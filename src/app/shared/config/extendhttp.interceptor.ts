@@ -75,7 +75,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
   }
 
   private _ifMaintenanceOn() {
-    this._maintananceSubject.subscribe ({
+    this._maintananceSubject.subscribe({
       complete: () => {
         this._maintananceSubject = new Subject<any>();
       }
@@ -89,45 +89,40 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     }
     return this._maintananceSubject;
   }
-  // private _ifSessionExpired() {
-  //   this._refreshSubject.subscribe({
-  //     complete: () => {
-  //       this._refreshSubject = new Subject<any>();
-  //     }
-  //   });
-  //   if (this._refreshSubject.observers.length === 1) {
-  //     // Hit refresh-token API passing the refresh token stored into the request
-  //     // to get new access token and refresh token pair
-  //     // this.sessionService.refreshToken().subscribe(this._refreshSubject);
-  //     this.shared_functions.removeitemfromSessionStorage('tabId');
-  //     const ynw_user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-  //     if (!ynw_user) {
-  //       window.location.reload();
-  //     }
-  //     const phone_number = ynw_user.loginId;
-  //     // const enc_pwd = this.lStorageService.getitemfromLocalStorage('jld');
-  //     const enc_pwd = 'U2FsdGVkX1++uus5wpaBf1lGVWOMvpqlEENsT1AA5P4==';
-  //     const password = this.shared_services.get(enc_pwd, projectConstants.KEY);
-  //     const post_data = {
-  //       'countryCode': '+91',
-  //       'loginId': phone_number,
-  //       'password': password,
-  //       'mUniqueId': ynw_user.mUniqueId
-  //     };
-  //     const activeuser = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
-  //     // this.shared_functions.doLogout().then(
-  //     //   (refreshSubject: any) => {
-  //     //     this._refreshSubject.next(refreshSubject);
-  //     //   }
-  //     // );
-  //     if (activeuser) {
-  //       this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
-  //     } else {
-  //       this.shared_services.ConsumerLogin(post_data).subscribe(this._refreshSubject);
-  //     }
-  //   }
-  //   return this._refreshSubject;
-  // }
+  private _ifSessionExpired() {
+    this._refreshSubject.subscribe({
+      complete: () => {
+        this._refreshSubject = new Subject<any>();
+      }
+    });
+    if (this._refreshSubject.observers.length === 1) {
+      // Hit refresh-token API passing the refresh token stored into the request
+      // to get new access token and refresh token pair
+      // this.sessionService.refreshToken().subscribe(this._refreshSubject);
+      this.sessionStorageService.removeitemfromSessionStorage('tabId');
+      let ynw_user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      ynw_user = JSON.parse(ynw_user);
+      if (!ynw_user) {
+        window.location.reload();
+      }
+      const phone_number = ynw_user.loginId;
+      const password = this.lStorageService.getitemfromLocalStorage('jld');
+      if (!ynw_user.mUniqueId) {
+        if (this.lStorageService.getitemfromLocalStorage('mUniqueId')) {
+          ynw_user.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+          this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw_user);
+        }
+      }
+      const post_data = {
+        'countryCode': '+91',
+        'loginId': phone_number,
+        'password': password,
+        'mUniqueId': ynw_user.mUniqueId
+      };
+      this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
+    }
+    return this._refreshSubject;
+  }
 
   private _checkSessionExpiryErr(error: HttpErrorResponse): boolean {
     return (
@@ -210,25 +205,29 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
           if (error instanceof HttpErrorResponse) {
             // console.log('HttpErrorResponse:',error);
             if (this._checkSessionExpiryErr(error)) {
-              if (!this.sessionExpired) {
-                // this.shared_services.callHealth(JSON.stringify(this.loggedUrls)).subscribe();
-                this.sessionExpired = true;
-              }             
-              // const isprovider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true';
-              //  this.shared_functions.doLogout().then (
-              //    () => {
-              //      this.router.navigate(['/']);
-              //    }
-              //  );
-              // return EMPTY;
-              return this._ifSessionExpiredN().pipe(
-                switchMap(() => {
-                  // return next.handle(this.updateHeader(req, url));
-                  // this.router.navigate(['/']);
-                  this.sessionExpired = false;
-                  return EMPTY;
-                })
-              );
+
+              let reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+
+              if (reqFrom && reqFrom === 'SP_APP') {
+                return this._ifSessionExpired().pipe(
+                  switchMap(() => {
+                    return next.handle(this.updateHeader(req, url));
+                  })
+                );
+              } else {
+                if (!this.sessionExpired) {
+                  // this.shared_services.callHealth(JSON.stringify(this.loggedUrls)).subscribe();
+                  this.sessionExpired = true;
+                }
+                return this._ifSessionExpiredN().pipe(
+                  switchMap(() => {
+                    // return next.handle(this.updateHeader(req, url));
+                    // this.router.navigate(['/']);
+                    this.sessionExpired = false;
+                    return EMPTY;
+                  })
+                );
+              }
               // return EMPTY;
               // return throwError(error);
             } else if (this._checkMaintanance(error)) {
@@ -286,19 +285,19 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
     const customId = this.lStorageService.getitemfromLocalStorage('customId');
     const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-    
+
     if (customId) {
-      if (reqFrom==='cuA') {
+      if (reqFrom === 'cuA') {
         req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'CUSTOM_APP'), withCredentials: true });
       } else {
         req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'WEB_LINK'), withCredentials: true });
       }
-    } else if (reqFrom){
+    } else if (reqFrom) {
       req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', reqFrom), withCredentials: true });
       if (reqFrom === 'CUSTOM_WEBSITE') {
         req = req.clone({ headers: req.headers.append('website-link', this.lStorageService.getitemfromLocalStorage('source')), withCredentials: true });
       }
-      
+
     }
 
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
@@ -313,16 +312,16 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     //   let authToken = this.lStorageService.getitemfromLocalStorage('appId') + '-' + this.lStorageService.getitemfromLocalStorage('installId');
     //   req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
     // } else 
-    if(this.lStorageService.getitemfromLocalStorage('pre-header') && this.lStorageService.getitemfromLocalStorage('authToken')) {
+    if (this.lStorageService.getitemfromLocalStorage('pre-header') && this.lStorageService.getitemfromLocalStorage('authToken')) {
       let authToken = this.lStorageService.getitemfromLocalStorage('pre-header') + "-" + this.lStorageService.getitemfromLocalStorage('authToken');
       req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
-    } else if(this.lStorageService.getitemfromLocalStorage('authToken')) {
+    } else if (this.lStorageService.getitemfromLocalStorage('authToken')) {
       let authToken = this.lStorageService.getitemfromLocalStorage('authToken');
       req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
     }
     req = req.clone({ url: url, responseType: 'json' });
- 
-    if(this.loggedUrls.length > 10) {
+
+    if (this.loggedUrls.length > 10) {
       this.loggedUrls.shift();
     }
     this.loggedUrls.push(req);
@@ -351,4 +350,3 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     return check;
   }
 }
-

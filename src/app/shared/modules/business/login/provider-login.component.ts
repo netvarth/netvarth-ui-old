@@ -42,11 +42,11 @@ export class ProviderLoginComponent implements OnInit {
   qParams;
   carouselTwo;
   evnt;
+  deviceId: any;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
     public shared_functions: SharedFunctions,
-    private routerobj: Router,
     public shared_services: SharedServices,
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
@@ -70,6 +70,7 @@ export class ProviderLoginComponent implements OnInit {
             this.shared_functions.getGlobalSettings()
               .then(
                 (settings: any) => {
+                  console.log("Settings value:",settings);
                   setTimeout(() => {
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
                       if (settings.appointment) {
@@ -120,6 +121,18 @@ export class ProviderLoginComponent implements OnInit {
     this.step = 1;
   }
   ngOnInit() {
+    this.activateRoute.params.subscribe((params)=>{
+      if (params.device) {
+        this.lStorageService.setitemonLocalStorage('deviceName', params.device);
+      }
+      if (params.at) {
+        this.deviceId = params.at;
+        this.lStorageService.setitemonLocalStorage('reqFrom', 'SP_APP');
+      }
+      if (params.muid) {
+        this.lStorageService.setitemonLocalStorage('mUniqueId', params.muid);
+      }
+    })
     this.createForm();
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode = this.countryCodes[0].value;
@@ -245,7 +258,7 @@ export class ProviderLoginComponent implements OnInit {
     this.step = 1;
   }
   doSignuppage() {
-    this.routerobj.navigate(['business/signup']);
+    this.router.navigate(['business/signup']);
   }
   gotoproducts() {
     const navigationExtras: NavigationExtras = {
@@ -254,6 +267,6 @@ export class ProviderLoginComponent implements OnInit {
     this.router.navigate(['business'], navigationExtras);
   }
   doLoginpage() {
-    this.routerobj.navigate(['business/login']);
+    this.router.navigate(['business/login']);
   }
 }
