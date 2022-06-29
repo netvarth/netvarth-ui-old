@@ -623,6 +623,12 @@
 
 /* Filter Code Ends */
 
+
+.custom-pagination {
+    font-size: 18px !important;
+    margin: 10px !important;
+}
+
 #selectViewModal .modal-dialog {
     max-width: calc(100% - 20px) !important;
     max-height: calc(100% - 20px) !important;
