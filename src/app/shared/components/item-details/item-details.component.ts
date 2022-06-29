@@ -98,12 +98,7 @@ export class ItemDetailsSharedComponent implements OnInit {
     this.route.queryParams.subscribe(
       params => {
         this.item = params.item;
-        console.log("params :",params)
-        //${this.item}
-      console.log("set item :", this.lStorageService.setitemonLocalStorage('item', this.item));
-
         this.provider_bussiness_id = parseInt(params.providerId, 0);
-        console.log("provider_id :",this.provider_bussiness_id)
 
         if (params.showpric === 'false') {
           this.showitemprice = false;

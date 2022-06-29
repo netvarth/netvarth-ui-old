@@ -32,6 +32,7 @@ export class ProviderLoginComponent implements OnInit {
   step = 1;
   moreParams = [];
   api_loading = true;
+  loading = true;
   show_error = false;
   test_provider = null;
   heading = '';
@@ -62,33 +63,48 @@ export class ProviderLoginComponent implements OnInit {
     this.titleService.setTitle('Jaldee Business - Login');
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
+      console.log("Params:", data);
+      if (data.device) {
+        this.lStorageService.setitemonLocalStorage('deviceName', data.device);
+      }
+      if (data.at) {
+        this.deviceId = data.at;
+        this.lStorageService.setitemonLocalStorage('reqFrom', 'SP_APP');
+      }
+      if (data.muid) {
+        this.lStorageService.setitemonLocalStorage('mUniqueId', data.muid);
+      }
     });
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if (router.url === '/business/login') {
+        console.log(router.url);
+        if (router.url.startsWith('/business/login')) {
           if (this.shared_functions.isBusinessOwner()) {
-            this.shared_functions.getGlobalSettings()
-              .then(
-                (settings: any) => {
-                  console.log("Settings value:",settings);
-                  setTimeout(() => {
-                    if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                      if (settings.appointment) {
-                        router.navigate(['provider', 'appointments']);
-                      } else if (settings.waitlist) {
-                        router.navigate(['provider', 'check-ins']);
-                      }  else if (settings.order) {
-                        router.navigate(['provider', 'orders']);
-                      } else if(settings.enableTask) {
-                        router.navigate(['provider', 'crm']);
-                      }  else {
-                        router.navigate(['provider', 'settings']);
-                      }
+            this.shared_functions.getGlobalSettings().then(
+              (settings: any) => {
+                console.log("Settings value:", settings);
+                setTimeout(() => {
+                  if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+                    if (settings.appointment) {
+                      router.navigate(['provider', 'appointments']);
+                    } else if (settings.waitlist) {
+                      router.navigate(['provider', 'check-ins']);
+                    } else if (settings.order) {
+                      router.navigate(['provider', 'orders']);
+                    } else if (settings.enableTask) {
+                      router.navigate(['provider', 'crm']);
                     } else {
                       router.navigate(['provider', 'settings']);
                     }
-                  }, 500);
-                });
+                  } else {
+                    router.navigate(['provider', 'settings']);
+                  }
+                }, 500);
+              }, (error)=>{
+                this.loading = false;
+              });
+          } else {
+            this.loading = false;
           }
         }
       }
@@ -121,18 +137,6 @@ export class ProviderLoginComponent implements OnInit {
     this.step = 1;
   }
   ngOnInit() {
-    this.activateRoute.params.subscribe((params)=>{
-      if (params.device) {
-        this.lStorageService.setitemonLocalStorage('deviceName', params.device);
-      }
-      if (params.at) {
-        this.deviceId = params.at;
-        this.lStorageService.setitemonLocalStorage('reqFrom', 'SP_APP');
-      }
-      if (params.muid) {
-        this.lStorageService.setitemonLocalStorage('mUniqueId', params.muid);
-      }
-    })
     this.createForm();
     if (this.countryCodes.length !== 0) {
       this.selectedCountryCode = this.countryCodes[0].value;

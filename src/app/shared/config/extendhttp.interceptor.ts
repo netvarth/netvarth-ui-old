@@ -106,7 +106,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         window.location.reload();
       }
       const phone_number = ynw_user.loginId;
-      const password = this.lStorageService.getitemfromLocalStorage('jld');
+      const password = this.lStorageService.getitemfromLocalStorage('bpwd');
       if (!ynw_user.mUniqueId) {
         if (this.lStorageService.getitemfromLocalStorage('mUniqueId')) {
           ynw_user.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
@@ -285,7 +285,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
     const customId = this.lStorageService.getitemfromLocalStorage('customId');
     const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-
+    console.log("reqFrom:", reqFrom);
     if (customId) {
       if (reqFrom === 'cuA') {
         req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'CUSTOM_APP'), withCredentials: true });

@@ -1,4 +1,4 @@
-<section id="busPageId" class="content bus-page" [ngClass]="theme" *ngIf="!globalLoading && !catalogId">
+<section id="busPageId" class="content bus-page" [ngClass]="theme" *ngIf="!globalLoading">
     <div class="container">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
@@ -554,7 +554,7 @@
         </div>
     </div>
 </div>
-<footer class="site-footer bus-page-footer" *ngIf="!userId && !loading_direct && !globalLoading && !catalogId"  [ngClass]="accountProperties?accountProperties['theme']:''">
+<footer class="site-footer bus-page-footer" *ngIf="!userId && !loading_direct && !globalLoading"  [ngClass]="accountProperties?accountProperties['theme']:''">
     <div class="footer-bottom brd-tp pad-up-20">
         <div class="container">
             <div class="row align-items-center justify-content-between text-center">
@@ -568,72 +568,5 @@
         </div>
     </div>
 </footer>
-
-
 <app-common-innerloading-spinner *ngIf="globalLoading"></app-common-innerloading-spinner>
 <!-- <app-consumer-footer></app-consumer-footer> -->
-
-
-<section *ngIf="catalogId">
-    <div class="serv-head order-serv-head col-md-12 col-xs-12 col-sm-12 mgn-bt-20" *ngIf="activeCatalog">
-        <div>
-            <div class="no-padding">
-                <h5 class="catalog-title mgn-bt-5 primary-color">
-                    <img (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"
-                        width="60" height="60" id="catalog-image1"
-                        class="rounded pointer-cursor img-circle">
-                    <div class="mgn-lt-10">{{activeCatalog.catalogName}}</div>
-                </h5>
-            </div>
-            <div class="catalog-icons no-padding-small disp-flex">
-                <div class="home-delivery mgn-rt-10 disp-flex align-items-center"
-                    *ngIf="activeCatalog.homeDelivery && activeCatalog.homeDelivery.homeDelivery && activeCatalog.nextAvailableDeliveryDetails">
-                    <img class="ordericon home" src="../../../../assets/images/Homedelivery.png" />
-                    <div class="mgn-lt-5">{{'Home Delivery' | translate}}<div class="font-small "
-                            *ngIf="activeCatalog.homeDelivery.deliveryRadius">
-                            (in {{ activeCatalog.homeDelivery.deliveryRadius}} km radius)</div>
-                    </div>
-                </div>
-                <div class="store-pickup disp-flex align-items-center"
-                    *ngIf="activeCatalog.pickUp && activeCatalog.pickUp.orderPickUp && activeCatalog.nextAvailablePickUpDetails">
-                    <img class="ordericon pickup" src="../../../../assets/images/Store-pick-up.png" />
-
-                    <div class="mgn-lt-5">{{'Store Pickup' | translate}}</div>
-                </div>
-            </div>
-        </div>
-        <div>
-            <p class="catalog-desc module-nomargin line-clamp" *ngIf="!showmoreSpec" (click)="showSpec()">
-                {{activeCatalog.catalogDesc}}</p>
-            <p class="catalog-desc" *ngIf="showmoreSpec" (click)="showSpec()">{{activeCatalog.catalogDesc}}
-            </p>
-        </div>
-    </div>
-    <ks-modal-gallery [id]="1" *ngIf="catalogimage_list_popup && catalogimage_list_popup.length>0"
-        [modalImages]="catalogimage_list_popup" [plainGalleryConfig]="customPlainGallerycatalogRowConfig"
-        [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
-        (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-    <ng-container
-       *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && checkVirtualOrPhysical()">
-        <div class="bus-item-I" *ngFor="let item of orderItems">
-            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
-                [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
-        </div>
-        <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
-            <div>{{'Your Order' | translate}} ({{ order_count }})
-                <span class="rupee-font">{{'SubTotal' | translate}} :&#8377;{{ price }}&nbsp;</span>
-                <button mat-flat-button class="btn-chkout" (click)="checkout();">{{'Checkout' | translate}}</button>
-            </div>
-        </div>
-    </ng-container>
-    <ng-container
-        *ngIf="orderType === 'SHOPPINGLIST' && (activeCatalog.nextAvailableDeliveryDetails || activeCatalog.nextAvailablePickUpDetails)">
-        <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
-        <div class="bus-item-O">
-            <a (click)="shoppinglistupload()" class="like-btn">{{'Upload Shopping List' | translate}}</a>
-        </div>
-    </div>
-
-    </ng-container>
-
-</section>
