@@ -740,11 +740,12 @@ export class AppointmentComponent implements OnInit {
                 this.customidFormat = data.jaldeeIdFormat;
             });
     }
+    
     initAppointment(thirdParty?) {
-        // if (thirdParty) {
-        //     this.thirdParty = thirdParty;
+        if (thirdParty) {
+            this.thirdParty = thirdParty;
         this.getGlobalSettings();
-        // }
+         }
         this.thirdParty = thirdParty ? thirdParty : '';
         this.api_loading1 = false;
         this.showCheckin = true;
@@ -2362,7 +2363,6 @@ export class AppointmentComponent implements OnInit {
             }
         } else {
             this.showOther = true;
-            $('.other-party-options-modal').modal('hide')
 
         }
     }

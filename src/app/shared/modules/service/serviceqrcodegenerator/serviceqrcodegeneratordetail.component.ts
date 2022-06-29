@@ -2,7 +2,6 @@ import { Component, OnInit, Inject, ViewChild, ElementRef, ChangeDetectorRef, On
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Meta, Title } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
-import { CrmSelectMemberComponent } from '../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component';
 
 @Component({
   selector: 'app-serviceqrcodegenerator',
@@ -46,20 +45,26 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
     this.userId = this.data.userid;
     this.catalogId = this.data.catalogId;
     this.itemId = this.data.itemId;
-    if(this.data.requestType === 'fileShare'){
-      this.shareLink = '';
-    }
-   
-    if (this.userId) {
+
+     
+     if(this.data.serviceid){
+      this.shareLink = this.wpath + this.accuid + '/service/' + this.serviceId + '/';
+      }
+      
+    if (this.data.userId) {
+    
       this.shareLink = this.wpath + this.accuid + '/' + this.userId + '/service/' + this.serviceId + '/';
     }
-    else  if(this.data.requestType == 'shareItem' && !this.userId && !this.serviceId && this.catalogId){
-      this.shareLink = this.wpath +  this.accuid  + '/catalog/' + this.catalogId + '/item/' + this.itemId;
 
-    }
-    else {
-      this.shareLink = this.wpath + this.accuid + '/service/' + this.serviceId + '/';
-    }
+    //else {
+    if(this.data.itemId && this.data.catalogId){
+      this.shareLink = this.wpath +  this.accuid  + '/catalog/' + this.catalogId + '/item/' + this.itemId;
+     }
+
+     if(this.data.catalogId && this.data.requestType == 'shareCatalog'){
+      this.shareLink = this.wpath +  this.accuid  + '/catalog/' + this.catalogId;
+
+     }
     this.description = 'You can book my services by just clicking this link';
     this.qrCodegenerateOnlineID(this.shareLink);
   }
@@ -100,24 +105,5 @@ export class ServiceQRCodeGeneratordetailComponent implements OnInit, OnDestroy 
   }
 
 
-  openDialogSearchCustomer(){
-    console.log('openDialogStatusChange')
-    const dialogRef= this.dialog.open(CrmSelectMemberComponent,{
-      width:'100%',
-      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data:{
-        requestType:'fileShare',
-        //file:file,
-      }
-    });
-    dialogRef.afterClosed().subscribe((res:any)=>{
-      console.log('resssssssss',res);
-      // this.getCompletedTask();
-      // if(res==='In Progress' ||res==='Completed' || res==='Assigned' || res==='New' || res === 'Cancelled' || res === 'Suspended' ){
-      //   // this.getInprogressTask();
-      //   this.ngOnInit()
-      // }
-    })
-  }
+
 }

@@ -12,6 +12,7 @@ import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm
 import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
+import { ProviderDataStorageService } from '../../../../../../business/services/provider-datastorage.service';
 
 @Component({
     'selector': 'app-item-details',
@@ -20,6 +21,9 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 })
 export class ItemDetailsComponent implements OnInit {
     item_id;
+    wndw_path = projectConstantsLocal.PATH;
+    bprofile: any = [];
+    locationExists = false;
     rupee_symbol = '₹';
     item_hi_cap = Messages.ITEM_HI_CAP;
     item_name_cap = Messages.ITEM_NAME_CAP;
@@ -118,6 +122,8 @@ export class ItemDetailsComponent implements OnInit {
     mainImage = false;
     iscmFrom;
     itemType = 'physical';
+    catalog_list : any =[]
+    newData : any=[];
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -126,38 +132,41 @@ export class ItemDetailsComponent implements OnInit {
         private fb: FormBuilder,
         public fed_service: FormMessageDisplayService,
         private snackbarService: SnackbarService,
+        private provider_datastorage: ProviderDataStorageService,
         private wordProcessor: WordProcessor) {
         this.activated_route.queryParams.subscribe(
             (qParams) => {
                 this.iscmFrom = qParams.type;
             });
+        
         this.activated_route.params.subscribe(
             (params) => {
-                this.item_id = params.id;
-                this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-                if (this.item_id) {
-                    if (this.item_id === 'add') {
-                        this.action = 'add';
-                        this.createForm();
-                        this.api_loading = false;
+                const _this = this;
+                _this.item_id = params.id;
+                _this.customer_label = _this.wordProcessor.getTerminologyTerm('customer');
+                if (_this.item_id) {
+                    if (_this.item_id === 'add') {
+                        _this.action = 'add';
+                        _this.createForm();
+                        _this.api_loading = false;
                     } else {
-                        this.activated_route.queryParams.subscribe(
+                        _this.activated_route.queryParams.subscribe(
                             (qParams) => {
-                                this.action = qParams.action;
-                                this.itmId = this.item_id;
-                                this.getItem(this.item_id).then(
+                                _this.action = qParams.action;
+                                _this.itmId = _this.item_id;
+                                _this.getItem(_this.item_id).then(
                                     (item) => {
-                                        this.item = item;
-                                        this.api_loading = false;
-                                        if (this.item.itemImages) {
-                                            this.imageList = this.item.itemImages;
-                                            this.loadImages(this.item.itemImages);
+                                        _this.item = item;
+                                        _this.api_loading = false;
+                                        if (_this.item.itemImages) {
+                                            _this.imageList = _this.item.itemImages;
+                                            _this.loadImages(_this.item.itemImages);
                                         }
-                                        this.itemname = this.item.displayName;
-                                        if (this.action === 'edit') {
-                                            this.createForm();
-                                        } else if (this.action === 'view') {
-                                            this.itemcaption = 'Item Details';
+                                        _this.itemname = this.item.displayName;
+                                        if (_this.action === 'edit') {
+                                            _this.createForm();
+                                        } else if (_this.action === 'view') {
+                                            _this.itemcaption = 'Item Details';
                                         }
                                     }
                                 );
@@ -197,8 +206,23 @@ export class ItemDetailsComponent implements OnInit {
     ngOnInit() {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.getTaxpercentage();
+        this.getBusinessProfile()
+    
     }
-
+    getBusinessProfile() {
+        this.provider_services.getBussinessProfile()
+            .subscribe(
+                data => {
+                    this.bprofile = data;
+                    if (this.bprofile.baseLocation) {
+                        this.locationExists = true;
+                    } else {
+                        this.locationExists = false;
+                    }
+                     this.provider_datastorage.set('bProfile', data);
+                });
+            }
+    
     getItem(itemId) {
         const _this = this;
         return new Promise(function (resolve, reject) {
@@ -588,24 +612,26 @@ export class ItemDetailsComponent implements OnInit {
         });
     }
     saveImages(id, routeTo?) {
+        const _this = this
+
         const submit_data: FormData = new FormData();
         const propertiesDetob = {};
         let i = 0;
-        for (const pic of this.selectedMessageMain.files) {
+        for (const pic of _this.selectedMessageMain.files) {
             submit_data.append('files', pic, pic['name']);
             let properties = {};
             properties = {
-                'caption': this.selectedMessageMain.caption[i] || '',
+                'caption': _this.selectedMessageMain.caption[i] || '',
                 'displayImage': true
             };
             propertiesDetob[i] = properties;
             i++;
         }
-        for (const pic of this.selectedMessage.files) {
+        for (const pic of _this.selectedMessage.files) {
             submit_data.append('files', pic, pic['name']);
             let properties = {};
             properties = {
-                'caption': this.selectedMessage.caption[i] || '',
+                'caption': _this.selectedMessage.caption[i] || '',
                 'displayImage': false
             };
             propertiesDetob[i] = properties;
@@ -616,53 +642,53 @@ export class ItemDetailsComponent implements OnInit {
         };
         const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
         submit_data.append('properties', blobPropdata);
-        this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
-            this.selectedMessage = {
+        _this.provider_services.uploadItemImages(id, submit_data).subscribe((data) => {
+            _this.selectedMessage = {
                 files: [],
                 base64: [],
                 caption: []
             };
-            this.selectedMessageMain = {
+            _this.selectedMessageMain = {
                 files: [],
                 base64: [],
                 caption: []
             };
-            this.image_list_popup = [];
-            this.mainimage_list_popup = [];
+            _this.image_list_popup = [];
+            _this.mainimage_list_popup = [];
             if (routeTo === 'list') {
-                if (this.iscmFrom === 'ordermanager') {
+                if (_this.iscmFrom === 'ordermanager') {
                     const navigatExtras: NavigationExtras = {
                         queryParams: {
-                            type: this.iscmFrom ? this.iscmFrom : ''
+                            type: _this.iscmFrom ? _this.iscmFrom : ''
                         }
                     };
-                    this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
+                    _this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
                 } else {
-                    this.router.navigate(['provider', 'settings', 'pos', 'items']);
+                    _this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 }
             }
             if (routeTo !== 'saveadd') {
-                this.getItem(id).then(
+                _this.getItem(id).then(
                     (item) => {
-                        this.item = item;
-                        if (this.item.itemImages) {
-                            this.imageList = this.item.itemImages;
-                            this.loadImages(this.item.itemImages);
+                        _this.item = item;
+                        if (_this.item.itemImages) {
+                            _this.imageList = _this.item.itemImages;
+                            _this.loadImages(_this.item.itemImages);
                         }
                     });
             }
-            this.api_loading = false;
+            _this.api_loading = false;
         },
             error => {
-                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                this.getItem(id).then(
+                _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                _this.getItem(id).then(
                     (item) => {
-                        this.item = item;
-                        if (this.item.itemImages) {
-                            this.imageList = this.item.itemImages;
-                            this.loadImages(this.item.itemImages);
+                        _this.item = item;
+                        if (_this.item.itemImages) {
+                            _this.imageList = _this.item.itemImages;
+                            _this.loadImages(_this.item.itemImages);
                         }
-                        this.api_loading = false;
+                        _this.api_loading = false;
                     });
             });
     }

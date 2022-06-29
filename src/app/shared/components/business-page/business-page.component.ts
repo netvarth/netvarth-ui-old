@@ -311,6 +311,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   uniqueId: any;
 
   globalLoading= true;
+  catalogId: string;
+  showCatalog: boolean = false;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -468,6 +470,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     });
+    this.activaterouterobj.paramMap.subscribe((params)=>{
+      this.catalogId = params.get('catalogId');
+    //  this.showCatalog = true
+      console.log("catalogId",this.catalogId)
+    })
     const _this = this;
     this.activaterouterobj.paramMap
       .subscribe(params => {
@@ -478,6 +485,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           if (params.get('userEncId')) {
             this.userEncId = params.get('userEncId');
             this.userId = this.userEncId;
+            this.catalogId = null
+
           } else {
             this.userId = null;
           }
@@ -586,6 +595,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           )
         }
       });
+      
   }
   getproviderBprofileDetails() {
     const self = this;
@@ -2960,6 +2970,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       account_id: this.provider_bussiness_id
 
     };
+    console.log("shoppinglistupload :",chosenDateTime)
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {

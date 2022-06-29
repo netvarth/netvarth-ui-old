@@ -11,6 +11,7 @@ import { LocalStorageService } from '../../../../../shared/services/local-storag
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SubSink } from 'subsink';
+import { ServiceQRCodeGeneratordetailComponent } from '../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
 
 @Component({
     selector: 'app-catalog',
@@ -21,6 +22,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
     newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
     tooltipcls = '';
+    wndw_path = projectConstantsLocal.PATH;
     name_cap = Messages.ITEM_NAME_CAP;
     price_cap = Messages.PRICES_CAP;
     taxable_cap = Messages.TAXABLE_CAP;
@@ -43,6 +45,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
     active_user;
     order = 'status';
     private subscriptions = new SubSink();
+    qrdialogRef: any;
+    bprofile: any;
     constructor(private provider_servicesobj: ProviderServices,
         public shared_functions: SharedFunctions,
         private router: Router, private dialog: MatDialog,
@@ -62,6 +66,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.getCatalog();
         this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         this.lStorageService.removeitemfromLocalStorage('selecteditems');
+        this.getBusinessProfile()
     }
     // tslint:disable-next-line: use-lifecycle-interface
     ngOnDestroy() {
@@ -79,7 +84,48 @@ export class CatalogComponent implements OnInit, OnDestroy {
             this.removeitemdialogRef.close();
         }
     }
-
+    catalogqrCodegeneraterOnlineID(catalog) {
+        console.log("catalog :",catalog)
+         let pid = '';
+        // let usrid = '';
+        if (!this.bprofile.customId) {
+            pid = this.bprofile.accEncUid;
+        } else {
+            pid = this.bprofile.customId;
+        }
+        // if (this.service && this.service.provider && this.service.provider.id) {
+        //     usrid = this.service.provider.id;
+        // } else {
+        //     usrid = '';
+                // 
+        this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
+            width: '40%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'servceqrcodesmall'],
+            disableClose: true,
+            data: {
+                accencUid: pid,
+               path: this.wndw_path,
+               // serviceid: this.service.id,
+               // userid: usrid,
+               // itemId:item.id,
+                catalogId:catalog.id,
+                // serviceStatus : this.service_data.status
+                requestType:'shareCatalog'
+            }
+        });
+        this.qrdialogRef.afterClosed().subscribe(result => {
+            if (result === 'reloadlist') {
+                this.getBusinessProfile();
+            }
+        });
+    }
+    getBusinessProfile() {
+        this.provider_servicesobj.getBussinessProfile()
+            .subscribe(
+                (data :any) => {
+                    this.bprofile = data;
+                })
+    }
     performActions(action) {
         if (action === 'learnmore') {
             this.routerobj.navigate(['/provider/' + this.domain + '/billing->items']);

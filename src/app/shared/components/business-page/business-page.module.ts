@@ -34,6 +34,7 @@ const routes: Routes = [
     { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
     { path: 'service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) },
     { path: 'service/:serid/pay/:id', loadChildren: () => import('./service-view/donation-link/donation-link.module').then(m => m.DonationLinkModule) },
+    { path: 'catalog/:catalogId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule)},
     { path: 'catalog/:catalogId/item/:itemId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule) },
     { path: ':userEncId', component: BusinessPageComponent},
     { path: ':userEncId/service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) }

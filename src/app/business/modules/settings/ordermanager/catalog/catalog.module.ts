@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { OrderModule } from 'ngx-order-pipe';
+import { ServiceqrcodegeneratorModule } from '../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.module';
+
 const routes: Routes = [
     { path: '', component: CatalogComponent },
     { path: ':id', loadChildren:()=> import('./details/catalog-details.module').then(m=>m.CatalogdetailModule) },
@@ -26,6 +28,7 @@ const routes: Routes = [
         MatButtonModule,
         ConfirmBoxModule,
         OrderModule,
+        ServiceqrcodegeneratorModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [CatalogComponent]

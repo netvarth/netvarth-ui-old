@@ -25,6 +25,7 @@
     text-align: center;
     font-weight: 600;
 }
+
 .yourProfile .pad-10 {
     padding:10px;
 }
@@ -222,9 +223,9 @@
 .modal-header {
     padding: 1rem 1.75rem  !important;
 }
-.modal-footer {
+/* .modal-footer {
     padding: 0 !important;
-}
+} */
 .ln-ht-1 {
     line-height: 1 !important;
 }

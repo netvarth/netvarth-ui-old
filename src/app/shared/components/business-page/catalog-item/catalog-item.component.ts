@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { AccountService } from '../../../../shared/services/account.service';
@@ -10,6 +10,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SignUpComponent } from '../../signup/signup.component';
+import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
+import { SharedServices } from '../../../../shared/services/shared-services';
+
 
 @Component({
   selector: 'app-catalog-item',
@@ -17,9 +20,12 @@ import { SignUpComponent } from '../../signup/signup.component';
   styleUrls: ['./catalog-item.component.css']
 })
 export class CatalogItemComponent implements OnInit {
-
+  catalogimage_list_popup: Image[];
+  image_list_popup: Image[];
+  catalogImage = '../../../../assets/images/order/catalogueimg.svg';
   accountEncId: any; // Account Enc Id / Custom Business Id
   catalogId: any;
+  orderType = '';
   itemId: any;
   private subscriptions = new SubSink();
   businessCustomId: any;
@@ -29,14 +35,38 @@ export class CatalogItemComponent implements OnInit {
   bLogo: any;
   bNameStart: any;
   bNameEnd: any;
+  orderItems: any = [];
+  terminologiesjson: any = null;
+  selectedLocation;
   bgCover: any;
   profileSettings: any;
   accountProperties: any;
   loading: boolean = false;
-
+  customPlainGalleryRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customPlainGallerycatalogRowConfig: PlainGalleryConfig = {
+    strategy: PlainGalleryStrategy.CUSTOM,
+    layout: new AdvancedLayout(-1, true)
+  };
+  customButtonsFontAwesomeConfig: ButtonsConfig = {
+    visible: true,
+    strategy: ButtonsStrategy.CUSTOM,
+    buttons: [
+      {
+        className: 'inside close-image',
+        type: ButtonType.CLOSE,
+        ariaLabel: 'custom close aria label',
+        title: 'Close',
+        fontSize: '20px'
+      }
+    ]
+  };
   cartItems: any = [];
   itemQuantity;
   cartItem;
+  onlyVirtualItems = false;
   // showitemprice: boolean = true;
   isPrice: boolean;
   isPromotionalpricePertage;
@@ -47,13 +77,36 @@ export class CatalogItemComponent implements OnInit {
   minQuantity: any;
   maxQuantity: any;
   orderItem: { type: string; minqty: any; maxqty: any; id: any; item: any; showpric: any; };
+  businessjson: any = [];
+  locationjson: any = [];
+  showmoreSpec: any;
+  showmoreDesc: any;
+  spId_local_id: any;
+  order_count: number;
+  price: number;
+  orderList: any = [];
+  provider_bussiness_id: any;
+  advance_amount: any;
+  store_pickup: boolean;
+  choose_type: string;
+  sel_checkindate: any;
+  nextAvailableTime: string;
+  home_delivery: boolean;
+  deliveryCharge: any;
+  itemCount: any;
+  screenWidth: number;
+  small_device_display: boolean;
+  deferredPrompt: any;
+  popupforCustomApp: any;
+  btnInstallApp: any;
 
   constructor(private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private accountService: AccountService,
     private router: Router,
+    private shared_services: SharedServices,
     private s3Processor: S3UrlProcessor,
-    public sharedFunctions: SharedFunctions,
+    public sharedFunctionobj: SharedFunctions,
     private lStorageService: LocalStorageService,
     private dialog: MatDialog) {
     this.activatedRoute.paramMap.subscribe(
@@ -62,9 +115,58 @@ export class CatalogItemComponent implements OnInit {
         this.catalogId = params.get('catalogId');
         this.itemId = params.get('itemId');
       }
+    
     )
+    this.image_list_popup = [];
+    this.catalogimage_list_popup = [];
   }
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 767) {
+    } else {
+      this.small_device_display = false;
+    }
+    if (this.screenWidth <= 1040) {
+      this.small_device_display = true;
+    } else {
+      this.small_device_display = false;
+    }
+  }
+  @HostListener('window:appinstalled', ['$event'])
+  onAppInstalled(e) {
+    console.log("App Successfully Installed");
+  }
+  @HostListener('window:beforeinstallprompt', ['$event'])
+  onBeforeInstallPrompt(e: { preventDefault: () => void; }) {
 
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
+    e.preventDefault();
+    // Stash the event so it can be triggered later.
+    if (this.accountProperties) {
+      this.deferredPrompt = e;
+      // Update UI to notify the user they can add to home screen
+
+      this.popupforCustomApp.nativeElement.style.display = 'block';
+
+      this.btnInstallApp.addEventListener('click', (e: any) => {
+        // console.log('binding');
+        // hide our user interface that shows our A2HS button
+        this.popupforCustomApp.nativeElement.style.display = 'none';
+        // Show the prompt
+        this.deferredPrompt.prompt();
+        // Wait for the user to respond to the prompt
+        this.deferredPrompt.userChoice.then((choiceResult: any) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('User clicked Install');
+          } else {
+            console.log('User dismissed prompt');
+          }
+          this.deferredPrompt = null;
+        });
+      });
+    }
+  }
   /**
   * 
   * @param encId encId/customId which represents the Account
@@ -104,9 +206,51 @@ export class CatalogItemComponent implements OnInit {
       }
     )
   }
+  catlogArry() {
 
+    if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
+      this.orderList = this.lStorageService.getitemfromLocalStorage('order');
+    }
+   this.getTotalItemAndPrice();
+  }
+  getTotalItemAndPrice() {
+    this.price = 0;
+    this.order_count = 0;
+    for (const itemObj of this.orderList) {
+      let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+      this.price = this.price + item_price;
+      this.order_count = this.order_count + 1;
+    }
+  }
+  isPhysicalItemsPresent() {
+    let physical_item_present = true;
+    const virtualItems = this.activeCatalog.catalogItem.filter(catalogItem => catalogItem.item.itemType === 'VIRTUAL')
+    if (virtualItems.length > 0 && this.activeCatalog.catalogItem.length === virtualItems.length) {
+      physical_item_present = false;
+      this.onlyVirtualItems = true;
+    }
+    return physical_item_present;
+  }
+  checkVirtualOrPhysical() {
+    // console.log('checkvirtualorphysical');
+    let showCatalogItems = false;
+    if (this.activeCatalog.nextAvailableDeliveryDetails || this.activeCatalog.nextAvailablePickUpDetails) {
+      showCatalogItems = true;
+    }
+
+    if (!this.isPhysicalItemsPresent()) {
+      showCatalogItems = true;
+    }
+    return showCatalogItems
+  }
+  
   setItemDetails(catalogId, itemId, accountId) {
     this.cartItems = [];
+    this.orderItems = [];
+    const orderItems = [];
     if (this.lStorageService.getitemfromLocalStorage('order_spId') && this.lStorageService.getitemfromLocalStorage('order_spId') == this.accountId) {
       this.cartItems = this.lStorageService.getitemfromLocalStorage('order');
     } else {
@@ -117,7 +261,59 @@ export class CatalogItemComponent implements OnInit {
 
     this.subscriptions.sink = this.orderService.getConsumerCatalogs(accountId).subscribe(
       (catalogs: any) => {
+        console.log("catalogssss :",catalogs)
+        if (catalogs.length > 0) {
+          this.activeCatalog = catalogs[0];
+          this.orderType = this.activeCatalog.orderType;
+          if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
+            this.catalogImage = this.activeCatalog.catalogImages[0].url;
+            this.catalogimage_list_popup = [];
+            const imgobj = new Image(0,
+              { // modal
+                img: this.activeCatalog.catalogImages[0].url,
+                description: ''
+              });
+            this.catalogimage_list_popup.push(imgobj);
+          }
+          this.catlogArry();
 
+
+          this.advance_amount = this.activeCatalog.advanceAmount;
+          if (this.activeCatalog.pickUp) {
+            if (this.activeCatalog.pickUp.orderPickUp && this.activeCatalog.nextAvailablePickUpDetails) {
+              this.store_pickup = true;
+              this.choose_type = 'store';
+              this.sel_checkindate = this.activeCatalog.nextAvailablePickUpDetails.availableDate;
+              this.nextAvailableTime = this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailablePickUpDetails.timeSlots[0]['eTime'];
+            }
+          }
+          if (this.activeCatalog.homeDelivery) {
+            if (this.activeCatalog.homeDelivery.homeDelivery && this.activeCatalog.nextAvailableDeliveryDetails) {
+              this.home_delivery = true;
+
+              if (!this.store_pickup) {
+                this.choose_type = 'home';
+                this.deliveryCharge = this.activeCatalog.homeDelivery.deliveryCharge;
+                this.sel_checkindate = this.activeCatalog.nextAvailableDeliveryDetails.availableDate;
+                this.nextAvailableTime = this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.activeCatalog.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
+              }
+            }
+          }
+          this.shared_services.setOrderDetails(this.activeCatalog);
+          if (this.activeCatalog && this.activeCatalog.catalogItem) {
+            for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
+              const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+              const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
+              const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
+              const showpric = this.activeCatalog.showPrice;
+              if (this.activeCatalog.catalogItem[itemIndex].item.isShowOnLandingpage) {
+                orderItems.push({ 'type': 'item', 'minqty': minQty, 'maxqty': maxQty, 'id': catalogItemId, 'item': this.activeCatalog.catalogItem[itemIndex].item, 'showpric': showpric });
+                this.itemCount++;
+              }
+            }
+          }
+          this.orderItems = orderItems;
+        }
         this.activeCatalog = this.orderService.getCatalogById(catalogs, catalogId);
         console.log(this.activeCatalog);
         let catalogItem = this.orderService.getCatalogItemById(this.activeCatalog, itemId);
@@ -126,10 +322,10 @@ export class CatalogItemComponent implements OnInit {
         this.cartItem = catalogItem.item;
         this.minQuantity = catalogItem.minQuantity;
         this.maxQuantity = catalogItem.maxQuantity;
-
+        if(catalogItem.item){
         this.orderItem = { 'type': 'item', 'minqty': catalogItem.minQuantity, 'maxqty': catalogItem.maxQuantity, 'id': catalogItem.id, 'item': catalogItem.item, 'showpric': showpric };
         // this.cartItems.push(this.orderItem);
-
+        }
         const businessObject = {
           'bname': this.businessProfile.businessName,
           'blocation': this.businessProfile.baseLocation.place,
@@ -180,6 +376,7 @@ export class CatalogItemComponent implements OnInit {
 
   setBusinesssProfile(businessProfile) {
     this.businessProfile = businessProfile;
+    console.log("businessProfile",businessProfile)
     this.accountId = businessProfile.id;
     if (businessProfile.customId) {
       this.businessCustomId = businessProfile.customId;
@@ -194,6 +391,7 @@ export class CatalogItemComponent implements OnInit {
     if (businessProfile.cover) {
       this.bgCover = businessProfile.cover.url;
     }
+    this.provider_bussiness_id = this.businessjson.id;
     if (businessProfile.logo !== null && businessProfile.logo !== undefined) {
       if (businessProfile.logo.url !== undefined && businessProfile.logo.url !== '') {
         this.bLogo = businessProfile.logo.url;
@@ -210,7 +408,93 @@ export class CatalogItemComponent implements OnInit {
       this.bNameStart = holdbName;
     }
   }
+  itemDetails(item) {
+    console.log("Item Details ",item)
+    const businessObject = {
+      'bname': this.businessjson.businessName,
+      //'blocation': this.locationjson[0].place,
+      'blocation':this.businessProfile.baseLocation.place,
+      'logo': this.businessProfile.logo.url
+    };
+    this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        item: JSON.stringify(item),
+        providerId: this.accountId,
+        showpric: this.activeCatalog.showPrice,
+        unique_id: this.s3UniqueId // changed unique id to s3uniqueid
+      }
 
+    };
+    this.router.navigate(['order', 'item-details'], navigationExtras);
+  }
+  incrementItem(item) {
+    this.addToCartItems(item);
+  }
+
+  decrementItem(item) {
+    this.removeFromCartItem(item);
+  }
+  getItemQty(itemObj) {
+    let qty = 0;
+    if (this.orderList !== null && this.orderList.filter(i => i.item.itemId === itemObj.item.itemId)) {
+      qty = this.orderList.filter(i => i.item.itemId === itemObj.item.itemId).length;
+    }
+    return qty;
+  }
+  removeFromCartItem(itemObj) {
+    const item = itemObj.item;
+
+    for (const i in this.orderList) {
+      if (this.orderList[i].item.itemId === item.itemId) {
+        this.orderList.splice(i, 1);
+        if (this.orderList.length > 0 && this.orderList !== null) {
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        } else {
+          this.lStorageService.removeitemfromLocalStorage('order_sp');
+          this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+          this.lStorageService.removeitemfromLocalStorage('order_spId');
+          this.lStorageService.removeitemfromLocalStorage('order');
+        }
+
+        break;
+      }
+    }
+    this.getTotalItemAndPrice();
+  }
+  addToCartItems(itemObj) {
+    //  const item = itemObj.item;
+    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
+    if (spId === null) {
+      this.orderList = [];
+      this.lStorageService.setitemonLocalStorage('order_spId', this.provider_bussiness_id);
+      this.orderList.push(itemObj);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.getTotalItemAndPrice();
+      this.getItemQty(itemObj);
+    } else {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (spId !== this.provider_bussiness_id) {
+          if (this.getConfirmation()) {
+            this.lStorageService.removeitemfromLocalStorage('order');
+          }
+        } else {
+          this.orderList.push(itemObj);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+          this.getTotalItemAndPrice();
+          this.getItemQty(itemObj);
+        }
+      } else {
+        this.orderList.push(itemObj);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        this.getTotalItemAndPrice();
+        this.getItemQty(itemObj);
+      }
+    }
+
+
+  }
   increment() {
     this.addToCart();
   }
@@ -288,7 +572,54 @@ export class CatalogItemComponent implements OnInit {
     this.itemQuantity = this.orderService.getItemQty(this.cartItems, this.itemId);
     // this.updateCartCount();
   }
+  checkoutItems() {
+    this.userType = '';
+    // if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner')) {
+    //   this.userType = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
+    // }
+  //  this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      // let blogoUrl;
+      // if (this.businessjson.logo) {
+      //   blogoUrl = this.businessjson.logo.url;
+      // } else {
+      //   blogoUrl = '';
+      // }
+             // 'blocation': this.locationjson[0].place,
 
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+       'blocation':this.businessProfile.baseLocation.place,
+        'logo': this.businessProfile.logo.url
+      };
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      let queryParam = {
+        account_id: this.accountId,
+        unique_id: this.s3UniqueId,
+      };
+      queryParam['customId'] = this.accountEncId;
+     
+      // let queryParam = {
+      //   account_id: this.accountId,
+      //   'logo': this.businessProfile.logo.url,
+      //   unique_id: this.s3UniqueId,
+      //   isFrom: this.from ? this.from : ''
+      // }
+      // if (this.businessCustomId) {
+      //   queryParam['customId'] = this.businessCustomId;
+      // }
+    //  queryParam['customId'] = this.accountEncId;
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParam,
+      };
+      this.router.navigate(['order/shoppingcart'], navigationExtras);
+    }
+    else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
+    }
+  }
 
   checkout() {
     this.userType = '';
@@ -297,7 +628,20 @@ export class CatalogItemComponent implements OnInit {
     }
 
     if (this.userType === 'consumer') {
+      if(!this.itemId){
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+       'blocation':this.businessProfile.baseLocation.place,
+        'logo': this.businessProfile.logo.url
+      };
+     
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      }
+      else{
       this.lStorageService.setitemonLocalStorage('order', this.cartItems);
+      }
+
       let queryParams = {
         account_id: this.accountId,
         'logo': this.bLogo,
@@ -324,7 +668,6 @@ export class CatalogItemComponent implements OnInit {
       disableClose: true,
       data: {
         type: origin,
-        mode: 'dialog',
         is_provider: false,
         test_account: is_test_account,
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
@@ -333,10 +676,14 @@ export class CatalogItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
         const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctions.sendMessage(pdata);
-        this.sharedFunctions.sendMessage({ ttype: 'main_loading', action: false });
+        this.sharedFunctionobj.sendMessage(pdata);
+        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
         if (passParam['callback'] === 'order') {
-          this.checkout();
+          if (this.orderType === 'SHOPPINGLIST') {
+            this.shoppinglistupload();
+          } else {
+            this.checkout();
+          }
         }
         else if (result === 'showsignup') {
           this.doSignup(passParam);
@@ -357,12 +704,124 @@ export class CatalogItemComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
         const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctions.sendMessage(pdata);
-        this.sharedFunctions.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'order') {
-          this.checkout();
-        }
+        this.sharedFunctionobj.sendMessage(pdata);
+        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+       
+          if (passParam['callback'] === 'order') {
+            if (this.orderType === 'SHOPPINGLIST') {
+              this.shoppinglistupload();
+            } else {
+              this.checkout();
+            }
+          }
+        
       }
     });
+  }
+  showDesc() {
+    if (this.showmoreDesc) {
+      this.showmoreDesc = false;
+    } else {
+      this.showmoreDesc = true;
+    }
+  }
+  showSpec() {
+    if (this.showmoreSpec) {
+      this.showmoreSpec = false;
+    } else {
+      this.showmoreSpec = true;
+    }
+  }
+  openImageModalRow(image: Image) {
+    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
+    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  openCatalogImageModalRow(image: Image) {
+
+    const index: number = this.getCurrentIndexCustomLayout(image, this.catalogimage_list_popup);
+    this.customPlainGallerycatalogRowConfig = Object.assign({}, this.customPlainGallerycatalogRowConfig, { layout: new AdvancedLayout(index, true) });
+  }
+  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
+    return image ? images.indexOf(image) : -1;
+  }
+  shoppinglistupload() {
+    const chosenDateTime = {
+      delivery_type: this.choose_type,
+      catlog_id: this.activeCatalog.id,
+      nextAvailableTime: this.nextAvailableTime,
+      order_date: this.sel_checkindate,
+      advance_amount: this.advance_amount,
+      account_id: this.provider_bussiness_id
+
+    };
+    console.log("shoppinglistupload :",chosenDateTime)
+    this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    if (this.userType === 'consumer') {
+      // let blogoUrl;
+      // if (this.businessjson.logo) {
+      //   blogoUrl = this.businessjson.logo.url;
+      // } else {
+      //   blogoUrl = '';
+      // }
+      const businessObject = {
+        'bname': this.businessjson.businessName,
+       // 'blocation': this.locationjson[0].place,
+       'logo': this.businessProfile.logo.url
+      };
+      this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+
+          providerId: this.provider_bussiness_id,
+          unique_id: this.s3UniqueId,
+        }
+
+      };
+      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
+    } else if (this.userType === '') {
+      const passParam = { callback: 'order' };
+      this.doLogin('consumer', passParam);
+    }
+  }
+
+
+
+  handlesearchClick() {
+  }
+  onButtonBeforeHook() {
+  }
+  onButtonAfterHook() { }
+
+  showOrderFooter() {
+    let showFooter = false;
+    this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
+    if (this.spId_local_id !== null) {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (this.spId_local_id !== this.provider_bussiness_id) {
+          showFooter = false;
+        } else {
+          showFooter = true;
+        }
+      }
+
+    }
+    return showFooter;
+  }
+  cardClicked(actionObj) {
+    console.log('entering into business page',actionObj);
+   console.log(actionObj);
+   if (actionObj['type'] === 'item') {
+    if (actionObj['action'] === 'view') {
+      this.itemDetails(actionObj['service']);
+    } else if (actionObj['action'] === 'add') {
+      this.incrementItem(actionObj['service']);
+    } else if (actionObj['action'] === 'remove') {
+      this.decrementItem(actionObj['service']);
+    }
+  } else {
+   // this.providerDetClicked(actionObj['userId']);
+  }
+  
   }
 }
