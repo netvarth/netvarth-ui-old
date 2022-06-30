@@ -281,10 +281,6 @@ export class ApplicantComponent implements OnInit {
           "idTypes": this.applicantForm.controls.idTypes1.value,
           "idValue": this.applicantForm.controls.idValue1.value,
           // "attachments": this.fileKycData
-        },
-        {
-          "idTypes": this.applicantForm.controls.idTypes2.value,
-          "idValue": this.applicantForm.controls.idValue2.value,
         }
       ],
       "permanentAddress": this.applicantForm.controls.permanentAddress.value,
@@ -311,8 +307,12 @@ export class ApplicantComponent implements OnInit {
     if (this.applicant.validationIds && this.applicant.validationIds[1].attachments) {
       applicantInfo.validationIds[1].attachments = this.applicant.validationIds[1].attachments;
     }
-    if (this.applicant.validationIds && this.applicant.validationIds[2].attachments) {
-      applicantInfo.validationIds[2].attachments = this.applicant.validationIds[2].attachments;
+    if (this.applicantForm.controls.idTypes2 && this.applicantForm.controls.idTypes2.value) {
+      this.applicant.validationIds[2]['idTypes'] = this.applicantForm.controls.idTypes2.value;
+      this.applicant.validationIds[2]['idValue'] = this.applicantForm.controls.idValue2.value;
+      if (this.applicant.validationIds && this.applicant.validationIds[2].attachments) {
+        applicantInfo.validationIds[2].attachments = this.applicant.validationIds[2].attachments;
+      }
     }
     // if (this.applicant.panAttachments) {
     //   applicantInfo.panAttachments = this.applicant.panAttachments;

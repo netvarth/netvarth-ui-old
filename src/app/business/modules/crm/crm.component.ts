@@ -5,7 +5,6 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { CrmService } from './crm.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
-import { projectConstants } from '../../../../../src/app/app.component';
 
 
 @Component({
@@ -53,16 +52,16 @@ export class CRMComponent implements OnInit {
     this.api_loading=true
     this.userInfo()
     if((this.providerServices && this.providerServices.reportToCrm )=== 'FromReport'){
-      setTimeout(() => {
+      // setTimeout(() => {
         this.fnChangeBorder('C');
         this.providerServices.reportToCrm=''
-      }, projectConstants.TIMEOUT_DELAY);
+      // }, projectConstants.TIMEOUT_DELAY);
      
     }
     else{
-      setTimeout(() => {
+      // setTimeout(() => {
         this.fnChangeBorder('A')
-      }, projectConstants.TIMEOUT_DELAY);
+      // }, projectConstants.TIMEOUT_DELAY);
     }
     const _this = this;
     _this.providerServices.getBussinessProfile().subscribe(
@@ -400,24 +399,24 @@ export class CRMComponent implements OnInit {
     // console.log('boxId', boxId)
     if (boxId === 'A') {
       this.api_loading=true;
-      setTimeout(() => {
+      // setTimeout(() => {
         this.api_loading=false;
         this.bBorderBottomTYpeA=true;
         this.bLosFieldOpen=true;
         this.bREportsFieldOpen=false;
       this.bBorderBottomTypeC=false;
-      }, projectConstants.TIMEOUT_DELAY);
+      // }, projectConstants.TIMEOUT_DELAY);
       
     }
     else if (boxId === 'C') {
       this.api_loading=true;
-      setTimeout(() => {
+      // setTimeout(() => {
         this.api_loading=false;
         this.bBorderBottomTypeC=true;
         this.bREportsFieldOpen=true;
       this.bLosFieldOpen=false;
       this.bBorderBottomTYpeA=false;
-      }, projectConstants.TIMEOUT_DELAY);
+      // }, projectConstants.TIMEOUT_DELAY);
       
 
     }

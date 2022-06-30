@@ -11,6 +11,7 @@ import { WordProcessor } from "../../../../../shared/services/word-processor.ser
 import { MatDialog } from "@angular/material/dialog";
 import { CrmSelectMemberComponent } from "../../../../../business/shared/crm-select-member/crm-select-member.component";
 import { TeleBookingService } from '../../../../../shared/services/tele-bookings-service';
+import { SharedFunctions } from "../../../../../shared/functions/shared-functions";
 
 
 @Component({
@@ -40,61 +41,61 @@ export class ViewLeadQnrComponent implements OnInit {
   notes: any;
   api_loading_video: boolean;
   api_loading: boolean;
-  api_loading_UpdateKyc:boolean;
-  api_loading_UpdateKycProceed:boolean;
+  api_loading_UpdateKyc: boolean;
+  api_loading_UpdateKycProceed: boolean;
   headerName = 'Add/Update Details';
   telephoneNumber: any;
-  api_loadingNotes:boolean=false;
-  public monthName:any=[
+  api_loadingNotes: boolean = false;
+  public monthName: any = [
     {
-      'count':'01',
-      'monthName':'January'
+      'count': '01',
+      'monthName': 'January'
     },
     {
-      'count':'02',
-      'monthName':'February'
+      'count': '02',
+      'monthName': 'February'
     },
     {
-      'count':'03',
-      'monthName':'March'
+      'count': '03',
+      'monthName': 'March'
     },
     {
-      'count':'04',
-      'monthName':'April'
+      'count': '04',
+      'monthName': 'April'
     },
     {
-      'count':'05',
-      'monthName':'May'
+      'count': '05',
+      'monthName': 'May'
     },
     {
-      'count':'06',
-      'monthName':'June'
+      'count': '06',
+      'monthName': 'June'
     },
     {
-      'count':'07',
-      'monthName':'July'
+      'count': '07',
+      'monthName': 'July'
     },
     {
-      'count':'08',
-      'monthName':'August'
+      'count': '08',
+      'monthName': 'August'
     },
     {
-      'count':'09',
-      'monthName':'September'
+      'count': '09',
+      'monthName': 'September'
     },
     {
-      'count':'10',
-      'monthName':'October'
+      'count': '10',
+      'monthName': 'October'
     },
     {
-      'count':'11',
-      'monthName':'November'
+      'count': '11',
+      'monthName': 'November'
     },
     {
-      'count':'12',
-      'monthName':'December'
+      'count': '12',
+      'monthName': 'December'
     }
-    ]
+  ]
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -106,7 +107,8 @@ export class ViewLeadQnrComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private dialog: MatDialog,
     private router: Router,
-    private teleService:TeleBookingService
+    private teleService: TeleBookingService,
+    private sharedFunctions: SharedFunctions
   ) {
     this.activatedRoute.params.subscribe(
       (params: any) => {
@@ -121,9 +123,9 @@ export class ViewLeadQnrComponent implements OnInit {
     _this.fetchLeadInfo(_this.leadUID).then(
       (leadInfo: any) => {
         _this.leadInfo = leadInfo; // Setting Lead information.
-       _this.getTelephoneNumer(_this.leadInfo.customer.phoneNo);
-       this.api_loading_UpdateKyc=false;
-       console.log('leadInfostatus::::::', _this.leadInfo.status)
+        _this.getTelephoneNumer(_this.leadInfo.customer.phoneNo);
+        this.api_loading_UpdateKyc = false;
+        console.log('leadInfostatus::::::', _this.leadInfo.status)
         if (leadInfo.status.name === 'New' || leadInfo.status.name === 'KYC Updated') {
           if (leadInfo.kycCreated) {
             _this.crmService.getkyc(leadInfo.uid).subscribe(
@@ -131,7 +133,7 @@ export class ViewLeadQnrComponent implements OnInit {
                 console.log("KYC Info:", kycInfo);
                 _this.initApplicantForm(kycInfo);
                 // this.api_loading=false;
-                this.api_loading_UpdateKyc=false;
+                this.api_loading_UpdateKyc = false;
               }
             )
           } else {
@@ -143,16 +145,16 @@ export class ViewLeadQnrComponent implements OnInit {
             _this.applicants = [0];
             _this.applicantsInfo[0] = applicant;
           }
-        } else if (leadInfo.status.name === 'Login'){
+        } else if (leadInfo.status.name === 'Login') {
           _this.headerName = "Login Verification";
           _this.crmService.getkyc(leadInfo.uid).subscribe(
             (kycInfo) => {
               console.log("KYC Info:", kycInfo);
               _this.initApplicantForm(kycInfo);
             }
-            
+
           )
-        } 
+        }
         // else if (leadInfo.status.name === 'Credit Recommendation') {
         //   _this.headerName = 'Loan Sanction';
         //   // _this.headerName = "Login Verification";
@@ -161,31 +163,31 @@ export class ViewLeadQnrComponent implements OnInit {
         //     console.log("KYC Info:", kycInfo);
         //     _this.initApplicantForm(kycInfo);
         //   }
-          
+
         // )
         // }
         else {
           if (leadInfo.status.name === 'Login Verified') {
             this.headerName = 'Credit Recommendation';
           }
-           else if (leadInfo.status.name === 'Credit Recommendation') {
+          else if (leadInfo.status.name === 'Credit Recommendation') {
             this.headerName = 'Loan Sanction';
             _this.headerName = "Login Verification";
-          _this.crmService.getkyc(leadInfo.uid).subscribe(
-            (kycInfo) => {
-              console.log("KYC Info:", kycInfo);
-              _this.initApplicantForm(kycInfo);
-            }
-            
-          )
+            _this.crmService.getkyc(leadInfo.uid).subscribe(
+              (kycInfo) => {
+                console.log("KYC Info:", kycInfo);
+                _this.initApplicantForm(kycInfo);
+              }
+
+            )
           }
           _this.getQuestionaire();
         }
       }
     );
   }
-  getTelephoneNumer(phNo){
-    this.telephoneNumber = this.teleService.getTeleNumber(phNo );
+  getTelephoneNumer(phNo) {
+    this.telephoneNumber = this.teleService.getTeleNumber(phNo);
   }
   /**
    * Init method
@@ -284,13 +286,13 @@ export class ViewLeadQnrComponent implements OnInit {
     })
   }
   updateKyc() {
-    if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified' 
-    || this.leadInfo.status.name === 'Login Verified' || this.leadInfo.status.name === 'Credit Recommendation') {
-      console.log('this.leadInfo.status.name',this.leadInfo.status.name)
-      this.api_loading_UpdateKyc=true
+    if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified'
+      || this.leadInfo.status.name === 'Login Verified' || this.leadInfo.status.name === 'Credit Recommendation') {
+      console.log('this.leadInfo.status.name', this.leadInfo.status.name)
+      this.api_loading_UpdateKyc = true
       this.submitQuestionnaire(this.leadInfo.uid, 'save');
     } else if (this.leadInfo.status.name === 'New' || this.leadInfo.status.name === 'KYC Updated') {
-      this.api_loading_UpdateKyc=true;
+      this.api_loading_UpdateKyc = true;
       console.log("Applicants Update", this.applicantsInfo);
       let applicantsList = [];
       Object.keys(this.applicantsInfo).forEach((key) => {
@@ -298,33 +300,33 @@ export class ViewLeadQnrComponent implements OnInit {
       })
       this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
         console.log('afterupdateKYCDAta', s3urls);
-        this.api_loading_UpdateKyc=false;
+        this.api_loading_UpdateKyc = false;
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             () => {
               this.snackbarService.openSnackBar('KYC updated successfully');
-              this.api_loading_UpdateKyc=false;
+              this.api_loading_UpdateKyc = false;
               this.initLead();
             }
           );
         } else {
           this.snackbarService.openSnackBar('KYC updated successfully');
-          this.api_loading_UpdateKyc=false;
+          this.api_loading_UpdateKyc = false;
           this.initLead();
         }
       },
         (error) => {
           setTimeout(() => {
-            this.api_loading_UpdateKyc=false;
+            this.api_loading_UpdateKyc = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }, projectConstants.TIMEOUT_DELAY);
         })
     }
   }
 
-  checkFileExists(type, applicantInfo) {
-    applicantInfo.validationIds
-  }
+  // checkFileExists(type, applicantInfo) {
+  //   applicantInfo.validationIds
+  // }
 
   getFileInfo(type, list) {
     let fileInfo = list.filter((fileObj) => {
@@ -357,24 +359,32 @@ export class ViewLeadQnrComponent implements OnInit {
           this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
         }
       }
-      if (this.applicantsInfo[applicantIndex].validationIds[2].attachments && this.applicantsInfo[applicantIndex].validationIds[2].attachments.length > 0) {
-      } else {
-        let fileData = this.getFileInfo('kyc3', filesObj);
-        if (fileData && fileData.length > 0 && !fileData[0]['order']) {
-          fileData[0]['order'] = this.filesCount++;
-          this.filesToUpload.push(fileData[0]);
-          this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
+      if (this.applicantsInfo[applicantIndex].validationIds[2]) {
+        if (this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != null || this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != '') {
+          this.applicantsInfo[applicantIndex].validationIds.splice(2, 1);
+        } else {
+          if (this.applicantsInfo[applicantIndex].validationIds[2].attachments && this.applicantsInfo[applicantIndex].validationIds[2].attachments.length > 0) {
+          } else {
+            let fileData = this.getFileInfo('kyc3', filesObj);
+            if (fileData && fileData.length > 0 && !fileData[0]['order']) {
+              fileData[0]['order'] = this.filesCount++;
+              this.filesToUpload.push(fileData[0]);
+              this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
+            }
+          }
         }
       }
-      if (this.applicantsInfo[applicantIndex].panAttachments && this.applicantsInfo[applicantIndex].panAttachments.length > 0) {
-      } else {
-        let fileData = this.getFileInfo('pan', filesObj);
-        if (fileData && fileData.length > 0 && !fileData[0]['order']) {
-          fileData[0]['order'] = this.filesCount++;
-          this.filesToUpload.push(fileData[0]);
-          this.applicantsInfo[applicantIndex].panAttachments = fileData;
-        }
-      }
+
+
+      // if (this.applicantsInfo[applicantIndex].panAttachments && this.applicantsInfo[applicantIndex].panAttachments.length > 0) {
+      // } else {
+      //   let fileData = this.getFileInfo('pan', filesObj);
+      //   if (fileData && fileData.length > 0 && !fileData[0]['order']) {
+      //     fileData[0]['order'] = this.filesCount++;
+      //     this.filesToUpload.push(fileData[0]);
+      //     this.applicantsInfo[applicantIndex].panAttachments = fileData;
+      //   }
+      // }
     }
     if (this.applicantsInfo[applicantIndex].parent) {
       this.applicantsInfo[applicantIndex]['customer'] = this.leadInfo.customer.id;
@@ -418,8 +428,8 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   updateQNRProceedStatus(uuid) {
-    console.log('this.leadInfo.status.name',this.leadInfo.status.name)
-    this.providerServices.updateQNRProceedStatus(this.leadInfo.status.id,uuid)
+    console.log('this.leadInfo.status.name', this.leadInfo.status.name)
+    this.providerServices.updateQNRProceedStatus(this.leadInfo.status.id, uuid)
       .subscribe((data) => {
         this.router.navigate(['provider', 'crm']);
       },
@@ -435,13 +445,13 @@ export class ViewLeadQnrComponent implements OnInit {
     let postData = {
       urls: []
     };
-    console.log("uplod:",_this.questionAnswers.filestoUpload);
-    
+    console.log("uplod:", _this.questionAnswers.filestoUpload);
+
     return new Promise(async function (resolve, reject) {
       if (s3UrlObj.urls && s3UrlObj.urls.length > 0) {
         for (const s3Obj of s3UrlObj.urls) {
           postData['urls'].push({ uid: s3Obj.uid, labelName: s3Obj.labelName });
-          
+
           const file = _this.questionAnswers.filestoUpload[s3Obj.labelName][s3Obj.document];
           await _this.uploadFiles(file, s3Obj.url).then(
             () => {
@@ -453,17 +463,17 @@ export class ViewLeadQnrComponent implements OnInit {
         if (count == s3UrlObj.urls.length) {
           resolve(postData);
         }
-        _this.api_loading_UpdateKycProceed=false;
-        _this.api_loading_UpdateKyc=false;
+        _this.api_loading_UpdateKycProceed = false;
+        _this.api_loading_UpdateKyc = false;
       }
     });
-    
+
   }
 
   uploadFileStatus(uuid, data) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      console.log("Data:",data);
+      console.log("Data:", data);
       if (data.urls.length > 0) {
         _this.uploadAudioVideoQNR(data).then(
           (uploadInput) => {
@@ -474,7 +484,7 @@ export class ViewLeadQnrComponent implements OnInit {
                 _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                 _this.api_loading = false;
                 _this.api_loading_video = false;
-                _this.api_loading_UpdateKycProceed=false;
+                _this.api_loading_UpdateKycProceed = false;
               });
           }
         );
@@ -486,11 +496,11 @@ export class ViewLeadQnrComponent implements OnInit {
 
   complete(uuid, type?) {
     if (type) {
-      this.api_loading_UpdateKyc=false;
+      this.api_loading_UpdateKyc = false;
       this.snackbarService.openSnackBar('saved successfully');
       this.initLead();
     } else {
-      this.api_loading_UpdateKyc=false;
+      this.api_loading_UpdateKyc = false;
       this.updateQNRProceedStatus(uuid);
     }
   }
@@ -499,7 +509,7 @@ export class ViewLeadQnrComponent implements OnInit {
     const dataToSend: FormData = new FormData();
     const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
-    if (this.leadInfo.status.name==='Login Verified'){
+    if (this.leadInfo.status.name === 'Login Verified') {
       _this.providerServices.submitLeadLoginVerifyQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         this.uploadFileStatus(uuid, data).then(
           () => {
@@ -528,28 +538,44 @@ export class ViewLeadQnrComponent implements OnInit {
 
   ProceedStatus() {
     if (this.leadInfo.status.name === 'KYC Updated') {
-      this.api_loading_UpdateKycProceed=true
+      this.api_loading_UpdateKycProceed = true
       this.crmService.ProceedStatusToSales(this.leadInfo.uid).subscribe(
         () => {
-          this.api_loading_UpdateKycProceed=false;
+          this.api_loading_UpdateKycProceed = false;
           this.router.navigate(['provider', 'crm']);
         }
         , (error) => {
-          this.api_loading_UpdateKycProceed=false;
+          this.api_loading_UpdateKycProceed = false;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         })
     } else if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified'
-     || this.leadInfo.status.name === 'Login Verified'  || this.leadInfo.status.name === 'Credit Recommendation'
-     ) {
+      || this.leadInfo.status.name === 'Login Verified' || this.leadInfo.status.name === 'Credit Recommendation'
+    ) {
       // this.api_loading_UpdateKyc=true;
-      this.api_loading_UpdateKycProceed=true;
-      this.submitQuestionnaire(this.leadInfo.uid);
-    } else if (this.leadInfo.status.name === 'Login' ) {
-      this.crmService.proceedToLoginVerified(this.leadInfo.status.id ,this.leadInfo.uid).subscribe((response) => {
-        this.api_loading_UpdateKycProceed=true;
+      this.api_loading_UpdateKycProceed = true;
+      if (this.leadInfo.status.name === 'Credit Recommendation') {
+        this.complete(this.leadInfo.uid);
+      } else {
+        this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+          this.api_loading = false;
+          if (data.length === 0) {
+            this.submitQuestionnaire(this.leadInfo.uid);
+          } else {
+            this.api_loading_UpdateKycProceed = false;
+          }
+          this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
+        }, error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
+        });
+      }
+
+    } else if (this.leadInfo.status.name === 'Login') {
+      this.crmService.proceedToLoginVerified(this.leadInfo.status.id, this.leadInfo.uid).subscribe((response) => {
+        this.api_loading_UpdateKycProceed = true;
         this.router.navigate(['provider', 'crm']);
       }, (error) => {
-        this.api_loading_UpdateKycProceed=false;
+        this.api_loading_UpdateKycProceed = false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
     }
@@ -563,36 +589,36 @@ export class ViewLeadQnrComponent implements OnInit {
     //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     //   });
     // }
-    
-    
-    
+
+
+
     else {
       let applicantsList = [];
       Object.keys(this.applicantsInfo).forEach((key) => {
         applicantsList.push(this.applicantsInfo[key]);
       })
       this.crmService.addkyc(applicantsList).subscribe((response) => {
-        this.api_loading_UpdateKycProceed=true;
+        this.api_loading_UpdateKycProceed = true;
         console.log('afterupdateKYCDAta', response);
         this.uploadAudioVideo(response).then();
         this.crmService.getproceedStatus(applicantsList).subscribe((response) => {
           console.log('afterupdateFollowUpData', response);
-          this.api_loading_UpdateKycProceed=false;
+          this.api_loading_UpdateKycProceed = false;
           this.router.navigate(['provider', 'crm']);
         },
           (error) => {
-            this.api_loading_UpdateKycProceed=false;
+            this.api_loading_UpdateKycProceed = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           })
       },
         (error) => {
-          this.api_loading_UpdateKycProceed=false;
+          this.api_loading_UpdateKycProceed = false;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         })
     }
   }
   getQuestionaire() {
-    this.questionaire ={};
+    this.questionaire = {};
     this.providerServices.getActiveQuestionaire(this.leadInfo.uid).subscribe(
       (questionaire: any) => {
         this.questionaire = questionaire;
