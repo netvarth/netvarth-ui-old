@@ -20,24 +20,16 @@
     gap: 10px;
 }
 .topicName{
-    font-style: normal;
+    font-size: 15px;
+    color: black;
     font-weight: 600;
-    font-size: 18.0896px;
-    color: #404650;;
 }
-/* .allTabInPannel{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-} */
+.topicName2{
+    font-size: 15px;
+    color: #fff;
+}
+
 @media  (max-width:764px){
-    .topicName{
-        font-style: normal;
-        font-weight: 600;
-        font-size: 12.0896px;
-        color: #404650;;
-    }
     .forWeb{
         display: none;
     }
@@ -51,10 +43,9 @@
         flex-basis: auto  !important;
     }
     .allTabInPannel{
-        display: block;
-        /* justify-content: space-between;
-        align-items: center;
-        gap: 10px; */
+        display: flex;
+    flex-flow: wrap;
+    gap: 5px;
     }
     .redirectionList{
         width: 100% !important;
@@ -62,9 +53,9 @@
         gap: 10px;
         align-items: center;
     }
-    .threeTab{
-        /* flex-wrap: wrap !important; */
-    }
+   .button-28{
+    width: 100% !important;
+   }
     
 }
 @media(min-width: 768px){
@@ -82,7 +73,6 @@
     }
     .allTabInPannel{
         display: flex;
-        justify-content: space-between;
         align-items: center;
         gap: 10px;
     }
@@ -170,3 +160,47 @@ img{
 .borderBottom{
     border-bottom: 2px solid #1D3E77;
 }
+  .button-28 {
+    --webkit-appearance: none;
+    --moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: 2px solid #0D2348;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: #3B3B3B;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    outline: none;
+    padding: 12px 15px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    will-change: transform;
+    width: 20%;
+  }
+  
+  .button-28:disabled {
+    pointer-events: none;
+  }
+  
+  .button-28:hover {
+    color: #fff;
+    background-color: #0D2348;
+    box-shadow: rgb(0 0 0 / 25%) 0 8px 15px;
+  }
+  
+  .button-28:active {
+    box-shadow: none;
+    transform: translateY(0);
+  }

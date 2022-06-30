@@ -78,7 +78,6 @@ export class CreateTaskComponent implements OnInit {
   api_loading_CreateActivity:boolean;
   src: any;
   constructor(private locationobj: Location,
-    // private lStorageService: LocalStorageService,
     private router: Router,
     private activated_route: ActivatedRoute,
      private crmService: CrmService,
@@ -88,10 +87,7 @@ export class CreateTaskComponent implements OnInit {
      private datePipe:DatePipe,
      private _Activatedroute:ActivatedRoute,
      private groupService:GroupStorageService
-
-     ) { 
-     }
-
+  ) { }
   ngOnInit(): void {
     this.activated_route.queryParams.subscribe(qparams => {
       console.log('qparams',qparams)
@@ -116,23 +112,11 @@ export class CreateTaskComponent implements OnInit {
     });
     this.api_loading=false;
     console.log('this.taskMasterData',this.taskMasterData)
-    if(this.type ==='SubUpdate'){
-     this.subUpdateActivity()
-    }
-    else if((this.type ==='Update' )&& (this.type !=='SubUpdate') || (this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster')){
-     this.updateActivity()
-    }
-    else if(this.crmService.taskActivityName === "subTaskCreate"){
-      this.subTaskCreateActivity()
-    }
-    else if(this.crmService.taskActivityName==='CreatE'){
+     if(this.crmService.taskActivityName==='CreatE'){
     this.creatEOthersActivity()
     }
     else if(this.crmService.taskActivityName =='Create'){
       this.createActivity()
-    }
-    else if(this.crmService.taskActivityName==='CreteTaskMaster'){
-      this.creteTaskMasterActivity()
     }
     this.getAssignMemberList()
     this.getCategoryListData()
@@ -140,155 +124,6 @@ export class CreateTaskComponent implements OnInit {
     this.getTaskStatusListData()
     this.getTaskPriorityListData()
     this.getLocation()
-  }
-  subUpdateActivity(){
-    this.createTaskForm=this.createTaskFB.group({
-    taskTitle:[null],
-    taskDescription:[null],
-    userTaskCategory:[null],
-    userTaskType:[null],
-    taskLocation:[null],
-    areaName:[null],
-    taskStatus:[null],
-    taskDate:[null],
-    taskDays:[null],
-    taskHrs:[null],
-    taskMin:[null],
-    selectMember:[null],
-    selectTaskManger:[null],
-    userTaskPriority:[null],
-    targetResult:[null],
-    targetPotential:[null],
-  }) 
-    this.selectHeader='SubActivity Update';
-    this.editable=false;
-    this.createBTimeField=false;
-    this.updateBTimefield=true;
-    console.log('this.updateValue',this.updateValue)
-    if(this.updateValue != undefined){
-      this.createTaskForm.patchValue({
-      taskTitle:this.updateValue.title,
-      taskDescription:this.updateValue.description,
-      targetResult:(this.updateValue.targetResult),
-      userTaskCategory:parseInt(this.updateValue.category),
-      userTaskType:parseInt(this.updateValue.typeId),
-      taskStatus:parseInt(this.updateValue.statusId),
-      userTaskPriority:parseInt(this.updateValue.priorityId),
-      taskLocation : this.updateValue.locationName,
-      taskDays:( this.updateValue.estdays),
-      taskHrs:parseInt( this.updateValue.esthours),
-      taskMin:parseInt( this.updateValue.estminutes),
-      taskDate:this.updateValue.dueDate,
-      targetPotential:parseInt(this.updateValue.targetPotential),
-      areaName: this.updateValue.locationArea
-
-    })
-    this.locationName =this.updateValue.locationName;
-    this.updteLocationId= parseInt(this.updateValue.locationId)
-    this.selectMember = (this.updateValue.assigneeName);
-    this.updateMemberId=parseInt(this.updateValue.assigneeId);
-    console.log(' this.updateMemberId', this.updateMemberId)
-    this.selectTaskManger= (this.updateValue.managerName);
-    this.updateManagerId=parseInt( this.updateValue.managerId)
-    this.updateUserType=this.updateValue.userTypeEnum;
-    this.estTime={ "days" :parseInt(this.updateValue.estdays), "hours" :parseInt(this.updateValue.esthours), "minutes" : parseInt(this.updateValue.estminutes)};
-    console.log('this.estTime',this.estTime)
-    this.subActivityTaskUid= this.updateValue.taskUid
-    }
-    else{
-      this.router.navigate(['provider', 'task']);
-    }
-  }
-  updateActivity(){
-    console.log('this.crmService.taskActivityName',this.crmService.taskActivityName)
-    this.createTaskForm=this.createTaskFB.group({
-    taskTitle:[null],
-    taskDescription:[null],
-    userTaskCategory:[null],
-    userTaskType:[null],
-    taskLocation:[null],
-    areaName:[null],
-    taskStatus:[null],
-    taskDate:[null],
-    taskDays:[null],
-    taskHrs:[null],
-    taskMin:[null],
-    selectMember:[null],
-    selectTaskManger:[null],
-    userTaskPriority:[null],
-    targetResult:[null],
-    targetPotential:[null],
-  }) 
-    this.selectHeader='Update Activity';
-    this.editable=false;
-    this.createBTimeField=false;
-    this.updateBTimefield=true;
-    this.updateValue=this.crmService.taskToCraeteViaServiceData;
-    console.log('this.updateValue',this.updateValue)
-    if(this.updateValue != undefined){
-      console.log(' this.updateValue', this.updateValue);
-      this.createTaskForm.patchValue({
-      taskTitle:this.updateValue.title,
-      taskDescription:this.updateValue.description,
-      targetPotential:this.updateValue.targetPotential,
-      targetResult:this.updateValue.targetResult,
-      userTaskCategory:this.updateValue.category.id,
-      userTaskType:this.updateValue.type.id,
-      taskStatus:this.updateValue.status.id,
-      userTaskPriority:this.updateValue.priority.id,
-    })
-    this.locationName =this.updateValue.location.name;
-    this.createTaskForm.controls.areaName.value =this.updateValue.locationArea;
-    this.updteLocationId= this.updateValue.location.id,
-    this.createTaskForm.controls.taskDays.value= this.updateValue.estDuration.days,
-    this.createTaskForm.controls.taskHrs.value= this.updateValue.estDuration.hours,
-    this.createTaskForm.controls.taskMin.value= this.updateValue.estDuration.minutes,
-    this.selectMember = this.updateValue.assignee.name;
-    this.updateMemberId=this.updateValue.assignee.id;
-    this.selectTaskManger= this.updateValue.manager.name;
-    this.updateManagerId= this.updateValue.manager.id
-    this.updateUserType=this.updateValue.userTypeEnum;
-    this.createTaskForm.controls.taskDate.value = this.updateValue.dueDate
-    this.estTime={ "days" :this.updateValue.estDuration.days, "hours" :this.updateValue.estDuration.hours, "minutes" : this.updateValue.estDuration.minutes };
-    console.log('this.estTime',this.estTime)
-    }
-    else{
-      this.router.navigate(['provider', 'task']);
-    }
-  }
-  subTaskCreateActivity(){
-    this.createTaskForm=this.createTaskFB.group({
-      taskTitle:[null,[Validators.required]],
-      taskDescription:[null],
-      userTaskCategory:[null,[Validators.required]],
-      userTaskType:[null,[Validators.required]],
-      taskLocation:[null],
-      areaName:[null],
-      taskStatus:[null],
-      taskDate:[null],
-      taskDays:[null],
-      taskHrs:[null],
-      taskMin:[null],
-      selectMember:[null],
-      selectTaskManger:[null],
-      userTaskPriority:[null],
-      targetResult:[null],
-      targetPotential:[null],
-    }) 
-        this.createBTimeField=true;
-        this.updateBTimefield=false;
-        this.selectHeader='Create Subactivity';
-        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
-        console.log(' this.taskDueDate', this.taskDueDate);
-        this.selectedDate = this.taskDueDate;
-        this.activityTitle='Enter subactivity title'
-        this.activityDescription='Enter subactivity description'
-        this.createTaskForm.controls.taskDays.value= 0,
-      this.createTaskForm.controls.taskHrs.value= 0
-      this.createTaskForm.controls.taskMin.value= 0
-      this.estTime={ "days" :this.createTaskForm.controls.taskDays.value, "hours" :this.createTaskForm.controls.taskHrs.value, "minutes" : this.createTaskForm.controls.taskMin.value };
-      console.log('this.estTime',this.estTime);
-      this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
   }
   creatEOthersActivity(){
     this.createTaskForm=this.createTaskFB.group({
@@ -311,7 +146,7 @@ export class CreateTaskComponent implements OnInit {
     }) 
     this.createBTimeField=true;
     this.updateBTimefield=false;
-    this.selectHeader='Create Activity';
+    this.selectHeader='Create activity';
     this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd') 
     console.log(' this.taskDueDate', this.taskDueDate);
     this.selectedDate = this.taskDueDate;
@@ -348,7 +183,7 @@ export class CreateTaskComponent implements OnInit {
     this.updateBTimefield=false;
     this.activityTitle='Enter activity title';
     this.activityDescription='Enter activity description'
-      this.selectHeader='Create Activity';
+      this.selectHeader='Create activity';
       this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd')
       console.log(' this.taskDueDate', this.taskDueDate);
       console.log("Data : ",this.createTaskForm.controls.taskDate)
@@ -369,43 +204,6 @@ export class CreateTaskComponent implements OnInit {
     this.createTaskForm.controls.taskMin.value=  taskMaster.estDuration.value.minutes,
       this.estTime={ "days" :taskMaster.estDuration.value.days, "hours" :taskMaster.estDuration.value.hours, "minutes" : taskMaster.estDuration.value.minutes };
 
-  }
-  creteTaskMasterActivity(){
-    this.createTaskForm=this.createTaskFB.group({
-      taskTitle:[null],
-      taskDescription:[null],
-      userTaskCategory:[null],
-      userTaskType:[null],
-      taskLocation:[null],
-      areaName:[null],
-      taskStatus:[null],
-      taskDate:[null],
-      taskDays:[null],
-      taskHrs:[null],
-      taskMin:[null],
-      selectMember:[null],
-      selectTaskManger:[null],
-      userTaskPriority:[null],
-      targetResult:[null],
-      targetPotential:[null],
-    }) 
-        this.createBTimeField=true;
-        this.updateBTimefield=false;
-        this.selectHeader='Create Activity';
-        this.activityTitle='Enter activity title';
-        this.activityDescription='Enter activity description'
-        this.taskDueDate=this.datePipe.transform(new Date(),'yyyy-MM-dd')
-        console.log(' this.taskDueDate', this.taskDueDate);
-        this.createTaskForm.controls.taskDate.setValue(this.taskDueDate);
-        this.taskDueTime= "0000" ;
-        console.log(' this.taskDueTime', this.taskDueTime)
-        this.estDurationWithDay=this.taskDueTime;
-        const estDurationDay=this.datePipe.transform(this.estDurationWithDay,'d')
-        const estDurationHour=this.datePipe.transform(this.estDurationWithDay,'h')
-        const estDurationMinurte= this.datePipe.transform(this.estDurationWithDay,'mm')
-        this.estTime={ "days" :estDurationDay, "hours" :estDurationHour, "minutes" : estDurationMinurte };
-        console.log('this.estTime',this.estTime)
-        console.log('new Date()',new Date())
   }
   userInfo(){
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -458,16 +256,13 @@ export class CreateTaskComponent implements OnInit {
 }
   getAssignMemberList(){
     this.crmService.getMemberList().subscribe((memberList:any)=>{
-      // console.log('memberList',memberList)
       this.allMemberList.push(memberList)
-        // this.allMemberList.sort((a:any, b:any) => (a.firstName).localeCompare(b.firstName))
     },(error:any)=>{
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     })
   }
   getCategoryListData(){
     this.crmService.getCategoryList().subscribe((categoryList:any)=>{
-      // console.log('category',categoryList);
       this.categoryListData.push(categoryList)
     },
     (error:any)=>{
@@ -477,7 +272,6 @@ export class CreateTaskComponent implements OnInit {
   }
   getTaskTypeListData(){
     this.crmService.getTaskType().subscribe((taskTypeList:any)=>{
-      // console.log('taskTypeList',taskTypeList);
       this.taskTypeList.push(taskTypeList)
     },
     (error:any)=>{
@@ -490,14 +284,12 @@ export class CreateTaskComponent implements OnInit {
       this.taskStatusList.push(taskStatus);
       if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
         this.createTaskForm.controls.taskStatus.setValue(this.taskStatusList[0][0].id);
-        // this.taskStatusModal=this.taskStatusList[0][0].id;
       }
       else if(this.type ==='SubUpdate'){
         this.createTaskForm.controls.taskStatus.setValue(parseInt(this.updateValue.statusId));
       }
       else {
         this.createTaskForm.controls.taskStatus.setValue(this.updateValue.status.id);
-        // this.taskStatusModal=this.updateValue.status.id
       }
       
     },
@@ -511,14 +303,12 @@ export class CreateTaskComponent implements OnInit {
       this.taskPriorityList.push(taskPriority);
       if(this.crmService.taskActivityName==='Create' || this.crmService.taskActivityName==='subTaskCreate' || this.crmService.taskActivityName==='CreatE' || this.crmService.taskActivityName==='CreteTaskMaster'){
         this.createTaskForm.controls.userTaskPriority.setValue(this.taskPriorityList[0][0].id);
-        // this.taskPriority=this.taskPriorityList[0][0].id;
       }
       else if(this.type ==='SubUpdate'){
         this.createTaskForm.controls.userTaskPriority.setValue(parseInt(this.updateValue.priorityId))
       }
       else {
         this.createTaskForm.controls.userTaskPriority.setValue(this.updateValue.priority.id);
-        // this.taskPriority=this.updateValue.priority.id;
       }
       
       console.log( this.taskPriority)
@@ -528,17 +318,13 @@ export class CreateTaskComponent implements OnInit {
     }
     )
   }
-
-
   goback() {
     this.locationobj.back();
   }
   resetErrors(){
     this.taskError = null;
-
   }
   autoGrowTextZone(e) {
-    // console.log('textarea',e)
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 15)+"px";
   }
@@ -546,7 +332,6 @@ export class CreateTaskComponent implements OnInit {
     console.log('taskTitleValue',taskTitleValue)
     this.taskError=null
     this.boolenTaskError=false
-    // if( !this.taskMasterData){
       if(taskTitleValue != ''){
         this.bErrormsg=false;
         this.errorMsgAny=''
@@ -554,12 +339,8 @@ export class CreateTaskComponent implements OnInit {
         this.bErrormsg=true;
         this.errorMsgAny='Please enter title'
       }
-    // }
-    
-
   }
-  removeEmoji(taskTitleValue,event) { 
-  }
+  
   handleTaskDescription(textareaValue) {
     this.taskError=null
     this.boolenTaskError=false
@@ -634,9 +415,6 @@ export class CreateTaskComponent implements OnInit {
     }
   })
   }
-  hamdleTaskManager(taskManger){
-    // console.log(taskManger)
-  }
   handleTaskCategorySelection(taskCategory){
     console.log('taskCategory',taskCategory)
     console.log('this.taskMasterData',this.taskMasterData)
@@ -706,98 +484,11 @@ export class CreateTaskComponent implements OnInit {
   saveCreateTask(){
     console.log('this.type',this.userType)
     this.api_loading_CreateActivity=true;
-    if(this.type ==='SubUpdate'){
-      console.log('this.subActivityTaskUid',this.subActivityTaskUid)
-      const SubUpdateTaskData:any = {
-        "title":this.createTaskForm.controls.taskTitle.value,
-        "description":this.createTaskForm.controls.taskDescription.value,
-        "userType":this.updateUserType,
-        "category":{"id":this.createTaskForm.controls.userTaskCategory.value},
-        "type":{"id":this.createTaskForm.controls.userTaskType.value},
-  
-        "status":{"id":this.createTaskForm.controls.taskStatus.value},
-        "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
-        "dueDate" : this.datePipe.transform(this.createTaskForm.controls.taskDate.value,'yyyy-MM-dd'),
-        "location" : { "id" : this.updteLocationId},
-        "locationArea" : this.createTaskForm.controls.areaName.value,
-        "assignee":{"id":this.updateMemberId },
-        "manager":{"id":this.updateManagerId},
-        "targetResult" : this.createTaskForm.controls.targetResult.value,
-        "targetPotential" : this.createTaskForm.controls.targetPotential.value,
-        "estDuration" : this.estTime    
-      }
-      console.log('SubUpdateTaskData',SubUpdateTaskData)
-      if((this.updateUserType==='PROVIDER' || this.updateUserType==='CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null)){
-        // this.api_loading = true;
-        console.log("2")
-        this.boolenTaskError=false;
-        console.log('SubUpdateTaskData',SubUpdateTaskData)
-        this.crmService.updateTask(this.subActivityTaskUid, SubUpdateTaskData).subscribe((response)=>{
-          console.log('afterUpdateList',response);
-          setTimeout(() => {
-            this.api_loading_CreateActivity=false;
-            this.createTaskForm.reset();
-            this.router.navigate(['provider', 'crm']);
-          }, projectConstants.TIMEOUT_DELAY);
-        },
-        (error)=>{
-          setTimeout(() => {
-            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
-            // this.router.navigate(['provider', 'task']);
-          }, projectConstants.TIMEOUT_DELAY);
-        })
-      }
-    } else if(this.type ==='Update' && this.type !=='SubUpdate' || (this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster')){
-      console.log("est time update data : ",this.estTime  )
-      const updateTaskData:any = {
-        "title":this.createTaskForm.controls.taskTitle.value,
-        "description":this.createTaskForm.controls.taskDescription.value,
-        "userType":this.updateUserType,
-        "category":{"id":this.createTaskForm.controls.userTaskCategory.value},
-        "type":{"id":this.createTaskForm.controls.userTaskType.value},
-  
-        "status":{"id":this.createTaskForm.controls.taskStatus.value},
-        "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
-        "dueDate" : this.datePipe.transform(this.createTaskForm.controls.taskDate.value,'yyyy-MM-dd'),
-        "location" : { "id" : this.updteLocationId},
-        "locationArea" : this.createTaskForm.controls.areaName.value,
-
-  
-        "assignee":{"id":this.updateMemberId },
-        "manager":{"id":this.updateManagerId},
-        "targetResult" : this.createTaskForm.controls.targetResult.value,
-        "targetPotential" : this.createTaskForm.controls.targetPotential.value,
-        "estDuration" : this.estTime    
-      }
-      console.log('updateTaskData',updateTaskData)
-      if((this.updateUserType==='PROVIDER' || this.updateUserType==='CONSUMER') && (this.createTaskForm.controls.taskTitle.value!=null)){
-        // this.api_loading = true;
-        console.log("2")
-        this.boolenTaskError=false;
-        console.log('updateTaskData',updateTaskData)
-        this.crmService.updateTask(this.updateValue.taskUid, updateTaskData).subscribe((response)=>{
-          console.log('afterUpdateList',response);
-          setTimeout(() => {
-            this.api_loading_CreateActivity=false;
-            this.createTaskForm.reset();
-            this.router.navigate(['provider', 'crm']);
-          }, projectConstants.TIMEOUT_DELAY);
-        },
-        (error)=>{
-          setTimeout(() => {
-            this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
-            // this.router.navigate(['provider', 'task']);
-          }, projectConstants.TIMEOUT_DELAY);
-        })
-      }
-     
-      console.log(' this.updateUserType', this.updateUserType)
-
-    } else if((this.crmService.taskActivityName!='Create' && this.crmService.taskActivityName!='subTaskCreate' && this.crmService.taskActivityName!='CreatE' && this.crmService.taskActivityName !='CreteTaskMaster') || this.type===undefined){
-    console.log("Here");
-    if (!this.userType || this.userType===undefined) {
-      this.userType = 'PROVIDER';
-    }
+     if( this.type===undefined){
+        console.log("Here");
+        if (!this.userType || this.userType===undefined) {
+          this.userType = 'PROVIDER';
+        }
       const createTaskData:any = {
       "originUid" : this.taskUid,
       "title":this.createTaskForm.controls.taskTitle.value,
@@ -805,7 +496,6 @@ export class CreateTaskComponent implements OnInit {
       "userType":this.userType,
       "category":{"id":this.createTaskForm.controls.userTaskCategory.value},
       "type":{"id":this.createTaskForm.controls.userTaskType.value},
-
       "status":{"id":this.createTaskForm.controls.taskStatus.value},
       "priority":{"id":this.createTaskForm.controls.userTaskPriority.value},
       "dueDate" : this.datePipe.transform(this.createTaskForm.controls.taskDate.value,'yyyy-MM-dd'),
@@ -817,14 +507,9 @@ export class CreateTaskComponent implements OnInit {
       "targetPotential" : this.createTaskForm.controls.targetPotential.value,
       "estDuration" : this.estTime   
     }
-    console.log('createTaskData',createTaskData)
-    console.log('this.userType',this.userType)
     if(this.taskMasterData){
       if(this.userType==='PROVIDER' || this.userType==='CONSUMER' || this.userType==='ADMIN'){
-        // console.log('...................kl')
         this.boolenTaskError=false;
-        // this.api_loading = true;
-        // console.log("1")
         this.crmService.addTask(createTaskData).subscribe((response)=>{
           console.log('afterCreateList',response);
           setTimeout(() => {
@@ -852,7 +537,6 @@ export class CreateTaskComponent implements OnInit {
       && (this.createTaskForm.controls.userTaskType.value != null) ){
         console.log('...................kl')
         this.boolenTaskError=false;
-        // this.api_loading = true;
         this.bErrormsg=false;
         this.errorMsgAny='';
         this.bErrormsgType=false;
@@ -878,7 +562,6 @@ export class CreateTaskComponent implements OnInit {
         (error)=>{
           setTimeout(() => {
             this.snackbarService.openSnackBar(error,{'panelClass': 'snackbarerror'});
-            // this.router.navigate(['provider', 'task']);
           }, projectConstants.TIMEOUT_DELAY);
         })
       }
@@ -894,8 +577,6 @@ export class CreateTaskComponent implements OnInit {
           this.bErrormsgType=true;
           this.errorMsgAnyType='Please select type';
         }
-        // console.log('this.errorMsgAny',this.errorMsgAny)
-
       }
     }
     }

@@ -84,9 +84,9 @@
             </div>
         </div>
         <div class="fieldPadding" *ngIf="applicant">
-            <div class="" [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
+            <div class="flexClass" [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event, 'kyc1')">Click & Upload your files here
+                    (change)="filesSelected($event, 'kyc1')">Click & Upload your files here <div class="astericColor">*</div>
                 <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
@@ -158,9 +158,9 @@
         </div>
 
         <div class="fieldPadding" *ngIf="applicant">
-            <div class="" [hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
+            <div class="flexClass"[hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event,'kyc2')">Click & Upload your files here
+                    (change)="filesSelected($event,'kyc2')">Click & Upload your files here <div class="astericColor">*</div>
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
@@ -233,7 +233,7 @@
         <div class="fieldPadding" *ngIf="applicant">
             <div class="" [hidden]="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && applicant.validationIds[2].attachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event,'kyc3')">Click & Upload your files here
+                    (change)="filesSelected($event,'kyc3')">Click & Upload your files here 
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>

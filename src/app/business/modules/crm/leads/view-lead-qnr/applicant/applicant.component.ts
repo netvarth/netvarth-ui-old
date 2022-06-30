@@ -114,7 +114,8 @@ export class ApplicantComponent implements OnInit {
     }
     if (this.applicant.validationIds && this.applicant.validationIds[0]) {
       this.applicantForm.controls.idTypes.setValue(this.applicant.validationIds[0].idTypes);
-    } else {
+    }
+     else {
       this.applicantForm.controls.idTypes.setValue(this.kycList[2].name);
     }
     if (this.applicant.validationIds && this.applicant.validationIds[0]) {
@@ -122,7 +123,8 @@ export class ApplicantComponent implements OnInit {
     }
     if (this.applicant.validationIds && this.applicant.validationIds[1]) {
       this.applicantForm.controls.idTypes1.setValue(this.applicant.validationIds[1].idTypes);
-    } else {
+    } 
+    else {
       this.applicantForm.controls.idTypes1.setValue(this.kycList[1].name);
     }
     if (this.applicant.validationIds && this.applicant.validationIds[1]) {
@@ -131,18 +133,13 @@ export class ApplicantComponent implements OnInit {
 
     if (this.applicant.validationIds && this.applicant.validationIds[2]) {
       this.applicantForm.controls.idTypes2.setValue(this.applicant.validationIds[2].idTypes);
-    } else {
-      this.applicantForm.controls.idTypes2.setValue(this.kycList[2].name);
     }
+    // else {
+    //   this.applicantForm.controls.idTypes2.setValue(this.kycList[2].name);
+    // }
     if (this.applicant.validationIds && this.applicant.validationIds[2]) {
       this.applicantForm.controls.idValue2.setValue(this.applicant.validationIds[2].idValue);
     }
-
-
-
-
-
-
     // if (this.applicant.panNumber) {
     //   this.applicantForm.controls.panNumber.setValue(this.applicant.panNumber);
     // }
@@ -201,11 +198,6 @@ export class ApplicantComponent implements OnInit {
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 15) + "px";
   }
-  handleidValue(textareaValue) {
-    // this.leadError = null
-    // this.boolenLeadError = false
-  }
-
   kycStatus() {
     this.crmService.getLeadStatus().subscribe((response: any) => {
       console.log(response);
@@ -264,6 +256,9 @@ export class ApplicantComponent implements OnInit {
     this.removeApplicant.emit(applicantId);
   }
   getApplicantInfo() {
+    // if(this.applicantForm.controls.idTypes.value != null &&  ){
+
+    // }
     let applicantInfo: any = {
       "originFrom": "Lead",
       "originUid": this.parentId,
