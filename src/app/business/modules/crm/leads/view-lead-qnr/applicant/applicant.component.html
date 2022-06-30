@@ -84,9 +84,9 @@
             </div>
         </div>
         <div class="fieldPadding" *ngIf="applicant">
-            <div class="flexClass" [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
+            <div class="" [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event, 'kyc1')">Click & Upload your files here <div class="astericColor">*</div>
+                    (change)="filesSelected($event, 'kyc1')">Click & Upload your files here 
                 <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
@@ -158,9 +158,9 @@
         </div>
 
         <div class="fieldPadding" *ngIf="applicant">
-            <div class="flexClass"[hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
+            <div class=""[hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event,'kyc2')">Click & Upload your files here <div class="astericColor">*</div>
+                    (change)="filesSelected($event,'kyc2')">Click & Upload your files here 
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
@@ -207,7 +207,7 @@
                     <!-- <div class="astericColor">*</div> -->
                 </div>
                 <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #idTypes2 formControlName="idTypes2">
+                    <mat-select class="form-control widthWebKit" placeholder="Select applicant KYC" #idTypes2 formControlName="idTypes2">
                         <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
                             <div>{{kyc.displayName}}</div>
                         </mat-option>

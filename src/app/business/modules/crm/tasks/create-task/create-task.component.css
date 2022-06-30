@@ -168,13 +168,17 @@ textarea {
     font-size: 14px !important;
     font-style: italic;
     color: #555;
-    /* color: black; */
-    /* font-weight: bold; */
   }
   input::placeholder {
     font-size: 14px !important;
     font-style: italic;
     color: #555;
-    /* color: black; */
-    /* font-weight: bold; */
+  }
+  ::ng-deep .mat-select-placeholder{
+    font-size: 14px !important;
+    font-style: italic;
+    color: #555;
+  }
+  ::ng-deep .mat-datepicker-toggle{
+    position: relative 
   }

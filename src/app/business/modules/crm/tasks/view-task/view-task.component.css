@@ -770,3 +770,22 @@ textarea .form-control {
 .cursorDiasable{
   cursor: not-allowed;
   }
+
+  textarea::placeholder {
+    font-size: 14px !important;
+    font-style: italic;
+    color: #555;
+  }
+  input::placeholder {
+    font-size: 14px !important;
+    font-style: italic;
+    color: #555;
+  }
+  ::ng-deep .mat-select-placeholder{
+    font-size: 14px !important;
+    font-style: italic;
+    color: #555;
+  }
+  ::ng-deep .mat-datepicker-toggle{
+    position: relative !important;
+  }
