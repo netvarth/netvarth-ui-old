@@ -1339,6 +1339,9 @@ color: red;
 }
 
 .card-timings-cont {
+    height:50px;
+}
+.card-timings-cont-o {
     height:100px;
 }
 .card-timings-cont h6 {
