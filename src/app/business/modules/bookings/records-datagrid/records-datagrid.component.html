@@ -22,9 +22,11 @@
                         <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
                     </div>
                 </div>
+                
                 <div class="tableBody" id="{{heading}}" [class.collapse]="view=='small' && heading && small_device_display" >
                     <div class="table-responsive"
                         [ngStyle]="{'height': (source == 'customers') ? '365px' : (view=='small') ? '317px' : 'auto' }">
+                        <app-common-innerloading-spinner *ngIf="loading && source == 'bill'"></app-common-innerloading-spinner>
                         <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"
                             *ngIf="source == 'providers' || (source == 'customers' && admin)">
                             <a class="inner-card-heading">

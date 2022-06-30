@@ -79,15 +79,15 @@ export class RecordsDatagridComponent implements OnInit {
     }
   }
   ngOnInit(): void {
-    if (!this.view) {
+    // if (!this.view) {
       if (this.source == 'bill') {
         this.getBills();
       }
-    } else {
-      setTimeout(() => {
-        this.loading = false;
-      }, 500);
-    }
+    // } else {
+    //   setTimeout(() => {
+    //     this.loading = false;
+    //   }, 500);
+    // }
     this.onResize();
   }
   getSingleTime(slot) {
