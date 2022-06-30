@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 // import { projectConstants } from '../../../../../../../src/app/app.component';
 import { Location } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
-import {  Router,ActivatedRoute } from '@angular/router';
+import {  Router,ActivatedRoute, NavigationExtras } from '@angular/router';
 import { CrmService } from '../../crm.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
@@ -17,6 +17,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
       public newTask:any;
       public type:any;
       api_loading_Sel_Template:boolean;
+  src: any;
       constructor(
         private locationobj: Location,
         private router: Router,
@@ -34,6 +35,9 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
           console.log('qparams',qparams)
           if (qparams.type) {
               this.type = qparams.type;
+          }
+          if (qparams.src) {
+              this.src = qparams.src;
           }
         });
         if(this.type==='activityCreateTemplate'){
@@ -63,7 +67,19 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
       if(taskMasterValue !==undefined){
         this.crmService.taskActivityName = 'Create';
         this.crmService.taskMasterToCreateServiceData= taskMasterValue;
-        this.router.navigate(['provider', 'task', 'create-task'])
+        if(this.src == 'updateactivity')
+        {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              src:'updateactivity'
+            }
+          }
+        this.router.navigate(['provider', 'task', 'create-task'],navigationExtras)
+        }
+        else{
+          this.router.navigate(['provider', 'task', 'create-task'])
+        }
+         
       }
       else{
         this.router.navigate(['provider', 'task'])

@@ -713,6 +713,7 @@ export class TasksComponent implements OnInit {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           type: 'activityCreateTemplate',
+          src:'updateactivity'
         }
       }
       this.router.navigate(['provider', 'task', 'tasktemplate'], navigationExtras)

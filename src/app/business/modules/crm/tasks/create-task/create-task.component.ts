@@ -76,6 +76,7 @@ export class CreateTaskComponent implements OnInit {
   public rupee_symbol = '₹';
   public editable:boolean=true;
   api_loading_CreateActivity:boolean;
+  src: any;
   constructor(private locationobj: Location,
     // private lStorageService: LocalStorageService,
     private router: Router,
@@ -99,8 +100,12 @@ export class CreateTaskComponent implements OnInit {
       if (qparams.type) {
           this.type = qparams.type;
       }
+      if(qparams.src)
+      {
+        this.src = qparams.src;
+      }
     });
-    console.log('this.type',this.type)
+    console.log('this.type',this.type,this.src)
     this.userInfo()
       this._Activatedroute.paramMap.subscribe(params => { 
       this.taskUid = params.get('taskid');
@@ -826,7 +831,13 @@ export class CreateTaskComponent implements OnInit {
             this.api_loading_CreateActivity=false;
             this.snackbarService.openSnackBar('Successfully created activity');
             this.createTaskForm.reset();
-          this.router.navigate(['provider', 'crm']);
+            if(this.src == "updateactivity")
+            {
+                this.router.navigate(['provider', 'task']);
+            }
+            else{
+                this.router.navigate(['provider', 'crm']);
+            }
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{
@@ -855,7 +866,13 @@ export class CreateTaskComponent implements OnInit {
             this.api_loading_CreateActivity=false;
             this.snackbarService.openSnackBar('Successfully created activity');
             this.createTaskForm.reset();
-          this.router.navigate(['provider', 'crm']);
+            if(this.src == "updateactivity")
+              {
+                  this.router.navigate(['provider', 'task']);
+              }
+              else{
+                  this.router.navigate(['provider', 'crm']);
+              }
           }, projectConstants.TIMEOUT_DELAY);
         },
         (error)=>{
