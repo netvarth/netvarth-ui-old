@@ -54,8 +54,8 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <button class="button-28" role="button" type="submit">
-                        <div  tabindex="1"(click)="redirectionTaskTemplate()" *ngIf="!showActivity">
+                    <button class="button-28" role="button" type="submit" *ngIf="!showActivity"(click)="redirectionTaskTemplate()">
+                        <div  tabindex="1">
                             <div style="display:flex;align-items:center;gap:5px">
                                 <div >
                                     Schedule Marketing Activity
@@ -63,8 +63,8 @@
                             </div>
                         </div>
                     </button> 
-                    <button class="button-28" role="button" type="submit">
-                        <div (click)="redirectionTaskActivityList()">
+                    <button class="button-28" role="button" type="submit"(click)="redirectionTaskActivityList()">
+                        <div >
                             <div style="display:flex;align-items:center;gap:5px">
                                 <div >
                                     Marketing Activity Updation

@@ -165,7 +165,7 @@ img{
     --moz-appearance: none;
     appearance: none;
     background-color: transparent;
-    border: 2px solid #0D2348;
+    border: 1px solid #0D2348;
     border-radius: 10px;
     box-sizing: border-box;
     color: #3B3B3B;
