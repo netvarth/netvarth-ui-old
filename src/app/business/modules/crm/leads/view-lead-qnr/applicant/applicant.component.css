@@ -163,7 +163,7 @@ textarea {
   .matDatePicker{
     display: flex;
     justify-content: space-between;
-    flex-direction: row-reverse;
+    /* flex-direction: row-reverse; */
   }
   .flexClass{
     display: flex;
@@ -186,3 +186,6 @@ textarea {
     font-style: italic;
     color: #555 !important;
   }
+  ::ng-deep .mat-datepicker-toggle {
+    position: relative;
+}
