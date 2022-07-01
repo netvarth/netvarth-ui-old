@@ -58,7 +58,7 @@ export class TasksComponent implements OnInit {
   public arr: any;
   public statusFilter: any = 1;
   public totalActivity: any = 'Total activity';
-  public headerName: any = 'Activity';
+  public headerName: any = 'Activity updation';
   totalTaskActivityList: any = [];
   pagination: any = {
     startpageval: 1,
@@ -70,7 +70,10 @@ export class TasksComponent implements OnInit {
   locations: any;
   tasks: any[];
   config: any;
-  taskCount: unknown;
+  taskCount: any;
+  newTaskDetailsCount: number=0;
+  completedTaskCount: number=0;
+  selected2: { id: number; name: any; image: any; };
   constructor(
     private locationobj: Location,
     public router: Router,
@@ -118,9 +121,7 @@ export class TasksComponent implements OnInit {
     });
 
     this.handleStatus();
-
   }
-
   pageChanged(event) {
     this.config.currentPage = event;
   }
@@ -161,6 +162,7 @@ export class TasksComponent implements OnInit {
         )
       }
     )
+    _this.getCompletedTask(filter);
   }
   getTaskStatusListData() {
     const _this = this;
@@ -210,6 +212,10 @@ export class TasksComponent implements OnInit {
     })
 
   }
+  compareFn(f1, f2): boolean {
+    return f1 && f2? f1.id === f2.id : f1 === f2;
+  }
+ 
   handleTaskStatus(statusValue: any) {
     console.log('statusValue', statusValue);
     let filter = {}
@@ -223,7 +229,8 @@ export class TasksComponent implements OnInit {
       this.getTotalTaskActivity(filter)
     }
     else if (statusValue === 1) {
-      this.getNewTask(filter)
+      this.getNewTask(filter);
+       this.selected2 = {id: 1, name: 'New', image: './assets/images/crmImages/new.png',};
     }
     else if (statusValue === 2) {
       this.getAssignedTask(filter)
@@ -238,7 +245,8 @@ export class TasksComponent implements OnInit {
       this.getInprogressTask(filter)
     }
     else if (statusValue === 5) {
-      this.getCompletedTask(filter)
+      this.selected2 = {id: 5, name: 'Completed', image: './assets/images/crmImages/completed2.png',};
+      this.getCompletedTask(filter);
     }
     else if (statusValue === 13) {
       this.getPendingTask(filter)
@@ -265,6 +273,7 @@ export class TasksComponent implements OnInit {
     const _this = this;
     return new Promise((resolve, reject) => {
       _this.crmService.getTotalTaskCount(filter).subscribe((data) => {
+        console.log('dataTotalactivity:::',data)
         _this.pagination.totalCnt = data;
         resolve(data);
       },
@@ -341,8 +350,9 @@ export class TasksComponent implements OnInit {
     console.log("filter", filter)
     console.log('filter', filter)
     this.getNewTaskCount(filter).then(
-      (count) => {
+      (count:any) => {
         if (count > 0) {
+          this.newTaskDetailsCount= count
           this.crmService.getNewTask(filter)
             .subscribe(
               data => {
@@ -489,9 +499,10 @@ export class TasksComponent implements OnInit {
   }
   getCompletedTask(filter) {
     this.getCompletedTaskCount(filter).then(
-      (count) => {
+      (count:any) => {
         console.log("taskcount", count)
         if (count > 0) {
+          this.completedTaskCount=count;
           this.crmService.getCompletedTask(filter)
             .subscribe(
               data => {

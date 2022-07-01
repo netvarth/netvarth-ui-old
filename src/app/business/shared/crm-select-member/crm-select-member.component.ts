@@ -1,10 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { CrmService } from "../../modules/crm/crm.service";
-import {
-  MAT_DIALOG_DATA,
-  MatDialogRef,
-  MatDialog
-} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA,MatDialogRef,MatDialog} from "@angular/material/dialog";
 import { projectConstants } from "../../../../../src/app/app.component";
 import { SnackbarService } from "../../../shared/services/snackbar.service";
 import { CrmMarkasDoneComponent } from "../../shared/crm-markas-done/crm-markas-done.component";
@@ -137,21 +133,14 @@ export class CrmSelectMemberComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router,
     private crmService: CrmService,
-    // private fb: FormBuilder,
     private snackbarService: SnackbarService,
-    // private _Activatedroute:ActivatedRoute,
-    // private router: Router,
-    // private createTaskFB: FormBuilder,
     private dialog: MatDialog,
-    // private datePipe:DatePipe,
     private providerServiceObj: ProviderServices,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private fileService: FileService
   ) {
-    console.log("consdataSelectMember", this.data);
-    // this.assignMemberDetails= this.data.assignMembername
-    // console.log('this.assignMemberDetails',this.assignMemberDetails);
+    // console.log("consdataSelectMember", this.data);
   }
 
   ngOnInit(): void {
@@ -160,7 +149,6 @@ export class CrmSelectMemberComponent implements OnInit {
     this.provider_label = this.wordProcessor.getTerminologyTerm("provider");
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
     console.log("User is :", user);
-    // this.assignMemberDetails= (user.id);
     if (
       this.data.requestType === "createtaskSelectMember" ||
       this.data.requestType === "createtaskSelectManager" ||
@@ -168,7 +156,6 @@ export class CrmSelectMemberComponent implements OnInit {
       this.data.requestType === "createleadSelectManager"
     ) {
       this.data.memberList[0].forEach((singleMember: any) => {
-        // console.log('singleMember',singleMember)
         if (singleMember.userType === "PROVIDER") {
           if(singleMember.status==='ACTIVE'){
             this.memberList.push(singleMember);
@@ -178,7 +165,6 @@ export class CrmSelectMemberComponent implements OnInit {
             if (singleMember.id == this.data.updateAssignMemberId) {
               if (this.crmService.taskActivityName === "Update") {
                 this.assignMemberDetails = singleMember;
-                // this.assignMemberDetails = this.data.updateSelectedMember;
               } else {
                 this.assignMemberDetails = this.data.updateSelectedMember;
               }
@@ -261,9 +247,7 @@ export class CrmSelectMemberComponent implements OnInit {
       }
       if (this.data.taskDetails.selectedStatusUID != undefined) {
         this.statusId = this.data.taskDetails.status.id;
-        // this.selectedStatusId=  this.statusId;
         this.currentStatus = this.data.taskDetails.status.name;
-        // this.showHideTickMarkUpdate=true;
       }
       this.getTaskStatusListData();
       console.log("this.statusssssssssss", this.status);
@@ -296,21 +280,16 @@ export class CrmSelectMemberComponent implements OnInit {
     } else if (this.data.requestType === "taskMasterList") {
       this.taskMasterListData = this.data.data;
       console.log("TaskMasterList.............", this.taskMasterListData);
-      // this.selectTemplateLength= this.taskMasterListData.templateName.length;
-      // console.log('selectTemplateLength',this.selectTemplateLength)
     } else if (this.data.requestType === "leadMasterList") {
       this.leadMasterListData = this.data.leadMasterFullList[0];
       console.log("leadMasterList.............", this.leadMasterListData);
     } else if (this.data.requestType === "createTaskActivityList") {
-      // this.getTotalTaskActivity();
-      // this.activityList= this.data[0];
       this.data.data[0].forEach((item: any) => {
         this.activityList.push(item);
       });
     }
 
     if (this.data.requestType === "fileShare") {
-      //console.log("this.data", this.data.file);
     }
     if (this.data.requestType === "customerView") {
       this.customerViewData = this.data.customer;
@@ -330,13 +309,10 @@ export class CrmSelectMemberComponent implements OnInit {
     return Math.round(fileSize);
   }
   getImageType(fileType) {
-    //console.log("fileType",fileType);
     return this.fileService.getImageByType(fileType);
   }
   handleMemberSelect(member, selected: string) {
     this.handleAssignMemberSelectText = "";
-    // console.log(selected)
-    // console.log(member)
     this.handleAssignMemberSelectText = selected;
     this.errorMsg = false;
   }
@@ -348,7 +324,6 @@ export class CrmSelectMemberComponent implements OnInit {
   }
 
   isChecked(memberSelect) {
-    // console.log('memberselect',memberSelect)
   }
   saveAssignMember(res) {
     if (this.assignMemberDetails !== "") {
@@ -377,20 +352,19 @@ export class CrmSelectMemberComponent implements OnInit {
     if (user.profilePicture) {
       const proImage = user.profilePicture;
       return proImage.url;
-    } else {
-      return "../../../assets/images/avatar5.png";
     }
+    //  else {
+    //   return "../../../assets/images/avatar5.png";
+    // }
   }
 
   buttonclicked(res) {
-    // console.log('res',res)
     this.dialogRef.close(res);
   }
   closetab() {
     this.dialogRef.close("");
   }
   autoGrowTextZone(e) {
-    // console.log('textarea',e)
     e.target.style.height = "0px";
     e.target.style.height = e.target.scrollHeight + 15 + "px";
   }
@@ -465,22 +439,16 @@ export class CrmSelectMemberComponent implements OnInit {
     console.log("this.data.taskName.taskUid", this.data.taskName.taskUid);
     console.log("jjj");
     if (this.data.requestType === "taskComplete") {
-      // this.router.navigate(['provider', 'task',]);
       const taskUID = this.data.taskName.taskUid;
       console.log("kkkkkk");
       this.crmService.taskStatusCloseDone(taskUID).subscribe(
         (res: any) => {
-          console.log("res................", res);
-          // setTimeout(() => {
-          //   this.dialogRef.close()
-          // }, projectConstants.TIMEOUT_DELAY);
           const dialogRef = this.dialog.open(CrmMarkasDoneComponent, {
             width: "85%",
             panelClass: ["popup-class", "confirmationmainclass"],
             data: {
               requestType: "taskComplete",
               taskDetails: this.data
-              // taskUid:this.data.taskName.taskUid
             }
           });
           dialogRef.afterClosed().subscribe(res => {
@@ -495,19 +463,6 @@ export class CrmSelectMemberComponent implements OnInit {
           this.dialogRef.close();
         }
       );
-      // const dialogRef= this.dialog.open(CrmMarkasDoneComponent,{
-      //   width: '85%',
-      //   panelClass: ['popup-class', 'confirmationmainclass'],
-      //   data:{
-      //     requestType:'taskComplete',
-      //     taskDetails:  this.data,
-      //     // taskUid:this.data.taskName.taskUid
-      //   }
-      // })
-      // dialogRef.afterClosed().subscribe((res)=>{
-      //   this.dialogRef.close()
-      //   console.log('res',res);
-      // })
     }
   }
   getTaskStatusListData() {
@@ -618,13 +573,9 @@ export class CrmSelectMemberComponent implements OnInit {
   }
   handleTaskMasterSelect(taskMaster, selected: string) {
     console.log("taskMaster", taskMaster);
-    // console.log('this.assignTaskMaster',this.assignTaskMaster)
-    // this.errorMsg=false;
-    // this.assignMemberErrorMsg=''
   }
   handleleadMasterSelect(leadMaster, selected: string) {
     console.log("leadMaster", leadMaster);
-    // console.log('this.assignLeadMaster',this.assignLeadMaster)
     this.errorMsg = false;
     this.assignMemberErrorMsg = "";
   }
@@ -644,7 +595,6 @@ export class CrmSelectMemberComponent implements OnInit {
     if (leadMasterValue !== undefined) {
       this.dialogRef.close(leadMasterValue);
     } else if (this.newTask === "CreatE") {
-      // this.router.navigate(['provider', 'task', 'create-task'])
       this.dialogRef.close("CreatE");
     } else {
       this.errorMsg = true;
@@ -661,7 +611,6 @@ export class CrmSelectMemberComponent implements OnInit {
       this.dialogRef.close(createText);
       this.router.navigate(["provider", "task", "create-task"]);
     }
-    // this.dialogRef.close(createText)
   }
   closeDialog(coseText) {
     this.dialogRef.close(coseText);
@@ -783,12 +732,8 @@ showFileView(file){
   }
   remove(index) {
     console.log("ID :",index)
-    //const index = this.customerList.indexOf();
-   // if (index >= 0) {
       this.customerList.splice(index, 1);
       this.customerArray.splice(index, 1);
-
-   // }
   }
   removeNewCustomer(index){
       this.newCustomerList.splice(index, 1);
@@ -870,10 +815,6 @@ showFileView(file){
           mode = "id";
           this.prefillnewCustomerwithfield = "id";
         }
-        // else{
-        //   mode = "name";
-        //   this.prefillnewCustomerwithfield = "name";
-        // }
       }
 
       switch (mode) {
@@ -910,18 +851,13 @@ showFileView(file){
             if(data.length === 0 || data === undefined){
               this.snackbarService.openSnackBar("No matches found",{'panelClass': 'snackbarerror'})
             }
-            //this.customerArray.push(data[0].id);
-            //this.customerList.push(data[0]);
             if(data.length > 1){
-              // this.newData = this.searchedData;
               data.forEach((newElement)=>{
                 console.log("multiple Data",newElement)
               this.showSelect=false;
               this.showInput = true;
               const customer = this.newData.find(x => x.id === newElement.id);
               if (customer) {
-               // this.newData.push('')
-               // this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
               } else {
                  this.newData.push(newElement)
               
@@ -930,19 +866,12 @@ showFileView(file){
               })
             }
             if(data.length === 1){
-            
-              
-            
-                //this.newData = newElement
                 const customer = this.customerData.find(x => x.id === data[0].id);
                 if (customer) {
                   this.snackbarService.openSnackBar("Searched people already existed!",{'panelClass': 'snackbarerror'})
                 } else {
                   this.searchedData.forEach((newElement)=>{
                     console.log("New ELSE",newElement)
-                    // if(newElement === '' || newElement === null){
-                    //   this.snackbarService.openSnackBar("No matches found!",{'panelClass': 'snackbarerror'})
-                    // }
                     if(newElement && (newElement.firstName !== '' || newElement.firstName !== undefined) || (newElement.lastName !== '' || newElement.lastName !== undefined)){
                       this.showName = true
                       this.showEmail = false;
@@ -969,11 +898,8 @@ showFileView(file){
             if (data.length === 0) {
               this.show_customer = false;
               this.create_customer = true;
-
-              //this.createNew();
             } else {
               if (data.length > 1) {
-                // const customer = data.filter(member => !member.parent);
                 this.customer_data = data[0];
                 this.hideSearch = true;
               } else {
@@ -1012,10 +938,8 @@ showFileView(file){
               if (
                 this.customer_data.firstName &&
                 this.customer_data.firstName !== "null" 
-                //|| this.customer_data.lastName
               ) {
                 this.jaldeeId = this.customer_data.firstNameValue
-                // + '' + this.customer_data.lastName;
               }
             }
           },
@@ -1039,7 +963,6 @@ showFileView(file){
       setTimeout(() => {
         console.log("aftergetCustomer..", customer);
         this.dialogRef.close(customer);
-        // this.router.navigate(['provider', 'task']);
       }, projectConstants.TIMEOUT_DELAY);
     } else {
       this.snackbarService.openSnackBar("Already existed!", {
@@ -1048,10 +971,6 @@ showFileView(file){
     }
   }
   shareFileToConsumerOrProvider() {
-    // if(customer === '' && file === ''){
-    //   this.customerError= null
-    //   this.customerErrorMsg = 'Please add cunsumer or provider info'
-    // }
     if(!this.email && !this.pushnotify){
       this.snackbarService.openSnackBar("Share via options are not selected", {
         panelClass: "snackbarerror"
@@ -1069,12 +988,7 @@ showFileView(file){
 
       this.fileArray.push(newObj);
     });
-    //this.customerArray = [];
     console.log("Custome :", this.fileArray);
-
-    // const newArray = []
-    // newArray.push(this.customerArray)
-    // console.log("new Array",newArray)
     const attachments = [];
 
     attachments.push(this.data.file.id);
@@ -1094,9 +1008,7 @@ showFileView(file){
      
       'medium': {
         'email': this.email,
-        // 'sms': this.sms,
         'pushNotification': this.pushnotify,
-       // 'telegram': this.telegram
       },
       'communicationMessage': this.message
     };
@@ -1118,9 +1030,6 @@ showFileView(file){
     
     this.providerServiceObj.shareProviderFiles(dataToSend).subscribe(
       res => {
-        //   console.log("Ressssssssssssult:", res);
-        //   this.dialogRef.close(res);
-        // });
         console.log("response", res);
         setTimeout(() => {
           this.dialogRef.close(res);
@@ -1181,11 +1090,6 @@ showFileView(file){
   }
 
   transform(seacrchFilterEmployee){
-    console.log('assignMemberDetails',this.seacrchFilterEmployee)
-    
+    console.log('assignMemberDetails',this.seacrchFilterEmployee) 
   }
-
-   
-
-
   }

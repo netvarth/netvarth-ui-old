@@ -368,7 +368,7 @@
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-                <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" (keyup)="resetErrors()" type="text" #permanentAddress placeholder="" class="form-control"
+                <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" (keyup)="resetErrors()" type="text" #permanentAddress placeholder="Enter house name" class="form-control"
                     formControlName="permanentAddress" autocomplete="off" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
                     errorMsg="{{errorMessage}}">
@@ -383,7 +383,7 @@
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="permanentCity" #permanentCity
-  placeholder="" />
+  placeholder="Enter city" />
          
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -417,7 +417,7 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  [maxlength]="6"  class="form-control" formControlName="permanentPinCode" #permanentPinCode placeholder="" />
+                    <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  [maxlength]="6"  class="form-control" formControlName="permanentPinCode" #permanentPinCode placeholder="Enter pin code" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -454,7 +454,7 @@
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"   class="form-control" formControlName="relationName" #relationName
-  placeholder="" />
+  placeholder="Enter relation name" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -496,7 +496,7 @@
                 </div>
                 <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" placeholder="" #nomineeType
-                        formControlName="nomineeType">
+                        formControlName="nomineeType" placeholder="Enter nominee type" >
                         <mat-option [value]="relation.name" *ngFor="let relation of relations">
                             <div>{{relation.displayName}}</div>
                         </mat-option>
@@ -526,7 +526,7 @@
                 </div>
                 <div class="fieldPadding">
                     <input  autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" (keyup)="resetErrors()" type="text" #address placeholder="" class="form-control"
-                        formControlName="address" autocomplete="off" />
+                        formControlName="address" autocomplete="off" placeholder="Enter nominee address"/>
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -540,7 +540,7 @@
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false"  class="form-control" formControlName="city" #city
-  placeholder="" />
+  placeholder="Enter district" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>
@@ -571,7 +571,7 @@
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false" oncut="return false" ondrop="return false" [maxlength]="6"  class="form-control" formControlName="pin" #pin
-  placeholder="" />
+  placeholder="Enter pin code"/>
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
                     </app-field-error-display>

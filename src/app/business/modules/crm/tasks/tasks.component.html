@@ -3,7 +3,7 @@
     <div class="col-md-4 col-lg-4 col-sm-5 col-xs-5">
       <div class="dash-head">
         <div class="arrowLeftIcon"> <i class="fa fa-arrow-left iconClr" aria-hidden="true" (click)="goback()"></i></div>
-        <div>{{headerName}}</div>
+        <div *ngIf="headerName">{{headerName}}</div>
       </div>
     </div>
 
@@ -45,14 +45,31 @@
     <!----mat tab change to mat select start-->
     <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6 statusSelectDiv">
       <div class="fieldPadding">
-        <mat-select class="form-control" placeholder="New" #userTaskStatus [(value)]="statusFilter">
-          <mat-option *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"
-            (click)="handleTaskStatus(userTaskStatus.value)">
+        <mat-select class="form-control" placeholder="New" #userTaskStatus [(value)]="statusFilter" [compareWith]="compareFn" >
+          <mat-select-trigger>
+            <div style="display:flex;gap:5px;align-items:center">
+              <img width="25px" src={{selected2.image}} />
+            <div *ngIf="selected2.name">{{selected2.name}}</div>
+            <div *ngIf="selected2.name==='New'">
+              ({{newTaskDetailsCount}})
+            </div>
+            <div *ngIf="selected2.name==='Completed'">
+              ({{completedTaskCount}})
+            </div>
+            </div>
+          </mat-select-trigger>
+          <mat-option *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"(click)="handleTaskStatus(userTaskStatus.value)">
             <span style="display:flex;gap:10px">
               <div>
                 <img width="25px" src={{stat.image}} />
               </div>
-              <div>{{stat.name }}</div>
+              <div *ngIf="stat.name">{{stat.name }}</div>
+              <div *ngIf="stat.name==='New'">
+                ({{newTaskDetailsCount}})
+              </div>
+              <div *ngIf="stat.name==='Completed'">
+                ({{completedTaskCount}})
+              </div>
             </span>
           </mat-option>
         </mat-select>
@@ -60,35 +77,9 @@
     </div>
     <div class="col-md-4 col-lg-4 col-sm-6 col-xs-6 ">
       <span style="margin-left: 20px;" (click)="createTask('Create')" class=" btn btn-primary pull-right">
-        <span>Create Activity</span>&nbsp; <i class="fa fa-plus" aria-hidden="true"></i>
+        <span>Create Activity</span>
       </span>
     </div>
-    <!----mat tab change to mat select end-->
-    <!-- <div class="webDisplay">
-      <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" (click)="createTask('Create')">
-        <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add confirmBtn">
-          Create Activity <i class="fa fa-plus" aria-hidden="true"></i></button>
-          
-      </a>
-    </div> -->
-    <!-- <div class="mobileDisplay">
-      <a [matTooltipClass]="tooltipcls"
-          class="navbar-item-color bold pointer-cursor mgn-lt-5">
-            <button type="button"   [matMenuTriggerFor]="appMenu" class="btn btn  action-button  btn-primary action-button-add confirmBtn"> 
-              Actions <img height="25px" width="25px" src="/assets/images/crmImages/downarrow.png" /> 
-            </button>
-            <mat-menu #appMenu="matMenu">
-                <button style="gap:5px !important" mat-menu-item  (click)="createTask('Create')" data-toggle="modal" data-target="#exampleModalCenter">
-                  <span>
-                    <img height="25px" width="25px" src="/assets/images/crmImages/craeteActivity.png"/>
-                  </span>
-                 <span style="font-weight: 500;">
-                  Create Activity 
-                 </span>
-                </button>
-            </mat-menu>
-          </a>
-    </div> -->
   </div>
   <div class="clearfix"></div>
   <div class="startMatTab">
@@ -109,8 +100,6 @@
                       <!-- <th></th> -->
                       <th class="head_color">Activity</th>
                       <th class="head_color">Employee</th>
-                      <!-- <th class="head_color">Category</th>
-                        <th class="head_color">Type</th> -->
                       <th class="head_color">Date</th>
                       <th class="head_color">Status</th>
 
@@ -249,58 +238,18 @@
                     <ng-container *ngIf="totalTaskActivityList.length>0">
                       <tr *ngFor="let task of totalTaskActivityList | paginate: config; let i=index"
                         class="pointer-cursor" (click)="viewTask(task.taskUid,task)">
-
-                        <!-- <td>
-                          <circle-progress class="circle__progress" [percent]="task.progress" [animation]="true"
-                            [animationDuration]="300" [startFromZero]="true" [showInnerStroke]="true"
-                            [titleFontSize]="'10'" [titleFontWeight]="'900'" [height]="'100'" [unitsFontSize]="'10'"
-                            [unitsFontWeight]="'700'" [subtitle]="task.status.name" [subtitleFontSize]="'7'"
-                            [lazy]="false"></circle-progress>
-                        </td> -->
-
-                        <td data-title="Task Details" class="td1">{{task.title}}</td>
+                        <td data-title="Task Details" class="td1" *ngIf="task.title">{{task.title}}</td>
                         <td data-title="Task Details" class="td2"><span
                             *ngIf="task.assignee">{{task.assignee.name}}</span></td>
                         <td data-title="Due Date" class="td6" *ngIf="task.dueDate">{{task.dueDate | date:newDateFormat}}
                         </td>
                         <td data-title="Status" class="td3" [ngStyle]="{'color': getColor(task.status.name)}">
                           {{task.status.name}}</td>
-                        <!-- <td data-title="Category" class="td4">{{task.category.name}}</td>
-                          <td data-title="Type" class="td5">{{task.type.name}}</td> -->
-
                         <td data-title="Due Date" class="td6" *ngIf="!task.dueDate">--</td>
-                        <!-- <td  >
-                            <div class="copy">
-                              <span class="">
-                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
-                                  (click)="stopprop($event);">
-                                  <mat-icon>more_vert</mat-icon>
-                                </button>
-                              </span>
-                              <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item (click)="openTaskCompletion(task)" *ngIf="task.status.name !='Completed'">
-                                  <img class="imageStatus" src="/assets/images/crmImages/mark.png" />Mark as Done
-                                </button>
-                                <button mat-menu-item (click)="openEditTask(task,'Update')"  *ngIf="task.status.name !='Completed'">
-                                  <img class="imageStatus" src="/assets/images/crmImages/edit.png" />Edit
-                                </button>
-                                <button mat-menu-item (click)="openDialogStatusChange(task)" >
-                                 <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
-                                </button>
-
-                              </mat-menu>
-                            </div>
-                          </td> -->
                       </tr>
                     </ng-container>
                   </tbody>
                 </table>
-                <!-- <div class="search_paging" *ngIf="pagination.totalCnt>10 ">
-                  <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-                    (pagerclick)="handle_pageclick($event,statusFilter)" [curpage]="pagination.startpageval">
-                  </app-pager>
-                </div> -->
-
                 <div class="search_paging my-2" *ngIf="pagination.totalCnt>10 ">
                   <pagination-template *ngIf="pagination.totalCnt>10" #p="paginationApi" [id]="config.id"
                     (pageChange)="config.currentPage = $event">

@@ -19,9 +19,9 @@
                             <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList |filter:seacrchFilterEmployee"
                                 [value]="assignMember" (change)="handleMemberSelect(assignMember,'Selected')">
                                 <div class="allMember">
-                                    <div>
+                                    <!-- <div>
                                         <img class="img" [src]="getUserImg(assignMember)" />
-                                    </div>
+                                    </div> -->
                                     <div class="members" style="display:flex;align-items: center;gap:5px">
                                         <div *ngIf="assignMember && assignMember.firstName" >{{assignMember.firstName}}</div>
                                         <div *ngIf="assignMember && assignMember.lastName">{{assignMember.lastName}}</div>
@@ -90,9 +90,9 @@
                             <mat-radio-button class="example-radio-button" *ngFor="let assignMember of memberList"
                                 [value]="assignMember" (change)="handleMemberSelect(assignMember,'Selected')">
                                 <div class="allMember">
-                                    <div>
+                                    <!-- <div>
                                         <img class="img" [src]="getUserImg(assignMember)" />
-                                    </div>
+                                    </div> -->
                                     <!-- <div>
                             {{assignMember.profilePicture | json}}
                         </div> -->

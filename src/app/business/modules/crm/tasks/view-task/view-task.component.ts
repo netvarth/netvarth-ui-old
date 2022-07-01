@@ -517,7 +517,6 @@ export class ViewTaskComponent implements OnInit {
 
   }
   actualResultTask(actualRes: any) {
-    // console.log('actualRes',actualRes)
   }
 
   getTaskmaster() {
@@ -726,26 +725,24 @@ export class ViewTaskComponent implements OnInit {
     this.taskError = null;
   }
   autoGrowTextZone(e) {
+    console.log('eeeeee',e)
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 15) + "px";
   }
   getLocation() {
     this.crmService.getProviderLocations().subscribe((res) => {
-      // console.log('location.........',res)
       this.taskDetailsForm.controls.taskLocation.setValue(res[0].place);
       this.updteLocationId = res[0].id;
     })
   }
   getAssignMemberList() {
     this.crmService.getMemberList().subscribe((memberList: any) => {
-      // console.log('memberList',memberList)
       this.allMemberList.push(memberList)
     }, (error: any) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     })
   }
   selectMemberDialog(handleselectMember: any) {
-    // console.log('handleselectMember',handleselectMember)
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: '100%',
       panelClass: ['popup-class', 'confirmationmainclass'],
