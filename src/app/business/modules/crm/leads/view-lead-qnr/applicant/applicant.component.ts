@@ -269,27 +269,15 @@ export class ApplicantComponent implements OnInit {
           "telephoneNumber": this.applicantForm.controls.telephoneNumber.value
         }
       ],
+      "validationIds": [],
       "relationType": this.applicantForm.controls.relationType.value,
       "relationName": this.applicantForm.controls.relationName.value,
-      "validationIds": [
-        {
-          "idTypes": this.applicantForm.controls.idTypes.value,
-          "idValue": this.applicantForm.controls.idValue.value,
-          // "attachments": this.applicantForm.controls.atta
-        },
-        {
-          "idTypes": this.applicantForm.controls.idTypes1.value,
-          "idValue": this.applicantForm.controls.idValue1.value,
-          // "attachments": this.fileKycData
-        }
-      ],
       "permanentAddress": this.applicantForm.controls.permanentAddress.value,
       "permanentCity": this.applicantForm.controls.permanentCity.value,
       "permanentState": this.applicantForm.controls.permanentState.value,
       "permanentPinCode": this.applicantForm.controls.permanentPinCode.value,
       "nomineeType": this.applicantForm.controls.nomineeType.value,
       "nomineeName": this.applicantForm.controls.nomineeName.value,
-
       "address": [
         {
           "addressType": this.applicantForm.controls.addressType.value,
@@ -301,18 +289,75 @@ export class ApplicantComponent implements OnInit {
       ],
       // "panNumber": this.applicantForm.controls.panNumber.value,
     }
-    if (this.applicant.validationIds && this.applicant.validationIds[0].attachments) {
-      applicantInfo.validationIds[0].attachments = this.applicant.validationIds[0].attachments;
-    }
-    if (this.applicant.validationIds && this.applicant.validationIds[1].attachments) {
-      applicantInfo.validationIds[1].attachments = this.applicant.validationIds[1].attachments;
-    }
-    if (this.applicantForm.controls.idTypes2 && this.applicantForm.controls.idTypes2.value) {
-      this.applicant.validationIds[2]['idTypes'] = this.applicantForm.controls.idTypes2.value;
-      this.applicant.validationIds[2]['idValue'] = this.applicantForm.controls.idValue2.value;
-      if (this.applicant.validationIds && this.applicant.validationIds[2].attachments) {
-        applicantInfo.validationIds[2].attachments = this.applicant.validationIds[2].attachments;
+    // if (this.applicant.validationIds && this.applicant.validationIds[0].attachments) {
+    //   applicantInfo.validationIds[0].attachments = this.applicant.validationIds[0].attachments;
+    // }
+    // if (this.applicant.validationIds && this.applicant.validationIds[1].attachments) {
+    //   applicantInfo.validationIds[1].attachments = this.applicant.validationIds[1].attachments;
+    // }
+    // "validationIds": [
+    //   {
+    //     "idTypes": this.applicantForm.controls.idTypes.value,
+    //     "idValue": this.applicantForm.controls.idValue.value,
+    //     // "attachments": this.applicantForm.controls.atta
+    //   },
+    //   {
+    //     "idTypes": this.applicantForm.controls.idTypes1.value,
+    //     "idValue": this.applicantForm.controls.idValue1.value,
+    //     // "attachments": this.fileKycData
+    //   }
+    // ],
+    if (this.applicantForm.controls.idTypes && this.applicantForm.controls.idTypes.value) {
+      let kyc = {
+        'idTypes': this.applicantForm.controls.idTypes.value,
+        'idValue':this.applicantForm.controls.idValue.value,
+        'attachments': []
       }
+
+      // applicantInfo["validationIds"][0]['idTypes'] = this.applicantForm.controls.idTypes.value;
+      // applicantInfo["validationIds"][0]['idValue'] = this.applicantForm.controls.idValue.value;
+      if (this.applicant.validationIds && this.applicant.validationIds[0] && this.applicant.validationIds[0].attachments) {
+        kyc['attachments'] = this.applicant.validationIds[0].attachments;
+      }
+      applicantInfo.validationIds.push(kyc);
+      // this.applicant.validationIds[0]['idTypes'] = this.applicantForm.controls.idTypes.value;
+      // this.applicant.validationIds[0]['idValue'] = this.applicantForm.controls.idValue.value;
+      // if (this.applicant.validationIds && this.applicant.validationIds[0].attachments) {
+      //   applicantInfo.validationIds[0].attachments = this.applicant.validationIds[0].attachments;
+      // }
+    }
+    if (this.applicantForm.controls.idTypes1 && this.applicantForm.controls.idTypes1.value) {
+      let kyc = {
+        'idTypes': this.applicantForm.controls.idTypes1.value,
+        'idValue':this.applicantForm.controls.idValue1.value,
+        'attachments': []
+      }
+      if (this.applicant.validationIds && this.applicant.validationIds[1] && this.applicant.validationIds[1].attachments) {
+        kyc['attachments'] = this.applicant.validationIds[1].attachments;
+      }
+      applicantInfo.validationIds.push(kyc);
+      // applicantInfo["validationIds"][1]['idTypes'] = this.applicantForm.controls.idTypes1.value;
+      // applicantInfo["validationIds"][1]['idValue'] = this.applicantForm.controls.idValue1.value;
+      // if (this.applicant.validationIds && this.applicant.validationIds[1].attachments) {
+      //   applicantInfo.validationIds[1]['attachments'] = this.applicant.validationIds[1].attachments;
+      // }
+    }
+
+    if (this.applicantForm.controls.idTypes2 && this.applicantForm.controls.idTypes2.value) {
+      let kyc = {
+        'idTypes': this.applicantForm.controls.idTypes2.value,
+        'idValue':this.applicantForm.controls.idValue2.value,
+        'attachments': []
+      }
+      if (this.applicant.validationIds && this.applicant.validationIds[2] && this.applicant.validationIds[2].attachments) {
+        kyc['attachments'] = this.applicant.validationIds[2].attachments;
+      }
+      applicantInfo.validationIds.push(kyc);
+      // this.applicant.validationIds[2]['idTypes'] = this.applicantForm.controls.idTypes2.value;
+      // this.applicant.validationIds[2]['idValue'] = this.applicantForm.controls.idValue2.value;
+      // if (this.applicant.validationIds && this.applicant.validationIds[2].attachments) {
+      //   applicantInfo.validationIds[2].attachments = this.applicant.validationIds[2].attachments;
+      // }
     }
     // if (this.applicant.panAttachments) {
     //   applicantInfo.panAttachments = this.applicant.panAttachments;
@@ -343,11 +388,25 @@ export class ApplicantComponent implements OnInit {
 
   }
   deleteTempImage(i, type) {
+    console.log(this.selectedFiles[type].files[i]);
+console.log(this.filesToUpload);
+    let files= this.filesToUpload.filter((fileObj) => {
+      console.log(fileObj.fileName);
+      return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type===type);
+    });
+
+    if (files.length > 0) {
+      console.log(this.filesToUpload.indexOf(files[0]));
+      const index = this.filesToUpload.indexOf(files[0]);
+      this.filesToUpload.splice(index,1);
+    }
+  
     this.selectedFiles[type].files.splice(i, 1);
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
     if (type === 'kyc1') {
       this.applicant.validationIds[0].attachments = [];
+      
     } else if (type === 'kyc2') {
       this.applicant.validationIds[1].attachments = [];
     } 
@@ -355,9 +414,10 @@ export class ApplicantComponent implements OnInit {
       this.applicant.validationIds[2].attachments = [];
     } 
     
-    else if (type === 'pan') {
-      this.applicant.panAttachments = [];
-    }
+    console.log(files);
+    // else if (type === 'pan') {
+    //   this.applicant.panAttachments = [];
+    // }
     this.sendApplicantInfo();
   }
   getImage(url, file) {
