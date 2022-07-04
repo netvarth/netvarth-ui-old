@@ -35,7 +35,8 @@ export class PaytmService {
                 },
                 "merchant": {
                     "mid": pData.merchantId,
-                    "redirect": false
+                    "redirect": false,
+                    "multipleWindowWebview":true
                 },
                 "payMode": {
                     "filter": {
