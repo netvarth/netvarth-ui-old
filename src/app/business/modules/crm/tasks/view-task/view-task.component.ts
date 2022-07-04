@@ -257,7 +257,6 @@ export class ViewTaskComponent implements OnInit {
     })
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    //  console.log("User is :", user);
     this.selectMember = user.firstName + user.lastName;
     this.selectTaskManger = user.firstName + user.lastName;
     this.assigneeId = user.id;
@@ -272,20 +271,17 @@ export class ViewTaskComponent implements OnInit {
         this.activityType = qparams.dataType;
       }
     })
-    // console.log('this.activityType',this.activityType)
+    console.log('this.activityType',this.activityType)
     this._Activatedroute.paramMap.subscribe(params => {
       this.enquiryId = params.get("id");
       this.taskUid = params.get("id");
-      // console.log('this.enquiryId',this.enquiryId)
       if (this.activityType === 'UpdateFollowUP') {
         this.getEnquiryDetailsRefresh()
       }
       else {
         this.getTaskDetailsRefresh()
       }
-
     });
-
     if (this.activityType === 'UpdateFollowUP') {
       this.bTaskFollowUpResult = false;
     }
@@ -467,23 +463,14 @@ export class ViewTaskComponent implements OnInit {
           this.crmService.taskToCraeteViaServiceData = this.taskDetails
           // console.log('this.crmService.taskToCraeteViaServiceData;',this.crmService.taskToCraeteViaServiceData)
         }
-
       });
-      // if(this.taskDetails && this.taskDetails.customer){
-      //   this.firstCustomerName=this.taskDetails.customer.name.charAt(0);
-      //   this.customerName= this.taskDetails.customer.name;
-      //   this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
-      // } 
-
       if (this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.name) {
         this.firstCustomerName = this.taskDetails.customer.name.charAt(0);
         this.customerName = this.taskDetails.customer.name;
-        // this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
       }
       if (this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.phoneNo) {
         this.customerPhNo = this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
       }
-
     }
 
   }

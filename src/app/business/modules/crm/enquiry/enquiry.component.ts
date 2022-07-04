@@ -86,8 +86,8 @@ import { Subject } from 'rxjs';
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.activityLocationIdDialogValue= user.bussLocs[0];
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-       this.headerName='Create Enquiry';
-       this.createEnquiryForm= this.createEnquiryFB.group({
+        this.headerName='Create Inquiry';
+        this.createEnquiryForm= this.createEnquiryFB.group({
         enquiryDetails:[''],
         firstNameValue:[''],
         lastNameValue:[''],
@@ -98,10 +98,10 @@ import { Subject } from 'rxjs';
         sourcingChannel:['']
 
        })
-      this.enquiryCategoryList()
-      this.getTemplateEnuiry()
-      this.sourcingChannelCategory()
-      this.onReSize()
+        this.enquiryCategoryList()
+        this.getTemplateEnuiry()
+        this.sourcingChannelCategory()
+        this.onReSize()
     }
     @HostListener('window:resize', ['$event'])
     onReSize(){
@@ -128,18 +128,32 @@ import { Subject } from 'rxjs';
       goback() {
         this.locationobj.back();
       }
-      enquiryDetailsInput(value:any){
-        // console.log('value',value)
+      enquiryDetailsInput(value:any,event){
+        console.log('value',value);
+        console.log('event',event)
+       
         if(!value){
+          console.log('lllllllllllllll')
            this.customerActivityText='New';
            this.inquiryFormPatchValue()
-          this.enableFormControl()
+            this.enableFormControl()
         }
         else{
-          this.errorMsg=''
+          console.log('jjjjjjjjjjjjjjj')
+          this.errorMsg='';
+        }
+        
+      }
+      validationField(event){
+        if(event){
+          let charCodeEnter= event.keyCode;
+          let charkeyName=event.key
+          if(charCodeEnter===13 && charkeyName==='Enter'){
+            this.searchCustomer()
+          }
         }
       }
-      searchCustomer() {
+      searchCustomer(event?) {
         this.api_loading_SearchCustomer= true;
         console.log('this.customer_data',this.customer_data);
         setTimeout(() => {
@@ -437,9 +451,38 @@ import { Subject } from 'rxjs';
           this.enquiryTemplateId = template[0].id;
         })
       }
-      handleFirstName(nnumberText){
-        // console.log(nnumberText)
-        this.errorMsg=''
+      handleNameField(fieldname,value,event:any){
+        if(event){
+          // console.log('event',event);
+          let charCode = event.keyCode;
+          if(fieldname===('firstName') || fieldname===('lastName')){
+            // console.log('charCode:::',charCode);
+            this.errorMsg='';
+              if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8){
+                // console.log('valid');
+                return true;
+              } 
+              else{
+                // console.log('Invalid');
+                const error='Invalid character at ' + fieldname.charAt(0).toUpperCase() + fieldname.slice(1);;
+                console.log('error',error)
+                this.snackbarService.openSnackBar( error,{'panelClass': 'snackbarerror'});
+                              return false;
+              }
+          }
+          else if(fieldname==='phoneNo'){
+            if((charCode >= 48 && charCode < 58)){
+              return true;
+            }
+            else{
+              const error='Invalid character at ' + fieldname.charAt(0).toUpperCase() + fieldname.slice(1);;
+              console.log('error',error)
+              this.snackbarService.openSnackBar( error,{'panelClass': 'snackbarerror'});
+              return false;
+            }
+          }
+        }
+        
       }
       enableFormControl(){
         this.createEnquiryForm.controls['firstNameValue'].enable()
@@ -482,7 +525,7 @@ import { Subject } from 'rxjs';
             phoneNoValue:'',
             emailValue:'',
           })
-        }
-        
+        } 
       }
+      
   }

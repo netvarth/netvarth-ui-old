@@ -257,9 +257,6 @@ export class ApplicantComponent implements OnInit {
     this.removeApplicant.emit(applicantId);
   }
   getApplicantInfo() {
-    // if(this.applicantForm.controls.idTypes.value != null &&  ){
-
-    // }
     let applicantInfo: any = {
       "originFrom": "Lead",
       "originUid": this.parentId,

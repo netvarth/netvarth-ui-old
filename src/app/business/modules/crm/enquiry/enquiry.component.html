@@ -14,15 +14,15 @@
                     <div class="infoHeader ">{{customer_label | capitalizeFirst}} Info</div>
                 </div>
                 <div class="customerInfo mgn-up-15" >
-                    <input  type="text" formControlName="enquiryDetails" #enquiry
-                        class="form-control" name="search" placeholder={{searchby}} (ngModelChange)="enquiryDetailsInput(enquiry.value)" />
+                    <input  type="text" formControlName="enquiryDetails" #enquiry autocomplete="off"
+                        class="form-control" name="search" placeholder={{searchby}} (ngModelChange)="enquiryDetailsInput(enquiry.value,$event)" (keypress)="validationField($event)" />
                         <div class="webDisplay">
-                            <button type="button" class="btn confirmBtnFind" (click)="
-                            searchCustomer()">Search<i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
+                            <button id="pw" type="button" class="btn confirmBtnFind" (click)="searchCustomer($event)">
+                                Search<i style="color:#fff;margin-left: 5px;" class="fa fa-search"></i> </button>
                         </div>
                           <div class="mobileDisplay">
-                              <button type="button" class="btn confirmBtnFindMObile" (click)="
-                              searchCustomer()"><i style="color:#fff;" class="fa fa-search"></i> </button>
+                              <button type="button" class="btn confirmBtnFindMObile" (click)="searchCustomer($event)">
+                                <i style="color:#fff;" class="fa fa-search"></i> </button>
                             </div>
                 </div>
                 <div class="errorClass">
@@ -43,7 +43,7 @@
                                 <div>First Name</div>
                             </div>
                             <div class="fieldPadding">
-                                <input (click)="handleFirstName('first')" autocomplete="off" formControlName="firstNameValue" type="text" #firstName
+                                <input (keypress)="handleNameField('firstName',firstName.value,$event)"  autocomplete="off" formControlName="firstNameValue" type="text" #firstName
                                     placeholder="{{enterFirstName}}"
                                     class="form-control" autocomplete="off" [value]="firstName" />
                             </div>
@@ -53,7 +53,7 @@
                                 <div>Last Name</div>
                             </div>
                             <div class="fieldPadding">
-                                <input (click)="handleFirstName('second')" autocomplete="off" formControlName="lastNameValue" type="text" #lastName
+                                <input (keypress)="handleNameField('lastName',lastName.value,$event)" autocomplete="off" formControlName="lastNameValue" type="text" #lastName
                                     placeholder="{{enterSecondName}}"
                                     class="form-control" autocomplete="off" [value]="lastName" />
                             </div>
@@ -65,7 +65,7 @@
                                 <div>Phone Number</div>
                             </div>
                             <div class="fieldPadding">
-                                <input (click)="handleFirstName('third')" autocomplete="off" formControlName="phoneNoValue" type="tel" #phoneNo type="tel"
+                                <input (keypress)="handleNameField('phoneNo',phoneNo.value,$event)" autocomplete="off" formControlName="phoneNoValue" #phoneNo type="text"
                                      placeholder="{{enterPhoNeNo}}"
                                     class="form-control" autocomplete="off" minlength="10" maxlength="10" [value]="phoneNo" />
                             </div>
@@ -75,7 +75,7 @@
                                 <div>Email</div>
                             </div>
                             <div class="fieldPadding">
-                                <input (click)="handleFirstName('fourth')" autocomplete="off" formControlName="emailValue" type="email" #email
+                                <input (onblur)="handleNameField('email',email.value,$event)" autocomplete="off" formControlName="emailValue" type="email" #email
                                      placeholder="{{enterEmailId}}"
                                     class="form-control" autocomplete="off" [value]="email" />
                             </div>
@@ -88,7 +88,7 @@
                                     <div>Sourcing Channel</div>
                                 </div>
                                 <div class="fieldPadding">
-                                    <mat-select  (click)="handleFirstName('fifth')" class="form-control" placeholder="{{sourcingChannelPlaceholder}}"
+                                    <mat-select  (ngModelChange)="handleNameField('sourcingChannel',sourcingChannel.value,$event)" class="form-control" placeholder="{{sourcingChannelPlaceholder}}"
                                         #sourcingChannel formControlName="sourcingChannel">
                                         <!-- {{sourcingChhannelCatListNew[0] | json}} -->
                                         <mat-option  *ngFor="let item of sourcingChhannelCatList[0];let index=i" [value]="item.id" >
@@ -106,7 +106,7 @@
                                     <div>Select Product</div>
                                 </div>
                                 <div class="fieldPadding">
-                                    <mat-select  (click)="handleFirstName('sixth')" class="form-control" placeholder="{{selectProduct}}"
+                                    <mat-select  (ngModelChange)="handleNameField('userTaskCategory',userTaskCategory.value,$event)" class="form-control" placeholder="{{selectProduct}}"
                                         #userTaskCategory formControlName="userTaskCategory">
                                         <mat-option  *ngFor="let item of categoryList[0];let index=i" [value]="item.id" >
                                             <div>
@@ -124,7 +124,7 @@
                                 <div>Proposed Amount</div>
                             </div>
                             <div class="fieldPadding">
-                                <input (click)="handleFirstName('seventh')" min="100000" autocomplete="off" formControlName="proposedAmount" type="number" #proposedAmount 
+                                <input (ngModelChange)="handleNameField('proposedAmount',proposedAmount.value,$event)" min="100000" autocomplete="off" formControlName="proposedAmount" type="number" #proposedAmount 
                                      placeholder="{{enterproposedAmount}}"
                                     class="form-control" autocomplete="off"  [value]="proposedAmount" />
                             </div>
