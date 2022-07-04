@@ -31,6 +31,7 @@ import { AccountService } from "../../services/account.service";
 
 const routes: Routes = [
     { path: '', component: BusinessPageComponent},
+    {path:'dashboard',loadChildren:() => import('./homedashboard/homedashboard.module').then(m => m.HomedashboardModule)},
     { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
     { path: 'service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) },
     { path: 'service/:serid/pay/:id', loadChildren: () => import('./service-view/donation-link/donation-link.module').then(m => m.DonationLinkModule) },

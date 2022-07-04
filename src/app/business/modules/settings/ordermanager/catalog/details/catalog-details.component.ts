@@ -280,7 +280,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     catelogItemqrCodegeneraterOnlineID(item) {
         console.log("Item :",item)
          let pid = '';
-         let usrid = '';
+        // let usrid = '';
         if (!this.bprofile.customId) {
             pid = this.bprofile.accEncUid;
         } else {
@@ -299,10 +299,9 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 accencUid: pid,
                 path: this.wndw_path,
                // serviceid: this.service.id,
-                userid: usrid,
+               // userid: usrid,
                 itemId:item.id,
                 catalogId:item.catalogId,
-                // serviceStatus : this.service_data.status
                 requestType:'shareItem'
             }
         });

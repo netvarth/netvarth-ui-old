@@ -381,7 +381,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   redirectto(mod) {
     this.showmobileSubmenu = false;
     const usertype = this.shared_functions.isBusinessOwner('returntyp');
-    console.log(usertype);
+    console.log("usertype :",usertype);
     switch (mod) {
       case 'profile':
         let pqueryParams = {};
@@ -395,7 +395,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const pnavigationExtras: NavigationExtras = {
           queryParams: pqueryParams
         };
-        this.router.navigate([usertype, 'profile'], pnavigationExtras);
+        this.router.navigate([`${this.customId}/dashboard`, 'profile'], pnavigationExtras);
         break;
      case 'wallet':
         this.router.navigate([usertype, 'mywallet']);
@@ -424,7 +424,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const navigationExtras1: NavigationExtras = {
           queryParams: qParams
         };
-        this.router.navigate([usertype, 'inbox'], navigationExtras1);
+       this.router.navigate([usertype, 'inbox'], navigationExtras1);
+      // this.router.navigate([`${this.customId}/dashboard`,'inbox'], navigationExtras1);
+
         break;
       case 'members':
         this.router.navigate([usertype, 'members']);
@@ -441,7 +443,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
           queryParams: queryParams
         };
-        this.router.navigate([usertype], navigationExtras);
+               this.router.navigate([usertype], navigationExtras);
+       // this.router.navigate([`${this.customId}/dashboard`], navigationExtras);
         break;
     }
   }

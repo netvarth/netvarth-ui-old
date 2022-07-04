@@ -3032,14 +3032,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   viewDashboard() {
-    let queryParam = {
-      'customId': this.accountEncId,
-      'accountId': this.provider_bussiness_id
-    }
-    const navigationExtras: NavigationExtras = {
-      queryParams: queryParam
-    };
-    this.routerobj.navigate(['consumer'], navigationExtras);
+    // let queryParam = {
+    //   'customId': this.accountEncId,
+    //   'accountId': this.provider_bussiness_id
+    // }
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: queryParam
+    // };
+    // this.routerobj.navigate(['consumer'], navigationExtras);
+    this.routerobj.navigateByUrl(`${this.accountEncId}/dashboard`)
+
   }
 
   addScript(pixelId) {

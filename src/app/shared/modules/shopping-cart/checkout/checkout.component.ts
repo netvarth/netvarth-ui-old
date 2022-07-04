@@ -1146,6 +1146,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         };
         console.log("Payment Data :", this.from);
         this.router.navigate(['consumer'], navigationExtras);
+      // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
+
       } else {
         let queryParams = {
           'source': 'order'
@@ -1157,7 +1159,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         let navigationExtras: NavigationExtras = {
           queryParams: queryParams
         };
-        this.router.navigate(['consumer'], navigationExtras);
+       this.router.navigate(['consumer'], navigationExtras);
+      // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
+
       }
     }
 }
@@ -1671,7 +1675,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             let navigationExtras: NavigationExtras = {
               queryParams: queryParams
             };
-            this.router.navigate(['consumer'], navigationExtras);
+             this.router.navigate(['consumer'], navigationExtras);
+           // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
             // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
         },

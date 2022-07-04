@@ -640,6 +640,12 @@
       width: 50%;
     }
   }
+  
+  @media(max-width: 450px) {
+    .bus-item-I {
+      width: 100%;
+    }
+  }
 
   .shopping-cart-footer {
     position: fixed;

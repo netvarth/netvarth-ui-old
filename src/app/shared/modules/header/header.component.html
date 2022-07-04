@@ -186,14 +186,14 @@
                 && includedfrom!='confirm' && includedfrom!='donation'">
                     <a (click)="gotoActiveHome()" class="logo pointer-cursor">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini visible-xs" *ngIf="!appLogo">
+                    <span class="logo-mini visible-xs" *ngIf="!appLogo && source !== 'dashboard'">
                         <img src="assets/images/home/logo-icon.png" alt="Jaldee">
                     </span>
                     <span class="logo-custom" *ngIf="appLogo">
                         <img class="img-circle" src="assets/images/home.png" alt="Home">
                     </span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg hidden-xs" *ngIf="!appLogo">
+                    <span class="logo-lg hidden-xs" *ngIf="!appLogo && source !== 'dashboard'">
                         <img src="assets/images/jaldee-logo.png" alt="Jaldee">
                     </span>
                     </a>

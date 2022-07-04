@@ -23,6 +23,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { TimewindowPopupModule } from "../timewindowpopup/timewindowpopup.module";
 
+
 const routes: Routes = [
     {path: '', component: CatalogdetailComponent}
 ]
@@ -50,6 +51,7 @@ const routes: Routes = [
         AddcatalogimageModule,
         CreateItemPopupModule,
         EditCatalogItemPopupModule,
+       
         [RouterModule.forChild(routes)]
     ]
 })

@@ -261,7 +261,7 @@ export class CatalogItemComponent implements OnInit {
 
     this.subscriptions.sink = this.orderService.getConsumerCatalogs(accountId).subscribe(
       (catalogs: any) => {
-        console.log("catalogssss :",catalogs)
+      //  console.log("catalogssss :",catalogs)
         if (catalogs.length > 0) {
           this.activeCatalog = catalogs[0];
           this.orderType = this.activeCatalog.orderType;
@@ -315,9 +315,9 @@ export class CatalogItemComponent implements OnInit {
           this.orderItems = orderItems;
         }
         this.activeCatalog = this.orderService.getCatalogById(catalogs, catalogId);
-        console.log(this.activeCatalog);
+      //  console.log(this.activeCatalog);
         let catalogItem = this.orderService.getCatalogItemById(this.activeCatalog, itemId);
-        console.log("Catalog Item:", catalogItem);
+       // console.log("Catalog Item:", catalogItem);
         const showpric = this.activeCatalog.showPrice;
         this.cartItem = catalogItem.item;
         this.minQuantity = catalogItem.minQuantity;
@@ -376,7 +376,7 @@ export class CatalogItemComponent implements OnInit {
 
   setBusinesssProfile(businessProfile) {
     this.businessProfile = businessProfile;
-    console.log("businessProfile",businessProfile)
+  //  console.log("businessProfile",businessProfile)
     this.accountId = businessProfile.id;
     if (businessProfile.customId) {
       this.businessCustomId = businessProfile.customId;
@@ -409,7 +409,7 @@ export class CatalogItemComponent implements OnInit {
     }
   }
   itemDetails(item) {
-    console.log("Item Details ",item)
+    //console.log("Item Details ",item)
     const businessObject = {
       'bname': this.businessjson.businessName,
       //'blocation': this.locationjson[0].place,
@@ -418,16 +418,20 @@ export class CatalogItemComponent implements OnInit {
     };
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        item: JSON.stringify(item),
-        providerId: this.accountId,
-        showpric: this.activeCatalog.showPrice,
-        unique_id: this.s3UniqueId // changed unique id to s3uniqueid
-      }
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     item: JSON.stringify(item),
+    //     providerId: this.accountId,
+    //     showpric: this.activeCatalog.showPrice,
+    //     unique_id: this.s3UniqueId // changed unique id to s3uniqueid
+    //   }
 
-    };
-    this.router.navigate(['order', 'item-details'], navigationExtras);
+    // };
+    //this.router.navigate(['order', 'item-details'], navigationExtras);
+    // this.router.navigate([this.accountId,'/catalog/',this.catalogId,'/item', this.itemId]); ,{relativeTo: this.activatedRoute}
+    this.router.navigate([`${this.accountEncId}/catalog/${this.catalogId}/item/${item.id}`]);
+
+
   }
   incrementItem(item) {
     this.addToCartItems(item);
@@ -535,7 +539,7 @@ export class CatalogItemComponent implements OnInit {
       this.lStorageService.setitemonLocalStorage('order_spId', this.accountId);
       this.cartItems.push(this.orderItem);
       this.lStorageService.setitemonLocalStorage('order', this.cartItems);
-      console.log("Cart Item:", this.cartItem);
+     // console.log("Cart Item:", this.cartItem);
       //this.lStorageService.setitemonLocalStorage('order_sp', this.businessDetails);
       this.itemQuantity = this.orderService.getItemQty(this.cartItems, this.itemId);
 
@@ -559,7 +563,7 @@ export class CatalogItemComponent implements OnInit {
     }
   }
   removeFromCart() {
-    console.log(this.cartItems);
+   // console.log(this.cartItems);
     // for (const i in this.cartItems) {
     // if (this.cartItems[i].id === this.) {
     if (this.cartItems.length > 0) {
@@ -810,8 +814,7 @@ export class CatalogItemComponent implements OnInit {
     return showFooter;
   }
   cardClicked(actionObj) {
-    console.log('entering into business page',actionObj);
-   console.log(actionObj);
+  //  console.log('entering into business page',actionObj);
    if (actionObj['type'] === 'item') {
     if (actionObj['action'] === 'view') {
       this.itemDetails(actionObj['service']);
