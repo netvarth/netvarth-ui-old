@@ -47,7 +47,7 @@
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-                <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
+                <input maxlength="10" autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
                     oncut="return false" ondrop="return false" class="form-control"
                     formControlName="permanentPhoneNumber" #applicantPhone type="tel" placeholder="Enter number" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
@@ -375,7 +375,7 @@
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
-                        oncut="return false" ondrop="return false" [maxlength]="6" class="form-control"
+                        oncut="return false" ondrop="return false" maxlength="6" class="form-control"
                         formControlName="permanentPinCode" #permanentPinCode placeholder="Enter pin code" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -535,7 +535,7 @@
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
-                        oncut="return false" ondrop="return false" [maxlength]="6" class="form-control"
+                        oncut="return false" ondrop="return false" maxlength="6"class="form-control"
                         formControlName="pin" #pin placeholder="Enter pin code" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -568,7 +568,7 @@
                     <div class="fieldPadding">
                         <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
                             {{crifScore}} </a>
-                        <button mat-flat-button style="margin-left: 25px !important;"
+                        <button [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button style="margin-left: 25px !important;"
                             class="btn btn mb-2 action-button action-button-add confirmBtn"
                             (click)="saveCrifApplicant(applicant)">
                             Check CRIF Verification </button>

@@ -190,3 +190,19 @@
     .cursorDiasable{
       cursor: not-allowed;
       }
+
+      textarea::placeholder {
+        font-size: 12px !important;
+        font-style: italic;
+        color: #555;
+      }
+      input::placeholder {
+       font-size: 12px !important;
+        font-style: italic;
+        color: #555;
+      }
+      ::ng-deep .mat-select-placeholder{
+       font-size: 12px !important;
+        font-style: italic;
+        color: #555;
+      }

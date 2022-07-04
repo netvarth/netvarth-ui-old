@@ -53,13 +53,13 @@ export class LeadsComponent implements OnInit {
    */
   ngOnInit() {
     const _this = this;
-    this.getLocationList().then(() => {
-      console.log("Locations:", this.locations);
-      this.selected_location = this.locations[0];
-      this.getStatus().then(
+    _this.getLocationList().then(() => {
+      console.log("Locations:", _this.locations);
+      _this.selected_location = _this.locations[0];
+      _this.getStatus().then(
         (statuses: any) => {
           _this.statuses = statuses;
-          const filter = this.setFilter();
+          const filter = _this.setFilter();
           _this.getLeadsCount(filter).then(
             (count) => {
               if (count > 0) {
@@ -210,10 +210,10 @@ export class LeadsComponent implements OnInit {
   onChangeLocationSelect(event) {
     const _this = this;
     const value = event;
-    this.selected_location = this.locations[value];
-    console.log(this.selected_location);
-    this.leads = [];
-    const filter = this.setFilter();
+    _this.selected_location = _this.locations[value];
+    console.log(_this.selected_location);
+    _this.leads = [];
+    const filter = _this.setFilter();
     _this.getLeadsCount(filter).then(
       (count) => {
         if (count > 0) {

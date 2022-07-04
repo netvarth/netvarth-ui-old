@@ -49,6 +49,7 @@ export class ApplicantComponent implements OnInit {
   crifHTML: any;
   crifDetails: any;
   api_loading: boolean=false;
+  bCrifBtnDisable:boolean;
   
 
   constructor(
@@ -435,6 +436,7 @@ console.log(this.filesToUpload);
   saveCrifApplicant(kycInfoList) {
     // console.log('kycIbfoList',kycInfoList)
     this.api_loading = true;
+        this.bCrifBtnDisable=true;
       const postData:any={
         "originUid": kycInfoList.originUid,
         "leadKycId": kycInfoList.id,
@@ -442,11 +444,12 @@ console.log(this.filesToUpload);
     this.crmService.processInquiry(postData).subscribe(
       (data:any) => {
         console.log('data::',data.status)
-       
         this.getCrifInquiryVerification(kycInfoList);
       },
       error => {
-      });
+        this.api_loading = false;
+        this.bCrifBtnDisable=false;
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })});
   }
   getCrifInquiryVerification(kycInfoList){
     this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
@@ -457,6 +460,7 @@ console.log(this.filesToUpload);
         this.crifScore = this.crifDetails.crifScoreString;
         this.api_loading=false;
         this.showPdfIcon = true;
+        this.bCrifBtnDisable=true;
       }
     )
   }
@@ -487,5 +491,17 @@ console.log(this.filesToUpload);
         })
       );
     // }
+  }
+  applicantName(event:any,input){
+    console.log(input)
+    console.log(event);
+    // var charCode = event.keyCode;
+
+    //         if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8)
+
+    //             return true;
+    //         else
+    //             return false;
+
   }
 }

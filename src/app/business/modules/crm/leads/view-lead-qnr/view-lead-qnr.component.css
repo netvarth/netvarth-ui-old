@@ -688,3 +688,8 @@ color: #fff;
 height: 2.5rem;
     width: 7rem;
 }
+textarea::placeholder {
+  font-size: 12px !important;
+   font-style: italic;
+   color: #555;
+ }
