@@ -2142,7 +2142,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
           if (accountS3s['jaldeediscount']) {
             this.jdndialogRef = this.dialog.open(JdnComponent, {
               width: '60%',
-              panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
+              panelClass: ['commonpopupmainclass', 'popup-class'],
               disableClose: true,
               data: {
                 jdnList: this.s3Processor.getJson(accountS3s['jaldeediscount'])
