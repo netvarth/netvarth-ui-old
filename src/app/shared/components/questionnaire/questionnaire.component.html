@@ -27,8 +27,8 @@
                                 (click)="!buttonDisable && !disableInput() && showDataGridAddSection(getQuestion(question), true)"></i>
                             <div class="pro-only" *ngIf="showProviderText(getQuestion(question))">For Providers</div>
                             <span class="red" *ngIf="getQuestion(question).mandatory">*</span>
-                            <div class="form-level-settings" *ngIf="getQuestion(question).hint">
-                                {{getQuestion(question).hint}}</div>
+                            <div class="form-level-settings" *ngIf="getQuestion(question).hint" [innerHTML]="{{getQuestion(question).hint}}">
+                                </div>
                         </label>
                         <!-- for file upload -->
                         <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'fileUpload'">
