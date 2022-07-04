@@ -947,6 +947,12 @@ input[type=checkbox]:not(old):checked + label > span:before {
   height:25px !important;
   float: left;
 }
+.transportation_icon {
+  content: url(../../../../../assets/images/home/signup/Transportation.png);
+  width: 25px !important;
+  height: 25px !important;
+  float: left;
+}
 .other_icon {
   content:    url(../../../../../assets/images/home/signup/support.png);
   width: 25px !important;
