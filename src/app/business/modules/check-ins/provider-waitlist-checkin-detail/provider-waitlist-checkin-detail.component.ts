@@ -864,6 +864,35 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
     });
   }
+
+
+  changeStatus(checkin?) {
+    console.log("opend", checkin)
+    let waitlist = [];
+    if (checkin) {
+      waitlist = checkin;
+    }
+    console.log("Action Data ...", checkin)
+    const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        checkinData: waitlist,
+        multiSelection: this.multiSelection,
+        timetype: this.timetype,
+        NoViewDetail: 'true',
+        status: true
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+      // console.log("data....",data);
+      this.getProviderSettings();
+
+
+    });
+  }
+
   showImagesection(index) {
     (this.showImages[index]) ? this.showImages[index] = false : this.showImages[index] = true;
   }

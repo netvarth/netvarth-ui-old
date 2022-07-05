@@ -206,6 +206,10 @@ export class CheckinActionsComponent implements OnInit {
             this.getUserTeams();
             this.getProviderLocation();
         }
+        if(this.data.status)
+        {
+            this.action = 'status';
+        }
     }
     getUser() {
         if (this.userid) {

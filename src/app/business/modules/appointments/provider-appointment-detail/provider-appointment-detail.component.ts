@@ -876,6 +876,31 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       this.getProviderSettings();
     });
   }
+
+
+  changeStatus(checkin?) {
+    let waitlist = [];
+    if (checkin) {
+      waitlist = checkin;
+    }
+    const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+      width: "50%",
+      panelClass: ["popup-class", "commonpopupmainclass", "checkinactionclass"],
+      disableClose: true,
+      data: {
+        checkinData: waitlist,
+        multiSelection: this.apptMultiSelection,
+        timetype: this.timetype,
+        NoViewDetail: "true",
+        status : true
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+      console.log("Actions Appt :", data);
+      this.getProviderSettings();
+    });
+  }
+
   showImagesection(index) {
     this.showImages[index]
       ? (this.showImages[index] = false)

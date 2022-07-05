@@ -69,10 +69,10 @@
               (click)="changeWaitlistStatus('Started')"
               class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-play"
                 aria-hidden="true"></i> Start</a>
-            <a style="cursor: no-drop!important"
+            <a (click)="changeStatus(waitlist_data)"
               *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
-              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-play"
-                aria-hidden="true"></i> Started</a>
+              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-refresh"
+                aria-hidden="true"></i> Change Status to</a>
             <a style="cursor: no-drop!important"
               *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               class="btn btn-info col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-play"
@@ -112,11 +112,11 @@
               </div> -->
               <div class="user-img float-left"
                 *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender === 'male'">
-                <img src="assets/images/avatar5.png" />
+                <img src="assets/images/mr_male.svg" />
               </div>
               <div class="user-img float-left"
                 *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender === 'female'">
-                <img src="assets/images/femalePic.png" />
+                <img src="assets/images/mr_female.svg" />
               </div>
               <div class="user-img float-left"
                 *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender != 'male' && waitlist_data.appmtFor[0].gender != 'female'">
