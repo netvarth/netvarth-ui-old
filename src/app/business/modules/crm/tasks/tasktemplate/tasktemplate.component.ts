@@ -17,7 +17,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
       public newTask:any;
       public type:any;
       api_loading_Sel_Template:boolean;
-  src: any;
+      src: any;
       constructor(
         private locationobj: Location,
         private router: Router,
@@ -54,13 +54,15 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
         this.locationobj.back();
       }
       getTaskmaster(){
-        this.api_loading_Sel_Template=true;
-        this.crmService.getTaskMasterList().subscribe((response:any)=>{
-          console.log('TaskMasterList :',response);
-          this.api_loading_Sel_Template=false;
-          this.taskMasterList.push(response)
-          
+        const _this= this;
+        return new Promise((resolve,reject)=>{
+          _this.api_loading_Sel_Template=true;
+          _this.crmService.getTaskMasterList().subscribe((response:any)=>{
+            _this.api_loading_Sel_Template=false;
+            _this.taskMasterList.push(response)          
+          })
         })
+        
         
       }
       saveTaskMaster(taskMasterValue){
