@@ -946,6 +946,11 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     return currentmode[0].value;
   }
 
+  gotoCustomerDetails()
+  {
+    this.router.navigate(['provider','customers',this.waitlist_data.appmtFor[0].id])
+  }
+
   openbookinghistory() {
     this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
       width: "100%",

@@ -127,7 +127,7 @@
                   class="edit-btn pointer-cursor"><b>Edit Details</b></a>
               </div>
             </div>
-            <span class="ml-0 pl-0" *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
+            <span (click)="gotoCustomerDetails()" class="ml-0 pl-0 pointer-cursor" *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
               &nbsp;<b>{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}} </b>
               <b class="">{{waitlist_data.appmtFor[0].lastName}}</b></span>
             <div class="booking-details-body">

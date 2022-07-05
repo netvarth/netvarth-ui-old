@@ -216,6 +216,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     }
   }
 
+
+  gotoCustomerDetails()
+  {
+    this.router.navigate(['provider','customers',this.waitlist_data.waitlistingFor[0].id])
+  }
+
+  
   getConsumerBills() {
     const filter = { 'providerConsumer-eq': this.waitlist_data.waitlistingFor[0].id };
     this.provider_services.getProviderBills(filter).subscribe(data => {
