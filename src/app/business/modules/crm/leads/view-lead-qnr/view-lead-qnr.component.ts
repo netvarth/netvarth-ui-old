@@ -713,7 +713,7 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
-      this.ngOnInit();
+      this.initLead();
       console.log("response", response);
     });
   }

@@ -22,7 +22,6 @@
 
   <ng-container
     *ngIf="leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified' || leadInfo.status.name==='Login Verified'">
-    <!-- || this.leadInfo.status.name === 'Credit Recommendation' -->
     <div class="row d-lg-flex justify-content-lg-start">
       <div class="card">
         <div style="display: flex;
@@ -164,7 +163,7 @@
       <div class=" mgn-bt-20 mgn-up-10" style="display: flex; justify-content: center; gap: 10px;">
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading_UpdateKyc && goBack()"[ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}">Cancel</button>
         <button [ngClass]="{'cursorDiasable':  api_loading_UpdateKycProceed}" class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)=" !api_loading_UpdateKyc && updateKyc()"
-          *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name !=='Login Verified'" [disabled]="api_loading_UpdateKyc">
+          *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name ==='Login Verified'" [disabled]="api_loading_UpdateKyc">
         <span *ngIf="!api_loading_UpdateKyc">Save</span>
         <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKyc">
         </app-common-innerloading-spinner>
