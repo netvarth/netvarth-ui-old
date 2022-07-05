@@ -472,7 +472,7 @@ export class ViewLeadQnrComponent implements OnInit {
           }
         );
       });
-    } else if ((this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) || this.leadInfo.status.name === 'Credit Recommendation') {
+    } else if ((this.questionaire && this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) || this.leadInfo.status.name === 'Credit Recommendation') {
       _this.providerServices.resubmitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         this.uploadFileStatus(uuid, data).then(
           () => {
