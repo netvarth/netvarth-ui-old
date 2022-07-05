@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationExtras, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ProviderServices } from "../../../../business/services/provider-services.service";
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -11,6 +11,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { AddProviderWaitlistCheckInProviderNoteComponent } from '../../check-ins/add-provider-waitlist-checkin-provider-note/add-provider-waitlist-checkin-provider-note.component';
 
 @Component({
   selector: 'app-notes-section',
@@ -51,6 +52,9 @@ export class NotesSectionComponent implements OnInit {
   small_device_display = false;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   showImages: any = [];
+  notedialogRef: any;
+  uid: any;
+  someSubscription: Subscription;
 
   constructor(private galleryService: GalleryService,
     private shared_services: SharedServices,
@@ -103,9 +107,16 @@ export class NotesSectionComponent implements OnInit {
         this.hasAttachment = qparams.hasAttachment;
       }
     });
+
+    this.someSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.router.navigated = false;
+      }
+    });
   }
   ngOnInit(): void {
     this.onResize();
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     console.log("Notes Waitlist data",this.waitlistdata)
     if (this.waitlist_data) {
       this.hasAttachment = this.waitlist_data.hasAttachment;
@@ -127,7 +138,63 @@ export class NotesSectionComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+
+    if (this.someSubscription) {
+      this.someSubscription.unsubscribe();
+    }
   }
+
+  addProviderNote() {
+    console.log("dialog box opened",this.waitlistdata)
+    if(this.waitlistdata.appmtFor)
+    {
+      this.uid = this.waitlistdata.uid
+      this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        checkin_id: this.uid,
+        source: "appt"
+      }
+    });
+
+    this.notedialogRef.afterClosed().subscribe(result => {
+      console.log("result ..", result)
+      if (result === 'reloadlist') {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            timetype: 3
+          }
+        };
+        this.router.navigate(['provider','appointments',this.uid],navigationExtras)
+      }
+    });
+    }
+    else if(this.waitlistdata.waitlistingFor){
+       this.uid = this.waitlistdata.ynwUuid
+        this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          checkin_id: this.uid
+        }
+      });
+
+      this.notedialogRef.afterClosed().subscribe(result => {
+        console.log("result ..", result)
+        if (result === 'reloadlist') {
+          this.ngOnInit();
+          console.log("dialog box closed")
+
+        }
+      });
+    }
+    
+  }
+
+  
   sendimages() {
     this.dialog.open(GalleryImportComponent, {
       width: '50%',

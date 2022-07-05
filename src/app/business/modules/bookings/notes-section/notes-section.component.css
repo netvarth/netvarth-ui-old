@@ -2,6 +2,11 @@
 {
     color: #1e4079!important;
 }
+.btn-primary
+{
+    background-color: #1e4079!important;
+    border-radius: 10px!important;
+}
 .data-card {
     box-shadow: none !important;
     border-radius: 0 !important;
