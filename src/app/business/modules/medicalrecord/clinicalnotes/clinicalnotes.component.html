@@ -61,7 +61,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div [id]="'collapse'+entry.displayName.replace(' ', '')" class="collapse mgn-up-10 pad-top-10 brd-tp"
-                  data-parent="#accordion">
+                  data-parent="#accordion" [class.show]="entry.value" >
                   <p *ngIf="entry.value">{{entry.value}}</p>
                   <p *ngIf="!entry.value">No {{entry.displayName}} Added</p>
                 </div>
