@@ -361,7 +361,14 @@ export class ViewLeadQnrComponent implements OnInit {
       this.applicantsInfo[applicantIndex]['permanentPhone'] = this.leadInfo.customer.phoneNo;
     }
     console.log(applicantIndex);
-    console.log(this.applicantsInfo);
+    console.log('applicantsInfo:::::',this.applicantsInfo);
+    if(applicant){
+      console.log('applicant.files',applicant.files.length)
+      if(applicant.files && applicant.files.length > 0){
+        this.updateKyc()
+      }
+      
+    }
   }
 
   /**
@@ -452,7 +459,7 @@ export class ViewLeadQnrComponent implements OnInit {
   complete(uuid, type?) {
     if (type) {
       this.api_loading_UpdateKyc = false;
-      this.snackbarService.openSnackBar('saved successfully');
+      // this.snackbarService.openSnackBar('saved successfully');
       this.initLead();
     } else {
       this.api_loading_UpdateKyc = false;
@@ -676,6 +683,13 @@ export class ViewLeadQnrComponent implements OnInit {
   getQuestionAnswers(event) {
     console.log('event', event)
     this.questionAnswers = event;
+    console.log('filestoUpload',event.answers.answerLine)
+    if(event && event.files && event.files.length>0){
+       this.updateKyc();
+    }
+    else if(event && event.audioVideo && event.audioVideo.length>0){
+      this.updateKyc();
+    }
   }
   autoGrowTextZone(e) {
     e.target.style.height = "0px";
