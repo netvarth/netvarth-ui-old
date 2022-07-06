@@ -108,91 +108,92 @@ export class ApplicantComponent implements OnInit {
     if (this.customerName) {
       this.applicantForm.controls.customerName.setValue(this.customerName);
     } else {
-      this.applicantForm.controls.customerName.setValue(this.applicant.customerName);
+      if(this.applicant && this.applicant.customerName){
+        this.applicantForm.controls.customerName.setValue(this.applicant.customerName);
+      }
     }
-    if (this.applicant.permanentPhone) {
+    if (this.applicant && this.applicant.permanentPhone) {
       this.applicantForm.controls.permanentPhoneNumber.setValue(this.applicant.permanentPhone);
     }
-    if (this.applicant.validationIds && this.applicant.validationIds[0]) {
+    if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[0]) {
       this.applicantForm.controls.idTypes.setValue(this.applicant.validationIds[0].idTypes);
     }
      else {
       this.applicantForm.controls.idTypes.setValue(this.kycList[2].name);
     }
-    if (this.applicant.validationIds && this.applicant.validationIds[0]) {
+    if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[0]) {
       this.applicantForm.controls.idValue.setValue(this.applicant.validationIds[0].idValue);
     }
-    if (this.applicant.validationIds && this.applicant.validationIds[1]) {
+    if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[1]) {
       this.applicantForm.controls.idTypes1.setValue(this.applicant.validationIds[1].idTypes);
     } 
     else {
       this.applicantForm.controls.idTypes1.setValue(this.kycList[1].name);
     }
-    if (this.applicant.validationIds && this.applicant.validationIds[1]) {
+    if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[1]) {
       this.applicantForm.controls.idValue1.setValue(this.applicant.validationIds[1].idValue);
     }
-
-    if (this.applicant.validationIds && this.applicant.validationIds[2]) {
+      console.log('this.applicant.validationIds::::',this.applicant.validationIds)
+    if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[2]) {
       this.applicantForm.controls.idTypes2.setValue(this.applicant.validationIds[2].idTypes);
     }
     // else {
     //   this.applicantForm.controls.idTypes2.setValue(this.kycList[2].name);
     // }
-    if (this.applicant.validationIds && this.applicant.validationIds[2]) {
+    if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[2]) {
       this.applicantForm.controls.idValue2.setValue(this.applicant.validationIds[2].idValue);
     }
     // if (this.applicant.panNumber) {
     //   this.applicantForm.controls.panNumber.setValue(this.applicant.panNumber);
     // }
-    if (this.applicant.telephone && this.applicant.telephone[0].telephoneType) {
+    if (this.applicant && this.applicant.telephone && this.applicant.telephone[0].telephoneType) {
       this.applicantForm.controls.telephoneType.setValue(this.applicant.telephone[0].telephoneType);
     }
-    if (this.applicant.telephone && this.applicant.telephone[0].telephoneNumber) {
+    if (this.applicant && this.applicant.telephone && this.applicant.telephone[0].telephoneNumber) {
       this.applicantForm.controls.telephoneNumber.setValue(this.applicant.telephone[0].telephoneNumber);
     }
-    if (this.applicant.address && this.applicant.address[0] && this.applicant.address[0].address) {
+    if (this.applicant && this.applicant.address && this.applicant.address[0] && this.applicant.address[0].address) {
       this.applicantForm.controls.address.setValue(this.applicant.address[0].address);
     }
-    if (this.applicant.address && this.applicant.address[0] && this.applicant.address[0].addressType) {
+    if (this.applicant && this.applicant.address && this.applicant.address[0] && this.applicant.address[0].addressType) {
       this.applicantForm.controls.addressType.setValue(this.applicant.address[0].addressType);
     }
-    if (this.applicant.address && this.applicant.address[0] && this.applicant.address[0].city) {
+    if (this.applicant && this.applicant.address && this.applicant.address[0] && this.applicant.address[0].city) {
       this.applicantForm.controls.city.setValue(this.applicant.address[0].city);
     }
-    if (this.applicant.address && this.applicant.address[0] &&  this.applicant.address[0].state) {
+    if (this.applicant && this.applicant.address && this.applicant.address[0] &&  this.applicant.address[0].state) {
       this.applicantForm.controls.state.setValue(this.applicant.address[0].state);
     }
-    if (this.applicant.address && this.applicant.address[0] && this.applicant.address[0].pin) {
+    if (this.applicant && this.applicant.address && this.applicant.address[0] && this.applicant.address[0].pin) {
       this.applicantForm.controls.pin.setValue(this.applicant.address[0].pin);
     }
-    if (this.applicant.dob) {
+    if (this.applicant && this.applicant.dob) {
       this.applicantForm.controls.dob.setValue(this.applicant.dob);
     }
-    if (this.applicant.relationName) {
+    if (this.applicant && this.applicant.relationName) {
       this.applicantForm.controls.relationName.setValue(this.applicant.relationName);
     }
-    if (this.applicant.relationType) {
+    if (this.applicant && this.applicant.relationType) {
       this.applicantForm.controls.relationType.setValue(this.applicant.relationType);
     }
-    if (this.applicant.nomineeName) {
+    if (this.applicant && this.applicant.nomineeName) {
       this.applicantForm.controls.nomineeName.setValue(this.applicant.nomineeName);
     }
-    if (this.applicant.nomineeType) {
+    if (this.applicant && this.applicant.nomineeType) {
       this.applicantForm.controls.nomineeType.setValue(this.applicant.nomineeType);
     }
-    if (this.applicant.permanentAddress) {
+    if (this.applicant && this.applicant.permanentAddress) {
       this.applicantForm.controls.permanentAddress.setValue(this.applicant.permanentAddress);
     }
-    if (this.applicant.permanentCity) {
+    if (this.applicant && this.applicant.permanentCity) {
       this.applicantForm.controls.permanentCity.setValue(this.applicant.permanentCity);
     }
-    if (this.applicant.permanentState) {
+    if (this.applicant && this.applicant.permanentState) {
       this.applicantForm.controls.permanentState.setValue(this.applicant.permanentState);
     }
-    if (this.applicant.permanentPinCode) {
+    if (this.applicant && this.applicant.permanentPinCode) {
       this.applicantForm.controls.permanentPinCode.setValue(this.applicant.permanentPinCode);
     }
-
   }
 
   autoGrowTextZone(e) {
@@ -200,12 +201,25 @@ export class ApplicantComponent implements OnInit {
     e.target.style.height = (e.target.scrollHeight + 15) + "px";
   }
   kycStatus() {
-    this.crmService.getLeadStatus().subscribe((response: any) => {
-      console.log(response);
-      this.failedStatusId = response[3].id;
-      this.crifStatusId = response[6].id;
-      console.log('this.failedStatusId', this.failedStatusId)
+    const _this=this;
+    return new Promise((resolve,reject)=>{
+      _this.crmService.getLeadStatus().subscribe((response: any) => {
+        console.log(response);
+        resolve(response)
+        if(response){
+          if(response[3] && response[3].id){
+            _this.failedStatusId = response[3].id;
+          }
+          if(response[6] && response[6].id){
+            _this.crifStatusId = response[6].id;
+          }
+        }
+      },
+      ((error)=>{
+        reject(error);
+      }))
     })
+   
   }
   filesSelected(event, type) {
     this.fileService.filesSelected(event, this.selectedFiles[type]).then(
@@ -347,7 +361,7 @@ export class ApplicantComponent implements OnInit {
         'idValue':this.applicantForm.controls.idValue2.value,
         'attachments': []
       }
-      if (this.applicant.validationIds && this.applicant.validationIds[2] && this.applicant.validationIds[2].attachments) {
+      if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[2] && this.applicant.validationIds[2].attachments) {
         kyc['attachments'] = this.applicant.validationIds[2].attachments;
       }
       applicantInfo.validationIds.push(kyc);
@@ -386,25 +400,26 @@ export class ApplicantComponent implements OnInit {
 
   }
   deleteTempImage(i, type) {
-    console.log(this.selectedFiles[type].files[i]);
-console.log(this.filesToUpload);
     let files= this.filesToUpload.filter((fileObj) => {
-      console.log(fileObj.fileName);
-      return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type===type);
+      if(fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name){
+        if(fileObj.type){
+          return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type===type);
+        }
+      }
     });
-
-    if (files.length > 0) {
+    if (files && files.length > 0) {
       console.log(this.filesToUpload.indexOf(files[0]));
-      const index = this.filesToUpload.indexOf(files[0]);
-      this.filesToUpload.splice(index,1);
+      if(this.filesToUpload && this.filesToUpload.indexOf(files[0])){
+        const index = this.filesToUpload.indexOf(files[0]);
+        this.filesToUpload.splice(index,1);
+      }
     }
-  
     this.selectedFiles[type].files.splice(i, 1);
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
     if (type === 'kyc1') {
       this.applicant.validationIds[0].attachments = [];
-      
+
     } else if (type === 'kyc2') {
       this.applicant.validationIds[1].attachments = [];
     } 
@@ -449,17 +464,31 @@ console.log(this.filesToUpload);
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })});
   }
   getCrifInquiryVerification(kycInfoList){
-    this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
-      (element)=>{
-        // console.log('elemnt',element)
-        this.crifDetails = element;
-        this.crifHTML = this.crifDetails.crifHTML;
-        this.crifScore = this.crifDetails.crifScoreString;
-        this.api_loading=false;
-        this.showPdfIcon = true;
-        this.bCrifBtnDisable=true;
-      }
-    )
+    const _this=this;
+    return new Promise((resolve,reject)=>{
+      _this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
+        (element)=>{
+          resolve(element);
+          // console.log('elemnt',element)
+          if(element){
+            _this.crifDetails = element;
+            if(_this.crifDetails &&  _this.crifDetails.crifHTML){
+              _this.crifHTML = _this.crifDetails.crifHTML;
+            }
+            if(_this.crifDetails && _this.crifDetails.crifScoreString){
+              _this.crifScore = _this.crifDetails.crifScoreString;
+            }
+            _this.api_loading=false;
+            _this.showPdfIcon = true;
+            _this.bCrifBtnDisable=true;
+          }
+          
+        }
+      ),
+      ((error)=>{
+        reject(error);
+      })
+    })
   }
   printCRIF() {
     const params = [

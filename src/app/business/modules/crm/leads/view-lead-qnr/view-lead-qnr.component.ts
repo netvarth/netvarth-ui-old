@@ -362,13 +362,13 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log(applicantIndex);
     console.log('applicantsInfo:::::',this.applicantsInfo);
-    if(applicant){
-      console.log('applicant.files',applicant.files.length)
-      if(applicant.files && applicant.files.length > 0){
-        this.updateKyc()
-      }
+    // if(applicant){
+    //   console.log('applicant.files',applicant.files.length)
+    //   if(applicant.files && applicant.files.length > 0){
+    //     this.updateKyc()
+    //   }
       
-    }
+    // }
   }
 
   /**
@@ -684,12 +684,12 @@ export class ViewLeadQnrComponent implements OnInit {
     console.log('event', event)
     this.questionAnswers = event;
     console.log('filestoUpload',event.answers.answerLine)
-    if(event && event.files && event.files.length>0){
-       this.updateKyc();
-    }
-    else if(event && event.audioVideo && event.audioVideo.length>0){
-      this.updateKyc();
-    }
+    // if(event && event.files && event.files.length>0){
+    //    this.updateKyc();
+    // }
+    // else if(event && event.audioVideo && event.audioVideo.length>0){
+    //   this.updateKyc();
+    // }
   }
   autoGrowTextZone(e) {
     e.target.style.height = "0px";
