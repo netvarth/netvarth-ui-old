@@ -831,6 +831,11 @@ h5
 .btn.btn-primary {
   color: #fff;
 }
+
+.btn-outline-primary
+{
+  border-color: #1E4079!important;
+}
 .font-weight-bold {
   font-weight: 500!important;
 }

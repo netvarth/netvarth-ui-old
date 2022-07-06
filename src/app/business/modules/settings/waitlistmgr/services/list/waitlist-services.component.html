@@ -11,7 +11,7 @@
 <section class="qservices">
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
-            <div class="card p0 w-dta">
+            <div class="card p0 w-dta table-responsive">
                 <table class="table childDetails singleDash" style="font-size: .875rem;">
                     <thead id="childActionBar" class="qBoardselected-table">
                         <tr>
@@ -28,11 +28,11 @@
                     </tbody>
                     <tbody *ngFor="let service of service_list | orderBy: order">
                         <tr class="grid-pad" [class.grid-disabled]="service.status=='INACTIVE'" *ngIf="!api_loading">
-                            <td class="serv-name no-padding-small pad-rt-5">
-                                <div class="bold pull-left mgn-lt-5 name pointer-cursor teli-wtsap-a"
+                            <td class="no-padding-small pad-rt-5">
+                                <span class="bold mgn-lt-5 pointer-cursor"
                                     (click)="goServiceDetail(service)">
                                     {{service.name | capitalizeFirst}}
-                                </div>
+                                </span>
                             </td>
                             <td class="no-padding-small pad-rt-5">
                                 <span
