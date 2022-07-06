@@ -892,7 +892,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         multiSelection: this.apptMultiSelection,
         timetype: this.timetype,
         NoViewDetail: "true",
-        status : true
+        status : true,
+        src : 'detail'
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {

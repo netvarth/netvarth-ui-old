@@ -206,7 +206,7 @@ export class CheckinActionsComponent implements OnInit {
             this.getUserTeams();
             this.getProviderLocation();
         }
-        if(this.data.status)
+        if(this.data.status && this.data.src && this.data.status == true && this.data.src == 'detail')
         {
             this.action = 'status';
         }

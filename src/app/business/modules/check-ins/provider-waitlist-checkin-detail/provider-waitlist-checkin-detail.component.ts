@@ -882,7 +882,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         multiSelection: this.multiSelection,
         timetype: this.timetype,
         NoViewDetail: 'true',
-        status: true
+        status: true,
+        src:'details'
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
