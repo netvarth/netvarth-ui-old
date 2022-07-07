@@ -11,7 +11,7 @@ import { WordProcessor } from "../../../../../shared/services/word-processor.ser
 import { MatDialog } from "@angular/material/dialog";
 import { CrmSelectMemberComponent } from "../../../../../business/shared/crm-select-member/crm-select-member.component";
 import { TeleBookingService } from '../../../../../shared/services/tele-bookings-service';
-import { SharedFunctions } from "../../../../../shared/functions/shared-functions";
+// import { SharedFunctions } from "../../../../../shared/functions/shared-functions";
 
 
 @Component({
@@ -108,7 +108,7 @@ export class ViewLeadQnrComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private teleService: TeleBookingService,
-    private sharedFunctions: SharedFunctions
+    // private sharedFunctions: SharedFunctions
   ) {
     this.activatedRoute.params.subscribe(
       (params: any) => {
@@ -385,13 +385,6 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log(applicantIndex);
     console.log('applicantsInfo:::::',this.applicantsInfo);
-    // if(applicant){
-    //   console.log('applicant.files',applicant.files.length)
-    //   if(applicant.files && applicant.files.length > 0){
-    //     this.updateKyc()
-    //   }
-      
-    // }
   }
 
   /**
@@ -589,18 +582,19 @@ export class ViewLeadQnrComponent implements OnInit {
       } else {
         this.api_loading_UpdateKycProceed = true;
         console.log('this.questionAnswers.answers',this.questionAnswers.answers)
-        this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
-          this.api_loading = false;
-          if (data.length === 0) {
-            this.submitQuestionnaire(this.leadInfo.uid);
-          } else {
-            this.api_loading_UpdateKycProceed = false;
-          }
-          this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
-        }, error => {
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-          this.api_loading = false;
-        });
+        this.submitQuestionnaire(this.leadInfo.uid);
+        // this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+        //   this.api_loading = false;
+        //   if (data.length === 0) {
+        //     this.submitQuestionnaire(this.leadInfo.uid);
+        //   } else {
+        //     this.api_loading_UpdateKycProceed = false;
+        //   }
+        //   this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
+        // }, error => {
+        //   this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        //   this.api_loading = false;
+        // });
       }
 
     } else if (this.leadInfo.status.name === 'Login') {
@@ -738,15 +732,15 @@ export class ViewLeadQnrComponent implements OnInit {
     console.log('filestoUpload',event.answers.answerLine)
     console.log(' this.questionAnswers ', this.questionAnswers );
     console.log(this.leadInfo.status.name);
-      if(event && event.answers && event.answers.answerLine){
-        event.answers.answerLine.forEach((item)=>{
-          if(item && item.answer && item.answer.fileUpload){
-            item.answer.fileUpload.forEach((res:any,index)=>{
-              this.updateKyc()
-            })
-          }
-        })
-      }
+      // if(event && event.answers && event.answers.answerLine){
+      //   event.answers.answerLine.forEach((item)=>{
+      //     if(item && item.answer && item.answer.fileUpload){
+      //       item.answer.fileUpload.forEach((res:any,index)=>{
+      //         this.updateKyc()
+      //       })
+      //     }
+      //   })
+      // }
   }
   autoGrowTextZone(e) {
     if(e){
