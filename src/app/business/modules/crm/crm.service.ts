@@ -620,4 +620,8 @@ export class CrmService {
   processInquiry(body){
     return this.servicemeta.httpPost('provider/crif/processinquiry', body);
   }
+  deleteCoApplicant(applicantId,uuid){
+    const url = 'provider/customers/KYC/coapplicant/' + applicantId + '/' + uuid ;
+    return this.servicemeta.httpDelete(url)
+  }
 }

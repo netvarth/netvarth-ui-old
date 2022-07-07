@@ -789,3 +789,11 @@ textarea .form-control {
   ::ng-deep .mat-datepicker-toggle{
     position: relative !important;
   }
+  .pointer{
+    cursor: pointer;
+  }
+  .fieldDisable{
+    cursor:not-allowed !important;
+    background-color: #eee;
+    opacity: 1;
+  }

@@ -268,6 +268,11 @@ export class ApplicantComponent implements OnInit {
     this.addApplicant.emit(applicantInfo);
   }
   removApplicant(applicantId) {
+    // let removeApplicant={
+    //   applicantid:applicantId,
+    //   status:this.leadInfo.status.name
+
+    // }
     this.removeApplicant.emit(applicantId);
   }
   getApplicantInfo() {

@@ -1,6 +1,6 @@
 <section class="card">
   <div class="title-gb no-padding">
-    <div class="dash-head text-primary">
+    <div class="dash-head text-primary" *ngIf="hideBackBtn && headerName">
       <span class="fa fa-arrow-left pointer-cursor border-cirlce" (click)="goBack()"></span>&nbsp;
       {{headerName}}
     </div>
@@ -8,7 +8,7 @@
 </section>
 <section class="container card mt-4 mx-auto" *ngIf="taskDetails">
   <div>
-    <div stye="padding:10px">
+    <div stye="padding:10px" *ngIf="headerName">
       <div class="headerName">
         {{headerName}}
       </div>
@@ -99,11 +99,11 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <div>
-                  <div [formControlName]="selectMember" class="form-control"
-                    style="display: flex;justify-content: space-between;">
-                    <div>{{selectMember}}</div>
-                    <div style="cursor: pointer;" (click)="selectMemberDialog(selectMember)"><i class="fa fa-user"
+                <div >
+                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }" [formControlName]="selectMember" class="form-control"
+                    style="display: flex;justify-content: space-between;" (click)="(taskDetails.status.name !=='Completed') && selectMemberDialog(selectMember)">
+                    <div >{{selectMember}}</div>
+                    <div  class="pointer" ><i class="fa fa-user"
                         aria-hidden="true"></i></div>
                   </div>
                 </div>
@@ -189,11 +189,10 @@
                 <div>Manager</div>
               </div>
               <div class="fieldPadding">
-                <div>
-                  <div [formControlName]="selectTaskManger" class="form-control"
-                    style="display: flex;justify-content: space-between;"
-                    (click)="selectManagerDialog(selectTaskManger)">
-                    <div>{{selectTaskManger}}</div>
+                <div >
+                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }" [formControlName]="selectTaskManger" class="form-control"
+                    style="display: flex;justify-content: space-between;" (click)="(taskDetails.status.name !=='Completed')&& selectManagerDialog(selectTaskManger)">
+                    <div  >{{selectTaskManger}}</div>
                     <div style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
                   </div>
                 </div>
@@ -264,13 +263,9 @@
                 <div>Status</div>
               </div>
               <div class="fieldPadding">
-                <!-- [disabled]="!editable" -->
                 <mat-select class="form-control" placeholder="Enter activity status" #taskStatus
                   formControlName="taskStatus" name="item">
                   <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id">
-                    <!-- <div>
-                        {{item.name | capitalizeFirst}}
-                    </div> -->
                     <div [ngStyle]="{'color': getColor(item.name)}">
                       {{item.name | capitalizeFirst}}
                     </div>

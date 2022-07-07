@@ -221,6 +221,29 @@ export class ViewLeadQnrComponent implements OnInit {
     this.applicants.splice(index, 1);
     console.log("After:", this.applicantsInfo);
   }
+  // removeApplicant(applicantInfo, applicationIndex) {
+  //   if(applicantInfo && (applicantInfo['status']==='New')){
+  //     if (this.applicantsInfo && this.applicantsInfo[applicantInfo['applicantid']]) {
+  //       delete this.applicantsInfo[applicantInfo['applicantid']];
+  //       if (this.applicants) {
+  //         const index = this.applicants.indexOf(applicantInfo['applicantid']);
+  //         this.applicants.splice(index, 1);
+  //         console.log("After:", this.applicantsInfo);
+  //       }
+  //     }
+  //   }
+  //   else if(applicantInfo && (applicantInfo['status']==='KYC Updated')) {
+  //     if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
+  //       this.crmService.deleteCoApplicant(applicantInfo['applicantid'],this.leadInfo.uid).subscribe((response) => {
+  //         if (response) {
+  //           this.initLead();
+  //           console.log(response)
+  //           console.log("After:", this.applicantsInfo);
+  //         }
+  //       })
+  //     }
+  //   }
+  // }
 
   addCoApplicant() {
     let maxVal = parseInt(Object.keys(this.applicantsInfo).reduce((a, b) => this.applicantsInfo[a] > this.applicantsInfo[b] ? a : b)) + 1;
@@ -459,7 +482,7 @@ export class ViewLeadQnrComponent implements OnInit {
   complete(uuid, type?) {
     if (type) {
       this.api_loading_UpdateKyc = false;
-      // this.snackbarService.openSnackBar('saved successfully');
+      this.snackbarService.openSnackBar('saved successfully');
       this.initLead();
     } else {
       this.api_loading_UpdateKyc = false;
@@ -502,7 +525,8 @@ export class ViewLeadQnrComponent implements OnInit {
    */
   updateKyc() {
     if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified'
-      || this.leadInfo.status.name === 'Login Verified' || this.leadInfo.status.name === 'Credit Recommendation') {
+      || this.leadInfo.status.name === 'Login Verified' || this.leadInfo.status.name === 'Credit Recommendation'
+      || this.leadInfo.status.name === 'Login') {
       console.log('this.leadInfo.status.name', this.leadInfo.status.name)
       this.api_loading_UpdateKyc = true
       this.submitQuestionnaire(this.leadInfo.uid, 'save');
@@ -552,6 +576,7 @@ export class ViewLeadQnrComponent implements OnInit {
       if (this.leadInfo.status.name === 'Credit Recommendation') {
         this.complete(this.leadInfo.uid);
       } else {
+        this.api_loading_UpdateKycProceed = true;
         this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
           this.api_loading = false;
           if (data.length === 0) {
@@ -586,6 +611,7 @@ export class ViewLeadQnrComponent implements OnInit {
     //   });
     // }
     else {
+      this.api_loading_UpdateKycProceed = true;
       let applicantsList = [];
       Object.keys(this.applicantsInfo).forEach((key) => {
         applicantsList.push(this.applicantsInfo[key]);
@@ -593,11 +619,13 @@ export class ViewLeadQnrComponent implements OnInit {
       this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
         console.log('afterupdateKYCDAta', s3urls);
         this.api_loading_UpdateKyc = false;
+        this.api_loading_UpdateKycProceed = false;
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             () => {
               this.snackbarService.openSnackBar('KYC updated successfully');
               this.api_loading_UpdateKyc = false;
+              this.api_loading_UpdateKycProceed = false;
               if (this.leadInfo.status.name === 'New') {
                 this.proceedToCrif(applicantsList);
               } else {
@@ -611,6 +639,7 @@ export class ViewLeadQnrComponent implements OnInit {
         } else {
           this.snackbarService.openSnackBar('KYC updated successfully');
           this.api_loading_UpdateKyc = false;
+          this.api_loading_UpdateKycProceed = false;
           if (this.leadInfo.status.name === 'New') {
             this.proceedToCrif(applicantsList);
           } else {
@@ -621,6 +650,7 @@ export class ViewLeadQnrComponent implements OnInit {
         (error) => {
           setTimeout(() => {
             this.api_loading_UpdateKyc = false;
+            this.api_loading_UpdateKycProceed = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }, projectConstants.TIMEOUT_DELAY);
         })
@@ -684,16 +714,20 @@ export class ViewLeadQnrComponent implements OnInit {
     console.log('event', event)
     this.questionAnswers = event;
     console.log('filestoUpload',event.answers.answerLine)
-    // if(event && event.files && event.files.length>0){
-    //    this.updateKyc();
-    // }
-    // else if(event && event.audioVideo && event.audioVideo.length>0){
-    //   this.updateKyc();
-    // }
+    console.log(' this.questionAnswers ', this.questionAnswers )
+    if(event && event.files ){
+      //  this.updateKyc();
+    }
+    else if(event && event.audioVideo ){
+      // this.updateKyc();
+    }
   }
   autoGrowTextZone(e) {
-    e.target.style.height = "0px";
-    e.target.style.height = (e.target.scrollHeight + 15) + "px";
+    if(e){
+      e.target.style.height = "0px";
+      e.target.style.height = (e.target.scrollHeight + 15) + "px";
+    }
+    
   }
   saveNotes() {
     if (this.notes !== undefined) {

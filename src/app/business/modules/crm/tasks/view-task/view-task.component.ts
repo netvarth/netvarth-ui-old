@@ -1,5 +1,4 @@
 import { Component, OnInit } from "@angular/core";
-import { projectConstantsLocal } from "../../../../../../../src/app/shared/constants/project-constants";
 import { projectConstants } from "../../../../../../../src/app/app.component";
 import { Messages } from "../../../../../../../src/app/shared/constants/project-messages";
 import { Location } from "@angular/common";
@@ -15,84 +14,21 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
-import { WordProcessor } from '../../../../../../../src/app/shared/services/word-processor.service';
 import { TeleBookingService } from '../../../../../shared/services/tele-bookings-service';
 import { ViewAttachmentComponent } from "./select-attachment/view-attachment/view-attachment.component";
-
 @Component({
   selector: "app-view-task",
   templateUrl: "./view-task.component.html",
   styleUrls: ["./view-task.component.css"]
 })
 export class ViewTaskComponent implements OnInit {
-  tooltipcls = "";
-  select_cap = Messages.SELECT_CAP;
-  search_cap = Messages.SEARCH_CAP;
-  date_time_cap = Messages.DATE_TIME_CAP;
-  date_time_auditcap = Messages.DATE_TIME_AUDIT_CAP;
-  text_cap = Messages.TEXT_CAP;
-  subject_cap = Messages.SUBJECT_CAP;
-  user_name_cap = Messages.USER_NAME_CAP;
-  category_cap = Messages.AUDIT_CATEGORY_CAP;
-  sub_category_cap = Messages.AUDIT_SUB_CTAEGORY_CAP;
-  action_cap = Messages.AUDIT_ACTION_CAP;
-  select_date_cap = Messages.AUDIT_SELECT_DATE_CAP;
-  no_tasks_cap = Messages.AUDIT_NO_TASKS_CAP;
-  auditlog_details: any = [];
-  load_complete = 0;
   api_loading = true;
   api_loading1 = true;
-  dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
-  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
-  auditStatus = 1;
-  time_type = 1;
-  filterapplied;
-  filter_sidebar = false;
-  open_filter = false;
-  filter = {
-    date: null,
-    page_count: projectConstants.PERPAGING_LIMIT,
-    page: 1
-  };
-  filters: any = {
-    date: false
-  };
-  ackStatus = false;
-  notAckStatus = false;
-  startpageval;
-  totalCnt;
-  domain;
-  perPage = projectConstants.PERPAGING_LIMIT;
-  newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
-  tday = new Date();
-  minday = new Date(2015, 0, 1);
-  endminday = new Date(1900, 0, 1);
-  dateFilter = false;
-  auditSelAck = [];
-  auditStartdate = null;
-  auditEnddate = null;
-  holdauditSelAck = null;
-  holdauditStartdate = null;
-  holdauditEnddate = null;
-  taskList: any = [];
-  detailedTaskData: any;
-  waitlist_history: any;
-  connected_with: any;
-  selectedIndex;
   taskUid: any;
   taskDetails: any;
-
-  action: any;
-  //notes variable start
-  public notesText: any;
   public notesList: any = [];
-  uploaded_attachments: any;
-  updateTaskData: any;
   taskkid: any;
   taskType: any;
-  changeAction = false;
-  public taskDetailsData: any;
-  //new ui variabe start
   public headerName: string = '';
   public taskDetailsDescription: string = 'View Task Details';
   public taskError: null;
@@ -122,7 +58,6 @@ export class ViewTaskComponent implements OnInit {
   public selectTaskManger: any;
   public selectTaskMangerId: any;
   public updateManagerId: any;
-  public estDurationWithDay: any;
   public estTime: any;
   public taskDueDays: any;
   public rupee_symbol = '₹';
@@ -142,15 +77,10 @@ export class ViewTaskComponent implements OnInit {
   public errorMsg: boolean = false;
   public assignMemberErrorMsg: string = '';
   public bTaskFollowUpResult: boolean = true;
-  public editable: boolean = true;
-  public followUpStatusComplToProceed: any;
-  public followUpStatusInProgressToPending: any;
-  public fiollowUpStatusCancelledToRejected: any;
   public activityType: any;
   public followUPStatus: any
   public bActualResult: boolean = true;
   public actualResult: any;
-  public customer_label: any;
   public customerName: any;
   public customerPhNo: any;
   public firstCustomerName: any;
@@ -213,6 +143,7 @@ export class ViewTaskComponent implements OnInit {
   api_loadingSaveTask: boolean;
   api_loadingCompletedStatus:boolean;
   api_loadingCancelledStatus:boolean;
+  hideBackBtn:boolean=true;
   constructor(
     private crmService: CrmService,
     public _location: Location,
@@ -224,7 +155,6 @@ export class ViewTaskComponent implements OnInit {
     private createTaskFormBuilder: FormBuilder,
     private groupService: GroupStorageService,
     private datePipe: DatePipe,
-    private wordProcessor: WordProcessor,
     private teleService: TeleBookingService
   ) { }
 
@@ -250,16 +180,7 @@ export class ViewTaskComponent implements OnInit {
       selectMember:[],
       actualPotential:[],
     })
-    const user = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.selectMember = user.firstName + user.lastName;
-    this.selectTaskManger = user.firstName + user.lastName;
-    this.assigneeId = user.id;
-    this.updateMemberId = this.assigneeId;
-    this.locationId = user.bussLocs[0]
-    if (user.userType === 1) {
-      this.userType = 'PROVIDER'
-    }
+   this.userInfo();
     this._Activatedroute.queryParams.subscribe((qparams: any) => {
       // console.log('qparams',qparams)
       if (qparams.dataType) {
@@ -289,6 +210,26 @@ export class ViewTaskComponent implements OnInit {
     this.getTaskStatusListData()
 
   }
+  userInfo(){
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if(user){
+      if(user.firstName || user.lastName){
+        this.selectMember = user.firstName + user.lastName;
+        this.selectTaskManger = user.firstName + user.lastName;
+      }
+      if(user.id){
+        this.assigneeId = user.id;
+        this.updateMemberId = this.assigneeId;
+      }
+      if(user.bussLocs && user.bussLocs[0]){
+        this.locationId = user.bussLocs[0]
+      }
+      if (user.userType === 1) {
+        this.userType = 'PROVIDER'
+      }
+    }
+    
+  }
   getEnquiryDetailsRefresh() {
     this.crmService.getEnquiryDetails(this.enquiryId).subscribe((enquiryList: any) => {
       this.taskDetails = enquiryList;
@@ -296,7 +237,6 @@ export class ViewTaskComponent implements OnInit {
       if (this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.name) {
         this.firstCustomerName = this.taskDetails.customer.name.charAt(0);
         this.customerName = this.taskDetails.customer.name;
-        // this.customerPhNo =  this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
       }
       if (this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.phoneNo) {
         this.customerPhNo = this.teleService.getTeleNumber(this.taskDetails.customer.phoneNo);
@@ -311,7 +251,9 @@ export class ViewTaskComponent implements OnInit {
       this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
         this.taskDetails = data;
         this.getTaskmaster()
-        this.taskkid = this.taskDetails.id;
+        if(this.taskDetails && this.taskDetails.id){
+          this.taskkid = this.taskDetails.id;
+        }
         this.api_loading = false;
         console.log("Task Details : ", this.taskDetails);
         this.getDate()
@@ -332,7 +274,7 @@ export class ViewTaskComponent implements OnInit {
             if (this.taskDetails.title != undefined) {
               this.bTaskTitle = true;
               this.taskDetailsForm.controls.taskTitle.value = this.taskDetails.title;
-              this.headerName = this.taskDetails.title
+              this.headerName = this.taskDetails.title;
             }
             else {
               this.bTaskTitle = false
@@ -369,7 +311,7 @@ export class ViewTaskComponent implements OnInit {
           if(this.taskDetails){
             if (this.taskDetails.dueDate != undefined) {
               this.bTaskDate = true
-              this.taskDetailsForm.controls.taskDate.value = this.taskDetails.dueDate
+              this.taskDetailsForm.controls.taskDate.value = this.taskDetails.dueDate;
             }
             else {
               this.bTaskDate = false
@@ -445,13 +387,10 @@ export class ViewTaskComponent implements OnInit {
               this.bTaskStatus = true;
               if(this.taskDetails.status.id){
                 this.taskDetailsForm.controls.taskStatus.value = this.taskDetails.status.id;
-                this.editable = false;
-                this.taskDetailsForm.controls['taskStatus'].disable()
               }
             }
             else {
               this.bTaskStatus = false;
-              this.taskDetailsForm.controls['taskStatus'].disable()
             }
           }
           if(this.taskDetails){
@@ -513,28 +452,29 @@ export class ViewTaskComponent implements OnInit {
   //mew ui method start
   getUpdateFollowUPValue() {
     // console.log('UpdateValueFollowup')
-    this.headerName = this.taskDetails.title;
-    if (this.taskDetails.title) {
-      this.taskDetailsForm.controls.taskTitle.value = this.taskDetails.title
+    if (this.taskDetails && this.taskDetails.title) {
+      this.taskDetailsForm.controls.taskTitle.value = this.taskDetails.title;
+      this.headerName = this.taskDetails.title;
     }
-    if (this.taskDetails.estDuration) {
-      this.estTime = { "days": this.taskDetails.estDuration.days, "hours": this.taskDetails.estDuration.hours, "minutes": this.taskDetails.estDuration.minutes };
-
+    if (this.taskDetails && this.taskDetails.estDuration) {
+      this.estTime = { "days": this.taskDetails.estDuration.days, "hours": this.taskDetails.estDuration.hours, 
+      "minutes": this.taskDetails.estDuration.minutes };
     }
-    if (this.taskDetails.assignee) {
+    if (this.taskDetails &&  this.taskDetails.assignee) {
       this.updateMemberId = this.taskDetails.assignee.id;
     }
-    if (this.taskDetails.description) {
+    if (this.taskDetails &&  this.taskDetails.description) {
       this.taskDetailsForm.controls.taskDescription.value = this.taskDetails.description;
     }
-    if (this.taskDetails.locationArea) {
+    if (this.taskDetails && this.taskDetails.locationArea) {
       this.taskDetailsForm.controls.areaName.value = (this.taskDetails.locationArea);
     }
-    if (this.taskDetails.dueDate) {
+    if (this.taskDetails && this.taskDetails.dueDate) {
       this.taskDetailsForm.controls.taskDate.value = this.taskDetails.dueDate;
     }
-    this.updateUserType = this.taskDetails.userTypeEnum;
-    // this.getEnquiryMaster()
+    if(this.taskDetails && this.taskDetails.userTypeEnum){
+      this.updateUserType = this.taskDetails.userTypeEnum;
+    }
     this.getTaskmaster()
 
   }
@@ -547,205 +487,277 @@ export class ViewTaskComponent implements OnInit {
         if (this.activityType === undefined) {
           if (this.taskDetails.title === 'Direct Notice Distribution') {
             console.log('taskDetailstitlename:::',this.taskDetails.title)
-            if(response && response[2]){
-              if(response[2].title){
-                if(response[2].title.isvisible){
-                  this.bTaskTitle = true;
-                }else{
-                  this.bTaskTitle = false;
+              if(response && response[2]){
+                if(response[2].title){
+                  if(response[2].title.isvisible){
+                    this.bTaskTitle = true;
+                  }else{
+                    this.bTaskTitle = false;
+                  }
+                  if(!(response[2].title.iseditable)){
+                    this.taskDetailsForm.controls['taskTitle'].disable()
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['taskTitle'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['taskTitle'].enable();
+                    }
+                  }
                 }
-                if(!(response[2].title.iseditable)){
-                  this.taskDetailsForm.controls['taskTitle'].disable()
+                if( response[2].description){
+                  if(response[2].description.isvisible){
+                    this.bTaskDescription = true;
+                  }else{
+                    this.bTaskDescription = false;
+                  }
+                  if(!(response[2].description.iseditable)){
+                    this.taskDetailsForm.controls['taskDescription'].disable();
+                  }
+                  else{
+                    console.log('response[2].description.iseditable',response[2].description.iseditable);
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['taskDescription'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['taskDescription'].enable()
+                    }
+                   
+                  }
                 }
-                else{
-                  this.taskDetailsForm.controls['taskTitle'].enable()
+                if(response[2].assignee){
+                  if(response[2].assignee.isvisible){
+                    this.bAssigneeName = true;
+                  }else{
+                    this.bAssigneeName = false;
+                  }
+                  if (!(response[2].assignee.iseditable)) {
+                    this.bAssigneeName = false;
+                  }
+                  else {
+                    this.bAssigneeName = true;
+                  }
+                }
+                if(response[2].status){
+                  if(response[2].status.isvisible){
+                    this.bTaskStatus = true;
+                  }else{
+                    this.bTaskStatus = false;
+                  }
+                  if(!(response[2].status.iseditable)){
+                    this.taskDetailsForm.controls['taskStatus'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['taskStatus'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['taskStatus'].enable()                          
+                    }
+                  }
+                }
+                if(response[2].category){
+                  if(response[2].category.isvisible){
+                    this.bTaskCategory = true;
+                  }else{
+                    this.bTaskCategory = false;
+                  }
+                  if(!(response[2].category.iseditable)){
+                    this.taskDetailsForm.controls['userTaskCategory'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['userTaskCategory'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                    }
+                  }
+                }
+                if(response[2].type){
+                  if(response[2].type.isvisible){
+                    this.bTaskType = true;
+                  }else{
+                    this.bTaskType = false;
+                  }
+                  if(!(response[2].type.iseditable)){
+                    this.taskDetailsForm.controls['userTaskType'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['userTaskType'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['userTaskType'].enable()                          
+                    }
+                  }
+                }
+                if(response[2].location){
+                  if(response[2].location.isvisible){
+                    this.bTaskLocation = true;
+                  }else{
+                    this.bTaskLocation = false;
+                  }
+                  if(!(response[2].location.iseditable)){
+                    this.taskDetailsForm.controls['taskLocation'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['taskLocation'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['taskLocation'].enable()                          
+                    }
+                  }
+                }
+                if(response[2].manager){
+                  if(response[2].manager.isvisible){
+                    this.bTaskManager = true;
+                  }else{
+                    this.bTaskManager = false;
+                  }
+                  if(!(response[2].manager.iseditable)){
+                    this.bTaskManager = false;               
+                  }
+                  else{
+                    this.bTaskManager = true;                     
+                  }
+                }
+                if(response[2].estDuration){
+                  if(response[2].estDuration.isvisible){
+                    this.bTaskEstDuration = false;
+                  }else{
+                    this.bTaskEstDuration = false;
+                  }
+                  if(!(response[2].estDuration.iseditable)){
+                    this.taskDetailsForm.controls['taskDays'].disable()  
+                    this.taskDetailsForm.controls['taskHrs'].disable()  
+                    this.taskDetailsForm.controls['taskMin'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['taskDays'].disable();
+                      this.taskDetailsForm.controls['taskHrs'].disable();
+                      this.taskDetailsForm.controls['taskMin'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['taskDays'].enable()  
+                    this.taskDetailsForm.controls['taskHrs'].enable()  
+                    this.taskDetailsForm.controls['taskMin'].enable()                            
+                    }
+                                            
+                  }
+                }
+                if(response[2].priority){
+                  if(response[2].priority.isvisible){
+                    this.bTaskPriority = true;
+                  }else{
+                    this.bTaskPriority = false;
+                  }
+                  if(!(response[2].priority.iseditable)){
+                    this.taskDetailsForm.controls['userTaskPriority'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['userTaskPriority'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                    }
+                  }
+                }
+                if(response[2].targetResult){
+                  if(response[2].targetResult.isvisible){
+                    this.bTaskTargetPotential = true;
+                  }else{
+                    this.bTaskTargetPotential = false;
+                  }
+                  if(!(response[2].targetResult.iseditable)){
+                    this.taskDetailsForm.controls['targetResult'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['targetResult'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['targetResult'].enable()                          
+                    }                   
+                  }
+                }
+                if(response[2].targetPotential){
+                  if(response[2].targetPotential.isvisible){
+                    this.bTaskBusinessPotential = true;
+                  }else{
+                    this.bTaskBusinessPotential = false;
+                  }
+                  if(!(response[2].targetResult.iseditable)){
+                    this.taskDetailsForm.controls['targetPotential'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['targetPotential'].disable();
+                    }
+                    else{
+                      this.taskDetailsForm.controls['targetPotential'].enable()                          
+                    }                       
+                  }
+                }
+                if(response[2].dueDate){
+                  if(response[2].dueDate.isvisible){
+                    this.bTaskDate = true;
+                  }else{
+                    this.bTaskDate = false;
+                  }
+                  if(!(response[2].dueDate.iseditable)){
+                    this.taskDetailsForm.controls['taskDate'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['taskDate'].disable()                          
+                    }
+                    else{
+                      this.taskDetailsForm.controls['taskDate'].enable()                          
+                    } 
+                  }
+                }
+                if(response[2].locationArea){
+                  if(response[2].locationArea.isvisible){
+                    this.bTaskAreaName = true;
+                  }else{
+                    this.bTaskAreaName = true;
+                  }
+                  if(!(response[2].locationArea.iseditable)){
+                    this.taskDetailsForm.controls['areaName'].disable()                 
+                  }
+                  else{
+                    if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                      this.taskDetailsForm.controls['areaName'].disable()                          
+                    }
+                    else{
+                      this.taskDetailsForm.controls['areaName'].enable()                          
+                    }
+                  }
+                }
+                if(response[2].actualPotential){
+                  if(response[2].actualPotential.isvisible){
+                    this.bTaskActualPotential=true;
+                  }else{
+                    this.bTaskActualPotential=false;
+                  }
+                  if(!(response[2].actualPotential.iseditable)){
+                    this.taskDetailsForm.controls['actualPotential'].disable()                 
+                  }
+                  else{
+                    if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
+                      this.taskDetailsForm.controls['actualPotential'].disable()
+                    }
+                    else {
+                      this.taskDetailsForm.controls['actualPotential'].enable()
+                    }
+                  }
                 }
               }
-              if( response[2].description){
-                if(response[2].description.isvisible){
-                  this.bTaskDescription = true;
-                }else{
-                  this.bTaskDescription = false;
-                }
-                if(!(response[2].description.iseditable)){
-                  this.taskDetailsForm.controls['taskDescription'].disable()
-                }
-                else{
-                  this.taskDetailsForm.controls['taskDescription'].enable()
-                }
-              }
-              if(response[2].assignee){
-                if(response[2].assignee.isvisible){
-                  this.bAssigneeName = true;
-                }else{
-                  this.bAssigneeName = false;
-                }
-                if(!(response[2].assignee.iseditable)){
-                  this.bAssigneeName = false;                }
-                else{
-                  this.bAssigneeName = true;                }
-              }
-              if(response[2].status){
-                if(response[2].status.isvisible){
-                  this.bTaskStatus = true;
-                }else{
-                  this.bTaskStatus = false;
-                }
-                if(!(response[2].status.iseditable)){
-                  this.taskDetailsForm.controls['taskStatus'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['taskStatus'].enable()                          
-                }
-              }
-              if(response[2].category){
-                if(response[2].category.isvisible){
-                  this.bTaskCategory = true;
-                }else{
-                  this.bTaskCategory = false;
-                }
-                if(!(response[2].category.iseditable)){
-                  this.taskDetailsForm.controls['userTaskCategory'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['userTaskCategory'].enable()                          
-                }
-              }
-              if(response[2].type){
-                if(response[2].type.isvisible){
-                  this.bTaskType = true;
-                }else{
-                  this.bTaskType = false;
-                }
-                if(!(response[2].type.iseditable)){
-                  this.taskDetailsForm.controls['userTaskType'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['userTaskType'].enable()                          
-                }
-              }
-              if(response[2].location){
-                if(response[2].location.isvisible){
-                  this.bTaskLocation = true;
-                }else{
-                  this.bTaskLocation = false;
-                }
-                if(!(response[2].location.iseditable)){
-                  this.taskDetailsForm.controls['taskLocation'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['taskLocation'].enable()                          
-                }
-              }
-              if(response[2].manager){
-                if(response[2].manager.isvisible){
-                  this.bTaskManager = true;
-                }else{
-                  this.bTaskManager = false;
-                }
-                if(!(response[2].manager.iseditable)){
-                  this.bTaskManager = false;               
-                }
-                else{
-                  this.bTaskManager = true;                     
-                }
-              }
-              if(response[2].estDuration){
-                if(response[2].estDuration.isvisible){
-                  this.bTaskEstDuration = false;
-                }else{
-                  this.bTaskEstDuration = false;
-                }
-                if(!(response[2].estDuration.iseditable)){
-                  this.taskDetailsForm.controls['taskDays'].disable()  
-                  this.taskDetailsForm.controls['taskHrs'].disable()  
-                  this.taskDetailsForm.controls['taskMin'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['taskDays'].enable()  
-                  this.taskDetailsForm.controls['taskHrs'].enable()  
-                  this.taskDetailsForm.controls['taskMin'].enable()                          
-                }
-              }
-              if(response[2].priority){
-                if(response[2].priority.isvisible){
-                  this.bTaskPriority = true;
-                }else{
-                  this.bTaskPriority = false;
-                }
-                if(!(response[2].priority.iseditable)){
-                  this.taskDetailsForm.controls['userTaskPriority'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['userTaskPriority'].enable()                          
-                }
-              }
-              if(response[2].targetResult){
-                if(response[2].targetResult.isvisible){
-                  this.bTaskTargetPotential = true;
-                }else{
-                  this.bTaskTargetPotential = false;
-                }
-                if(!(response[2].targetResult.iseditable)){
-                  this.taskDetailsForm.controls['targetResult'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['targetResult'].enable()                          
-                }
-              }
-              if(response[2].targetPotential){
-                if(response[2].targetPotential.isvisible){
-                  this.bTaskBusinessPotential = true;
-                }else{
-                  this.bTaskBusinessPotential = false;
-                }
-                if(!(response[2].targetResult.iseditable)){
-                  this.taskDetailsForm.controls['targetPotential'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['targetPotential'].enable()                          
-                }
-              }
-              if(response[2].dueDate){
-                if(response[2].dueDate.isvisible){
-                  this.bTaskDate = true;
-                }else{
-                  this.bTaskDate = false;
-                }
-                if(!(response[2].dueDate.iseditable)){
-                  this.taskDetailsForm.controls['taskDate'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['taskDate'].enable()                          
-                }
-              }
-              if(response[2].locationArea){
-                if(response[2].locationArea.isvisible){
-                  this.bTaskAreaName = true;
-                }else{
-                  this.bTaskAreaName = true;
-                }
-                if(!(response[2].locationArea.iseditable)){
-                  this.taskDetailsForm.controls['areaName'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['areaName'].enable()                          
-                }
-              }
-              if(response[2].actualPotential){
-                if(response[2].actualPotential.isvisible){
-                  this.bTaskActualPotential=true;
-                }else{
-                  this.bTaskActualPotential=false;
-                }
-                if(!(response[2].actualPotential.iseditable)){
-                  this.taskDetailsForm.controls['actualPotential'].disable()                 
-                }
-                else{
-                  this.taskDetailsForm.controls['actualPotential'].enable()                          
-                }
-              }
-            }
           }
           else if (this.taskDetails.title === 'Notice Distribution Through Newspaper') {
             if(response && response[3]){
@@ -759,7 +771,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskTitle'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskTitle'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskTitle'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskTitle'].enable()                          
+                  }
                 }
               }
               if( response[3].description){
@@ -772,7 +789,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDescription'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDescription'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDescription'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDescription'].enable()                          
+                  }
                 }
               }
               if(response[3].assignee){
@@ -796,7 +818,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskStatus'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskStatus'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  }
                 }
               }
               if(response[3].category){
@@ -809,7 +836,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskCategory'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskCategory'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  }
                 }
               }
               if(response[3].type){
@@ -822,7 +854,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskType'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskType'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  }
                 }
               }
               if(response[3].location){
@@ -835,7 +872,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskLocation'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskLocation'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskLocation'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskLocation'].enable()                          
+                  }
                 }
               }
               if(response[3].manager){
@@ -863,6 +905,16 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskMin'].disable()                 
                 }
                 else{
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDays'].disable();
+                    this.taskDetailsForm.controls['taskHrs'].disable();
+                    this.taskDetailsForm.controls['taskMin'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDays'].enable()  
+                    this.taskDetailsForm.controls['taskHrs'].enable()  
+                    this.taskDetailsForm.controls['taskMin'].enable()                            
+                  }
                   this.taskDetailsForm.controls['taskDays'].enable()  
                   this.taskDetailsForm.controls['taskHrs'].enable()  
                   this.taskDetailsForm.controls['taskMin'].enable()                          
@@ -878,7 +930,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskPriority'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskPriority'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  }
                 }
               }
               if(response[3].targetResult){
@@ -891,7 +948,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetResult'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetResult'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetResult'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetResult'].enable()                          
+                  }
                 }
               }
               if(response[3].targetPotential){
@@ -904,7 +966,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetPotential'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  }
                 }
               }
               if(response[3].dueDate){
@@ -917,7 +984,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDate'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDate'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDate'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDate'].enable()                          
+                  }
                 }
               }
               if(response[3].locationArea){
@@ -930,7 +1002,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['areaName'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['areaName'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['areaName'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['areaName'].enable()                          
+                  }
                 }
               }
               if(response[3].actualPotential){
@@ -943,7 +1020,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['actualPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['actualPotential'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  }
                 }
               }
             }
@@ -960,7 +1042,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskTitle'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskTitle'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskTitle'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskTitle'].enable()
+                  }
                 }
               }
               if( response[4].description){
@@ -973,7 +1060,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDescription'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDescription'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDescription'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDescription'].enable()
+                  }
                 }
               }
               if(response[4].assignee){
@@ -997,7 +1089,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskStatus'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskStatus'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  }
                 }
               }
               if(response[4].category){
@@ -1010,7 +1107,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskCategory'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskCategory'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  }
                 }
               }
               if(response[4].type){
@@ -1023,7 +1125,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskType'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskType'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  }
                 }
               }
               if(response[4].location){
@@ -1036,7 +1143,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskLocation'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskLocation'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskLocation'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskLocation'].enable()                          
+                  }
                 }
               }
               if(response[4].manager){
@@ -1064,9 +1176,17 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskMin'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDays'].enable()  
-                  this.taskDetailsForm.controls['taskHrs'].enable()  
-                  this.taskDetailsForm.controls['taskMin'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                   this.taskDetailsForm.controls['taskDays'].disable()  
+                  this.taskDetailsForm.controls['taskHrs'].disable()  
+                  this.taskDetailsForm.controls['taskMin'].disable() 
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDays'].enable()  
+                    this.taskDetailsForm.controls['taskHrs'].enable()  
+                    this.taskDetailsForm.controls['taskMin'].enable()                      
+                  }
+                                           
                 }
               }
               if(response[4].priority){
@@ -1079,7 +1199,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskPriority'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskPriority'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  }
                 }
               }
               if(response[4].targetResult){
@@ -1092,7 +1217,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetResult'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetResult'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetResult'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetResult'].enable()                          
+                  }
                 }
               }
               if(response[4].targetPotential){
@@ -1105,7 +1235,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetPotential'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  }
                 }
               }
               if(response[4].dueDate){
@@ -1118,7 +1253,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDate'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDate'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDate'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDate'].enable()                          
+                  }
                 }
               }
               if(response[4].locationArea){
@@ -1131,7 +1271,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['areaName'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['areaName'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['areaName'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['areaName'].enable()                          
+                  }
                 }
               }
               if(response[4].actualPotential){
@@ -1144,7 +1289,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['actualPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['actualPotential'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  }
                 }
               }
             }
@@ -1161,7 +1311,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskTitle'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskTitle'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskTitle'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskTitle'].enable()
+                  }
                 }
               }
               if( response[5].description){
@@ -1174,7 +1329,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDescription'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDescription'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDescription'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDescription'].enable()
+                  }
                 }
               }
               if(response[5].assignee){
@@ -1198,7 +1358,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskStatus'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskStatus'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  }
                 }
               }
               if(response[5].category){
@@ -1211,7 +1376,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskCategory'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskCategory'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  }
                 }
               }
               if(response[5].type){
@@ -1224,7 +1394,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskType'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskType'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  }
                 }
               }
               if(response[5].location){
@@ -1237,7 +1412,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskLocation'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskLocation'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskLocation'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskLocation'].enable()                          
+                  }
                 }
               }
               if(response[5].manager){
@@ -1265,9 +1445,17 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskMin'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDays'].enable()  
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDays'].disable()  
+                    this.taskDetailsForm.controls['taskHrs'].disable()  
+                    this.taskDetailsForm.controls['taskMin'].disable()   
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDays'].enable()  
                   this.taskDetailsForm.controls['taskHrs'].enable()  
-                  this.taskDetailsForm.controls['taskMin'].enable()                          
+                  this.taskDetailsForm.controls['taskMin'].enable()                            
+                  }
+                                         
                 }
               }
               if(response[5].priority){
@@ -1280,7 +1468,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskPriority'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskPriority'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  }
                 }
               }
               if(response[5].targetResult){
@@ -1293,7 +1486,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetResult'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetResult'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetResult'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetResult'].enable()                          
+                  }
                 }
               }
               if(response[5].targetPotential){
@@ -1306,7 +1504,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetPotential'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  }
                 }
               }
               if(response[5].dueDate){
@@ -1319,7 +1522,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDate'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDate'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDate'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDate'].enable()                          
+                  }
                 }
               }
               if(response[5].locationArea){
@@ -1332,7 +1540,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['areaName'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['areaName'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['areaName'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['areaName'].enable()                          
+                  }
                 }
               }
               if(response[5].actualPotential){
@@ -1345,7 +1558,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['actualPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['actualPotential'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  }
                 }
               }
             }
@@ -1362,7 +1580,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskTitle'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskTitle'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskTitle'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskTitle'].enable()
+                  }
                 }
               }
               if( response[6].description){
@@ -1375,7 +1598,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDescription'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDescription'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDescription'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDescription'].enable()
+                  }
                 }
               }
               if(response[6].assignee){
@@ -1399,7 +1627,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskStatus'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskStatus'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  }
                 }
               }
               if(response[6].category){
@@ -1412,7 +1645,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskCategory'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskCategory'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  }
                 }
               }
               if(response[6].type){
@@ -1425,7 +1663,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskType'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskType'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  }
                 }
               }
               if(response[6].location){
@@ -1438,7 +1681,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskLocation'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskLocation'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskLocation'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskLocation'].enable()                          
+                  }
                 }
               }
               if(response[6].manager){
@@ -1466,9 +1714,17 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskMin'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDays'].enable()  
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDays'].disable()  
+                  this.taskDetailsForm.controls['taskHrs'].disable()  
+                  this.taskDetailsForm.controls['taskMin'].disable()  
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDays'].enable()  
                   this.taskDetailsForm.controls['taskHrs'].enable()  
-                  this.taskDetailsForm.controls['taskMin'].enable()                          
+                  this.taskDetailsForm.controls['taskMin'].enable()                            
+                  }
+                                          
                 }
               }
               if(response[6].priority){
@@ -1481,7 +1737,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskPriority'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskPriority'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  }
                 }
               }
               if(response[6].targetResult){
@@ -1494,7 +1755,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetResult'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetResult'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetResult'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetResult'].enable()                          
+                  }
                 }
               }
               if(response[6].targetPotential){
@@ -1507,7 +1773,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetPotential'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  }
                 }
               }
               if(response[6].dueDate){
@@ -1520,7 +1791,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDate'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDate'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDate'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDate'].enable()                          
+                  }
                 }
               }
               if(response[6].locationArea){
@@ -1533,7 +1809,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['areaName'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['areaName'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['areaName'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['areaName'].enable()                          
+                  }
                 }
               }
               if(response[6].actualPotential){
@@ -1546,7 +1827,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['actualPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['actualPotential'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  }
                 }
               }
             }
@@ -1563,7 +1849,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskTitle'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskTitle'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskTitle'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskTitle'].enable()
+                  }
                 }
               }
               if( response[7].description){
@@ -1576,7 +1867,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDescription'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDescription'].enable()
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDescription'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDescription'].enable()
+                  }
                 }
               }
               if(response[7].assignee){
@@ -1600,7 +1896,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskStatus'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskStatus'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  }
                 }
               }
               if(response[7].category){
@@ -1613,7 +1914,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskCategory'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskCategory'].disable();
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  }
                 }
               }
               if(response[7].type){
@@ -1626,7 +1932,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskType'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskType'].disable();
+                  }
+                  else{
+                   this.taskDetailsForm.controls['userTaskType'].enable()                        
+                  }
+                                            
                 }
               }
               if(response[7].location){
@@ -1639,7 +1951,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskLocation'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskLocation'].enable()                          
+                if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskLocation'].disable();
+                  }
+                  else{
+                   this.taskDetailsForm.controls['taskLocation'].enable()                            
+                  }
+                                       
                 }
               }
               if(response[7].manager){
@@ -1667,9 +1985,17 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskMin'].disable()                 
                 }
                 else{
+                if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                   this.taskDetailsForm.controls['taskDays'].disable()  
+                  this.taskDetailsForm.controls['taskHrs'].disable()  
+                  this.taskDetailsForm.controls['taskMin'].disable() 
+                  }
+                  else{
                   this.taskDetailsForm.controls['taskDays'].enable()  
                   this.taskDetailsForm.controls['taskHrs'].enable()  
-                  this.taskDetailsForm.controls['taskMin'].enable()                          
+                  this.taskDetailsForm.controls['taskMin'].enable()                              
+                  }
+                                           
                 }
               }
               if(response[7].priority){
@@ -1682,7 +2008,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskPriority'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskPriority'].disable();
+                  }
+                  else{
+                   this.taskDetailsForm.controls['userTaskPriority'].enable()                             
+                  }
+                                          
                 }
               }
               if(response[7].targetResult){
@@ -1695,7 +2027,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetResult'].disable()                 
                 }
                 else{
+                if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetResult'].disable();
+                  }
+                  else{
                   this.taskDetailsForm.controls['targetResult'].enable()                          
+                  }
                 }
               }
               if(response[7].targetPotential){
@@ -1708,7 +2045,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetPotential'].enable()                          
+                 if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetPotential'].disable();
+                  }
+                  else{
+                  this.taskDetailsForm.controls['targetPotential'].enable()                         
+                  }
+                                            
                 }
               }
               if(response[7].dueDate){
@@ -1721,7 +2064,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDate'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDate'].enable()                          
+                if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDate'].disable();
+                  }
+                  else{
+                 this.taskDetailsForm.controls['taskDate'].enable()                          
+                  }
+                                          
                 }
               }
               if(response[7].locationArea){
@@ -1734,7 +2083,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['areaName'].disable()                 
                 }
                 else{
+                if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['areaName'].disable();
+                  }
+                  else{
                   this.taskDetailsForm.controls['areaName'].enable()                          
+                  }
                 }
               }
               if(response[7].actualPotential){
@@ -1747,7 +2101,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['actualPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['actualPotential'].enable()                          
+                 if(this.taskDetails && this.taskDetails.status && this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['actualPotential'].disable();
+                  }
+                  else{
+                  this.taskDetailsForm.controls['actualPotential'].enable()                        
+                  }
+                                            
                 }
               }
             }
@@ -1764,7 +2124,12 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskTitle'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskTitle'].enable()
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskTitle'].disable()
+                  }
+                  else{
+                     this.taskDetailsForm.controls['taskTitle'].enable()
+                  }
                 }
               }
               if( response[8].description){
@@ -1777,7 +2142,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDescription'].disable()
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDescription'].enable()
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDescription'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDescription'].enable()
+                  }
+                  
                 }
               }
               if(response[8].assignee){
@@ -1801,7 +2172,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskStatus'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskStatus'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskStatus'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskStatus'].enable() 
+                  }
+                                          
                 }
               }
               if(response[8].category){
@@ -1814,7 +2191,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskCategory'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskCategory'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskCategory'].enable() 
+                  }
+                                           
                 }
               }
               if(response[8].type){
@@ -1827,7 +2210,14 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskType'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskType'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskType'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskType'].enable()  
+                  }
+                   
+                                         
                 }
               }
               if(response[8].location){
@@ -1840,7 +2230,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskLocation'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskLocation'].enable()                          
+                   if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskLocation'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskLocation'].enable()      
+                  }
+                                       
                 }
               }
               if(response[8].manager){
@@ -1870,9 +2266,17 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskMin'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDays'].enable()  
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDays'].disable()  
+                    this.taskDetailsForm.controls['taskHrs'].disable()  
+                    this.taskDetailsForm.controls['taskMin'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDays'].enable()  
                   this.taskDetailsForm.controls['taskHrs'].enable()  
-                  this.taskDetailsForm.controls['taskMin'].enable()                          
+                  this.taskDetailsForm.controls['taskMin'].enable()       
+                  }
+                                            
                 }
               }
               if(response[8].priority){
@@ -1885,7 +2289,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['userTaskPriority'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['userTaskPriority'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['userTaskPriority'].enable()        
+                  }
+                                         
                 }
               }
               if(response[8].targetResult){
@@ -1898,7 +2308,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetResult'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetResult'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetResult'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetResult'].enable()         
+                  }
+                                         
                 }
               }
               if(response[8].targetPotential){
@@ -1911,7 +2327,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['targetPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['targetPotential'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['targetPotential'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['targetPotential'].enable()          
+                  }
+                                           
                 }
               }
               if(response[8].dueDate){
@@ -1924,7 +2346,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['taskDate'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['taskDate'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['taskDate'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['taskDate'].enable()          
+                  }
+                                           
                 }
               }
               if(response[8].locationArea){
@@ -1937,7 +2365,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['areaName'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['areaName'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['areaName'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['areaName'].enable()           
+                  }
+                                          
                 }
               }
               if(response[8].actualPotential){
@@ -1950,7 +2384,13 @@ export class ViewTaskComponent implements OnInit {
                   this.taskDetailsForm.controls['actualPotential'].disable()                 
                 }
                 else{
-                  this.taskDetailsForm.controls['actualPotential'].enable()                          
+                  if(this.taskDetails.status.name==='Completed'){
+                    this.taskDetailsForm.controls['actualPotential'].disable()
+                  }
+                  else{
+                    this.taskDetailsForm.controls['actualPotential'].enable()          
+                  }
+                                            
                 }
               }
             }
@@ -1969,7 +2409,14 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskTitle'].disable()
                     }
                     else{
-                      this.taskDetailsForm.controls['taskTitle'].enable()
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskTitle'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskTitle'].enable()
+                      }
+
+                     
                     }
                   }
                   if( response[0].description){
@@ -1982,7 +2429,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskDescription'].disable()
                     }
                     else{
-                      this.taskDetailsForm.controls['taskDescription'].enable()
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskDescription'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskDescription'].enable()
+                      }
+                      
                     }
                   }
                   if(response[0].assignee){
@@ -2006,7 +2459,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskStatus'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['taskStatus'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskStatus'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskStatus'].enable()  
+                      }
+                                              
                     }
                   }
                   if(response[0].category){
@@ -2019,7 +2478,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['userTaskCategory'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['userTaskCategory'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['userTaskCategory'].enable()   
+                      }
+                                               
                     }
                   }
                   if(response[0].type){
@@ -2032,7 +2497,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['userTaskType'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['userTaskType'].enable()                          
+                       if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['userTaskType'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['userTaskType'].enable()  
+                      }
+                                               
                     }
                   }
                   if(response[0].location){
@@ -2045,7 +2516,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskLocation'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['taskLocation'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskLocation'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskLocation'].enable() 
+                      }
+                                                
                     }
                   }
                   if(response[0].manager){
@@ -2075,9 +2552,17 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskMin'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['taskDays'].enable()  
-                      this.taskDetailsForm.controls['taskHrs'].enable()  
-                      this.taskDetailsForm.controls['taskMin'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskDays'].disable()  
+                        this.taskDetailsForm.controls['taskHrs'].disable()  
+                        this.taskDetailsForm.controls['taskMin'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskDays'].enable()  
+                        this.taskDetailsForm.controls['taskHrs'].enable()  
+                        this.taskDetailsForm.controls['taskMin'].enable() 
+                      }
+                                                
                     }
                   }
                   if(response[0].priority){
@@ -2090,7 +2575,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['userTaskPriority'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['userTaskPriority'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['userTaskPriority'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['userTaskPriority'].enable() 
+                      }
+                                               
                     }
                   }
                   if(response[0].targetResult){
@@ -2103,7 +2594,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['targetResult'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['targetResult'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['targetResult'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['targetResult'].enable() 
+                      }
+                                               
                     }
                   }
                   if(response[0].targetPotential){
@@ -2116,7 +2613,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['targetPotential'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['targetPotential'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['targetPotential'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['targetPotential'].enable()  
+                      }
+                                              
                     }
                   }
                   if(response[0].dueDate){
@@ -2129,7 +2632,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskDate'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['taskDate'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskDate'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskDate'].enable()   
+                      }
+                                              
                     }
                   }
                   if(response[0].locationArea){
@@ -2142,7 +2651,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['areaName'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['areaName'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['areaName'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['areaName'].enable()  
+                      }
+                                               
                     }
                   }
                   if(response[0].actualPotential){
@@ -2155,7 +2670,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['actualPotential'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['actualPotential'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['actualPotential'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['actualPotential'].enable()  
+                      }
+                                               
                     }
                   }
                 }
@@ -2172,7 +2693,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskTitle'].disable()
                     }
                     else{
-                      this.taskDetailsForm.controls['taskTitle'].enable()
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskTitle'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskTitle'].enable() 
+                      }
+                      
                     }
                   }
                   if( response[1].description){
@@ -2185,7 +2712,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskDescription'].disable()
                     }
                     else{
-                      this.taskDetailsForm.controls['taskDescription'].enable()
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskDescription'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskDescription'].enable() 
+                      }
+                      
                     }
                   }
                   if(response[1].assignee){
@@ -2209,7 +2742,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskStatus'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['taskStatus'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskStatus'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskStatus'].enable()
+                      }
+                                                
                     }
                   }
                   if(response[1].category){
@@ -2222,7 +2761,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['userTaskCategory'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['userTaskCategory'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['userTaskCategory'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['userTaskCategory'].enable()   
+                      }
+                                            
                     }
                   }
                   if(response[1].type){
@@ -2235,7 +2780,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['userTaskType'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['userTaskType'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['userTaskType'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['userTaskType'].enable()  
+                      }
+                                               
                     }
                   }
                   if(response[1].location){
@@ -2248,7 +2799,12 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskLocation'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['taskLocation'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskLocation'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskLocation'].enable() 
+                      }                        
                     }
                   }
                   if(response[1].manager){
@@ -2276,9 +2832,17 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskMin'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['taskDays'].enable()  
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskDays'].disable()  
+                      this.taskDetailsForm.controls['taskHrs'].disable()  
+                      this.taskDetailsForm.controls['taskMin'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskDays'].enable()  
                       this.taskDetailsForm.controls['taskHrs'].enable()  
-                      this.taskDetailsForm.controls['taskMin'].enable()                          
+                      this.taskDetailsForm.controls['taskMin'].enable()
+                      } 
+                                                
                     }
                   }
                   if(response[1].priority){
@@ -2317,7 +2881,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['targetPotential'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['targetPotential'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['targetPotential'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['targetPotential'].enable()
+                      } 
+                                                
                     }
                   }
                   if(response[1].dueDate){
@@ -2330,7 +2900,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['taskDate'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['taskDate'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['taskDate'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['taskDate'].enable()  
+                      } 
+                                              
                     }
                   }
                   if(response[1].locationArea){
@@ -2343,7 +2919,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['areaName'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['areaName'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['areaName'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['areaName'].enable()    
+                      } 
+                                              
                     }
                   }
                   if(response[1].actualPotential){
@@ -2356,7 +2938,13 @@ export class ViewTaskComponent implements OnInit {
                       this.taskDetailsForm.controls['actualPotential'].disable()                 
                     }
                     else{
-                      this.taskDetailsForm.controls['actualPotential'].enable()                          
+                      if(this.taskDetails.status.name==='Completed'){
+                        this.taskDetailsForm.controls['actualPotential'].disable()
+                      }
+                      else{
+                        this.taskDetailsForm.controls['actualPotential'].enable()    
+                      } 
+                                              
                     }
                   }
                 }
@@ -2365,6 +2953,13 @@ export class ViewTaskComponent implements OnInit {
             }
           }
           else {
+            if(this.taskDetails.status.name==='Completed'){
+              this.disableFormControl();
+              
+            }
+            else{
+              this.enableFormControl();
+            }
             this.bTaskStatus = true;
             this.bTaskCategory = true;
             this.bTaskType = true;
@@ -2385,6 +2980,15 @@ export class ViewTaskComponent implements OnInit {
         }
         else if (this.activityType === 'UpdateFollowUP') {
 
+          // if(this.taskDetails.status.name==='Completed'){
+          //   this.taskDetailsForm.controls['areaName'].disable()
+          // this.taskDetailsForm.controls['selectMember'].disable()
+          // }
+          // else{
+          //   this.taskDetailsForm.controls['areaName'].enable()
+          // this.taskDetailsForm.controls['selectMember'].enable()
+          // }
+
           this.bTaskStatus = false;
           this.bTaskCategory = false;
           this.bTaskType = false;
@@ -2401,17 +3005,54 @@ export class ViewTaskComponent implements OnInit {
           this.bAssigneeName = true;
           this.bTaskAreaName = false;
           this.bFollowupButtonAfterEnquiry = true;
-          this.bTaskActualPotential=false
-  
+          this.bTaskActualPotential=false;
         }
       })
     })
+     }
+     disableFormControl(){
+      this.taskDetailsForm.controls['taskTitle'].disable()
+      this.taskDetailsForm.controls['taskDescription'].disable()
+      this.taskDetailsForm.controls['areaName'].disable()
+      this.taskDetailsForm.controls['taskDate'].disable()
+      this.taskDetailsForm.controls['userTaskCategory'].disable()
+      this.taskDetailsForm.controls['userTaskType'].disable()
+      this.taskDetailsForm.controls['taskLocation'].disable()
+      this.taskDetailsForm.controls['selectTaskManger'].disable()
+      this.taskDetailsForm.controls['taskDays'].disable()
+      this.taskDetailsForm.controls['taskHrs'].disable()
+      this.taskDetailsForm.controls['taskMin'].disable()
+      this.taskDetailsForm.controls['userTaskPriority'].disable()
+      this.taskDetailsForm.controls['taskStatus'].disable()
+      this.taskDetailsForm.controls['targetResult'].disable()
+      this.taskDetailsForm.controls['targetPotential'].disable()
+      this.taskDetailsForm.controls['selectMember'].disable()
+      this.taskDetailsForm.controls['actualPotential'].disable()
+                    //  this.taskDetailsForm.controls['taskTitle'].disable()
+     }
+     enableFormControl(){
+      this.taskDetailsForm.controls['taskTitle'].enable()
+      this.taskDetailsForm.controls['taskDescription'].enable()
+      this.taskDetailsForm.controls['areaName'].enable()
+      this.taskDetailsForm.controls['taskDate'].enable()
+      this.taskDetailsForm.controls['userTaskCategory'].enable()
+      this.taskDetailsForm.controls['userTaskType'].enable()
+      this.taskDetailsForm.controls['taskLocation'].enable()
+      this.taskDetailsForm.controls['selectTaskManger'].enable()
+      this.taskDetailsForm.controls['taskDays'].enable()
+      this.taskDetailsForm.controls['taskHrs'].enable()
+      this.taskDetailsForm.controls['taskMin'].enable()
+      this.taskDetailsForm.controls['userTaskPriority'].enable()
+      this.taskDetailsForm.controls['taskStatus'].enable()
+      this.taskDetailsForm.controls['targetResult'].enable()
+      this.taskDetailsForm.controls['targetPotential'].enable()
+      this.taskDetailsForm.controls['selectMember'].enable()
+      this.taskDetailsForm.controls['actualPotential'].enable()
      }
   resetErrors() {
     this.taskError = null;
   }
   autoGrowTextZone(e) {
-    console.log('eeeeee',e)
     e.target.style.height = "0px";
     e.target.style.height = (e.target.scrollHeight + 15) + "px";
   }
@@ -2551,12 +3192,23 @@ export class ViewTaskComponent implements OnInit {
     })
   }
   handleTaskEstDuration(estDuration: any) {
-    this.estDurationWithDay = this.taskDueDays;
-    const estDurationDay = this.taskDetailsForm.controls.taskDays.value
-    const estDurationHour = this.taskDetailsForm.controls.taskHrs.value
-    const estDurationMinute = this.taskDetailsForm.controls.taskMin.value
-    this.estTime = { "days": estDurationDay, "hours": estDurationHour, "minutes": estDurationMinute };
-
+    let estDurationDay:any;
+    let estDurationHour:any;
+    let estDurationMinute:any;
+    if(this.taskDetailsForm && this.taskDetailsForm.controls && this.taskDetailsForm.controls.taskDays && 
+      this.taskDetailsForm.controls.taskDays.value){
+      estDurationDay = this.taskDetailsForm.controls.taskDays.value;
+    }
+    if(this.taskDetailsForm && this.taskDetailsForm.controls && this.taskDetailsForm.controls.taskHrs && 
+      this.taskDetailsForm.controls.taskHrs.value){
+      estDurationHour = this.taskDetailsForm.controls.taskHrs.value;
+    }
+    if(this.taskDetailsForm && this.taskDetailsForm.controls && this.taskDetailsForm.controls.taskMin && 
+      this.taskDetailsForm.controls.taskMin.value){
+      estDurationMinute = this.taskDetailsForm.controls.taskMin.value;}
+      if(estDurationDay && estDurationHour && estDurationMinute){
+        this.estTime = { "days": estDurationDay, "hours": estDurationHour, "minutes": estDurationMinute };
+      }
   }
   getTaskPriorityListData() {
     const _this=this;
@@ -2637,25 +3289,35 @@ export class ViewTaskComponent implements OnInit {
       const createNoteData: any = {
         "note": this.notesTextarea
       }
-      if (this.updateUserType === ('PROVIDER' || 'CONSUMER')) {
+      if (this.updateUserType === ('PROVIDER' || 'CONSUMER') && this.taskDetails && updateTaskData) {
         this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response) => {
-          this.api_loadingSaveTask = true;
-          this.updateResponse = response;
-          if (this.updateResponse = true) {
-            this.crmService.activityCloseWithNotes(this.taskDetails.taskUid, createNoteData).subscribe((response) => {
-              setTimeout(() => {
-                this.api_loadingSaveTask = true;
-                this.snackbarService.openSnackBar('Successfully updated activity');
-                this.router.navigate(['provider', 'task']);
-              }, projectConstants.TIMEOUT_DELAY);
-            },
-              (error) => {
-                setTimeout(() => {
-                  this.api_loadingSaveTask = false;
-                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                }, projectConstants.TIMEOUT_DELAY);
-              })
+          if(response){
+            this.api_loadingSaveTask = true;
+            this.hideBackBtn=false;
+            if(response){
+              this.updateResponse = response;
+              if (this.updateResponse = true) {
+                this.crmService.activityCloseWithNotes(this.taskDetails.taskUid, createNoteData).subscribe((res) => {
+                  if(res){
+                    setTimeout(() => {
+                      this.api_loadingSaveTask = true;
+                      this.hideBackBtn=false;
+                      this.snackbarService.openSnackBar('Successfully updated activity');
+                      this.router.navigate(['provider', 'task']);
+                    }, projectConstants.TIMEOUT_DELAY);
+                  }
+                },
+                  (error) => {
+                    setTimeout(() => {
+                      this.api_loadingSaveTask = false;
+                      this.hideBackBtn=true;
+                      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    }, projectConstants.TIMEOUT_DELAY);
+                  })
+              }
+            }
           }
+          
         },
           (error) => {
             setTimeout(() => {
@@ -2686,32 +3348,43 @@ export class ViewTaskComponent implements OnInit {
         "note": this.notesTextarea
       }
       if (this.activityType === 'UpdateFollowUP') {
-        this.crmService.enquiryNotes(this.enquiryUid, createNoteData).subscribe((response: any) => {
-          this.api_loading = true;
-          this.notesTextarea = '';
-          setTimeout(() => {
-            this.getEnquiryDetailsRefresh()
-            this.api_loading = false;
-          }, projectConstants.TIMEOUT_DELAY);
-          this.snackbarService.openSnackBar('Remarks added successfully');
-        },
-          (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          })
+        if(this.enquiryUid && createNoteData){
+          this.crmService.enquiryNotes(this.enquiryUid, createNoteData).subscribe((response: any) => {
+            if(response){
+              this.api_loading = true;
+              this.notesTextarea = '';
+              setTimeout(() => {
+                this.getEnquiryDetailsRefresh()
+                this.api_loading = false;
+              }, projectConstants.TIMEOUT_DELAY);
+              this.snackbarService.openSnackBar('Remarks added successfully');
+            }
+          },
+            (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+            })
+        }
+        
       }
       else {
-        this.crmService.addNotes(this.taskDetails.taskUid, createNoteData).subscribe((response: any) => {
-          this.api_loading = true;
-          this.notesTextarea = '';
-          setTimeout(() => {
-            this.getTaskDetailsRefresh()
-            this.api_loading = false;
-          }, projectConstants.TIMEOUT_DELAY);
-          this.snackbarService.openSnackBar('Remarks added successfully');
-        },
-          (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          })
+        if(this.taskDetails && this.taskDetails.taskUid && createNoteData){
+          this.crmService.addNotes(this.taskDetails.taskUid, createNoteData).subscribe((response: any) => {
+            if(response){
+              this.api_loading = true;
+              this.notesTextarea = '';
+              setTimeout(() => {
+                this.getTaskDetailsRefresh()
+                this.api_loading = false;
+              }, projectConstants.TIMEOUT_DELAY);
+              this.snackbarService.openSnackBar('Remarks added successfully');
+            }
+          },
+            (error) => {
+              if(error){
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+              }
+            })
+        }
       }
 
     }
@@ -2722,80 +3395,93 @@ export class ViewTaskComponent implements OnInit {
   }
   selectStatus(status: any) {
     console.log('status', status)
-    if (status.name === 'Pending') {
-      if(status.id){
-        this.followUpStatusInProgressToPending = status.id;
-      }
+    if (status && (status.name === 'Pending')) {
       document.getElementById('A').style.boxShadow = "none";
-      // document.getElementById('B').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
       document.getElementById('C').style.boxShadow = "none";
       this.crmService.statusToPendingFollowUp(this.enquiryId).subscribe((response) => {
-        console.log('afterupdateFollowUpData', response);
-        setTimeout(() => {
-          this.taskDetailsForm.reset();
-          this.snackbarService.openSnackBar('Successfully updated to ' + status.name.toLowerCase() + ' mode');
-          this.router.navigate(['provider', 'crm']);
-        }, projectConstants.TIMEOUT_DELAY);
-      },
-        (error) => {
-          setTimeout(() => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }, projectConstants.TIMEOUT_DELAY);
-        })
-    }
-    else if (status.name === 'Rejected') {
-      this.api_loadingCancelledStatus=true;
-      if(status.id){
-        this.fiollowUpStatusCancelledToRejected = status.id;
-      }
-      document.getElementById('A').style.boxShadow = "none";
-      document.getElementById('C').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
-      this.crmService.statusToRejectedFollowUP(this.enquiryId).subscribe((response) => {
-        console.log('afterupdateFollowUpData', response);
-        setTimeout(() => {
-          this.taskDetailsForm.reset();
-          this.snackbarService.openSnackBar('Successfully updated to ' + status.name.toLowerCase() + ' mode');
-          this.api_loadingCancelledStatus=false;
-          this.router.navigate(['provider', 'crm']);
-        }, projectConstants.TIMEOUT_DELAY);
-      },
-        (error) => {
-          setTimeout(() => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }, projectConstants.TIMEOUT_DELAY);
-        })
-    }
-    else if (status.name === 'Proceed') {
-      this.api_loadingCompletedStatus=true;
-      if(status.id){
-        this.followUpStatusComplToProceed = status.id
-      }
-      document.getElementById('A').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
-      document.getElementById('C').style.boxShadow = "none";
-      console.log(' this.enquiryId', this.enquiryId)
-      if (this.taskDetails.status.name != 'Proceed') {
-        this.crmService.statusToProceed(this.enquiryId).subscribe((response) => {
+        if(response){
+          // console.log('afterupdateFollowUpData', response);
           setTimeout(() => {
             this.taskDetailsForm.reset();
-            this.snackbarService.openSnackBar('Successfully updated');
-            this.api_loadingCompletedStatus=false;
+            if(status&& status.name){
+              this.snackbarService.openSnackBar('Successfully updated to ' + status.name.toLowerCase() + ' mode');
+            }
             this.router.navigate(['provider', 'crm']);
           }, projectConstants.TIMEOUT_DELAY);
+        }
+      },
+        (error) => {
+          setTimeout(() => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }, projectConstants.TIMEOUT_DELAY);
+        })
+    }
+    else if (status && (status.name === 'Rejected')) {
+      if(this.enquiryId){
+      this.api_loadingCancelledStatus=true;
+      this.hideBackBtn=false;
+      document.getElementById('A').style.boxShadow = "none";
+      document.getElementById('C').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
+        this.crmService.statusToRejectedFollowUP(this.enquiryId).subscribe((response) => {
+          if(response){
+            console.log('afterupdateFollowUpData', response);
+            setTimeout(() => {
+              this.taskDetailsForm.reset();
+              if(status && status.name){
+                this.snackbarService.openSnackBar('Successfully updated to ' + status.name.toLowerCase() + ' mode');
+              }
+              this.api_loadingCancelledStatus=false;
+              this.hideBackBtn=true
+              this.router.navigate(['provider', 'crm']);
+            }, projectConstants.TIMEOUT_DELAY);
+          }
+          
         },
           (error) => {
             setTimeout(() => {
+              this.hideBackBtn=true
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }, projectConstants.TIMEOUT_DELAY);
+          })
+      }
+      
+    }
+    else if (status && (status.name === 'Proceed')) {
+      if(this.enquiryId){
+        this.api_loadingCompletedStatus=true;
+        this.hideBackBtn=false;
+        document.getElementById('A').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
+        document.getElementById('C').style.boxShadow = "none";
+        console.log(' this.enquiryId', this.enquiryId);
+      if (this.taskDetails.status.name !== 'Proceed') {
+        this.crmService.statusToProceed(this.enquiryId).subscribe((response) => {
+          if(response){
+            setTimeout(() => {
+              this.taskDetailsForm.reset();
+              this.snackbarService.openSnackBar('Successfully updated');
+              this.api_loadingCompletedStatus=false;
+              this.hideBackBtn=true;
+              this.router.navigate(['provider', 'crm']);
+            }, projectConstants.TIMEOUT_DELAY);
+          }
+        },
+          (error) => {
+            setTimeout(() => {
+              this.hideBackBtn=true;
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }, projectConstants.TIMEOUT_DELAY);
           })
       }
       else {
         this.crmService.statusToProceedFollowUp2(this.enquiryId).subscribe((response) => {
-          setTimeout(() => {
-            this.taskDetailsForm.reset();
-            this.snackbarService.openSnackBar('Successfully updated');
-            this.api_loadingCompletedStatus=false;
-            this.router.navigate(['provider', 'crm']);
-          }, projectConstants.TIMEOUT_DELAY);
+          if(response){
+            setTimeout(() => {
+              this.taskDetailsForm.reset();
+              this.snackbarService.openSnackBar('Successfully updated');
+              this.api_loadingCompletedStatus=false;
+              this.router.navigate(['provider', 'crm']);
+            }, projectConstants.TIMEOUT_DELAY);
+          }
         },
           (error) => {
             setTimeout(() => {
@@ -2803,10 +3489,9 @@ export class ViewTaskComponent implements OnInit {
             }, projectConstants.TIMEOUT_DELAY);
           })
       }
-
-
     }
 
+    }
   }
   //new ui method end
 
@@ -2827,7 +3512,7 @@ export class ViewTaskComponent implements OnInit {
       else {
         this.api_loading1 = true;
         setTimeout(() => {
-          if (this.activityType === 'UpdateFollowUP') {
+          if (this.activityType && (this.activityType === 'UpdateFollowUP')) {
             this.getEnquiryDetailsRefresh()
           }
           else {
@@ -2839,9 +3524,6 @@ export class ViewTaskComponent implements OnInit {
       }
     });
   }
-
-
-
   viewAttachment(attachment) {
     const ViewFileRef = this.dialog.open(ViewAttachmentComponent, {
       panelClass: ["popup-class", "confirmationmainclass"],
@@ -2891,30 +3573,32 @@ export class ViewTaskComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(response => {
-      this.notesText = response;
-      if (response === 'Cancel') {
-        setTimeout(() => {
-          this.api_loading = false;
-          if (this.activityType === 'UpdateFollowUP') {
-            this.getEnquiryDetailsRefresh()
-          }
-          else {
-            this.getTaskDetailsRefresh()
-          }
-        }, projectConstants.TIMEOUT_DELAY);
+      if(response){
+        if (response === 'Cancel') {
+          setTimeout(() => {
+            this.api_loading = false;
+            if (this.activityType && (this.activityType === 'UpdateFollowUP')) {
+              this.getEnquiryDetailsRefresh()
+            }
+            else {
+              this.getTaskDetailsRefresh()
+            }
+          }, projectConstants.TIMEOUT_DELAY);
+        }
+        else {
+          this.api_loading = true;
+          setTimeout(() => {
+            this.api_loading = false;
+            if (this.activityType && (this.activityType === 'UpdateFollowUP')) {
+              this.getEnquiryDetailsRefresh()
+            }
+            else {
+              this.getTaskDetailsRefresh()
+            }
+          }, projectConstants.TIMEOUT_DELAY);
+        }
       }
-      else {
-        this.api_loading = true;
-        setTimeout(() => {
-          this.api_loading = false;
-          if (this.activityType === 'UpdateFollowUP') {
-            this.getEnquiryDetailsRefresh()
-          }
-          else {
-            this.getTaskDetailsRefresh()
-          }
-        }, projectConstants.TIMEOUT_DELAY);
-      }
+      
 
     });
   }
@@ -2941,43 +3625,64 @@ export class ViewTaskComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe((response: any) => {
-      this.getTaskDetails();
+      if(response){
+        this.getTaskDetails();
+      }
     });
   }
   getDate() {
     this.taskDetails.notes.forEach(
       (date: any) => {
-        console.log('dateTime', date);
-        console.log('date.createdDate', date.createdDate)
-        let dateHour = date.createdDate.slice(11, 13)
-        console.log('dateHour', Number(dateHour))
-        let dateHr1: any;
-        let dateHr12: any;
-        let dateHr2: any;
-        let dateMonth: any;
-        let meridianAm: string = 'am';
-        let meridianPm: string = 'pm';
-        dateMonth = date.createdDate.slice(3, 5);
-        console.log('dateMonth', dateMonth);
-        if (dateHour < 12) {
-          dateHr1 = dateHour;
-          console.log('dateHr1', dateHr1);
-          this.totalTimeDisplay = dateHr1 + ':' + dateMonth + ' ' + meridianAm;
-          console.log('totalTimeDisplayHr1', this.totalTimeDisplay)
+        // console.log('dateTime', date);
+        // console.log('date.createdDate', date.createdDate)
+        if(date){
+          let dateHour:any;
+          let dateHr1: any;
+          let dateHr12: any;
+          let dateHr2: any;
+          let dateMonth: any;
+          let meridianAm: string = 'am';
+          let meridianPm: string = 'pm';
+          if(date.createdDate){
+            dateHour = date.createdDate.slice(11, 13);
+            // console.log('dateHour', Number(dateHour))
+          }
+          if(date.createdDate){
+            dateMonth = date.createdDate.slice(3, 5);
+            // console.log('dateHour', Number(dateHour))
+          }
+          if(dateHour || dateMonth){
+            if (dateHour && (dateHour < 12)) {
+              dateHr1 = dateHour;
+              console.log('dateHr1', dateHr1);
+              if(dateHr1 && dateMonth && meridianAm){
+                this.totalTimeDisplay = dateHr1 + ':' + dateMonth + ' ' + meridianAm;
+                // console.log('totalTimeDisplayHr1', this.totalTimeDisplay)
+              }
+            }
+            else if (dateHour && (dateHour === 12)) {
+              dateHr12 = dateHour;
+              console.log('dateHr12', dateHr12);
+              if(dateHr12 && dateMonth && meridianPm){
+                this.totalTimeDisplay = dateHr12 + ':' + dateMonth + ' ' + meridianPm;
+                // console.log('totalTimeDisplayHr12', this.totalTimeDisplay);  
+              }
+            }
+            else {
+              if(dateHour){
+                dateHr2 = dateHour - 12;
+                // console.log('dateHr2', dateHr1);
+                if(dateHr2 && dateMonth && meridianPm){
+                  this.totalTimeDisplay = dateHr2 + ':' + dateMonth + ' ' + meridianPm;
+                }
+                // console.log('totalTimeDisplayHr2', this.totalTimeDisplay)
+              }
+             
+            }
+          }
+          
         }
-        else if (dateHour === 12) {
-          dateHr12 = dateHour;
-          console.log('dateHr12', dateHr12);
-          this.totalTimeDisplay = dateHr12 + ':' + dateMonth + ' ' + meridianPm;
-          console.log('totalTimeDisplayHr12', this.totalTimeDisplay)
-
-        }
-        else {
-          dateHr2 = dateHour - 12;
-          console.log('dateHr2', dateHr1);
-          this.totalTimeDisplay = dateHr2 + ':' + dateMonth + ' ' + meridianPm;
-          console.log('totalTimeDisplayHr2', this.totalTimeDisplay)
-        }
+        
       }
     )
 
