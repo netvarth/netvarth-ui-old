@@ -742,7 +742,7 @@ export class ViewLeadQnrComponent implements OnInit {
         event.answers.answerLine.forEach((item)=>{
           if(item && item.answer && item.answer.fileUpload){
             item.answer.fileUpload.forEach((res:any,index)=>{
-              this.updateKyc();
+              this.updateKyc()
             })
           }
         })
