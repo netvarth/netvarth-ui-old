@@ -1,7 +1,7 @@
 <section class="card">
   <div class="title-gb no-padding">
-    <div class="dash-head text-primary" *ngIf="hideBackBtn && headerName">
-      <span class="fa fa-arrow-left pointer-cursor border-cirlce" (click)="goBack()"></span>&nbsp;
+    <div class="dash-head text-primary" >
+      <span *ngIf="hideBackBtn && headerName" class="fa fa-arrow-left pointer-cursor border-cirlce" (click)="goBack()"></span>&nbsp;
       {{headerName}}
     </div>
   </div>

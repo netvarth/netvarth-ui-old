@@ -1,8 +1,8 @@
 <!-----card header start-->
 <section class="card cardBoxShadow">
     <div class="title-gb no-padding">
-        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head" *ngIf="!api_loading_CreateActivity">
-            <span class="fa fa-arrow-left pointer-cursor" (click)="goback()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head" >
+            <span *ngIf="!api_loading_CreateActivity" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             {{selectHeader}}
         </div>
     </div>
