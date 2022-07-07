@@ -44,8 +44,8 @@
         </div>
       </div>
       <hr />
-      <div *ngIf="showQuestionnaire && questionaire" class="quest">
-        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
+      <div *ngIf="showQuestionnaire && questionaire" class="quest" [ngClass]="{'opacity':  api_loading_UpdateKyc}">
+        <app-questionnaire [ngClass]="{'opacity':  api_loading_UpdateKyc}" [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
           (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
       </div>
     </div>

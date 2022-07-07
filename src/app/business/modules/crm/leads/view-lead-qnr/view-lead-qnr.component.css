@@ -577,6 +577,10 @@ height: 2.5rem;
 .cursorDiasable{
 cursor: not-allowed;
 }
+.opacity{
+  opacity: 20%;
+  cursor: not-allowed;
+}
 
 
 
