@@ -139,12 +139,12 @@
       <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
         (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
-    <!-- <ng-container>
+    <ng-container>
       <div *ngIf="showQuestionnaire && questionaire" class="quest">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
           (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
       </div>
-    </ng-container> -->
+    </ng-container>
   </ng-container>
   <div *ngIf="leadInfo.status.name==='New'" class="mgn-up-20">
     <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm"
