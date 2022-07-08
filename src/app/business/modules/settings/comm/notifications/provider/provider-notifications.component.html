@@ -13,9 +13,17 @@
     </div>
   </div>
 </section>
+<section *ngIf="!waitlistStatus && !appointment_status && !donations_status && !order_status && !api_loading">
+  <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
+    <div class="token-appt">
+      To setup 'Notifications', Appointment manager/QManager/Order manager/Donations need to be enabled from your
+      settings.
+    </div>
+  </div>
+</section>
 
-
-<section class="mgn-lt-10 mgn-rt-10 card" *ngIf="!api_loading">
+<section class="mgn-lt-10 mgn-rt-10 card" 
+*ngIf="(waitlistStatus || appointment_status || donations_status || order_status) && !api_loading">
 
   <mat-tab-group (selectedTabChange)="tabClick($event)"  >
     <mat-tab class="notifilabel" label="Token Notifications" *ngIf="showToken && waitlistStatus" >
@@ -60,3 +68,4 @@
 </mat-tab>
   </mat-tab-group>
 </section>
+
