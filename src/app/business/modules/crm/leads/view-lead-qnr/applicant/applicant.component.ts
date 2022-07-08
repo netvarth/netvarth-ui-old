@@ -250,7 +250,7 @@ export class ApplicantComponent implements OnInit {
           fileObjFinal['file'] = pic;
           fileObjFinal['type'] = type;
           this.filesToUpload.push(fileObjFinal);
-          // console.log('this.filesToUpload', this.filesToUpload);
+          console.log('this.filesToUpload', this.filesToUpload);
           this.sendApplicantInfo();
         }
       }).catch((error) => {

@@ -11,7 +11,7 @@ import { WordProcessor } from "../../../../../shared/services/word-processor.ser
 import { MatDialog } from "@angular/material/dialog";
 import { CrmSelectMemberComponent } from "../../../../../business/shared/crm-select-member/crm-select-member.component";
 import { TeleBookingService } from '../../../../../shared/services/tele-bookings-service';
-// import { SharedFunctions } from "../../../../../shared/functions/shared-functions";
+import { SharedFunctions } from "../../../../../shared/functions/shared-functions";
 
 
 @Component({
@@ -108,7 +108,7 @@ export class ViewLeadQnrComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private teleService: TeleBookingService,
-    // private sharedFunctions: SharedFunctions
+    private sharedFunctions: SharedFunctions
   ) {
     this.activatedRoute.params.subscribe(
       (params: any) => {
@@ -329,7 +329,9 @@ export class ViewLeadQnrComponent implements OnInit {
       if (this.applicantsInfo[applicantIndex].validationIds[0].attachments && this.applicantsInfo[applicantIndex].validationIds[0].attachments.length > 0) {
       } else {
         let fileData = this.getFileInfo('kyc1', filesObj);
+        console.log('fileData',fileData)
         if (fileData && fileData.length > 0 && !fileData[0]['order']) {
+          console.log('fileData[0]',fileData[0])
           fileData[0]['order'] = this.filesCount++;
           this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].validationIds[0].attachments = fileData;
@@ -582,19 +584,19 @@ export class ViewLeadQnrComponent implements OnInit {
       } else {
         this.api_loading_UpdateKycProceed = true;
         console.log('this.questionAnswers.answers',this.questionAnswers.answers)
-        this.submitQuestionnaire(this.leadInfo.uid);
-        // this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
-        //   this.api_loading = false;
-        //   if (data.length === 0) {
-        //     this.submitQuestionnaire(this.leadInfo.uid);
-        //   } else {
-        //     this.api_loading_UpdateKycProceed = false;
-        //   }
-        //   this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
-        // }, error => {
-        //   this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        //   this.api_loading = false;
-        // });
+        // this.submitQuestionnaire(this.leadInfo.uid);
+        this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+          this.api_loading = false;
+          if (data.length === 0) {
+            this.submitQuestionnaire(this.leadInfo.uid);
+          } else {
+            this.api_loading_UpdateKycProceed = false;
+          }
+          this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
+        }, error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          this.api_loading = false;
+        });
       }
 
     } else if (this.leadInfo.status.name === 'Login') {
