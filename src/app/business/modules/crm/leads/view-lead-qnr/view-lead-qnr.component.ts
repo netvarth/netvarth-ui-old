@@ -222,27 +222,32 @@ export class ViewLeadQnrComponent implements OnInit {
   //   console.log("After:", this.applicantsInfo);
   // }
   removeApplicant(applicantInfo, applicationIndex) {
-    if(applicantInfo && (applicantInfo['status'])){
-      if (this.applicantsInfo && this.applicantsInfo[applicantInfo['applicantid']]) {
-        delete this.applicantsInfo[applicantInfo['applicantid']];
-        if (this.applicants) {
-          const index = this.applicants.indexOf(applicantInfo['applicantid']);
-          this.applicants.splice(index, 1);
-          console.log("After:", this.applicantsInfo);
-        }
+    console.log('applicantInfo',applicantInfo)
+     if (applicantInfo && (applicantInfo['status'] === 'New')) {
+       if (this.applicantsInfo && this.applicantsInfo[applicantInfo['applicantid']]) {
+         delete this.applicantsInfo[applicantInfo['applicantid']];
+         if (this.applicants) {
+           const index = this.applicants.indexOf(applicantInfo['applicantid']);
+           this.applicants.splice(index, 1);
+           console.log("After:", this.applicantsInfo);
+           this.snackbarService.openSnackBar('Successfully removed coapplicant');
+         }
+       }
+     }
+     else{
+      if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
+        this.crmService.deleteCoApplicant(applicantInfo['applicantid'],this.leadInfo.uid).subscribe((response) => {
+          if (response) {
+            this.initLead();
+            console.log(response)
+            console.log("After:", this.applicantsInfo);
+            this.snackbarService.openSnackBar('Successfully removed coapplicant');
+          }
+        })
       }
-    }
-    // else if(applicantInfo && (applicantInfo['status']==='KYC Updated')) {
-    //   if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
-    //     this.crmService.deleteCoApplicant(applicantInfo['applicantid'],this.leadInfo.uid).subscribe((response) => {
-    //       if (response) {
-    //         this.initLead();
-    //         console.log(response)
-    //         console.log("After:", this.applicantsInfo);
-    //       }
-    //     })
-    //   }
-    // }
+     }
+    
+    
   }
 
   addCoApplicant() {

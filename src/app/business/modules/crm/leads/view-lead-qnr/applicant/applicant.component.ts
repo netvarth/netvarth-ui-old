@@ -280,12 +280,25 @@ export class ApplicantComponent implements OnInit {
     this.addApplicant.emit(applicantInfo);
   }
   removApplicant(applicantId) {
-    let removeApplicant={
-      applicantid:applicantId,
-      status:this.leadInfo.status.name
-
+    console.log('applicantId',this.applicant)
+    if(this.applicant && this.applicant.id){
+      let removeApplicant={
+        applicantid:this.applicant.id,
+        status:this.leadInfo.status.name
+  
+      }
+      this.removeApplicant.emit(removeApplicant);
     }
-    this.removeApplicant.emit(removeApplicant);
+    else{
+      let removeApplicant={
+        applicantid:applicantId,
+        status:this.leadInfo.status.name
+  
+      }
+      this.removeApplicant.emit(removeApplicant);
+    }
+    
+    
   }
   getApplicantInfo() {
     let applicantInfo: any = {

@@ -76,6 +76,7 @@ export class CreateTaskComponent implements OnInit {
   public rupee_symbol = '₹';
   api_loading_CreateActivity:boolean;
   src: any;
+  taskmasterId:any;
   constructor(private locationobj: Location,
     private router: Router,
     private activated_route: ActivatedRoute,
@@ -173,6 +174,9 @@ export class CreateTaskComponent implements OnInit {
         console.log('taskMasterCreate',taskMaster);
         console.log(' this.taskMasterData ', this.taskMasterData );
         if(taskMaster || this.taskMasterData){
+          if(this.taskMasterData.id){
+            this.taskmasterId=this.taskMasterData.id;
+          }
           if(taskMaster.title&&taskMaster.title.value){
             this.createTaskForm.controls.taskTitle.value = taskMaster.title.value;
           }
@@ -551,6 +555,7 @@ export class CreateTaskComponent implements OnInit {
       "targetPotential" : this.createTaskForm.controls.targetPotential.value,
       "estDuration" : this.estTime,
       "actualPotential":this.createTaskForm.controls.actualPotential.value,
+      "taskMasterId":this.taskmasterId
     }
     if(this.taskMasterData){
       if(this.userType==='PROVIDER' || this.userType==='CONSUMER' || this.userType==='ADMIN'){
