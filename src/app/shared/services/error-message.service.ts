@@ -9,6 +9,7 @@ export class ErrorMessagingService {
     constructor() {
     }
     getApiError(error) {
+        console.log("Get Api Error:", error);
         if (error.error && typeof error.error === 'string') {
             return error.error;
         } else if (typeof error === 'string') {

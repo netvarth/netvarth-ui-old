@@ -95,8 +95,10 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.service = this.item.item;
                 console.log("Appointment Info :",this.service)
                 this.timingCaption = 'Next Available Time';
-                this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);
-                this.buttonCaption = 'Get Appointment';
+                this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);                                
+                this.buttonCaption = this.getTerminologyTerm('get_appointment');
+                this.buttonCaption = (this.buttonCaption === 'Get_appointment')? 'Get Appointment': this.buttonCaption;
+                               
                 break;
             case 'donation':
                 this.service = this.item.item;
@@ -218,6 +220,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
     getTerminologyTerm(term) {
         const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
+        console.log(this.terminology);
         if (this.terminology) {
             return this.wordProcessor.firstToUpper((this.terminology[term_only]) ? this.terminology[term_only] : ((term === term_only) ? term_only : term));
         } else {

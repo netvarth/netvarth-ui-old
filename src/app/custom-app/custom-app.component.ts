@@ -195,8 +195,11 @@ export class CustomAppComponent implements OnInit, OnDestroy {
         if (status) {
           this.viewDashboard();
         } else {
-          const passParam = { callback: 'dashboard' };
-          this.doLogin('consumer', passParam);
+          // const passParam = { callback: 'dashboard' };
+          // this.doLogin('consumer', passParam);
+          let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId='+this.accountEncId;
+          this.lStorageService.setitemonLocalStorage('target', dashboardUrl);
+          this.router.navigate([this.accountEncId , 'login']);
         }
       });
   }

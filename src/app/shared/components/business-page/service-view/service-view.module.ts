@@ -13,10 +13,8 @@ import { TruncateModule } from '../../../pipes/limitTo.module';
 import { CardModule } from '../../card/card.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ServiceViewComponent } from './service-view.component';
-import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer-join/join.component.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Routes, RouterModule } from '@angular/router';
-import { SignupModule } from '../../signup/signup.module';
 
 import { VirtualFieldsModule } from '../../../../ynw_consumer/components/virtualfields/virtualfields.module';
 import { DomainConfigGenerator } from '../../../../shared/services/domain-config-generator.service';
@@ -38,10 +36,8 @@ const routes: Routes = [
         TruncateModule,
         CardModule,
         MatDialogModule,
-        ConsumerJoinModule,
         MatTooltipModule,
         VirtualFieldsModule,
-        SignupModule,
         [RouterModule.forChild(routes)]
     ],
     declarations: [

@@ -9,8 +9,6 @@ import { CapitalizeFirstPipeModule } from '../../../../shared/pipes/capitalize.m
 import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { OwlModule } from 'ngx-owl-carousel';
-import { ConsumerJoinModule } from '../../../../ynw_consumer/components/consumer-join/join.component.module';
-import { SignupModule } from '../../signup/signup.module';
 import { CardModule } from "../../card/card.module"
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
@@ -19,8 +17,6 @@ export function homeHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ 'assets/i18n/home/', '.json');
 }
 import { projectConstantsLocal } from "../../../constants/project-constants";
-
-
 
 const routes: Routes = [
   { path: '', component: CatalogItemComponent}
@@ -35,8 +31,6 @@ const routes: Routes = [
     HeaderModule,
     CapitalizeFirstPipeModule,
     MatDialogModule,
-    ConsumerJoinModule,
-    SignupModule,
     LoadingSpinnerModule,
     OwlModule,
     CardModule,

@@ -174,7 +174,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.scrollhideclass.emit(false);
   }
   ngOnInit() {
-    if (this.lStorageService.getitemfromLocalStorage('reqFrom')=== 'cuA' || this.lStorageService.getitemfromLocalStorage('reqFrom')=== 'CUSTOM_WEBSITE') {
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom')=== 'cuA' || this.lStorageService.getitemfromLocalStorage('reqFrom')=== 'CUSTOM_WEBSITE' || this.customId) {
       this.appLogo = true;
     }
     this.pageSource = this.includedfrom;
@@ -395,7 +395,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const pnavigationExtras: NavigationExtras = {
           queryParams: pqueryParams
         };
-        this.router.navigate([`${this.customId}/dashboard`, 'profile'], pnavigationExtras);
+        this.router.navigate([usertype, 'profile'], pnavigationExtras);
         break;
      case 'wallet':
         this.router.navigate([usertype, 'mywallet']);
@@ -425,8 +425,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
           queryParams: qParams
         };
        this.router.navigate([usertype, 'inbox'], navigationExtras1);
-      // this.router.navigate([`${this.customId}/dashboard`,'inbox'], navigationExtras1);
-
         break;
       case 'members':
         this.router.navigate([usertype, 'members']);
@@ -443,8 +441,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
           queryParams: queryParams
         };
-               this.router.navigate([usertype], navigationExtras);
-       // this.router.navigate([`${this.customId}/dashboard`], navigationExtras);
+        if (this.customId) {
+          this.router.navigate([this.customId, 'dashboard']);
+        } else {
+          this.router.navigate([usertype], navigationExtras);
+        }
         break;
     }
   }

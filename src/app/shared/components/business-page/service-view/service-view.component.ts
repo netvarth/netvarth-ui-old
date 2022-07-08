@@ -16,8 +16,7 @@ import { LocalStorageService } from '../../../services/local-storage.service';
 import { GroupStorageService } from '../../../services/group-storage.service';
 // import { VirtualFieldsComponent } from '../../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
-import { SignUpComponent } from '../../signup/signup.component';
+// import { SignUpComponent } from '../../signup/signup.component';
 import { MatSidenav } from '@angular/material/sidenav';
 import { AuthService } from '../../../../shared/services/auth-service';
 import { CheckavailabilityComponent } from '../../checkavailability/checkavailability.component';
@@ -1312,43 +1311,43 @@ export class ServiceViewComponent implements OnInit {
     };
     this.routerobj.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  doLogin(origin?, passParam?) {
-    const current_provider = passParam['current_provider'];
-    const is_test_account = true;
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class', this.theme],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        theme: this.theme,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      // this.loading_direct = true;
-      if (result === 'success') {
-        this.loading_direct = true;
-        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
-        } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
-        }
-      } else if (result === 'showsignup') {
-        this.doSignup(passParam);
-      } else {
-          this.loading_direct = false;
-      }
-    });
-  }
+  // doLogin(origin?, passParam?) {
+  //   const current_provider = passParam['current_provider'];
+  //   const is_test_account = true;
+  //   const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+  //     width: '40%',
+  //     panelClass: ['loginmainclass', 'popup-class', this.theme],
+  //     disableClose: true,
+  //     data: {
+  //       type: origin,
+  //       is_provider: false,
+  //       test_account: is_test_account,
+  //       theme: this.theme,
+  //       moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     // this.loading_direct = true;
+  //     if (result === 'success') {
+  //       this.loading_direct = true;
+  //       this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+  //       const pdata = { 'ttype': 'updateuserdetails' };
+  //       this.sharedFunctionobj.sendMessage(pdata);
+  //       this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+  //       if (passParam['callback'] === 'donation') {
+  //         this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+  //       } else if (passParam['callback'] === 'appointment') {
+  //         this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
+  //       } else {
+  //           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
+  //       }
+  //     } else if (result === 'showsignup') {
+  //       this.doSignup(passParam);
+  //     } else {
+  //         this.loading_direct = false;
+  //     }
+  //   });
+  // }
   showDonation(locid, curdate, service) {
     let queryParam = {
       loc_id: locid,
@@ -1368,35 +1367,35 @@ export class ServiceViewComponent implements OnInit {
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
   }
-  doSignup(passParam?) {
-    const current_provider = passParam['current_provider'];
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'false',
-        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'appointment') {
-            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        }
-      } else {
-        this.loading_direct = false;
-      }
-    });
-  }
+  // doSignup(passParam?) {
+  //   const current_provider = passParam['current_provider'];
+  //   const dialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: 'false',
+  //       moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'success') {
+  //       this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+  //       const pdata = { 'ttype': 'updateuserdetails' };
+  //       this.sharedFunctionobj.sendMessage(pdata);
+  //       this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+  //       if (passParam['callback'] === 'donation') {
+  //         this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+  //       } else if (passParam['callback'] === 'appointment') {
+  //           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+  //       } else {
+  //           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+  //       }
+  //     } else {
+  //       this.loading_direct = false;
+  //     }
+  //   });
+  // }
   getAvailibilityForCheckin(date, serviceTime) {
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
@@ -1461,8 +1460,11 @@ export class ServiceViewComponent implements OnInit {
         if (status) {
           this.viewDashboard();
         } else {
-          const passParam = { callback: 'dashboard' };
-          this.doLogin('consumer', passParam);
+          let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId;
+          this.lStorageService.setitemonLocalStorage('target', dashboardUrl);
+          this.routerobj.navigate([this.accountEncId, 'login']);
+          // const passParam = { callback: 'dashboard' };
+          // this.doLogin('consumer', passParam);
         }
       });
   }

@@ -10,9 +10,9 @@ import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messa
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
-import { SignUpComponent } from '../signup/signup.component';
+// import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
-import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
+// import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../modules/visualizer/visualize.component';
@@ -21,7 +21,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
-import { SnackbarService } from '../../services/snackbar.service';
+// import { SnackbarService } from '../../services/snackbar.service';
 import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegeneratordetail.component';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
@@ -304,6 +304,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
   accountIdExists = false;
   providercustomId: any;
   provideraccEncUid: any;
+  callback: string;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -318,7 +319,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     public wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService,
+    // private snackbarService: SnackbarService,
     private domainConfigService: DomainConfigGenerator,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor,
@@ -747,6 +748,9 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
             } else {
               this.setGalleryNotFound();
             }
+          }
+          if (this.callback === 'communicate') {
+            this.communicateHandler();
           }
         }
       );
@@ -1665,13 +1669,17 @@ console.log("fgf"+JSON.stringify(loc));
   redirectToHistory() {
     const _this = this;
     _this.loading_direct = true;
+    let historyUrl = 'searchdetail/' + this.provider_bussiness_id + '/history';
     _this.goThroughLogin().then(
       (status) => {
         if (status) {
-          this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
+          this.router.navigateByUrl(historyUrl);
+          // this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
         } else {
-          const passParam = { callback: 'history' };
-          this.doLogin('consumer', passParam);
+          this.lStorageService.setitemonLocalStorage('target', historyUrl);
+          this.router.navigate([this.accountEncId, 'login']);
+          // const passParam = { callback: 'history' };
+          // this.doLogin('consumer', passParam);
         }
       });
   }
@@ -1694,8 +1702,12 @@ console.log("fgf"+JSON.stringify(loc));
           _this.showCommunicate(providforCommunicate);
 
         } else {
-          const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
-          this.doLogin('consumer', passParam);
+          let communicateUrl = this.accountEncId + '/' + this.userEncId + '?callback=communicate';
+          console.log(communicateUrl);
+          this.lStorageService.setitemonLocalStorage('target', communicateUrl);
+          this.router.navigate([this.accountEncId, 'login']);
+          // const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
+          // this.doLogin('consumer', passParam);
         }
       }
     );
@@ -1770,19 +1782,19 @@ console.log("fgf"+JSON.stringify(loc));
     }
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
+    // _this.goThroughLogin().then(
+    //   (status) => {
+    //     if (status) {
           //console.log("logged In");
-          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-          if (_this.userType === 'consumer') {
+          // _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+          // if (_this.userType === 'consumer') {
               _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer',current_provider['ctime']);
-          }
-        } else {
-          const passParam = { callback: '', current_provider: current_provider };
-          _this.doLogin('consumer', passParam);
-        }
-      });
+        //   }
+        // } else {
+        //   const passParam = { callback: '', current_provider: current_provider };
+        //   _this.doLogin('consumer', passParam);
+        // }
+      // });
   }
   appointmentClicked(location, service: any) {
     const _this = this;
@@ -1828,115 +1840,115 @@ console.log("fgf"+JSON.stringify(loc));
       this.futureAllowed = false;
     }
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-      //  console.log("Login Status:" + status);
-        if (status) {
-          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-         // console.log("User Type:" + _this.userType);
-          if (_this.userType === 'consumer') {
+    // _this.goThroughLogin().then(
+    //   (status) => {
+    //   //  console.log("Login Status:" + status);
+    //     if (status) {
+    //       _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+    //      // console.log("User Type:" + _this.userType);
+    //       if (_this.userType === 'consumer') {
               _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer',current_provider['ctime']);
-          }
-        } else {
-          const passParam = { callback: 'appointment', current_provider: current_provider };
-          _this.doLogin('consumer', passParam);
-        }
-      });
+        //   }
+        // } else {
+        //   const passParam = { callback: 'appointment', current_provider: current_provider };
+        //   _this.doLogin('consumer', passParam);
+        // }
+      // });
   }
-  doLogin(origin?, passParam?) {
-    // this.snackbarService.openSnackBar('You need to login to check in');
-    const current_provider = passParam['current_provider'];
-    // let is_test_account = null;
-    // if (current_provider) {
-    //   if (current_provider.test_account === '1') {
-    const is_test_account = true;
-    //   } else {
-    //     is_test_account = false;
-    //   }
-    // }
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class', this.theme],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        theme: this.theme,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history') {
-          this.redirectToHistory();
-        } else if (passParam['callback'] === 'dashboard') {
-          this.viewDashboard();
-        } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
-        } else if (passParam['callback'] === 'order') {
-          if (this.orderType === 'SHOPPINGLIST') {
-            this.shoppinglistupload();
-          } else {
-            this.checkout();
-          }
-        } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
-        }
-      } else if (result === 'showsignup') {
-        this.doSignup(passParam);
-      } else {
-        this.loading_direct = false;
-      }
-    });
-  }
-  doSignup(passParam?) {
-    const current_provider = passParam['current_provider'];
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'false',
-        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history') {
-          this.redirectToHistory();
-        } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'appointment') {
-            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        } else if (passParam['callback'] === 'order') {
-          if (this.orderType === 'SHOPPINGLIST') {
-            this.shoppinglistupload();
-          } else {
-            this.checkout();
-          }
-        } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        }
-      } else {
-        this.loading_direct = false;
-      }
-    });
-  }
+  // doLogin(origin?, passParam?) {
+  //   // this.snackbarService.openSnackBar('You need to login to check in');
+  //   const current_provider = passParam['current_provider'];
+  //   // let is_test_account = null;
+  //   // if (current_provider) {
+  //   //   if (current_provider.test_account === '1') {
+  //   const is_test_account = true;
+  //   //   } else {
+  //   //     is_test_account = false;
+  //   //   }
+  //   // }
+  //   const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+  //     width: '40%',
+  //     panelClass: ['loginmainclass', 'popup-class', this.theme],
+  //     disableClose: true,
+  //     data: {
+  //       type: origin,
+  //       is_provider: false,
+  //       test_account: is_test_account,
+  //       theme: this.theme,
+  //       moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'success') {
+  //       this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+  //       const pdata = { 'ttype': 'updateuserdetails' };
+  //       this.sharedFunctionobj.sendMessage(pdata);
+  //       this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+  //       if (passParam['callback'] === 'communicate') {
+  //         this.showCommunicate(passParam['providerId']);
+  //       } else if (passParam['callback'] === 'history') {
+  //         this.redirectToHistory();
+  //       } else if (passParam['callback'] === 'dashboard') {
+  //         this.viewDashboard();
+  //       } else if (passParam['callback'] === 'donation') {
+  //         this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+  //       } else if (passParam['callback'] === 'appointment') {
+  //         this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
+  //       } else if (passParam['callback'] === 'order') {
+  //         if (this.orderType === 'SHOPPINGLIST') {
+  //           this.shoppinglistupload();
+  //         } else {
+  //           this.checkout();
+  //         }
+  //       } else {
+  //           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer',current_provider['ctime']);
+  //       }
+  //     } else if (result === 'showsignup') {
+  //       this.doSignup(passParam);
+  //     } else {
+  //       this.loading_direct = false;
+  //     }
+  //   });
+  // }
+  // doSignup(passParam?) {
+  //   const current_provider = passParam['current_provider'];
+  //   const dialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: 'false',
+  //       moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'success') {
+  //       this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+  //       const pdata = { 'ttype': 'updateuserdetails' };
+  //       this.sharedFunctionobj.sendMessage(pdata);
+  //       this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+  //       if (passParam['callback'] === 'communicate') {
+  //         this.showCommunicate(passParam['providerId']);
+  //       } else if (passParam['callback'] === 'history') {
+  //         this.redirectToHistory();
+  //       } else if (passParam['callback'] === 'donation') {
+  //         this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+  //       } else if (passParam['callback'] === 'appointment') {
+  //           this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+  //       } else if (passParam['callback'] === 'order') {
+  //         if (this.orderType === 'SHOPPINGLIST') {
+  //           this.shoppinglistupload();
+  //         } else {
+  //           this.checkout();
+  //         }
+  //       } else {
+  //           this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+  //       }
+  //     } else {
+  //       this.loading_direct = false;
+  //     }
+  //   });
+  // }
   showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?,ctime?) {
    // console.log("Service Checkin ");
    // console.log(service);
@@ -2136,52 +2148,52 @@ console.log("fgf"+JSON.stringify(loc));
     }
   }
 
-  claimBusiness() {
-    const myidarr = this.businessjson.id;
-    if (myidarr) {
-      this.searchdetailserviceobj.getClaimmable(myidarr)
-        .subscribe(data => {
-          const claimdata = data;
-          const pass_data = {
-            accountId: myidarr,
-            sector: claimdata['sector'],
-            subSector: claimdata['subSector']
-          };
-          this.SignupforClaimmable(pass_data);
-        }, error => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        });
-    } else {
-    }
-  }
-  SignupforClaimmable(passData) {
-    this.claimdialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'true',
-        claimData: passData
-      }
-    });
-    this.claimdialogRef.afterClosed().subscribe(result => {
-    });
-  }
+  // claimBusiness() {
+  //   const myidarr = this.businessjson.id;
+  //   if (myidarr) {
+  //     this.searchdetailserviceobj.getClaimmable(myidarr)
+  //       .subscribe(data => {
+  //         const claimdata = data;
+  //         const pass_data = {
+  //           accountId: myidarr,
+  //           sector: claimdata['sector'],
+  //           subSector: claimdata['subSector']
+  //         };
+  //         this.SignupforClaimmable(pass_data);
+  //       }, error => {
+  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+  //       });
+  //   } else {
+  //   }
+  // }
+  // SignupforClaimmable(passData) {
+  //   this.claimdialogRef = this.dialog.open(SignUpComponent, {
+  //     width: '50%',
+  //     panelClass: ['signupmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       is_provider: 'true',
+  //       claimData: passData
+  //     }
+  //   });
+  //   this.claimdialogRef.afterClosed().subscribe(result => {
+  //   });
+  // }
   payClicked(locid, locname, cdate, service) {
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-          if (_this.userType === 'consumer') {
+    // _this.goThroughLogin().then(
+    //   (status) => {
+    //     if (status) {
+    //       _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
+    //       if (_this.userType === 'consumer') {
             this.showDonation(locid, cdate, service);
-          }
-        } else {
-          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service, consumer: 'consumer' };
-          this.doLogin('consumer', passParam);
-        }
-      });
+      //     }
+      //   } else {
+      //     const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service, consumer: 'consumer' };
+      //     this.doLogin('consumer', passParam);
+      //   }
+      // });
   }
   showDonation(locid, curdate, service) {
     const navigationExtras: NavigationExtras = {
@@ -2799,8 +2811,7 @@ console.log("fgf"+JSON.stringify(loc));
   }
   checkout() {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
-      let blogoUrl;
+    let blogoUrl;
       if (this.businessjson.logo) {
         blogoUrl = this.businessjson.logo.url;
       } else {
@@ -2813,26 +2824,17 @@ console.log("fgf"+JSON.stringify(loc));
       };
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-      // const navigationExtras: NavigationExtras = {
-      //   queryParams: {
-      //     account_id: this.provider_bussiness_id,
-      //     unique_id: this.provider_id,
-      //   }
-      // };
-      let queryParam = {
-        account_id: this.provider_bussiness_id,
-        unique_id: this.provider_id,
-      };
-      queryParam['customId'] = this.accountEncId;
-      queryParam['isFrom'] = 'providerdetail';
-      const navigationExtras: NavigationExtras = {
-        queryParams: queryParam,
-      };
-      this.router.navigate(['order/shoppingcart'], navigationExtras);
+      let cartUrl = 'order/shoppingcart?account_id=' + this.provider_bussiness_id + '&customId=' + this.accountEncId +
+       '&unique_id=' + this.provider_id + '&isFrom=' + 'providerdetail';
+    if (this.userType === 'consumer') {
+      this.router.navigateByUrl(cartUrl);
+      // this.router.navigate(['order/shoppingcart'], navigationExtras);
     }
     else if (this.userType === '') {
-      const passParam = { callback: 'order' };
-      this.doLogin('consumer', passParam);
+      this.lStorageService.setitemonLocalStorage('target', cartUrl);
+      this.router.navigate([this.accountEncId, 'login']);
+      // const passParam = { callback: 'order' };
+      // this.doLogin('consumer', passParam);
     }
   }
   itemDetails(item) {
@@ -2914,9 +2916,7 @@ console.log("fgf"+JSON.stringify(loc));
 
     };
     this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
-    if (this.userType === 'consumer') {
-      let blogoUrl;
+    let blogoUrl;
       if (this.businessjson.logo) {
         blogoUrl = this.businessjson.logo.url;
       } else {
@@ -2928,20 +2928,31 @@ console.log("fgf"+JSON.stringify(loc));
         'logo': blogoUrl
       };
       this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-
-          providerId: this.provider_bussiness_id,
-          unique_id: this.provider_id,
-          isFrom : 'providerdetail'
-        }
-
-      };
-      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
+    this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
+    let cartUrl = 'order/shoppingcart/checkout?providerId=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.provider_id
+    + '&isFrom=' + 'providerdetail';
+    if (this.userType === 'consumer') {
+      this.router.navigateByUrl(cartUrl);
     } else if (this.userType === '') {
-      const passParam = { callback: 'order' };
-      this.doLogin('consumer', passParam);
+      this.lStorageService.setitemonLocalStorage('target', cartUrl);
+      this.router.navigate([this.accountEncId, 'login']);
     }
+    // if (this.userType === 'consumer') {
+      
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+
+    //       providerId: this.provider_bussiness_id,
+    //       unique_id: this.provider_id,
+    //       isFrom : 'providerdetail'
+    //     }
+
+    //   };
+    //   this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
+    // } else if (this.userType === '') {
+    //   const passParam = { callback: 'order' };
+    //   this.doLogin('consumer', passParam);
+    // }
   }
 
   qrCodegeneraterOnlineID(accEncUid) {
@@ -2980,8 +2991,11 @@ console.log("fgf"+JSON.stringify(loc));
         if (status) {
           this.viewDashboard();
         } else {
-          const passParam = { callback: 'dashboard' };
-          this.doLogin('consumer', passParam);
+          let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId;
+          this.lStorageService.setitemonLocalStorage('target', dashboardUrl);
+          this.router.navigate([this.accountEncId, 'login']);
+          // const passParam = { callback: 'dashboard' };
+          // this.doLogin('consumer', passParam);
         }
       });
   }

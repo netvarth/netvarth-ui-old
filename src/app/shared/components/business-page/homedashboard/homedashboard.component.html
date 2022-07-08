@@ -1,7 +1,7 @@
 <section class="container consumer-dashhome no-padding no-padding-small" [ngClass]="theme">
     <div class="panel panel-default">
-        <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
-            <app-header [headerTitle]="" [source]="source" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
+        <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row" *ngIf="businessCustomId">
+            <app-header [headerTitle]="" [source]="source" [customId]="businessCustomId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
         </div>
         <div class="panel-body no-padding">
             <div class="content consumer-dash mgn-bt-10" *ngIf="api_loading">
@@ -10,28 +10,7 @@
             </div>
             <div class="content consumer-dash" *ngIf="!api_loading">
                 <div class="c_card card c-checkins">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" *ngIf="this.customId">
-                        <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
-                            <h1 class="ng-tns-c16-8 txt-align hello-msg" *ngIf="usr_details">
-                                <span class="ng-tns-c16-8 greeting">
-                                    Hello {{usr_details.userName}} !
-                                </span> <br>
-                                <button *ngIf="!accountId" class="mgn-up-20 find-sp-btn" mat-raised-button (click)="gotoDetails()">
-                                    {{'Home Page' | translate}}</button>
-                                <button *ngIf="!accountId" class="mgn-up-20 find-sp-btn" mat-raised-button (click)="do_search()">{{'Find_Service_Provider' | translate}} &nbsp; <i class="fa fa-search"></i></button>
-                            </h1>
-                        </div>
-                        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 bg-visible fl-right tele_button" *ngIf="showTeleBt && !fromApp">
-                            <!-- <img class="myjaldee-bg fl-right" _ngcontent-ywv-c30=""
-                                src="assets/images/myjaldee/Group92.png"> -->
-
-                                <button class="mgn-up-20 find-sp-btn telebt" mat-raised-button (click)="redirectto('profile')"><i class="fa fa-telegram tbt" aria-hidden="true"></i>  &nbsp; {{'Telegram_msg' | translate}}</button>
-
-                        </div>
-                    </div>
-
-<!-- [ngClass]="this.customId?'':'bg-yelow'" -->
-                    <h2 class="ng-tns-c16-8" [ngClass]="this.customId?'bg-yelow':'bg-yelow'">
+                    <h2 class="ng-tns-c16-8">
                         <div class="jld-option">
                             <div class="col-sm-4 col-md-4 col-lg-4 col-xs-5 mgn-up-10 no-padding-small mgn-lft-2"
                                 *ngIf="!showOrder">{{'MY BOOKINGS' | translate}}</div>
@@ -87,7 +66,7 @@
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">{{'No_Active_Bookings' | translate}}</p>
                     </div>
-                    <div class="table-outer1 booking-dash ng-tns-c16-57" *ngIf="!loading && !showOrder" [ngClass]="customId?'cuA':''">
+                    <div class="table-outer1 booking-dash ng-tns-c16-57 cuA" *ngIf="!loading && !showOrder">
 
                         <!-- begin revamp bookings -->
                         <!-- TODAY BOOKINGS-->

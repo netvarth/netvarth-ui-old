@@ -35,7 +35,9 @@ export class AuthService {
     setLoginData(data, post_data, mod) {
         this.groupService.setitemToGroupStorage('ynw-user', data);
         this.lStorageService.setitemonLocalStorage('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
-        delete post_data['password'];
+        if (post_data['password']) {
+            delete post_data['password'];
+        }
         this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
     }
     /**
@@ -118,7 +120,7 @@ export class AuthService {
             );
     }
 
-    logoutFromJaldee() {
+    logoutFromJaldee(srcUrl?) {
         const promise = new Promise<void>((resolve, reject) => {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
             const isCustomProvider = this.lStorageService.getitemfromLocalStorage('busLoginId');
@@ -132,7 +134,7 @@ export class AuthService {
                             this.router.navigate(['business', isCustomProvider, 'login']);
                         } else {
                             this.router.navigate(['business', 'login']);
-                        }                        
+                        }
                         resolve();
                     }
                 )
@@ -142,13 +144,18 @@ export class AuthService {
                         if (customId) {
                             if (reqFrom === 'cuA') {
                                 this.router.navigate(['customapp', customId]);
-                            } else if (reqFrom==='CUSTOM_WEBSITE'){
+                            } else if (reqFrom === 'CUSTOM_WEBSITE') {
                                 let source = this.lStorageService.getitemfromLocalStorage('source');
                                 this.lStorageService.removeitemfromLocalStorage('reqFrom');
                                 this.lStorageService.removeitemfromLocalStorage('source');
-                                window.location.href = source;                               
+                                window.location.href = source;
                             } else {
-                                this.router.navigate([customId]);
+                                if (srcUrl) {
+                                    this.router.navigateByUrl(srcUrl);
+                                } else {
+                                    this.router.navigate([customId]);
+                                }
+
                             }
                         } else {
                             this.router.navigate(['/']);
@@ -201,6 +208,7 @@ export class AuthService {
     }
 
     consumerLogin(post_data, moreParams?) {
+        console.log(post_data);
         post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
         this.sendMessage({ ttype: 'main_loading', action: true });
         const promise = new Promise((resolve, reject) => {
@@ -239,8 +247,34 @@ export class AuthService {
         });
         return promise;
     }
+
+    consumerLoginViaGmail(post_data) {
+        const _this = this;
+        post_data.mUniqueId = _this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        const promise = new Promise((resolve, reject) => {
+            _this.shared_services.ConsumerLogin(post_data).subscribe(data => {
+                _this.setLoginData(data, post_data, 'consumer');
+                resolve(data);
+            }, error => {
+                _this.sendMessage({ ttype: 'main_loading', action: false });
+                if (error.status === 401) {
+                    // Not registred consumer or session alredy exists
+                    reject(error);
+                    // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+                } else {
+                    if (error.error && typeof (error.error) === 'object') {
+                        error.error = _this.API_ERROR;
+                    }
+                    reject(error);
+                }
+            });
+        });
+        return promise;
+    }
+
     consumerAppLogin(post_data) {
-        post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        // post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        console.log(post_data);
         this.sendMessage({ ttype: 'main_loading', action: true });
         const promise = new Promise((resolve, reject) => {
             this.shared_services.ConsumerLogin(post_data)
@@ -252,15 +286,6 @@ export class AuthService {
                         }
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
-                        // if (moreParams === undefined) {
-                        //     this.router.navigate(['/consumer']);
-                        // } else {
-                        //     if (moreParams['bypassDefaultredirection'] === 1) {
-                        //         // const mtemp = '1';
-                        //     } else {
-                        //         this.router.navigate(['/consumer']);
-                        //     }
-                        // }
                     },
                     error => {
                         this.sendMessage({ ttype: 'main_loading', action: false });
@@ -297,6 +322,7 @@ export class AuthService {
                             // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
                         } else {
                             if (error.error && typeof (error.error) === 'object') {
+                                console.log("Error 1:", error);
                                 error.error = this.API_ERROR;
                             }
                             reject(error);
@@ -374,15 +400,21 @@ export class AuthService {
      * @returns true/false
      */
     goThroughLogin() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
             const _this = this;
             console.log("Entered to goThroughLogin Method");
             return new Promise((resolve) => {
                 if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
                     resolve(true);
+                } else if (_this.lStorageService.getitemfromLocalStorage('appId') && _this.lStorageService.getitemfromLocalStorage('installId')) {
+                    resolve(true);
                 } else {
                     resolve(false);
                 }
+            });
+        } else if (this.lStorageService.getitemfromLocalStorage('authorization')) {
+            return new Promise((resolve) => {
+                resolve(true);
             });
         } else {
             return new Promise((resolve) => {
@@ -410,11 +442,39 @@ export class AuthService {
                             }
                         }
                     );
+                } else if(qrusr && !qrpw){
+                    resolve(true);
                 } else {
                     resolve(false);
                 }
             });
         }
+    }
+
+    consumerSignupViaGoogle(post_data) {
+        this.sendMessage({ ttype: 'main_loading', action: true });
+        const promise = new Promise((resolve, reject) => {
+            this.shared_services.signUpConsumer(post_data)
+                .subscribe(
+                    data => {
+                        resolve(data);
+                    },
+                    error => {
+                        this.sendMessage({ ttype: 'main_loading', action: false });
+                        if (error.status === 401) {
+                            // Not registred consumer or session alredy exists
+                            reject(error);
+                            // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
+                        } else {
+                            if (error.error && typeof (error.error) === 'object') {
+                                error.error = this.API_ERROR;
+                            }
+                            reject(error);
+                        }
+                    });
+
+        })
+        return promise;
     }
 
     consumerAppSignup(post_data) {
@@ -427,9 +487,7 @@ export class AuthService {
                         // let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
                         // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
                         //     this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-                        // }
-                       
-                        this.setLoginData(data, post_data, 'consumer');
+                        // }                       
                         resolve(data);
                         // if (moreParams === undefined) {
                         //     this.router.navigate(['/consumer']);

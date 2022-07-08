@@ -31,6 +31,7 @@ import { ServiceDisplayModule } from '../../../../ynw_consumer/modules/service-d
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../shared/services/paytm.service';
 import { FileService } from '../../../../shared/services/file-service';
+import { AuthenticationModule } from '../../../../shared/modules/authentication/authentication.module';
 const routes: Routes = [
     { path: '', component: ConsumerCheckinComponent},
     { path: 'track/:id', loadChildren: ()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerLiveTrackModule) },
@@ -70,6 +71,7 @@ const routes: Routes = [
         BookingNoteModule,
         ServiceDisplayModule,
         BookingAccountinfoModule,
+        AuthenticationModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

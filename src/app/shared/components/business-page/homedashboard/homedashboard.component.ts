@@ -292,17 +292,6 @@ export class HomedashboardComponent implements OnInit, OnDestroy {
       if (qparams && qparams.theme) {
         this.theme = qparams.theme;
       }
-      // if (qparams && qparams.accountId) {
-      //   this.accountId = qparams.accountId;
-      //   this.shared_services.getOrderSettings(this.accountId).subscribe(
-      //     (settings: any) => {
-      //       this.orderstatus = settings.enableOrder;
-      //     }
-      //   );
-      // }
-      // if (qparams && qparams.customId) {
-      //   this.customId = qparams.customId;
-      // }
     });
     this.activated_route.paramMap.subscribe((params)=>{
       this.customId = params.get('id');
@@ -394,51 +383,6 @@ this.getAccountIdFromEncId(this.customId);
     }
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    this.carouselOne = {
-      dots: false,
-      nav: true,
-      navContainer: '.custom-nav',
-      navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-      ],
-      autoplay: false,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      loop: false,
-      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
-    };
-    this.carouselDonations = {
-      dots: false,
-      nav: true,
-      navContainer: '.custom-don-nav',
-      navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-      ],
-      autoplay: false,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      loop: false,
-      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
-    };
-    this.carouselAppointments = {
-      dots: false,
-      nav: true,
-      navContainer: '.custom-appt-nav',
-      navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-      ],
-      autoplay: false,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      loop: false,
-      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
-    };
     this.currentcheckinsTooltip = this.wordProcessor.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.wordProcessor.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.wordProcessor.getProjectMesssages('HISTORY_TOOLTIP');

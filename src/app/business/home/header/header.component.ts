@@ -40,7 +40,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   bname;
   bsector = '';
   bsubsector = '';
-  blogo = '';
+  blogo: any;
   refreshTime;
   enable_disable;
   iswiz = false; // is true when active page is wizard
@@ -227,7 +227,6 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
           this.blogo = this.userDetails.profilePicture;
         } else if (bdetails.logo) {
           this.blogo = bdetails.logo;
-
         } else {
           this.blogo = '../../../assets/images/img-null.svg';
         }

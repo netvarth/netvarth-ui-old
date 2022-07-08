@@ -225,6 +225,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 _this.image_list_popup = [];
             });
             const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+            console.log(activeUser);
             if (activeUser) {
                 _this.setDonorInfo(activeUser);
             }

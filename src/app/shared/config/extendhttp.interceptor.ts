@@ -305,19 +305,28 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     } else {
       req.headers.delete('tab');
     }
-    // if (this.lStorageService.getitemfromLocalStorage("authorizationToken")) {
-    //   let authToken = this.lStorageService.getitemfromLocalStorage("authorizationToken");
-    //   req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
-    // } else if (this.lStorageService.getitemfromLocalStorage('appId') && this.lStorageService.getitemfromLocalStorage('installId')) {
-    //   let authToken = this.lStorageService.getitemfromLocalStorage('appId') + '-' + this.lStorageService.getitemfromLocalStorage('installId');
-    //   req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
-    // } else 
-    if (this.lStorageService.getitemfromLocalStorage('pre-header') && this.lStorageService.getitemfromLocalStorage('authToken')) {
+    // authorizationToken --- For OTP Login/Signup
+    if (this.lStorageService.getitemfromLocalStorage("authorizationToken")) {
+      let authToken = this.lStorageService.getitemfromLocalStorage("authorizationToken");
+      req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+    } else if (this.lStorageService.getitemfromLocalStorage('appId') && this.lStorageService.getitemfromLocalStorage('installId')) {
+      let authToken = this.lStorageService.getitemfromLocalStorage('appId') + '-' + this.lStorageService.getitemfromLocalStorage('installId');
+      req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+    } else if (this.lStorageService.getitemfromLocalStorage('pre-header') && this.lStorageService.getitemfromLocalStorage('authToken')) {
       let authToken = this.lStorageService.getitemfromLocalStorage('pre-header') + "-" + this.lStorageService.getitemfromLocalStorage('authToken');
       req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
-    } else if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+    } else if (this.lStorageService.getitemfromLocalStorage('authToken') && !this.lStorageService.getitemfromLocalStorage('googleToken')) {
       let authToken = this.lStorageService.getitemfromLocalStorage('authToken');
-      req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+      req = req.clone({headers: req.headers.append('Authorization', authToken), withCredentials: true });
+    } else {
+      if ((customId || this.lStorageService.getitemfromLocalStorage('login')) && !this.shared_functions.checkLogin()) {
+        req = req.clone({ headers: req.headers.append('Authorization', 'browser'), withCredentials: true });
+      } else if (customId && this.shared_functions.checkLogin()){
+        this.lStorageService.removeitemfromLocalStorage('Authorization');
+      }
+    }
+    if (this.lStorageService.getitemfromLocalStorage('googleToken')) {
+      req = req.clone({ headers: req.headers.append('authToken', this.lStorageService.getitemfromLocalStorage('googleToken')), withCredentials: true });
     }
     req = req.clone({ url: url, responseType: 'json' });
 

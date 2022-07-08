@@ -902,7 +902,8 @@ export class SharedServices {
   }
 
   sendConsumerOTP(body) {
-    const url = 'consumer/oauth/credential/identify';
+    // credential
+    const url = 'consumer/oauth/identify';
     return this.servicemeta.httpPost(url, body);
   }
   verifyConsumerOTP(otp) {

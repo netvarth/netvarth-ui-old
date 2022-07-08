@@ -1,0 +1,20 @@
+::ng-deep .g-container iframe {
+    width:100%  !important;
+    text-align: center  !important;
+    margin: 0 !important;
+}
+::ng-deep .g-container iframe #container{
+    width:100vh  !important;
+    padding: 0 !important;
+}
+/* ::ng-deep .g-container iframe .container .nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-MJoBVe {
+    width:100%  !important;
+    max-width: none !important;
+} */
+.color-grey {
+    color: darkgrey !important;
+}
+.authentication {
+    max-width: 500px !important;
+    margin: auto !important;
+}

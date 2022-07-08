@@ -26,6 +26,7 @@ import {  ReactiveFormsModule } from '@angular/forms';
 import { RazorpayService } from "../../../../shared/services/razorpay.service";
 import { PaytmService } from "../../../../shared/services/paytm.service";
 import { CustomerService } from "../../../../shared/services/customer.service";
+import { AuthenticationModule } from "../../../../shared/modules/authentication/authentication.module";
 const routes: Routes = [
     {path: '', component: ConsumerDonationComponent}
 ]
@@ -55,6 +56,7 @@ const routes: Routes = [
         MatFormFieldModule,
         MatInputModule,
         ReactiveFormsModule,
+        AuthenticationModule,
         [RouterModule.forChild(routes)]
     ],
     providers: [RazorpayService, PaytmService, CustomerService]
