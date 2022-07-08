@@ -222,40 +222,51 @@ export class ApplicantComponent implements OnInit {
    
   }
   filesSelected(event, type) {
-    this.fileService.filesSelected(event, this.selectedFiles[type]).then(
-      () => {
-        for (const pic of this.selectedFiles[type].files) {
-          let fileObjFinal;
-          const size = pic["size"] / 1024;
-          if (pic["type"]) {
-            const fileObj = {
-              owner: this.activeUser,
-              fileName: pic["name"],
-              fileSize: size / 1024,
-              caption: "",
-              fileType: pic["type"].split("/")[1],
+    console.log('event',event)
+    const input = event.target.files;
+    console.log('input',input.length)
+    if(input.length===2){
+      this.fileService.filesSelected(event, this.selectedFiles[type]).then(
+        () => {
+          for (const pic of this.selectedFiles[type].files) {
+            let fileObjFinal;
+            const size = pic["size"] / 1024;
+            if (pic["type"]) {
+              const fileObj = {
+                owner: this.activeUser,
+                fileName: pic["name"],
+                fileSize: size / 1024,
+                caption: "",
+                fileType: pic["type"].split("/")[1],
+              }
+              fileObjFinal = fileObj;
+            } else {
+              const picType = "jpeg";
+              const fileObj = {
+                owner: this.activeUser,
+                fileName: pic["name"],
+                fileSize: size / 1024,
+                caption: "",
+                fileType: picType,
+              }
+              fileObjFinal = fileObj;
             }
-            fileObjFinal = fileObj;
-          } else {
-            const picType = "jpeg";
-            const fileObj = {
-              owner: this.activeUser,
-              fileName: pic["name"],
-              fileSize: size / 1024,
-              caption: "",
-              fileType: picType,
-            }
-            fileObjFinal = fileObj;
+            fileObjFinal['file'] = pic;
+            fileObjFinal['type'] = type;
+            console.log('fileObjFinal',fileObjFinal)
+            this.filesToUpload.push(fileObjFinal);
+            console.log('this.filesToUpload', this.filesToUpload);
+            this.sendApplicantInfo();
           }
-          fileObjFinal['file'] = pic;
-          fileObjFinal['type'] = type;
-          this.filesToUpload.push(fileObjFinal);
-          console.log('this.filesToUpload', this.filesToUpload);
-          this.sendApplicantInfo();
-        }
-      }).catch((error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      })
+        }).catch((error) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        })
+    }
+    else{
+      const error="Please select multiple file"
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    }
+    
   }
 
   sendApplicantInfo() {
@@ -264,6 +275,7 @@ export class ApplicantComponent implements OnInit {
       info: this.getApplicantInfo(),
       files: this.filesToUpload
     }
+    console.log("sendd files",this.filesToUpload)
     console.log("In send Applicant", applicantInfo);
     this.addApplicant.emit(applicantInfo);
   }

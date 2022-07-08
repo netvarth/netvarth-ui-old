@@ -314,34 +314,52 @@ export class ViewLeadQnrComponent implements OnInit {
     })
   }
   getFileInfo(type, list) {
+    console.log('list',list)
     let fileInfo = list.filter((fileObj) => {
+      console.log('fileObj',fileObj);
       return fileObj.type === type ? fileObj : '';
     });
+    console.log('fileInfo',fileInfo)
+    // list=''
     return fileInfo;
   }
   receivedApplicantInfo(applicant, applicantIndex) {
     console.log(applicant);
     let filesObj = applicant.files;
+    // console.log('applicant.files',applicant.files)
     if (applicant.info) {
       this.applicantsInfo[applicantIndex] = applicant.info;
     }
     if (this.applicantsInfo[applicantIndex]) {
-      if (this.applicantsInfo[applicantIndex].validationIds[0].attachments && this.applicantsInfo[applicantIndex].validationIds[0].attachments.length > 0) {
-      } else {
+      if (this.applicantsInfo[applicantIndex].validationIds[0] && this.applicantsInfo[applicantIndex].validationIds[0].attachments &&
+         this.applicantsInfo[applicantIndex].validationIds[0].attachments.length > 0) {
+      } 
+      else {
+        // console.log('else block1')
+        // console.log('filesObj',filesObj)
         let fileData = this.getFileInfo('kyc1', filesObj);
-        console.log('fileData',fileData)
-        if (fileData && fileData.length > 0 && !fileData[0]['order']) {
+        // console.log('fileData',fileData)
+         // && !fileData[0]['order']
+        if (fileData && fileData.length > 0 ) {
           console.log('fileData[0]',fileData[0])
-          fileData[0]['order'] = this.filesCount++;
+          // fileData[0]['order'] = this.filesCount++;
+          // console.log('this.filesCount',this.filesCount)
           this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].validationIds[0].attachments = fileData;
         }
       }
-      if (this.applicantsInfo[applicantIndex].validationIds[1].attachments && this.applicantsInfo[applicantIndex].validationIds[1].attachments.length > 0) {
-      } else {
+      if (this.applicantsInfo[applicantIndex].validationIds[1] && this.applicantsInfo[applicantIndex].validationIds[1].attachments && 
+        this.applicantsInfo[applicantIndex].validationIds[1].attachments.length > 0) {
+      } 
+      else {
+        // console.log('else block2')
+        // console.log('filesObj2',filesObj)
         let fileData = this.getFileInfo('kyc2', filesObj);
-        if (fileData && fileData.length > 0 && !fileData[0]['order']) {
-          fileData[0]['order'] = this.filesCount++;
+        // console.log('fileData[0]2::::',fileData[0])
+         // && !fileData[0]['order']
+        if (fileData && fileData.length > 0 ) {
+          // fileData[0]['order'] = this.filesCount++;
+          // console.log('this.filesCount2',this.filesCount)
           this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
         }
@@ -353,8 +371,9 @@ export class ViewLeadQnrComponent implements OnInit {
           if (this.applicantsInfo[applicantIndex].validationIds[2].attachments && this.applicantsInfo[applicantIndex].validationIds[2].attachments.length > 0) {
           } else {
             let fileData = this.getFileInfo('kyc3', filesObj);
-            if (fileData && fileData.length > 0 && !fileData[0]['order']) {
-              fileData[0]['order'] = this.filesCount++;
+            // && !fileData[0]['order']
+            if (fileData && fileData.length > 0 ) {
+              // fileData[0]['order'] = this.filesCount++;
               this.filesToUpload.push(fileData[0]);
               this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
             }
@@ -532,12 +551,15 @@ export class ViewLeadQnrComponent implements OnInit {
       Object.keys(this.applicantsInfo).forEach((key) => {
         applicantsList.push(this.applicantsInfo[key]);
       })
+      console.log('applicantsList',applicantsList)
       this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
         console.log('afterupdateKYCDAta', s3urls);
         this.api_loading_UpdateKyc = false;
+        console.log(s3urls.length.length)
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
-            () => {
+            (dataS3Url) => {
+              console.log('dataS3Url',dataS3Url)
               if(this.leadInfo.status.name === 'KYC Updated'){
                 this.snackbarService.openSnackBar('Updated successfully');
               }
@@ -738,7 +760,8 @@ export class ViewLeadQnrComponent implements OnInit {
       //   event.answers.answerLine.forEach((item)=>{
       //     if(item && item.answer && item.answer.fileUpload){
       //       item.answer.fileUpload.forEach((res:any,index)=>{
-      //         this.updateKyc()
+      //         // this.updateKyc()
+      //         console.log('res::::',res)
       //       })
       //     }
       //   })
