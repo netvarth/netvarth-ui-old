@@ -225,7 +225,7 @@ export class ApplicantComponent implements OnInit {
     console.log('event',event)
     const input = event.target.files;
     console.log('input',input.length)
-    if(input.length===2){
+    if(input.length < 3){
       this.fileService.filesSelected(event, this.selectedFiles[type]).then(
         () => {
           for (const pic of this.selectedFiles[type].files) {
@@ -263,7 +263,7 @@ export class ApplicantComponent implements OnInit {
         })
     }
     else{
-      const error="Please select multiple file"
+      const error="Max three file can uplaod"
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     }
     
@@ -284,7 +284,9 @@ export class ApplicantComponent implements OnInit {
     if(this.applicant && this.applicant.id){
       let removeApplicant={
         applicantid:this.applicant.id,
-        status:this.leadInfo.status.name
+        status:this.leadInfo.status.name,
+        creditScore:true,
+        leadUID:this.leadInfo.uid
   
       }
       this.removeApplicant.emit(removeApplicant);
@@ -292,8 +294,8 @@ export class ApplicantComponent implements OnInit {
     else{
       let removeApplicant={
         applicantid:applicantId,
-        status:this.leadInfo.status.name
-  
+        status:this.leadInfo.status.name,
+        creditScore:false
       }
       this.removeApplicant.emit(removeApplicant);
     }

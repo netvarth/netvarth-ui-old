@@ -96,7 +96,8 @@ export class ViewLeadQnrComponent implements OnInit {
       'monthName': 'December'
     }
   ]
-
+  methodTrigger:any;
+  kycInfo:any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -132,17 +133,20 @@ export class ViewLeadQnrComponent implements OnInit {
               (kycInfo) => {
                 console.log("KYC Info:", kycInfo);
                 _this.initApplicantForm(kycInfo);
+                this.kycInfo=kycInfo
                 // this.api_loading=false;
                 this.api_loading_UpdateKyc = false;
               }
             )
           } else {
+            console.log(':::::::::::::::::')
             let applicant = {
               parent: true,
               name: _this.leadInfo.customer.name,
               phone: _this.leadInfo.customer.phoneNo
             }
             _this.applicants = [0];
+            console.log('_this.applicantsInfo',_this.applicantsInfo)
             _this.applicantsInfo[0] = applicant;
           }
         } else if (leadInfo.status.name === 'Login') {
@@ -198,50 +202,66 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   initApplicantForm(kycList) {
+    console.log('kycList',kycList);
     this.applicants = [];
     for (let kycIndex = 0; kycIndex < kycList.length; kycIndex++) {
-      console.log(kycList[kycIndex]);
+      // console.log(kycList[kycIndex]);
       let applicant = kycList[kycIndex];
       if (!applicant.customerName) {
         applicant['customerName'] = this.leadInfo.customer.name;
       }
+      console.log('applicant11',applicant);
+      console.log('kycIndex',kycIndex)
       this.applicantsInfo[kycIndex] = applicant;
+      console.log('this.applicantsInfo[kycIndex] ',this.applicantsInfo[kycIndex] );
       console.log(this.applicantsInfo);
+     console.log(kycList[kycIndex]);
+     console.log('kycIndex',kycIndex)
       this.applicants.push(kycIndex);
     }
   }
 
-  // removeApplicant(applicantId, applicationIndex) {
-  //   console.log(applicationIndex);
-  //   console.log(applicantId);
-  //   console.log("Before:", this.applicantsInfo);
-  //   // this.applicantsInfo.splice(applicantId,1);
-  //   delete this.applicantsInfo[applicantId];
-  //   const index = this.applicants.indexOf(applicantId);
-  //   this.applicants.splice(index, 1);
-  //   console.log("After:", this.applicantsInfo);
-  // }
   removeApplicant(applicantInfo, applicationIndex) {
-    console.log('applicantInfo',applicantInfo)
+    console.log('applicantInfo',applicantInfo);
+    this.methodTrigger= applicantInfo['creditScore'];
      if (applicantInfo && (applicantInfo['status'] === 'New')) {
-       if (this.applicantsInfo && this.applicantsInfo[applicantInfo['applicantid']]) {
-         delete this.applicantsInfo[applicantInfo['applicantid']];
-         if (this.applicants) {
-           const index = this.applicants.indexOf(applicantInfo['applicantid']);
-           this.applicants.splice(index, 1);
-           console.log("After:", this.applicantsInfo);
-           this.snackbarService.openSnackBar('Successfully removed coapplicant');
-         }
-       }
+      if(applicantInfo && (applicantInfo['creditScore']===true)){
+        if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
+          this.crmService.deleteCoApplicant(applicantInfo['applicantid'],this.leadInfo.uid).subscribe((response) => {
+            if (response) {
+              this.initLead();
+              console.log(response)
+              console.log("After:", this.applicantsInfo);
+              this.snackbarService.openSnackBar('Successfully removed coapplicant');
+              // this.router.navigate(['/provider/viewleadqnr/' + applicantInfo['leadUID']]);
+            }
+          })
+        }
+      }
+      else{
+        if (this.applicantsInfo && this.applicantsInfo[applicantInfo['applicantid']]) {
+          delete this.applicantsInfo[applicantInfo['applicantid']];
+          if (this.applicants) {
+            const index = this.applicants.indexOf(applicantInfo['applicantid']);
+            this.applicants.splice(index, 1);
+            console.log("After:", this.applicantsInfo);
+            this.snackbarService.openSnackBar('Successfully removed coapplicant');
+          }
+        }
+      }
+       
      }
      else{
       if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
+        // delete this.applicantsInfo[applicantInfo['applicantid']];
         this.crmService.deleteCoApplicant(applicantInfo['applicantid'],this.leadInfo.uid).subscribe((response) => {
           if (response) {
             this.initLead();
+            // this.router.navigate(['/provider/viewleadqnr/' + applicantInfo['leadUID']]);
             console.log(response)
             console.log("After:", this.applicantsInfo);
             this.snackbarService.openSnackBar('Successfully removed coapplicant');
+            // this.router.navigate(['/provider/viewleadqnr/' + applicantInfo['leadUID']]);
           }
         })
       }
@@ -260,6 +280,7 @@ export class ViewLeadQnrComponent implements OnInit {
         id: this.leadInfo.customer.id
       }
     }
+    this.methodTrigger=== false;
   }
 
   /**
@@ -285,8 +306,13 @@ export class ViewLeadQnrComponent implements OnInit {
     return new Promise(async function (resolve, reject) {
       for (const s3UrlObj of data) {
         console.log("S3URLOBJ:", s3UrlObj);
-        const file = _this.filesToUpload.filter((fileObj) => {
-          return ((fileObj.order === s3UrlObj.orderId) ? fileObj : '');
+        console.log('_this.filesToUpload',_this.filesToUpload)
+        const file = _this.filesToUpload.filter((fileObj,index) => {
+          // s3UrlObj.orderId
+          console.log('index',index);
+          console.log(_this.filesToUpload[index]);
+
+          return ((fileObj.order === (index) ) ? fileObj : '');
         })[0];
         console.log("File:", file);
         if (file) {
@@ -340,14 +366,11 @@ export class ViewLeadQnrComponent implements OnInit {
          this.applicantsInfo[applicantIndex].validationIds[0].attachments.length > 0) {
       } 
       else {
-        // console.log('else block1')
-        // console.log('filesObj',filesObj)
         let fileData = this.getFileInfo('kyc1', filesObj);
-        // console.log('fileData',fileData)
          // && !fileData[0]['order']
         if (fileData && fileData.length > 0 ) {
           console.log('fileData[0]',fileData[0])
-          // fileData[0]['order'] = this.filesCount++;
+          fileData[0]['order'] = this.filesCount++;
           // console.log('this.filesCount',this.filesCount)
           this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].validationIds[0].attachments = fileData;
@@ -357,14 +380,10 @@ export class ViewLeadQnrComponent implements OnInit {
         this.applicantsInfo[applicantIndex].validationIds[1].attachments.length > 0) {
       } 
       else {
-        // console.log('else block2')
-        // console.log('filesObj2',filesObj)
         let fileData = this.getFileInfo('kyc2', filesObj);
-        // console.log('fileData[0]2::::',fileData[0])
          // && !fileData[0]['order']
-        if (fileData && fileData.length > 0 ) {
-          // fileData[0]['order'] = this.filesCount++;
-          // console.log('this.filesCount2',this.filesCount)
+        if (fileData && fileData.length > 0  ) {
+          fileData[0]['order'] = this.filesCount++;
           this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
         }
@@ -551,50 +570,98 @@ export class ViewLeadQnrComponent implements OnInit {
       this.submitQuestionnaire(this.leadInfo.uid, 'save');
     } else if (this.leadInfo.status.name === 'New' || this.leadInfo.status.name === 'KYC Updated') {
       this.api_loading_UpdateKyc = true;
+      console.log('this.kycInfo',this.kycInfo)
       console.log("Applicants Update", this.applicantsInfo);
       let applicantsList = [];
-      Object.keys(this.applicantsInfo).forEach((key) => {
+      // this.applicantsInfo===this.kycInfo
+      Object.keys(this.applicantsInfo).forEach((key:any) => {
+        console.log('key',key)
         applicantsList.push(this.applicantsInfo[key]);
       })
-      console.log('applicantsList',applicantsList)
-      this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
-        console.log('afterupdateKYCDAta', s3urls);
-        this.api_loading_UpdateKyc = false;
-        console.log(s3urls.length.length)
-        if (s3urls.length > 0) {
-          this.uploadAudioVideo(s3urls).then(
-            (dataS3Url) => {
-              console.log('dataS3Url',dataS3Url)
-              if(this.leadInfo.status.name === 'KYC Updated'){
-                this.snackbarService.openSnackBar('Updated successfully');
-              }
-              else{
-                this.snackbarService.openSnackBar('KYC updated successfully');
-              }
-              
-              this.api_loading_UpdateKyc = false;
-              this.initLead();
-            }, (error) => {
-              console.log("upload error", error);
-            }
-          );
-        } else {
-          if(this.leadInfo.status.name === 'KYC Updated'){
-            this.snackbarService.openSnackBar('Updated successfully');
-          }
-          else{
-            this.snackbarService.openSnackBar('KYC updated successfully');
-          }
+      if(this.methodTrigger=== true){
+        this.crmService.addkyc(this.kycInfo).subscribe((s3urls: any) => {
+          console.log('afterupdateKYCDAta', s3urls);
           this.api_loading_UpdateKyc = false;
-          this.initLead();
-        }
-      },
-        (error) => {
-          setTimeout(() => {
+          // console.log(s3urls.length.length)
+          if (s3urls.length > 0) {
+            this.uploadAudioVideo(s3urls).then(
+              (dataS3Url) => {
+                console.log('dataS3Url',dataS3Url)
+                if(this.leadInfo.status.name === 'KYC Updated'){
+                  this.snackbarService.openSnackBar('Updated successfully');
+                }
+                else{
+                  this.snackbarService.openSnackBar('KYC updated successfully');
+                }
+                
+                this.api_loading_UpdateKyc = false;
+                this.initLead();
+              }, (error) => {
+                console.log("upload error", error);
+              }
+            );
+          } else {
+            if(this.leadInfo.status.name === 'KYC Updated'){
+              this.snackbarService.openSnackBar('Updated successfully');
+            }
+            else{
+              this.snackbarService.openSnackBar('KYC updated successfully');
+            }
             this.api_loading_UpdateKyc = false;
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }, projectConstants.TIMEOUT_DELAY);
-        })
+            this.initLead();
+          }
+        },
+          (error) => {
+            setTimeout(() => {
+              this.api_loading_UpdateKyc = false;
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }, projectConstants.TIMEOUT_DELAY);
+          })
+          this.methodTrigger=== false;
+      }
+      else{
+        console.log('applicantsList',applicantsList)
+        this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
+          console.log('afterupdateKYCDAta', s3urls);
+          this.api_loading_UpdateKyc = false;
+          // console.log(s3urls.length.length)
+          if (s3urls.length > 0) {
+            this.uploadAudioVideo(s3urls).then(
+              (dataS3Url) => {
+                console.log('dataS3Url',dataS3Url)
+                if(this.leadInfo.status.name === 'KYC Updated'){
+                  this.snackbarService.openSnackBar('Updated successfully');
+                }
+                else{
+                  this.snackbarService.openSnackBar('KYC updated successfully');
+                }
+                
+                this.api_loading_UpdateKyc = false;
+                this.initLead();
+              }, (error) => {
+                console.log("upload error", error);
+              }
+            );
+          } else {
+            if(this.leadInfo.status.name === 'KYC Updated'){
+              this.snackbarService.openSnackBar('Updated successfully');
+            }
+            else{
+              this.snackbarService.openSnackBar('KYC updated successfully');
+            }
+            this.api_loading_UpdateKyc = false;
+            this.initLead();
+          }
+        },
+          (error) => {
+            setTimeout(() => {
+              this.api_loading_UpdateKyc = false;
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }, projectConstants.TIMEOUT_DELAY);
+          })
+      }
+      
+     
     }
   }
   /**
@@ -649,8 +716,10 @@ export class ViewLeadQnrComponent implements OnInit {
       this.api_loading_UpdateKycProceed = true;
       let applicantsList = [];
       Object.keys(this.applicantsInfo).forEach((key) => {
+        console.log(key)
         applicantsList.push(this.applicantsInfo[key]);
       })
+     
       this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
         console.log('afterupdateKYCDAta', s3urls);
         this.api_loading_UpdateKyc = false;
@@ -699,25 +768,9 @@ export class ViewLeadQnrComponent implements OnInit {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }, projectConstants.TIMEOUT_DELAY);
         })
+      
 
-      // this.crmService.addkyc(applicantsList).subscribe((response) => {
-      //   this.api_loading_UpdateKycProceed = true;
-      //   console.log('afterupdateKYCDAta', response);
-      //   this.uploadAudioVideo(response).then();
-      //   this.crmService.getproceedStatus(applicantsList).subscribe((response) => {
-      //     console.log('afterupdateFollowUpData', response);
-      //     this.api_loading_UpdateKycProceed = false;
-      //     this.router.navigate(['provider', 'crm']);
-      //   },
-      //     (error) => {
-      //       this.api_loading_UpdateKycProceed = false;
-      //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //     })
-      // },
-      //   (error) => {
-      //     this.api_loading_UpdateKycProceed = false;
-      //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      //   })
+      
     }
   }
 
