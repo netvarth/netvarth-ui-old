@@ -141,6 +141,7 @@ export class AuthService {
             } else {
                 this.consumerLogout().then(
                     () => {
+                        this.lStorageService.removeitemfromLocalStorage('authToken');
                         if (customId) {
                             if (reqFrom === 'cuA') {
                                 this.router.navigate(['customapp', customId]);
@@ -151,9 +152,13 @@ export class AuthService {
                                 window.location.href = source;
                             } else {
                                 if (srcUrl) {
-                                    this.router.navigateByUrl(srcUrl);
+                                    this.router.navigateByUrl(srcUrl).then();
                                 } else {
-                                    this.router.navigate([customId]);
+                                    this.router.navigate([customId]).then(
+                                        ()=> {
+                                            window.location.reload();
+                                        }
+                                    );
                                 }
 
                             }

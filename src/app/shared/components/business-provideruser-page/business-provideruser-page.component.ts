@@ -324,6 +324,7 @@ export class BusinessprovideruserPageComponent implements OnInit, AfterViewInit,
     private dateTimeProcessor: DateTimeProcessor,
     private s3Processor: S3UrlProcessor,
     private authService: AuthService,
+    
     // private customAppSerice: CustomAppService
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');

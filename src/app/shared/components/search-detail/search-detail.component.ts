@@ -1802,12 +1802,14 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         is_test_account = false;
       }
     }
+    
     const dialogRef = this.dialog.open(LoginComponent, {
       width: '50%',
       panelClass: ['loginmainclass', 'popup-class'],
       disableClose: true,
       data: {
         type: origin,
+        modal: 'dialog',
         is_provider: this.checkProvider(origin),
         test_account: is_test_account,
         moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }

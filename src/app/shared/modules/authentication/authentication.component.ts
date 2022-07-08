@@ -21,6 +21,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   separateDialCode = true;
+  loading = false;
 
   public finalResponse;
 
@@ -124,7 +125,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.lStorageService.removeitemfromLocalStorage('authorization');
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     this.lStorageService.removeitemfromLocalStorage('googleToken');
-
+    this.lStorageService.removeitemfromLocalStorage('authToken');
     if (this.phoneNumber) {
       this.dialCode = this.phoneNumber.dialCode;
       const pN = this.phoneNumber.e164Number.trim();
@@ -252,12 +253,14 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   verifyOTP() {
     this.otpSuccess = '';
     this.otpError = '';
+    this.loading = true;
     if (this.otpEntered === '' || this.otpEntered === undefined) {
       this.otpError = 'Invalid OTP';
     } else {
       this.subs.sink = this.sharedServices.verifyConsumerOTP(this.otpEntered)
         .subscribe(
           (response: any) => {
+            this.loading = false;
             let loginId;
             const pN = this.phoneNumber.e164Number.trim();
             if (pN.startsWith(this.dialCode)) {
@@ -287,6 +290,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           // this.step = 6;
 
           error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.loading= false;
             // this.actionstarted = false;
             // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           }

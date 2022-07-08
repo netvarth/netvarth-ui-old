@@ -30,6 +30,7 @@
         </div>
         <div *ngIf="step===3">
             <div class="form-group otp">
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="loading"></app-common-innerloading-spinner>
                 <h1>Verification</h1>
                 <label for="phone" class="mgn-bt-20">Please type the verification code sent to {{phoneNumber.e164Number}}</label>
                 <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>

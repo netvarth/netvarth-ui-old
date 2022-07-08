@@ -24,9 +24,11 @@
                             data-wizard-clickable="false">
                             <div [ngClass]="loggedIn ? 'row justify-content-center': ''">
                                 <div class="loading-hgt" *ngIf="!loggedIn || loading">
+                                    <app-consumer-join *ngIf="!loggedIn && !customId" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
+                                    <app-authentication *ngIf="!loggedIn && customId" (actionPerformed)="actionPerformed($event)" [accountId]="accountId"></app-authentication>
                                     <!-- <app-consumer-join *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)">
                                     </app-consumer-join> -->
-                                    <app-authentication *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)" [accountId]="accountId"></app-authentication>
+                                    <!-- <app-authentication *ngIf="!loggedIn" (actionPerformed)="actionPerformed($event)" [accountId]="accountId"></app-authentication> -->
                                     <app-common-innerloading-spinner *ngIf="loggedIn && loading">
                                     </app-common-innerloading-spinner>
                                 </div>
