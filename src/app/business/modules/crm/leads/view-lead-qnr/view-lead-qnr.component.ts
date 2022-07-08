@@ -271,6 +271,7 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   addCoApplicant() {
+     this.methodTrigger=== false;
     let maxVal = parseInt(Object.keys(this.applicantsInfo).reduce((a, b) => this.applicantsInfo[a] > this.applicantsInfo[b] ? a : b)) + 1;
     console.log(maxVal);
     this.applicants.push(maxVal);
@@ -280,7 +281,6 @@ export class ViewLeadQnrComponent implements OnInit {
         id: this.leadInfo.customer.id
       }
     }
-    this.methodTrigger=== false;
   }
 
   /**
@@ -719,55 +719,107 @@ export class ViewLeadQnrComponent implements OnInit {
         console.log(key)
         applicantsList.push(this.applicantsInfo[key]);
       })
-     
-      this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
-        console.log('afterupdateKYCDAta', s3urls);
-        this.api_loading_UpdateKyc = false;
-        this.api_loading_UpdateKycProceed = false;
-        if (s3urls.length > 0) {
-          this.uploadAudioVideo(s3urls).then(
-            () => {
-              if(this.leadInfo.status.name === 'KYC Updated'){
-                this.snackbarService.openSnackBar('Updated successfully');
-              }
-              else{
-                this.snackbarService.openSnackBar('KYC updated successfully');
-              }
-              this.api_loading_UpdateKyc = false;
-              this.api_loading_UpdateKycProceed = false;
-              if (this.leadInfo.status.name === 'New') {
-                this.proceedToCrif(applicantsList);
-              } else {
-                this.proceedAfterKycUpdation();
-              }
-
-            }, (error) => {
-              console.log("upload error", error);
-            }
-          );
-        } else {
-          if(this.leadInfo.status.name === 'KYC Updated'){
-            this.snackbarService.openSnackBar('Updated successfully');
-          }
-          else{
-            this.snackbarService.openSnackBar('KYC updated successfully');
-          }
+      if(this.methodTrigger=== true){
+        this.crmService.addkyc(this.kycInfo).subscribe((s3urls: any) => {
+          console.log('afterupdateKYCDAta', s3urls);
           this.api_loading_UpdateKyc = false;
           this.api_loading_UpdateKycProceed = false;
-          if (this.leadInfo.status.name === 'New') {
-            this.proceedToCrif(applicantsList);
+          if (s3urls.length > 0) {
+            this.uploadAudioVideo(s3urls).then(
+              () => {
+                if(this.leadInfo.status.name === 'KYC Updated'){
+                  this.snackbarService.openSnackBar('Updated successfully');
+                }
+                else{
+                  this.snackbarService.openSnackBar('KYC updated successfully');
+                }
+                this.api_loading_UpdateKyc = false;
+                this.api_loading_UpdateKycProceed = false;
+                if (this.leadInfo.status.name === 'New') {
+                  this.proceedToCrif(applicantsList);
+                } else {
+                  this.proceedAfterKycUpdation();
+                }
+  
+              }, (error) => {
+                console.log("upload error", error);
+              }
+            );
           } else {
-            this.proceedAfterKycUpdation();
-          }
-        }
-      },
-        (error) => {
-          setTimeout(() => {
+            if(this.leadInfo.status.name === 'KYC Updated'){
+              this.snackbarService.openSnackBar('Updated successfully');
+            }
+            else{
+              this.snackbarService.openSnackBar('KYC updated successfully');
+            }
             this.api_loading_UpdateKyc = false;
             this.api_loading_UpdateKycProceed = false;
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }, projectConstants.TIMEOUT_DELAY);
-        })
+            if (this.leadInfo.status.name === 'New') {
+              this.proceedToCrif(applicantsList);
+            } else {
+              this.proceedAfterKycUpdation();
+            }
+          }
+        },
+          (error) => {
+            setTimeout(() => {
+              this.api_loading_UpdateKyc = false;
+              this.api_loading_UpdateKycProceed = false;
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }, projectConstants.TIMEOUT_DELAY);
+          })
+      }
+      else{
+        this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
+          console.log('afterupdateKYCDAta', s3urls);
+          this.api_loading_UpdateKyc = false;
+          this.api_loading_UpdateKycProceed = false;
+          if (s3urls.length > 0) {
+            this.uploadAudioVideo(s3urls).then(
+              () => {
+                if(this.leadInfo.status.name === 'KYC Updated'){
+                  this.snackbarService.openSnackBar('Updated successfully');
+                }
+                else{
+                  this.snackbarService.openSnackBar('KYC updated successfully');
+                }
+                this.api_loading_UpdateKyc = false;
+                this.api_loading_UpdateKycProceed = false;
+                if (this.leadInfo.status.name === 'New') {
+                  this.proceedToCrif(applicantsList);
+                } else {
+                  this.proceedAfterKycUpdation();
+                }
+  
+              }, (error) => {
+                console.log("upload error", error);
+              }
+            );
+          } else {
+            if(this.leadInfo.status.name === 'KYC Updated'){
+              this.snackbarService.openSnackBar('Updated successfully');
+            }
+            else{
+              this.snackbarService.openSnackBar('KYC updated successfully');
+            }
+            this.api_loading_UpdateKyc = false;
+            this.api_loading_UpdateKycProceed = false;
+            if (this.leadInfo.status.name === 'New') {
+              this.proceedToCrif(applicantsList);
+            } else {
+              this.proceedAfterKycUpdation();
+            }
+          }
+        },
+          (error) => {
+            setTimeout(() => {
+              this.api_loading_UpdateKyc = false;
+              this.api_loading_UpdateKycProceed = false;
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }, projectConstants.TIMEOUT_DELAY);
+          })
+      }
+      
       
 
       

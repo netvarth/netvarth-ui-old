@@ -263,7 +263,7 @@ export class ApplicantComponent implements OnInit {
         })
     }
     else{
-      const error="Max three file can uplaod"
+      const error="Max two file can uplaod"
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     }
     
