@@ -27,7 +27,8 @@
             </div>            
             <div class="bus-page-header login-container-outer" *ngIf="loginRequired">
                 <div class="login-container">
-                    <app-login [accountId]="accountId" (actionPerformed)="loginPerformed($event)"></app-login>
+                    <app-authentication (actionPerformed)="loginPerformed($event)" [accountId]="accountId"></app-authentication>
+                    <!-- <app-login [accountId]="accountId" (actionPerformed)="loginPerformed($event)"></app-login> -->
                 </div>
             </div>
         </div>

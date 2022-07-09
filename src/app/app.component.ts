@@ -31,12 +31,12 @@ export class AppComponent implements OnInit, AfterViewInit {
    * 
    */
   ngOnInit() {
-    let token = this.lStorageService.getitemfromLocalStorage('authToken');
-    if (token) {
-      let regexToReplace = /\-/gi;
-      let authToken = token.replace(regexToReplace, "&");
-      this.lStorageService.setitemonLocalStorage('authToken', authToken);
-    }
+    // let token = this.lStorageService.getitemfromLocalStorage('authToken');
+    // if (token) {
+    //   let regexToReplace = /\-/gi;
+    //   let authToken = token.replace(regexToReplace, "&");
+    //   this.lStorageService.setitemonLocalStorage('authToken', authToken);
+    // }
 
     projectConstants = this.globalService.getGlobalConstants();
 

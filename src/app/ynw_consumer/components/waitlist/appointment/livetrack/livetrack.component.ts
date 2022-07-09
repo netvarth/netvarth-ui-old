@@ -72,6 +72,9 @@ export class ConsumerAppointmentLiveTrackComponent implements OnInit,OnDestroy {
                   if(params.account_id){
                     this.accountId = params.account_id;
                   }
+                  if(params.accountId){
+                    this.accountId = params.accountId;
+                  }
                   if(params.theme){
                     this.theme=params.theme;
                   }

@@ -193,38 +193,38 @@ export class LoginComponent implements OnInit {
       if (self.lStorageService.getitemfromLocalStorage('authToken')) {
         post_data['token'] = self.lStorageService.getitemfromLocalStorage('authToken');
       }
-      self.authService.consumerAppLogin(post_data)
-        .then(
-          () => {
-            self.lStorageService.setitemonLocalStorage('qrp', data.password);
-            let pre_header = dialCode.split('+')[1] + "-" + loginId;
-            if (self.lStorageService.getitemfromLocalStorage('authToken')) {
-              self.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-            }
-            self.actionPerformed.emit('success');
-          },
-          error => {
-            if (error.status === 401 && error.error === 'Session already exists.') {
-              const activeUser = self.lStorageService.getitemfromLocalStorage('ynw-user');
-              if (!activeUser) {
-                self.shared_services.ConsumerLogout().subscribe(
-                  () => {
-                    self.authService.consumerAppLogin(post_data).then(
-                      () => {
-                        self.lStorageService.setitemonLocalStorage('qrp', data.password);
-                        self.actionPerformed.emit('success');
-                      });
-                  }
-                )
-              } else {
-                self.lStorageService.setitemonLocalStorage('qrp', data.password);
-              }
-            } else {
-              ob.api_error = self.wordProcessor.getProjectErrorMesssages(error);
-              self.api_loading = false;
-            }
-          }
-        );
+      // self.authService.consumerAppLogin(post_data)
+      //   .then(
+      //     () => {
+      //       self.lStorageService.setitemonLocalStorage('qrp', data.password);
+      //       let pre_header = dialCode.split('+')[1] + "-" + loginId;
+      //       if (self.lStorageService.getitemfromLocalStorage('authToken')) {
+      //         self.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+      //       }
+      //       self.actionPerformed.emit('success');
+      //     },
+      //     error => {
+      //       if (error.status === 401 && error.error === 'Session already exists.') {
+      //         const activeUser = self.lStorageService.getitemfromLocalStorage('ynw-user');
+      //         if (!activeUser) {
+      //           self.shared_services.ConsumerLogout().subscribe(
+      //             () => {
+      //               self.authService.consumerAppLogin(post_data).then(
+      //                 () => {
+      //                   self.lStorageService.setitemonLocalStorage('qrp', data.password);
+      //                   self.actionPerformed.emit('success');
+      //                 });
+      //             }
+      //           )
+      //         } else {
+      //           self.lStorageService.setitemonLocalStorage('qrp', data.password);
+      //         }
+      //       } else {
+      //         ob.api_error = self.wordProcessor.getProjectErrorMesssages(error);
+      //         self.api_loading = false;
+      //       }
+      //     }
+      //   );
     }
   }
 

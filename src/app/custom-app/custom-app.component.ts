@@ -53,9 +53,6 @@ export class CustomAppComponent implements OnInit, OnDestroy {
       if (qparams && qparams.app_id) {
         this.lStorageService.setitemonLocalStorage('appId', qparams.app_id);
       }
-      if (qparams && qparams.at) {
-        this.lStorageService.setitemonLocalStorage('authToken', qparams.at);
-      }
       if (qparams && qparams.muid) {
         this.lStorageService.setitemonLocalStorage('mUniqueId', qparams.muid);
       }

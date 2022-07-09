@@ -1393,7 +1393,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     const _this = this;
     console.log("Entered to goThroughLogin Method");
     return new Promise((resolve) => {
-      if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
+      if (_this.lStorageService.getitemfromLocalStorage('authToken')) {
         resolve(true);
       } else {
         resolve(false);

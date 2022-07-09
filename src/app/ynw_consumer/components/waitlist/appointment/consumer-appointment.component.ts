@@ -489,10 +489,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     actionPerformed(status) {
         const _this = this;
-        if (status === 'success') {
-            const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+        if (status === 'success') {           
             _this.initAppointment().then(
                 (status) => {
+                    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
                     _this.getOneTimeInfo(activeUser, _this.accountId).then(
                         (questions) => {
                             console.log("Questions:", questions);

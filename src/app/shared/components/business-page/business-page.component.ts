@@ -605,13 +605,28 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               self.providercustomId = accountS3s.businessProfile.customId;
             }
             self.provideraccEncUid = accountS3s.businessProfile.accEncUid;
-            if (self.providercustomId) {
-              self.lStorageService.setitemonLocalStorage('customId', self.providercustomId);
+            let accountIdFromStorage = self.lStorageService.getitemfromLocalStorage('accountId');
+            if (accountIdFromStorage && accountIdFromStorage!=accountS3s.businessProfile.id && self.groupService.getitemFromGroupStorage('ynw-user')) {
+              self.authService.doLogout().then (
+                () => {
+                  if (self.providercustomId) {
+                    self.lStorageService.setitemonLocalStorage('customId', self.providercustomId);
+                  } else {
+                    self.lStorageService.setitemonLocalStorage('customId', self.provideraccEncUid);
+                  }
+                  self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
+                  resolve(true);
+                }
+              )
             } else {
-              self.lStorageService.setitemonLocalStorage('customId', self.provideraccEncUid);
-            }
-            self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
-            resolve(true);
+              if (self.providercustomId) {
+                self.lStorageService.setitemonLocalStorage('customId', self.providercustomId);
+              } else {
+                self.lStorageService.setitemonLocalStorage('customId', self.provideraccEncUid);
+              }
+              self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
+              resolve(true);
+            }            
           });
     })
 
@@ -1710,13 +1725,15 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       const _this = this;
       console.log("Entered to goThroughLogin Method");
       return new Promise((resolve) => {
-        if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
+        if (_this.lStorageService.getitemfromLocalStorage('authToken')) {
           resolve(true);
         } else {
           resolve(false);
         }
       });
     } else {
+
+      /// Check google token have to check this one needed or not    
       return new Promise((resolve) => {
         const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
         let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');

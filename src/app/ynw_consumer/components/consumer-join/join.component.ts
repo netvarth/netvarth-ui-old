@@ -244,22 +244,22 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
       } else {
 
         post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-        console.log("Before Checking authToken");
-        console.log("Token: " + this.lStorageService.getitemfromLocalStorage('authToken'));
-        if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-          post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
-        }
+        // console.log("Before Checking authToken");
+        // console.log("Token: " + this.lStorageService.getitemfromLocalStorage('authToken'));
+        // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+        //   post_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
+        // }
         this.authService.consumerLogin(post_data, moreparams)
           .then(
             () => {
               const encrypted = this.shared_services.set(data.password, projectConstantsLocal.KEY);
               this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
               this.lStorageService.setitemonLocalStorage('qrp', data.password);
-              let pre_header = dialCode.split('+')[1] + "-" + loginId;
-              if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-                this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-              }
-              console.log("235:", this.data);
+              // let pre_header = dialCode.split('+')[1] + "-" + loginId;
+              // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+              //   this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+              // }
+              // console.log("235:", this.data);
               if (this.data && (!Array.isArray(this.data) && this.data.length!==0)) {
                 this.dialogRef.close('success');
               } else {
@@ -435,9 +435,9 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
             'loginId': this.user_details.userProfile.primaryMobileNo,
             'password': post_data.password
           };
-          if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-            login_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
-          }
+          // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+          //   login_data['token'] = this.lStorageService.getitemfromLocalStorage('authToken');
+          // }
           // this.dialogRef.close();
           this.authService.consumerAppLogin(login_data).then(
               (login_info: any) => {
@@ -449,10 +449,10 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
                     login_info['firstName'] = this.user_details.userProfile['firstName'];
                     login_info['lastName'] = this.user_details.userProfile['lastName'];
                     login_info['userName'] = login_info['firstName'] + ' ' + login_info['lastName'];
-                    let pre_header = dialCode.split('+')[1] + "-" + this.user_details.userProfile.primaryMobileNo;
-                    if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-                      this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-                    }
+                    // let pre_header = dialCode.split('+')[1] + "-" + this.user_details.userProfile.primaryMobileNo;
+                    // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                    //   this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                    // }
                     this.authService.setLoginData(login_info, login_data, 'consumer');
                     const pdata = { 'ttype': 'updateuserdetails' };
                     this.authService.sendMessage(pdata);

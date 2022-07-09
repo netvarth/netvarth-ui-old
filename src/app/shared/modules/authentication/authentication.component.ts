@@ -121,12 +121,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
    */
   sendOTP() {
     this.phoneError = null;
-    // this.lStorageService.removeitemfromLocalStorage('authToken');
+    this.lStorageService.removeitemfromLocalStorage('authToken');
     this.lStorageService.removeitemfromLocalStorage('authorization');
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     this.lStorageService.removeitemfromLocalStorage('googleToken');
-    this.lStorageService.removeitemfromLocalStorage('authToken');
-    if (this.phoneNumber) {
+        if (this.phoneNumber) {
       this.dialCode = this.phoneNumber.dialCode;
       const pN = this.phoneNumber.e164Number.trim();
       let loginId = pN;

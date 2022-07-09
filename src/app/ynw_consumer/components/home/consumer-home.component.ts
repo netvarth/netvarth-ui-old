@@ -286,6 +286,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
       if (qparams && qparams.customId) {
         this.customId = qparams.customId;
+      } else {
+        this.lStorageService.removeitemfromLocalStorage('customId')
+        this.lStorageService.removeitemfromLocalStorage('accountId');
       }
     });
   }

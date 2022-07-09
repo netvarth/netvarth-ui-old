@@ -220,10 +220,10 @@ export class AuthService {
             this.shared_services.ConsumerLogin(post_data)
                 .subscribe(
                     data => {
-                        let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
-                        if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-                            this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-                        }
+                        // let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
+                        // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
+                        //     this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
+                        // }
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
                         if (moreParams === undefined) {
@@ -284,11 +284,7 @@ export class AuthService {
         const promise = new Promise((resolve, reject) => {
             this.shared_services.ConsumerLogin(post_data)
                 .subscribe(
-                    data => {
-                        let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
-                        if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-                            this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-                        }
+                    data => {                        
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
                     },
@@ -407,11 +403,13 @@ export class AuthService {
     goThroughLogin() {
         if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
             const _this = this;
+            let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
             console.log("Entered to goThroughLogin Method");
             return new Promise((resolve) => {
-                if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
-                    resolve(true);
-                } else if (_this.lStorageService.getitemfromLocalStorage('appId') && _this.lStorageService.getitemfromLocalStorage('installId')) {
+                // if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
+                //     resolve(true);
+                // } else 
+                if (_this.lStorageService.getitemfromLocalStorage('appId') && _this.lStorageService.getitemfromLocalStorage('installId') && qrusr) {
                     resolve(true);
                 } else {
                     resolve(false);
@@ -425,8 +423,9 @@ export class AuthService {
             return new Promise((resolve) => {
                 const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
                 let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+                let customId = this.lStorageService.getitemfromLocalStorage('customId');
                 qrusr = JSON.parse(qrusr);
-                if (qrusr && qrpw) {
+                if (!customId && qrusr && qrpw) {
                     const data = {
                         'countryCode': qrusr.countryCode,
                         'loginId': qrusr.loginId,
@@ -447,11 +446,11 @@ export class AuthService {
                             }
                         }
                     );
-                } else if(qrusr && !qrpw){
+                } else if(customId && qrusr){
                     resolve(true);
                 } else {
                     resolve(false);
-                }
+            }
             });
         }
     }
