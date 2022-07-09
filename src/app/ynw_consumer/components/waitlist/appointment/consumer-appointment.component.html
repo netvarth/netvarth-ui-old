@@ -7,8 +7,8 @@
         </app-booking-accountinfo>
     </div>
 </div>
-<section #consumer_appointment class="consumerAppt" [ngClass]="theme?theme:''"
-    [ngClass]="smallDevice?'container':'container-fluid'">
+<section #consumer_appointment class="consumerAppt" 
+    [ngClass]="[smallDevice?'container':'container-fluid', theme?theme:'']">
     <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
     <div  class="customLoader" *ngIf="loadingPaytm">
         <app-common-innerloading-spinner ></app-common-innerloading-spinner>
