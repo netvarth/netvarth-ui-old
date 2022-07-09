@@ -47,6 +47,11 @@ export class CustomAppComponent implements OnInit, OnDestroy {
     private lStorageService: LocalStorageService
   ) {
     this.activatedRoute.queryParams.subscribe(qparams => {
+      if (qparams && qparams.cl_dt) {
+        if ((qparams.cl_dt=="true" || qparams.cl_dt==true) && !this.lStorageService.getitemfromLocalStorage('cleared')) {
+          this.clearStorage();
+        }
+      }
       if (qparams && qparams.inst_id) {
         this.lStorageService.setitemonLocalStorage('installId', qparams.inst_id);
       }
@@ -59,6 +64,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
       if(qparams && qparams.mode) {
         this.lStorageService.setitemonLocalStorage('ios', true);
       }
+      
     });
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -363,4 +369,8 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   //   };
   //   this.router.navigate(['consumer', 'appointment'], navigationExtras);
   // }
+  clearStorage() {
+    this.lStorageService.clearAll();
+    this.lStorageService.setitemonLocalStorage('cleared', true);
+  }
 }

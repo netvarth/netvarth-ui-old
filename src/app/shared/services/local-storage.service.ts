@@ -11,14 +11,14 @@ import { Injectable } from "@angular/core";
 export class LocalStorageService {
 
     /* holds the variables which not removed by clearLocalstorage() method */
-    dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'qrp', 'qB', 'mUniqueId', 'authToken', 'reqFrom', 'source', 'translatevariable','appId', 'installId', 'order', 'order_sp'];
-    
+    dont_delete_localstorage = ['ynw-locdet', 'ynw-createprov', 'supportName', 'supportPass', 'userType', 'version', 'activeSkin', 'qrp', 'qB', 'mUniqueId', 'authToken', 'reqFrom', 'source', 'translatevariable', 'appId', 'installId', 'order', 'order_sp'];
+
     /**
      * Default constructor
      */
     constructor(
         // @Inject(PLATFORM_ID) private platformId: object
-        ) {
+    ) {
     }
 
     /**
@@ -27,9 +27,9 @@ export class LocalStorageService {
      */
     public getitemfromLocalStorage(itemname) {
         // if (isPlatformBrowser(this.platformId)) {
-            if (localStorage.getItem(itemname) !== 'undefined') {
-                return JSON.parse(localStorage.getItem(itemname));
-            }
+        if (localStorage.getItem(itemname) !== 'undefined') {
+            return JSON.parse(localStorage.getItem(itemname));
+        }
         // }
         // return null;
     }
@@ -40,7 +40,7 @@ export class LocalStorageService {
      */
     public setitemonLocalStorage(itemname, itemvalue) {
         // if (isPlatformBrowser(this.platformId)) {
-            localStorage.setItem(itemname, JSON.stringify(itemvalue));
+        localStorage.setItem(itemname, JSON.stringify(itemvalue));
         // }
     }
     /**
@@ -49,7 +49,7 @@ export class LocalStorageService {
      */
     public removeitemfromLocalStorage(itemname) {
         // if (isPlatformBrowser(this.platformId)) {
-            localStorage.removeItem(itemname);
+        localStorage.removeItem(itemname);
         // }
     }
     /**
@@ -57,13 +57,22 @@ export class LocalStorageService {
      */
     public clearLocalstorage() {
         // if (isPlatformBrowser(this.platformId)) {
-            this.removeitemfromLocalStorage('ynw-credentials');
-            for (let index = 0; index < localStorage.length; index++) {
-                if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
-                    localStorage.removeItem(localStorage.key(index));
-                    index = index - 1; // manage index after remove
-                }
+        this.removeitemfromLocalStorage('ynw-credentials');
+        for (let index = 0; index < localStorage.length; index++) {
+            if (this.dont_delete_localstorage.indexOf(localStorage.key(index)) === -1) {
+                localStorage.removeItem(localStorage.key(index));
+                index = index - 1; // manage index after remove
             }
+        }
         // }
+    }
+    /**
+     * Method to clear the local storage items
+     */
+    public clearAll() {
+        for (let index = 0; index < localStorage.length; index++) {
+            localStorage.removeItem(localStorage.key(index));
+            index = index - 1; // manage index after remove
+        }
     }
 }
