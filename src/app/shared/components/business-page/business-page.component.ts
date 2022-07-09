@@ -609,6 +609,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             if (accountIdFromStorage && accountIdFromStorage!=accountS3s.businessProfile.id && self.groupService.getitemFromGroupStorage('ynw-user')) {
               self.authService.doLogout().then (
                 () => {
+                  self.setSystemDate();
                   if (self.providercustomId) {
                     self.lStorageService.setitemonLocalStorage('customId', self.providercustomId);
                   } else {

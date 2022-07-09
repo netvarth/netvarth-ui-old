@@ -13,7 +13,6 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SharedServices } from '../../../../shared/services/shared-services';
 
-
 @Component({
   selector: 'app-catalog-item',
   templateUrl: './catalog-item.component.html',
@@ -616,7 +615,7 @@ export class CatalogItemComponent implements OnInit {
     else {
       this.lStorageService.setitemonLocalStorage('order', this.cartItems);
     }
-    let cartUrl = 'order/shoppingcart?account_id=' + this.provider_bussiness_id + '&customId=' + this.businessCustomId + '&unique_id=' 
+    let cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id=' 
     + this.s3UniqueId + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
     if (this.userType === 'consumer') {
       this.router.navigateByUrl(cartUrl);
@@ -737,6 +736,14 @@ export class CatalogItemComponent implements OnInit {
 
     // };
     let cartUrl = 'order/shoppingcart/checkout?providerId=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.s3UniqueId;
+   
+    // this.authService.goThroughLogin().then((status) => {
+    //   console.log("Status:", status);
+    //   if (status) {
+    //   }
+    // })
+
+   
     if (this.userType === 'consumer') {
       this.router.navigateByUrl(cartUrl);
       // let blogoUrl;
