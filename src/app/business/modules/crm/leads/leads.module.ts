@@ -9,6 +9,19 @@ import { LeadsComponent } from "./leads.component";
 import { RouterModule, Routes } from "@angular/router";
 import { PagerModule } from "../../../../../../src/app/shared/modules/pager/pager.module";
 import { NgxPaginationModule } from "ngx-pagination";
+import { MatButtonModule } from "@angular/material/button";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatTableModule } from "@angular/material/table";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { FormsModule } from "@angular/forms";
+import { MatOptionModule } from "@angular/material/core";
+import { MatSelectModule } from "@angular/material/select";
 
 const routes: Routes = [
   { path: '', component: LeadsComponent },
@@ -20,13 +33,27 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        CommonModule,
-        PagerModule,
-        MatDialogModule,
-        CapitalizeFirstPipeModule,
-        LoadingSpinnerModule,
-        NgxPaginationModule,
-        [RouterModule.forChild(routes)]
+      CommonModule,
+      MatSelectModule,
+      MatOptionModule,
+      FormsModule,
+      CommonModule,
+      MatIconModule,
+      MatMenuModule,
+      MatCheckboxModule,
+      PagerModule,
+      MatDialogModule,
+      MatDatepickerModule,
+      MatTableModule,
+      MatTabsModule,
+      MatTooltipModule,
+      MatButtonModule,
+      MatFormFieldModule,
+      MatChipsModule,
+      CapitalizeFirstPipeModule,
+      LoadingSpinnerModule,
+      NgxPaginationModule,
+      [RouterModule.forChild(routes)]
     ],
     exports: [LeadsComponent],
     declarations: [LeadsComponent],

@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CrmService } from '../crm.service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-leads',
@@ -15,20 +16,51 @@ import { ProviderServices } from '../../../../business/services/provider-service
  * 
  */
 export class LeadsComponent implements OnInit {
+  tooltipcls = '';
   type: any; // To store the filter type param
   locations: any; // to hold the locations
   leads: any = []; // To store the leads
   statuses: any; // To store statuses
   selected_location: any //To store the selected location
   headerName = 'Leads';
+  filtericonTooltip = '';
   pagination: any = {
     startpageval: 1,
     totalCnt: 0,
     perPage: this.crmService.PERPAGING_LIMIT
   };
+
+  filter = {
+    status: '',
+    category: '',
+    type: '',
+    dueDate: '',
+    title: '',
+    check_in_start_date:null,
+    check_in_end_date:null,
+    page: 1
+  };
+  filters: any = {
+    'status': false,
+    'category': false,
+    'type': false,
+    'dueDate': false,
+    'title': false,
+    'check_in_start_date':false,
+    'check_in_end_date':false
+  };
+  
   api_loading = true;
   no_leads_cap = Messages.AUDIT_NO_LEADS_CAP;
   config: any;
+  filterapplied: boolean;
+  endminday: any;
+  maxday: any;
+  server_date: any;
+  tomorrowDate: Date;
+  yesterdayDate: Date;
+  endmaxday: Date;
+  filter_sidebar: boolean;
   constructor(
     private groupService: GroupStorageService,
     public router: Router,
@@ -100,6 +132,12 @@ export class LeadsComponent implements OnInit {
         );
     });
   }
+
+  hideFilterSidebar() {
+    this.filter_sidebar = false;
+  }
+
+
 /**
  * 
  * @param filter 
@@ -139,6 +177,15 @@ export class LeadsComponent implements OnInit {
     // filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     // filter['count'] = this.pagination.perPage;
     filter['location-eq'] = this.selected_location.id;
+    if(this.filter.check_in_start_date != null)
+    {
+      filter['createdDate-ge'] = moment(this.filter.check_in_start_date).format("YYYY-MM-DD");
+    }
+    if(this.filter.check_in_end_date != null)
+    {
+      filter['createdDate-le'] = moment(this.filter.check_in_end_date).format("YYYY-MM-DD");
+    }
+
     switch (this.type) {
       case 'NEWLEAD':
         filter['statusName-eq'] = 'New';
@@ -224,6 +271,64 @@ export class LeadsComponent implements OnInit {
       }
     )
   }
+
+  applyFilter() {
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = this.yesterdayDate;
+    }
+    const filter = this.setFilter()
+    this.getLeadsCount(filter);
+    this.getLeads(filter);
+    this.filter_sidebar = false;
+  }
+
+    clearFilter() {
+    this.resetFilter();
+    const filter = this.setFilter();
+    this.getLeadsCount(filter);
+    this.getLeads(filter);
+    this.filterapplied = false;
+  }
+
+
+  resetFilter() {
+    this.filters = {
+      status: false,
+      category: false,
+      type: false,
+      dueDate: false,
+      title: false,
+      check_in_start_date:false,
+      check_in_end_date:false,
+    };
+    this.filter = {
+      status: '',
+      category: '',
+      type: '',
+      dueDate: '',
+      title: '',
+      check_in_start_date:null,
+      check_in_end_date:null,
+      page: 1
+    };
+  }
+
+    showFilterSidebar() {
+    this.filter_sidebar = true;
+  }
+
+
+  keyPressed() {
+    console.log("this.filter",this.filter)
+    if (this.filter.check_in_start_date || this.filter.check_in_end_date) {
+      this.filterapplied = true;
+    } else {
+      this.filterapplied = false;
+    }
+  } 
   /**
    * 
    * @returns 

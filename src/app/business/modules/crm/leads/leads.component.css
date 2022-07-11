@@ -1407,6 +1407,16 @@ input[type='file'] {
     background: transparent !important;
 }
 
+
+.filter-sidebar {
+    box-shadow: -5px 0px 10px -1px #bbb !important;
+    border: 0 !important;
+    height: -webkit-fill-available !important;
+    width: 295px !important;
+    margin-top: 150px !important;
+    overflow: hidden !important;
+}
+
 .confirmBtn {
     background: #0D2348 !important;
     box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;

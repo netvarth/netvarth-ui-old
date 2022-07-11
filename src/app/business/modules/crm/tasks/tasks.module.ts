@@ -15,6 +15,16 @@ import { NgCircleProgressModule } from "ng-circle-progress";
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { NgxPaginationModule } from "ngx-pagination";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { FormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatTableModule } from "@angular/material/table";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { AppointmentActionsModule } from "../../appointments/appointment-actions/appointment-actions.module";
+import { VoicecallDetailsSendModule } from "../../appointments/voicecall-details-send/voicecall-details-send.module";
 
 const routes: Routes = [
   { path: '', component: TasksComponent },
@@ -35,6 +45,16 @@ const routes: Routes = [
     MatCheckboxModule,
     LoadingSpinnerModule,
     NgxPaginationModule,
+    MatDatepickerModule,
+    MatTableModule,
+    MatTabsModule,
+    MatTooltipModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    VoicecallDetailsSendModule,
+    AppointmentActionsModule,
+    FormsModule,
     NgCircleProgressModule.forRoot({
       backgroundColor: "#e9ecef",
       backgroundPadding: 2,

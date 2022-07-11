@@ -12,7 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { CrmSelectMemberComponent } from '../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
-
+import { DateTimeProcessor } from '../../../../../../src/app/shared/services/datetime-processor.service';
+import { SharedServices } from '../../../../../../src/app/shared/services/shared-services';
+import * as moment from 'moment';
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
@@ -36,6 +38,8 @@ export class TasksComponent implements OnInit {
     type: '',
     dueDate: '',
     title: '',
+    check_in_start_date:null,
+    check_in_end_date:null,
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
   };
@@ -44,7 +48,9 @@ export class TasksComponent implements OnInit {
     'category': false,
     'type': false,
     'dueDate': false,
-    'title': false
+    'title': false,
+    'check_in_start_date':false,
+    'check_in_end_date':false
   };
   msg = 'Do you really want to mark as done this activity? ';
   public taskStatusList: any = [];
@@ -74,6 +80,12 @@ export class TasksComponent implements OnInit {
   newTaskDetailsCount: number=0;
   completedTaskCount: number=0;
   selected2: { id: number; name: any; image: any; };
+  endminday: any;
+  maxday: any;
+  server_date: any;
+  tomorrowDate: Date;
+  yesterdayDate: Date;
+  endmaxday: Date;
   constructor(
     private locationobj: Location,
     public router: Router,
@@ -83,7 +95,10 @@ export class TasksComponent implements OnInit {
     private snackbarService: SnackbarService,
     private crmService: CrmService,
     private groupService: GroupStorageService,
-    private providerServices: ProviderServices
+    private providerServices: ProviderServices,
+    private dateTimeProcessor: DateTimeProcessor,
+    private shared_services: SharedServices,
+
 
 
   ) {
@@ -121,7 +136,28 @@ export class TasksComponent implements OnInit {
     });
 
     this.handleStatus();
+    this.setSystemDate();
+    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+    if (this.server_date) {
+      this.getTomorrowDate();
+      this.getYesterdayDate();
+    }
   }
+
+
+  getTomorrowDate() {
+    const server = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const servdate = new Date(serverdate);
+    this.tomorrowDate = new Date(moment(new Date(servdate)).add(+1, 'days').format('YYYY-MM-DD'));
+  }
+  getYesterdayDate() {
+    const server = this.server_date.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
+    const serverdate = moment(server).format();
+    const servdate = new Date(serverdate);
+    this.yesterdayDate = this.maxday = this.endmaxday = new Date(moment(new Date(servdate)).add(-1, 'days').format('YYYY-MM-DD'));
+  }
+  
   pageChanged(event) {
     this.config.currentPage = event;
   }
@@ -134,11 +170,26 @@ export class TasksComponent implements OnInit {
     // filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     // filter['count'] = this.pagination.perPage;
     filter['location-eq'] = this.selected_location.id;
+    if(this.filter.check_in_start_date != null)
+    {
+      filter['dueDate-ge'] = moment(this.filter.check_in_start_date).format("YYYY-MM-DD");
+    }
+    if(this.filter.check_in_end_date != null)
+    {
+      filter['dueDate-le'] = moment(this.filter.check_in_end_date).format("YYYY-MM-DD");
+    }
     return filter;
   }
 
 
-
+setSystemDate() {
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
+        });
+  }
 
 
   handleStatus() {
@@ -348,7 +399,6 @@ export class TasksComponent implements OnInit {
 
   getNewTask(filter) {
     console.log("filter", filter)
-    console.log('filter', filter)
     this.getNewTaskCount(filter).then(
       (count:any) => {
         if (count > 0) {
@@ -645,6 +695,31 @@ export class TasksComponent implements OnInit {
     });
   }
   applyFilter(status) {
+    this.endminday = this.filter.check_in_start_date;
+    if (this.filter.check_in_end_date) {
+      this.maxday = this.filter.check_in_end_date;
+    } else {
+      this.maxday = this.yesterdayDate;
+    }
+    const filter = {}
+    console.log(this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date))
+    filter['location-eq'] = this.selected_location.id;
+    if(this.filter.check_in_start_date != null)
+    {
+      filter['dueDate-ge'] = moment(this.filter.check_in_start_date).format("YYYY-MM-DD");
+    }
+    if(this.filter.check_in_end_date != null)
+    {
+      filter['dueDate-le'] = moment(this.filter.check_in_end_date).format("YYYY-MM-DD");
+    }
+    if(this.statusFilter == 1)
+    {
+      this.getNewTask(filter);
+    }
+    else if(this.statusFilter == 5)
+    {
+      this.getCompletedTask(filter)
+    }
     console.log(status);
     this.handleTaskStatus(this.checkBoxValueSelect)
     this.filter_sidebar = false;
@@ -755,6 +830,8 @@ export class TasksComponent implements OnInit {
       type: false,
       dueDate: false,
       title: false,
+      check_in_start_date:false,
+      check_in_end_date:false,
     };
     this.filter = {
       status: '',
@@ -762,12 +839,15 @@ export class TasksComponent implements OnInit {
       type: '',
       dueDate: '',
       title: '',
+      check_in_start_date:null,
+      check_in_end_date:null,
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
     };
   }
   keyPressed() {
-    if (this.filter.title
+    console.log("this.filter",this.filter)
+    if (this.filter.check_in_start_date || this.filter.check_in_end_date
       || this.statuses.length > 0 || this.categories.length > 0 || this.types.length > 0) {
       this.filterapplied = true;
     } else {
@@ -789,6 +869,12 @@ export class TasksComponent implements OnInit {
     if (this.filter.title !== '') {
       api_filter['title-eq'] = this.filter.title;
     }
+    if (this.filter.check_in_start_date != null) {
+        api_filter['date-ge'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date);
+      }
+      if (this.filter.check_in_end_date != null) {
+        api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
+      }
     console.log(api_filter)
     return api_filter;
   }
@@ -827,8 +913,9 @@ export class TasksComponent implements OnInit {
     this.types = [];
     this.categories = [];
     this.resetFilter();
+    console.log("this.statusFilter",this.statusFilter)
+    this.handleTaskStatus(this.statusFilter)
     this.filterapplied = false;
-    this.getTotalTaskActivity(this.statusFilter);
   }
 
   getCategoryListData() {
