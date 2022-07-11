@@ -80,7 +80,7 @@
                                 <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
                                 <!-- <div class="container"> -->
                                 <!-- <div class="row"> -->
-                                <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="cartItem">
+                                <div class="col-md-12 col-sm-12 col-xs-12" *ngIf="cartItem && itemId">
                                     <div class="col-md-6 col-sm-12 col-xs-10 pad-25 no-padding-small mgn-bt-10"
                                         *ngIf="cartItem.itemImages &&cartItem.itemImages.length> 0">
                                         <owl-carousel [options]="{items: 1, dots: true, navigation: false}"

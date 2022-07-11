@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatOptionModule } from "@angular/material/core";
@@ -11,6 +12,7 @@ import { AddproviderAddonComponent } from "./add-provider-addons.component";
 
 @NgModule({
     imports: [
+        CommonModule,
         MatDialogModule,
         ReactiveFormsModule,
         MatFormFieldModule,

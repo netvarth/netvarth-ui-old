@@ -427,7 +427,7 @@ export class CatalogItemComponent implements OnInit {
 
     // };
     //this.router.navigate(['order', 'item-details'], navigationExtras);
-    this.router.navigate([this.accountEncId, 'catalog', this.catalogId, 'item', this.itemId]);
+    this.router.navigate([this.accountEncId, 'catalog', this.catalogId, 'item', item.id]);
     // this.router.navigate([`${this.accountEncId}/catalog/${this.catalogId}/item/${item.id}`]);
 
 
@@ -602,6 +602,7 @@ export class CatalogItemComponent implements OnInit {
     if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner')) {
       this.userType = (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') ? 'provider' : 'consumer';
     }
+
     if (!this.itemId) {
       const businessObject = {
         'bname': this.businessjson.businessName,
@@ -617,9 +618,13 @@ export class CatalogItemComponent implements OnInit {
     }
     let cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id=' 
     + this.s3UniqueId + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
+    console.log("userType :",this.userType)
+
     if (this.userType === 'consumer') {
       this.router.navigateByUrl(cartUrl);
-    } else if (this.userType === '') {
+    } else
+      {
+        // if (this.userType === '')
       this.lStorageService.setitemonLocalStorage('target', cartUrl);
       this.router.navigate([this.accountEncId, 'login']);
     }
@@ -784,7 +789,7 @@ export class CatalogItemComponent implements OnInit {
     return showFooter;
   }
   cardClicked(actionObj) {
-    //  console.log('entering into business page',actionObj);
+     console.log('entering into business page',actionObj);
     if (actionObj['type'] === 'item') {
       if (actionObj['action'] === 'view') {
         this.itemDetails(actionObj['service']);
