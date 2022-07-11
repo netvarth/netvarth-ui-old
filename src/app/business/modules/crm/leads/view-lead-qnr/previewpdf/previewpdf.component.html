@@ -1,10 +1,20 @@
-<h1 class="mat-dialog-title">  <br>
-   <span > </span>
-  <button #locte mat-dialog-close class="modal_close" tabindex="-1">
-    <i class="fa fa-window-close" aria-hidden="true"></i>
-  </button>
-</h1>
-<button (click)="printCRIF()"></button>
-<div id="crifForm" class="pad-20 image-scroll"  [innerHTML]="crifHTML">
+<section *ngIf="dialogTYpe==='priviewFile'">
+  <div class="header mat-dialog-title">
+    <div style="display:flex;gap:5px">
+      <div>
+        <img class="imgType" [src]="getImageType(data.data.fileType)" />
+      </div>
+      <div class="headerText">File Preview</div>
+    </div>
+    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+        <mat-icon>clear</mat-icon>
+    </div>
 </div>
+<app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+<mat-dialog-content class="custDialogCon">
+  <div>
+   <img class="image" [src]="data.data.s3path" />
+  </div>
+</mat-dialog-content>
+</section>
 

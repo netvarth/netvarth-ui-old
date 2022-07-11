@@ -1,5 +1,5 @@
 <form [formGroup]="applicantForm" id="{{applicantId}}" (focusout)="sendApplicantInfo()">
-    <div style="display: flex; align-items: center;  gap: 10px;" *ngIf="applicant.parent">
+    <div style="display: flex; align-items: center;  gap: 10px;" *ngIf="applicant && applicant.parent">
         <div class="imageClass">
             <div style="color: #8A8383;" *ngIf="customerName">{{customerName[0] | capitalizeFirst}}</div>
         </div>
@@ -14,8 +14,8 @@
             </div>
         </div>
     </div>
-    <hr *ngIf="applicant.parent" />
-    <div style="border-bottom: 1px solid #04A5FF;height: 30px;" *ngIf="!applicant.parent">
+    <hr *ngIf="applicant && applicant.parent" />
+    <div style="border-bottom: 1px solid #04A5FF;height: 30px;" *ngIf="applicant && (!applicant.parent)">
         <div style="display: flex;justify-content: space-between;align-items: center;">
             <div style="font-size: 15px!important;font-weight: bold!important">
                 Co-Applicant Name
@@ -26,7 +26,7 @@
             </div>
         </div>
     </div>
-    <div style="display: flex;gap: 5px" *ngIf="!applicant.parent">
+    <div style="display: flex;gap: 5px" *ngIf="applicant && (!applicant.parent)">
         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
             <div class="leadTitle">
                 <div>Name</div>
@@ -118,15 +118,22 @@
     </div>
     <div class="bggrey my-2 clearfix"
         *ngIf="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
-        <div style="display: flex;gap: 5px">
+        <div style="display: flex;gap: 5px" id="print-section">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-
-                <div *ngFor="let file of applicant.validationIds[0].attachments;let i = index">
-                    <a href="{{file.s3path}}" target="_blank" download>
+                <div *ngFor="let file of applicant.validationIds[0].attachments;let i = index" style="display:flex">
+                    <div  (click)="dialogImgView(file)">
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
-                    </a>
+                    </div>
+                    <!-- <div>
+                        <a href="{{file.s3path}}" target="_blank" download>
+                            <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                            {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                        </a>
+                    </div> -->
+                   <div>
                     <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc1')"></i>
+                   </div>
                 </div>
             </div>
 
@@ -197,12 +204,18 @@
         *ngIf="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div *ngFor="let file of applicant.validationIds[1].attachments; let i=index">
-                    <a href="{{file.s3path}}" target="_blank" download>
+                <div *ngFor="let file of applicant.validationIds[1].attachments; let i=index"style="display:flex">
+                    <div  (click)="dialogImgView(file)">
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
-                    </a>
+                    </div>
+                    <!-- <a href="{{file.s3path}}" target="_blank" download>
+                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                    </a> -->
+                   <div>
                     <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc2')"></i>
+                   </div>
                 </div>
             </div>
         </div>
@@ -275,11 +288,18 @@
         *ngIf="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && applicant.validationIds[2].attachments[0]['s3path']">
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div *ngFor="let file of applicant.validationIds[2].attachments;let i=index">
-                    <a href="{{file.s3path}}" target="_blank" download>
+                <div *ngFor="let file of applicant.validationIds[2].attachments;let i=index" style="display:flex">
+                    <!-- <a href="{{file.s3path}}" target="_blank" download>
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
-                    </a><i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc3')"></i>
+                    </a> -->
+                    <div  (click)="dialogImgView(file)">
+                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                    </div>
+                   <div>
+                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc3')"></i>
+                   </div>
                 </div>
             </div>
         </div>

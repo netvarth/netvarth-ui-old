@@ -24,4 +24,30 @@
         height: 35px;
         width: 35px;
        }
-       
+       .header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+    }
+    .headerText{
+      font-weight: 700;
+      font-size: 14px;
+      color: #000000;
+  }
+  .image{
+    height: -webkit-fill-available;
+    width: -webkit-fill-available;
+    object-fit: cover;
+  }
+  .custDialogCon{
+    overflow-x: scroll;
+    overflow-y: auto;
+    margin: -15px;
+    margin-top: -30px;
+  }
+  .imgType{
+    height: 25px;
+    width: 25px;
+    object-fit: cover;
+  }

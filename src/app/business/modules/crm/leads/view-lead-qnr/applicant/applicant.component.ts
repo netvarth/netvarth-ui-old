@@ -8,14 +8,14 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { TeleBookingService } from '../../../../../../shared/services/tele-bookings-service';
-
+import { MatDialog } from '@angular/material/dialog';
+import { PreviewpdfComponent } from '../previewpdf/previewpdf.component';
 @Component({
   selector: 'app-applicant',
   templateUrl: './applicant.component.html',
   styleUrls: ['./applicant.component.css']
 })
 export class ApplicantComponent implements OnInit {
-
   applicantForm: FormGroup;
   errorMessage;
   customerName;
@@ -50,6 +50,7 @@ export class ApplicantComponent implements OnInit {
   crifDetails: any;
   api_loading: boolean=false;
   bCrifBtnDisable:boolean;
+  fileOpener: any;
   
 
   constructor(
@@ -59,24 +60,23 @@ export class ApplicantComponent implements OnInit {
     private snackbarService: SnackbarService,
     private datePipe:DatePipe,
     private teleService:TeleBookingService,
-    private el: ElementRef, private renderer: Renderer2
-  ) { }
+    private el: ElementRef, private renderer: Renderer2,
+    private dialog: MatDialog, 
+     ) { }
 
   ngOnInit(): void {
     console.log("Applicant Init");
     console.log(this.applicant);
     console.log('this.leadInfo',this.leadInfo)
-    // this.phoneNumber = this.teleService.getTeleNumber(this.applicant.permanentPhone);
-    //  console.log('phNumber',this.phoneNumber)
     if (this.applicant && this.applicant['name']) {
       this.customerName = this.applicant['name'];
     } else {
       this.customerName = this.applicant['customerName'];
     }
-    if (this.applicant.parent && this.applicant['phone']) {
-      this.phoneNumber =  this.teleService.getTeleNumber(this.applicant['phone']);  //'+91' + this.applicant['phone'];
+    if (this.applicant && this.applicant.parent && this.applicant['phone']) {
+      this.phoneNumber =  this.teleService.getTeleNumber(this.applicant['phone']);
     } else {
-      this.phoneNumber =  this.teleService.getTeleNumber(this.applicant['permanentPhone']) //this.applicant['permanentPhone'];
+      this.phoneNumber =  this.teleService.getTeleNumber(this.applicant['permanentPhone']);
     }
     this.applicantForm = this.formBuilder.group({
       customerName: [null],
@@ -406,7 +406,7 @@ export class ApplicantComponent implements OnInit {
     // if (this.applicant.panAttachments) {
     //   applicantInfo.panAttachments = this.applicant.panAttachments;
     // }
-    if (this.applicant['parent']) {
+    if (this.applicant && this.applicant['parent']) {
       applicantInfo['parent'] = this.applicant['parent'];
     } else {
       applicantInfo['parent'] = false;
@@ -562,4 +562,51 @@ export class ApplicantComponent implements OnInit {
     //             return false;
 
   }
+  dialogImgView(fileDetails:any){
+    console.log('fileDetails',fileDetails);
+    if(fileDetails){
+      if(fileDetails.fileName && (fileDetails.fileType===('png' || 'jpeg' || 'bmp' || 'webp' || 'gif'))){
+        let fileExtn:any=fileDetails.fileName.split('.').reverse()[0];
+        if(fileExtn){
+          let image='image/' + fileExtn;
+          if(this.fileService && this.fileService.IMAGE_FORMATS){
+            for(var i=0;i<this.fileService.IMAGE_FORMATS.length;i++){
+              if(this.fileService.IMAGE_FORMATS[i]===image){
+                console.log('imageIf',image);
+                const dialogRef= this.dialog.open(PreviewpdfComponent,{
+                  width:'100%',
+                  // panelClass: ['popup-class', 'confirmationmainclass'],
+                  data:{
+                    requestType:'priviewFile',
+                    data:fileDetails,
+                  }
+                })
+                dialogRef.afterClosed().subscribe((res)=>{
+                  console.log(res)
+                })
+              }
+            }
+          }
+        }
+      }
+      else{
+        console.log('imageelse');
+        window.open(fileDetails.s3path);
+      }
+     
+      
+    }
+    
+    
+    
+   
+  }
+
+
+ 
+  
+
+
 }
+
+
