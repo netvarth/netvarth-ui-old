@@ -324,7 +324,11 @@ export class PaymentLinkComponent implements OnInit {
   }
   goToGateway(paytype?) {
     this.isClickedOnce = true;
-
+    if (!this.selected_payment_mode) {
+      this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+      this.isClickedOnce = false;
+      return false;
+  }
     const postdata = {
       'uuid': this.genid,
       'amount': this.amountDue,
@@ -335,7 +339,6 @@ export class PaymentLinkComponent implements OnInit {
       'isInternational': this.isInternatonal,
       'serviceId': 0
     };
-
     this.provider_services.linkPayment(postdata)
       .subscribe((data: any) => {
         console.log("Response Data:");
@@ -354,6 +357,7 @@ export class PaymentLinkComponent implements OnInit {
           // this.api_error = this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' };
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
+      
   }
   paywithRazorpay(pData: any) {
     this.isClickedOnce = false;
