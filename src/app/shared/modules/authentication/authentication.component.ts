@@ -150,6 +150,12 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       this.phoneError = 'Mobile number required';
     }
   }
+  checkCountrycode() {
+    this.phoneError = '';
+    if (this.phoneNumber && this.phoneNumber.dialCode !== '+91'){
+      this.phoneError = 'Use Google Login to continue for users country code other than +91';
+    }
+  }
   clearPhoneExists() {
     this.phoneExists = false;
   }
