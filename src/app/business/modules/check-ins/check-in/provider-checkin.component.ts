@@ -1778,6 +1778,7 @@ export class ProviderCheckinComponent implements OnInit {
                             this.note_cap = 'Edit Note / Delivery address';
                         } else {
                             this.note_cap = 'Edit Note';
+                            this.action = '';
                         }
                     } else {
                         if (this.domain === 'foodJoints') {

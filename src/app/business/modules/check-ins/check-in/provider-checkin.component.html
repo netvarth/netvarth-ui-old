@@ -1609,6 +1609,56 @@
                   </div>
                 </div>
               </div>
+              <span class="text-primary" *ngIf="thirdParty === '' && queuejson.length > 0"><b class="uploadText">Please upload
+                  Notes/Files related to your service</b></span>
+              <mat-chip-list class="btns provider-checkin" *ngIf="thirdParty === '' && queuejson.length > 0"
+                style="margin:0px!important">
+                <mat-chip class="pro-action" (click)="handleSideScreen('note')">
+                  <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
+                    <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
+                </mat-chip>
+                <mat-chip class="pro-action" (click)="imagefile.click()"><a>
+                    <input #imagefile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                      (change)="filesSelected($event)">
+                    <span> Upload
+                      File</span>
+                    <span
+                      *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
+                </mat-chip>
+              </mat-chip-list>
+
+              <ng-container class="row" *ngIf="action=='note'">
+                <div class="col-md-6 textarea">
+                  <mat-form-field>
+                    <textarea matInput rowa="10" class="form-control" [(ngModel)]="consumerNote" #consumernote
+                      (change)="handleConsumerNote(consumernote.value)" (keyup)="autoGrowTextZone($event)" maxlength="1000"
+                      placeholder="{{note_placeholder}}"></textarea>
+                  </mat-form-field>
+                  <div class="col-md-12 no-padding mgn-up-10 glbl-seting-heder noteBtn">
+                    <button mat-button class="cs-btn bt1  mgn-rt-10 cancelBtn" (click)="handleGoBack(4)">
+                      Cancel
+                    </button>
+                    <button mat-button class="cs-btn bt1  confirmBtn" (click)="handleGoBack(1)">OK
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+              <div class="clearfix"></div>
+
+              <div class="row col-md-12 ml-1 1" *ngIf="consumerNote || selectedMessage.files">
+                <div class="mgn-up-20 btns mr-1" *ngIf="consumerNote">
+                  <a class="notes p-1 px-2 pointer-cursor pro-action" (click)="toggleNotes()">Notes Added
+                    <i class="fa fa-chevron-down" aria-hidden="true" *ngIf="!notes"></i>
+                    <i class="fa fa-chevron-up" aria-hidden="true" *ngIf="notes"></i>
+                  </a>
+                </div>
+                <div class="mgn-up-20 btns ml-1" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+                  <a class="attachment pointer-cursor pro-action p-1 px-2" (click)="toggleAttachment()">Uploaded Files
+                    <i class="fa fa-chevron-down" aria-hidden="true" *ngIf="!attachments"></i>
+                    <i class="fa fa-chevron-up" aria-hidden="true" *ngIf="attachments"></i>
+                  </a>
+                </div>
+              </div>
               
               <div class="col-md-12 no-padding ">
                 <!-- <div class="col-md-12 mgn-bt-10" *ngIf="queuejson.length > 0">
@@ -1659,6 +1709,7 @@
                   </div>
                 </div>
               </div>
+              
               <div>
                 <ng-container *ngIf="queuejson.length == 0 && queueQryExecuted">
                   <span class='no-queue-available'
@@ -1680,9 +1731,9 @@
               </div>
             </div>
           </ng-container>
-          <div class="col-md-12 mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+          <!-- <div class="col-md-12 mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
             <a class="attachment pointer-cursor" (click)="toggleAttachment()">Uploaded Files</a>
-          </div>
+          </div> -->
           <ng-container class="attachment"
             *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && attachments">
 
