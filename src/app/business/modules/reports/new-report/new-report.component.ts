@@ -1268,21 +1268,7 @@ export class NewReportComponent implements OnInit {
         );
     });
   } 
-  generateEnquiryReportByCriteria(payload) {
-    return new Promise((resolve, reject) => {
-      this.provider_services.generateEnquiryReport(payload)
-        .subscribe(
-          data => {
-            console.log("Generated Enquiry Report :",data)
-            resolve(data);
-          },
-          error => {
-            reject(error);
-            this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-          }
-        );
-    });
-  }
+ 
   generateUserReportByCriteria(payload) {
     return new Promise((resolve, reject) => {
       this.provider_services.generateUserReport(payload.filter)
@@ -1325,23 +1311,7 @@ export class NewReportComponent implements OnInit {
           this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
         });
     }
-    // else if (this.report_type === 'enquiry') {
-    //   this.generateEnquiryReportByCriteria(payload).then(res => {
-    //     this.report_loading = false;
-    //     this.btn_disabled = false;
-    //     this.report_data_service.storeSelectedValues(res);
-    //     console.log("Resss... User",this.report_data_service.storeSelectedValues(res))
-    //     this.lStorageService.setitemonLocalStorage('reportCriteria', payload);
-    //    // this.generateUserReport(res, payload);
-    //    // user generate report is in progression please dont remove it!
-    //     this.generatedReport(res);
-    //   },
-    //     (error) => {
-    //       this.report_loading = false;
-    //       this.btn_disabled = false;
-    //       this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-    //     });
-    // }
+   
      else {
       this.generateReportByCriteria(payload).then(res => {
         this.report_loading = false;
