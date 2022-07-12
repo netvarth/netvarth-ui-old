@@ -1,6 +1,17 @@
 .threeTab{
     display: flex;gap:10px;align-items: center;justify-content: space-between;
 }
+@media (max-width:460px){
+  .customThreeCards{
+    display: block;
+    gap:10px;
+    align-items: center;
+    justify-content: space-between;
+  } 
+  .customCard{
+    margin-bottom: 10px;
+  }
+}
 .eachTab{
     display: flex;
     gap:10px;align-items: center;

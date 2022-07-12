@@ -333,8 +333,9 @@ export class BranchUserDetailComponent implements OnInit {
       showCsmrDataBase:[""],
       selectedUserType: []
     });
-    this.userForm.patchValue({
-      countryCode: "+91",
+    this.userForm.patchValue(
+      {
+      countryCode: "+91" || '',
       countryCode_whatsapp: "+91" || null,
       countryCode_telegram: "+91" || null
     });
@@ -375,15 +376,15 @@ export class BranchUserDetailComponent implements OnInit {
     if (this.user_data.userType === "PROVIDER") {
       this.showPrvdrFields = true;
     }
-    console.log(this.user_data);
-    console.log(this.userForm);
+    console.log("form Data",this.user_data);
+    console.log("Data :",this.userForm);
     
-    this.userForm.setValue({
+    this.userForm.patchValue({
       first_name: this.user_data.firstName || null,
       last_name: this.user_data.lastName || null,
       gender: this.user_data.gender || null,
       employeeId: this.user_data.employeeId || null,
-      countryCode: '+'+this.user_data.countryCode ? '+'+this.user_data.countryCode : "+91",
+      // countryCode: '+'+this.user_data.countryCode ? '+'+this.user_data.countryCode : "+91",
       phonenumber: this.user_data.mobileNo || "",
       dob: this.user_data.dob || null,
       email: this.user_data.email || null,
@@ -410,12 +411,12 @@ export class BranchUserDetailComponent implements OnInit {
           ? this.user_data.telegramNum.number
           : ""
     });
-    //  if(this.user_data.countryCode === '91' || ''){
-    // this.userForm.patchValue({    
-    //   countryCode: "+91",  
-    //   }); 
-    // }  
-    console.log(this.userForm);
+     if(this.user_data.countryCode === '91' || '' || undefined){
+    this.userForm.patchValue({    
+      countryCode: "+91",  
+      }); 
+    }  
+    console.log("After set the form",this.user_data);
   }
   onUserSelect(event) {
     this.type = event.value;
@@ -509,8 +510,8 @@ export class BranchUserDetailComponent implements OnInit {
       } else {
         this.countrycode = "+" + input.countryCode;
       }
-      (post_data1["countryCode"] = this.countrycode),
-        (post_data1["mobileNo"] = input.phonenumber);
+      (post_data1["countryCode"] = this.countrycode?this.countrycode:'+91'),
+        (post_data1["mobileNo"] = input.phonenumber ?  input.phonenumber : '');
     }
     if (input.selectedUserType === "PROVIDER") {
       post_data1["deptId"] = input.selectedDepartment;

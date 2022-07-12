@@ -9,7 +9,7 @@
 </section>
 <section class="card mgn-up-15">
     <!----threee tab start-->
-    <div class="threeTab">
+    <div class="threeTab customThreeCards">
         <div class="customCard" id="A" (click)="fnChangeBorder('A')" [ngClass]="{'borderBottom':  bBorderBottomTYpeA}">
             <div class="eachTab">
                 <div>
@@ -20,7 +20,8 @@
                 </div>
             </div>
         </div>
-        <div class="customCard" id="C" (click)="fnChangeBorder('C')" *ngIf="!showActivity" [ngClass]="{'borderBottom': bBorderBottomTypeC}">
+        <div class="customCard" id="C" (click)="fnChangeBorder('C')" *ngIf="!showActivity"
+            [ngClass]="{'borderBottom': bBorderBottomTypeC}">
             <div class="eachTab">
                 <div>
                     <img style="width: 35px;height:35px" src="/assets/images/crmImages/reports.png" />
@@ -32,9 +33,9 @@
         </div>
     </div>
     <!--three tab end-->
-   <div class="mgn-up-15">
-    <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-   </div>
+    <div class="mgn-up-15">
+        <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+    </div>
     <!---mat pannel start-->
     <div class="mgn-up-15" *ngIf="bLosFieldOpen && !api_loading">
         <mat-accordion class="example-headers-align">
@@ -54,19 +55,20 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <button class="button-28" role="button" type="submit" *ngIf="!showActivity"(click)="redirectionTaskTemplate()">
-                        <div  tabindex="1">
+                    <button class="button-28" role="button" type="submit" *ngIf="!showActivity"
+                        (click)="redirectionTaskTemplate()">
+                        <div tabindex="1">
                             <div style="display:flex;align-items:center;gap:5px">
-                                <div >
+                                <div>
                                     Schedule Marketing Activity
                                 </div>
                             </div>
                         </div>
-                    </button> 
-                    <button class="button-28" role="button" type="submit"(click)="redirectionTaskActivityList()">
-                        <div >
+                    </button>
+                    <button class="button-28" role="button" type="submit" (click)="redirectionTaskActivityList()">
+                        <div>
                             <div style="display:flex;align-items:center;gap:5px">
-                                <div >
+                                <div>
                                     Marketing Activity Updation
                                 </div>
                             </div>
@@ -110,7 +112,7 @@
                         </mat-expansion-panel-header>
                         <div class="allTabInPannel">
                             <button class="button-28" role="button" type="submit">
-                                <div tabindex="1"(click)="templateViewActivity('Follow UP 1')">
+                                <div tabindex="1" (click)="templateViewActivity('Follow UP 1')">
                                     <div style="display:flex;align-items:center;gap:5px">
                                         <div>
                                             Follow UP 1
@@ -163,7 +165,7 @@
     </div>
     <!----templates end-->
     <div class="mgn-up-15" *ngIf="bREportsFieldOpen && !api_loading">
-        <div class="threeTab">
+        <div class="threeTab customThreeCards">
             <div class="customCard" (click)="createActivity()">
                 <div class="eachTab">
                     <div>
@@ -182,6 +184,17 @@
                     </div>
                     <div class="topicName">
                         Lead Report
+                    </div>
+                </div>
+
+            </div>
+            <div class="customCard" (click)="createEnquiryReport()">
+                <div class="eachTab">
+                    <div>
+                        <img height="25px" width="25px" src="/assets/images/crmImages/leadReporterMob.png" />
+                    </div>
+                    <div class="topicName">
+                        Enquiry Report
                     </div>
                 </div>
 

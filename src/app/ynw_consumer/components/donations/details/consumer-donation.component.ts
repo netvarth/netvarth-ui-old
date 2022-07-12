@@ -492,6 +492,11 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     }
     goToGateway() {
         this.isClickedOnce = true;
+        if (!this.paymentMode) {
+            this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+            this.isClickedOnce = false;
+            return false;
+        }
         // this.resetApi();
         if (this.selectedServiceId) {
 
@@ -499,6 +504,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
+       
         let paymenttype = this.paymentMode;
         this.donate(paymenttype);
     }

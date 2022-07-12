@@ -437,5 +437,14 @@ export class CRMComponent implements OnInit {
     }
     this.router.navigate(['provider','reports','new-report'],navigationExtras);
   }
+
+  createEnquiryReport(){
+    const navigationExtras: NavigationExtras =  {
+      queryParams: {
+        report_type: 'enquiry'
+      }
+    }
+    this.router.navigate(['provider','reports','new-report'],navigationExtras);
+  }
   
 }

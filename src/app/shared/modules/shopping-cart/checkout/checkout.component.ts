@@ -1610,6 +1610,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     this.makeFailedPayment(paymentWay);
   }
   makeFailedPayment(paymentMode) {
+    if (!this.selected_payment_mode) {
+      this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+      this.isClickedOnce = false;
+      return false;
+  }
     // console.log(this.orderType);
     // console.log(this.remainingadvanceamount);
     // if(this.orderType === 'SHOPPINGLIST'){
