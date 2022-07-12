@@ -20,8 +20,8 @@
   </ng-container>
   
 
-  <ng-container
-    *ngIf="leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified' || leadInfo.status.name==='Login Verified'">
+  <ng-container *ngIf="leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified' 
+  || leadInfo.status.name==='Login Verified'">
     <div class="row d-lg-flex justify-content-lg-start">
       <div class="card">
         <div style="display: flex;
@@ -120,7 +120,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)"
-        (removeApplicant)="removeApplicant($event, applicant)"></app-applicant>
+        (removeApplicant)="removeApplicant($event, applicant)" [leadInfo]="leadInfo"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
       <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
@@ -133,17 +133,15 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)"
-        (removeApplicant)="removeApplicant($event, applicant)"></app-applicant>
+        (removeApplicant)="removeApplicant($event, applicant)" [leadInfo]="leadInfo" ></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
       <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
         (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
-    <ng-container>
-      <div *ngIf="showQuestionnaire && questionaire" class="quest">
+    <ng-container *ngIf="showQuestionnaire && questionaire" class="quest">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
           (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
-      </div>
     </ng-container>
   </ng-container>
   <div *ngIf="leadInfo.status.name==='New'" class="mgn-up-20">

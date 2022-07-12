@@ -697,3 +697,18 @@ textarea::placeholder {
    font-style: italic;
    color: #555;
  }
+ .confirmCheckCrifBtn{
+  width:12rem;
+  background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid !important;
+  padding: 6px 12px;
+  color: #fff;
+  height: 2.5rem;
+}
+.bggrey{
+  background-color: #f8f8f8 !important;
+    padding: 15px !important;
+    border-radius: 10px !important;
+}

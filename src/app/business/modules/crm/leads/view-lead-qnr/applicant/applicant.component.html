@@ -565,7 +565,8 @@
         </div>
     </div>
 </form>
-<ng-container *ngIf="this.leadInfo && this.leadInfo.status && this.leadInfo.status.name==='KYC Updated'">
+<ng-container *ngIf="this.leadInfo && this.leadInfo.status && (this.leadInfo.status.name==='KYC Updated'||
+this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation')">
     <!---crif btn start-->
     <div class=" my-2">
         <!-- (click)="hideme[i] = !hideme[i]" -->
@@ -588,7 +589,8 @@
                     <div class="fieldPadding">
                         <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
                             {{crifScore}} </a>
-                        <button [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button style="margin-left: 25px !important;"
+                        <button [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
+                            style="margin-left: 25px !important;"
                             class="btn btn mb-2 action-button action-button-add confirmBtn"
                             (click)="saveCrifApplicant(applicant)">
                             Check CRIF Verification </button>

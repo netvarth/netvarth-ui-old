@@ -96,8 +96,8 @@ export class ViewLeadQnrComponent implements OnInit {
       'monthName': 'December'
     }
   ]
-  methodTrigger:any;
   kycInfo:any;
+  bCrifBtnDisable:boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -223,7 +223,6 @@ export class ViewLeadQnrComponent implements OnInit {
 
   removeApplicant(applicantInfo, applicationIndex) {
     console.log('applicantInfo',applicantInfo);
-    this.methodTrigger= applicantInfo['creditScore'];
      if (applicantInfo && (applicantInfo['status'] === 'New')) {
       if(applicantInfo && (applicantInfo['creditScore']===true)){
         if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
@@ -269,7 +268,6 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   addCoApplicant() {
-     this.methodTrigger=== false;
     let maxVal = parseInt(Object.keys(this.applicantsInfo).reduce((a, b) => this.applicantsInfo[a] > this.applicantsInfo[b] ? a : b)) + 1;
     console.log(maxVal);
     this.applicants.push(maxVal);
@@ -359,6 +357,7 @@ export class ViewLeadQnrComponent implements OnInit {
     if (applicant.info) {
       this.applicantsInfo[applicantIndex] = applicant.info;
     }
+    console.log(' this.applicantsInfo[applicantIndex] ', this.applicantsInfo[applicantIndex] )
     if (this.applicantsInfo[applicantIndex]) {
       if (this.applicantsInfo[applicantIndex].validationIds[0] && this.applicantsInfo[applicantIndex].validationIds[0].attachments &&
          this.applicantsInfo[applicantIndex].validationIds[0].attachments.length > 0) {
@@ -386,6 +385,7 @@ export class ViewLeadQnrComponent implements OnInit {
           this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
         }
       }
+      console.log('this.applicantsInfo[applicantIndex].validationIds[2].idTypes2',this.applicantsInfo[applicantIndex])
       if (this.applicantsInfo[applicantIndex].validationIds[2]) {
         if (this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != null || this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != '') {
           this.applicantsInfo[applicantIndex].validationIds.splice(2, 1);
@@ -395,7 +395,7 @@ export class ViewLeadQnrComponent implements OnInit {
             let fileData = this.getFileInfo('kyc3', filesObj);
             // && !fileData[0]['order']
             if (fileData && fileData.length > 0 ) {
-              // fileData[0]['order'] = this.filesCount++;
+              fileData[0]['order'] = this.filesCount++;
               this.filesToUpload.push(fileData[0]);
               this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
             }
@@ -815,5 +815,10 @@ export class ViewLeadQnrComponent implements OnInit {
       , (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       })
+  }
+
+  showCrifscoreSection(data:any,index:any) {
+    console.log(data);
+    this.showCrifSection =! this.showCrifSection;
   }
 }
