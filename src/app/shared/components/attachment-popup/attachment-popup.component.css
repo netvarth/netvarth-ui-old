@@ -7,6 +7,11 @@ ul, li {
    color: #008566;
    text-decoration: none;
  }
+
+ .fa-image
+ {
+   font-size: 17px!important;
+ }
  
  
  .attachment a:hover
@@ -16,6 +21,6 @@ ul, li {
    }
 
    .imgIcon {
-    height: 35px;
-    width: 35px;
+    height: 20px!important;
+    width: 20px!important;
    }

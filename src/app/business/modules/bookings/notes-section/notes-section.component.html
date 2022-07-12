@@ -34,7 +34,7 @@
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes" *ngFor="let note of waitlist_notes; let i = index">
               <div class="note_view">
                 <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
-                <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date">{{note.timeStamp | date: newDateFormat}}</span> 
+                <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date"> {{note.timeStamp | date: newDateFormat}}</span> 
                 <div class="note text-primary" [innerHTML]="note.note">
                 </div>
               
