@@ -437,8 +437,8 @@
                                                     <div class="date-head">Appointment {{date_cap}}</div>
                                                 </div>
                                                 <div class="date-body date_body2" style="background-color: #fff !important;
-                                    border: 1px solid #ccc!important;height: 45px;
-                                    padding: 2px;">
+                                                    border: 1px solid #ccc!important;height: 45px;
+                                                    padding: 2px;">
                                                     <span class="selected-date">
 
                                                         {{sel_checkindate | date: dateFormat}}
@@ -861,19 +861,23 @@
             </div>
             <div class="card" *ngIf="showCheckin && !showQuestionnaire && showFollowup">
                 <div class="">
-                    <div class="servicefor-outer btborder">
-                        <div>
-                            <div class="row">
-                                <ul class="availer-ul pl-0">
-                                    <ng-container>
-                                        <li class="block-level">
+                    <div class="servicefor-outer btborder1">
+                        <div class="row">
+                            <ul class="availer-ul pl-0">
+                                <ng-container>
+                                    <li class="block-level consumer-name d-flex justify-content-start">
+                                        <div class="my-auto">
+                                            <img src="/assets/images/avatar.png" width="60px" height="60px" class="my-auto">
+                                        </div>
+                                        <div class="ml-3 userName">
                                             {{cusfirstname | capitalizeFirst}} {{cuslastname | capitalizeFirst}}
-                                            <div *ngIf="memberJaldeeId">
-                                                {{customer_label | capitalizeFirst}} id: {{memberJaldeeId}}</div>
-                                        </li>
-                                    </ng-container>
-                                </ul>
-                            </div>
+                                            <div *ngIf="memberJaldeeId" class="consumer-id">
+                                                {{customer_label | capitalizeFirst}} id: {{memberJaldeeId}}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ng-container>
+                            </ul>
                         </div>
                     </div>
                     <div class="lbl col-sm-12 col-md-7 col-lg-7 no-padding">
@@ -905,7 +909,7 @@
                                         </li>
                                     </ng-container>
                                 </div>
-                                <div class="date-outer p-0 m-0 walkin-form-fields-appointment">
+                                <!-- <div class="date-outer p-0 m-0 walkin-form-fields-appointment">
                                     <span class="date-head">Appointment {{date_cap}}&nbsp;</span>
                                     <div class="date-body"
                                         style="background-color: #f6f6f6 !important;border: 1px solid #f6f6f6 !important;">
@@ -937,6 +941,64 @@
                                                 </span>
                                             </mat-chip>
                                         </mat-chip-list>
+                                    </div>
+                                </div> -->
+
+                                <div class="col-md-8 date-outer p-0 m-0 walkin-form-fields-appointment">
+                                    <div class="appt_date">
+                                        <div>
+                                            <div class="appt_date2">
+                                                <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <div class="date-head">Appointment {{date_cap}}</div>
+                                            </div>
+                                            <div class="date-body date_body2" style="background-color: #fff !important;
+                                                                                    border: 1px solid #ccc!important;height: 45px;
+                                                                                    padding: 2px;">
+                                                <span class="selected-date">
+                                
+                                                    {{sel_checkindate | date: dateFormat}}
+                                
+                                                </span>
+                                                <div class="form-group dt" *ngIf="!slotTime">
+                                                    <div class="pickerouter">
+                                                        <mat-datepicker-toggle matSuffix [for]="picker">
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
+                                                        </mat-datepicker>
+                                                        <input class="inputbox matInputCstmClass" type="text" matInput [matDatepicker]="picker"
+                                                            [min]="minDate" [max]="maxDate" [value]="ddate"
+                                                            (dateChange)="handleFutureDateChange($event)">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class=" no-padding timeTop">
+                                            <div class=" freeslots " *ngIf="queuejson.length > 0" style="padding:0px !important">
+                                                <div class="appt_date2">
+                                                    <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                                                    <div class="date-head">Appointment Schedule</div>
+                                                </div>
+                                                <mat-form-field>
+                                                    <!-- queuejson[0].apptSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].apptSchedule.timeSlots[0]['eTime'] -->
+                                                    <!-- queue.apptSchedule.timeSlots[0]['sTime'] + ' - ' + queue.apptSchedule.timeSlots[0]['eTime'] -->
+                                                    <mat-select class="inputbox timeSlot" [(ngModel)]="selectedSchedule"
+                                                        (selectionChange)="handleQueueSelection(userapptsch.value)" #userapptsch>
+                                                        <mat-option *ngFor="let queue of queuejson, let i= index" [value]="queue">
+                                                            <div style="display:flex;gap:5px">
+                                                                <div>
+                                                                    <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                                                                </div>
+                                                                <div class="selectedUser">
+                                                                    {{queue.apptSchedule.timeSlots[0]['sTime'] + ' -
+                                                                    ' +
+                                                                    queue.apptSchedule.timeSlots[0]['eTime']}}
+                                                                </div>
+                                                            </div>
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </ng-container>

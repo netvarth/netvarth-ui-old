@@ -389,9 +389,9 @@
                         <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
                         <div class="date-head">{{date_cap}}</div>
                       </div>
-                      <div class="date-body date_body2" style="background-color: #fff !important;
-                border: 1px solid #f6f6f6 !important;
-                padding: 2px;border: none !important;">
+                        <div class="date-body date_body2" style="background-color: #fff !important;
+                          border: 1px solid #f6f6f6 !important;
+                          padding: 2px;border: none !important;">
                         <div class="form-group dt matDatePicker">
                           <div class="pickerouter">
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -1041,8 +1041,8 @@
                         <div class="date-head">{{date_cap}}</div>
                       </div>
                       <div class="date-body date_body2" style="background-color: #fff !important;
-                border: 1px solid #f6f6f6 !important;
-                padding: 2px;border: none !important;">
+                  border: 1px solid #f6f6f6 !important;
+                  padding: 2px;border: none !important;">
                         <div class="form-group dt matDatePicker">
                           <div class="pickerouter">
                             <mat-datepicker-toggle matSuffix [for]="picker">
@@ -1483,13 +1483,31 @@
         <div class="lbl col-sm-12 col-md-7 col-lg-7">
           <div class="mainouter checkin-page ">
             <ng-container *ngIf="!api_loading1">
-              <div class="servicefor-outer btborder">
+              <!-- <div class="servicefor-outer btborder">
                 <ul class="availer-ul">
                   <ng-container>
                     <li class="block-level">
                       {{cusfirstname | capitalizeFirst}} {{cuslastname | capitalizeFirst}}
                       <div *ngIf="jaldeeId">
                         {{customer_label | capitalizeFirst}} id: {{jaldeeId}}</div>
+                    </li>
+                  </ng-container>
+                </ul>
+              </div> -->
+              <div class="row btborder1 p-1">
+                <ul class="availer-ul pl-0">
+                  <ng-container>
+                    <li class="block-level consumer-name d-flex justify-content-start">
+                      <div class="my-auto">
+                        <img src="/assets/images/avatar.png" width="60px" height="60px" class="my-auto">
+                      </div>
+                      <div class="ml-3 userName">
+                        {{cusfirstname | capitalizeFirst}} {{cuslastname | capitalizeFirst}}
+                        <div *ngIf="jaldeeId" class="consumer-id">
+                          {{customer_label | capitalizeFirst}} id: {{jaldeeId}}
+              
+                        </div>
+                      </div>
                     </li>
                   </ng-container>
                 </ul>
@@ -1529,26 +1547,71 @@
                   </ng-container>
                 </ul>
               </div>
-              <div class="date-outer">
-                <div class="date-head" *ngIf="!settingsjson['showTokenId']">{{checkinLabel}} {{date_cap}}</div>
-                <div class="date-head" *ngIf="settingsjson['showTokenId']">{{date_cap}}</div>
-                <div class="date-body">
-                  <span class="selected-date">
-                    {{sel_checkindate | date: dateFormat}}
-                  </span>
-                  <div class="form-group dt">
-                    <div class="pickerouter">
-                      <mat-datepicker-toggle matSuffix [for]="picker">
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                      <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate"
-                        [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+              <div class="dateTime row">
+                <div class="col-md-6 date-outer p-0 m-0 walkin-form-fields-appointment ">
+                  <div class="appt_date">
+                    <div class="date-outer">
+                      <div class="">
+                        <div class="appt_date2" *ngIf="!settingsjson['showTokenId']">
+                          <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                          <div class="date-head">{{checkinLabel}} {{date_cap}}</div>
+                        </div>
+                        <div class="appt_date2" *ngIf="settingsjson['showTokenId']">
+                          <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                          <div class="date-head">{{date_cap}}</div>
+                        </div>
+                        <div class="date-body">
+                          <div>
+                            <span class="selected-date">
+                              {{sel_checkindate | date: dateFormat}}
+                            </span>
+                          </div>
+                          <div class="form-group dt">
+                            <div class="pickerouter">
+                              <mat-datepicker-toggle matSuffix [for]="picker">
+                              </mat-datepicker-toggle>
+                              <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
+                              <input class="form-control" type="text" matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate"
+                                [value]="ddate" (dateChange)="handleFutureDateChange($event)">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class=" no-padding timeTop">
+                      <div *ngIf="queuejson.length > 0" class="freeslots" style="padding:0px !important">
+                        <div class="appt_date2">
+                          <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                          <div class="date-head">Time &nbsp;</div>
+                        </div>
+                        <div>
+                          <mat-form-field>
+                            <!-- queuejson[0].queueSchedule.timeSlots[0]['sTime'] + ' - ' + queuejson[0].queueSchedule.timeSlots[0]['eTime'] -->
+                            <!-- queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' + queue.queueSchedule.timeSlots[0]['eTime'] -->
+                            <mat-select class="inputbox timeSlot" #lstQueue2 [(ngModel)]="selectedQ"
+                              (selectionChange)="handleQueueSelection(lstQueue2.value);">
+                              <mat-option *ngFor="let queue of queuejson" [value]="queue">
+                                <div style="display:flex;gap:5px">
+                                  <div>
+                                    <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                                  </div>
+                                  <div class="selectedUser">
+                                    {{queue.queueSchedule.timeSlots[0]['sTime'] + ' - ' +
+                                    queue.queueSchedule.timeSlots[0]['eTime']}}
+                                  </div>
+                                </div>
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              
               <div class="col-md-12 no-padding ">
-                <div class="col-md-12 mgn-bt-10" *ngIf="queuejson.length > 0">
+                <!-- <div class="col-md-12 mgn-bt-10" *ngIf="queuejson.length > 0">
                   <mat-chip-list class="pcheckin-owl">
                     <owl-carousel [options]="carouselOne" [carouselClasses]="['owl-theme']">
                       <mat-chip class="item" *ngFor="let queue of queuejson, let i= index"
@@ -1565,7 +1628,7 @@
                       </div>
                     </div>
                   </mat-chip-list>
-                </div>
+                </div> -->
                 <br>
                 <div class="col-md-12" *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                   <div class="waitlist-button-outer">
