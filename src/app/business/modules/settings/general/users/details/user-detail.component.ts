@@ -411,9 +411,11 @@ export class BranchUserDetailComponent implements OnInit {
           ? this.user_data.telegramNum.number
           : ""
     });
-     if(this.user_data.countryCode === '91' || '' || undefined){
+     if((this.user_data.countryCode === '91' || '' || undefined) || (this.user_data.whatsAppNum.countryCode === '91' || '' || undefined) || (this.user_data.telegramNum.countryCode === '91' || '' || undefined)){
     this.userForm.patchValue({    
       countryCode: "+91",  
+      countryCode_whatsapp: "+91" || null,
+      countryCode_telegram: "+91" || null
       }); 
     }  
     console.log("After set the form",this.user_data);

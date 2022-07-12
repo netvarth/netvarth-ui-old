@@ -76,7 +76,7 @@
                                                                 {{(catalog.catalogStatus=='ACTIVE') ? 'Disable'
                                                                 :'Enable'}}
                                                             </button>
-                                                            <button mat-menu-item  (click)="catalogqrCodegeneraterOnlineID(catalog)">
+                                                            <button type="button" mat-menu-item *ngIf="catalog.catalogStatus=='ACTIVE'" (click)="catalogqrCodegeneraterOnlineID(catalog)">
                                                                 <i class="fa fa-share-alt"></i>Share catalog
                                                               </button>
                                                         </mat-menu>
@@ -84,8 +84,11 @@
                                                     <span class="mbt-mobile-show">
                                                         <button class="editcls" type="button"
                                                             (click)="editCatalog(catalog)">{{edit_btn}}</button>
+                                                            <button type="button"  (click)="catalogqrCodegeneraterOnlineID(catalog)" style="margin-right:5px;border-radius:10px; color:blue">
+                                                                <i class="fa fa-share-alt gap-1"></i>Share catalog
+                                                              </button>
                                                         <button class="status tel-serv-flex" type="button"
-                                                            style="color:blue;" (click)="dochangeStatus(catalog)">
+                                                            style="color:blue;border-radius: 10px;" (click)="dochangeStatus(catalog)">
                                                             <i
                                                                 *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"></i>
                                                             <i *ngIf="catalog.catalogStatus=='ACTIVE'"
