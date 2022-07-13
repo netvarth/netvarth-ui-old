@@ -102,7 +102,7 @@
                     <ul class="galul">
                         <li *ngFor="let file of selectedFiles['kyc1'].files;let i = index ">
                             <div class="galimg_outer">
-                                <div class="gal_img">
+                                <div class="gal_img pointer-cursor">
                                     <img [src]="getImage(selectedFiles['kyc1'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc1'].base64[i]">
                                 </div>
@@ -121,7 +121,7 @@
         <div style="display: flex;gap: 5px" id="print-section">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                 <div *ngFor="let file of applicant.validationIds[0].attachments;let i = index" style="display:flex">
-                    <div  (click)="dialogImgView(file)">
+                    <div class="pointer-cursor" (click)="dialogImgView(file)">
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>

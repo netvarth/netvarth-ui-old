@@ -303,12 +303,12 @@ export class ViewLeadQnrComponent implements OnInit {
       for (const s3UrlObj of data) {
         console.log("S3URLOBJ:", s3UrlObj);
         console.log('_this.filesToUpload',_this.filesToUpload)
-        const file = _this.filesToUpload.filter((fileObj,index) => {
-          // s3UrlObj.orderId
-          console.log('index',index);
-          console.log(_this.filesToUpload[index]);
+        const file = _this.filesToUpload.filter((fileObj) => {
+          // 
+          // console.log('index',index);
+          // console.log(_this.filesToUpload[index]);
 
-          return ((fileObj.order === (index) ) ? fileObj : '');
+          return ((fileObj.order === (s3UrlObj.orderId) ) ? fileObj : '');
         })[0];
         console.log("File:", file);
         if (file) {
@@ -364,8 +364,7 @@ export class ViewLeadQnrComponent implements OnInit {
       } 
       else {
         let fileData = this.getFileInfo('kyc1', filesObj);
-         // && !fileData[0]['order']
-        if (fileData && fileData.length > 0 ) {
+        if (fileData && fileData.length > 0 && !fileData[0]['order']) {
           console.log('fileData[0]',fileData[0])
           fileData[0]['order'] = this.filesCount++;
           // console.log('this.filesCount',this.filesCount)
@@ -378,8 +377,8 @@ export class ViewLeadQnrComponent implements OnInit {
       } 
       else {
         let fileData = this.getFileInfo('kyc2', filesObj);
-         // && !fileData[0]['order']
-        if (fileData && fileData.length > 0  ) {
+         // 
+        if (fileData && fileData.length > 0  && !fileData[0]['order']) {
           fileData[0]['order'] = this.filesCount++;
           this.filesToUpload.push(fileData[0]);
           this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
@@ -393,8 +392,8 @@ export class ViewLeadQnrComponent implements OnInit {
           if (this.applicantsInfo[applicantIndex].validationIds[2].attachments && this.applicantsInfo[applicantIndex].validationIds[2].attachments.length > 0) {
           } else {
             let fileData = this.getFileInfo('kyc3', filesObj);
-            // && !fileData[0]['order']
-            if (fileData && fileData.length > 0 ) {
+            // 
+            if (fileData && fileData.length > 0 && !fileData[0]['order']) {
               fileData[0]['order'] = this.filesCount++;
               this.filesToUpload.push(fileData[0]);
               this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
