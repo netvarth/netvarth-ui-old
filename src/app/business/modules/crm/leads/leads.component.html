@@ -57,6 +57,7 @@
                   <th class="head_color">Customer Name</th>
                   <th class="head_color">Employee</th>
                   <th class="head_color">Lead Created Date</th>
+                  <th class="head_color" *ngIf="bStatusTableHead">Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -142,6 +143,9 @@
                     </td>
                     <td data-title="Lead Details" class="td2" *ngIf="lead.createdDate">
                       {{lead.createdDate}}
+                    </td>
+                    <td data-title="Lead Details" class="td2" *ngIf="(lead.status && (lead.status.name==='New' || lead.status.name==='Sales Verified'))&& lead.isRedirected">
+                     Pending
                     </td>
                   </tr>
                 </ng-container>

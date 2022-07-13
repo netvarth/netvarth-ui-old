@@ -177,9 +177,9 @@
           style="background: #FADDDD !important;color:black !important" (click)="!api_loading_UpdateKyc && reject()"
           *ngIf="leadInfo.status.name!=='Login'">Rejected
         </button>
-        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button" class="btn btn-primary font-weight-bold confirmBtn"
-          style="background: #FADDDD !important;color:black !important" (click)="!api_loading_UpdateKyc && redirect()"
-          *ngIf="leadInfo.status.name==='Login'">Redirect
+        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button" class="button-5"
+          (click)="!api_loading_UpdateKyc && redirect()"
+          *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name==='KYC Updated'">Redirect
         </button>
       </div>
     </ng-container>

@@ -61,6 +61,7 @@ export class LeadsComponent implements OnInit {
   yesterdayDate: Date;
   endmaxday: Date;
   filter_sidebar: boolean;
+  bStatusTableHead:boolean;
   constructor(
     private groupService: GroupStorageService,
     public router: Router,
@@ -189,6 +190,7 @@ export class LeadsComponent implements OnInit {
     switch (this.type) {
       case 'NEWLEAD':
         filter['statusName-eq'] = 'New';
+        this.bStatusTableHead=true;
         break;
       case 'CRIF':
         filter['statusName-eq'] = 'KYC Updated';
@@ -200,6 +202,7 @@ export class LeadsComponent implements OnInit {
         break;
       case 'DOCUMENTUPLOD':
         filter['statusName-eq'] = 'Sales Verified';
+        this.bStatusTableHead=true;
         this.headerName = 'Login';
         break;
       case 'LOGIN':
