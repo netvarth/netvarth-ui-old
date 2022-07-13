@@ -65,8 +65,8 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
-                        <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
+                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes.value,'firstApplicant')" class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
+                        <mat-option [value]="kyc.name" *ngFor="let kyc of kycList" >
                             <div>{{kyc.displayName}}</div>
                         </mat-option>
                     </mat-select>
@@ -147,7 +147,7 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
+                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes1.value,'secondApplicant')" class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
                         <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
                             <div>{{kyc.displayName}}</div>
                         </mat-option>
@@ -230,7 +230,7 @@
                     <!-- <div class="astericColor">*</div> -->
                 </div>
                 <div class="fieldPadding">
-                    <mat-select class="form-control widthWebKit" placeholder="Select applicant KYC" #idTypes2
+                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes2.value,'thirdApplicant')" class="form-control widthWebKit" placeholder="Select applicant KYC" #idTypes2
                         formControlName="idTypes2">
                         <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
                             <div>{{kyc.displayName}}</div>
@@ -573,8 +573,7 @@ this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recom
         <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
     border: 1px solid #D7FFE9 !important;
     color: #fff;
-    width: -webkit-fill-available;" (click)="showCrifscoreSection()">Generate CRIF Score of Applicant
-        </button>
+    width: -webkit-fill-available;" (click)="showCrifscoreSection()">{{generateCrifText}}  </button>
     </div>
     <!----crif btn end-->
     <!-- *ngIf="showCrifSection"  [hidden]="! hideme[i]" -->

@@ -145,8 +145,11 @@
                       {{lead.createdDate}}
                     </td>
                     <td data-title="Lead Details" class="td2" *ngIf="(lead.status && (lead.status.name==='New' || lead.status.name==='Sales Verified'))&& lead.isRedirected">
-                     Pending
+                     Redirected
                     </td>
+                    <td data-title="Lead Details" class="td2" *ngIf="(lead.status && (lead.status.name==='New' || lead.status.name==='Sales Verified'))&& (!lead.isRedirected)">
+                      Pending
+                     </td>
                   </tr>
                 </ng-container>
               </tbody>

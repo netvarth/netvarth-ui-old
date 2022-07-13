@@ -51,6 +51,8 @@ export class ApplicantComponent implements OnInit {
   api_loading: boolean=false;
   bCrifBtnDisable:boolean;
   fileOpener: any;
+  crifScoreError:string;
+  generateCrifText:string='Generate CRIF Score of Applicant';
   
 
   constructor(
@@ -67,7 +69,10 @@ export class ApplicantComponent implements OnInit {
   ngOnInit(): void {
     console.log("Applicant Init");
     console.log(this.applicant);
-    console.log('this.leadInfo',this.leadInfo)
+    console.log('this.leadInfo',this.leadInfo);
+    if(this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation'){
+     this.getCrifInquiryVerification(this.leadInfo)
+    }
     if (this.applicant && this.applicant['name']) {
       this.customerName = this.applicant['name'];
     } else {
@@ -475,10 +480,14 @@ export class ApplicantComponent implements OnInit {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
   }
   showCrifscoreSection() {
-    this.showCrifSection = !this.showCrifSection
+    console.log('this.leadInfo.status.name',this.leadInfo.status.name)
+    console.log( this.applicant.length);
+    if(this.leadInfo.status.name==='KYC Updated'){
+      this.showCrifSection = !this.showCrifSection
+    }
   }
   saveCrifApplicant(kycInfoList) {
-    // console.log('kycIbfoList',kycInfoList)
+    console.log('kycIbfoList1',kycInfoList)
     this.api_loading = true;
         this.bCrifBtnDisable=true;
       const postData:any={
@@ -496,6 +505,7 @@ export class ApplicantComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })});
   }
   getCrifInquiryVerification(kycInfoList){
+     console.log('kycIbfoList2',kycInfoList)
     const _this=this;
     return new Promise((resolve,reject)=>{
       _this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
@@ -515,9 +525,21 @@ export class ApplicantComponent implements OnInit {
             _this.bCrifBtnDisable=true;
           }
           
-        }
+        },
+        ((error:any)=>{
+          if(this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation'){
+            this.crifScoreError = 'Sorry you have no credit score';
+            this.generateCrifText='Sorry you have no credit score'
+            // this.showCrifSection=false;
+            console.log('error1111111',this.crifScoreError)
+           
+          }
+          
+          // reject(error);
+        })
       ),
       ((error)=>{
+         console.log('error222222',error)
         reject(error);
       })
     })
@@ -592,14 +614,25 @@ export class ApplicantComponent implements OnInit {
       else{
         console.log('imageelse');
         window.open(fileDetails.s3path);
-      }
-     
-      
+      } 
     }
+  }
+  handleKycSelectedType(selectValue,applicantType){
+    // console.log('valueChange',selectValue);
+    // console.log('this.kycList',this.kycList);
+    // console.log('applicantType',applicantType)
+    // if(applicantType==='firstApplicant'){
+    //   this.kycList.splice(0, 1); 
+    // }
+    // if(selectValue){
+    //   if(this.applicantForm.controls.idValue.value !== null){
+    //     console.log(this.applicantForm.controls.idTypes.value);
+    //     console.log(this.applicantForm.controls.idTypes1.value);
+    //     console.log(this.applicantForm.controls.idTypes2.value);
+    //   }
+    // }
     
     
-    
-   
   }
 
 
