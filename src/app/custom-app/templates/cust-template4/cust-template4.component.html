@@ -46,7 +46,7 @@
                     </div>
                     <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
                         <app-appointment-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [apptSettings]="apptSettings" [businessProfile]="businessProfile"
+                            [apptSettings]="apptSettings" [businessProfile]="businessProfile"  [config]="accountConfig"
                             [filteredServices]="filteredApptServices" [selectedLocation]="selectedLocation">
                         </app-appointment-services>
                     </div>

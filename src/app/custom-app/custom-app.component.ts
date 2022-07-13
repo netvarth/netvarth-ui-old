@@ -48,6 +48,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   ) {
     this.activatedRoute.queryParams.subscribe(qparams => {
       if (qparams && qparams.cl_dt) {
+        console.log(qparams.cl_dt);
         if ((qparams.cl_dt=="true" || qparams.cl_dt==true) && !this.lStorageService.getitemfromLocalStorage('cleared')) {
           this.clearStorage();
         }
@@ -105,6 +106,13 @@ export class CustomAppComponent implements OnInit, OnDestroy {
           (id: any) => {
             _this.provider_id = id;
             _this.accountExists = true;
+            
+            _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
+              (account_config: any) => {
+                this.customappService.setAccountConfig(account_config);
+              }
+            )
+
             _this.domainConfigService.getHometemplate(_this.provider_id).subscribe(
               (templateJson: any) => {
                 this.theme = templateJson.theme;

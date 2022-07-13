@@ -1,12 +1,17 @@
 <!--begin::Main-->
-<div class="d-flex flex-column flex-root" style="height: 100vh;">
+<div class="d-flex flex-column flex-root" style="height: 100vh;" [ngClass]="theme?theme:''">
     <!--begin::Login-->
     <!-- <div class="child" *ngIf="loading">
       <app-common-innerloading-spinner>
       </app-common-innerloading-spinner>
   </div> -->
   <!-- *ngIf="!loading" -->
-    <div class="login login-3 wizard d-flex flex-column flex-lg-row flex-column-fluid no-padding">
+  <div class="d-flex loading-overlay" *ngIf="loading">
+    <div class="loading-overlay-inner">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
+    </div>
+</div>
+    <div class="login login-3 wizard d-flex flex-column flex-lg-row flex-column-fluid no-padding"  *ngIf="!loading">
       <!--begin::Aside-->
       <div class="login-aside d-flex flex-column flex-row-auto">
         <!--begin::Aside Top-->
@@ -25,8 +30,8 @@
         </div>
         <!--end::Aside Top-->
         <!--begin::Aside Bottom-->
-        <div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-x-center"
-          style="background-position-y: calc(100% + 5rem); background-image: url(../../../../../assets/images/login_pge.png)">
+        <div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-x-center" [ngStyle]="{'background-image': 'url(' + imgPath + ')'}"
+          style="background-position-y: calc(50%);">
         </div>
         <!--end::Aside Bottom-->
       </div>
@@ -38,7 +43,7 @@
           <!--begin::Signin-->
           <div class="login-form">
             <!--begin::Form-->
-            <app-authentication  (actionPerformed)="actionPerformed($event)" [accountId]="accountId"></app-authentication>
+            <app-authentication   (actionPerformed)="actionPerformed($event)" [accountId]="accountId"></app-authentication>
             <!--end::Form-->
           </div>
           <!--end::Signin-->

@@ -12,7 +12,6 @@ import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, P
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
-import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { VisualizeComponent } from '../../modules/visualizer/visualize.component';
@@ -27,7 +26,6 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
-// import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { AuthService } from '../../services/auth-service';
 import { TranslateService } from '@ngx-translate/core';
 import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
@@ -309,10 +307,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkavailabilitydialogref: any;
   searchEnabled;
   uniqueId: any;
-
     globalLoading = true;
-
   callback;
+  accountConfig: any;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -335,7 +332,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private authService: AuthService,
     public translate: TranslateService,
     private accountService: AccountService
-    // private customAppSerice: CustomAppService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -499,7 +495,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                     () => {
                       _this.domainConfigService.getUIAccountConfig(_this.uniqueId).subscribe(
                         (uiconfig: any) => {
-
+                          _this.accountConfig = uiconfig;
                           if (uiconfig['customWebsite']) {
                             if (uiconfig['customWebsite']['redirect'] === true && uiconfig['customWebsite']['url']) {
                               window.location.href = uiconfig['customWebsite']['url'];
@@ -562,9 +558,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                             _this.profileSettings = _this.accountProperties['smallDevices'];
                           } else {
                             _this.profileSettings = _this.accountProperties['normalDevices'];
-                          }
-                          if (_this.accountProperties['theme']) {
+                          }                          
+                          if (_this.accountProperties['theme'] && !this.theme) {
                             _this.theme = _this.accountProperties['theme'];
+                            _this.lStorageService.setitemonLocalStorage('theme',_this.theme);
                           }
                           const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
                           if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
@@ -1719,66 +1716,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return str;
   }
-
-
-  goThroughLogin() {
-    if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
-      const _this = this;
-      console.log("Entered to goThroughLogin Method");
-      return new Promise((resolve) => {
-        if (_this.lStorageService.getitemfromLocalStorage('authToken')) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      });
-    } else {
-
-      /// Check google token have to check this one needed or not    
-      return new Promise((resolve) => {
-        const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-        let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-        qrusr = JSON.parse(qrusr);
-        if (qrusr && qrpw) {
-          const data = {
-            'countryCode': qrusr.countryCode,
-            'loginId': qrusr.loginId,
-            'password': qrpw,
-            'mUniqueId': null
-          };
-          this.shared_services.ConsumerLogin(data).subscribe(
-            (loginInfo: any) => {
-              this.authService.setLoginData(loginInfo, data, 'consumer');
-              this.lStorageService.setitemonLocalStorage('qrp', data.password);
-              resolve(true);
-            },
-            (error) => {
-              if (error.status === 401 && error.error === 'Session already exists.') {
-                resolve(true);
-              } else {
-                resolve(false);
-              }
-            }
-          );
-        } else {
-          resolve(false);
-        }
-      });
-    }
-  }
-  redirectToHistory() {
-    const _this = this;
-    _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
-        } else {
-          const passParam = { callback: 'history' };
-          this.doLogin('consumer', passParam);
-        }
-      });
-  }
   getInboxUnreadCnt() {
     const usertype = 'consumer';
     this.shared_services.getInboxUnreadCount(usertype)
@@ -1802,8 +1739,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log(communicateUrl);
           this.lStorageService.setitemonLocalStorage('target', communicateUrl);
           this.router.navigate([this.accountEncId, 'login']);
-          // const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
-          // this.doLogin('consumer', passParam);
         }
       }
     );
@@ -1878,19 +1813,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     const _this = this;
     _this.loading_direct = true;
-    // _this.goThroughLogin().then(
-    //   (status) => {
-    //     if (status) {
-    console.log("logged In");
-    // _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-    // if (_this.userType === 'consumer') {
     _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer', current_provider['ctime']);
-    // }
-    //   } else {
-    //     const passParam = { callback: '', current_provider: current_provider };
-    //     _this.doLogin('consumer', passParam);
-    //   }
-    // });
   }
   appointmentClicked(location, service: any) {
     const _this = this;
@@ -1937,120 +1860,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.futureAllowed = false;
     }
     _this.loading_direct = true;
-    // _this.goThroughLogin().then(
-    //   (status) => {
-    //     //  console.log("Login Status:" + status);
-    //     if (status) {
-    //       _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-    //       // console.log("User Type:" + _this.userType);
-    //       if (_this.userType === 'consumer') {
     _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer', current_provider['ctime']);
-    // }
-    // } else {
-    //   const passParam = { callback: 'appointment', current_provider: current_provider };
-    //   _this.doLogin('consumer', passParam);
-    // }
-    // });
-  }
-
-  doLogin(origin?, passParam?) {
-    // this.snackbarService.openSnackBar('You need to login to check in');
-    const current_provider = passParam['current_provider'];
-    // let is_test_account = null;
-    // if (current_provider) {
-    //   if (current_provider.test_account === '1') {
-    const is_test_account = true;
-    //   } else {
-    //     is_test_account = false;
-    //   }
-    // }
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class', this.theme],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        theme: this.theme,
-        mode: 'dialog',
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history') {
-          this.redirectToHistory();
-        } else if (passParam['callback'] === 'dashboard') {
-          this.viewDashboard();
-        } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'checkavailability') {
-          this.opencheckavail(passParam['actionObjtype'])
-          console.log('end of login section')
-        }
-        else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer', current_provider['ctime']);
-        } else if (passParam['callback'] === 'order') {
-          if (this.orderType === 'SHOPPINGLIST') {
-            this.shoppinglistupload();
-          } else {
-            this.checkout();
-          }
-        } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer', current_provider['ctime']);
-        }
-      } else if (result === 'showsignup') {
-        this.doSignup(passParam);
-      } else {
-        this.loading_direct = false;
-      }
-    });
-  }
-  doSignup(passParam?) {
-    const current_provider = passParam['current_provider'];
-    const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '50%',
-      panelClass: ['signupmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        is_provider: 'false',
-        moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history') {
-          this.redirectToHistory();
-        } else if (passParam['callback'] === 'donation') {
-          this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'appointment') {
-          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        } else if (passParam['callback'] === 'order') {
-          if (this.orderType === 'SHOPPINGLIST') {
-            this.shoppinglistupload();
-          } else {
-            this.checkout();
-          }
-        } else {
-          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        }
-      } else {
-        this.loading_direct = false;
-      }
-    });
   }
   showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?, ctime?) {
     let queryParam = {
@@ -2071,9 +1881,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       queryParam['tel_serv_stat'] = false;
     }
-    if (service['department']) {
-      queryParam['dept'] = service['department'];
+    if(this.theme){
       queryParam['theme'] = this.theme;
+    }   
+    if (service['department']) {
+      queryParam['dept'] = service['department'];      
     }
     queryParam['customId'] = this.accountEncId;
     const navigationExtras: NavigationExtras = {
@@ -2101,9 +1913,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       queryParam['tel_serv_stat'] = false;
     }
+    if(this.theme){
+      queryParam['theme'] = this.theme;
+    }
     if (service['department']) {
       queryParam['dept'] = service['department'];
-      queryParam['theme'] = this.theme;
     }
     queryParam['customId'] = this.accountEncId;
     const navigationExtras: NavigationExtras = {
@@ -2246,25 +2060,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   payClicked(locid, locname, cdate, service) {
     const _this = this;
     _this.loading_direct = true;
-    // _this.goThroughLogin().then(
-    //   (status) => {
-    //     if (status) {
-    //       _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
-    //       if (_this.userType === 'consumer') {
-
-
-    // this.shared_services.generateDonationLink('','').subscribe(
-    //   (paymentLink)=> {
-
-    //   }
-    // )
     this.showDonation(locid, cdate, service);
-    //   }
-    // } else {
-    //   const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, service: service, consumer: 'consumer' };
-    //   this.doLogin('consumer', passParam);
-    // }
-    // });
   }
   showDonation(locid, curdate, service) {
     const navigationExtras: NavigationExtras = {
@@ -2407,8 +2203,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log(actionObj);
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
-        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
         let queryParam = {
           back: 1,
           customId: this.accountEncId
@@ -2421,7 +2215,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
         }
-        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
       }
       else if (actionObj['action'] === 'availability') {
         this.opencheckavail(actionObj);
@@ -2430,7 +2223,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     } else if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
-        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
         let queryParam = {
           back: 1,
           customId: this.accountEncId
@@ -2443,8 +2235,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
         }
-
-        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
       }
       else if (actionObj['action'] === 'availability') {
         this.opencheckavail(actionObj);
@@ -2453,8 +2243,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     } else if (actionObj['type'] === 'donation') {
       if (actionObj['action'] === 'view') {
-        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
-        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
         let queryParam = {
           back: 1,
           customId: this.accountEncId
@@ -2467,7 +2255,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         } else {
           this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
         }
-        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
       } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
       }
@@ -3026,7 +2813,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   dashboardClicked() {
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
+    _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
           this.viewDashboard();
@@ -3038,7 +2825,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   viewDashboard() {
-    this.routerobj.navigate([this.accountEncId, 'dashboard']);
+    let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId + '&theme='+this.theme;
+    this.router.navigateByUrl(dashboardUrl);
+    // this.routerobj.navigate([this.accountEncId, 'dashboard']);
   }
 
   addScript(pixelId) {

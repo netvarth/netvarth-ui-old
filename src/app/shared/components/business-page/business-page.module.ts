@@ -20,7 +20,6 @@ import { AddInboxMessagesModule } from "../add-inbox-messages/add-inbox-messages
 import { JDNDetailModule } from "../jdn-detail/jdn-detail.module";
 import { CouponsModule } from "../coupons/coupons.module";
 import { ServiceDetailModule } from "../service-detail/service-detail.module";
-import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-join/join.component.module";
 import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
 import { RouterModule, Routes } from "@angular/router";
@@ -56,7 +55,6 @@ const routes: Routes = [
         JDNDetailModule,
         CouponsModule,
         ServiceDetailModule,
-        ConsumerJoinModule,
         ConfirmBoxModule,
         QRCodeGeneratordetailModule,
         HttpClientModule,

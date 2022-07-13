@@ -140,14 +140,10 @@
     </div>
 </div>
 <div *ngIf="item.type=='pitem'">
-
     <div [id]="'item-' + service.itemId" class="card booking-card pointer-cursor order items pitem height-301"
         [class.disabled]="service['status'] && service['status']=='INACTIVE' || (!service.isStockAvailable && item.type=='item')"
         *ngIf="item.type=='catalog' || item.type=='item' || item.type=='pitem'"
         (click)="cardActionPerformed(item.type, 'view', item, loc, null, $event)">
-
-
-
         <span class="ribbon-new" *ngIf="service.promotionLabel && item.type=='item'">{{service.promotionLabel}}</span>
         <div class="card-item-head mgn-up-5">
             <button class="fx" mat-icon-button [matMenuTriggerFor]="appMenu" *ngIf="item.actions"

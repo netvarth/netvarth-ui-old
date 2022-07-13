@@ -11,6 +11,7 @@ export class CustomappService {
   accountEncId: any;
   custId;
   businessJsons: any;
+  accountConfig;
 
   constructor(private lStorageService: LocalStorageService, private servicemeta: ServiceMeta) { }
 
@@ -43,6 +44,10 @@ export class CustomappService {
   setAccountEncId(accountEncId) {
     this.accountEncId = accountEncId;
     this.custId = this.accountEncId;
+  }
+
+  setAccountConfig(accountConfig) {
+    this.accountConfig = accountConfig;
   }
 
   /**
@@ -116,24 +121,8 @@ export class CustomappService {
     return this.businessJsons['departmentProviders'];
   }
 
-  //   showCommunicate(provid) {
-  //     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
-  //       width: '50%',
-  //       panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'loginmainclass', 'smallform'],
-  //       disableClose: true,
-  //       data: {
-  //         caption: 'Enquiry',
-  //         user_id: provid,
-  //         userId: this.userId,
-  //         source: 'consumer-common',
-  //         type: 'send',
-  //         terminologies: this.terminologiesjson,
-  //         name: this.businessjson.businessName,
-  //         typeOfMsg: 'single'
-  //       }
-  //     });
-  //     this.commdialogRef.afterClosed().subscribe(() => {
-  //     });
-  //   }
+  getAccountConfig() {
+    return this.accountConfig;
+  }
 
 }

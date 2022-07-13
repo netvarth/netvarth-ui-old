@@ -441,11 +441,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
         const navigationExtras: NavigationExtras = {
           queryParams: queryParams
         };
-        if (this.customId) {
-          this.router.navigate([this.customId, 'dashboard']);
-        } else {
+        // if (this.customId) {
+        //   this.router.navigate([this.customId, 'dashboard']);
+        // } else {
           this.router.navigate([usertype], navigationExtras);
-        }
+        // }
         break;
     }
   }

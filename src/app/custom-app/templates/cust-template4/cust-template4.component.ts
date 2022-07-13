@@ -26,7 +26,7 @@ export class CustTemplate4Component implements OnInit {
   businessProfile: any;
   donationServices: any;
   selectedLocation: any;
-
+  accountConfig: any;
   loaded_donations = false;
   loaded_orders = false;
   loaded_appointments = false;
@@ -81,6 +81,9 @@ export class CustTemplate4Component implements OnInit {
     if (this.customappService.getLocations()) {
       this.locationjson = this.s3Processor.getJson(this.customappService.getLocations());
       this.selectedLocation = this.locationjson[0];
+    }
+    if (this.customappService.getAccountConfig()) {
+      this.accountConfig = this.customappService.getAccountConfig();
     }
     if (this.customappService.getAccountSettings()) {
       this.settings = this.s3Processor.getJson(this.customappService.getAccountSettings());

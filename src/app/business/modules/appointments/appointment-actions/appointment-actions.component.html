@@ -89,15 +89,6 @@
                 <div class="icon-text">Follow Up</div>
             </div>
         </div>
-        <!-- <div class="action-box pointer-cursor" 
-        *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0) && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && (location && location.length > 1)"
-        (click)="chnageLocation()">
-            <div class="action-box-sub">
-                <span class="location-icon-action"></span>
-                <div class="icon-text">Assign Location</div>
-               
-            </div>
-        </div> -->
         <!-- <div *ngIf="appt.teamId != 0"  class="icon-text">Change Team</div> -->
         <div class="action-box pointer-cursor"
             *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) &&  (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
@@ -150,12 +141,7 @@
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
                 <div class="icon-text">
                     {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
-                </div>
-                <!-- <div class="icon-text"
-                *ngIf="appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
-                {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
-            </div> -->
-
+                </div>              
             </div>
 
         </div>
@@ -326,13 +312,6 @@
         <a class="" (click)="applyLabel()" *ngIf="showApply">Apply</a>
     </div>
 </div>
-<!-- <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'reschedule'">
-    <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
-            aria-hidden="true"></i></button>
-</h1>
-<h4 style="margin-left: 25px;" *ngIf="action === 'reschedule'">Reschedule Appointment for {{appt.appmtFor[0].firstName |
-    capitalizeFirst}}{{appt.appmtFor[0].lastName |capitalizeFirst}}
-</h4> -->
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'slotChange'">
     Choose Date & Time
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"

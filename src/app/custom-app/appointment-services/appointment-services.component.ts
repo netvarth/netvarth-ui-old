@@ -1,12 +1,7 @@
 import { Component, Input, OnChanges, OnInit, ViewEncapsulation } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
-// import { AuthService } from '../../shared/services/auth-service';
-import { CheckavailabilityComponent } from '../../shared/components/checkavailability/checkavailability.component';
 import { DateTimeProcessor } from '../../shared/services/datetime-processor.service';
 import { LocalStorageService } from '../../shared/services/local-storage.service';
-import { ServiceDetailComponent } from '../../shared/components/service-detail/service-detail.component';
-import { ConsumerJoinComponent } from '../../ynw_consumer/components/consumer-join/join.component';
 
 @Component({
   selector: 'app-appointment-services',
@@ -22,16 +17,13 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
   @Input() apptSettings;
   @Input() businessProfile;
   @Input() filteredServices;
+  @Input() config;
 
   services;
-
-  availabilityDialogref: any;
   serverDate: any;
-  serviceDialogRef: any;
 
-  constructor(private dialog: MatDialog,
+  constructor(
     private dateTimeProcessor: DateTimeProcessor,
-    // private authService: AuthService,
     private router: Router,
     private lStorageService: LocalStorageService) { }
 
@@ -44,57 +36,9 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
     this.services = this.filteredServices;
   }
 
-  checkAvailableSlots(actionObj) {
-    this.availabilityDialogref = this.dialog.open(CheckavailabilityComponent, {
-      width: '100%',
-      panelClass: ['loginmainclass', 'popup-class', this.templateJson['theme']],
-      height: 'auto',
-      data: {
-        alldetails: actionObj,
-        apptSettingsJson: this.apptSettings,
-        domain: this.businessProfile.serviceSector.domain,
-        theme: this.templateJson['theme']
-      }
-    });
-    this.availabilityDialogref.afterClosed().subscribe(result => {
-      if (result != 'undefined') {
-        actionObj['location']['time'] = result[0];
-        actionObj['location']['date'] = result[1];
-        this.appointmentClicked(actionObj['location'], actionObj['service']);
-      }
-    });
-  }
-  showServiceDetail(serv, busname) {
-    let servData;
-    if (serv.serviceType && serv.serviceType === 'donationService') {
-      servData = {
-        bname: busname,
-        sector: this.businessProfile.serviceSector.domain,
-        serdet: serv,
-        serv_type: 'donation'
-      };
-    } else {
-      servData = {
-        bname: busname,
-        sector: this.businessProfile.serviceSector.domain,
-        serdet: serv
-      };
-    }
-
-    this.serviceDialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.templateJson['theme']],
-      disableClose: true,
-      data: servData
-    });
-    this.serviceDialogRef.afterClosed().subscribe(() => {
-    });
-  }
-
   cardClicked(actionObj) {
     if (actionObj['type'] === 'appt') {
       if (actionObj['action'] === 'view') {
-        // this.showServiceDetail(actionObj['service'], this.businessProfile.businessName);
         console.log(this.businessProfile);
         console.log(this.businessProfile.accEncUid);
         console.log(actionObj['service']);
@@ -107,8 +51,6 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
           queryParams: queryParam
         };
         this.router.navigate([this.businessProfile.accEncUid, 'service', actionObj['service'].id], navigationExtras);
-      } else if (actionObj['action'] === 'availability') {
-        this.checkAvailableSlots(actionObj);
       } else {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
       }
@@ -121,22 +63,7 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
   }
   appointmentClicked(location, service: any) {
     const _this = this;
-    // const current_provider = {
-    //   'id': location.id,
-    //   'place': location.place,
-    //   'location': location,
-    //   'cdate': service.serviceAvailability.nextAvailableDate,
-    //   'service': service
-    // };
-    // _this.authService.goThroughLogin().then(
-    //   (status) => {
-    //     if (status) {
     _this.showAppointment(location, service);
-    //   } else {
-    //     const passParam = { callback: 'appointment', current_provider: current_provider };
-    //     _this.doLogin('consumer', passParam);
-    //   }
-    // });
   }
   showAppointment(location, service) {
     let queryParam = {
@@ -172,7 +99,6 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
     }
     if (location.date) {
       queryParam['cdate'] = location.date
-      // console.log('differnt dates....', service.serviceAvailability.nextAvailableDate, location.date)
       service.serviceAvailability.nextAvailableDate = location.date
     }
     const dtoday = this.dateTimeProcessor.getStringFromDate_YYYYMMDD(this.dateTimeProcessor.getLocaleDateFromServer(this.serverDate));
@@ -185,50 +111,5 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
       queryParams: queryParam
     };
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
-  }
-  doLogin(origin?, passParam?) {
-    const current_provider = passParam['current_provider'];
-    const is_test_account = true;
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class', this.templateJson['theme']],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        theme: this.templateJson['theme'],
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        this.showAppointment(current_provider['location'], current_provider['service']);
-
-        // this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        // if (passParam['callback'] === 'communicate') {
-        //   this.showCommunicate(passParam['providerId']);
-        // } else if (passParam['callback'] === 'history') {
-        //   this.redirectToHistory();
-        // } else 
-        // else if (passParam['callback'] === 'donation') {
-        //   this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        // } else if (passParam['callback'] === 'appointment') {
-        //   this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        // } else if (passParam['callback'] === 'order') {
-        //   if (this.orderType === 'SHOPPINGLIST') {
-        //     this.shoppinglistupload();
-        //   } else {
-        //     this.checkout();
-        //   }
-        // } else {
-        //   this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        // }
-      } else if (result === 'showsignup') {
-        // this.doSignup(passParam);
-      } else {
-        //this.loading = false;
-      }
-    });
   }
 }

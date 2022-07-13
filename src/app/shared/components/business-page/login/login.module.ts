@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login.component';
 import { AuthenticationModule } from '../../../../shared/modules/authentication/authentication.module';
 import { RouterModule, Routes } from '@angular/router';
+import { LoadingSpinnerModule } from '../../../../shared/modules/loading-spinner/loading-spinner.module';
 
 const routes: Routes = [
   { path: '', component: LoginComponent}
@@ -15,6 +16,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     AuthenticationModule,
+    LoadingSpinnerModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

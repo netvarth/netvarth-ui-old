@@ -180,7 +180,8 @@
     .login.login-3 .login-aside .aside-img {
       /* min-height: 450px !important; */
       height: 57vh !important;
-      background-size: 630px;
+      /* background-size: 630px; */
+      background-size: 100%;
     }
   
     .login.login-3 .login-content .top-signup {
@@ -477,3 +478,20 @@
     left: 50%;
     margin: -25px 0 0 -25px;
   }
+  .loading-overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 100000;
+    background-color: rgb(242, 242, 242);
+    background-color: rgba(242, 242, 242, 0.9);
+    overflow-x: hidden;
+    transition: 0.5s;   
+    top: 0;
+    opacity: 0.6;
+}
+.loading-overlay-inner{
+    top: 45%;
+    left: 40%;
+    position: fixed;
+}

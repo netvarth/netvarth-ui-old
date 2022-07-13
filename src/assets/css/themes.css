@@ -308,7 +308,7 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
 .mediExpat mat-sidenav {
   background: #FD7029 0% 0% no-repeat padding-box !important; 
 }
-.mediExpat .mat-button, .mediExpat .getappointmentbutton {
+.mediExpat .mat-button,.mediExpat .mat-flat-button, .mediExpat .getappointmentbutton {
     background: linear-gradient(45deg, #FD7029 0%, #FD7029 100%) !important;
     border-color: #FD7029 !important;
   }
@@ -353,6 +353,10 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
     font-weight: 500 !important;
 
   }
+  .mediExpat .default-value, .mediExpat app-slot-picker .freeslots mat-chip.mat-chip-selected {
+    background-color: #FD7029 !important;
+    color: white!important;
+}
   .mediExpat .ok-btn span{
     background: #FD7029 0% 0% no-repeat padding-box !important;
   }

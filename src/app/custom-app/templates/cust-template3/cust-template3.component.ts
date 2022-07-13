@@ -40,14 +40,12 @@ export class CustTemplate3Component implements OnInit {
   galleryJson: any;
   onlineUsers: any;
   settings: any;
+  accountConfig: any;
   waitlisttime_arr: any = [];
   appttime_arr: any = [];
   deptUsers: any;
   selectedIndex;
-  // @Input() templateJson;
-  // userId;
-  // pSource;
-  // loading = true;
+
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   server_date: any;
   constructor(
@@ -84,6 +82,9 @@ export class CustTemplate3Component implements OnInit {
       this.settings = this.s3Processor.getJson(this.customappService.getAccountSettings());
       this.showDepartments = this.settings.filterByDept;
     }
+    if (this.customappService.getAccountConfig()) {
+      this.accountConfig = this.customappService.getAccountConfig();
+    }
     console.log("Template Json:", this.showDepartments);
     if (this.customappService.getTerminologies()) {
       this.terminologiesjson = this.s3Processor.getJson(this.customappService.getTerminologies());
@@ -102,14 +103,9 @@ export class CustTemplate3Component implements OnInit {
       this.setUserWaitTime();
       this.setUsers(this.deptUsers);
     }
-    // if(this.templateJson.section1.gallery || this.templateJson.section2.gallery || this.templateJson.section3.gallery) {
-
-    // }
-
     if (this.templateJson.section1.donations || this.templateJson.section2.donations || this.templateJson.section3.donations) {
       this.getDonationServices();
     }
-
     if (this.showDepartments) {
       let departmentsS3 = [];
       const depts = this.s3Processor.getJson(this.customappService.getDepartments());
@@ -274,11 +270,6 @@ export class CustTemplate3Component implements OnInit {
     this.onlineUsers = [];
     if (this.showDepartments) {
       for (let dIndex = 0; dIndex < deptUsers.length; dIndex++) {
-        // const deptItem = {};
-        // deptItem['departmentName'] = deptUsers[dIndex]['departmentName'];
-        // deptItem['departmentCode'] = deptUsers[dIndex]['departmentCode'];
-        // deptItem['departmentId'] = deptUsers[dIndex]['departmentId'];
-        // deptItem['departmentItems'] = [];
         if (this.settings.enabledWaitlist || this.apptSettings.enableAppt) {
           for (let pIndex = 0; pIndex < deptUsers[dIndex]['users'].length; pIndex++) {
             const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === deptUsers[dIndex]['users'][pIndex].id);
@@ -286,10 +277,8 @@ export class CustTemplate3Component implements OnInit {
             deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
             deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
             this.onlineUsers.push({ 'type': 'provider', 'item': deptUsers[dIndex]['users'][pIndex] });
-            // this.userCount++;
           }
         }
-        // this.onlineUsers.push(deptItem);
       }
     } else {
       if (this.settings.enabledWaitlist || this.apptSettings.enableAppt) {
@@ -297,12 +286,10 @@ export class CustTemplate3Component implements OnInit {
             deptUsers[dIndex]['waitingTime'] = this.waitlisttime_arr[dIndex];
             deptUsers[dIndex]['apptTime'] = this.appttime_arr[dIndex];
             this.onlineUsers.push({ 'type': 'provider', 'item': deptUsers[dIndex] });
-            // this.userCount++;
           }
       }
     }
   }
-
 
   getDonationServices() {
     this.donationServices = [];
@@ -354,34 +341,16 @@ export class CustTemplate3Component implements OnInit {
   }
 
   /**
-   * 
    * @param loc
    */
   changeLocation(loc) {
     this.selectedLocation = loc;
-
     if (this.templateJson.section1.appointments || this.templateJson.section2.appointments || this.templateJson.section3.appointments) {
       this.getAppointmentServices(this.selectedLocation.id);
     }
-
     if (this.templateJson.section1.checkins || this.templateJson.section2.checkins || this.templateJson.section3.checkins) {
       this.getCheckinServices(this.selectedLocation.id);
     }
-    // // this.filteredUsers = [];
-    // this.loading = true;
-    // console.log("ChangeLocation:", loc);
-    // this.selectedLocation = loc;
-    // this.getAppointmentServices(this.selectedLocation.id).then(
-    //   (status) => {
-    //     if (status) {
-    //       this.getCheckinServices(this.selectedLocation.id);
-    //     } else {
-    //       this.filteredApptServices = [];
-    //       this.checkinServices = [];
-    //       this.loading = false;
-    //     }
-    //   }
-    // );
   }
   onTabChanged(event) {
     console.log("Tab Event:" , event.index);

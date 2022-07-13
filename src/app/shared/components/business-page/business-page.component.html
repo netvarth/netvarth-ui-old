@@ -423,7 +423,7 @@
                             </h4>
                             <div class="bus-item-N" *ngFor="let sp of sps['departmentItems']">
                                 <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson?.serviceSector?.domain"
-                                    [terminology]='terminologiesjson' [loc]="selectedLocation"
+                                    [terminology]='terminologiesjson' [loc]="selectedLocation" [config]="accountConfig"
                                     (actionPerformed)="cardClicked($event)"></app-card>
                             </div>
                             <div class="clearfix"></div>
@@ -433,13 +433,13 @@
                     <ng-container *ngIf="!showDepartments || (showDepartments && userId)">
                         <div class="bus-item-N" *ngFor="let sp of servicesAndProviders">
                             <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [domain]="businessjson?.serviceSector?.domain"
-                                [terminology]='terminologiesjson' [loc]="selectedLocation"
+                                [terminology]='terminologiesjson' [loc]="selectedLocation" [config]="accountConfig"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
                     <ng-container *ngIf="donationServices && donationServices.length >0">
                         <div class="bus-item-N" *ngFor="let sp of donationServices">
-                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
+                            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="sp" [config]="accountConfig" [terminology]='terminologiesjson' [loc]="selectedLocation"
                                 (actionPerformed)="cardClicked($event)"></app-card>
                         </div>
                     </ng-container>
@@ -487,7 +487,7 @@
                     *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && checkVirtualOrPhysical()">
                     <div class="bus-item-I" *ngFor="let item of orderItems">
                         <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
-                            [loc]="selectedLocation" (actionPerformed)="cardClicked($event)"></app-card>
+                            [loc]="selectedLocation" [config]="accountConfig" (actionPerformed)="cardClicked($event)"></app-card>
                     </div>
                     <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
                         <div>{{'Your Order' | translate}} ({{ order_count }})

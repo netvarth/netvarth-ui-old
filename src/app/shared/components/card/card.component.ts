@@ -16,6 +16,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() loc;
     @Input() extras;
     @Input() domain;
+    @Input() config;
     @Output() actionPerformed = new EventEmitter<any>();
     @Output() noteClicked = new EventEmitter<any>();
     @Input() type;
@@ -96,8 +97,11 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 console.log("Appointment Info :",this.service)
                 this.timingCaption = 'Next Available Time';
                 this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);                                
-                this.buttonCaption = this.getTerminologyTerm('get_appointment');
-                this.buttonCaption = (this.buttonCaption === 'Get_appointment')? 'Get Appointment': this.buttonCaption;
+                // if (this.config) {                   
+                // }                
+                let buttonTitle = this.getTerminologyFromConfig('get_appointment');
+                console.log("Button Caption:", buttonTitle);
+                this.buttonCaption = ((buttonTitle!==null) ? buttonTitle: 'Get Appointment');
                                
                 break;
             case 'donation':
@@ -145,6 +149,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     }
 
     ngOnChanges() {
+        // console.log("Config:", this.config);
     }
     ngAfterViewChecked() {
         this.cdref.detectChanges();
@@ -175,20 +180,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         return qty;
     }
-    // gotoCustomerDetailsAppt(appt, event) {
-    //     event.stopPropagation();
-    //     if (appt.apptStatus !== 'blocked') {
-    //         this.router.navigate(['/provider/customers/' + appt.appmtFor[0].id]);
-    //     }
-    // }
-
-    // gotoCustomerDetailsToken(waitlist, event) {
-    //     event.stopPropagation();
-    //     if (waitlist.waitlistStatus !== 'blocked') {
-    //         this.router.navigate(['/provider/customers/' + waitlist.waitlistingFor[0].id]);
-    //     }
-    // }
-
     stopProp(event) {
         event.stopPropagation();
     }
@@ -227,6 +218,14 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
             return this.wordProcessor.firstToUpper((term === term_only) ? term_only : term);
         }
     }
+
+    getTerminologyFromConfig(term) {
+        if(this.config && this.config.terminologies && this.config.terminologies[term]) {
+            return this.config.terminologies[term];
+        }
+        return null; 
+    }
+    
     getTimeToDisplay(min) {
         return this.dateTimeProcessor.convertMinutesToHourMinute(min);
     }
@@ -348,13 +347,6 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     checkinActions(waitlist, type) {
         this.actionPerformed.emit({ waitlist: waitlist, type: type, statusAction: this.statusAction });
     }
-    // gotoDetails() {
-    //     if (this.item.type == 'checkin-dashboard') {
-    //         this.router.navigate(['provider', 'check-ins', this.waitlist.ynwUuid], { queryParams: { timetype: this.time_type } });
-    //     } else {
-    //         this.router.navigate(['provider', 'appointments', this.appointment.uid], { queryParams: { timetype: this.time_type } });
-    //     }
-    // }
     getAge(age) {
         age = age.split(',');
         return age[0];

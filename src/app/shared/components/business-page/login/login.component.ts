@@ -4,6 +4,8 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from 'subsink';
 import { AccountService } from '../../../../shared/services/account.service';
+import { DomainConfigGenerator } from '../../../../shared/services/domain-config-generator.service';
+import { AuthService } from '../../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-login',
@@ -15,48 +17,98 @@ export class LoginComponent implements OnInit {
   target: any;
   uniqueId: any;
   accountId;
+  theme;
+  loading = true;
   subscriptions = new SubSink();
+  imgPath: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private accountService: AccountService,
     private s3Processor: S3UrlProcessor,
-    private lStorageService: LocalStorageService
-    ) { 
-      this.activatedRoute.params.subscribe(
-        (params: any) => {
-          this.businessCustomId = params.id;
-        }
-      )
-      this.activatedRoute.queryParams.subscribe(
-        (queryParams: any) => {
-          if (queryParams.target)
+    private lStorageService: LocalStorageService,
+    private configService: DomainConfigGenerator,
+    private authService: AuthService
+  ) {
+    this.activatedRoute.params.subscribe(
+      (params: any) => {
+        this.businessCustomId = params.id;
+      }
+    )
+    this.activatedRoute.queryParams.subscribe(
+      (queryParams: any) => {
+        if (queryParams.target)
           this.target = queryParams.target;
-        }
-      )
-    }
+      }
+    )
+  }
+
+  getAccountConfig(uniqueId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.configService.getUIAccountConfig(uniqueId).subscribe(
+        (uiconfig: any) => {
+          if (uiconfig['theme']) {
+            _this.theme = uiconfig['theme'];
+            _this.lStorageService.setitemonLocalStorage('theme', uiconfig['theme']);
+          }
+          if (uiconfig['imagePath'] && uiconfig['imagePath']['login']) {
+            _this.imgPath = uiconfig['imagePath']['login'];
+          } else {
+            _this.imgPath = './assets/images/login_pge.png';
+          }
+          resolve(true);
+        }, (error) => {
+          resolve(false);
+        });
+    })
+  }
 
   ngOnInit(): void {
     const _this = this;
     this.getAccountIdFromEncId(this.businessCustomId).then(
       (uniqueId: any) => {
         this.uniqueId = uniqueId;
-        _this.getproviderBprofileDetails().then(() => {});
+        _this.getAccountConfig(uniqueId).then(
+          (status) => {
+            _this.getproviderBprofileDetails().then(() => {
+              _this.authService.goThroughLogin().then(
+                (status) => {
+                  if (status) {
+                    _this.goToDashboard();
+                  } else {
+                    _this.loading = false;
+                  }
+                }
+              )
+            });
+          });
       });
   }
 
+  goToDashboard() {
+    let theme = this.lStorageService.getitemfromLocalStorage('theme');
+    let customId = this.lStorageService.getitemfromLocalStorage('customId');
+    let accountId = this.lStorageService.getitemfromLocalStorage('accountId');
+    let dashboardUrl = 'consumer?accountId=' + accountId + '&customId=' + customId + '&theme=' + theme;
+    this.router.navigateByUrl(dashboardUrl);
+  }
   actionPerformed(response) {
     const _this = this;
     let target = _this.lStorageService.getitemfromLocalStorage('target');
-    _this.lStorageService.removeitemfromLocalStorage('target');
-    _this.router.navigateByUrl(target);
+    if (target) {
+      _this.lStorageService.removeitemfromLocalStorage('target');
+      _this.router.navigateByUrl(target);
+    } else {
+      this.goToDashboard();
+    }
   }
 
- /**
-   * 
-   * @param encId encId/customId which represents the Account
-   * @returns the unique provider id which will gives access to the s3
-   */
+  /**
+    * 
+    * @param encId encId/customId which represents the Account
+    * @returns the unique provider id which will gives access to the s3
+    */
   getAccountIdFromEncId(encId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -87,12 +139,10 @@ export class LoginComponent implements OnInit {
             } else {
               self.businessCustomId = accountS3s.businessProfile.accEncUid;
             }
-              self.lStorageService.setitemonLocalStorage('customId', self.businessCustomId);
+            self.lStorageService.setitemonLocalStorage('customId', self.businessCustomId);
             self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
             resolve(true);
           });
     })
-
   }
-
 }
