@@ -153,7 +153,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   checkCountrycode() {
     this.phoneError = '';
     if (this.phoneNumber && this.phoneNumber.dialCode !== '+91'){
-      this.phoneError = 'Use Google Login to continue for users country code other than +91';
+      // this.phoneError = 'Use Google Login to continue for users country code other than +91';
+      this.phoneError = 'For users with country code other than +91, please continue using Google login';
     }
   }
   clearPhoneExists() {

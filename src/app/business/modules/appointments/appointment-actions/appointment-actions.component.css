@@ -206,7 +206,8 @@
 @media(max-width: 750px){ 
   .popBt{
     height: 38px !important;
-    width: 100px !important;
+    width: 120px !important;
+    align-items: center;
   }
   }
 
