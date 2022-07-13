@@ -3,13 +3,16 @@
 }
 @media (max-width:460px){
   .customThreeCards{
-    display: block;
+    /* display: block; */
     gap:10px;
     align-items: center;
     justify-content: space-between;
   } 
   .customCard{
     margin-bottom: 10px;
+  }
+  .customThreeCardsReport{
+    display: block !important;
   }
 }
 .eachTab{
