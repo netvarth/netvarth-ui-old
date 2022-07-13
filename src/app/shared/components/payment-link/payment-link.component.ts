@@ -325,7 +325,7 @@ export class PaymentLinkComponent implements OnInit {
   goToGateway(paytype?) {
     this.isClickedOnce = true;
     if (!this.selected_payment_mode) {
-      this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+      this.snackbarService.openSnackBar('Please select a payment mode', { 'panelClass': 'snackbarerror' });
       this.isClickedOnce = false;
       return false;
   }

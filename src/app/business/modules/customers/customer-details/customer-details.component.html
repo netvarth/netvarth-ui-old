@@ -56,6 +56,11 @@
                                 <i class="fa fa-envelope icon"></i>
                                 <span class="value">{{customer[0].email}}</span>
                             </div>
+                            <div class="email" *ngIf="groups.length > 0">
+                                <i class="fa fa-users icon"></i>
+                                <span class="value">Groups: </span>
+                                <span class="value" *ngFor="let group of groups; let i = index">{{group.groupName ? group.groupName+', ' :''}}</span>
+                            </div>
                             <div class="gender-and-dob">
                                 <div *ngIf="customer[0].gender" class="gender">
                                     <i *ngIf="customer[0].gender === 'male'" class="fa fa-mars icon"></i>

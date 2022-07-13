@@ -133,6 +133,7 @@ export class CustomerDetailComponent implements OnInit {
   grpId;
   groupName: string;
   groupMemberTextId;
+  groups: any[]=[];
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -181,6 +182,18 @@ export class CustomerDetailComponent implements OnInit {
           this.action = qParams.action;
           this.getCustomers(this.customerId).then(customer => {
             this.customer = customer;
+            if(this.customer[0].groups){
+              const groupIdsArray = JSON.parse(this.customer[0].groups);
+           console.log("customer group :",groupIdsArray)
+           groupIdsArray.map((groupId)=>{
+            this.provider_services.getCustomerGroupById(groupId).subscribe((res:any) =>{
+                    this.groups.push(res);
+                    console.log("group",this.groups);
+            })
+           })
+
+            }
+
             // console.log("localstorage :", localStorage.getItem('groupId'))
             this.getConsumerBills();
             if (this.customer[0].groupMemberId) {
