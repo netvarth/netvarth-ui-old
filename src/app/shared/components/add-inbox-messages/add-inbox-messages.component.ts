@@ -224,7 +224,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         );
     }
     this.SEND_MESSAGE = Messages.SEND_MESSAGE.replace('[customer]', this.customer_label);
-    if (this.source === 'provider-waitlist' || this.source === 'customer-list') {
+    if (this.source === 'provider-waitlist' || this.source === 'customer-list' || this.source === 'donation-list') {
       this.getSMSCredits();
     }
   }

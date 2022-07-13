@@ -13,6 +13,8 @@ import { CommunicationService } from '../../services/communication-service';
 import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { ProviderServices } from '../../services/provider-services.service';
+import { MatSelectModule } from "@angular/material/select";
 
 const routes: Routes = [
     { path: '', component: DonationsComponent },
@@ -28,6 +30,7 @@ const routes: Routes = [
     imports: [
         CommonModule,
         FormsModule,
+        MatSelectModule,
         LoadingSpinnerModule,
         PagerModule,
         CapitalizeFirstPipeModule,
@@ -40,7 +43,7 @@ const routes: Routes = [
         [RouterModule.forChild(routes)]
     ],
     exports: [DonationsComponent],
-    providers: [CommunicationService]
+    providers: [CommunicationService,ProviderServices]
 })
 export class DonationsModule {
 
