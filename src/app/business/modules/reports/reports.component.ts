@@ -19,6 +19,8 @@ export class ReportsComponent implements OnInit {
   msg = 'Do you really want to delete this report ? ';
   order_criteria: any[];
   crm_criteria: any[];
+  enquiry_criteria: any[];
+  enquiryReports = [];
   appointmentReports = [];
   donationReports = [];
   paymentReports = [];
@@ -79,6 +81,7 @@ export class ReportsComponent implements OnInit {
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
+    this.enquiry_criteria = [];
     this.provider_services.getCriteriaList().subscribe(data => {
       this.criteria_list = data;
       for (let i = 0; i < this.criteria_list.length; i++) {
@@ -109,6 +112,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'CRM_LEAD': {
             this.crm_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'ENQUIRY_REPORT': {
+            this.enquiry_criteria.push(this.criteria_list[i]);
             break;
           }
         }

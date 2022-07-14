@@ -280,6 +280,38 @@
                     </mat-accordion>
                     </div>
                 </div>
+
+                  <!-- Enquiry Reports -->
+                  <div class="row">
+                    <div class="card p0">
+                      <mat-accordion class="report">
+                        <mat-expansion-panel  [expanded]="true">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title class="report_title">
+                                   Enquiry
+                                   <div class="width100pc" >
+                                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'enquiry'}">Create New Report</a>
+                                   </div>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <ng-container *ngIf="enquiryReports.length===0">
+                              <div *ngIf="enquiry_criteria.length === 0" >
+                                <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                              </div>
+                              <table  *ngIf="enquiry_criteria.length > 0">
+                                <span class="savd-report">Saved Reports</span>
+                                <tr *ngFor="let enquiry of enquiry_criteria">
+                                  <td>{{enquiry.reportName}}</td>
+                                  <td><a (click)="recreateReport(enquiry)">Generate</a></td>
+                                  <td><a (click)="viewCriteria(enquiry)">View</a></td>
+                                  <td><a (click)="deletCriteria(enquiry)">Delete</a></td>
+                                </tr>
+                              </table>
+                          </ng-container>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                    </div>
+                </div>
                
       </div>
       <div class="clearfix"></div>
