@@ -149,8 +149,8 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
         this.provider_services.getDisplayboardById_Type(this.layout_id, this.type).subscribe(
             (displayboard_data: any) => {
                 this.displayboardDetails = displayboard_data;
-                if (displayboard_data.isContainer) {                    
-                    this.inputStatusboards = displayboard_data.containerData;
+                if (displayboard_data.isContainer) {
+                    // this.inputStatusboards = displayboard_data.containerData;
                     this.showIndex = 0;
                     this.isContainer = true;
                     if (displayboard_data['headerSettings']) {
@@ -174,15 +174,18 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                             this.gLogoHeight = '100';
                         }
                     }
-                    this.getStatusboard(this.inputStatusboards[this.showIndex]);
-                    this.cronHandle = observableInterval(this.inputStatusboards[this.showIndex].sbInterval * 1000).subscribe(() => {
-                        if (this.showIndex === (this.inputStatusboards.length - 1)) {
-                            this.showIndex = 0;
-                        } else {
-                            ++this.showIndex;
-                        }
-                        this.getStatusboard(this.inputStatusboards[this.showIndex]);
-                    });
+                    // 
+                    this.paintDisplayBoard(displayboard_data);
+                    // })
+                    // this.getStatusboard(this.inputStatusboards[this.showIndex]);
+                    // this.cronHandle = observableInterval(this.inputStatusboards[this.showIndex].sbInterval * 1000).subscribe(() => {
+                    //     if (this.showIndex === (this.inputStatusboards.length - 1)) {
+                    //         this.showIndex = 0;
+                    //     } else {
+                    //         ++this.showIndex;
+                    //     }
+                    //     this.getStatusboard(this.inputStatusboards[this.showIndex]);
+                    // });
                 } else {
                     this.roomName = displayboard_data['serviceRoom'];
                     if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
@@ -230,46 +233,74 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                 this.router.navigate(['/']);
             });
     }
-    getStatusboard(boardObj) {
+
+    paintDisplayBoard(displayboard_data) {
+        const _this = this;
+        console.log("DisplayData:");
+        console.log(displayboard_data);
+        this.getActiveQBoards(displayboard_data.containerData).then(
+            async (activeboard: any) => {
+                console.log("Active Boards");
+                console.log(activeboard);
+                if (activeboard.length > 0) {
+                    console.log(activeboard);
+                    const timer = ms => new Promise(res => setTimeout(res, ms))
+                    for (let index = 0; index < activeboard.length; index++) {
+                        _this.getStatusboard(activeboard[index].detailedInfo);
+                        console.log(activeboard[index].basicInfo.sbInterval);
+                        await timer(activeboard[index].basicInfo.sbInterval * 1000);
+                    }
+                    _this.paintDisplayBoard(displayboard_data);
+                } else {
+                    _this.snackbarService.openSnackBar('No Active Records', { 'panelClass': 'snackbarerror' });
+                }
+            }
+        )
+    }
+
+    getStatusboard(displayboard_data) {
+        console.log(displayboard_data);
         this.blogo = "";
         this.bLogoWidth = "";
         this.bLogoHeight = "";
-        this.qBoardTitle="";
-        this.qBoardFooter="";
-        if (boardObj.sbId) {
-            this.roomName = '';
-            this.api_loading = true;
-            this.provider_services.getDisplayboardById_Type(boardObj.sbId, this.type).subscribe(
-                (displayboard_data: any) => {
-                    this.roomName = displayboard_data['serviceRoom'];
-                    if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
-                        this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
-                    }
-                    if (displayboard_data.footerSettings && displayboard_data.footerSettings['title1']) {
-                        this.qBoardFooter = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.footerSettings['title1']);
-                    }
-                    if (displayboard_data.logoSettings) {
-                        if (displayboard_data.logoSettings.logo) {
-                            this.is_image = true;
-                            const logoObj = displayboard_data.logoSettings.logo;
-                            this.blogo = logoObj['url'];
-                        }
-                        this.position = displayboard_data.logoSettings['position'];
-                        this.bLogoWidth = displayboard_data.logoSettings['width'];
-                        this.bLogoHeight = displayboard_data.logoSettings['height'];
-                    }
-                    const layoutPosition = displayboard_data.layout.split('_');
-                    this.boardRows = layoutPosition[0];
-                    this.onResize();
-                    this.boardCols = layoutPosition[1];
-                    displayboard_data.metric.forEach(element => {
-                        this.metricElement = element;
-                        this.selectedDisplayboards[element.position] = {};
-                        this.setDisplayboards(this.metricElement);
-                    });
-                    this.api_loading = false;
-                });
+        this.qBoardTitle = "";
+        this.qBoardFooter = "";
+        // if (boardObj.sbId) {
+        this.roomName = '';
+        this.api_loading = true;
+        // this.provider_services.getDisplayboardById_Type(boardObj.sbId, this.type).subscribe(
+        // (displayboard_data: any) => {
+        this.roomName = displayboard_data['serviceRoom'];
+        if (displayboard_data.headerSettings && displayboard_data.headerSettings['title1']) {
+            this.qBoardTitle = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.headerSettings['title1']);
         }
+        if (displayboard_data.footerSettings && displayboard_data.footerSettings['title1']) {
+            this.qBoardFooter = this._sanitizer.bypassSecurityTrustHtml(displayboard_data.footerSettings['title1']);
+        }
+        if (displayboard_data.logoSettings) {
+            if (displayboard_data.logoSettings.logo) {
+                this.is_image = true;
+                const logoObj = displayboard_data.logoSettings.logo;
+                this.blogo = logoObj['url'];
+            }
+            this.position = displayboard_data.logoSettings['position'];
+            this.bLogoWidth = displayboard_data.logoSettings['width'];
+            this.bLogoHeight = displayboard_data.logoSettings['height'];
+        }
+        const layoutPosition = displayboard_data.layout.split('_');
+        this.boardRows = layoutPosition[0];
+        this.onResize();
+        this.boardCols = layoutPosition[1];
+        displayboard_data.metric.forEach(element => {
+            // this.metricElement = element;
+            this.selectedDisplayboards[element.position] = {};
+            this.selectedDisplayboards[element.position]['board'] = element.queueSet;
+            this.selectedDisplayboards[element.position]['checkins'] = element.bookings;
+            // this.setDisplayboards(this.metricElement);
+        });
+        this.api_loading = false;
+        // });
+        // }
     }
     getFieldValue(field, checkin) {
         let fieldValue = '';
@@ -369,13 +400,90 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
                     this.selectedDisplayboards[element.position]['checkins'] = filteredList;
                 });
         }
-
     }
+
     createRange(number) {
         const items = [];
         for (let i = 0; i < number; i++) {
             items.push(i);
         }
         return items;
+    }
+
+
+    getMetricData(sbInfo) {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            let count = 0;
+            let activeSB = 0;
+            for (let metricIndex = 0; metricIndex < sbInfo.metric.length; metricIndex++) {
+                _this.getBoardContents(sbInfo.metric[metricIndex]).then(
+                    (bookings: any) => {
+                        if (bookings.length > 0) {
+                            sbInfo.metric[metricIndex]['bookings'] = bookings;
+                            activeSB++;
+                        }
+                        count++;
+                        if (count === sbInfo.metric.length) {
+                            if (activeSB > 0) {
+                                resolve([sbInfo]);
+                            } else {
+                                resolve([]);
+                            }
+                        }
+                    }
+                );
+            }
+        });
+    }
+    getBoardContents(element) {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            const displayboard = element.queueSet;
+            const Mfilter = displayboard.queryString;
+            if (_this.type === 'waitlist') {
+                _this.provider_services.getTodayWaitlistFromStringQuery(Mfilter).subscribe(
+                    (waitlist: any) => {
+                        const filteredList = waitlist.filter(wt => wt.service.serviceType === 'physicalService');
+                        resolve(filteredList);
+                    }, () => {
+                        resolve([]);
+                    });
+            } else {
+                _this.provider_services.getTodayAppointmentsFromStringQuery(Mfilter).subscribe(
+                    (waitlist: any) => {
+                        const filteredList = waitlist.filter(wt => wt.service.serviceType === 'physicalService');
+                        resolve(filteredList);
+                    }, () => {
+                        resolve(false);
+                    });
+            }
+        })
+    }
+
+    getActiveQBoards(statusBoards) {
+        let activeBoards = [];
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            let count = 0;
+            for (let sbIndex = 0; sbIndex < statusBoards.length; sbIndex++) {
+                _this.provider_services.getDisplayboardById_Type(statusBoards[sbIndex].sbId, _this.type).subscribe(
+                    (sbInfo: any) => {
+                        _this.getMetricData(sbInfo).then((sbupdatedInfo: any) => {
+                            count++;
+                            if (sbupdatedInfo.length > 0) {
+                                let sb = {
+                                    basicInfo: statusBoards[sbIndex],
+                                    detailedInfo: sbupdatedInfo[0]
+                                }
+                                activeBoards.push(sb);
+                            }
+                            if (count === statusBoards.length) {
+                                resolve(activeBoards);
+                            }
+                        })
+                    })
+            }
+        })
     }
 }

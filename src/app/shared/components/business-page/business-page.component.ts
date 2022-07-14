@@ -307,7 +307,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   checkavailabilitydialogref: any;
   searchEnabled;
   uniqueId: any;
-    globalLoading = true;
+  globalLoading = true;
   callback;
   accountConfig: any;
 
@@ -558,10 +558,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                             _this.profileSettings = _this.accountProperties['smallDevices'];
                           } else {
                             _this.profileSettings = _this.accountProperties['normalDevices'];
-                          }                          
+                          }
                           if (_this.accountProperties['theme'] && !this.theme) {
                             _this.theme = _this.accountProperties['theme'];
-                            _this.lStorageService.setitemonLocalStorage('theme',_this.theme);
+                            _this.lStorageService.setitemonLocalStorage('theme', _this.theme);
                           }
                           const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
                           if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
@@ -603,8 +603,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             }
             self.provideraccEncUid = accountS3s.businessProfile.accEncUid;
             let accountIdFromStorage = self.lStorageService.getitemfromLocalStorage('accountId');
-            if (accountIdFromStorage && accountIdFromStorage!=accountS3s.businessProfile.id && self.groupService.getitemFromGroupStorage('ynw-user')) {
-              self.authService.doLogout().then (
+            if (accountIdFromStorage && accountIdFromStorage != accountS3s.businessProfile.id && self.groupService.getitemFromGroupStorage('ynw-user')) {
+              self.authService.doLogout().then(
                 () => {
                   self.setSystemDate();
                   if (self.providercustomId) {
@@ -624,7 +624,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
               }
               self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
               resolve(true);
-            }            
+            }
           });
     })
 
@@ -1881,11 +1881,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       queryParam['tel_serv_stat'] = false;
     }
-    if(this.theme){
+    if (this.theme) {
       queryParam['theme'] = this.theme;
-    }   
+    }
     if (service['department']) {
-      queryParam['dept'] = service['department'];      
+      queryParam['dept'] = service['department'];
     }
     queryParam['customId'] = this.accountEncId;
     const navigationExtras: NavigationExtras = {
@@ -1913,7 +1913,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     } else {
       queryParam['tel_serv_stat'] = false;
     }
-    if(this.theme){
+    if (this.theme) {
       queryParam['theme'] = this.theme;
     }
     if (service['department']) {
@@ -2825,7 +2825,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
   viewDashboard() {
-    let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId + '&theme='+this.theme;
+    let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId + '&theme=' + this.theme;
     this.router.navigateByUrl(dashboardUrl);
     // this.routerobj.navigate([this.accountEncId, 'dashboard']);
   }

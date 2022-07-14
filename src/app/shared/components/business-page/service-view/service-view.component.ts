@@ -244,7 +244,7 @@ export class ServiceViewComponent implements OnInit {
           (domainConfig) => {
             _this.domainList = domainConfig;
             this.getAccountIdFromEncId(_this.accountEncId).then(
-              (id: any) => {
+              (id: any) => {              
                 _this.provider_id = id;      
                 _this.customId = _this.accountEncId;
                 this.lStorageService.setitemonLocalStorage('customId', _this.customId);
@@ -258,8 +258,10 @@ export class ServiceViewComponent implements OnInit {
                     } else {
                       _this.profileSettings = _this.accountProperties['normalDevices'];
                     }
-                    if (_this.accountProperties['theme']) {
+                    if (_this.accountProperties['theme'] && !_this.theme) {
                       _this.theme = _this.accountProperties['theme'];
+                      _this.lStorageService.setitemonLocalStorage('theme', _this.theme);
+
                     }
                     _this.gets3curl();
                   }, (error: any) => {

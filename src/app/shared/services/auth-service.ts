@@ -155,7 +155,7 @@ export class AuthService {
                                     this.router.navigateByUrl(srcUrl).then();
                                 } else {
                                     this.router.navigate([customId]).then(
-                                        ()=> {
+                                        () => {
                                             window.location.reload();
                                         }
                                     );
@@ -284,7 +284,7 @@ export class AuthService {
         const promise = new Promise((resolve, reject) => {
             this.shared_services.ConsumerLogin(post_data)
                 .subscribe(
-                    data => {                        
+                    data => {
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
                     },
@@ -406,9 +406,6 @@ export class AuthService {
             let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
             console.log("Entered to goThroughLogin Method");
             return new Promise((resolve) => {
-                // if (_this.lStorageService.getitemfromLocalStorage('pre-header') && _this.lStorageService.getitemfromLocalStorage('authToken')) {
-                //     resolve(true);
-                // } else 
                 if (_this.lStorageService.getitemfromLocalStorage('appId') && _this.lStorageService.getitemfromLocalStorage('installId') && qrusr) {
                     resolve(true);
                 } else {
@@ -446,16 +443,17 @@ export class AuthService {
                             }
                         }
                     );
-                } else if(customId && qrusr){
+                } else if (customId && qrusr) {
                     resolve(true);
                 } else {
                     resolve(false);
-            }
+                }
             });
         }
     }
 
     consumerSignupViaGoogle(post_data) {
+        post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
         this.sendMessage({ ttype: 'main_loading', action: true });
         const promise = new Promise((resolve, reject) => {
             this.shared_services.signUpConsumer(post_data)
@@ -482,33 +480,19 @@ export class AuthService {
     }
 
     consumerAppSignup(post_data) {
-        // post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
         this.sendMessage({ ttype: 'main_loading', action: true });
         const promise = new Promise((resolve, reject) => {
             this.shared_services.signUpConsumer(post_data)
                 .subscribe(
-                    data => {
-                        // let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
-                        // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-                        //     this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-                        // }                       
+                    data => {                 
                         resolve(data);
-                        // if (moreParams === undefined) {
-                        //     this.router.navigate(['/consumer']);
-                        // } else {
-                        //     if (moreParams['bypassDefaultredirection'] === 1) {
-                        //         // const mtemp = '1';
-                        //     } else {
-                        //         this.router.navigate(['/consumer']);
-                        //     }
-                        // }
                     },
                     error => {
                         this.sendMessage({ ttype: 'main_loading', action: false });
                         if (error.status === 401) {
                             // Not registred consumer or session alredy exists
                             reject(error);
-                            // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
                         } else {
                             if (error.error && typeof (error.error) === 'object') {
                                 error.error = this.API_ERROR;
