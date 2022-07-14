@@ -80,9 +80,49 @@
 @media(max-width:600px) {
     .greenborder {
         width:300px !important;
+        margin-left: 15px;
+        margin-right: 0px;
     }
     .redborder {
         width: 300px !important;
+    }
+    .minimum-height {
+        height: auto !important;
+        margin-bottom: 5px !important;
+      
+      }
+      .notification{
+        margin-left: 6px;
+      }
+
+}
+@media(max-width:370px) {
+    .greenborder {
+        width:270px !important;
+        margin-left: 18px;
+        margin-right: 0px;
+    }
+    .redborder {
+        width: 270px !important;
+    }
+    .minimum-height {
+        height: auto !important;
+        margin-bottom: 5px !important;
+      
+      }
+      .notification{
+        margin-left: 8px;
+      }
+
+}
+@media(max-width:300px) {
+    .greenborder {
+        width:220px !important;
+        margin-left: 5px;
+        margin-right: 0px;
+    }
+    .redborder {
+        width: 220px !important;
     }
     .minimum-height {
         height: auto !important;
