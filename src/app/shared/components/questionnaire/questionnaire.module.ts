@@ -11,6 +11,7 @@ import { QuestionnaireComponent } from './questionnaire.component';
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
 import { FileService } from '../../services/file-service';
+import { SafeHtmlModule } from '../../pipes/safe-html/safehtml.module';
 @NgModule({
     declarations: [
         QuestionnaireComponent
@@ -26,7 +27,8 @@ import { FileService } from '../../services/file-service';
         MatCheckboxModule,
         MatSlideToggleModule,
         MatOptionModule,
-        MatSelectModule
+        MatSelectModule,
+        SafeHtmlModule
     ],
     providers:[FileService],
     exports: [QuestionnaireComponent]

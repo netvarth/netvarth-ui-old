@@ -18,3 +18,10 @@
     max-width: 500px !important;
     margin: auto !important;
 }
+.signup-button {
+    width: 49% !important;
+    /* color: white !important; */
+    margin: 0 !important;
+    /* background-color: #1E4079 !important; */
+    border-radius: 4px !important;
+}
