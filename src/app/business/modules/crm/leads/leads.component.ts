@@ -223,6 +223,7 @@ export class LeadsComponent implements OnInit {
         break;
         case 'Redirect':
         filter['isRedirected-eq'] = true;
+        this.bStatusTableHead=true;
         this.headerName = 'Redirect';
         break;
         case 'Rejected':
