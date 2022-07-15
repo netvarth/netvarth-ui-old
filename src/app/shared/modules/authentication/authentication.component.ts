@@ -38,6 +38,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
   firstName;
   lastName;
+  emailId;
   password;
   rePassword;
 
@@ -74,9 +75,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.lStorageService.removeitemfromLocalStorage('login');
   }
 
-  ngOnInit(): void {
+  initGoogleButton() {
     const referrer = this;
-    this.lStorageService.setitemonLocalStorage('login', true);
     referrer.loadGoogleJS().onload = () => {
       google.accounts.id.initialize({
         client_id: "906354236471-jdan9m82qtls09iahte8egdffvvhl5pv.apps.googleusercontent.com",
@@ -99,6 +99,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     // script.defer = true;
     // script.async=true;
     // this.renderer.appendChild(document.body, script);
+  }
+
+  ngOnInit(): void {
+    this.lStorageService.setitemonLocalStorage('login', true);
+    this.initGoogleButton();
   }
 
   loadGoogleJS() {
@@ -125,49 +130,71 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.lStorageService.removeitemfromLocalStorage('authorization');
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     this.lStorageService.removeitemfromLocalStorage('googleToken');
-        if (this.phoneNumber) {
+    if (this.phoneNumber && this.phoneNumber.dialCode === '+91') {
       this.dialCode = this.phoneNumber.dialCode;
       const pN = this.phoneNumber.e164Number.trim();
       let loginId = pN;
       if (pN.startsWith(this.dialCode)) {
         loginId = pN.split(this.dialCode)[1];
-
-        if (loginId.startsWith('55') && this.dialCode === '+91') {
+        if (loginId.startsWith('55')) {
           this.config.length = 5;
         }
-      }
-      const credentials = {
-        countryCode: this.dialCode,
-        loginId: loginId,
-        accountId: this.accountId
-      }
-      this.subs.sink = this.sharedServices.sendConsumerOTP(credentials).subscribe(
-        (response: any) => {
-          this.step = 3;
-        }
-      )
+      }    
+      this.performSendOTP(loginId);
+    } else if (this.phoneNumber.dialCode !== '+91'){
+      this.dialCode = this.phoneNumber.dialCode;
+      const pN = this.phoneNumber.e164Number.trim();
+      let loginId = pN;
+      // if (pN.startsWith(this.dialCode)) {
+      //   loginId = pN.split(this.dialCode)[1];
+      //   if (loginId.startsWith('55')) {
+      //     this.config.length = 5;
+      //   }
+      // } 
+      this.performSendOTP(loginId, this.emailId);
     } else {
       this.phoneError = 'Mobile number required';
     }
   }
-  checkCountrycode() {
-    this.phoneError = '';
-    if (this.phoneNumber && this.phoneNumber.dialCode !== '+91'){
-      // this.phoneError = 'Use Google Login to continue for users country code other than +91';
-      this.phoneError = 'For users with country code other than +91, please continue using Google login';
+  performSendOTP(loginId, emailId?) {
+    let credentials = {
+      countryCode: this.dialCode,
+      loginId: loginId,
+      accountId: this.accountId
     }
+    if (emailId) {
+      credentials['alternateLoginId']=emailId;
+    }
+    this.subs.sink = this.sharedServices.sendConsumerOTP(credentials).subscribe(
+      (response: any) => {
+        this.step = 3;
+      }
+    )
   }
+  resetApiErrors() {
+    this.phoneError = null;
+    // this.actionstarted = false;
+  }
+  // checkCountrycode() {
+  //   this.phoneError = '';
+  //   if (this.phoneNumber && this.phoneNumber.dialCode !== '+91'){
+  //     this.phoneError = 'Use Google Login to continue for users country code other than +91';
+  //   }
+  // }
   clearPhoneExists() {
     this.phoneExists = false;
   }
 
   onOtpSubmit(otp) {
   }
-
+  goBack () {
+    this.initGoogleButton();
+    this.step = 1;
+  }
   signUpConsumer() {
     const _this = this;
     _this.phoneError = '';
-    if (_this.phoneNumber) {
+    if (_this.phoneNumber ) {
       _this.dialCode = _this.phoneNumber.dialCode;
       const pN = _this.phoneNumber.e164Number.trim();
       let phoneNum;
@@ -189,6 +216,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           let credentials = {
             accountId: _this.accountId
           }
+          credentials['mUniqueId'] = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        
           _this.authService.consumerLoginViaGmail(credentials).then(
             () => {
               _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
@@ -205,12 +234,16 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         })
       } else {
+        if (_this.dialCode!=='+91') {
+          credentials['userProfile']['email'] = _this.emailId;
+        }        
         _this.authService.consumerAppSignup(credentials).then((response) => {
           let credentials = {
             accountId: _this.accountId,
             countryCode: _this.dialCode,
             loginId: phoneNum
           }
+          credentials['mUniqueId'] = this.lStorageService.getitemfromLocalStorage('mUniqueId');
           _this.authService.consumerAppLogin(credentials).then((response) => {
             _this.authService.setLoginData(response, credentials, 'consumer');
             console.log("Login Response:", response);
@@ -237,13 +270,14 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
 
   onOtpChange(otp) {
     this.otpEntered = otp;
+    console.log(this.phoneNumber);
     if (this.phoneNumber) {
       const pN = this.phoneNumber.e164Number.trim();
       let phoneNumber;
       if (pN.startsWith(this.dialCode)) {
         phoneNumber = pN.split(this.dialCode)[1];
       }
-      if (phoneNumber.startsWith('55') && this.otpEntered.length < 5) {
+      if (this.phoneNumber.dialCode === '+91' && phoneNumber.startsWith('55') && this.otpEntered.length < 5) {
         // this.api_error = 'Enter valid OTP';
         return false;
       } else if (this.otpEntered.length < 4) {
@@ -328,6 +362,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     const credentials = {
       accountId: _this.accountId
     }
+    credentials['mUniqueId'] = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     _this.authService.consumerLoginViaGmail(credentials).then((response) => {
       console.log("Login Response:", response);
       _this.ngZone.run(

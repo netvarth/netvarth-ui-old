@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output,Renderer2 } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FileService } from '../../../../../../shared/services/file-service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
@@ -51,7 +51,6 @@ export class ApplicantComponent implements OnInit {
   api_loading: boolean=false;
   bCrifBtnDisable:boolean;
   fileOpener: any;
-  crifScoreError:string;
   generateCrifText:string='Generate CRIF Score of Applicant';
   
 
@@ -62,7 +61,6 @@ export class ApplicantComponent implements OnInit {
     private snackbarService: SnackbarService,
     private datePipe:DatePipe,
     private teleService:TeleBookingService,
-    private el: ElementRef, private renderer: Renderer2,
     private dialog: MatDialog, 
      ) { }
 
@@ -71,7 +69,7 @@ export class ApplicantComponent implements OnInit {
     console.log(this.applicant);
     console.log('this.leadInfo',this.leadInfo);
     if(this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation'){
-     this.getCrifInquiryVerification(this.leadInfo)
+     this.getCrifInquiryVerification(this.applicant)
     }
     if (this.applicant && this.applicant['name']) {
       this.customerName = this.applicant['name'];
@@ -481,10 +479,10 @@ export class ApplicantComponent implements OnInit {
   }
   showCrifscoreSection() {
     console.log('this.leadInfo.status.name',this.leadInfo.status.name)
-    console.log( this.applicant.length);
-    if(this.leadInfo.status.name==='KYC Updated'){
-      this.showCrifSection = !this.showCrifSection
-    }
+    // console.log( this.applicant.length);
+   if( this.generateCrifText==='Verify CRIF Score of Applicant' || this.leadInfo.status.name==='KYC Updated'){
+    this.showCrifSection = !this.showCrifSection;
+   }
   }
   saveCrifApplicant(kycInfoList) {
     console.log('kycIbfoList1',kycInfoList)
@@ -511,7 +509,6 @@ export class ApplicantComponent implements OnInit {
       _this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
         (element)=>{
           resolve(element);
-          // console.log('elemnt',element)
           if(element){
             _this.crifDetails = element;
             if(_this.crifDetails &&  _this.crifDetails.crifHTML){
@@ -522,24 +519,20 @@ export class ApplicantComponent implements OnInit {
             }
             _this.api_loading=false;
             _this.showPdfIcon = true;
+            _this.generateCrifText='Verify CRIF Score of Applicant'
             _this.bCrifBtnDisable=true;
           }
-          
         },
         ((error:any)=>{
-          if(this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation'){
-            this.crifScoreError = 'Sorry you have no credit score';
-            this.generateCrifText='Sorry you have no credit score'
-            // this.showCrifSection=false;
-            console.log('error1111111',this.crifScoreError)
-           
+          if(this.leadInfo && this.leadInfo.status){
+            if(this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation'){
+              this.generateCrifText='Sorry you have no CRIF score';
+            }
           }
-          
-          // reject(error);
         })
       ),
       ((error)=>{
-         console.log('error222222',error)
+        //  console.log('error222222',error)
         reject(error);
       })
     })
@@ -558,31 +551,6 @@ export class ApplicantComponent implements OnInit {
     setTimeout(() => {
       printWindow.close();
     }, 500);
-  }
-  handlePinCode(type){
-    console.log('type',type)
-    // if(type==='applicantPinCode'){
-      var events = 'ccp';
-      console.log('events',events,events.split)
-      events.split(' ').forEach(e => 
-        this.renderer.listen(this.el.nativeElement, e, (event) => {
-          console.log('this.renderer',this.renderer)
-        event.preventDefault();
-        })
-      );
-    // }
-  }
-  applicantName(event:any,input){
-    console.log(input)
-    console.log(event);
-    // var charCode = event.keyCode;
-
-    //         if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || charCode == 8)
-
-    //             return true;
-    //         else
-    //             return false;
-
   }
   dialogImgView(fileDetails:any){
     console.log('fileDetails',fileDetails);

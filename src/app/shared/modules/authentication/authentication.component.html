@@ -13,9 +13,19 @@
                     [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
                     [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
                     [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phoneNumber"
-                    (ngModelChange)="checkCountrycode()">
+                    >
+                    <!-- (ngModelChange)="checkCountrycode()" -->
                 </ngx-intl-tel-input>
                 <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
+
+                <div class="form-group email mgn-up-20" *ngIf="phoneNumber && phoneNumber.dialCode != '+91'">
+                    <label for="phone">Enter your Email</label>
+                    <input type="text" class="form-control" id="emailId" [(ngModel)]="emailId" autocomplete="off"
+                        (keypress)="resetApiErrors()">
+                </div>
+
+
+
                 <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
                     [disabled]="api_loading" (click)="sendOTP()" (keyup)="clearPhoneExists()">
                     <span *ngIf="!api_loading">Continue</span>
@@ -33,7 +43,8 @@
             <div class="form-group otp">
                 <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="loading"></app-common-innerloading-spinner>
                 <h1>Verification</h1>
-                <label for="phone" class="mgn-bt-20">Please type the verification code sent to {{phoneNumber.e164Number}}</label>
+                <label *ngIf="phoneNumber && phoneNumber.dialCode==='+91'" for="phone" class="mgn-bt-20">Please type the verification code sent to {{phoneNumber.e164Number}}</label>
+                <label *ngIf="phoneNumber && phoneNumber.dialCode!=='+91'" for="phone" class="mgn-bt-20">Please type the verification code sent to {{emailId}}</label>
                 <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
                 <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
                 <!-- <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
@@ -55,6 +66,12 @@
                 <label for="phone">Last Name</label>
                 <input type="text" class="form-control" id="first_name" [(ngModel)]="lastName" autocomplete="off" />
             </div>
+            <!-- <div class="form-group email" *ngIf="!phoneNumber && phoneNumber.dialCode != '+91'">
+                <label for="phone">Email</label>
+                <input type="text" class="form-control" id="emailId" [(ngModel)]="emailId" autocomplete="off"
+                    (keypress)="resetApiErrors()">
+            </div> -->
+            <!-- (blur)="onFieldBlur('emailId')" -->
             <div class="form-group otp" *ngIf="googleLogin">
                 <label for="phone">Mobile Number</label>
                 <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
@@ -66,8 +83,14 @@
                 </ngx-intl-tel-input>
                 <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
             </div>
-            <div class="form-group otp">
-                <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
+            <div class="form-group otp" style="display: flex !important; justify-content: space-between !important;">
+                <button class="mgn-up-20 mat-button signup-button" type="button"
+                    [disabled]="api_loading" (click)="goBack()">
+                    <span *ngIf="!api_loading">Back</span>
+                    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                    </app-common-innerloading-spinner>
+                </button>
+                <button class="mgn-up-20 mat-button signup-button" type="button"
                     [disabled]="api_loading" (click)="signUpConsumer()">
                     <span *ngIf="!api_loading">Next</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
