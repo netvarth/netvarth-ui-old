@@ -98,6 +98,8 @@ export class ViewLeadQnrComponent implements OnInit {
   ]
   kycInfo:any;
   bCrifBtnDisable:boolean;
+  generateCrifText:string='';
+  api_loadingprintCrif:boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -124,6 +126,7 @@ export class ViewLeadQnrComponent implements OnInit {
     _this.fetchLeadInfo(_this.leadUID).then(
       (leadInfo: any) => {
         _this.leadInfo = leadInfo; // Setting Lead information.
+        console.log('leadInfo::::::',_this.leadInfo)
         _this.getTelephoneNumer(_this.leadInfo.customer.phoneNo);
         this.api_loading_UpdateKyc = false;
         console.log('leadInfostatus::::::', _this.leadInfo.status)
@@ -159,20 +162,25 @@ export class ViewLeadQnrComponent implements OnInit {
 
           )
         }
-        // else if (leadInfo.status.name === 'Credit Recommendation') {
-        //   _this.headerName = 'Loan Sanction';
-        //   // _this.headerName = "Login Verification";
-        // _this.crmService.getkyc(leadInfo.uid).subscribe(
-        //   (kycInfo) => {
-        //     console.log("KYC Info:", kycInfo);
-        //     _this.initApplicantForm(kycInfo);
-        //   }
+        else if (leadInfo.status.name === 'Credit Score Generated') {
+          // console.log('this.kycInfo',this.kycInfo)
+          _this.crmService.getkyc(leadInfo.uid).subscribe(
+            (kycInfo:any) => {
+              console.log("KYC Info:", kycInfo);
+              this.kycInfo=kycInfo;
+              kycInfo.forEach((item)=>{
+                
+                this.getCrifInquiryVerification(item);
+              })
+              
+            }
 
-        // )
-        // }
+          )
+          _this.getQuestionaire();
+        }
         else {
           if (leadInfo.status.name === 'Login Verified') {
-            this.headerName = 'Credit Recommendation';
+            _this.headerName = 'Credit Recommendation';
           }
           else if (leadInfo.status.name === 'Credit Recommendation') {
             this.headerName = 'Loan Sanction';
@@ -823,9 +831,63 @@ export class ViewLeadQnrComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       })
   }
-
-  showCrifscoreSection(data:any,index:any) {
-    console.log(data);
-    this.showCrifSection =! this.showCrifSection;
+  showCrifscoreSection() {
+    console.log('this.leadInfo.status.name',this.leadInfo.status.name)
+    if(this.generateCrifText==='Verify CRIF Score of'){
+      this.showCrifSection = !this.showCrifSection
+    }
+  }
+  getCrifInquiryVerification(kycInfoList){
+     console.log('kycIbfoList2',kycInfoList.originUid,kycInfoList.id)
+    const _this=this;
+    return new Promise((resolve,reject)=>{
+      _this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
+        (element)=>{
+          resolve(element);
+          // console.log('elemnt',element)
+          if(element){
+            _this.crifDetails = element;
+            if(_this.crifDetails &&  _this.crifDetails.crifHTML){
+              _this.crifHTML = _this.crifDetails.crifHTML;
+            }
+            if(_this.crifDetails && _this.crifDetails.crifScoreString){
+              _this.crifScore = _this.crifDetails.crifScoreString;
+            }
+            _this.api_loadingprintCrif=false;
+            _this.showPdfIcon = true;
+            _this.generateCrifText='Verify CRIF Score of'
+            _this.bCrifBtnDisable=true;
+          }
+          
+        },
+        ((error:any)=>{
+          if(this.leadInfo && this.leadInfo.status){
+            if(this.leadInfo.status.name==='Credit Score Generated'){
+              this.generateCrifText='Sorry you have no CRIF score of';
+            }
+          }
+        })
+      ),
+      ((error)=>{
+         console.log('error222222',error)
+        reject(error);
+      })
+    })
+    
+  }
+  printCRIF() {
+    const params = [
+      'height=' + screen.height,
+      'width=' + screen.width,
+      'fullscreen=yes'
+    ].join(',');
+    const printWindow = window.open('', '', params);
+    printWindow.document.write(this.crifHTML);
+    printWindow.moveTo(0, 0);
+    printWindow.print();
+    printWindow.document.close();
+    setTimeout(() => {
+      printWindow.close();
+    }, 500);
   }
 }

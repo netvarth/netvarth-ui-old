@@ -44,6 +44,54 @@
         </div>
       </div>
       <hr />
+      <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Credit Score Generated')">
+        <div *ngFor="let item of kycInfo;let i=index">
+          <!---crif btn start-->
+        <div class=" my-2" >
+          <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
+                border: 1px solid #D7FFE9 !important;
+                color: #fff;
+                width: -webkit-fill-available;" (click)="showCrifscoreSection()">
+            {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
+            <span *ngIf="i===1">Co-Applicant </span>
+            <span *ngIf="i>1">Co-Applicant {{i}}</span>
+          </button>
+      </div>
+      <!----crif btn end-->
+      <div *ngIf="showCrifSection">
+          <span class="group-head">CRIF Score of
+            <span *ngIf="i===0">Applicant</span>
+            <span *ngIf="i===1">Co-Applicant </span>
+            <span *ngIf="i>1">Co-Applicant {{i}}</span>
+          </span><br>
+          <div class="bggrey my-2">
+              <div style="display: flex;gap: 5px">
+                  <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;
+          flex-direction: row-reverse; justify-content: left;">
+                      <div class="leadTitle">
+                      </div>
+                      <div class="fieldPadding">
+                          <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
+                              {{crifScore}} </a>
+                          <button [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
+                              style="margin-left: 25px !important;width: -webkit-fill-available;"
+                              class="btn btn mb-2 action-button action-button-add confirmBtn">
+                              Check CRIF Verification </button>
+                      </div>
+                      <app-common-innerloading-spinner *ngIf="api_loadingprintCrif"></app-common-innerloading-spinner>
+                      <div *ngIf="showPdfIcon">
+                          <a (click)="printCRIF()">
+                              <img class="img" style="height: 50px; width: 50px;"
+                                  src="/assets/images/ImgeFileIcon/pdf.png" />
+                          </a>
+                      </div>
+                  </div>
+  
+              </div>
+          </div>
+      </div>
+        </div>
+          </div>
       <div *ngIf="showQuestionnaire && questionaire" class="quest">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid"
           (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
