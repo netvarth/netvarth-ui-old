@@ -1071,7 +1071,8 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   getSMSCredits() {
     this.provider_services.getSMSCredits().subscribe(data => {
       this.smsCredits = data;
-      if (this.smsCredits < 5 && this.smsCredits > 0) {
+      console.log("Sms credits :",this.smsCredits)
+      if (this.smsCredits < 5) {
         this.is_smsLow = true;
         this.smsWarnMsg = Messages.LOW_SMS_CREDIT;
         this.getLicenseCorpSettings();
@@ -1108,7 +1109,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
-          this.getSMSCredits();
+          //this.getSMSCredits();
         }
       });
     }
