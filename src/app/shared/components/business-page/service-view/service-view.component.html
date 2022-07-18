@@ -1,11 +1,11 @@
-<section class="content bus-page" [ngClass]="accountProperties?accountProperties['theme']:''">
+<section class="content bus-page" [ngClass]="theme?theme:''">
     <div class="panel panel-default" *ngIf="loading || loading_direct" class="full-height">
         <div class="child">
             <app-common-innerloading-spinner>
             </app-common-innerloading-spinner>
         </div>
     </div>
-    <div class="container" *ngIf="!loading">
+    <div class="container service-view-container" *ngIf="!loading">
         <div class="row pad-bt-10 bus-page-header">            
             <div class="panel panel-default" >
                 <!-- *ngIf="!loading" -->
@@ -90,10 +90,9 @@
                         </div>
                     </div>
                     <br>
-                    <!-- *ngIf="!loading" -->
+                    <!-- *ngIf="!loading" style="background-color: #1e4079;"-->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
-                        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 card-outer-cont no-margin"
-                            style="background-color: #1e4079;">
+                        <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 card-outer-cont no-margin service-title-sec">
                             <div class="col-md-2 col-xs-3 col-sm-3 col-lg-1 no-padding card-inner-img-cont">
                                 <div class="img-circle"
                                     *ngIf="servicedetails && !servicedetails.servicegallery && servicedetails.serviceType == 'virtualService'">

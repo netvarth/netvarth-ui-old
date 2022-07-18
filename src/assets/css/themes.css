@@ -324,6 +324,16 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
     background-size: 100% 100%  !important;
     /* color: #fff !important; */
   }
+  .mediExpat .service-view-container .service-head-cont h5,
+  .mediExpat .service-view-container .card-inner-img-cont i {
+    color: black !important;
+  }
+  .mediExpat .service-view-container .description {
+    background: none !important;
+  }
+  .mediExpat .service-view-container .service-title-sec {
+    background:  #fff !important;
+  }
   /* .mediExpat .serv-head.service-serv-head, .mediExpat .mat-tab-label,
   .mediExpat .serv-head.service-serv-head h5, .mediExpat .mat-select-value,
   .mediExpat.bus-page .dept-title-h4,.mediExpat .lgmem .lgin,

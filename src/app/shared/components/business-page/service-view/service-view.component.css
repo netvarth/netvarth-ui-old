@@ -551,7 +551,9 @@ ul.service-ul li {
   border-radius: 5px;
   color: #3c8dbc;
 }
-
+.service-title-sec {
+  background-color: #1e4079 !important;
+}
 .service-li-title {
   color: #2653B7;
 }
