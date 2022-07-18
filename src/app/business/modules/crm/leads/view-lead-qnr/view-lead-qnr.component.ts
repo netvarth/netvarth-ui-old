@@ -332,7 +332,10 @@ export class ViewLeadQnrComponent implements OnInit {
               }
             }
           );
-        }        
+        }
+        else{
+          resolve(true);
+        }     
       }
     })
   }
@@ -703,10 +706,12 @@ export class ViewLeadQnrComponent implements OnInit {
         applicantsList.push(this.applicantsInfo[key]);
       })
       this.crmService.addkyc(applicantsList).subscribe((s3urls: any) => {
-        console.log('afterupdateKYCDAta', s3urls);
+        console.log('afterupdateKYCDAta', applicantsList,s3urls);
         this.api_loading_UpdateKyc = false;
         this.api_loading_UpdateKycProceed = false;
+        console.log("s3urls.length",s3urls.length)
         if (s3urls.length > 0) {
+          console.log("Entered if")
           this.uploadAudioVideo(s3urls).then(
             () => {
               if(this.leadInfo.status.name === 'KYC Updated'){
@@ -715,9 +720,11 @@ export class ViewLeadQnrComponent implements OnInit {
               else{
                 this.snackbarService.openSnackBar('KYC updated successfully');
               }
+               console.log("Proceeding done4")
               this.api_loading_UpdateKyc = false;
               this.api_loading_UpdateKycProceed = false;
               if (this.leadInfo.status.name === 'New') {
+                console.log("Proceeding done")
                 this.proceedToCrif(applicantsList);
               } else {
                 this.proceedAfterKycUpdation();
@@ -734,9 +741,11 @@ export class ViewLeadQnrComponent implements OnInit {
           else{
             this.snackbarService.openSnackBar('KYC updated successfully');
           }
+           console.log("Proceeding done3")
           this.api_loading_UpdateKyc = false;
           this.api_loading_UpdateKycProceed = false;
           if (this.leadInfo.status.name === 'New') {
+            console.log("Proceeding done2")
             this.proceedToCrif(applicantsList);
           } else {
             this.proceedAfterKycUpdation();
