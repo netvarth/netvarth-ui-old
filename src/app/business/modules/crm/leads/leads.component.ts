@@ -217,11 +217,11 @@ export class LeadsComponent implements OnInit {
         filter['statusName-eq'] = 'Loan Sanction';
         this.headerName = 'Loan Disbursement';
         break;
-      case 'Redirect':
-        filter['isRedirected-eq'] = true;
-        this.bStatusTableHead = true;
-        this.headerName = 'Redirect';
-        break;
+      // case 'Redirect':
+      //   filter['isRedirected-eq'] = true;
+      //   this.bStatusTableHead = true;
+      //   this.headerName = 'Redirect';
+      //   break;
       case 'Rejected':
         filter['statusName-eq'] = 'rejected';
         this.headerName = 'Rejected';
