@@ -4,19 +4,19 @@
     border: 0 !important;
     background: white !important;
     border-radius: 0 !important;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12) !important;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12) !important;
     color: #1E4079 !important;
     width: 100px !important;
     text-align: center !important;
 }
-.overLap{
-display: inline-flex;    
+
+.overLap {
+    display: inline-flex;
 }
 
-.custom-pagination
-{
-    font-size: 18px!important;
-    margin: 10px!important;
+.custom-pagination {
+    font-size: 18px !important;
+    margin: 10px !important;
 }
 
 .dropdown.notifications-menu a i {
@@ -35,18 +35,18 @@ display: inline-flex;
         height: 60px !important;
         width: 60px !important;
     }
-    
+
     .dropdown.notifications-menu a i {
         font-size: 30px !important;
         margin-bottom: 0px !important;
-    }    
+    }
 }
 
 .dropdown.customized-dd button {
     background-color: white !important;
 }
 
-.dropdown.customized-dd:hover button{
+.dropdown.customized-dd:hover button {
     background-color: #f4f4f4 !important;
     color: #444 !important;
 }
@@ -68,39 +68,47 @@ display: inline-flex;
     background: #f0f0f0 !important;
     height: 30px !important;
 }
+
 .location {
     font-weight: normal !important;
     font-size: .8rem !important;
 }
-.dashboard .card.w-dta .dash-list .table tbody tr td{
+
+.dashboard .card.w-dta .dash-list .table tbody tr td {
     border: none;
 }
-tr{
+
+tr {
     border: 1px solid #ddd;
 }
 
-.mobileDisplay{
+.mobileDisplay {
     display: none;
 }
-.webDisplay{
+
+.webDisplay {
     display: flex;
 }
-@media (max-width: 767px){
-    .mobileDisplay{
+
+@media (max-width: 767px) {
+    .mobileDisplay {
         display: block;
     }
-    .webDisplay{
+
+    .webDisplay {
         display: none;
     }
-   
-    .statusSelectDiv{
+
+    .statusSelectDiv {
         width: -webkit-fill-available;
-        
+
     }
-    .form-control{
-        width: 100%  !important;
+
+    .form-control {
+        width: 100% !important;
     }
-    .btnClass{
+
+    .btnClass {
         padding-left: 0px !important;
     }
 
@@ -1445,6 +1453,7 @@ input[type='file'] {
     font-size: 15.4396px;
     color: #4B4B4B;
 }
+
 @media (max-width: 599px) {
     .totalCount {
         font-weight: bold;
@@ -1457,12 +1466,15 @@ input[type='file'] {
         font-size: 12.4396px;
         color: #4B4B4B;
     }
+
     ::ng-deep .mat-ink-bar {
         width: 0px !important;
     }
+
     .img {
         height: 25px !important;
     }
+
     .btnClass {
         display: flex !important;
         justify-content: space-between !important;
@@ -1477,30 +1489,29 @@ svg {
 
 
 
-.Unassigned
-  {
-    color: #0000FF!important;
-  }
-  .Success
-  {
-    color:#008000!important;
-  }
-  .Progress
-  {
-    color:#FCD445!important;
-  }
-  .Assigned
-  {
-    color:#f594f5!important;
-  }
-  .Failed
-  {
-    color: rgb(223, 71, 71)!important;
-  }
-  .Transferred
-  {
-    color:#4D4B4B!important;
-  }
+.Unassigned {
+    color: #0000FF !important;
+}
+
+.Success {
+    color: #008000 !important;
+}
+
+.Progress {
+    color: #FCD445 !important;
+}
+
+.Assigned {
+    color: #f594f5 !important;
+}
+
+.Failed {
+    color: rgb(223, 71, 71) !important;
+}
+
+.Transferred {
+    color: #4D4B4B !important;
+}
 
 .progress-circle span {
     font-size: 0.6rem;
@@ -1521,8 +1532,9 @@ svg {
 }
 
 span.tab-text.ng-star-inserted {
-    padding: 0 10px!important;
+    padding: 0 10px !important;
 }
+
 .progress-circle span:after {
     content: "";
     font-weight: 600;
@@ -1546,62 +1558,79 @@ span.tab-text.ng-star-inserted {
 }
 
 @media (max-width: 599px) {
-::ng-deep.mat-tab-label .mat-tab-label-content {
-    flex-wrap: wrap!important;
-    line-height: 20px !important;
-  }
-  
-  ::ng-deep.mat-tab-label .mat-tab-label-content span{
-    display: flex!important;
-    flex: 1 0 100%!important;
-    justify-content: center!important;
-  }
-  ::ng-deep.mat-tab-label {
-      padding:5px !important;
-  }
+    ::ng-deep.mat-tab-label .mat-tab-label-content {
+        flex-wrap: wrap !important;
+        line-height: 20px !important;
+    }
+
+    ::ng-deep.mat-tab-label .mat-tab-label-content span {
+        display: flex !important;
+        flex: 1 0 100% !important;
+        justify-content: center !important;
+    }
+
+    ::ng-deep.mat-tab-label {
+        padding: 5px !important;
+    }
 }
+
 ::ng-deep.mat-tab-label-active {
-    color:  #1e4079 !important;
+    color: #1e4079 !important;
 }
-::ng-deep.mat-tab-label-active .mat-tab-label-content{ 
+
+::ng-deep.mat-tab-label-active .mat-tab-label-content {
     font-weight: bold !important;
 }
-.generateBTN{
+
+.generateBTN {
     margin-right: -15px !important;
 }
-@media (max-width: 767px){
-    .divDisp{
+
+@media (max-width: 767px) {
+    .divDisp {
         display: block;
     }
-    .generateBTN{
+
+    .generateBTN {
         margin-right: -30px !important;
     }
 
 }
 
-.divDisp{
+.divDisp {
     display: flex;
 }
 
-td{
+td {
     white-space: normal !important;
     height: 50px;
-  }
-  .lead{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0px !important;
-  }
-  .fieldPadding{
-      padding-left: 15px;
-  }
-  .filterBtn{
-    float: right;margin-top: -30px;
-  }
-  .dashboard .card.w-dta .dash-list .table tbody tr:nth-child(odd) {
+}
+
+.lead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0px !important;
+}
+
+.fieldPadding {
+    padding-left: 15px;
+}
+
+.filterBtn {
+    float: right;
+    margin-top: -30px;
+}
+
+.dashboard .card.w-dta .dash-list .table tbody tr:nth-child(odd) {
     background: transparent;
 }
+
 .dashboard .card.w-dta .dash-list .table tbody tr {
     transition: all 500ms;
+}
+
+.dash-head {
+    display: flex;
+    align-items: center;
 }

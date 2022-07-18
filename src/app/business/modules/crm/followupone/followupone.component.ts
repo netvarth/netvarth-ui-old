@@ -27,10 +27,8 @@ export class FollowUpOneComponent implements OnInit {
     private activated_route: ActivatedRoute,
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
-      console.log('qparams', qparams)
       if (qparams.type) {
         this.type = qparams.type;
-        console.log('this.type',this.type)
       }
     });
   }
@@ -48,11 +46,6 @@ export class FollowUpOneComponent implements OnInit {
     } else{
       filter['statusName-eq'] = 'Proceed'
     }
-    
-
-    // filter['statusName-eq'] = 'Assigned';
-    // filter['title-eq'] = this.headerName;
-    // filter['statusName-neq']='Rejected';
     return filter;
   }
   /**
@@ -82,7 +75,6 @@ export class FollowUpOneComponent implements OnInit {
   getFollowups(filter) {
     this.crmService.getFollowups(filter).subscribe((res: any) => {
       this.followups = res;
-      console.log('dataTableres',res)
       this.api_loading = false;
     });
   }

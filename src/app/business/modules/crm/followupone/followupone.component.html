@@ -1,12 +1,12 @@
 <section class="card">
   <div class="title-gb no-padding">
     <div class="dash-head">
-      <div class="arrowLeftIcon"> <i class="fa fa-arrow-left iconClr" aria-hidden="true" (click)="goback()"></i></div>
-      <div>{{headerName}}</div>
+      <div> <i style="color:#1D3E77 !important" class="fa fa-arrow-left" aria-hidden="true" (click)="goback()"></i>
+      </div>
+      <div style="color:#1D3E77 !important" *ngIf="headerName">{{headerName}}</div>
     </div>
   </div>
 </section>
-
 <section class="card col-md-12">
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
   <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
@@ -33,43 +33,30 @@
                   <tr *ngFor="let task of followups; let i=index" class="pointer-cursor"
                     (click)="followupClicked(task)">
                     <td class="td2" *ngIf="task.customer">
-                      <span *ngIf="task.customer && task.customer.name &&task.customer.name.startsWith('null')&& task.customer.name != undefined">
+                      <span
+                        *ngIf="task.customer && task.customer.name &&task.customer.name.startsWith('null')&& task.customer.name != undefined">
                         {{task.customer.name | slice:4: task.customer.name.length}}
                       </span>
-                      <span *ngIf="task.customer && task.customer.name != undefined && task.customer.name &&(!task.customer.name.startsWith('null'))">{{task.customer.name}}</span>
-                      <span *ngIf="task.customer && task.customer.name===undefined">Location-{{task.location.name}}</span>
+                      <span
+                        *ngIf="task.customer && task.customer.name != undefined && task.customer.name &&(!task.customer.name.startsWith('null'))">{{task.customer.name}}</span>
+                      <span
+                        *ngIf="task.customer && task.customer.name===undefined">Location-{{task.location.name}}</span>
                     </td>
                     <td class="td3"><span *ngIf="task.generatedBy">{{task.generatedBy.name}}</span></td>
                     <td *ngIf="task.createdDate">{{task.createdDate}}</td>
                     <td class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
-                      <!-- {{task.status.name}} -->
-                      <div *ngIf="task.status.name==='New'" style="width: min-content !important;
-                          padding: 10px !important;
-                          color: #00D1FF !important;
-                          background: #D6F5FF !important;
-                          border-radius: 7px!important;text-align:center;width: 7rem !important;">
+                      <div *ngIf="task.status.name==='New'" class="newBtn">
                         {{task.status.name}}
                       </div>
-                      <div *ngIf="task.status.name==='Completed'" style="width: min-content !important;
-                          padding: 10px !important;text-align:center;width: 7rem !important;
-                          background: #D7FEE9 !important;
-    border: 1px solid #D7FFE9 !important;
-    color: #38C984 !important;
-                          border-radius: 7px!important">
+                      <div *ngIf="task.status.name==='Completed'" class="completedBtn">
                         {{task.status.name}}
                       </div>
-                      <div *ngIf="task.status.name==='Assigned'" style="width: min-content !important;
-                          padding: 10px !important;text-align:center;width: 7rem !important;
-                          background: #D7FEE9 !important;
-    border: 1px solid #D7FFE9 !important;
-    color: #38C984 !important;
-                          border-radius: 7px!important">
+                      <div *ngIf="task.status.name==='Assigned'" class="assignedBtn">
                         {{task.status.name}}
                       </div>
                       <div
                         *ngIf="(task.status.name !=='New')&& (task.status.name !== 'Completed') && (task.status.name !== 'Assigned')"
-                        style="width: min-content !important;
-                          padding: 10px !important;color: #38C984 !important;background: #D7FEE9;text-align:center;width: 7rem !important;border: 1px solid #D7FFE9;border-radius: 7px!important">
+                        class="defultBtn">
                         {{task.status.name}}
                       </div>
                     </td>
@@ -77,7 +64,7 @@
                 </ng-container>
               </tbody>
             </table>
-            <div class="search_paging" *ngIf="pagination.totalCnt >= 10">
+            <div class="search_paging" *ngIf="pagination && pagination.totalCnt >= 10">
               <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
                 (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
               </app-pager>

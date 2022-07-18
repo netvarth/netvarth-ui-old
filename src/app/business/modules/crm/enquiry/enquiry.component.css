@@ -1,208 +1,243 @@
-.dash-head{
-    color: #1D3E77 !important;
+.dash-head {
+  color: #1D3E77 !important;
 }
-.customerInfo{
-    display:flex;
+
+.customerInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
+  position: relative;
+  /* flex-direction: row-reverse; */
+  margin-top: 5px;
+  width: 50%;
+}
+
+.form-control {
+  /* background-color: #f6f6f6!important; */
+  display: block;
+  width: 100%;
+  height: 35px;
+  padding: 6px 12px !important;
+  font-size: 14px !important;
+  line-height: 1.42857143 !important;
+  color: #555 !important;
+  background-image: none !important;
+  /* background: #F1F1F1 !important; */
+  border-radius: 5.73504px !important;
+  box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s !important;
+  background: #F9F9F9;
+}
+
+.confirmBtnFind {
+  background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid !important;
+  padding: 6px 12px;
+  color: #fff;
+  margin-left: -90px;
+  height: 35px;
+  width: 85px;
+}
+
+.confirmBtnFindMObile {
+  background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid !important;
+  padding: 6px 12px;
+  color: #fff;
+  height: 35px;
+  width: 40px;
+  margin-left: -46px;
+}
+
+@media (max-width: 767px) {
+  .mobileDisplay {
+    display: block;
+  }
+
+  .webDisplay {
+    display: none;
+  }
+
+  .SorceChannel {
+    width: 100%;
+  }
+
+  input[type=number] {
+    width: 100%;
+  }
+}
+
+@media (min-width: 767px) {
+  .mobileDisplay {
+    display: none;
+  }
+
+  .webDisplay {
+    display: flex;
+  }
+
+  /* ::ng-deep .mat-select{
+        width: 49.5% !important;
+      } */
+  .SorceChannel {
+    width: 49.5% !important;
+  }
+
+  input[type=number] {
+    width: 49%;
+  }
+}
+
+.infoHeader {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.customer {
+  height: 40px;
+  border-bottom: 1px solid #E3E3E3;
+}
+
+.cancelBtn {
+  background: #A8ABAF !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid !important;
+  margin-right: 10px !important;
+  padding: 6px 10px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  height: 2.5rem;
+}
+
+.confirmBtn {
+  background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid !important;
+  padding: 6px 12px;
+  color: #fff;
+  height: 2.5rem;
+}
+
+.taskTitle {
+  font-size: 12px;
+  color: #949191;
+  display: flex;
+  gap: 3px;
+}
+
+.formField {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width:764px) {
+  .formField {
+    display: block;
+  }
+
+  .customerInfo {
+    display: flex;
     justify-content: space-between;
     align-items: center;
-    gap:5px;
+    gap: 5px;
     position: relative;
     /* flex-direction: row-reverse; */
     margin-top: 5px;
-    width: 50%;
-    }
-    .form-control{
-        /* background-color: #f6f6f6!important; */
-        display: block;
-        width: 100%;
-        height: 35px;
-        padding: 6px 12px!important;
-        font-size: 14px !important;
-        line-height: 1.42857143!important;
-        color: #555!important;
-        background-image: none !important;
-        /* background: #F1F1F1 !important; */
-        border-radius: 5.73504px !important;
-        box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
-        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important;
-        background: #F9F9F9;
-      }
-      .confirmBtnFind{
-        background: #0D2348 !important;
-          box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
-          border-radius: 3.75916px !important;
-          border: 0px solid !important;
-          padding: 6px 12px;
-          color: #fff;
-          margin-left: -90px;
-          height: 35px;
-          width: 85px;
-      }
-      .confirmBtnFindMObile{
-        background: #0D2348 !important;
-          box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
-          border-radius: 3.75916px !important;
-          border: 0px solid !important;
-          padding: 6px 12px;
-          color: #fff;
-          height: 35px;
-          width: 40px;
-          margin-left: -46px;
-      }
-      @media (max-width: 767px){
-        .mobileDisplay{
-            display: block;
-        }
-        .webDisplay{
-          display: none;
-      }
-      .SorceChannel{
-        width: 100%;
-      }
-      input[type=number]{
-        width: 100%;
-      }
-      }
-      @media (min-width: 767px){
-      .mobileDisplay{
-        display: none;
-      }
-      .webDisplay{
-        display: flex;
-      }
-      /* ::ng-deep .mat-select{
-        width: 49.5% !important;
-      } */
-      .SorceChannel{
-        width: 49.5% !important;
-      }
-      input[type=number]{
-        width:49%;
-      }
-      }
-    .infoHeader{
-      color: #000000;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .customer{
-        height: 40px;
-    border-bottom: 1px solid #E3E3E3;
-    }
-    .cancelBtn{
-        background: #A8ABAF !important;
-      box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
-      border-radius: 3.75916px !important;
-      border: 0px solid  !important;
-      margin-right: 10px !important;
-      padding: 6px 10px;
-      color: #fff;
-      font-weight: bold;
-        font-size: 14px;
-        height: 2.5rem;
-      }
-      .confirmBtn{
-        background: #0D2348 !important;
-      box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
-      border-radius: 3.75916px !important;
-      border: 0px solid  !important;
-      padding: 6px 12px;
-      color: #fff;
-      height: 2.5rem;
-      }
-      .taskTitle{
-        font-size: 12px;
-        color: #949191;
-        display: flex;
-        gap: 3px;
-    }
-    .formField{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-    }
-    @media  (max-width:764px){
-      .formField{
-        display: block;
-      }
-      .customerInfo{
-        display:flex;
-        justify-content: space-between;
-        align-items: center;
-        gap:5px;
-        position: relative;
-        /* flex-direction: row-reverse; */
-        margin-top: 5px;
-        width: 100%;
-        }
-        /* ::ng-deep .mat-select{
+    width: 100%;
+  }
+
+  /* ::ng-deep .mat-select{
           width: 100% !important;
         } */
-    }
-    .taskInputField{
-      width: -webkit-fill-available;
-    }
-    .dash-head{
-      display: flex;
-    /* align-items: center; */
-    gap: 10px;
-    }
-    .arrowLeftIcon{
-      border: 1px solid;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    text-align: center;
-    background: #1D3E77;
-    }
-    .iconClr{
-      color: #fff !important;
-    }
-    ::ng-deep .form-control:focus {
-      border: 2px solid #96d3e2 !important;
-    }
-    ::ng-deep .mat-select-arrow {
-      transform: rotate(0deg) !important;
-    }
-    
-    ::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
-      transform: rotate(-180deg) !important;
-    }
-    .templateImage{
-      /* height: 20px; */
-      width: 50px;
-      object-fit: cover;
-    }
-    .templateClass{
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .astericColor{
-      color: #f24949 !important;
-      font-size: large;
-    margin-top: -3px;
-    }
-    .errorClass{
-      color: #f24949 !important;font-size: 12px;
-    }
-    .cursorDiasable{
-      cursor: not-allowed;
-      }
+}
 
-      textarea::placeholder {
-        font-size: 12px !important;
-        font-style: italic;
-        color: #555;
-      }
-      input::placeholder {
-       font-size: 12px !important;
-        font-style: italic;
-        color: #555;
-      }
-      ::ng-deep .mat-select-placeholder{
-       font-size: 12px !important;
-        font-style: italic;
-        color: #555;
-      }
+.taskInputField {
+  width: -webkit-fill-available;
+}
+
+.dash-head {
+  display: flex;
+  /* align-items: center; */
+  gap: 10px;
+}
+
+.arrowLeftIcon {
+  border: 1px solid;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  text-align: center;
+  background: #1D3E77;
+}
+
+.iconClr {
+  color: #fff !important;
+}
+
+::ng-deep .form-control:focus {
+  border: 2px solid #96d3e2 !important;
+}
+
+::ng-deep .mat-select-arrow {
+  transform: rotate(0deg) !important;
+}
+
+::ng-deep .mat-form-field.mat-focused.mat-primary .mat-select-arrow {
+  transform: rotate(-180deg) !important;
+}
+
+.templateImage {
+  /* height: 20px; */
+  width: 50px;
+  object-fit: cover;
+}
+
+.templateClass {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.astericColor {
+  color: #f24949 !important;
+  font-size: large;
+  margin-top: -3px;
+}
+
+.errorClass {
+  color: #f24949 !important;
+  font-size: 12px;
+}
+
+.cursorDiasable {
+  cursor: not-allowed;
+}
+
+textarea::placeholder {
+  font-size: 12px !important;
+  font-style: italic;
+  color: #555;
+}
+
+input::placeholder {
+  font-size: 12px !important;
+  font-style: italic;
+  color: #555;
+}
+
+::ng-deep .mat-select-placeholder {
+  font-size: 12px !important;
+  font-style: italic;
+  color: #555;
+}

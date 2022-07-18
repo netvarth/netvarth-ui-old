@@ -36,8 +36,8 @@ export class LeadsComponent implements OnInit {
     type: '',
     dueDate: '',
     title: '',
-    check_in_start_date:null,
-    check_in_end_date:null,
+    check_in_start_date: null,
+    check_in_end_date: null,
     page: 1
   };
   filters: any = {
@@ -46,10 +46,10 @@ export class LeadsComponent implements OnInit {
     'type': false,
     'dueDate': false,
     'title': false,
-    'check_in_start_date':false,
-    'check_in_end_date':false
+    'check_in_start_date': false,
+    'check_in_end_date': false
   };
-  
+
   api_loading = true;
   no_leads_cap = Messages.AUDIT_NO_LEADS_CAP;
   config: any;
@@ -61,7 +61,7 @@ export class LeadsComponent implements OnInit {
   yesterdayDate: Date;
   endmaxday: Date;
   filter_sidebar: boolean;
-  bStatusTableHead:boolean;
+  bStatusTableHead: boolean;
   constructor(
     private groupService: GroupStorageService,
     public router: Router,
@@ -104,19 +104,19 @@ export class LeadsComponent implements OnInit {
           )
         }
       )
-    });    
+    });
   }
   /**
    * 
    */
   goBack() {
-    this.router.navigate(['provider','crm']);
+    this.router.navigate(['provider', 'crm']);
   }
-/**
- * 
- * @param filter 
- * @returns 
- */
+  /**
+   * 
+   * @param filter 
+   * @returns 
+   */
   getLeadsCount(filter) {
     const _this = this;
     return new Promise((resolve, reject) => {
@@ -139,19 +139,19 @@ export class LeadsComponent implements OnInit {
   }
 
 
-/**
- * 
- * @param filter 
- */
+  /**
+   * 
+   * @param filter 
+   */
   getLeads(filter) {
     this.crmService.getTotalLead(filter).subscribe((res: any) => {
       this.leads = res;
       this.api_loading = false;
     });
   }
-/**
- * 
- */
+  /**
+   * 
+   */
   getStatus() {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -160,37 +160,33 @@ export class LeadsComponent implements OnInit {
       });
     })
   }
-/**
- * 
- * @param pg 
- */
+  /**
+   * 
+   * @param pg 
+   */
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     const filter = this.setFilter();
     this.getLeads(filter);
   }
-/**
- * 
- * @returns 
- */
+  /**
+   * 
+   * @returns 
+   */
   setFilter() {
     let filter = {}
-    // filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
-    // filter['count'] = this.pagination.perPage;
     filter['location-eq'] = this.selected_location.id;
-    if(this.filter.check_in_start_date != null)
-    {
+    if (this.filter.check_in_start_date != null) {
       filter['createdDate-ge'] = moment(this.filter.check_in_start_date).format("YYYY-MM-DD");
     }
-    if(this.filter.check_in_end_date != null)
-    {
+    if (this.filter.check_in_end_date != null) {
       filter['createdDate-le'] = moment(this.filter.check_in_end_date).format("YYYY-MM-DD");
     }
 
     switch (this.type) {
       case 'NEWLEAD':
         filter['statusName-eq'] = 'New';
-        this.bStatusTableHead=true;
+        this.bStatusTableHead = true;
         break;
       case 'CRIF':
         filter['statusName-eq'] = 'KYC Updated';
@@ -202,7 +198,7 @@ export class LeadsComponent implements OnInit {
         break;
       case 'DOCUMENTUPLOD':
         filter['statusName-eq'] = 'Sales Verified';
-        this.bStatusTableHead=true;
+        this.bStatusTableHead = true;
         this.headerName = 'Login';
         break;
       case 'LOGIN':
@@ -213,20 +209,20 @@ export class LeadsComponent implements OnInit {
         filter['statusName-eq'] = 'Login Verified';
         this.headerName = 'Credit Recommendation';
         break;
-        case 'LoanSanction':
+      case 'LoanSanction':
         filter['statusName-eq'] = 'Credit Recommendation';
         this.headerName = 'Loan Sanction';
         break;
-        case 'LoanDisbursement':
+      case 'LoanDisbursement':
         filter['statusName-eq'] = 'Loan Sanction';
         this.headerName = 'Loan Disbursement';
         break;
-        case 'Redirect':
+      case 'Redirect':
         filter['isRedirected-eq'] = true;
-        this.bStatusTableHead=true;
+        this.bStatusTableHead = true;
         this.headerName = 'Redirect';
         break;
-        case 'Rejected':
+      case 'Rejected':
         filter['statusName-eq'] = 'rejected';
         this.headerName = 'Rejected';
         break;
@@ -238,13 +234,12 @@ export class LeadsComponent implements OnInit {
    * @param leadUID 
    */
   openLead(leadUID) {
-    // console.log('this.type',this.type)
-    if (this.type === 'LoanDisbursement'){
-      return false; 
-    }
-    else if(this.type ===  'Rejected'){
+    if (this.type === 'LoanDisbursement') {
       return false;
-    }  
+    }
+    else if (this.type === 'Rejected') {
+      return false;
+    }
     this.router.navigate(['/provider/viewleadqnr/' + leadUID]);
   }
 
@@ -289,7 +284,7 @@ export class LeadsComponent implements OnInit {
     this.filter_sidebar = false;
   }
 
-    clearFilter() {
+  clearFilter() {
     this.resetFilter();
     const filter = this.setFilter();
     this.getLeadsCount(filter);
@@ -305,8 +300,8 @@ export class LeadsComponent implements OnInit {
       type: false,
       dueDate: false,
       title: false,
-      check_in_start_date:false,
-      check_in_end_date:false,
+      check_in_start_date: false,
+      check_in_end_date: false,
     };
     this.filter = {
       status: '',
@@ -314,25 +309,25 @@ export class LeadsComponent implements OnInit {
       type: '',
       dueDate: '',
       title: '',
-      check_in_start_date:null,
-      check_in_end_date:null,
+      check_in_start_date: null,
+      check_in_end_date: null,
       page: 1
     };
   }
 
-    showFilterSidebar() {
+  showFilterSidebar() {
     this.filter_sidebar = true;
   }
 
 
   keyPressed() {
-    console.log("this.filter",this.filter)
+    console.log("this.filter", this.filter)
     if (this.filter.check_in_start_date || this.filter.check_in_end_date) {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
     }
-  } 
+  }
   /**
    * 
    * @returns 

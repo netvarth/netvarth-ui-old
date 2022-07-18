@@ -18,8 +18,8 @@ export class CrmService {
   public leadMasterToCreateServiceData:any;
   public updateSubTaskData:any;
   public followUpTableToOverView:any;
-  
   PERPAGING_LIMIT= 10;
+ 
 
   constructor(
     private servicemeta: ServiceMeta,
@@ -31,7 +31,6 @@ export class CrmService {
          "taskId": 1,
          "taskName": 'Task 1'
        };
-       console.log(taskList)
        return taskList.asObservable();
     }
 
@@ -254,14 +253,12 @@ export class CrmService {
 
 
     updateTask(taskUid ,updateTaskData){
-      console.log(updateTaskData)
       const url='provider/task/'+ taskUid
       return this.servicemeta.httpPut(url, updateTaskData);
     }
 
 
     updateLead(leadUid ,updateLeadData){
-      console.log(updateLeadData)
       const url='provider/lead/'+ leadUid
       return this.servicemeta.httpPut(url, updateLeadData);
     }
@@ -305,12 +302,6 @@ export class CrmService {
     upload(file: File): Observable<HttpEvent<any>> {
       const formData: FormData = new FormData();
       formData.append('file', file);
-      console.log("Form Data : ",formData)
-      // const req = new HttpRequest('POST', 'provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt/attachment', formData, {
-      //   reportProgress: true,
-      //   responseType: 'json'
-      // });
-      // console.log("Form Data : ",req)
       return this.http.post<any>('provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt/attachment', formData, {
               reportProgress: true,
               observe: 'events'
@@ -432,7 +423,6 @@ export class CrmService {
     return this.servicemeta.httpGet(url, null, filter);
   }
   statusToPending(taskUid,data){
-    console.log(data)
       const url='provider/task/'+ taskUid + '/status/pending'
       return this.servicemeta.httpPut(url, data);
   }
@@ -550,7 +540,6 @@ export class CrmService {
     return this.servicemeta.httpGet(url, null);
   }
   statusToFailed(leadUid){
-    // console.log(data)
       const url='provider/lead/'+ leadUid + '/status/rejected'
       return this.servicemeta.httpPut(url);
   }

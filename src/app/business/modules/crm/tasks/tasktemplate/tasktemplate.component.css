@@ -1,55 +1,54 @@
-.templateList{
-    display: flex;
-    /* justify-content: space-between;
-    align-items: center; */
-    flex-wrap: wrap;
-    grid-gap: 10px;
-    gap: 10px;
-    margin-top: 10px;
+.templateList {
+  display: flex;
+  flex-wrap: wrap;
+  grid-gap: 10px;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.singleTempalte {
+  padding: 8px;
+  width: 40%;
+  background: #FFFFFF;
+  border: 1.19687px solid #F8F8F8;
+  box-shadow: 3.7135px 3.7135px 7.427px -2.9708px rgba(136, 136, 136, 0.25);
+  border-radius: 6.6843px;
+  cursor: pointer;
+}
+
+.templateName {
+  font-size: 12px;
+  font-weight: 500;
+  color: #000000;
+}
+
+.selectType {
+  color: #000000;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+}
+
+.image {
+  height: 75px;
+  width: 80px;
+  cursor: pointer;
+}
+
+@media (max-width:764px) {
+  .singleTempalte {
+    width: 100% !important;
   }
-  .singleTempalte{
-    padding: 8px;
-    /* background: #FFFFFF; */
-    /* box-shadow: 1.05788px 0.391416px 5.28941px rgb(96 95 95 / 25%);
-    border-radius: 5.46305px; */
-    width: 40%;
-      /* cursor: pointer; */
-      /* height: 6rem; */
-      background: #FFFFFF;
-border: 1.19687px solid #F8F8F8;
-box-shadow: 3.7135px 3.7135px 7.427px -2.9708px rgba(136, 136, 136, 0.25);
-border-radius: 6.6843px;
-cursor: pointer;
-  }
-  .templateName{
+
+  .templateName {
     font-size: 12px;
-      font-weight: 500;
-      color: #000000;
-  }
-  .selectType{
+    font-weight: 500;
     color: #000000;
-    font-size: 16px;
-    font-weight: 600;
-    text-align: left;
   }
-  .image{
-    height: 75px;
-    width: 80px;
-    /* object-fit: cover; */
-    cursor: pointer;
-  }
-  @media  (max-width:764px){
-    .singleTempalte{
-      width: 100% !important;
-    }
-    .templateName{
-      font-size: 12px;
-      font-weight: 500;
-      color: #000000;
-    }
-  }
-  .mainImg{
-    background: #F1F1F1;
-    border-radius: 6.6843px;
-    border: 1.19687px solid #F8F8F8;
-  }
+}
+
+.mainImg {
+  background: #F1F1F1;
+  border-radius: 6.6843px;
+  border: 1.19687px solid #F8F8F8;
+}

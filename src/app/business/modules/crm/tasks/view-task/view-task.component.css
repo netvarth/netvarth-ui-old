@@ -553,7 +553,7 @@ textarea {
   font-weight: bold;
   font-size: 14px;
   height: 35px;
-          width: 85px;
+  width: 85px;
 }
 
 .confirmBtn {
@@ -564,9 +564,10 @@ textarea {
   padding: 6px 12px;
   color: #fff;
   height: 35px;
-          width: 85px;
+  width: 85px;
 }
-.confirmBtnRemarks{
+
+.confirmBtnRemarks {
   background: #0D2348 !important;
   box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
   border-radius: 3.75916px !important;
@@ -574,7 +575,7 @@ textarea {
   padding: 6px 12px;
   color: #fff;
   height: 35px;
-          /* width: 85px; */
+  /* width: 85px; */
 }
 
 input:focus {
@@ -767,33 +768,45 @@ textarea .form-control {
   text-align: center;
   background: #D9D8D8;
 }
-.cursorDiasable{
-  cursor: not-allowed;
-  }
 
-  textarea::placeholder {
-    font-size: 14px !important;
-    font-style: italic;
-    color: #555;
-  }
-  input::placeholder {
-    font-size: 14px !important;
-    font-style: italic;
-    color: #555;
-  }
-  ::ng-deep .mat-select-placeholder{
-    font-size: 14px !important;
-    font-style: italic;
-    color: #555;
-  }
-  ::ng-deep .mat-datepicker-toggle{
-    position: relative !important;
-  }
-  .pointer{
-    cursor: pointer;
-  }
-  .fieldDisable{
-    cursor:not-allowed !important;
-    background-color: #eee;
-    opacity: 1;
-  }
+.cursorDiasable {
+  cursor: not-allowed;
+}
+
+textarea::placeholder {
+  font-size: 14px !important;
+  font-style: italic;
+  color: #555;
+}
+
+input::placeholder {
+  font-size: 14px !important;
+  font-style: italic;
+  color: #555;
+}
+
+::ng-deep .mat-select-placeholder {
+  font-size: 14px !important;
+  font-style: italic;
+  color: #555;
+}
+
+::ng-deep .mat-datepicker-toggle {
+  position: relative !important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.fieldDisable {
+  cursor: not-allowed !important;
+  background-color: #eee;
+  opacity: 1;
+}
+.custName{
+  font-size: 14px;
+    color: #000000;
+    font-weight: bold;
+    margin-bottom: 4px;
+}

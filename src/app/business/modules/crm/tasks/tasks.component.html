@@ -2,19 +2,17 @@
   <div class="row d-flex">
     <div class="col-md-4 col-lg-4 col-sm-5 col-xs-5">
       <div class="dash-head">
-        <div class="arrowLeftIcon"> <i class="fa fa-arrow-left iconClr" aria-hidden="true" (click)="goback()"></i></div>
-        <div *ngIf="headerName">{{headerName}}</div>
+        <div><i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i></div>
+        <div style="color: #1D3E77;"*ngIf="headerName">{{headerName}}</div>
       </div>
     </div>
-
     <div class="col-md-8 col-lg-8 col-sm-7 col-xs-7">
       <div class="pull-right">
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
             <li class="dropdown messages-menu loc-lst queue-menu-1 pull-right">
-              <i class="icon-location dropdown-toggle " data-toggle="dropdown"></i>
-              <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"
-                *ngIf="selected_location">
+              <i class="icon-location dropdown-toggle " data-toggle="dropdown" style="color: #1D3E77"></i>
+              <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"*ngIf="selected_location"style="color: #1D3E77">
                 {{selected_location.place | capitalizeFirst}}
               </a>
               <ul class="dropdown-menu">
@@ -22,7 +20,7 @@
                   <ul *ngIf="selected_location" class="menu">
                     <li *ngFor="let location of locations;let i = index"
                       [ngClass]="{'active': (location.place === selected_location.place)}">
-                      <a class="pointer-cursor" (click)="onChangeLocationSelect(i)">
+                      <a class="pointer-cursor" (click)="onChangeLocationSelect(i)"style="color: #1D3E77">
                         <h4 *ngIf="location.place.length>='27'">
                           {{ location.place.substring(0,24) | capitalizeFirst }}...</h4>
                         <h4 *ngIf="location.place.length<'27'">{{ location.place | capitalizeFirst }}</h4>

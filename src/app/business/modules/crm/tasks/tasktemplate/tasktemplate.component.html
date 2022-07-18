@@ -1,56 +1,61 @@
 <section class="card">
     <div class="title-gb no-padding">
-      <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
-          <div style="display:flex;gap:5px">
-            <div>
-                <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
+        <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
+            <div style="display:flex;gap:5px">
+                <div>
+                    <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
+                </div>
+                <div style="color: #1D3E77;"> Schedule Marketing Activity</div>
             </div>
-          <div style="color: #1D3E77;"> Schedule Marketing Activity</div>
-          </div>
-      </div>
+        </div>
     </div>
-  </section>
-  <app-common-innerloading-spinner  *ngIf="api_loading_Sel_Template"></app-common-innerloading-spinner>
-  <div style="margin:20px" *ngIf="!api_loading_Sel_Template">
+</section>
+<app-common-innerloading-spinner *ngIf="api_loading_Sel_Template"></app-common-innerloading-spinner>
+<div style="margin:20px" *ngIf="!api_loading_Sel_Template">
     <section class="card">
         <div>
             <div>
                 <div class="selectType">Select type of activity</div>
             </div>
-            <hr/>
-           <div class="templateList">
-               <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
-               <div *ngFor="let taskMaster of taskMasterList[0];let index=i" class="singleTempalte"
-                     >
-                   <div style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Direct Notice Distribution'" (click)="saveTaskMaster(taskMaster)">
-                       <div style="display: flex;gap:5px;align-items: center;">
-                        <div class="mainImg">
-                            <img class="image" src="/assets/images/crmImages/tempateImg/homeVisit.png" />
-                        </div>
-                        <div >
-                         <div class="templateName">{{taskMaster.templateName}}</div>
-                         <div class="templateName">{{taskMaster.description.value}}</div>
-                     </div>
-                       </div>
-                    <div>
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </div>
-                   </div>
-                   <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Notice Distribution Through Newspaper'" >
-                    <div style="display: flex;gap:5px;align-items: center;">
-                        <div class="mainImg">
-                            <img class="image" src="/assets/images/crmImages/tempateImg/noticeThroughDist.png" />
+            <hr />
+            <div class="templateList">
+                <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
+                <div *ngFor="let taskMaster of taskMasterList[0];let index=i" class="singleTempalte">
+                    <div style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='Direct Notice Distribution'"
+                        (click)="saveTaskMaster(taskMaster)">
+                        <div style="display: flex;gap:5px;align-items: center;">
+                            <div class="mainImg">
+                                <img class="image" src="/assets/images/crmImages/tempateImg/homeVisit.png" />
+                            </div>
+                            <div>
+                                <div class="templateName">{{taskMaster.templateName}}</div>
+                                <div class="templateName">{{taskMaster.description.value}}</div>
+                            </div>
                         </div>
                         <div>
-                            <div class="templateName">{{taskMaster.templateName}}</div>
-                            <div class="templateName">{{taskMaster.description.value}}</div>
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div>
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    <div (click)="saveTaskMaster(taskMaster)"
+                        style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='Notice Distribution Through Newspaper'">
+                        <div style="display: flex;gap:5px;align-items: center;">
+                            <div class="mainImg">
+                                <img class="image" src="/assets/images/crmImages/tempateImg/noticeThroughDist.png" />
+                            </div>
+                            <div>
+                                <div class="templateName">{{taskMaster.templateName}}</div>
+                                <div class="templateName">{{taskMaster.description.value}}</div>
+                            </div>
+                        </div>
+                        <div>
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </div>
                     </div>
-                    </div>
-                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Kiosk/Umbrella Activity and Data Collection'" >
+                    <div (click)="saveTaskMaster(taskMaster)"
+                        style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='Kiosk/Umbrella Activity and Data Collection'">
                         <div style="display: flex;gap:5px;align-items: center;">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/kisok.png" />
@@ -64,7 +69,9 @@
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Poster Activity'" >
+                    <div (click)="saveTaskMaster(taskMaster)"
+                        style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='Poster Activity'">
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/posterActivity.png" />
@@ -78,7 +85,9 @@
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div (click)="saveTaskMaster(taskMaster)"  style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Telecalling'" >
+                    <div (click)="saveTaskMaster(taskMaster)"
+                        style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='Telecalling'">
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/telecaing.png" />
@@ -92,7 +101,9 @@
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Digital Marketing'" >
+                    <div (click)="saveTaskMaster(taskMaster)"
+                        style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='Digital Marketing'">
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/digitaMarketing.png" />
@@ -106,10 +117,13 @@
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='Home Visit'" >
+                    <div (click)="saveTaskMaster(taskMaster)"
+                        style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='Home Visit'">
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
-                                <img class="image" src="/assets/images/crmImages/tempateImg/directNoticeDistribution.png" />
+                                <img class="image"
+                                    src="/assets/images/crmImages/tempateImg/directNoticeDistribution.png" />
                             </div>
                             <div>
                                 <div class="templateName">{{taskMaster.templateName}}</div>
@@ -120,7 +134,9 @@
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='BA Follow Up'" >
+                    <div (click)="saveTaskMaster(taskMaster)"
+                        style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='BA Follow Up'">
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/Folloup1.png" />
@@ -134,7 +150,9 @@
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-                    <div (click)="saveTaskMaster(taskMaster)" style="display: flex;justify-content: space-between;align-items: center;" *ngIf="taskMaster.templateName==='BA Recruitment'" >
+                    <div (click)="saveTaskMaster(taskMaster)"
+                        style="display: flex;justify-content: space-between;align-items: center;"
+                        *ngIf="taskMaster.templateName==='BA Recruitment'">
                         <div style="display: flex;align-items: center;gap:5px">
                             <div class="mainImg">
                                 <img class="image" src="/assets/images/crmImages/tempateImg/Folloup2.png" />
@@ -148,23 +166,8 @@
                             <i class="fa fa-arrow-right" aria-hidden="true"></i>
                         </div>
                     </div>
-               </div>
-               <!-- <div (click)="createTask('CreatE')" class="singleTempalte">
-                   <div style="display:flex;justify-content: space-between;align-items: center;">
-                    <div style="display: flex;align-items: center;gap:5px">
-                        <div>
-                            <img class="image" src="/assets/images/crmImages/tempateImg/others.png" />
-                        </div>   
-                        <div>
-                               <div class="templateName">Others</div>
-                           </div>
-                    </div>
-                    <div>
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </div>
-                   </div>
-               </div> -->
-           </div>
+                </div>
+            </div>
         </div>
-     </section>
-  </div>
+    </section>
+</div>

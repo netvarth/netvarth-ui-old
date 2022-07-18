@@ -1,7 +1,7 @@
 <section class="card">
   <div class="title-gb no-padding">
-    <div class="dash-head text-primary" >
-      <span *ngIf="hideBackBtn && headerName" class="fa fa-arrow-left pointer-cursor border-cirlce" (click)="goBack()"></span>&nbsp;
+    <div class="dash-head text-primary">
+      <span *ngIf="hideBackBtn && headerName" class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;
       {{headerName}}
     </div>
   </div>
@@ -25,10 +25,7 @@
           </div>
           <div>
             <div>
-              <div style="font-size: 14px;
-          color: #000000;
-          font-weight: bold;
-          margin-bottom: 4px;">
+              <div class="custName">
 
                 <span
                   *ngIf="taskDetails.customer && taskDetails.customer.name &&taskDetails.customer.name.startsWith('null')">
@@ -99,12 +96,13 @@
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <div >
-                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }" [formControlName]="selectMember" class="form-control"
-                    style="display: flex;justify-content: space-between;" (click)="(taskDetails.status.name !=='Completed') && selectMemberDialog(selectMember)">
-                    <div >{{selectMember}}</div>
-                    <div  class="pointer" ><i class="fa fa-user"
-                        aria-hidden="true"></i></div>
+                <div>
+                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }"
+                    [formControlName]="selectMember" class="form-control"
+                    style="display: flex;justify-content: space-between;"
+                    (click)="(taskDetails.status.name !=='Completed') && selectMemberDialog(selectMember)">
+                    <div>{{selectMember}}</div>
+                    <div class="pointer"><i class="fa fa-user" aria-hidden="true"></i></div>
                   </div>
                 </div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError"
@@ -123,7 +121,6 @@
                   [matDatepicker]="picker" [min]="minDate" [max]="maxDate" [value]="ddate" placeholder="Enter Date"
                   #taskDate>
                 <mat-datepicker-toggle matSuffix [for]="picker">
-                  <!-- <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon> -->
                 </mat-datepicker-toggle>
                 <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
                 </mat-datepicker>
@@ -189,10 +186,12 @@
                 <div>Manager</div>
               </div>
               <div class="fieldPadding">
-                <div >
-                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }" [formControlName]="selectTaskManger" class="form-control"
-                    style="display: flex;justify-content: space-between;" (click)="(taskDetails.status.name !=='Completed')&& selectManagerDialog(selectTaskManger)">
-                    <div  >{{selectTaskManger}}</div>
+                <div>
+                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }"
+                    [formControlName]="selectTaskManger" class="form-control"
+                    style="display: flex;justify-content: space-between;"
+                    (click)="(taskDetails.status.name !=='Completed')&& selectManagerDialog(selectTaskManger)">
+                    <div>{{selectTaskManger}}</div>
                     <div style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
                   </div>
                 </div>
@@ -307,20 +306,24 @@
                     <div style="font-size: 12px;font-weight: bold;">Enter Result</div>
                     <div class="statusListClass">
                       <div *ngFor="let item of taskStatusList[0]">
-                        <div [ngClass]="{'cursorDiasable': api_loadingCompletedStatus}" *ngIf="item.name==='Proceed'" class="statusClass1" (click)="!api_loadingCompletedStatus && selectStatus(item)" id="A">
-                          <div >{{item.name}}</div>
+                        <div [ngClass]="{'cursorDiasable': api_loadingCompletedStatus}" *ngIf="item.name==='Proceed'"
+                          class="statusClass1" (click)="!api_loadingCompletedStatus && selectStatus(item)" id="A">
+                          <div>{{item.name}}</div>
                           <div *ngIf="!api_loadingCompletedStatus">
                             <img class="imageStatus" src="/assets/images/crmImages/completed2.png" />
                           </div>
-                          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingCompletedStatus">
+                          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}"
+                            *ngIf="api_loadingCompletedStatus">
                           </app-common-innerloading-spinner>
                         </div>
-                        <div [ngClass]="{'cursorDiasable': api_loadingCancelledStatus}" *ngIf="item.name==='Rejected'" class="statusClass3" (click)="!api_loadingCancelledStatus && selectStatus(item)" id="C">
+                        <div [ngClass]="{'cursorDiasable': api_loadingCancelledStatus}" *ngIf="item.name==='Rejected'"
+                          class="statusClass3" (click)="!api_loadingCancelledStatus && selectStatus(item)" id="C">
                           <div>{{item.name}}</div>
                           <div *ngIf="!api_loadingCancelledStatus">
                             <img class="imageStatus" src="/assets/images/crmImages/cancelled.png" />
                           </div>
-                          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingCancelledStatus">
+                          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}"
+                            *ngIf="api_loadingCancelledStatus">
                           </app-common-innerloading-spinner>
                         </div>
                       </div>
@@ -345,9 +348,11 @@
             <div style="text-align: center;margin-top: 15px;" class="forWeb" *ngIf="bTaskFollowUpResult">
               <ng-container>
                 <div class=" mgn-bt-20 mgn-up-10">
-                  <button  [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
+                  <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button"
+                    class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
                   </button>
-                  <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
+                  <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}"
+                    class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingSaveTask">
                     </app-common-innerloading-spinner>
                     <span *ngIf="!api_loadingSaveTask">Complete</span>
@@ -361,7 +366,6 @@
       </div>
       <!----\files start-->
       <div class="notesWidth">
-        <!-- !(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') && -->
         <div class="notesSection" *ngIf=" activityType !=='UpdateFollowUP' ">
           <div class="fiesWithIcon">
             <div>
@@ -392,7 +396,6 @@
                 </div>
               </div>
             </div>
-            <!-- <span class="label" ><b></b></span> -->
             <div *ngIf="taskDetails.attachments.length>0"
               style="display: flex;align-items: center;margin-left: 10px;gap:5px">
               <div>
@@ -410,7 +413,8 @@
                     <div style="color: #121212;">{{attachment.originalName}}<br><span class="labelFile"><b>File Type :
                         </b>{{attachment.type}} &nbsp;&nbsp;&nbsp;<b>Size : </b>{{attachment.size}} MB</span></div>
                     <div class="d-flex justify-content-around">
-                      <a style="cursor: pointer;" *ngIf="attachment.type == 'jpg' || attachment.type == 'jpeg' || attachment.type == 'png' || attachment.type == 'gif'"
+                      <a style="cursor: pointer;"
+                        *ngIf="attachment.type == 'jpg' || attachment.type == 'jpeg' || attachment.type == 'png' || attachment.type == 'gif'"
                         (click)="viewAttachment(attachment)"><i class="fa fa-eye"
                           aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
                       <a style="cursor: pointer;" href="{{attachment.s3path}}" target="_blank"><i class="fa fa-download"
@@ -423,13 +427,11 @@
           </div>
         </div>
         <!---notes start-->
-        <!-- *ngIf="!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment') " -->
         <div style="margin-top:10px" *ngIf="activityType !=='UpdateFollowUP'">
           <div class="textareaStart">
             <div class="fiesWithIcon">
               <div style="display:flex;gap:5px">
                 <div class="card-title"><b>Remarks</b></div>
-                <!-- <span class="asteric">*</span> -->
                 <div *ngIf="this.taskDetails.status.name==='New'" class="astericColor">*</div>
               </div>
               <div *ngIf="taskDetails.notes.length>0">
@@ -471,8 +473,6 @@
               </div>
             </div>
             <!---cancel save btn end-->
-            <!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
-            <!-- <span class="label" *ngIf="taskDetails.notes.length>0 "><b>Saved Remarks</b></span> -->
             <div *ngIf="taskDetails.notes.length>0 " style="display: flex;align-items: center;margin-left: 10px;">
               <div>
                 <img style="height:25px" src="/assets/images/crmImages/noteIcon.png" />
@@ -514,15 +514,13 @@
         </div>
         <!---notes end-->
         <!----enter result start-->
-        <!-- && (!(this.taskDetails.title ==='BA Follow Up') && !(this.taskDetails.title ==='BA Recruitment')) -->
         <div class="formTop" *ngIf="activityType !=='UpdateFollowUP' &&  taskDetails.status.name==='New'">
           <div class="taskTitle">
             <div>No of data collected</div>
           </div>
           <div class="fieldPadding">
             <input min="0" (keyup)="resetErrors()" [(ngModel)]="actualResult" type="number" #actualResultt
-              placeholder="No of data collected"
-              class="form-control " autocomplete="off" />
+              placeholder="No of data collected" class="form-control " autocomplete="off" />
           </div>
         </div>
         <!---enter result end-->
@@ -535,9 +533,11 @@
     <div style="text-align: center;margin-top: 15px;" class="forMobile" *ngIf="bTaskFollowUpResult">
       <ng-container>
         <div class=" mgn-bt-20 mgn-up-10">
-          <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
+          <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button"
+            class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
           </button>
-          <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
+          <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}"
+            class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
             <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingSaveTask">
             </app-common-innerloading-spinner>
             <span *ngIf="!api_loadingSaveTask">Complete</span>
