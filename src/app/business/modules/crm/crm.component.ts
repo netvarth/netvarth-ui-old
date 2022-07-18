@@ -110,10 +110,10 @@ export class CRMComponent implements OnInit {
           id: 10,
           activityName: 'Loan Disbursement'
         },
-        {
-          id: 11,
-          activityName: 'Redirect'
-        },
+        // {
+        //   id: 11,
+        //   activityName: 'Redirect'
+        // },
         {
           id: 11,
           activityName: 'Rejected'
@@ -156,10 +156,10 @@ export class CRMComponent implements OnInit {
           id: 10,
           activityName: 'Loan Disbursement'
         },
-        {
-          id: 11,
-          activityName: 'Redirect'
-        },
+        // {
+        //   id: 11,
+        //   activityName: 'Redirect'
+        // },
         {
           id: 11,
           activityName: 'Rejected'
@@ -185,10 +185,10 @@ export class CRMComponent implements OnInit {
           id: 6,
           activityName: 'Login'
         },
-        {
-          id: 11,
-          activityName: 'Redirect'
-        },
+        // {
+        //   id: 11,
+        //   activityName: 'Redirect'
+        // },
         {
           id: 11,
           activityName: 'Rejected'
@@ -228,10 +228,10 @@ export class CRMComponent implements OnInit {
           id: 10,
           activityName: 'Loan Disbursement'
         },
-        {
-          id: 11,
-          activityName: 'Redirect'
-        },
+        // {
+        //   id: 11,
+        //   activityName: 'Redirect'
+        // },
         {
           id: 11,
           activityName: 'Rejected'
@@ -343,14 +343,14 @@ export class CRMComponent implements OnInit {
       }
       this.router.navigate(['provider', 'lead'], navigationExtras);
     }
-    else if (templateName === 'Redirect') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'Redirect'
-        }
-      }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
-    }
+    // else if (templateName === 'Redirect') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'Redirect'
+    //     }
+    //   }
+    //   this.router.navigate(['provider', 'lead'], navigationExtras);
+    // }
     else if (templateName === 'Rejected') {
       const navigationExtras: NavigationExtras = {
         queryParams: {

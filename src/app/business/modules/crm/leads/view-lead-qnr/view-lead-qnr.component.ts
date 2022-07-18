@@ -7,7 +7,6 @@ import { GroupStorageService } from "../../../../../shared/services/group-storag
 import { CrmService } from "../../crm.service";
 import { ProviderServices } from "../../../../../business/services/provider-services.service";
 import { WordProcessor } from "../../../../../shared/services/word-processor.service";
-// import { PreviewpdfComponent } from "./previewpdf/previewpdf.component";
 import { MatDialog } from "@angular/material/dialog";
 import { CrmSelectMemberComponent } from "../../../../../business/shared/crm-select-member/crm-select-member.component";
 import { TeleBookingService } from '../../../../../shared/services/tele-bookings-service';
@@ -342,7 +341,7 @@ export class ViewLeadQnrComponent implements OnInit {
         .subscribe(() => {
           resolve(true);
         }, error => {
-          console.log(error);
+          console.log('error',error)
           _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           resolve(false);
         });
@@ -731,6 +730,7 @@ export class ViewLeadQnrComponent implements OnInit {
           setTimeout(() => {
             this.api_loading_UpdateKyc = false;
             this.api_loading_UpdateKycProceed = false;
+            console.log('error',error)
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }, projectConstants.TIMEOUT_DELAY);
         })
@@ -822,17 +822,31 @@ export class ViewLeadQnrComponent implements OnInit {
     });
   }
 
-  redirect() {
-    this.crmService.proceedToRedirect(this.leadInfo.uid).subscribe(
-      () => {
-        this.router.navigate(['provider', 'crm']);
+  redirect(uid) {
+    console.log('uid',uid)
+    const dialogRef=this.dialog.open(CrmSelectMemberComponent,{
+      width:"100%",
+      panelClass: ["popup-class", "confirmationmainclass"],
+      data:{
+        requestType:'createUpdateNotes',
+        info:uid,
+        header: "Add remarks"
       }
-      , (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      })
+    })
+    dialogRef.afterClosed().subscribe((response:any)=>{
+      console.log('response',response);
+      if (response) {
+        this.crmService.proceedToRedirectNotesadded(this.leadInfo.uid, this.leadInfo.status.id, response).subscribe(
+          () => {
+            this.router.navigate(['provider', 'crm']);
+          }
+          , (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          })
+      }
+    })
   }
   showCrifscoreSection() {
-    console.log('this.leadInfo.status.name',this.leadInfo.status.name)
     if(this.generateCrifText==='Verify CRIF Score of'){
       this.showCrifSection = !this.showCrifSection
     }

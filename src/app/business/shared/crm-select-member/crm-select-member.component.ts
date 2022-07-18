@@ -127,6 +127,7 @@ export class CrmSelectMemberComponent implements OnInit {
   private onDestroy$: Subject<void> = new Subject<void>();
   public activityList: any = [];
   seacrchFilterEmployee:any;
+  leadUID:any;
 
   constructor(
     public dialogRef: MatDialogRef<CrmSelectMemberComponent>,
@@ -184,7 +185,9 @@ export class CrmSelectMemberComponent implements OnInit {
       this.memberList = this.data.memberList;
       console.log("customermemberlist", this.memberList);
     } else if (this.data.requestType === "createUpdateNotes") {
+      console.log('createUpdateNotes',this.data)
       console.log("createUpdateNotes");
+      this.leadUID= this.data['info'];
     } else if (this.data.requestType === "noteDetails") {
       console.log("Notews");
       this.allNotes.push(this.data.noteDetails.notes);
@@ -219,10 +222,6 @@ export class CrmSelectMemberComponent implements OnInit {
       this.showHideTickMarkUpdate = true;
       this.selectedStatusId = this.statusId;
     } else if (this.data.requestType === "statusChangeLeadToTask") {
-      console.log(
-        "this.data.taskDetails.assignee",
-        this.data.taskDetails.assignee
-      );
       console.log("this.data", this.data);
       this.taskDescription = this.data.taskDetails.description;
       this.taskTitle = this.data.taskDetails.title;
@@ -381,14 +380,17 @@ export class CrmSelectMemberComponent implements OnInit {
   cancelCreateNote(textValue) {
     console.log("textValue", textValue);
     if (textValue === "Cancel") {
+      this.notesTextarea='';
       setTimeout(() => {
-        this.dialogRef.close(textValue);
+        const createNoteData: any = {
+          note: this.notesTextarea
+        };
+        this.dialogRef.close(createNoteData);
       }, projectConstants.TIMEOUT_DELAY);
     }
   }
   saveCreateNote(notesValue: any) {
     console.log("notesValue", notesValue);
-    console.log("this.data.taskUid", this.data.taskUid);
     if (this.notesTextarea !== undefined) {
       console.log("this.notesTextarea", this.notesTextarea);
       this.errorMsg = false;
@@ -397,38 +399,25 @@ export class CrmSelectMemberComponent implements OnInit {
         note: this.notesTextarea
       };
       console.log("createNoteData", createNoteData);
-      if (this.data.source == "Lead") {
-        this.crmService
-          .addLeadNotes(this.data.leadUid, createNoteData)
-          .subscribe(
-            (response: any) => {
-              console.log("response", response);
-              setTimeout(() => {
-                this.dialogRef.close(notesValue);
-              }, projectConstants.TIMEOUT_DELAY);
-            },
-            error => {
-              this.snackbarService.openSnackBar(error, {
-                panelClass: "snackbarerror"
-              });
-            }
-          );
-      } else {
-        this.crmService.addNotes(this.data.taskUid, createNoteData).subscribe(
-          (response: any) => {
+      console.log('this.leadUID',this.leadUID);
+      this.crmService.addLeadNotes(this.leadUID, createNoteData).subscribe(
+        (response: any) => {
+          if(response){
             console.log("response", response);
             setTimeout(() => {
-              this.dialogRef.close(notesValue);
+              this.dialogRef.close(createNoteData);
             }, projectConstants.TIMEOUT_DELAY);
             this.snackbarService.openSnackBar("Remarks added successfully");
-          },
-          error => {
-            this.snackbarService.openSnackBar(error, {
-              panelClass: "snackbarerror"
-            });
           }
-        );
-      }
+          
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, {
+            panelClass: "snackbarerror"
+          });
+        }
+      )
+      
     } else {
       this.errorMsg = true;
       this.assignMemberErrorMsg = "Please enter some description";

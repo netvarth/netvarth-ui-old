@@ -87,7 +87,7 @@ export class enquiryComponent implements OnInit {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.activityLocationIdDialogValue = user.bussLocs[0];
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.headerName = 'Create Inquiry';
+    this.headerName = 'Create Enquiry';
     this.createEnquiryForm = this.createEnquiryFB.group({
       enquiryDetails: [''],
       firstNameValue: [''],

@@ -598,6 +598,10 @@ export class CrmService {
     const url ='provider/lead/' + uid + '/redirect';
     return this.servicemeta.httpPut(url)
   }
+  proceedToRedirectNotesadded(uid,statusId,body){
+    const url ='provider/lead/' + uid + '/redirect' +'/status' +'/'+ statusId ;
+    return this.servicemeta.httpPut(url,body)
+  }
   // activityCloseWithNotes(body){
   //   const url ='provider/task/{taskUid}/status/closedwithnotes'+body
   //   return this.servicemeta.httpPut(url,body)

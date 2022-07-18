@@ -748,3 +748,17 @@ textarea::placeholder {
 .cursorDisable{
   cursor: not-allowed;
 }
+.heightlimitSalesVerified{
+ max-height: 190px ;
+  overflow-y: scroll;
+}
+.notesHeaderSection{
+  display: flex;
+    align-items: center;
+    margin-left: 5px;
+    justify-content: space-between;
+}
+.notesTexticon{
+  display: flex;
+  align-items: center;
+}
