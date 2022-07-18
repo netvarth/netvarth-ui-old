@@ -276,7 +276,7 @@ export class ViewLeadQnrComponent implements OnInit {
 
   addCoApplicant() {
     let maxVal = parseInt(Object.keys(this.applicantsInfo).reduce((a, b) => this.applicantsInfo[a] > this.applicantsInfo[b] ? a : b)) + 1;
-    console.log(maxVal);
+    console.log("maxVal",maxVal);
     this.applicants.push(maxVal);
     this.applicantsInfo[maxVal] = {
       parent: false,
@@ -284,6 +284,8 @@ export class ViewLeadQnrComponent implements OnInit {
         id: this.leadInfo.customer.id
       }
     }
+    console.log("maxVal",this.applicantsInfo[maxVal]);
+
   }
 
   /**
@@ -408,6 +410,21 @@ export class ViewLeadQnrComponent implements OnInit {
           }
         }
       }
+
+      if (this.applicantsInfo) {
+
+          if (this.applicantsInfo[applicantIndex].otherAttachments && this.applicantsInfo[applicantIndex].otherAttachments.length > 0) {
+          } else {
+            let fileData = this.getFileInfo('other', filesObj);
+            console.log("Other Attachments called",fileData) 
+            if (fileData && fileData.length > 0 && !fileData[0]['order']) {
+              fileData[0]['order'] = this.filesCount++;
+              this.filesToUpload.push(fileData[0]);
+              this.applicantsInfo[applicantIndex].otherAttachments = fileData;
+            }
+        }
+      }
+
 
 
       // if (this.applicantsInfo[applicantIndex].panAttachments && this.applicantsInfo[applicantIndex].panAttachments.length > 0) {

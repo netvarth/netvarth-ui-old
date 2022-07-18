@@ -28,7 +28,8 @@ export class ApplicantComponent implements OnInit {
     "kyc1": { files: [], base64: [], caption: [] },
     "kyc2": { files: [], base64: [], caption: [] },
     "kyc3": { files: [], base64: [], caption: [] },
-    "pan": { files: [], base64: [], caption: [] }
+    "pan": { files: [], base64: [], caption: [] },
+    "other": { files: [], base64: [], caption: [] }
   }
   filesToUpload: any = [];
 
@@ -317,6 +318,7 @@ export class ApplicantComponent implements OnInit {
         }
       ],
       "validationIds": [],
+      "otherAttachments": [],
       "relationType": this.applicantForm.controls.relationType.value,
       "relationName": this.applicantForm.controls.relationName.value,
       "permanentAddress": this.applicantForm.controls.permanentAddress.value,
@@ -428,6 +430,9 @@ export class ApplicantComponent implements OnInit {
     if (this.applicant['id']) {
       applicantInfo['id'] = this.applicant['id'];
     } 
+    if (this.applicant['otherAttachments']) {
+      applicantInfo['otherAttachments'] = this.applicant['otherAttachments'];
+    } 
     return applicantInfo;
   }
 
@@ -442,6 +447,7 @@ export class ApplicantComponent implements OnInit {
         }
       }
     });
+    console.log("files",files,i)
     if (files && files.length > 0) {
       console.log(this.filesToUpload.indexOf(files[0]));
       if(this.filesToUpload && this.filesToUpload.indexOf(files[0])){
@@ -452,15 +458,20 @@ export class ApplicantComponent implements OnInit {
     this.selectedFiles[type].files.splice(i, 1);
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
+    console.log("this.applicant",this.applicant)
     if (type === 'kyc1') {
       this.applicant.validationIds[0].attachments = [];
 
     } else if (type === 'kyc2') {
       this.applicant.validationIds[1].attachments = [];
     } 
-    else if (type === 'kyc3') {
-      this.applicant.validationIds[2].attachments = [];
-    } 
+    else if (type === 'other') {
+      console.log("other attachments delete")
+      this.applicant.otherAttachments = [];
+    }
+    // else if (type === 'kyc3') {
+    //   this.applicant.validationIds[2].attachments = [];
+    // } 
     
     console.log(files);
     // else if (type === 'pan') {

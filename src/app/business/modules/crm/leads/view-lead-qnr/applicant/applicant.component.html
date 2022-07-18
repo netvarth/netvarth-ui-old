@@ -564,9 +564,61 @@
             </div>
         </div>
     </div>
+    <span class="group-head" *ngIf="applicant && applicant.parent">Other Files</span><br>
+    <div class="bggrey" *ngIf="applicant && applicant.parent">
+        <div class="fieldPadding">
+            <div>
+                <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                    (change)="filesSelected($event,'other')">Click & Upload your files here
+                <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                        attach_file</i></a>
+            </div>
+            <div
+                *ngIf="applicant && applicant.otherAttachments && applicant.otherAttachments.length > 0 && !applicant.otherAttachments[0]['s3path']">
+                <div class="img-section clearfix mgn-up-20"
+                    *ngIf="selectedFiles['other'] && selectedFiles['other'].files && selectedFiles['other'].files.length > 0">
+                    <ul class="galul">
+                        <li *ngFor="let file of selectedFiles['other'].files;let i = index ">
+                            <div class="galimg_outer">
+                                <div class="gal_img">
+                                    <img [src]="getImage(selectedFiles['other'].base64[i], file)"
+                                        *ngIf="selectedFiles['other'].base64[i]">
+                                </div>
+                                <div class="gal_action" (click)="deleteTempImage(i, 'other')">
+                                    <i class="fa fa-times-circle" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class=" my-2 clearfix"
+            *ngIf="applicant && applicant.otherAttachments && applicant.otherAttachments.length > 0 && applicant.otherAttachments[0]['s3path']">
+            <div style="display: flex;gap: 5px">
+                <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
+                    <div *ngFor="let file of applicant.otherAttachments; let i=index" style="display:flex">
+                        <div (click)="dialogImgView(file)">
+                            <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                            {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                        </div>
+                        <!-- <a href="{{file.s3path}}" target="_blank" download>
+                                    <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                                    {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
+                                </a> -->
+                        <div>
+                            <i class="fa fa-times-circle pointer-cursor" aria-hidden="true"
+                                (click)="deleteTempImage(i, 'other')"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
 <ng-container *ngIf="this.leadInfo && this.leadInfo.status && (this.leadInfo.status.name==='KYC Updated'||
-this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation')">
+    this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation')">
     <!---crif btn start-->
     <div class=" my-2">
         <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
