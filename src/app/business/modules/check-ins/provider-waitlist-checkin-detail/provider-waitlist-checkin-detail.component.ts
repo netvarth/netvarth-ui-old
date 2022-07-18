@@ -872,7 +872,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     if (checkin) {
       waitlist = checkin;
     }
-    console.log("Action Data ...", checkin)
+    //console.log("Action Data ...", checkin)
     const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
@@ -883,7 +883,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
         timetype: this.timetype,
         NoViewDetail: 'true',
         status: true,
-        src:'details'
+        src:'detail'
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
@@ -892,6 +892,29 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
 
     });
+
+
+    // let waitlist = [];
+    // if (checkin) {
+    //   waitlist = checkin;
+    // }
+    // const actiondialogRef = this.dialog.open(CheckinActionsComponent, {
+    //   width: "50%",
+    //   panelClass: ["popup-class", "commonpopupmainclass", "checkinactionclass"],
+    //   disableClose: true,
+    //   data: {
+    //     checkinData: waitlist,
+    //     multiSelection: this.multiSelection,
+    //     timetype: this.timetype,
+    //     NoViewDetail: "true",
+    //     status : true,
+    //     src : 'detail'
+    //   }
+    // });
+    // actiondialogRef.afterClosed().subscribe(data => {
+    //   //console.log("Actions Appt :", data);
+    //   this.getProviderSettings();
+    // });
   }
 
   showImagesection(index) {
