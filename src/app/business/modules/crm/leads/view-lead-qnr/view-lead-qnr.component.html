@@ -266,7 +266,7 @@
           <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKycProceed"></app-common-innerloading-spinner>
         </button>
         <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button" class="btn btn-primary font-weight-bold confirmBtn"
-          style="background: #FADDDD !important;color:black !important" (click)="!api_loading_UpdateKyc && reject()"
+          style="background: #FADDDD !important;color:black !important" (click)="!api_loading_UpdateKyc && reject(leadUID)"
           *ngIf="leadInfo.status.name!=='Login'">Rejected
         </button>
         <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button" class="button-5"

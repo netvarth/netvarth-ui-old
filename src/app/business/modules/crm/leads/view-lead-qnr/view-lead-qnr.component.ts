@@ -467,15 +467,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.location.back();
   }
 
-  reject() {
-    this.crmService.rejectedStatusLeadkyc(this.leadInfo.uid).subscribe((response) => {
-      console.log('afterupdateFollowUpData', response);
-      this.router.navigate(['provider', 'crm']);
-    },
-      (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      })
-  }
+
 
   updateQNRProceedStatus(uuid) {
     console.log('this.leadInfo.status.name', this.leadInfo.status.name)
@@ -1012,5 +1004,29 @@ export class ViewLeadQnrComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+  reject(uid) {
+    console.log('uid',uid);
+    const dialogRef = this.dialog.open(CrmSelectMemberComponent,{
+      width:"100%",
+      panelClass: ["popup-class", "confirmationmainclass"],
+      data:{
+        requestType:'rejectedLead',
+        info:uid,
+      }
+    })
+    dialogRef.afterClosed().subscribe((response:any)=>{
+      console.log('response',response)
+      if(response==='reject'){
+        this.crmService.rejectedStatusLeadkyc(this.leadInfo.uid).subscribe((response) => {
+          console.log('afterupdateFollowUpData', response);
+          this.router.navigate(['provider', 'crm']);
+        },
+          (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          })
+      }
+    })
+    
   }
 }

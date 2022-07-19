@@ -287,6 +287,9 @@ export class CrmSelectMemberComponent implements OnInit {
         this.activityList.push(item);
       });
     }
+    else if(this.data.requestType==='rejectedLead'){
+      console.log('rejectedLead')
+    }
 
     if (this.data.requestType === "fileShare") {
     }
@@ -1080,5 +1083,11 @@ showFileView(file){
 
   transform(seacrchFilterEmployee){
     console.log('assignMemberDetails',this.seacrchFilterEmployee) 
+  }
+  noRejected(){
+    this.dialogRef.close('cancel')
+  }
+  yesRejected(){
+    this.dialogRef.close('reject')
   }
   }
