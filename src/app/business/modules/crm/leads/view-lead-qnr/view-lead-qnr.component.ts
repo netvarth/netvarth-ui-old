@@ -663,7 +663,20 @@ export class ViewLeadQnrComponent implements OnInit {
         console.log('this.questionAnswers.answers',this.questionAnswers.answers)
         console.log(this.leadInfo)
         if(this.leadInfo.isRedirected){
-          this.submitQuestionnaire(this.leadInfo.uid);
+          console.log("this.leadInfo.isRedirected")
+          this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
+            this.api_loading = false;
+            if (data.length === 0) {
+              this.submitQuestionnaire(this.leadInfo.uid);
+            } else {
+              this.api_loading_UpdateKycProceed = false;
+            }
+            this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
+          },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+              this.api_loading = false;
+            });
         }
         else{
           this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
