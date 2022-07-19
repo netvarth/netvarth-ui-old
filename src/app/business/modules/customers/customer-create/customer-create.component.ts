@@ -189,6 +189,7 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (qparams.countryCode) {
         this.contryCod = qparams.countryCode;
+        console.log("params countrycode :",this.contryCod)
       } else {
         this.contryCod = "+91";
       }
@@ -520,7 +521,7 @@ export class CustomerCreateComponent implements OnInit {
           ])
         ],
         countryCode: [
-          "",
+          "+91",
           Validators.compose([
             Validators.pattern(projectConstantsLocal.VALIDATOR_COUNTRYCODE)
           ])
@@ -560,11 +561,15 @@ export class CustomerCreateComponent implements OnInit {
       this.amForm.get("mobile_number").setValue(this.phoneNo);
     }
 
-    if (this.contryCod) {
-      this.amForm.get("countryCode").setValue(this.contryCod);
-    } else {
-      this.amForm.get("countryCode").setValue(this.contryCod);
+    if (this.customer[0].countryCode) {
+      this.amForm.get("countryCode").setValue(this.customer[0].countryCode);
+    } 
+    if(this.customer[0].countryCode === ' ' || undefined || '' || null) {
+      this.amForm.get("countryCode").setValue('+91');
     }
+    // else{
+    //   this.amForm.get("countryCode").setValue('+91');
+    // }
     if (this.email) {
       this.amForm.get("email_id").setValue(this.email);
     }

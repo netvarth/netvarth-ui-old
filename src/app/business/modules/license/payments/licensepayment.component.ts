@@ -128,6 +128,11 @@ export class PaymentComponent implements OnInit {
   }
 
   makeFailedPayment() {
+    if (!this.selected_payment_mode) {
+      this.snackbarService.openSnackBar('Please select a payment mode', { 'panelClass': 'snackbarerror' });
+      this.isClickedOnce = false;
+      return false;
+  }
     this.waitlistDetails.isInternational = this.isInternatonal;
     this.waitlistDetails.paymentMode = this.selected_payment_mode;
     this.waitlistDetails.serviceId = 0;

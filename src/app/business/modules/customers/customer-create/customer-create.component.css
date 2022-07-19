@@ -95,11 +95,11 @@
     }
 }
 .countrycode{
-width:20%;
+width:22%;
 float: left;
 }
 .mobilenumber{
-width: 80%;
+width: 78%;
 margin-top: -1px;
 }
 @media (max-width: 576px) {
