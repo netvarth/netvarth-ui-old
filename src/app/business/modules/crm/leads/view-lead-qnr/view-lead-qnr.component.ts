@@ -423,15 +423,21 @@ export class ViewLeadQnrComponent implements OnInit {
 
       if (this.applicantsInfo) {
 
-          if (this.applicantsInfo[applicantIndex].otherAttachments && this.applicantsInfo[applicantIndex].otherAttachments.length > 0) {
-          } else {
+          // if (this.applicantsInfo[applicantIndex].otherAttachments && this.applicantsInfo[applicantIndex].otherAttachments.length > 0) {
+          //   let fileData = this.getFileInfo('other', filesObj);
+          //   console.log("Other Attachments called",fileData) 
+          // } else {
             let fileData = this.getFileInfo('other', filesObj);
             console.log("Other Attachments called",fileData) 
-            if (fileData && fileData.length > 0 && !fileData[0]['order']) {
-              fileData[0]['order'] = this.filesCount++;
-              this.filesToUpload.push(fileData[0]);
+            for(let i=0;i<fileData.length;i++)
+            {
+              if (fileData && fileData.length > 0 && !fileData[i]['order']) {
+              fileData[i]['order'] = this.filesCount++;
+              this.filesToUpload.push(fileData[i]);
               this.applicantsInfo[applicantIndex].otherAttachments = fileData;
             }
+            // }
+            
         }
       }
 

@@ -229,11 +229,13 @@ export class ApplicantComponent implements OnInit {
   filesSelected(event, type) {
     console.log('event',event)
     const input = event.target.files;
-    console.log('input',input.length)
+    console.log('input',input)
     if(input.length < 3){
       this.fileService.filesSelected(event, this.selectedFiles[type]).then(
         () => {
-          for (const pic of this.selectedFiles[type].files) {
+          if(type == 'other')
+          {
+            for (const pic of input) {
             let fileObjFinal;
             const size = pic["size"] / 1024;
             if (pic["type"]) {
@@ -262,6 +264,40 @@ export class ApplicantComponent implements OnInit {
             this.filesToUpload.push(fileObjFinal);
             console.log('this.filesToUpload', this.filesToUpload);
             this.sendApplicantInfo();
+          }
+          }
+          else
+          {
+            for (const pic of this.selectedFiles[type].files) {
+            let fileObjFinal;
+            const size = pic["size"] / 1024;
+            if (pic["type"]) {
+              const fileObj = {
+                owner: this.activeUser,
+                fileName: pic["name"],
+                fileSize: size / 1024,
+                caption: "",
+                fileType: pic["type"].split("/")[1],
+              }
+              fileObjFinal = fileObj;
+            } else {
+              const picType = "jpeg";
+              const fileObj = {
+                owner: this.activeUser,
+                fileName: pic["name"],
+                fileSize: size / 1024,
+                caption: "",
+                fileType: picType,
+              }
+              fileObjFinal = fileObj;
+            }
+            fileObjFinal['file'] = pic;
+            fileObjFinal['type'] = type;
+            console.log('fileObjFinal',fileObjFinal)
+            this.filesToUpload.push(fileObjFinal);
+            console.log('this.filesToUpload', this.filesToUpload);
+            this.sendApplicantInfo();
+          }
           }
         }).catch((error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
