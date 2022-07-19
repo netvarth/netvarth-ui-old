@@ -693,7 +693,7 @@ export class ViewLeadQnrComponent implements OnInit {
       this.api_loading_UpdateKycProceed = true;
       if (this.leadInfo.status.name === 'Credit Recommendation') {
         this.complete(this.leadInfo.uid);
-        this.snackbarService.openSnackBar('Updated successfully');
+        this.snackbarService.openSnackBar('Updated successfully'); 
       } else {
         this.api_loading_UpdateKycProceed = true;
         console.log('this.questionAnswers.answers',this.questionAnswers.answers)
