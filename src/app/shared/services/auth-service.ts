@@ -94,11 +94,7 @@ export class AuthService {
         });
         return promise;
     }
-
-
-
     // Copying -------- Shared Functions
-
     logout() {
         this.doLogout()
             .then(
@@ -109,17 +105,7 @@ export class AuthService {
                 }
             );
     }
-
-    logoutNoRedirect() {
-        this.doLogout()
-            .then(
-                data => {
-                },
-                error => {
-                }
-            );
-    }
-
+    logoutNoRedirect() {this.doLogout().then(data => {},error => {});}
     logoutFromJaldee(srcUrl?) {
         const promise = new Promise<void>((resolve, reject) => {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
@@ -177,19 +163,9 @@ export class AuthService {
     doLogout() {
         const promise = new Promise<void>((resolve, reject) => {
             if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
-                this.providerLogout()
-                    .then(
-                        data => {
-                            resolve();
-                        }
-                    );
+                this.providerLogout().then(data => {resolve();});
             } else {
-                this.consumerLogout()
-                    .then(
-                        data => {
-                            resolve();
-                        }
-                    );
+                this.consumerLogout().then(data => {resolve();});
             }
         });
         return promise;
@@ -220,10 +196,6 @@ export class AuthService {
             this.shared_services.ConsumerLogin(post_data)
                 .subscribe(
                     data => {
-                        // let pre_header = post_data.countryCode.split('+')[1] + "-" + post_data.loginId;
-                        // if (this.lStorageService.getitemfromLocalStorage('authToken')) {
-                        //     this.lStorageService.setitemonLocalStorage("pre-header", pre_header);
-                        // }
                         resolve(data);
                         this.setLoginData(data, post_data, 'consumer');
                         if (moreParams === undefined) {

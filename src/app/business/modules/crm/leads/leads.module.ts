@@ -22,6 +22,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { FormsModule } from "@angular/forms";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
+import { LeadsService } from "./leads-service";
 
 const routes: Routes = [
   { path: '', component: LeadsComponent },
@@ -58,7 +59,8 @@ const routes: Routes = [
     exports: [LeadsComponent],
     declarations: [LeadsComponent],
     providers: [
-      CrmService
+      CrmService,
+      LeadsService
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

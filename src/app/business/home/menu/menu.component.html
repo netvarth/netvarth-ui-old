@@ -1,11 +1,9 @@
 <div *ngIf="!iswiz" class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" [class.aside-on]="showMenu"
-  [class.aside-minimize]="minimizeMenu"> 
+  [class.aside-minimize]="minimizeMenu">
   <div class="brand flex-column-auto">
     <a (click)="gotoActiveHome()" class="brand-logo img-section mgn-up-10">
-      <!-- <img
-        src="assets/images/jaldeebussinesslogo.svg" alt="Jaldee"> -->
-        <img class="Logo" src="assets/images/home.png" alt="Home">
-      </a>
+      <img class="Logo" src="assets/images/home.png" alt="Home">
+    </a>
     <button class="brand-toggle btn btn-sm px-0 pointer-cursor" (click)="minimizeSideBar()">
       <span class="svg-icon svg-icon svg-icon-xl">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -31,10 +29,9 @@
       class="aside-menu">
       <ul class="menu-nav">
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-          (click)="showMenuSection()"  *ngIf="apptstatus">
-          <a routerLink="appointments" routerLinkActive="active-menu" class="menu-link menu-toggle"  [matTooltip]="'Appointments'">
-            <span
-              class="svg-icon menu-icon">
+          (click)="showMenuSection()" *ngIf="apptstatus">
+          <a routerLink="appointments" routerLinkActive="active-menu" class="menu-link menu-toggle">
+            <span class="svg-icon menu-icon">
               <i class="fa fa-calendar"></i>
             </span><span class="menu-text">Appointments</span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>
@@ -42,62 +39,46 @@
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()" *ngIf="checkinStatus">
-          <a routerLink="check-ins" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="showToken ? 'Tokens' : 'Check-ins'"><span
+          <a routerLink="check-ins" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-check-circle"></i>
             </span><span class="menu-text">
               <ng-container *ngIf="showToken"> Tokens</ng-container>
-              <ng-container *ngIf="!showToken" > Check-ins</ng-container>
+              <ng-container *ngIf="!showToken"> Check-ins</ng-container>
             </span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-           <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()" *ngIf="orderstatus">
-          <a routerLink="orders" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Orders'"><span
+          <a routerLink="orders" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             </span><span class="menu-text">Orders</span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <!-- target="_blank" -->
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" (click)="showMenuSection()" *ngIf="taskStatus"> 
-          <a routerLink="crm"  routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'LMS'"
-            ><span class="svg-icon menu-icon">
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+          (click)="showMenuSection()" *ngIf="taskStatus">
+          <a routerLink="crm" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
+              class="svg-icon menu-icon">
               <i class="fa fa-file"></i>
             </span><span class="menu-text">LMS</span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <!-- <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"  *ngIf="taskStatus"> 
-          <a routerLink="task" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Activity'"
-            (click)="showMenuSection()"><span class="svg-icon menu-icon">
-              <i class="fa fa-file"></i>
-            </span><span class="menu-text">Activity</span><i class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i class="menu-arrow"></i>
-          </div>
-        </li> -->
-        <!-- <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" *ngIf="leadStatus"> 
-          <a routerLink="lead" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Lead'"
-            (click)="showMenuSection()"><span class="svg-icon menu-icon">
-              <i class="fa fa-user"></i>
-            </span><span class="menu-text">Lead</span><i class="menu-arrow"></i></a>
-          <div class="menu-submenu"><i class="menu-arrow"></i>
-          </div>
-        </li> -->
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()" *ngIf="donationstatus">
-          <a routerLink="donations" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Donations'"><span
+          <a routerLink="donations" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-stack fa-inr"></i>
             </span><span class="menu-text">Donations</span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" *ngIf="isadminPrivilege || isShowCsmrDataBase"
-          (click)="showMenuSection()">
-          <a routerLink="customers" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="customer_label+'s'"><span
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+          *ngIf="isadminPrivilege || isShowCsmrDataBase" (click)="showMenuSection()">
+          <a routerLink="customers" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-users"></i>
             </span><span class="menu-text">{{customer_label |
@@ -105,22 +86,19 @@
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-       
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
-          (click)="showMenuSection()">
-        <a routerLink="drive" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Jaldee Drive'"><span
-            class="svg-icon menu-icon">
-            <i class="fa fa-folder" aria-hidden="true"></i>
-          </span><span class="menu-text"> Jaldee Drive</span><i class="menu-arrow"></i></a>
-        <div class="menu-submenu"><i class="menu-arrow"></i>
-        </div>
-      </li>
-
-      
 
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()">
-          <a routerLink="inbox" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Messages'"><span
+          <a routerLink="drive" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
+              class="svg-icon menu-icon">
+              <i class="fa fa-folder" aria-hidden="true"></i>
+            </span><span class="menu-text"> Jaldee Drive</span><i class="menu-arrow"></i></a>
+          <div class="menu-submenu"><i class="menu-arrow"></i>
+          </div>
+        </li>
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+          (click)="showMenuSection()">
+          <a routerLink="inbox" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-envelope"></i>
             </span><span class="menu-text">Messages</span>
@@ -132,7 +110,7 @@
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()">
-          <a routerLink="enquiry" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Enquiries'"><span
+          <a routerLink="enquiry" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-envelope"></i>
             </span><span class="menu-text">Enquiries</span>
@@ -143,16 +121,16 @@
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()">
-          <a routerLink="auditlog" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Activity Log'"><span
+          <a routerLink="auditlog" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-list"></i>
             </span><span class="menu-text">Activity Log</span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>
           </div>
         </li>
-        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"  *ngIf="isadminPrivilege"
+        <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" *ngIf="isadminPrivilege"
           (click)="showMenuSection()">
-          <a routerLink="reports" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Reports'"><span
+          <a routerLink="reports" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-file"></i>
             </span><span class="menu-text">Reports</span><i class="menu-arrow"></i></a>
@@ -161,7 +139,7 @@
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()">
-          <a routerLink="alerts" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Alerts'"><span
+          <a routerLink="alerts" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-bell"></i>
             </span><span class="menu-text">Alerts</span>
@@ -172,7 +150,7 @@
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()" *ngIf="accountType=='BRANCH'">
-          <a routerLink="settings/general/users" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Users'"><span
+          <a routerLink="settings/general/users" routerLinkActive="active-menu" class="menu-link menu-toggle"><span
               class="svg-icon menu-icon">
               <i class="fa fa-users"></i>
             </span><span class="menu-text">Users</span><i class="menu-arrow"></i></a>
@@ -180,7 +158,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" *ngIf="isadminPrivilege">
-          <a routerLink="settings" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Settings'"
+          <a routerLink="settings" routerLinkActive="active-menu" class="menu-link menu-toggle"
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="fa fa-gears"></i>
             </span><span class="menu-text">Settings</span><i class="menu-arrow"></i></a>
@@ -188,7 +166,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu" *ngIf="isadminPrivilege">
-          <a routerLink="license" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Subscription Plan'"
+          <a routerLink="license" routerLinkActive="active-menu" class="menu-link menu-toggle"
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="icon-license"></i>
             </span><span class="menu-text">Subscription Plan</span><i class="menu-arrow"></i></a>
@@ -196,7 +174,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu">
-          <a routerLink="{{domain}}/help" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Help'"
+          <a routerLink="{{domain}}/help" routerLinkActive="active-menu" class="menu-link menu-toggle"
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="fa fa-book"></i>
             </span><span class="menu-text">Help</span><i class="menu-arrow"></i></a>
@@ -204,7 +182,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu">
-          <a routerLink="faq" routerLinkActive="active-menu" class="menu-link menu-toggle" [matTooltip]="'Faq'"
+          <a routerLink="faq" routerLinkActive="active-menu" class="menu-link menu-toggle"
             (click)="showMenuSection()"><span class="svg-icon menu-icon">
               <i class="fa fa-question-circle"></i>
             </span><span class="menu-text">Faq</span><i class="menu-arrow"></i></a>
@@ -212,7 +190,7 @@
           </div>
         </li>
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu">
-          <a class="menu-link menu-toggle" (click)="doLogout()" [matTooltip]="'Sign Out'"><span class="svg-icon menu-icon">
+          <a class="menu-link menu-toggle" (click)="doLogout()"><span class="svg-icon menu-icon">
               <i class="fa fa-sign-out" aria-hidden="true"></i>
             </span><span class="menu-text">Sign Out</span><i class="menu-arrow"></i></a>
           <div class="menu-submenu"><i class="menu-arrow"></i>

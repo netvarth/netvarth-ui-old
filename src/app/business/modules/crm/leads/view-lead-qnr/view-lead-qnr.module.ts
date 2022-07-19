@@ -26,6 +26,7 @@ import { MatOptionModule } from "@angular/material/core";
 import { PreviewpdfModule } from "./previewpdf/previewpdf.module";
 import { ApplicantModule } from "./applicant/applicant.module";
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
+import { LeadsService } from "../leads-service";
 
 const routes: Routes = [
   { path: '', component: ViewLeadQnrComponent },
@@ -69,7 +70,8 @@ const routes: Routes = [
   ],
   providers: [
     CrmService,
-    FileService
+    FileService,
+    LeadsService
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,

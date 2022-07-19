@@ -1,6 +1,4 @@
-// import { DOCUMENT } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-// import { Meta } from '@angular/platform-browser';
 import { CountryISO, PhoneNumberFormat, SearchCountryField } from 'ngx-intl-tel-input';
 import { SubSink } from 'subsink';
 import { AuthService } from '../../services/auth-service';
@@ -64,7 +62,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   constructor(private sharedServices: SharedServices,
     private authService: AuthService,
     private lStorageService: LocalStorageService,
-    // private metaService: Meta,
     private renderer: Renderer2,
     private snackbarService: SnackbarService,
     private cd: ChangeDetectorRef,
@@ -85,20 +82,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         }
       });
       google.accounts.id.renderButton(
-        // document.getElementById("buttonDiv"),
         referrer.googleButton.nativeElement,
         { theme: "outline", size: "large", width: "100%" }  // customization attributes
       );
       // google.accounts.id.prompt(); // also display the One Tap dialog
     };
-    // this.metaService.addTags([
-    //   {name: 'google-signin-client_id', content:'906354236471-jdan9m82qtls09iahte8egdffvvhl5pv.apps.googleusercontent.com'}
-    // ])
-    // let script = this.renderer.createElement('script');
-    // script.src = 'https://accounts.google.com/gsi/client';
-    // script.defer = true;
-    // script.async=true;
-    // this.renderer.appendChild(document.body, script);
   }
 
   ngOnInit(): void {
@@ -111,12 +99,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     const url = "https://accounts.google.com/gsi/client";
     console.log('preparing to load...');
     let script = this.renderer.createElement('script');
-    // script.id = pData.orderId;
     script.src = url;
     script.defer = true;
     script.async = true;
-    // script['crossorigin'] = "anonymous"
-    // console.log(isfrom.paytmview);
     self.renderer.appendChild(document.body, script);
     return script;
   }
@@ -145,12 +130,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       this.dialCode = this.phoneNumber.dialCode;
       const pN = this.phoneNumber.e164Number.trim();
       let loginId = pN;
-      // if (pN.startsWith(this.dialCode)) {
-      //   loginId = pN.split(this.dialCode)[1];
-      //   if (loginId.startsWith('55')) {
-      //     this.config.length = 5;
-      //   }
-      // } 
       this.performSendOTP(loginId, this.emailId);
     } else {
       this.phoneError = 'Mobile number required';
@@ -173,14 +152,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   }
   resetApiErrors() {
     this.phoneError = null;
-    // this.actionstarted = false;
   }
-  // checkCountrycode() {
-  //   this.phoneError = '';
-  //   if (this.phoneNumber && this.phoneNumber.dialCode !== '+91'){
-  //     this.phoneError = 'Use Google Login to continue for users country code other than +91';
-  //   }
-  // }
   clearPhoneExists() {
     this.phoneExists = false;
   }
@@ -267,7 +239,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   /**
    * OTP Section
    */
-
   onOtpChange(otp) {
     this.otpEntered = otp;
     console.log(this.phoneNumber);
@@ -278,16 +249,13 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         phoneNumber = pN.split(this.dialCode)[1];
       }
       if (this.phoneNumber.dialCode === '+91' && phoneNumber.startsWith('55') && this.otpEntered.length < 5) {
-        // this.api_error = 'Enter valid OTP';
         return false;
       } else if (this.otpEntered.length < 4) {
-        // this.api_error = 'Enter valid OTP';
         return false;
       } else {
         this.verifyOTP();
       }
     }
-
   }
 
   verifyOTP() {
@@ -323,29 +291,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
               })
             }
           },
-          // this.actionstarted = false;
-          // this.otp = otp;
-          // this.createForm(4);
-
-          // this.step = 6;
-
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.loading= false;
-            // this.actionstarted = false;
-            // this.api_error = this.wordProcessor.getProjectErrorMesssages(error);
           }
         );
-      // this.disableConfirmbtn = true;
-      // this.versionService.verifyOtp(this.otp)
-      //   .subscribe(res => {
-      //     this.disableConfirmbtn = false;
-      //     this.api_success = 'version updated successfully';
-      //   },
-      //     (error) => {
-      //       this.disableConfirmbtn = false;
-      //       this.api_error = error.error;
-      //     });
     }
   }
   handleCredentialResponse(response) {

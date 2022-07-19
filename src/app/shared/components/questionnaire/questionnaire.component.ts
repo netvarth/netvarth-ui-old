@@ -29,9 +29,11 @@ export class QuestionnaireComponent implements OnInit {
   @Input() type;
   @Input() waitlistStatus;
   @Input() orderStatus;
-
   @Input() donationDetails;
+  @Output() fileChanged = new EventEmitter<any>();
   @Output() returnAnswers = new EventEmitter<any>();
+
+  
   answers: any = {};
   showDataGrid: any = {};
   selectedMessage: any = [];
@@ -315,9 +317,18 @@ export class QuestionnaireComponent implements OnInit {
   }
   filesSelected(event, question, document) {
     const input = event.target.files;
-
     if (input) {
+     
       for (const file of input) {
+        console.log("File:");
+        console.log(file.type);
+        const fileInput = {
+          caption: document,
+          file: file,
+          labelName: question.labelName
+        }
+  
+        this.fileChanged.emit(fileInput);
         let type = file.type.split('/');
 
         this.apiError[question.labelName] = [];
@@ -353,7 +364,7 @@ export class QuestionnaireComponent implements OnInit {
             reader.onload = (e) => {
               this.selectedMessage[indx]['path'] = e.target['result'];
             };
-            reader.readAsDataURL(file);
+            reader.readAsDataURL(file);            
           }
         } else {
           this.audioVideoFiles.push(file);
@@ -365,12 +376,11 @@ export class QuestionnaireComponent implements OnInit {
             };
             reader.readAsDataURL(file);
           }
-        }
-        // }
+        }        
       }
       if (this.file2 && this.file2.nativeElement.value) {
         this.file2.nativeElement.value = '';
-      }
+      }      
       this.onSubmit('inputChange');
     }
   }
@@ -453,9 +463,9 @@ export class QuestionnaireComponent implements OnInit {
               let type = this.filestoUpload[key][key1].type.split('/');
               type = type[0];
               if (type === 'application' || type === 'image') {
-                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
+                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1], driveId: this.filestoUpload[key][key1].driveId, uid: this.filestoUpload[key][key1].uid });
               } else {
-                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
+                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1], driveId: this.filestoUpload[key][key1].driveId, uid: this.filestoUpload[key][key1].uid });
               }
             }
           } else {
@@ -1258,7 +1268,6 @@ export class QuestionnaireComponent implements OnInit {
   }
   getMaxdate(data) {
     let date;
-
     if (this.getQuestion(data).dateProperties && this.getQuestion(data).dateProperties.endDate) {
       const dt = this.reverse(this.getQuestion(data).dateProperties.endDate);
       date = new Date(dt)

@@ -18,7 +18,7 @@ import { AppointmentActionsComponent } from '../appointments/appointment-actions
 @Component({
     selector: 'app-teleservice',
     templateUrl: './teleservice.component.html',
-    styleUrls: ['./teleservice.component.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../assets/css/style.bundle.css']
+    styleUrls: ['./teleservice.component.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
 export class TeleServiceComponent implements OnInit {
     customer_label: any;

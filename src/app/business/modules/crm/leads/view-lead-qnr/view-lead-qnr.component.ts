@@ -11,6 +11,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { CrmSelectMemberComponent } from "../../../../../business/shared/crm-select-member/crm-select-member.component";
 import { TeleBookingService } from '../../../../../shared/services/tele-bookings-service';
 import { SharedFunctions } from "../../../../../shared/functions/shared-functions";
+import { LeadsService } from "../leads-service";
 
 
 @Component({
@@ -112,7 +113,8 @@ export class ViewLeadQnrComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private teleService: TeleBookingService,
-    private sharedFunctions: SharedFunctions
+    private sharedFunctions: SharedFunctions,
+    private leadsService: LeadsService
   ) {
     this.activatedRoute.params.subscribe(
       (params: any) => {
@@ -948,5 +950,67 @@ export class ViewLeadQnrComponent implements OnInit {
     setTimeout(() => {
       printWindow.close();
     }, 500);
+  }
+
+  uploadFile(input) {
+    console.log("File Input:");
+    console.log(input);
+    const fileString = [{
+      caption: input.caption,
+      mimeType:input.file.type,
+      url:input.file.name,
+      size:input.file.size,
+      labelName:input.labelName
+    }]
+
+
+    const dataToSend: FormData = new FormData();
+    const requestsInfo = {
+      "proId": this.leadInfo.customer.id,
+      "questionnaireId": this.questionaire.questionnaireName
+    }
+  
+    const requests = new Blob([JSON.stringify(requestsInfo)], { type: 'application/json' });
+    dataToSend.append('requests', requests);
+    
+    // const files = new Blob([JSON.stringify(requestsInfo)], { type: 'application/json' });
+    dataToSend.append('files', new Blob([JSON.stringify(fileString)], { type: 'application/json' }));
+    
+    this.leadsService.uploadFile(dataToSend).subscribe(
+      (info: any)=>{
+        
+        console.log(info);
+        
+        this.questionAnswers.answers.answerLine.forEach((element, index) => {
+          if(element.labelName===input.labelName) {
+            console.log("Element:", element)
+            element.answer.fileUpload.forEach((element1, index1) => {
+              console.log("Element1:");
+              console.log(element1);
+              if (element1.caption === input.caption) {
+                this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
+                this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = info.urls[0].uid;
+               console.log("herererere");
+              }
+            });
+
+            // this.questionAnswers.fileUpload[index]['driveId'] = info.urls[0].driveId;
+            // this.questionAnswers.fileUpload[index]['uid'] = info.urls[0].uid;
+          }
+      });
+
+        this.questionAnswers.filestoUpload[input.labelName][input.caption]['driveId'] = info.urls[0].driveId;
+        this.questionAnswers.filestoUpload[input.labelName][input.caption]['uid'] = info.urls[0].uid;
+
+        console.log(this.questionAnswers);
+
+        this.uploadAudioVideoQNR(info);
+
+
+
+      }, error  => {
+        console.log(error);
+      }
+    )
   }
 }
