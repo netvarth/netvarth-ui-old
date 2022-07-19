@@ -693,6 +693,7 @@ export class ViewLeadQnrComponent implements OnInit {
       this.api_loading_UpdateKycProceed = true;
       if (this.leadInfo.status.name === 'Credit Recommendation') {
         this.complete(this.leadInfo.uid);
+        this.snackbarService.openSnackBar('Updated successfully');
       } else {
         this.api_loading_UpdateKycProceed = true;
         console.log('this.questionAnswers.answers',this.questionAnswers.answers)
@@ -703,6 +704,7 @@ export class ViewLeadQnrComponent implements OnInit {
             this.api_loading = false;
             if (data.length === 0) {
               this.submitQuestionnaire(this.leadInfo.uid);
+              this.snackbarService.openSnackBar('Updated successfully');
             } else {
               this.api_loading_UpdateKycProceed = false;
             }
@@ -718,6 +720,7 @@ export class ViewLeadQnrComponent implements OnInit {
             this.api_loading = false;
             if (data.length === 0) {
               this.submitQuestionnaire(this.leadInfo.uid);
+              this.snackbarService.openSnackBar('Updated successfully');
             } else {
               this.api_loading_UpdateKycProceed = false;
             }
@@ -729,12 +732,13 @@ export class ViewLeadQnrComponent implements OnInit {
             });
         }
        
-        
       }
+
 
     } else if (this.leadInfo.status.name === 'Login') {
       this.crmService.proceedToLoginVerified(this.leadInfo.status.id, this.leadInfo.uid).subscribe((response) => {
         this.api_loading_UpdateKycProceed = true;
+        this.snackbarService.openSnackBar('Updated successfully');
         this.router.navigate(['provider', 'crm']);
       }, (error) => {
         this.api_loading_UpdateKycProceed = false;
