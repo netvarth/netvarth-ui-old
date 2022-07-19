@@ -41,7 +41,7 @@ export class DonationMgrComponent implements OnInit {
 
   handle_Donations(event) {
     if(this.domain === 'finance'){
-    let error = 'Donations are disabled for this account.  Please contact Jaldee support @ +91 8880125000'
+    let error = 'Donations are disabled for this account.  Please contact Jaldee support @ +91 7306823011'
     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
     this.getDonationStatus();
   }
