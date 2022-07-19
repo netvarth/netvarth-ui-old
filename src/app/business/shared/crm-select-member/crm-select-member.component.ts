@@ -1090,4 +1090,10 @@ showFileView(file){
   yesRejected(){
     this.dialogRef.close('reject')
   }
+  noRemove(){
+    this.dialogRef.close('cancel')
+  }
+  yesRemove(){
+    this.dialogRef.close('remove')
+  }
   }
