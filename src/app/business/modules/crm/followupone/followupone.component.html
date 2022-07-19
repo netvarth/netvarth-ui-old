@@ -43,7 +43,7 @@
                         *ngIf="task.customer && task.customer.name===undefined">Location-{{task.location.name}}</span>
                     </td>
                     <td class="td3"><span *ngIf="task.generatedBy">{{task.generatedBy.name}}</span></td>
-                    <td *ngIf="task.createdDate">{{task.createdDate}}</td>
+                    <td *ngIf="task.createdDate">{{task.createdDate |date: newDateFormat}}</td>
                     <td class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
                       <div *ngIf="task.status.name==='New'" class="newBtn">
                         {{task.status.name}}

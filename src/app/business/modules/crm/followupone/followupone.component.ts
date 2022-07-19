@@ -3,6 +3,8 @@ import { Messages } from '../../../../../../src/app/shared/constants/project-mes
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { CrmService } from '../crm.service';
+import { projectConstantsLocal } from "../../../../shared/constants/project-constants";
+
 @Component({
   selector: 'app-followupone',
   templateUrl: './followupone.component.html',
@@ -19,6 +21,7 @@ export class FollowUpOneComponent implements OnInit {
     perPage: this.crmService.PERPAGING_LIMIT
   };
   public type: any;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   constructor(
     private locationobj: Location,
     public router: Router,

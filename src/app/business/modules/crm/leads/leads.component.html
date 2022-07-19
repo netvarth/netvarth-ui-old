@@ -146,7 +146,7 @@
                         *ngIf="lead.assignee && lead.assignee.name">{{lead.assignee.name}}</span>
                     </td>
                     <td data-title="Lead Details" class="td2" *ngIf="lead.createdDate">
-                      {{lead.createdDate}}
+                      {{lead.createdDate  |date: newDateFormat}}
                     </td>
                     <td data-title="Lead Details" class="td2"
                       *ngIf="(lead.status && (lead.status.name==='New' || lead.status.name==='Sales Verified'))&& lead.isRedirected">

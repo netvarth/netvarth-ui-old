@@ -7,7 +7,7 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
-import { TeleBookingService } from '../../../../../../shared/services/tele-bookings-service';
+// import { TeleBookingService } from '../../../../../../shared/services/tele-bookings-service';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewpdfComponent } from '../previewpdf/previewpdf.component';
 @Component({
@@ -61,7 +61,7 @@ export class ApplicantComponent implements OnInit {
     private crmService: CrmService,
     private snackbarService: SnackbarService,
     private datePipe:DatePipe,
-    private teleService:TeleBookingService,
+    // private teleService:TeleBookingService,
     private dialog: MatDialog, 
      ) { }
 
@@ -78,9 +78,9 @@ export class ApplicantComponent implements OnInit {
       this.customerName = this.applicant['customerName'];
     }
     if (this.applicant && this.applicant.parent && this.applicant['phone']) {
-      this.phoneNumber =  this.teleService.getTeleNumber(this.applicant['phone']);
+      this.phoneNumber = this.applicant['phone']
     } else {
-      this.phoneNumber =  this.teleService.getTeleNumber(this.applicant['permanentPhone']);
+      this.phoneNumber =  this.applicant['permanentPhone']
     }
     this.applicantForm = this.formBuilder.group({
       customerName: [null],

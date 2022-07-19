@@ -6,6 +6,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CrmService } from '../crm.service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
 import * as moment from 'moment';
+import { projectConstantsLocal } from "../../../../shared/constants/project-constants";
+
 
 @Component({
   selector: 'app-leads',
@@ -62,6 +64,7 @@ export class LeadsComponent implements OnInit {
   endmaxday: Date;
   filter_sidebar: boolean;
   bStatusTableHead: boolean;
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   constructor(
     private groupService: GroupStorageService,
     public router: Router,
