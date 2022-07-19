@@ -10,7 +10,10 @@
                     capitalizeFirst}}</div>
             </div>
             <div>
-                <div style="font-size: 12px;color: #000000;" *ngIf="phoneNumber">{{phoneNumber}}</div>
+                <div style="font-size: 12px;color: #000000;" *ngIf="phoneNumber">+91{{phoneNumber}}</div>
+            </div>
+            <div>
+                <div style="font-size: 12px;color: #000000;" *ngIf="leadInfo && leadInfo.leadId">LeadId-{{leadInfo.leadId}}</div>
             </div>
         </div>
     </div>

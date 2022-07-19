@@ -20,6 +20,7 @@ export class ApplicantComponent implements OnInit {
   errorMessage;
   customerName;
   phoneNumber;
+  leadId;
   kycList = projectConstantsLocal.KYC_LIST;
   telePhoneTypeList = projectConstantsLocal.PHONE_TYPES;
   stateList = projectConstantsLocal.INDIAN_STATES;
@@ -78,9 +79,9 @@ export class ApplicantComponent implements OnInit {
       this.customerName = this.applicant['customerName'];
     }
     if (this.applicant && this.applicant.parent && this.applicant['phone']) {
-      this.phoneNumber = this.applicant['phone']
+      this.phoneNumber = this.applicant['phone'];
     } else {
-      this.phoneNumber =  this.applicant['permanentPhone']
+      this.phoneNumber =  this.applicant['permanentPhone'];
     }
     this.applicantForm = this.formBuilder.group({
       customerName: [null],

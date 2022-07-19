@@ -130,7 +130,10 @@ export class ViewLeadQnrComponent implements OnInit {
       (leadInfo: any) => {
         _this.leadInfo = leadInfo; // Setting Lead information.
         console.log('leadInfo::::::',_this.leadInfo)
-        _this.getTelephoneNumer(_this.leadInfo.customer.phoneNo);
+        if( this.leadInfo.customer && this.leadInfo.customer.phoneNo){
+          _this.telephoneNumber=_this.leadInfo.customer.phoneNo;
+        }
+        // _this.getTelephoneNumer(_this.leadInfo.customer.phoneNo);
         this.api_loading_UpdateKyc = false;
         console.log('leadInfostatus::::::', _this.leadInfo.status)
         if (leadInfo.status.name === 'New' || leadInfo.status.name === 'KYC Updated') {
