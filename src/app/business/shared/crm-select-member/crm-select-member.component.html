@@ -1408,3 +1408,30 @@
         <!---cancel save btn end-->
     </div>
 </section>
+
+<section *ngIf="data.requestType==='applicantRemove'" style="padding: 20px;">
+    <mat-dialog-content>
+        <div>
+           <div style="text-align: center;">
+            <img heigt="60px" width="60px" src="/assets/images/crmImages/remove.png" />
+           </div>
+           <div style="color:#000">
+            Are you sure you want to remove this Co-Applicant ??
+           </div>
+        </div>
+    </mat-dialog-content>
+    <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
+        <!---cancel save btn start-->
+        <div style="text-align: center;">
+            <ng-container>
+                <div class=" mgn-bt-20 mgn-up-10">
+                    <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
+                        (click)="noRemove()"mat-dialog-close>No</button>
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                        (click)="yesRemove()">Yes</button>
+                </div>
+            </ng-container>
+        </div>
+        <!---cancel save btn end-->
+    </div>
+</section>

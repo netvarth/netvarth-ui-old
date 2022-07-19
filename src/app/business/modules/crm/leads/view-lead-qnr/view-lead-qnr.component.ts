@@ -240,41 +240,76 @@ export class ViewLeadQnrComponent implements OnInit {
      if (applicantInfo && (applicantInfo['status'] === 'New')) {
       if(applicantInfo && (applicantInfo['creditScore']===true)){
         if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
-          this.crmService.deleteCoApplicant(applicantInfo['applicantid'],this.leadInfo.uid).subscribe((response) => {
-            if (response) {
-              this.applicantsInfo={};
-              this.initLead();
-              // console.log(response)
-              // console.log("After:", this.applicantsInfo);
-              this.snackbarService.openSnackBar('Successfully removed coapplicant');
+          console.log('applicantInfoapplicantid,applicantInfo',applicantInfo)
+          const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+            width: "100%",
+            panelClass: ["popup-class", "confirmationmainclass"],
+            data: {
+              requestType: "applicantRemove",
             }
-          })
+          });
+          dialogRef.afterClosed().subscribe((dialogresponse: any) => {
+            if (dialogresponse === 'remove') {
+              this.crmService.deleteCoApplicant(applicantInfo['applicantid'], this.leadInfo.uid).subscribe((response) => {
+                if (response) {
+                  this.applicantsInfo = {};
+                  this.initLead();
+                  console.log(response)
+                  console.log("After:", this.applicantsInfo);
+                  this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
+                }
+              })
+            }
+          });
         }
       }
       else{
         if (this.applicantsInfo && this.applicantsInfo[applicantInfo['applicantid']]) {
-          delete this.applicantsInfo[applicantInfo['applicantid']];
-          if (this.applicants) {
-            const index = this.applicants.indexOf(applicantInfo['applicantid']);
-            this.applicants.splice(index, 1);
-            // console.log("After:", this.applicantsInfo);
-            this.snackbarService.openSnackBar('Successfully removed coapplicant');
-          }
+          const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+            width: "100%",
+            panelClass: ["popup-class", "confirmationmainclass"],
+            data: {
+              requestType: "applicantRemove",
+            }
+          });
+          dialogRef.afterClosed().subscribe((response)=>{
+            if(response=== 'remove'){
+              delete this.applicantsInfo[applicantInfo['applicantid']];
+              if (this.applicants) {
+                const index = this.applicants.indexOf(applicantInfo['applicantid']);
+                this.applicants.splice(index, 1);
+                // console.log("After:", this.applicantsInfo);
+                this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
+              }
+            }
+          })
+          
         }
       }
        
      }
      else{
       if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
-        this.crmService.deleteCoApplicant(applicantInfo['applicantid'],this.leadInfo.uid).subscribe((response) => {
-          if (response) {
-            this.applicantsInfo={};
-            this.initLead();
-            console.log(response)
-            console.log("After:", this.applicantsInfo);
-            this.snackbarService.openSnackBar('Successfully removed coapplicant');
+        const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+          width: "100%",
+          panelClass: ["popup-class", "confirmationmainclass"],
+          data: {
+            requestType: "applicantRemove",
           }
-        })
+        });
+        dialogRef.afterClosed().subscribe((dialogresponse: any) => {
+          if (dialogresponse === 'remove') {
+            this.crmService.deleteCoApplicant(applicantInfo['applicantid'], this.leadInfo.uid).subscribe((response) => {
+              if (response) {
+                this.applicantsInfo = {};
+                this.initLead();
+                console.log(response)
+                console.log("After:", this.applicantsInfo);
+                this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
+              }
+            })
+          }
+        });
       }
      }
     
