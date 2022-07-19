@@ -7,7 +7,7 @@
         </div>
     </div>
 </section>
-<section class="card mgn-up-15">
+<section class="card mgn-up-15" >
     <!----threee tab start-->
     <div class="threeTab customThreeCards">
         <div class="customCard" id="A" (click)="fnChangeBorder('A')" [ngClass]="{'borderBottom':  bBorderBottomTYpeA}">
@@ -39,7 +39,7 @@
     <!---mat pannel start-->
     <div class="mgn-up-15" *ngIf="bLosFieldOpen && !api_loading">
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel (closed)="panelOpenState = false">
+            <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div style="display:flex;gap:10px;align-items: center;">
@@ -92,11 +92,11 @@
             </div>
             <!----follow ups pannel start-->
             <!---mat pannel start-->
-            <div class="mgn-up-15">
+            <div class="mgn-up-15"  >
                 <mat-accordion class="example-headers-align">
-                    <mat-expansion-panel (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title>
+                    <mat-expansion-panel (closed)="panelOpenState = false" (opened)="panelOpenState = true">
+                        <mat-expansion-panel-header >
+                            <mat-panel-title >
                                 <div style="display:flex;gap:10px;align-items: center;">
                                     <div class="plusOutside">
                                         <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
@@ -178,7 +178,7 @@
             <div class="customCard" (click)="createEnquiryReport()">
                 <div class="eachTab">
                     <div>
-                        <img height="25px" width="25px" src="/assets/images/crmImages/leadReporterMob.png" />
+                        <img height="25px" width="25px" src="/assets/images/crmImages/inquiry.png" />
                     </div>
                     <div class="topicName">
                         Enquiry Report

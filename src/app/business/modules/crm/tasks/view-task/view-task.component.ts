@@ -187,6 +187,7 @@ export class ViewTaskComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(params => {
       this.enquiryId = params.get("id");
       this.taskUid = params.get("id");
+      console.log('activityType:::::',this.activityType )
       if (this.activityType === 'UpdateFollowUP') {
         this.getEnquiryDetailsRefresh()
       }
@@ -2989,16 +2990,6 @@ export class ViewTaskComponent implements OnInit {
           }
         }
         else if (this.activityType === 'UpdateFollowUP') {
-
-          // if(this.taskDetails.status.name==='Completed'){
-          //   this.taskDetailsForm.controls['areaName'].disable()
-          // this.taskDetailsForm.controls['selectMember'].disable()
-          // }
-          // else{
-          //   this.taskDetailsForm.controls['areaName'].enable()
-          // this.taskDetailsForm.controls['selectMember'].enable()
-          // }
-
           this.bTaskStatus = false;
           this.bTaskCategory = false;
           this.bTaskType = false;
@@ -3100,40 +3091,42 @@ export class ViewTaskComponent implements OnInit {
 
   }
   selectMemberDialog(handleselectMember: any) {
-    const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
-      width: '100%',
-      panelClass: ['popup-class', 'confirmationmainclass'],
-      data: {
-        requestType: 'createtaskSelectMember',
-        header: 'Assign Member',
-        memberList: this.allMemberList,
-        assignMembername: handleselectMember,
-        updateSelectedMember: this.updateAssignMemberDetailsToDialog,
-        updateAssignMemberId: this.updateMemberId
-      }
-    })
-    dialogRef.afterClosed().subscribe((res: any) => {
-      if (res === '') {
-      } else {
-        if (res) {
-          this.updateAssignMemberDetailsToDialog = res;
-          if (res.firstName || res.lastName) {
-            this.selectMember = (res.firstName + ' ' + res.lastName);
-          }
-          if (res.userType) {
-            this.userType = res.userType;
-          }
-          if (res.bussLocations && res.bussLocations[0]) {
-            this.locationId = res.bussLocations[0];
-            this.updteLocationId = this.locationId;
-          }
-          if (res.id) {
-            this.assigneeId = res.id;
-            this.updateMemberId = this.assigneeId;
+    if(this.activityType !=='UpdateFollowUP'){
+      const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+        width: '100%',
+        panelClass: ['popup-class', 'confirmationmainclass'],
+        data: {
+          requestType: 'createtaskSelectMember',
+          header: 'Assign Member',
+          memberList: this.allMemberList,
+          assignMembername: handleselectMember,
+          updateSelectedMember: this.updateAssignMemberDetailsToDialog,
+          updateAssignMemberId: this.updateMemberId
+        }
+      })
+      dialogRef.afterClosed().subscribe((res: any) => {
+        if (res === '') {
+        } else {
+          if (res) {
+            this.updateAssignMemberDetailsToDialog = res;
+            if (res.firstName || res.lastName) {
+              this.selectMember = (res.firstName + ' ' + res.lastName);
+            }
+            if (res.userType) {
+              this.userType = res.userType;
+            }
+            if (res.bussLocations && res.bussLocations[0]) {
+              this.locationId = res.bussLocations[0];
+              this.updteLocationId = this.locationId;
+            }
+            if (res.id) {
+              this.assigneeId = res.id;
+              this.updateMemberId = this.assigneeId;
+            }
           }
         }
-      }
-    })
+      })
+    }
   }
   dateClass(date: Date): MatCalendarCellCssClasses {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';

@@ -97,12 +97,13 @@
               </div>
               <div class="fieldPadding">
                 <div>
-                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }"
+                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' || activityType==='UpdateFollowUP' }"
                     [formControlName]="selectMember" class="form-control"
                     style="display: flex;justify-content: space-between;"
                     (click)="(taskDetails.status.name !=='Completed') && selectMemberDialog(selectMember)">
                     <div>{{selectMember}}</div>
-                    <div class="pointer"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    <div  [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' || activityType==='UpdateFollowUP' }"
+                     class="pointer"><i class="fa fa-user" aria-hidden="true"></i></div>
                   </div>
                 </div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError"
@@ -192,7 +193,8 @@
                     style="display: flex;justify-content: space-between;"
                     (click)="(taskDetails.status.name !=='Completed')&& selectManagerDialog(selectTaskManger)">
                     <div>{{selectTaskManger}}</div>
-                    <div style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }"
+                     style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
                   </div>
                 </div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError"

@@ -99,6 +99,8 @@ export class ViewLeadQnrComponent implements OnInit {
   bCrifBtnDisable:boolean;
   generateCrifText:string='';
   api_loadingprintCrif:boolean;
+  remarksDisable:boolean=true;
+  notesErrorMsg:string;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -808,12 +810,22 @@ export class ViewLeadQnrComponent implements OnInit {
     if(e){
       e.target.style.height = "0px";
       e.target.style.height = (e.target.scrollHeight + 15) + "px";
+      this.remarksDisable=false;
+      this.notesErrorMsg=''
+    }
+    else{
+      this.notesErrorMsg='Please give some remarks'
+      const error= this.notesErrorMsg 
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      this.remarksDisable=true;
     }
     
   }
   saveNotes() {
-    if (this.notes !== undefined) {
+    console.log('this.notes',this.notes);
+    if (this.notes !== '') {
       this.api_loadingNotes = true;
+      this.remarksDisable=false;
       const createNoteData: any = {
         "note": this.notes
       }
@@ -823,12 +835,19 @@ export class ViewLeadQnrComponent implements OnInit {
         setTimeout(() => {
           this.initLead();
           this.api_loadingNotes = false;
+          this.remarksDisable=false;
         }, projectConstants.TIMEOUT_DELAY);
         this.snackbarService.openSnackBar('Remarks added successfully');
       },
         (error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         })
+    }
+    else{
+      this.notesErrorMsg='Please give some remarks'
+      const error= this.notesErrorMsg 
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+     this.remarksDisable=true;
     }
   }
   noteView(noteDetails: any) {

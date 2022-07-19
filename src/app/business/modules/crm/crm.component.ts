@@ -1,4 +1,4 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Location } from '@angular/common';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -16,8 +16,8 @@ export class CRMComponent implements OnInit {
 
   crmTitle = '';
   isadminPrivilege: any;
-  public step: any = 0;
-  public panelOpenState: false;
+  public step: any;
+  public panelOpenState: boolean=false;
   public redirectionList: any = []
   public api_loading: boolean;
   public bLosFieldOpen: boolean = true;
@@ -277,7 +277,7 @@ export class CRMComponent implements OnInit {
     this.router.navigate(['provider', 'CreateEnquiry']);
   }
   redirectionSeperateTemplate(templateName: any) {
-    console.log('templateName', templateName)
+    // console.log('templateName', templateName)
     if (templateName === 'Login Verification') {
       const navigationExtras: NavigationExtras = {
         queryParams: {

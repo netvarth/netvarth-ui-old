@@ -19,7 +19,6 @@ export class FollowUpOneComponent implements OnInit {
     perPage: this.crmService.PERPAGING_LIMIT
   };
   public type: any;
-
   constructor(
     private locationobj: Location,
     public router: Router,
@@ -44,7 +43,7 @@ export class FollowUpOneComponent implements OnInit {
     if(this.type==='followUpOne'){
       filter['statusName-eq'] = ['New','Assigned'];
     } else{
-      filter['statusName-eq'] = 'Proceed'
+      filter['statusName-eq'] = 'Proceed';
     }
     return filter;
   }

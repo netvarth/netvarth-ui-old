@@ -150,19 +150,20 @@
             <span (click)="noteView(leadInfo)" class="pointer-cursor fa fa-external-link"></span>
           </div>
         </div>
-        <div style="padding:10px">
+        <div style="padding:5px">
           <!-- (ngModelChange)="handleNotesDescription(taskDescription.value)" -->
           <textarea rows="10" class="form-control" [(ngModel)]="notes" #taskDescription
             (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter remarks description"
             style=" height: 40px !important;background: #FCFCFC !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
-        </div>
+          </div>
+        
         <!---cancel save btn start-->
         <div
           style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
           <div style="text-align: center;">
             <ng-container>
               <div>
-                <button type="button" class="btn btn-primary font-weight-bold confirmBtnRemarks" (click)="saveNotes()">Add
+                <button [ngClass]="{'cursorDiasable':remarksDisable}" type="button" class="btn btn-primary font-weight-bold confirmBtnRemarks" (click)="!remarksDisable && saveNotes()">Add
                   Remarks</button>
               </div>
             </ng-container>
@@ -249,7 +250,7 @@
   <div style="text-align: center;margin-top: 15px;">
     <ng-container>
       <!-- {{leadInfo.status | json}} -->
-      <div class=" mgn-bt-20 mgn-up-10" style="display: flex; justify-content: center; gap: 10px;">
+      <div class=" mgn-bt-20 mgn-up-10 allBtns">
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading_UpdateKyc && goBack()"[ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}">Cancel</button>
         <button [ngClass]="{'cursorDiasable':  api_loading_UpdateKycProceed}" class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)=" !api_loading_UpdateKyc && updateKyc()"
          [disabled]="api_loading_UpdateKyc">
