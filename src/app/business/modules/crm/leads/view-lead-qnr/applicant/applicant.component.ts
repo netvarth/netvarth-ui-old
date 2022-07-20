@@ -355,7 +355,6 @@ export class ApplicantComponent implements OnInit {
         }
       ],
       "validationIds": [],
-      "otherAttachments": [],
       "relationType": this.applicantForm.controls.relationType.value,
       "relationName": this.applicantForm.controls.relationName.value,
       "permanentAddress": this.applicantForm.controls.permanentAddress.value,
