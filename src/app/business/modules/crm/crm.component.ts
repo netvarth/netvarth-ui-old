@@ -25,6 +25,7 @@ export class CRMComponent implements OnInit {
   showActivity = true;
   bBorderBottomTYpeA: boolean = false;
   bBorderBottomTypeC: boolean = false;
+  followUpList:any=[]
   constructor(
     private providerServices: ProviderServices,
     private router: Router,
@@ -63,6 +64,20 @@ export class CRMComponent implements OnInit {
         )
       }
     )
+    this.followUpsList()
+  }
+  followUpsList(){
+    const _this=this;
+    return new Promise((resolve,reject)=>{
+      _this.crmService.enquiryStatusdashBoard().subscribe((res)=>{
+        resolve(res)
+        console.log(res);
+        this.followUpList=res;
+      }),
+      ((error)=>{
+        reject(error);
+      })
+    })
   }
   fromReportToCrm() {
     if (this.providerServices && this.providerServices.reportToCrm) {
@@ -242,24 +257,51 @@ export class CRMComponent implements OnInit {
   goback() {
     this.locationobj.back();
   }
-  templateViewActivity(textValue) {
-    if (textValue === 'Follow UP 1') {
+  templateViewActivity(data) {
+    console.log(data);
+    if(data && data.name && data.name==='Follow Up 1'){
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'followUpOne'
-        }
-      }
-      this.router.navigate(['provider', 'followupone'], navigationExtras)
+            queryParams: {
+              type: data.name,
+              id:data.id,
+              name:data.name
+            }
+          }
+          this.router.navigate(['provider', 'followupone'], navigationExtras)
     }
-    else {
+    else if(data && data.name && data.name==='Follow Up 2'){
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'followUpTwo'
-        }
-      }
-      this.router.navigate(['provider', 'followupone'], navigationExtras)
-
+            queryParams: {
+              type: data.name,
+              id:data.id,
+              name:data.name
+            }
+          }
+          this.router.navigate(['provider', 'followupone'], navigationExtras)
     }
+    else if(data && data.name && data.name==='Rejected'){
+      return false;
+      const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type:data.name,
+              id:data.id,
+              name:data.name
+            }
+          }
+          this.router.navigate(['provider', 'followupone'], navigationExtras)
+    }
+    else if(data && data.name && data.name==='Completed'){
+      return false;
+      const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: data.name,
+              id:data.id,
+              name:data.name
+            }
+          }
+          this.router.navigate(['provider', 'followupone'], navigationExtras)
+    }
+    
 
   }
   redirectionTaskTemplate() {

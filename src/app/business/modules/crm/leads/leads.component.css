@@ -111,6 +111,9 @@ tr {
     .btnClass {
         padding-left: 0px !important;
     }
+    .hideFilter{
+        display: none;
+    }
 
 }
 

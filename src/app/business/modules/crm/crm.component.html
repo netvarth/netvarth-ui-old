@@ -109,21 +109,12 @@
                             <mat-panel-description>
                             </mat-panel-description>
                         </mat-expansion-panel-header>
-                        <div class="allTabInPannel">
-                            <button class="button-28" role="button" type="submit">
-                                <div tabindex="1" (click)="templateViewActivity('Follow UP 1')">
+                        <div class="" *ngFor="let item of followUpList">
+                            <button *ngIf="item.name==='Follow Up 1' ||  item.name==='Follow Up 2'" style="width:10rem !important" class="button-28" role="button" type="submit">
+                                <div tabindex="1" (click)="templateViewActivity(item)">
                                     <div style="display:flex;align-items:center;gap:5px">
                                         <div>
-                                            Follow Up 1
-                                        </div>
-                                    </div>
-                                </div>
-                            </button>
-                            <button class="button-28" role="button" type="submit">
-                                <div (click)="templateViewActivity('Follow UP 2')">
-                                    <div style="display:flex;align-items:center;gap:5px">
-                                        <div>
-                                            Follow Up 2
+                                            {{item.name}}
                                         </div>
                                     </div>
                                 </div>

@@ -19,7 +19,6 @@
             </div>
             <hr />
             <div class="templateList">
-                <!-- [ngStyle]="{'background-color':status.id === data.taskDetails.status.id ? '#CACACA' : '#FFFFFF' }" -->
                 <div *ngFor="let taskMaster of taskMasterList[0];let index=i" class="singleTempalte">
                     <div style="display: flex;justify-content: space-between;align-items: center;"
                         *ngIf="taskMaster.templateName==='Direct Notice Distribution'"

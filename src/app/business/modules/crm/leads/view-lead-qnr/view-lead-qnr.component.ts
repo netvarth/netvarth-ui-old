@@ -189,8 +189,8 @@ export class ViewLeadQnrComponent implements OnInit {
             _this.headerName = 'Credit Recommendation';
           }
           else if (leadInfo.status.name === 'Credit Recommendation') {
-            this.headerName = 'Loan Sanction';
-            _this.headerName = "Login Verification";
+            _this.headerName = 'Loan Sanction';
+            // _this.headerName = "Login Verification";
             _this.crmService.getkyc(leadInfo.uid).subscribe(
               (kycInfo) => {
                 console.log("KYC Info:", kycInfo);

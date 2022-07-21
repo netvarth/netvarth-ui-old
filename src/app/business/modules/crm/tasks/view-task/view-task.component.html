@@ -1,19 +1,19 @@
 <section class="card">
   <div class="title-gb no-padding">
     <div class="dash-head text-primary">
-      <span *ngIf="hideBackBtn && headerName" class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;
+      <span *ngIf="hideBackBtn && headerName" class="fa fa-arrow-left pointer-cursor" (click)="goBack(taskDetails)"></span>&nbsp;
       {{headerName}}
     </div>
   </div>
 </section>
 <section class="container card mt-4 mx-auto" *ngIf="taskDetails">
   <div>
-    <div stye="padding:10px" *ngIf="headerName">
+    <!-- <div stye="padding:10px" *ngIf="headerName">
       <div class="headerName">
         {{headerName}}
       </div>
       <hr />
-    </div>
+    </div> -->
     <!----task details start-->
     <div class="taskAndNote">
       <div class="formWidth">
@@ -308,7 +308,7 @@
                     <div style="font-size: 12px;font-weight: bold;">Enter Result</div>
                     <div class="statusListClass">
                       <div *ngFor="let item of taskStatusList[0]">
-                        <div [ngClass]="{'cursorDiasable': api_loadingCompletedStatus}" *ngIf="item.name==='Proceed'"
+                        <div [ngClass]="{'cursorDiasable': api_loadingCompletedStatus}" *ngIf="item.name==='Proceed' && updateEnqStatusName !=='Completed'"
                           class="statusClass1" (click)="!api_loadingCompletedStatus && selectStatus(item)" id="A">
                           <div>{{item.name}}</div>
                           <div *ngIf="!api_loadingCompletedStatus">
@@ -351,7 +351,7 @@
               <ng-container>
                 <div class=" mgn-bt-20 mgn-up-10">
                   <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button"
-                    class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
+                    class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack(taskDetails)">Cancel
                   </button>
                   <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}"
                     class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
@@ -429,12 +429,12 @@
           </div>
         </div>
         <!---notes start-->
-        <div style="margin-top:10px" *ngIf="activityType !=='UpdateFollowUP'">
+        <div style="margin-top:10px" >
           <div class="textareaStart">
             <div class="fiesWithIcon">
               <div style="display:flex;gap:5px">
                 <div class="card-title"><b>Remarks</b></div>
-                <div *ngIf="this.taskDetails.status.name==='New'" class="astericColor">*</div>
+                <div *ngIf="taskDetails.status.name==='New' && activityType !=='UpdateFollowUP'" class="astericColor">*</div>
               </div>
               <div *ngIf="taskDetails.notes.length>0">
                 <span (click)="noteView(taskDetails)" class="pointer-cursor fa fa-external-link"></span>
@@ -462,7 +462,7 @@
                 </ng-container>
               </div>
             </div>
-            <div
+            <!-- <div
               style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;"
               *ngIf="activityType ==='UpdateFollowUP'">
               <div style="text-align: center;">
@@ -473,7 +473,7 @@
                   </div>
                 </ng-container>
               </div>
-            </div>
+            </div> -->
             <!---cancel save btn end-->
             <div *ngIf="taskDetails.notes.length>0 " style="display: flex;align-items: center;margin-left: 10px;">
               <div>
@@ -536,7 +536,7 @@
       <ng-container>
         <div class=" mgn-bt-20 mgn-up-10">
           <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button"
-            class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack()">Cancel
+            class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack(taskDetails)">Cancel
           </button>
           <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}"
             class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">

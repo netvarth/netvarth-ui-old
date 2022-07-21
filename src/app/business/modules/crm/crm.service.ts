@@ -409,15 +409,6 @@ export class CrmService {
     const url ='provider/enquire/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
-
-  // getTotalFollowUPOneCount(filter){
-  //   const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 1';
-  //     return this.servicemeta.httpGet(url, null, filter);
-  // }
-  // getTotalFollowUPTwoCount(filter){
-  //   const url = 'provider/task/provider/count?originFrom-eq=Enquire&title-eq=Follow Up 2';
-  //     return this.servicemeta.httpGet(url, null, filter);
-  // }
   getTotalEnquiryNone(filter = {}) {
     const url = 'provider/task/provider?isSubTask-eq=false&originFrom-eq=None'
     return this.servicemeta.httpGet(url, null, filter);
@@ -434,17 +425,17 @@ export class CrmService {
       const url='provider/task/'+ taskUid + '/status/rejected'
       return this.servicemeta.httpPut(url, data);
   }
-  statusToRejectedFollowUP(taskUid){
-    const url='provider/enquire/'+ taskUid + '/status/rejected'
-    return this.servicemeta.httpPut(url);
+  statusToRejectedFollowUP(taskUid,body){
+    const url='provider/enquire/'+ taskUid + '/reject';
+    return this.servicemeta.httpPut(url,body);
 }
-  statusToProceed(taskUid){
-      const url='provider/enquire/'+ taskUid + '/status/done'
-      return this.servicemeta.httpPut(url);
+  statusToProceed(taskUid,statusId,body){
+      const url='provider/enquire/'+ taskUid + '/' + 'proceed/' + 'status/' + statusId;
+      return this.servicemeta.httpPut(url,body);
   }
-  statusToProceedFollowUp2(taskUid){
-    const url='provider/enquire/'+ taskUid + '/status/closed'
-    return this.servicemeta.httpPut(url);
+  statusToProceedFollowUp2(taskUid,statusId,body){
+    const url='provider/enquire/'+ taskUid + '/' + 'proceed/'+ 'status/'+ statusId; 
+    return this.servicemeta.httpPut(url,body);
 }
   getLeadQnrDetails(categoryId){
     const url = 'provider/questionnaire/lead/' + categoryId + '/WALKIN';
@@ -616,5 +607,9 @@ export class CrmService {
   deleteCoApplicant(applicantId,uuid){
     const url = 'provider/customers/KYC/coapplicant/' + applicantId + '/' + uuid ;
     return this.servicemeta.httpDelete(url)
+  }
+  enquiryStatusdashBoard(){
+    const url = 'provider/enquire/status';
+    return this.servicemeta.httpGet(url);
   }
 }

@@ -218,3 +218,8 @@ img{
     box-shadow: none;
     transform: translateY(0);
   }
+  ::ng-deep .mat-expansion-panel-body{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }

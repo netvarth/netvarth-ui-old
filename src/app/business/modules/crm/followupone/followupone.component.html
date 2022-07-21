@@ -45,7 +45,8 @@
                     <td class="td3"><span *ngIf="task.generatedBy">{{task.generatedBy.name}}</span></td>
                     <td *ngIf="task.createdDate">{{task.createdDate |date: newDateFormat}}</td>
                     <td class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
-                      <div *ngIf="task.status.name==='New'" class="newBtn">
+                      {{task.status.name}}
+                      <!-- <div *ngIf="task.status.name==='New'" class="newBtn">
                         {{task.status.name}}
                       </div>
                       <div *ngIf="task.status.name==='Completed'" class="completedBtn">
@@ -58,7 +59,7 @@
                         *ngIf="(task.status.name !=='New')&& (task.status.name !== 'Completed') && (task.status.name !== 'Assigned')"
                         class="defultBtn">
                         {{task.status.name}}
-                      </div>
+                      </div> -->
                     </td>
                   </tr>
                 </ng-container>

@@ -21,6 +21,8 @@ export class FollowUpOneComponent implements OnInit {
     perPage: this.crmService.PERPAGING_LIMIT
   };
   public type: any;
+  public enquiryId:any;
+  public enquiryName:any;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   constructor(
     private locationobj: Location,
@@ -32,6 +34,13 @@ export class FollowUpOneComponent implements OnInit {
       if (qparams.type) {
         this.type = qparams.type;
       }
+      if(qparams.id){
+        this.enquiryId= qparams.id;
+      }
+      if(qparams.name){
+        this.enquiryName= qparams.name
+      }
+      console.log(' this.type', this.type)
     });
   }
 
@@ -43,10 +52,25 @@ export class FollowUpOneComponent implements OnInit {
     let filter = {}
     filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
     filter['count'] = this.pagination.perPage;
-    if(this.type==='followUpOne'){
-      filter['statusName-eq'] = ['New','Assigned'];
-    } else{
-      filter['statusName-eq'] = 'Proceed';
+    if(this.type=== this.enquiryName){
+      filter['status-eq'] =this.enquiryId;
+      filter['isRejected-eq']= false;
+      this.headerName =  this.enquiryName;
+    } 
+    else if(this.type=== this.enquiryName){
+      filter['status-eq'] =this.enquiryId;
+      filter['isRejected-eq']= false;
+      this.headerName =  this.enquiryName;
+    }
+    else if(this.type=== this.enquiryName){
+      filter['status-eq'] =this.enquiryId;
+      filter['isRejected-eq']= false;
+      this.headerName =  this.enquiryName;
+    }
+    else if(this.type=== this.enquiryName){
+      filter['status-eq'] =this.enquiryId;
+      filter['isRejected-eq']= false;
+      this.headerName =  this.enquiryName;
     }
     return filter;
   }
@@ -75,10 +99,22 @@ export class FollowUpOneComponent implements OnInit {
    * @param filter 
    */
   getFollowups(filter) {
-    this.crmService.getFollowups(filter).subscribe((res: any) => {
-      this.followups = res;
-      this.api_loading = false;
-    });
+    const _this = this;
+    return new Promise((resolve,reject)=>{
+      _this.crmService.getFollowups(filter).subscribe((res: any) => {
+        resolve(res)
+        console.log('res',res)
+        if(res){
+          _this.followups=res;     
+          _this.api_loading = false;
+        }
+      }),
+      ((error)=>{
+        reject(error);
+      })
+      
+    })
+    
   }
   followupClicked(task) {
     const navigationExtras: NavigationExtras = {
@@ -91,10 +127,6 @@ export class FollowUpOneComponent implements OnInit {
   ngOnInit(): void {
     const _this = this;
     this.api_loading = false;
-    this.headerName = 'Follow Up 1';
-    if (this.type === 'followUpTwo') {
-      this.headerName = 'Follow Up 2';
-    }
     const filter = this.setFilter();
     this.getFollowupsCount(filter).then(
       (count) => {

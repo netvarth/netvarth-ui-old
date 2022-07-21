@@ -29,7 +29,6 @@ export class ViewTaskComponent implements OnInit {
   taskkid: any;
   taskType: any;
   public headerName: string = '';
-  public taskDetailsDescription: string = 'View Task Details';
   public taskError: null;
   public taskDetailsForm: any;
   public selectMember: any;
@@ -143,6 +142,18 @@ export class ViewTaskComponent implements OnInit {
   api_loadingCompletedStatus: boolean;
   api_loadingCancelledStatus: boolean;
   hideBackBtn: boolean = true;
+  updateEnqDes: any;
+  updateEnqTitle: any;
+  updateEnqCategory: any;
+  updateEnqType: any;
+  updateEnqStatus: any;
+  updateEnqPriority: any;
+  updateEnqLocation: any;
+  updateEnqCustomer: any;
+  updateEnqLeadMasterId: any;
+  updateEnqLeadAutoGenerate: any;
+  updateEnqAssignId: any;
+  updateEnqStatusName:any;
   constructor(
     private crmService: CrmService,
     public _location: Location,
@@ -228,250 +239,319 @@ export class ViewTaskComponent implements OnInit {
 
   }
   getEnquiryDetailsRefresh() {
-    this.crmService.getEnquiryDetails(this.enquiryId).subscribe((enquiryList: any) => {
-      this.taskDetails = enquiryList;
-      this.enquiryUid = enquiryList.uid;
-      if (this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.name) {
-        this.firstCustomerName = this.taskDetails.customer.name.charAt(0);
-        this.customerName = this.taskDetails.customer.name;
-      }
-      if (this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.phoneNo) {
-        this.customerPhNo = (this.taskDetails.customer.phoneNo);
-      }
-      this.getUpdateFollowUPValue();
-      this.headerName = 'Follow Up';
+    const _this=this;
+    return new Promise((resolve,reject)=>{
+      _this.crmService.getEnquiryDetails(_this.enquiryId).subscribe((enquiryList: any) => {
+        console.log('enquiryList:::',enquiryList);
+        resolve(enquiryList);
+        _this.taskDetails = enquiryList;
+        if(enquiryList && enquiryList.uid){
+          _this.enquiryUid = enquiryList.uid;
+        }
+        if (enquiryList && enquiryList.customer && enquiryList.customer.name) {
+          _this.firstCustomerName = enquiryList.customer.name.charAt(0);
+          _this.customerName = enquiryList.customer.name;
+        }
+        if (enquiryList && enquiryList.customer && enquiryList.customer.phoneNo) {
+          _this.customerPhNo = (enquiryList.customer.phoneNo);
+        }
+        if(enquiryList){
+          _this.getUpdateFollowUPValue(enquiryList);
+        }
+        if(enquiryList && enquiryList.status && enquiryList.status.name){
+          _this.headerName = enquiryList.status.name;
+        }
+      }),
+      ((error)=>{
+        reject(error);
+      })
     })
+    
   }
 
   getTaskDetailsRefresh() {
-    if (this.activityType === undefined) {
-      this.crmService.getTaskDetails(this.taskUid).subscribe(data => {
-        this.taskDetails = data;
-        this.getTaskmaster()
-        if (this.taskDetails && this.taskDetails.id) {
-          this.taskkid = this.taskDetails.id;
-        }
-        this.api_loading = false;
-        // console.log("Task Details : ", this.taskDetails);
-        this.getDate()
-        if (this.taskDetails && this.taskDetails.userTypeEnum) {
-          this.updateUserType = this.taskDetails.userTypeEnum;
-        }
-        if (this.taskDetails) {
-          if (this.taskDetails.status && (this.taskDetails.status.name === 'Completed')) {
-            this.bTaskFollowUpResult = false;
+    const _this=this;
+    return new Promise((resolve,reject)=>{
+      if (_this.activityType === undefined) {
+        _this.crmService.getTaskDetails(_this.taskUid).subscribe(data => {
+          resolve(data);
+          _this.taskDetails = data;
+          _this.getTaskmaster()
+          if (_this.taskDetails && _this.taskDetails.id) {
+            _this.taskkid = _this.taskDetails.id;
           }
-          else {
-            this.bTaskFollowUpResult = true;
+          _this.api_loading = false;
+          // console.log("Task Details : ", _this.taskDetails);
+          _this.getDate()
+          if (_this.taskDetails && _this.taskDetails.userTypeEnum) {
+            _this.updateUserType = _this.taskDetails.userTypeEnum;
           }
-        }
-
-        if (this.activityType !== 'UpdateFollowUP') {
-          if (this.taskDetails) {
-            if (this.taskDetails.title != undefined) {
-              this.bTaskTitle = true;
-              this.taskDetailsForm.controls.taskTitle.value = this.taskDetails.title;
-              this.headerName = this.taskDetails.title;
+          if (_this.taskDetails) {
+            if (_this.taskDetails.status && (_this.taskDetails.status.name === 'Completed')) {
+              _this.bTaskFollowUpResult = false;
             }
             else {
-              this.bTaskTitle = false
+              _this.bTaskFollowUpResult = true;
             }
           }
-          if (this.taskDetails) {
-            if (this.taskDetails.description != undefined) {
-              this.bTaskDescription = true;
-              this.taskDetailsForm.controls.taskDescription.value = this.taskDetails.description;
-            }
-            else {
-              this.bTaskDescription = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.assignee.name != undefined) {
-              this.bAssigneeName = true;
-              this.selectMember = this.taskDetails.assignee.name;
-              this.updateMemberId = this.taskDetails.assignee.id;
-            }
-            else {
-              this.bAssigneeName = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.locationArea != undefined) {
-              this.bTaskAreaName = true;
-              this.taskDetailsForm.controls.areaName.value = this.taskDetails.locationArea;
-            }
-            else {
-              this.bTaskAreaName = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.dueDate != undefined) {
-              this.bTaskDate = true
-              this.taskDetailsForm.controls.taskDate.value = this.taskDetails.dueDate;
-            }
-            else {
-              this.bTaskDate = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.category.name != undefined) {
-              this.bTaskCategory = true;
-              this.taskDetailsForm.controls.userTaskCategory.value = this.taskDetails.category.id;
-            }
-            else {
-              this.bTaskCategory = false;
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.type.name != undefined) {
-              this.bTaskType = true
-              this.taskDetailsForm.controls.userTaskType.value = this.taskDetails.type.id;
-            }
-            else {
-              this.bTaskType = false;
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.location && this.taskDetails.location.name != undefined) {
-              this.bTaskLocation = true;
-              this.taskDetailsForm.controls.taskLocation.setValue(this.taskDetails.location.name);
-              if (this.taskDetails.location.id) {
-                this.updteLocationId = this.taskDetails.location.id;
+  
+          if (_this.activityType !== 'UpdateFollowUP') {
+            if (_this.taskDetails) {
+              if (_this.taskDetails.title != undefined) {
+                _this.bTaskTitle = true;
+                _this.taskDetailsForm.controls.taskTitle.value = _this.taskDetails.title;
+                _this.headerName = _this.taskDetails.title;
+              }
+              else {
+                _this.bTaskTitle = false
               }
             }
-            else {
-              this.bTaskLocation = false;
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.manager && this.taskDetails.manager.name != undefined) {
-              this.bTaskManager = true;
-              this.selectTaskManger = this.taskDetails.manager.name;
-              if (this.taskDetails.manager.id) {
-                this.updateManagerId = this.taskDetails.manager.id;
+            if (_this.taskDetails) {
+              if (_this.taskDetails.description != undefined) {
+                _this.bTaskDescription = true;
+                _this.taskDetailsForm.controls.taskDescription.value = _this.taskDetails.description;
+              }
+              else {
+                _this.bTaskDescription = false
               }
             }
-            else {
-              this.bTaskManager = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.estDuration && (this.taskDetails.estDuration.days != undefined || this.taskDetails.estDuration.hours != undefined || this.taskDetails.estDuration.minutes != undefined)) {
-              this.bTaskEstDuration = true;
-              this.estTime = { "days": this.taskDetails.estDuration.days, "hours": this.taskDetails.estDuration.hours, "minutes": this.taskDetails.estDuration.minutes };
-              this.taskDetailsForm.controls.taskDays.value = this.taskDetails.estDuration.days;
-              this.taskDetailsForm.controls.taskHrs.value = this.taskDetails.estDuration.hours;
-              this.taskDetailsForm.controls.taskMin.value = this.taskDetails.estDuration.minutes;
-            }
-            else {
-              this.bTaskEstDuration = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.priority && this.taskDetails.priority.name != undefined) {
-              this.bTaskPriority = true;
-              if (this.taskDetails.priority.id) {
-                this.taskDetailsForm.controls.userTaskPriority.value = this.taskDetails.priority.id;
+            if (_this.taskDetails) {
+              if (_this.taskDetails.assignee.name != undefined) {
+                _this.bAssigneeName = true;
+                _this.selectMember = _this.taskDetails.assignee.name;
+                _this.updateMemberId = _this.taskDetails.assignee.id;
+              }
+              else {
+                _this.bAssigneeName = false
               }
             }
-            else {
-              this.bTaskPriority = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.status && this.taskDetails.status.name != undefined) {
-              this.bTaskStatus = true;
-              if (this.taskDetails.status.id) {
-                this.taskDetailsForm.controls.taskStatus.value = this.taskDetails.status.id;
+            if (_this.taskDetails) {
+              if (_this.taskDetails.locationArea != undefined) {
+                _this.bTaskAreaName = true;
+                _this.taskDetailsForm.controls.areaName.value = _this.taskDetails.locationArea;
+              }
+              else {
+                _this.bTaskAreaName = false
               }
             }
-            else {
-              this.bTaskStatus = false;
+            if (_this.taskDetails) {
+              if (_this.taskDetails.dueDate != undefined) {
+                _this.bTaskDate = true
+                _this.taskDetailsForm.controls.taskDate.value = _this.taskDetails.dueDate;
+              }
+              else {
+                _this.bTaskDate = false
+              }
             }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.category.name != undefined) {
+                _this.bTaskCategory = true;
+                _this.taskDetailsForm.controls.userTaskCategory.value = _this.taskDetails.category.id;
+              }
+              else {
+                _this.bTaskCategory = false;
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.type.name != undefined) {
+                _this.bTaskType = true
+                _this.taskDetailsForm.controls.userTaskType.value = _this.taskDetails.type.id;
+              }
+              else {
+                _this.bTaskType = false;
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.location && _this.taskDetails.location.name != undefined) {
+                _this.bTaskLocation = true;
+                _this.taskDetailsForm.controls.taskLocation.setValue(_this.taskDetails.location.name);
+                if (_this.taskDetails.location.id) {
+                  _this.updteLocationId = _this.taskDetails.location.id;
+                }
+              }
+              else {
+                _this.bTaskLocation = false;
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.manager && _this.taskDetails.manager.name != undefined) {
+                _this.bTaskManager = true;
+                _this.selectTaskManger = _this.taskDetails.manager.name;
+                if (_this.taskDetails.manager.id) {
+                  _this.updateManagerId = _this.taskDetails.manager.id;
+                }
+              }
+              else {
+                _this.bTaskManager = false
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.estDuration && (_this.taskDetails.estDuration.days != undefined || _this.taskDetails.estDuration.hours != undefined || _this.taskDetails.estDuration.minutes != undefined)) {
+                _this.bTaskEstDuration = true;
+                _this.estTime = { "days": _this.taskDetails.estDuration.days, "hours": _this.taskDetails.estDuration.hours, "minutes": _this.taskDetails.estDuration.minutes };
+                _this.taskDetailsForm.controls.taskDays.value = _this.taskDetails.estDuration.days;
+                _this.taskDetailsForm.controls.taskHrs.value = _this.taskDetails.estDuration.hours;
+                _this.taskDetailsForm.controls.taskMin.value = _this.taskDetails.estDuration.minutes;
+              }
+              else {
+                _this.bTaskEstDuration = false
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.priority && _this.taskDetails.priority.name != undefined) {
+                _this.bTaskPriority = true;
+                if (_this.taskDetails.priority.id) {
+                  _this.taskDetailsForm.controls.userTaskPriority.value = _this.taskDetails.priority.id;
+                }
+              }
+              else {
+                _this.bTaskPriority = false
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.status && _this.taskDetails.status.name != undefined) {
+                _this.bTaskStatus = true;
+                if (_this.taskDetails.status.id) {
+                  _this.taskDetailsForm.controls.taskStatus.value = _this.taskDetails.status.id;
+                }
+              }
+              else {
+                _this.bTaskStatus = false;
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.targetPotential) {
+                _this.bTaskTargetPotential = true;
+                _this.taskDetailsForm.patchValue({
+                  targetPotential: _this.taskDetails.targetPotential
+                })
+              }
+              else {
+                _this.bTaskTargetPotential = false
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.targetResult) {
+                _this.bTaskBusinessPotential = true;
+                _this.taskDetailsForm.patchValue({
+                  targetResult: _this.taskDetails.targetResult
+                })
+              }
+              else {
+                _this.bTaskBusinessPotential = false
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.actualPotential) {
+                _this.bTaskActualPotential = true;
+                _this.taskDetailsForm.patchValue({
+                  actualPotential: _this.taskDetails.actualPotential
+                })
+              }
+              else {
+                _this.bTaskActualPotential = false
+              }
+            }
+            if (_this.taskDetails) {
+              if (_this.taskDetails.actualResult) {
+                _this.bActualResult = true;
+                _this.actualResult = _this.taskDetails.actualResult
+              }
+              else {
+                _this.bActualResult = true;
+              }
+            }
+            _this.crmService.taskToCraeteViaServiceData = _this.taskDetails
           }
-          if (this.taskDetails) {
-            if (this.taskDetails.targetPotential) {
-              this.bTaskTargetPotential = true;
-              this.taskDetailsForm.patchValue({
-                targetPotential: this.taskDetails.targetPotential
-              })
-            }
-            else {
-              this.bTaskTargetPotential = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.targetResult) {
-              this.bTaskBusinessPotential = true;
-              this.taskDetailsForm.patchValue({
-                targetResult: this.taskDetails.targetResult
-              })
-            }
-            else {
-              this.bTaskBusinessPotential = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.actualPotential) {
-              this.bTaskActualPotential = true;
-              this.taskDetailsForm.patchValue({
-                actualPotential: this.taskDetails.actualPotential
-              })
-            }
-            else {
-              this.bTaskActualPotential = false
-            }
-          }
-          if (this.taskDetails) {
-            if (this.taskDetails.actualResult) {
-              this.bActualResult = true;
-              this.actualResult = this.taskDetails.actualResult
-            }
-            else {
-              this.bActualResult = true;
-            }
-          }
-          this.crmService.taskToCraeteViaServiceData = this.taskDetails
+        }),
+        ((error)=>{
+          reject(error);
+        });
+        if (_this.taskDetails && _this.taskDetails.customer && _this.taskDetails.customer.name) {
+          _this.firstCustomerName = _this.taskDetails.customer.name.charAt(0);
+          _this.customerName = _this.taskDetails.customer.name;
         }
-      });
-      if (this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.name) {
-        this.firstCustomerName = this.taskDetails.customer.name.charAt(0);
-        this.customerName = this.taskDetails.customer.name;
+        if (_this.taskDetails && _this.taskDetails.customer && _this.taskDetails.customer.phoneNo) {
+          _this.customerPhNo = (_this.taskDetails.customer.phoneNo);
+        }
       }
-      if (this.taskDetails && this.taskDetails.customer && this.taskDetails.customer.phoneNo) {
-        this.customerPhNo = (this.taskDetails.customer.phoneNo);
-      }
-    }
-
+    })
+    
   }
-
   //mew ui method start
-  getUpdateFollowUPValue() {
-    if (this.taskDetails && this.taskDetails.title) {
-      this.taskDetailsForm.controls.taskTitle.value = this.taskDetails.title;
-      this.headerName = this.taskDetails.title;
+  getUpdateFollowUPValue(enquiryDetails) {
+    if (enquiryDetails && enquiryDetails.title) {
+      this.updateEnqTitle= enquiryDetails.title
     }
-    if (this.taskDetails && this.taskDetails.estDuration) {
-      this.estTime = {
-        "days": this.taskDetails.estDuration.days, "hours": this.taskDetails.estDuration.hours,
-        "minutes": this.taskDetails.estDuration.minutes
-      };
+    else{
+      this.updateEnqTitle=''
     }
-    if (this.taskDetails && this.taskDetails.assignee) {
-      this.updateMemberId = this.taskDetails.assignee.id;
+    if (enquiryDetails && enquiryDetails.assignee) {
+      this.updateMemberId = enquiryDetails.assignee.id;
     }
-    if (this.taskDetails && this.taskDetails.description) {
-      this.taskDetailsForm.controls.taskDescription.value = this.taskDetails.description;
+    if(enquiryDetails && enquiryDetails.description){
+      this.updateEnqDes= enquiryDetails.description;
     }
-    if (this.taskDetails && this.taskDetails.locationArea) {
-      this.taskDetailsForm.controls.areaName.value = (this.taskDetails.locationArea);
+    else{
+      this.updateEnqDes=''
     }
-    if (this.taskDetails && this.taskDetails.dueDate) {
-      this.taskDetailsForm.controls.taskDate.value = this.taskDetails.dueDate;
+    if(enquiryDetails && enquiryDetails.category && enquiryDetails.category.id){
+      this.updateEnqCategory= enquiryDetails.category.id;
     }
-    if (this.taskDetails && this.taskDetails.userTypeEnum) {
-      this.updateUserType = this.taskDetails.userTypeEnum;
+    else{
+      this.updateEnqCategory=''
+    }
+    if(enquiryDetails && enquiryDetails.type && enquiryDetails.type.id){
+      this.updateEnqType= enquiryDetails.type.id;
+    }
+    else{
+      this.updateEnqType=''
+    }
+    if(enquiryDetails && enquiryDetails.status && enquiryDetails.status.id && enquiryDetails.status.name){
+      this.updateEnqStatus= enquiryDetails.status.id;
+      this.updateEnqStatusName= enquiryDetails.status.name;
+    }
+    else{
+      this.updateEnqStatus=''
+    }
+    if(enquiryDetails && enquiryDetails.priority && enquiryDetails.priority.id){
+      this.updateEnqPriority= enquiryDetails.priority.id;
+    }
+    else{
+      this.updateEnqPriority=''
+    }
+    if(enquiryDetails && enquiryDetails.location && enquiryDetails.location.id){
+      this.updateEnqLocation= enquiryDetails.location.id;
+    }
+    else{
+      this.updateEnqLocation=''
+    }
+    if(enquiryDetails && enquiryDetails.customer && enquiryDetails.customer.id){
+      this.updateEnqCustomer= enquiryDetails.customer.id;
+    }
+    else{
+      this.updateEnqCustomer=''
+    }
+    if(enquiryDetails && enquiryDetails.leadMasterId){
+      this.updateEnqLeadMasterId= enquiryDetails.leadMasterId;
+    }
+    else{
+      this.updateEnqLeadMasterId=''
+    }
+    if(enquiryDetails && enquiryDetails.isLeadAutogenerate){
+      this.updateEnqLeadAutoGenerate= enquiryDetails.isLeadAutogenerate
+    }
+    else{
+      this.updateEnqLeadAutoGenerate=''
+    }
+    if(enquiryDetails && enquiryDetails.notes && enquiryDetails.notes.length>0){
+      this.notesTextarea= enquiryDetails.notes
+    }
+    else{
+      this.notesTextarea=''
+    }
+    if(enquiryDetails && enquiryDetails.assignee && enquiryDetails.assignee.id){
+      this.updateEnqAssignId= enquiryDetails.assignee.id;
     }
     this.getTaskmaster()
 
@@ -2997,7 +3077,6 @@ export class ViewTaskComponent implements OnInit {
           this.bTaskManager = false;
           this.bTaskEstDuration = false;
           this.bTaskPriority = false;
-          this.bTaskStatus = false;
           this.bTaskTargetPotential = false;
           this.bTaskBusinessPotential = false;
           this.bTaskTitle = false;
@@ -3126,6 +3205,7 @@ export class ViewTaskComponent implements OnInit {
           }
         }
       })
+      
     }
   }
   dateClass(date: Date): MatCalendarCellCssClasses {
@@ -3397,33 +3477,22 @@ export class ViewTaskComponent implements OnInit {
     }
   }
   selectStatus(status: any) {
-    if (status && (status.name === 'Pending')) {
-      document.getElementById('A').style.boxShadow = "none";
-      document.getElementById('C').style.boxShadow = "none";
-      this.crmService.statusToPendingFollowUp(this.enquiryId).subscribe((response) => {
-        if (response) {
-          setTimeout(() => {
-            this.taskDetailsForm.reset();
-            if (status && status.name) {
-              this.snackbarService.openSnackBar('Successfully updated to ' + status.name.toLowerCase() + ' mode');
-            }
-            this.router.navigate(['provider', 'crm']);
-          }, projectConstants.TIMEOUT_DELAY);
-        }
-      },
-        (error) => {
-          setTimeout(() => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }, projectConstants.TIMEOUT_DELAY);
-        })
-    }
-    else if (status && (status.name === 'Rejected')) {
+     if (status && (status.name === 'Rejected')) {
       if (this.enquiryId) {
         this.api_loadingCancelledStatus = true;
         this.hideBackBtn = false;
-        document.getElementById('A').style.boxShadow = "none";
-        document.getElementById('C').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
-        this.crmService.statusToRejectedFollowUP(this.enquiryId).subscribe((response) => {
+        if(document.getElementById('A') && document.getElementById('C').style && document.getElementById('A').style.boxShadow){
+          document.getElementById('A').style.boxShadow = "none";
+        }
+        else if(document.getElementById('C') && document.getElementById('C').style && document.getElementById('C').style.boxShadow){
+          document.getElementById('C').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
+        }
+        // console.log(this.notesTextarea);
+        const noteAddData:any={
+          "note":this.notesTextarea,
+        }
+        this.crmService.statusToRejectedFollowUP(this.enquiryId,noteAddData).subscribe((response) => {
+          console.log('response',response)
           if (response) {
             setTimeout(() => {
               this.taskDetailsForm.reset();
@@ -3448,12 +3517,30 @@ export class ViewTaskComponent implements OnInit {
     }
     else if (status && (status.name === 'Proceed')) {
       if (this.enquiryId) {
+        console.log(this.taskDetails.status.id)
+        let statusId=this.taskDetails.status.id;
+        const updateEnquiryData={
+          "status":{"id":this.updateEnqStatus},
+          "priority":{"id":this.updateEnqPriority},
+          "location":{"id":this.updateEnqLocation},
+          "customer":{"id":this.updateEnqCustomer},
+          "leadMasterId": this.updateEnqLeadMasterId,
+          "isLeadAutogenerate": this.updateEnqLeadAutoGenerate,
+          // "note": this.notesTextarea,
+          "assignee":{"id":this.updateEnqAssignId}
+        }
         this.api_loadingCompletedStatus = true;
         this.hideBackBtn = false;
-        document.getElementById('A').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
-        document.getElementById('C').style.boxShadow = "none";
+        if(document.getElementById('A') && document.getElementById('C').style && document.getElementById('A').style.boxShadow){
+          document.getElementById('A').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
+        }
+        else if(document.getElementById('C') && document.getElementById('C').style && document.getElementById('C').style.boxShadow){
+          document.getElementById('C').style.boxShadow = "none";
+        }
         if (this.taskDetails.status.name !== 'Proceed') {
-          this.crmService.statusToProceed(this.enquiryId).subscribe((response) => {
+          console.log('updateEnquiryData',updateEnquiryData);
+          this.crmService.statusToProceed(this.enquiryId,statusId,updateEnquiryData).subscribe((response) => {
+            console.log('response',response)
             if (response) {
               setTimeout(() => {
                 this.taskDetailsForm.reset();
@@ -3472,7 +3559,7 @@ export class ViewTaskComponent implements OnInit {
             })
         }
         else {
-          this.crmService.statusToProceedFollowUp2(this.enquiryId).subscribe((response) => {
+          this.crmService.statusToProceedFollowUp2(this.enquiryId,statusId,updateEnquiryData).subscribe((response) => {
             if (response) {
               setTimeout(() => {
                 this.taskDetailsForm.reset();
@@ -3558,8 +3645,27 @@ export class ViewTaskComponent implements OnInit {
         }));
     })
   }
-  goBack() {
-    this.router.navigate(['provider', 'crm']);
+  goBack(data) {
+    console.log('data',data)
+    if(this.activityType==='UpdateFollowUP'){
+      if((data && data.status)&&((data.status.name===('Follow Up 1') ||(data.status.name=== 'Follow Up 2' )|| 
+      (data.status.name=== 'Completed' )|| (data.status.name=== 'Rejected')))){
+        this._location.back();
+      }
+      else{
+        this.router.navigate(['provider', 'crm']);
+      }
+    }
+    else{
+      if(data && data.status && data.status.name==='New' || data.status.name==='Completed'){
+        this._location.back();
+      }
+      else{
+        this.router.navigate(['provider', 'crm']);
+      }
+    }
+    
+    // this.router.navigate(['provider', 'crm']);
   }
   openAddNoteDialog(addNoteText: any) {
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
