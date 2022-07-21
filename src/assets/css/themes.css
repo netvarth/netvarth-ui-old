@@ -584,3 +584,22 @@ footer.mediExpat.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-
   color: #946394 !important;
   font-weight: bold !important;
 }
+
+.theme3 .panel-heading {
+  background: #1e4079 0% 0% no-repeat padding-box !important;
+  height: 50px !important;
+}
+.theme3 .panel-heading .dashboard-btn {
+  color: #fff !important;
+}
+.theme3 .background-changer .body-default,.theme3 #page {
+  background-image: linear-gradient(0deg,#f2f2f7,#f2f2f7)!important;
+} 
+.theme3 #page .box {
+  background: #eaeaf1 !important;
+}
+
+.theme3 h3 {
+  color: darkslateblue !important;
+  font-size: 18px !important;
+}
