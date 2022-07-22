@@ -54,7 +54,7 @@ export class ApplicantComponent implements OnInit {
   bCrifBtnDisable:boolean;
   fileOpener: any;
   generateCrifText:string='Generate CRIF Score of Applicant';
-  
+  deleteTextFile:any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -268,7 +268,8 @@ export class ApplicantComponent implements OnInit {
           }
           else
           {
-            for (const pic of this.selectedFiles[type].files) {
+            // this.selectedFiles[type].files
+            for (const pic of input) {
             let fileObjFinal;
             const size = pic["size"] / 1024;
             if (pic["type"]) {
@@ -314,7 +315,8 @@ export class ApplicantComponent implements OnInit {
     let applicantInfo = {
       id: this.applicantId,
       info: this.getApplicantInfo(),
-      files: this.filesToUpload
+      files: this.filesToUpload,
+      removeFile:this.deleteTextFile
     }
     console.log("sendd files",this.filesToUpload)
     console.log("In send Applicant", applicantInfo);
@@ -475,7 +477,7 @@ export class ApplicantComponent implements OnInit {
   resetErrors() {
 
   }
-  deleteTempImage(i, type) {
+  deleteTempImage(i, type,deleteText) {
     let files= this.filesToUpload.filter((fileObj) => {
       if(fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name){
         if(fileObj.type){
@@ -496,14 +498,17 @@ export class ApplicantComponent implements OnInit {
     this.selectedFiles[type].caption.splice(i, 1);
     console.log("this.applicant",this.applicant)
     if (type === 'kyc1') {
-      this.applicant.validationIds[0].attachments = [];
+      this.applicant.validationIds[0].attachments.splice(i,1);
+      this.sendApplicantInfo()
 
     } else if (type === 'kyc2') {
-      this.applicant.validationIds[1].attachments = [];
+      this.applicant.validationIds[1].attachments.splice(i,1);
+      this.sendApplicantInfo() 
     } 
     else if (type === 'other') {
-      console.log("other attachments delete")
-      this.applicant.otherAttachments = [];
+      // console.log("other attachments delete")
+      this.applicant.otherAttachments.splice(i,1);
+      this.sendApplicantInfo() 
     }
     // else if (type === 'kyc3') {
     //   this.applicant.validationIds[2].attachments = [];

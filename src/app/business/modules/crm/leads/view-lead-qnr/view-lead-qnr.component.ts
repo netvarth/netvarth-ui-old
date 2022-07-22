@@ -413,31 +413,42 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log(' this.applicantsInfo[applicantIndex] ', this.applicantsInfo[applicantIndex] )
     if (this.applicantsInfo[applicantIndex]) {
-      if (this.applicantsInfo[applicantIndex].validationIds[0] && this.applicantsInfo[applicantIndex].validationIds[0].attachments &&
-         this.applicantsInfo[applicantIndex].validationIds[0].attachments.length > 0) {
-      } 
-      else {
-        let fileData = this.getFileInfo('kyc1', filesObj);
-        if (fileData && fileData.length > 0 && !fileData[0]['order']) {
-          console.log('fileData[0]',fileData[0])
-          fileData[0]['order'] = this.filesCount++;
-          // console.log('this.filesCount',this.filesCount)
-          this.filesToUpload.push(fileData[0]);
-          this.applicantsInfo[applicantIndex].validationIds[0].attachments = fileData;
+      // if (this.applicantsInfo[applicantIndex].validationIds[0] && this.applicantsInfo[applicantIndex].validationIds[0].attachments &&
+      //    this.applicantsInfo[applicantIndex].validationIds[0].attachments.length > 0) {
+      // } 
+      // else {
+        if (this.applicantsInfo){
+          let fileData = this.getFileInfo('kyc1', filesObj);
+          // fileData && fileData.length > 0 &&
+          for(let i=0;i<fileData.length;i++){
+            if ( fileData && fileData.length > 0 && !fileData[i]['order']) {
+              console.log('fileData[0]',fileData[i])
+              fileData[i]['order'] = this.filesCount++;
+              this.filesToUpload.push(fileData[i]);
+              this.applicantsInfo[applicantIndex].validationIds[0].attachments = fileData;
+            }
+          }  
         }
-      }
-      if (this.applicantsInfo[applicantIndex].validationIds[1] && this.applicantsInfo[applicantIndex].validationIds[1].attachments && 
-        this.applicantsInfo[applicantIndex].validationIds[1].attachments.length > 0) {
-      } 
-      else {
-        let fileData = this.getFileInfo('kyc2', filesObj);
-         // 
-        if (fileData && fileData.length > 0  && !fileData[0]['order']) {
-          fileData[0]['order'] = this.filesCount++;
-          this.filesToUpload.push(fileData[0]);
-          this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
+        
+      // }
+      // if (this.applicantsInfo[applicantIndex].validationIds[1] && this.applicantsInfo[applicantIndex].validationIds[1].attachments && 
+      //   this.applicantsInfo[applicantIndex].validationIds[1].attachments.length > 0) {
+      // } 
+      // else {
+        if (this.applicantsInfo){
+          let fileData = this.getFileInfo('kyc2', filesObj);
+          // fileData && fileData.length > 0  &&
+          for(let i=0;i<fileData.length;i++){
+           if (fileData && fileData.length > 0 && !fileData[i]['order']) {
+             fileData[i]['order'] = this.filesCount++;
+             this.filesToUpload.push(fileData[i]);
+             this.applicantsInfo[applicantIndex].validationIds[1].attachments = fileData;
+           }
+         }
         }
-      }
+        
+        
+      // }
       console.log('this.applicantsInfo[applicantIndex].validationIds[2].idTypes2',this.applicantsInfo[applicantIndex])
       if (this.applicantsInfo[applicantIndex].validationIds[2]) {
         if (this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != null || this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != '') {
@@ -502,6 +513,10 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log(applicantIndex);
     console.log('applicantsInfo:::::',this.applicantsInfo);
+    if(applicant['removeFile']==='delete'){
+      // this.updateKyc();
+      // applicant['removeFile']===''
+    }
   }
 
   /**
@@ -658,7 +673,14 @@ export class ViewLeadQnrComponent implements OnInit {
                 }
                 
                 this.api_loading_UpdateKyc = false;
-                this.initLead();
+                if(this.leadInfo.status.name === 'New'){
+                  // this.initLead();
+                                     this.router.navigate(['/provider/viewleadqnr/' + this.leadUID]);
+                }
+                else{
+                 this.initLead();
+                }
+                
               }, (error) => {
                 console.log("upload error", error);
               }

@@ -109,7 +109,7 @@
                                     <img [src]="getImage(selectedFiles['kyc1'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc1'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc1')">
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc1','delete')">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -128,14 +128,8 @@
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
-                    <!-- <div>
-                        <a href="{{file.s3path}}" target="_blank" download>
-                            <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
-                            {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
-                        </a>
-                    </div> -->
                    <div>
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc1')"></i>
+                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc1','delete')"></i>
                    </div>
                 </div>
             </div>
@@ -193,7 +187,7 @@
                                     <img [src]="getImage(selectedFiles['kyc2'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc2'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc2')">
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc2','delete')">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -217,7 +211,7 @@
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </a> -->
                    <div>
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc2')"></i>
+                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc2','delete')"></i>
                    </div>
                 </div>
             </div>
@@ -277,7 +271,7 @@
                                     <img [src]="getImage(selectedFiles['kyc3'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc3'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc3')">
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc3','delete')">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -301,7 +295,7 @@
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
                    <div>
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc3')"></i>
+                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc3','delete')"></i>
                    </div>
                 </div>
             </div>
@@ -587,7 +581,7 @@
                                     <img [src]="getImage(selectedFiles['other'].base64[i], file)"
                                         *ngIf="selectedFiles['other'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'other')">
+                                <div class="gal_action" (click)="deleteTempImage(i, 'other','delete')">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -606,13 +600,9 @@
                             <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                             {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                         </div>
-                        <!-- <a href="{{file.s3path}}" target="_blank" download>
-                                    <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
-                                    {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
-                                </a> -->
                         <div>
                             <i class="fa fa-times-circle pointer-cursor" aria-hidden="true"
-                                (click)="deleteTempImage(i, 'other')"></i>
+                                (click)="deleteTempImage(i, 'other','delete')"></i>
                         </div>
                     </div>
                 </div>
