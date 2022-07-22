@@ -24,7 +24,8 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     base_url + 'support/login',
     base_url + 'marketing/login',
     base_url + 'provider/login',
-    base_url + 'consumer/login/reset/\d{10,12}'
+    base_url + 'consumer/login/reset/\d{10,12}',
+    base_url + 'consumer/oauth/token/refresh'
   ];
   reload_path = [
     base_url + 'consumer/communications/unreadCount',
@@ -119,7 +120,16 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         'password': password,
         'mUniqueId': ynw_user.mUniqueId
       };
-      this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
+      const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+      if (reqFrom === 'cuA') {
+        this.authService.refreshToken().then(
+          (response)=> {
+            this.authService.refresh(response).subscribe(this._refreshSubject);
+          }
+        )        
+      } else {
+        this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
+      }      
     }
     return this._refreshSubject;
   }
@@ -169,7 +179,15 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     }
     const url = base_url + req.url;
     if (this.checkUrl(url)) {
-      return next.handle(this.updateHeader(req, url)).pipe(
+
+      let refresh = false;
+      let refreshUrl = base_url + 'consumer/oauth/token/refresh';
+      let element = refreshUrl.replace(/[\/]/g, '\\$&');
+      if (url.match(element)) {
+        refresh = true;
+      }
+    
+      return next.handle(this.updateHeader(req, url, refresh)).pipe(
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {
             if (this._checkMaintanance(error)) {
@@ -208,7 +226,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
               let reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
 
-              if (reqFrom && reqFrom === 'SP_APP') {
+              if (reqFrom && reqFrom === 'SP_APP' || reqFrom === 'cuA') {
                 return this._ifSessionExpired().pipe(
                   switchMap(() => {
                     return next.handle(this.updateHeader(req, url));
@@ -274,7 +292,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       );
     }
   }
-  updateHeader(req, url) {
+  updateHeader(req, url, refresh?) {
     req = req.clone({ headers: req.headers.set('Accept', 'application/json'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Source', 'Desktop'), withCredentials: true });
     req = req.clone({ headers: req.headers.append('Cache-Control', 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0'), withCredentials: true });
@@ -297,7 +315,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       if (reqFrom === 'CUSTOM_WEBSITE') {
         req = req.clone({ headers: req.headers.append('website-link', this.lStorageService.getitemfromLocalStorage('source')), withCredentials: true });
       }
-
     }
 
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
@@ -305,19 +322,19 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     } else {
       req.headers.delete('tab');
     }
+    console.log("Refresh:", refresh);
     // authorizationToken --- For OTP Login/Signup
-    if (this.lStorageService.getitemfromLocalStorage("authorizationToken")) {
+    if (refresh) {
+      let authToken = this.lStorageService.getitemfromLocalStorage("refreshToken");
+      req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+      this.lStorageService.removeitemfromLocalStorage("authorizationToken");
+    } else if (this.lStorageService.getitemfromLocalStorage("authorizationToken")) {
       let authToken = this.lStorageService.getitemfromLocalStorage("authorizationToken");
       req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
     } else if (this.lStorageService.getitemfromLocalStorage('appId') && this.lStorageService.getitemfromLocalStorage('installId')) {
       let authToken = this.lStorageService.getitemfromLocalStorage('appId') + '-' + this.lStorageService.getitemfromLocalStorage('installId');
       req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
-    }
-    //  else if (this.lStorageService.getitemfromLocalStorage('pre-header') && this.lStorageService.getitemfromLocalStorage('authToken')) {
-    //   let authToken = this.lStorageService.getitemfromLocalStorage('pre-header') + "-" + this.lStorageService.getitemfromLocalStorage('authToken');
-    //   req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
-    // }
-     else if (this.lStorageService.getitemfromLocalStorage('authToken') && !this.lStorageService.getitemfromLocalStorage('googleToken')) {
+    } else if (this.lStorageService.getitemfromLocalStorage('authToken') && !this.lStorageService.getitemfromLocalStorage('googleToken')) {
       let authToken = this.lStorageService.getitemfromLocalStorage('authToken');
       req = req.clone({headers: req.headers.append('Authorization', authToken), withCredentials: true });
     } else {

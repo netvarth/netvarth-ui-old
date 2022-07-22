@@ -4,6 +4,7 @@ import { Observable, Subject } from "rxjs";
 import { ProviderDataStorageService } from "../../business/services/provider-datastorage.service";
 import { GroupStorageService } from "./group-storage.service";
 import { LocalStorageService } from "./local-storage.service";
+import { ServiceMeta } from "./service-meta";
 import { SessionStorageService } from "./session-storage.service";
 import { SharedServices } from "./shared-services";
 
@@ -22,7 +23,8 @@ export class AuthService {
         private groupService: GroupStorageService,
         private sessionStorageService: SessionStorageService,
         private providerDataStorage: ProviderDataStorageService,
-        private router: Router
+        private router: Router,
+        private serviceMeta: ServiceMeta
     ) {
 
     }
@@ -130,6 +132,7 @@ export class AuthService {
                         this.lStorageService.removeitemfromLocalStorage('authToken');
                         if (customId) {
                             if (reqFrom === 'cuA') {
+                                this.lStorageService.removeitemfromLocalStorage('refreshToken');
                                 this.router.navigate(['customapp', customId]);
                             } else if (reqFrom === 'CUSTOM_WEBSITE') {
                                 let source = this.lStorageService.getitemfromLocalStorage('source');
@@ -408,7 +411,7 @@ export class AuthService {
                             resolve(true);
                         },
                         (error) => {
-                            if (error.status === 401 && error.error === 'Session already exists.') {
+                            if (error.status === 401 && error.error === 'Session already exists.') {                                
                                 resolve(true);
                             } else {
                                 resolve(false);
@@ -475,4 +478,20 @@ export class AuthService {
         });
         return promise;
     }
+
+    refreshLogin() {
+        return this.serviceMeta.httpPost('consumer/oauth/token/refresh');
+    }
+    refresh(response) {
+        return new Observable(response);
+    }
+    refreshToken() {
+        return new Promise((resolve) => {
+            this.refreshLogin().subscribe((response: any)=> {
+                this.lStorageService.setitemonLocalStorage('refreshToken', response.token);
+                resolve(response);
+            })
+        });
+    }
+    
 }

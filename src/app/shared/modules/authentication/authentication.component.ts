@@ -13,39 +13,30 @@ declare var google;
   styleUrls: ['./authentication.component.css']
 })
 export class AuthenticationComponent implements OnInit, OnDestroy {
-
   SearchCountryField = SearchCountryField;
   selectedCountry = CountryISO.India;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [CountryISO.India, CountryISO.UnitedKingdom, CountryISO.UnitedStates];
   separateDialCode = true;
   loading = false;
-
   public finalResponse;
-
   @ViewChild('googleBtn') googleButton: ElementRef;
-
   step: any = 1; //
   api_loading;
-
   phoneExists;
   phoneError: string;
   phoneNumber;
   dialCode: any;
   isPhoneValid: boolean;
-
   firstName;
   lastName;
   emailId;
   password;
   rePassword;
-
   @Input() accountId;
-
   @Output() actionPerformed = new EventEmitter<any>();
   otpError: string;
   otpSuccess: string;
-
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -58,7 +49,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   email: any;
   googleLogin: boolean;
-
   constructor(private sharedServices: SharedServices,
     private authService: AuthService,
     private lStorageService: LocalStorageService,
@@ -71,7 +61,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.lStorageService.removeitemfromLocalStorage('login');
   }
-
   initGoogleButton() {
     const referrer = this;
     referrer.loadGoogleJS().onload = () => {
@@ -88,7 +77,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       // google.accounts.id.prompt(); // also display the One Tap dialog
     };
   }
-
   ngOnInit(): void {
     this.lStorageService.setitemonLocalStorage('login', true);
     this.initGoogleButton();
@@ -124,12 +112,12 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         if (loginId.startsWith('55')) {
           this.config.length = 5;
         }
-      }    
+      }
       this.performSendOTP(loginId);
-    } else if (this.phoneNumber.dialCode !== '+91'){
+    } else if (this.phoneNumber.dialCode !== '+91') {
       this.dialCode = this.phoneNumber.dialCode;
       const pN = this.phoneNumber.e164Number.trim();
-      let loginId = pN;
+      let loginId = pN.split(this.dialCode)[1];
       this.performSendOTP(loginId, this.emailId);
     } else {
       this.phoneError = 'Mobile number required';
@@ -142,7 +130,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       accountId: this.accountId
     }
     if (emailId) {
-      credentials['alternateLoginId']=emailId;
+      credentials['alternateLoginId'] = emailId;
     }
     this.subs.sink = this.sharedServices.sendConsumerOTP(credentials).subscribe(
       (response: any) => {
@@ -156,17 +144,16 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   clearPhoneExists() {
     this.phoneExists = false;
   }
-
   onOtpSubmit(otp) {
   }
-  goBack () {
+  goBack() {
     this.initGoogleButton();
     this.step = 1;
   }
   signUpConsumer() {
     const _this = this;
     _this.phoneError = '';
-    if (_this.phoneNumber ) {
+    if (_this.phoneNumber) {
       _this.dialCode = _this.phoneNumber.dialCode;
       const pN = _this.phoneNumber.e164Number.trim();
       let phoneNum;
@@ -189,9 +176,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             accountId: _this.accountId
           }
           credentials['mUniqueId'] = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-        
           _this.authService.consumerLoginViaGmail(credentials).then(
             () => {
+              const token = _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+              _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+
               _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
               _this.lStorageService.removeitemfromLocalStorage('googleToken');
               _this.ngZone.run(() => {
@@ -206,9 +195,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         })
       } else {
-        if (_this.dialCode!=='+91') {
+        if (_this.dialCode !== '+91') {
           credentials['userProfile']['email'] = _this.emailId;
-        }        
+        }
         _this.authService.consumerAppSignup(credentials).then((response) => {
           let credentials = {
             accountId: _this.accountId,
@@ -219,6 +208,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           _this.authService.consumerAppLogin(credentials).then((response) => {
             _this.authService.setLoginData(response, credentials, 'consumer');
             console.log("Login Response:", response);
+            const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+            if (reqFrom === 'cuA') {
+              const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+              _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+            }
             _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
             _this.ngZone.run(() => {
               _this.actionPerformed.emit('success');
@@ -259,6 +253,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   }
 
   verifyOTP() {
+    const _this = this;
     this.otpSuccess = '';
     this.otpError = '';
     this.loading = true;
@@ -286,14 +281,19 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
               }
               this.authService.consumerAppLogin(credentials).then((response) => {
                 console.log("Login Response:", response);
-                this.lStorageService.removeitemfromLocalStorage('authorizationToken');
-                this.actionPerformed.emit('success');
+                const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+                if (reqFrom === 'cuA') {
+                  const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                  _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+                }
+                _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+                _this.actionPerformed.emit('success');
               })
             }
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-            this.loading= false;
+            this.loading = false;
           }
         );
     }
@@ -322,20 +322,24 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           _this.actionPerformed.emit('success');
         }
       )
-
     }, (error: any) => {
       if (error.status === 419 && error.error === 'Session Already Exist') {
         const activeUser = _this.lStorageService.getitemfromLocalStorage('ynw-user');
         if (!activeUser) {
-
           _this.authService.doLogout().then(
             () => {
               _this.authService.consumerLoginViaGmail(credentials).then(
                 () => {
                   _this.ngZone.run(
                     () => {
+                      const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+                      if (reqFrom === 'cuA') {
+                        const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                        _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+                      }
                       _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
                       _this.lStorageService.removeitemfromLocalStorage('googleToken');
+
                       _this.actionPerformed.emit('success');
                     }
                   )
@@ -355,7 +359,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             _this.step = 2;
           }
         )
-
       }
     });
   }

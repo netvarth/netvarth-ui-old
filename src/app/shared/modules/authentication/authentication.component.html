@@ -1,7 +1,4 @@
 <div class="authentication">
-
-    <!-- Account Exists or not -->
-
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="check-mobile-exist" *ngIf="step===1">
             <h1>Let's Start</h1>
@@ -12,20 +9,14 @@
                     [searchCountryField]="[SearchCountryField.Iso2, SearchCountryField.Name]"
                     [selectFirstCountry]="false" [maxLength]="15" [phoneValidation]="true"
                     [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
-                    [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phoneNumber"
-                    >
-                    <!-- (ngModelChange)="checkCountrycode()" -->
+                    [numberFormat]="PhoneNumberFormat.National" name="phone" [(ngModel)]="phoneNumber">
                 </ngx-intl-tel-input>
                 <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
-
                 <div class="form-group email mgn-up-20" *ngIf="phoneNumber && phoneNumber.dialCode != '+91'">
                     <label for="phone">Enter your Email</label>
                     <input type="text" class="form-control" id="emailId" [(ngModel)]="emailId" autocomplete="off"
                         (keypress)="resetApiErrors()">
                 </div>
-
-
-
                 <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
                     [disabled]="api_loading" (click)="sendOTP()" (keyup)="clearPhoneExists()">
                     <span *ngIf="!api_loading">Continue</span>
@@ -36,24 +27,20 @@
                 <div class="form-group mobile-no mgn-up-30">
                     <div id="buttonDiv" class="g-container" #googleBtn></div>
                 </div>
-
             </div>
         </div>
         <div *ngIf="step===3">
             <div class="form-group otp">
-                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="loading"></app-common-innerloading-spinner>
+                <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="loading">
+                </app-common-innerloading-spinner>
                 <h1>Verification</h1>
-                <label *ngIf="phoneNumber && phoneNumber.dialCode==='+91'" for="phone" class="mgn-bt-20">Please type the verification code sent to {{phoneNumber.e164Number}}</label>
-                <label *ngIf="phoneNumber && phoneNumber.dialCode!=='+91'" for="phone" class="mgn-bt-20">Please type the verification code sent to {{emailId}}</label>
+                <label *ngIf="phoneNumber && phoneNumber.dialCode==='+91'" for="phone" class="mgn-bt-20">Please type the
+                    verification code sent to {{phoneNumber.e164Number}}</label>
+                <label *ngIf="phoneNumber && phoneNumber.dialCode!=='+91'" for="phone" class="mgn-bt-20">Please type the
+                    verification code sent to {{emailId}}</label>
                 <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
-                <!-- <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div> -->
-                <!-- <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
-                    [disabled]="api_loading" (click)="verifyOTP()" (keyup)="clearPhoneExists()">
-                    <span *ngIf="!api_loading">Confirm OTP</span>
-                    <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
-                    </app-common-innerloading-spinner>
-                </button> -->
-                <p class="mgn-up-20">Not received yet! <a class="pointer-cursor link" (click)="sendOTP()">Resend OTP</a></p>
+                <p class="mgn-up-20">Not received yet! <a class="pointer-cursor link" (click)="sendOTP()">Resend OTP</a>
+                </p>
             </div>
         </div>
         <div *ngIf="step===2">
@@ -66,12 +53,6 @@
                 <label for="phone">Last Name</label>
                 <input type="text" class="form-control" id="first_name" [(ngModel)]="lastName" autocomplete="off" />
             </div>
-            <!-- <div class="form-group email" *ngIf="!phoneNumber && phoneNumber.dialCode != '+91'">
-                <label for="phone">Email</label>
-                <input type="text" class="form-control" id="emailId" [(ngModel)]="emailId" autocomplete="off"
-                    (keypress)="resetApiErrors()">
-            </div> -->
-            <!-- (blur)="onFieldBlur('emailId')" -->
             <div class="form-group otp" *ngIf="googleLogin">
                 <label for="phone">Mobile Number</label>
                 <ngx-intl-tel-input [cssClass]="'custom'" [preferredCountries]="preferredCountries"
@@ -84,14 +65,14 @@
                 <div class="sts-msg error" *ngIf="phoneError">{{phoneError}}</div>
             </div>
             <div class="form-group otp" style="display: flex !important; justify-content: space-between !important;">
-                <button class="mgn-up-20 mat-button signup-button" type="button"
-                    [disabled]="api_loading" (click)="goBack()">
+                <button class="mgn-up-20 mat-button signup-button" type="button" [disabled]="api_loading"
+                    (click)="goBack()">
                     <span *ngIf="!api_loading">Back</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
                 </button>
-                <button class="mgn-up-20 mat-button signup-button" type="button"
-                    [disabled]="api_loading" (click)="signUpConsumer()">
+                <button class="mgn-up-20 mat-button signup-button" type="button" [disabled]="api_loading"
+                    (click)="signUpConsumer()">
                     <span *ngIf="!api_loading">Next</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
@@ -109,7 +90,6 @@
                 <label for="phone">Confirm Password</label>
                 <input type="text" class="form-control" id="first_name" [(ngModel)]="rePassword" autocomplete="off" />
             </div>
-
             <div class="form-group otp">
                 <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
                     [disabled]="api_loading" (keyup)="clearPhoneExists()">
@@ -121,14 +101,4 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-12 col-sm-12 col-md-6 col-lg-6">
-        <div>
-
-        </div>
-        <div class="text-center">
-            <h1>Experience now...</h1>
-            <label for="phone">Our technology enables you</label>
-            <label for="phone">Our team evolves you</label>
-        </div>
-    </div> -->
 </div>
