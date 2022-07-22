@@ -226,7 +226,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
               let reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
 
-              if (reqFrom && reqFrom === 'SP_APP' || reqFrom === 'cuA') {
+              if (reqFrom && reqFrom === 'SP_APP' || (reqFrom === 'cuA' && this.lStorageService.getitemfromLocalStorage('refreshToken'))){
                 return this._ifSessionExpired().pipe(
                   switchMap(() => {
                     return next.handle(this.updateHeader(req, url));
