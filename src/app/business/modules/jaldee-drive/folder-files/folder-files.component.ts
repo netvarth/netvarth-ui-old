@@ -15,6 +15,8 @@ import { FileService } from "../../../../shared/services/file-service";
 import { DateTimeProcessor } from "../../../../shared/services/datetime-processor.service";
 import { CrmSelectMemberComponent } from "../../../../../../src/app/business/shared/crm-select-member/crm-select-member.component";
 import { projectConstantsLocal } from "../../../../shared/constants/project-constants";
+// import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: "app-folder-files",
@@ -144,6 +146,7 @@ export class FolderFilesComponent implements OnInit {
   holdauditSelAck = null;
   holdauditStartdate = null;
   holdauditEnddate = null;
+  activeUserId: any;
   constructor(
     private _location: Location,
     private provider_servicesobj: ProviderServices,
@@ -219,6 +222,7 @@ export class FolderFilesComponent implements OnInit {
     this.active_user = this.groupService.getitemFromGroupStorage("ynw-user");
     console.log("getFilesOnProviderId", this.getFilesOnProviderId());
     console.log("active_user", this.active_user);
+    this.activeUserId = this.active_user.id
   }
   doSearch() {
     this.filter.endminday = this.filter.startDate;
@@ -306,7 +310,10 @@ export class FolderFilesComponent implements OnInit {
         .getAllFilterAttachments(filter)
         .subscribe((data: any) => {
           console.log(data);
-          this.driveFiles = data;
+          //this.driveFiles = data;
+          Object.keys(data).map((key)=> {
+            this.driveFiles = data[key];
+          });
           this.api_loading = false;
         });
     }
@@ -552,7 +559,6 @@ export class FolderFilesComponent implements OnInit {
     this.doSearch();
   }
   preview(file) {
-    console.log("Files : ", this.driveFiles);
     if (
       file.fileType === "jpg" ||
       file.fileType === "jpeg" ||
@@ -635,7 +641,10 @@ export class FolderFilesComponent implements OnInit {
       .getFilesUploaded(this.active_user.id)
       .subscribe((data: any) => {
         console.log("Alllllll Filessss.", data);
-        this.driveFiles = data;
+       // this.driveFiles = data;
+        Object.keys(data).map((key)=> {
+          this.driveFiles = data[key];
+        });
         this.dataLoading = false;
       });
   }
@@ -658,9 +667,13 @@ export class FolderFilesComponent implements OnInit {
     this.provider_servicesobj
       .getAllFilterAttachments(filter)
       .subscribe((data: any) => {
-        console.log("Alllllll Filessss.", data);
-        this.driveFiles = data;
-        console.log("this.driveFiles.", this.driveFiles);
+        console.log("All Files.", data);
+      
+         Object.keys(data).forEach((key,index)=> {
+            this.driveFiles = data[key];
+          
+        });
+        console.log("drive Folder Level Files.", this.driveFiles);
         this.dataLoading = false;
       });
   }
@@ -834,7 +847,9 @@ export class FolderFilesComponent implements OnInit {
   getFolderfiles() {
     this.provider_servicesobj.getAllFileAttachments().subscribe((data: any) => {
       console.log(data);
-      this.driveFiles = data;
+      Object.keys(data).map((key)=> {
+        this.driveFiles = data[key];
+      });
       console.log("The Folder Files : ", this.driveFiles);
     });
   }

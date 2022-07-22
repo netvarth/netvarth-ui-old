@@ -461,4 +461,12 @@ export class CRMComponent implements OnInit {
     this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
   }
 
+  createMonthlyActivityReport() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        report_type: 'monthlyActivity'
+      }
+    }
+    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
+  }
 }

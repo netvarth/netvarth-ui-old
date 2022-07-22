@@ -278,6 +278,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentRequestId; // Retrying failed attempts
 
     serverDate;       // To store the server date
+    filestoUpload: any =[];
+    uuid: any;
+    apiErrors: any[];
 
 
     constructor(public fed_service: FormMessageDisplayService,
@@ -355,6 +358,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.rescheduleUserId = params.uuid;
                     // this.getRescheduleWaitlistDet();
                 }
+                this.uuid = params.uuid;
             }
         );
     }
@@ -780,6 +784,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         // type === 'checkin' && 
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
             // this.paymentBtnDisabled = true;
+            this.submitQuestionnaireAnswers(this.questionAnswers);
+
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class']
@@ -808,7 +814,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             if (type === 'checkin') {
                 if (this.selectedService.isPrePayment && !this.selected_payment_mode) {
-                    this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please select a payment mode', { 'panelClass': 'snackbarerror' });
                     this.isClickedOnce = false;
                     return false;
                 }
@@ -983,11 +989,14 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         else {
                             _this.submitQuestionnaire(parentUid).then(
                                 () => {
+
                                     resolve(true);
                                     // this.paymentOperation();
+
                                 }
                             );
                             // this.submitQuestionnaire(parentUid);
+
                         }
 
                         // else {
@@ -997,6 +1006,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         //         this.paymentOperation(paymenttype);
                         //     }
                         // }
+
                     },
                         error => {
                             _this.isClickedOnce = false;
@@ -1020,6 +1030,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     // }
     submitQuestionnaire(uuid) {
         const _this = this;
+
         return new Promise(function (resolve, reject) {
             if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                 const dataToSend: FormData = new FormData();
@@ -1079,6 +1090,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 resolve(true);
             }
         });
+
     }
     paymentOperation() {
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
@@ -1937,6 +1949,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQuestionAnswers(event) {
         this.questionAnswers = event;
+        console.log("consCheckin questionnaire :",this.questionAnswers)
     }
     getConsumerQuestionnaire() {
         const _this = this;
@@ -1968,6 +1981,112 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         }
     }
+
+    setValidateError(errors) {
+        this.apiErrors = [];
+        if (errors.length > 0) {
+          for (let error of errors) {
+            this.apiErrors[error.questionField] = [];
+           // this.apiError[error.questionField].push(error.error);
+          }
+          //this.buttonDisable = false;
+        }
+      }
+    successGoback() {
+        //this.buttonDisable = false;
+        // if (!this.type) {
+        //   this.location.back();
+        // } 
+        // else {
+          this.filestoUpload = [];
+         // this.editQnr();
+         // this.returnAnswers.emit('reload');
+          this.questionAnswers.emit('reload');
+          // if (this.type !== 'qnr-link') {
+          //   this.snackbarService.openSnackBar('Updated Successfully');
+          // }
+       // }
+      }
+      //step5
+     uploadAudioVideo(data,uuid?) {
+    console.log("upload Audio :",data)
+    if (data.urls && data.urls.length > 0) {
+      let postData = {
+        urls: []
+      };
+      for (const url of data.urls) {
+        const file = this.filestoUpload[url.labelName][url.document];
+        this.provider_services.videoaudioS3Upload(file, url.url)
+          .subscribe(() => {
+            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+            if (data.urls.length === postData['urls'].length) {
+                this.shared_services.consumerWaitlistQnrUploadStatusUpdate(this.trackUuid, this.account_id, postData)
+                  .subscribe((data) => {
+                    this.successGoback();
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                     // this.buttonDisable = false;
+                    });
+            }
+          },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+             // this.buttonDisable = false;
+            });
+      }
+    } else {
+     this.successGoback();
+    }
+      }
+     //step4
+    resubmitConsumerWaitlistQuestionnaire(body) {
+        this.shared_services.resubmitConsumerOrderQuestionnaire(body, this.uuid, this.account_id).subscribe(data => {
+          this.uploadAudioVideo(data);
+        }, error => {
+         // this.buttonDisable = false;
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+      }
+      submitConsumerWaitlistQuestionnaire(body,uuid?) {
+        console.log("submit uuid:",uuid)
+        this.shared_services.submitConsumerOrderQuestionnaire(body, this.trackUuid, this.account_id).subscribe(data => {
+          this.uploadAudioVideo(data,uuid);
+        }, error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+      }
+     //step3 
+    validateConsumerQuestionnaireResubmit(answers, dataToSend,uuid?) {
+        this.shared_services.validateConsumerQuestionnaireResbumit(answers, this.account_id).subscribe((data: any) => {
+          this.setValidateError(data);
+          if (data.length === 0) {
+             //if (this.source === 'consOrder') {
+              // if (this.qnrStatus === 'submitted') {
+              //   this.resubmitConsumerOrderQuestionnaire(dataToSend);
+              // } else {
+                this.submitConsumerWaitlistQuestionnaire(dataToSend,uuid);
+            //  }
+           // } 
+         
+          }
+        }, error => {
+         // this.buttonDisable = false;
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+      }
+     //step2 submitQuestionnaireAnswers()
+    submitQuestionnaireAnswers(passData,uuid?) {
+        console.log("Submitttttt : ",uuid)
+        const dataToSend: FormData = new FormData();
+        const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
+        dataToSend.append('question', blobpost_Data);
+       // this.buttonDisable = true;
+          this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend,uuid);
+        
+      }
+
+
     validateQuestionnaire() {
         if (!this.questionAnswers) {
             this.questionAnswers = {
@@ -1979,6 +2098,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         if (this.questionAnswers.answers) {
             this.shared_services.validateConsumerQuestionnaire(this.questionAnswers.answers, this.account_id).subscribe((data: any) => {
+                // step1 submit questionnaire answers!
+                //this.submitQuestionnaireAnswers(this.questionAnswers);
                 if (data.length === 0) {
                     if (this.selectedService.consumerNoteMandatory && this.consumerNote == '') {
                         this.snackbarService.openSnackBar('Please provide ' + this.selectedService.consumerNoteTitle, { 'panelClass': 'snackbarerror' });

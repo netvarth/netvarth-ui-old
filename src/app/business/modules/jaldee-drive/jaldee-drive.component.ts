@@ -219,8 +219,11 @@ export class JaldeeDriveComponent implements OnInit, OnChanges {
   getfiles() {
     this.provider_servicesobj.getAllFileAttachments().subscribe(
       (data: any) => {
-        console.log(data);
-        this.customers = data
+        //console.log("Files",data);
+       // this.customers = data
+        Object.keys(data).map(function(key, index) {
+          console.log("Json Files:", data[key])
+        });
       }
     );
   }
