@@ -20,7 +20,7 @@
                   <th class="head_color">Customer</th>
                   <th class="head_color">Employee</th>
                   <th class="head_color">Enquiry Date</th>
-                  <th class="head_color">Status</th>
+                  <!-- <th class="head_color">Status</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -44,23 +44,9 @@
                     </td>
                     <td class="td3"><span *ngIf="task.generatedBy">{{task.generatedBy.name}}</span></td>
                     <td *ngIf="task.createdDate">{{task.createdDate |date: newDateFormat}}</td>
-                    <td class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
+                    <!-- <td class="td4" *ngIf="task.status" [ngStyle]="{'color': getColor(task.status.name)}">
                       {{task.status.name}}
-                      <!-- <div *ngIf="task.status.name==='New'" class="newBtn">
-                        {{task.status.name}}
-                      </div>
-                      <div *ngIf="task.status.name==='Completed'" class="completedBtn">
-                        {{task.status.name}}
-                      </div>
-                      <div *ngIf="task.status.name==='Assigned'" class="assignedBtn">
-                        {{task.status.name}}
-                      </div>
-                      <div
-                        *ngIf="(task.status.name !=='New')&& (task.status.name !== 'Completed') && (task.status.name !== 'Assigned')"
-                        class="defultBtn">
-                        {{task.status.name}}
-                      </div> -->
-                    </td>
+                    </td> -->
                   </tr>
                 </ng-container>
               </tbody>
