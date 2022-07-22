@@ -21,6 +21,8 @@ export class ReportsComponent implements OnInit {
   crm_criteria: any[];
   enquiry_criteria: any[];
   enquiryReports = [];
+  monthlyActivityReports = [];
+  monthly_criteria:any[];
   appointmentReports = [];
   donationReports = [];
   paymentReports = [];
@@ -82,6 +84,7 @@ export class ReportsComponent implements OnInit {
     this.token_criteria = [];
     this.donation_criteria = [];
     this.enquiry_criteria = [];
+    this.monthly_criteria = []
     this.provider_services.getCriteriaList().subscribe(data => {
       this.criteria_list = data;
       for (let i = 0; i < this.criteria_list.length; i++) {
@@ -117,6 +120,9 @@ export class ReportsComponent implements OnInit {
           case 'ENQUIRY_REPORT': {
             this.enquiry_criteria.push(this.criteria_list[i]);
             break;
+          }
+          case 'MONTHLY_ACTIVITY':{
+            this.monthly_criteria.push(this.criteria_list[i])
           }
         }
       }
