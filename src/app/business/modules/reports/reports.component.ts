@@ -19,6 +19,7 @@ export class ReportsComponent implements OnInit {
   msg = 'Do you really want to delete this report ? ';
   order_criteria: any[];
   crm_criteria: any[];
+  crm_lead_status_criteria: any[];
   enquiry_criteria: any[];
   enquiryReports = [];
   monthlyActivityReports = [];
@@ -29,6 +30,7 @@ export class ReportsComponent implements OnInit {
   checkinReports = [];
   orderReports = [];
   crmReports = [];
+  leadStatusReports = []
   settings: any = [];
   showToken = false;
   criteria_list;
@@ -80,6 +82,7 @@ export class ReportsComponent implements OnInit {
     this.appt_criteria = [];
     this.order_criteria = [];
     this.crm_criteria = [];
+    this.crm_lead_status_criteria = []
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
@@ -115,6 +118,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'CRM_LEAD': {
             this.crm_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'LEAD_STATUS': {
+            this.crm_lead_status_criteria.push(this.criteria_list[i]);
             break;
           }
           case 'ENQUIRY_REPORT': {

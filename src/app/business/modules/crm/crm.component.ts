@@ -469,4 +469,12 @@ export class CRMComponent implements OnInit {
     }
     this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
   }
+  createLeadStatusReport(){
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        report_type: 'leadStatus'
+      }
+    }
+    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
+  }
 }

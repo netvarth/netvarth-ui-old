@@ -343,6 +343,38 @@
                   </mat-accordion>
                   </div>
               </div>
+               <!-- LEAD Status Reports -->
+               <div class="row">
+                <div class="card p0">
+                  <mat-accordion class="report">
+                    <mat-expansion-panel  [expanded]="true">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title class="report_title">
+                                Lead Status
+                               <div class="width100pc" >
+                                <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'leadStatus'}">Create New Report</a>
+                               </div>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ng-container *ngIf="leadStatusReports.length===0">
+                          <div *ngIf="crm_lead_status_criteria.length === 0" >
+                            <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                          </div>
+                          <table  *ngIf="crm_lead_status_criteria.length > 0">
+                            <span class="savd-report">Saved Reports</span>
+                            <tr *ngFor="let crm_lead_status of crm_lead_status_criteria">
+                              <td>{{crm_lead_status.reportName}}</td>
+                              <td><a (click)="recreateReport(crm_lead_status)">Generate</a></td>
+                              <td><a (click)="viewCriteria(crm_lead_status)">View</a></td>
+                              <td><a (click)="deletCriteria(crm_lead_status)">Delete</a></td>
+                            </tr>
+                          </table>
+                      </ng-container>
+                    </mat-expansion-panel>
+                </mat-accordion>
+                </div>
+            </div>
+
                
       </div>
       <div class="clearfix"></div>
