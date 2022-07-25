@@ -1065,6 +1065,7 @@ export class ViewLeadQnrComponent implements OnInit {
               if (element1.caption === input.caption) {
                 this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
                 this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = info.urls[0].uid;
+                this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
                console.log("herererere");
               }
             });
@@ -1073,10 +1074,9 @@ export class ViewLeadQnrComponent implements OnInit {
             // this.questionAnswers.fileUpload[index]['uid'] = info.urls[0].uid;
           }
       });
-
         this.questionAnswers.filestoUpload[input.labelName][input.caption]['driveId'] = info.urls[0].driveId;
         this.questionAnswers.filestoUpload[input.labelName][input.caption]['uid'] = info.urls[0].uid;
-
+        this.questionAnswers.filestoUpload[input.labelName][input.caption]['status'] = 'COMPLETE';
         console.log(this.questionAnswers);
 
         this.uploadAudioVideoQNR(info);
