@@ -614,7 +614,7 @@
                     <div class="leadTitle">
                     </div>
                     <div class="fieldPadding">
-                        <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore || crifScoreLebal">{{crifScoreLebal}} 
+                        <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore && crifScoreLebal">{{crifScoreLebal}} 
                             {{crifScore}} </a>
                         <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
                             style="margin-left: 25px !important;"
