@@ -323,7 +323,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         }
       )
     }, (error: any) => {
-      if (error.status === 419 && error.error === 'Session Already Exist') {
+      if (error.status === 401 && error.error === 'Session Already Exist') {
         const activeUser = _this.lStorageService.getitemfromLocalStorage('ynw-user');
         if (!activeUser) {
           _this.authService.doLogout().then(

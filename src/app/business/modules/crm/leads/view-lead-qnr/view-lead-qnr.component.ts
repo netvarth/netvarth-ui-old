@@ -1054,7 +1054,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.leadsService.uploadFile(dataToSend).subscribe(
       (info: any)=>{
         
-        console.log(info);
+        console.log("Info:",info);
         
         this.questionAnswers.answers.answerLine.forEach((element, index) => {
           if(element.labelName===input.labelName) {
@@ -1067,22 +1067,16 @@ export class ViewLeadQnrComponent implements OnInit {
                 this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = info.urls[0].uid;
                 this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
                console.log("herererere");
+              } else {
+                this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
               }
             });
-
-            // this.questionAnswers.fileUpload[index]['driveId'] = info.urls[0].driveId;
-            // this.questionAnswers.fileUpload[index]['uid'] = info.urls[0].uid;
           }
       });
         this.questionAnswers.filestoUpload[input.labelName][input.caption]['driveId'] = info.urls[0].driveId;
         this.questionAnswers.filestoUpload[input.labelName][input.caption]['uid'] = info.urls[0].uid;
         this.questionAnswers.filestoUpload[input.labelName][input.caption]['status'] = 'COMPLETE';
-        console.log(this.questionAnswers);
-
-        this.uploadAudioVideoQNR(info);
-
-
-
+        this.uploadAudioVideoQNR(info).then();
       }, error  => {
         console.log(error);
       }
