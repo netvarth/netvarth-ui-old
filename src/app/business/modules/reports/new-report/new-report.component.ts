@@ -202,10 +202,10 @@ export class NewReportComponent implements OnInit {
           this.reportTitle='Enquiry '
         }
         else if(this.report_type === 'monthlyActivity'){
-          this.reportTitle = 'Consolidated Activity Report'
+          this.reportTitle = 'Consolidated Activity'
         }
         else if(this.report_type === 'leadStatus'){
-          this.reportTitle = 'Lead Status Report'
+          this.reportTitle = 'Lead Status'
         }
 
       }
