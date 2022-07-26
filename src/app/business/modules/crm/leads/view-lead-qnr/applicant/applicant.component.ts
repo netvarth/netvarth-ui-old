@@ -64,6 +64,23 @@ export class ApplicantComponent implements OnInit {
   legbalApplicantKyc:string='Applicant KYC';
   lebalNumber:string='Number'
   lebalUplaodFile:string='Click & Upload your files here';
+  lebalDetails:string='Details';
+  lebalTelType:string='Telephone Type';
+  lebalTelNumber:string='Telephone number';
+  lebalHousename:string='House Name';
+  lebalCity:string='City';
+  lebalState:string='State';
+  lebalPinCode:string='Pin code';
+  lebalDOB:string='Date of birth';
+  lebalRelationName:string='Relation name';
+  lebalRelationType:string='Relationship Type';
+  lebalNOmineeName:string='Nominee Name';
+  lebalNomineeType:string='Nominee Type';
+  lebalAddressType:string='Address Type';
+  lebalNomineeAddress:string='Nominee Address';
+  lebalDistrict:string='District';
+  crifScoreLebal:string='CRIF SCORE :';
+  lebalCrifVerification:string='Check CRIF Verification';
   
   constructor(
     private formBuilder: FormBuilder,
@@ -82,6 +99,9 @@ export class ApplicantComponent implements OnInit {
     if(this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation'){
       this.crifBtnForHide=false;
      this.getCrifInquiryVerification(this.applicant)
+    }
+    else{
+      this.crifBtnForHide=true;
     }
     if (this.applicant && this.applicant['name']) {
       this.customerName = this.applicant['name'];

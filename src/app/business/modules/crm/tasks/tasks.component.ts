@@ -86,6 +86,8 @@ export class TasksComponent implements OnInit {
   tomorrowDate: Date;
   yesterdayDate: Date;
   endmaxday: Date;
+  createActivityText:string='Create Activity';
+  Filter:string='Filter';
   constructor(
     private locationobj: Location,
     public router: Router,
@@ -98,9 +100,6 @@ export class TasksComponent implements OnInit {
     private providerServices: ProviderServices,
     private dateTimeProcessor: DateTimeProcessor,
     private shared_services: SharedServices,
-
-
-
   ) {
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.config = {
@@ -167,8 +166,6 @@ export class TasksComponent implements OnInit {
  */
   setFilter() {
     let filter = this.handleTaskStatus(this.statusFilter);
-    // filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
-    // filter['count'] = this.pagination.perPage;
     filter['location-eq'] = this.selected_location.id;
     if(this.filter.check_in_start_date != null)
     {
@@ -180,8 +177,6 @@ export class TasksComponent implements OnInit {
     }
     return filter;
   }
-
-
 setSystemDate() {
     this.shared_services.getSystemDate()
       .subscribe(
@@ -198,7 +193,6 @@ setSystemDate() {
     this.getTaskStatusListData().then(
       (statuses: any) => {
         _this.statuses = statuses;
-
         _this.getNewTaskCount(filter).then(
           (count) => {
             console.log(" Task Count : ", count)
@@ -268,13 +262,9 @@ setSystemDate() {
   }
  
   handleTaskStatus(statusValue: any) {
-    console.log('statusValue', statusValue);
+    // console.log('statusValue', statusValue);
     let filter = {}
-    console.log("this.selected_location", this.selected_location)
-    // filter['location-eq'] = this.selected_location;
-    // filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.pagination.perPage : 0;
-    // filter['count'] = this.pagination.perPage;
-
+    // console.log("this.selected_location", this.selected_location)
     console.log("filter", filter)
     if (statusValue === 0) {
       this.getTotalTaskActivity(filter)
@@ -324,7 +314,7 @@ setSystemDate() {
     const _this = this;
     return new Promise((resolve, reject) => {
       _this.crmService.getTotalTaskCount(filter).subscribe((data) => {
-        console.log('dataTotalactivity:::',data)
+        // console.log('dataTotalactivity:::',data)
         _this.pagination.totalCnt = data;
         resolve(data);
       },
@@ -335,10 +325,10 @@ setSystemDate() {
     })
   }
   handle_pageclick(pg, statusValue) {
-    console.log('statusValue', statusValue)
+    // console.log('statusValue', statusValue)
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-    console.log('this.pagination.startpageval', this.pagination.startpageval)
+    // console.log('this.pagination.startpageval', this.pagination.startpageval)
     const filter = this.handleTaskStatus(statusValue);
     if (statusValue === 0) {
       this.api_loading = true
@@ -386,19 +376,8 @@ setSystemDate() {
     }
 
   }
-
-  // getStatus() {
-  //   const _this = this;
-  //   return new Promise(function (resolve, reject) {
-  //     _this.crmService.getTaskStatus().subscribe((taskstatuses: any) => {
-  //       resolve(taskstatuses);
-  //     });
-  //   })
-  // }
-
-
   getNewTask(filter) {
-    console.log("filter", filter)
+    // console.log("filter", filter)
     this.getNewTaskCount(filter).then(
       (count:any) => {
         if (count > 0) {
@@ -409,7 +388,7 @@ setSystemDate() {
                 this.config.totalItems = count;
                 this.totalTaskActivityList = data;
                 this.api_loading = false;
-                console.log('totalTaskActivityList', this.totalTaskActivityList)
+                // console.log('totalTaskActivityList', this.totalTaskActivityList)
               },
               error => {
                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -442,7 +421,7 @@ setSystemDate() {
       .subscribe(
         data => {
           this.totalTaskActivityList = data;
-          console.log('assignedTaskList', this.totalTaskActivityList);
+          // console.log('assignedTaskList', this.totalTaskActivityList);
           this.api_loading = false;
         },
         error => {
@@ -787,14 +766,14 @@ setSystemDate() {
   }
   getTaskmaster() {
     this.crmService.getTaskMasterList().subscribe((response: any) => {
-      console.log('TaskMasterList :', response);
+      // console.log('TaskMasterList :', response);
       this.taskMasterList.push(response)
     })
 
   }
 
   createTask(createText: any) {
-    console.log('..........', this.taskMasterList[0].length)
+    // console.log('..........', this.taskMasterList[0].length)
     if (this.taskMasterList[0].length > 0) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -805,7 +784,7 @@ setSystemDate() {
       this.router.navigate(['provider', 'task', 'tasktemplate'], navigationExtras)
     }
     else {
-      console.log('kkkk')
+      // console.log('kkkk')
       this.crmService.taskActivityName = 'CreteTaskMaster'
       this.router.navigate(['provider', 'task', 'create-task'])
     }
@@ -883,13 +862,6 @@ setSystemDate() {
     console.log('value', value)
     if (type === 'status') {
       this.checkBoxValueSelect = value;
-      // const indx = this.statuses.indexOf(value);
-      // console.log('indx',indx)
-
-      // this.statuses = [];
-      // if (indx === -1) {
-      //   this.statuses.push(value);
-      // }
     }
     if (type === 'type') {
       const indx = this.types.indexOf(value);
@@ -970,12 +942,6 @@ setSystemDate() {
       this.ngOnInit()
     })
   }
-
-
-
-
-
-
   /**
  * Router Navigations
  */
@@ -990,13 +956,13 @@ setSystemDate() {
     const _this = this;
     const value = event;
     this.selected_location = this.locations[value];
-    console.log("this.selected_location", this.selected_location);
+    // console.log("this.selected_location", this.selected_location);
     const filter = this.setFilter();
     console.log("filter", filter)
     if (this.statusFilter == 1) {
       _this.getNewTaskCount(filter).then(
         (count) => {
-          console.log("taskcount", count)
+          // console.log("taskcount", count)
           if (count > 0) {
             _this.getNewTask(filter);
           } else {
@@ -1008,7 +974,7 @@ setSystemDate() {
     else {
       _this.getCompletedTaskCount(filter).then(
         (count) => {
-          console.log("taskcount", count)
+          // console.log("taskcount", count)
           if (count > 0) {
             _this.getCompletedTask(filter);
           } else {

@@ -1558,3 +1558,9 @@ td {
     color: #1E4079 !important;
     font-weight: bold !important;
 }
+@media (max-width: 767px) {
+    .hideFilter{
+        display: none;
+    }
+
+}

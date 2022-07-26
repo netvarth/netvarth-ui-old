@@ -24,12 +24,12 @@
                 </tr>
               </thead>
               <tbody>
-                <ng-container *ngIf="followups.length === 0">
+                <ng-container *ngIf="followups && followups.length === 0">
                   <tr>
-                    <td class="nodatafound" colspan="5">{{no_tasks_cap}}</td>
+                    <td class="nodatafound" colspan="5" *ngIf="no_tasks_cap">{{no_tasks_cap}}</td>
                   </tr>
                 </ng-container>
-                <ng-container *ngIf="followups.length > 0">
+                <ng-container *ngIf="followups && followups.length > 0">
                   <tr *ngFor="let task of followups; let i=index" class="pointer-cursor"
                     (click)="followupClicked(task)">
                     <td class="td2" *ngIf="task.customer">

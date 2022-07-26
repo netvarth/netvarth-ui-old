@@ -9,7 +9,7 @@
                     {{customerName |capitalizeFirst}}</div>
             </div>
             <div>
-                <div style="font-size: 12px;color: #000000;" *ngIf="phoneNumber">+91{{phoneNumber}}</div>
+                <div style="font-size: 12px;color: #000000;" *ngIf="phoneNumber">+91 {{phoneNumber}}</div>
             </div>
             <div>
                 <div style="font-size: 12px;color: #000000;" *ngIf="leadInfo && leadInfo.leadId">LeadId-{{leadInfo.leadId}}</div>
@@ -138,21 +138,21 @@
     <div class="bggrey my-2 mgn-bt-20">
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Applicant KYC</div>
+                <div class="leadTitle" *ngIf="legbalApplicantKyc">
+                    <div>{{legbalApplicantKyc}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select (ngModelChange)="handleKycSelectedType(idTypes1.value,'secondApplicant')" class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
                         <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
-                            <div>{{kyc.displayName}}</div>
+                            <div *ngIf="kyc && kyc.displayName">{{kyc.displayName}}</div>
                         </mat-option>
                     </mat-select>
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Number</div>
+                <div class="leadTitle" *ngIf="lebalNumber">
+                    <div>{{lebalNumber}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
@@ -171,7 +171,7 @@
             <div class=""
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event,'kyc2')">Click & Upload your files here
+                    (change)="filesSelected($event,'kyc2')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
@@ -205,10 +205,6 @@
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
-                    <!-- <a href="{{file.s3path}}" target="_blank" download>
-                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
-                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
-                    </a> -->
                    <div>
                     <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc2','delete')"></i>
                    </div>
@@ -221,23 +217,21 @@
     <div class="bggrey my-2 mgn-bt-20">
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Applicant KYC</div>
-                    <!-- <div class="astericColor">*</div> -->
+                <div class="leadTitle" *ngIf="legbalApplicantKyc">
+                    <div>{{legbalApplicantKyc}}</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select (ngModelChange)="handleKycSelectedType(idTypes2.value,'thirdApplicant')" class="form-control widthWebKit" placeholder="Select applicant KYC" #idTypes2
                         formControlName="idTypes2">
                         <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
-                            <div>{{kyc.displayName}}</div>
+                            <div *ngIf="kyc && kyc.displayName">{{kyc.displayName}}</div>
                         </mat-option>
                     </mat-select>
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Number</div>
-                    <!-- <div class="astericColor">*</div> -->
+                <div class="leadTitle" *ngIf="lebalNumber">
+                    <div>{{lebalNumber}}</div>
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
@@ -255,7 +249,7 @@
             <div class=""
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && applicant.validationIds[2].attachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event,'kyc3')">Click & Upload your files here
+                    (change)="filesSelected($event,'kyc3')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
@@ -285,10 +279,6 @@
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                 <div *ngFor="let file of applicant.validationIds[2].attachments;let i=index" style="display:flex">
-                    <!-- <a href="{{file.s3path}}" target="_blank" download>
-                        <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
-                        {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
-                    </a> -->
                     <div  (click)="dialogImgView(file)">
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
@@ -300,26 +290,26 @@
             </div>
         </div>
     </div>
-    <span class="group-head">Details</span><br>
+    <span class="group-head" *ngIf="lebalDetails">{{lebalDetails}}</span><br>
     <div class="bggrey my-2">
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Telephone Type</div>
+                <div class="leadTitle" *ngIf="lebalTelType">
+                    <div>{{lebalTelType}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" placeholder="" #telephoneType
                         formControlName="telephoneType">
                         <mat-option *ngFor="let telephone of telePhoneTypeList" [value]="telephone.name">
-                            <div>{{telephone.displayName}}</div>
+                            <div *ngIf="telephone && telephone.displayName">{{telephone.displayName}}</div>
                         </mat-option>
                     </mat-select>
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Telephone number</div>
+                <div class="leadTitle" *ngIf="lebalTelNumber">
+                    <div>{{lebalTelNumber}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
@@ -333,8 +323,8 @@
             </div>
         </div>
         <div>
-            <div class="leadTitle">
-                <div>House Name</div>
+            <div class="leadTitle" *ngIf="lebalHousename">
+                <div>{{lebalHousename}}</div>
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
@@ -349,8 +339,8 @@
         </div>
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>City</div>
+                <div class="leadTitle" *ngIf="lebalCity">
+                    <div>{{lebalCity}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
@@ -364,15 +354,15 @@
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>State</div>
+                <div class="leadTitle" *ngIf="lebalState">
+                    <div>{{lebalState}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select class="form-control" placeholder="Enter State" #permanentState
                         formControlName="permanentState">
                         <mat-option *ngFor="let item of stateList;let index=i" [value]="item.name">
-                            <div>
+                            <div *ngIf="item && item.name">
                                 {{item.name}}
                             </div>
                         </mat-option>
@@ -385,8 +375,8 @@
         </div>
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Pin code</div>
+                <div class="leadTitle" *ngIf="lebalPinCode">
+                    <div>{{lebalPinCode}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
@@ -399,13 +389,11 @@
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Date of birth</div>
+                <div class="leadTitle" *ngIf="lebalDOB">
+                    <div>{{lebalDOB}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <!-- <input (keyup)="resetErrors()" type="date" #dob placeholder="" class="form-control"
-                        formControlName="dob" autocomplete="off" /> -->
                     <div class="matDatePicker">
                         <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
                             oncut="return false" ondrop="return false" formControlName="dob" class="form-control"
@@ -423,8 +411,8 @@
         </div>
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Relation name</div>
+                <div class="leadTitle" *ngIf="lebalRelationName">
+                    <div>{{lebalRelationName}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
@@ -437,15 +425,15 @@
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Relationship Type</div>
+                <div class="leadTitle" *ngIf="lebalRelationType">
+                    <div>{{lebalRelationType}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" placeholder="" #relationType
                         formControlName="relationType">
                         <mat-option [value]="relation.name" *ngFor="let relation of relations">
-                            <div>{{relation.displayName}}</div>
+                            <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
                         </mat-option>
                     </mat-select>
                 </div>
@@ -455,8 +443,8 @@
     <div class="bggrey my-2">
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Nominee Name</div>
+                <div class="leadTitle" *ngIf="lebalNOmineeName">
+                    <div>{{lebalNOmineeName}}</div>
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
@@ -468,14 +456,14 @@
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Nominee Type</div>
+                <div class="leadTitle" *ngIf="lebalNomineeType">
+                    <div>{{lebalNomineeType}}</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" placeholder="" #nomineeType
                         formControlName="nomineeType" placeholder="Enter nominee type">
                         <mat-option [value]="relation.name" *ngFor="let relation of relations">
-                            <div>{{relation.displayName}}</div>
+                            <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
                         </mat-option>
                     </mat-select>
                 </div>
@@ -483,8 +471,8 @@
         </div>
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Address Type</div>
+                <div class="leadTitle" *ngIf="lebalAddressType">
+                    <div>{{lebalAddressType}}</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" placeholder="" #addressType
@@ -498,8 +486,8 @@
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Nominee Address</div>
+                <div class="leadTitle" *ngIf="lebalNomineeAddress">
+                    <div>{{lebalNomineeAddress}}</div>
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
@@ -514,8 +502,8 @@
         </div>
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>District</div>
+                <div class="leadTitle" *ngIf="lebalDistrict">
+                    <div>{{lebalDistrict}}</div>
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
@@ -527,13 +515,13 @@
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>State</div>
+                <div class="leadTitle" *ngIf="lebalState">
+                    <div>{{lebalState}}</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select class="form-control" placeholder="Enter State" #state formControlName="state">
                         <mat-option *ngFor="let item of stateList;let index=i" [value]="item.name">
-                            <div>
+                            <div *ngIf="item && item.name">
                                 {{item.name}}
                             </div>
                         </mat-option>
@@ -546,8 +534,8 @@
         </div>
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Pin code</div>
+                <div class="leadTitle" *ngIf="lebalPinCode">
+                    <div>{{lebalPinCode}}</div>
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
@@ -565,7 +553,7 @@
         <div class="fieldPadding">
             <div>
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event,'other')">Click & Upload your files here
+                    (change)="filesSelected($event,'other')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
@@ -618,7 +606,7 @@
     </div>
     <!----crif btn end-->
     <div *ngIf="showCrifSection">
-        <span class="group-head">CRIF Score of Applicant</span><br>
+        <span class="group-head">{{generateCrifText | slice:9:generateCrifText.length}}</span><br>
         <div class="bggrey my-2">
             <div style="display: flex;gap: 5px">
                 <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;
@@ -626,23 +614,21 @@
                     <div class="leadTitle">
                     </div>
                     <div class="fieldPadding">
-                        <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
+                        <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore || crifScoreLebal">{{crifScoreLebal}} 
                             {{crifScore}} </a>
                         <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
                             style="margin-left: 25px !important;"
                             class="btn btn mb-2 action-button action-button-add confirmBtn"
                             (click)="!bCrifBtnDisable && saveCrifApplicant(applicant)">
-                            Check CRIF Verification </button>
+                            {{lebalCrifVerification}}</button>
                     </div>
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <div *ngIf="showPdfIcon">
                         <a (click)="printCRIF()">
-                            <img class="img" style="height: 50px; width: 50px;"
-                                src="/assets/images/ImgeFileIcon/pdf.png" />
+                            <img class="img" style="height: 50px; width: 50px;"src="/assets/images/ImgeFileIcon/pdf.png" />
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
