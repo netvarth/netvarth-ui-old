@@ -55,7 +55,16 @@ export class ApplicantComponent implements OnInit {
   fileOpener: any;
   generateCrifText:string='Generate CRIF Score of Applicant';
   deleteTextFile:any;
-
+  crifBtnForHide:boolean;
+  kycListId:any;
+  coApplicantText:string='Co-Applicant Name';
+  lebalName:string='Name';
+  lebalPhoneNumber:string='Phone Number';
+  lebalkycDetails:string='KYC Details';
+  legbalApplicantKyc:string='Applicant KYC';
+  lebalNumber:string='Number'
+  lebalUplaodFile:string='Click & Upload your files here';
+  
   constructor(
     private formBuilder: FormBuilder,
     private fileService: FileService,
@@ -71,6 +80,7 @@ export class ApplicantComponent implements OnInit {
     console.log(this.applicant);
     console.log('this.leadInfo',this.leadInfo);
     if(this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation'){
+      this.crifBtnForHide=false;
      this.getCrifInquiryVerification(this.applicant)
     }
     if (this.applicant && this.applicant['name']) {
@@ -142,9 +152,6 @@ export class ApplicantComponent implements OnInit {
     if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[2]) {
       this.applicantForm.controls.idTypes2.setValue(this.applicant.validationIds[2].idTypes);
     }
-    // else {
-    //   this.applicantForm.controls.idTypes2.setValue(this.kycList[2].name);
-    // }
     if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[2]) {
       this.applicantForm.controls.idValue2.setValue(this.applicant.validationIds[2].idValue);
     }
@@ -530,14 +537,11 @@ export class ApplicantComponent implements OnInit {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
   }
   showCrifscoreSection() {
-    console.log('this.leadInfo.status.name',this.leadInfo.status.name)
-    // console.log( this.applicant.length);
    if( this.generateCrifText==='Verify CRIF Score of Applicant' || this.leadInfo.status.name==='KYC Updated'){
     this.showCrifSection = !this.showCrifSection;
    }
   }
   saveCrifApplicant(kycInfoList) {
-    console.log('kycIbfoList1',kycInfoList)
     this.api_loading = true;
         this.bCrifBtnDisable=true;
       const postData:any={
@@ -546,7 +550,6 @@ export class ApplicantComponent implements OnInit {
       }
     this.crmService.processInquiry(postData).subscribe(
       (data:any) => {
-        console.log('data::',data.status)
         this.getCrifInquiryVerification(kycInfoList);
       },
       error => {
@@ -555,7 +558,6 @@ export class ApplicantComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })});
   }
   getCrifInquiryVerification(kycInfoList){
-     console.log('kycIbfoList2',kycInfoList)
     const _this=this;
     return new Promise((resolve,reject)=>{
       _this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
@@ -584,7 +586,6 @@ export class ApplicantComponent implements OnInit {
         })
       ),
       ((error)=>{
-        //  console.log('error222222',error)
         reject(error);
       })
     })
@@ -605,7 +606,7 @@ export class ApplicantComponent implements OnInit {
     }, 500);
   }
   dialogImgView(fileDetails:any){
-    console.log('fileDetails',fileDetails);
+    // console.log('fileDetails',fileDetails);
     if(fileDetails){
       if(fileDetails.fileName && (fileDetails.fileType===('png' || 'jpeg' || 'bmp' || 'webp' || 'gif'))){
         let fileExtn:any=fileDetails.fileName.split('.').reverse()[0];
@@ -614,7 +615,7 @@ export class ApplicantComponent implements OnInit {
           if(this.fileService && this.fileService.IMAGE_FORMATS){
             for(var i=0;i<this.fileService.IMAGE_FORMATS.length;i++){
               if(this.fileService.IMAGE_FORMATS[i]===image){
-                console.log('imageIf',image);
+                // console.log('imageIf',image);
                 const dialogRef= this.dialog.open(PreviewpdfComponent,{
                   width:'100%',
                   // panelClass: ['popup-class', 'confirmationmainclass'],
@@ -624,7 +625,7 @@ export class ApplicantComponent implements OnInit {
                   }
                 })
                 dialogRef.afterClosed().subscribe((res)=>{
-                  console.log(res)
+                  // console.log(res)
                 })
               }
             }
@@ -632,28 +633,12 @@ export class ApplicantComponent implements OnInit {
         }
       }
       else{
-        console.log('imageelse');
+        // console.log('imageelse');
         window.open(fileDetails.s3path);
       } 
     }
   }
-  handleKycSelectedType(selectValue,applicantType){
-    // console.log('valueChange',selectValue);
-    // console.log('this.kycList',this.kycList);
-    // console.log('applicantType',applicantType)
-    // if(applicantType==='firstApplicant'){
-    //   this.kycList.splice(0, 1); 
-    // }
-    // if(selectValue){
-    //   if(this.applicantForm.controls.idValue.value !== null){
-    //     console.log(this.applicantForm.controls.idTypes.value);
-    //     console.log(this.applicantForm.controls.idTypes1.value);
-    //     console.log(this.applicantForm.controls.idTypes2.value);
-    //   }
-    // }
-    
-    
-  }
+  handleKycSelectedType(selectValue,applicantType){}
 
 
  

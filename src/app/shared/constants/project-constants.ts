@@ -1184,13 +1184,13 @@ export const projectConstantsLocal = {
     {name: 'Other', displayName: 'Other'}
   ],
   KYC_LIST: [
-    {name: 'Passport', displayName: 'Passport'},
-    {name: 'VoterID', displayName: 'VoterID'},
-    {name: 'UID', displayName: 'Aadhaar'},
-    {name: 'RationCard', displayName: 'RationCard'},
-    {name: 'DrivingLicenseNo', displayName: 'DrivingLicenseNo'},
-    {name: 'Pan', displayName: 'Pan'},
-    {name: 'Others', displayName: 'Others'}
+    {name: 'Passport', displayName: 'Passport',id:0},
+    {name: 'VoterID', displayName: 'VoterID',id:1},
+    {name: 'UID', displayName: 'Aadhaar',id:2},
+    {name: 'RationCard', displayName: 'RationCard',id:3},
+    {name: 'DrivingLicenseNo', displayName: 'DrivingLicenseNo',id:4},
+    {name: 'Pan', displayName: 'Pan',id:5},
+    {name: 'Other', displayName: 'Other',id:6}
   ],
   PHONE_TYPES:[
     {name: 'Residence', displayName: 'Residence'},
@@ -1199,7 +1199,7 @@ export const projectConstantsLocal = {
     {name: 'Permanent', displayName: 'Permanent'},
     {name: 'Foreign', displayName: 'Foreign'},
     {name: 'Untagged', displayName: 'Untagged'},
-    {name: 'Others', displayName: 'Others'},
+    {name: 'Other', displayName: 'Other'},
   ],
   CUSTOM_PROV_APP: {
     "maben": {

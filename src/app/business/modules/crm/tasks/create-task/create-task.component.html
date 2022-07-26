@@ -1,29 +1,31 @@
 <!-----card header start-->
 <section class="card">
     <div class="title-gb no-padding">
-        <div class="mgn-up-15 dash-head">&nbsp;&nbsp;&nbsp;
+        <div class="dash-head">&nbsp;&nbsp;&nbsp;
             <div style="display:flex;gap:5px">
                 <div *ngIf="!api_loading_CreateActivity">
                     <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i>
                 </div>
-                <div style="color: #1D3E77;">{{selectHeader}}</div>
+                <div style="color: #1D3E77;" *ngIf="selectHeader">{{selectHeader}}</div>
             </div>
         </div>
     </div>
 </section>
-<br>
 <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 <section class="card" *ngIf="taskMasterData">
     <div class=" card bgColor inputwithImg">
         <div class="noImg">
             <form [formGroup]="createTaskForm">
-                <div
-                    *ngIf="(taskMasterData && taskMasterData.title && taskMasterData.title.isvisible)|| (taskMasterData && taskMasterData.description && taskMasterData.description.isvisible)||(taskMasterData && taskMasterData.category && taskMasterData.category.isvisible)||(taskMasterData && taskMasterData.type && taskMasterData.type.isvisible)||(taskMasterData && taskMasterData.location && taskMasterData.location.isvisible)">
-                    <span class="group-head">{{selectHeader}} details</span><br>
+                <div *ngIf="(taskMasterData && taskMasterData.title && taskMasterData.title.isvisible)|| 
+                    (taskMasterData && taskMasterData.description && taskMasterData.description.isvisible)||
+                    (taskMasterData && taskMasterData.category && taskMasterData.category.isvisible)||
+                    (taskMasterData && taskMasterData.type && taskMasterData.type.isvisible)||
+                    (taskMasterData && taskMasterData.location && taskMasterData.location.isvisible)">
+                    <span class="group-head" *ngIf="selectHeader">{{selectHeader}} details</span><br>
                     <div class="bggrey my-2">
                         <div *ngIf="taskMasterData && taskMasterData.title && taskMasterData.title.isvisible">
-                            <div class="taskTitle">
-                                <div>Title</div>
+                            <div class="taskTitle" *ngIf="activityTitleField">
+                                <div>{{activityTitleField}}</div>
                                 <div class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding"
@@ -40,8 +42,8 @@
                         </div>
                         <div
                             *ngIf="taskMasterData && taskMasterData.description && taskMasterData.description.isvisible">
-                            <div class="taskTitle">
-                                <div>Description</div>
+                            <div class="taskTitle" *ngIf="activityDescriptionField">
+                                <div>{{activityDescriptionField}}</div>
                             </div>
                             <div class="fieldPadding"
                                 [ngClass]="{'highlight': !(taskMasterData && taskMasterData.description && taskMasterData.description.iseditable)}">
@@ -59,8 +61,8 @@
                         <div style="display: flex;gap: 5px">
                             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
                                 *ngIf="taskMasterData && taskMasterData.category && taskMasterData.category.isvisible">
-                                <div class="taskTitle">
-                                    <div>Category</div>
+                                <div class="taskTitle" *ngIf="categoryLabelname">
+                                    <div>{{categoryLabelname}}</div>
                                     <div class="astericColor">*</div>
                                 </div>
                                 <div class="fieldPadding"
@@ -80,8 +82,8 @@
                             </div>
                             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
                                 *ngIf="taskMasterData && taskMasterData.type && taskMasterData.type.isvisible">
-                                <div class="taskTitle">
-                                    <div>Type</div>
+                                <div class="taskTitle" *ngIf="labelType">
+                                    <div>{{labelType}}</div>
                                     <div class="astericColor">*</div>
                                 </div>
                                 <div class="fieldPadding"
@@ -99,12 +101,11 @@
                                 </div>
                             </div>
                         </div>
-
                         <div style="display: flex;gap: 5px">
                             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
                                 *ngIf="taskMasterData && taskMasterData.location && taskMasterData.location.isvisible">
-                                <div class="taskTitle">
-                                    <div>Location</div>
+                                <div class="taskTitle" *ngIf="labelLocation">
+                                    <div>{{labelLocation}}</div>
                                     <div class="astericColor">*</div>
                                 </div>
                                 <div class="fieldPadding"
@@ -121,8 +122,8 @@
                             </div>
                             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
                                 *ngIf="taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.isvisible">
-                                <div class="taskTitle">
-                                    <div>Area</div>
+                                <div class="taskTitle" *ngIf="labelArea">
+                                    <div>{{labelArea}}</div>
                                 </div>
                                 <div class="fieldPadding"
                                     [ngClass]="{'highlight': !(taskMasterData && taskMasterData.locationArea && taskMasterData.locationArea.iseditable)}">
@@ -138,33 +139,31 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div
-                    *ngIf="(taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible)|| (taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible)">
-                    <!-- <span class="group-head" >Select Activity Assignee and Manager</span><br> -->
+                <div *ngIf="(taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible)|| 
+                    (taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible)">
                     <div style="display: flex;gap: 5px;">
                         <div class="group-head"
-                            *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible ===true">
-                            Select activity employee
+                            *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible ===true && labelActivityManager">
+                            {{labelActivityManager|slice:0:25}}
                         </div>
                         <div class="group-head" style="display: none;"
-                            *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible === false">
-                            Select activity employee
+                            *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible === false && labelActivityManager">
+                            {{labelActivityManager|slice:0:25}}
                         </div>
                         <div class="group-head"
-                            *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible===true">
-                            and manager
+                            *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible===true && labelActivityManager">
+                            <!-- and manager -->
+                            {{labelActivityManager|slice:27:37}}
                         </div>
                         <div class="group-head" style="display: none;"
-                            *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible===false">
-                            and manager
+                            *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible===false && labelActivityManager">
+                            {{labelActivityManager|slice:27:37}}
                         </div>
                     </div>
                     <div class="bggrey my-2">
                         <div *ngIf="taskMasterData && taskMasterData.assignee && taskMasterData.assignee.isvisible">
-                            <div class="taskTitle">
-                                <div>Employee</div>
+                            <div class="taskTitle" *ngIf="labelEmployee">
+                                <div>{{labelEmployee}}</div>
                                 <div class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding"
@@ -184,8 +183,8 @@
                             </div>
                         </div>
                         <div *ngIf="taskMasterData && taskMasterData.manager && taskMasterData.manager.isvisible">
-                            <div class="taskTitle">
-                                <div>Manager</div>
+                            <div class="taskTitle" *ngIf="labelManager">
+                                <div>{{labelManager}}</div>
                             </div>
                             <div class="fieldPadding"
                                 [ngClass]="{'highlight': !(taskMasterData && taskMasterData.manager && taskMasterData.manager.iseditable)}">
@@ -205,42 +204,42 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div
-                    *ngIf="(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible)|| (taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible)||(taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible)">
+                <div *ngIf="(taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible)|| 
+                    (taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible)||
+                    (taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible)">
                     <div>
                         <div class="group-head"
                             *ngIf="taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible===true">
-                            Activity date
+                            {{labelActivitydateOther | slice:0:14}}
                         </div>
                         <div class="group-head" style="display: none;"
                             *ngIf="taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible===false">
-                            Activity date
+                            {{labelActivitydateOther | slice:0:14}}
                         </div>
                         <div class="group-head"
                             *ngIf="(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible===true)">
                             Other info
+                            {{labelActivitydateOther | slice:15:25}}
                         </div>
                         <div class="group-head" style="display: none;"
                             *ngIf="(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible===false)">
-                            Other info
+                            {{labelActivitydateOther | slice:15:25}}
                         </div>
                         <div class="group-head"
                             *ngIf="(taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible===true)">
-                            Other info
+                            {{labelActivitydateOther | slice:15:25}}
                         </div>
                         <div class="group-head" style="display: none;"
                             *ngIf="(taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible===false)">
-                            Other info
+                            {{labelActivitydateOther | slice:15:25}}
                         </div>
                     </div>
                     <div class="bggrey my-2">
                         <div style="display: flex;gap: 5px;flex-wrap: wrap;">
                             <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding"
                                 *ngIf="taskMasterData && taskMasterData.dueDate && taskMasterData.dueDate.isvisible">
-                                <div class="taskTitle">
-                                    <div>Due Date</div>
+                                <div class="taskTitle" *ngIf="labelDueDate">
+                                    <div>{{labelDueDate}}</div>
                                 </div>
                                 <div class="pickerouter fieldPadding dt dateWithMatDtae">
                                     <input formControlName="taskDate" class="form-control widthWebKit positionNameInput"
@@ -260,8 +259,8 @@
 
                             <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding"
                                 *ngIf="taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.isvisible">
-                                <div class="taskTitle">
-                                    <div>Est Duration</div>
+                                <div class="taskTitle" *ngIf="labelEstDuration">
+                                    <div>{{labelEstDuration}}</div>
                                 </div>
                                 <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;"
                                     *ngIf="createBTimeField"
@@ -270,55 +269,50 @@
                                         <div class="secondEst">
                                             <input id="days" [value]="taskDays" (keyup)="resetErrors()" type="number"
                                                 #taskDays (ngModelChange)="handleTaskEstDuration(taskDays.value)"
-                                                placeholder="Days" class="form-control widthWebKit"
+                                                placeholder="{{labelEstDays}}" class="form-control widthWebKit"
                                                 formControlName="taskDays"
                                                 [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)"
                                                 autocomplete="off" min="0" />
                                         </div>
-                                        <div class="timeField">Days</div>
+                                        <div class="timeField" *ngIf="labelEstDays">{{labelEstDays}}</div>
                                     </div>
                                     <div class="estField">
                                         <div class="secondEst">
                                             <input id="hrs" [value]="taskHrs" (keyup)="resetErrors()" type="number"
                                                 #taskHrs (ngModelChange)="handleTaskEstDuration(taskHrs.value)"
-                                                placeholder="Hours" class="form-control widthWebKit"
+                                                placeholder="{{labelEstHours}}" class="form-control widthWebKit"
                                                 formControlName="taskHrs"
                                                 [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)"
                                                 autocomplete="off" min="0" max="23" />
                                         </div>
-                                        <div class="timeField"> Hours </div>
+                                        <div class="timeField" *ngIf="labelEstHours"> {{labelEstHours}} </div>
                                     </div>
                                     <div class="estField">
                                         <div class="secondEst">
                                             <input id="min" [value]="taskMin" (keyup)="resetErrors()" type="number"
                                                 #taskMin (ngModelChange)="handleTaskEstDuration(taskMin.value)"
-                                                placeholder="Minutes" class="form-control widthWebKit"
+                                                placeholder="{{labelMinutes}}" class="form-control widthWebKit"
                                                 formControlName="taskMin"
                                                 [readonly]="!(taskMasterData && taskMasterData.estDuration && taskMasterData.estDuration.iseditable)"
                                                 autocomplete="off" min="0" max="59" />
                                         </div>
-                                        <div class="timeField">
-                                            Minutes
-                                        </div>
+                                        <div class="timeField" *ngIf="labelMinutes">{{labelMinutes}}</div>
                                     </div>
                                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                                         *ngIf="taskError" errorMsg="{{taskError}}">
                                     </app-field-error-display>
                                 </div>
                                 <div class="fieldPadding" *ngIf="updateBTimefield">
-                                    <div class="form-control"
+                                    <div *ngIf="updateValue" class="form-control"
                                         style="display: flex !important;justify-content: space-between;align-items: center;">
                                         <div style="display: flex;gap: 5px;align-items: center;"
-                                            *ngIf="type != 'SubUpdate'">
-                                            <div>{{updateValue.estDuration.days}}days,</div>
-                                            <div>{{this.updateValue.estDuration.hours}}hours,</div>
-                                            <div>{{this.updateValue.estDuration.minutes}}minutes</div>
-                                        </div>
-                                        <div style="display: flex;gap: 5px;align-items: center;"
-                                            *ngIf="type === 'SubUpdate'">
-                                            <div>{{updateValue.estdays}}days,</div>
-                                            <div>{{updateValue.esthours}}hours,</div>
-                                            <div>{{updateValue.estminutes}}minutes</div>
+                                            *ngIf="(updateValue && updateValue.estDuration)">
+                                            <div *ngIf="(updateValue.estDuration.days)">
+                                                {{updateValue.estDuration.days}}days,</div>
+                                            <div *ngIf="(updateValue.estDuration.hours)">
+                                                {{updateValue.estDuration.hours}}hours,</div>
+                                            <div *ngIf="(updateValue.estDuration.minutes)">
+                                                {{updateValue.estDuration.minutes}}minutes</div>
                                         </div>
                                         <div style="cursor: pointer;" (click)="openTimeField()">
                                             <mat-icon>access_time</mat-icon>
@@ -328,8 +322,8 @@
                             </div>
                         </div>
                         <div *ngIf="taskMasterData && taskMasterData.priority && taskMasterData.priority.isvisible">
-                            <div class="taskTitle">
-                                <div>Priority</div>
+                            <div class="taskTitle" *ngIf="labelPriority">
+                                <div>{{labelPriority}}</div>
                             </div>
                             <div class="fieldPadding"
                                 [ngClass]="{'highlight': !(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)}">
@@ -337,27 +331,21 @@
                                     [disabled]="!(taskMasterData && taskMasterData.priority && taskMasterData.priority.iseditable)"
                                     #userTaskPriority formControlName="userTaskPriority">
                                     <mat-option *ngFor="let item of taskPriorityList[0];let index=i" [value]="item.id">
-                                        <div>
-                                            {{item.name}}
-                                        </div>
+                                        <div *ngIf="item && item.name">{{item.name}}</div>
                                     </mat-option>
                                 </mat-select>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-                <div class="bggrey my-2"
-                    *ngIf="(taskMasterData && taskMasterData.status && taskMasterData.status.isvisible)|| (taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.isvisible)||(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.isvisible)">
+                <div class="bggrey my-2" *ngIf="(taskMasterData && taskMasterData.status && taskMasterData.status.isvisible)|| 
+                    (taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.isvisible)||
+                    (taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.isvisible)">
                     <div style="display: flex;gap: 5px">
                         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding"
                             *ngIf="taskMasterData && taskMasterData.status && taskMasterData.status.isvisible">
-                            <div class="taskTitle">
-                                <div>Status</div>
+                            <div class="taskTitle" *ngIf="labelStatus">
+                                <div>{{labelStatus}}</div>
                             </div>
                             <div class="fieldPadding"
                                 [ngClass]="{'highlight': !(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)}">
@@ -365,25 +353,22 @@
                                     [disabled]="!(taskMasterData && taskMasterData.status && taskMasterData.status.iseditable)"
                                     #taskStatus formControlName="taskStatus" name="item">
                                     <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id">
-                                        <div [ngStyle]="{'color': getColor(item.name)}">
+                                        <div *ngIf="item && item.name" [ngStyle]="{'color': getColor(item.name)}">
                                             {{item.name | capitalizeFirst}}
                                         </div>
                                     </mat-option>
                                 </mat-select>
-
                                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                                     *ngIf="taskError" errorMsg="{{taskError}}">
                                 </app-field-error-display>
                             </div>
                         </div>
                     </div>
-
-
                     <div style="display: flex;gap: 5px">
                         <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding"
                             *ngIf="taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.isvisible">
-                            <div class="taskTitle">
-                                <div>Target Potential</div>
+                            <div class="taskTitle" *ngIf="labelTargetPotential">
+                                <div>{{labelTargetPotential}}</div>
                             </div>
                             <div class="fieldPadding"
                                 [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetResult && taskMasterData.targetResult.iseditable)}">
@@ -393,11 +378,10 @@
                                     autocomplete="off" />
                             </div>
                         </div>
-
                         <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding"
                             *ngIf="taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.isvisible">
-                            <div class="taskTitle">
-                                <div>Business Potential</div>
+                            <div class="taskTitle" *ngIf="labelBusinessPotential">
+                                <div>{{labelBusinessPotential}}</div>
                             </div>
                             <div class="fieldPadding"
                                 [ngClass]="{'highlight': !(taskMasterData && taskMasterData.targetPotential && taskMasterData.targetPotential.iseditable)}">
@@ -409,60 +393,53 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="bggrey my-2"
                     *ngIf="(taskMasterData && taskMasterData.actualPotential && taskMasterData.actualPotential.isvisible)">
                     <div style="display: flex;gap: 5px">
                         <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding"
                             *ngIf="taskMasterData && taskMasterData.actualPotential && taskMasterData.actualPotential.isvisible">
-                            <div class="taskTitle">
-                                <div>Result</div>
+                            <div class="taskTitle" *ngIf="labelResult">
+                                <div>{{labelResult}}</div>
                             </div>
                             <div class="fieldPadding"
                                 [ngClass]="{'highlight': !(taskMasterData && taskMasterData.actualPotential && taskMasterData.actualPotential.iseditable)}">
                                 <input (keyup)="resetErrors()" type="number" #actualPotential placeholder="Enter result"
-                                    class="form-control widthWebKit" formControlName="actualPotential"
+                                    min="0" class="form-control widthWebKit" formControlName="actualPotential"
                                     [readonly]="!(taskMasterData && taskMasterData.actualPotential && taskMasterData.actualPotential.iseditable)"
                                     autocomplete="off" />
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
                 <div style="text-align: center;margin-top: 15px;">
                     <ng-container>
                         <div class=" mgn-bt-20 mgn-up-10">
                             <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button"
                                 class="btn btn-primary font-weight-bold cancelBtn"
-                                (click)="!api_loading_CreateActivity && goback()">Cancel
+                                (click)="!api_loading_CreateActivity && goback()" *ngIf="cancelBtn">{{cancelBtn}}
                             </button>
                             <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button"
                                 (click)="saveCreateTask()" class="btn btn-primary font-weight-bold confirmBtn">
                                 <app-common-innerloading-spinner *ngIf="api_loading_CreateActivity">
                                 </app-common-innerloading-spinner>
-                                <span *ngIf="!api_loading_CreateActivity">Save</span>
+                                <span *ngIf="!api_loading_CreateActivity">{{saveBtn}}</span>
                             </button>
                         </div>
                     </ng-container>
                 </div>
             </form>
         </div>
-        <!-- <div class="imageClass">
-            <img class="taskImg" src="/assets/images/crmImages/Addtasks.png" />
-        </div> -->
     </div>
 </section>
 <section class="card" *ngIf="!taskMasterData">
     <div class=" card bgColor inputwithImg">
         <div class="noImg">
             <form [formGroup]="createTaskForm">
-                <span class="group-head">{{selectHeader}} details</span><br>
-                <div class="bggrey my-2">
+                <span class="group-head" *ngIf="selectHeader">{{selectHeader}} details</span><br>
+                <div class="bggrey my-2" *ngIf="selectHeader">
                     <div>
-                        <div class="taskTitle">
-                            <div>Title</div>
+                        <div class="taskTitle" *ngIf="activityTitleField">
+                            <div>{{activityTitleField}}</div>
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding">
@@ -473,13 +450,14 @@
                             <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                                 *ngIf="taskError" errorMsg="{{taskError}}">
                             </app-field-error-display>
-                            <div *ngIf="bErrormsg" style="color: #f24949 !important;font-size: 12px;">{{errorMsgAny}}
+                            <div *ngIf="bErrormsg || errorMsgAny" style="color: #f24949 !important;font-size: 12px;">
+                                {{errorMsgAny}}
                             </div>
                         </div>
                     </div>
                     <div>
-                        <div class="taskTitle">
-                            <div>Description</div>
+                        <div class="taskTitle" *ngIf="activityDescriptionField">
+                            <div>{{activityDescriptionField}}</div>
                         </div>
                         <div class="fieldPadding">
                             <textarea rowa="10" class="form-control" formControlName="taskDescription" #taskDescription
@@ -495,8 +473,8 @@
                     </div>
                     <div style="display: flex;gap: 5px">
                         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                            <div class="taskTitle">
-                                <div>Category</div>
+                            <div class="taskTitle" *ngIf="categoryLabelname">
+                                <div>{{categoryLabelname}}</div>
                                 <div class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding">
@@ -505,18 +483,17 @@
                                     (selectionChange)="handleTaskCategorySelection(userTaskCategory.value)">
                                     <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id"
                                         (ngModelChange)="handleTaskCategorySelection(userTaskCategory.value)">
-                                        <div>
-                                            {{item.name}}
-                                        </div>
+                                        <div *ngIf="item && item.name">{{item.name}}</div>
                                     </mat-option>
                                 </mat-select>
                             </div>
-                            <div *ngIf="bErrormsgCategory" style="color: #f24949 !important;font-size: 12px;">
+                            <div *ngIf="bErrormsgCategory || errorMsgAnyCategory"
+                                style="color: #f24949 !important;font-size: 12px;">
                                 {{errorMsgAnyCategory}}</div>
                         </div>
                         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                            <div class="taskTitle">
-                                <div>Type</div>
+                            <div class="taskTitle" *ngIf="labelType">
+                                <div>{{labelType}}</div>
                                 <div class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding">
@@ -531,15 +508,15 @@
                                     </mat-option>
                                 </mat-select>
                             </div>
-                            <div *ngIf="bErrormsgType" style="color: #f24949 !important;font-size: 12px;">
+                            <div *ngIf="bErrormsgType || errorMsgAnyType"
+                                style="color: #f24949 !important;font-size: 12px;">
                                 {{errorMsgAnyType}}</div>
                         </div>
                     </div>
-
                     <div style="display: flex;gap: 5px">
                         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                            <div class="taskTitle">
-                                <div>Location</div>
+                            <div class="taskTitle" *ngIf="labelLocation">
+                                <div>{{labelLocation}}</div>
                                 <div class="astericColor">*</div>
                             </div>
                             <div class="fieldPadding">
@@ -552,8 +529,8 @@
                             </div>
                         </div>
                         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                            <div class="taskTitle">
-                                <div>Area</div>
+                            <div class="taskTitle" *ngIf="labelArea">
+                                <div>{{labelArea}}</div>
                             </div>
                             <div class="fieldPadding">
                                 <input (keyup)="resetErrors()" type="text" placeholder=""
@@ -565,13 +542,11 @@
                         </div>
                     </div>
                 </div>
-
-
-                <span class="group-head">Select activity employee and manager</span><br>
-                <div class="bggrey my-2">
+                <span class="group-head" *ngIf="labelActivityManager">{{labelActivityManager}}</span><br>
+                <div class="bggrey my-2" *ngIf="labelActivityManager">
                     <div>
-                        <div class="taskTitle">
-                            <div>Employee</div>
+                        <div class="taskTitle" *ngIf="labelEmployee">
+                            <div>{{labelEmployee}}</div>
                             <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding">
@@ -589,8 +564,8 @@
                         </div>
                     </div>
                     <div>
-                        <div class="taskTitle">
-                            <div>Manager</div>
+                        <div class="taskTitle" *ngIf="labelManager">
+                            <div>{{labelManager}}</div>
                         </div>
                         <div class="fieldPadding">
                             <div>
@@ -607,14 +582,12 @@
                         </div>
                     </div>
                 </div>
-
-
-                <span class="group-head">Activity date and other info</span><br>
-                <div class="bggrey my-2">
+                <span class="group-head" *ngIf="labelDateAndOther">{{labelDateAndOther}}</span><br>
+                <div class="bggrey my-2" *ngIf="labelDateAndOther">
                     <div style="display: flex;gap: 5px;flex-wrap: wrap;">
                         <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
-                            <div class="taskTitle">
-                                <div>Due Date</div>
+                            <div class="taskTitle" *ngIf="labelDueDate">
+                                <div>{{labelDueDate}}</div>
                             </div>
                             <div class="pickerouter fieldPadding dt dateWithMatDtae">
                                 <input formControlName="taskDate" class="form-control widthWebKit positionNameInput"
@@ -629,10 +602,9 @@
                                 </app-field-error-display>
                             </div>
                         </div>
-
                         <div class="lbl col-sm-8 col-md-6 col-lg-6 no-padding">
-                            <div class="taskTitle">
-                                <div>Est Duration</div>
+                            <div class="taskTitle" *ngIf="labelEstDuration">
+                                <div>{{labelEstDuration}}</div>
                             </div>
                             <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;" *ngIf="createBTimeField">
                                 <div class="estField">
@@ -642,7 +614,7 @@
                                             placeholder="Days" class="form-control widthWebKit"
                                             formControlName="taskDays" autocomplete="off" min="0" />
                                     </div>
-                                    <div class="timeField">Days</div>
+                                    <div class="timeField" *ngIf="labelEstDays">{{labelEstDays}}</div>
                                 </div>
                                 <div class="estField">
                                     <div class="secondEst">
@@ -651,7 +623,7 @@
                                             class="form-control widthWebKit" formControlName="taskHrs"
                                             autocomplete="off" min="0" max="23" />
                                     </div>
-                                    <div class="timeField"> Hours </div>
+                                    <div class="timeField" *ngIf="labelEstHours"> {{labelEstHours}} </div>
                                 </div>
                                 <div class="estField">
                                     <div class="secondEst">
@@ -660,28 +632,23 @@
                                             class="form-control widthWebKit" formControlName="taskMin"
                                             autocomplete="off" min="0" max="59" />
                                     </div>
-                                    <div class="timeField">
-                                        Minutes
-                                    </div>
+                                    <div class="timeField" *ngIf="labelMinutes">{{labelMinutes}}</div>
                                 </div>
                                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                                     *ngIf="taskError" errorMsg="{{taskError}}">
                                 </app-field-error-display>
                             </div>
                             <div class="fieldPadding" *ngIf="updateBTimefield">
-                                <div class="form-control"
+                                <div *ngIf="updateValue && updateValue.estDuration" class="form-control"
                                     style="display: flex !important;justify-content: space-between;align-items: center;">
                                     <div style="display: flex;gap: 5px;align-items: center;"
-                                        *ngIf="type != 'SubUpdate'">
-                                        <div>{{updateValue.estDuration.days}}days,</div>
-                                        <div>{{this.updateValue.estDuration.hours}}hours,</div>
-                                        <div>{{this.updateValue.estDuration.minutes}}minutes</div>
-                                    </div>
-                                    <div style="display: flex;gap: 5px;align-items: center;"
-                                        *ngIf="type === 'SubUpdate'">
-                                        <div>{{updateValue.estdays}}days,</div>
-                                        <div>{{updateValue.esthours}}hours,</div>
-                                        <div>{{updateValue.estminutes}}minutes</div>
+                                        *ngIf="updateValue && updateValue.estDuration">
+                                        <div *ngIf="updateValue.estDuration.days">{{updateValue.estDuration.days}}days,
+                                        </div>
+                                        <div *ngIf="updateValue.estDuration.hours">
+                                            {{updateValue.estDuration.hours}}hours,</div>
+                                        <div *ngIf="updateValue.estDuration.minutes">
+                                            {{updateValue.estDuration.minutes}}minutes</div>
                                     </div>
                                     <div style="cursor: pointer;" (click)="openTimeField()">
                                         <mat-icon>access_time</mat-icon>
@@ -690,11 +657,9 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div>
-                        <div class="taskTitle">
-                            <div>Priority</div>
+                        <div class="taskTitle" *ngIf="labelPriority">
+                            <div>{{labelPriority}}</div>
                         </div>
                         <div class="fieldPadding">
                             <mat-select class="form-control" placeholder="Select Priority" #userTaskPriority
@@ -708,22 +673,17 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
                 <div class="bggrey my-2">
                     <div style="display: flex;gap: 5px">
                         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                            <div class="taskTitle">
-                                <div>Status</div>
+                            <div class="taskTitle" *ngIf="labelStatus">
+                                <div>{{labelStatus}}</div>
                             </div>
                             <div class="fieldPadding">
                                 <mat-select class="form-control widthWebKit" placeholder="Enter activity status"
                                     #taskStatus formControlName="taskStatus" name="item">
                                     <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id">
-                                        <div [ngStyle]="{'color': getColor(item.name)}">
+                                        <div *ngIf="item && item.name" [ngStyle]="{'color': getColor(item.name)}">
                                             {{item.name | capitalizeFirst}}
                                         </div>
                                     </mat-option>
@@ -734,12 +694,10 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div style="display: flex;gap: 5px;flex-wrap: wrap !important;">
                         <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
-                            <div class="taskTitle">
-                                <div>Target Potential</div>
+                            <div class="taskTitle" *ngIf="labelTargetPotential">
+                                <div>{{labelTargetPotential}}</div>
                             </div>
                             <div class="fieldPadding">
                                 <input (keyup)="resetErrors()" type="text" #targetResult placeholder="Enter potential"
@@ -747,10 +705,9 @@
                                     autocomplete="off" />
                             </div>
                         </div>
-
                         <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
-                            <div class="taskTitle">
-                                <div>Business Potential</div>
+                            <div class="taskTitle" *ngIf="labelBusinessPotential">
+                                <div>{{labelBusinessPotential}}</div>
                             </div>
                             <div class="fieldPadding">
                                 <input min="0" (keyup)="resetErrors()" type="number" #targetPotential
@@ -759,13 +716,12 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="bggrey my-2">
                     <div style="display: flex;gap: 5px;flex-wrap: wrap !important;">
                         <div class="lbl col-sm-8 col-md-7 col-lg-6 no-padding">
-                            <div class="taskTitle">
-                                <div>Result</div>
+                            <div class="taskTitle" *ngIf="labelResult">
+                                <div>{{labelResult}}</div>
                             </div>
                             <div class="fieldPadding">
                                 <input (keyup)="resetErrors()" type="text" #actualPotential placeholder="Enter result"
@@ -775,20 +731,18 @@
                         </div>
                     </div>
                 </div>
-
-
-                <div style="text-align: center;margin-top: 15px;">
+                <div style="text-align: center;margin-top: 15px;" *ngIf="cancelBtn || saveBtn">
                     <ng-container>
                         <div class=" mgn-bt-20 mgn-up-10">
                             <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button"
                                 class="btn btn-primary font-weight-bold cancelBtn"
-                                (click)="!api_loading_CreateActivity && goback()">Cancel
+                                (click)="!api_loading_CreateActivity && goback()" *ngIf="cancelBtn">{{cancelBtn}}
                             </button>
                             <button [ngClass]="{'cursorDiasable':  api_loading_CreateActivity}" type="button"
                                 (click)="saveCreateTask()" class="btn btn-primary font-weight-bold confirmBtn">
                                 <app-common-innerloading-spinner *ngIf="api_loading_CreateActivity">
                                 </app-common-innerloading-spinner>
-                                <span *ngIf="!api_loading_CreateActivity">Save</span>
+                                <span *ngIf="!api_loading_CreateActivity">{{saveBtn}}</span>
                             </button>
                         </div>
                     </ng-container>

@@ -1,13 +1,12 @@
 <form [formGroup]="applicantForm" id="{{applicantId}}" (focusout)="sendApplicantInfo()">
     <div style="display: flex; align-items: center;  gap: 10px;" *ngIf="applicant && applicant.parent">
         <div class="imageClass">
-            <div style="color: #8A8383;" *ngIf="customerName">{{customerName[0] | capitalizeFirst}}</div>
+            <div style="color: #8A8383;" *ngIf="customerName && customerName[0]">{{customerName[0] | capitalizeFirst}}</div>
         </div>
         <div>
             <div>
                 <div style="font-size: 14px;color: #000000;font-weight: bold;margin-bottom: 4px;" *ngIf="customerName">
-                    {{customerName |
-                    capitalizeFirst}}</div>
+                    {{customerName |capitalizeFirst}}</div>
             </div>
             <div>
                 <div style="font-size: 12px;color: #000000;" *ngIf="phoneNumber">+91{{phoneNumber}}</div>
@@ -20,8 +19,8 @@
     <hr *ngIf="applicant && applicant.parent" />
     <div style="border-bottom: 1px solid #04A5FF;height: 30px;" *ngIf="applicant && (!applicant.parent)">
         <div style="display: flex;justify-content: space-between;align-items: center;">
-            <div style="font-size: 15px!important;font-weight: bold!important">
-                Co-Applicant Name
+            <div style="font-size: 15px!important;font-weight: bold!important" *ngIf="coApplicantText">
+                {{coApplicantText}}
             </div>
             <div>
                 <i (click)="removApplicant(applicantId)" style="cursor:pointer" class="fa fa-trash"
@@ -31,8 +30,8 @@
     </div>
     <div style="display: flex;gap: 5px" *ngIf="applicant && (!applicant.parent)">
         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-                <div>Name</div>
+            <div class="leadTitle" *ngIf="lebalName">
+                <div>{{lebalName}}</div>
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
@@ -45,8 +44,8 @@
             </div>
         </div>
         <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-            <div class="leadTitle">
-                <div>Phone Number</div>
+            <div class="leadTitle" *ngIf="lebalPhoneNumber">
+                <div>{{lebalPhoneNumber}}</div>
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
@@ -59,25 +58,25 @@
             </div>
         </div>
     </div>
-    <span class="group-head">KYC Details</span><br>
+    <span class="group-head" *ngIf="lebalkycDetails">{{lebalkycDetails}}</span><br>
     <div class="bggrey my-2 mgn-bt-20">
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Applicant KYC</div>
+                <div class="leadTitle" *ngIf="legbalApplicantKyc">
+                    <div>{{legbalApplicantKyc}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
                     <mat-select (ngModelChange)="handleKycSelectedType(idTypes.value,'firstApplicant')" class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
                         <mat-option [value]="kyc.name" *ngFor="let kyc of kycList" >
-                            <div>{{kyc.displayName}}</div>
+                            <div *ngIf="kyc && kyc.displayName">{{kyc.displayName}}</div>
                         </mat-option>
                     </mat-select>
                 </div>
             </div>
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div class="leadTitle">
-                    <div>Number</div>
+                <div class="leadTitle" *ngIf="lebalNumber">
+                    <div>{{lebalNumber}}</div>
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
@@ -94,7 +93,7 @@
             <div class=""
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
-                    (change)="filesSelected($event, 'kyc1')">Click & Upload your files here
+                    (change)="filesSelected($event, 'kyc1')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
@@ -615,27 +614,24 @@
     <!---crif btn start-->
     <div class=" my-2">
         <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
-    border: 1px solid #D7FFE9 !important;
-    color: #fff;
-    width: -webkit-fill-available;" (click)="showCrifscoreSection()">{{generateCrifText}}  </button>
+    border: 1px solid #D7FFE9 !important;color: #fff;width: -webkit-fill-available;" (click)="showCrifscoreSection()">{{generateCrifText}}  </button>
     </div>
     <!----crif btn end-->
-    <!-- *ngIf="showCrifSection"  [hidden]="! hideme[i]" -->
     <div *ngIf="showCrifSection">
         <span class="group-head">CRIF Score of Applicant</span><br>
         <div class="bggrey my-2">
             <div style="display: flex;gap: 5px">
                 <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;
-        flex-direction: row-reverse; justify-content: left;">
+        flex-direction: row-reverse; justify-content: left;align-items:center;">
                     <div class="leadTitle">
                     </div>
                     <div class="fieldPadding">
                         <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
                             {{crifScore}} </a>
-                        <button [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
+                        <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
                             style="margin-left: 25px !important;"
                             class="btn btn mb-2 action-button action-button-add confirmBtn"
-                            (click)="saveCrifApplicant(applicant)">
+                            (click)="!bCrifBtnDisable && saveCrifApplicant(applicant)">
                             Check CRIF Verification </button>
                     </div>
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>

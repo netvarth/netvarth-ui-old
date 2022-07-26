@@ -1,25 +1,18 @@
 <section class="card">
   <div class="title-gb no-padding">
     <div class="dash-head text-primary">
-      <span *ngIf="hideBackBtn && headerName" class="fa fa-arrow-left pointer-cursor" (click)="goBack(taskDetails)"></span>&nbsp;
+      <span *ngIf="hideBackBtn && headerName && taskDetails" class="fa fa-arrow-left pointer-cursor"
+        (click)="goBack(taskDetails)"></span>&nbsp;
       {{headerName}}
     </div>
   </div>
 </section>
 <section class="container card mt-4 mx-auto" *ngIf="taskDetails">
   <div>
-    <!-- <div stye="padding:10px" *ngIf="headerName">
-      <div class="headerName">
-        {{headerName}}
-      </div>
-      <hr />
-    </div> -->
     <!----task details start-->
     <div class="taskAndNote">
       <div class="formWidth">
-        <div style="display: flex;
-      align-items: center;
-      gap: 10px;" *ngIf="(taskDetails.customer) ">
+        <div  *ngIf="(taskDetails.customer) " style="display: flex;align-items: center;gap: 10px;">
           <div class="imageClass">
             <div style="color: #8A8383;" *ngIf="firstCustomerName">{{firstCustomerName | capitalizeFirst}}</div>
           </div>
@@ -44,8 +37,8 @@
           <div>
             <!---activityu name start-->
             <div class="formTop" *ngIf="bTaskTitle">
-              <div class="taskTitle">
-                <div class="inputlabel">Activity Name</div>
+              <div class="taskTitle" *ngIf="titleLebal">
+                <div class="inputlabel">{{titleLebal}}</div>
                 <div class="astericColor">*</div>
               </div>
               <div>
@@ -61,8 +54,8 @@
             <!---activityu name start-->
             <!---description start-->
             <div class="formTop" *ngIf="bTaskDescription">
-              <div class="taskTitle">
-                <div>Description</div>
+              <div class="taskTitle" *ngIf="desCriptionLebal">
+                <div>{{desCriptionLebal}}</div>
               </div>
               <div class="fieldPadding">
                 <textarea rowa="10" class="form-control" formControlName="taskDescription" #taskDescription
@@ -77,8 +70,8 @@
             <!----description end-->
             <!----area start-->
             <div class="formTop" *ngIf="bTaskAreaName">
-              <div class="taskTitle">
-                <div>Area</div>
+              <div class="taskTitle" *ngIf="areaLebal">
+                <div>{{areaLebal}}</div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" [value]="areaName" #areaName type="text" placeholder=""
@@ -91,19 +84,21 @@
             <!----area end-->
             <!---assignee start-->
             <div class="formTop" *ngIf="bAssigneeName">
-              <div class="taskTitle">
-                <div>Employee</div>
+              <div class="taskTitle" *ngIf="employeeLebal">
+                <div>{{employeeLebal}}</div>
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
-                <div>
-                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' || activityType==='UpdateFollowUP' }"
+                <div *ngIf="taskDetails && taskDetails.status && taskDetails.status.name">
+                  <div
+                    [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' || activityType==='UpdateFollowUP' }"
                     [formControlName]="selectMember" class="form-control"
                     style="display: flex;justify-content: space-between;"
                     (click)="(taskDetails.status.name !=='Completed') && selectMemberDialog(selectMember)">
                     <div>{{selectMember}}</div>
-                    <div  [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' || activityType==='UpdateFollowUP' }"
-                     class="pointer"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    <div
+                      [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' || activityType==='UpdateFollowUP' }"
+                      class="pointer"><i class="fa fa-user" aria-hidden="true"></i></div>
                   </div>
                 </div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError"
@@ -114,8 +109,8 @@
             <!---assignee end-->
             <!----date start-->
             <div class="formTop" *ngIf="(bTaskDate) ">
-              <div class="taskTitle">
-                <div>Due Date</div>
+              <div class="taskTitle" *ngIf="dueDateLebal">
+                <div>{{dueDateLebal}}</div>
               </div>
               <div class="pickerouter fieldPadding dt dateWithMatDtae">
                 <input formControlName="taskDate" class="form-control positionNameInput" type="text" matInput
@@ -133,15 +128,15 @@
             <!----date end-->
             <!---category start-->
             <div class="formTop" *ngIf="bTaskCategory">
-              <div class="taskTitle">
-                <div>Category</div>
+              <div class="taskTitle" *ngIf="lebalCategory">
+                <div>{{lebalCategory}}</div>
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control " placeholder="Enter Category" #userTaskCategory
                   formControlName="userTaskCategory">
                   <mat-option *ngFor="let item of categoryListData[0];let index=i" [value]="item.id">
-                    <div>
+                    <div *ngIf="item && item.name">
                       {{item.name}}
                     </div>
                   </mat-option>
@@ -151,14 +146,14 @@
             <!----category end-->
             <!----tasktype start-->
             <div class="formTop" *ngIf="bTaskType">
-              <div class="taskTitle">
-                <div>Type</div>
+              <div class="taskTitle" *ngIf="lebalType">
+                <div>{{lebalType}}</div>
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control" placeholder="Enter Type" #userTaskType formControlName="userTaskType">
                   <mat-option *ngFor="let item of taskTypeList[0];let index=i" [value]="item.id">
-                    <div>
+                    <div *ngIf="item && item.name">
                       {{item.name}}
                     </div>
                   </mat-option>
@@ -168,8 +163,8 @@
             <!----task type end-->
             <!----location start-->
             <div class="formTop" *ngIf="bTaskLocation && activityType!='UpdateFollowUP'">
-              <div class="taskTitle">
-                <div>Location</div>
+              <div class="taskTitle" *ngIf="lebalLocation">
+                <div>{{lebalLocation}}</div>
                 <div class="astericColor">*</div>
               </div>
               <div class="fieldPadding">
@@ -183,18 +178,18 @@
             <!----location end-->
             <!----task manager start-->
             <div class="formTop" *ngIf="bTaskManager">
-              <div class="taskTitle">
-                <div>Manager</div>
+              <div class="taskTitle" *ngIf="lebalManager">
+                <div>{{lebalManager}}</div>
               </div>
               <div class="fieldPadding">
-                <div>
+                <div *ngIf="taskDetails && taskDetails.status && taskDetails.status.name">
                   <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }"
                     [formControlName]="selectTaskManger" class="form-control"
                     style="display: flex;justify-content: space-between;"
                     (click)="(taskDetails.status.name !=='Completed')&& selectManagerDialog(selectTaskManger)">
                     <div>{{selectTaskManger}}</div>
-                    <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }"
-                     style="cursor: pointer;"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }" style="cursor: pointer;">
+                      <i class="fa fa-user" aria-hidden="true"></i></div>
                   </div>
                 </div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError"
@@ -205,8 +200,8 @@
             <!---task manager end-->
             <!----est duration start-->
             <div class="formTop" *ngIf="bTaskEstDuration">
-              <div class="taskTitle">
-                <div>Est Duration</div>
+              <div class="taskTitle" *ngIf="lebalEstDuration">
+                <div>{{lebalEstDuration}}</div>
               </div>
               <div class="fieldPadding d-flex" style="gap: 5px;flex-wrap: wrap;">
                 <div class="estField">
@@ -215,7 +210,7 @@
                       (ngModelChange)="handleTaskEstDuration(taskDays.value)" placeholder="Days" class="form-control "
                       formControlName="taskDays" autocomplete="off" min="0" />
                   </div>
-                  <div class="timeField">Days</div>
+                  <div class="timeField" *ngIf="lebalDays">{{lebalDays}}</div>
                 </div>
                 <div class="estField">
                   <div class="secondEst">
@@ -223,7 +218,7 @@
                       (ngModelChange)="handleTaskEstDuration(taskHrs.value)" placeholder="Hours" class="form-control "
                       formControlName="taskHrs" autocomplete="off" min="0" max="23" />
                   </div>
-                  <div class="timeField"> Hours </div>
+                  <div class="timeField" *ngIf="lebalHours"> {{lebalHours}} </div>
                 </div>
                 <div class="estField">
                   <div class="secondEst">
@@ -231,8 +226,8 @@
                       (ngModelChange)="handleTaskEstDuration(taskMin.value)" placeholder="Minutes" class="form-control"
                       formControlName="taskMin" autocomplete="off" min="0" max="59" />
                   </div>
-                  <div class="timeField">
-                    Minutes
+                  <div class="timeField" *ngIf="lebalMinutes">
+                    {{lebalMinutes}}
                   </div>
                 </div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError"
@@ -260,14 +255,14 @@
             <!--priority end-->
             <!---status start-->
             <div class="formTop" *ngIf="bTaskStatus">
-              <div class="taskTitle">
-                <div>Status</div>
+              <div class="taskTitle" *ngIf="lebalStatus">
+                <div>{{lebalStatus}}</div>
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control" placeholder="Enter activity status" #taskStatus
                   formControlName="taskStatus" name="item">
                   <mat-option *ngFor="let item of taskStatusList[0];let index=i" [value]="item.id">
-                    <div [ngStyle]="{'color': getColor(item.name)}">
+                    <div *ngIf="item && item.name" [ngStyle]="{'color': getColor(item.name)}">
                       {{item.name | capitalizeFirst}}
                     </div>
                   </mat-option>
@@ -280,8 +275,8 @@
             <!---status end-->
             <!---target potential start-->
             <div class="formTop" *ngIf="bTaskTargetPotential">
-              <div class="taskTitle">
-                <div>Target Potential</div>
+              <div class="taskTitle" *ngIf="lebalTargetPotential">
+                <div>{{lebalTargetPotential}}</div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" type="text" #targetResult placeholder="Enter potential"
@@ -291,8 +286,8 @@
             <!---target potential end-->
             <!----business potential start-->
             <div class="formTop" *ngIf="bTaskBusinessPotential">
-              <div class="taskTitle">
-                <div>Business Potential</div>
+              <div class="taskTitle" *ngIf="lebalBusinessPotential">
+                <div>{{lebalBusinessPotential}}</div>
               </div>
               <div class="fieldPadding">
                 <input #targetPotential min="0" (keyup)="resetErrors()" type="number"
@@ -308,8 +303,9 @@
                     <div style="font-size: 12px;font-weight: bold;">Enter Result</div>
                     <div class="statusListClass">
                       <div *ngFor="let item of taskStatusList[0]">
-                        <div [ngClass]="{'cursorDiasable': api_loadingCompletedStatus}" *ngIf="item.name==='Proceed' && updateEnqStatusName !=='Completed'"
-                          class="statusClass1" (click)="!api_loadingCompletedStatus && selectStatus(item)" id="A">
+                        <div [ngClass]="{'cursorDiasable': api_loadingCompletedStatus}"
+                          *ngIf="item.name==='Proceed' && updateEnqStatusName !=='Completed'" class="statusClass1"
+                          (click)="!api_loadingCompletedStatus && selectStatus(item)" id="A">
                           <div>{{item.name}}</div>
                           <div *ngIf="!api_loadingCompletedStatus">
                             <img class="imageStatus" src="/assets/images/crmImages/completed2.png" />
@@ -336,28 +332,28 @@
             </div>
             <!---actual potential start-->
             <div class="formTop" *ngIf="bTaskActualPotential">
-              <div class="taskTitle">
-                <div>Actual Potential</div>
+              <div class="taskTitle" *ngIf="lebalActualPotential">
+                <div>{{lebalActualPotential}}</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" #actualPotential placeholder="Enter potential"
+                <input min="0" (keyup)="resetErrors()" type="number" #actualPotential placeholder="Enter potential"
                   class="form-control " formControlName="actualPotential" autocomplete="off" />
               </div>
             </div>
             <!---actual potential end-->
-
             <!----for web cancel save btn-->
             <div style="text-align: center;margin-top: 15px;" class="forWeb" *ngIf="bTaskFollowUpResult">
               <ng-container>
                 <div class=" mgn-bt-20 mgn-up-10">
-                  <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button"
-                    class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack(taskDetails)">Cancel
+                  <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button" *ngIf="cancelBtn"
+                    class="btn btn-primary font-weight-bold cancelBtn"
+                    (click)="!api_loadingSaveTask && goBack(taskDetails)">{{cancelBtn}}
                   </button>
                   <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}"
                     class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingSaveTask">
                     </app-common-innerloading-spinner>
-                    <span *ngIf="!api_loadingSaveTask">Complete</span>
+                    <span *ngIf="!api_loadingSaveTask">{{completeBtn}}</span>
                   </button>
                 </div>
               </ng-container>
@@ -370,10 +366,10 @@
       <div class="notesWidth">
         <div class="notesSection" *ngIf=" activityType !=='UpdateFollowUP' ">
           <div class="fiesWithIcon">
-            <div>
-              <span class="card-title"><b>Files</b></span>
+            <div *ngIf="files">
+              <span class="card-title"><b>{{files}}</b></span>
             </div>
-            <div *ngIf="taskDetails.attachments.length>0">
+            <div *ngIf="taskDetails && taskDetails.attachments && taskDetails.attachments.length>0">
               <span (click)="attatchmentDialog(taskDetails.attachments)"
                 class="pointer-cursor fa fa-external-link"></span>
             </div>
@@ -381,46 +377,42 @@
           <!-- <hr /> -->
           <div class="text-left">
             <div class="filesUploadThings">
-              <div *ngIf="taskType !=='SubTask'" mat-button [mat-dialog-close]="true"
+              <div mat-button [mat-dialog-close]="true"
                 class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary inputFile"
                 (click)="uploadFiles()">
-                <div class="filesUploadThingsAction">
+                <div class="filesUploadThingsAction" *ngIf="uploadFilesrelated">
                   <img width="25px" src="/assets/images/crmImages/fileUpload.png" />
-                  <div class="text-dark btn-text">Click or Upload Files related to activity</div>
-                </div>
-              </div>
-              <div *ngIf="taskType==='SubTask'" mat-button [mat-dialog-close]="true"
-                class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary inputFile"
-                (click)="uploadFiles()">
-                <div class="filesUploadThingsAction">
-                  <img width="25px" src="/assets/images/crmImages/fileUpload.png" />
-                  <div class="text-dark btn-text">Click or Upload Files related to subactivity</div>
+                  <div class="text-dark btn-text">{{uploadFilesrelated}}</div>
                 </div>
               </div>
             </div>
-            <div *ngIf="taskDetails.attachments.length>0"
+            <div *ngIf="taskDetails && taskDetails.attachments && taskDetails.attachments.length>0"
               style="display: flex;align-items: center;margin-left: 10px;gap:5px">
               <div>
                 <img style="height:25px" src="/assets/images/crmImages/fileUploADHeader.png" />
               </div>
-              <div class="label" style="padding:0px !important">
-                ( Uploaded Files )
+              <div class="label" style="padding:0px !important" *ngIf="uploadedFiles">
+                {{uploadedFiles}}
               </div>
             </div>
             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
-            <div class="my-2  height-limit" *ngIf="taskDetails.attachments.length>0">
+            <div class="my-2 height-limit"
+              *ngIf="taskDetails && taskDetails.attachments&& taskDetails.attachments.length>0">
               <div>
                 <div *ngFor="let attachment of taskDetails.attachments;let i=index" class="allNotesList">
                   <div class="notesListSection">
-                    <div style="color: #121212;">{{attachment.originalName}}<br><span class="labelFile"><b>File Type :
-                        </b>{{attachment.type}} &nbsp;&nbsp;&nbsp;<b>Size : </b>{{attachment.size}} MB</span></div>
-                    <div class="d-flex justify-content-around">
-                      <a style="cursor: pointer;"
-                        *ngIf="attachment.type == 'jpg' || attachment.type == 'jpeg' || attachment.type == 'png' || attachment.type == 'gif'"
-                        (click)="viewAttachment(attachment)"><i class="fa fa-eye"
+                    <div style="color: #121212;" *ngIf="attachment && attachment.originalName && attachment.type && attachment.size
+                    ">{{attachment.originalName}}<br>
+                      <span class="labelFile"><b *ngIf="fileType">{{fileType}}
+                        </b>{{attachment.type}} &nbsp;&nbsp;&nbsp;<b *ngIf="size">{{size}} </b>{{attachment.size}}
+                        MB</span>
+                    </div>
+                    <div class="d-flex justify-content-around" *ngIf="attachment">
+                      <a style="cursor: pointer;" *ngIf="attachment && (attachment.type == 'jpg' || attachment.type == 'jpeg' || attachment.type == 'png'
+                         || attachment.type == 'gif')" (click)="viewAttachment(attachment)"><i class="fa fa-eye"
                           aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
-                      <a style="cursor: pointer;" href="{{attachment.s3path}}" target="_blank"><i class="fa fa-download"
-                          aria-hidden="true"></i></a>
+                      <a *ngIf="attachment.s3path" style="cursor: pointer;" href="{{attachment.s3path}}"
+                        target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
                     </div>
                   </div>
                 </div>
@@ -429,14 +421,15 @@
           </div>
         </div>
         <!---notes start-->
-        <div style="margin-top:10px" >
+        <div style="margin-top:10px">
           <div class="textareaStart">
             <div class="fiesWithIcon">
               <div style="display:flex;gap:5px">
-                <div class="card-title"><b>Remarks</b></div>
-                <div *ngIf="taskDetails.status.name==='New' && activityType !=='UpdateFollowUP'" class="astericColor">*</div>
+                <div class="card-title"><b *ngIf="remarks">{{remarks}}</b></div>
+                <div *ngIf="(taskDetails && taskDetails.status && taskDetails.status.name) && 
+                taskDetails.status.name==='New' && activityType !=='UpdateFollowUP'" class="astericColor">*</div>
               </div>
-              <div *ngIf="taskDetails.notes.length>0">
+              <div *ngIf="taskDetails && taskDetails.notes && taskDetails.notes.length>0">
                 <span (click)="noteView(taskDetails)" class="pointer-cursor fa fa-external-link"></span>
               </div>
             </div>
@@ -446,66 +439,55 @@
                 maxlength="1000" placeholder="Enter remarks description"
                 style=" height: 45px !important;background: #FCFCFC !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
             </div>
-            <div *ngIf="errorMsg" class="errorMsg">
+            <div *ngIf="errorMsg && assignMemberErrorMsg" class="errorMsg">
               <div>{{assignMemberErrorMsg}}</div>
             </div>
             <!---cancel save btn start-->
             <div
               style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;"
-              *ngIf="activityType ===undefined && taskDetails.status.name !=='New'">
+              *ngIf="(activityType ===undefined) && (taskDetails &&  taskDetails.status && taskDetails.status.name !=='New')">
               <div style="text-align: center;">
-                <ng-container>
+                <ng-container *ngIf="notesTextarea">
                   <div>
                     <button type="button" class="btn btn-primary font-weight-bold confirmBtnRemarks "
-                      (click)="saveCreateNote(notesTextarea)">Add Remarks</button>
+                      (click)="saveCreateNote(notesTextarea)" *ngIf="addRemarks">{{addRemarks}}</button>
                   </div>
                 </ng-container>
               </div>
             </div>
-            <!-- <div
-              style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;"
-              *ngIf="activityType ==='UpdateFollowUP'">
-              <div style="text-align: center;">
-                <ng-container>
-                  <div>
-                    <button type="button" class="btn btn-primary font-weight-bold confirmBtnRemarks"
-                      (click)="saveCreateNote(notesTextarea)">Add Remarks</button>
-                  </div>
-                </ng-container>
-              </div>
-            </div> -->
             <!---cancel save btn end-->
-            <div *ngIf="taskDetails.notes.length>0 " style="display: flex;align-items: center;margin-left: 10px;">
+            <div *ngIf="taskDetails && taskDetails.notes && taskDetails.notes.length>0 "
+              style="display: flex;align-items: center;margin-left: 10px;">
               <div>
                 <img style="height:25px" src="/assets/images/crmImages/noteIcon.png" />
               </div>
-              <div class="label" style="padding:0px !important">
-                ( Saved Remarks)
+              <div *ngIf="savedRemarks" class="label" style="padding:0px !important">
+                {{savedRemarks}}
               </div>
             </div>
             <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-            <div class="my-2  height-limit" *ngIf="taskDetails.notes.length>0 ">
+            <div class="my-2  height-limit" *ngIf="taskDetails && taskDetails.notes && taskDetails.notes.length>0 ">
               <div>
                 <div *ngFor="let note of taskDetails.notes;let i=index" class="allNotesList">
-                  <div class="notesListSection">
-                    <div>
+                  <div class="notesListSection" *ngIf="note">
+                    <div *ngIf="note && note.note">
                       {{note.note}}
                     </div>
                   </div>
                   <div class="notesListSection" style="gap:0.5px;justify-content:flex-start !important">
-                    <div>({{note.createdDate.slice(0,2) }}</div>
+                    <div *ngIf="note && note.createdDate">({{note.createdDate.slice(0,2) }})</div>
                     <div *ngFor="let month of monthName">
-                      <div *ngIf="month.count===note.createdDate.slice(3,5)">
+                      <div *ngIf="month && month.monthName && (month.count===note.createdDate.slice(3,5))">
                         {{month.monthName}},
                       </div>
                     </div>
-                    <div *ngIf="note.createdDate.slice(11,13)<12">
+                    <div *ngIf="note && note.createdDate && note.createdDate.slice(11,13)<12">
                       {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
                     </div>
-                    <div *ngIf="note.createdDate.slice(11,13)===12">
+                    <div *ngIf="note && note.createdDate && note.createdDate.slice(11,13)===12">
                       {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
                     </div>
-                    <div *ngIf="note.createdDate.slice(11,13)>12">
+                    <div *ngIf="note && note.createdDate && note.createdDate.slice(11,13)>12">
                       {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
                     </div>
                   </div>
@@ -516,9 +498,10 @@
         </div>
         <!---notes end-->
         <!----enter result start-->
-        <div class="formTop" *ngIf="activityType !=='UpdateFollowUP' &&  taskDetails.status.name==='New'">
-          <div class="taskTitle">
-            <div>No of data collected</div>
+        <div class="formTop" *ngIf="activityType !=='UpdateFollowUP' &&  taskDetails && 
+        taskDetails.status && taskDetails.status.name==='New'">
+          <div class="taskTitle" *ngIf="noOfDataCollected">
+            <div>{{noOfDataCollected}}</div>
           </div>
           <div class="fieldPadding">
             <input min="0" (keyup)="resetErrors()" [(ngModel)]="actualResult" type="number" #actualResultt
@@ -527,7 +510,6 @@
         </div>
         <!---enter result end-->
       </div>
-
       <!----files end-->
     </div>
     <!----task details end -->
@@ -535,14 +517,15 @@
     <div style="text-align: center;margin-top: 15px;" class="forMobile" *ngIf="bTaskFollowUpResult">
       <ng-container>
         <div class=" mgn-bt-20 mgn-up-10">
-          <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button"
-            class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loadingSaveTask && goBack(taskDetails)">Cancel
+          <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}" type="button" *ngIf="cancelBtn"
+            class="btn btn-primary font-weight-bold cancelBtn"
+            (click)="!api_loadingSaveTask && goBack(taskDetails)">{{cancelBtn}}
           </button>
           <button [ngClass]="{'cursorDiasable': api_loadingSaveTask}"
             class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)="saveCreateTask()">
             <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loadingSaveTask">
             </app-common-innerloading-spinner>
-            <span *ngIf="!api_loadingSaveTask">Complete</span>
+            <span *ngIf="!api_loadingSaveTask">{{completeBtn}}</span>
           </button>
         </div>
       </ng-container>

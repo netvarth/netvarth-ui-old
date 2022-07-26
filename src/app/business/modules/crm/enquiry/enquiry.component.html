@@ -1,7 +1,7 @@
 <section class="card">
     <div class="title-gb no-padding">
-      <div class="dash-head"*ngIf="!api_loading">
-       <div> <i class="fa fa-arrow-left" style="color:#1D3E77 !important" aria-hidden="true" (click)="goback()"></i></div>
+      <div class="dash-head">
+       <div *ngIf="!api_loading"> <i class="fa fa-arrow-left" style="color:#1D3E77 !important" aria-hidden="true" (click)="goback()"></i></div>
        <div  style="color:#1D3E77" *ngIf="headerName">{{headerName}}</div>
       </div>
     </div>
@@ -11,7 +11,7 @@
         <div>
             <form [formGroup]="createEnquiryForm">
                 <div class="customer">
-                    <div class="infoHeader ">{{customer_label | capitalizeFirst}} Info</div>
+                    <div class="infoHeader" *ngIf="customer_label">{{customer_label | capitalizeFirst}} Info</div>
                 </div>
                 <div class="customerInfo mgn-up-15" >
                     <input  type="text" formControlName="enquiryDetails" #enquiry autocomplete="off"
@@ -25,7 +25,7 @@
                                 <i style="color:#fff;" class="fa fa-search"></i> </button>
                             </div>
                 </div>
-                <div class="errorClass">
+                <div class="errorClass" *ngIf="errorMsg">
                     {{errorMsg}}
                 </div>
                 <div *ngIf="api_loading_SearchCustomer" class="mt-2">
@@ -33,7 +33,7 @@
                 </div>
                 <div class="mgn-up-15" *ngIf="!api_loading_SearchCustomer">
                     <div class="customer">
-                        <div class="infoHeader ">{{customerActivityText}} {{ customer_label | capitalizeFirst}}</div>
+                        <div class="infoHeader" *ngIf="customerActivityText || customer_label">{{customerActivityText}} {{ customer_label | capitalizeFirst}}</div>
                     </div>
                 </div>
                 <div class="mgn-up-15" *ngIf="!api_loading_SearchCustomer" >

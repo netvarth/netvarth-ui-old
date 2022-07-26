@@ -154,7 +154,35 @@ export class ViewTaskComponent implements OnInit {
   updateEnqLeadAutoGenerate: any;
   updateEnqAssignId: any;
   updateEnqStatusName:any;
-  constructor(
+  titleLebal:string='Activity Name';
+  desCriptionLebal:string='Description';
+  areaLebal:string='Area';
+  employeeLebal:string='Employee';
+  dueDateLebal:string='Due Date';
+  lebalCategory:string='Category';
+  lebalType:string='Type';
+  lebalLocation:string='Location';
+  lebalManager:string='Manager';
+  lebalEstDuration:string='Est Duration';
+  lebalDays:string='Days';
+  lebalHours:string='Hours';
+  lebalMinutes:string='Minutes';
+  lebalStatus:string='Status';
+  lebalTargetPotential:string='Target Potential';
+  lebalBusinessPotential:string='Business Potential';
+  lebalActualPotential:string='Actual Potential';
+  cancelBtn:string='Cancel';
+  completeBtn:string='Complete';
+  files:string='Files';
+  uploadFilesrelated:string='Click or Upload Files related to activity';
+  uploadedFiles:string='( Uploaded Files )';
+  fileType:string='File Type :';
+  size:string='Size :';
+  remarks:string='Remarks';
+  addRemarks:'Add Remarks';
+  savedRemarks:string='( Saved Remarks)';
+  noOfDataCollected:string='No of data collected';
+    constructor(
     private crmService: CrmService,
     public _location: Location,
     public dialog: MatDialog,
@@ -198,7 +226,7 @@ export class ViewTaskComponent implements OnInit {
     this._Activatedroute.paramMap.subscribe(params => {
       this.enquiryId = params.get("id");
       this.taskUid = params.get("id");
-      console.log('activityType:::::',this.activityType )
+      // console.log('activityType:::::',this.activityType )
       if (this.activityType === 'UpdateFollowUP') {
         this.getEnquiryDetailsRefresh()
       }
@@ -219,30 +247,34 @@ export class ViewTaskComponent implements OnInit {
 
   }
   userInfo() {
-    const user = this.groupService.getitemFromGroupStorage('ynw-user');
-    if (user) {
-      if (user.firstName || user.lastName) {
-        this.selectMember = user.firstName + user.lastName;
-        this.selectTaskManger = user.firstName + user.lastName;
-      }
-      if (user.id) {
-        this.assigneeId = user.id;
-        this.updateMemberId = this.assigneeId;
-      }
-      if (user.bussLocs && user.bussLocs[0]) {
-        this.locationId = user.bussLocs[0]
-      }
-      if (user.userType === 1) {
-        this.userType = 'PROVIDER'
+    if(this.groupService &&  this.groupService.getitemFromGroupStorage('ynw-user')){
+      const user = this.groupService.getitemFromGroupStorage('ynw-user');
+      if (user) {
+        if (user.firstName || user.lastName) {
+          this.selectMember = user.firstName + user.lastName;
+          this.selectTaskManger = user.firstName + user.lastName;
+        }
+        if (user.id) {
+          this.assigneeId = user.id;
+          if(this.assigneeId){
+            this.updateMemberId = this.assigneeId;
+          }
+        }
+        if (user.bussLocs && user.bussLocs[0]) {
+          this.locationId = user.bussLocs[0]
+        }
+        if (user.userType === 1) {
+          this.userType = 'PROVIDER'
+        }
       }
     }
+    
 
   }
   getEnquiryDetailsRefresh() {
     const _this=this;
     return new Promise((resolve,reject)=>{
       _this.crmService.getEnquiryDetails(_this.enquiryId).subscribe((enquiryList: any) => {
-        console.log('enquiryList:::',enquiryList);
         resolve(enquiryList);
         _this.taskDetails = enquiryList;
         if(enquiryList && enquiryList.uid){
@@ -266,13 +298,11 @@ export class ViewTaskComponent implements OnInit {
         reject(error);
       })
     })
-    
   }
-
   getTaskDetailsRefresh() {
     const _this=this;
     return new Promise((resolve,reject)=>{
-      if (_this.activityType === undefined) {
+      if (_this.activityType === undefined && _this.taskUid) {
         _this.crmService.getTaskDetails(_this.taskUid).subscribe(data => {
           resolve(data);
           _this.taskDetails = data;
@@ -3133,8 +3163,11 @@ export class ViewTaskComponent implements OnInit {
     this.taskError = null;
   }
   autoGrowTextZone(e) {
-    e.target.style.height = "0px";
-    e.target.style.height = (e.target.scrollHeight + 15) + "px";
+    if(e){
+      e.target.style.height = "0px";
+      e.target.style.height = (e.target.scrollHeight + 15) + "px";
+    }
+    
   }
   getLocation() {
     const _this = this;
@@ -3657,16 +3690,14 @@ export class ViewTaskComponent implements OnInit {
       }
     }
     else{
-      if(data && data.status && data.status.name==='New' || data.status.name==='Completed'){
+      if(data && data.status && (data.status.name==='New' || data.status.name==='Completed')){
         this._location.back();
       }
       else{
         this.router.navigate(['provider', 'crm']);
       }
     }
-    
-    // this.router.navigate(['provider', 'crm']);
-  }
+      }
   openAddNoteDialog(addNoteText: any) {
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
