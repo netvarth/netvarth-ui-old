@@ -449,21 +449,23 @@ export class ViewLeadQnrComponent implements OnInit {
         
         
       // }
-      console.log('this.applicantsInfo[applicantIndex].validationIds[2].idTypes2',this.applicantsInfo[applicantIndex])
       if (this.applicantsInfo[applicantIndex].validationIds[2]) {
-        if (this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != null || this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != '') {
-          this.applicantsInfo[applicantIndex].validationIds.splice(2, 1);
-        } else {
-          if (this.applicantsInfo[applicantIndex].validationIds[2].attachments && this.applicantsInfo[applicantIndex].validationIds[2].attachments.length > 0) {
-          } else {
+        if (this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != null || 
+          this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != '') {
+          if (this.applicantsInfo) {
             let fileData = this.getFileInfo('kyc3', filesObj);
             // 
-            if (fileData && fileData.length > 0 && !fileData[0]['order']) {
-              fileData[0]['order'] = this.filesCount++;
-              this.filesToUpload.push(fileData[0]);
-              this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
+            for(let i=0;i<fileData.length;i++){
+              if (fileData && fileData.length > 0 && !fileData[i]['order']) {
+                fileData[i]['order'] = this.filesCount++;
+                this.filesToUpload.push(fileData[i]);
+                this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
+              }
             }
+            
           }
+        } else {
+          this.applicantsInfo[applicantIndex].validationIds.splice(2, 1);
         }
       }
 
@@ -513,10 +515,6 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log(applicantIndex);
     console.log('applicantsInfo:::::',this.applicantsInfo);
-    if(applicant['removeFile']==='delete'){
-      // this.updateKyc();
-      // applicant['removeFile']===''
-    }
   }
 
   /**
@@ -675,7 +673,7 @@ export class ViewLeadQnrComponent implements OnInit {
                 this.api_loading_UpdateKyc = false;
                 if(this.leadInfo.status.name === 'New'){
                   // this.initLead();
-                                     this.router.navigate(['/provider/viewleadqnr/' + this.leadUID]);
+                  this.router.navigate(['/provider/viewleadqnr/' + this.leadUID]);
                 }
                 else{
                  this.initLead();

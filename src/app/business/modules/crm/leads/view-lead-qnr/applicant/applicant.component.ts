@@ -54,7 +54,6 @@ export class ApplicantComponent implements OnInit {
   bCrifBtnDisable:boolean;
   fileOpener: any;
   generateCrifText:string='Generate CRIF Score of Applicant';
-  deleteTextFile:any;
   crifBtnForHide:boolean;
   kycListId:any;
   coApplicantText:string='Co-Applicant Name';
@@ -168,7 +167,6 @@ export class ApplicantComponent implements OnInit {
     if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[1]) {
       this.applicantForm.controls.idValue1.setValue(this.applicant.validationIds[1].idValue);
     }
-      console.log('this.applicant.validationIds::::',this.applicant.validationIds)
     if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[2]) {
       this.applicantForm.controls.idTypes2.setValue(this.applicant.validationIds[2].idTypes);
     }
@@ -236,7 +234,7 @@ export class ApplicantComponent implements OnInit {
     const _this=this;
     return new Promise((resolve,reject)=>{
       _this.crmService.getLeadStatus().subscribe((response: any) => {
-        console.log(response);
+        // console.log(response);
         resolve(response)
         if(response){
           if(response[3] && response[3].id){
@@ -254,9 +252,9 @@ export class ApplicantComponent implements OnInit {
    
   }
   filesSelected(event, type) {
-    console.log('event',event)
+    // console.log('event',event)
     const input = event.target.files;
-    console.log('input',input)
+    // console.log('input',input)
     if(input.length < 3){
       this.fileService.filesSelected(event, this.selectedFiles[type]).then(
         () => {
@@ -343,7 +341,6 @@ export class ApplicantComponent implements OnInit {
       id: this.applicantId,
       info: this.getApplicantInfo(),
       files: this.filesToUpload,
-      removeFile:this.deleteTextFile
     }
     console.log("sendd files",this.filesToUpload)
     console.log("In send Applicant", applicantInfo);
@@ -463,9 +460,11 @@ export class ApplicantComponent implements OnInit {
         'idValue':this.applicantForm.controls.idValue2.value,
         'attachments': []
       }
-      if (this.applicant && this.applicant.validationIds && this.applicant.validationIds[2] && this.applicant.validationIds[2].attachments) {
+      if ( this.applicant.validationIds && this.applicant.validationIds[2] && this.applicant.validationIds[2].attachments) {
         kyc['attachments'] = this.applicant.validationIds[2].attachments;
       }
+      // console.log('this.filesToUpload',this.filesToUpload)
+      
       applicantInfo.validationIds.push(kyc);
       // this.applicant.validationIds[2]['idTypes'] = this.applicantForm.controls.idTypes2.value;
       // this.applicant.validationIds[2]['idValue'] = this.applicantForm.controls.idValue2.value;
@@ -505,14 +504,18 @@ export class ApplicantComponent implements OnInit {
 
   }
   deleteTempImage(i, type,deleteText) {
+    // console.log('type::::::',type)
+    // console.log(' this.filesToUpload', this.filesToUpload);
+    // console.log('deleteText',deleteText)
     let files= this.filesToUpload.filter((fileObj) => {
+      // console.log('fileObj',fileObj)
       if(fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name){
         if(fileObj.type){
           return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type===type);
         }
       }
     });
-    console.log("files",files,i)
+    // console.log("files",files,i)
     if (files && files.length > 0) {
       console.log(this.filesToUpload.indexOf(files[0]));
       if(this.filesToUpload && this.filesToUpload.indexOf(files[0])){
@@ -525,23 +528,33 @@ export class ApplicantComponent implements OnInit {
     this.selectedFiles[type].caption.splice(i, 1);
     console.log("this.applicant",this.applicant)
     if (type === 'kyc1') {
-      this.applicant.validationIds[0].attachments.splice(i,1);
-      this.sendApplicantInfo()
+    //   this.selectedFiles[type].files.splice(i, 1);
+    // this.selectedFiles[type].base64.splice(i, 1);
+    // this.selectedFiles[type].caption.splice(i, 1);
+      this.applicant.validationIds[0].attachments.splice(i, 1);
 
     } else if (type === 'kyc2') {
-      this.applicant.validationIds[1].attachments.splice(i,1);
-      this.sendApplicantInfo() 
+    //   this.selectedFiles[type].files.splice(i, 1);
+    // this.selectedFiles[type].base64.splice(i, 1);
+    // this.selectedFiles[type].caption.splice(i, 1);
+      this.applicant.validationIds[1].attachments.splice(i, 1); 
+    } 
+    else if (type === 'kyc3') {
+    //   this.selectedFiles[type].files.splice(i, 1);
+    // this.selectedFiles[type].base64.splice(i, 1);
+    // this.selectedFiles[type].caption.splice(i, 1);
+      this.applicant.validationIds[2].attachments.splice(i, 1); 
     } 
     else if (type === 'other') {
       // console.log("other attachments delete")
-      this.applicant.otherAttachments.splice(i,1);
-      this.sendApplicantInfo() 
+    //   this.selectedFiles[type].files.splice(i, 1);
+    // this.selectedFiles[type].base64.splice(i, 1);
+    // this.selectedFiles[type].caption.splice(i, 1);
+      this.applicant.otherAttachments.splice(i, 1); 
     }
-    // else if (type === 'kyc3') {
-    //   this.applicant.validationIds[2].attachments = [];
-    // } 
     
-    console.log(files);
+    
+    // console.log(files);
     // else if (type === 'pan') {
     //   this.applicant.panAttachments = [];
     // }
