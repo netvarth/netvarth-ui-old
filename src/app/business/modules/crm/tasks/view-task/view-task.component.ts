@@ -251,8 +251,8 @@ export class ViewTaskComponent implements OnInit {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       if (user) {
         if (user.firstName || user.lastName) {
-          this.selectMember = user.firstName + user.lastName;
-          this.selectTaskManger = user.firstName + user.lastName;
+          this.selectMember = user.firstName + ' ' + user.lastName;
+          this.selectTaskManger = user.firstName + ' ' + user.lastName;
         }
         if (user.id) {
           this.assigneeId = user.id;
@@ -277,6 +277,7 @@ export class ViewTaskComponent implements OnInit {
       _this.crmService.getEnquiryDetails(_this.enquiryId).subscribe((enquiryList: any) => {
         resolve(enquiryList);
         _this.taskDetails = enquiryList;
+        console.log('taskDetails:::',_this.taskDetails)
         if(enquiryList && enquiryList.uid){
           _this.enquiryUid = enquiryList.uid;
         }
@@ -3810,5 +3811,15 @@ export class ViewTaskComponent implements OnInit {
       }
     )
 
+  }
+  select(){
+    var s = "SMIBANK";
+    console.log('s',s)
+    var i = s.indexOf(' ');
+    console.log('iii',i)
+    var partOne = s.slice(0, i).trim();
+    var partTwo = s.slice(i + 1, s.length).trim();
+    console.log('partOne',partOne)
+    console.log('partTwo',partTwo)
   }
 }

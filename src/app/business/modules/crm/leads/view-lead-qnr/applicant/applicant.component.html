@@ -551,7 +551,8 @@
     <span class="group-head" *ngIf="applicant && applicant.parent && ( this.leadInfo.status.name == 'New' || this.leadInfo.status.name == 'KYC Updated')">Other Files</span><br>
     <div class="bggrey" *ngIf="applicant && applicant.parent && ( this.leadInfo.status.name == 'New' || this.leadInfo.status.name == 'KYC Updated')">
         <div class="fieldPadding">
-            <div>
+            <div
+            [hidden]=" applicant && applicant.otherAttachments && applicant.otherAttachments.length > 0 && applicant.otherAttachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
                     (change)="filesSelected($event,'other')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">

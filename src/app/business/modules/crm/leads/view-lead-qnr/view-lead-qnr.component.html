@@ -8,9 +8,9 @@
   </div>
 </section>
 <section  class="container card mt-4 mx-auto" *ngIf="leadInfo && leadInfo.status 
-&& (leadInfo.status.name==='New' || leadInfo.status.name==='Sales Verified') && (leadInfo.notes && leadInfo.notes.length>0)">
-  <div *ngIf="leadInfo.notes && leadInfo.notes.length>0 ">
-    <div *ngIf="leadInfo.notes && leadInfo.notes.length>0 " class="notesHeaderSection">
+&& (leadInfo.status.name==='New' || leadInfo.status.name==='Sales Verified') && (leadInfo.redirectNotes && leadInfo.redirectNotes.length>0)">
+  <div *ngIf="leadInfo.redirectNotes && leadInfo.redirectNotes.length>0 ">
+    <div *ngIf="leadInfo.redirectNotes && leadInfo.redirectNotes.length>0 " class="notesHeaderSection">
       <div class="notesTexticon">
         <div>
           <img style="height:25px" src="/assets/images/crmImages/noteIcon.png" />
@@ -19,13 +19,13 @@
           Remarks
         </div>
       </div>
-      <div>
+      <!-- <div>
         <span (click)="noteView(leadInfo)" class="pointer-cursor fa fa-external-link"></span>
-      </div>
+      </div> -->
     </div>
-    <div id="myDiv" class="my-2 heightlimitSalesVerified" *ngIf="leadInfo.notes &&  leadInfo.notes.length>0 ">
+    <div id="myDiv" class="my-2 heightlimitSalesVerified" *ngIf="leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0 ">
       <div>
-        <div *ngFor="let note of leadInfo.notes;let i=index" class="allNotesList">
+        <div *ngFor="let note of leadInfo.redirectNotes;let i=index" class="allNotesList">
           <div class="notesListSection" *ngIf="note.note">
             {{note.note}}
           </div>

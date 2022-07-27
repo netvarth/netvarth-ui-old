@@ -190,8 +190,16 @@ export class CrmSelectMemberComponent implements OnInit {
       this.leadUID= this.data['info'];
     } else if (this.data.requestType === "noteDetails") {
       console.log("Notews");
-      this.allNotes.push(this.data.noteDetails.notes);
-      console.log(" this.allNotes", this.allNotes);
+      if(this.data && this.data.noteDetails && this.data.noteDetails.notes && this.data.noteDetails.notes.length>0){
+        this.allNotes.push(this.data.noteDetails.notes);
+        console.log(" this.allNotes", this.allNotes);
+      }
+      else if(this.data && this.data.noteDetails && this.data.noteDetails.redirectNotes && this.data.noteDetails.redirectNotes.length>0 
+        && this.data.notedetails.isRedirected){
+        this.allNotes.push(this.data.noteDetails.redirectNotes);
+        console.log(" this.allNotes", this.allNotes);
+      }
+      
       this.noteDescription = this.data.noteDetails.note;
       this.noteDescriptionTime = this.data.noteDetails.createdDate;
     } else if (this.data.requestType === "taskComplete") {
@@ -403,23 +411,24 @@ export class CrmSelectMemberComponent implements OnInit {
       };
       console.log("createNoteData", createNoteData);
       console.log('this.leadUID',this.leadUID);
-      this.crmService.addLeadNotes(this.leadUID, createNoteData).subscribe(
-        (response: any) => {
-          if(response){
-            console.log("response", response);
-            setTimeout(() => {
-              this.dialogRef.close(createNoteData);
-            }, projectConstants.TIMEOUT_DELAY);
-            this.snackbarService.openSnackBar("Remarks added successfully");
-          }
+      this.dialogRef.close(createNoteData);
+      // this.crmService.addLeadNotes(this.leadUID, createNoteData).subscribe(
+      //   (response: any) => {
+      //     if(response){
+      //       console.log("response", response);
+      //       setTimeout(() => {
+      //         this.dialogRef.close(createNoteData);
+      //       }, projectConstants.TIMEOUT_DELAY);
+      //       this.snackbarService.openSnackBar("Remarks added successfully");
+      //     }
           
-        },
-        error => {
-          this.snackbarService.openSnackBar(error, {
-            panelClass: "snackbarerror"
-          });
-        }
-      )
+      //   },
+      //   error => {
+      //     this.snackbarService.openSnackBar(error, {
+      //       panelClass: "snackbarerror"
+      //     });
+      //   }
+      // )
       
     } else {
       this.errorMsg = true;

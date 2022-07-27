@@ -253,7 +253,8 @@ export class ViewLeadQnrComponent implements OnInit {
               this.crmService.deleteCoApplicant(applicantInfo['applicantid'], this.leadInfo.uid).subscribe((response) => {
                 if (response) {
                   this.applicantsInfo = {};
-                  this.initLead();
+                  this.updateKyc()
+                  // this.initLead();
                   console.log(response)
                   console.log("After:", this.applicantsInfo);
                   this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
@@ -278,6 +279,7 @@ export class ViewLeadQnrComponent implements OnInit {
               if (this.applicants) {
                 const index = this.applicants.indexOf(applicantInfo['applicantid']);
                 this.applicants.splice(index, 1);
+                this.updateKyc()
                 // console.log("After:", this.applicantsInfo);
                 this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
               }
@@ -302,7 +304,8 @@ export class ViewLeadQnrComponent implements OnInit {
             this.crmService.deleteCoApplicant(applicantInfo['applicantid'], this.leadInfo.uid).subscribe((response) => {
               if (response) {
                 this.applicantsInfo = {};
-                this.initLead();
+                this.updateKyc()
+                // this.initLead();
                 console.log(response)
                 console.log("After:", this.applicantsInfo);
                 this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
@@ -411,15 +414,10 @@ export class ViewLeadQnrComponent implements OnInit {
     if (applicant.info) {
       this.applicantsInfo[applicantIndex] = applicant.info;
     }
-    console.log(' this.applicantsInfo[applicantIndex] ', this.applicantsInfo[applicantIndex] )
+    console.log('this.applicantsInfo[applicantIndex]', this.applicantsInfo[applicantIndex] )
     if (this.applicantsInfo[applicantIndex]) {
-      // if (this.applicantsInfo[applicantIndex].validationIds[0] && this.applicantsInfo[applicantIndex].validationIds[0].attachments &&
-      //    this.applicantsInfo[applicantIndex].validationIds[0].attachments.length > 0) {
-      // } 
-      // else {
         if (this.applicantsInfo){
           let fileData = this.getFileInfo('kyc1', filesObj);
-          // fileData && fileData.length > 0 &&
           for(let i=0;i<fileData.length;i++){
             if ( fileData && fileData.length > 0 && !fileData[i]['order']) {
               console.log('fileData[0]',fileData[i])
@@ -427,14 +425,8 @@ export class ViewLeadQnrComponent implements OnInit {
               this.filesToUpload.push(fileData[i]);
               this.applicantsInfo[applicantIndex].validationIds[0].attachments = fileData;
             }
-          }  
+          } 
         }
-        
-      // }
-      // if (this.applicantsInfo[applicantIndex].validationIds[1] && this.applicantsInfo[applicantIndex].validationIds[1].attachments && 
-      //   this.applicantsInfo[applicantIndex].validationIds[1].attachments.length > 0) {
-      // } 
-      // else {
         if (this.applicantsInfo){
           let fileData = this.getFileInfo('kyc2', filesObj);
           // fileData && fileData.length > 0  &&
@@ -446,15 +438,11 @@ export class ViewLeadQnrComponent implements OnInit {
            }
          }
         }
-        
-        
-      // }
       if (this.applicantsInfo[applicantIndex].validationIds[2]) {
         if (this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != null || 
           this.applicantsInfo[applicantIndex].validationIds[2].idTypes2 != '') {
           if (this.applicantsInfo) {
             let fileData = this.getFileInfo('kyc3', filesObj);
-            // 
             for(let i=0;i<fileData.length;i++){
               if (fileData && fileData.length > 0 && !fileData[i]['order']) {
                 fileData[i]['order'] = this.filesCount++;
@@ -462,19 +450,12 @@ export class ViewLeadQnrComponent implements OnInit {
                 this.applicantsInfo[applicantIndex].validationIds[2].attachments = fileData;
               }
             }
-            
           }
         } else {
           this.applicantsInfo[applicantIndex].validationIds.splice(2, 1);
         }
       }
-
       if (this.applicantsInfo) {
-
-          // if (this.applicantsInfo[applicantIndex].otherAttachments && this.applicantsInfo[applicantIndex].otherAttachments.length > 0) {
-          //   let fileData = this.getFileInfo('other', filesObj);
-          //   console.log("Other Attachments called",fileData) 
-          // } else {
             let fileData = this.getFileInfo('other', filesObj);
             console.log("Other Attachments called",fileData) 
             for(let i=0;i<fileData.length;i++)
@@ -484,22 +465,8 @@ export class ViewLeadQnrComponent implements OnInit {
               this.filesToUpload.push(fileData[i]);
               this.applicantsInfo[applicantIndex].otherAttachments = fileData;
             }
-            // }
-            
         }
       }
-
-
-
-      // if (this.applicantsInfo[applicantIndex].panAttachments && this.applicantsInfo[applicantIndex].panAttachments.length > 0) {
-      // } else {
-      //   let fileData = this.getFileInfo('pan', filesObj);
-      //   if (fileData && fileData.length > 0 && !fileData[0]['order']) {
-      //     fileData[0]['order'] = this.filesCount++;
-      //     this.filesToUpload.push(fileData[0]);
-      //     this.applicantsInfo[applicantIndex].panAttachments = fileData;
-      //   }
-      // }
     }
     if (this.applicantsInfo && this.applicantsInfo[applicantIndex] && this.applicantsInfo[applicantIndex].parent) {
       this.applicantsInfo[applicantIndex]['customer'] = this.leadInfo.customer.id;
@@ -515,6 +482,11 @@ export class ViewLeadQnrComponent implements OnInit {
     }
     console.log(applicantIndex);
     console.log('applicantsInfo:::::',this.applicantsInfo);
+    const serviceCall= applicant.text;
+    // console.log('serviceCall',serviceCall);
+    if((serviceCall==='Delete') || (serviceCall==='InputFileUpload')){
+      this.updateKyc()
+    }
   }
 
   /**

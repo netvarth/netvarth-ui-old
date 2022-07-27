@@ -197,7 +197,7 @@ export class LeadsComponent implements OnInit {
         break;
       case 'SALESVERIFICATION':
         filter['statusName-eq'] = 'Credit Score Generated';
-        this.headerName = 'Sales Field Verification';
+        this.headerName = 'Sales  Verification';
         break;
       case 'DOCUMENTUPLOD':
         filter['statusName-eq'] = 'Sales Verified';

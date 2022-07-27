@@ -80,7 +80,7 @@ export class ApplicantComponent implements OnInit {
   lebalDistrict:string='District';
   crifScoreLebal:string='CRIF SCORE :';
   lebalCrifVerification:string='Check CRIF Verification';
-  
+  actionText: string='';  
   constructor(
     private formBuilder: FormBuilder,
     private fileService: FileService,
@@ -288,6 +288,7 @@ export class ApplicantComponent implements OnInit {
             console.log('fileObjFinal',fileObjFinal)
             this.filesToUpload.push(fileObjFinal);
             console.log('this.filesToUpload', this.filesToUpload);
+            this.actionText ='InputFileUpload';
             this.sendApplicantInfo();
           }
           }
@@ -322,9 +323,11 @@ export class ApplicantComponent implements OnInit {
             console.log('fileObjFinal',fileObjFinal)
             this.filesToUpload.push(fileObjFinal);
             console.log('this.filesToUpload', this.filesToUpload);
+            this.actionText ='InputFileUpload';
             this.sendApplicantInfo();
           }
           }
+         
         }).catch((error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         })
@@ -341,10 +344,12 @@ export class ApplicantComponent implements OnInit {
       id: this.applicantId,
       info: this.getApplicantInfo(),
       files: this.filesToUpload,
+      text:this.actionText,
     }
     console.log("sendd files",this.filesToUpload)
     console.log("In send Applicant", applicantInfo);
     this.addApplicant.emit(applicantInfo);
+    this.actionText='';
   }
   removApplicant(applicantId) {
     console.log('applicantId',this.applicant)
@@ -504,9 +509,6 @@ export class ApplicantComponent implements OnInit {
 
   }
   deleteTempImage(i, type,deleteText) {
-    // console.log('type::::::',type)
-    // console.log(' this.filesToUpload', this.filesToUpload);
-    // console.log('deleteText',deleteText)
     let files= this.filesToUpload.filter((fileObj) => {
       // console.log('fileObj',fileObj)
       if(fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name){
@@ -528,29 +530,20 @@ export class ApplicantComponent implements OnInit {
     this.selectedFiles[type].caption.splice(i, 1);
     console.log("this.applicant",this.applicant)
     if (type === 'kyc1') {
-    //   this.selectedFiles[type].files.splice(i, 1);
-    // this.selectedFiles[type].base64.splice(i, 1);
-    // this.selectedFiles[type].caption.splice(i, 1);
       this.applicant.validationIds[0].attachments.splice(i, 1);
+      this.actionText='Delete';
 
     } else if (type === 'kyc2') {
-    //   this.selectedFiles[type].files.splice(i, 1);
-    // this.selectedFiles[type].base64.splice(i, 1);
-    // this.selectedFiles[type].caption.splice(i, 1);
-      this.applicant.validationIds[1].attachments.splice(i, 1); 
+      this.applicant.validationIds[1].attachments.splice(i, 1);
+      this.actionText='Delete'; 
     } 
     else if (type === 'kyc3') {
-    //   this.selectedFiles[type].files.splice(i, 1);
-    // this.selectedFiles[type].base64.splice(i, 1);
-    // this.selectedFiles[type].caption.splice(i, 1);
       this.applicant.validationIds[2].attachments.splice(i, 1); 
+      this.actionText='Delete';
     } 
     else if (type === 'other') {
-      // console.log("other attachments delete")
-    //   this.selectedFiles[type].files.splice(i, 1);
-    // this.selectedFiles[type].base64.splice(i, 1);
-    // this.selectedFiles[type].caption.splice(i, 1);
       this.applicant.otherAttachments.splice(i, 1); 
+      this.actionText='Delete';
     }
     
     

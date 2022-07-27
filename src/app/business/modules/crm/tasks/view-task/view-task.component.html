@@ -83,7 +83,7 @@
             </div>
             <!----area end-->
             <!---assignee start-->
-            <div class="formTop" *ngIf="bAssigneeName">
+            <div class="formTop" *ngIf="bAssigneeName" (click)="select()">
               <div class="taskTitle" *ngIf="employeeLebal">
                 <div>{{employeeLebal}}</div>
                 <div class="astericColor">*</div>
