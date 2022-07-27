@@ -108,6 +108,7 @@ export class MedicalrecordComponent implements OnInit {
   someSubscription: any;
   uploadedfiledialogRef: any;
   provider: string;
+  customerphoneno: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -430,7 +431,7 @@ export class MedicalrecordComponent implements OnInit {
 
   }
   goback(type_from) {
-
+    this.getCustomerbyId(this.customerDetails.id)
     const back_type = this.medicalService.getReturnTo();
     if (type_from === 'medical') {
       this.medicalService.viewVisitDetails = false;
@@ -494,6 +495,17 @@ export class MedicalrecordComponent implements OnInit {
   //   const mrId = this.mrId;
   //   this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mrId, 'fileupload']);
   // }
+
+
+  getCustomerbyId(id) {
+        const filter = { 'id-eq': id };
+        this.provider_services.getCustomer(filter)
+            .subscribe(
+                (data: any) => {
+                    this.customerphoneno = this.data[0].phoneNo;
+                });
+        return this.customerphoneno;
+    }
 
 
   isShowtable() {

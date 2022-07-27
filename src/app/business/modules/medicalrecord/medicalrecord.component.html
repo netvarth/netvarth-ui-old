@@ -29,14 +29,17 @@
         </div>
         <div class="clearfix"></div>
         <div class="ml-3 mt-3 mb-5">
-          <!-- <pre>{{customerDetails | json}}</pre> -->
 
           <label *ngIf="customerDetails.phoneNo && customerDetails.phoneNo!=' '">
             <i class="fa fa-mobile" style="font-size:20px!important" aria-hidden="true"></i>
           </label> &nbsp;&nbsp;<span *ngIf="customerDetails.countryCode">{{customerDetails.countryCode ?
             customerDetails.countryCode : '+91'}} </span> <span
-            *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}} </span><br>
-
+            *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}} </span>
+            <label *ngIf="!customerDetails.phoneNo && customerDetails.id">
+              <i class="fa fa-mobile" style="font-size:20px!important" aria-hidden="true"></i>
+            </label> &nbsp;&nbsp;<span>{{customerDetails.countryCode ?
+              customerDetails.countryCode : '+91'}} </span><span *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518
+            </span><br>
           <label *ngIf="customerDetails.id">
             <i class="fa fa-id-badge" aria-hidden="true"></i>
           </label> &nbsp;&nbsp;<span *ngIf="customerDetails.id">{{customerDetails.id}} </span><br>
@@ -52,6 +55,7 @@
       </div>
     </div>
 
+    <!-- <pre>{{customerDetails | json}}</pre> -->
 
     <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-up-10 pl-0">
       <div class="shadow">
