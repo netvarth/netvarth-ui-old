@@ -2079,10 +2079,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     submitQuestionnaireAnswers(passData,uuid?) {
         console.log("Submitttttt : ",uuid)
         const dataToSend: FormData = new FormData();
-        const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
-        dataToSend.append('question', blobpost_Data);
-       // this.buttonDisable = true;
-          this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend,uuid);
+        if(passData && passData.answers){
+            const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
+            dataToSend.append('question', blobpost_Data);
+           // this.buttonDisable = true;
+              this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend,uuid);
+        }
+       
         
       }
 
