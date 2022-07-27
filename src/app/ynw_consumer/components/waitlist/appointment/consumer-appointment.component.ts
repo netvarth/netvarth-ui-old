@@ -172,6 +172,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     tooltipcls = '';
     slotLoaded = false;
     btnClicked = false // To avoid double click
+    apptDetails_firstName;
+    apptDetails_lastName
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -1087,6 +1089,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return new Promise(function (resolve, reject) {
             _this.customerService.getCustomerInfo(activeUser.id).then(data => {
                 _this.parentCustomer = data;
+                if(_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.firstName){
+                    _this.apptDetails_firstName = _this.parentCustomer.userProfile.firstName;
+                }
+                if(_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.lastName){
+                    _this.apptDetails_lastName = _this.parentCustomer.userProfile.lastName;
+                }
                 if (_this.appointmentType != 'reschedule') {
                     _this.appmtFor.push({ id: _this.parentCustomer.id, firstName: _this.parentCustomer.userProfile.firstName, lastName: _this.parentCustomer.userProfile.lastName });
                     _this.prepaymentAmount = _this.appmtFor.length * _this.selectedService.minPrePaymentAmount || 0;
@@ -1219,6 +1227,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             _this.commObj['comWhatsappCountryCode'] = _this.parentCustomer.userProfile.countryCode;
                         }
                         _this.consumerNote = _this.scheduledAppointment.consumerNote;
+                        if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].firstName){
+                            _this.apptDetails_firstName = _this.scheduledAppointment.appmtFor[0].firstName;
+                        }
+                        if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].lastName){
+                            _this.apptDetails_lastName = _this.scheduledAppointment.appmtFor[0].lastName;
+                        }
+                        
+                    }
+                    if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].firstName){
+                        _this.apptDetails_firstName = _this.scheduledAppointment.appmtFor[0].firstName;
+                    }
+                    if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].lastName){
+                        _this.apptDetails_lastName = _this.scheduledAppointment.appmtFor[0].lastName;
                     }
                     _this.locationId = _this.scheduledAppointment.location.id;
                     _this.selectedServiceId = _this.scheduledAppointment.service.id;
@@ -1433,7 +1454,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     confirmAppointment(type?) {
         console.log("confirmAppointment");
+        console.log(this.commObj)
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
+        
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class'],
@@ -1448,6 +1471,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
+          
             if (this.selectedService.serviceType === 'virtualService' && !this.validateVirtualCallInfo(this.callingModes)) {
                 return false;
             }

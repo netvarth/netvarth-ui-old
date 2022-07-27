@@ -251,9 +251,10 @@
                                     <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
                                         <div class="no-padding">
                                             <div class="col-sm-12 col-xs-12 col-md-12 no-padding">
-                                                <h6 class="text-primary service custom" *ngIf="appmtFor && appmtFor[0]">
-                                                    {{appmtFor[0].firstName | capitalizeFirst}}
-                                                    {{appmtFor[0].lastName | capitalizeFirst}}
+                                                <h6 class="text-primary service custom">
+                                                    <span *ngIf="apptDetails_firstName">{{apptDetails_firstName | capitalizeFirst}}</span>&nbsp;
+                                                    <span *ngIf="apptDetails_lastName">{{apptDetails_lastName | capitalizeFirst}}</span>
+                                                   
 
                                                     <a *ngIf="appointmentType !== 'reschedule' && !paymentRequestId"
                                                         class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
