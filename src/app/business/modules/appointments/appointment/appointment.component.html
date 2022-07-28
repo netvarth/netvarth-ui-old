@@ -735,7 +735,20 @@
                                         <div  > {{ Math.round (item.size/fileSizeInKb)}}KB</div>
                                       </div> -->
 
-
+                                      <div style="display:flex;gap:10px" *ngIf="item.type==='video/mp4' || item.type==='mp4'">
+                                        <div>
+                                            <img class="img" src="/assets/images/ImgeFileIcon/video.png" />
+                                        </div>
+                                        <div> {{item.name}}</div>
+                                        <div> {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                    </div>
+                                    <div style="display:flex;gap:10px" *ngIf="item.type==='audio/mpeg' || item.type==='mp3'">
+                                        <div>
+                                            <img class="img" src="/assets/images/audio.png" />
+                                        </div>
+                                        <div> {{item.name}}</div>
+                                        <div> {{ Math.round (item.size/fileSizeInKb)}}KB</div>
+                                    </div>
                                         <div>
                                             <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                 <mat-icon>more_vert</mat-icon>
