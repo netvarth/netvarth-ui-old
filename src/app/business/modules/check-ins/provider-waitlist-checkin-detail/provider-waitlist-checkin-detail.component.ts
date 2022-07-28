@@ -974,4 +974,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       return userObject[0].name;
     }
   }
+  showCallingModes(modes, action) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        waiting_id: modes,
+        type: 'checkin'
+      }
+    };
+    this.router.navigate(['provider', 'telehealth'], navigationExtras);
+  }
 }

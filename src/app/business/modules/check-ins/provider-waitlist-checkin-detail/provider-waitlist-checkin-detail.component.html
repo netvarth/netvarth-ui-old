@@ -99,10 +99,19 @@
             </span>
           </div>
           <div>
-            <a *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'"
-              (click)="changeWaitlistStatus('STARTED')"
+            <span  *ngIf="waitlist_data.service.serviceType === 'virtualService'">
+              <a *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'"
+              (click)="showCallingModes(waitlist_data.ynwUuid, 'STARTED')"
               class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-play"
                 aria-hidden="true"></i> Start</a>
+            </span>
+          <span *ngIf="waitlist_data.service.serviceType !== 'virtualService'">
+            <a *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'"
+            (click)="changeWaitlistStatus('STARTED')"
+            class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-play"
+              aria-hidden="true"></i> Start</a>
+          </span>
+             
             <a (click)="changeStatus(waitlist_data)"
               *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'"
               class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-refresh" aria-hidden="true"></i> Change Status to</a>
