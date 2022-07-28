@@ -15,8 +15,8 @@
                 <div>
                     <img style="width: 35px;height:35px" src="/assets/images/crmImages/loanOperating.png" />
                 </div>
-                <div class="topicName">
-                    LOS
+                <div class="topicName"*ngIf="lebalNameLOS">
+                   {{lebalNameLOS}}
                 </div>
             </div>
         </div>
@@ -26,14 +26,14 @@
                 <div>
                     <img style="width: 35px;height:35px" src="/assets/images/crmImages/reports.png" />
                 </div>
-                <div class="topicName">
-                    REPORTS
+                <div class="topicName" *ngIf="lebalnameREPORT">
+                    {{lebalnameREPORT}}
                 </div>
             </div>
         </div>
     </div>
     <!--three tab end-->
-    <div class="mgn-up-15">
+    <div class="mgn-up-15" *ngIf="api_loading">
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </div>
     <!---mat pannel start-->
@@ -46,8 +46,8 @@
                             <div class="plusOutside">
                                 <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
                             </div>
-                            <div class="marketActivity">
-                                <div>Marketing Activity</div>
+                            <div class="marketActivity"  *ngIf="lebalMarkrtingActivity">
+                                <div>{{lebalMarkrtingActivity}}</div>
                             </div>
                         </div>
                     </mat-panel-title>
@@ -59,8 +59,8 @@
                         (click)="redirectionTaskTemplate()">
                         <div tabindex="1">
                             <div style="display:flex;align-items:center;gap:5px">
-                                <div>
-                                    Schedule Marketing Activity
+                                <div *ngIf="lebalScheduleMarkActivity">
+                                    {{lebalScheduleMarkActivity}}
                                 </div>
                             </div>
                         </div>
@@ -68,8 +68,8 @@
                     <button class="button-28" role="button" type="submit" (click)="redirectionTaskActivityList()">
                         <div>
                             <div style="display:flex;align-items:center;gap:5px">
-                                <div>
-                                    Marketing Activity Updation
+                                <div *ngIf="lebalMarketingActivityUpdation">
+                                    {{lebalMarketingActivityUpdation}}
                                 </div>
                             </div>
                         </div>
@@ -86,8 +86,8 @@
                 <div>
                     <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
                 </div>
-                <div class="topicNameedirectionList">
-                    Enquiry
+                <div class="topicNameedirectionList" *ngIf="lebalEnquiry">
+                    {{lebalEnquiry}}
                 </div>
             </div>
             <!----follow ups pannel start-->
@@ -101,8 +101,8 @@
                                     <div class="plusOutside">
                                         <i style="color: #D92323;" class="fa fa-plus" aria-hidden="true"></i>
                                     </div>
-                                    <div class="marketActivity">
-                                        <div>Follow Ups</div>
+                                    <div class="marketActivity" *ngIf="lebalFollowUps">
+                                        <div>{{lebalFollowUps}}</div>
                                     </div>
                                 </div>
                             </mat-panel-title>
@@ -110,10 +110,11 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div class="" *ngFor="let item of followUpList">
-                            <button *ngIf="item.name==='Follow Up 1' ||  item.name==='Follow Up 2'" style="width:10rem !important" class="button-28" role="button" type="submit">
-                                <div tabindex="1" (click)="templateViewActivity(item)">
-                                    <div style="display:flex;align-items:center;gap:5px">
-                                        <div>
+                            <button *ngIf="item && (item.name==='Follow Up 1' ||  item.name==='Follow Up 2')" 
+                            style="width:10rem !important" class="button-28" role="button" type="submit">
+                                <div *ngIf="item" tabindex="1" (click)="templateViewActivity(item)">
+                                    <div style="display:flex;align-items:center;gap:5px" *ngIf="item && item.name">
+                                        <div *ngIf="item && item.name">
                                             {{item.name}}
                                         </div>
                                     </div>
@@ -128,78 +129,28 @@
             <div class="eachTab mgn-up-15" style="flex-wrap: wrap;">
                 <div class="customCard redirectionList" *ngFor="let item of redirectionList"
                     (click)="redirectionSeperateTemplate(item.activityName)">
-                    <div class="activityTemplate">
-                        <div>
+                    <div class="activityTemplate" *ngIf="item && item.activityName">
+                        <div *ngIf="item && item.activityName">
                             <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
                         </div>
-                        <div class="topicNameedirectionList">
+                        <div class="topicNameedirectionList" *ngIf="item && item.activityName">
                             {{item.activityName}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
     <!----templates end-->
-    <div class="mgn-up-15" *ngIf="bREportsFieldOpen && !api_loading">
-        <div class="threeTab customThreeCardsReport">
-            <div class="customCard" (click)="createActivity()">
-                <div class="eachTab">
-                    <div>
-                        <img height="25px" width="25px" src="/assets/images/crmImages/craeteActivity.png" />
-                    </div>
-                    <div class="topicName">
-                        Activity Report
-
-                    </div>
+    <div class="mgn-up-15 report" *ngIf="bREportsFieldOpen && !api_loading">
+        <div class="threeTab customThreeCardsReport" *ngFor="let item of reportType" >
+            <div class="customCard" style="align-items:center !important;height: 5rem;" *ngIf="item" (click)="reportActionType(item)">
+                <div *ngIf="item">
+                    <img *ngIf="item" height="35px" width="35px" [src]="getImage(item)">
                 </div>
-            </div>
-            <div class="customCard" (click)="craeteLeadReport()">
-                <div class="eachTab">
-                    <div>
-                        <img height="25px" width="25px" src="/assets/images/crmImages/leadReporterMob.png" />
-                    </div>
-                    <div class="topicName">
-                        Lead Report
-                    </div>
-                </div>
-
-            </div>
-            <div class="customCard" (click)="createEnquiryReport()">
-                <div class="eachTab">
-                    <div>
-                        <img height="25px" width="25px" src="/assets/images/crmImages/inquiry.png" />
-                    </div>
-                    <div class="topicName">
-                        Enquiry Report
-                    </div>
-                </div>
-
-            </div>
-            <div class="customCard" (click)="createMonthlyActivityReport()">
-                <div class="eachTab">
-                    <div>
-                        <img height="25px" width="25px" src="/assets/images/crmImages/inquiry.png" />
-                    </div>
-                    <div class="topicName">
-                        Consolidated Activity Report 
-                    </div>
-                </div>
-
-            </div>
-            <div class="customCard" (click)="createLeadStatusReport()">
-                <div class="eachTab">
-                    <div>
-                        <img height="25px" width="25px" src="/assets/images/crmImages/leadReporterMob.png" />
-                    </div>
-                    <div class="topicName">
-                        Lead Status Report 
-                    </div>
-                </div>
-
+                <div *ngIf="item && item.type">
+                    {{item.type}}</div>
             </div>
         </div>
-    </div>
-
+        </div>
 </section>

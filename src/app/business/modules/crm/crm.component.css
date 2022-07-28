@@ -1,7 +1,7 @@
 .threeTab{
     display: flex;gap:10px;align-items: center;justify-content: space-between;
 }
-@media (max-width:460px){
+@media (max-width:720px){
   .customThreeCards{
     /* display: block; */
     gap:10px;
@@ -13,8 +13,13 @@
   }
   .customThreeCardsReport{
     display: block !important;
+    width: 100% !important;
   }
 }
+.customThreeCardsReport{
+  width: 32%;
+}
+
 .eachTab{
     display: flex;
     gap:10px;align-items: center;
@@ -222,4 +227,11 @@ img{
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
+  }
+  .report{
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
   }

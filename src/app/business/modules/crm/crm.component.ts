@@ -5,15 +5,12 @@ import { ProviderServices } from '../../services/provider-services.service';
 import { CrmService } from './crm.service';
 import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
-
-
 @Component({
   selector: 'app-crm',
   templateUrl: './crm.component.html',
   styleUrls: ['./crm.component.css']
 })
 export class CRMComponent implements OnInit {
-
   crmTitle = '';
   isadminPrivilege: any;
   public step: any;
@@ -25,7 +22,31 @@ export class CRMComponent implements OnInit {
   showActivity = true;
   bBorderBottomTYpeA: boolean = false;
   bBorderBottomTypeC: boolean = false;
-  followUpList:any=[]
+  followUpList:any=[];
+  lebalNameLOS:string='LOS';
+  lebalnameREPORT:string='REPORTS';
+  lebalMarkrtingActivity:string='Marketing Activity';
+  lebalScheduleMarkActivity:string='Schedule Marketing Activity';
+  lebalMarketingActivityUpdation:string='Marketing Activity Updation';
+  lebalEnquiry:string='Enquiry';
+  lebalFollowUps:string='Follow Ups';
+  reportType:any=[
+    {
+      id: 1, type: 'Activity Report',
+    },
+    {
+      id: 2, type: 'Lead Report'
+    },
+    {
+      id: 3, type: 'Enquiry Report'
+    }, 
+    {
+      id: 4, type: 'Consolidated Activity Report'
+    }, 
+    {
+      id: 5, type: 'Lead Status Report'
+    },
+  ]
   constructor(
     private providerServices: ProviderServices,
     private router: Router,
@@ -435,46 +456,88 @@ export class CRMComponent implements OnInit {
       this.bBorderBottomTYpeA = false;
     }
   }
-  createActivity() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        report_type: 'crm'
-      }
-    }
-    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
-  }
-  craeteLeadReport() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        report_type: 'lead'
-      }
-    }
-    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
-  }
+  reportActionType(data){
+    console.log('data::::',data);
+    if(data){
+      switch (data.type) {
+        case 'Activity Report':
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              report_type: 'crm'
+            }
+          }
+          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
+          break;
+        case 'Lead Report':
+          const navigationExtrasToLead: NavigationExtras = {
+            queryParams: {
+              report_type: 'lead'
+            }
+          }
+          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLead);
+          break;
+        case 'Enquiry Report':
+          const navigationExtrasToEnquiry: NavigationExtras = {
+            queryParams: {
+              report_type: 'enquiry'
+            }
+          }
+          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToEnquiry);
+          break;
+        case 'Consolidated Activity Report':
+          const navigationExtrasToMonthly: NavigationExtras = {
+            queryParams: {
+              report_type: 'monthlyActivity'
+            }
+          }
+          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToMonthly);
+          break;
+        case 'Lead Status Report':
+          const navigationExtrasToLeadStatus: NavigationExtras = {
+            queryParams: {
+              report_type: 'leadStatus'
+            }
+          }
+          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLeadStatus);
 
-  createEnquiryReport() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        report_type: 'enquiry'
       }
     }
-    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
   }
-
-  createMonthlyActivityReport() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        report_type: 'monthlyActivity'
+  getImage(data){
+    if(data){
+      let imgSrc:any;
+      switch (data.type) {
+        case 'Activity Report':
+          imgSrc = './assets/images/crmImages/craeteActivity.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Lead Report':
+          imgSrc = './assets/images/crmImages/leadReporterMob.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Enquiry Report':
+          imgSrc = './assets/images/crmImages/inquiry.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Consolidated Activity Report':
+          imgSrc = './assets/images/crmImages/consolidation.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Lead Status Report':
+          imgSrc = './assets/images/crmImages/leadStatus.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
       }
     }
-    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
-  }
-  createLeadStatusReport(){
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        report_type: 'leadStatus'
-      }
-    }
-    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
   }
 }
