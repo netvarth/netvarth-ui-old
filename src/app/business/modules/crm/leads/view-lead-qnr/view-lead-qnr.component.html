@@ -139,7 +139,7 @@
         </div>
           </div>
       <div *ngIf="showQuestionnaire && questionaire" class="quest">
-        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)"
+        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"  [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)"
           (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
       </div>
     </div>
