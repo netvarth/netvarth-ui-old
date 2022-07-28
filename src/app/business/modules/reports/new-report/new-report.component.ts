@@ -156,7 +156,7 @@ export class NewReportComponent implements OnInit {
   loading = false;
 
   isQuestionaire = false;
-
+  tday = new Date();
   @ViewChild('selectIntStatus') selectIntStatus: MatSelect;
   @ViewChild('select') select: MatSelect;
   @ViewChild('apptStatusSelect') apptStatusSelect: MatSelect;
