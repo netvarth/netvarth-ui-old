@@ -3,12 +3,14 @@
     <h5 class="mgn-up-10" *ngIf="foldertype === 'shared'">
       <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {{customer_label | capitalizeFirst}} Files
+      <!-- {{customer_label | capitalizeFirst}}  -->
+      {{folderFileName | capitalizeFirst}}
     </h5>
     <h5 class="mgn-up-10" *ngIf="foldertype === 'public'">
       <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
       </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      {{provider_label | capitalizeFirst}} Files
+      <!-- {{provider_label | capitalizeFirst}} -->
+      {{folderFileName | capitalizeFirst}}
     </h5>
     <h5 class="mgn-up-10" *ngIf="foldertype === 'private'">
       <span class="fa fa-arrow-left pointer-cursor" (click)="onCancel()">
@@ -19,13 +21,13 @@
       Manage the files uploaded by the {{customer_label ? customer_label : provider_label}}s !
     </p> -->
     <p *ngIf="foldertype === 'shared'" class="text-secondary mx-5 no-padding">
-      <!-- && !isHealthCare -->
+      <!-- && !isHealthCare {{customer_label | capitalizeFirst}}s -->
       <!-- Manage the files uploaded by the {{foldername=='Provider' ? 'provider' : 'consumer'}} label! -->
-      Manage the files uploaded by the {{customer_label | capitalizeFirst}}s label!
+      Manage the files uploaded by the {{folderFileName | capitalizeFirst}}!
     </p>
     <p *ngIf="foldertype === 'public'" class="text-secondary mx-5 no-padding">
-      <!-- && provider_label && isHealthCare -->
-      Manage the files uploaded by the {{provider_label | capitalizeFirst}}s label!
+      <!-- && provider_label && isHealthCare {{provider_label | capitalizeFirst}}s-->
+      Manage the files uploaded by the {{folderFileName | capitalizeFirst}}!
     </p>
     <p *ngIf="foldertype === 'private'" class="text-secondary mx-5 no-padding">Manage your own files!
     </p>
@@ -331,7 +333,7 @@
                 </div>
               </div>
             </div>
-            <div class="card side" *ngIf="foldertype !== 'private'">
+            <!-- <div class="card side" *ngIf="foldertype !== 'private'">
               <div class="card-header">
                 <h2 class="mb-0">
                   <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOwnerName"
@@ -357,7 +359,7 @@
 
                 </div>
               </div>
-            </div>
+            </div> -->
             <div class="card side">
               <div class="card-header">
                 <h2 class="mb-0">

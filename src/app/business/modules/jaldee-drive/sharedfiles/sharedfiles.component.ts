@@ -35,6 +35,8 @@ export class SharedfilesComponent implements OnInit {
         foldername: foldername,
       }
     };
-    this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
+   // this.router.navigate(['provider', 'drive', 'folderfiles'], navigationExtras);
+   this.router.navigate(['provider', 'drive','sharedfiles', 'folders'], navigationExtras);
+
   }
 }

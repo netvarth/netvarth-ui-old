@@ -5,7 +5,9 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
 import { SharedfilesComponent } from "./sharedfiles.component";
 
 const routes: Routes = [
-    { path: '', component: SharedfilesComponent }
+    { path: '', component: SharedfilesComponent },
+    { path: 'folders',loadChildren: ()=> import('../folders/folders.module').then(m=>m.FoldersModule) },
+
 ]
 
 @NgModule({
