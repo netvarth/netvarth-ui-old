@@ -996,4 +996,13 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
       }
     });
   }
+  showCallingModes(modes, action) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        waiting_id: modes,
+        type: 'appt'
+      }
+    };
+    this.router.navigate(['provider', 'telehealth'], navigationExtras);
+  }
 }
