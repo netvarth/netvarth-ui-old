@@ -780,11 +780,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     confirmcheckin(type?) {
+      
         const _this = this;
         // type === 'checkin' && 
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
             // this.paymentBtnDisabled = true;
-            this.submitQuestionnaireAnswers(this.questionAnswers);
+            // this.submitQuestionnaireAnswers(this.questionAnswers);
 
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
@@ -2050,7 +2051,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
       }
       submitConsumerWaitlistQuestionnaire(body,uuid?) {
         console.log("submit uuid:",uuid)
-        this.shared_services.submitConsumerOrderQuestionnaire(body, this.trackUuid, this.account_id).subscribe(data => {
+        this.shared_services.submitConsumerWaitlistQuestionnaire(body, this.trackUuid, this.account_id).subscribe(data => {
           this.uploadAudioVideo(data,uuid);
         }, error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -2058,6 +2059,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
       }
      //step3 
     validateConsumerQuestionnaireResubmit(answers, dataToSend,uuid?) {
+      
         this.shared_services.validateConsumerQuestionnaireResbumit(answers, this.account_id).subscribe((data: any) => {
           this.setValidateError(data);
           if (data.length === 0) {
