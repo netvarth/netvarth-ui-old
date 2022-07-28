@@ -59,6 +59,9 @@
                         (click)="redirectionTaskTemplate()">
                         <div tabindex="1">
                             <div style="display:flex;align-items:center;gap:5px">
+                                <div>
+                                    <img style="height:25px;width:25px" src="/assets/images/crmImages/schedulemarketingActivityIcon.png" />
+                                </div>
                                 <div *ngIf="lebalScheduleMarkActivity">
                                     {{lebalScheduleMarkActivity}}
                                 </div>
@@ -68,6 +71,9 @@
                     <button class="button-28" role="button" type="submit" (click)="redirectionTaskActivityList()">
                         <div>
                             <div style="display:flex;align-items:center;gap:5px">
+                                <div>
+                                    <img style="height:25px !important;width:25px !important;" src="/assets/images/crmImages/schedulemarketingActivityUpdationIcon.png" />
+                                </div>
                                 <div *ngIf="lebalMarketingActivityUpdation">
                                     {{lebalMarketingActivityUpdation}}
                                 </div>
@@ -114,6 +120,9 @@
                             style="width:10rem !important" class="button-28" role="button" type="submit">
                                 <div *ngIf="item" tabindex="1" (click)="templateViewActivity(item)">
                                     <div style="display:flex;align-items:center;gap:5px" *ngIf="item && item.name">
+                                        <div>
+                                            <img style="height:25px !important;width:25px !important"  src="/assets/images/crmImages/followUPs.png" />
+                                        </div>
                                         <div *ngIf="item && item.name">
                                             {{item.name}}
                                         </div>
