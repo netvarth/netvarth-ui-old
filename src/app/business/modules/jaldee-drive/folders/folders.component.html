@@ -53,11 +53,11 @@
                     <img  src="/assets/images/folderImage.png" title="{{folder.folderName ? folder.folderName : folder.id}} Folder" class="iconSize" alt=""> 
                  <span class="folderName">{{(folder.folderName | capitalizeFirst) ? (folder.folderName | capitalizeFirst) : folder.id}}</span> 
                 </td>
-                <td>
-                  <span class="text-dark-75 d-block" *ngIf="folder.folderSize >=1">
+                <td style="vertical-align: middle;">
+                  <span class="text-dark-75" *ngIf="folder.folderSize >=1">
                     {{getFileSize(folder.folderSize)}}MB
                   </span>
-                  <span class="text-dark-75 d-block" *ngIf="folder.folderSize <1">
+                  <span class="text-dark-75" *ngIf="folder.folderSize <1">
                     {{getFileSize(folder.folderSize*1024)}}KB
                   </span>
                 </td>
