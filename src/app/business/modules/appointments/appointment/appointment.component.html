@@ -742,6 +742,7 @@
                                         <div> {{item.name}}</div>
                                         <div> {{ Math.round (item.size/fileSizeInKb)}}KB</div>
                                     </div>
+                                    
                                     <div style="display:flex;gap:10px" *ngIf="item.type==='audio/mpeg' || item.type==='mp3'">
                                         <div>
                                             <img class="img" src="/assets/images/audio.png" />
