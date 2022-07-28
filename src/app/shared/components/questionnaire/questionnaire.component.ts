@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProviderServices } from '../../../business/services/provider-services.service';
 import { SharedServices } from '../../services/shared-services';
@@ -19,7 +19,7 @@ import { FileService } from '../../services/file-service';
   templateUrl: './questionnaire.component.html',
   styleUrls: ['./questionnaire.component.css', '../../../../assets/plugins/global/plugins.bundle.css', '../../../../assets/plugins/custom/prismjs/prismjs.bundle.css']
 })
-export class QuestionnaireComponent implements OnInit {
+export class QuestionnaireComponent implements OnInit, OnChanges {
   @Input() questionnaireList;
   @Input() source;
   @Input() accountId;
@@ -30,10 +30,11 @@ export class QuestionnaireComponent implements OnInit {
   @Input() waitlistStatus;
   @Input() orderStatus;
   @Input() donationDetails;
+  @Input() mode; // Added by mani to check the file upload 
   @Output() fileChanged = new EventEmitter<any>();
   @Output() returnAnswers = new EventEmitter<any>();
 
-  
+
   answers: any = {};
   showDataGrid: any = {};
   selectedMessage: any = [];
@@ -126,9 +127,13 @@ export class QuestionnaireComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
+  ngOnChanges() {
+    console.log("In Change:", this.questionAnswers);
+  }
   ngOnInit(): void {
+    console.log("Questionaire Init");
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log("questionnaireList :", this.questionnaireList);
+    // console.log("questionnaireList :", this.questionnaireList);
     if (this.questionnaireList) {
       if (this.source === 'customer-create' || this.source === 'onetime') {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
@@ -156,6 +161,7 @@ export class QuestionnaireComponent implements OnInit {
       this.groupQuestionsBySection();
       this.getAnswers(this.questions, 'get');
     }
+    console.log("Inside QA:", this.questionAnswers);
     if (this.questionAnswers) {
       if (this.questionAnswers.files) {
         this.selectedMessage = this.questionAnswers.files;
@@ -185,17 +191,18 @@ export class QuestionnaireComponent implements OnInit {
       }
     }
     if (this.uuid) {
+      console.log("I am here:", this.questionnaireList);
       if (this.questionnaireList.questionAnswers) {
         this.questions = this.questionnaireList.questionAnswers;
         this.qnrStatus = 'submitted';
         this.groupQuestionsBySection();
-        console.log("Sequence :", this.groupedQnr);
       } else {
         this.questions = this.questionnaireList.labels;
         this.qnrStatus = 'released';
         this.groupQuestionsBySection();
       }
       if (this.questions && this.questions.length > 0) {
+        console.log("UId");
         this.getAnswers(this.questions, 'get');
       }
     }
@@ -231,6 +238,7 @@ export class QuestionnaireComponent implements OnInit {
     }
   }
   getAnswers(answerData, type?) {
+    console.log(answerData);
     this.answers = new Object();
     this.dataGridColumns = {};
     if (type === 'get') {
@@ -238,8 +246,22 @@ export class QuestionnaireComponent implements OnInit {
       this.uploadedImages = [];
       this.uploadedFiles = [];
       for (let answ of answerData) {
+        console.log("Answer Data: ", answ);
+        console.log("Questionanswers", this.questionAnswers);
         if (answ.answerLine) {
           if (answ.question.fieldDataType === 'fileUpload') {
+            
+            if (this.source === 'proLead') {            
+              for (let i = 0; i < answ.answerLine.answer[answ.question.fieldDataType].length; i++) {
+                answ.answerLine.answer[answ.question.fieldDataType][i].action = 'add';
+                answ.answerLine.answer[answ.question.fieldDataType][i].status = 'COMPLETE';
+                answ.answerLine.answer[answ.question.fieldDataType][i].uid = answ.answerLine.answer[answ.question.fieldDataType][i].keyName.uid;
+                answ.answerLine.answer[answ.question.fieldDataType][i].driveId = answ.answerLine.answer[answ.question.fieldDataType][i].driveId;
+                answ.answerLine.answer[answ.question.fieldDataType][i].url = answ.answerLine.answer[answ.question.fieldDataType][i].keyName;
+              }
+              this.answers[answ.answerLine.labelName] = answ.answerLine.answer[answ.question.fieldDataType];              
+            }
+
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
               for (let i = 0; i < answ.answerLine.answer[answ.question.fieldDataType].length; i++) {
                 if (type === 'get') {
@@ -252,6 +274,8 @@ export class QuestionnaireComponent implements OnInit {
                   }
                   this.comments[answ.answerLine.labelName + '=' + answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i].comments;
                   this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i];
+                  console.log("Answer1:", this.uploadedFiles);
+
                 } else {
                   this.selectedMessage.push(answ.answerLine.answer[answ.question.fieldDataType][i]);
                   if (!this.filestoUpload[answ.answerLine.labelName]) {
@@ -261,6 +285,7 @@ export class QuestionnaireComponent implements OnInit {
                     this.filestoUpload[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = {};
                   }
                   this.filestoUpload[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i];
+                  console.log("Answer2:", answ.answerLine);
                 }
               }
             }
@@ -313,21 +338,17 @@ export class QuestionnaireComponent implements OnInit {
         });
       });
     }
-    this.onSubmit();
+    this.onSubmit('init');
   }
   filesSelected(event, question, document) {
     const input = event.target.files;
     if (input) {
-     
       for (const file of input) {
-        console.log("File:");
-        console.log(file.type);
         const fileInput = {
           caption: document,
           file: file,
           labelName: question.labelName
         }
-  
         this.fileChanged.emit(fileInput);
         let type = file.type.split('/');
 
@@ -364,7 +385,7 @@ export class QuestionnaireComponent implements OnInit {
             reader.onload = (e) => {
               this.selectedMessage[indx]['path'] = e.target['result'];
             };
-            reader.readAsDataURL(file);            
+            reader.readAsDataURL(file);
           }
         } else {
           this.audioVideoFiles.push(file);
@@ -376,11 +397,11 @@ export class QuestionnaireComponent implements OnInit {
             };
             reader.readAsDataURL(file);
           }
-        }        
+        }
       }
       if (this.file2 && this.file2.nativeElement.value) {
         this.file2.nativeElement.value = '';
-      }      
+      }
       this.onSubmit('inputChange');
     }
   }
@@ -431,6 +452,7 @@ export class QuestionnaireComponent implements OnInit {
     return this.sharedFunctionobj.isNumeric(evt);
   }
   onSubmit(keytype?) {
+    console.log("Files To upload", this.filestoUpload);
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -546,6 +568,7 @@ export class QuestionnaireComponent implements OnInit {
     });
 
     Object.keys(this.answers).forEach(key => {
+      console.log(key);
       this.apiError[key] = [];
       let newMap = {};
       let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
@@ -571,20 +594,17 @@ export class QuestionnaireComponent implements OnInit {
         });
       }
     });
-    console.log(this.questionnaireList[0]);
     let postData;
     postData = {
       'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
       'answerLine': data
     }
-    console.log("Postdata:", postData);
     const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload, 'dataGridColumnsAnswerList': this.dataGridColumnsAnswerList, 'comments': this.comments };
     if (keytype === 'inputChange') {
       this.changeHappened = true;
     }
     if (keytype === 'submit') {
       if (this.changeHappened) {
-
         this.submitQuestionnaire(passData);
       } else {
         if (!this.type) {
@@ -598,6 +618,7 @@ export class QuestionnaireComponent implements OnInit {
         }
       }
     } else {
+      console.log("passData:", passData);
       this.returnAnswers.emit(passData);
     }
   }

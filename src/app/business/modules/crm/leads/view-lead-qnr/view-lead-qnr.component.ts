@@ -583,27 +583,15 @@ export class ViewLeadQnrComponent implements OnInit {
     dataToSend.append('question', blobpost_Data);
     if (this.leadInfo.status.name === 'Login Verified') {
       _this.providerServices.submitLeadLoginVerifyQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-        this.uploadFileStatus(uuid, data).then(
-          () => {
-            _this.complete(uuid, type);
-          }
-        );
+        _this.complete(uuid, type);
       });
     } else if ((this.questionaire && this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) || this.leadInfo.status.name === 'Credit Recommendation') {
       _this.providerServices.resubmitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-        this.uploadFileStatus(uuid, data).then(
-          () => {
-            _this.complete(uuid, type);
-          }
-        );
+        _this.complete(uuid, type);
       });
     } else {
       _this.providerServices.submitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
-        this.uploadFileStatus(uuid, data).then(
-          () => {
-            _this.complete(uuid, type);
-          }
-        );
+        _this.complete(uuid, type);
       });
     }
   }
@@ -841,18 +829,31 @@ export class ViewLeadQnrComponent implements OnInit {
     this.providerServices.getActiveQuestionaire(this.leadInfo.uid).subscribe(
       (questionaire: any) => {
         this.questionaire = questionaire;
-        console.log("Current Questionaire:", this.questionaire);
+        if (this.questionaire.questionAnswers) {
+          this.questionAnswers = this.questionaire.questionAnswers;
+        }
         this.showQuestionnaire = true;
       }
     )
   }
   getQuestionAnswers(event) {
-    console.log('event', event)
+    const _this = this;
     this.questionAnswers = event;
-    console.log('filestoUpload',event.answers.answerLine)
-    console.log(' this.questionAnswers ', this.questionAnswers );
-    console.log(this.leadInfo.status.name);
+    this.questionAnswers.answers.answerLine.forEach((element, index) => {
+      if (element.answer.fileUpload) {
+        element.answer.fileUpload.forEach((element1, index1) => {
+          console.log("Element1:");
+          console.log(element1);        
+            // _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
+            _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = element1.uid;
+            _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
+            _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['action'] = 'add';
+        });
+      }
+    });
+  console.log("Show:",_this.questionAnswers);
   }
+  
   autoGrowTextZone(e) {
     if(e){
       e.target.style.height = "0px";
@@ -998,56 +999,44 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   uploadFile(input) {
-    console.log("File Input:");
-    console.log(input);
+    const _this = this;
     const fileString = [{
       caption: input.caption,
-      mimeType:input.file.type,
-      url:input.file.name,
-      size:input.file.size,
-      labelName:input.labelName
+      mimeType: input.file.type,
+      url: input.file.name,
+      size: input.file.size,
+      labelName: input.labelName
     }]
-
-
     const dataToSend: FormData = new FormData();
     const requestsInfo = {
       "proId": this.leadInfo.customer.id,
       "questionnaireId": this.questionaire.questionnaireName
     }
-  
     const requests = new Blob([JSON.stringify(requestsInfo)], { type: 'application/json' });
     dataToSend.append('requests', requests);
-    
-    // const files = new Blob([JSON.stringify(requestsInfo)], { type: 'application/json' });
     dataToSend.append('files', new Blob([JSON.stringify(fileString)], { type: 'application/json' }));
-    
     this.leadsService.uploadFile(dataToSend).subscribe(
-      (info: any)=>{
-        
-        console.log("Info:",info);
-        
-        this.questionAnswers.answers.answerLine.forEach((element, index) => {
-          if(element.labelName===input.labelName) {
-            console.log("Element:", element)
-            element.answer.fileUpload.forEach((element1, index1) => {
-              console.log("Element1:");
-              console.log(element1);
-              if (element1.caption === input.caption) {
-                this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
-                this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = info.urls[0].uid;
-                this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
-               console.log("herererere");
-              } else {
-                this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
+      (info: any) => {
+        this.uploadAudioVideoQNR(info).then(()=>{
+          console.log("Show:",_this.questionAnswers)
+          _this.questionAnswers.answers.answerLine.forEach((element, index) => {
+              if (element.labelName === input.labelName) {
+                console.log("Element:", element)
+                element.answer.fileUpload.forEach((element1, index1) => {
+                  console.log("Element1:");
+                  console.log(element1);
+                  if (element1.caption === input.caption) {
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = info.urls[0].uid;
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['action'] = 'add';
+                  }
+                });
               }
             });
-          }
-      });
-        this.questionAnswers.filestoUpload[input.labelName][input.caption]['driveId'] = info.urls[0].driveId;
-        this.questionAnswers.filestoUpload[input.labelName][input.caption]['uid'] = info.urls[0].uid;
-        this.questionAnswers.filestoUpload[input.labelName][input.caption]['status'] = 'COMPLETE';
-        this.uploadAudioVideoQNR(info).then();
-      }, error  => {
+          console.log("Show:",_this.questionAnswers);
+        });
+      }, error => {
         console.log(error);
       }
     )
