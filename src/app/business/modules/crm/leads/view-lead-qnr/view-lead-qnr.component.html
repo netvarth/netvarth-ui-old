@@ -51,7 +51,6 @@
     </div>
   </div>
 </section>
-
 <section *ngIf="leadInfo" class="container card mt-4 mx-auto">
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
   <ng-container *ngIf="this.leadInfo.status.name==='New' || this.leadInfo.status.name==='KYC Updated'">
@@ -65,7 +64,7 @@
   
 
   <ng-container *ngIf="leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified' 
-  || leadInfo.status.name==='Login Verified'">
+  || leadInfo.status.name==='Login Verified'">sdfsdffds
     <div class="row d-lg-flex justify-content-lg-start">
       <div class="card">
         <div style="display: flex;
@@ -218,12 +217,13 @@
         (removeApplicant)="removeApplicant($event, applicant)" [leadInfo]="leadInfo"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers" [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)"
+      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'"  [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)"
         (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
   </ng-container>
 
   <ng-container *ngIf="leadInfo.status.name==='Credit Recommendation'">
+    
     <ng-container *ngFor="let applicant of applicants; let i=index">
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
@@ -231,11 +231,11 @@
         (removeApplicant)="removeApplicant($event, applicant)" [leadInfo]="leadInfo" ></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers" [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)"
+      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)"
         (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
     <ng-container *ngIf="showQuestionnaire && questionaire" class="quest">
-        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"  [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)"
+        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"  [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)"
           (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
   </ng-container>

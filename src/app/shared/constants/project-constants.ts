@@ -1214,6 +1214,9 @@ export const projectConstantsLocal = {
     },
     "nanohospitals": {
       pathref: 128621
+    },
+    "AuthordemyOfficial": {
+      pathref: 129147
     }
   },
   UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",
