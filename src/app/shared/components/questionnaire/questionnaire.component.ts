@@ -251,15 +251,17 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         if (answ.answerLine) {
           if (answ.question.fieldDataType === 'fileUpload') {
             
-            if (this.source === 'proLead') {            
-              for (let i = 0; i < answ.answerLine.answer[answ.question.fieldDataType].length; i++) {
-                answ.answerLine.answer[answ.question.fieldDataType][i].action = 'add';
-                answ.answerLine.answer[answ.question.fieldDataType][i].status = 'COMPLETE';
-                answ.answerLine.answer[answ.question.fieldDataType][i].uid = answ.answerLine.answer[answ.question.fieldDataType][i].keyName.uid;
-                answ.answerLine.answer[answ.question.fieldDataType][i].driveId = answ.answerLine.answer[answ.question.fieldDataType][i].driveId;
-                answ.answerLine.answer[answ.question.fieldDataType][i].url = answ.answerLine.answer[answ.question.fieldDataType][i].keyName;
-              }
-              this.answers[answ.answerLine.labelName] = answ.answerLine.answer[answ.question.fieldDataType];              
+            if (this.source === 'proLead') {        
+              if (answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length>0) {
+                for (let i = 0; i < answ.answerLine.answer[answ.question.fieldDataType].length; i++) {
+                  answ.answerLine.answer[answ.question.fieldDataType][i].action = 'add';
+                  answ.answerLine.answer[answ.question.fieldDataType][i].status = 'COMPLETE';
+                  answ.answerLine.answer[answ.question.fieldDataType][i].uid = answ.answerLine.answer[answ.question.fieldDataType][i].keyName.uid;
+                  answ.answerLine.answer[answ.question.fieldDataType][i].driveId = answ.answerLine.answer[answ.question.fieldDataType][i].driveId;
+                  answ.answerLine.answer[answ.question.fieldDataType][i].url = answ.answerLine.answer[answ.question.fieldDataType][i].keyName;
+                }
+                this.answers[answ.answerLine.labelName] = answ.answerLine.answer[answ.question.fieldDataType];       
+              }                         
             }
 
             if (answ.answerLine.answer && answ.answerLine.answer[answ.question.fieldDataType] && answ.answerLine.answer[answ.question.fieldDataType].length > 0) {
@@ -307,7 +309,9 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       }
     } else {
       for (let answ of answerData) {
-        this.answers[answ.labelName] = answ.answer[Object.keys(answ.answer)[0]];
+        if (answ.answer[Object.keys(answ.answer)[0]]) {
+          this.answers[answ.labelName] = answ.answer[Object.keys(answ.answer)[0]];
+        }        
       }
     }
     if (type === 'get') {
@@ -588,10 +592,10 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
           'answer': newMap
         });
       } else {
-        newMap = '';
-        data.push({
-          'labelName': key,
-        });
+        // newMap = '';
+        // data.push({
+        //   'labelName': key,
+        // });
       }
     });
     let postData;
