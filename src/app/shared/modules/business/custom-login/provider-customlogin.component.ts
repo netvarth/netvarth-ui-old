@@ -12,7 +12,6 @@ import { ForgotPasswordComponent } from '../../../components/forgot-password/for
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { SessionStorageService } from '../../../services/session-storage.service';
 import { SnackbarService } from '../../../services/snackbar.service';
-import { Title } from '@angular/platform-browser';
 import { GroupStorageService } from '../../../services/group-storage.service';
 import { AuthService } from '../../../services/auth-service';
 
@@ -49,6 +48,7 @@ export class ProviderCustomLoginComponent implements OnInit {
   prefix = '';
   idCaption = 'Mobile/Email';
   idPlaceHolder = 'Enter Mobile/Email';
+  deviceId: any;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -62,12 +62,24 @@ export class ProviderCustomLoginComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private sessionStorageService: SessionStorageService,
     private snackbarService: SnackbarService,
-    private titleService: Title,
     private groupService: GroupStorageService,
     private authService: AuthService
   ) {
 
-    this.titleService.setTitle('Jaldee Business - Login');
+    this.activateRoute.queryParams.subscribe(data => {
+      this.qParams = data;
+      console.log("Params:", data);
+      if (data.device) {
+        this.lStorageService.setitemonLocalStorage('deviceName', data.device);
+      }
+      if (data.at) {
+        this.deviceId = data.at;
+        this.lStorageService.setitemonLocalStorage('reqFrom', 'SP_APP');
+      }
+      if (data.muid) {
+        this.lStorageService.setitemonLocalStorage('mUniqueId', data.muid);
+      }
+    });
     this.activateRoute.params.subscribe(data => {
       this.qParams = data;
       this.busLoginId = this.qParams.id;
