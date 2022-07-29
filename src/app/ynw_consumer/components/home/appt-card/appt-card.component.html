@@ -124,6 +124,19 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+        <br>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5" (click)="stopprop($event);cardActionPerformed('appt', 'viewPrescription', booking, $event)">
+            <div class="pull-left col-xs-6 no-padding" *ngIf="showViewPrescritionBtn">
+                <div class="prov_lbl"></div>
+                <div class="prov_nme" (click)="stopprop($event);cardActionPerformed('appt', 'viewPrescription', booking, $event)" style="margin-top: 20px;">
+                    <!-- {{booking.provider.businessName}} -->
+                    <span ><i class="mr-rx-icon-customer" (click)="stopprop($event);cardActionPerformed('appt', 'viewPrescription', booking, $event)"></i></span>&nbsp;<span (click)="stopprop($event);cardActionPerformed('appt', 'viewPrescription', booking, $event)">View Prescription</span>
+                </div>
+            </div>
+            
+
         </div>
     </div>
 
