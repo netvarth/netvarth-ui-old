@@ -14,11 +14,11 @@
 </section>
 
 
-<section class="driveFilesList card mt-2 p-3 table-card col-md-12 ">
-  <div class="row sectionRow p-3 no-padding-small">
+<section class="mt-2 p-3  col-md-12">
+  <div class="row mx-1 no-padding-small">
     <div class="card  card-custom card-stretch gutter-b no-padding col-md-12  col-sm-12  col-xs-12">
-      <div class="row p-3 no-padding-small">
-        <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12">
+      <!-- <div class="row p-3 no-padding-small"> -->
+        <!-- <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12"> -->
           <div class="tab-content">
             <div class="table-responsive1">
               <app-common-innerloading-spinner *ngIf="dataLoading"></app-common-innerloading-spinner>
@@ -26,10 +26,12 @@
                 class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
                   <tr class="tble-filtr-tr heght ">
-                    <th style="min-width: 160px" class="head_color">
+                    <!-- style="min-width: 160px" -->
+                    <th  class="head_color folderHeadMinSize">
                       Folders
                     </th>
-                    <th style="min-width: 100px"  class="head_color">
+                    <!-- style="min-width: 100px"  -->
+                    <th  class="head_color sizeHeadMinSize">
                       Size
                     </th>
                         <!-- <th class="head_color" >
@@ -101,8 +103,8 @@
             </div>
             </div>
           </div>
-        </div>
-      </div>
+        <!-- </div> -->
+      <!-- </div> -->
     </div>
   </div>
  

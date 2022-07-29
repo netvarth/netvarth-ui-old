@@ -17,12 +17,29 @@
       margin: 0px !important;
 
     }
+    /* .folderHeadMinSize{
+      min-width: 0px !important;
+    }
+    .sizeHeadMinSize{
+      min-width: 0px !important;
+    } */
+
+  }
+  .table-responsive{
+    border: none !important;
   }
   .head_color{
     border-top: 0;
     color: #1e4079;
     vertical-align: middle;
+
   }
+  /* .folderHeadMinSize{
+    min-width: 160px;
+  }
+  .sizeHeadMinSize{
+    min-width: 100px;
+  } */
   .heght {
     line-height: 24px !important;
     /* background-color: #f3f6f9; */
