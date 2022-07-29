@@ -81,6 +81,7 @@ export class ApplicantComponent implements OnInit {
   crifScoreLebal:string='CRIF SCORE :';
   lebalCrifVerification:string='Check CRIF Verification';
   actionText: string='';  
+  todayDate:Date;
   constructor(
     private formBuilder: FormBuilder,
     private fileService: FileService,
@@ -89,7 +90,11 @@ export class ApplicantComponent implements OnInit {
     private datePipe:DatePipe,
     // private teleService:TeleBookingService,
     private dialog: MatDialog, 
-     ) { }
+     ) { 
+    this.todayDate = new Date();
+    this.todayDate.setDate(this.todayDate.getDate() - 1);
+    // console.log(this.todayDate.toString());
+     }
 
   ngOnInit(): void {
     console.log("Applicant Init");
@@ -665,7 +670,45 @@ export class ApplicantComponent implements OnInit {
     }
   }
   handleKycSelectedType(selectValue,applicantType){}
-
+  customerNameValidate(inputtxt){
+  //   console.log('inputtxt',inputtxt)
+  //   console.log('inputtxt',inputtxt.length)
+  //   var letters = /^[A-Za-z]+$/;
+  //  if(inputtxt.match(letters))
+  //    {
+      
+  //     return true;
+  //    }
+  //  else
+  //    {
+  //     this.applicantForm.get('customerName').valueChanges.subscribe((res)=>{
+  //       console.log(res);
+  //       const error='Allow only allphabet';
+  //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      
+  //    return false;
+  //     })
+      
+  //    }
+  }
+  allowOnlyLetters(e) {
+    console.log(e);
+    console.log('window.event',window.event)
+    if (window.event) {
+      // var charCode = window.event.keyCode;    
+    }
+    else if (e) {
+      var charCode = e.which;
+      console.log('charCode',charCode)
+    }
+    else { return true; }
+    if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode=8))
+      return true;
+    else {
+      alert("Please enter only alphabets");
+      return false;
+    }
+  }   
 
  
   

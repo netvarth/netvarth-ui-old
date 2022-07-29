@@ -93,6 +93,8 @@
           <div class="text-center mx-auto">
             <a class="status-btn btn btn-outline-dark my-2" (click)="addConsumerInboxMessage()"><i
                 class="fa fa-commenting-o" aria-hidden="true"></i> Message</a>
+                <a class="status-btn btn btn-outline-dark my-2 mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] === 'Started'" (click)="showCallingModes(waitlist_data.uid, 'STARTED')"> <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'"
+                  [class]="iconClass"></i></span> Resume</a>
             <a class="status-btn btn btn-outline-dark my-2 mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Cancelled')"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>

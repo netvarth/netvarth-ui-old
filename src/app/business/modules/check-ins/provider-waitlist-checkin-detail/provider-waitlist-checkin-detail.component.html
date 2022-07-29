@@ -125,8 +125,11 @@
                 aria-hidden="true"></i> Cancelled</a>
           </div>
           <div class="text-center mx-auto">
+            
             <a class="status-btn btn btn-outline-dark my-2 serviceBtnName" (click)="addConsumerInboxMessage()"><i
                 class="fa fa-commenting-o" aria-hidden="true"></i> Message</a>
+                <a class="status-btn btn btn-outline-dark my-2 mx-1 serviceBtnName" *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] === 'Started'" (click)="showCallingModes(waitlist_data.ynwUuid, 'STARTED')"> <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'"
+                  [class]="iconClass"></i></span> Resume</a>
             <a class="status-btn btn btn-outline-dark my-2 mx-1 serviceBtnName" *ngIf="check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Completed'
              && check_in_statuses[waitlist_data.waitlistStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('CANCEL')">
