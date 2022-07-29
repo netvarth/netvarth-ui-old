@@ -3812,14 +3812,5 @@ export class ViewTaskComponent implements OnInit {
     )
 
   }
-  select(){
-    var s = "SMIBANK";
-    console.log('s',s)
-    var i = s.indexOf(' ');
-    console.log('iii',i)
-    var partOne = s.slice(0, i).trim();
-    var partTwo = s.slice(i + 1, s.length).trim();
-    console.log('partOne',partOne)
-    console.log('partTwo',partTwo)
-  }
+
 }

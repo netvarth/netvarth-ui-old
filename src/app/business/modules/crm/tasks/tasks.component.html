@@ -1,16 +1,16 @@
 <section class="card">
   <div class="row d-flex">
-    <div class="col-md-4 col-lg-4 col-sm-5 col-xs-5">
+    <div class="col-md-4 col-lg-4 col-sm-5 col-xs-5 headerDetails">
       <div class="dash-head">
         <div><i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor" (click)="goback()"></i></div>
         <div style="color: #1D3E77;" *ngIf="headerName">{{headerName}}</div>
       </div>
     </div>
-    <div class="col-md-8 col-lg-8 col-sm-7 col-xs-7">
+    <div class="col-md-8 col-lg-8 col-sm-7 col-xs-7 headerDetailss">
       <div class="pull-right">
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
-            <li class="dropdown messages-menu loc-lst queue-menu-1 pull-right">
+            <li class="dropdown messages-menu loc-lst queue-menu-1 pull-right locationName">
               <i class="icon-location dropdown-toggle " data-toggle="dropdown" style="color: #1D3E77"></i>
               <a href="#" class="dropdown-toggle navbar-item-color bold" data-toggle="dropdown"
                 *ngIf="selected_location && selected_location.place" style="color: #1D3E77">
@@ -39,9 +39,9 @@
   </div>
 </section>
 <section class="card col-md-12">
-  <div class="row col-md-12 btnClass">
+  <div class="activityFilter1">
     <!----mat tab change to mat select start-->
-    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4 statusSelectDiv">
+    <div class="statusSelectDiv">
       <div class="fieldPadding">
         <mat-select class="form-control" placeholder="New" #userTaskStatus [(value)]="statusFilter"
           [compareWith]="compareFn">
@@ -75,19 +75,40 @@
         </mat-select>
       </div>
     </div>
-    <div class="col-md-4 col-lg-4 col-sm-8 col-xs-8  no-padding no-padding-small d-flex">
-      <div class="col-sm-6 col-xs-6 mr-5 no-padding-small no-padding">
-        <span (click)="createTask('Create')" class="btn btn-primary">
+    <div class="activityandFilter" >
+      <div class="">
+        <span (click)="createTask('Create')"  class="btn btn-primary font-weight-bold confirmBtn">
           <span *ngIf="createActivityText"> {{createActivityText}}</span>
         </span>
       </div>
-      <div class="col-sm-6 col-xs-6 no-padding-small no-padding">
-        <span (click)="showFilterSidebar()" class="btn btn-primary">
+      <div class="">
+        <span (click)="showFilterSidebar()"  class="btn btn-primary font-weight-bold confirmBtn">
           <i class="icon-filter-one mt-2" [matTooltipClass]="tooltipcls" [matTooltip]="filtericonTooltip"
             style="cursor: pointer;"></i>
           <span class="hideFilter" *ngIf="Filter">{{Filter}}</span>
         </span>
       </div>
+    </div>
+    <div class="activityandFilterMob">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" 
+      style="height:35px;width:85px;border-radius: 0px !important;" >
+        <!-- <mat-icon>more_vert</mat-icon> -->
+        <div class="others">
+          <span><img style="margin-bottom: 7px;" height="20px" width="20px" src="/assets/images/crmImages/others.png" /></span>
+         <span><span style="font-size: 13px;color:#000;margin-left: 2px;font-weight: 600;">Others</span></span>
+        </div>
+       <!-- <div>Others</div> -->
+      </button>
+      <mat-menu #menu="matMenu" class="mat-menu-panel">
+        <button mat-menu-item (click)="createTask('Create')">
+          <img  height="25px" width="25px"  src="/assets/images/crmImages/craeteActivity.png"/>
+          <span *ngIf="createActivityText">{{createActivityText}}</span>
+        </button>
+        <button mat-menu-item (click)="showFilterSidebar()">
+          <img  height="25px" width="25px"  src="/assets/images/crmImages/filter.png"/>
+          <span *ngIf="Filter">{{Filter}}</span>
+        </button>
+      </mat-menu>
     </div>
   </div>
   <div class="clearfix"></div>
