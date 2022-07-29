@@ -92,7 +92,7 @@
         <div class="fieldPadding" *ngIf="applicant">
             <div class=""
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
-                <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+                <input #logofile type="file" accept="/*;capture=camera" style="display:none;" 
                     (change)="filesSelected($event, 'kyc1')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
                         attach_file</i></a>
@@ -170,7 +170,7 @@
         <div class="fieldPadding" *ngIf="applicant">
             <div class=""
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
-                <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                <input #files type="file" accept="/*;capture=camera" style="display:none;"
                     (change)="filesSelected($event,'kyc2')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
@@ -248,7 +248,7 @@
         <div class="fieldPadding" *ngIf="applicant">
             <div class=""
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && applicant.validationIds[2].attachments[0]['s3path']">
-                <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                <input #files type="file" accept="/*;capture=camera" style="display:none;" 
                     (change)="filesSelected($event,'kyc3')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
@@ -397,7 +397,7 @@
                     <div class="matDatePicker">
                         <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
                             oncut="return false" ondrop="return false" formControlName="dob" class="form-control"
-                            type="text" matInput [matDatepicker]="picker" placeholder="Enter Date" #dob>
+                            type="text" matInput [matDatepicker]="picker" placeholder="Enter Date" #dob [max]="todayDate">
                         <mat-datepicker-toggle matSuffix [for]="picker">
                         </mat-datepicker-toggle>
                         <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
@@ -553,7 +553,7 @@
         <div class="fieldPadding">
             <div
             [hidden]=" applicant && applicant.otherAttachments && applicant.otherAttachments.length > 0 && applicant.otherAttachments[0]['s3path']">
-                <input #files type="file" accept="/*;capture=camera" style="display:none;" multiple
+                <input #files type="file" accept="/*;capture=camera" style="display:none;" 
                     (change)="filesSelected($event,'other')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
                         attach_file</i></a>
