@@ -656,12 +656,12 @@ export class FolderFilesComponent implements OnInit {
     this.doSearch();
   }
   preview(file) {
+    console.log("File Type :",file.fileType)
     if (
-      file.fileType === "jpg" ||
-      file.fileType === "jpeg" ||
-      file.fileType === "png" ||
-      file.fileType === "bmp" ||
-      file.fileType === "webp"
+      file.fileType === "jpg" ||file.fileType === "jpeg" || file.fileType === "png" ||file.fileType === "bmp" || file.fileType === "webp" ||file.fileType === "image/png" ||
+      file.fileType === "image/jpeg" ||
+      file.fileType === "image/jpg" ||
+      file.fileType === "jfif" 
     ) {
       this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
         width: "100%",

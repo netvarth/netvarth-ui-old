@@ -21,7 +21,7 @@
         <!-- <div class="card-body tble pt-0 pb-3 col-12 col-sm-12 col-xs-12"> -->
           <div class="tab-content">
             <div class="table-responsive1">
-              <app-common-innerloading-spinner *ngIf="dataLoading"></app-common-innerloading-spinner>
+              <!-- <app-common-innerloading-spinner *ngIf="dataLoading"></app-common-innerloading-spinner> -->
               <table
                 class="table  table-responsive table-hover table-head-custom table-head-bg table-borderless table-vertical-center">
                 <thead>
@@ -49,8 +49,8 @@
                     </th> -->
                   </tr>
                 </thead>
-                <tbody *ngFor="let folder of driveFiles | paginate: config; let i=index">
-                 <tr (click)="folderCliked(folder.id,folder.folderName)" class="trRow">
+                <tbody >
+                 <tr *ngFor="let folder of driveFiles | paginate: config; let i=index" (click)="folderCliked(folder.id,folder.folderName)" class="trRow">
                     <td class="tdStyle">
                     <img  src="/assets/images/folderImage.png" title="{{folder.folderName ? folder.folderName : folder.id}} Folder" class="iconSize" alt=""> 
                  <span class="folderName">{{(folder.folderName | capitalizeFirst) ? (folder.folderName | capitalizeFirst) : folder.id}}</span> 
@@ -66,7 +66,7 @@
                 <!-- <td></td> -->
                  </tr>
                  <tr *ngIf="!dataLoading && driveFiles.length === 0" class="my-2 py-2 ">
-                  <td class="text-center my-2 py-2" colspan="4">No files found.</td>
+                  <td class="text-center my-2 py-2" colspan="4">No folders found.</td>
                 </tr>
                 <tr *ngIf="dataLoading">
                   <td class="text-center" colspan="4">
