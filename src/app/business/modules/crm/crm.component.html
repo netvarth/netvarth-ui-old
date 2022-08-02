@@ -136,14 +136,14 @@
             <!---mat pannel end-->
             <!----follow ups pannel end-->
             <div class="eachTab mgn-up-15" style="flex-wrap: wrap;">
-                <div class="customCard redirectionList" *ngFor="let item of redirectionList"
-                    (click)="redirectionSeperateTemplate(item.activityName)">
-                    <div class="activityTemplate" *ngIf="item && item.activityName">
-                        <div *ngIf="item && item.activityName">
+                <div class="customCard redirectionList" *ngFor="let item of redirectionList[0]"
+                    (click)="redirectionSeperateTemplate(item.aliasName,item)">
+                    <div class="activityTemplate" *ngIf="item && item.aliasName">
+                        <div *ngIf="item && item.aliasName">
                             <img class="imgTempalte" src="/assets/images/crmImages/navbarIcon.png" />
                         </div>
-                        <div class="topicNameedirectionList" *ngIf="item && item.activityName">
-                            {{item.activityName}}
+                        <div class="topicNameedirectionList" *ngIf="item && item.aliasName">
+                            {{item.aliasName}}
                         </div>
                     </div>
                 </div>

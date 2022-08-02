@@ -105,7 +105,15 @@ export class ApplicantComponent implements OnInit {
      this.getCrifInquiryVerification(this.applicant)
     }
     else{
-      this.crifBtnForHide=true;
+      if(this.applicant.creditScoreCreated){
+        this.crifBtnForHide=true;
+        // this.showCrifscoreSection()
+        this.getCrifInquiryVerification(this.applicant);
+       }
+       else{
+        this.crifBtnForHide=true;
+       }
+      
     }
     if (this.applicant && this.applicant['name']) {
       this.customerName = this.applicant['name'];
@@ -568,16 +576,19 @@ export class ApplicantComponent implements OnInit {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
   }
   showCrifscoreSection() {
-   if( this.generateCrifText==='Verify CRIF Score of Applicant' || this.leadInfo.status.name==='KYC Updated'){
+   if( this.generateCrifText==='Verify CRIF Score of Applicant' || this.leadInfo.status.name==='KYC Updated' ||
+   this.generateCrifText==='Re-Generate CRIF Score of Applicant'){
     this.showCrifSection = !this.showCrifSection;
    }
   }
   saveCrifApplicant(kycInfoList) {
     this.api_loading = true;
         this.bCrifBtnDisable=true;
+        this.showPdfIcon = false;
       const postData:any={
         "originUid": kycInfoList.originUid,
         "leadKycId": kycInfoList.id,
+        "isRegenerate":kycInfoList.creditScoreCreated
       }
     this.crmService.processInquiry(postData).subscribe(
       (data:any) => {
@@ -592,20 +603,41 @@ export class ApplicantComponent implements OnInit {
     const _this=this;
     return new Promise((resolve,reject)=>{
       _this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
-        (element)=>{
+        (element:any)=>{
           resolve(element);
           if(element){
             _this.crifDetails = element;
+            console.log('crifDetails',element.crifScore)
             if(_this.crifDetails &&  _this.crifDetails.crifHTML){
               _this.crifHTML = _this.crifDetails.crifHTML;
             }
-            if(_this.crifDetails && _this.crifDetails.crifScoreString){
-              _this.crifScore = _this.crifDetails.crifScoreString;
+            if(_this.crifDetails && _this.crifDetails.crifScore){
+              _this.crifScore =  _this.crifDetails.crifScore;
             }
             _this.api_loading=false;
-            _this.showPdfIcon = true;
-            _this.generateCrifText='Verify CRIF Score of Applicant'
-            _this.bCrifBtnDisable=true;
+            
+            if(_this.applicant.creditScoreCreated){
+              if(_this.leadInfo.status.name==='Login' || _this.leadInfo.status.name==='Credit Recommendation'){
+                _this.generateCrifText='Verify CRIF Score of Applicant';
+                _this.bCrifBtnDisable=false;
+                _this.showPdfIcon = true;
+              }
+              else{
+                if(_this.leadInfo.status && _this.leadInfo.status.name==='KYC Updated'){
+                  _this.lebalCrifVerification='Re-Check CRIF Verification'
+                  _this.bCrifBtnDisable=false;
+                  _this.showPdfIcon = true;
+                  _this.generateCrifText='Re-Generate CRIF Score of Applicant'
+                }
+              }
+             
+            }
+            else{
+              _this.generateCrifText='Verify CRIF Score of Applicant';
+              _this.bCrifBtnDisable=false;
+              _this.showPdfIcon = true;
+            }
+           
           }
         },
         ((error:any)=>{
@@ -670,27 +702,6 @@ export class ApplicantComponent implements OnInit {
     }
   }
   handleKycSelectedType(selectValue,applicantType){}
-  customerNameValidate(inputtxt){
-  //   console.log('inputtxt',inputtxt)
-  //   console.log('inputtxt',inputtxt.length)
-  //   var letters = /^[A-Za-z]+$/;
-  //  if(inputtxt.match(letters))
-  //    {
-      
-  //     return true;
-  //    }
-  //  else
-  //    {
-  //     this.applicantForm.get('customerName').valueChanges.subscribe((res)=>{
-  //       console.log(res);
-  //       const error='Allow only allphabet';
-  //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      
-  //    return false;
-  //     })
-      
-  //    }
-  }
   allowOnlyLetters(e) {
     console.log(e);
     console.log('window.event',window.event)
@@ -709,7 +720,13 @@ export class ApplicantComponent implements OnInit {
       return false;
     }
   }   
-
+  diasbleFormControl(){
+    this.applicantForm.get('idTypes').disable();
+  }
+  enableFormCiontrol(){
+    this.applicantForm.get('idTypes').enable();
+    this.applicantForm.get('idTypes1').enable();
+  }
  
   
 

@@ -65,6 +65,10 @@ export class LeadsComponent implements OnInit {
   filter_sidebar: boolean;
   bStatusTableHead: boolean;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+  dataUrl:any;
+  dataId:any;
+  dataStatus;
+  tempaltename: any;
   constructor(
     private groupService: GroupStorageService,
     public router: Router,
@@ -74,8 +78,24 @@ export class LeadsComponent implements OnInit {
 
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
-      if (qparams.type) {
+      // console.log('qparams',qparams)
+      if (qparams && qparams.type) {
         this.type = qparams.type;
+      }
+      if(qparams && qparams.dataUrl){
+        console.log('qparams.dataUrl',qparams.dataUrl);
+        this.dataUrl= qparams.dataUrl;
+      }
+      if(qparams && qparams.dataId){
+        console.log('qparams.dataId',qparams.dataId);
+        this.dataId= qparams.dataId;
+      }
+      if(qparams && qparams.dataStatus){
+        console.log('dataStatus',qparams.dataStatus);
+        this.dataStatus= qparams.dataStatus;
+      }
+      if(qparams && qparams.templateName){
+        this.tempaltename = qparams.templateName
       }
     });
     this.config = {
@@ -149,6 +169,7 @@ export class LeadsComponent implements OnInit {
   getLeads(filter) {
     this.crmService.getTotalLead(filter).subscribe((res: any) => {
       this.leads = res;
+      console.log('this.leads',this.leads)
       this.api_loading = false;
     });
   }
@@ -185,51 +206,83 @@ export class LeadsComponent implements OnInit {
     if (this.filter.check_in_end_date != null) {
       filter['createdDate-le'] = moment(this.filter.check_in_end_date).format("YYYY-MM-DD");
     }
-
-    switch (this.type) {
-      case 'NEWLEAD':
-        filter['statusName-eq'] = 'New';
-        this.bStatusTableHead = true;
-        break;
-      case 'CRIF':
-        filter['statusName-eq'] = 'KYC Updated';
-        this.headerName = 'CRIF';
-        break;
-      case 'SALESVERIFICATION':
-        filter['statusName-eq'] = 'Credit Score Generated';
-        this.headerName = 'Sales  Verification';
-        break;
-      case 'DOCUMENTUPLOD':
-        filter['statusName-eq'] = 'Sales Verified';
-        this.bStatusTableHead = true;
-        this.headerName = 'Login';
-        break;
-      case 'LOGIN':
-        filter['statusName-eq'] = 'Login';
-        this.headerName = 'Login Verification';
-        break;
-      case 'CreditRecommendation':
-        filter['statusName-eq'] = 'Login Verified';
-        this.headerName = 'Credit Recommendation';
-        break;
-      case 'LoanSanction':
-        filter['statusName-eq'] = 'Credit Recommendation';
-        this.headerName = 'Loan Sanction';
-        break;
-      case 'LoanDisbursement':
-        filter['statusName-eq'] = 'Loan Sanction';
-        this.headerName = 'Loan Disbursement';
-        break;
-      // case 'Redirect':
-      //   filter['isRedirected-eq'] = true;
-      //   this.bStatusTableHead = true;
-      //   this.headerName = 'Redirect';
-      //   break;
-      case 'Rejected':
-        filter['statusName-eq'] = 'rejected';
-        this.headerName = 'Rejected';
-        break;
+    if(this.type){
+      if(this.type==='Rejected'){
+        if(this.dataId){
+          filter['status-eq'] = this.dataId;
+          filter['isRejected-eq']= true;
+        }
+        if(this.tempaltename){
+          this.headerName = this.tempaltename;
+        }
+        if(this.selected_location && this.selected_location.id){
+          filter['location-eq'] = this.selected_location.id;
+        }
+      }
+      else{
+        if(this.dataId){
+          filter['status-eq'] = this.dataId;
+          filter['isRejected-eq']= false;
+        }
+        if(this.tempaltename){
+          this.headerName = this.tempaltename;
+          console.log('this.tempaltename::',this.tempaltename)
+          if(this.tempaltename==='Leads' || this.tempaltename==='Login'){
+            this.bStatusTableHead = true; 
+          }
+          else{
+            this.bStatusTableHead = false;
+          }
+        }
+        if(this.selected_location && this.selected_location.id){
+          filter['location-eq'] = this.selected_location.id;
+        }
+      }
     }
+
+    // switch (this.type) {
+    //   // case this.type !== 'Rejected':
+    //   //   filter['statusName-eq'] = this.dataStatus;
+    //   //   filter['isRejected-eq']= false;
+    //   //   this.bStatusTableHead = true;
+    //   //   this.headerName = this.tempaltename;
+    //   //   break;
+    //   // case this.type === 'Rejected':
+    //   //   filter['statusName-eq'] = this.dataStatus;
+    //   //   filter['isRejected-eq']= true;
+    //   //   this.headerName = this.tempaltename;
+    //   //   // this.bStatusTableHead = true;
+    //   //   break;
+    //   // case 'SALESVERIFICATION':
+    //   //   filter['statusName-eq'] = 'Credit Score Generated';
+    //   //   this.headerName = 'Sales  Verification';
+    //   //   break;
+    //   // case 'DOCUMENTUPLOD':
+    //   //   filter['statusName-eq'] = 'Sales Verified';
+    //   //   this.bStatusTableHead = true;
+    //   //   this.headerName = 'Login';
+    //   //   break;
+    //   // case 'LOGIN':
+    //   //   filter['statusName-eq'] = 'Login';
+    //   //   this.headerName = 'Login Verification';
+    //   //   break;
+    //   // case 'CreditRecommendation':
+    //   //   filter['statusName-eq'] = 'Login Verified';
+    //   //   this.headerName = 'Credit Recommendation';
+    //   //   break;
+    //   // case 'LoanSanction':
+    //   //   filter['statusName-eq'] = 'Credit Recommendation';
+    //   //   this.headerName = 'Loan Sanction';
+    //   //   break;
+    //   // case 'LoanDisbursement':
+    //   //   filter['statusName-eq'] = 'Loan Sanction';
+    //   //   this.headerName = 'Loan Disbursement';
+    //   //   break;
+    //   // case 'Rejected':
+    //     // filter['statusName-eq'] = 'rejected';
+    //     // this.headerName = 'Rejected';
+    //     // break;
+    // }
     return filter;
   }
   /**

@@ -476,6 +476,7 @@ export class CreateTaskComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((res: any) => {
+      console.log('res',res)
       if (res === '') {
         if (this.updateValue && this.updateValue.assignee && this.updateValue.assignee.name) {
           this.selectMember = this.updateValue.assignee.name;
@@ -500,6 +501,7 @@ export class CreateTaskComponent implements OnInit {
           }
           if (res.bussLocations && res.bussLocations[0]) {
             this.locationId = res.bussLocations[0];
+            // console.log(' this.locationId', this.locationId);
             if (this.locationId) {
               this.updteLocationId = this.locationId;
             }
@@ -577,6 +579,7 @@ export class CreateTaskComponent implements OnInit {
     this.updateBTimefield = false;
   }
   saveCreateTask() {
+    console.log(' this.locationId', this.locationId)
     const _this = this;
     return new Promise((resolve, reject) => {
       _this.api_loading_CreateActivity = true;
@@ -604,6 +607,7 @@ export class CreateTaskComponent implements OnInit {
           "actualPotential": _this.createTaskForm.controls.actualPotential.value,
           "taskMasterId": _this.taskmasterId
         }
+        // console.log('createTaskData',createTaskData)
         if (_this.taskMasterData) {
           if (_this.userType === 'PROVIDER' || _this.userType === 'CONSUMER' || _this.userType === 'ADMIN') {
             _this.boolenTaskError = false;

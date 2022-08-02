@@ -67,6 +67,7 @@ export class CRMComponent implements OnInit {
   ngOnInit(): void {
     this.api_loading = true;
     this.userInfo();
+    this.followUpsList();
     if ((this.providerServices && this.providerServices.reportToCrm) === 'FromReport') {
       this.fnChangeBorder('C');
       this.providerServices.reportToCrm = '';
@@ -85,7 +86,22 @@ export class CRMComponent implements OnInit {
         )
       }
     )
-    this.followUpsList()
+  }
+  dashBoardStatus(user){
+    const _this=this;
+    return new Promise((resolve,reject)=>{
+      _this.crmService.getLeadStatusDashboard().subscribe((res)=>{
+        if(res){
+          resolve(res);
+          _this.redirectionList.push(res);
+          if(user && user.userType === 1 && user.isadminPrivilege){
+            this.accordingUserRedirection(user);
+          }
+        }
+      },((error)=>{
+        reject(error);
+      }))
+    })
   }
   followUpsList(){
     const _this=this;
@@ -106,173 +122,178 @@ export class CRMComponent implements OnInit {
     }
     this.providerServices.reportToCrm = ''
   }
+  accordingUserRedirection(user){
+    if((user && (user.userType === 1)) && user.isadminPrivilege){
+    }
+    else if(user && user.userType === 2){
+    }
+    else if(user.userType === 1){
+      this.redirectionList[0].forEach((item)=>{
+        if(item && item.aliasName){
+          if(item.aliasName==='CRIF' ||item.aliasName==='Login Verification' || item.aliasName==='Credit Recommendation' 
+          || item.aliasName==='Loan Sanction' || item.aliasName==='Loan Disbursement' || item.aliasName==='Loan Created' ){
+            this.redirectionList[0].splice(this.redirectionList[0].indexOf(item), 1);
+          }
+        }
+      })
+    }
+    else{
+      this.redirectionList[0].forEach((item)=>{
+        if(item && item.aliasName==='CRIF'){
+          this.redirectionList[0].splice(this.redirectionList[0].indexOf(item), 1);
+        }
+      })
+
+    }
+  }
   userInfo() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log(user)
-    this.isadminPrivilege = user.adminPrivilege;
-    if (user.userType === 2) {
+    if (user && user.userType === 2) {
       this.showActivity = false;
-      this.redirectionList = [
-        {
-          id: 7,
-          activityName: 'Leads'
-        },
-        {
-          id: 4,
-          activityName: 'CRIF'
-        },
-        {
-          id: 5,
-          activityName: 'Sales Verification'
-        },
-        {
-          id: 6,
-          activityName: 'Login'
-        },
-        {
-          id: 3,
-          activityName: 'Login Verification'
-        },
-
-        {
-          id: 8,
-          activityName: 'Credit Recommendation'
-        },
-        {
-          id: 9,
-          activityName: 'Loan Sanction'
-        },
-        {
-          id: 10,
-          activityName: 'Loan Disbursement'
-        },
-        // {
-        //   id: 11,
-        //   activityName: 'Redirect'
-        // },
-        {
-          id: 11,
-          activityName: 'Rejected'
-        }
-      ]
+      this.dashBoardStatus(user)
+      // this.redirectionList = [
+      //   {
+      //     id: 7,
+      //     activityName: 'Leads'
+      //   },
+      //   {
+      //     id: 4,
+      //     activityName: 'CRIF'
+      //   },
+      //   {
+      //     id: 5,
+      //     activityName: 'Sales Verification'
+      //   },
+      //   {
+      //     id: 6,
+      //     activityName: 'Login'
+      //   },
+      //   {
+      //     id: 3,
+      //     activityName: 'Login Verification'
+      //   },
+      //   {
+      //     id: 8,
+      //     activityName: 'Credit Recommendation'
+      //   },
+      //   {
+      //     id: 9,
+      //     activityName: 'Loan Sanction'
+      //   },
+      //   {
+      //     id: 10,
+      //     activityName: 'Loan Disbursement'
+      //   },
+      //   {
+      //     id: 11,
+      //     activityName: 'Rejected'
+      //   }
+      // ]
     }
-    else if (user.userType === 1 && this.isadminPrivilege) {
+    else if (user && user.userType === 1 && user.adminPrivilege) {
       this.showActivity = false;
-      this.redirectionList = [
-        {
-          id: 7,
-          activityName: 'Leads'
-        },
-        {
-          id: 4,
-          activityName: 'CRIF'
-        },
-        {
-          id: 5,
-          activityName: 'Sales Verification'
-        },
-        {
-          id: 6,
-          activityName: 'Login'
-        },
-        {
-          id: 3,
-          activityName: 'Login Verification'
-        },
+      this.dashBoardStatus(user)
+      // this.redirectionList = [
+      //   {
+      //     id: 7,
+      //     activityName: 'Leads'
+      //   },
+      //   {
+      //     id: 4,
+      //     activityName: 'CRIF'
+      //   },
+      //   {
+      //     id: 5,
+      //     activityName: 'Sales Verification'
+      //   },
+      //   {
+      //     id: 6,
+      //     activityName: 'Login'
+      //   },
+      //   {
+      //     id: 3,
+      //     activityName: 'Login Verification'
+      //   },
 
-        {
-          id: 8,
-          activityName: 'Credit Recommendation'
-        },
-        {
-          id: 9,
-          activityName: 'Loan Sanction'
-        },
-        {
-          id: 10,
-          activityName: 'Loan Disbursement'
-        },
-        // {
-        //   id: 11,
-        //   activityName: 'Redirect'
-        // },
-        {
-          id: 11,
-          activityName: 'Rejected'
-        }
-      ]
+      //   {
+      //     id: 8,
+      //     activityName: 'Credit Recommendation'
+      //   },
+      //   {
+      //     id: 9,
+      //     activityName: 'Loan Sanction'
+      //   },
+      //   {
+      //     id: 10,
+      //     activityName: 'Loan Disbursement'
+      //   },
+      //   {
+      //     id: 11,
+      //     activityName: 'Rejected'
+      //   }
+      // ]
     }
-    else if (user.userType === 1) {
+    else if (user && user.userType === 1) {
       this.showActivity = true;
-      this.redirectionList = [
-        {
-          id: 7,
-          activityName: 'Leads'
-        },
-        // {
-        //   id: 4,
-        //   activityName: 'CRIF'
-        // },
-        {
-          id: 5,
-          activityName: 'Sales Verification'
-        },
-        {
-          id: 6,
-          activityName: 'Login'
-        },
-        // {
-        //   id: 11,
-        //   activityName: 'Redirect'
-        // },
-        {
-          id: 11,
-          activityName: 'Rejected'
-        }
-      ]
+      this.dashBoardStatus(user)
+      // this.redirectionList = [
+      //   {
+      //     id: 7,
+      //     activityName: 'Leads'
+      //   },
+      //   {
+      //     id: 5,
+      //     activityName: 'Sales Verification'
+      //   },
+      //   {
+      //     id: 6,
+      //     activityName: 'Login'
+      //   },
+      //   {
+      //     id: 11,
+      //     activityName: 'Rejected'
+      //   }
+      // ]
     }
     else {
       this.showActivity = true;
-      this.redirectionList = [
-        {
-          id: 7,
-          activityName: 'Leads'
-        },
+      this.dashBoardStatus(user)
+      // this.redirectionList = [
+      //   {
+      //     id: 7,
+      //     activityName: 'Leads'
+      //   },
 
-        {
-          id: 5,
-          activityName: 'Sales Verification'
-        },
-        {
-          id: 6,
-          activityName: 'Login'
-        },
-        {
-          id: 3,
-          activityName: 'Login Verification'
-        },
+      //   {
+      //     id: 5,
+      //     activityName: 'Sales Verification'
+      //   },
+      //   {
+      //     id: 6,
+      //     activityName: 'Login'
+      //   },
+      //   {
+      //     id: 3,
+      //     activityName: 'Login Verification'
+      //   },
 
-        {
-          id: 8,
-          activityName: 'Credit Recommendation'
-        },
-        {
-          id: 9,
-          activityName: 'Loan Sanction'
-        },
-        {
-          id: 10,
-          activityName: 'Loan Disbursement'
-        },
-        // {
-        //   id: 11,
-        //   activityName: 'Redirect'
-        // },
-        {
-          id: 11,
-          activityName: 'Rejected'
-        }
-      ]
+      //   {
+      //     id: 8,
+      //     activityName: 'Credit Recommendation'
+      //   },
+      //   {
+      //     id: 9,
+      //     activityName: 'Loan Sanction'
+      //   },
+      //   {
+      //     id: 10,
+      //     activityName: 'Loan Disbursement'
+      //   },
+      //   {
+      //     id: 11,
+      //     activityName: 'Rejected'
+      //   }
+      // ]
     }
   }
   goback() {
@@ -331,7 +352,10 @@ export class CRMComponent implements OnInit {
         type: 'activityCreateTemplate'
       }
     }
-    this.router.navigate(['provider', 'task', 'tasktemplate'], navigationExtras);
+    if(navigationExtras){
+      this.router.navigate(['provider', 'task', 'tasktemplate'], navigationExtras);
+    }
+    
   }
   redirectionTaskActivityList() {
     this.router.navigate(['provider', 'task']);
@@ -339,88 +363,132 @@ export class CRMComponent implements OnInit {
   redirectionToEnquiry() {
     this.router.navigate(['provider', 'CreateEnquiry']);
   }
-  redirectionSeperateTemplate(templateName: any) {
-    // console.log('templateName', templateName)
-    if (templateName === 'Login Verification') {
+  redirectionSeperateTemplate(templateName: any,templateData) {
+    if (templateName && templateName === 'Login Verification') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'LOGIN'
+          type: 'LOGIN',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+          dataStatus:templateData.name,
+          templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
-    else if (templateName === 'CRIF') {
+    else if (templateName && templateName === 'CRIF') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'CRIF'
+          type: 'CRIF',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+           dataStatus:templateData.name,
+           templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
-    else if (templateName === 'Sales Verification') {
+    else if (templateName && templateName === 'Sales Field Verification') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'SALESVERIFICATION'
+          type: 'SALESVERIFICATION',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+           dataStatus:templateData.name,
+           templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
-
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
-    else if (templateName === 'Login') {
+    else if (templateName && templateName === 'Login') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'DOCUMENTUPLOD'
+          type: 'DOCUMENTUPLOD',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+           dataStatus:templateData.name,
+           templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
-    else if (templateName === 'Leads') {
+    else if (templateName && templateName === 'Leads') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'NEWLEAD'
+          type: 'NEWLEAD',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+           dataStatus:templateData.name,
+           templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
-    else if (templateName === 'Credit Recommendation') {
+    else if (templateName && templateName === 'Credit Recommendation') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'CreditRecommendation'
+          type: 'CreditRecommendation',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+           dataStatus:templateData.name,
+           templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
-    else if (templateName === 'Loan Sanction') {
+    else if (templateName && templateName === 'Loan Sanction') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'LoanSanction'
+          type: 'LoanSanction',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+           dataStatus:templateData.name,
+           templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
-    else if (templateName === 'Loan Disbursement') {
+    else if (templateName && templateName === 'Loan Disbursement') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'LoanDisbursement'
+          type: 'LoanDisbursement',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+           dataStatus:templateData.name,
+           templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
-    // else if (templateName === 'Redirect') {
-    //   const navigationExtras: NavigationExtras = {
-    //     queryParams: {
-    //       type: 'Redirect'
-    //     }
-    //   }
-    //   this.router.navigate(['provider', 'lead'], navigationExtras);
-    // }
-    else if (templateName === 'Rejected') {
+    else if (templateName && templateName === 'Rejected') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'Rejected'
+          type: 'Rejected',
+          dataUrl:templateData.dataUrl,
+          dataId:templateData.id,
+           dataStatus:templateData.name,
+           templateName:templateName,
         }
       }
-      this.router.navigate(['provider', 'lead'], navigationExtras);
+      if(navigationExtras){
+        this.router.navigate(['provider', 'lead'], navigationExtras);
+      }
     }
   }
   buttonClicked(type) {
@@ -434,7 +502,9 @@ export class CRMComponent implements OnInit {
             type: 'leadCreateTemplate'
           }
         }
-        this.router.navigate(['provider', 'task', 'tasktemplate'], navigationExtras);
+        if(navigationExtras){
+          this.router.navigate(['provider', 'task', 'tasktemplate'], navigationExtras);
+        }
     }
   }
   templateUpdation(textValue) { }
@@ -457,7 +527,6 @@ export class CRMComponent implements OnInit {
     }
   }
   reportActionType(data){
-    console.log('data::::',data);
     if(data){
       switch (data.type) {
         case 'Activity Report':
@@ -466,7 +535,9 @@ export class CRMComponent implements OnInit {
               report_type: 'crm'
             }
           }
-          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
+          if(navigationExtras){
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
+          }
           break;
         case 'Lead Report':
           const navigationExtrasToLead: NavigationExtras = {
@@ -474,7 +545,9 @@ export class CRMComponent implements OnInit {
               report_type: 'lead'
             }
           }
-          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLead);
+          if(navigationExtrasToLead){
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLead);
+          }
           break;
         case 'Enquiry Report':
           const navigationExtrasToEnquiry: NavigationExtras = {
@@ -482,7 +555,10 @@ export class CRMComponent implements OnInit {
               report_type: 'enquiry'
             }
           }
-          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToEnquiry);
+          if(navigationExtrasToEnquiry){
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToEnquiry);
+          }
+         
           break;
         case 'Consolidated Activity Report':
           const navigationExtrasToMonthly: NavigationExtras = {
@@ -490,7 +566,9 @@ export class CRMComponent implements OnInit {
               report_type: 'monthlyActivity'
             }
           }
-          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToMonthly);
+          if(navigationExtrasToMonthly){
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToMonthly);
+          }
           break;
         case 'Lead Status Report':
           const navigationExtrasToLeadStatus: NavigationExtras = {
@@ -498,8 +576,10 @@ export class CRMComponent implements OnInit {
               report_type: 'leadStatus'
             }
           }
-          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLeadStatus);
-
+          if(navigationExtrasToLeadStatus){
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLeadStatus);
+          }
+          break;
       }
     }
   }

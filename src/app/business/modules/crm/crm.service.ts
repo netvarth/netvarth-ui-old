@@ -612,4 +612,8 @@ export class CrmService {
     const url = 'provider/enquire/status';
     return this.servicemeta.httpGet(url);
   }
+  getLeadStatusDashboard(){
+    const url = 'provider/lead/dashboard/status';
+    return this.servicemeta.httpGet(url);
+  }
 }

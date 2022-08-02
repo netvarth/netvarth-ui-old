@@ -92,7 +92,7 @@
         <div class="fieldPadding" *ngIf="applicant">
             <div class=""
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
-                <input #logofile type="file" accept="/*;capture=camera" style="display:none;" 
+                <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
                     (change)="filesSelected($event, 'kyc1')">{{lebalUplaodFile}}
                 <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
                         attach_file</i></a>
@@ -607,7 +607,7 @@
     </div>
     <!----crif btn end-->
     <div *ngIf="showCrifSection">
-        <span class="group-head">{{generateCrifText | slice:9:generateCrifText.length}}</span><br>
+        <span class="group-head">{{generateCrifText }}</span><br>
         <div class="bggrey my-2">
             <div style="display: flex;gap: 5px">
                 <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;

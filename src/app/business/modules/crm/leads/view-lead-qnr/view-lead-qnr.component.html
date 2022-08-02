@@ -53,7 +53,7 @@
 </section>
 <section *ngIf="leadInfo" class="container card mt-4 mx-auto">
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-  <ng-container *ngIf="this.leadInfo.status.name==='New' || this.leadInfo.status.name==='KYC Updated'">
+  <ng-container *ngIf="leadInfo.status && (leadInfo.status.name==='New' || leadInfo.status.name==='KYC Updated')">
     <ng-container *ngFor="let applicant of applicants; let i=index">
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
@@ -64,7 +64,7 @@
   
 
   <ng-container *ngIf="leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified' 
-  || leadInfo.status.name==='Login Verified'">sdfsdffds
+  || leadInfo.status.name==='Login Verified'">
     <div class="row d-lg-flex justify-content-lg-start">
       <div class="card">
         <div style="display: flex;
@@ -119,7 +119,7 @@
                       <div class="fieldPadding">
                           <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
                               {{crifScore}} </a>
-                          <button [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
+                          <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
                               style="margin-left: 25px !important;width: -webkit-fill-available;"
                               class="btn btn mb-2 action-button action-button-add confirmBtn">
                               Check CRIF Verification </button>
