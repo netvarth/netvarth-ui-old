@@ -96,6 +96,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         this._refreshSubject = new Subject<any>();
       }
     });
+    console.log(this._refreshSubject.observers.length);
     if (this._refreshSubject.observers.length === 1) {
       // Hit refresh-token API passing the refresh token stored into the request
       // to get new access token and refresh token pair
@@ -121,6 +122,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
         'mUniqueId': ynw_user.mUniqueId
       };
       const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+      console.log("_ifSessionExpired:", reqFrom);
       if (reqFrom === 'cuA') {
         this.authService.refreshToken().then(
           (response)=> {
@@ -303,10 +305,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     // req = req.clone({ headers: req.headers.append('Hybrid-Version', version.iospro) });
     const customId = this.lStorageService.getitemfromLocalStorage('customId');
     const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-    console.log("reqFrom:", reqFrom);
+    // console.log("reqFrom:", reqFrom);
     if (customId) {
       if (reqFrom === 'cuA') {
         req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'CUSTOM_APP'), withCredentials: true });
+      } else if (reqFrom === 'CUSTOM_WEBSITE') {
+        req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', reqFrom), withCredentials: true });
+        req = req.clone({ headers: req.headers.append('website-link', this.lStorageService.getitemfromLocalStorage('source')), withCredentials: true });
       } else {
         req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'WEB_LINK'), withCredentials: true });
       }
@@ -322,7 +327,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     } else {
       req.headers.delete('tab');
     }
-    console.log("Refresh:", refresh);
+    // console.log("Refresh:", refresh);
     // authorizationToken --- For OTP Login/Signup
     if (refresh) {
       let authToken = this.lStorageService.getitemfromLocalStorage("refreshToken");
