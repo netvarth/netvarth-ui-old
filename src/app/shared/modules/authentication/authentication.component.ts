@@ -288,7 +288,40 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 }
                 _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
                 _this.actionPerformed.emit('success');
+              }, (error: any) => {
+                if (error.status === 401 && error.error === 'Session Already Exist') {
+                  const activeUser = _this.lStorageService.getitemfromLocalStorage('ynw-user');
+                  if (!activeUser) {
+                    _this.authService.doLogout().then(
+                      () => {
+                        _this.authService.consumerAppLogin(credentials).then(
+                          () => {
+                            _this.ngZone.run(
+                              () => {
+                                const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+                                if (reqFrom === 'cuA') {
+                                  const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                                  _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+                                }
+                                _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+                                _this.actionPerformed.emit('success');
+                              }
+                            )
+                          });
+                      }
+                    )
+                  } else {
+                    _this.actionPerformed.emit('success');
+                  }
+                } else if (error.status === 401) {                  
+                  _this.ngZone.run(
+                    () => {
+                      _this.step = 2;
+                    }
+                  )
+                }
               })
+
             }
           },
           error => {
