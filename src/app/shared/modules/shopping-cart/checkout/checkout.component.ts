@@ -311,7 +311,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.getPaymentModes();
-    const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+    const credentials = this.sharedFunctionobj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
     this.customer_countrycode = credentials.countryCode;
     this.linear = false;
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
@@ -494,7 +494,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
       this.getProfile();
-      const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+      const credentials = this.sharedFunctionobj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
       this.customer_countrycode = credentials.countryCode;
       this.phonenumber = activeUser.primaryPhoneNumber;
       // this.storeContact.get('phone').value(this.phonenumber);
@@ -768,7 +768,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   isLoggedIn() {
     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     if (activeUser) {
-      const credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+      const credentials = this.sharedFunctionobj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
       const customer_phonenumber = credentials.countryCode + activeUser.primaryPhoneNumber;
       this.loginForm.get('phone').setValue(customer_phonenumber);
       // this.getaddress();

@@ -1639,8 +1639,8 @@ console.log("fgf"+JSON.stringify(loc));
   goThroughLogin() {
     return new Promise((resolve) => {
       const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-      let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-      qrusr = JSON.parse(qrusr);
+      let qrusr = this.sharedFunctionobj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+      // qrusr = JSON.parse(qrusr);
       if (qrusr && qrpw) {
         const data = {
           'countryCode': qrusr.countryCode,

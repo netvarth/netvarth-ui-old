@@ -93,7 +93,7 @@ export class TeleServiceShareComponent implements OnInit {
     private groupService: GroupStorageService) { }
 
   ngOnInit() {
-    this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    this.ynw_credentials =this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (user.email) {
       this.providerEmail = true;

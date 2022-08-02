@@ -106,7 +106,7 @@ export class ChangePasswordComponent implements OnInit {
         .subscribe(
           () => {
             // this.api_success = Messages.PASSWORD_CHANGED;
-            const ynw = this.lStorageService.getitemfromLocalStorage('ynw-credentials'); // get the credentials from local storage variable
+            const ynw = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials')); // get the credentials from local storage variable
             const encrypted = this.shared_services.set(sub_data.new_password, projectConstantsLocal.KEY);
             this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
             // ynw.password = sub_data.new_password; // change the password to the new one in the local storage variable

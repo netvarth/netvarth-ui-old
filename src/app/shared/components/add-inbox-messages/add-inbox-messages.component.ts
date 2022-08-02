@@ -201,7 +201,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       console.log("Sms and Notify status :",this.smsGlobalStatusEnable, this.notificationStatusEnable )
   });
     this.createForm();
-    this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    this.ynw_credentials = this.sharedfunctionObj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
     if (this.phone) {
       if (this.countryCode.startsWith('+')) {
         this.countryCod = this.countryCode.substring(1);

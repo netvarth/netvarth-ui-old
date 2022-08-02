@@ -11,7 +11,6 @@ import { Location } from '@angular/common';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { LocalStorageService } from '../../services/local-storage.service';
-import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { isValidNumber } from 'libphonenumber-js';
 import { SubSink } from 'subsink';
 import { TranslateService } from '@ngx-translate/core';
@@ -62,7 +61,6 @@ export class ChangeMobileComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
-    private s3Processor: S3UrlProcessor,
     private activated_route: ActivatedRoute,
     public translate: TranslateService,
   ) { 
@@ -199,7 +197,7 @@ export class ChangeMobileComponent implements OnInit {
           console.log(this.submit_data.phonenumber);
           this.api_success = null;
           this.snackbarService.openSnackBar(Messages.PHONE_VERIFIED);
-          const ynw = this.s3Processor.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+          const ynw = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
           console.log(ynw)// get the credentials from local storage variable
           ynw['loginId'] = this.submit_data.phonenumber; // change the phone number to the new one in the local storage variable
           ynw['countryCode'] = this.submit_data.countryCode;

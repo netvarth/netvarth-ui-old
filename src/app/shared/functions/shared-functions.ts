@@ -32,7 +32,17 @@ export class SharedFunctions {
     });
     return promise;
   }
-
+/**
+     * 
+     * @param jsonStr_Obj 
+     */
+ getJson(jsonStr_Obj) {
+  if(typeof jsonStr_Obj === 'object') {
+      return jsonStr_Obj;
+  } else {
+      return JSON.parse(jsonStr_Obj);
+  }
+}
   
   public checkLogin() {
     const login = (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) ? true : false;

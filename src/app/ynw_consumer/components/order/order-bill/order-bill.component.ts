@@ -228,7 +228,7 @@ export class OrderBillComponent implements OnInit, OnDestroy {
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
-                    const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+                    const credentials =this.sharedfunctionObj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                     this.customer_countrycode = credentials.countryCode;
                     console.log("credentioooo" + credentials.countryCode);
                     // if(this.customer_countrycode == '+91'){

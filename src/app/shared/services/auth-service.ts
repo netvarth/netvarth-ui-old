@@ -43,14 +43,26 @@ export class AuthService {
         this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
     }
     /**
+     * 
+     * @param jsonStr_Obj 
+     */
+ getJson(jsonStr_Obj) {
+    if(typeof jsonStr_Obj === 'object') {
+        return jsonStr_Obj;
+    } else {
+        return JSON.parse(jsonStr_Obj);
+    }
+  }
+    /**
      * To Check whether Provider already logged in or not. Return logged status true/false 
      */
     goThroughBusinessLogin() {
         return new Promise((resolve) => {
             const bPwd = this.lStorageService.getitemfromLocalStorage('bpwd');
-            let bUser = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+            
+            let bUser = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
-            bUser = JSON.parse(bUser);
+            // bUser = JSON.parse(bUser);
             if (bUser && bPwd || (isProvider && isProvider === 'true')) {
                 const data = {
                     'countryCode': bUser.countryCode,
@@ -378,7 +390,7 @@ export class AuthService {
     goThroughLogin() {
         if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
             const _this = this;
-            let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+            let qrusr = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
             console.log("Entered to goThroughLogin Method");
             return new Promise((resolve) => {
                 if (_this.lStorageService.getitemfromLocalStorage('appId') && _this.lStorageService.getitemfromLocalStorage('installId') && qrusr) {
@@ -394,9 +406,9 @@ export class AuthService {
         } else {
             return new Promise((resolve) => {
                 const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-                let qrusr = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+                let qrusr = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                 let customId = this.lStorageService.getitemfromLocalStorage('customId');
-                qrusr = JSON.parse(qrusr);
+                // qrusr = JSON.parse(qrusr);
                 if (!customId && qrusr && qrpw) {
                     const data = {
                         'countryCode': qrusr.countryCode,

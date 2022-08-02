@@ -102,7 +102,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       // to get new access token and refresh token pair
       // this.sessionService.refreshToken().subscribe(this._refreshSubject);
       this.sessionStorageService.removeitemfromSessionStorage('tabId');
-      let ynw_user = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+      let ynw_user = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
       // ynw_user = JSON.parse(ynw_user);
       if (!ynw_user) {
         window.location.reload();
@@ -135,19 +135,6 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     }
     return this._refreshSubject;
   }
-
-  /**
-     * 
-     * @param jsonStr_Obj 
-     */
-   getJson(jsonStr_Obj) {
-    if(typeof jsonStr_Obj === 'object') {
-        return jsonStr_Obj;
-    } else {
-        return JSON.parse(jsonStr_Obj);
-    }
-}
-
   private _checkSessionExpiryErr(error: HttpErrorResponse): boolean {
     return (
       error.status &&

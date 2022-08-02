@@ -116,7 +116,7 @@ export class SignUpComponent implements OnInit {
       this.selectedCountryCode = this.countryCodes[0].value;
     }
     this.ynwUser = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.ynw_credentials = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    this.ynw_credentials = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
     if (this.ynw_credentials) {
       this.loginId = this.ynw_credentials.loginId;
     }

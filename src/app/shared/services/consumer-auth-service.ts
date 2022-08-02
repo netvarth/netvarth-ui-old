@@ -19,7 +19,17 @@ export class ConsumerAuthService {
         delete post_data['password'];
         this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
     }
-
+/**
+     * 
+     * @param jsonStr_Obj 
+     */
+ getJson(jsonStr_Obj) {
+    if(typeof jsonStr_Obj === 'object') {
+        return jsonStr_Obj;
+    } else {
+        return JSON.parse(jsonStr_Obj);
+    }
+  }
     goThroughConsumerLogin(loginId?, countryCode?, password?) {
         return new Promise((resolve) => {
             if (password) {
@@ -60,7 +70,7 @@ export class ConsumerAuthService {
                 );
             } else {
                 const bPwd = this.lStorageService.getitemfromLocalStorage('bpwd');
-                let bUser = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+                let bUser = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                 const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
                 bUser = JSON.parse(bUser);
                 if (bUser && bPwd || (isProvider && isProvider === 'true')) {

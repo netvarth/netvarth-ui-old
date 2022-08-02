@@ -353,9 +353,9 @@ this.getAccountIdFromEncId(this.customId);
 
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.login_details = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
+    this.login_details =this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));    
     this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
-    let login = JSON.parse(this.login_details);
+    let login = this.login_details;
 
     if (login && login.countryCode && login.countryCode.startsWith('+')){
       this.countryCode = login.countryCode.substring(1);

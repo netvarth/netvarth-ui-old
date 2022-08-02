@@ -263,7 +263,7 @@ export class ConsumerCheckinBillComponent implements OnInit, OnDestroy {
                     this.getWaitlistBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
-                    const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+                    const credentials = this.sharedfunctionObj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                     this.customer_countrycode = credentials.countryCode;
                 });
     }

@@ -217,7 +217,7 @@ export class ConsumerAppointmentBillComponent implements OnInit, OnDestroy {
                     this.getAppointmentBill();
                     this.getPrePaymentDetails();
                     this.getPaymentModes();
-                    const credentials = JSON.parse(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+                    const credentials = this.sharedfunctionObj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
                     this.customer_countrycode = credentials.countryCode;
                 });
     }
