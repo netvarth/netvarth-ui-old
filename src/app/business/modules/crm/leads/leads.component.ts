@@ -209,7 +209,7 @@ export class LeadsComponent implements OnInit {
     if(this.type){
       if(this.type==='Rejected'){
         if(this.dataId){
-          filter['status-eq'] = this.dataId;
+          // filter['status-eq'] = this.dataId;
           filter['isRejected-eq']= true;
         }
         if(this.tempaltename){
@@ -217,6 +217,9 @@ export class LeadsComponent implements OnInit {
         }
         if(this.selected_location && this.selected_location.id){
           filter['location-eq'] = this.selected_location.id;
+        }
+        if(this.tempaltename==='Rejected'){
+          this.bStatusTableHead = false;
         }
       }
       else{
