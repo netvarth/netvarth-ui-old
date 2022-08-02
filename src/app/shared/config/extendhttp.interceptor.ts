@@ -103,7 +103,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       // this.sessionService.refreshToken().subscribe(this._refreshSubject);
       this.sessionStorageService.removeitemfromSessionStorage('tabId');
       let ynw_user = this.lStorageService.getitemfromLocalStorage('ynw-credentials');
-      ynw_user = JSON.parse(ynw_user);
+      // ynw_user = JSON.parse(ynw_user);
       if (!ynw_user) {
         window.location.reload();
       }
