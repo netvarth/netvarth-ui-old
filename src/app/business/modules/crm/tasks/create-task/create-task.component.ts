@@ -129,7 +129,7 @@ export class CreateTaskComponent implements OnInit {
       userTaskPriority: [null],
       targetResult: [null],
       targetPotential: [null],
-      actualPotential: [null],
+      // actualPotential: [null],
     })
     this.activated_route.queryParams.subscribe(qparams => {
       this.updateValue = qparams;
@@ -604,7 +604,7 @@ export class CreateTaskComponent implements OnInit {
           "targetResult": _this.createTaskForm.controls.targetResult.value,
           "targetPotential": _this.createTaskForm.controls.targetPotential.value,
           "estDuration": _this.estTime,
-          "actualPotential": _this.createTaskForm.controls.actualPotential.value,
+          // "actualPotential": _this.createTaskForm.controls.actualPotential.value,
           "taskMasterId": _this.taskmasterId
         }
         // console.log('createTaskData',createTaskData)

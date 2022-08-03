@@ -170,7 +170,7 @@ export class ViewTaskComponent implements OnInit {
   lebalStatus:string='Status';
   lebalTargetPotential:string='Target Potential';
   lebalBusinessPotential:string='Business Potential';
-  lebalActualPotential:string='Actual Potential';
+  lebalActualPotential:string='Activity Number';
   cancelBtn:string='Cancel';
   completeBtn:string='Complete';
   files:string='Files';
@@ -178,10 +178,11 @@ export class ViewTaskComponent implements OnInit {
   uploadedFiles:string='( Uploaded Files )';
   fileType:string='File Type :';
   size:string='Size :';
-  remarks:string='Remarks';
+  remarks:string='Activity Remarks';
   addRemarks:'Add Remarks';
   savedRemarks:string='( Saved Remarks)';
   noOfDataCollected:string='No of data collected';
+  actualPotential:any;
     constructor(
     private crmService: CrmService,
     public _location: Location,
@@ -215,7 +216,7 @@ export class ViewTaskComponent implements OnInit {
       targetResult: [],
       targetPotential: [],
       selectMember: [],
-      actualPotential: [],
+      // actualPotential: [],
     })
     this.userInfo();
     this._Activatedroute.queryParams.subscribe((qparams: any) => {
@@ -475,9 +476,10 @@ export class ViewTaskComponent implements OnInit {
             if (_this.taskDetails) {
               if (_this.taskDetails.actualPotential) {
                 _this.bTaskActualPotential = true;
-                _this.taskDetailsForm.patchValue({
-                  actualPotential: _this.taskDetails.actualPotential
-                })
+                _this.actualPotential= _this.taskDetails.actualPotential
+                // _this.taskDetailsForm.patchValue({
+                //   actualPotential: _this.taskDetails.actualPotential
+                // })
               }
               else {
                 _this.bTaskActualPotential = false
@@ -845,24 +847,24 @@ export class ViewTaskComponent implements OnInit {
                   }
                 }
               }
-              if (response[2].actualPotential) {
-                if (response[2].actualPotential.isvisible) {
-                  this.bTaskActualPotential = true;
-                } else {
-                  this.bTaskActualPotential = false;
-                }
-                if (!(response[2].actualPotential.iseditable)) {
-                  this.taskDetailsForm.controls['actualPotential'].disable()
-                }
-                else {
-                  if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
-                    this.taskDetailsForm.controls['actualPotential'].disable()
-                  }
-                  else {
-                    this.taskDetailsForm.controls['actualPotential'].enable()
-                  }
-                }
-              }
+              // if (response[2].actualPotential) {
+              //   if (response[2].actualPotential.isvisible) {
+              //     this.bTaskActualPotential = true;
+              //   } else {
+              //     this.bTaskActualPotential = false;
+              //   }
+              //   if (!(response[2].actualPotential.iseditable)) {
+              //     this.taskDetailsForm.controls['actualPotential'].disable()
+              //   }
+              //   else {
+              //     if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
+              //       this.taskDetailsForm.controls['actualPotential'].disable()
+              //     }
+              //     else {
+              //       this.taskDetailsForm.controls['actualPotential'].enable()
+              //     }
+              //   }
+              // }
             }
           }
           else if (this.taskDetails.title === 'Notice Distribution Through Newspaper') {
@@ -1118,24 +1120,24 @@ export class ViewTaskComponent implements OnInit {
                   }
                 }
               }
-              if (response[3].actualPotential) {
-                if (response[3].actualPotential.isvisible) {
-                  this.bTaskActualPotential = true;
-                } else {
-                  this.bTaskActualPotential = false;
-                }
-                if (!(response[3].actualPotential.iseditable)) {
-                  this.taskDetailsForm.controls['actualPotential'].disable()
-                }
-                else {
-                  if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
-                    this.taskDetailsForm.controls['actualPotential'].disable();
-                  }
-                  else {
-                    this.taskDetailsForm.controls['actualPotential'].enable()
-                  }
-                }
-              }
+              // if (response[3].actualPotential) {
+              //   if (response[3].actualPotential.isvisible) {
+              //     this.bTaskActualPotential = true;
+              //   } else {
+              //     this.bTaskActualPotential = false;
+              //   }
+              //   if (!(response[3].actualPotential.iseditable)) {
+              //     this.taskDetailsForm.controls['actualPotential'].disable()
+              //   }
+              //   else {
+              //     if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
+              //       this.taskDetailsForm.controls['actualPotential'].disable();
+              //     }
+              //     else {
+              //       this.taskDetailsForm.controls['actualPotential'].enable()
+              //     }
+              //   }
+              // }
             }
           }
           else if (this.taskDetails.title === 'Kiosk/Umbrella Activity and Data Collection') {
@@ -1389,24 +1391,24 @@ export class ViewTaskComponent implements OnInit {
                   }
                 }
               }
-              if (response[4].actualPotential) {
-                if (response[4].actualPotential.isvisible) {
-                  this.bTaskActualPotential = true;
-                } else {
-                  this.bTaskActualPotential = false;
-                }
-                if (!(response[4].actualPotential.iseditable)) {
-                  this.taskDetailsForm.controls['actualPotential'].disable()
-                }
-                else {
-                  if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
-                    this.taskDetailsForm.controls['actualPotential'].disable();
-                  }
-                  else {
-                    this.taskDetailsForm.controls['actualPotential'].enable()
-                  }
-                }
-              }
+              // if (response[4].actualPotential) {
+              //   if (response[4].actualPotential.isvisible) {
+              //     this.bTaskActualPotential = true;
+              //   } else {
+              //     this.bTaskActualPotential = false;
+              //   }
+              //   if (!(response[4].actualPotential.iseditable)) {
+              //     this.taskDetailsForm.controls['actualPotential'].disable()
+              //   }
+              //   else {
+              //     if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
+              //       this.taskDetailsForm.controls['actualPotential'].disable();
+              //     }
+              //     else {
+              //       this.taskDetailsForm.controls['actualPotential'].enable()
+              //     }
+              //   }
+              // }
             }
           }
           else if (this.taskDetails.title === 'Poster Activity') {
@@ -1660,24 +1662,24 @@ export class ViewTaskComponent implements OnInit {
                   }
                 }
               }
-              if (response[5].actualPotential) {
-                if (response[5].actualPotential.isvisible) {
-                  this.bTaskActualPotential = true;
-                } else {
-                  this.bTaskActualPotential = false;
-                }
-                if (!(response[5].actualPotential.iseditable)) {
-                  this.taskDetailsForm.controls['actualPotential'].disable()
-                }
-                else {
-                  if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
-                    this.taskDetailsForm.controls['actualPotential'].disable();
-                  }
-                  else {
-                    this.taskDetailsForm.controls['actualPotential'].enable()
-                  }
-                }
-              }
+              // if (response[5].actualPotential) {
+              //   if (response[5].actualPotential.isvisible) {
+              //     this.bTaskActualPotential = true;
+              //   } else {
+              //     this.bTaskActualPotential = false;
+              //   }
+              //   if (!(response[5].actualPotential.iseditable)) {
+              //     this.taskDetailsForm.controls['actualPotential'].disable()
+              //   }
+              //   else {
+              //     if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
+              //       this.taskDetailsForm.controls['actualPotential'].disable();
+              //     }
+              //     else {
+              //       this.taskDetailsForm.controls['actualPotential'].enable()
+              //     }
+              //   }
+              // }
             }
           }
           else if (this.taskDetails.title === 'Telecalling') {
@@ -1931,24 +1933,24 @@ export class ViewTaskComponent implements OnInit {
                   }
                 }
               }
-              if (response[6].actualPotential) {
-                if (response[6].actualPotential.isvisible) {
-                  this.bTaskActualPotential = true;
-                } else {
-                  this.bTaskActualPotential = false;
-                }
-                if (!(response[6].actualPotential.iseditable)) {
-                  this.taskDetailsForm.controls['actualPotential'].disable()
-                }
-                else {
-                  if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
-                    this.taskDetailsForm.controls['actualPotential'].disable();
-                  }
-                  else {
-                    this.taskDetailsForm.controls['actualPotential'].enable()
-                  }
-                }
-              }
+              // if (response[6].actualPotential) {
+              //   if (response[6].actualPotential.isvisible) {
+              //     this.bTaskActualPotential = true;
+              //   } else {
+              //     this.bTaskActualPotential = false;
+              //   }
+              //   if (!(response[6].actualPotential.iseditable)) {
+              //     this.taskDetailsForm.controls['actualPotential'].disable()
+              //   }
+              //   else {
+              //     if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
+              //       this.taskDetailsForm.controls['actualPotential'].disable();
+              //     }
+              //     else {
+              //       this.taskDetailsForm.controls['actualPotential'].enable()
+              //     }
+              //   }
+              // }
             }
           }
           else if (this.taskDetails.title === 'Digital Marketing') {
@@ -2207,25 +2209,25 @@ export class ViewTaskComponent implements OnInit {
                   }
                 }
               }
-              if (response[7].actualPotential) {
-                if (response[7].actualPotential.isvisible) {
-                  this.bTaskActualPotential = true;
-                } else {
-                  this.bTaskActualPotential = false;
-                }
-                if (!(response[7].actualPotential.iseditable)) {
-                  this.taskDetailsForm.controls['actualPotential'].disable()
-                }
-                else {
-                  if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
-                    this.taskDetailsForm.controls['actualPotential'].disable();
-                  }
-                  else {
-                    this.taskDetailsForm.controls['actualPotential'].enable()
-                  }
+              // if (response[7].actualPotential) {
+              //   if (response[7].actualPotential.isvisible) {
+              //     this.bTaskActualPotential = true;
+              //   } else {
+              //     this.bTaskActualPotential = false;
+              //   }
+              //   if (!(response[7].actualPotential.iseditable)) {
+              //     this.taskDetailsForm.controls['actualPotential'].disable()
+              //   }
+              //   else {
+              //     if (this.taskDetails && this.taskDetails.status && this.taskDetails.status.name === 'Completed') {
+              //       this.taskDetailsForm.controls['actualPotential'].disable();
+              //     }
+              //     else {
+              //       this.taskDetailsForm.controls['actualPotential'].enable()
+              //     }
 
-                }
-              }
+              //   }
+              // }
             }
           }
           else if (this.taskDetails.title === 'Home Visit') {
@@ -2492,25 +2494,25 @@ export class ViewTaskComponent implements OnInit {
 
                 }
               }
-              if (response[8].actualPotential) {
-                if (response[8].actualPotential.isvisible) {
-                  this.bTaskActualPotential = true;
-                } else {
-                  this.bTaskActualPotential = false;
-                }
-                if (!(response[8].actualPotential.iseditable)) {
-                  this.taskDetailsForm.controls['actualPotential'].disable()
-                }
-                else {
-                  if (this.taskDetails.status.name === 'Completed') {
-                    this.taskDetailsForm.controls['actualPotential'].disable()
-                  }
-                  else {
-                    this.taskDetailsForm.controls['actualPotential'].enable()
-                  }
+              // if (response[8].actualPotential) {
+              //   if (response[8].actualPotential.isvisible) {
+              //     this.bTaskActualPotential = true;
+              //   } else {
+              //     this.bTaskActualPotential = false;
+              //   }
+              //   if (!(response[8].actualPotential.iseditable)) {
+              //     this.taskDetailsForm.controls['actualPotential'].disable()
+              //   }
+              //   else {
+              //     if (this.taskDetails.status.name === 'Completed') {
+              //       this.taskDetailsForm.controls['actualPotential'].disable()
+              //     }
+              //     else {
+              //       this.taskDetailsForm.controls['actualPotential'].enable()
+              //     }
 
-                }
-              }
+              //   }
+              // }
             }
           }
           else if ((this.taskDetails.title === 'BA Follow Up') || (this.taskDetails.title === 'BA Recruitment')) {
@@ -2780,25 +2782,25 @@ export class ViewTaskComponent implements OnInit {
 
                     }
                   }
-                  if (response[0].actualPotential) {
-                    if (response[0].actualPotential.isvisible) {
-                      this.bTaskActualPotential = true;
-                    } else {
-                      this.bTaskActualPotential = false;
-                    }
-                    if (!(response[0].actualPotential.iseditable)) {
-                      this.taskDetailsForm.controls['actualPotential'].disable()
-                    }
-                    else {
-                      if (this.taskDetails.status.name === 'Completed') {
-                        this.taskDetailsForm.controls['actualPotential'].disable()
-                      }
-                      else {
-                        this.taskDetailsForm.controls['actualPotential'].enable()
-                      }
+                  // if (response[0].actualPotential) {
+                  //   if (response[0].actualPotential.isvisible) {
+                  //     this.bTaskActualPotential = true;
+                  //   } else {
+                  //     this.bTaskActualPotential = false;
+                  //   }
+                  //   if (!(response[0].actualPotential.iseditable)) {
+                  //     this.taskDetailsForm.controls['actualPotential'].disable()
+                  //   }
+                  //   else {
+                  //     if (this.taskDetails.status.name === 'Completed') {
+                  //       this.taskDetailsForm.controls['actualPotential'].disable()
+                  //     }
+                  //     else {
+                  //       this.taskDetailsForm.controls['actualPotential'].enable()
+                  //     }
 
-                    }
-                  }
+                  //   }
+                  // }
                 }
               }
               else if (this.taskDetails.title === 'BA Recruitment') {
@@ -3050,25 +3052,25 @@ export class ViewTaskComponent implements OnInit {
 
                     }
                   }
-                  if (response[1].actualPotential) {
-                    if (response[1].actualPotential.isvisible) {
-                      this.bTaskActualPotential = true;
-                    } else {
-                      this.bTaskActualPotential = false;
-                    }
-                    if (!(response[1].actualPotential.iseditable)) {
-                      this.taskDetailsForm.controls['actualPotential'].disable()
-                    }
-                    else {
-                      if (this.taskDetails.status.name === 'Completed') {
-                        this.taskDetailsForm.controls['actualPotential'].disable()
-                      }
-                      else {
-                        this.taskDetailsForm.controls['actualPotential'].enable()
-                      }
+                  // if (response[1].actualPotential) {
+                  //   if (response[1].actualPotential.isvisible) {
+                  //     this.bTaskActualPotential = true;
+                  //   } else {
+                  //     this.bTaskActualPotential = false;
+                  //   }
+                  //   if (!(response[1].actualPotential.iseditable)) {
+                  //     this.taskDetailsForm.controls['actualPotential'].disable()
+                  //   }
+                  //   else {
+                  //     if (this.taskDetails.status.name === 'Completed') {
+                  //       this.taskDetailsForm.controls['actualPotential'].disable()
+                  //     }
+                  //     else {
+                  //       this.taskDetailsForm.controls['actualPotential'].enable()
+                  //     }
 
-                    }
-                  }
+                  //   }
+                  // }
                 }
               }
 
@@ -3138,8 +3140,7 @@ export class ViewTaskComponent implements OnInit {
     this.taskDetailsForm.controls['targetResult'].disable()
     this.taskDetailsForm.controls['targetPotential'].disable()
     this.taskDetailsForm.controls['selectMember'].disable()
-    this.taskDetailsForm.controls['actualPotential'].disable()
-    //  this.taskDetailsForm.controls['taskTitle'].disable()
+    // this.taskDetailsForm.controls['actualPotential'].disable()
   }
   enableFormControl() {
     this.taskDetailsForm.controls['taskTitle'].enable()
@@ -3158,7 +3159,7 @@ export class ViewTaskComponent implements OnInit {
     this.taskDetailsForm.controls['targetResult'].enable()
     this.taskDetailsForm.controls['targetPotential'].enable()
     this.taskDetailsForm.controls['selectMember'].enable()
-    this.taskDetailsForm.controls['actualPotential'].enable()
+    // this.taskDetailsForm.controls['actualPotential'].enable()
   }
   resetErrors() {
     this.taskError = null;
@@ -3401,7 +3402,7 @@ export class ViewTaskComponent implements OnInit {
         "targetPotential": this.taskDetailsForm.controls.targetPotential.value,
         "estDuration": this.estTime,
         "actualResult": this.actualResult,
-        "actualPotential": this.taskDetailsForm.controls.actualPotential.value,
+        "actualPotential": this.actualPotential//this.taskDetailsForm.controls.actualPotential.value,
       }
       const createNoteData: any = {
         "note": this.notesTextarea
