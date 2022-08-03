@@ -1215,7 +1215,7 @@ export const projectConstantsLocal = {
     "nanohospitals": {
       pathref: 128621
     },
-    "AuthordemyOfficial": {
+    "AuthorDemy": {
       pathref: 129147
     }
   },
