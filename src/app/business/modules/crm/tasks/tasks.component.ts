@@ -126,7 +126,8 @@ export class TasksComponent implements OnInit {
         (count) => {
           if (count > 0) {
             this.config.totalItems = count;
-            _this.getNewTask(filter);
+             this.handleStatus();
+            // _this.getNewTask(filter);
           } else {
             _this.api_loading = false;
           }
@@ -134,7 +135,7 @@ export class TasksComponent implements OnInit {
       )
     });
 
-    this.handleStatus();
+    // this.handleStatus();
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     if (this.server_date) {
