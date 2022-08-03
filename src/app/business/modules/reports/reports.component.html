@@ -374,7 +374,37 @@
                 </mat-accordion>
                 </div>
             </div>
-
+   <!-- Processing Files Reports -->
+   <div class="row">
+    <div class="card p0">
+      <mat-accordion class="report">
+        <mat-expansion-panel  [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                    Processing Files
+                   <div class="width100pc" >
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'processingFiles'}">Create New Report</a>
+                   </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="processingFilesReports.length===0">
+              <div *ngIf="processing_files_criteria.length === 0" >
+                <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+              </div>
+              <table  *ngIf="processing_files_criteria.length > 0">
+                <span class="savd-report">Saved Reports</span>
+                <tr *ngFor="let processing_file of processing_files_criteria">
+                  <td>{{processing_file.reportName}}</td>
+                  <td><a (click)="recreateReport(processing_file)">Generate</a></td>
+                  <td><a (click)="viewCriteria(processing_file)">View</a></td>
+                  <td><a (click)="deletCriteria(processing_file)">Delete</a></td>
+                </tr>
+              </table>
+          </ng-container>
+        </mat-expansion-panel>
+    </mat-accordion>
+    </div>
+</div>
                
       </div>
       <div class="clearfix"></div>

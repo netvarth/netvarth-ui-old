@@ -46,6 +46,9 @@ export class CRMComponent implements OnInit {
     {
       id: 5, type: 'Lead Status Report'
     },
+    {
+      id:6, type: 'Processing Files Report'
+    }
   ]
   constructor(
     private providerServices: ProviderServices,
@@ -580,6 +583,16 @@ export class CRMComponent implements OnInit {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLeadStatus);
           }
           break;
+          case 'Processing Files Report':
+            const navigationExtrasToProcessingFiles: NavigationExtras = {
+              queryParams: {
+                report_type: 'processingFiles'
+              }
+            }
+            if(navigationExtrasToProcessingFiles){
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToProcessingFiles);
+            }
+            break;
       }
     }
   }
@@ -617,6 +630,12 @@ export class CRMComponent implements OnInit {
             return imgSrc;
           }
           break;
+          case 'Processing Files Report':
+            imgSrc = './assets/images/crmImages/fileProcessing.png';
+            if (imgSrc) {
+              return imgSrc;
+            }
+            break;
       }
     }
   }

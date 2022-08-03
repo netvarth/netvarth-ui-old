@@ -20,6 +20,7 @@ export class ReportsComponent implements OnInit {
   order_criteria: any[];
   crm_criteria: any[];
   crm_lead_status_criteria: any[];
+  processing_files_criteria: any[];
   enquiry_criteria: any[];
   enquiryReports = [];
   monthlyActivityReports = [];
@@ -30,7 +31,8 @@ export class ReportsComponent implements OnInit {
   checkinReports = [];
   orderReports = [];
   crmReports = [];
-  leadStatusReports = []
+  leadStatusReports = [];
+  processingFilesReports = [];
   settings: any = [];
   showToken = false;
   criteria_list;
@@ -82,7 +84,8 @@ export class ReportsComponent implements OnInit {
     this.appt_criteria = [];
     this.order_criteria = [];
     this.crm_criteria = [];
-    this.crm_lead_status_criteria = []
+    this.crm_lead_status_criteria = [];
+    this.processing_files_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
@@ -130,6 +133,11 @@ export class ReportsComponent implements OnInit {
           }
           case 'MONTHLY_ACTIVITY':{
             this.monthly_criteria.push(this.criteria_list[i])
+            break;
+          }
+          case 'PROCESSING_FILES_REPORT': {
+            this.processing_files_criteria.push(this.criteria_list[i]);
+            break;
           }
         }
       }
