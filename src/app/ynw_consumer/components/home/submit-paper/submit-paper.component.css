@@ -1,0 +1,84 @@
+.btn-dark {
+    background-color: #000 !important;
+    color: #fff !important;
+    border-radius: 10px !important;
+    padding: 5px !important;
+}
+
+.back-btn {
+    font-size: 20px !important;
+}
+
+.btn-warning {
+    background-color: rgb(255, 237, 203) !important;
+    color: #000 !important;
+    border-radius: 10px !important;
+    border: none !important;
+}
+
+.person-img {
+    border-radius: 50% !important;
+}
+
+.fa-angle-down {
+    font-size: 20px !important;
+    color: #000 !important;
+}
+
+.fa-spinner {
+    color: rgb(96, 248, 210) !important;
+}
+
+.fa-ban {
+    color: red !important;
+}
+
+.fa-bars {
+    color: #4E73DF !important;
+}
+
+h3 {
+    font-weight: bolder !important;
+}
+
+.btn-primary {
+    background-color: #1E4079 !important;
+    color: #fff !important;
+    padding: 5px 15px !important;
+    border-radius: 10px !important;
+    font-size: 16px !important;
+}
+
+.bgGrey {
+    background-color: #f1f1f1 !important;
+    padding: 20px 60px !important;
+    margin: 10px 10px !important;
+}
+
+
+.card .form-card {
+    background-color: #ffffff !important;
+    padding: 20px 60px !important;
+    margin: 10px 10px !important;
+}
+
+.text-primary {
+    color: #1E4079 !important;
+}
+
+.text-gold {
+    color: rgb(204, 138, 15) !important;
+    font-weight: 500 !important;
+}
+
+@media screen and (max-width: 576px) and (min-width: 0px) {
+    .btn-dark {
+        padding: 5px 10px !important;
+    }
+
+    .card .form-card {
+        background-color: #ffffff !important;
+        padding: 20px 20px !important;
+        margin: 10px 10px !important;
+    }
+}

@@ -793,7 +793,14 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   }
   resubmitConsumerOrderQuestionnaire(body) {
     this.sharedService.resubmitConsumerOrderQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consOrder');
+      if(this.source === 'paper')
+      {
+      this.uploadAudioVideo(data, 'paper');
+      }
+      else
+      {
+        this.uploadAudioVideo(data, 'consOrder');
+      }
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -801,7 +808,14 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   }
   submitConsumerOrderQuestionnaire(body) {
     this.sharedService.submitConsumerOrderQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consOrder');
+      if(this.source === 'paper')
+      {
+      this.uploadAudioVideo(data, 'paper');
+      }
+      else
+      {
+        this.uploadAudioVideo(data, 'consOrder');
+      }
     }, error => {
       this.buttonDisable = false;
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -902,7 +916,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       this.buttonDisable = false;
                     });
-              } else if (type === 'consOrder') {
+              } else if (type === 'consOrder' ||  type === 'paper') {
                 this.sharedService.consumerOrderQnrUploadStatusUpdate(this.uuid, this.accountId, postData)
                   .subscribe((data) => {
                     this.successGoback();
@@ -1019,7 +1033,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
           } else {
             this.submitConsumerApptQuestionnaire(dataToSend);
           }
-        } else if (this.source === 'consOrder') {
+        } else if (this.source === 'consOrder' || this.source === 'paper') {
           if (this.qnrStatus === 'submitted') {
             this.resubmitConsumerOrderQuestionnaire(dataToSend);
           } else {
@@ -1082,7 +1096,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
           return true;
         }
       }
-      if (this.source === 'consOrder' || this.source === 'proOrder') {
+      if (this.source === 'consOrder' || this.source === 'proOrder' || this.source === 'paper') {
         if (this.waitlistStatus !== 'Order Confirmed' && this.waitlistStatus !== 'Order Received') {
           return true;
         }
@@ -1104,7 +1118,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
           return false;
         }
       }
-      if (this.source === 'consOrder' || this.source === 'proOrder') {
+      if (this.source === 'consOrder' || this.source === 'proOrder' || this.source === 'paper') {
         if (this.waitlistStatus !== 'Order Confirmed' && this.waitlistStatus !== 'Order Received') {
           return false;
         }

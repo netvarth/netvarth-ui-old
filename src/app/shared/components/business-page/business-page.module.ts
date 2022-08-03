@@ -38,7 +38,9 @@ const routes: Routes = [
     { path: 'catalog/:catalogId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule)},
     { path: 'catalog/:catalogId/item/:itemId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule) },
     { path: ':userEncId', component: BusinessPageComponent},
-    { path: ':userEncId/service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) }
+    { path: ':userEncId/service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) },
+    { path: 'submitpaper', loadChildren: () => import('../../../ynw_consumer/components/home/submit-paper/submit-paper.module').then(m => m.SubmitPaperModule) }
+
 ];
 @NgModule({
     imports: [

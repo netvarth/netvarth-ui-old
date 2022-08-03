@@ -24,11 +24,13 @@ import { AttachmentPopupModule } from "../../../shared/components/attachment-pop
 import { CouponsModule } from "../../../shared/components/coupons/coupons.module";
 const routes: Routes = [
     { path: '', component: ConsumerHomeComponent }
+    
 ];
 import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstantsLocal } from "../../../shared/constants/project-constants";
+import { SubmissionsModule } from "./submissions/submissions.module";
 export function homeHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
 }
@@ -45,6 +47,7 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         MatButtonModule,
         MatMenuModule,
         WLCardModule,
+        SubmissionsModule,
         ApptCardModule,
         GalleryModule,
         AddInboxMessagesModule,

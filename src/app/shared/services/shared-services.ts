@@ -1098,6 +1098,11 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
 
+  addOtherFilestoLeadqnr(leaduid, body) {
+    const url = 'provider/customers/KYC/' + leaduid + '/otherAttachments';
+    return this.servicemeta.httpPost(url, body);
+  }
+
   addProviderAppointmentAttachment(uuid, body) {
     const url = 'provider/appointment/' + uuid + '/attachment';
     return this.servicemeta.httpPost(url, body);

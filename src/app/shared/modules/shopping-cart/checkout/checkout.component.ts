@@ -206,6 +206,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   disablebutton = false;
   bookStep = 'qnr';
   con_email: any;
+  source: any;
+  termscheck: boolean = false;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -257,6 +259,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         if (params.isFrom && params.isFrom == 'providerdetail') {
           this.from = 'providerdetail';
+        }
+        if (params.source) {
+          this.source = params.source;
+        }
+        if (params.account_id) {
+          this.account_id = params.account_id;
         }
       });
 
@@ -950,7 +958,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    if (this.delivery_type === 'store' || this.onlyvirtualItemsPresent) {
+    if (this.delivery_type === 'store' || this.onlyvirtualItemsPresent || this.source==="paper") {
 
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
@@ -961,11 +969,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         const contactNumber = this.storeContact.value.phone;
         const contact_email = this.storeContact.value.email;
         post_Data['phoneNumber'] = contactNumber,
-          post_Data['email'] = contact_email
+        post_Data['email'] = contact_email
 
       }
-      if (this.delivery_type === 'store' && !this.onlyvirtualItemsPresent) {
+      if (this.delivery_type === 'store' && (!this.onlyvirtualItemsPresent || this.source==="paper")) {
         post_Data['storePickup'] = true;
+        console.log("storePickupstorePickupstorePickup")
       }
     }
 
@@ -1000,6 +1009,11 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
       }
     });
+  }
+
+  terms_check()
+  {
+    this.termscheck = !this.termscheck;
   }
   confirmOrder(post_Data, paytype?) {
     console.log("Orderr Data :", post_Data);

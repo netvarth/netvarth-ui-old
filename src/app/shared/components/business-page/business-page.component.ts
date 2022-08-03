@@ -310,6 +310,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   globalLoading = true;
   callback;
   accountConfig: any;
+  source: string;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -588,6 +589,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           )
         }
       });
+      if(this.accountEncId == "53a37k7")
+      {
+        this.loading_direct = true;
+        this.globalLoading = true;
+        this.source = "paper";
+      }
+      if(this.source == 'paper')
+      {
+        setTimeout(()=> this.checkout(), 1000);
+      }
   }
   getproviderBprofileDetails() {
     const self = this;
@@ -2198,8 +2209,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
   }
+  IsAuthordemy(event)
+  {
+    console.log("Authordemy Event",event);
+  }
   cardClicked(actionObj) {
-    console.log('entering into business page');
+    console.log('entering into business page',actionObj);
     console.log(actionObj);
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
@@ -2675,10 +2690,48 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       'logo': blogoUrl
     };
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
+    this.lStorageService.setitemonLocalStorage('active_catalog', this.activeCatalog);
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     let cartUrl = 'order/shoppingcart?account_id=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.uniqueId;
     if (this.userType === 'consumer') {
-      this.router.navigateByUrl(cartUrl);
+      console.log("this.activeCatalog",this.activeCatalog)
+      if(this.activeCatalog.catalogItem.length == 1 && this.order_count==1)
+      {
+        // let cartUrl = 'paper/shoppingcart?account_id=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.uniqueId + '&catalog_id=' + this.activeCatalog.id+ '&source=' + "paper";
+        // this.router.navigateByUrl(cartUrl);
+        const chosenDateTime = {
+        delivery_type: "store",
+        catlog_id: this.activeCatalog.id,
+        nextAvailableTime: this.nextAvailableTime,
+        order_date: this.sel_checkindate,
+        advance_amount: this.activeCatalog.advance_amount,
+        account_id: this.accountId,
+      };
+
+      let queryParam = {
+        providerId: this.accountId,
+      };
+      if (this.customId) {
+        queryParam['customId'] = this.customId;
+      }
+      
+      if(this.activeCatalog.id ){
+        queryParam['catalog_Id']= this.activeCatalog.id;
+      }
+
+      queryParam['source']= "paper";
+     
+      const navigationExtras: NavigationExtras = {
+        queryParams: queryParam,
+      };
+
+      this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+      this.router.navigate(['order', 'shoppingcart', 'checkout'],navigationExtras);
+      }
+      else
+      {
+        this.router.navigateByUrl(cartUrl);
+      }
     } else if (this.userType === '') {
       this.lStorageService.setitemonLocalStorage('target', cartUrl);
       this.router.navigate([this.accountEncId, 'login']);

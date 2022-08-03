@@ -676,11 +676,13 @@
             </div>
         </div>
     </div>
+    <div>
+        <app-submissions [user_details]="usr_details"></app-submissions>
+    </div>
 </section>
 <div id="popup" #popupforApp class="modal disply">
     <div class="modal-content">
         <div class="modal-header">
-                
             <h6 class="text-center">
                 <span class="close" (click)="closeModal()">&times;</span>
             </h6>

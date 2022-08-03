@@ -18,6 +18,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() domain;
     @Input() config;
     @Output() actionPerformed = new EventEmitter<any>();
+    @Output() IsPaper = new EventEmitter<any>();
     @Output() noteClicked = new EventEmitter<any>();
     @Input() type;
     @Input() time_type;
@@ -50,6 +51,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     qualification;
     disablecheckavailabilitybutton = false;
     tooltipcls = '';
+    IsAuthordemy: boolean;
 
     constructor(
         private lStorageService: LocalStorageService,
@@ -138,6 +140,18 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         }
         console.log('waitlist...', this.waitlist)
     }
+
+
+    ngAfterViewInit() {
+            if(this.source == 'paper')
+            {
+                console.log("Came from paper");
+                let element: HTMLElement = document.getElementsByClassName('add-to-cart')[0] as HTMLElement;
+                element.click();
+                this.IsAuthordemy = true
+                this.IsPaper.emit(this.IsAuthordemy);
+            }
+        }
     getServiceName(serviceName) {
         let name = '';
         if (serviceName.length > 12) {
