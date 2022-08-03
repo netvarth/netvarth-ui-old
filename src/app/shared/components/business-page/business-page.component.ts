@@ -591,8 +591,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       });
       if(this.accountEncId == "53a37k7")
       {
-        this.loading_direct = true;
-        this.globalLoading = true;
+        // this.loading_direct = true;
+        // this.globalLoading = true;
         this.source = "paper";
       }
       if(this.source == 'paper')
@@ -689,6 +689,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     //   this.popUp.nativeElement.style.display = 'block';
     // } else {
     //   this.popUp.nativeElement.style.display = 'none';
+    // }
+
+    // if(this.source == 'paper')
+    // {
+      // this.checkout();
+      
+        // let checkout: HTMLElement = document.getElementsByClassName('btn-chkout')[0] as HTMLElement;
+        
+        // setTimeout(()=> checkout.click(), 2000);
+
     // }
   }
   closeModal() {
@@ -2737,6 +2747,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.router.navigate([this.accountEncId, 'login']);
     }
   }
+
+
+
+
   itemDetails(item) {
     const businessObject = {
       'bname': this.businessjson.businessName,
