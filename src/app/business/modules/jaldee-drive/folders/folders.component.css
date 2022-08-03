@@ -1,52 +1,69 @@
 .iconSize{
-    height: 20px !important;
-    width: 20px !important;
-    /* line-height: 100px!important; */
-    margin: 10px 10px !important;
-    /* font-size: 90px!important; */
-    /* transition: .2s all ease-out; */
-    margin-left: 5px;
-  }
-  /* .iconSize:hover{
-    transform: scale(1.6);
-  } */
-  @media (max-width:300px){
-    .card-body{
-      overflow-x: auto;
-      padding: 0 !important;
-      margin: 0px !important;
+  height: 20px !important;
+  width: 20px !important;
+  /* line-height: 100px!important; */
+  margin: 10px 10px !important;
+  /* font-size: 90px!important; */
+  /* transition: .2s all ease-out; */
+  margin-left: 5px;
+}
+/* .iconSize:hover{
+  transform: scale(1.6);
+} */
+@media (max-width:300px){
+  .card-body{
+    overflow-x: auto;
+    padding: 0 !important;
+    margin: 0px !important;
 
-    }
   }
-  .head_color{
-    border-top: 0;
-    color: #1e4079;
-    vertical-align: middle;
+  /* .folderHeadMinSize{
+    min-width: 0px !important;
   }
-  .heght {
-    line-height: 24px !important;
-    /* background-color: #f3f6f9; */
-    background-color: #d8e2f1 !important;
-    height: 60px;
-    align-items: center;
-  }
-  .trRow:hover{
-    background: transparent;
-    box-shadow: 0 3px 15px rgb(0 0 0 / 20%);
-  }
-  .tdStyle{
-    display: flex;
-    align-items: center;
-  }
-  .folderName{
-    font-size: .9rem;
-  }
-  .sectionRow{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  .card-custom{
-   flex-basis: 1;
-  }
+  .sizeHeadMinSize{
+    min-width: 0px !important;
+  } */
+
+}
+.table-responsive{
+  border: none !important;
+}
+.head_color{
+  border-top: 0;
+  color: #1e4079;
+  vertical-align: middle;
+
+}
+/* .folderHeadMinSize{
+  min-width: 160px;
+}
+.sizeHeadMinSize{
+  min-width: 100px;
+} */
+.heght {
+  line-height: 24px !important;
+  /* background-color: #f3f6f9; */
+  background-color: #d8e2f1 !important;
+  height: 60px;
+  align-items: center;
+}
+.trRow:hover{
+  background: transparent;
+  box-shadow: 0 3px 15px rgb(0 0 0 / 20%);
+}
+.tdStyle{
+  display: flex;
+  align-items: center;
+}
+.folderName{
+  font-size: .9rem;
+}
+.sectionRow{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card-custom{
+ flex-basis: 1;
+}
