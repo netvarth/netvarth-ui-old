@@ -84,6 +84,7 @@ export class NewReportComponent implements OnInit {
   crm_timePeriod: string;
   lead_timePeriod : string;
   lead_status_timePeriod: string;
+  processing_files_timePeriod: string;
   enquiry_timePeriod : string;
   monthly_timePeriod : string;
   appointment_service_id: number;
@@ -144,6 +145,8 @@ export class NewReportComponent implements OnInit {
   monthly_EndDate;
   user_timePeriod;
   user_users;
+  processing_files_StartDate;
+  processing_files_EndDate;
   report_criteria: any;
   report_type: any;
   public reportForm: FormGroup;
@@ -207,7 +210,9 @@ export class NewReportComponent implements OnInit {
         else if(this.report_type === 'leadStatus'){
           this.reportTitle = 'Lead Status'
         }
-
+        else if(this.report_type === 'processingFiles'){
+          this.reportTitle = 'Processing Files'
+        }
       }
     });
     this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -215,7 +220,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.crm_timePeriod = this.lead_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.crm_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -399,6 +404,15 @@ export class NewReportComponent implements OnInit {
             this.lead_Status_EndDate = res.endDate;          
           }
         }
+        case 'processingFiles' : {
+          this.processing_files_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if(res.dateRange === 'DATE_RANGE'){
+            this.hide_dateRange = false;
+            this.processing_files_StartDate = res.startDate;
+            this.processing_files_EndDate = res.endDate;          
+          }
+        }
+      
       }
     }
   }
@@ -1187,6 +1201,71 @@ export class NewReportComponent implements OnInit {
         const request_payload: any = {};
         request_payload.reportType = 'LEAD_STATUS';
         request_payload.reportDateCategory = this.lead_status_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    } 
+    else if (reportType === 'processingFiles') {
+      console.log("Report Type :",reportType)
+      if (this.processing_files_timePeriod === 'DATE_RANGE' && (this.processing_files_StartDate === undefined || this.processing_files_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId
+        };
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+          }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.processing_files_timePeriod === 'DATE_RANGE') {
+          if (this.processing_files_StartDate === undefined || this.processing_files_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.processing_files_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.processing_files_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'PROCESSING_FILES_REPORT';
+        request_payload.reportDateCategory = this.processing_files_timePeriod;
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
