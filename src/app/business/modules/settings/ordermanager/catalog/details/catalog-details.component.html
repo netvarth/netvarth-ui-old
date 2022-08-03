@@ -80,7 +80,7 @@
                     <i class="wizard-icon flaticon-piggy-bank"></i>
                     <h3 class="wizard-title">3. Payment Information</h3>
                   </div>
-                  <span class="svg-icon svg-icon-xl wizard-arrow">
+                  <span class="svg-icon svg-icon-xl wizard-arrow" *ngIf="bShowHideFirststorderType">
                     <!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Arrow-right.svg--><svg
                       xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
                       height="24px" viewBox="0 0 24 24" version="1.1">
@@ -100,7 +100,7 @@
                 </div>
                 <!--end::Wizard Step 2 Nav-->
                 <!--begin::Wizard Step 3 Nav-->
-                <div class="wizard-step" [class.tab-selected]="step == 4">
+                <div class="wizard-step" [class.tab-selected]="step == 4" *ngIf="bShowHideFirststorderType">
                   <div class="wizard-label">
                     <i class="wizard-icon flaticon-truck"></i>
                     <h3 class="wizard-title">4. Delivery Information</h3>
@@ -137,6 +137,25 @@
                   <div class="pb-5" *ngIf="step == 1 && !api_loading">
                     <h3 class="mb-10 font-weight-bold text-dark">Catalog Information</h3>
                     <div class="row">
+                      <!----order type start-->
+                      <div class="col-xl-6">
+                        <div class="leadTitle">
+                            <div>Order type</div>
+                            <div class="astericColor">*</div>
+                        </div>
+                        <div class="fieldPadding">
+                            <mat-select class="form-control1 form-control-solid form-control-lg" placeholder="Enter order type" #firststorderTypeValue
+                                formControlName="firststorderType"(ngModelChange)="handleFirstOrderType(firststorderTypeValue.value)">
+                                <mat-option *ngFor="let item of firstOrderTypeJSON;let index=i" [value]="item.name">
+                                    <div *ngIf="item && item.name">
+                                        {{item.name | capitalizeFirst}}
+                                    </div>
+                                </mat-option>
+                            </mat-select>
+                        </div>
+                    </div>
+
+                      <!----order type end-->
                       <div class="col-xl-6">
                         <!--begin::Input-->
                         <div class="form-group">
@@ -227,7 +246,7 @@
                         </mat-form-field>
                         <!--end::Input-->
                       </div>
-                      <div class="col-xl-6">
+                      <div class="col-xl-6" *ngIf="bShowHideFirststorderType">
                         <!--begin::Select-->
                         <div class="form-group">
                           <label>Order Type</label><br>
@@ -564,7 +583,7 @@
                   </div>
                   <!--end::Wizard Step 3-->
 
-                  <div class="pb-5" *ngIf="step == 4">
+                  <div class="pb-5" *ngIf="step == 4 && bShowHideFirststorderType">
                     <!--begin::Section-->
                     <h4 class="mb-10 font-weight-bold text-dark">Delivery details</h4>
                     <div class="card card-shadow card-custom card-shadowless" *ngIf="onlyVirtualItems">
@@ -806,7 +825,8 @@
                       </button>
                     </div>
                     <div>
-                      <button *ngIf="step == 4" type="button" (click)="onSubmit(amForm.value)"
+                      <button *ngIf="step == 4 || (amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value==='submission'&& step === 3)" 
+                      type="button" (click)="onSubmit(amForm.value)"
                         class="btn btn-success font-weight-bold text-uppercase px-9 py-1" [disabled]="disableButton">
                         Save
                       </button>
@@ -815,7 +835,9 @@
                         class="btn btn-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoNext()">
                         Next
                       </button> -->
-                      <button *ngIf="step == 1 || step == 2 || step == 3" type="button"
+                      <button *ngIf="step == 1 || step == 2 ||(amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value ==='Order' && step===3) 
+                       || (amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value !=='submission'&& step ===3)" 
+                       type="button"
                         class="btn btn-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoNext()">
                         Next
                       </button>

@@ -218,6 +218,15 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     homeDeliveryDisabled = false;
     onlyVirtualItems=false;
     bprofile: any = [];
+    firstOrderTypeJSON=[
+        {
+            id:1,name:'itemOrder'
+        },
+        {
+            id:2,name:'submission'
+        }
+    ]
+    bShowHideFirststorderType:boolean=true;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private router: Router,
@@ -428,7 +437,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.subscriptions.sink = this.provider_services.getProviderfilterItems(apiFilter)
                 .subscribe(
                     data => {
-                        console.log(JSON.stringify(data));
+                        // console.log(JSON.stringify(data));
                         this.item_list = data;
                         this.item_count = this.item_list.length;
                         this.catalogItem = data;
@@ -501,7 +510,8 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             startdatehome: [''],
             enddatehome: [''],
             deliverykms: [''],
-            deliverycharge: ['']
+            deliverycharge: [''],
+            firststorderType:['itemOrder']
 
         });
         this.amForm.get('orderType').setValue('SHOPPINGCART');
@@ -518,17 +528,40 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         if (this.action === 'edit') {
             this.getCatalog(this.catalog_id).then(
                 (catalog) => {
-                    this.catalog = catalog;
-                    this.catalogcaption = this.catalog.catalogName;
-                    if (this.catalog.catalogItem) {
-                        this.catalogItems = this.catalog.catalogItem;
-                        this.updateForm();
-                        this.setItemFromCataDetails();
+                    console.log('catalogEdit:::',catalog)
+                    if(catalog){
+                        this.catalog = catalog;
+                        if(this.catalog && this.catalog.catalogName){
+                            this.catalogcaption = this.catalog.catalogName;
+                        }
+                        
+                        if(this.catalog && this.catalog.catalogType){
+                            this.amForm.controls.firststorderType.setValue(this.catalog.catalogType);
+                            if(this.catalog.catalogType === 'submission'){
+                                this.bShowHideFirststorderType= false;
+                            }
+                        }
+                        else{
+                            this.bShowHideFirststorderType=true;
+                        }
+                        if (this.catalog && this.catalog.catalogItem) {
+                            this.catalogItems = this.catalog.catalogItem;
+                            this.updateForm();
+                            this.setItemFromCataDetails();
+                        }
                     }
-
                 });
 
 
+        }
+
+    }
+    handleFirstOrderType(data:any){
+        if(this.amForm.controls.firststorderType.value==='submission'){
+            this.bShowHideFirststorderType= false;
+        }
+        else{
+            this.bShowHideFirststorderType= true; 
         }
 
     }
@@ -729,9 +762,10 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         if (homeDeliverystartdate && this.hometimewindow_list.length > 0 && this.selday_arrhomedelivery.length > 0) {
             this.homedeliveryinfo = true;
         }
-
-        this.amForm.setValue({
+        // console.log('catalogOnForm',this.catalog);
+        this.amForm.patchValue({
             'catalogName': this.catalog.catalogName,
+            'catalogType':this.catalog.catalogType,
             'catalogDesc': this.catalog.catalogDesc || '',
             'startdate': this.catalog.catalogSchedule.startDate || '',
             'enddate': this.catalog.catalogSchedule.terminator.endDate || '',
@@ -975,7 +1009,6 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
 
     }
     onSubmit(form_data) {
-
         let endDate;
         const startDate = this.convertDate(form_data.startdate);
         if (form_data.enddate) {
@@ -983,8 +1016,6 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         } else {
             endDate = '';
         }
-
-
         //store pickup
         const storedaystr: any = [];
         for (const cday of this.selday_arrstorepickup) {
@@ -1061,6 +1092,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 ]
             },
             'catalogStatus': 'ACTIVE',
+            'catalogType': this.amForm.controls.firststorderType.value,
             'orderType': form_data.orderType,
             'orderStatuses': form_data.orderStatuses,
             'pickUp': {
@@ -1133,6 +1165,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         };
         if (this.action === 'add') {
             if (form_data.orderType === 'SHOPPINGCART') {
+                console.log('this.catalogItemsSelected;',this.catalogItemsSelected)
                 postdata['catalogItem'] = this.catalogItemsSelected;
             }
             this.addCatalog(postdata);
@@ -1144,6 +1177,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         }
     }
     addCatalog(post_data) {
+        // console.log('post_data',post_data)
         this.disableButton = true;
         this.resetApiErrors();
         this.api_loading = true;
@@ -1620,11 +1654,10 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     getItemImg(item) {
         if (item.itemImages) {
             const img = item.itemImages.filter(image => image.displayImage);
-           // console.log("Img URl",img[0])
-            if(img[0].imageSize === 0){
+            if(img && img[0] && img[0].imageSize === 0){
                 return '../../../../assets/images/order/Items.svg';
             }
-            if (img[0]) {
+            if (img && img[0]) {
                 return img[0].url;
             } 
             else {
@@ -1960,7 +1993,9 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 this.getCatalog(this.catalog_id).then(
                     (catalog) => {
                         this.catalog = catalog;
-                        this.catalogcaption = this.catalog.catalogName;
+                        if(this.catalog.catalogName){
+                            this.catalogcaption = this.catalog.catalogName;
+                        }
                         if (this.catalog.catalogItem) {
                             this.catalogItems = this.catalog.catalogItem;
                             this.setItemFromCataDetails();

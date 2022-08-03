@@ -22,6 +22,7 @@ import { EditCatalogItemPopupModule } from "../editcatalogitempopup/editcatalogi
 import { RouterModule, Routes } from "@angular/router";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
 import { TimewindowPopupModule } from "../timewindowpopup/timewindowpopup.module";
+import { CapitalizeFirstPipeModule } from '../../../../../../shared/pipes/capitalize.module';
 
 
 const routes: Routes = [
@@ -51,6 +52,7 @@ const routes: Routes = [
         AddcatalogimageModule,
         CreateItemPopupModule,
         EditCatalogItemPopupModule,
+        CapitalizeFirstPipeModule,
        
         [RouterModule.forChild(routes)]
     ]
