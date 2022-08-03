@@ -341,7 +341,16 @@
                                 <span *ngIf="cartDetails.advanceAmount >0" style="font-size: small;color: red;"><i
                                     class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span
                                     class="rupee-font">{{getAmountToPay(cartDetails) | currency:'&#8377;'}}
-                                  </span>required</span>
+                                  </span>required</span><br>
+                                  <span style="font-size: small;" *ngIf="convenientFee > 0">
+                                    <span  class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{convenientFee | currency:'&#8377;'}}</span>
+                                </span><br>
+                                <span style="font-size: small;" *ngIf="selected_payment_mode && isInternatonal === false && gatewayFee > 0">
+                                    <span class="ser_price no-mgn-bt rupee-font">Gateway Fee: {{gatewayFee | currency:'&#8377;'}}</span>
+                                </span>
+                                <span style="font-size: small;" *ngIf="selected_payment_mode && isInternatonal === true && gatewayFee > 0">
+                                    <span  class="ser_price no-mgn-bt rupee-font">Gateway Fee: {{gatewayFee | currency:'&#8377;'}}</span>
+                                </span>
                                 <div *ngIf="cartDetails.advanceAmount">
                                   <div *ngIf="jcashamount>0" class="jaldeecredit">
                                     <mat-checkbox [(ngModel)]="checkJcash" (change)='OnChangeJcash($event)'>

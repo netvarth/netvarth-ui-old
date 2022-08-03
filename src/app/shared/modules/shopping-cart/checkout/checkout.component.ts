@@ -208,6 +208,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   con_email: any;
   source: any;
   termscheck: boolean = false;
+  convenientPaymentModes:any=[];
+  convenientFeeObj: any;
+  convenientFee: any;
+  gatewayFee: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -462,10 +466,32 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   indian_payment_mode_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = false;
+    this.convenientPaymentModes.map((res:any)=>{
+      this.convenientFeeObj = { }
+      if(res.isInternational === false){
+          this.convenientFeeObj = res;
+          if(this.selected_payment_mode === res.mode){
+            //  this.convenientFee = this.convenientFeeObj.convenienceFee;
+              this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+              console.log("convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
+          }
+      }
+     })
   }
   non_indian_modes_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = true;
+    this.convenientPaymentModes.map((res:any)=>{
+      this.convenientFeeObj = { }
+      if(res.isInternational === false){
+          this.convenientFeeObj = res;
+          if(this.selected_payment_mode === res.mode){
+            //  this.convenientFee = this.convenientFeeObj.convenienceFee;
+              this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+              console.log("convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
+          }
+      }
+     })
   }
   togglepaymentMode() {
     this.shownonIndianModes = !this.shownonIndianModes;
@@ -482,6 +508,28 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
           this.paymentmodes = data[0];
           this.isPayment = true;
+          let convienientPaymentObj = {}
+          convienientPaymentObj = {
+              "profileId" :  this.paymentmodes.profileId,
+              "amount"	: this.advance_amount
+          }
+          this.shared_services.getConvenientFeeOfProvider(this.account_id,convienientPaymentObj).subscribe((data:any)=>{
+                                         // let array = []
+                                         console.log("Convenient response :",data)
+                                         this.convenientPaymentModes = data;
+                                         this.convenientPaymentModes.map((res:any)=>{
+                                          this.convenientFeeObj = { }
+                                          if(res){
+                                              this.convenientFeeObj = res;
+                                                  this.convenientFee = this.convenientFeeObj.convenienceFee;
+                                                  console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
+                                              
+                                          }
+                                         })
+            
+
+          })
+          console.log("isConvenienceFee paymentsss:",this.paymentmodes)
           if (this.paymentmodes && this.paymentmodes.indiaPay) {
             this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
           }
@@ -1656,10 +1704,37 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       'isInternational': this.isInternatonal
 
     };
+    this.convenientPaymentModes.map((res:any)=>{
+      this.convenientFeeObj = res
+      if(this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternatonal){
+          // this.convenientFeeObj = res;
+           if(paymentMode ===  this.convenientFeeObj.mode){
+              this.orderDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
+              this.orderDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
+              this.orderDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
+              this.orderDetails['profileId'] = this.paymentmodes.profileId;
+              this.orderDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
+              this.orderDetails['paymentGateway'] = this.convenientFeeObj.gateway
+              console.log("Non-Indian Payment Info", this.orderDetails)
+           }
+       }
+       if(this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternatonal){
+       // this.convenientFeeObj = res;
+        if(paymentMode ===  this.convenientFeeObj.mode){
+           this.orderDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
+           this.orderDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
+           this.orderDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
+           this.orderDetails['profileId'] = this.paymentmodes.profileId;
+           this.orderDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
+           this.orderDetails['paymentGateway'] = this.convenientFeeObj.gateway
+           console.log("Indian Payment Info", this.orderDetails)
+        }
+    }
+     })
     this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
     this.lStorageService.setitemonLocalStorage('acid', this.account_id);
     this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-    console.log(this.orderDetails);
+    console.log("orderDetails",this.orderDetails);
     if (this.remainingadvanceamount == 0 && this.checkJcash) {
       const postData = {
         'amountToPay': this.prepayAmount,

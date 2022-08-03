@@ -519,8 +519,13 @@ export class SharedServices {
     return this.servicemeta.httpPost(url, body);
   }
   getPaymentModesofProvider(provid,serviceId,purpose?) {
-    const url = 'consumer/payment/modes/' + provid +'/'+serviceId+ '/'+ purpose;
+    const url = 'consumer/payment/modes/service/' + provid +'/'+serviceId+ '/'+ purpose;
     return this.servicemeta.httpGet(url);
+  }
+  getConvenientFeeOfProvider(provid,data?) {
+    console.log("Service :",data)
+    const url = 'consumer/payment/modes/convenienceFee/'+provid;
+    return this.servicemeta.httpPut(url,data);
   }
   consumerPayment(data) {
     const url = 'consumer/payment';

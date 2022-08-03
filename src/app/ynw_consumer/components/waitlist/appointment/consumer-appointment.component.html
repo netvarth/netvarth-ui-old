@@ -378,9 +378,9 @@
                                             <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
                                                 ? payAmount : paymentDetails.amountRequiredNow)|
                                                 currency:'&#8377;'}}</span></span> <br>
-                                                <span style="font-size: small;">Additional convenience charges may apply
+                                                <!-- <span style="font-size: small;">Additional convenience charges may apply
 
-                                                </span>
+                                                </span> -->
                                     </div>
                                 </div>
                                 <div class="disply"
@@ -394,11 +394,24 @@
                                             <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
                                                 ? payAmount : paymentDetails.amountRequiredNow)|
                                                 currency:'&#8377;'}}</span></span> <br>
-                                                <span style="font-size: small;">Additional convenience charges may apply
+                                                <!-- <span style="font-size: small;">Additional convenience charges may apply
 
-                                                </span>
+                                                </span> -->
                                     </div>
                                 </div>
+                                <!-- <span style="font-size: small;" *ngIf="paymentMode && isInternational === false && convenientFee > 0">
+                                    <span class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{convenientFee | currency:'&#8377;'}}</span>
+                                </span> -->
+                                <!-- paymentMode && isInternational === true && -->
+                                <span style="font-size: small;" *ngIf="convenientFee > 0">
+                                    <span  class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{convenientFee | currency:'&#8377;'}}</span>
+                                </span><br>
+                                <span style="font-size: small;" *ngIf="paymentMode && isInternational === false && gatewayFee > 0">
+                                    <span class="ser_price no-mgn-bt rupee-font">Gateway Fee: {{gatewayFee | currency:'&#8377;'}}</span>
+                                </span>
+                                <span style="font-size: small;" *ngIf="paymentMode && isInternational === true && gatewayFee > 0">
+                                    <span  class="ser_price no-mgn-bt rupee-font">Gateway Fee: {{gatewayFee | currency:'&#8377;'}}</span>
+                                </span>
                                 <div
                                     *ngIf="selectedService && selectedService.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
                                     <div class="jaldeecredit" *ngIf="jcashamount>0">

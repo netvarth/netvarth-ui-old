@@ -173,7 +173,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     slotLoaded = false;
     btnClicked = false // To avoid double click
     apptDetails_firstName;
-    apptDetails_lastName
+    apptDetails_lastName;
+    convenientPaymentModes:any=[];
+    convenientFeeObj: any;
+    convenientFee: any;
+    paymentReqInfo : any = { }
+    gatewayFee: any;
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -961,6 +966,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     getProviderCustomerId(member, accountId) {
         console.log("Member:", member);
+        if(member){
+        this.apptDetails_firstName = member.firstName;
+        this.apptDetails_lastName = member.lastName;
+        }
         console.log("ProviderList:", this.providerConsumerList);
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
         const _this = this;
@@ -1274,8 +1283,52 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
+                    
                     this.isPayment = true;
-                    if (this.paymentmodes && this.paymentmodes.indiaPay) {
+               //   if(this.paymentmodes.isConvenienceFee === true){
+                    let convienientPaymentObj = {}
+                    convienientPaymentObj = {
+                        "profileId" :  this.paymentmodes.profileId,
+                        "amount"	: this.paymentDetails.amountRequiredNow
+                    }
+                    this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
+                                                   // let array = []
+                                                   console.log("Convenient response :",data)
+                                                   this.convenientPaymentModes = data;
+                                                   if(this.convenientPaymentModes){
+                                                   this.convenientPaymentModes.map((res:any)=>{
+                                                    this.convenientFeeObj = { }
+                                                    if(res){
+                                                        this.convenientFeeObj = res;
+                                                            this.convenientFee = this.convenientFeeObj.convenienceFee;
+                                                            console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
+                                                        
+                                                    }
+                                                   })
+                                                }
+                      
+
+                    })
+                    console.log("isConvenienceFee paymentsss:",this.paymentmodes)
+
+                    // if (this.paymentmodes && this.paymentmodes.indiaPay) {
+                    //     this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
+                    // }
+                    // if (this.paymentmodes && this.paymentmodes.internationalPay) {
+                    //     this.non_indian_modes = this.paymentmodes.internationalBankInfo;
+                    // }
+                    // if (this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
+                    //     this.shownonIndianModes = true;
+                    // } else {
+                    //     this.shownonIndianModes = false;
+                    // }
+
+                  
+             //  }
+            // else {
+               // this.paymentmodes = data[0];
+               // console.log("paymentsss:",this.paymentmodes)
+                  if (this.paymentmodes && this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
                     if (this.paymentmodes && this.paymentmodes.internationalPay) {
@@ -1286,6 +1339,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     } else {
                         this.shownonIndianModes = false;
                     }
+             // }
                 },
                 error => {
                     this.isPayment = false;
@@ -1447,10 +1501,32 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     indian_payment_mode_onchange(event) {
         this.paymentMode = event.value;
         this.isInternational = false;
+        this.convenientPaymentModes.map((res:any)=>{
+            this.convenientFeeObj = { }
+            if(res.isInternational === false){
+                this.convenientFeeObj = res;
+                if(this.paymentMode === res.mode){
+                  //  this.convenientFee = this.convenientFeeObj.convenienceFee;
+                    this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                    console.log("gatewayFee for indian:",this.gatewayFee,res.mode)
+                }
+            }
+           })
     }
     non_indian_modes_onchange(event) {
         this.paymentMode = event.value;
         this.isInternational = true;
+        this.convenientPaymentModes.map((res:any)=>{
+            this.convenientFeeObj = { }
+            if(res.isInternational === true){
+               this.convenientFeeObj = res;
+               if(this.paymentMode === res.mode){
+                  // this.convenientFee = this.convenientFeeObj.convenienceFee;
+                   this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                   console.log("gatewayFee for  non-indian:",this.gatewayFee,res.mode)
+               }
+           }
+           })
     }
     confirmAppointment(type?) {
         console.log("confirmAppointment");
@@ -1908,7 +1984,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     makeFailedPayment(paymentMode) {
 
-        let paymentReqInfo = {
+        this.paymentReqInfo = {
             'amount': this.paymentDetails.amountRequiredNow,
             'paymentMode': null,
             'uuid': this.trackUuid,
@@ -1916,19 +1992,47 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             'purpose': 'prePayment'
         };
 
-        paymentReqInfo.paymentMode = paymentMode;
-        paymentReqInfo['serviceId'] = this.selectedServiceId;
-        paymentReqInfo['isInternational'] = this.isInternational;
+        this.paymentReqInfo.paymentMode = paymentMode;
+        this.paymentReqInfo['serviceId'] = this.selectedServiceId;
+        this.paymentReqInfo['isInternational'] = this.isInternational;
 
         if (this.paymentRequestId) {
-            paymentReqInfo['paymentRequestId'] = this.paymentRequestId;
+            this.paymentReqInfo['paymentRequestId'] = this.paymentRequestId;
         }
+        this.convenientPaymentModes.map((res:any)=>{
+            this.convenientFeeObj = res
+            if(this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternational){
+                // this.convenientFeeObj = res;
+                 if(this.paymentMode ===  this.convenientFeeObj.mode){
+                    this.paymentReqInfo['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
+                    this.paymentReqInfo['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
+                    this.paymentReqInfo['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
+                    this.paymentReqInfo['profileId'] = this.paymentmodes.profileId;
+                    this.paymentReqInfo['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
+                    this.paymentReqInfo['paymentGateway'] = this.convenientFeeObj.gateway
+                    console.log("Non-Indian Payment Info", this.paymentReqInfo)
+                 }
+             }
+             if(this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternational){
+             // this.convenientFeeObj = res;
+              if(this.paymentMode ===  this.convenientFeeObj.mode){
+                 this.paymentReqInfo['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
+                 this.paymentReqInfo['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
+                 this.paymentReqInfo['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
+                 this.paymentReqInfo['profileId'] = this.paymentmodes.profileId;
+                 this.paymentReqInfo['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
+                 this.paymentReqInfo['paymentGateway'] = this.convenientFeeObj.gateway
+
+                 console.log("Indian Payment Info", this.paymentReqInfo)
+              }
+          }
+           })
 
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.accountId);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
 
-        console.log("paymentReqInfo:", paymentReqInfo);
+        console.log("paymentReqInfo:", this.paymentReqInfo);
 
 
         if (this.remainingadvanceamount == 0 && this.checkJcash) {
@@ -1988,7 +2092,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
                     });
         } else {
-            this.subs.sink = this.sharedServices.consumerPayment(paymentReqInfo)
+            this.subs.sink = this.sharedServices.consumerPayment(this.paymentReqInfo)
                 .subscribe((pData: any) => {
                     console.log(JSON.stringify(pData));
                     this.paymentRequestId = pData['paymentRequestId'];
@@ -2153,7 +2257,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     */
     memberSelected(selectedMembers) {
         const _this = this;
-        console.log(selectedMembers);
+        console.log("selected Member :",selectedMembers);
         // this.waitlistForPrev = this.waitlist_for;
         _this.appmtFor = selectedMembers;
         console.log(_this.appmtFor);

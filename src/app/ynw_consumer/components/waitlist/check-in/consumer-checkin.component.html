@@ -693,9 +693,9 @@
                                                                             ? payAmount :
                                                                             paymentDetails.amountRequiredNow)|
                                                                             currency:'&#8377;'}}</span></span> <br>
-                                                                            <span style="font-size: small;">Additional convenience charges may apply
+                                                                            <!-- <span style="font-size: small;">Additional convenience charges may apply
 
-                                                                            </span>
+                                                                            </span> -->
                                                                 </div>
                                                             </div>
                                                             <div class="disply">
@@ -714,11 +714,25 @@
                                                                             ? payAmount :
                                                                             paymentDetails.amountRequiredNow)|
                                                                             currency:'&#8377;'}}</span></span> <br>
-                                                                            <span style="font-size: small;">Additional convenience charges may apply
+                                                                            <!-- <span style="font-size: small;">Additional convenience charges may apply
 
-                                                                            </span>
+                                                                            </span> -->
                                                                 </div>
                                                             </div>
+                                                            <!-- selected_payment_mode && isInternatonal === false && -->
+                                                            <!-- <span style="font-size: small;" *ngIf="convenientFee > 0">
+                                                                <span class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{convenientFee | currency:'&#8377;'}}</span>
+                                                            </span> -->
+                                                            <!-- selected_payment_mode && isInternatonal === true && -->
+                                                            <span style="font-size: small;" *ngIf="convenientFee > 0">
+                                                                <span  class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{convenientFee | currency:'&#8377;'}}</span>
+                                                            </span><br>
+                                                            <span style="font-size: small;" *ngIf="selected_payment_mode && isInternatonal === false && gatewayFee > 0">
+                                                                <span class="ser_price no-mgn-bt rupee-font">Gateway Fee: {{gatewayFee | currency:'&#8377;'}}</span>
+                                                            </span>
+                                                            <span style="font-size: small;" *ngIf="selected_payment_mode && isInternatonal === true && gatewayFee > 0">
+                                                                <span  class="ser_price no-mgn-bt rupee-font">Gateway Fee: {{gatewayFee | currency:'&#8377;'}}</span>
+                                                            </span>
                                                         </div>
                                                         <div
                                                             *ngIf="selectedService && selectedService.isPrePayment && paymentLength>0 && paymentDetails.amountRequiredNow > 0">
