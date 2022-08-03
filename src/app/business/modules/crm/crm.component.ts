@@ -549,7 +549,7 @@ export class CRMComponent implements OnInit {
           }
           break;
           case 'Processing Files Report':
-            imgSrc = './assets/images/crmImages/fileUpload.png';
+            imgSrc = './assets/images/crmImages/fileProcessing.png';
             if (imgSrc) {
               return imgSrc;
             }
