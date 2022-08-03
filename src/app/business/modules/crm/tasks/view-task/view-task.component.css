@@ -801,7 +801,7 @@ input::placeholder {
 
 .fieldDisable {
   cursor: not-allowed !important;
-  background-color: #eee;
+  background-color: #eee !important;
   opacity: 1;
 }
 .custName{

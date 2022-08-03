@@ -437,7 +437,7 @@
               <textarea [disabled]="taskDetails.status.name==='Completed'" rows="10" class="form-control" [(ngModel)]="notesTextarea" #taskDescription
                 (ngModelChange)="handleNotesDescription(taskDescription.value)" (keyup)="autoGrowTextZone($event)"
                 maxlength="1000" placeholder="Enter remarks description"
-                style=" height: 45px !important;background: #FCFCFC !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
+                style=" height: 45px !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
             </div>
             <div *ngIf="errorMsg && assignMemberErrorMsg" class="errorMsg">
               <div>{{assignMemberErrorMsg}}</div>
@@ -504,7 +504,7 @@
             <div>{{lebalActualPotential}}</div>
           </div>
           <div class="fieldPadding">
-            <input [disabled]="taskDetails.status.name==='Completed'" min="0" (keyup)="resetErrors()" type="number" [(ngModel)]="actualPotential"  placeholder="Enter potential"
+            <input [disabled]="taskDetails.status.name==='Completed'" min="0" (keyup)="resetErrors()" type="number" [(ngModel)]="actualPotential"  placeholder="Enter activity number"
               class="form-control " autocomplete="off" />
           </div>
         </div>
