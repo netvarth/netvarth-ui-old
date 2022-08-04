@@ -32,15 +32,14 @@ const routes: Routes = [
     { path: '', component: BusinessPageComponent},
     { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
     {path:'dashboard',loadChildren:() => import('./homedashboard/homedashboard.module').then(m => m.HomedashboardModule)},
-    { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },    
+    { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
+    { path: 'submitpaper', loadChildren: () => import('../../../ynw_consumer/components/home/submit-paper/submit-paper.module').then(m => m.SubmitPaperModule) },
     { path: 'service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) },
     { path: 'service/:serid/pay/:id', loadChildren: () => import('./service-view/donation-link/donation-link.module').then(m => m.DonationLinkModule) },
     { path: 'catalog/:catalogId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule)},
     { path: 'catalog/:catalogId/item/:itemId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule) },
     { path: ':userEncId', component: BusinessPageComponent},
-    { path: ':userEncId/service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) },
-    { path: 'submitpaper', loadChildren: () => import('../../../ynw_consumer/components/home/submit-paper/submit-paper.module').then(m => m.SubmitPaperModule) }
-
+    { path: ':userEncId/service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) }
 ];
 @NgModule({
     imports: [

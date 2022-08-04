@@ -6,6 +6,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { SharedServices } from '../../services/shared-services';
 import jwt_decode from "jwt-decode";
 import { SnackbarService } from '../../services/snackbar.service';
+import { Messages } from '../../constants/project-messages';
 declare var google;
 @Component({
   selector: 'app-authentication',
@@ -97,7 +98,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   /**
    * Phone Number Collection for Account Existencen
    */
-  sendOTP() {
+  sendOTP(mode?) {
     this.phoneError = null;
     this.lStorageService.removeitemfromLocalStorage('authToken');
     this.lStorageService.removeitemfromLocalStorage('authorization');
@@ -113,17 +114,17 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
           this.config.length = 5;
         }
       }
-      this.performSendOTP(loginId);
+      this.performSendOTP(loginId, null, mode);
     } else if (this.phoneNumber.dialCode !== '+91') {
       this.dialCode = this.phoneNumber.dialCode;
       const pN = this.phoneNumber.e164Number.trim();
       let loginId = pN.split(this.dialCode)[1];
-      this.performSendOTP(loginId, this.emailId);
+      this.performSendOTP(loginId, this.emailId, mode);
     } else {
       this.phoneError = 'Mobile number required';
     }
   }
-  performSendOTP(loginId, emailId?) {
+  performSendOTP(loginId, emailId?, mode?) {
     let credentials = {
       countryCode: this.dialCode,
       loginId: loginId,
@@ -135,6 +136,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.sendConsumerOTP(credentials).subscribe(
       (response: any) => {
         this.step = 3;
+        if (mode == 'resent') {
+          this.snackbarService.openSnackBar(Messages.OTP_RESEND_SUCCESS);
+        }        
       }
     )
   }

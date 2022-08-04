@@ -3,6 +3,7 @@ export const Messages = {
   'OTP_SENT_EMAIL': 'Enter the OTP sent to [your_email]',
   'OTP_SENT_MOBILE': 'OTP has been sent to [your_mobile]. Please enter your OTP.',
   'OTP_SENT_LABEL': 'Enter the OTP sent to [your_mobile]',
+  'OTP_RESEND_SUCCESS': 'OTP has been sent successfully',
   'PROFILE_UPDATE': 'Profile has been updated successfully',
   'EMAIL_ADDED': 'Email added successfully',
   'PASSWORD_MISMATCH': 'Entered passwords does not match',
