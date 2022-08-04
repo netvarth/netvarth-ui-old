@@ -517,6 +517,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                                          // let array = []
                                          console.log("Convenient response :",data)
                                          this.convenientPaymentModes = data;
+                                         if(this.convenientPaymentModes){
                                          this.convenientPaymentModes.map((res:any)=>{
                                           this.convenientFeeObj = { }
                                           if(res){
@@ -526,6 +527,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                                               
                                           }
                                          })
+                                        }
             
 
           })

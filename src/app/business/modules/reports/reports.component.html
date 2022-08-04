@@ -374,6 +374,7 @@
                 </mat-accordion>
                 </div>
             </div>
+           
    <!-- Processing Files Reports -->
    <div class="row">
     <div class="card p0">
@@ -404,6 +405,68 @@
         </mat-expansion-panel>
     </mat-accordion>
     </div>
+</div>
+  <!--Consolidated Reports -->
+  <div class="row">
+    <div class="card p0">
+      <mat-accordion class="report">
+        <mat-expansion-panel  [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                    Consolidated(HO)
+                   <div class="width100pc" >
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'consolidated'}">Create New Report</a>
+                   </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container *ngIf="consolidatedReports.length===0">
+              <div *ngIf="consolidated_criteria.length === 0" >
+                <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+              </div>
+              <table  *ngIf="consolidated_criteria.length > 0">
+                <span class="savd-report">Saved Reports</span>
+                <tr *ngFor="let consolidate of consolidated_criteria">
+                  <td>{{consolidate.reportName}}</td>
+                  <td><a (click)="recreateReport(consolidate)">Generate</a></td>
+                  <td><a (click)="viewCriteria(consolidate)">View</a></td>
+                  <td><a (click)="deletCriteria(consolidate)">Delete</a></td>
+                </tr>
+              </table>
+          </ng-container>
+        </mat-expansion-panel>
+    </mat-accordion>
+    </div>
+</div>
+ <!--Tat Reports -->
+ <div class="row">
+  <div class="card p0">
+    <mat-accordion class="report">
+      <mat-expansion-panel  [expanded]="true">
+          <mat-expansion-panel-header>
+              <mat-panel-title class="report_title">
+                  Tat
+                 <div class="width100pc" >
+                  <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'tat'}">Create New Report</a>
+                 </div>
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngIf="tatReports.length===0">
+            <div *ngIf="tat_criteria.length === 0" >
+              <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+            </div>
+            <table  *ngIf="tat_criteria.length > 0">
+              <span class="savd-report">Saved Reports</span>
+              <tr *ngFor="let tat of tat_criteria">
+                <td>{{tat.reportName}}</td>
+                <td><a (click)="recreateReport(tat)">Generate</a></td>
+                <td><a (click)="viewCriteria(tat)">View</a></td>
+                <td><a (click)="deletCriteria(tat)">Delete</a></td>
+              </tr>
+            </table>
+        </ng-container>
+      </mat-expansion-panel>
+  </mat-accordion>
+  </div>
 </div>
                
       </div>

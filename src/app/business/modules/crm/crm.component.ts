@@ -41,14 +41,21 @@ export class CRMComponent implements OnInit {
       id: 3, type: 'Enquiry Report'
     }, 
     {
-      id: 4, type: 'Consolidated Activity Report'
+      id: 4, type: 'Activity Consolidated Report'
     }, 
     {
       id: 5, type: 'Lead Status Report'
     },
     {
       id:6, type: 'Processing Files Report'
-    }
+    },
+    {
+      id:7, type: 'Consolidated Report'
+    },
+    {
+      id:8, type: 'Tat Report'
+    },
+
   ]
   constructor(
     private providerServices: ProviderServices,
@@ -563,7 +570,7 @@ export class CRMComponent implements OnInit {
           }
          
           break;
-        case 'Consolidated Activity Report':
+        case 'Activity Consolidated Report':
           const navigationExtrasToMonthly: NavigationExtras = {
             queryParams: {
               report_type: 'monthlyActivity'
@@ -593,6 +600,26 @@ export class CRMComponent implements OnInit {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToProcessingFiles);
             }
             break;
+            case 'Consolidated Report':
+              const navigationExtrasToConsolidated: NavigationExtras = {
+                queryParams: {
+                  report_type: 'consolidated'
+                }
+              }
+              if(navigationExtrasToConsolidated){
+                this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToConsolidated);
+              }
+              break;
+              case 'Tat Report':
+                const navigationExtrasToTat: NavigationExtras = {
+                  queryParams: {
+                    report_type: 'tat'
+                  }
+                }
+                if(navigationExtrasToTat){
+                  this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToTat);
+                }
+                break;
       }
     }
   }
@@ -618,7 +645,7 @@ export class CRMComponent implements OnInit {
             return imgSrc;
           }
           break;
-        case 'Consolidated Activity Report':
+        case 'Activity Consolidated Report':
           imgSrc = './assets/images/crmImages/consolidation.png';
           if (imgSrc) {
             return imgSrc;
@@ -636,6 +663,18 @@ export class CRMComponent implements OnInit {
               return imgSrc;
             }
             break;
+            case 'Consolidated Report':
+              imgSrc = './assets/images/crmImages/inquiry.png';
+              if (imgSrc) {
+                return imgSrc;
+              }
+              break;
+              case 'Tat Report':
+                imgSrc = './assets/images/crmImages/inquiry.png';
+                if (imgSrc) {
+                  return imgSrc;
+                }
+                break;
       }
     }
   }
