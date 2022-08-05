@@ -179,6 +179,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     convenientFee: any;
     paymentReqInfo : any = { }
     gatewayFee: any;
+    profileId: any;
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -1285,31 +1286,33 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.paymentmodes = data[0];
                     
                     this.isPayment = true;
+                    this.profileId = this.paymentmodes.profileId;
+                    console.log("Profile ID :",this.profileId)
                //   if(this.paymentmodes.isConvenienceFee === true){
-                    let convienientPaymentObj = {}
-                    convienientPaymentObj = {
-                        "profileId" :  this.paymentmodes.profileId,
-                        "amount"	: this.paymentDetails.amountRequiredNow
-                    }
-                    this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
-                                                   // let array = []
-                                                   console.log("Convenient response :",data)
-                                                   this.convenientPaymentModes = data;
-                                                   if(this.convenientPaymentModes){
-                                                   this.convenientPaymentModes.map((res:any)=>{
-                                                    this.convenientFeeObj = { }
-                                                    if(res){
-                                                        this.convenientFeeObj = res;
-                                                            this.convenientFee = this.convenientFeeObj.convenienceFee;
-                                                            console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
+                    // let convienientPaymentObj = {}
+                    // convienientPaymentObj = {
+                    //     "profileId" :  this.paymentmodes.profileId,
+                    //     "amount"	: this.paymentDetails.amountRequiredNow
+                    // }
+                    // this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
+                    //                                // let array = []
+                    //                                console.log("Convenient response :",data)
+                    //                                this.convenientPaymentModes = data;
+                    //                                if(this.convenientPaymentModes){
+                    //                                this.convenientPaymentModes.map((res:any)=>{
+                    //                                 this.convenientFeeObj = { }
+                    //                                 if(res){
+                    //                                     this.convenientFeeObj = res;
+                    //                                         this.convenientFee = this.convenientFeeObj.convenienceFee;
+                    //                                         console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
                                                         
-                                                    }
-                                                   })
-                                                }
+                    //                                 }
+                    //                                })
+                    //                             }
                       
 
-                    })
-                    console.log("isConvenienceFee paymentsss:",this.paymentmodes)
+                    // })
+                    // console.log("isConvenienceFee paymentsss:",this.paymentmodes)
 
                     // if (this.paymentmodes && this.paymentmodes.indiaPay) {
                     //     this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
@@ -1590,6 +1593,28 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
                     this.payAmount = 0;
                 }
+                let convienientPaymentObj = {}
+                convienientPaymentObj = {
+                    "profileId" :  this.profileId,
+                    "amount"	: this.paymentDetails.amountRequiredNow
+                }
+                this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
+                                               // let array = []
+                                               console.log("Convenient response :",data)
+                                               this.convenientPaymentModes = data;
+                                               if(this.convenientPaymentModes){
+                                               this.convenientPaymentModes.map((res:any)=>{
+                                                this.convenientFeeObj = { }
+                                                if(res){
+                                                    this.convenientFeeObj = res;
+                                                        this.convenientFee = this.convenientFeeObj.convenienceFee;
+                                                    
+                                                }
+                                               })
+                                            }
+                  
+
+                })
             },
                 error => {
                     this.isClickedOnce = false;

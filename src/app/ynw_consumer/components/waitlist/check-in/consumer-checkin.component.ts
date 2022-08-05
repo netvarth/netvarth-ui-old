@@ -286,6 +286,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     convenientFeeObj: any;
     convenientFee: any;
     gatewayFee: any;
+    profileId: any;
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -544,30 +545,31 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.paymentmodes = data[0];
                     this.isPayment = true;
 
-                    let convienientPaymentObj = {}
-                    convienientPaymentObj = {
-                        "profileId" :  this.paymentmodes.profileId,
-                        "amount"	: this.paymentDetails.amountRequiredNow
-                    }
+                    this.profileId = this.paymentmodes.profileId;
+                    // let convienientPaymentObj = {}
+                    // convienientPaymentObj = {
+                    //     "profileId" :  this.paymentmodes.profileId,
+                    //     "amount"	: this.paymentDetails.amountRequiredNow
+                    // }
                 
-                    this.shared_services.getConvenientFeeOfProvider(this.account_id,convienientPaymentObj).subscribe((data:any)=>{
-                                                   // let array = []
-                                                   console.log("Convenient response :",data)
-                                                   this.convenientPaymentModes = data;
-                                                   if(this.convenientPaymentModes){
-                                                   this.convenientPaymentModes.map((res:any)=>{
-                                                    this.convenientFeeObj = { }
-                                                    if(res){
-                                                        this.convenientFeeObj = res;
-                                                            this.convenientFee = this.convenientFeeObj.convenienceFee;
-                                                            // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
-                                                            console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
+                    // this.shared_services.getConvenientFeeOfProvider(this.account_id,convienientPaymentObj).subscribe((data:any)=>{
+                    //                                // let array = []
+                    //                                console.log("Convenient response :",data)
+                    //                                this.convenientPaymentModes = data;
+                    //                                if(this.convenientPaymentModes){
+                    //                                this.convenientPaymentModes.map((res:any)=>{
+                    //                                 this.convenientFeeObj = { }
+                    //                                 if(res){
+                    //                                     this.convenientFeeObj = res;
+                    //                                         this.convenientFee = this.convenientFeeObj.convenienceFee;
+                    //                                         // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                    //                                         console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
                                                         
-                                                    }
-                                                   })
-                                                }
+                    //                                 }
+                    //                                })
+                    //                             }
                                                    
-                    })
+                    // })
                     console.log("isConvenienceFee paymentsss:",this.paymentmodes)
                     if (this.paymentmodes && this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
@@ -1837,6 +1839,30 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
                     this.payAmount = 0;
                 }
+                let convienientPaymentObj = {}
+                convienientPaymentObj = {
+                    "profileId" :  this.profileId,
+                    "amount"	: this.paymentDetails.amountRequiredNow
+                }
+            
+                this.shared_services.getConvenientFeeOfProvider(this.account_id,convienientPaymentObj).subscribe((data:any)=>{
+                                               // let array = []
+                                               console.log("Convenient response :",data)
+                                               this.convenientPaymentModes = data;
+                                               if(this.convenientPaymentModes){
+                                               this.convenientPaymentModes.map((res:any)=>{
+                                                this.convenientFeeObj = { }
+                                                if(res){
+                                                    this.convenientFeeObj = res;
+                                                        this.convenientFee = this.convenientFeeObj.convenienceFee;
+                                                        // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                                                        console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
+                                                    
+                                                }
+                                               })
+                                            }
+                                               
+                })
             },
                 error => {
                     this.isClickedOnce = false;
