@@ -217,12 +217,20 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                 
                 if (media['videoDevices'].length > 0) {
                     _this.twilioService.camDeviceCount = media['videoDevices'].length;
-
+                    if (media['videoDevices'].length > 1) {
+                        for(let i=0; i<media['videoDevices'].length; i++) {
+                            console.log(media['videoDevices'][i].label);
+                            if (media['videoDevices'][i].label && media['videoDevices'][i].label.indexOf('back')!=-1) {
+                                _this.twilioService.cam2Device = media['videoDevices'][i].deviceId;
+                                break;
+                            }
+                        }
+                    }
                     _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
                     _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
-                    if (media['videoDevices'].length > 1) {
-                        _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
-                    }
+                    // if (media['videoDevices'].length > 1) {
+                    //     _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                    // }
                 }
                 console.log("System Media Devices");
                 console.log(media);

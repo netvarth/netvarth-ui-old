@@ -69,6 +69,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         private lStorageService: LocalStorageService
     ) {
         const _this = this;
+        console.log("In LiveChat Component");
         _this.twilioService.loading = false;
         _this.router.routeReuseStrategy.shouldReuseRoute = () => false;
         _this.renderer = rendererFactory.createRenderer(null, null);
@@ -255,18 +256,29 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         _this.mediaService.getMediaDevices().then(
             (media: any) => {
                 _this.media = media;
-                
+                console.log("Media Devices:");
+                console.log(media['videoDevices']);
                 if (media['videoDevices'].length > 0) {
                     _this.twilioService.camDeviceCount = media['videoDevices'].length;
-
+                    if (media['videoDevices'].length > 1) {
+                        for(let i=0; i<media['videoDevices'].length; i++) {
+                            console.log(media['videoDevices'][i].label);
+                            if (media['videoDevices'][i].label && media['videoDevices'][i].label.indexOf('back')!=-1) {
+                                _this.twilioService.cam2Device = media['videoDevices'][i].deviceId;
+                                break;
+                            }
+                        }
+                    }
                     _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
                     _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
-                    if (media['videoDevices'].length > 1) {
-                        _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
-                    }
+                    // if (media['videoDevices'].length > 1) {
+                    //     _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                    // }
                 }
                 console.log("System Media Devices");
                 console.log(media);
+                console.log("BackCam:" ,_this.twilioService.cam2Device);
+                console.log("FrontCam:" ,_this.twilioService.cam1Device);
                 _this.generateType(media).then(
                     (mode) => {
                         console.log(mode);
