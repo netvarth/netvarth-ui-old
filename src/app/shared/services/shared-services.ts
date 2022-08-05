@@ -523,7 +523,6 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   getConvenientFeeOfProvider(provid,data?) {
-    console.log("Service :",data)
     const url = 'consumer/payment/modes/convenienceFee/'+provid;
     return this.servicemeta.httpPut(url,data);
   }
