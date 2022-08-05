@@ -388,8 +388,10 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))
-    this.lStorageService.setitemonLocalStorage('reqFrom', 'WEB_LINK');
+    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')));
+    if (!this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+      this.lStorageService.setitemonLocalStorage('reqFrom', 'WEB_LINK');
+    }
     this.api_loading = true;
     this.accountIdExists = false;
     this.userId = null;
