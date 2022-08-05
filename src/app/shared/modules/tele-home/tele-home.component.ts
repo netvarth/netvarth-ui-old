@@ -3,7 +3,7 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { projectConstants } from '../../../app.component';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
+// import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupStorageService } from '../../services/group-storage.service';
 import { Title } from '@angular/platform-browser';
@@ -13,6 +13,11 @@ import { ConsumerAuthService } from '../../services/consumer-auth-service';
 import { findPhoneNumbersInText } from 'libphonenumber-js';
 import { SnackbarService } from '../../services/snackbar.service';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { AuthService } from '../../services/auth-service';
+import { SharedServices } from '../../services/shared-services';
+import { SubSink } from 'subsink';
+import { S3UrlProcessor } from '../../services/s3-url-processor.service';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
   selector: 'app-tele-home',
   templateUrl: './tele-home.component.html',
@@ -37,22 +42,29 @@ export class TeleHomeComponent implements OnInit {
   messageDialog: any;
   isToday = false;
   noBookings = true;
+  isJaldeeConsumer: boolean;
   loggedUser;
   password;
   countryCode: string;
   phoneObj: any;
+  customId: any;
+  private subscriptions = new SubSink();
+  accountId: any;
   constructor(
-    public sharedFunctionobj: SharedFunctions,
+    private sharedFunctions: SharedFunctions,
     private teleService: TeleBookingService,
-    public shared_functions: SharedFunctions,
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
     public router: Router,
     private groupService: GroupStorageService,
     public date_format: DateFormatPipe,
     private titleService: Title,
-    private authService: ConsumerAuthService,
-    private snackbarService: SnackbarService
+    private cAuthService: ConsumerAuthService,
+    private snackbarService: SnackbarService,
+    private authService: AuthService,
+    private sharedServices: SharedServices,
+    private s3Processor: S3UrlProcessor,
+    private lStorageService: LocalStorageService
   ) {
     this.titleService.setTitle('Jaldee - Meetings');
     this.activated_route.params.subscribe(
@@ -66,6 +78,13 @@ export class TeleHomeComponent implements OnInit {
         if (qparams.pwd) {
           this.password = qparams.pwd;
         }
+        if(qparams.customId) {
+          this.customId = qparams.customId;
+          this.isJaldeeConsumer = false;
+        } else {
+          this.isJaldeeConsumer = true;
+          
+        }
       });
   }
   ngOnInit() {
@@ -73,84 +92,188 @@ export class TeleHomeComponent implements OnInit {
     if (this.phoneObj.length > 0) {
       this.phone = this.phoneObj[0].number.nationalNumber;
       this.countryCode = this.phoneObj[0].number.countryCallingCode;
-      if (this.password) {
-        this.authService.goThroughConsumerLogin(this.phone, this.countryCode, this.password).then(
-          () => {
-            this.isLoggedIn = true;
-            const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-            this.isLoggedIn = true;
-            this.loggedUser = activeUser;
-            this.getVideo();
-          }
-        )
+      if (this.isJaldeeConsumer) {
+        this.initJaldeeConsumerSettings();
       } else {
-        this.isLoggedIn = false;
-        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        if (activeUser) {
-          this.isLoggedIn = true;
-          this.loggedUser = activeUser;
-          this.getVideo();
-        }
-        else {
-          this.api_loading = false;
-          this.doLogin('consumer');
-        }
+        this.initProviderConsumer();
       }
     } else {
       this.snackbarService.openSnackBar("Meeting Room not available for this number", { 'panelClass': 'snackbarerror' });
     }
   }
-  doLogin(origin?, passParam?) {
-    const is_test_account = true;
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        this.isLoggedIn = true;
-        const pdata = { 'ttype': 'updateuserdetails' };
-        this.sharedFunctionobj.sendMessage(pdata);
-        this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
+  actionPerformed(status) {
+    if (status === 'success') {
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.isLoggedIn = true;
         this.loggedUser = activeUser;
         this.getVideo();
-      } else if (result === 'showsignup') {
+    }
+  }
+  initProviderConsumer() {
+    const _this = this;
+    this.getAccountIdFromEncId(this.customId).then(
+      (uniqueId: any)=> {
+        _this.getBusinessInfo(uniqueId).then((businessProfile: any)=> {
+          _this.authService.goThroughLogin().then(
+            (status) => {
+              if (status) {
+                _this.isLoggedIn = true;
+                const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+                _this.isLoggedIn = true;
+                _this.loggedUser = activeUser;
+                _this.getVideo();
+              } else {
+                _this.isLoggedIn = false;
+                _this.api_loading = false;
+              }
+            }
+          );
+        })
       }
+    )
+    
+    
+  }
+  getBusinessInfo(uniqueId) {
+    const self = this;
+    return new Promise(function (resolve, reject) {
+      let accountS3List = 'businessProfile';
+      self.subscriptions.sink = self.s3Processor.getJsonsbyTypes(uniqueId,
+        null, accountS3List).subscribe(
+          (accountS3s: any) => {
+            self.accountId = accountS3s.businessProfile.id;
+            self.api_loading = false;
+            
+            // let accountIdFromStorage = self.lStorageService.getitemfromLocalStorage('accountId');
+            // if (accountIdFromStorage && accountIdFromStorage != accountS3s.businessProfile.id && self.groupService.getitemFromGroupStorage('ynw-user')) {
+            //   self.authService.doLogout().then(
+            //     () => {
+            //       self.setSystemDate();
+            //       if (self.providercustomId) {
+                    self.lStorageService.setitemonLocalStorage('customId', self.customId);
+                    self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
+            //       } else {
+            //         self.lStorageService.setitemonLocalStorage('customId', self.provideraccEncUid);
+            //       }
+            //       self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
+            //       resolve(true);
+            //     }
+            //   )
+            // } else {
+            //   if (self.providercustomId) {
+            //     self.lStorageService.setitemonLocalStorage('customId', self.providercustomId);
+            //   } else {
+            //     self.lStorageService.setitemonLocalStorage('customId', self.provideraccEncUid);
+            //   }
+            //   self.lStorageService.setitemonLocalStorage('accountId', accountS3s.businessProfile.id);
+              resolve(true);
+            // }
+          });
+    })
+
+  }
+  /**
+   * 
+   * @param encId encId/customId which represents the Account
+   * @returns the unique provider id which will gives access to the s3
+   */
+   getAccountIdFromEncId(encId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.sharedServices.getBusinessUniqueId(encId).subscribe(
+        (id) => {
+          resolve(id);
+        },
+        error => {
+          if (error.status === 404) {
+            _this.router.navigate(['/not-found']);
+          }
+          reject();
+        }
+      );
     });
   }
+  initJaldeeConsumerSettings() {
+    const _this= this;
+    if (_this.password) {
+      _this.cAuthService.goThroughConsumerLogin(_this.phone, _this.countryCode, _this.password).then(
+        () => {
+          _this.isLoggedIn = true;
+          const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+          _this.isLoggedIn = true;
+          _this.loggedUser = activeUser;
+          _this.getVideo();
+        }
+      )
+    } else {
+      _this.api_loading =false;
+      _this.isLoggedIn = false;
+      const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+      if (activeUser) {
+        _this.isLoggedIn = true;
+        _this.loggedUser = activeUser;
+        _this.getVideo();
+      }
+      else {
+        _this.api_loading = false;
+        _this.isLoggedIn = false;
+        // this.doLogin('consumer');
+      }
+    }
+  }
+  // doLogin(origin?, passParam?) {
+  //   const is_test_account = true;
+  //   const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+  //     width: '40%',
+  //     panelClass: ['loginmainclass', 'popup-class'],
+  //     disableClose: true,
+  //     data: {
+  //       type: origin,
+  //       is_provider: false,
+  //       modal: 'dialog',
+  //       test_account: is_test_account,
+  //       moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'success') {
+  //       this.isLoggedIn = true;
+  //       const pdata = { 'ttype': 'updateuserdetails' };
+  //       this.sharedFunctions.sendMessage(pdata);
+  //       this.sharedFunctions.sendMessage({ ttype: 'main_loading', action: false });
+  //       const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+  //       this.loggedUser = activeUser;
+  //       this.getVideo();
+  //     } else if (result === 'showsignup') {
+  //     }
+  //   });
+  // }
   /**
    * 
    */
   getVideo() {
-    this.api_loading = true;
-    this.teleService.getAvailableBookings(this.countryCode, this.phone)
+    const _this= this;
+    _this.api_loading = true;
+    _this.teleService.getAvailableBookings(_this.countryCode, _this.phone)
       .then((bookings: any) => {
-        this.api_loading = false;
+        _this.api_loading = false;
         console.log(bookings);
         if (bookings.length > 0) {
-          this.noBookings = false;
-          this.gBookings = this.shared_functions.groupBy(bookings, 'bookingDate');
+          _this.noBookings = false;
+          _this.gBookings = _this.sharedFunctions.groupBy(bookings, 'bookingDate');
           console.log(new Date());
-          let myDate = this.date_format.transformTofilterDate(new Date());
+          let myDate = _this.date_format.transformTofilterDate(new Date());
           console.log("MyDate:" + myDate);
-          if (Object.keys(this.gBookings)[0] === myDate) {
-            this.isToday = true;
+          if (Object.keys(_this.gBookings)[0] === myDate) {
+            _this.isToday = true;
           }
-          console.log(Object.keys(this.gBookings)[0]);
+          console.log(Object.keys(_this.gBookings)[0]);
         } else {
-          this.noBookings = true;
+          _this.noBookings = true;
         }
       },
         () => {
-          this.api_loading = false;
+          _this.api_loading = false;
         });
   }
   /**
@@ -181,9 +304,11 @@ export class TeleHomeComponent implements OnInit {
    * @param booking 
    */
   joinJaldeeVideo(booking) {
+    console.log(booking);
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        src: 'room'
+        src: 'room',
+        account: booking.businessId
       }
     };
     this.router.navigate(['meeting', this.countryCode + "" + this.phone, booking.id], navigationExtras);

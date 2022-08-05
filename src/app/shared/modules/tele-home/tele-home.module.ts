@@ -10,6 +10,8 @@ import { AddInboxMessagesModule } from "../../components/add-inbox-messages/add-
 import { CapitalizeFirstPipeModule } from "../../pipes/capitalize.module";
 import { ConsumerAuthService } from "../../services/consumer-auth-service";
 import { TeleBookingService } from "../../services/tele-bookings-service";
+import { AuthenticationModule } from "../authentication/authentication.module";
+import { HeaderModule } from "../header/header.module";
 import { LoadingSpinnerModule } from "../loading-spinner/loading-spinner.module";
 import { TeleHomeRoutingModule } from "./tele-home-routing.module";
 import { TeleHomeComponent } from "./tele-home.component";
@@ -29,7 +31,9 @@ import { TeleHomeComponent } from "./tele-home.component";
         MatIconModule,
         NgxQRCodeModule,
         AddInboxMessagesModule,
-        ConsumerJoinModule
+        ConsumerJoinModule,
+        AuthenticationModule,
+        HeaderModule
     ],
     exports: [
         TeleHomeComponent

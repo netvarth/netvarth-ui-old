@@ -262,7 +262,7 @@
                             </div>
                         </div>
                         <div class="isprovidertop"
-                            *ngIf="!shared_functions.checkLogin() && source !== 'business' && pageSource!='details'"><b
+                            *ngIf="!shared_functions.checkLogin() && source !== 'business' && pageSource!='details' && !customId"><b
                                 style="font-size: 0.85rem">{{are_you_ser_pro}}</b> <button class="jn cons_btn_go_top"
                                 [matTooltipClass]="tooltipcls" [matTooltip]="provsignTooltip"
                                 (click)="providerLinkClicked()">{{click_here_cap}}</button>

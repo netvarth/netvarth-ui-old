@@ -66,3 +66,9 @@ button.menu-icon:hover {
   .consumer-dash .grid-card button:disabled {
       background-color: grey !important;
   }
+  .panel {
+      height: 100vh;
+  }
+  .panel-body {
+      padding:0 !important;
+  }
