@@ -104,9 +104,9 @@ export class CRMComponent implements OnInit {
         if(res){
           resolve(res);
           _this.redirectionList.push(res);
-          if(user && user.userType === 1 && user.isadminPrivilege){
-            this.accordingUserRedirection(user);
-          }
+          // if(user && user.userType === 1 && user.isadminPrivilege){
+          //   this.accordingUserRedirection(user);
+          // }
         }
       },((error)=>{
         reject(error);

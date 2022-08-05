@@ -584,7 +584,13 @@ export class ViewTaskComponent implements OnInit {
       this.notesTextarea=''
     }
     if(enquiryDetails && enquiryDetails.assignee && enquiryDetails.assignee.id){
-      this.updateEnqAssignId= enquiryDetails.assignee.id;
+      // this.updateEnqAssignId= enquiryDetails.assignee.id;
+    }
+    if(enquiryDetails && enquiryDetails.generatedBy && enquiryDetails.generatedBy.id){
+      this.selectMember= enquiryDetails.generatedBy.name;
+      this.updateEnqAssignId= enquiryDetails.generatedBy.id;
+      // _this.selectMember = _this.taskDetails.assignee.name;
+      //           _this.updateMemberId = _this.taskDetails.assignee.id;
     }
     this.getTaskmaster()
 

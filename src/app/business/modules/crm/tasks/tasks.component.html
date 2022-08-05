@@ -47,7 +47,7 @@
           [compareWith]="compareFn">
           <mat-select-trigger>
             <div style="display:flex;gap:5px;align-items:center">
-              <img width="25px" src={{selected2.image}} />
+              <img width="25px" *ngIf="selected2 && selected2.image" src={{selected2.image}} />
               <div *ngIf="selected2 && selected2.name">{{selected2.name}}</div>
               <div *ngIf="selected2 && selected2.name==='New'">
                 <div *ngIf="newTaskDetailsCount">({{newTaskDetailsCount}})</div>
@@ -61,7 +61,7 @@
             (click)="handleTaskStatus(userTaskStatus.value)">
             <span style="display:flex;gap:10px">
               <div>
-                <img width="25px" src={{stat.image}} />
+                <img *ngIf="stat && stat.image" width="25px" src={{stat.image}} />
               </div>
               <div *ngIf="stat.name">{{stat.name }}</div>
               <div *ngIf="stat.name==='New'">

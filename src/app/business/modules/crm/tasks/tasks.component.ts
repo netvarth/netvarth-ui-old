@@ -121,7 +121,7 @@ export class TasksComponent implements OnInit {
       console.log("Locations:", this.locations);
       this.selected_location = this.locations[0];
       const filter = this.setFilter();
-      console.log('filter', filter)
+      // console.log('filter', filter)
       _this.getNewTaskCount(filter).then(
         (count) => {
           if (count > 0) {
@@ -196,7 +196,7 @@ setSystemDate() {
         _this.statuses = statuses;
         _this.getNewTaskCount(filter).then(
           (count) => {
-            console.log(" Task Count : ", count)
+            // console.log(" Task Count : ", count)
             this.config.totalItems = count;
             if (count > 0) {
               this.config.totalItems = count;
@@ -214,7 +214,7 @@ setSystemDate() {
     const _this = this;
     return new Promise((resolve, reject) => {
       _this.crmService.getTaskStatus().subscribe((taskStatus: any) => {
-        console.log('taskStatus', taskStatus);
+        // console.log('taskStatus', taskStatus);
         resolve(taskStatus);
         _this.taskStatusList.push(
           // {
@@ -266,7 +266,7 @@ setSystemDate() {
     // console.log('statusValue', statusValue);
     let filter = {}
     // console.log("this.selected_location", this.selected_location)
-    console.log("filter", filter)
+    // console.log("filter", filter)
     if (statusValue === 0) {
       this.getTotalTaskActivity(filter)
     }
@@ -451,7 +451,7 @@ setSystemDate() {
         data => {
           this.totalTaskActivityList = data;
           this.api_loading = false;
-          console.log('totalTaskActivityList', this.totalTaskActivityList)
+          // console.log('totalTaskActivityList', this.totalTaskActivityList)
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -478,7 +478,7 @@ setSystemDate() {
         data => {
           this.totalTaskActivityList = data;
           this.api_loading = false;
-          console.log('totalTaskActivityList', this.totalTaskActivityList)
+          // console.log('totalTaskActivityList', this.totalTaskActivityList)
         },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -504,7 +504,7 @@ setSystemDate() {
     this.crmService.getInprogressTask(filter)
       .subscribe(
         data => {
-          console.log('data', data)
+          // console.log('data', data)
           this.totalTaskActivityList = data;
           this.api_loading = false;
         },
@@ -530,7 +530,7 @@ setSystemDate() {
   getCompletedTask(filter) {
     this.getCompletedTaskCount(filter).then(
       (count:any) => {
-        console.log("taskcount", count)
+        // console.log("taskcount", count)
         if (count > 0) {
           this.completedTaskCount=count;
           this.crmService.getCompletedTask(filter)
@@ -571,7 +571,7 @@ setSystemDate() {
     this.crmService.getPendingTask(filter)
       .subscribe(
         data => {
-          console.log('data', data)
+          // console.log('data', data)
           this.totalTaskActivityList = data;
           this.api_loading = false;
         },
@@ -598,7 +598,7 @@ setSystemDate() {
     this.crmService.getRejectedTask(filter)
       .subscribe(
         data => {
-          console.log('data', data)
+          // console.log('data', data)
           this.totalTaskActivityList = data;
           this.api_loading = false;
         },
@@ -625,7 +625,7 @@ setSystemDate() {
     this.crmService.getProceedTask(filter)
       .subscribe(
         data => {
-          console.log('data', data)
+          // console.log('data', data)
           this.totalTaskActivityList = data;
           this.api_loading = false;
         },
@@ -654,7 +654,7 @@ setSystemDate() {
     this.crmService.getVerifiedTask(filter)
       .subscribe(
         data => {
-          console.log('data', data)
+          // console.log('data', data)
           this.totalTaskActivityList = data;
           this.api_loading = false;
         },
@@ -682,7 +682,7 @@ setSystemDate() {
       this.maxday = this.yesterdayDate;
     }
     const filter = {}
-    console.log(this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date))
+    // console.log(this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_start_date))
     filter['location-eq'] = this.selected_location.id;
     if(this.filter.check_in_start_date != null)
     {
@@ -700,7 +700,7 @@ setSystemDate() {
     {
       this.getCompletedTask(filter)
     }
-    console.log(status);
+    // console.log(status);
     this.handleTaskStatus(this.checkBoxValueSelect)
     this.filter_sidebar = false;
   }
@@ -826,7 +826,7 @@ setSystemDate() {
     };
   }
   keyPressed() {
-    console.log("this.filter",this.filter)
+    // console.log("this.filter",this.filter)
     if (this.filter.check_in_start_date || this.filter.check_in_end_date
       || this.statuses.length > 0 || this.categories.length > 0 || this.types.length > 0) {
       this.filterapplied = true;
@@ -855,12 +855,12 @@ setSystemDate() {
       if (this.filter.check_in_end_date != null) {
         api_filter['date-le'] = this.dateTimeProcessor.transformToYMDFormat(this.filter.check_in_end_date);
       }
-    console.log(api_filter)
+    // console.log(api_filter)
     return api_filter;
   }
   setFilterDataCheckbox(type, value?, event?) {
-    console.log('type', type)
-    console.log('value', value)
+    // console.log('type', type)
+    // console.log('value', value)
     if (type === 'status') {
       this.checkBoxValueSelect = value;
     }
@@ -886,7 +886,7 @@ setSystemDate() {
     this.types = [];
     this.categories = [];
     this.resetFilter();
-    console.log("this.statusFilter",this.statusFilter)
+    // console.log("this.statusFilter",this.statusFilter)
     this.handleTaskStatus(this.statusFilter)
     this.filterapplied = false;
   }
@@ -920,7 +920,7 @@ setSystemDate() {
       }
     });
     dialogRef.afterClosed().subscribe((res) => {
-      console.log('resssssssssCom', res);
+      // console.log('resssssssssCom', res);
       if (res === 'Completed') {
         this.ngOnInit()
       }
@@ -928,7 +928,7 @@ setSystemDate() {
 
   }
   openDialogStatusChange(taskData: any) {
-    console.log('openDialogStatusChange', taskData)
+    // console.log('openDialogStatusChange', taskData)
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: '100%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -939,7 +939,7 @@ setSystemDate() {
       }
     });
     dialogRef.afterClosed().subscribe((res: any) => {
-      console.log('resssssssss', res);
+      // console.log('resssssssss', res);
       this.ngOnInit()
     })
   }
@@ -959,7 +959,7 @@ setSystemDate() {
     this.selected_location = this.locations[value];
     // console.log("this.selected_location", this.selected_location);
     const filter = this.setFilter();
-    console.log("filter", filter)
+    // console.log("filter", filter)
     if (this.statusFilter == 1) {
       _this.getNewTaskCount(filter).then(
         (count) => {
