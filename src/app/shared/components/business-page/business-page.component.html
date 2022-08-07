@@ -484,7 +484,7 @@
                     [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
                     (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                 <ng-container
-                    *ngIf="orderItems.length >0 && orderType === 'SHOPPINGCART' && checkVirtualOrPhysical()">
+                    *ngIf="orderItems.length >0 && checkVirtualOrPhysical()">
                     <div class="bus-item-I" *ngFor="let item of orderItems">
                         <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="item" [terminology]='terminologiesjson' [extras]="orderList"
                             [loc]="selectedLocation" [config]="accountConfig" (actionPerformed)="cardClicked($event)" (IsPaper)="IsAuthordemy($event)" [source]="source"></app-card>

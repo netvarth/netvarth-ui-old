@@ -350,8 +350,20 @@ export class CatalogItemComponent implements OnInit {
         } else {
           this.isPrice = true;
         }
+
+        if(this.activeCatalog.catalogType == 'submission')
+        {
+          this.loading = true;
+          if(this.cartItems.length == 0)
+          {
+            this.addToCart();
+          }
+          this.checkout();
+        }
       }
+      
     )
+    
   }
 
   /**
@@ -616,11 +628,16 @@ export class CatalogItemComponent implements OnInit {
     else {
       this.lStorageService.setitemonLocalStorage('order', this.cartItems);
     }
-    let cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id=' 
+    var cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id=' 
     + this.s3UniqueId + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
     console.log("userType :",this.userType)
 
     if (this.userType === 'consumer') {
+      if(this.activeCatalog.catalogType == 'submission')
+      {
+        var cartUrl = 'order/shoppingcart/checkout?providerId=' + this.accountId + '&customId=' + this.accountEncId + '&catalog_Id=' + this.activeCatalog.id + '&source=paper' ;
+      }
+      
       this.router.navigateByUrl(cartUrl);
     } else
       {
@@ -740,8 +757,8 @@ export class CatalogItemComponent implements OnInit {
     //   }
 
     // };
-    let cartUrl = 'order/shoppingcart/checkout?providerId=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.s3UniqueId;
-   
+  let cartUrl = 'order/shoppingcart/checkout?providerId=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.s3UniqueId;
+
     // this.authService.goThroughLogin().then((status) => {
     //   console.log("Status:", status);
     //   if (status) {

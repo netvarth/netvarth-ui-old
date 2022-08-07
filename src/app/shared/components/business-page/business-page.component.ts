@@ -2707,7 +2707,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     let cartUrl = 'order/shoppingcart?account_id=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.uniqueId;
     if (this.userType === 'consumer') {
       console.log("this.activeCatalog",this.activeCatalog)
-      if(this.activeCatalog.catalogItem.length == 1 && this.order_count==1)
+      if(this.activeCatalog.catalogItem.length == 1 && this.activeCatalog.catalogType == 'submission')
       {
         // let cartUrl = 'paper/shoppingcart?account_id=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.uniqueId + '&catalog_id=' + this.activeCatalog.id+ '&source=' + "paper";
         // this.router.navigateByUrl(cartUrl);
