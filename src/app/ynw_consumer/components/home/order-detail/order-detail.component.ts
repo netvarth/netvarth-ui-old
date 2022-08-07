@@ -79,6 +79,7 @@ buttons: [
   private subs=new SubSink();
   questionnaires: any = [];
   history: boolean = false;
+  source: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -99,6 +100,10 @@ buttons: [
           this.history = true;
         }
         this.providerId = qParams.providerId;
+        if(qParams.source)
+        {
+          this.source = qParams.source;
+        }
       });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_label = this.wordProcessor.getTerminologyTerm('provider');

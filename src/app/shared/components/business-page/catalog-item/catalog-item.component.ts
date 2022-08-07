@@ -635,7 +635,9 @@ export class CatalogItemComponent implements OnInit {
     if (this.userType === 'consumer') {
       if(this.activeCatalog.catalogType == 'submission')
       {
-        var cartUrl = 'order/shoppingcart/checkout?providerId=' + this.accountId + '&customId=' + this.accountEncId + '&catalog_Id=' + this.activeCatalog.id + '&source=paper' ;
+        // var cartUrl = 'order/shoppingcart/checkout?providerId=' + this.accountId + '&customId=' + this.accountEncId + '&catalog_Id=' + this.activeCatalog.id + '&source=paper' ;
+        var cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id=' 
+    + this.s3UniqueId  + '&source=paper' + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
       }
       
       this.router.navigateByUrl(cartUrl);

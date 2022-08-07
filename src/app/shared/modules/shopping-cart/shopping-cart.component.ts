@@ -76,6 +76,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   applied_inbilltime = Messages.APPLIED_INBILLTIME;
   couponvalid = true;
   api_cp_error = null;
+  apiloading = false;
   s3CouponsList: any = {
     JC:[],OWN:[]
   };
@@ -100,6 +101,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   customId: any; // To know the source whether the router came from Landing page or not
   businessId: any;
   from: string;
+  source: any;
 
   constructor(
     public router: Router,
@@ -126,6 +128,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
           this.customId = params.customId;
           this.businessId = this.account_id;
       }
+      if (params.source) {
+          this.source = params.source;
+      }
       });
 
   }
@@ -137,7 +142,11 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.orderCount = this.orders.length;
     this.gets3curl();
     this.fetchCatalog();
-
+    if(this.source == 'paper')
+    {
+        this.apiloading = true;
+        setTimeout(() => this.confirmOrder(), projectConstants.TIMEOUT_DELAY);
+    }
   }
 
   ngOnDestroy() {
@@ -524,6 +533,11 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       }
       if(this.catalog_Id ){
         queryParam['catalog_Id']= this.catalog_Id;
+      }
+
+      if(this.source == 'paper')
+      {
+        queryParam['source']= this.source;
       }
      
       const navigationExtras: NavigationExtras = {

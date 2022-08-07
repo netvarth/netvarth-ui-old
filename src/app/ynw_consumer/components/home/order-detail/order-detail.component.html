@@ -1,4 +1,4 @@
-<section class="container no-padding-small cust-book-details">
+<section class="container no-padding-small cust-book-details" *ngIf="source != 'paper'">
     <div class="content p0 comn-cls checkin-details order-det">
         <div class="row">
             <div class="panel panel-default">
@@ -339,6 +339,116 @@
                                                     </app-questionnaire>
                                                 </div>
                                             </div>                                            
+                                        </ng-container>
+                                    </div>
+                                    <div class="col-md-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="container no-padding-small cust-book-details" *ngIf="source=='paper'">
+    <div class="content p0 comn-cls checkin-details order-det">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+                        <app-header *ngIf="shared_functions.checkLogin()" [showHeaderAction]="true"></app-header>
+                    </div>
+                </div>
+                <div class="panel-body no-padding">
+                    <div class="c-outer m0">
+                        <div class="c-body booking-content col-md-12 col-xs-12 col-sm-12 no-padding">
+
+                            <div class="card title-gb">
+                                <h5 class="mgn-up-10 index-head">Paper Details <a class="pull-left mgn-rt-20 back-btn"
+                                        (click)="gotoPrev()"><i class="fa fa-arrow-left"></i></a></h5>
+                            </div>
+
+                            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
+                                <div class="card" *ngIf="!api_loading">
+                                    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+                                </div>
+                                
+                                <div [class.opacit_5]="showSide" *ngIf="api_loading && waitlist">
+
+                                    <div *ngIf="api_loading && questionnaires.length > 0">
+                                        <!-- <div class="pad-10 pad-bt-0">
+                                            <h3 class="no-margin">
+                                                Paper Info
+                                            </h3>
+                                        </div> -->
+                                        <ng-container *ngIf="questionnaires.length > 1">
+                                            <mat-accordion class="qnr-accord no-padding"
+                                                *ngFor="let qnr of questionnaires">
+                                                <mat-expansion-panel>
+                                                    <mat-expansion-panel-header>
+                                                        <mat-panel-title>
+                                                            {{(qnr.questionnaireName) ? qnr.questionnaireName :
+                                                            qnr.questionnaireId}}
+                                                            <div class="qnrstatus">
+                                                                <span class="greenc"
+                                                                    *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
+                                                                <span class="red"
+                                                                    *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span>
+                                                            </div>
+                                                        </mat-panel-title>
+                                                    </mat-expansion-panel-header>
+                                                    <div class="c-details">
+                                                        <app-questionnaire [questionnaireList]="qnr"
+                                                            [source]="'consOrder'" [uuid]="waitlist.uid"
+                                                            [accountId]="waitlist.providerAccount.id" [type]="'details'"
+                                                            [waitlistStatus]="waitlist.orderStatus"
+                                                            (returnAnswers)="getQuestionAnswers($event)">
+                                                        </app-questionnaire>
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+                                        </ng-container>
+                                        <ng-container *ngIf="questionnaires.length === 1">
+                                            <div *ngIf="questionnaires.length === 1">
+                                                <div class="c-details" *ngFor="let qnr of questionnaires">
+                                                    <app-questionnaire [questionnaireList]="qnr" [source]="'consOrder'"
+                                                        [uuid]="waitlist.uid" [accountId]="waitlist.providerAccount.id"
+                                                        [type]="'details'" [waitlistStatus]="waitlist.orderStatus"
+                                                        (returnAnswers)="getQuestionAnswers($event)">
+                                                    </app-questionnaire>
+                                                </div>
+                                            </div>
                                         </ng-container>
                                     </div>
                                     <div class="col-md-12">

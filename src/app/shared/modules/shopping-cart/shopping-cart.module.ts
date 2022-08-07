@@ -12,6 +12,7 @@ import { AddItemNotesModule } from './add-item-notes/add-item-notes.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 
 const routes: Routes = [
   { path: '', component: ShoppingCartSharedComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
       FormsModule,
       FormMessageDisplayModule,
       ConfirmBoxModule,
+      LoadingSpinnerModule,
       AddItemNotesModule,
       [RouterModule.forChild(routes)]
     ],

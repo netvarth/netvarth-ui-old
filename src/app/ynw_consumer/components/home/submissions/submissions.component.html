@@ -25,7 +25,7 @@
                                 <i class="fa fa-spinner" aria-hidden="true"></i>
                             </div>
                             <div class="marketActivity">
-                                <div class="font-weight-bold">Ongoing Papers&nbsp;&nbsp;&nbsp;2</div>
+                                <div class="font-weight-bold">Ongoing Papers&nbsp;&nbsp;&nbsp;{{ongoing_papers.length}}</div>
                             </div>
                         </div>
                     </mat-panel-title>
@@ -35,28 +35,23 @@
                 <div class="allTabInPannel">
                     <table>
                         <tbody>
-                            <ng-container>
-                                <tr class="pointer-cursor" (click)="viewPaper()">
-                                    <td width="400" class="td1 ">Environmental and Earth Sciences (JREES)</td>
-                                    <td width="400" class="td2"><span>04-07-2022</span></td>
-                                    <td width="400" class="td6">Krishnadas</td>
-                                    <td width="400" class="td3">Submitted for abstract view</td>
+                            <ng-container *ngFor="let paper of ongoing_papers">
+                                <tr class="pointer-cursor" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
+                                    <td width="400" class="td1 ">{{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}</td>
+                                    <td width="400" class="td2"><span>{{paper.lastStatusUpdatedDate}}</span></td>
+                                    <td width="400" class="td6">{{user_details.firstName}}</td>
+                                    <td width="400" class="td3 text-primary">Submitted</td>
                                 </tr>
                                 <br>
-                                <tr class="pointer-cursor">
-                                    <td width="400" class="td1">Environmental and Earth Sciences (JREES)</td>
-                                    <td width="400" class="td2"><span>04-07-2022</span></td>
-                                    <td width="400" class="td6">Krishnadas</td>
-                                    <td width="400" class="td3">Submitted for abstract view</td>
-                                </tr>
                             </ng-container>
                         </tbody>
+                        <ng-container *ngIf="ongoing_papers.length==0" class="text-danger">No Papers Found</ng-container>
                     </table>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
         <br>
-        <mat-accordion class="example-headers-align">
+        <!-- <mat-accordion class="example-headers-align">
             <mat-expansion-panel (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
@@ -76,8 +71,7 @@
                     Hello
                 </div>
             </mat-expansion-panel>
-        </mat-accordion>
-        <br>
+        </mat-accordion> -->
         <mat-accordion class="example-headers-align">
             <mat-expansion-panel (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
@@ -87,7 +81,7 @@
                                 <i class="fa fa-check" aria-hidden="true"></i>
                             </div>
                             <div class="marketActivity">
-                                <div class="font-weight-bold">Completed Papers&nbsp;&nbsp;&nbsp;0</div>
+                                <div class="font-weight-bold">Completed Papers&nbsp;&nbsp;&nbsp;{{completed_papers.length}}</div>
                             </div>
                         </div>
                     </mat-panel-title>
@@ -95,7 +89,21 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    Hello
+                    <table>
+                        <tbody>
+                            <ng-container *ngFor="let paper of completed_papers">
+                                <tr class="pointer-cursor" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
+                                    <td width="400" class="td1 ">{{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}
+                                    </td>
+                                    <td width="400" class="td2"><span>{{paper.lastStatusUpdatedDate}}</span></td>
+                                    <td width="400" class="td6">{{user_details.firstName}}</td>
+                                    <td width="400" class="td3 text-success">Completed</td>
+                                </tr>
+                                <br>
+                            </ng-container>
+                        </tbody>
+                        <ng-container *ngIf="completed_papers.length==0" class="text-danger">No Papers Found</ng-container>
+                    </table>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>
@@ -109,7 +117,7 @@
                                 <i class="fa fa-ban" aria-hidden="true"></i>
                             </div>
                             <div class="marketActivity">
-                                <div class="font-weight-bold">Rejected Papers&nbsp;&nbsp;&nbsp;0</div>
+                                <div class="font-weight-bold">Rejected Papers&nbsp;&nbsp;&nbsp;{{cancelled_papers.length}}</div>
                             </div>
                         </div>
                     </mat-panel-title>
@@ -117,7 +125,21 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    Hello
+                    <table>
+                        <tbody>
+                            <ng-container *ngFor="let paper of cancelled_papers">
+                                <tr class="pointer-cursor" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
+                                    <td width="400" class="td1 ">{{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}
+                                    </td>
+                                    <td width="400" class="td2"><span>{{paper.lastStatusUpdatedDate}}</span></td>
+                                    <td width="400" class="td6">{{user_details.firstName}}</td>
+                                    <td width="400" class="td3 text-danger">Rejected</td>
+                                </tr>
+                                <br>
+                            </ng-container>
+                        </tbody>
+                        <ng-container *ngIf="cancelled_papers.length==0" class="text-danger">No Papers Found</ng-container>
+                    </table>
                 </div>
             </mat-expansion-panel>
         </mat-accordion>

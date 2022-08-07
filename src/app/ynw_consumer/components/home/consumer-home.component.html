@@ -676,8 +676,8 @@
             </div>
         </div>
     </div>
-    <div *ngIf="customId=='53a37k7'">
-        <app-submissions [user_details]="usr_details"></app-submissions>
+    <div *ngIf="orders && future_orders && customId">
+        <app-submissions [user_details]="usr_details" [custom_id]="customId" [orders]="orders.concat(future_orders)"></app-submissions>
     </div>
 </section>
 <div id="popup" #popupforApp class="modal disply">
