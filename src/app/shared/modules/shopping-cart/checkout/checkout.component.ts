@@ -472,7 +472,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.convenientFeeObj = res;
           if(this.selected_payment_mode === res.mode){
             //  this.convenientFee = this.convenientFeeObj.convenienceFee;
-              this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+             // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+              this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
               console.log("convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
           }
       }
@@ -487,7 +488,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.convenientFeeObj = res;
           if(this.selected_payment_mode === res.mode){
             //  this.convenientFee = this.convenientFeeObj.convenienceFee;
-              this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+             // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+             this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
               console.log("convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
           }
       }
@@ -511,7 +513,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           let convienientPaymentObj = {}
           convienientPaymentObj = {
               "profileId" :  this.paymentmodes.profileId,
-              "amount"	: this.advance_amount
+              "amount"	: this.totalamountPay
           }
           this.shared_services.getConvenientFeeOfProvider(this.account_id,convienientPaymentObj).subscribe((data:any)=>{
                                          // let array = []

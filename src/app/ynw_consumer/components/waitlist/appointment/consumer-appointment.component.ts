@@ -1510,7 +1510,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.convenientFeeObj = res;
                 if(this.paymentMode === res.mode){
                   //  this.convenientFee = this.convenientFeeObj.convenienceFee;
-                    this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                 // if(this.convenientFeeObj.consumerGatewayFee)
+                 this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
+                   // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
                     console.log("gatewayFee for indian:",this.gatewayFee,res.mode)
                 }
             }
@@ -1525,7 +1527,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                this.convenientFeeObj = res;
                if(this.paymentMode === res.mode){
                   // this.convenientFee = this.convenientFeeObj.convenienceFee;
-                   this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                 //  this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                   this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
+
                    console.log("gatewayFee for  non-indian:",this.gatewayFee,res.mode)
                }
            }

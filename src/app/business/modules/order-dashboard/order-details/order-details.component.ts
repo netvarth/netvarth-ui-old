@@ -178,6 +178,8 @@ export class OrderDetailsComponent implements OnInit {
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(data => {
       this.getOrderDetails(this.uid);
+      this.getorderHistory(this.uid);
+
     });
   }
   getItemImg(item) {
