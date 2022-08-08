@@ -468,6 +468,70 @@
   </mat-accordion>
   </div>
 </div>
+
+ <!--Recommended Status Reports -->
+ <div class="row">
+  <div class="card p0">
+    <mat-accordion class="report">
+      <mat-expansion-panel  [expanded]="true">
+          <mat-expansion-panel-header>
+              <mat-panel-title class="report_title">
+                  Recommended Status
+                 <div class="width100pc" >
+                  <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'recommendedStatus'}">Create New Report</a>
+                 </div>
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngIf="recommendedStatusReports.length===0">
+            <div *ngIf="recommended_status_criteria.length === 0" >
+              <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+            </div>
+            <table  *ngIf="recommended_status_criteria.length > 0">
+              <span class="savd-report">Saved Reports</span>
+              <tr *ngFor="let recommedStatus of recommended_status_criteria">
+                <td>{{recommedStatus.reportName}}</td>
+                <td><a (click)="recreateReport(recommedStatus)">Generate</a></td>
+                <td><a (click)="viewCriteria(recommedStatus)">View</a></td>
+                <td><a (click)="deletCriteria(recommedStatus)">Delete</a></td>
+              </tr>
+            </table>
+        </ng-container>
+      </mat-expansion-panel>
+  </mat-accordion>
+  </div>
+</div>
+
+ <!--Login Reports -->
+ <div class="row">
+  <div class="card p0">
+    <mat-accordion class="report">
+      <mat-expansion-panel  [expanded]="true">
+          <mat-expansion-panel-header>
+              <mat-panel-title class="report_title">
+                  Login Reports
+                 <div class="width100pc" >
+                  <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'login'}">Create New Report</a>
+                 </div>
+              </mat-panel-title>
+          </mat-expansion-panel-header>
+          <ng-container *ngIf="loginReports.length===0">
+            <div *ngIf="login_criteria.length === 0" >
+              <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+            </div>
+            <table  *ngIf="login_criteria.length > 0">
+              <span class="savd-report">Saved Reports</span>
+              <tr *ngFor="let login of login_criteria">
+                <td>{{login.reportName}}</td>
+                <td><a (click)="recreateReport(login)">Generate</a></td>
+                <td><a (click)="viewCriteria(login)">View</a></td>
+                <td><a (click)="deletCriteria(login)">Delete</a></td>
+              </tr>
+            </table>
+        </ng-container>
+      </mat-expansion-panel>
+  </mat-accordion>
+  </div>
+</div>
                
       </div>
       <div class="clearfix"></div>

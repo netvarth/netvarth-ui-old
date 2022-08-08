@@ -22,6 +22,8 @@ export class ReportsComponent implements OnInit {
   crm_lead_status_criteria: any[];
   consolidated_criteria: any[];
   tat_criteria: any[];
+  recommended_status_criteria: any[];
+  login_criteria:any[];
   processing_files_criteria: any[];
   enquiry_criteria: any[];
   enquiryReports = [];
@@ -37,6 +39,8 @@ export class ReportsComponent implements OnInit {
   processingFilesReports = [];
   consolidatedReports = [];
   tatReports = [];
+  recommendedStatusReports = [];
+  loginReports = [];
   settings: any = [];
   showToken = false;
   criteria_list;
@@ -91,6 +95,8 @@ export class ReportsComponent implements OnInit {
     this.crm_lead_status_criteria = [];
     this.consolidated_criteria = [];
     this.tat_criteria = [];
+    this.login_criteria = [];
+    this.recommended_status_criteria = [];
     this.processing_files_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
@@ -151,6 +157,14 @@ export class ReportsComponent implements OnInit {
           }
           case 'CONSOLIDATED_REPORT': {
             this.consolidated_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'RECOMMENDED_STATUS_REPORT': {
+            this.recommended_status_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'LOGIN_REPORT': {
+            this.login_criteria.push(this.criteria_list[i]);
             break;
           }
         }

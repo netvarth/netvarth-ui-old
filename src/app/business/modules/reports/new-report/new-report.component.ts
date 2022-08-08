@@ -88,6 +88,12 @@ export class NewReportComponent implements OnInit {
   monthly_timePeriod : string;
   consolidated_timePeriod: string;
   tat_timePeriod: string;
+  recommended_timePeriod: string;
+  login_timePeriod: string;
+  recommended_StartDate;
+  recommended_EndDate;
+  login_StartDate;
+  login_EndDate;
   appointment_service_id: number;
   appointment_service: string;
   donation_service_id: any;
@@ -225,6 +231,12 @@ export class NewReportComponent implements OnInit {
         else if(this.report_type === 'tat'){
           this.reportTitle = 'Tat'
         }
+        else if(this.report_type === 'recommendedStatus'){
+          this.reportTitle = 'Recommended Status'
+        }
+        else if(this.report_type === 'login'){
+          this.reportTitle = 'Login'
+        }
 
       }
     });
@@ -233,7 +245,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.crm_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod =this.consolidated_timePeriod=this.tat_timePeriod= this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.crm_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod =this.consolidated_timePeriod=this.tat_timePeriod= this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -439,6 +451,22 @@ export class NewReportComponent implements OnInit {
             this.hide_dateRange = false;
             this.tat_StartDate = res.startDate;
             this.tat_EndDate = res.endDate;          
+          }
+        }
+        case 'recommendedStatus' : {
+          this.recommended_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if(res.dateRange === 'DATE_RANGE'){
+            this.hide_dateRange = false;
+            this.recommended_StartDate = res.startDate;
+            this.recommended_EndDate = res.endDate;          
+          }
+        }
+        case 'login' : {
+          this.login_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if(res.dateRange === 'DATE_RANGE'){
+            this.hide_dateRange = false;
+            this.login_StartDate = res.startDate;
+            this.login_EndDate = res.endDate;          
           }
         }
       }
@@ -1424,6 +1452,136 @@ export class NewReportComponent implements OnInit {
         const request_payload: any = {};
         request_payload.reportType = 'TAT_REPORT';
         request_payload.reportDateCategory = this.tat_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    } 
+    else if (reportType === 'recommendedStatus') {
+      console.log("Report Type :",reportType)
+      if (this.recommended_timePeriod === 'DATE_RANGE' && (this.recommended_StartDate === undefined || this.recommended_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId
+        };
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+          }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.recommended_timePeriod === 'DATE_RANGE') {
+          if (this.recommended_StartDate === undefined || this.recommended_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.recommended_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.recommended_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'RECOMMENDED_STATUS_REPORT';
+        request_payload.reportDateCategory = this.recommended_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    } 
+    else if (reportType === 'login') {
+      console.log("Report Type :",reportType)
+      if (this.login_timePeriod === 'DATE_RANGE' && (this.login_StartDate === undefined || this.login_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId
+        };
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+          }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.login_timePeriod === 'DATE_RANGE') {
+          if (this.login_StartDate === undefined || this.login_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.login_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.login_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'LOGIN_REPORT';
+        request_payload.reportDateCategory = this.login_timePeriod;
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);

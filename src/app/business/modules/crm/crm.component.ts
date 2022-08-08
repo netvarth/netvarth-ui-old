@@ -55,6 +55,13 @@ export class CRMComponent implements OnInit {
     {
       id:8, type: 'Tat Report'
     },
+    {
+      id:8, type: 'Recommended Status Report'
+    },
+    {
+      id:8, type: 'Login Report'
+    },
+
 
   ]
   constructor(
@@ -620,6 +627,26 @@ export class CRMComponent implements OnInit {
                   this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToTat);
                 }
                 break;
+                case 'Recommended Status Report':
+                  const navigationExtrasToRecommendedStatus: NavigationExtras = {
+                    queryParams: {
+                      report_type: 'recommendedStatus'
+                    }
+                  }
+                  if(navigationExtrasToRecommendedStatus){
+                    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToRecommendedStatus);
+                  }
+                  break;
+                  case 'Login Report':
+                    const navigationExtrasToLogin: NavigationExtras = {
+                      queryParams: {
+                        report_type: 'login'
+                      }
+                    }
+                    if(navigationExtrasToLogin){
+                      this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLogin);
+                    }
+                    break;
       }
     }
   }
@@ -675,6 +702,18 @@ export class CRMComponent implements OnInit {
                   return imgSrc;
                 }
                 break;
+                case 'Recommended Status Report':
+                  imgSrc = './assets/images/crmImages/inquiry.png';
+                  if (imgSrc) {
+                    return imgSrc;
+                  }
+                  break;
+                  case 'Login Report':
+                    imgSrc = './assets/images/crmImages/inquiry.png';
+                    if (imgSrc) {
+                      return imgSrc;
+                    }
+                    break;
       }
     }
   }
