@@ -20,6 +20,25 @@
                 <div class="icon-text">Change status to</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor"
+        *ngIf="(users && users.length > 1 && !mulipleSelection && this.accountType=='BRANCH'  && (this.orderDetails.orderStatus !== 'Cancelled') && !this.orderDetails.provider)"
+        (click)="changeWaitlistservice()">
+        <div class="action-box-sub">
+            <span class="doctor-change-icon"></span>
+            <!-- <div class="icon-text">Assign {{provider_label | capitalizeFirst}}</div> -->
+            <div *ngIf="this.orderDetails.provider" class="icon-text">Change {{provider_label | capitalizeFirst}}</div>
+            <div *ngIf="!this.orderDetails.provider" class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
+            
+        </div>
+    </div>
+    <div class="action-box pointer-cursor"
+    *ngIf="!mulipleSelection && this.accountType=='BRANCH' && (this.orderDetails.orderStatus !== 'Cancelled') && this.orderDetails.provider"
+    (click)="removeProvider()">
+    <div class="action-box-sub">
+        <span class="doctor-change-icon"></span>
+        <div class="icon-text">Unassign {{provider_label | capitalizeFirst}}</div>
+    </div>
+</div>
         <div class="action-box pointer-cursor" (click)="gotoDetails()"
             *ngIf="!mulipleSelection && data.source !== 'details'">
             <div class="action-box-sub">

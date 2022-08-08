@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
   { path: 'order-wizard', loadChildren: ()=> import('./order-wizard/order-wizard.module').then(m=>m.OrderWizardModule)},
   { path: ':id', loadChildren: ()=> import('./order-details/order-details.module').then(m=>m.OrderDetailsModule)},
-  
+  {path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
   { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)} 
 ];
 @NgModule({

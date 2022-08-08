@@ -112,6 +112,9 @@ export class UserServiceChnageComponent implements OnInit {
     } else if (this.source == 'checkin') {
       this.getCheckinDetails();
     }
+    else if (this.source == 'order') {
+      this.getOrderDetails();
+    }
 
   }
   applyFilter(filterValue: string) {
@@ -234,6 +237,23 @@ export class UserServiceChnageComponent implements OnInit {
               }
             );
         }
+        else if(this.source == 'order'){
+          const post_data = {
+            'uid': this.uuid,
+            'provider': {
+              'id': this.userId
+            },
+          };
+          this.provider_services.updateUserOrder(post_data)
+            .subscribe(
+              data => {
+                this.location.back();
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        }
         else {
           const post_data = {
             'uid': this.uuid,
@@ -311,6 +331,26 @@ export class UserServiceChnageComponent implements OnInit {
             }
           };
           this.provider_services.updateUserWaitlist(post_data)
+            .subscribe(
+              data => {
+                this.location.back();
+              },
+              error => {
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              }
+            );
+        }
+        else if (this.source == 'order') {
+          const post_data = {
+            'uid': this.uuid,
+            'provider': {
+              'id': this.userId
+            },
+            'location': {
+              'id': result
+            }
+          };
+          this.provider_services.updateUserOrder(post_data)
             .subscribe(
               data => {
                 this.location.back();
@@ -572,6 +612,28 @@ export class UserServiceChnageComponent implements OnInit {
               }
               if (this.checkin.waitlistingFor[0].jaldeeId) {
                 this.userDetails = this.customer_label + 'id:' + this.checkin.waitlistingFor[0].jaldeeId;
+              }
+            }
+          }
+        }, error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+  getOrderDetails() {
+    this.provider_services.getProviderOrderDetailById(this.uuid)
+      .subscribe(
+        data => {
+          this.checkin = data;
+          if (this.checkin.orderFor) {
+            if (this.checkin.orderFor.firstName && this.checkin.orderFor.firstName !== null && this.checkin.orderFor.firstName !== undefined && this.checkin.orderFor.firstName !== '') {
+              this.userDetails = this.checkin.orderFor.firstName + ' ' + this.checkin.orderFor.lastName;
+            } else {
+              if (this.checkin && this.checkin.orderFor && this.checkin.orderFor.memberJaldeeId) {
+                this.userDetails = this.customer_label + 'id:' + this.checkin.orderFor.memberJaldeeId;
+              }
+              if (this.checkin.orderFor.jaldeeId) {
+                this.userDetails = this.customer_label + 'id:' + this.checkin.orderFor.jaldeeId;
               }
             }
           }

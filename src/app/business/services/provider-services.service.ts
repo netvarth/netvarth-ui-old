@@ -1137,6 +1137,10 @@ export class ProviderServices {
     const url = 'provider/appointment/update';
     return this.servicemeta.httpPut(url, post_data);
   }
+  updateUserOrder(post_data) {
+    const url = 'provider/orders/update';
+    return this.servicemeta.httpPut(url, post_data);
+  }
   unassignUserWaitlist(post_data) {
     const url = 'provider/waitlist/unassign';
     return this.servicemeta.httpPut(url, post_data);

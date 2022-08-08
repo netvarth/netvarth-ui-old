@@ -10,6 +10,7 @@ import { ApplyLabelComponent } from '../../check-ins/apply-label/apply-label.com
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
 import { VoiceConfirmComponent } from '../../customers/voice-confirm/voice-confirm.component';
 import { CommunicationService } from '../../../../business/services/communication-service';
+import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 
 @Component({
   selector: 'app-order-actions',
@@ -47,6 +48,12 @@ export class OrderActionsComponent implements OnInit {
   id: any;
   providerMeetingUrl: any;
   showQnr = false;
+  accountType: any;
+  userid: any;
+  users: any = [];
+  user_arr: any;
+  isUserdisable;
+  provider_label = '';
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -54,6 +61,7 @@ export class OrderActionsComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
+    private groupService: GroupStorageService,
     private communicationService: CommunicationService
 ) { }
 
@@ -74,6 +82,13 @@ export class OrderActionsComponent implements OnInit {
    }
     this.getLabel();
     this.getPos();
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.accountType = user.accountType;
+        this.userid = user.id
+        if (this.accountType === 'BRANCH') {
+          this.getUser();
+      }
+      this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
   }
   setActions() {
     if (!this.mulipleSelection) {
@@ -199,7 +214,22 @@ showStatus() {
 goBack() {
   this.action = '';
 }
-
+getUser() {
+  if (this.userid) {
+      this.provider_services.getUsers()
+          .subscribe((data: any) => {
+              this.users = data;
+              this.user_arr = this.users.filter(user => user.id === this.userid);
+              if (this.user_arr[0].status === 'ACTIVE') {
+                  this.isUserdisable = true
+              } else {
+                  this.isUserdisable = false
+              }
+          }
+              , error => {
+              });
+  }
+}
 
 addLabeltoOrder(label, event) {
   this.showApply = false;
@@ -514,5 +544,41 @@ printOrder() {
 showQuestionnaires() {
   this.dialogRef.close();
   this.router.navigate(['provider', 'orders', 'questionnaires'], { queryParams: { source: 'order', uid: this.orderDetails.uid } });
+}
+changeWaitlistservice() {
+  this.dialogRef.close();
+  this.router.navigate(['provider', 'orders', this.orderDetails.uid, 'user'], { queryParams: { source: 'order' } });
+}
+removeProvider() {
+  // this.dialogRef.close();
+  let msg = '';
+  msg = 'Do you want to remove this ' + this.provider_label + '?';
+  const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+          'message': msg,
+          'type': 'yes/no'
+      }
+  });
+  dialogrefd.afterClosed().subscribe(result => {
+      if (result) {
+          const post_data = {
+              'uid': this.orderDetails.uid,
+              
+          };
+          this.provider_services.updateUserOrder(post_data)
+              .subscribe(
+                  data => {
+                      this.dialogRef.close('reload');
+                  },
+                  error => {
+                      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      this.dialogRef.close('reload');
+                  }
+              );
+      }
+  });
 }
 }
