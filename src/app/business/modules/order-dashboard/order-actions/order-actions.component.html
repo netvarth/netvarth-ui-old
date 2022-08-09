@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="action-box pointer-cursor"
-        *ngIf="(users && users.length > 1 && !mulipleSelection && this.accountType=='BRANCH'  && (this.orderDetails.orderStatus !== 'Cancelled') && !this.orderDetails.provider)"
+        *ngIf="(users && users.length > 1 && !mulipleSelection && this.accountType=='BRANCH'  && (this.orderDetails.orderStatus !== 'Cancelled'))"
         (click)="changeWaitlistservice()">
         <div class="action-box-sub">
             <span class="doctor-change-icon"></span>
