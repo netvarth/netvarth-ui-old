@@ -129,6 +129,11 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   }
   ngOnChanges() {
     console.log("In Change:", this.questionAnswers);
+    console.log(this.answers);
+    if (this.questionAnswers && this.questionAnswers.filestoUpload && this.source === 'proLead') {
+      this.filestoUpload = this.questionAnswers.filestoUpload;
+    }
+    
   }
   ngOnInit(): void {
     console.log("Questionaire Init");
@@ -256,7 +261,8 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
                 for (let i = 0; i < answ.answerLine.answer[answ.question.fieldDataType].length; i++) {
                   answ.answerLine.answer[answ.question.fieldDataType][i].action = 'add';
                   answ.answerLine.answer[answ.question.fieldDataType][i].status = 'COMPLETE';
-                  answ.answerLine.answer[answ.question.fieldDataType][i].uid = answ.answerLine.answer[answ.question.fieldDataType][i].keyName.uid;
+                  answ.answerLine.answer[answ.question.fieldDataType][i].s3path = answ.answerLine.answer[answ.question.fieldDataType][i].s3path;
+                  answ.answerLine.answer[answ.question.fieldDataType][i].uid = answ.answerLine.answer[answ.question.fieldDataType][i].uid;
                   answ.answerLine.answer[answ.question.fieldDataType][i].driveId = answ.answerLine.answer[answ.question.fieldDataType][i].driveId;
                   answ.answerLine.answer[answ.question.fieldDataType][i].url = answ.answerLine.answer[answ.question.fieldDataType][i].keyName;
                 }
@@ -1151,7 +1157,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
         if (indx !== -1) {
           if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
-            window.open(this.selectedMessage[indx].path, '_blank');
+              window.open(this.selectedMessage[indx].path, '_blank'); 
           } else {
             imagePath = this.uploadedImages[indx].path;
             caption = this.comments[question.labelName + '=' + document];

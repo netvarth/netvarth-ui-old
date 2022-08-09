@@ -104,6 +104,7 @@ export class ViewLeadQnrComponent implements OnInit {
   notesErrorMsg:string;
   afterUpdate:any;
   crifBtnForHide:boolean;
+  fileLoading: boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -851,20 +852,21 @@ export class ViewLeadQnrComponent implements OnInit {
     )
   }
   getQuestionAnswers(event) {
+    console.log("In getQuestion Answers");
     const _this = this;
     this.questionAnswers = event;
-    this.questionAnswers.answers.answerLine.forEach((element, index) => {
-      if (element.answer && element.answer.fileUpload) {
-        element.answer.fileUpload.forEach((element1, index1) => {
-          console.log("Element1:");
-          console.log(element1);        
-            // _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
-            _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = element1.uid;
-            _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
-            _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['action'] = 'add';
-        });
-      }
-    });
+    // this.questionAnswers.answers.answerLine.forEach((element, index) => {
+    //   if (element.answer && element.answer.fileUpload) {
+    //     element.answer.fileUpload.forEach((element1, index1) => {
+    //       console.log("Element1:");
+    //       console.log(element1);        
+    //         _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = element1.driveId;
+    //         _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = element1.uid;
+    //         _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
+    //         _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['action'] = 'add';
+    //     });
+    //   }
+    // });
   console.log("Show:",_this.questionAnswers);
   }
   
@@ -1014,6 +1016,7 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   uploadFile(input) {
+    this.fileLoading = true;
     const _this = this;
     const fileString = [{
       caption: input.caption,
@@ -1033,7 +1036,7 @@ export class ViewLeadQnrComponent implements OnInit {
     this.leadsService.uploadFile(dataToSend).subscribe(
       (info: any) => {
         this.uploadAudioVideoQNR(info).then(()=>{
-          console.log("Show:",_this.questionAnswers)
+          console.log("Show:",_this.questionAnswers);
           _this.questionAnswers.answers.answerLine.forEach((element, index) => {
               if (element.answer && element.answer.fileUpload && element.labelName === input.labelName) {
                 console.log("Element:", element)
@@ -1042,17 +1045,26 @@ export class ViewLeadQnrComponent implements OnInit {
                   console.log(element1);
                   if (element1.caption === input.caption) {
                     _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['driveId'] = info.urls[0].driveId;
                     _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = info.urls[0].uid;
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['uid'] = info.urls[0].uid;
                     _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['status'] = 'COMPLETE';
                     _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['action'] = 'add';
-                  }
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['action'] = 'add';
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['s3path'] = info.urls[0].url;
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['s3path'] = info.urls[0].url;
+                  } 
                 });
               }
             });
-          console.log("Show:",_this.questionAnswers);
+          console.log("Show1:",_this.questionAnswers);
+          this.fileLoading = false;
         });
       }, error => {
         console.log(error);
+        this.fileLoading = false;
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     )
   }

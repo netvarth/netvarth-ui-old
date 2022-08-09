@@ -1,4 +1,10 @@
 <!-----card header start-->
+<div *ngIf="fileLoading" class="overlay">
+  <div class="child">
+    <app-common-innerloading-spinner ></app-common-innerloading-spinner>
+  </div>  
+</div>
+
 <section class="card cardBoxShadow">
   <div class="title-gb no-padding">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head" *ngIf="leadInfo" style="color:#1D3E77">
