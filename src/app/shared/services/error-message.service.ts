@@ -1,11 +1,13 @@
 import { Injectable } from "@angular/core";
-import { Messages } from "../constants/project-messages";
 
 Injectable({
     providedIn: 'root'
 })
 
 export class ErrorMessagingService {
+
+    API_ERROR = 'There was a problem while connecting to our server. Please try again.';
+
     constructor() {
     }
     getApiError(error) {
@@ -15,7 +17,7 @@ export class ErrorMessagingService {
         } else if (typeof error === 'string') {
             return error;
         } else {
-            return Messages.API_ERROR;
+            return this.API_ERROR;
         }
     }
 }

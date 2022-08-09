@@ -100,6 +100,7 @@ export class RazorpayService {
     }
     const options = razorModel;
     options['handler'] = ((response, error) => {
+      console.log(error);
       options['response'] = response;
       console.log('orpitons.response' + JSON.stringify(options['response']));
 

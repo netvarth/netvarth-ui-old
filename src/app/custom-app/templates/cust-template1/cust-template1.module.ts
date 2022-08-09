@@ -17,6 +17,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
 import { MatButtonModule } from '@angular/material/button';
 import { CustTemplate1Component } from './cust-template1.component';
+import { BasicProfileModule } from '../../basic-profile/basic-profile.module';
 const routes: Routes = [
     { path: '', component: CustTemplate1Component }
 ];
@@ -39,6 +40,7 @@ const routes: Routes = [
         MatDialogModule,
         MatButtonModule,
         AddInboxMessagesModule,
+        BasicProfileModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

@@ -32,11 +32,9 @@ export class CustTemplate1Component implements OnInit {
   loaded_orders = false;
   loaded_appointments = false;
   loaded_checkins = false;
-
   donationServicesJson: any;
   apptServices: any = [];
   checkinServices: any = [];
-
   filteredApptServices: any;
   filteredCheckinServices: any;
   departments: any;
@@ -46,12 +44,7 @@ export class CustTemplate1Component implements OnInit {
   waitlisttime_arr: any = [];
   appttime_arr: any = [];
   deptUsers: any;
-
   selectedIndex;
-  // @Input() templateJson;
-  // userId;
-  // pSource;
-  // loading = true;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   server_date: any;
   constructor(
@@ -111,10 +104,6 @@ export class CustTemplate1Component implements OnInit {
       this.setUserWaitTime();
       this.setUsers(this.deptUsers);
     }
-    // if(this.templateJson.section1.gallery || this.templateJson.section2.gallery || this.templateJson.section3.gallery) {
-
-    // }
-
     if (this.templateJson.section1.donations || this.templateJson.section2.donations || this.templateJson.section3.donations) {
       this.getDonationServices();
     }
@@ -289,11 +278,6 @@ export class CustTemplate1Component implements OnInit {
     this.onlineUsers = [];
     if (this.showDepartments) {
       for (let dIndex = 0; dIndex < deptUsers.length; dIndex++) {
-        // const deptItem = {};
-        // deptItem['departmentName'] = deptUsers[dIndex]['departmentName'];
-        // deptItem['departmentCode'] = deptUsers[dIndex]['departmentCode'];
-        // deptItem['departmentId'] = deptUsers[dIndex]['departmentId'];
-        // deptItem['departmentItems'] = [];
         if (this.settings.enabledWaitlist || this.apptSettings.enableAppt) {
           for (let pIndex = 0; pIndex < deptUsers[dIndex]['users'].length; pIndex++) {
             const userWaitTime = this.waitlisttime_arr.filter(time => time.provider.id === deptUsers[dIndex]['users'][pIndex].id);
@@ -301,10 +285,8 @@ export class CustTemplate1Component implements OnInit {
             deptUsers[dIndex]['users'][pIndex]['waitingTime'] = userWaitTime[0];
             deptUsers[dIndex]['users'][pIndex]['apptTime'] = userApptTime[0];
             this.onlineUsers.push({ 'type': 'provider', 'item': deptUsers[dIndex]['users'][pIndex] });
-            // this.userCount++;
           }
         }
-        // this.onlineUsers.push(deptItem);
       }
     } else {
       if (this.settings.enabledWaitlist || this.apptSettings.enableAppt) {
@@ -400,7 +382,6 @@ export class CustTemplate1Component implements OnInit {
     // );
   }
   doLogin(origin?, passParam?) {
-    // const current_provider = passParam['current_provider'];
     const is_test_account = true;
     const dialogRef = this.dialog.open(ConsumerJoinComponent, {
       width: '40%',
@@ -416,33 +397,10 @@ export class CustTemplate1Component implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        // this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        // if (passParam['callback'] === 'communicate') {
-        //   
-        // } else if (passParam['callback'] === 'history') {
-        //   this.redirectToHistory();
-        // } else 
+      if (result === 'success') { 
         if (passParam['callback'] === 'communicate') {
           this.showCommunicate(passParam['providerId']);
         } 
-        // else if (passParam['callback'] === 'donation') {
-        //   this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        // } else if (passParam['callback'] === 'appointment') {
-        //   this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        // } else if (passParam['callback'] === 'order') {
-        //   if (this.orderType === 'SHOPPINGLIST') {
-        //     this.shoppinglistupload();
-        //   } else {
-        //     this.checkout();
-        //   }
-        // } else {
-        //   this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        // }
-      } else if (result === 'showsignup') {
-        // this.doSignup(passParam);
-      } else {
-        // this.loading = false;
       }
     });
   }
@@ -468,7 +426,6 @@ export class CustTemplate1Component implements OnInit {
   }
   communicateHandler() {
     const _this = this;
-    // _this.loading = true;
     _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
@@ -478,18 +435,5 @@ export class CustTemplate1Component implements OnInit {
           this.doLogin('consumer', passParam);
         }
       });
-    // const _this = this;
-    // const providforCommunicate = this.provider_bussiness_id;
-    // _this.goThroughLogin().then(
-    //   (status) => {
-    //     if (status) {
-    //       _this.showCommunicate(providforCommunicate);
-
-    //     } else {
-    //       const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
-    //       this.doLogin('consumer', passParam);
-    //     }
-    //   }
-    // );
   }
 }

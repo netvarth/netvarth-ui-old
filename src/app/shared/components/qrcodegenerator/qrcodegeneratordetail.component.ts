@@ -37,34 +37,19 @@ export class QRCodeGeneratordetailComponent implements OnInit, OnDestroy {
       this.qrCodeParent = content1;
     }
   }
-  // private qrCodeCustId: ElementRef;
-
-  // @ViewChild('qrCodeCustId') set content2(content2: ElementRef) {
-  //   if (content2) { // initially setter gets called with undefined
-  //     this.qrCodeParent = content2;
-  //   }
-  // }
-  // ngAfterViewChecked() {
-  //     this.changeDetectorRef.detectChanges();
-  // }
   ngOnInit() {
     this.accuid = this.data.accencUid;
     this.wpath = this.data.path;
     this.bname = this.data.businessName;
     this.about = this.data.businessDesc;
     this.busername = this.data.businessUserName;
-
-
     this.customId = this.data.customId;
-    // this.window_path = this.data.pathUrl;
-    // console.log(this.wpath + this.accuid);
     this.userId = this.data.userId;
     if (this.userId) {
       this.shareLink = this.wpath + this.accuid + '/' + this.userId + '/';
     } else {
       this.shareLink = this.wpath + this.accuid + '/';
     }
-    // this.description = 'You can book my services by just clicking this link';
     this.description = 'For bookings use this link';
     this.qrCodegenerateOnlineID(this.accuid, this.userId);
   }

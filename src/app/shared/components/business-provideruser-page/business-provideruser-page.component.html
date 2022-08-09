@@ -39,7 +39,6 @@
                                 (click)="openImageModalRow(image_list_popup[0])">
                                 <i class="fa fa-circle" *ngFor="let enable of galleryenabledArr"></i>
                                 <span class="extra-count" *ngIf="tempgalleryjson.length > 5">+{{extra_img_count}}</span>
-                                <!-- <i class="fa fa-circle-o" *ngFor="let i of gallerydisabledArr"></i> -->
                             </div>
                         </div>
                     </div>
@@ -86,7 +85,6 @@
                                                     (click)="showDesc()">...</span> &nbsp;
                                                     <span class="morebt" *ngIf="!showmoreDesc && bNameEnd!=''"
                                                     (click)="showDesc()">Read more</span>
-                                                <!-- <span class="more" *ngIf="showmoreDesc" (click)="showDesc()">less</span> -->
                                             </div>
                                         </ng-container>
                                     </div>
@@ -111,21 +109,11 @@
                                         <li class="more pointer-cursor"
                                             *ngIf="!showmoreSpec && specializationslist_more.length>0"
                                             (click)="showSpec()">...</li>
-                                        <!-- <li class="more" *ngIf="showmoreSpec && specializationslist_more.length>0"
-                                            (click)="showSpec()">less</li> -->
                                     </ul>
                                 </div>
-
-                                <div class="showmoresec" *ngIf="showMore && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))"
-                                    >
+                                <div class="showmoresec" *ngIf="showMore && (!profileSettings || (profileSettings && profileSettings['showVirtualFields']))">
                                     <div class="" *ngIf="showMore">
                                         <div class="">
-                                            <!-- <div class="question-main-outer" *ngIf="!userId">
-                                                <div class="question-header">Area of Specialization</div>
-                                                <div class="question-value1">{{businessjson.serviceSubSector.displayName
-                                                    |
-                                                    capitalizeFirst}}</div>
-                                            </div> -->
                                             <div class="question-main-outer"
                                                 *ngFor="let vfield of virtualfieldsCombinedjson">
                                                 <div class="question-outer" *ngIf="vfield.value">
@@ -154,24 +142,9 @@
                                             <div class="question-header">Languages Known</div>
                                             <div class="specialization-value question-value1">
                                                 <ul class="comma-list">
-                                                    <li class="item" *ngFor="let languages of businessjson.languagesSpoken;let i=index">{{languages | capitalizeFirst}}</li>
-                                                 
-                                                   
+                                                    <li class="item" *ngFor="let languages of businessjson.languagesSpoken;let i=index">{{languages | capitalizeFirst}}</li>                                                                                                   
                                                 </ul>
                                             </div></div>
-                                           <!-- <div class="question-main-outer"
-                                                *ngIf="businessjson.languagesSpoken && businessjson.languagesSpoken.length > 0">
-                                                <div class="question-header">Languages Known</div>
-                                                <div
-                                                    class="col-md-12 col-xs-12 col-lg-12 col-sm-12 no-padding mgn-bt-10">
-                                                    <div class="question-value1 pull-left mgn-rt-5"
-                                                        *ngFor="let languages of businessjson.languagesSpoken;let i=index">
-                                                        {{languages | capitalizeFirst}}<ng-container
-                                                            *ngIf="i<(businessjson.languagesSpoken.length-1)">,
-                                                        </ng-container>
-                                                    </div>
-                                                </div>
-                                            </div> !-->
                                             <div class="question-main-outer" *ngIf="socialMedialist.length>0">
                                                 <div class="question-header">Social Media Links and Listing Sites</div>
                                                 <div class="question-value1">
@@ -559,7 +532,6 @@
         <div class="container">
             <div class="row align-items-center justify-content-between text-center">
                 <div class="footer-bottom--links col-md-auto mgn-bt-20">
-                    <!-- <span>Follow Us: </span> -->
                     <a class="footer-links bd-pd-right" (click)="footerClicked('privacy')">Privacy</a>
                     <a class="footer-links bd-pd-left bd-pd-right" (click)="footerClicked('terms')">Terms & Conditions</a>
                     <a class="footer-links bd-pd-left" (click)="footerClicked('contact')">Contact</a>
