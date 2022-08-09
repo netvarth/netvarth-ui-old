@@ -780,7 +780,7 @@
     <div class="panel panel-default">
       <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-          <app-header *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+          <app-header [includedfrom]="'paper'" [showHeaderAction]="true"></app-header>
         </div>
       </div>
       <div class="panel-body no-padding">
@@ -792,30 +792,7 @@
             <div class="card" *ngIf="loading">
               <app-common-innerloading-spinner> </app-common-innerloading-spinner>
             </div>
-            <div class="card">
-              <div class="d-flex justify-content-between">
-                <div class="">
-                  <img src="assets/images/authordemy/logo.png" alt="Authordemy" width="100px" height="70px">
-                </div>
-                <div class="d-flex pt-3">
-                  <div class="mr-2">
-                    <a class="btn btn-dark"><i class="fa fa-volume-control-phone" aria-hidden="true"></i><span
-                        class="desktop-only">&nbsp;&nbsp;Contact Us</span></a>
-                  </div>
-                  <div class="dropdown">
-                    <a class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <img src="assets/images/authordemy/person.png" class="person-img" alt="Person" width="25px" height="25px">
-                      <span class="desktop-only">&nbsp;&nbsp;Krishnadas Ps</span>&nbsp;<i class="fa fa-angle-down"></i>
-                    </a>
-                    <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item" href="#">Action</a>
-                      <a class="dropdown-item" href="#">Another action</a>
-                      <a class="dropdown-item" href="#">Something else here</a>
-                    </div> -->
-                  </div>
-                </div>
-              </div>
-            </div>
+           
             
             
             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 bg-grey no-padding-small no-padding"
