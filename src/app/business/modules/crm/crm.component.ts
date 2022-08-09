@@ -63,6 +63,9 @@ export class CRMComponent implements OnInit {
     },
     {
       id:11, type: 'HO Leads Status Report'
+    },
+    {
+      id:12, type: 'Sanctioned Status Report'
     }
   ]
   constructor(
@@ -658,6 +661,16 @@ export class CRMComponent implements OnInit {
                         this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToHOLeads);
                       }
                       break;
+                      case 'Sanctioned Status Report':
+                        const navigationExtrasToSanctioned: NavigationExtras = {
+                          queryParams: {
+                            report_type: 'sanctionedStatus'
+                          }
+                        }
+                        if(navigationExtrasToSanctioned){
+                          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToSanctioned);
+                        }
+                        break;
       }
     }
   }
@@ -731,6 +744,12 @@ export class CRMComponent implements OnInit {
                         return imgSrc;
                       }
                       break;
+                      case 'Sanctioned Status Report':
+                        imgSrc = './assets/images/crmImages/otherTemplate.png';
+                        if (imgSrc) {
+                          return imgSrc;
+                        }
+                        break;
       }
     }
   }

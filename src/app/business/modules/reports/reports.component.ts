@@ -27,6 +27,8 @@ export class ReportsComponent implements OnInit {
   processing_files_criteria: any[];
   enquiry_criteria: any[];
   HO_lead_criteria: any[];
+  sanctioned_status_criteria: any[];
+  sanctionedReports = [];
   enquiryReports = [];
   monthlyActivityReports = [];
   monthly_criteria:any[];
@@ -101,6 +103,7 @@ export class ReportsComponent implements OnInit {
     this.recommended_status_criteria = [];
     this.processing_files_criteria = [];
     this.HO_lead_criteria = [];
+    this.sanctioned_status_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
@@ -172,6 +175,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'HO_LEADS_STATUS': {
             this.HO_lead_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'SANCTIONED_STATUS': {
+            this.sanctioned_status_criteria.push(this.criteria_list[i]);
             break;
           }
         }

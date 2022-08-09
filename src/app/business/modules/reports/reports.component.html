@@ -562,7 +562,38 @@
         </mat-expansion-panel>
     </mat-accordion>
     </div>
-</div>      
+</div>   
+        <!--Sanctioned Status Reports -->
+        <div class="row">
+          <div class="card p0">
+            <mat-accordion class="report">
+              <mat-expansion-panel  [expanded]="true">
+                  <mat-expansion-panel-header>
+                      <mat-panel-title class="report_title">
+                          Sanctioned Status
+                         <div class="width100pc" >
+                          <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'sanctionedStatus'}">Create New Report</a>
+                         </div>
+                      </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <ng-container *ngIf="sanctionedReports.length===0">
+                    <div *ngIf="sanctioned_status_criteria.length === 0" >
+                      <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                    </div>
+                    <table  *ngIf="sanctioned_status_criteria.length > 0">
+                      <span class="savd-report">Saved Reports</span>
+                      <tr *ngFor="let sanctionedStatus of sanctioned_status_criteria">
+                        <td>{{sanctionedStatus.reportName}}</td>
+                        <td><a (click)="recreateReport(sanctionedStatus)">Generate</a></td>
+                        <td><a (click)="viewCriteria(sanctionedStatus)">View</a></td>
+                        <td><a (click)="deletCriteria(sanctionedStatus)">Delete</a></td>
+                      </tr>
+                    </table>
+                </ng-container>
+              </mat-expansion-panel>
+          </mat-accordion>
+          </div>
+      </div>      
       </div>
       <div class="clearfix"></div>
   </div>
