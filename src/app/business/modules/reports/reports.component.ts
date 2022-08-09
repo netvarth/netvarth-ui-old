@@ -26,6 +26,7 @@ export class ReportsComponent implements OnInit {
   login_criteria:any[];
   processing_files_criteria: any[];
   enquiry_criteria: any[];
+  HO_lead_criteria: any[];
   enquiryReports = [];
   monthlyActivityReports = [];
   monthly_criteria:any[];
@@ -40,6 +41,7 @@ export class ReportsComponent implements OnInit {
   consolidatedReports = [];
   tatReports = [];
   recommendedStatusReports = [];
+  HOLeadsReports = [];
   loginReports = [];
   settings: any = [];
   showToken = false;
@@ -98,6 +100,7 @@ export class ReportsComponent implements OnInit {
     this.login_criteria = [];
     this.recommended_status_criteria = [];
     this.processing_files_criteria = [];
+    this.HO_lead_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
@@ -165,6 +168,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'LOGIN_REPORT': {
             this.login_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'HO_LEADS_STATUS': {
+            this.HO_lead_criteria.push(this.criteria_list[i]);
             break;
           }
         }

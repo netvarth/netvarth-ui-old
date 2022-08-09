@@ -56,13 +56,14 @@ export class CRMComponent implements OnInit {
       id:8, type: 'Tat Report'
     },
     {
-      id:8, type: 'Recommended Status Report'
+      id:9, type: 'Recommended Status Report'
     },
     {
-      id:8, type: 'Login Report'
+      id:10, type: 'Login Report'
     },
-
-
+    {
+      id:11, type: 'HO Leads Status Report'
+    }
   ]
   constructor(
     private providerServices: ProviderServices,
@@ -647,6 +648,16 @@ export class CRMComponent implements OnInit {
                       this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLogin);
                     }
                     break;
+                    case 'HO Leads Status Report':
+                      const navigationExtrasToHOLeads: NavigationExtras = {
+                        queryParams: {
+                          report_type: 'HOLead'
+                        }
+                      }
+                      if(navigationExtrasToHOLeads){
+                        this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToHOLeads);
+                      }
+                      break;
       }
     }
   }
@@ -691,29 +702,35 @@ export class CRMComponent implements OnInit {
             }
             break;
             case 'Consolidated Report':
-              imgSrc = './assets/images/crmImages/inquiry.png';
+              imgSrc = './assets/images/crmImages/consolidated.jfif';
               if (imgSrc) {
                 return imgSrc;
               }
               break;
               case 'Tat Report':
-                imgSrc = './assets/images/crmImages/inquiry.png';
+                imgSrc = './assets/images/crmImages/otherTemplate.png';
                 if (imgSrc) {
                   return imgSrc;
                 }
                 break;
                 case 'Recommended Status Report':
-                  imgSrc = './assets/images/crmImages/inquiry.png';
+                  imgSrc = './assets/images/crmImages/otherTemplate.png';
                   if (imgSrc) {
                     return imgSrc;
                   }
                   break;
                   case 'Login Report':
-                    imgSrc = './assets/images/crmImages/inquiry.png';
+                    imgSrc = './assets/images/crmImages/loginReport.png';
                     if (imgSrc) {
                       return imgSrc;
                     }
                     break;
+                    case 'HO Leads Status Report':
+                      imgSrc = './assets/images/crmImages/leadStatus.png';
+                      if (imgSrc) {
+                        return imgSrc;
+                      }
+                      break;
       }
     }
   }

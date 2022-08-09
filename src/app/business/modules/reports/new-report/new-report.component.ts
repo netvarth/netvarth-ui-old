@@ -94,6 +94,9 @@ export class NewReportComponent implements OnInit {
   recommended_EndDate;
   login_StartDate;
   login_EndDate;
+  HO_lead_timePeriod: string;
+  HO_lead_StartDate;
+  HO_lead_EndDate;
   appointment_service_id: number;
   appointment_service: string;
   donation_service_id: any;
@@ -237,6 +240,9 @@ export class NewReportComponent implements OnInit {
         else if(this.report_type === 'login'){
           this.reportTitle = 'Login'
         }
+        else if(this.report_type === 'HOLead'){
+          this.reportTitle = 'HO Lead Status'
+        }
 
       }
     });
@@ -245,7 +251,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.crm_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod =this.consolidated_timePeriod=this.tat_timePeriod= this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.crm_timePeriod =this.HO_lead_timePeriod= this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod =this.consolidated_timePeriod=this.tat_timePeriod= this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -467,6 +473,14 @@ export class NewReportComponent implements OnInit {
             this.hide_dateRange = false;
             this.login_StartDate = res.startDate;
             this.login_EndDate = res.endDate;          
+          }
+        }
+        case 'HOLead' : {
+          this.HO_lead_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if(res.dateRange === 'DATE_RANGE'){
+            this.hide_dateRange = false;
+            this.HO_lead_StartDate = res.startDate;
+            this.HO_lead_EndDate = res.endDate;          
           }
         }
       }
@@ -1582,6 +1596,71 @@ export class NewReportComponent implements OnInit {
         const request_payload: any = {};
         request_payload.reportType = 'LOGIN_REPORT';
         request_payload.reportDateCategory = this.login_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    } 
+    else if (reportType === 'HOLead') {
+      console.log("Report Type :",reportType)
+      if (this.HO_lead_timePeriod === 'DATE_RANGE' && (this.HO_lead_StartDate === undefined || this.HO_lead_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId
+        };
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+          }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.HO_lead_timePeriod === 'DATE_RANGE') {
+          if (this.HO_lead_StartDate === undefined || this.HO_lead_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.HO_lead_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.HO_lead_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'HO_LEADS_STATUS';
+        request_payload.reportDateCategory = this.HO_lead_timePeriod;
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);
