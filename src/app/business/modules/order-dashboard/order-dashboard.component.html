@@ -306,6 +306,10 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
+                <div class="grey-color" *ngIf="order.provider">
+                  Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
+                  + ' ' + order.provider.lastName}}
+                </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp; <span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
                   <span
@@ -810,7 +814,10 @@
                   <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
-
+                <div class="grey-color" *ngIf="order.provider">
+                  Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
+                  + ' ' + order.provider.lastName}}
+                </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp;<span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
                   <span
@@ -1368,7 +1375,10 @@
                     (click)="stopprop($event);showConsumerNote(order)"></i>
                 </div>
                 
-
+                <div class="grey-color" *ngIf="order.provider">
+                  Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
+                  + ' ' + order.provider.lastName}}
+                </div>
                 <div class="mgn-up-15 mgn-bt-10">
                   <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp;<span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
                   <span
