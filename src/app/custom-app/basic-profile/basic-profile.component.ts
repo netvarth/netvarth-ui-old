@@ -9,8 +9,11 @@ export class BasicProfileComponent implements OnInit {
   
   @Input() businessProfile;
   @Input() templateJson;
+  @Input() selectedLocation;
   emailId: any;
   phoneNo: any;
+  location: any;
+  
 
   constructor() { }
 
@@ -21,6 +24,9 @@ export class BasicProfileComponent implements OnInit {
     if (this.businessProfile.phoneNumbers) {
       this.phoneNo = this.businessProfile.phoneNumbers[0];
     }
+    if (this.businessProfile.baseLocation.place) {
+      this.location = this.businessProfile.baseLocation.place;      
+    }    
   }
 
 }

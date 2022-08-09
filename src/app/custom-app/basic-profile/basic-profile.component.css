@@ -5,4 +5,39 @@
 
  .card {
      padding: 0px !important;
+     height: 187px !important;
+     background-color: #1AA695;
  }
+ body{
+    color: white;
+}
+ h5 {
+    color: white;
+    font-weight: 600 !important;
+    font-size: 20px;
+    padding-top: 0.75rem!important;
+ }
+ button {
+    border-radius: 8px!important;
+    background: border-box;
+    border-width: 1px!important;
+    border-color: white!important;
+    color: white!important;
+ }
+.fa {
+    color: black!important;
+    background-color: white;
+    padding: 2.5px;
+}
+p.smalltext {
+color: white; 
+}   
+
+.img-responsive {
+
+    height: 187px!important;
+}
+.location {
+    font-size: 12px!important;
+    color: white!important;
+}
