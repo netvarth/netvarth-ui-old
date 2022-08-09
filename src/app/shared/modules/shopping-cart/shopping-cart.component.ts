@@ -102,6 +102,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   businessId: any;
   from: string;
   source: any;
+  catalog_type: any;
 
   constructor(
     public router: Router,
@@ -170,6 +171,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       console.log(this.catalog_details);
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
+        this.catalog_type = this.catalog_details.catalogType;
         if (this.catalog_details.pickUp) {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
             this.store_pickup = true;
@@ -226,9 +228,23 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       } else {
         this.isFuturedate = true;
       }
+      this.isAuthordemy();
 
     });
+    
   }
+
+
+  isAuthordemy()
+  {
+    if(this.catalog_type === 'submission')
+    {
+      this.apiloading = true;
+      this.source = 'paper';
+      setTimeout(() => this.confirmOrder(), projectConstants.TIMEOUT_DELAY);
+    }
+  }
+
   fillDateFromLocalStorage() {
     this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
     if (this.chosenDateDetails !== null) {

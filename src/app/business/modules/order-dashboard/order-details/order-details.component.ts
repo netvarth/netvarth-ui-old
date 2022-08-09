@@ -13,6 +13,7 @@ import { CommunicationComponent } from '../../../../shared/components/communicat
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { SharedServices } from '../../../../../../src/app/shared/services/shared-services';
 
 @Component({
   selector: 'app-order-details',
@@ -60,9 +61,13 @@ export class OrderDetailsComponent implements OnInit {
     ]
   };
   private onDestroy$: Subject<void> = new Subject<void>();
+  catalog_id: any;
+  catalog_details: any;
+  isSubmission: boolean;
   constructor(public activaterouter: ActivatedRoute,
     public providerservice: ProviderServices, private dialog: MatDialog,
     private provider_services: ProviderServices,
+    private shared_services: SharedServices,
     public location: Location, public sharedFunctions: SharedFunctions,
     private wordProcessor: WordProcessor) {
     this.activaterouter.params
@@ -91,6 +96,22 @@ export class OrderDetailsComponent implements OnInit {
       this.small_device_display = false;
     }
   }
+
+  getCatalogDetails(accountId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.shared_services.getConsumerCatalogs(accountId)
+        .subscribe(
+          (data: any) => {
+            resolve(data[0]);
+          },
+          () => {
+            reject();
+          }
+        );
+    });
+  }
+
   getOrderDetails(uid) {
     this.loading = true;
     this.orderItems = [];
@@ -99,6 +120,18 @@ export class OrderDetailsComponent implements OnInit {
     .pipe(takeUntil(this.onDestroy$))
     .subscribe(data => {
       this.orderDetails = data;
+      if(this.orderDetails)
+      {
+        this.catalog_id = this.orderDetails.catalog.id;
+      }
+      this.getCatalogDetails(this.orderDetails.account).then(data => {
+      this.catalog_details = data;
+      console.log("this.catalog_details",this.catalog_details)
+      if(this.catalog_details.catalogType == 'submission')
+      {
+        this.isSubmission = true
+      }
+      });
       if (this.orderDetails.questionnaires && this.orderDetails.questionnaires.length > 0) {
         this.questionnaires = this.orderDetails.questionnaires;
         console.log(this.questionnaires)
