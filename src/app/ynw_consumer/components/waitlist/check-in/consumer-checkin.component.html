@@ -253,16 +253,16 @@
                                                             </mat-chip-list>
                                                         </div>
                                                         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10"
-                                                            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
+                                                            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && scheduledWaitlist.attchment && scheduledWaitlist.attchment.length > 0)">
                                                             Uploaded Files
                                                         </div>
                                                         <div class="img-section mgn-up-20"
-                                                            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0)">
+                                                            *ngIf="(selectedMessage.files && selectedMessage.files.length > 0) || (type=='waitlistreschedule' && scheduledWaitlist.attchment && scheduledWaitlist.attchment.length > 0)">
                                                             <ul class="galul">
                                                                 <ng-container
-                                                                    *ngIf="type=='waitlistreschedule' && waitlist.attchment && waitlist.attchment.length > 0">
+                                                                    *ngIf="type=='waitlistreschedule' && scheduledWaitlist.attchment && scheduledWaitlist.attchment.length > 0">
                                                                     <li
-                                                                        *ngFor="let file of waitlist.attchment;let i = index ">
+                                                                        *ngFor="let file of scheduledWaitlist.attchment;let i = index ">
                                                                         <div class="galimg_outer"
                                                                             *ngIf="getThumbUrl(file)">
                                                                             <div class="gal_img">

@@ -675,17 +675,18 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
             'date': this.checkinDate,
-            'queue': this.queueId,
+            'queue':this.queueId,
             'consumerNote': this.consumerNote
         };
+        // console.log("Reschedule :",post_Data)
         console.log(post_Data)
         this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {
-                    if (this.selectedMessage.files.length > 0) {
-                        const uid = [];
-                        uid.push(this.rescheduleUserId);
-                        this.consumerNoteAndFileSave(uid);
+                    if (this.selectedMessage.files.length > 0 || this.scheduledWaitlist.attchment.length > 0) {
+                     //   const uid = [];
+                       // uid.push(this.rescheduleUserId);
+                        this.consumerNoteAndFileSave(this.rescheduleUserId);    
                     } else {
                         let queryParams = {
                             account_id: this.account_id,
@@ -1461,11 +1462,27 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
             _this.sendWLAttachment(_this.account_id, parentUid, dataToSend).then(
                 () => {
-                    _this.submitQuestionnaire(parentUid).then(
-                        () => {
-                            resolve(true);
+                    if (_this.type !== 'waitlistreschedule') {
+                        _this.submitQuestionnaire(parentUid).then(
+                            () => {
+                                resolve(true);
+                            }
+                        );
+                    } else {
+                        let queryParams = {
+                            account_id: _this.account_id,
+                            uuid: _this.rescheduleUserId,
+                            type: 'waitlistreschedule',
+                            theme: _this.theme
                         }
-                    );
+                        if (_this.businessId) {
+                            queryParams['customId'] = _this.customId;
+                        }
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: queryParams
+                        };
+                        _this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
+                    }
                 }
             )
         });
