@@ -683,10 +683,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {
-                    if (this.selectedMessage.files.length > 0 || this.scheduledWaitlist.attchment.length > 0) {
-                     //   const uid = [];
-                       // uid.push(this.rescheduleUserId);
-                        this.consumerNoteAndFileSave(this.rescheduleUserId);    
+                    if (this.selectedMessage.files.length > 0) {
+                       const uid = [];
+                       uid.push(this.rescheduleUserId);
+                        this.consumerNoteAndFileSave(uid);    
                     } else {
                         let queryParams = {
                             account_id: this.account_id,
