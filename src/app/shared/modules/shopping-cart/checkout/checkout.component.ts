@@ -982,11 +982,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       post_Data['orderDate'] = this.sel_checkindate;
 
       if (this.delivery_type === 'home') {
-        if ((this.added_address === null || this.added_address.length === 0) && this.source!=="paper") {
-          this.checkoutDisabled = false;
-          this.isClickedOnce = false;
-          this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
-          return;
+        if ((this.added_address === null || this.added_address.length === 0)) {
+          if(this.source!=="paper"){
+            this.checkoutDisabled = false;
+            this.isClickedOnce = false;
+            this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+            return;
+          }
+          
         } else {
           const delivery_address = {
             'firstName': this.selectedAddress.firstName,
