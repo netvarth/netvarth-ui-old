@@ -73,6 +73,7 @@ export class EditProfileComponent implements OnInit {
   customId: any;
   theme;
   fromApp = false;
+  tel_stat: string;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -369,18 +370,37 @@ export class EditProfileComponent implements OnInit {
     this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
     })
-    this.teleGramStat( this.status).then(
-      (data) => {
-        console.log('then');
-        this.getTelegramstat();
-      },
-      error => {
-        console.log("helllo")
-        this.telegramstat = false;
-        if (!this.telegramstat || this.chatId === null) {
-          this.telegramInfo();
-        }
-      });
+    if(this.status === true){
+      this.tel_stat = 'DISABLED'
+      this.teleGramStat( this.tel_stat).then(
+        (data) => {
+          console.log('then');
+          this.getTelegramstat();
+        },
+        error => {
+          console.log("helllo")
+          this.telegramstat = false;
+          if (!this.telegramstat || this.chatId === null) {
+            this.telegramInfo();
+          }
+        });
+    }
+    else{
+      this.tel_stat = 'ENABLED'
+      
+      this.teleGramStat( this.tel_stat).then(
+        (data) => {
+          console.log('then');
+          this.getTelegramstat();
+        },
+        error => {
+          console.log("helllo")
+          this.telegramstat = false;
+          if (!this.telegramstat || this.chatId === null) {
+            this.telegramInfo();
+          }
+        });
+    }
     }
     if(event.source.checked === false){
       this.waitlist_statusstr = 'Off';
