@@ -135,6 +135,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.getDefaultCatalogStatus();
     this.doSearch();
     this.getProviderSubmissionOrders();
+    this.getProviderCompletedOrders();
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
