@@ -2603,4 +2603,8 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/lead/questionnaire/proceed/'+ status +'/'+ uuid;
     return this.servicemeta.httpPut(url);
   }
+  getProviderSubmissionOrders(filter = {}) {
+    const url = 'provider/orders/OrderSubmission';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
 } 

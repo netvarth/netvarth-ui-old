@@ -97,10 +97,13 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   };
 
   private subs=new SubSink();
+  catalogType: any;
+  totalOrdersCount: any;
   
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
+    private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
     public dateformat: DateFormatPipe,
     private groupService: GroupStorageService,
@@ -130,12 +133,14 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.getLabel();
     this.getDefaultCatalogStatus();
     this.doSearch();
+    this.getProviderSubmissionOrders();
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
     this.subs.sink= observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
+    this.getGlobalSettings();
   }
   ngOnDestroy() {
     this.subs.unsubscribe();
@@ -175,6 +180,13 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   gotoDetails(order) {
     this.router.navigate(['provider', 'orders', order.uid]);
   }
+  getGlobalSettings() {
+    this.provider_services.getGlobalSettings().subscribe(
+        (data: any) => {
+            this.catalogType = data.catalogType;
+            console.log(this.catalogType)
+        });
+}
   showActionPopup(order?,timetype?) {
     if (order) {
       this.selectedOrders = order;
@@ -334,7 +346,14 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   }
 
   doSearch() {
-    this.setTabSelection(this.selectedTab);
+    if(this.catalogType === 'submission'){
+      this.getProviderSubmissionOrders();
+    }
+    else{
+      this.setTabSelection(this.selectedTab);
+    }
+    
+
   }
   keyPressed() {
     this.labelSelection();
@@ -663,4 +682,18 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
     this.router.navigate(['provider', 'customers', 'find']);
   }
+  getProviderSubmissionOrders() {
+    this.loading = true;
+    let filter = {};
+    filter = this.setFilterForApi();
+   
+   this.subs.sink=this.providerservices.getProviderSubmissionOrders(filter)
+
+    .subscribe(data => {
+      this.orders = data;
+      this.totalOrdersCount = this.orders.length;
+      this.loading = false;
+    });
+
+  }  
 }
