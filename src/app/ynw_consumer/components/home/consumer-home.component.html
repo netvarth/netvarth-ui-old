@@ -1,4 +1,4 @@
-<section class="container consumer-dashhome no-padding no-padding-small" [ngClass]="theme">
+<section class="container consumer-dashhome no-padding no-padding-small" [ngClass]="theme" *ngIf="!this.customId">
     <div class="panel panel-default">
         <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
             <app-header [headerTitle]="" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
@@ -676,6 +676,9 @@
             </div>
         </div>
     </div>
+   
+</section>
+<section *ngIf="orders && future_orders && customId">
     <div *ngIf="orders && future_orders && customId">
         <app-submissions [user_details]="usr_details" [custom_id]="customId" [orders]="orders.concat(future_orders)"></app-submissions>
     </div>
