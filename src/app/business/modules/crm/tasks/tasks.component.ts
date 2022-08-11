@@ -214,7 +214,7 @@ setSystemDate() {
     const _this = this;
     return new Promise((resolve, reject) => {
       _this.crmService.getTaskStatus().subscribe((taskStatus: any) => {
-        // console.log('taskStatus', taskStatus);
+        console.log('taskStatus', taskStatus);
         resolve(taskStatus);
         _this.taskStatusList.push(
           // {

@@ -502,6 +502,8 @@
         taskDetails.status && (taskDetails.status.name==='New' || taskDetails.status.name==='Completed')">
           <div class="taskTitle" *ngIf="lebalActualPotential">
             <div>{{lebalActualPotential}}</div>
+            <div *ngIf="(taskDetails && taskDetails.status && taskDetails.status.name) && 
+                taskDetails.status.name==='New' && activityType !=='UpdateFollowUP'" class="astericColor">*</div>
           </div>
           <div class="fieldPadding">
             <input [disabled]="taskDetails.status.name==='Completed'" min="0" (keyup)="resetErrors()" type="number" [(ngModel)]="actualPotential"  placeholder="Enter activity number"
