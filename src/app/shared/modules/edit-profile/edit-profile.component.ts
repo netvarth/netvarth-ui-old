@@ -370,6 +370,8 @@ export class EditProfileComponent implements OnInit {
     this.shared_services.consumertelegramChat(this.removePlus(this.countryCode), this.phonenoHolder).subscribe(data => {
       this.chatId = data;
     })
+   
+    }
     if(this.status === true){
       this.tel_stat = 'DISABLED'
       this.teleGramStat( this.tel_stat).then(
@@ -385,7 +387,7 @@ export class EditProfileComponent implements OnInit {
           }
         });
     }
-    else{
+    else if(this.status === false){
       this.tel_stat = 'ENABLED'
       
       this.teleGramStat( this.tel_stat).then(
@@ -400,7 +402,6 @@ export class EditProfileComponent implements OnInit {
             this.telegramInfo();
           }
         });
-    }
     }
     if(event.source.checked === false){
       this.waitlist_statusstr = 'Off';
