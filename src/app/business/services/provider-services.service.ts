@@ -2607,4 +2607,8 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/orders/OrderSubmission';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getProviderCompletedOrders(filter = {}) {
+    const url = 'provider/orders/OrderSubmission?orderStatus-eq=Completed';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
 } 

@@ -99,6 +99,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   private subs=new SubSink();
   catalogType: any;
   totalOrdersCount: any;
+  totalPaperdCompletedCount: any;
   
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
@@ -169,6 +170,25 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       }
     }
   }
+  setTabSelection_papers(type) {
+    this.selectedTab = type;
+    this.groupService.setitemToGroupStorage('orderTab', this.selectedTab);
+    switch (type) {
+      case 1: {
+        this.getProviderSubmissionOrders();
+
+        break;
+      }
+      case 2: {
+        this.getProviderCompletedOrders();
+      
+
+        break;
+      }
+   
+    }
+  }
+  
   tabChange(event) {
     this.hideFilterSidebar();
     this.resetFilter();
@@ -176,6 +196,14 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.resetLabelFilter();
     this.filterapplied = false;
     this.setTabSelection(event.index + 1);
+  }
+  tabChange_papers(event) {
+    this.hideFilterSidebar();
+    this.resetFilter();
+    this.resetFilterValues();
+    this.resetLabelFilter();
+    this.filterapplied = false;
+    this.setTabSelection_papers(event.index + 1);
   }
   gotoDetails(order) {
     this.router.navigate(['provider', 'orders', order.uid]);
@@ -347,7 +375,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
 
   doSearch() {
     if(this.catalogType === 'submission'){
-      this.getProviderSubmissionOrders();
+      this.setTabSelection_papers(this.selectedTab);
     }
     else{
       this.setTabSelection(this.selectedTab);
@@ -692,6 +720,20 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     .subscribe(data => {
       this.orders = data;
       this.totalOrdersCount = this.orders.length;
+      this.loading = false;
+    });
+
+  }  
+  getProviderCompletedOrders() {
+    this.loading = true;
+    let filter = {};
+    filter = this.setFilterForApi();
+   
+   this.subs.sink=this.providerservices.getProviderCompletedOrders(filter)
+
+    .subscribe(data => {
+      this.orders = data;
+      this.totalPaperdCompletedCount = this.orders.length;
       this.loading = false;
     });
 
