@@ -593,7 +593,69 @@
               </mat-expansion-panel>
           </mat-accordion>
           </div>
-      </div>      
+      </div> 
+       <!--Employee Activity Tat Reports -->
+       <div class="row">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel  [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="report_title">
+                        Employee Activity Tat
+                       <div class="width100pc" >
+                        <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'employeeAverageTat'}">Create New Report</a>
+                       </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-container *ngIf="employeeActivityReports.length===0">
+                  <div *ngIf="employee_activity_criteria.length === 0" >
+                    <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                  </div>
+                  <table  *ngIf="employee_activity_criteria.length > 0">
+                    <span class="savd-report">Saved Reports</span>
+                    <tr *ngFor="let employeeActivity of employee_activity_criteria">
+                      <td>{{employeeActivity.reportName}}</td>
+                      <td><a (click)="recreateReport(employeeActivity)">Generate</a></td>
+                      <td><a (click)="viewCriteria(employeeActivity)">View</a></td>
+                      <td><a (click)="deletCriteria(employeeActivity)">Delete</a></td>
+                    </tr>
+                  </table>
+              </ng-container>
+            </mat-expansion-panel>
+        </mat-accordion>
+        </div>
+    </div>      
+     <!--Daily Activity Reports -->
+     <div class="row">
+      <div class="card p0">
+        <mat-accordion class="report">
+          <mat-expansion-panel  [expanded]="true">
+              <mat-expansion-panel-header>
+                  <mat-panel-title class="report_title">
+                      Daily Activity
+                     <div class="width100pc" >
+                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'dailyActivity'}">Create New Report</a>
+                     </div>
+                  </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="dailyActivityReports.length===0">
+                <div *ngIf="daily_activity_criteria.length === 0" >
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                </div>
+                <table  *ngIf="daily_activity_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let dailyActivity of daily_activity_criteria">
+                    <td>{{dailyActivity.reportName}}</td>
+                    <td><a (click)="recreateReport(dailyActivity)">Generate</a></td>
+                    <td><a (click)="viewCriteria(dailyActivity)">View</a></td>
+                    <td><a (click)="deletCriteria(dailyActivity)">Delete</a></td>
+                  </tr>
+                </table>
+            </ng-container>
+          </mat-expansion-panel>
+      </mat-accordion>
+      </div>
+  </div>           
       </div>
       <div class="clearfix"></div>
   </div>

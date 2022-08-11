@@ -44,6 +44,10 @@ export class ReportsComponent implements OnInit {
   tatReports = [];
   recommendedStatusReports = [];
   HOLeadsReports = [];
+  employee_activity_criteria: any[];
+  employeeActivityReports = [];
+  daily_activity_criteria: any[];
+  dailyActivityReports = [];
   loginReports = [];
   settings: any = [];
   showToken = false;
@@ -104,6 +108,8 @@ export class ReportsComponent implements OnInit {
     this.processing_files_criteria = [];
     this.HO_lead_criteria = [];
     this.sanctioned_status_criteria = [];
+    this.employee_activity_criteria = [];
+    this.daily_activity_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
@@ -181,6 +187,16 @@ export class ReportsComponent implements OnInit {
             this.sanctioned_status_criteria.push(this.criteria_list[i]);
             break;
           }
+          case 'EMPLOYEE_AVERAGE_TAT': {
+            this.employee_activity_criteria.push(this.criteria_list[i]);
+            break;
+          }
+
+          case 'DAILY_ACTIVITY': {
+            this.daily_activity_criteria.push(this.criteria_list[i]);
+            break;
+          }
+
         }
       }
     });

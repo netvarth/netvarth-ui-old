@@ -66,6 +66,12 @@ export class CRMComponent implements OnInit {
     },
     {
       id:12, type: 'Sanctioned Status Report'
+    },
+    {
+      id:13, type: 'Employee Average Tat Report'
+    },
+    {
+      id:14, type: 'Daily Activity Report'
     }
   ]
   constructor(
@@ -671,6 +677,26 @@ export class CRMComponent implements OnInit {
                           this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToSanctioned);
                         }
                         break;
+                        case 'Employee Average Tat Report':
+                          const navigationExtrasToEmployeeAverage: NavigationExtras = {
+                            queryParams: {
+                              report_type: 'employeeAverageTat'
+                            }
+                          }
+                          if(navigationExtrasToEmployeeAverage){
+                            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToEmployeeAverage);
+                          }
+                          break;
+                          case 'Daily Activity Report':
+                            const navigationExtrasToDailyActivity: NavigationExtras = {
+                              queryParams: {
+                                report_type: 'dailyActivity'
+                              }
+                            }
+                            if(navigationExtrasToDailyActivity){
+                              this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToDailyActivity);
+                            }
+                            break;
       }
     }
   }
@@ -750,6 +776,18 @@ export class CRMComponent implements OnInit {
                           return imgSrc;
                         }
                         break;
+                        case 'Employee Average Tat Report':
+                          imgSrc = './assets/images/crmImages/otherTemplate.png';
+                          if (imgSrc) {
+                            return imgSrc;
+                          }
+                          break;
+                          case 'Daily Activity Report':
+                            imgSrc = './assets/images/crmImages/otherTemplate.png';
+                            if (imgSrc) {
+                              return imgSrc;
+                            }
+                            break;
       }
     }
   }
