@@ -19,7 +19,7 @@
                 </div>
                 <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
                     [disabled]="api_loading" (click)="sendOTP()" (keyup)="clearPhoneExists()">
-                    <span *ngIf="!api_loading">Continue</span>
+                    <span class="continue" *ngIf="!api_loading">Continue</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
                 </button>
@@ -93,7 +93,7 @@
             <div class="form-group otp">
                 <button class="cust-logpg-submt mgn-up-20 mat-button continue-button" type="button"
                     [disabled]="api_loading" (keyup)="clearPhoneExists()">
-                    <span *ngIf="!api_loading">SAVE</span>
+                    <span class="continue" *ngIf="!api_loading">SAVE</span>
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
                 </button>

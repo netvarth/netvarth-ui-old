@@ -803,10 +803,10 @@
                   <span class="back-btn pointer-cursor" (click)="goBack()"><i class="fa fa-arrow-left"
                       aria-hidden="true"></i>&nbsp;Back</span>
                 </div>
-                <div *ngIf="qnr" class="mt-5">
-                    <h3 class="text-gold font-weight-bold">
+                <div *ngIf="qnr" class="mt-5" class="paperSubmit">
+                    <div class="font-weight-bold paperSubmitTxt">
                       Submit a Paper
-                    </h3>
+                    </div>
                   <div>
                     <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consOrder'"
                       [questionAnswers]="questionAnswers" [accountId]="account_id"

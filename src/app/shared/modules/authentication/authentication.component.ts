@@ -82,7 +82,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.lStorageService.setitemonLocalStorage('login', true);
     this.initGoogleButton();
   }
-
+  
   loadGoogleJS() {
     const self = this;
     const url = "https://accounts.google.com/gsi/client";

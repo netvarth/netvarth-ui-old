@@ -621,3 +621,24 @@ box-shadow: 4px 4px 5px gainsboro;
         padding: 5px 10px !important;
       }
     }
+    .paperSubmit{
+      margin-top: 15px !important;
+    padding: 10px;
+    background: #FFFFFF;
+    border: 0.867156px solid #FFFFFF;
+    box-shadow: 0px 2.15156px 7.53044px rgb(0 0 0 / 15%);
+    border-radius: 7.95393px;
+    }
+    .paperSubmitTxt{
+      color: #D2A113;
+      font-size: 14px;
+    }
+    // .app-questionnaire-component .form-control1{
+    //   background: red !important;
+    //   border-radius: 4.71709px !important;
+    // }
+   
+    // ::ng-deep .form-control1 app-questionnaire-component{
+    //   background: red !important;
+    //   border: 1px solid #E4E6EF!important;
+    // }

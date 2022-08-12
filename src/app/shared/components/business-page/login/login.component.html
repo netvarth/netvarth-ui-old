@@ -30,8 +30,11 @@
         </div>
         <!--end::Aside Top-->
         <!--begin::Aside Bottom-->
-        <div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-x-center" [ngStyle]="{'background-image': 'url(' + imgPath + ')'}"
+        <div *ngIf="imgPath" class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-x-center" [ngStyle]="{'background-image': 'url(' + imgPath + ')'}"
           style="background-position-y: calc(50%);">
+        </div>
+        <div *ngIf="!imgPath" class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-x-center"style="background-position-y: calc(50%);">
+          <img class="img" src="/assets/images/authordemy/signup.png"/>
         </div>
         <!--end::Aside Bottom-->
       </div>

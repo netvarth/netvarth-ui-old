@@ -158,20 +158,33 @@
     </div>
     <div class="clearfix"></div>
     <hr>
-    <div class="container">
+    <!-- <div class="container">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 pull-left">
-            <h3>Welcome back, {{user_details.firstName}}</h3>
-            <h5>Phd Student @IIT</h5>
+            <div class="welcomeBck">Welcome back, {{user_details.firstName}}</div>
+            <div class="phdStud">Phd Student @IIT</div>
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mr-auto">
             <a class="btn btn-primary" (click)="uploadPaper()"><i class="fa fa-plus"></i>&nbsp;Submit a paper</a>
+        </div>
+    </div> -->
+    <div class="userInfo">
+        <div>
+            <div class="welcomeBck">Welcome back, {{user_details.firstName}}</div>
+            <div class="phdStud">Phd Student @IIT</div> 
+        </div>
+        <div >
+            <button type="submit" (click)="uploadPaper()" class=" font-weight-bold confirmBtn pointer-cursor">
+                <div class="addSign"><i class="fa fa-plus"></i></div>
+                <div>Submit a paper</div>
+            </button>
+            <!-- <a class="btn btn-primary" (click)="uploadPaper()"><i class="fa fa-plus"></i>&nbsp;Submit a paper</a> -->
         </div>
     </div>
 
     <div class="clearfix"></div>
     <div class="mgn-up-15" style="padding:20px!important ;">
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel (closed)="panelOpenState = false">
+            <mat-expansion-panel (closed)="panelOpenState = false" class="expansionPanel">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div style="display:flex;gap:10px;align-items: center;">
@@ -179,7 +192,8 @@
                                 <i class="fa fa-spinner" aria-hidden="true"></i>
                             </div>
                             <div class="marketActivity">
-                                <div class="font-weight-bold">Ongoing Papers&nbsp;&nbsp;&nbsp;{{ongoing_papers.length}}</div>
+                                <div class="paperLength">Ongoing Papers</div>
+                                <div *ngIf="ongoing_papers && ongoing_papers.length">{{ongoing_papers.length}}</div>
                             </div>
                         </div>
                     </mat-panel-title>
@@ -187,16 +201,48 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <table>
+                    <table class="table ">
+                        <!-- <thead>
+                            <tr>
+                              <th>No</th>
+                              <th>Medicine</th>
+                              <th>Duration(days)</th>
+                              <th>Dosage</th>
+                            </tr>
+                          </thead> -->
                         <tbody>
                             <ng-container *ngFor="let paper of ongoing_papers">
-                                <tr class="pointer-cursor" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
-                                    <td width="400" class="td1 ">{{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}</td>
-                                    <td width="400" class="td2"><span>{{paper.lastStatusUpdatedDate}}</span></td>
-                                    <td width="400" class="td6">{{user_details.firstName}}</td>
-                                    <td width="400" class="td3 text-primary">Submitted</td>
+                                <tr class="pointer-cursor" *ngIf="paper" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
+                                    <td width="400"   class="td1" *ngIf="paper && paper.questionnaires && paper.questionnaires[0] && paper.questionnaires[0].questionAnswers  && paper.questionnaires[0].questionAnswers[4] && paper.questionnaires[0].questionAnswers[4].answerLine &&
+                                     paper.questionnaires[0].questionAnswers[4].answerLine.answer && paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText">
+                                       <div class="imgClass">
+                                        <div>
+                                            <img class="img" src="/assets/images/authordemy/diamond.png" />
+                                        </div>
+                                        <div> {{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}</div>
+                                       </div>
+                                    </td>
+                                    <td width="400"  class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
+                                        <div class="imgClass">
+                                            <div>
+                                                <img class="img" src="/assets/images/authordemy/date.png" />
+                                            </div>
+                                            <div>{{paper.lastStatusUpdatedDate}}</div>
+                                        </div>
+                                       
+                                    </td>
+                                    <td width="400"   class="td3" *ngIf="user_details && user_details.firstName">
+                                    <div class="imgClass">
+                                        <div >
+                                            <img class="img" src="/assets/images/avatar5.png" />
+                                        </div>
+                                        <div>
+                                            {{user_details.firstName}}
+                                        </div>
+                                    </div>
+                                    </td>
+                                    <td width="400"   class="td4 text-primary">Submitted</td>
                                 </tr>
-                                <br>
                             </ng-container>
                         </tbody>
                         <ng-container *ngIf="ongoing_papers.length==0" class="text-danger">No Papers Found</ng-container>
@@ -205,37 +251,20 @@
             </mat-expansion-panel>
         </mat-accordion>
         <br>
-        <!-- <mat-accordion class="example-headers-align">
-            <mat-expansion-panel (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <div style="display:flex;gap:10px;align-items: center;">
-                            <div class="plusOutside">
-                                <i class="fa fa-bars" aria-hidden="true"></i>
-                            </div>
-                            <div class="marketActivity">
-                                <div class="font-weight-bold">Total Papers&nbsp;&nbsp;&nbsp;0</div>
-                            </div>
-                        </div>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div class="allTabInPannel">
-                    Hello
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion> -->
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel (closed)="panelOpenState = false">
+            <mat-expansion-panel (closed)="panelOpenState = false" class="expansionPanel">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div style="display:flex;gap:10px;align-items: center;">
                             <div class="plusOutside">
                                 <i class="fa fa-check" aria-hidden="true"></i>
                             </div>
-                            <div class="marketActivity">
+                            <!-- <div class="marketActivity">
                                 <div class="font-weight-bold">Completed Papers&nbsp;&nbsp;&nbsp;{{completed_papers.length}}</div>
+                            </div> -->
+                            <div class="marketActivity">
+                                <div class="paperLength">Completed Papers</div>
+                                <div *ngIf="completed_papers && completed_papers.length">{{completed_papers.length}}</div>
                             </div>
                         </div>
                     </mat-panel-title>
@@ -243,17 +272,43 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <table>
+                    <table class="table">
                         <tbody>
                             <ng-container *ngFor="let paper of completed_papers">
-                                <tr class="pointer-cursor" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
-                                    <td width="400" class="td1 ">{{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}
+                                <tr class="pointer-cursor" *ngIf="paper" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
+                                    <td width="400" class="td1 " *ngIf="paper && paper.questionnaires && paper.questionnaires[0] 
+                                    && paper.questionnaires[0].questionAnswers
+                                    && paper.questionnaires[0].questionAnswers[4] &&  
+                                    paper.questionnaires[0].questionAnswers[4].answerLine &&
+                                    paper.questionnaires[0].questionAnswers[4].answerLine.answer &&
+                                    paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText">
+                                        <div class="imgClass">
+                                            <div>
+                                                <img class="img" src="../../../../../assets/images/authordemy/diamond.png" />
+                                            </div>
+                                            <div> {{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}</div>
+                                        </div>
                                     </td>
-                                    <td width="400" class="td2"><span>{{paper.lastStatusUpdatedDate}}</span></td>
-                                    <td width="400" class="td6">{{user_details.firstName}}</td>
-                                    <td width="400" class="td3 text-success">Completed</td>
+                                    <td width="400" class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
+                                        <div class="imgClass">
+                                            <div>
+                                                <img class="img" src="/assets/images/authordemy/date.png" />
+                                            </div>
+                                            <div>{{paper.lastStatusUpdatedDate}}</div>
+                                        </div>
+                                    </td>
+                                    <td width="400" class="td3" *ngIf="user_details && user_details.firstName">
+                                        <div class="imgClass">
+                                            <div >
+                                                <img class="img" src="/assets/images/avatar5.png" />
+                                            </div>
+                                            <div>
+                                                {{user_details.firstName}}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td width="400" class="td4 text-success">Completed</td>
                                 </tr>
-                                <br>
                             </ng-container>
                         </tbody>
                         <ng-container *ngIf="completed_papers.length==0" class="text-danger">No Papers Found</ng-container>
@@ -263,7 +318,7 @@
         </mat-accordion>
         <br>
         <mat-accordion class="example-headers-align">
-            <mat-expansion-panel (closed)="panelOpenState = false">
+            <mat-expansion-panel (closed)="panelOpenState = false" class="expansionPanel">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div style="display:flex;gap:10px;align-items: center;">
@@ -271,7 +326,8 @@
                                 <i class="fa fa-ban" aria-hidden="true"></i>
                             </div>
                             <div class="marketActivity">
-                                <div class="font-weight-bold">Rejected Papers&nbsp;&nbsp;&nbsp;{{cancelled_papers.length}}</div>
+                                <div class="paperLength">Rejected Papers</div>
+                                <div *ngIf="cancelled_papers && cancelled_papers.length">{{cancelled_papers.length}}</div>
                             </div>
                         </div>
                     </mat-panel-title>
@@ -279,17 +335,44 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
-                    <table>
+                    <table class="table">
                         <tbody>
                             <ng-container *ngFor="let paper of cancelled_papers">
                                 <tr class="pointer-cursor" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
-                                    <td width="400" class="td1 ">{{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}
+                                    <td width="400" class="td1 "*ngIf="paper && paper.questionnaires && paper.questionnaires[0] 
+                                    && paper.questionnaires[0].questionAnswers
+                                    && paper.questionnaires[0].questionAnswers[4] &&  
+                                    paper.questionnaires[0].questionAnswers[4].answerLine &&
+                                    paper.questionnaires[0].questionAnswers[4].answerLine.answer &&
+                                    paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText">
+                                    <div class="imgClass">
+                                        <div>
+                                            <img class="img" src="/assets/images/authordemy/diamond.png" />
+                                        </div>
+                                        <div> {{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}</div>
+                                    </div>
                                     </td>
-                                    <td width="400" class="td2"><span>{{paper.lastStatusUpdatedDate}}</span></td>
-                                    <td width="400" class="td6">{{user_details.firstName}}</td>
-                                    <td width="400" class="td3 text-danger">Rejected</td>
+                                    <td width="400" class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
+                                        <div class="imgClass">
+                                            <div>
+                                                <img class="img" src="/assets/images/authordemy/date.png" />
+                                            </div>
+                                            <div>{{paper.lastStatusUpdatedDate}}</div>
+                                        </div>
+                                    </td>
+                                    <td width="400" class="td3" *ngIf="user_details && user_details.firstName"><div>
+                                        <div class="imgClass">
+                                            <div>
+                                                <img class="img" src="/assets/images/avatar5.png" />
+                                            </div>
+                                            <div>
+                                                {{user_details.firstName}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </td>
+                                    <td width="400" class="td4 text-danger">Rejected</td>
                                 </tr>
-                                <br>
                             </ng-container>
                         </tbody>
                         <ng-container *ngIf="cancelled_papers.length==0" class="text-danger">No Papers Found</ng-container>
