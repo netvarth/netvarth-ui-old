@@ -128,17 +128,14 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
   }
   ngOnChanges() {
-    console.log("In Change:", this.questionAnswers);
-    console.log(this.answers);
     if (this.questionAnswers && this.questionAnswers.filestoUpload && this.source === 'proLead') {
       this.filestoUpload = this.questionAnswers.filestoUpload;
     }
     
   }
   ngOnInit(): void {
-    console.log("Questionaire Init");
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    // console.log("questionnaireList :", this.questionnaireList);
+    console.log("questionnaireList :", this.questionnaireList);
     if (this.questionnaireList) {
       if (this.source === 'customer-create' || this.source === 'onetime') {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
@@ -152,13 +149,22 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       } else if (this.source === 'qnrDetails') {
         this.questions = this.questionnaireList.questions;
         this.groupQuestionsBySection();
-      } else if (!this.uuid) {
+      } 
+      
+      else if (this.source === 'qnrpaper') {
+        this.questions = this.questionnaireList[0].labels;
+        console.log(JSON.stringify( this.questions))
+        console.log('333333333333333333333')
+        this.groupQuestionsBySection();
+      }else if (!this.uuid) {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
       } else if (this.source === 'qnrView') {
         this.questions = this.questionnaireList.labels;
         this.groupQuestionsBySection();
+        
       }
+      
     }
     if (this.source === 'customer-details' && this.customerDetails[0] && this.customerDetails[0].questionnaire) {
       this.questionnaireList = this.customerDetails[0].questionnaire;
@@ -166,7 +172,6 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       this.groupQuestionsBySection();
       this.getAnswers(this.questions, 'get');
     }
-    console.log("Inside QA:", this.questionAnswers);
     if (this.questionAnswers) {
       if (this.questionAnswers.files) {
         this.selectedMessage = this.questionAnswers.files;
@@ -196,7 +201,6 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       }
     }
     if (this.uuid) {
-      console.log("I am here:", this.questionnaireList);
       if (this.questionnaireList.questionAnswers) {
         this.questions = this.questionnaireList.questionAnswers;
         this.qnrStatus = 'submitted';
@@ -207,7 +211,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         this.groupQuestionsBySection();
       }
       if (this.questions && this.questions.length > 0) {
-        console.log("UId");
+      
         this.getAnswers(this.questions, 'get');
       }
     }
@@ -225,7 +229,8 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         (rv[x.question['sequnceId']] = rv[x.question['sequnceId']] || []).push(x);
         return rv;
       }, {});
-    } else {
+    } 
+   else {
       this.groupedQnr = this.questions.reduce(function (rv, x) {
         (rv[x.question['sectionOrder']] = rv[x.question['sectionOrder']] || []).push(x);
         return rv;
@@ -243,7 +248,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
   }
   getAnswers(answerData, type?) {
-    console.log(answerData);
+   
     this.answers = new Object();
     this.dataGridColumns = {};
     if (type === 'get') {
@@ -251,8 +256,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       this.uploadedImages = [];
       this.uploadedFiles = [];
       for (let answ of answerData) {
-        console.log("Answer Data: ", answ);
-        console.log("Questionanswers", this.questionAnswers);
+       
         if (answ.answerLine) {
           if (answ.question.fieldDataType === 'fileUpload') {
             
@@ -282,7 +286,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
                   }
                   this.comments[answ.answerLine.labelName + '=' + answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i].comments;
                   this.uploadedFiles[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i];
-                  console.log("Answer1:", this.uploadedFiles);
+                 
 
                 } else {
                   this.selectedMessage.push(answ.answerLine.answer[answ.question.fieldDataType][i]);
@@ -293,7 +297,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
                     this.filestoUpload[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = {};
                   }
                   this.filestoUpload[answ.answerLine.labelName][answ.answerLine.answer[answ.question.fieldDataType][i].caption] = answ.answerLine.answer[answ.question.fieldDataType][i];
-                  console.log("Answer2:", answ.answerLine);
+                 
                 }
               }
             }
@@ -462,7 +466,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     return this.sharedFunctionobj.isNumeric(evt);
   }
   onSubmit(keytype?) {
-    console.log("Files To upload", this.filestoUpload);
+  
     Object.keys(this.filestoUpload).forEach(key => {
       if (!this.answers[key]) {
         this.answers[key] = [];
@@ -578,7 +582,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     });
 
     Object.keys(this.answers).forEach(key => {
-      console.log(key);
+     
       this.apiError[key] = [];
       let newMap = {};
       let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
@@ -605,10 +609,18 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       }
     });
     let postData;
+    if(this.source === 'qnrpaper'){
+      postData = {
+        'questionnaireId': (this.questionnaireList[0].id) ? this.questionnaireList[0].id : this.questionnaireList[0].questionnaireId,
+        'answerLine': data
+      }
+    }
+   else{
     postData = {
       'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
       'answerLine': data
     }
+   }
     const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload, 'dataGridColumnsAnswerList': this.dataGridColumnsAnswerList, 'comments': this.comments };
     if (keytype === 'inputChange') {
       this.changeHappened = true;
@@ -628,7 +640,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         }
       }
     } else {
-      console.log("passData:", passData);
+   
       this.returnAnswers.emit(passData);
     }
   }

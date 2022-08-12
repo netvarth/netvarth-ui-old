@@ -101,6 +101,12 @@
                 <div class="icon-text">Voice Call</div>
             </div>
         </div>
+        <div class="action-box pointer-cursor" (click)="gotoRemarks()" *ngIf="!mulipleSelection && catalogType === 'submission'">
+            <div class="action-box-sub">
+                <span class="viewdetails-icon"></span>
+                <div class="icon-text">Release Remarks</div>
+            </div>
+        </div>
     </div>
 </div>
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === 'label'">

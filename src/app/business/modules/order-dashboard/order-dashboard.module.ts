@@ -22,7 +22,9 @@ const routes: Routes = [
   { path: 'edit/:id', loadChildren: ()=> import('./order-edit/order-edit.module').then(m=>m.OrderEditModule)},
   { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
   { path: 'order-wizard', loadChildren: ()=> import('./order-wizard/order-wizard.module').then(m=>m.OrderWizardModule)},
+  { path: 'remarks', loadChildren: ()=> import('./remarks/remarks.module').then(m=>m.RemarksModule)},
   { path: ':id', loadChildren: ()=> import('./order-details/order-details.module').then(m=>m.OrderDetailsModule)},
+  
   {path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
   { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)} 
 ];

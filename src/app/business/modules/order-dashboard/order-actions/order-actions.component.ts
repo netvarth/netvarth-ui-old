@@ -54,6 +54,8 @@ export class OrderActionsComponent implements OnInit {
   user_arr: any;
   isUserdisable;
   provider_label = '';
+  catalogType: any;
+  account: any;
   constructor(public dialogRef: MatDialogRef<OrderActionsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public router: Router, public provider_services: ProviderServices,
@@ -82,6 +84,7 @@ export class OrderActionsComponent implements OnInit {
    }
     this.getLabel();
     this.getPos();
+    this.getGlobalSettings();
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.accountType = user.accountType;
         this.userid = user.id
@@ -127,6 +130,7 @@ export class OrderActionsComponent implements OnInit {
 
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(data => {
+      this.account = data['accountId'];
       this.pos = data['enablepos'];
       this.setActions();
     },
@@ -580,5 +584,16 @@ removeProvider() {
               );
       }
   });
+}
+getGlobalSettings() {
+  this.provider_services.getGlobalSettings().subscribe(
+      (data: any) => {
+          this.catalogType = data.catalogType;
+      });
+}
+gotoRemarks() {
+  this.dialogRef.close();
+  this.router.navigate(['provider', 'orders', 'remarks'], { queryParams: { source: 'order', uid: this.orderDetails.uid , account : this.account} });
+
 }
 }

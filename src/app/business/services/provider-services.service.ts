@@ -2611,4 +2611,8 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/orders/OrderSubmission?orderStatus-eq=Completed';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getPaperQnr(catId, channel) {
+    const url = 'provider/questionnaire/order/submission/' + catId + '/' + channel ;
+    return this.servicemeta.httpGet(url);
+  }
 } 
