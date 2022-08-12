@@ -854,7 +854,7 @@
                     <div class="instructionText">Instructions to the author</div>
                     <div class="defultTextIns" *ngIf="defultTextFirstStep">
                       {{defultTextFirstStep}} 
-                      <div *ngIf="!termscheck">{{defultMoreText}}</div>
+                      <div *ngIf="!termscheck" (click)="termsOpen()" class="terms">{{defultMoreText}}</div>
                       <div *ngIf="termscheck">
                         <div>
                           <span class="SINO">A.</span> Please make sure that you have made your best efforts in finalizing the documents. Avoid leaving improvements/corrections that you can make to the peer reviewers. 
@@ -940,13 +940,14 @@
                           AuthorDemy.com
                         </div>
                       </div>
+                      <div *ngIf="termscheck" (click)="termsOpen()" class="terms">{{defultMoreText}}</div> 
                     </div>
                     <span class="confirmClr my-2 font-weight-bold">Total Payment: ₹{{cartDetails.itemTotal}}</span>
                     <br>
                     <form>
                       <div class="form-check text-success d-flex mgn-up-10">
                         <label class="container1">I have read and understood all the instructions
-                          <input type="checkbox" (click)="terms_check()">
+                          <input type="checkbox">
                           <span class="mark"></span>
                         </label>
                       </div>
