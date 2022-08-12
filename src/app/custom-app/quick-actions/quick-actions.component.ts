@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-quick-actions',
@@ -6,10 +7,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./quick-actions.component.css']
 })
 export class QuickActionsComponent implements OnInit {
-
-  constructor() { }
-
+  @Input() templateJson;
+  // title: any;
+  // description: any;
+  // image: any;
+  // quickactions: any;
+  constructor(private router:Router) { }
+  
   ngOnInit(): void {
+    console.log("file",this.templateJson);
+    
+    
   }
-
+  cardActionPerformed(action) {
+    if (action.link) {
+        this.router.navigateByUrl('/consumer');
+    }
+  }
 }

@@ -1,1 +1,13 @@
-<p>quick-actions works!</p>
+<div class="main">
+    <div class="card col-xs-6" *ngFor="let quickAction of templateJson.section1.quickActions" (click)="cardActionPerformed(quickAction)">
+        <div class="img-action">
+            <img class="act-img img-responsive" src="{{quickAction.image}}">
+        </div>
+        <div>
+            <h3 class="hed">{{quickAction.title}}</h3>
+        </div>
+        <div>
+            <p class="detai">{{quickAction.description}}</p>
+        </div>
+    </div>
+</div>
