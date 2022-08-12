@@ -135,7 +135,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   }
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    console.log("questionnaireList :", this.questionnaireList);
+  
     if (this.questionnaireList) {
       if (this.source === 'customer-create' || this.source === 'onetime') {
         if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
@@ -153,8 +153,6 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       
       else if (this.source === 'qnrpaper') {
         this.questions = this.questionnaireList[0].labels;
-        console.log(JSON.stringify( this.questions))
-        console.log('333333333333333333333')
         this.groupQuestionsBySection();
       }else if (!this.uuid) {
         this.questions = this.questionnaireList.labels;

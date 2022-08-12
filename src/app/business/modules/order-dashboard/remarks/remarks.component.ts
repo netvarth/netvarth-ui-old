@@ -1,16 +1,12 @@
 import { Location } from '@angular/common';
 import { Component, HostListener, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../services/provider-services.service';
-import { ProviderWaitlistCheckInConsumerNoteComponent } from '../../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { SharedServices } from '../../../../../../src/app/shared/services/shared-services';
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
 @Component({
@@ -73,13 +69,13 @@ export class RemarksComponent implements OnInit {
   account: any;
   constructor(public activaterouter: ActivatedRoute,
     private snackbarService: SnackbarService,
-    public providerservice: ProviderServices, private dialog: MatDialog,
+    public providerservice: ProviderServices,
     private provider_services: ProviderServices,
     public router: Router,
     private providerService: ProviderServices,
     private activateRoute: ActivatedRoute,
     private wordProcessor: WordProcessor,
-    private shared_services: SharedServices,
+    
     public location: Location, public sharedFunctions: SharedFunctions) {
       this.activateRoute.queryParams.subscribe(params => {
        
@@ -124,83 +120,22 @@ export class RemarksComponent implements OnInit {
     this.questionAnswers = event;
     console.log(this.questionAnswers)
 }
-  getCatalogDetails(accountId) {
-    const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.shared_services.getConsumerCatalogs(accountId)
-        .subscribe(
-          (data: any) => {
-            resolve(data[0]);
-          },
-          () => {
-            reject();
-          }
-        );
-    });
-  }
-
+  
   getOrderDetails(uid) {
   
     this.loading = true;
     this.providerservice.getProviderOrderById(uid)
     .subscribe(data => {
       this.orderDetails = data;
-    console.log(this.orderDetails)
+   
         this.catalog_id = this.orderDetails.catalog.id;
         if(this.catalog_id){
           this.getPaperQnr();
         }
-       
-    
-      if (this.orderDetails.questionnaires && this.orderDetails.questionnaires.length > 0) {
-        this.questionnaires = this.orderDetails.questionnaires;
-        console.log(this.questionnaires)
-      }
-      if (this.orderDetails.releasedQnr && this.orderDetails.releasedQnr.length > 0) {
-        const releasedQnrs = this.orderDetails.releasedQnr.filter(qnr => qnr.status === 'released');
-        if (releasedQnrs.length > 0) {
-          this.getReleasedQnrs(releasedQnrs);
-        }
-      }
-      if (this.orderDetails.homeDeliveryAddress) {
-        this.delivery_address = this.orderDetails.homeDeliveryAddress;
-      }
-      if (this.orderDetails && this.orderDetails.orderItem) {
-        for (const item of this.orderDetails.orderItem) {
-          this.orderItems.push({ 'type': 'order-details-item', 'item': item });
-        }
-      }
-      if (this.orderDetails && this.orderDetails.shoppingList) {
-        this.imagelist = {
-          files: [],
-          base64: [],
-          caption: []
-        };
-        this.imagelist = this.orderDetails.shoppingList;
-        for (let i = 0; i < this.imagelist.length; i++) {
-          const imgobj = new Image(
-            i,
-            { // modal
-              img: this.imagelist[i].thumbPath,
-              description: this.imagelist[i].caption || ''
-            },this.imagelist[i].originalName);
-          this.image_list_popup.push(imgobj);
-          
-        }
-      }
       this.loading = false;
     });
   }
-  getReleasedQnrs(releasedQnrs) {
-    this.provider_services.getOrderQuestionnaireByUid(this.orderDetails.uid).subscribe((data: any) => {
-      const qnrs = data.filter(function (o1) {
-        return releasedQnrs.some(function (o2) {
-          return o1.id === o2.id;
-        });
-      });
-      this.questionnaires = this.questionnaires.concat(qnrs);
-    });
-  }
+  
 
   goBack() {
     this.location.back();
@@ -209,42 +144,9 @@ export class RemarksComponent implements OnInit {
     this.selectedType = type;
   }
   
-  getItemImg(item) {
-    if (item.itemImages) {
-      const image = item.itemImages.filter(img => img.displayImage);
-      if (image[0]) {
-        return image[0].url;
-      } else {
-        return '../../../../assets/images/order/Items.svg';
-      }
-    } else {
-      return '../../../../assets/images/order/Items.svg';
-    }
-  }
-  showConsumerNote(item) {
-    const notedialogRef = this.dialog.open(ProviderWaitlistCheckInConsumerNoteComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        checkin: item,
-        type: 'order-details'
-      }
-    });
-    notedialogRef.afterClosed()
-    .pipe(takeUntil(this.onDestroy$))
-    .subscribe(result => {
-      if (result === 'reloadlist') {
-      }
-    });
-  }
-  openImageModalRow(image: Image) {
-    const index: number = this.getCurrentIndexCustomLayout(image, this.image_list_popup);
-    this.customPlainGalleryRowConfig = Object.assign({}, this.customPlainGalleryRowConfig, { layout: new AdvancedLayout(index, true) });
-  }
-  private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
-    return image ? images.indexOf(image) : -1;
-  }
+  
+  
+  
   submitQuestionnaire() {
     const dataToSend: FormData = new FormData();
    
