@@ -1,13 +1,13 @@
-<section #consumer_order class="container no-padding cons-donate no-padding-small order-checkout" *ngIf="source!=='paper'">
+<section #consumer_order class="container no-padding cons-donate no-padding-small order-checkout" >
   <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
   <div class="content p0 loc-list p-checkin ynw-common-form-nm">
     <div class="panel panel-default">
       <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-          <app-header [accountId]="account_id" [customId]="customId" *ngIf="sharedFunctionobj.checkLogin()"></app-header>
+          <app-header [accountId]="account_id" [customId]="customId" *ngIf="sharedFunctionobj.checkLogin()" [showHeaderAction]="true"></app-header>
         </div>
       </div>
-      <div class="panel-body no-padding">
+      <div class="panel-body no-padding" *ngIf="source!=='paper'">
         <div class="c-outer m0">
           <div class="c-body width-100">
             <div class="card title-gb m0">
@@ -758,21 +758,7 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="clearfix"></div>
-  </div>
-</section>
-
-<section #consumer_order class="container no-padding cons-donate no-padding-small order-checkout" *ngIf="source==='paper'">
-  <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
-  <div class="content p0 loc-list p-checkin ynw-common-form-nm">
-    <div class="panel panel-default">
-      <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-          <app-header [includedfrom]="'paper'" [showHeaderAction]="true"></app-header>
-        </div>
-      </div>
-      <div class="panel-body no-padding">
+      <div class="panel-body no-padding" *ngIf="source==='paper'">
         <div class="c-outer m0">
           <div class="c-body width-100">
             <div *ngIf="loadingPaytm">
