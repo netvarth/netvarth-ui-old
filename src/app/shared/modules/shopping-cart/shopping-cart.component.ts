@@ -21,10 +21,8 @@ import { SubSink } from '../../../../../node_modules/subsink';
   selector: 'app-shopping-cart',
   templateUrl: './shopping-cart.component.html',
   styleUrls: ['./shopping-cart.component.css']
-
 })
 export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
-
   totaltax = 0;
   catalog_loading = false;
   orderCount: number;
@@ -78,7 +76,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   api_cp_error = null;
   apiloading = false;
   s3CouponsList: any = {
-    JC:[],OWN:[]
+    JC: [], OWN: []
   };
   selected_coupons: any = [];
   couponsList: any = [];
@@ -122,31 +120,31 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         if (params.unique_id) {
           this.provider_id = params.unique_id;
         }
-        if(params.isFrom && params.isFrom =='providerdetail'){
+        if (params.isFrom && params.isFrom == 'providerdetail') {
           this.from = 'providerdetail';
-      }
+        }
         if (params.customId) {
           this.customId = params.customId;
           this.businessId = this.account_id;
-      }
-      if (params.source) {
+        }
+        if (params.source) {
           this.source = params.source;
-      }
+        }
       });
 
   }
 
   ngOnInit() {
+    console.log("Shopping Cart Component");
     this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
     this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
     this.orderCount = this.orders.length;
     this.gets3curl();
     this.fetchCatalog();
-    if(this.source == 'paper')
-    {
-        this.apiloading = true;
-        setTimeout(() => this.confirmOrder(), projectConstants.TIMEOUT_DELAY);
+    if (this.source == 'paper') {
+      this.apiloading = true;
+      setTimeout(() => this.confirmOrder(), projectConstants.TIMEOUT_DELAY);
     }
   }
 
@@ -154,12 +152,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.subs.unsubscribe();
   }
-  isPhysicalItemsPresent(){
-    let physical_item_present=true;
+  isPhysicalItemsPresent() {
+    let physical_item_present = true;
 
-    const virtualItems=this.orders.filter(orderitem=>orderitem.item.itemType==='VIRTUAL')
-    if(virtualItems.length>0&& this.orders.length===virtualItems.length){
-      physical_item_present=false;
+    const virtualItems = this.orders.filter(orderitem => orderitem.item.itemType === 'VIRTUAL')
+    if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
+      physical_item_present = false;
       this.isfutureAvailableTime = true;
     }
     return physical_item_present;
@@ -229,22 +227,15 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         this.isFuturedate = true;
       }
       this.isAuthordemy();
-
     });
-    
   }
-
-
-  isAuthordemy()
-  {
-    if(this.catalog_type === 'submission')
-    {
+  isAuthordemy() {
+    if (this.catalog_type === 'submission') {
       this.apiloading = true;
       this.source = 'paper';
       setTimeout(() => this.confirmOrder(), projectConstants.TIMEOUT_DELAY);
     }
   }
-
   fillDateFromLocalStorage() {
     this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
     if (this.chosenDateDetails !== null) {
@@ -270,9 +261,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     } else {
       this.storeChecked = true;
     }
-
   }
-
   getCatalogDetails(accountId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
@@ -286,10 +275,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
           }
         );
     });
-
-
-
-
   }
   getItemQty(item) {
     const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
@@ -298,7 +283,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     }
     return qty;
   }
-
   getItemPrice(itemObj) {
     const qty = this.orderList.filter(i => i.item.itemId === itemObj.item.itemId).length;
     let item_price = itemObj.item.price;
@@ -336,37 +320,37 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   gets3curl() {
     this.api_loading1 = true;
-        let accountS3List = 'coupon,providerCoupon';
-        this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
-            null, accountS3List).subscribe(
-                (accountS3s) => {
-                    this.processS3s('coupon', accountS3s['coupon']);
-                    this.processS3s('providerCoupon', accountS3s['providerCoupon']);
-                    this.api_loading1 = false;
-                }
-            );
+    let accountS3List = 'coupon,providerCoupon';
+    this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
+      null, accountS3List).subscribe(
+        (accountS3s) => {
+          this.processS3s('coupon', accountS3s['coupon']);
+          this.processS3s('providerCoupon', accountS3s['providerCoupon']);
+          this.api_loading1 = false;
+        }
+      );
   }
   processS3s(type, res) {
     let result = this.s3Processor.getJson(res);
     switch (type) {
-        case 'coupon': {
-          this.s3CouponsList.JC = result;
-          console.log(this.s3CouponsList.JC);
-          if (this.s3CouponsList.JC.length > 0) {
-            this.showCouponWB = true;
-          }
-            break;
+      case 'coupon': {
+        this.s3CouponsList.JC = result;
+        console.log(this.s3CouponsList.JC);
+        if (this.s3CouponsList.JC.length > 0) {
+          this.showCouponWB = true;
         }
-        case 'providerCoupon': {
-          this.s3CouponsList.OWN = result;
-          console.log(this.s3CouponsList.OWN);
-          if (this.s3CouponsList.OWN.length > 0) {
-            this.showCouponWB = true;
-          }
-            break;
+        break;
+      }
+      case 'providerCoupon': {
+        this.s3CouponsList.OWN = result;
+        console.log(this.s3CouponsList.OWN);
+        if (this.s3CouponsList.OWN.length > 0) {
+          this.showCouponWB = true;
         }
+        break;
       }
     }
+  }
   toggleterms(i) {
     if (this.couponsList[i].showme) {
       this.couponsList[i].showme = false;
@@ -393,28 +377,28 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       let found = false;
       for (let couponIndex = 0; couponIndex < this.s3CouponsList.JC.length; couponIndex++) {
         if (this.s3CouponsList.JC[couponIndex].jaldeeCouponCode.trim() === jaldeeCoupn) {
-            this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
-            couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
-            couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
-            this.couponsList.push(couponInfo);
-            found = true;
-            this.selected_coupon = '';
-            break;
+          this.selected_coupons.push(this.s3CouponsList.JC[couponIndex].jaldeeCouponCode);
+          couponInfo.couponCode = this.s3CouponsList.JC[couponIndex].jaldeeCouponCode;
+          couponInfo.instructions = this.s3CouponsList.JC[couponIndex].consumerTermsAndconditions;
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
         }
-    }
-    for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
+      }
+      for (let couponIndex = 0; couponIndex < this.s3CouponsList.OWN.length; couponIndex++) {
         if (this.s3CouponsList.OWN[couponIndex].couponCode.trim() === jaldeeCoupn) {
-            this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
-            couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
-            if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
-                couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
-            }
-            this.couponsList.push(couponInfo);
-            found = true;
-            this.selected_coupon = '';
-            break;
+          this.selected_coupons.push(this.s3CouponsList.OWN[couponIndex].couponCode);
+          couponInfo.couponCode = this.s3CouponsList.OWN[couponIndex].couponCode;
+          if (this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions) {
+            couponInfo.instructions = this.s3CouponsList.OWN[couponIndex].consumerTermsAndconditions;
+          }
+          this.couponsList.push(couponInfo);
+          found = true;
+          this.selected_coupon = '';
+          break;
         }
-    }
+      }
       if (found) {
         this.couponvalid = true;
         this.snackbarService.openSnackBar('Promocode applied', { 'panelclass': 'snackbarerror' });
@@ -476,22 +460,17 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         }
       } else {
         taxprice = 0;
-
       }
       this.totaltax = this.totaltax + taxprice;
-
     }
     return this.totaltax.toFixed(2);
-
   }
   removeItemFromCart(item) {
     this.orderList = this.orderList.filter(Item => Item.item.itemId !== item.item.itemId);
     this.orders = [...new Map(this.orderList.map(Item => [Item.item['itemId'], Item])).values()];
-
     if (this.orders.length === 0) {
       this.disabledConfirmbtn = true;
     }
-
   }
   getTotalItemPrice() {
     this.price = 0;
@@ -524,10 +503,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   confirmOrder() {
     if (this.checkMinimumQuantityofItems()) {
-
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
-      console.log(this.nextAvailableTime);
-
       const chosenDateTime = {
         delivery_type: this.choose_type,
         catlog_id: this.catalog_details.id,
@@ -544,25 +520,21 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       if (this.businessId) {
         queryParam['customId'] = this.customId;
       }
-      if(this.from){
-        queryParam['isFrom']= 'providerdetail'
+      if (this.from) {
+        queryParam['isFrom'] = 'providerdetail'
       }
-      if(this.catalog_Id ){
-        queryParam['catalog_Id']= this.catalog_Id;
+      if (this.catalog_Id) {
+        queryParam['catalog_Id'] = this.catalog_Id;
       }
-
-      if(this.source == 'paper')
-      {
-        queryParam['source']= this.source;
+      if (this.source == 'paper') {
+        queryParam['source'] = this.source;
       }
-     
       const navigationExtras: NavigationExtras = {
         queryParams: queryParam,
       };
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-      this.router.navigate(['order', 'shoppingcart', 'checkout'],navigationExtras);
+      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
     }
-
   }
   checkMinimumQuantityofItems() {
     let all_itemsSet = true;
@@ -590,7 +562,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
     console.log(selectqueue);
     this.nextAvailableTime = selectqueue;
-    // this.nextAvailableTime = selectedTimeslot;
     this.action = '';
   }
   changeTime() {
@@ -598,7 +569,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.getAvailabilityByDate(this.sel_checkindate);
   }
   calculateDate(days) {
-    // this.resetApi();
     const dte = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const date = moment(dte, 'YYYY-MM-DD HH:mm').format();
     const newdate = new Date(date);
@@ -608,14 +578,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const y = newdate.getFullYear();
     const ndate1 = y + '-' + mm + '-' + dd;
     const ndate = moment(ndate1, 'YYYY-MM-DD HH:mm').format();
-    // const strtDt1 = this.hold_sel_checkindate + ' 00:00:00';
     const strtDt1 = this.todaydate + ' 00:00:00';
     const strtDt = moment(strtDt1, 'YYYY-MM-DD HH:mm').toDate();
     const nDt = new Date(ndate);
     if (nDt.getTime() >= strtDt.getTime()) {
       this.sel_checkindate = ndate;
       this.getAvailabilityByDate(this.sel_checkindate);
-      // this.getQueuesbyLocationandServiceId(this.sel_loc, this.sel_ser, this.sel_checkindate, this.account_id);
     }
     const dt = this.sel_checkindate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const dt1 = moment(dt, 'YYYY-MM-DD HH:mm').format();
@@ -623,7 +591,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     const dt0 = this.todaydate.toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const dt2 = moment(dt0, 'YYYY-MM-DD HH:mm').format();
     const date2 = new Date(dt2);
-    // if (this.sel_checkindate !== this.todaydate) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
     if (date1.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
       this.isFuturedate = true;
     } else {
@@ -694,7 +661,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.nextAvailableTime = this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.nextAvailableDeliveryDetails.timeSlots[0]['eTime'];
       this.getAvailabilityByDate(this.sel_checkindate);
     }
-
     if (this.todaydate === this.sel_checkindate) {
       this.isFuturedate = false;
     } else {
@@ -703,12 +669,11 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   getOrderAvailableDatesForPickup() {
     const _this = this;
-
     _this.shared_services.getAvailableDatesForPickup(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
-        this.store_availables  = data.filter(obj => obj.isAvailable);
+        this.store_availables = data.filter(obj => obj.isAvailable);
         this.getAvailabilityByDate(this.sel_checkindate);
-        const availDates = this.store_availables .map(function (a) { return a.date; });
+        const availDates = this.store_availables.map(function (a) { return a.date; });
         _this.storeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -716,12 +681,11 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   }
   getOrderAvailableDatesForHome() {
     const _this = this;
-
     _this.shared_services.getAvailableDatesForHome(this.catalog_Id, this.account_id)
       .subscribe((data: any) => {
         this.home_availables = data.filter(obj => obj.isAvailable);
         this.getAvailabilityByDate(this.sel_checkindate);
-        const availDates =  this.home_availables.map(function (a) { return a.date; });
+        const availDates = this.home_availables.map(function (a) { return a.date; });
         _this.homeAvailableDates = availDates.filter(function (elem, index, self) {
           return index === self.indexOf(elem);
         });
@@ -735,8 +699,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       return (this.homeAvailableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
     }
   }
-
-
   getAvailabilityByDate(date) {
     this.sel_checkindate = date;
     const cday = new Date(this.sel_checkindate);
@@ -744,74 +706,66 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     if (this.choose_type === 'store') {
       const storeIntervals = (this.catalog_details.pickUp.pickUpSchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
-      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {   
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
+      if ((storeIntervals.includes(currentday)) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
         console.log('greater than 30');
-      } 
-      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {  
-        console.log('less than 30'); 
+      }
+      else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {
+        console.log('less than 30');
         console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        if(this.store_availables){
-        const availability  = this.store_availables.filter(obj => obj.date ===  sel_check_date);          
-        if(availability.length > 0){
+        if (this.store_availables) {
+          const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
+          if (availability.length > 0) {
             this.isfutureAvailableTime = true;
             this.nextAvailableTimeQueue = availability[0].timeSlots;
             this.queue = availability[0].timeSlots[0];
-            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
-          } else{
+            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+          } else {
             this.isfutureAvailableTime = false;
           }
         }
-        }     
+      }
       else {
         this.isfutureAvailableTime = false;
       }
-    }  
+    }
     else {
       const homeIntervals = (this.catalog_details.homeDelivery.deliverySchedule.repeatIntervals).map(Number);
       const last_date = moment().add(30, 'days');
-      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();         
+      const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
       console.log(homeIntervals);
       console.log(JSON.stringify(homeIntervals));
-      if (homeIntervals.includes(currentday) && (date > thirty_date))  {
+      if (homeIntervals.includes(currentday) && (date > thirty_date)) {
         this.isfutureAvailableTime = true;
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
         console.log('greater than 30');
-      } else if( homeIntervals.includes(currentday) && (date < thirty_date)) {   
+      } else if (homeIntervals.includes(currentday) && (date < thirty_date)) {
         console.log(this.home_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
-        const availability  = this.home_availables.filter(obj => obj.date ===  sel_check_date);          
-        if(availability.length > 0){
-            this.isfutureAvailableTime = true;
-            this.nextAvailableTimeQueue = availability[0].timeSlots;
-            this.queue = availability[0].timeSlots[0];
-            this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' +  availability[0].timeSlots[0]['eTime'];
-      } else {
+        const availability = this.home_availables.filter(obj => obj.date === sel_check_date);
+        if (availability.length > 0) {
+          this.isfutureAvailableTime = true;
+          this.nextAvailableTimeQueue = availability[0].timeSlots;
+          this.queue = availability[0].timeSlots[0];
+          this.futureAvailableTime = availability[0].timeSlots[0]['sTime'] + ' - ' + availability[0].timeSlots[0]['eTime'];
+        } else {
+          this.isfutureAvailableTime = false;
+        }
+      }
+      else {
         this.isfutureAvailableTime = false;
       }
     }
-    else {        
-       this.isfutureAvailableTime = false;
-     }
-    }
   }
-
-
-
   itemDetails(item) {
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     item: JSON.stringify(item)
-    //   }
-    // };
     let queryParam = {
       item: JSON.stringify(item)
     };
@@ -844,7 +798,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
           }
         });
       }
-      // console.log(this.orderList);
     });
   }
   deleteNotes(item, index) {
@@ -866,13 +819,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
             Item['consumerNote'] = Item.consumerNote.splice;
           }
         });
-        // this.orders.map((Item, i) => {
-        //   if (Item.item.itemId === item.item.itemId) {
-        //     Item['consumerNote'] = Item.consumerNote.splice;
-        //   }
-        // });
-        console.log(this.orderList);
-
       }
     });
   }
@@ -885,11 +831,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         this.storeContact = data;
       });
   }
-  // resetDateTime() {
-  //   this.action = '';
-  //   this.fetchCatalog();
-  // }
-
   closeNav() {
     this.showSide = false;
   }
@@ -900,5 +841,3 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     console.log(this.queue);
   }
 }
-
-

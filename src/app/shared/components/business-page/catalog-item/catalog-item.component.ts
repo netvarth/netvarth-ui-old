@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { ActivatedRoute,  Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { AccountService } from '../../../../shared/services/account.service';
 import { OrderService } from '../../../../shared/services/order.service';
@@ -7,11 +7,10 @@ import { SubSink } from 'subsink';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { ConfirmBoxComponent } from '../../confirm-box/confirm-box.component';
 import { MatDialog } from '@angular/material/dialog';
-// import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
-// import { SignUpComponent } from '../../signup/signup.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { SharedServices } from '../../../../shared/services/shared-services';
+import { DomainConfigGenerator } from '../../../../shared/services/domain-config-generator.service';
 
 @Component({
   selector: 'app-catalog-item',
@@ -66,7 +65,6 @@ export class CatalogItemComponent implements OnInit {
   itemQuantity;
   cartItem;
   onlyVirtualItems = false;
-  // showitemprice: boolean = true;
   isPrice: boolean;
   isPromotionalpricePertage;
   isPromotionalpriceFixed;
@@ -95,10 +93,7 @@ export class CatalogItemComponent implements OnInit {
   itemCount: any;
   screenWidth: number;
   small_device_display: boolean;
-  deferredPrompt: any;
-  popupforCustomApp: any;
-  btnInstallApp: any;
-
+  homeView: any;
   constructor(private activatedRoute: ActivatedRoute,
     private orderService: OrderService,
     private accountService: AccountService,
@@ -107,6 +102,7 @@ export class CatalogItemComponent implements OnInit {
     private s3Processor: S3UrlProcessor,
     public sharedFunctionobj: SharedFunctions,
     private lStorageService: LocalStorageService,
+    private domainConfigService: DomainConfigGenerator,
     private dialog: MatDialog) {
     this.activatedRoute.paramMap.subscribe(
       (params: any) => {
@@ -132,40 +128,6 @@ export class CatalogItemComponent implements OnInit {
       this.small_device_display = false;
     }
   }
-  @HostListener('window:appinstalled', ['$event'])
-  onAppInstalled(e) {
-    console.log("App Successfully Installed");
-  }
-  @HostListener('window:beforeinstallprompt', ['$event'])
-  onBeforeInstallPrompt(e: { preventDefault: () => void; }) {
-
-    // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault();
-    // Stash the event so it can be triggered later.
-    if (this.accountProperties) {
-      this.deferredPrompt = e;
-      // Update UI to notify the user they can add to home screen
-
-      this.popupforCustomApp.nativeElement.style.display = 'block';
-
-      this.btnInstallApp.addEventListener('click', (e: any) => {
-        // console.log('binding');
-        // hide our user interface that shows our A2HS button
-        this.popupforCustomApp.nativeElement.style.display = 'none';
-        // Show the prompt
-        this.deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        this.deferredPrompt.userChoice.then((choiceResult: any) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User clicked Install');
-          } else {
-            console.log('User dismissed prompt');
-          }
-          this.deferredPrompt = null;
-        });
-      });
-    }
-  }
   /**
   * 
   * @param encId encId/customId which represents the Account
@@ -189,24 +151,30 @@ export class CatalogItemComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log("Catalog Item Component");
     const _this = this;
-
-
     this.getAccountIdFromEncId(this.accountEncId).then(
       (s3UniqueId: any) => {
         this.s3UniqueId = s3UniqueId;
         this.getBusinessAccountInfo(s3UniqueId).then(
           () => {
-
-            _this.setItemDetails(this.catalogId, this.itemId, this.accountId);
-
+            _this.domainConfigService.getUIAccountConfig(s3UniqueId).subscribe(
+              (uiconfig: any) => {
+                // _this.viewMode = 
+                if (uiconfig['mode']) {
+                  _this.homeView= uiconfig['mode'];   
+                  _this.setItemDetails(this.catalogId, this.itemId, this.accountId);             
+                }
+              }, ()=> {
+                _this.setItemDetails(this.catalogId, this.itemId, this.accountId);
+              })
+            
           }
         )
       }
     )
   }
   catlogArry() {
-
     if (this.lStorageService.getitemfromLocalStorage('order') !== null) {
       this.orderList = this.lStorageService.getitemfromLocalStorage('order');
     }
@@ -314,33 +282,20 @@ export class CatalogItemComponent implements OnInit {
           this.orderItems = orderItems;
         }
         this.activeCatalog = this.orderService.getCatalogById(catalogs, catalogId);
-        //  console.log(this.activeCatalog);
         let catalogItem = this.orderService.getCatalogItemById(this.activeCatalog, itemId);
-        // console.log("Catalog Item:", catalogItem);
         const showpric = this.activeCatalog.showPrice;
         this.cartItem = catalogItem.item;
         this.minQuantity = catalogItem.minQuantity;
         this.maxQuantity = catalogItem.maxQuantity;
         if (catalogItem.item) {
           this.orderItem = { 'type': 'item', 'minqty': catalogItem.minQuantity, 'maxqty': catalogItem.maxQuantity, 'id': catalogItem.id, 'item': catalogItem.item, 'showpric': showpric };
-          // this.cartItems.push(this.orderItem);
         }
         const businessObject = {
           'bname': this.businessProfile.businessName,
           'blocation': this.businessProfile.baseLocation.place,
-          // 'logo': this.businessjson.logo.url
         };
-
         this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-
-
-        // this.itemCount++;
-        // this.shared_services.setaccountId(account_Id);
-        // this.shared_services.setOrderDetails(this.activeCatalog);
-
-        // this.cartItem = item;
         this.itemQuantity = this.orderService.getItemQty(this.cartItems, itemId);
-
         if (this.cartItem.showPromotionalPrice) {
           if (this.cartItem.promotionalPriceType === 'FIXED') {
             this.isPromotionalpriceFixed = true;
@@ -351,19 +306,17 @@ export class CatalogItemComponent implements OnInit {
           this.isPrice = true;
         }
 
-        if(this.activeCatalog.catalogType == 'submission')
-        {
+        if (this.activeCatalog.catalogType == 'submission') {
           this.loading = true;
-          if(this.cartItems.length == 0)
-          {
+          if (this.cartItems.length == 0) {
             this.addToCart();
           }
           this.checkout();
         }
       }
-      
+
     )
-    
+
   }
 
   /**
@@ -384,10 +337,8 @@ export class CatalogItemComponent implements OnInit {
           });
     })
   }
-
   setBusinesssProfile(businessProfile) {
     this.businessProfile = businessProfile;
-    //  console.log("businessProfile",businessProfile)
     this.accountId = businessProfile.id;
     if (businessProfile.customId) {
       this.businessCustomId = businessProfile.customId;
@@ -420,34 +371,18 @@ export class CatalogItemComponent implements OnInit {
     }
   }
   itemDetails(item) {
-    //console.log("Item Details ",item)
     const businessObject = {
       'bname': this.businessjson.businessName,
-      //'blocation': this.locationjson[0].place,
       'blocation': this.businessProfile.baseLocation.place,
       'logo': this.businessProfile.logo.url
     };
     this.lStorageService.setitemonLocalStorage('order', this.orderList);
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     item: JSON.stringify(item),
-    //     providerId: this.accountId,
-    //     showpric: this.activeCatalog.showPrice,
-    //     unique_id: this.s3UniqueId // changed unique id to s3uniqueid
-    //   }
-
-    // };
-    //this.router.navigate(['order', 'item-details'], navigationExtras);
     this.router.navigate([this.accountEncId, 'catalog', this.catalogId, 'item', item.id]);
-    // this.router.navigate([`${this.accountEncId}/catalog/${this.catalogId}/item/${item.id}`]);
-
-
   }
   incrementItem(item) {
     this.addToCartItems(item);
   }
-
   decrementItem(item) {
     this.removeFromCartItem(item);
   }
@@ -472,7 +407,6 @@ export class CatalogItemComponent implements OnInit {
           this.lStorageService.removeitemfromLocalStorage('order_spId');
           this.lStorageService.removeitemfromLocalStorage('order');
         }
-
         break;
       }
     }
@@ -507,8 +441,6 @@ export class CatalogItemComponent implements OnInit {
         this.getItemQty(itemObj);
       }
     }
-
-
   }
   increment() {
     this.addToCart();
@@ -546,12 +478,9 @@ export class CatalogItemComponent implements OnInit {
   addToCart() {
     const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     if (spId === null) {
-      // this.cartItems = [];
       this.lStorageService.setitemonLocalStorage('order_spId', this.accountId);
       this.cartItems.push(this.orderItem);
       this.lStorageService.setitemonLocalStorage('order', this.cartItems);
-      // console.log("Cart Item:", this.cartItem);
-      //this.lStorageService.setitemonLocalStorage('order_sp', this.businessDetails);
       this.itemQuantity = this.orderService.getItemQty(this.cartItems, this.itemId);
 
     } else {
@@ -574,18 +503,11 @@ export class CatalogItemComponent implements OnInit {
     }
   }
   removeFromCart() {
-    // console.log(this.cartItems);
-    // for (const i in this.cartItems) {
-    // if (this.cartItems[i].id === this.) {
     if (this.cartItems.length > 0) {
       this.cartItems.splice(0, 1);
       this.lStorageService.setitemonLocalStorage('order', this.cartItems);
     }
-    // break;
-    // }
-    // }
     this.itemQuantity = this.orderService.getItemQty(this.cartItems, this.itemId);
-    // this.updateCartCount();
   }
   checkoutItems() {
     this.userType = '';
@@ -628,85 +550,21 @@ export class CatalogItemComponent implements OnInit {
     else {
       this.lStorageService.setitemonLocalStorage('order', this.cartItems);
     }
-    var cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id=' 
-    + this.s3UniqueId + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
-    console.log("userType :",this.userType)
-
+    let cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id='
+      + this.s3UniqueId + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
+    console.log("userType :", this.userType)
+    if (this.activeCatalog.catalogType == 'submission') {
+      cartUrl+='&source=paper';
+    }
     if (this.userType === 'consumer') {
-      if(this.activeCatalog.catalogType == 'submission')
-      {
-        // var cartUrl = 'order/shoppingcart/checkout?providerId=' + this.accountId + '&customId=' + this.accountEncId + '&catalog_Id=' + this.activeCatalog.id + '&source=paper' ;
-        var cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id=' 
-    + this.s3UniqueId  + '&source=paper' + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
-      }
-      
+        // cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id='
+        //   + this.s3UniqueId + '&source=paper' + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
       this.router.navigateByUrl(cartUrl);
-    } else
-      {
-        // if (this.userType === '')
+    } else {
       this.lStorageService.setitemonLocalStorage('target', cartUrl);
       this.router.navigate([this.accountEncId, 'login']);
     }
   }
-  // doLogin(origin?, passParam?) {
-  //   const is_test_account = true;
-  //   const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-  //     width: '40%',
-  //     panelClass: ['loginmainclass', 'popup-class'],
-  //     disableClose: true,
-  //     data: {
-  //       type: origin,
-  //       mode: 'dialog',
-  //       is_provider: false,
-  //       test_account: is_test_account,
-  //       moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-  //     }
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result === 'success') {
-  //       const pdata = { 'ttype': 'updateuserdetails' };
-  //       this.sharedFunctionobj.sendMessage(pdata);
-  //       this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-  //       if (passParam['callback'] === 'order') {
-  //         if (this.orderType === 'SHOPPINGLIST') {
-  //           this.shoppinglistupload();
-  //         } else {
-  //           this.checkout();
-  //         }
-  //       }
-  //       else if (result === 'showsignup') {
-  //         this.doSignup(passParam);
-  //       }
-  //     }
-  //   });
-  // }
-  // doSignup(passParam?) {
-  //   const dialogRef = this.dialog.open(SignUpComponent, {
-  //     width: '50%',
-  //     panelClass: ['signupmainclass', 'popup-class'],
-  //     disableClose: true,
-  //     data: {
-  //       is_provider: 'false',
-  //       moreParams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-  //     }
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result === 'success') {
-  //       const pdata = { 'ttype': 'updateuserdetails' };
-  //       this.sharedFunctionobj.sendMessage(pdata);
-  //       this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-
-  //       if (passParam['callback'] === 'order') {
-  //         if (this.orderType === 'SHOPPINGLIST') {
-  //           this.shoppinglistupload();
-  //         } else {
-  //           this.checkout();
-  //         }
-  //       }
-
-  //     }
-  //   });
-  // }
   showDesc() {
     if (this.showmoreDesc) {
       this.showmoreDesc = false;
@@ -747,51 +605,22 @@ export class CatalogItemComponent implements OnInit {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     const businessObject = {
       'bname': this.businessjson.businessName,
-      // 'blocation': this.locationjson[0].place,
       'logo': this.businessProfile.logo.url
     };
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-
-    //     providerId: this.provider_bussiness_id,
-    //     unique_id: this.s3UniqueId,
-    //   }
-
-    // };
-  let cartUrl = 'order/shoppingcart/checkout?providerId=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.s3UniqueId;
-
-    // this.authService.goThroughLogin().then((status) => {
-    //   console.log("Status:", status);
-    //   if (status) {
-    //   }
-    // })
-
-   
+    let cartUrl = 'order/shoppingcart/checkout?providerId=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.s3UniqueId;
     if (this.userType === 'consumer') {
       this.router.navigateByUrl(cartUrl);
-      // let blogoUrl;
-      // if (this.businessjson.logo) {
-      //   blogoUrl = this.businessjson.logo.url;
-      // } else {
-      //   blogoUrl = '';
-      // }
-     
-      // this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
     } else if (this.userType === '') {
       this.lStorageService.setitemonLocalStorage('target', cartUrl);
       this.router.navigate([this.accountEncId, 'login']);
     }
   }
-
-
-
   handlesearchClick() {
   }
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
-
   showOrderFooter() {
     let showFooter = false;
     this.spId_local_id = this.lStorageService.getitemfromLocalStorage('order_spId');
@@ -803,12 +632,11 @@ export class CatalogItemComponent implements OnInit {
           showFooter = true;
         }
       }
-
     }
     return showFooter;
   }
   cardClicked(actionObj) {
-     console.log('entering into business page',actionObj);
+    console.log('entering into business page', actionObj);
     if (actionObj['type'] === 'item') {
       if (actionObj['action'] === 'view') {
         this.itemDetails(actionObj['service']);
@@ -817,9 +645,6 @@ export class CatalogItemComponent implements OnInit {
       } else if (actionObj['action'] === 'remove') {
         this.decrementItem(actionObj['service']);
       }
-    } else {
-      // this.providerDetClicked(actionObj['userId']);
     }
-
   }
 }

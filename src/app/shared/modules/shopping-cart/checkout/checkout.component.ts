@@ -322,6 +322,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
+   console.log("Checkout Component");
     this.getPaymentModes();
     const credentials = this.sharedFunctionobj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
     this.customer_countrycode = credentials.countryCode;

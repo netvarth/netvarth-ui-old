@@ -31,6 +31,8 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 import { SubSink } from '../../../../../node_modules/subsink';
 import { AttachmentPopupComponent } from '../../../shared/components/attachment-popup/attachment-popup.component';
 import { TranslateService } from '@ngx-translate/core';
+import { AccountService } from '../../../shared/services/account.service';
+import { DomainConfigGenerator } from '../../../shared/services/domain-config-generator.service';
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -248,6 +250,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   showattachmentDialogRef: MatDialogRef<unknown, any>;
   theme: any;
   fromApp = false;
+  homeView: any;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public translate: TranslateService,
@@ -261,6 +264,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private galleryService: GalleryService,
     private dateTimeProcessor: DateTimeProcessor,
+    private accountService: AccountService,
+    private domainConfigService: DomainConfigGenerator,
     public _sanitizer: DomSanitizer) {
     this.onResize();
     this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
@@ -292,12 +297,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
-  // public carouselOne: NgxCarousel;
-  public carouselOne;
-  public carouselDonations;
-  public carouselAppointments;
-
-
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
@@ -318,12 +317,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     // console.log(this.no_of_grids);
   }
 
-  ngOnInit() {
+
+  initConsumer() {
+    console.log("In Consumer");
+    this.api_loading = false;
     if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
       this.fromApp = true;
     }
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable')));
-
     // console.log(this.bookingStatusClasses);
     this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
     this.login_details = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
@@ -356,63 +357,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
     this.setSystemDate();
     this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    this.carouselOne = {
-      dots: false,
-      nav: true,
-      navContainer: '.custom-nav',
-      navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-      ],
-      autoplay: false,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      loop: false,
-      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
-    };
-    this.carouselDonations = {
-      dots: false,
-      nav: true,
-      navContainer: '.custom-don-nav',
-      navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-      ],
-      autoplay: false,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      loop: false,
-      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
-    };
-    this.carouselAppointments = {
-      dots: false,
-      nav: true,
-      navContainer: '.custom-appt-nav',
-      navText: [
-        '<i class="fa fa-angle-left" aria-hidden="true"></i>',
-        '<i class="fa fa-angle-right" aria-hidden="true"></i>'
-      ],
-      autoplay: false,
-      mouseDrag: true,
-      touchDrag: true,
-      pullDrag: true,
-      loop: false,
-      responsive: { 0: { items: 1 }, 700: { items: 2 }, 991: { items: 3 }, 1200: { items: 3 } }
-    };
     this.currentcheckinsTooltip = this.wordProcessor.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
     this.favTooltip = this.wordProcessor.getProjectMesssages('FAVORITE_TOOLTIP');
     this.historyTooltip = this.wordProcessor.getProjectMesssages('HISTORY_TOOLTIP');
-    // this.gets3curl();
     this.getFavouriteProvider();
     this.getAppointmentToday();
-    // this.getAppointmentFuture();
-    // this.getTdyOrder();
     this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.reloadAPIs();
     });
-
     this.subs.sink = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
       this.recheckwaitlistCounters();
     });
@@ -422,7 +374,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
       this.liveTrackApptPolling();
     });
-
     this.subs.sink = this.shared_functions.getSwitchMessage().subscribe(message => {
       switch (message.ttype) {
         case 'fromconsumer': {
@@ -430,11 +381,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       }
     });
-
     this.subs.sink = this.galleryService.getMessage().subscribe(input => {
       console.log("Reached Here:");
       if (input && input.accountId && input.uuid && input.type === 'appt') {
-        // console.log(input);
         this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)
           .subscribe(
             () => {
@@ -447,7 +396,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             }
           );
       } else {
-        // console.log(input);
         if (input && input.accountId && input.uuid && input.type === 'checkin') {
           this.shared_services.addConsumerWaitlistAttachment(input.accountId, input.uuid, input.value)
             .subscribe(
@@ -463,6 +411,54 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       }
     });
+  }
+ 
+  /**
+   * 
+   * @param encId encId/customId which represents the Account
+   * @returns the unique provider id which will gives access to the s3
+   */
+  getAccountIdFromEncId(encId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.accountService.getBusinessUniqueId(encId).subscribe(
+        (id) => {
+          resolve(id);
+        },
+        error => {
+          if (error.status === 404) {
+            _this.router.navigate(['/not-found']);
+          }
+          reject();
+        }
+      );
+    });
+  }
+
+
+  ngOnInit() {
+    const _this = this;
+    this.api_loading = true;
+    if(this.customId && this.accountId) {
+      _this.getAccountIdFromEncId(this.customId).then(
+        (uniqueId:any)=>{
+          _this.domainConfigService.getUIAccountConfig(uniqueId).subscribe(
+            (uiconfig: any) => {
+              alert(uiconfig.mode);
+              // _this.viewMode = 
+              if (uiconfig['mode']) {
+                _this.homeView= uiconfig['mode'];                
+              }
+              _this.initConsumer();
+            }, ()=> {
+              _this.initConsumer();
+            })
+        }
+      )
+    } else {
+      _this.initConsumer();
+    }
+    
   }
   getOrderPaidBill(orderBill) {
     if (orderBill.bill && orderBill.bill.amountPaid) {
@@ -706,9 +702,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.waitlists[i].cancelled_caption = retval.cancelled_caption;
             this.waitlists[i].cancelled_date = retval.cancelled_date;
             this.waitlists[i].cancelled_time = retval.cancelled_time;
-            // if (waitlist.waitlistStatus === 'prepaymentPending') {
-            //   this.waitlists[i].counter = this.prepaymentCounter(waitlist);
-            // }
             i++;
           }
           this.loadcomplete.waitlist = true;

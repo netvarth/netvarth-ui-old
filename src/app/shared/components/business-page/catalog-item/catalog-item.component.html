@@ -1,19 +1,15 @@
 <section class="content bus-page item-details-consumer" [ngClass]="accountProperties?accountProperties['theme']:''">
-    <div class="panel panel-default" *ngIf="loading" class="full-height">
+    <div class="panel panel-default" *ngIf="loading || !homeView || homeView==='paper_submission'" class="full-height">
         <div class="child">
             <app-common-innerloading-spinner>
             </app-common-innerloading-spinner>
         </div>
     </div>
-    <div class="container" *ngIf="businessProfile && !loading">
+    <div class="container" *ngIf="businessProfile && !loading && homeView && homeView!=='paper_submission'">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
-                <!-- *ngIf="!loading" -->
                 <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <!-- (click)="goBack()" -->
-                        <!-- <a class="pull-left back-btn mgn-up-5" *ngIf="userId || back==='1'" ><i
-                                class="fa fa-arrow-left"></i></a> -->
                         &nbsp;
                     </div>
                     <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding">
@@ -220,10 +216,8 @@
                                         <div class="bus-item-O">
                                             <a (click)="shoppinglistupload()" class="like-btn">{{'Upload Shopping List' | translate}}</a>
                                         </div>
-                                    </div>
-                                
-                                    </ng-container>
-                                
+                                    </div>                                
+                                    </ng-container>                                
                                 </section>
                             </div>
                         </div>

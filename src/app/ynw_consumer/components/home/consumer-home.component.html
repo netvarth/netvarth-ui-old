@@ -1,7 +1,8 @@
-<section class="container consumer-dashhome no-padding no-padding-small" [ngClass]="theme" *ngIf="!this.customId">
+<section class="container consumer-dashhome no-padding no-padding-small" [ngClass]="theme">
     <div class="panel panel-default">
         <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
-            <app-header [headerTitle]="" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
+            <app-header [headerTitle]="" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true">
+            </app-header>
         </div>
         <div class="panel-body no-padding">
             <div class="content consumer-dash mgn-bt-10" *ngIf="api_loading">
@@ -9,27 +10,28 @@
                 </app-common-innerloading-spinner>
             </div>
             <div class="content consumer-dash" *ngIf="!api_loading">
-                <div class="c_card card c-checkins">
-                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" *ngIf="!this.customId">
+                <div class="c_card card c-checkins" *ngIf="homeView!=='paper_submission'">
+                    <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12" >
                         <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
                             <h1 class="ng-tns-c16-8 txt-align hello-msg" *ngIf="usr_details">
                                 <span class="ng-tns-c16-8 greeting">
                                     Hello {{usr_details.userName}} !
                                 </span> <br>
-                                <button *ngIf="accountId" class="mgn-up-20 find-sp-btn" mat-raised-button (click)="gotoDetails()">
+                                <button *ngIf="accountId" class="mgn-up-20 find-sp-btn" mat-raised-button
+                                    (click)="gotoDetails()">
                                     {{'Home Page' | translate}}</button>
-                                <button *ngIf="!accountId" class="mgn-up-20 find-sp-btn" mat-raised-button (click)="do_search()">{{'Find_Service_Provider' | translate}} &nbsp; <i class="fa fa-search"></i></button>
+                                <button *ngIf="!accountId" class="mgn-up-20 find-sp-btn" mat-raised-button
+                                    (click)="do_search()">{{'Find_Service_Provider' | translate}} &nbsp; <i
+                                        class="fa fa-search"></i></button>
                             </h1>
                         </div>
-                        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 bg-visible fl-right tele_button" *ngIf="showTeleBt && !fromApp">
-                            <!-- <img class="myjaldee-bg fl-right" _ngcontent-ywv-c30=""
-                                src="assets/images/myjaldee/Group92.png"> -->
-
-                                <button class="mgn-up-20 find-sp-btn telebt" mat-raised-button (click)="redirectto('profile')"><i class="fa fa-telegram tbt" aria-hidden="true"></i>  &nbsp; {{'Telegram_msg' | translate}}</button>
-
+                        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 bg-visible fl-right tele_button"
+                            *ngIf="showTeleBt && !fromApp">
+                            <button class="mgn-up-20 find-sp-btn telebt" mat-raised-button
+                                (click)="redirectto('profile')"><i class="fa fa-telegram tbt" aria-hidden="true"></i>
+                                &nbsp; {{'Telegram_msg' | translate}}</button>
                         </div>
                     </div>
-
 
                     <h2 class="ng-tns-c16-8" [ngClass]="this.customId?'':'bg-yelow'">
                         <div class="jld-option">
@@ -40,10 +42,11 @@
                             <div class="col-sm-8 col-md-8 col-lg-8 col-xs-9 no-padding-small">
                                 <div class="fl-right disply-flex">
                                     <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
-                                        <button *ngIf="!showOrder && (!accountId || orderstatus)" class="flat-btn full-wdth" mat-flat-button
-                                            (click)="showOrders()">{{'My Orders' | translate}}</button>
-                                        <button *ngIf="!showOrder && (!accountId || orderstatus)" class="flat-icon-btn" mat-flat-button
-                                            (click)="showOrders()" [matTooltip]="'Orders'">
+                                        <button *ngIf="!showOrder && (!accountId || orderstatus)"
+                                            class="flat-btn full-wdth" mat-flat-button (click)="showOrders()">{{'My
+                                            Orders' | translate}}</button>
+                                        <button *ngIf="!showOrder && (!accountId || orderstatus)" class="flat-icon-btn"
+                                            mat-flat-button (click)="showOrders()" [matTooltip]="'Orders'">
                                             <i class="fa ordr_ico"></i>
                                         </button>
 
@@ -55,15 +58,15 @@
                                         </button>
                                     </div>
                                     <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div">
-                                        <button (click)="paymentsClicked()" class="flat-btn full-wdth"
-                                            mat-flat-button>
+                                        <button (click)="paymentsClicked()" class="flat-btn full-wdth" mat-flat-button>
                                             {{'My Payments' |translate}}</button>
                                         <button class="flat-icon-btn" mat-flat-button (click)="paymentsClicked()"
                                             [matTooltip]="'My Payments'">
                                             <i class="fa myjld-payment"></i>
                                         </button>
                                     </div>
-                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div" *ngIf="!accountId">
+                                    <div class="col-sm-2 col-md-2 col-lg-2 col-xs-2 no-padding item-btn-div"
+                                        *ngIf="!accountId">
                                         <button class="flat-btn full-wdth" mat-flat-button
                                             (click)="getmyfavourites()">{{'My Favourites' | translate}}</button>
                                         <button class="flat-icon-btn" mat-flat-button (click)="getmyfavourites()"
@@ -87,12 +90,13 @@
                         class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 nocheckins">
                         <p class="locate-customer">{{'No_Active_Bookings' | translate}}</p>
                     </div>
-                    <div class="table-outer1 booking-dash ng-tns-c16-57" *ngIf="!loading && !showOrder" [ngClass]="customId?'cuA':''">
+                    <div class="table-outer1 booking-dash ng-tns-c16-57" *ngIf="!loading && !showOrder"
+                        [ngClass]="customId?'cuA':''">
 
                         <!-- begin revamp bookings -->
                         <!-- TODAY BOOKINGS-->
                         <div *ngIf="(today_totalbookings.length != 0)" class="day_hed">
-                        {{'TODAY' | translate}}
+                            {{'TODAY' | translate}}
                         </div>
                         <div *ngIf="today_totalbookings.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
                             <mat-grid-list cols="{{no_of_grids}}" rowHeight="240px" [gutterSize]="'10px'">
@@ -100,11 +104,13 @@
                                     (click)="showBookingDetails(booking, 'today')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
-                                        <app-appt-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
+                                        <app-appt-card [booking]="booking" type="today" [extras]="extras"
+                                            (actionPerformed)="cardClicked($event)"></app-appt-card>
                                     </ng-container>
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
-                                        <app-wl-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
+                                        <app-wl-card [booking]="booking" type="today" [extras]="extras"
+                                            (actionPerformed)="cardClicked($event)"></app-wl-card>
                                     </ng-container>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -120,11 +126,13 @@
                                     (click)="showBookingDetails(booking, 'today')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
-                                        <app-appt-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
+                                        <app-appt-card [booking]="booking" type="today" [extras]="extras"
+                                            (actionPerformed)="cardClicked($event)"></app-appt-card>
                                     </ng-container>
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
-                                        <app-wl-card [booking]="booking" type="today" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
+                                        <app-wl-card [booking]="booking" type="today" [extras]="extras"
+                                            (actionPerformed)="cardClicked($event)"></app-wl-card>
                                     </ng-container>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -137,7 +145,7 @@
 
                         <!--------------------------- FUTURE BOOKINGS----------------------------------------->
                         <!-- <hr style="margin-bottom: !important 0px;"> -->
-                        <div *ngIf="(future_totalbookings.length != 0)" class="day_hed" >
+                        <div *ngIf="(future_totalbookings.length != 0)" class="day_hed">
                             {{'UPCOMING' | translate}}
                         </div>
                         <div *ngIf="future_totalbookings.length != 0" class="mgn-up-10 mgn-bt-10 grid-card">
@@ -146,11 +154,13 @@
                                     (click)="showBookingDetails(booking, 'future')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
-                                        <app-appt-card [booking]="booking" type="future" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>
+                                        <app-appt-card [booking]="booking" type="future" [extras]="extras"
+                                            (actionPerformed)="cardClicked($event)"></app-appt-card>
                                     </ng-container>
                                     <!-- Checkins -->
-                                    <ng-container *ngIf="booking.waitlistStatus">      
-                                        <app-wl-card [booking]="booking" type="future" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>                      
+                                    <ng-container *ngIf="booking.waitlistStatus">
+                                        <app-wl-card [booking]="booking" type="future" [extras]="extras"
+                                            (actionPerformed)="cardClicked($event)"></app-wl-card>
                                     </ng-container>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -166,11 +176,13 @@
                                     (click)="showBookingDetails(booking, 'future')">
                                     <!-- Appointments -->
                                     <ng-container *ngIf="booking.apptStatus">
-                                      <app-appt-card type="future" [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-appt-card>                                       
+                                        <app-appt-card type="future" [booking]="booking" [extras]="extras"
+                                            (actionPerformed)="cardClicked($event)"></app-appt-card>
                                     </ng-container>
                                     <!-- Checkins -->
                                     <ng-container *ngIf="booking.waitlistStatus">
-                                        <app-wl-card type="future" [booking]="booking" [extras]="extras" (actionPerformed)="cardClicked($event)"></app-wl-card>
+                                        <app-wl-card type="future" [booking]="booking" [extras]="extras"
+                                            (actionPerformed)="cardClicked($event)"></app-wl-card>
                                     </ng-container>
                                 </mat-grid-tile>
                             </mat-grid-list>
@@ -180,11 +192,7 @@
                             <a class="show_more">{{'show_less' | translate}}</a>
                         </div>
                         <!-- end revamp order -->
-
                     </div>
-
-
-
                     <!-- Order Section -->
                     <!-- If there is no order -->
                     <div *ngIf="((total_tdy_order.length == 0 && total_future_order == 0) && !loading) && showOrder"
@@ -208,7 +216,8 @@
                                                     [matTooltip]="'Store Pickup'"></i>
                                                 <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                     [matTooltip]="'Home Delivery'"></i>
-                                                    <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
+                                                <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)"
+                                                    class="fa electronic_deliver_icon"
                                                     [matTooltip]="'Electronic Delivery'"></i>
                                             </div>
                                         </div>
@@ -229,7 +238,8 @@
                                                 </button>
                                                 <button mat-menu-item *ngIf="oder.orderStatus !='Cancelled'"
                                                     (click)="rateService(oder,'order')">
-                                                    <i class="fa fa-star-o" aria-hidden="true"></i>{{'Rate Your Order' | translate}}
+                                                    <i class="fa fa-star-o" aria-hidden="true"></i>{{'Rate Your Order' |
+                                                    translate}}
                                                 </button>
                                                 <!-- <button mat-menu-item >
                                                     <span class="rate-service" [class.rated]="isRated(oder)"
@@ -245,7 +255,8 @@
                                                 </button>
                                                 <button mat-menu-item *ngIf="!checkIfFav(oder.providerAccount.id)">
                                                     <span class="icon-favourite"
-                                                        (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;{{'Add to Favourites' | translate}}</span>
+                                                        (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;{{'Add
+                                                        to Favourites' | translate}}</span>
                                                 </button>
                                             </mat-menu>
                                         </div>
@@ -257,9 +268,12 @@
                                                     (click)="providerDetail(oder.providerAccount,$event)">
                                                     {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                                 <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
-                                                    <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
-                                                    {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}} </ng-container></div>
+                                                    <ng-container
+                                                        *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">
+                                                        ,
+                                                        {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}} </ng-container>
+                                                </div>
                                                 <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                         class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                     <span>{{oder.totalItemQuantity}}</span>
@@ -272,23 +286,22 @@
                                                 mat-flat-button class="btns rupee-font"
                                                 (click)="viewBill(oder,'order',$event)">Pay
                                                 {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
-                                       
-                                                <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid > 0"
-                                                class="amtPaid">{{'Paid' | translate}}
+
+                                            <span *ngIf="oder.bill && oder.bill.amountPaid > 0" class="amtPaid">{{'Paid'
+                                                | translate}}
                                                 {{oder.bill.amountPaid | currency:'&#8377;'}} </span>
-                                                <span
-                                                *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
+                                            <span *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
                                                 class="amtPaid">{{'Paid' | translate}}
                                                 {{oder.advanceAmountPaid | currency:'&#8377;'}}</span>
-                                                
-                                                &nbsp;&nbsp;
+
+                                            &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.refundedAmount >0" style="color:green">
                                                 {{'Refunded' | translate}} </span>
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
-                                                    (click)="viewBill(oder,'order',$event)">{{'Receipt' | translate}}</button>
+                                                    (click)="viewBill(oder,'order',$event)">{{'Receipt' |
+                                                    translate}}</button>
                                             </span>
 
                                         </div>
@@ -317,8 +330,9 @@
                                                         [matTooltip]="'Store Pickup'"></i>
                                                     <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                         [matTooltip]="'Home Delivery'"></i>
-                                                        <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
-                                                    [matTooltip]="'Electronic Delivery'"></i>
+                                                    <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)"
+                                                        class="fa electronic_deliver_icon"
+                                                        [matTooltip]="'Electronic Delivery'"></i>
                                                 </div>
                                             </div>
                                             <div class="more_opt">
@@ -334,11 +348,13 @@
                                                         {{'Cancel' | translate}}</button>
 
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
-                                                        <i class="fa fa-sticky-note-o"></i>{{'Order details' | translate}}
+                                                        <i class="fa fa-sticky-note-o"></i>{{'Order details' |
+                                                        translate}}
                                                     </button>
                                                     <button mat-menu-item *ngIf="oder.orderStatus !='Cancelled'"
                                                         (click)="rateService(oder,'order')">
-                                                        <i class="fa fa-star-o" aria-hidden="true"></i>{{'Rate Your Order' | translate}}
+                                                        <i class="fa fa-star-o" aria-hidden="true"></i>{{'Rate Your
+                                                        Order' | translate}}
                                                         <!-- <span class="rate-service" [class.rated]="isRated(oder)"
                                                             (click)="rateService(oder,'order')"><i class="fa fa-star-o" aria-hidden="true"></i>{{rate_visit}}</span> -->
                                                     </button>
@@ -352,7 +368,8 @@
                                                     </button>
                                                     <button mat-menu-item *ngIf="!checkIfFav(oder.providerAccount.id)">
                                                         <span class="icon-favourite"
-                                                            (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;{{'Add to Favourites' | translate}}</span>
+                                                            (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;{{'Add
+                                                            to Favourites' | translate}}</span>
                                                     </button>
                                                 </mat-menu>
                                             </div>
@@ -365,10 +382,13 @@
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
                                                     <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
-                                                            <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
-                                                        {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}
-                                                    </ng-container></div>
+                                                        <ng-container
+                                                            *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">
+                                                            ,
+                                                            {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                            {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                        </ng-container>
+                                                    </div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>
@@ -381,7 +401,7 @@
                                                     mat-flat-button class="btns rupee-font"
                                                     (click)="viewBill(oder,'order',$event)">{{'Pay' | translate}}
                                                     {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
-                                                    <!-- <span
+                                                <!-- <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0 || oder.advanceAmountPaid > 0"
                                                 class="amtPaid">{{'Paid' | translate}}
                                                 {{getOrderPaidBill(oder)| currency:'&#8377;'}}</span>
@@ -395,22 +415,21 @@
 
 
 
-                                                <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid > 0"
-                                                class="amtPaid">{{'Paid' | translate}}
-                                                {{oder.bill.amountPaid | currency:'&#8377;'}}</span>
-                                                <span
-                                                *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
-                                                class="amtPaid">{{'Paid' | translate}}
-                                                {{oder.advanceAmountPaid | currency:'&#8377;'}}</span>
-                                                
+                                                <span *ngIf="oder.bill && oder.bill.amountPaid > 0"
+                                                    class="amtPaid">{{'Paid' | translate}}
+                                                    {{oder.bill.amountPaid | currency:'&#8377;'}}</span>
+                                                <span *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
+                                                    class="amtPaid">{{'Paid' | translate}}
+                                                    {{oder.advanceAmountPaid | currency:'&#8377;'}}</span>
+
                                                 &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.refundedAmount >0"
                                                     style="color:green"> {{'Refunded' | translate}} </span>
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
-                                                        (click)="viewBill(oder,'order',$event)">{{'Receipt' | translate}}</button>
+                                                        (click)="viewBill(oder,'order',$event)">{{'Receipt' |
+                                                        translate}}</button>
                                                 </span>
 
                                             </div>
@@ -443,7 +462,8 @@
                                                     [matTooltip]="'Store Pickup'"></i>
                                                 <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                     [matTooltip]="'Home Delivery'"></i>
-                                                    <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
+                                                <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)"
+                                                    class="fa electronic_deliver_icon"
                                                     [matTooltip]="'Electronic Delivery'"></i>
                                             </div>
                                         </div>
@@ -464,7 +484,8 @@
                                                 </button>
                                                 <button mat-menu-item *ngIf="oder.orderStatus !='Cancelled'"
                                                     (click)="rateService(oder,'order')">
-                                                    <i class="fa fa-star-o" aria-hidden="true"></i>{{'Rate Your Order' | translate }}
+                                                    <i class="fa fa-star-o" aria-hidden="true"></i>{{'Rate Your Order' |
+                                                    translate }}
                                                 </button>
                                                 <button mat-menu-item (click)="addWaitlistMessage(oder,'orders')">
                                                     <i class="fa chat-icon"></i>
@@ -476,7 +497,8 @@
                                                 </button>
                                                 <button mat-menu-item *ngIf="!checkIfFav(oder.providerAccount.id)">
                                                     <span class="icon-favourite"
-                                                        (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;{{'Add to Favourites' | translate}}</span>
+                                                        (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;{{'Add
+                                                        to Favourites' | translate}}</span>
                                                 </button>
                                             </mat-menu>
                                         </div>
@@ -488,10 +510,13 @@
                                                     (click)="providerDetail(oder.providerAccount,$event)">
                                                     {{oder.providerAccount.businessName || '' | capitalizeFirst}}</span>
                                                 <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
-                                                        <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
-                                                    {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                    {{oder.orderTimeWindow.timeSlots[0].eTime}}
-                                                </ng-container></div>
+                                                    <ng-container
+                                                        *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">
+                                                        ,
+                                                        {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                    </ng-container>
+                                                </div>
                                                 <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                         class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                     <span>{{oder.totalItemQuantity}}</span>
@@ -504,34 +529,33 @@
                                                 mat-flat-button class="btns rupee-font"
                                                 (click)="viewBill(oder,'order',$event)">{{'Pay' | translate}}
                                                 {{oder.amountDue | currency:'&#8377;'}}</button>&nbsp;&nbsp;
-                                            
-                                                <!-- <span
+
+                                            <!-- <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0 || oder.advanceAmountPaid > 0"
                                                 class="amtPaid">{{'Paid' | translate }}
                                                 {{(oder.bill && oder.bill.amountPaid ? (oder.bill.amountPaid |
                                                 currency:'&#8377;') : (oder.advanceAmountPaid |
                                                 currency:'&#8377;'))}}</span> -->
 
-                                                <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid > 0"
-                                                class="amtPaid">{{'Paid' | translate }}
+                                            <span *ngIf="oder.bill && oder.bill.amountPaid > 0" class="amtPaid">{{'Paid'
+                                                | translate }}
                                                 {{oder.bill.amountPaid | currency:'&#8377;'}}</span>
-                                                <span
-                                                *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
+                                            <span *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
                                                 class="amtPaid">{{'Paid' | translate }}
                                                 {{oder.advanceAmountPaid | currency:'&#8377;'}}</span>
-                                                
-                                                &nbsp;&nbsp;
-                                                 
-                                                 <!-- <span
+
+                                            &nbsp;&nbsp;
+
+                                            <!-- <span
                                                 *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
                                                 class="amtPaid">{{'Paid' | translate }}
                                                 {{getOrderPaidBill(oder)| currency:'&#8377;'}}</span> -->
-                                                &nbsp;&nbsp;
+                                            &nbsp;&nbsp;
                                             <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                 <button mat-flat-button class="btns"
                                                     *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
-                                                    (click)="viewBill(oder,'order',$event)">{{'Receipt' | translate }}</button>
+                                                    (click)="viewBill(oder,'order',$event)">{{'Receipt' | translate
+                                                    }}</button>
                                             </span>
 
                                         </div>
@@ -561,7 +585,8 @@
                                                         [matTooltip]="'Store Pickup'"></i>
                                                     <i *ngIf="oder.homeDelivery" class="fa hom_deliver_ico"
                                                         [matTooltip]="'Home Delivery'"></i>
-                                                        <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)" class="fa electronic_deliver_icon"
+                                                    <i *ngIf="!oder.storePickup &&!oder.homeDelivery &&!isPhysicalItemsPresent(oder.orderItem)"
+                                                        class="fa electronic_deliver_icon"
                                                         [matTooltip]="'Electronic Delivery'"></i>
                                                 </div>
                                             </div>
@@ -575,10 +600,11 @@
                                                         *ngIf="oder.orderStatus=='Order Received' || oder.orderStatus=='Order Acknowledged' || oder.orderStatus=='Order Confirmed'"
                                                         (click)="doCancelWaitlist(oder,'order')">
                                                         <i class="fa cross-icon"></i>
-                                                       {{'Cancel' | translate}} </button>
+                                                        {{'Cancel' | translate}} </button>
 
                                                     <button mat-menu-item (click)="showBookingDetails(oder)">
-                                                        <i class="fa fa-sticky-note-o"></i>{{'Order details' | translate}}
+                                                        <i class="fa fa-sticky-note-o"></i>{{'Order details' |
+                                                        translate}}
                                                     </button>
                                                     <button mat-menu-item *ngIf="oder.orderStatus !='Cancelled'"
                                                         (click)="rateService(oder,'order')">
@@ -594,7 +620,8 @@
                                                     </button>
                                                     <button mat-menu-item *ngIf="!checkIfFav(oder.providerAccount.id)">
                                                         <span class="icon-favourite"
-                                                            (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;{{'Add to Favourites' | translate}}</span>
+                                                            (click)="addFavProvider(oder.providerAccount.id)">&nbsp;&nbsp;{{'Add
+                                                            to Favourites' | translate}}</span>
                                                     </button>
                                                 </mat-menu>
                                             </div>
@@ -607,10 +634,13 @@
                                                         {{oder.providerAccount.businessName || '' |
                                                         capitalizeFirst}}</span>
                                                     <div class="ordr_no">{{oder.orderDate | date: display_dateFormat}}
-                                                            <ng-container *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">,
-                                                        {{oder.orderTimeWindow.timeSlots[0].sTime}} -
-                                                        {{oder.orderTimeWindow.timeSlots[0].eTime}}
-                                                    </ng-container></div>
+                                                        <ng-container
+                                                            *ngIf="oder.orderTimeWindow && oder.orderTimeWindow.timeSlots[0]">
+                                                            ,
+                                                            {{oder.orderTimeWindow.timeSlots[0].sTime}} -
+                                                            {{oder.orderTimeWindow.timeSlots[0].eTime}}
+                                                        </ng-container>
+                                                    </div>
                                                     <div *ngIf="oder.totalItemQuantity > 0" class="bold"><span
                                                             class="ordr_no">Qty</span>&nbsp;&nbsp;&nbsp;
                                                         <span>{{oder.totalItemQuantity}}</span>
@@ -630,25 +660,24 @@
                                                     currency:'&#8377;') : (oder.advanceAmountPaid |
                                                     currency:'&#8377;'))}}</span> -->
 
-                                                <span
-                                                *ngIf="oder.bill && oder.bill.amountPaid > 0"
-                                                class="amtPaid">{{'Paid' | translate }}
-                                                {{oder.bill.amountPaid | currency:'&#8377;'}}</span>
-                                                <span
-                                                *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
-                                                class="amtPaid">{{'Paid' | translate }}
-                                                {{oder.advanceAmountPaid | currency:'&#8377;'}}</span>
-                                                
+                                                <span *ngIf="oder.bill && oder.bill.amountPaid > 0"
+                                                    class="amtPaid">{{'Paid' | translate }}
+                                                    {{oder.bill.amountPaid | currency:'&#8377;'}}</span>
+                                                <span *ngIf="!oder.bill && oder.advanceAmountPaid > 0"
+                                                    class="amtPaid">{{'Paid' | translate }}
+                                                    {{oder.advanceAmountPaid | currency:'&#8377;'}}</span>
+
                                                 &nbsp;&nbsp;
-                                                    <!-- <span
+                                                <!-- <span
                                                     *ngIf="oder.bill && oder.bill.amountPaid > 0|| oder.advanceAmountPaid > 0"
                                                     class="amtPaid">{{'Paid' | translate }}
                                                     {{getOrderPaidBill(oder)| currency:'&#8377;'}}</span> -->
-                                                     &nbsp;&nbsp;
+                                                &nbsp;&nbsp;
                                                 <span *ngIf="oder.bill && oder.bill.billViewStatus == 'Show'">
                                                     <button mat-flat-button class="btns"
                                                         *ngIf="oder.amountDue ==0 && oder.orderStatus != 'Cancelled'"
-                                                        (click)="viewBill(oder,'order',$event)">{{'Receipt' | translate }}</button>
+                                                        (click)="viewBill(oder,'order',$event)">{{'Receipt' | translate
+                                                        }}</button>
                                                 </span>
 
                                             </div>
@@ -673,14 +702,13 @@
                         [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
                         (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                 </div>
+                <div class="c_card card c-checkins" *ngIf="homeView==='paper_submission'">
+                    <app-submissions [user_details]="usr_details" [custom_id]="customId"
+                        [orders]="orders.concat(future_orders)">
+                    </app-submissions>
+                </div>
             </div>
         </div>
-    </div>
-   
-</section>
-<section *ngIf="orders && future_orders && customId">
-    <div *ngIf="orders && future_orders && customId">
-        <app-submissions [user_details]="usr_details" [custom_id]="customId" [orders]="orders.concat(future_orders)"></app-submissions>
     </div>
 </section>
 <div id="popup" #popupforApp class="modal disply">
@@ -690,9 +718,9 @@
                 <span class="close" (click)="closeModal()">&times;</span>
             </h6>
             <div class="section-app text-center">
-                    <button class="mgn-up-20 find-sp-btn telebt" mat-raised-button (click)="redirectto('profile')"><i class="fa fa-telegram tbt" aria-hidden="true"></i>  &nbsp; Get Updates On Telegram</button>
+                <button class="mgn-up-20 find-sp-btn telebt" mat-raised-button (click)="redirectto('profile')"><i
+                        class="fa fa-telegram tbt" aria-hidden="true"></i> &nbsp; Get Updates On Telegram</button>
             </div>
         </div>
     </div>
 </div>
-

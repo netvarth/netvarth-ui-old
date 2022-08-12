@@ -1,6 +1,5 @@
-<app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
-
-<section class="container no-padding cons-donate no-padding-small shop-cart" *ngIf="!apiloading">
+<app-common-innerloading-spinner *ngIf="apiloading || source === 'paper'"></app-common-innerloading-spinner>
+<section class="container no-padding cons-donate no-padding-small shop-cart" *ngIf="!apiloading && source!=='paper'">
   <div class="content  p0 loc-list p-checkin ynw-common-form-nm">
     <div class="col-md-12 no-padding-small">
       <div class="panel panel-default">
