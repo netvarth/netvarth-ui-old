@@ -480,12 +480,12 @@
                       <div
                         *ngIf="cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
                         <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
-                          [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; â†’
+                          [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; →
                         </button>
                       </div>
                       <div *ngIf="cartDetails.advanceAmount == 0 || !cartDetails.advanceAmount">
                         <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
-                          [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; â†’
+                          [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp;→
                         </button>
                       </div>
                     </div>
@@ -629,13 +629,13 @@
                   <div
                     *ngIf="selectedImagelist.files.length > 0 && cartDetails.advanceAmount > 0 &&  ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
                     <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
-                      [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; â†’
+                      [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp;→
                     </button>
                   </div>
                   <div
                     *ngIf="selectedImagelist.files.length > 0 && (cartDetails.advanceAmount == 0 || !cartDetails.advanceAmount)">
                     <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
-                      [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; â†’
+                      [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp;→
                     </button>
                   </div>
                 </div>
@@ -955,7 +955,7 @@
                         </div>
                       </div>
                     </div>
-                    <span class="confirmClr my-2 font-weight-bold">Total Payment: â‚¹{{cartDetails.itemTotal}}</span>
+                    <span class="confirmClr my-2 font-weight-bold">Total Payment: ₹{{cartDetails.itemTotal}}</span>
                     <br>
                     <form>
                       <div class="form-check text-success d-flex mgn-up-10">
@@ -1188,12 +1188,12 @@
                       <div
                         *ngIf="cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
                         <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
-                          [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; â†’
+                          [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp;→
                         </button>
                       </div>
                       <div *ngIf="cartDetails.advanceAmount == 0 || !cartDetails.advanceAmount">
                         <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
-                          [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; â†’
+                          [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp;→
                         </button>
                       </div>
                     </div>
@@ -1339,13 +1339,13 @@
                   <div
                     *ngIf="selectedImagelist.files.length > 0 && cartDetails.advanceAmount > 0 &&  ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
                     <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
-                      [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; â†’
+                      [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp;→
                     </button>
                   </div>
                   <div
                     *ngIf="selectedImagelist.files.length > 0 && (cartDetails.advanceAmount == 0 || !cartDetails.advanceAmount)">
                     <button mat-flat-button [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirm()"
-                      [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp; â†’
+                      [disabled]="checkoutDisabled || !isfutureAvailableTime" class="chekout-btn">CHECKOUT &nbsp;→
                     </button>
                   </div>
                 </div>
