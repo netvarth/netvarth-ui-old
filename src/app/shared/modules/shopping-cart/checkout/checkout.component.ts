@@ -946,7 +946,29 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  goBackToHome() {
+    // const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+    const source = this.lStorageService.getitemfromLocalStorage('source');
+    console.log(source);
+    if (source) {
+      window.location.href = source;
+      this.lStorageService.removeitemfromLocalStorage('reqFrom');
+      this.lStorageService.removeitemfromLocalStorage('source');
+    } else {
+      const chosenDateTime = {
+        delivery_type: this.choose_type,
+        catlog_id: this.catalog_details.id,
+        nextAvailableTime: this.nextAvailableTime,
+        order_date: this.sel_checkindate,
+        account_id: this.account_id,
+        selected_coupons: this.selected_coupons,
+        couponsList: this.couponsList
 
+      };
+      this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+      this.location.back();
+    }
+  }
 
   confirm(paytype?) {
     let post_Data: any;
