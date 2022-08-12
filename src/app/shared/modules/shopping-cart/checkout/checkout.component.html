@@ -861,29 +861,112 @@
                     <span class="back-btn pointer-cursor" (click)="goBack()"><i class="fa fa-arrow-left"
                         aria-hidden="true"></i>&nbsp;Back</span>
                   </div>
-                  <h3 class="text-gold font-weight-bold">
-                    Submit a Paper
-                  </h3>
-                  <h5>Payment Instructions</h5>
-                  <p>
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-                    industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-                    scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-                    electronic typesetting, remaining essentially unchanged.
-                  </p>
-                  <span class="text-primary my-2 font-weight-bold">Total Payment: â‚¹{{cartDetails.itemTotal}}</span>
-                  <br>
-                  <form>
-                    <div class="form-check text-success d-flex">
-                      <section class="example-section">
-                        <mat-checkbox class="example-margin" (click)="terms_check()"><label>
-                          &nbsp;&nbsp;I have read and understood all the instructions
-                        </label>
-                      </mat-checkbox>
-                      </section>
+                  <div class="shadow">
+                    <div class="font-weight-bold paperSubmitTxt">
+                      Submit a Paper
                     </div>
-                  </form>
-                  <br>
+                    <div class="instructionText">Instructions to the author</div>
+                    <div class="defultTextIns" *ngIf="defultTextFirstStep">
+                      {{defultTextFirstStep}} 
+                      <div *ngIf="!termscheck">{{defultMoreText}}</div>
+                      <div *ngIf="termscheck">
+                        <div>
+                          <span class="SINO">A.</span> Please make sure that you have made your best efforts in finalizing the documents. Avoid leaving improvements/corrections that you can make to the peer reviewers. 
+                          Ensure that you have done spell check and grammar check of the manuscript using software freely available for these purposes.
+                        </div>
+                        <div>
+                          <span class="SINO">B.</span>Please ensure that your manuscript clears plagiarism check, including that of self plagiarism. 
+                          AuthorDemy.com does not do plagiarism check and will not be of any help if the manuscript is returned from journal based on plagiarism check.
+                        </div>
+                        <div>
+                          <span class="SINO">C.</span> Please provide pictures and graphs with sufficient clarity. 
+                          Ensure that quality of the images is good and it is easy to read the legends and captions of the axes of the graphs.
+                        </div>
+                        <div>
+                          <span class="SINO">D.</span> Ensure that there is uniformity in the units used throughout the manuscript. For example avoid using °C in one place and K in another place for temperature in the same manuscript. 
+                          Please note the most of the journals encourage the use of SI units. 
+                        </div>
+                        <div>
+                          <span class="SINO">E.</span> If the authors are having a targeted journal in mind, ensure that manuscript is well with in the limits for maximum number of words allowed, 
+                          maximum number of tables and figures permitted for the manuscript for that journal. Please note that if peer reviewers recommend major modifications, them, then the revised manuscript may exceed the limits specified for the journal. This may further delay the manuscript submission.
+                        </div>
+                        <div>
+                          <span class="SINO">F.</span> Make the list of references as per the requirements of the journal. Please ensure that the listing of the authors and inclusion of the title of the paper in the reference list are as 
+                          per the guidelines provided for the targeted journal.
+                        </div>
+                        <div>
+                          <span class="SINO">G.</span> Ensure use of proper tense (past, present and future tenses) in the manuscript. For example, literature survey and
+                           experimental details can be in past tense; but the results presented in manuscript can be in present tense.
+                        </div>
+                        <div>
+                          <span class="SINO">H.</span> It would be good to ensure that the English Language used is uniform throughout. Avoid mixing up 
+                          ‘American English’ and ‘UK English’. Depending on the journal and the publisher, it is better to choose one of these and prepare the manuscript fully in that.
+                        </div>
+                        <div>
+                          <span class="SINO">I.</span> Please be informed that authors have to upload ‘abstract’ in text form and complete manuscript, including abstract in PDF format separately to AuthorDemy.com. In the complete manuscript, it is strongly recommended to include figures and tables where they are referred in the manuscript. Further Table and Figure captions shall accompany the Tables and Figures respectively. 
+                          Avoid uploading manuscripts prepared with text first, then tables and figures and then figure and table captions.
+                        </div>
+                        <div>
+                          <span class="SINO">J.</span> It is recommended to prepare the PDF version 
+                          of the manuscript with at least one and half line spacing. It would help the reviewers to read as well as to comment on the manuscript.
+                        </div>
+                        <div>
+                          <span class="SINO">K.</span> It is recommended to include a list of symbols with their description if the symbols used in the manuscript 
+                          are many. Please ensure that same symbol is not used for more than one parameter. 
+                        </div>
+                        <div>
+                          <span class="SINO">L.</span> Ensure that abbreviations are expanded first time when it appears in the manuscript.
+                        </div>
+                        <div>
+                          <span class="SINO">M.</span> It may be noted that peer-reviewer will not modify or correct your manuscript. He/She would only comment on the manuscript and advise the authors how to improve the manuscript. The peer-reviewer would be an expert in the broad area of the subject of manuscript.
+                        </div>
+                        <div>
+                          <span class="SINO">N.</span> Peer reviewer will not comment on the technical content of the manuscript as this is an exhaustive work which needs to be done by the reviewer to whom the editor of the journal would identify. 
+                        </div>
+                        <div>
+                          <span class="SINO">O.</span> AuthorDemy.com does not guarantee that the papers subjected to peer-review would be accepted by the journals for publications. It only helps the authors to improve the quality of the manuscript. This improvement along with the good technical content of the manuscript can significantly improve the chances of publication.
+                        </div>
+                        <div>
+                          <span class="SINO">P.</span> AuthorDemy.com does not expect authors to approach them again for a second peer review of a manuscript already reviewed by AuthorDemy.com peer reviewer. However, If authors feel that one more review is desirable, then authors can submit the manuscript for a second revision with a subsidised cost, preferably with in 12 months of the first peer-review.
+                        </div>
+                        <div>
+                          <span class="SINO">Q.</span> As of now, information on peer reviewer would be confidential. Authors shall not ask for who peer-reviewed their manuscript. Authors shall not approach the possible peer reviewers directly based on the information available in the AuthorDemy.com website.s 
+                        </div>
+                        <div>
+                          <span class="SINO">R.</span> Authors can log in to the website and find out the status of the review. For any additional information or follow up, they can contact AuthorDemy.com in the e-mail provided in the website. No other communication will be entertained when the manuscript is in peer-review state.
+                        </div>
+                        <div>
+                          <span class="SINO">S.</span> Once manuscript is submitted to AuthorDemy.com for peer review, the task will be assigned to one of the peer reviewers already registered with AuthroDemy.com. However, in case AuthorDemy.com fails to find a suitable peer reviewer, manuscript will be returned (within seven days) and authors need not make any payment. When a peer-reviewer accepts to carry out the review, the manuscript will be accepted for peer-review by AuthorDemy.com and author need to make the payment for the peer review immediately to take up the peer review without any further delay. Though some time may be lost in this process, AuthorDemy.com shall make best efforts to complete the peer-review within one month of submission of manuscript to AuthroDemy.com.
+                        </div>
+                        <div>
+                          <span class="SINO">T.</span> In the unlikely event of AuthorDemy.com is not able to complete the review with in 30 days of submission, extension of time for 15 more days would be sought by AuthorDemy.com from the Author. If author is not ready for this extended time, money paid by the author would be returned. If the author agrees for extension and AuthorDemy.com, still fails to complete the review after 45 days of submission, authors will get back the money paid. It may be noted that we do not expect this situation to arise.
+                        </div>
+                        <div>
+                          <span class="SINO">U.</span> All communication of AuthorDemy.com will be with the corresponding author identified while submitting the paper for review. We will not entertain communication from others, including co-authors. In case one corresponding author wants another author to replace him, he can communicate this to AuthorDemy.com and AuthorDemy.com shall make these changes and inform both the present and old corresponding author appropriately. It may be noted that only an author of the paper can become a corresponding author.  Persons who are not authors of the manuscript cannot become corresponding authors for the manuscript.
+                        </div>
+                        <div>
+                          <span class="SINO">V.</span> For any additional information, contact AuthorDemy.com in the website provided
+                        </div>
+                        <div>
+                          We at AuthorDemy.com expect to meet the expectation of all the authors who approach us for peer-review. We wish all the authors that their manuscript modified as per the comments from AuthorDemy.com shall be accepted in the targeted journals. We hope, with this initiative, there would be a significant improvement in the quality of the paper being submitted and increase in number of the manuscripts being accepted for publications, leading to improved confidence among the researchers on their abilities to prepare good manuscripts for publications.
+                        </div>
+                        <div>
+                          AuthorDemy.com
+                        </div>
+                      </div>
+                    </div>
+                    <span class="confirmClr my-2 font-weight-bold">Total Payment: â‚¹{{cartDetails.itemTotal}}</span>
+                    <br>
+                    <form>
+                      <div class="form-check text-success d-flex mgn-up-10">
+                        <label class="container1">I have read and understood all the instructions
+                          <input type="checkbox" (click)="terms_check()">
+                          <span class="mark"></span>
+                        </label>
+                      </div>
+                    </form>
+                    
+                  </div>
                 </div>
 <!-- 
                 <span class="mgn-up-20" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'"

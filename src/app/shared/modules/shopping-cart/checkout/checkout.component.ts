@@ -212,6 +212,9 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   convenientFeeObj: any;
   convenientFee: any;
   gatewayFee: any;
+  defultTextFirstStep:string='The primary objective of AuthorDemy.com is to help you improve the quality of the manuscript that you have prepared for publication so that its chances for getting accepted for publication increases considerably.We are particular that you should take full advantage of this additional step that we recommend to you before you submit your manuscript for publication. We want to improve not only the quality of the publication that you submitted to us, but also the writing skill of the authors by this exercise. Ideally, we do not want you to come back to AuthorDemy.com for all your future publications. Instead, we look forward to new authors to come to us based on the positive feed back about AuthorDemy.com that you give to them based on your experience in working with AuthorDemy.com. In order to achieve these, we request you to make sure that the manuscript you submit to AuthorDemy.com is finalized based on the information and instructions provided below.'
+  defultMoreText:string='...more';
+  defultTextSecondStep:string=''
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
