@@ -1052,8 +1052,8 @@ export class ViewLeadQnrComponent implements OnInit {
                     _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['status'] = 'COMPLETE';
                     _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['action'] = 'add';
                     _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['action'] = 'add';
-                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['s3path'] = info.urls[0].url;
-                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['s3path'] = info.urls[0].url;
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['s3path'] = info.urls[0].viewPath;
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['s3path'] = info.urls[0].viewPath;
                   } 
                 });
               }

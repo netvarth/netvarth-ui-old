@@ -223,6 +223,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit {
                                 break;
                             }
                         }
+                        if (!_this.twilioService.cam2Device && media['videoDevices'].length > 1) {
+                            _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                        }
                     }
                     _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
                     _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;  

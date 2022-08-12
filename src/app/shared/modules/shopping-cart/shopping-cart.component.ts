@@ -502,6 +502,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     return subtotal.toFixed(2);
   }
   confirmOrder() {
+    console.log("CustomId:", this.customId);
     if (this.checkMinimumQuantityofItems()) {
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       const chosenDateTime = {
@@ -533,6 +534,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         queryParams: queryParam,
       };
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+      console.log(navigationExtras);
       this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
     }
   }

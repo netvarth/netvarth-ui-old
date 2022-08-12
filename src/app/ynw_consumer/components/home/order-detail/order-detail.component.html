@@ -1,13 +1,13 @@
-<section class="container no-padding-small cust-book-details" *ngIf="source != 'paper'">
+<section class="container no-padding-small cust-book-details" >
     <div class="content p0 comn-cls checkin-details order-det">
         <div class="row">
             <div class="panel panel-default">
                 <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                        <app-header *ngIf="shared_functions.checkLogin()" [showHeaderAction]="true"></app-header>
+                        <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
                     </div>
                 </div>
-                <div class="panel-body no-padding">
+                <div class="panel-body no-padding" *ngIf="source !== 'paper'">
                     <div class="c-outer m0">
                         <div class="c-body booking-content col-md-12 col-xs-12 col-sm-12 no-padding">
                             <!-- graphics -->
@@ -348,49 +348,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<section class="container no-padding-small cust-book-details" *ngIf="source=='paper'">
-    <div class="content p0 comn-cls checkin-details order-det">
-        <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                        <app-header *ngIf="shared_functions.checkLogin()" [showHeaderAction]="true"></app-header>
-                    </div>
-                </div>
-                <div class="panel-body no-padding">
+                <div class="panel-body no-padding" *ngIf="source === 'paper'">
                     <div class="c-outer m0">
                         <div class="c-body booking-content col-md-12 col-xs-12 col-sm-12 no-padding">
 

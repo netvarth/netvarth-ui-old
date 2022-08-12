@@ -40,6 +40,7 @@ export class ApplicantComponent implements OnInit {
   @Input() activeUser;
   @Output() removeApplicant = new EventEmitter<any>();
   @Output() addApplicant = new EventEmitter<any>();
+  @Input() mode;
   failedStatusId: any;
   crifStatusId: any;
   availableDates: any = [];

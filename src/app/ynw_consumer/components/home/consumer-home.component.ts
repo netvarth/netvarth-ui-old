@@ -444,8 +444,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         (uniqueId:any)=>{
           _this.domainConfigService.getUIAccountConfig(uniqueId).subscribe(
             (uiconfig: any) => {
-              alert(uiconfig.mode);
-              // _this.viewMode = 
               if (uiconfig['mode']) {
                 _this.homeView= uiconfig['mode'];                
               }
@@ -2071,7 +2069,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   }
   getTdyOrder() {
-    this.orders = '';
+    this.orders = [];
     this.total_tdy_order = [];
     this.todayOrderslst = [];
     this.todayOrderslst_more = [];
@@ -2080,6 +2078,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       'orderDate-eq': this.tDate
     };
     this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
+      console.log("Orders:", data);
       this.orders = data; // saving todays orders
       console.log('orders' + JSON.stringify(this.orders));
       this.total_tdy_order = this.orders;
@@ -2099,7 +2098,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     });
   }
   getFutureOrder() {
-    this.future_orders = '';
+    this.future_orders = [];
     this.total_future_order = [];
     this.futureOrderslst = [];
     this.futureOrderslst_more = [];
@@ -2119,6 +2118,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.futureOrderslst_more.push(this.total_future_order[i]);
         }
       }
+      this.orders.concat(this.future_orders);
     });
   }
 

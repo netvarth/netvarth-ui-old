@@ -59,7 +59,7 @@
                                             <input [disabled]="buttonDisable || disableInput()"
                                                 (blur)="onSubmit('inputChange');"
                                                 [(ngModel)]="comments[getQuestion(question).labelName + '=' + doc]">
-                                            <div class="gal_action" *ngIf="!buttonDisable && !disableInput()"
+                                            <div class="gal_action" *ngIf="!buttonDisable && !disableInput() && mode!=='read'"
                                                 (click)="changeImageSelected(getQuestion(question), doc)">
                                                 <i class="fa fa-times-circle" aria-hidden="true"></i>
                                             </div>

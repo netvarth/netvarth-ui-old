@@ -1167,7 +1167,11 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
         if (indx !== -1) {
           if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
+            if (this.selectedMessage[indx].s3path){
+              window.open(this.selectedMessage[indx].s3path, '_blank'); 
+            } else {
               window.open(this.selectedMessage[indx].path, '_blank'); 
+            } 
           } else {
             imagePath = this.uploadedImages[indx].path;
             caption = this.comments[question.labelName + '=' + document];

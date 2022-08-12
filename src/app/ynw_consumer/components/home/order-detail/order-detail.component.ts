@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, HostListener, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 // import { ConsumerServices } from '../../../services/consumer-services.service';
@@ -80,6 +80,8 @@ buttons: [
   questionnaires: any = [];
   history: boolean = false;
   source: any;
+  accountId: any;
+  customId: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -100,9 +102,14 @@ buttons: [
           this.history = true;
         }
         this.providerId = qParams.providerId;
-        if(qParams.source)
-        {
+        if(qParams.source)  {
           this.source = qParams.source;
+        }
+        if (qParams && qParams.accountId) {
+        this.accountId = qParams.accountId;
+        }
+        if (qParams && qParams.customId) {
+          this.customId = qParams.customId;
         }
       });
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -234,7 +241,16 @@ buttons: [
   }
   gotoPrev() {
     // this.locationobj.back();
-    this.router.navigate(['consumer'] ,{ queryParams: { 'source': 'order'}});
+    let queryParams = {};
+    queryParams['source']= 'order';
+    if (this.customId) {
+      queryParams['accountId'] = this.accountId;
+      queryParams['customId'] = this.customId;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
+    this.router.navigate(['consumer'] ,navigationExtras);
 
   }
   providerDetail(provider) {

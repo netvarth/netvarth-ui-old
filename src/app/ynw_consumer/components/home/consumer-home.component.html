@@ -702,9 +702,9 @@
                         [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
                         (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
                 </div>
-                <div class="c_card card c-checkins" *ngIf="homeView==='paper_submission'">
+                <div class="c_card card c-checkins" *ngIf="homeView==='paper_submission' && orders">
                     <app-submissions [user_details]="usr_details" [custom_id]="customId"
-                        [orders]="orders.concat(future_orders)">
+                        [orders]="orders">
                     </app-submissions>
                 </div>
             </div>

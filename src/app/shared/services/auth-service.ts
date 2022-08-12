@@ -176,6 +176,9 @@ export class AuthService {
     }
 
     doLogout() {
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom') !== 'cuA') {
+            this.lStorageService.removeitemfromLocalStorage('authorization');
+        }
         const promise = new Promise<void>((resolve, reject) => {
             if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
                 this.providerLogout().then(data => {resolve();});

@@ -110,8 +110,13 @@ export class CatalogItemComponent implements OnInit {
         this.catalogId = params.get('catalogId');
         this.itemId = params.get('itemId');
       }
-
     )
+    this.activatedRoute.queryParams.subscribe(qparams => {
+      if (qparams.src) {
+        this.lStorageService.setitemonLocalStorage('source', qparams.src);
+        this.lStorageService.setitemonLocalStorage('reqFrom', 'CUSTOM_WEBSITE');
+      }
+    });
     this.image_list_popup = [];
     this.catalogimage_list_popup = [];
   }
@@ -153,22 +158,23 @@ export class CatalogItemComponent implements OnInit {
   ngOnInit() {
     console.log("Catalog Item Component");
     const _this = this;
-    this.getAccountIdFromEncId(this.accountEncId).then(
+    _this.getAccountIdFromEncId(_this.accountEncId).then(
       (s3UniqueId: any) => {
-        this.s3UniqueId = s3UniqueId;
-        this.getBusinessAccountInfo(s3UniqueId).then(
+        _this.businessCustomId = _this.accountEncId;
+        console.log(_this.businessCustomId);
+        _this.s3UniqueId = s3UniqueId;
+        _this.getBusinessAccountInfo(s3UniqueId).then(
           () => {
             _this.domainConfigService.getUIAccountConfig(s3UniqueId).subscribe(
               (uiconfig: any) => {
                 // _this.viewMode = 
                 if (uiconfig['mode']) {
                   _this.homeView= uiconfig['mode'];   
-                  _this.setItemDetails(this.catalogId, this.itemId, this.accountId);             
+                  _this.setItemDetails(_this.catalogId, _this.itemId, _this.accountId);             
                 }
               }, ()=> {
-                _this.setItemDetails(this.catalogId, this.itemId, this.accountId);
-              })
-            
+                _this.setItemDetails(this.catalogId, _this.itemId, _this.accountId);
+              })            
           }
         )
       }
@@ -331,7 +337,6 @@ export class CatalogItemComponent implements OnInit {
       _this.subscriptions.sink = _this.s3Processor.getJsonsbyTypes(uniqueId,
         null, accountS3List).subscribe(
           (accountS3s: any) => {
-
             _this.setBusinesssProfile(accountS3s.businessProfile);
             resolve(true);
           });
@@ -552,10 +557,11 @@ export class CatalogItemComponent implements OnInit {
     }
     let cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id='
       + this.s3UniqueId + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
-    console.log("userType :", this.userType)
+    console.log("cartUrl :", cartUrl);
     if (this.activeCatalog.catalogType == 'submission') {
       cartUrl+='&source=paper';
     }
+    console.log("cartUrl :", cartUrl);
     if (this.userType === 'consumer') {
         // cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id='
         //   + this.s3UniqueId + '&source=paper' + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');

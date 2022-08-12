@@ -108,7 +108,7 @@
                                     <img [src]="getImage(selectedFiles['kyc1'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc1'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc1',file)">
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc1',file)" *ngIf="mode!=='read'">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -128,7 +128,7 @@
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
                    <div>
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc1',file)"></i>
+                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc1',file)" *ngIf="mode!=='read'"></i>
                    </div>
                 </div>
             </div>
@@ -186,7 +186,7 @@
                                     <img [src]="getImage(selectedFiles['kyc2'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc2'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc2',file)">
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc2',file)" *ngIf="mode!=='read'">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -206,7 +206,7 @@
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
                    <div>
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc2',file)"></i>
+                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc2',file)" *ngIf="mode!=='read'"></i>
                    </div>
                 </div>
             </div>
@@ -264,7 +264,7 @@
                                     <img [src]="getImage(selectedFiles['kyc3'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc3'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc3',file)">
+                                <div class="gal_action" (click)="deleteTempImage(i, 'kyc3',file)" *ngIf="mode!=='read'">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -284,7 +284,7 @@
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
                    <div>
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc3',file)"></i>
+                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc3',file)" *ngIf="mode!=='read'"></i>
                    </div>
                 </div>
             </div>
@@ -569,7 +569,7 @@
                                     <img [src]="getImage(selectedFiles['other'].base64[i], file)"
                                         *ngIf="selectedFiles['other'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'other','delete')">
+                                <div class="gal_action" (click)="deleteTempImage(i, 'other','delete')" *ngIf="mode!=='read'">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -590,7 +590,7 @@
                         </div>
                         <div>
                             <i class="fa fa-times-circle pointer-cursor" aria-hidden="true"
-                                (click)="deleteTempImage(i, 'other','delete')"></i>
+                                (click)="deleteTempImage(i, 'other','delete')" *ngIf="mode!=='read'"></i>
                         </div>
                     </div>
                 </div>
