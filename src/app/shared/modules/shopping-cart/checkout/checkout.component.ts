@@ -1039,7 +1039,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    if (this.delivery_type === 'store' || this.onlyvirtualItemsPresent || this.source==="paper") {
+    if ((this.delivery_type === 'store' || this.onlyvirtualItemsPresent) && this.source!=="paper") {
 
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
@@ -1053,7 +1053,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         post_Data['email'] = contact_email
 
       }
-      if (this.delivery_type === 'store' && (!this.onlyvirtualItemsPresent || this.source==="paper")) {
+      if (this.delivery_type === 'store' && !this.onlyvirtualItemsPresent) {
         post_Data['storePickup'] = true;
         console.log("storePickupstorePickupstorePickup")
       }

@@ -497,9 +497,9 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
               let type = this.filestoUpload[key][key1].type.split('/');
               type = type[0];
               if (type === 'application' || type === 'image') {
-                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1], driveId: this.filestoUpload[key][key1].driveId, uid: this.filestoUpload[key][key1].uid });
+                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1], driveId: this.filestoUpload[key][key1].driveId, uid: this.filestoUpload[key][key1].uid, status: 'COMPLETE' });
               } else {
-                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1], driveId: this.filestoUpload[key][key1].driveId, uid: this.filestoUpload[key][key1].uid });
+                this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1], driveId: this.filestoUpload[key][key1].driveId, uid: this.filestoUpload[key][key1].uid, status: 'COMPLETE' });
               }
             }
           } else {
