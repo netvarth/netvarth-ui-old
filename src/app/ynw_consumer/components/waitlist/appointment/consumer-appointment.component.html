@@ -364,7 +364,7 @@
                             <div class="clearfix"></div>
                             <hr
                                 *ngIf="(s3CouponsList.JC.length > 0) && appointmentType != 'reschedule'||(s3CouponsList.OWN.length > 0) && appointmentType != 'reschedule'" />
-                            <label class="question-header" *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails">Payment
+                            <label class="question-header" *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails.amountRequiredNow > 0">Payment
                                 Details</label><br />
                             <div class="payment-section-details mgn-lt-10" *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails">
                                 <div class="web"

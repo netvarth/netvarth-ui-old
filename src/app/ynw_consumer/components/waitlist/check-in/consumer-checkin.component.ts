@@ -872,7 +872,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 return false;
             }
             if (type === 'checkin') {
-                if (this.selectedService.isPrePayment && !this.selected_payment_mode) {
+                if (this.selectedService.isPrePayment && !this.selected_payment_mode && this.paymentDetails.amountRequiredNow > 0) {
                     this.snackbarService.openSnackBar('Please select a payment mode', { 'panelClass': 'snackbarerror' });
                     this.isClickedOnce = false;
                     return false;

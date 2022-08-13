@@ -672,7 +672,7 @@
                                                     <hr  />
                                                     <hr
                                                     *ngIf="(s3CouponsList.JC.length > 0) && type != 'waitlistreschedule'||(s3CouponsList.OWN.length > 0) && type != 'waitlistreschedule'" />
-                            <label class="question-header" *ngIf="type != 'waitlistreschedule' && paymentLength>0 && paymentDetails">Payment
+                            <label class="question-header" *ngIf="type != 'waitlistreschedule' && paymentLength>0 && paymentDetails.amountRequiredNow > 0">Payment
                                 Details</label><br />
                                                     <div class="payment-section-details mgn-lt-10"
                                                         *ngIf="selectedService && selectedService.isPrePayment">

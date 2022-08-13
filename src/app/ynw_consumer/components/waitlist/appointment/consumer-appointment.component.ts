@@ -1489,10 +1489,44 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     checkCouponvalidity() {
         const post_Data = this.generateInputForAppointment();
+        post_Data['appmtFor'][0]['apptTime'] = this.selectedSlots[0]['time'];
+        post_Data['schedule'] = { 'id': this.selectedSlots[0]['scheduleId'] };
         const param = { 'account': this.accountId };
         this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data).subscribe(data => {
             this.paymentDetails = data;
             console.log("PaymentDetails:", this.paymentDetails);
+            this.paymentLength = Object.keys(this.paymentDetails).length;
+                this.checkJcash = true
+                this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
+                this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
+                if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
+                    this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
+
+                } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
+                    this.payAmount = 0;
+                }
+                let convienientPaymentObj = {}
+                convienientPaymentObj = {
+                    "profileId" :  this.profileId,
+                    "amount"	: this.paymentDetails.amountRequiredNow
+                }
+                this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
+                    // let array = []
+                    console.log("Convenient response :",data)
+                    this.convenientPaymentModes = data;
+                    if(this.convenientPaymentModes){
+                    this.convenientPaymentModes.map((res:any)=>{
+                    this.convenientFeeObj = { }
+                    if(res){
+                        this.convenientFeeObj = res;
+                            this.convenientFee = this.convenientFeeObj.convenienceFee;
+                        
+                    }
+                    })
+                }
+                  
+
+                })
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
@@ -1717,7 +1751,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     // _this.paymentOperation(_this.paymentMode);
     async performAppointment() {
         const _this = this;
-        if (this.selectedService.isPrePayment && !this.paymentMode) {
+        if (this.selectedService.isPrePayment && !this.paymentMode && this.paymentDetails.amountRequiredNow > 0) {
             this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
             this.isClickedOnce = false;
             return false;
