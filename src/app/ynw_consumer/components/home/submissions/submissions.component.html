@@ -202,18 +202,18 @@
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
                     <table class="table ">
-                        <!-- <thead>
+                        <thead>
                             <tr>
-                              <th>No</th>
-                              <th>Medicine</th>
-                              <th>Duration(days)</th>
-                              <th>Dosage</th>
+                              <th>Name</th>
+                              <th>Date</th>
+                              <th>Assigned</th>
+                              <th>Status</th>
                             </tr>
-                          </thead> -->
+                          </thead>
                         <tbody>
                             <ng-container *ngFor="let paper of ongoing_papers">
                                 <tr class="pointer-cursor" *ngIf="paper" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
-                                    <td width="400"   class="td1" *ngIf="paper && paper.questionnaires && paper.questionnaires[0] && paper.questionnaires[0].questionAnswers  && paper.questionnaires[0].questionAnswers[4] && paper.questionnaires[0].questionAnswers[4].answerLine &&
+                                    <!-- <td width="400"   class="td1" *ngIf="paper && paper.questionnaires && paper.questionnaires[0] && paper.questionnaires[0].questionAnswers  && paper.questionnaires[0].questionAnswers[4] && paper.questionnaires[0].questionAnswers[4].answerLine &&
                                      paper.questionnaires[0].questionAnswers[4].answerLine.answer && paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText">
                                        <div class="imgClass">
                                         <div>
@@ -221,17 +221,22 @@
                                         </div>
                                         <div> {{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}</div>
                                        </div>
+                                    </td> -->
+                                    <td data-title="Name" width="400"   class="td1" *ngIf="paper && paper.consumer && paper.consumer.firstName">
+                                       <div class="imgClass">
+                                        <div> {{paper.consumer.firstName}}</div>
+                                       </div>
                                     </td>
-                                    <td width="400"  class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
+                                    <td data-title="Date" width="400"  class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
                                         <div class="imgClass">
                                             <div>
                                                 <img class="img" src="/assets/images/authordemy/date.png" />
                                             </div>
-                                            <div>{{paper.lastStatusUpdatedDate}}</div>
+                                            <div>{{paper.lastStatusUpdatedDate }}</div>
                                         </div>
                                        
                                     </td>
-                                    <td width="400"   class="td3" *ngIf="user_details && user_details.firstName">
+                                    <td data-title="Assigned" width="400"   class="td3" *ngIf="user_details && user_details.firstName">
                                     <div class="imgClass">
                                         <div >
                                             <img class="img" src="/assets/images/avatar5.png" />
@@ -241,11 +246,13 @@
                                         </div>
                                     </div>
                                     </td>
-                                    <td width="400"   class="td4 text-primary">Submitted</td>
+                                    <td data-title="Status" width="400"   class="td4 text-primary" *ngIf="paper && paper.orderStatus">
+                                        <div *ngIf=" paper && paper.orderStatus">{{paper.orderStatus}}</div>
+                                    </td>
                                 </tr>
                             </ng-container>
                         </tbody>
-                        <ng-container *ngIf="ongoing_papers.length==0" class="text-danger">No Papers Found</ng-container>
+                        <ng-container *ngIf="ongoing_papers && ongoing_papers.length===0" class="text-danger">No Papers Found</ng-container>
                     </table>
                 </div>
             </mat-expansion-panel>
@@ -273,10 +280,18 @@
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
                     <table class="table">
+                        <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Date</th>
+                              <th>Assigned</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
                         <tbody>
                             <ng-container *ngFor="let paper of completed_papers">
                                 <tr class="pointer-cursor" *ngIf="paper" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
-                                    <td width="400" class="td1 " *ngIf="paper && paper.questionnaires && paper.questionnaires[0] 
+                                    <!-- <td width="400" class="td1 " *ngIf="paper && paper.questionnaires && paper.questionnaires[0] 
                                     && paper.questionnaires[0].questionAnswers
                                     && paper.questionnaires[0].questionAnswers[4] &&  
                                     paper.questionnaires[0].questionAnswers[4].answerLine &&
@@ -288,8 +303,13 @@
                                             </div>
                                             <div> {{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}</div>
                                         </div>
-                                    </td>
-                                    <td width="400" class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
+                                    </td> -->
+                                    <td data-title="Name" width="400"   class="td1" *ngIf="paper && paper.consumer && paper.consumer.firstName">
+                                        <div class="imgClass">
+                                         <div> {{paper.consumer.firstName}}</div>
+                                        </div>
+                                     </td>
+                                    <td data-title="Date" width="400" class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
                                         <div class="imgClass">
                                             <div>
                                                 <img class="img" src="/assets/images/authordemy/date.png" />
@@ -297,7 +317,7 @@
                                             <div>{{paper.lastStatusUpdatedDate}}</div>
                                         </div>
                                     </td>
-                                    <td width="400" class="td3" *ngIf="user_details && user_details.firstName">
+                                    <td data-title="Assigned" width="400" class="td3" *ngIf="user_details && user_details.firstName">
                                         <div class="imgClass">
                                             <div >
                                                 <img class="img" src="/assets/images/avatar5.png" />
@@ -307,11 +327,13 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td width="400" class="td4 text-success">Completed</td>
+                                    <td data-title="Status" width="400"   class="td4 text-primary" *ngIf="paper && paper.orderStatus">
+                                        <div *ngIf=" paper && paper.orderStatus">{{paper.orderStatus}}</div>
+                                    </td>
                                 </tr>
                             </ng-container>
                         </tbody>
-                        <ng-container *ngIf="completed_papers.length==0" class="text-danger">No Papers Found</ng-container>
+                        <ng-container *ngIf="completed_papers && completed_papers.length===0" class="text-danger">No Papers Found</ng-container>
                     </table>
                 </div>
             </mat-expansion-panel>
@@ -336,10 +358,18 @@
                 </mat-expansion-panel-header>
                 <div class="allTabInPannel">
                     <table class="table">
+                        <thead>
+                            <tr>
+                              <th>Name</th>
+                              <th>Date</th>
+                              <th>Assigned</th>
+                              <th>Status</th>
+                            </tr>
+                          </thead>
                         <tbody>
                             <ng-container *ngFor="let paper of cancelled_papers">
                                 <tr class="pointer-cursor" (click)="viewPaper(paper.account,paper.uid,paper.providerAccount.id)">
-                                    <td width="400" class="td1 "*ngIf="paper && paper.questionnaires && paper.questionnaires[0] 
+                                    <!-- <td width="400" class="td1 "*ngIf="paper && paper.questionnaires && paper.questionnaires[0] 
                                     && paper.questionnaires[0].questionAnswers
                                     && paper.questionnaires[0].questionAnswers[4] &&  
                                     paper.questionnaires[0].questionAnswers[4].answerLine &&
@@ -351,8 +381,13 @@
                                         </div>
                                         <div> {{paper.questionnaires[0].questionAnswers[4].answerLine.answer.plainText}}</div>
                                     </div>
-                                    </td>
-                                    <td width="400" class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
+                                    </td> -->
+                                    <td data-title="Name" width="400"   class="td1" *ngIf="paper && paper.consumer && paper.consumer.firstName">
+                                        <div class="imgClass">
+                                         <div> {{paper.consumer.firstName}}</div>
+                                        </div>
+                                     </td>
+                                    <td data-title="Date" width="400" class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
                                         <div class="imgClass">
                                             <div>
                                                 <img class="img" src="/assets/images/authordemy/date.png" />
@@ -360,7 +395,7 @@
                                             <div>{{paper.lastStatusUpdatedDate}}</div>
                                         </div>
                                     </td>
-                                    <td width="400" class="td3" *ngIf="user_details && user_details.firstName"><div>
+                                    <td data-title="Assigned" width="400" class="td3" *ngIf="user_details && user_details.firstName"><div>
                                         <div class="imgClass">
                                             <div>
                                                 <img class="img" src="/assets/images/avatar5.png" />
@@ -371,11 +406,13 @@
                                         </div>
                                     </div>
                                     </td>
-                                    <td width="400" class="td4 text-danger">Rejected</td>
+                                    <td data-title="Status" width="400"   class="td4 text-primary" *ngIf="paper && paper.orderStatus">
+                                        <div *ngIf=" paper && paper.orderStatus">{{paper.orderStatus}}</div>
+                                    </td>
                                 </tr>
                             </ng-container>
                         </tbody>
-                        <ng-container *ngIf="cancelled_papers.length==0" class="text-danger">No Papers Found</ng-container>
+                        <ng-container *ngIf="cancelled_papers.length===0" class="text-danger">No Papers Found</ng-container>
                     </table>
                 </div>
             </mat-expansion-panel>

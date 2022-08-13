@@ -1,6 +1,8 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+
 
 @Component({
   selector: 'app-submissions',
@@ -15,6 +17,7 @@ panelOpenState: false;
   ongoing_papers: any = [];
   completed_papers: any = [];
   cancelled_papers: any = [];
+  newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
 
   constructor(
     private router: Router,
@@ -27,6 +30,7 @@ panelOpenState: false;
 initOrder() {
   if (this.orders && this.orders.length > 0) {
     this.ongoing_papers = this.orders.filter(p => p.orderStatus=="Order Confirmed");
+    console.log('this.ongoing_papers',this.ongoing_papers)
     this.completed_papers = this.orders.filter(p => p.orderStatus=="Completed");
     this.cancelled_papers = this.orders.filter(p => p.orderStatus=="Cancelled");
   }
@@ -34,6 +38,7 @@ initOrder() {
 
   ngOnInit(): void {
     this.initOrder();
+    console.log('this.user_details',this.user_details)
   }
 
   viewPaper(accountid,uid,providerid)
