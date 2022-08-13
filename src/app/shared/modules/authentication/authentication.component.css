@@ -25,10 +25,10 @@
     /* background-color: #1E4079 !important; */
     border-radius: 4px !important;
 }
-::ng-deep .custom:hover{
+::ng-deep .authentication .custom:hover{
   box-shadow: none !important;
 }
- ::ng-deep .custom {
+ ::ng-deep .authentication .custom {
     background: #FFFFFF !important;
     border: 1.39032px solid #E1E2E3 !important;
     border-radius: 11.1225px !important;
@@ -36,7 +36,7 @@
     font-size: 15px;
     color: #B3B4BA;
   }
-  ::ng-deep .custom:focus{
+  ::ng-deep .authentication .custom:focus{
     border: 1px solid #3498db;
   }
   .cust-logpg-submt{
