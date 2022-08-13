@@ -331,7 +331,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
     let login = this.login_details;
 
-    if (login && login.countryCode && login.countryCode.startsWith('+')){
+    if (login && login.countryCode && login.countryCode.startsWith('+')) {
       this.countryCode = login.countryCode.substring(1);
       this.shared_services.consumertelegramChat(this.countryCode, login.loginId).subscribe(
         data => {
@@ -412,7 +412,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
     });
   }
- 
+
   /**
    * 
    * @param encId encId/customId which represents the Account
@@ -439,16 +439,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const _this = this;
     this.api_loading = true;
-    if(this.customId && this.accountId) {
+    if (this.customId && this.accountId) {
       _this.getAccountIdFromEncId(this.customId).then(
-        (uniqueId:any)=>{
+        (uniqueId: any) => {
           _this.domainConfigService.getUIAccountConfig(uniqueId).subscribe(
             (uiconfig: any) => {
               if (uiconfig['mode']) {
-                _this.homeView= uiconfig['mode'];                
+                _this.homeView = uiconfig['mode'];
               }
               _this.initConsumer();
-            }, ()=> {
+            }, () => {
               _this.initConsumer();
             })
         }
@@ -456,7 +456,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     } else {
       _this.initConsumer();
     }
-    
+
   }
   getOrderPaidBill(orderBill) {
     if (orderBill.bill && orderBill.bill.amountPaid) {
@@ -1445,12 +1445,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     event.stopPropagation();
     if (checkin.videoCallButton && checkin.videoCallButton !== 'DISABLED') {
       let queryParams = {
-        account: checkin.providerAccount.id        
-    }
-    if (this.customId) {
-    queryParams['account_id'] = checkin.providerAccount.id,
-      queryParams['customId'] = this.customId;
-    }
+        account: checkin.providerAccount.id
+      }
+      if (this.customId) {
+        queryParams['account_id'] = checkin.providerAccount.id,
+          queryParams['customId'] = this.customId;
+      }
       const navigationExtras: NavigationExtras = {
         queryParams: queryParams
       };
@@ -1467,34 +1467,48 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   viewBill(checkin, type, event) {
     event.stopPropagation();
     if (type === 'appointment') {
+      let queryParams = {
+        uuid: checkin.uid,
+        accountId: checkin.providerAccount.id,
+        type: 'appointment',
+        'paidStatus': false
+      }
+      if (this.customId) {
+        queryParams['accountId'] = checkin.providerAccount.id,
+          queryParams['customId'] = this.customId;
+      }
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: checkin.uid,
-          accountId: checkin.providerAccount.id,
-          type: 'appointment',
-          'paidStatus': false
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'appointment', 'bill'], navigationExtras);
     } else if (type === 'checkin') {
+      let queryParams = {
+        uuid: checkin.ynwUuid,
+        accountId: checkin.providerAccount.id,
+        type: 'waitlist',
+        'paidStatus': false
+      }
+      if (this.customId) {
+        queryParams['accountId'] = checkin.providerAccount.id,
+          queryParams['customId'] = this.customId;
+      }
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: checkin.ynwUuid,
-          accountId: checkin.providerAccount.id,
-          type: 'waitlist',
-          'paidStatus': false
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'checkin', 'bill'], navigationExtras);
     } else {
-
+      let queryParams = {
+        uuid: checkin.uid,
+        accountId: checkin.providerAccount.id,
+        // type: 'order',
+        'paidStatus': false
+      }
+      if (this.customId) {
+        queryParams['accountId'] = checkin.providerAccount.id,
+          queryParams['customId'] = this.customId;
+      }
       const navigationExtras: NavigationExtras = {
-        queryParams: {
-          uuid: checkin.uid,
-          accountId: checkin.providerAccount.id,
-          // type: 'order',
-          'paidStatus': false
-        }
+        queryParams: queryParams
       };
       this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras);
     }
