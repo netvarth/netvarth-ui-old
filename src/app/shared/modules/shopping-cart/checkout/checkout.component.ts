@@ -934,7 +934,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   goBack() {
     if (this.action === 'timeChange' || this.action === 'coupons') {
       this.action = '';
-    } else {
+    }
+    else if(this.source == 'paper' && this.bookStep=='Step 3')
+    {
+      this.bookStep = 'qnr';
+    }
+     else {
       const chosenDateTime = {
         delivery_type: this.choose_type,
         catlog_id: this.catalog_details.id,
