@@ -1104,7 +1104,9 @@ export const projectConstantsLocal = {
     { displayName: 'Completed', value: 'Completed', delivery: true, pickup: true, clas: 'ordercompleted' },
     { displayName: 'In Transit', value: 'In Transit', delivery: true, pickup: false, clas: 'orderintransit' },
     { displayName: 'Shipped', value: 'Shipped', delivery: true, pickup: false, clas: 'ordershipped' },
-    { displayName: 'Cancelled', value: 'Cancelled', delivery: true, pickup: true, clas: 'ordercancelled' }
+    { displayName: 'Cancelled', value: 'Cancelled', delivery: true, pickup: true, clas: 'ordercancelled' },
+    { displayName: 'Paper Submitted', value: 'Paper Submitted', delivery: true, pickup: false, clas: 'papersubmitted' },
+    { displayName: 'In review', value: 'In review', delivery: true, pickup: true, clas: 'paperinreview' }
   ],
   ITEM_TYPES:[
     {displayName:'physical',value:'PHYSICAL'},
