@@ -70,6 +70,8 @@ initOrder() {
       this.lStorageService.removeitemfromLocalStorage('reqFrom');
       this.lStorageService.removeitemfromLocalStorage('source');
     }
+    let url = '/53a2k52/catalog/289/item/1505'
+    this.router.navigateByUrl(url);
   }
 
 }
