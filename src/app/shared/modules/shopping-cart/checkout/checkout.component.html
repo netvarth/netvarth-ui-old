@@ -175,8 +175,8 @@
 
             <div class="lbl col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 no-padding-small bg-grey" *ngIf="action==''">
               <!-- Side bar contact -->
-              <div class="contact-outer">
-                <aside *ngIf="showSide" class="side_nav">
+              <div class="contact-outer" *ngIf="storeContactNw">
+                <aside *ngIf="showSide" class="side_nav" >
                   <h4>Store Contact <i (click)="closeNav()" class="fa fa-times-circle fl-right"></i></h4>
                   <div class="addrs">
                     <span>{{storeContactNw.firstName}}&nbsp;{{storeContactNw.lastName}}</span>

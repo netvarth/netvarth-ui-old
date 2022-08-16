@@ -326,7 +326,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     } else {
       req.headers.delete('tab');
     }
-    // console.log("Refresh:", refresh);
+    console.log("Refresh:", req.method);
     // authorizationToken --- For OTP Login/Signup
     if (refresh) {
       let authToken = this.lStorageService.getitemfromLocalStorage("refreshToken");
@@ -342,7 +342,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       let authToken = this.lStorageService.getitemfromLocalStorage('authToken');
       req = req.clone({headers: req.headers.append('Authorization', authToken), withCredentials: true });
     } else {
-      if ((customId || this.lStorageService.getitemfromLocalStorage('login')) && !this.shared_functions.checkLogin()) {
+      if ((customId || this.lStorageService.getitemfromLocalStorage('login')) && !this.shared_functions.checkLogin() && req.method !=='DELETE') {
         req = req.clone({ headers: req.headers.append('Authorization', 'browser'), withCredentials: true });
       } else if (customId && this.shared_functions.checkLogin()){
         this.lStorageService.removeitemfromLocalStorage('Authorization');

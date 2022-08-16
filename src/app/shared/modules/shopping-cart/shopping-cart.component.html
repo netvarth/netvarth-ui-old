@@ -64,7 +64,7 @@
                 <div class="contact-outer">
                   <aside *ngIf="showSide" class="side_nav">
                     <h4>Store Contact <i (click)="closeNav()" class="fa fa-times-circle fl-right"></i></h4>
-                    <div class="addrs">
+                    <div class="addrs" *ngIf="storeContact">
                       <div>{{storeContact.firstName}}&nbsp;{{storeContact.lastName}}</div>
                       <div *ngIf="storeContact.address">
                         <i class="fa fa-address-card-o" aria-hidden="true"></i> {{storeContact.address}}

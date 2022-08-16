@@ -28,6 +28,7 @@ import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../../app/shared/services/paytm.service';
 import { JcCouponNoteComponent } from '../../jc-coupon-note/jc-coupon-note.component';
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
+import { ConsumerEmailComponent } from '../../../../ynw_consumer/shared/component/consumer-email/consumer-email.component';
 
 @Component({
   selector: 'app-checkout',
@@ -208,13 +209,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   con_email: any;
   source: any;
   termscheck: boolean = false;
-  convenientPaymentModes:any=[];
+  convenientPaymentModes: any = [];
   convenientFeeObj: any;
   convenientFee: any;
   gatewayFee: any;
-  defultTextFirstStep:string='The primary objective of AuthorDemy.com is to help you improve the quality of the manuscript that you have prepared for publication so that its chances for getting accepted for publication increases considerably.We are particular that you should take full advantage of this additional step that we recommend to you before you submit your manuscript for publication. We want to improve not only the quality of the publication that you submitted to us, but also the writing skill of the authors by this exercise. Ideally, we do not want you to come back to AuthorDemy.com for all your future publications. Instead, we look forward to new authors to come to us based on the positive feed back about AuthorDemy.com that you give to them based on your experience in working with AuthorDemy.com. In order to achieve these, we request you to make sure that the manuscript you submit to AuthorDemy.com is finalized based on the information and instructions provided below.'
-  defultMoreText:string='...show more';
-  defultTextSecondStep:string=''
+  defultTextFirstStep: string = 'The primary objective of AuthorDemy.com is to help you improve the quality of the manuscript that you have prepared for publication so that its chances for getting accepted for publication increases considerably.We are particular that you should take full advantage of this additional step that we recommend to you before you submit your manuscript for publication. We want to improve not only the quality of the publication that you submitted to us, but also the writing skill of the authors by this exercise. Ideally, we do not want you to come back to AuthorDemy.com for all your future publications. Instead, we look forward to new authors to come to us based on the positive feed back about AuthorDemy.com that you give to them based on your experience in working with AuthorDemy.com. In order to achieve these, we request you to make sure that the manuscript you submit to AuthorDemy.com is finalized based on the information and instructions provided below.'
+  defultMoreText: string = '...show more';
+  defultTextSecondStep: string = ''
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -325,7 +326,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-   console.log("Checkout Component");
+    console.log("Checkout Component");
     this.getPaymentModes();
     const credentials = this.sharedFunctionobj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
     this.customer_countrycode = credentials.countryCode;
@@ -470,34 +471,34 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   indian_payment_mode_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = false;
-    this.convenientPaymentModes.map((res:any)=>{
-      this.convenientFeeObj = { }
-      if(res.isInternational === false){
-          this.convenientFeeObj = res;
-          if(this.selected_payment_mode === res.mode){
-            //  this.convenientFee = this.convenientFeeObj.convenienceFee;
-             // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
-              this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
-              console.log("convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
-          }
+    this.convenientPaymentModes.map((res: any) => {
+      this.convenientFeeObj = {}
+      if (res.isInternational === false) {
+        this.convenientFeeObj = res;
+        if (this.selected_payment_mode === res.mode) {
+          //  this.convenientFee = this.convenientFeeObj.convenienceFee;
+          // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+          this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
+          console.log("convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
+        }
       }
-     })
+    })
   }
   non_indian_modes_onchange(event) {
     this.selected_payment_mode = event.value;
     this.isInternatonal = true;
-    this.convenientPaymentModes.map((res:any)=>{
-      this.convenientFeeObj = { }
-      if(res.isInternational === false){
-          this.convenientFeeObj = res;
-          if(this.selected_payment_mode === res.mode){
-            //  this.convenientFee = this.convenientFeeObj.convenienceFee;
-             // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
-             this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
-              console.log("convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
-          }
+    this.convenientPaymentModes.map((res: any) => {
+      this.convenientFeeObj = {}
+      if (res.isInternational === false) {
+        this.convenientFeeObj = res;
+        if (this.selected_payment_mode === res.mode) {
+          //  this.convenientFee = this.convenientFeeObj.convenienceFee;
+          // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+          this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
+          console.log("convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
+        }
       }
-     })
+    })
   }
   togglepaymentMode() {
     this.shownonIndianModes = !this.shownonIndianModes;
@@ -516,28 +517,28 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.isPayment = true;
           let convienientPaymentObj = {}
           convienientPaymentObj = {
-              "profileId" :  this.paymentmodes.profileId,
-              "amount"	: this.totalamountPay
+            "profileId": this.paymentmodes.profileId,
+            "amount": this.totalamountPay
           }
-          this.shared_services.getConvenientFeeOfProvider(this.account_id,convienientPaymentObj).subscribe((data:any)=>{
-                                         // let array = []
-                                         console.log("Convenient response :",data)
-                                         this.convenientPaymentModes = data;
-                                         if(this.convenientPaymentModes){
-                                         this.convenientPaymentModes.map((res:any)=>{
-                                          this.convenientFeeObj = { }
-                                          if(res){
-                                              this.convenientFeeObj = res;
-                                                  this.convenientFee = this.convenientFeeObj.convenienceFee;
-                                                  console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
-                                              
-                                          }
-                                         })
-                                        }
-            
+          this.shared_services.getConvenientFeeOfProvider(this.account_id, convienientPaymentObj).subscribe((data: any) => {
+            // let array = []
+            console.log("Convenient response :", data)
+            this.convenientPaymentModes = data;
+            if (this.convenientPaymentModes) {
+              this.convenientPaymentModes.map((res: any) => {
+                this.convenientFeeObj = {}
+                if (res) {
+                  this.convenientFeeObj = res;
+                  this.convenientFee = this.convenientFeeObj.convenienceFee;
+                  console.log("payment convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
+
+                }
+              })
+            }
+
 
           })
-          console.log("isConvenienceFee paymentsss:",this.paymentmodes)
+          console.log("isConvenienceFee paymentsss:", this.paymentmodes)
           if (this.paymentmodes && this.paymentmodes.indiaPay) {
             this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
           }
@@ -1009,13 +1010,13 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
       if (this.delivery_type === 'home') {
         if ((this.added_address === null || this.added_address.length === 0)) {
-          if(this.source!=="paper"){
+          if (this.source !== "paper") {
             this.checkoutDisabled = false;
             this.isClickedOnce = false;
             this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
             return;
           }
-          
+
         } else {
           const delivery_address = {
             'firstName': this.selectedAddress.firstName,
@@ -1039,7 +1040,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
-    if ((this.delivery_type === 'store' || this.onlyvirtualItemsPresent) && this.source!=="paper") {
+    if ((this.delivery_type === 'store' || this.onlyvirtualItemsPresent) && this.source !== "paper") {
 
       if (!this.storeContact.value.phone || !this.storeContact.value.email) {
         this.checkoutDisabled = false;
@@ -1047,19 +1048,47 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
       } else {
+        console.log("StoreContact:", this.storeContact);
         const contactNumber = this.storeContact.value.phone;
         const contact_email = this.storeContact.value.email;
         post_Data['phoneNumber'] = contactNumber,
-        post_Data['email'] = contact_email
+          post_Data['email'] = contact_email
 
       }
       if (this.delivery_type === 'store' && !this.onlyvirtualItemsPresent) {
         post_Data['storePickup'] = true;
         console.log("storePickupstorePickupstorePickup")
       }
+      this.confirmOrder(post_Data, paytype);
+    } else if(this.source === "paper") {
+      const contactNumber = this.storeContact.value.phone;
+      const contact_email = this.storeContact.value.email;
+      post_Data['phoneNumber'] = contactNumber;
+      post_Data['email'] = contact_email;
+      if (!contact_email) {
+        const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
+          width: '40%',
+          panelClass: ['loginmainclass', 'popup-class'],
+        });
+        emaildialogRef.afterClosed().subscribe(result => {
+          if (result !== '' && result !== undefined) {
+            post_Data['email'] = result;
+            // this.commObj['communicationEmail'] = result;
+            // this.confirmAppointment(type);
+            this.confirmOrder(post_Data, paytype);
+          } else {
+            this.isClickedOnce = false;
+            // this.goBack('backy');
+          }
+        });
+      } else {
+        this.confirmOrder(post_Data, paytype);
+      }
+    } else {
+      this.confirmOrder(post_Data, paytype);
     }
+    console.log("StoreContact:", this.storeContact);
 
-    this.confirmOrder(post_Data, paytype);
   }
 
   doLogin(origin?, passParam?) {
@@ -1092,19 +1121,18 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  terms_check()
-  {
+  terms_check() {
     this.termscheck = !this.termscheck;
   }
-  termsOpen(){
-    if(this.termscheck = !this.termscheck){
-      this.defultMoreText='...show less'
+  termsOpen() {
+    if (this.termscheck = !this.termscheck) {
+      this.defultMoreText = '...show less'
     }
-    else{
-      this.defultMoreText='...show more'
+    else {
+      this.defultMoreText = '...show more'
     }
-    
-    
+
+
   }
   confirmOrder(post_Data, paytype?) {
     console.log("Orderr Data :", post_Data);
@@ -1145,14 +1173,14 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               uuidList.push(retData[key]);
             }
           });
-          if(post_Data.email){
+          if (post_Data.email) {
             this.con_email = post_Data.email
           }
           if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
             this.submitQuestionnaire(this.trackUuid, paytype);
-        } else {
-          this.paymentOperation(this.con_email, paytype);
-        }
+          } else {
+            this.paymentOperation(this.con_email, paytype);
+          }
 
         },
           error => {
@@ -1162,17 +1190,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
         );
-    } 
-
-
-
-    else {
+    } else {
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateConsumerOrder(this.account_id, dataToSend)
         .subscribe(data => {
           const retData = data;
-
           if (this.customId) {
             console.log("businessid" + this.account_id);
             this.shared_services.addProvidertoFavourite(this.account_id)
@@ -1189,16 +1212,16 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
               uuidList.push(retData[key]);
             }
           });
-          if(post_Data.email){
+          if (post_Data.email) {
             this.con_email = post_Data.email
           }
           if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
             this.submitQuestionnaire(this.trackUuid, paytype);
-        } else {
-          console.log(post_Data)
-          this.paymentOperation(this.con_email, paytype);
-        }
-        
+          } else {
+            console.log(post_Data)
+            this.paymentOperation(this.con_email, paytype);
+          }
+
         },
           error => {
             this.isClickedOnce = false;
@@ -1209,7 +1232,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         );
     }
   }
-  paymentOperation(post_Data ? , paytype?) {
+  paymentOperation(post_Data?, paytype?) {
     if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
       console.log(post_Data.email + 'post_Data.email')
       this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.con_email)
@@ -1218,19 +1241,19 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.catalog_details.advanceAmount)
               .subscribe(data => {
                 this.remainingadvanceamount = data;
-               
+
                 this.payuPayment(paytype);
-                
+
 
               });
           }
           else {
-              this.payuPayment(paytype);
-            
+            this.payuPayment(paytype);
+
           }
 
         });
-      
+
     } else {
       this.orderList = [];
       this.lStorageService.removeitemfromLocalStorage('order_sp');
@@ -1251,7 +1274,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         };
         console.log("Payment Data :", this.from);
         this.router.navigate(['consumer'], navigationExtras);
-      // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
+        // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
 
       } else {
         let queryParams = {
@@ -1264,12 +1287,12 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         let navigationExtras: NavigationExtras = {
           queryParams: queryParams
         };
-       this.router.navigate(['consumer'], navigationExtras);
-      // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
+        this.router.navigate(['consumer'], navigationExtras);
+        // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
 
       }
     }
-}
+  }
   goBackToCheckout(selectesTimeslot, queue) {
     this.action = '';
     const selectqueue = queue['sTime'] + ' - ' + queue['eTime'];
@@ -1719,7 +1742,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
       this.isClickedOnce = false;
       return false;
-  }
+    }
     // console.log(this.orderType);
     // console.log(this.remainingadvanceamount);
     // if(this.orderType === 'SHOPPINGLIST'){
@@ -1747,37 +1770,37 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       'isInternational': this.isInternatonal
 
     };
-    this.convenientPaymentModes.map((res:any)=>{
+    this.convenientPaymentModes.map((res: any) => {
       this.convenientFeeObj = res
-      if(this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternatonal){
-          // this.convenientFeeObj = res;
-           if(paymentMode ===  this.convenientFeeObj.mode){
-              this.orderDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
-              this.orderDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
-              this.orderDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
-              this.orderDetails['profileId'] = this.paymentmodes.profileId;
-              this.orderDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
-              this.orderDetails['paymentGateway'] = this.convenientFeeObj.gateway
-              console.log("Non-Indian Payment Info", this.orderDetails)
-           }
-       }
-       if(this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternatonal){
-       // this.convenientFeeObj = res;
-        if(paymentMode ===  this.convenientFeeObj.mode){
-           this.orderDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
-           this.orderDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
-           this.orderDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
-           this.orderDetails['profileId'] = this.paymentmodes.profileId;
-           this.orderDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
-           this.orderDetails['paymentGateway'] = this.convenientFeeObj.gateway
-           console.log("Indian Payment Info", this.orderDetails)
+      if (this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternatonal) {
+        // this.convenientFeeObj = res;
+        if (paymentMode === this.convenientFeeObj.mode) {
+          this.orderDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
+          this.orderDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
+          this.orderDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
+          this.orderDetails['profileId'] = this.paymentmodes.profileId;
+          this.orderDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
+          this.orderDetails['paymentGateway'] = this.convenientFeeObj.gateway
+          console.log("Non-Indian Payment Info", this.orderDetails)
         }
-    }
-     })
+      }
+      if (this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternatonal) {
+        // this.convenientFeeObj = res;
+        if (paymentMode === this.convenientFeeObj.mode) {
+          this.orderDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
+          this.orderDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
+          this.orderDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
+          this.orderDetails['profileId'] = this.paymentmodes.profileId;
+          this.orderDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
+          this.orderDetails['paymentGateway'] = this.convenientFeeObj.gateway
+          console.log("Indian Payment Info", this.orderDetails)
+        }
+      }
+    })
     this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
     this.lStorageService.setitemonLocalStorage('acid', this.account_id);
     this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-    console.log("orderDetails",this.orderDetails);
+    console.log("orderDetails", this.orderDetails);
     if (this.remainingadvanceamount == 0 && this.checkJcash) {
       const postData = {
         'amountToPay': this.prepayAmount,
@@ -1812,8 +1835,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
             let navigationExtras: NavigationExtras = {
               queryParams: queryParams
             };
-             this.router.navigate(['consumer'], navigationExtras);
-           // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
+            this.router.navigate(['consumer'], navigationExtras);
+            // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
             // this.router.navigate(['consumer'], { queryParams: { 'source': 'order' } });
           }
         },
@@ -1904,6 +1927,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   finishCheckout(status) {
+    console.log("Finish Checkout");
     if (status) {
       this.isClickedOnce = false;
       this.lStorageService.removeitemfromLocalStorage('order_sp');
@@ -1933,7 +1957,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
       }
     } else {
-        this.isClickedOnce = false;
+      this.isClickedOnce = false;
       this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
       if (this.from) {
         let queryParams = {
@@ -1957,7 +1981,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
       }
     }
-}
+  }
 
   transactionCompleted(response, payload, accountId) {
     if (response.SRC) {
@@ -1974,7 +1998,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
       } else if (response.STATUS == 'TXN_FAILURE') {
         if (response.error && response.error.description) {
           this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
-        } 
+        }
         this.finishCheckout(false);
       }
     } else {
@@ -2019,6 +2043,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   submitQuestionnaire(uuid, paymenttype?) {
     const dataToSend: FormData = new FormData();
+    console.log("Submit Questionaire");
     console.log(this.questionAnswers)
     if (this.questionAnswers === undefined) {
       this.snackbarService.openSnackBar('Please fill more info to complete your booking.', { 'panelClass': 'snackbarerror' });
@@ -2046,7 +2071,8 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 if (data.urls.length === postData['urls'].length) {
                   this.shared_services.consumerOrderQnrUploadStatusUpdate(uuid, this.account_id, postData)
                     .subscribe((data) => {
-                      this.paymentOperation(this.con_email , paymenttype);
+                      console.log("Payment Started");
+                      this.paymentOperation(this.con_email, paymenttype);
                     },
                       error => {
                         this.isClickedOnce = false;
@@ -2064,7 +2090,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
                 });
           }
         } else {
-          this.paymentOperation(this.con_email , paymenttype);
+          this.paymentOperation(this.con_email, paymenttype);
         }
       },
         error => {
@@ -2093,10 +2119,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
           this.bookStep = 'qnr';
           this.sharedFunctionobj.sendMessage({ type: 'qnrValidateError', value: data });
         }
-
-
-
-
       }, error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });

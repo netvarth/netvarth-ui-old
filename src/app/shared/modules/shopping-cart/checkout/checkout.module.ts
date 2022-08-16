@@ -26,6 +26,7 @@ import { RefundpolicyModule } from '../../../../ynw_consumer/modules/refundpolic
 import { QuestionnaireModule } from "../../../../shared/components/questionnaire/questionnaire.module";
 import { RazorpayService } from "../../../../shared/services/razorpay.service";
 import { PaytmService } from "../../../../shared/services/paytm.service";
+import { ConsumerEmailModule } from "../../../../ynw_consumer/shared/component/consumer-email/consumer-email.module";
 const routes: Routes = [
     {path: '', component: CheckoutComponent}
 ]
@@ -46,6 +47,7 @@ const routes: Routes = [
         AddAddressModule,
         ConfirmBoxModule,
         ConsumerJoinModule,
+        ConsumerEmailModule,
         JcCouponNoteModule,
         ShoppingListUploadModule,
         LoadingSpinnerModule,

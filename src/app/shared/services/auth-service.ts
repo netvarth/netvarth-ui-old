@@ -121,6 +121,9 @@ export class AuthService {
     }
     logoutNoRedirect() {this.doLogout().then(data => {},error => {});}
     logoutFromJaldee(srcUrl?) {
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom') !== 'cuA') {
+            this.lStorageService.removeitemfromLocalStorage('authorization');
+        }
         const promise = new Promise<void>((resolve, reject) => {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
             const isCustomProvider = this.lStorageService.getitemfromLocalStorage('busLoginId');
