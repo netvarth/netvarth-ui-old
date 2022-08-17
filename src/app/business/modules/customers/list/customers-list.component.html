@@ -371,11 +371,14 @@
                           </span>
                         </div>
                         <div>
-                          <span class="text-dark-75 text-hover-primary mb-1 cust-name">
+                          <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="customer.firstName">
                               <!-- {{getCustomer(customer) | capitalizeFirst}} -->
-                              {{(customer.firstName | capitalizeFirst) ? (customer.firstName | capitalizeFirst) : ''}} {{(customer.lastName | capitalizeFirst) ? (customer.lastName | capitalizeFirst) : '-'}}
+                              {{(customer.firstName | capitalizeFirst) ? (customer.firstName | capitalizeFirst) : ''}} {{(customer.lastName | capitalizeFirst) ? (customer.lastName | capitalizeFirst) : ''}}
                               <!-- {{customer.firstName | capitalizeFirst ? customer.firstName | capitalizeFirst : '' }}
                               {{customer.lastName | capitalizeFirst ? customer.firstName | capitalizeFirst :  ''}} -->
+                            </span>
+                            <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="(customer.firstName === '' || customer.firstName === undefined) && (customer.lastName === '' || customer.lastName === undefined)">
+                              -
                             </span>
                             <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="customer.firstName && customer.lastName === undefined">
                               {{'-'}}                    

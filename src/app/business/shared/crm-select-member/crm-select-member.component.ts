@@ -307,8 +307,14 @@ export class CrmSelectMemberComponent implements OnInit {
       if(this.customerViewData.phoneNo !== undefined || this.customerViewData.phoneNo !== '' || this.customerViewData.phoneNo !== ' '){
         this.showDone = true;
       }
+      else{
+        this.showDone= false;
+      }
       if(this.customerViewData.email !== undefined || this.customerViewData.email !== '' || this.customerViewData.email !== ' '){
         this.showDone = true;
+      }
+      else{
+        this.showDone=false
       }
     }
     if (this.data.requestType === "fileView") {

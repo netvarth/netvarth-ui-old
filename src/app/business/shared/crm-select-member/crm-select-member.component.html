@@ -1325,10 +1325,10 @@
             <mat-icon>clear</mat-icon>
         </div>
     </div>
-    <mat-dialog-content>
+    <mat-dialog-content *ngIf="customerViewData">
 
-        <div>
-            <div class="bggrey">
+        <div *ngIf="customerViewData">
+            <div class="bggrey" *ngIf="customerViewData">
                 <!-- <div class="leadTitle" *ngIf="customerViewData.firstName || customerViewData.lastName">
                     <i class="fa fa-user"></i>
                     {{customerViewData.firstName | capitalizeFirst}} {{customerViewData.lastName | capitalizeFirst}}
@@ -1338,14 +1338,14 @@
                         <i class="fa fa-id-card-o icon"></i>
                         <span>{{customer_label | capitalizeFirst}} id : {{customerViewData.jaldeeId}}</span>
                     </div>
-                    <div class="leadTitle" *ngIf="showDone">
+                    <div class="leadTitle" *ngIf="showDone && customerViewData.phoneNo">
                         <!-- *ngIf="customerViewData.phoneNo !== ' ' || customerViewData.phoneNo !== undefined || customerViewData.phoneNo !== ''" -->
-                        <i class="fa fa-mobile icon"></i>
+                        <i class="fa fa-mobile icon" *ngIf="customerViewData.phoneNo"></i>
                         <span>{{customerViewData.phoneNo}}</span>
                     </div>
                     <!-- *ngIf="customerViewData.email !== '' || customerViewData.email !== undefined" -->
-                    <div class="leadTitle" *ngIf="showDone">
-                        <i class="fa fa-envelope icon"></i>
+                    <div class="leadTitle" *ngIf="showDone && customerViewData.email">
+                        <i class="fa fa-envelope icon" *ngIf="customerViewData.email"></i>
                         <span>{{customerViewData.email}}</span>
                     </div>
                 </div>
