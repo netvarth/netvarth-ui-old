@@ -29,7 +29,7 @@ panelOpenState: false;
   }
 initOrder() {
   if (this.orders && this.orders.length > 0) {
-    this.ongoing_papers = this.orders.filter(p => p.orderStatus=="Order Confirmed");
+    this.ongoing_papers = this.orders.filter(p => p.orderStatus=="Order Confirmed" || p.orderStatus=="Paper Submitted" || p.orderStatus=="In review");
     console.log('this.ongoing_papers',this.ongoing_papers)
     this.completed_papers = this.orders.filter(p => p.orderStatus=="Completed");
     this.cancelled_papers = this.orders.filter(p => p.orderStatus=="Cancelled");
