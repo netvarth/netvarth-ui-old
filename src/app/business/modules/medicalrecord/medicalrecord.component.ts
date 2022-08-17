@@ -655,6 +655,7 @@ export class MedicalrecordComponent implements OnInit {
     console.log('visitDetails:::',visitDetails)
     // this.selectedRowIndex = visitDetails.mrId;
     if (visitDetails.waitlist) {
+      // alert('1')
       let mrId = 0;
       if (visitDetails.waitlist.mrId) {
         mrId = visitDetails.waitlist.mrId;
@@ -673,7 +674,7 @@ export class MedicalrecordComponent implements OnInit {
       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
 
     } else if (visitDetails.appointmnet) {
-
+      // alert('2')
       let mrId = 0;
       if (visitDetails.appointmnet.mrId) {
         mrId = visitDetails.appointmnet.mrId;
@@ -693,13 +694,13 @@ export class MedicalrecordComponent implements OnInit {
 
 
     } else {
-
-      // const mrId = visitDetails.mrId;
+      // alert('3')
+      const mrId = visitDetails.mrId;
       // const customerDetails = visitDetails.providerConsumer;
       console.log('customerDetailFOLLOWUP::',  this.customerDetails)
-      // const customerId = customerDetails.id;
-      // const bookingId = 0;
-      // const bookingType = 'FOLLOWUP';
+      const customerId = this.customerDetails.id;
+      const bookingId = 0;
+      const bookingType = 'FOLLOWUP';
       // this.dialogRef.close();
       // this.medicalService.viewVisitDetails = true;
       // this.viewVisitDetails = this.medicalService.viewVisitDetails
@@ -712,7 +713,8 @@ export class MedicalrecordComponent implements OnInit {
         console.log(this.medicalService.viewVisitDetails)
         console.log("visit Details", visitDetails);
         console.log('this.mrId',this.mrId)
-        this.getMedicalRecordUsingId(visitDetails.mrId)
+        // this.getMedicalRecordUsingId(visitDetails.mrId)
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription']);
       }
       else{
         console.log('2nd')
