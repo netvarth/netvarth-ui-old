@@ -155,6 +155,11 @@ export class ManualSignatureComponent implements OnInit {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
+  resizeSignaturePad() {
+    this.signaturePad.set('canvasWidth', document.getElementById("sign_canvas").offsetWidth);
+    this.signaturePad.clear();
+}
+
 
 
 }

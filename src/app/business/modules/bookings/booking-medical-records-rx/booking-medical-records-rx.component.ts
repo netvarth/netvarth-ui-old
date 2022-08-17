@@ -71,7 +71,7 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     if (this.type === 'rx') {
       this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription']);
     } else {
-      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId]);
+      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
     }
   }
   gotoMrList() {

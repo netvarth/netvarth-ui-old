@@ -1,6 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+// import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -66,9 +66,9 @@ export class AddDrugComponent implements OnInit {
   customer_label = '';
 
   constructor(
-    public dialogRef: MatDialogRef<AddDrugComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    public dialog: MatDialog,
+    // public dialogRef: MatDialogRef<AddDrugComponent>,
+    // @Inject(MAT_DIALOG_DATA) public data: any,
+    // public dialog: MatDialog,
     private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -77,11 +77,11 @@ export class AddDrugComponent implements OnInit {
     private wordProcessor: WordProcessor,
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.formMode = data.type;
+    // this.formMode = data.type;
     if (this.formMode === 'edit') {
-      this.drugData = data.drugDetails;
+      // this.drugData = data.drugDetails;
     }
-    this.fromWhr = data.isFrom;
+    // this.fromWhr = data.isFrom;
   }
   taxDetails: any = [];
   ngOnInit() {
@@ -133,7 +133,7 @@ export class AddDrugComponent implements OnInit {
       this.api_error = 'Atleast one field required';
     } else {
     this.drugDetail.push(form_data);
-    this.dialogRef.close(this.drugDetail);
+    // this.dialogRef.close(this.drugDetail);
     }
   }
   clearError(event){
@@ -141,9 +141,9 @@ export class AddDrugComponent implements OnInit {
   }
   close() {
     if (this.addAnother === true) {
-      this.dialogRef.close(this.drugDetail);
+      // this.dialogRef.close(this.drugDetail);
     } else {
-      this.dialogRef.close();
+      // this.dialogRef.close();
     }
     
   }

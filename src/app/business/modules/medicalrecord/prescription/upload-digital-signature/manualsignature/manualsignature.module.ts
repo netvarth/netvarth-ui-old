@@ -5,6 +5,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { RouterModule, Routes } from "@angular/router";
 import { SignaturePadModule } from "angular2-signaturepad";
 import { ManualSignatureComponent } from "./manual-signature.component";
+import { MatIconModule } from "@angular/material/icon";
 const routes: Routes = [
     { path: '', component: ManualSignatureComponent}
 ]
@@ -14,6 +15,7 @@ const routes: Routes = [
         MatDialogModule,
         MatButtonModule,
         SignaturePadModule,
+        MatIconModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [ManualSignatureComponent],

@@ -1,7 +1,9 @@
 <div class="mat-expansion-panel-content" *ngIf="isLoaded && showClinicalNotesDetails!='true'">
   <div class="w-dta">
-    <h5 class="ml-1 mb-1"><b>Clinical Notes</b></h5>
-    <div class="row no-padding-small">
+    <div>
+      <span class="table-heading"><b>Clinical Notes</b></span>
+    </div>
+    <!-- <div class="row no-padding-small">
       <div class="bggrey copy one col-xs-12 col-sm-12 no-padding">
         <h5 class="mb-3"><b></b></h5>
         <div class="mgn-bt-10" *ngFor="let entry of clinicalNotes">
@@ -18,15 +20,29 @@
                       entry.value == '' ? 'Add' : 'Edit' }}</button>
                   </div>
                 </div>
-                <div class="clearfix"></div>
-                <!-- <div *ngIf="entry.value" class="mgn-up-10 pad-top-10 brd-tp">
-                  <p>{{entry.value}}</p>
-                </div> -->
-                <div class="clearfix"></div>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div> -->
+    <div class="card">
+      <!-- {{clinicalNotes | json}} -->
+      <div *ngFor="let list of clinicalNotes;let i = index;">
+        <div class="form-group">
+          <label>{{list.displayName}}</label>
+          <div class="input-group">
+            <div class="input-group-prepend"></div>
+            <textarea #clinicalNotesType  [(ngModel)]="list.value" (ngModelChange)="handleClinicalNotes(clinicalNotesType.value,list.displayName)"  
+            (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+              placeholder="Enter {{list.displayName}} instructions" maxlength="500"></textarea>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel</button>
+        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" 
+          (click)="saveClinicalNotes()">Save</button>
       </div>
     </div>
   </div>
@@ -37,13 +53,16 @@
 
 
 
-<div class="mat-expansion-panel-content" *ngIf="isLoaded && showClinicalNotesDetails=='true'">
-  <div class="w-dta">
+<div  *ngIf="isLoaded && showClinicalNotesDetails=='true'">
+  <!-- class="mat-expansion-panel-content" -->
+  <!-- {{showClinicalNotesDetails | json}} -->
+  <!-- <div class="w-dta">
     <h5 class="ml-1 mb-1"><b>Clinical Notes</b></h5>
     <div class="row no-padding-small">
       <div class="bggrey copy one col-xs-12 col-sm-12 no-padding">
         <h5 class="mb-3"><b></b></h5>
         <div class="mgn-bt-10" *ngFor="let entry of clinicalNotes">
+          {{entry | json}}
           <div class="card col-a col-b cd-b my-3 col-md-12 col-lg-12 col-xs-12 col-sm-12">
             <div class="p0 w-dta active no-padding">
               <div class="custId-cursor">
@@ -54,15 +73,11 @@
                   </div>
                   <div class="pull-left heading3 p6">{{entry.displayName}}</div>
                   <div class="pull-right fa-angle"><i class="fa fa-angle-down" aria-hidden="true"></i></div>
-                  <!-- <div>
-                    <button type="button" mat-button style="float: right;" class="pull-right btn btn-primary">{{
-                      entry.value == '' ? 'Add' : 'Edit' }}</button>
-                  </div> -->
                 </div>
                 <div class="clearfix"></div>
                 <div [id]="'collapse'+entry.displayName.replace(' ', '')" class="collapse mgn-up-10 pad-top-10 brd-tp"
                   data-parent="#accordion" [class.show]="entry.value" >
-                  <p *ngIf="entry.value">{{entry.value}}</p>
+                  <p *ngIf="entry && entry.value">{{entry.value}}</p>
                   <p *ngIf="!entry.value">No {{entry.displayName}} Added</p>
                 </div>
 
@@ -73,5 +88,15 @@
         </div>
       </div>
     </div>
+  </div> -->
+  <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding shadow" *ngIf="clinicalNotes.length>0">
+    <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate">
+      <div class="table-heading">Clinical Notes</div>
+      <div [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}" class="shadow clinicalNotesList" *ngFor="let item of clinicalNotes">
+        <div class="notelabel" [ngStyle]="{'color':getColorType(item)}">{{item.type}}</div>
+        <div class="noteDes">{{item.clinicalNotes}}</div>
+      </div>
+    </div>
+   
   </div>
 </div>

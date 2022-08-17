@@ -12,6 +12,12 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SharedServices } from '../../../../../shared/services/shared-services';
 import { AddproviderAddonComponent } from '../../../add-provider-addons/add-provider-addons.component';
+import { UploadDigitalSignatureComponent } from '../upload-digital-signature/upload-digital-signature.component';
+import { UploadSignatureComponent } from '../upload-digital-signature/uploadsignature/upload-signature.component';
+import { ManualSignatureComponent } from '../upload-digital-signature/manualsignature/manual-signature.component';
+import { ImagesviewComponent } from '../imagesview/imagesview.component';
+import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.component';
+
 
 
 @Component({
@@ -102,6 +108,15 @@ export class ShareRxComponent implements OnInit {
   chatId: any;
   IsTelegramDisable = true;
   mrPrescriptionDetails: any;
+  ThemePalette;
+  digitalSign = false;
+  bookingId: any;
+  bookingType: any;
+  selectedMessage = {
+    files: [],
+    base64: [],
+    caption: []
+  };
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -127,6 +142,8 @@ export class ShareRxComponent implements OnInit {
     }
     console.log(this.data.docname);
     this.getPatientDetails(this.patientId);
+    this.ThemePalette='#06c706';
+    console.log('data:;',this.data)
 
 
   }
@@ -405,11 +422,175 @@ export class ShareRxComponent implements OnInit {
       this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data: any) => {
           this.imagedetails = data;
+          console.log('imagedetails:::',this.imagedetails)
           this.signurl = this.imagedetails.url;
+          this.digitalSign = true;
+          if (data && data !== null) {
+            this.selectedMessage.files.push(data);
+          }
         },
           error => {
+            this.digitalSign = false;
           });
     }
+  }
+  uploadSign() {
+   const uploadsignRef = this.dialog.open(UploadDigitalSignatureComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType
+      }
+    });
+    uploadsignRef.afterClosed().subscribe(() => {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+      }, 100);
+    }
+    );
+  }
+  filesSelected(event) {
+    const input = event.target.files;
+    if (input) {
+      for (const file of input) {
+        if (projectConstantsLocal.IMAGE_FORMATS.indexOf(file.type) === -1) {
+          this.snackbarService.openSnackBar('Selected image type not supported', { 'panelClass': 'snackbarerror' });
+        } else if (file.size > projectConstantsLocal.IMAGE_MAX_SIZE) {
+          this.snackbarService.openSnackBar('Please upload images with size < 10mb', { 'panelClass': 'snackbarerror' });
+        } else {
+          this.selectedMessage.files.push(file);
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            this.selectedMessage.base64.push(e.target['result']);
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+      console.log(' this.selectedMessage', this.selectedMessage);
+      this.saveDigitalSignImages();
+      
+    }
+  }
+  saveDigitalSignImages() {
+    const submit_data: FormData = new FormData();
+    const propertiesDetob = {};
+    let i = 0;
+    for (const pic of this.selectedMessage.files) {
+      submit_data.append('files', pic, pic['name']);
+      const properties = {
+        'caption': this.selectedMessage.caption[i] || ''
+      };
+      propertiesDetob[i] = properties;
+      i++;
+    }
+    const propertiesDet = {
+      'propertiesMap': propertiesDetob
+    };
+    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+    submit_data.append('properties', blobPropdata);
+    if (this.provider_user_Id) {
+      this.uploadMrDigitalsign(this.provider_user_Id, submit_data);
+    }
+  }
+  uploadMrDigitalsign(id, submit_data) {
+    this.provider_services.uploadMrDigitalsign(id, submit_data)
+      .subscribe((data) => {
+        console.log('data',data);
+        // this.selectedMessage= data;
+        this.snackbarService.openSnackBar('Digital sign uploaded successfully');
+        this.digitalSign=true;
+        // this.uploadsignatureRef.close()
+        // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+      },
+        error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
+  }
+  uploadSignature() {
+   const uploadsignatureRef = this.dialog.open(UploadSignatureComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType,
+        providerid: this.provider_user_Id
+      }
+    });
+    uploadsignatureRef.afterClosed().subscribe(() => {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+      }, 100);
+    }
+    );
+  }
+  manualSignature() {
+   const uploadmanualsignatureRef = this.dialog.open(ManualSignatureComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        mrid: this.mrId,
+        patientid: this.patientId,
+        bookingid: this.bookingId,
+        bookingtype: this.bookingType,
+        providerid:this.provider_user_Id
+      }
+    });
+    uploadmanualsignatureRef.afterClosed().subscribe(() => {
+      this.loading = true;
+      setTimeout(() => {
+        this.loading = false;
+        this.ngOnInit();
+      }, 100);
+    }
+    );
+  }
+  showimgPopup(file) {
+    file.title = 'Your digital signature';
+   const signatureviewdialogRef = this.dialog.open(ImagesviewComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: file,
+    });
+   signatureviewdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    });
+  }
+  deleteTempImagefrmdb(img, index) {
+    const removedsigndialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you really want to remove the digital signature?',
+        'type': 'digitalSignature'
+      }
+    });
+    removedsigndialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.provider_services.deleteUplodedsign(img.keyName, this.provider_user_Id)
+          .subscribe((data) => {
+            this.selectedMessage.files.splice(index, 1);
+            this.getDigitalSign();
+          },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+      }
+    });
   }
   showdigitalsign() {
     let logourl = '';
@@ -494,5 +675,12 @@ export class ShareRxComponent implements OnInit {
         }
       });
     }
+  }
+  autoGrowTextZone(e) {
+    if(e){
+      e.target.style.height = "0px";
+      e.target.style.height = (e.target.scrollHeight + 15) + "px";
+    }
+    
   }
 }

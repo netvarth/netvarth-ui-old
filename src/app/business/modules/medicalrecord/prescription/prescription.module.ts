@@ -10,10 +10,15 @@ import { InstructionsModule } from "./instructions/instructions.module";
 import { PrescriptionComponent } from "./prescription.component";
 import { ShareRxModule } from "./share-rx/share-rx.module";
 import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery';
-// import { RouterModule, Routes } from "@angular/router";
-// const routes: Routes = [
-//     { path: '', component: PrescriptionComponent}
-// ]
+// import { addPrescriptionComponent } from "./add-prescription.component";
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import {  MatTableModule } from "@angular/material/table";
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { ReactiveFormsModule } from "@angular/forms";
+import { RouterModule, Routes } from "@angular/router";
+const routes: Routes = [
+    { path: '', component: PrescriptionComponent}
+]
 @NgModule({
     imports: [
         CommonModule,
@@ -25,10 +30,17 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
         ImagesViewModule,
         InstructionsModule,
         MatButtonModule,
-        // [RouterModule.forChild(routes)],
+        ReactiveFormsModule,
+        CapitalizeFirstPipeModule,
+        MatTableModule,
+        [RouterModule.forChild(routes)],
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],
     exports: [PrescriptionComponent],
-    declarations: [ PrescriptionComponent ]
+    declarations: [ PrescriptionComponent ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+    ]
 })
 export class PrescriptionModule {}

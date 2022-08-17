@@ -1,0 +1,116 @@
+.createTxtIcon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+    /* flex-wrap: wrap; */
+    width: 35rem;
+}
+.createTxt{
+    color: #000000;
+    font-weight: 500;
+
+}
+.overView{
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    font-weight: 500;
+}
+.medicineNameIcon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.medicineTxt{
+    font-size: 14px;
+    font-weight: bold;
+    color: #767980;
+    font-family: 'Inter';
+    font-style: normal;
+}
+.medecinename{
+    color: #373737;
+    font-size: 12px;
+    font-weight: 500;
+}
+.medecineDetails{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-right: 2.5rem;
+}
+.duration{
+    font-family: 'Inter';
+    font-style: normal;
+    font-size: 12px;
+    font-weight: bold;
+    color: #767980;
+}
+.durationAns{
+    color: #06152B;
+    font-size: 12px;
+    font-weight: 500;
+}
+.medecineInstruction{
+    font-size: 12px;
+    font-weight: 500;
+    color: #272525;
+}
+.cardCustom{
+    width: 50% !important;
+    height: 180px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 10px !important;
+    padding: 20px;
+    /* border-radius: 5px; */
+    background: padding-box rgb(255, 255, 255);
+    /* border-width: initial !important;
+    border-style: none !important;
+    border-color: initial !important;
+    border-image: initial !important; */
+    border: 1.48047px solid #F1F1F1;
+    border-radius: 14.3973px;
+}
+@media(max-width: 776px){
+    .cardCustom{
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .createTxtIcon{
+        flex-wrap: wrap;
+        width: 100%;
+    }
+}
+.closeIcon{
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    background: #FFFFFF;
+}
+.closeIcon:hover{
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    background: #FFFFFF;
+    border: 0.13368px solid #FFFFFF;
+    box-shadow: 0px 0.534719px 11.8652px rgb(0 0 0 / 17%);
+}
+.confirmBtn {
+    background: #0D2348 !important;
+    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+    border-radius: 3.75916px !important;
+    border: 0px solid !important;
+    padding: 6px 12px;
+    color: #fff;
+  }
+  .closeClass{
+    margin-top: 10px;
+    text-align: end;
+  }

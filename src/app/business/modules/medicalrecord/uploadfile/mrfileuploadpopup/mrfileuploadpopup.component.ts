@@ -77,7 +77,8 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
     }
     close() {
         this.dialogRef.close(this.mrId);
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
+        const routerText='prescription'
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId,routerText]);
     }
     closeUploadFile() {
       this.dialogRef.close();
@@ -166,7 +167,8 @@ export class MrfileuploadpopupComponent implements OnInit, OnChanges {
       .subscribe((data) => {
         this.dialogRef.close(this.mrId);
         this.snackbarService.openSnackBar('File Uploaded Successfully');
-       this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId]);
+        const routerId='prescription';
+       this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId,routerId]);
        // this.reloadCurrentRoute();
     
        },

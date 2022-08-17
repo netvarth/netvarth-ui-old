@@ -1,107 +1,164 @@
 <section>
   <div class="card title-gb">
-    <h5 class="mgn-up-10">
-      <span class="fa fa-arrow-left pointer-cursor" (click)="goback('medical')"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      Medical Record
+    <h5 class="mgn-up-10 medicalRecord">
+      <span class="fa fa-arrow-left pointer-cursor clrChnge" (click)="goback('medical')"></span>
+      <span class="clrChnge">Medical Record</span>
     </h5>
   </div>
 </section>
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section *ngIf="!loading && !viewVisitDetails" class="medical-record">
   <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding-small">
-    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10">
-      <div class="details-card shadow">
-        <div class="text-center mt-5" *ngIf="customerDetails.gender === 'male'">
-          <img src="assets/images/mr_male.svg" width="100" height="100" />
+    <div class="col-xs-12 col-sm-12 mgn-up-10 card">
+      <div class="infoDetails shadow">
+        <div *ngIf="customerDetails">
+          <div  *ngIf="customerDetails && customerDetails.gender === 'male'">
+            <img class="imGBorderRadius" src="assets/images/mr_male.svg"  />
+          </div>
+          <div  *ngIf="customerDetails && customerDetails.gender === 'female'">
+            <img class="imGBorderRadius" src="assets/images/mr_female.svg"  />
+          </div>
+          <div  *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
+            <img class="imGBorderRadius" src="assets/images/undefinedUser.png"  />
+          </div>
+            <div *ngIf="customerDetails.firstName ||customerDetails.lastName || customerDetails.age || customerDetails.age.year || customerDetails.gender">
+              <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge" >
+                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" />
+                <div class="nameClr">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
+              </div>
+              <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
+                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" />
+                <div class="nameClrOther">{{customerDetails.age.year}} years,</div>
+                <div class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
+              </div>
+            </div>
+            <div *ngIf="customerDetails && customerDetails.address">
+              <div class="infoDetails" style="justify-content:flex-start !important">
+                <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div>
+                <div class="nameClrOther">{{customerDetails.address}}</div>
+              </div>
+            </div>
         </div>
-        <div class="text-center mt-5" *ngIf="customerDetails.gender === 'female'">
-          <img src="assets/images/mr_female.svg" width="100" height="100" />
+        <div *ngIf="customer_label || display_PatientId || customerDetails &&  (customerDetails.phoneNo ||customerDetails.id )">
+          <div>
+            <div class="nameClr" *ngIf="customer_label">{{customer_label | capitalizeFirst}} Id</div>
+            <div class="infoDetails" style="justify-content:flex-start !important">
+              <div><img  style="height:15px;width:15px" src="/assets/images/medicalReportIcon/id.png" /></div>
+              <div *ngIf="display_PatientId" class="nameClrOther">{{display_PatientId}}</div>
+            </div>
+          </div>
+          <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
+            <div class="nameClr" >Phone</div>
+            <div class="infoDetails">
+              <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
+                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
+              </div>
+              <div *ngIf="customerDetails" class="nameClrOther">
+                {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
+              </div>
+              <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
+            </div> 
+          </div>
+           <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
+            <div class="nameClr" >Phone</div>
+            <div class="infoDetails">
+              <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
+                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
+              </div>
+              <div >{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
+                <div class="nameClrOther" *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518</div>
+            </div>
+           </div>
         </div>
-        <div class="text-center mt-5" *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
-          <img src="assets/images/undefinedUser.png" width="100" height="100" />
-        </div>
-        <div class="text-center my-1">
-          <label *ngIf="customerDetails.firstName ||customerDetails.lastName">
-            &nbsp; <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}
-            </span></label><br>
-          {{customer_label | capitalizeFirst}} Id :&nbsp; <span>{{display_PatientId}}</span> <br
-            *ngIf="display_PatientId">
-        </div>
-        <div class="clearfix"></div>
-        <div class="ml-3 mt-3 mb-5">
+        <!---dob && email start---->
+        <div *ngIf="customerDetails && (customerDetails.dob || customerDetails.email)">
+          <div *ngIf="customerDetails && customerDetails.dob">
+            <div class="nameClr">Date Of Birth</div>
+            <div class="infoDetails" style="justify-content: flex-start !important;">
+              <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/dob.png" />
+              <div>
+                <div class="nameClrOther" *ngIf="customerDetails.dob">{{customerDetails.dob |date:newDateFormat}} </div> 
+              </div>
+            </div>
+          </div>
 
-          <label *ngIf="customerDetails.phoneNo && customerDetails.phoneNo!=' '">
-            <i class="fa fa-mobile" style="font-size:20px!important" aria-hidden="true"></i>
-          </label> &nbsp;&nbsp;<span *ngIf="customerDetails.countryCode">{{customerDetails.countryCode ?
-            customerDetails.countryCode : '+91'}} </span> <span
-            *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}} </span>
-            <label *ngIf="!customerDetails.phoneNo && customerDetails.id">
-              <i class="fa fa-mobile" style="font-size:20px!important" aria-hidden="true"></i>
-            </label> &nbsp;&nbsp;<span>{{customerDetails.countryCode ?
-              customerDetails.countryCode : '+91'}} </span><span *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518
-            </span><br>
-          <label *ngIf="customerDetails.id">
-            <i class="fa fa-id-badge" aria-hidden="true"></i>
-          </label> &nbsp;&nbsp;<span *ngIf="customerDetails.id">{{customerDetails.id}} </span><br>
-
-          <label *ngIf="customerDetails.dob"><i class="fa fa-birthday-cake" aria-hidden="true"></i></label> &nbsp;<span
-            *ngIf="customerDetails.dob">{{customerDetails.dob |
-            date:newDateFormat}} </span> <br *ngIf="customerDetails.dob">
-          <label *ngIf="customerDetails.gender">
-            <i *ngIf="customerDetails.gender == 'male'" class="fa fa-mars" aria-hidden="true"></i>
-            <i *ngIf="customerDetails.gender != 'male'" class="fa fa-venus" aria-hidden="true"></i>
-          </label> &nbsp;<span *ngIf="customerDetails.gender">{{customerDetails.gender | capitalizeFirst}} </span>
+          <div *ngIf="customerDetails && customerDetails.email">
+            <div class="nameClr">Email</div>
+            <div class="infoDetails">
+              <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" />
+              <div>
+                <div class="nameClrOther" *ngIf="customerDetails.email">{{customerDetails.email}} </div> 
+              </div>
+            </div>
+          </div>
         </div>
+         <!---dob && email end---->
+        <!---prescriptiojn start-->
+        <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')">
+          <div>
+            <img class="imageSize"  src="/assets/images/medicalReportIcon/prescription.png" />
+          </div>
+          <div class="nameClrOther">
+            Create Prescription
+          </div>
+        </div>
+         <!---prescriptiojn end-->
+         <!---clinical notes start-->
+        <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')">
+          <div>
+            <img class="imageSize"  src="/assets/images/medicalReportIcon/clinicalReport.png" />
+          </div>
+          <div class="nameClrOther">
+           Add Clinical Notes
+          </div>
+        </div>
+         <!---clinical noptes end-->
       </div>
     </div>
-
-    <!-- <pre>{{customerDetails | json}}</pre> -->
-
-    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-up-10 pl-0">
+    <div class="col-xs-12 col-sm-12 mgn-up-10  previousVisit card" *ngIf="showHidepreviousDetails ">
+      <app-common-innerloading-spinner *ngIf="loading_table"></app-common-innerloading-spinner>
       <div class="shadow">
         <div class="d-flex justify-content-between">
           <div class="pt-2">
             <span class="table-heading pl-2"><b>Previous Visits</b></span>
           </div>
-          <div>
-            <span *ngIf="mrId !== 0" class="custId-cursor mr-20 btn btn-primary" (click)="activitylogs()">Activity
-              Logs</span>
-          </div>
         </div>
         <section class="report pt-2" *ngIf="visitcount !== 0">
-          <app-common-innerloading-spinner *ngIf="loading_table"></app-common-innerloading-spinner>
           <ng-container *ngIf="!loading && !loading_table">
             <mat-table class="mat-scrool visit-tbl" [dataSource]="lastVisit_dataSource">
               <ng-container matColumnDef="consultationDate">
-                <mat-header-cell *matHeaderCellDef class="visit-dt-cl"> <b>Date</b></mat-header-cell>
-                <mat-cell *matCellDef="let visit">
-                  {{getLastVisitDate(visit)}}</mat-cell>
+                <mat-header-cell *matHeaderCellDef class="visit-dt-cl"> <b class="headerClr">Date</b></mat-header-cell>
+                <mat-cell *matCellDef="let visit"><div class="elementTextClr">{{getLastVisitDate(visit)}}</div></mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="mrId">
+                <mat-header-cell *matHeaderCellDef> <b class="headerClr">Medical Id</b></mat-header-cell>
+                <mat-cell *matCellDef="let visit"><div class="elementTextClr">MR-{{visit.mrId}}</div></mat-cell>
               </ng-container>
               <ng-container matColumnDef="serviceName">
-                <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b>Service Name</b></mat-header-cell>
-                <mat-cell *matCellDef="let visit">
-                  {{getServiceName(visit)}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b class="headerClr">Service</b></mat-header-cell>
+                <mat-cell *matCellDef="let visit"><div class="elementTextClr">{{getServiceName(visit)}}</div></mat-cell>
               </ng-container>
               <ng-container matColumnDef="userName">
-                <mat-header-cell *matHeaderCellDef class="m-0 p-0 visit-dr-cl"> <b>Doctor</b></mat-header-cell>
+                <mat-header-cell *matHeaderCellDef class="m-0 p-0 visit-dr-cl"> <b class="headerClr">Doctor</b></mat-header-cell>
                 <mat-cell *matCellDef="let visit">
-                  {{getProviderName(visit)}}
+                  <div class="providerName">
+                    <div class="arrowIcon">
+                      <img style="margin-top: 5px" src="/assets/images/medicalReportIcon/arrow2.png"/>
+                    </div>
+                   <div class="elementTextClr"> {{getProviderName(visit)}}</div>
+                  </div>
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="mr">
-                <mat-header-cell *matHeaderCellDef class="visit-mr-cl"> <b>Medical Record</b></mat-header-cell>
+                <mat-header-cell *matHeaderCellDef class="visit-mr-cl"> <b class="headerClr">Medical Record</b></mat-header-cell>
                 <mat-cell class="m-0 p-0" *matCellDef="let row;columns:lastVisit_displayedColumns">
-                  <i [ngClass]="isMRCreated(row) == true ? 'fa fa-check':'fa fa-times'"></i>
+                  <div [ngClass]="row.mrCreated === true ? 'createBtn':'ViewBtn'">
+                    <div *ngIf="row.mrCreated">View</div>
+                    <div *ngIf="!row.mrCreated">Create</div>
+                  </div>
                 </mat-cell>
               </ng-container>
-              <ng-container matColumnDef="rx">
-                <mat-header-cell *matHeaderCellDef class="visit-rx-cl" style="margin-left: 20px;"> <b>Prescription</b>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row;columns:lastVisit_displayedColumns" style="margin-left: 20px;"> <i
-                    style="text-align:center" [ngClass]="isRxCreated(row) == true ? 'fa fa-check':'fa fa-times'"></i>
-                </mat-cell>
-              </ng-container>
-              <mat-header-row *matHeaderRowDef="lastVisit_displayedColumns"></mat-header-row>
+              <mat-header-row class="matHeaderRow" *matHeaderRowDef="lastVisit_displayedColumns;sticky: true"></mat-header-row>
               <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns" (click)="getMedicalRecord(row)"
                 class="pointlist"></mat-row>
             </mat-table>
@@ -110,106 +167,86 @@
         </section>
       </div>
     </div>
-
-
-    <div class="card">
-      <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-        <h5 class="heading2b">Add or view medical records</h5>
-        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8" style="padding-left:0px;padding-right:0px;"><span
-            class="normal-sz">{{customer_label | capitalizeFirst}} visit date </span>
-          <button *ngIf="dateShow">{{visitdate }} &nbsp;</button>
-          <button *ngIf="isShowList" (click)="VisitList()">{{visitdate}} &nbsp; <i class="arrow down"></i></button>
-        </div>  
-        <div class="mt-4 col-md-4 col-xs-12 col-sm-12 col-lg-4" style="padding-left:0px;padding-right:0px;">
-          <span *ngIf="mrId !== 0" class="custId-cursor mr-20 btn btn-primary" (click)="activitylogs()">Activity Logs</span>
-        </div>
-        <div class="clearfix"></div>
-        <hr>
-      </div> -->
-      <!-- <div class="mt-2 col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding no-padding-small">
-        <div class="shadow">
-          <div class="col-md-7 col-lg-7 col-xs-12 col-sm-12">
-            <label *ngIf="department">Department :</label><span *ngIf="department">
-              {{department | capitalizeFirst}}</span><br *ngIf="department">
-            <label *ngIf="serviceName">Service/Consultation :</label><span *ngIf="serviceName">
-              {{serviceName | capitalizeFirst}}</span><br *ngIf="serviceName">
-            <label *ngIf="doctorBName">Doctor :</label><span *ngIf="doctorBName">
-              {{doctorBName | capitalizeFirst}}</span><br *ngIf="doctorBName">
-            <label *ngIf="!doctorBName && doctorName">Doctor :</label><span *ngIf="!doctorBName && doctorName">
-              {{doctorName | capitalizeFirst}}</span><br *ngIf="!doctorBName && doctorName">
-          </div>
-          <div class="col-md-5 col-lg-5 col-xs-12 col-sm-12">
-            <label *ngIf="mrId !== 0">Medical Record# :</label><span *ngIf="mrId !== 0"> {{mrNumber}}</span><br>
-            <div *ngIf="mrId !== 0">
-              <label>Created On :</label>
-              <span>&nbsp;{{mrCreatedDate}}</span>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-        </div>
-      </div> -->
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-
-
-        <div class="prescription p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8">
-          <div class="shadow">
+      <!---prescription start-->
+      <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes card"> -->
+        <!-- (uploadFiles && uploadFiles.length===0)" -->
+        <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate shadow mgn-up-10" *ngIf="showHideAddPrescription">
+          <div>
             <app-prescription></app-prescription>
-            <div class="clearfix"></div>
           </div>
         </div>
 
-        <div class="prescription p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4">
-          <div class="shadow">
-            <span class="normal-sz p-1 details-card"><b>Upload Your Files</b></span><br>
-            <div class="text-dark text-center my-3 pointer-cursor" *ngIf="uploadFiles.length == 0"
-              (click)="uploadFileforMr()">
-              <i style="font-size: 100px!important;color: #1E4079!important;" class="fa fa-cloud-upload"
-                aria-hidden="true"></i>
-            </div><br class="no-need">
-            <div class="my-3 ml-1 pointer-cursor fileUpload" *ngIf="uploadFiles && uploadFiles.length > 0">
-              <i style="font-size: 30px!important;color: #1E4079!important;" class="fa fa-upload"
-                aria-hidden="true"></i>
-              <span class="pointer-cursor" (click)="uploadedFileforMr()">&nbsp;&nbsp;<u style="color: #1E4079;">Uploaded
-                  files</u></span><br>
-              <span class="mt-4 pointer-cursor btn btn-primary" (click)="uploadFileforMr()">&nbsp;&nbsp;Upload
-                file</span>
-            </div><br class="no-need">
-            <div class="clearfix"></div>
-            <!-- <div>
-              <button class="btn btn-primary m-2 ml-0 mb-auto">Upload Files</button>
-            </div> -->
-          </div>
+        <!-- <span class="spaanOr" *ngIf="uploadFiles && uploadFiles.length===0">OR</span>
+        <div class="mobileDevice" *ngIf="uploadFiles && uploadFiles.length===0">
+          <span class="mobileOr">OR</span>
         </div>
-
-      </div>
-
-
-      <div class="clearfix"></div>
-
-      <!-- <hr> -->
-      <div class="content w-manager settings no-padding">
-        <div>
-          <!-- <nav mat-tab-nav-bar>
-            <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link"
-              routerLinkActive="mat-tab-link-active" #rla="routerLinkActive" class="routerLink.active heading2"
-              [active]="rla.isActive" (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">
-              {{routeLink.label}}
-            </a>
-          </nav>
-          <router-outlet></router-outlet> -->
-          <div class="p-1 pt-0 px-0 col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <div class="shadow">
-              <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId">
-              </app-clinicalnotes>
-              <div class="clearfix"></div>
+        <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate" >
+          <div class="shadow flexClass">
+            <div class="text-dark text-center dashedClass" *ngIf="uploadFiles && uploadFiles.length == 0">
+                <img style="height:50px;width:50px" src="/assets/images/medicalReportIcon/uploadIcon.png" />
+                <div class="fileText">Click Your Files Here </div>
+                <div>
+                  <button type="button"class=" font-weight-bold confirmBtn pointer-cursor"(click)="uploadFileforMr()" >Upload file</button>
+                </div>
+            </div>
+            <div class="pointer-cursor fileUpload text-dark text-center" *ngIf="uploadFiles && uploadFiles.length > 0">
+                <img style="height:50px;width:50px" src="/assets/images/medicalReportIcon/uploadIcon.png" />
+              <div class="twolConfirmBtn">
+                <div>
+                  <button type="button"class=" font-weight-bold confirmBtn pointer-cursor"(click)="uploadedFileforMr()" >Uploaded files</button>
+                </div>
+                <div>
+                  <button type="button"class=" font-weight-bold confirmBtn pointer-cursor"(click)="uploadFileforMr()" >Upload file</button>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="clearfix"></div>
+        </div>
+        <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate"*ngIf="uploadFiles && uploadFiles.length > 0" >
+          <div class="shadow" style="height:100% !important">
+            <div class="pl-2 uploadedText">Uploaded Prescription</div>
+            <div class="hightLimit">
+              <div *ngFor="let file of uploadFiles;let i=index" class="allFile">
+                <div class="borderClass" >
+                  <div class="allfileNameDetails">
+                    <div class="allfileName">
+                      <div class="fileType" *ngIf="file && file.type ">
+                        <img height="25px" width="25px" [src]="getFileType(file.type)"  />
+                      </div>
+                      <div>
+                        <div class="fileName"*ngIf="file && file.originalName">{{originalFilename(file.originalName)}}</div>
+                        <div *ngIf="file && file.imageSize" class="fileSize" >
+                          {{bytesToSize(file.imageSize)}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="imageClas">
+                      <div (click)="dialogImgView(file)">
+                        <img class="fileView"src="./assets/images/ImgeFileIcon/fileView.png" />
+                      </div>
+                      <div (click)="deletePrescriptionFile(file,i)">
+                        <img class="removeIcon"src="./assets/images/ImgeFileIcon/removeCross.png" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            </div> -->
+
+      <!-- </div> -->
+      <!---prescription end-->
+      <!-- <hr> -->
+      <!----clinical notess ection start-->
+      <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate shadow mgn-up-10" *ngIf="showHideClinicalNotes">
+        <div>
+          <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId">
+          </app-clinicalnotes>
         </div>
       </div>
-    </div>
+ <!----clinical notess ection end-->
   </div>
-  <div class="clearfix"></div>
 </section>
 
 
@@ -240,143 +277,139 @@
 
 <section *ngIf="!loading && viewVisitDetails" class="medical-record">
   <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding-small">
-    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10">
-      <div class="details-card shadow">
-        <div class="text-center mt-5" *ngIf="customerDetails.gender === 'male'">
-          <img src="assets/images/mr_male.svg" width="100" height="100" />
+    <div class="col-xs-12 col-sm-12 mgn-up-10 card">
+      <div class="infoDetails shadow">
+        <div *ngIf="customerDetails">
+          <div  *ngIf="customerDetails && customerDetails.gender === 'male'">
+            <img class="imGBorderRadius" src="assets/images/mr_male.svg"  />
+          </div>
+          <div  *ngIf="customerDetails && customerDetails.gender === 'female'">
+            <img class="imGBorderRadius" src="assets/images/mr_female.svg"  />
+          </div>
+          <div  *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
+            <img class="imGBorderRadius" src="assets/images/undefinedUser.png"  />
+          </div>
+            <div *ngIf="customerDetails.firstName ||customerDetails.lastName || customerDetails.age || customerDetails.age.year || customerDetails.gender">
+              <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge" >
+                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" />
+                <div class="nameClr">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
+              </div>
+              <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
+                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" />
+                <div class="nameClrOther">{{customerDetails.age.year}} years,</div>
+                <div class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
+              </div>
+            </div>
+            <div *ngIf="customerDetails && customerDetails.address">
+              <div class="infoDetails" style="justify-content:flex-start !important">
+                <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div>
+                <div class="nameClrOther">{{customerDetails.address}}</div>
+              </div>
+            </div>
         </div>
-        <div class="text-center mt-5" *ngIf="customerDetails.gender === 'female'">
-          <img src="assets/images/mr_female.svg" width="100" height="100" />
+        <div *ngIf="customer_label || display_PatientId || customerDetails &&  (customerDetails.phoneNo ||customerDetails.id )">
+          <div>
+            <div class="nameClr" *ngIf="customer_label">{{customer_label | capitalizeFirst}} Id</div>
+            <div class="infoDetails" style="justify-content:flex-start !important">
+              <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/id.png" /></div>
+              <div *ngIf="display_PatientId" class="nameClrOther">{{display_PatientId}}</div>
+            </div>
+          </div>
+          <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " >
+            <div class="nameClr" >Phone</div>
+            <div class="infoDetails">
+              <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
+                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
+              </div>
+              <div *ngIf="customerDetails" class="nameClrOther">
+                {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
+              </div>
+              <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
+            </div> 
+          </div>
+           <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
+            <div class="nameClr" >Phone</div>
+            <div class="infoDetails">
+              <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
+                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
+              </div>
+              <div >{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
+                <div class="nameClrOther" *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518</div>
+            </div>
+           </div>
         </div>
-        <div class="text-center mt-5" *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
-          <img src="assets/images/undefinedUser.png" width="100" height="100" />
-        </div>
-        <div class="text-center my-1">
-          <label *ngIf="customerDetails.firstName ||customerDetails.lastName">
-            &nbsp; <span>{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}
-            </span></label><br>
-          {{customer_label | capitalizeFirst}} Id :&nbsp; <span>{{display_PatientId}}</span> <br
-            *ngIf="display_PatientId">
-        </div>
-        <div class="clearfix"></div>
-        <div class="ml-3 mt-3 mb-5">
-          <!-- <pre>{{customerDetails | json}}</pre> -->
+        <!---dob && email start---->
+        <div *ngIf="customerDetails && (customerDetails.dob || customerDetails.email)">
+          <div *ngIf="customerDetails && customerDetails.dob">
+            <div class="nameClr">Date Of Birth</div>
+            <div class="infoDetails" style="justify-content: flex-start !important;">
+              <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/dob.png" />
+              <div>
+                <div class="nameClrOther" *ngIf="customerDetails.dob">{{customerDetails.dob |date:newDateFormat}} </div> 
+              </div>
+            </div>
+          </div>
 
-          <label *ngIf="customerDetails.phoneNo">
-            <i class="fa fa-mobile" style="font-size:20px!important" aria-hidden="true"></i>
-          </label> &nbsp;&nbsp;<span *ngIf="customerDetails.countryCode">
-            {{customerDetails.countryCode ? customerDetails.countryCode : '+91'}} </span> <span
-            *ngIf="customerDetails.phoneNo">{{customerDetails.phoneNo}} </span><br>
-          <label *ngIf="customerDetails.id">
-            <i class="fa fa-id-badge" aria-hidden="true"></i>
-          </label> &nbsp;&nbsp;<span *ngIf="customerDetails.id">{{customerDetails.id}} </span><br>
+          <div *ngIf="customerDetails && customerDetails.email">
+            <div class="nameClr">Email</div>
+            <div class="infoDetails">
+              <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" />
+              <div>
+                <div class="nameClrOther" *ngIf="customerDetails.email">{{customerDetails.email}} </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+         <!---dob && email end---->
+      </div>
+    </div>
 
-          <label *ngIf="customerDetails.dob"><i class="fa fa-birthday-cake" aria-hidden="true"></i></label> &nbsp;<span
-            *ngIf="customerDetails.dob">{{customerDetails.dob |
-            date:newDateFormat}} </span> <br *ngIf="customerDetails.dob">
-          <label *ngIf="customerDetails.gender">
-            <i *ngIf="customerDetails.gender == 'male'" class="fa fa-mars" aria-hidden="true"></i>
-            <i *ngIf="customerDetails.gender != 'male'" class="fa fa-venus" aria-hidden="true"></i>
-          </label> &nbsp;<span *ngIf="customerDetails.gender">{{customerDetails.gender | capitalizeFirst}} </span>
+      <div class="col-xs-12 col-sm-12 mgn-up-10 card">
+        <div class="shadow flexClass1">
+          <div class="recordInfo">
+            <div class="mrNumber1">
+              <div>Medical Records</div>
+              <div *ngIf="mrId !== 0">1</div>
+            </div>
+            <div class="mrNumber2">
+              <div>Medical Record ID</div>
+              <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+            </div>
+          </div>
+          <div class="dateCreate">
+            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/calendar.png" />
+            <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
+          </div>
+          <div class="dateCreate">
+            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/serviceIcon.png" />
+            <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
+          </div>
+          <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
+            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/doctorIcon.png" />
+            <div *ngIf="doctorBName" class="dateClr">{{doctorBName | capitalizeFirst}}</div>
+            <div *ngIf="!doctorBName && doctorName" class="dateClr">{{doctorName | capitalizeFirst}}</div>
+          </div>
+        </div>
+      </div>
+
+
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 card" >
+      <div  >
+        <div [ngClass]="{'prescription-details':uploadFiles.length>0}" class=" p-1 pl0 pt-0">
+          <app-prescription [viewVisitDetails]="viewVisitDetails"></app-prescription>
         </div>
       </div>
     </div>
 
 
-    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 mgn-up-10 pl-0">
-      <div class="shadow">
-        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
-          <label>Medical Record# </label><span *ngIf="mrId !== 0">: {{mrNumber}}</span><br>
-        </div>
-        <div class="mt-2 col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding">
-          <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" *ngIf="mrId !== 0">
-            <i *ngIf="mrId !== 0" class="fa fa-calendar" aria-hidden="true"></i>&nbsp;&nbsp;<span *ngIf="mrId !== 0">
-              {{getDate(mrCreatedDate)}}</span>
-          </div>
-          <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" *ngIf="serviceName">
-            <i class="fa fa-medkit" aria-hidden="true"></i>&nbsp;&nbsp;<span>
-              {{serviceName | capitalizeFirst}}</span><br *ngIf="serviceName">
-          </div>
-          <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" *ngIf="doctorBName || (!doctorBName && doctorName)">
-            <i class="fa fa-user-md" aria-hidden="true"></i>&nbsp;&nbsp;
-            <span *ngIf="doctorBName">
-              {{doctorBName | capitalizeFirst}}</span><br *ngIf="doctorBName">
-            <span *ngIf="!doctorBName && doctorName">
-              {{doctorName | capitalizeFirst}}</span><br *ngIf="!doctorBName && doctorName">
-          </div>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-
-      <div class="shadow mt-1">
-        <div class="prescription-details p-1 pl0 pt-0">
-          <app-prescription></app-prescription>
-        </div>
-        <div class="clearfix"></div>
-      </div>
-    </div>
-
-
-    <div class="card">
-      <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-        <h5 class="heading2b">Add or view medical records</h5>
-        <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8" style="padding-left:0px;padding-right:0px;"><span
-            class="normal-sz">{{customer_label | capitalizeFirst}} visit date </span>
-          <button *ngIf="dateShow">{{visitdate }} &nbsp;</button>
-          <button *ngIf="isShowList" (click)="VisitList()">{{visitdate}} &nbsp; <i class="arrow down"></i></button>
-        </div>  
-        <div class="mt-4 col-md-4 col-xs-12 col-sm-12 col-lg-4" style="padding-left:0px;padding-right:0px;">
-          <span *ngIf="mrId !== 0" class="custId-cursor mr-20 btn btn-primary" (click)="activitylogs()">Activity Logs</span>
-        </div>
-        <div class="clearfix"></div>
-        <hr>
-      </div> -->
-      <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
-
-
-        <div class="prescription p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4">
-          <div class="shadow">
-            <span class="normal-sz mgn-bt-10 p-1 details-card"><b>Uploaded Files</b></span><br>
-            <div class="text-dark text-center my-3" *ngIf="uploadFiles.length == 0">
-              <span>No Files Uploaded</span>
-            </div>
-            <div class="my-5 ml-1" *ngIf="uploadFiles && uploadFiles.length > 0">
-              <span class="pointer-cursor" (click)="uploadedFileforMr()">&nbsp;&nbsp;<u style="color: #1E4079;">Uploaded
-                  files</u></span>
-            </div>
-            <div class="clearfix"></div>
-            <div>
-              <button class="btn btn-primary m-2 ml-0 mb-auto" (click)="uploadFileforMr()">Upload Files</button>
-            </div>
-          </div>
-        </div>
-
-      </div> -->
-
-
-      <div class="clearfix"></div>
-
-      <!-- <hr> -->
-      <div class="content w-manager settings no-padding">
-        <div>
-          <!-- <nav mat-tab-nav-bar>
-            <a mat-tab-link *ngFor="let routeLink of routeLinks; let i = index;" [routerLink]="routeLink.link"
-              routerLinkActive="mat-tab-link-active" #rla="routerLinkActive" class="routerLink.active heading2"
-              [active]="rla.isActive" (click)="activeLinkIndex = i" [routerLinkActiveOptions]="{exact: true}">
-              {{routeLink.label}}
-            </a>
-          </nav>
-          <router-outlet></router-outlet> -->
-          <div class="p-1 pt-0 px-0 col-md-12 col-xs-12 col-sm-12 col-lg-12">
-            <div class="shadow">
-              <app-clinicalnotes [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
-              <div class="clearfix"></div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 card" >
+      <div  >
+        <div class=" p-1 pl0 pt-0">
+          <app-clinicalnotes [mRListUsingId]="mRListUsingId" [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
         </div>
       </div>
     </div>
+
   </div>
-  <div class="clearfix"></div>
+  
 </section>

@@ -1,25 +1,30 @@
-<section>
-  <div class="p-3">
+<section  class="secHeight">
+  <div >
     <div class="d-flex justify-content-between">
       <div class="heading font-weight-bold">{{heading}}</div>
-      <i class="fa fa-times pointer-cursor" (click)="goBack()"></i>
+      <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon">
+        <mat-icon>clear</mat-icon>
+    </div>
     </div>
   </div>
-  <div class="card title-gb mgn-up-20 mgn-rt-10 mgn-lt-5">
-    <div class="no-dta">
+  <div >
+    <div >
       <div class="font-weight-bold"> Create your own signature </div>
       <div *ngIf="!small_device_display" class="digitalsignature-pad">
-
-        <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
+        <!-- [theme]="my-theme" [config]="{penColor:red}"  -->
+        <signature-pad   [options]="signaturePadOptions" (onBeginEvent)="drawStart()"fxFlex="1 1 50" (window:resize)="resizeSignaturePad()"
+        class="signature" 
+        id="sign_canvas" fxFlexAlign.xs="center"></signature-pad>
       </div>
+      <!-- <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:84%"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg> -->
+
       <div *ngIf="small_device_display" class="digitalsignature-pad">
 
         <signature-pad [options]="smallsignaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
       </div>
-      <div>
-        <button type="button" style="margin: 10px" class="cs-btn bt2 sm" (click)="clearSign()">Clear</button>
-        <button type="button" mat-button (click)="drawComplete()" [disabled]="sign"
-          class="cs-btn bt1 sm btn btn-primary">Save</button>
+      <div style="margin-top: 10px;">
+        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="clearSign()">Clear</button>
+        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="drawComplete()" [disabled]="sign">Save</button>
       </div>
     </div>
   </div>

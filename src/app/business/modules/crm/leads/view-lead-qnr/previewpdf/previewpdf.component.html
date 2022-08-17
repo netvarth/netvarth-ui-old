@@ -18,3 +18,23 @@
 </mat-dialog-content>
 </section>
 
+<section *ngIf="dialogTYpe==='priviewFilePrescription'">
+  <div class="header mat-dialog-title">
+    <div style="display:flex;gap:5px">
+      <div>
+        <img class="imgType" [src]="getFileType(data.data.type)" />
+      </div>
+      <div class="headerText">File Preview</div>
+    </div>
+    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+        <mat-icon>clear</mat-icon>
+    </div>
+</div>
+<!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
+<mat-dialog-content class="custDialogCon">
+  <div>
+   <img class="image" [src]="data.data.url" />
+  </div>
+</mat-dialog-content>
+</section>
+

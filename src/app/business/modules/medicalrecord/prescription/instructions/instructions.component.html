@@ -1,10 +1,62 @@
-<h1 class="mat-dialog-title"> Instructions of {{ medicine.medicine_name }}
+<!-- <h1 class="mat-dialog-title" *ngIf="medicine && medicine.medicine_name "> Instructions of {{ medicine.medicine_name }}
 </h1>
 <mat-dialog-content>
-  <textarea readonly rows="5" class="col-md-12 col-sm-12 col-xs-12">
+  <textarea readonly rows="5" class="col-md-12 col-sm-12 col-xs-12" *ngIf="locationMessage">
         {{locationMessage}}
     </textarea>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button type="button" class="cs-btn bt1 small-btn" (click)="closeDialog()">Close</button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->
+<section class="card" *ngIf="data && data.requestType==='craetePrescription'">
+  <div>
+   <div class="createTxtIcon">
+    <div class="createTxt">Created Prescription</div>
+    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon">
+      <mat-icon>clear</mat-icon>
+    </div>
+   </div>
+   <div>
+    <div class="overView">Over view of created Prescriptions</div>
+   </div>
+   <div class="createTxtIcon">
+    <div class="cardCustom">
+      <div>
+        <div class="medicineNameIcon" *ngIf="medecineName">
+         <div>
+          <img height="40px" width="40px" src="/assets/images/medicalReportIcon/medicine.png"/>
+         </div>
+         <div>
+          <div class="medicineTxt">Medicine</div>
+          <div class="medecinename" *ngIf="medecineName">{{medecineName}}</div>
+         </div>
+        </div>
+        <div class="medecineDetails" *ngIf="medicineDurationDays">
+          <div class="duration">Duration(Days)</div>
+          <div class="durationAns">{{medicineDurationDays}}</div>
+        </div>
+        <div class="medecineDetails" *ngIf="medecineDoseDays">
+          <div class="duration">Dose</div>
+          <div class="durationAns">{{medecineDoseDays}}</div>
+        </div>
+        <div class="medecineDetails" *ngIf="medecineDoseFrequency">
+          <div class="duration">Frequency</div>
+          <div class="durationAns">{{medecineDoseFrequency}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="cardCustom" *ngIf="medecineInstruction" >
+      <div class="medicineTxt">
+        Instruction
+      </div>
+      <dIv class="medecineInstruction">
+        {{medecineInstruction}}
+      </dIv>
+    </div>
+   </div>
+   <div class="closeClass">
+    <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold confirmBtn">Close</button>
+   </div>
+  </div>
+
+</section>

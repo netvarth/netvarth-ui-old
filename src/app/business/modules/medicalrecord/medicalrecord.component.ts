@@ -14,9 +14,16 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
-import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfileuploadpopup.component';
+// import { MrfileuploadpopupComponent } from './uploadfile/mrfileuploadpopup/mrfileuploadpopup.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { UploadFileComponent } from './uploadfile/uploadfile.component';
+import { FileService } from '../../../shared/services/file-service';
+import { PreviewpdfComponent } from '../crm/leads/view-lead-qnr/previewpdf/previewpdf.component';
+import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
+import { SubSink } from 'subsink';
+import { UploadPrescriptionComponent } from './prescription/upload-prescription/upload-prescription.component';
+
+
 
 @Component({
   selector: 'app-medicalrecord',
@@ -25,7 +32,7 @@ import { UploadFileComponent } from './uploadfile/uploadfile.component';
 })
 export class MedicalrecordComponent implements OnInit {
   public lastVisit_dataSource = new MatTableDataSource<any>([]);
-  lastVisit_displayedColumns = ['consultationDate', 'serviceName', 'userName', 'mr', 'rx'];
+  lastVisit_displayedColumns = ['consultationDate', 'mrId','serviceName', 'userName', 'mr'];
   accountType: any;
   bookingId: string;
   patientId: string;
@@ -109,6 +116,14 @@ export class MedicalrecordComponent implements OnInit {
   uploadedfiledialogRef: any;
   provider: string;
   customerphoneno: any;
+  medicalRecordBtnName:string='Create';
+  mrDateFromTableRow:any;
+  showHidepreviousDetails:boolean;
+  showHideAddPrescription:boolean;
+  showHideClinicalNotes:boolean;
+  medicalRecordID:any;
+  private subscriptions = new SubSink();
+  mRListUsingId:any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -118,7 +133,8 @@ export class MedicalrecordComponent implements OnInit {
     private datePipe: DateFormatPipe,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private fileService: FileService,
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
@@ -153,6 +169,7 @@ export class MedicalrecordComponent implements OnInit {
       this.medicalService.setParams(this.bookingType, this.bookingId);
       this.getPatientVisitListCount();
       this.getPatientVisitList();
+      console.log('this.mrId',this.mrId)
       if (this.mrId !== 0) {
         this.getMedicalRecordUsingId(this.mrId);
       } else {
@@ -208,6 +225,7 @@ export class MedicalrecordComponent implements OnInit {
         }
         this.medicalService.setServiceDept(this.serviceName, this.department);
         this.customerDetails = response.appmtFor[0];
+        console.log('customerDetailsappmtFor::',  this.customerDetails)
         this.medicalService.setPatientDetails(this.customerDetails);
         this.patientId = this.customerDetails.id;
         if (this.customerDetails.memberJaldeeId) {
@@ -239,6 +257,7 @@ export class MedicalrecordComponent implements OnInit {
         }
         this.medicalService.setServiceDept(this.serviceName, this.department);
         this.customerDetails = response.waitlistingFor[0];
+        console.log('customerDetailswaitlistingFor::',  this.customerDetails)
         this.medicalService.setPatientDetails(this.customerDetails);
         this.patientId = this.customerDetails.id;
         if (this.customerDetails.memberJaldeeId) {
@@ -259,12 +278,13 @@ export class MedicalrecordComponent implements OnInit {
   }
   getPatientDetails(uid) {
     const filter = { 'id-eq': uid };
-    this.provider_services.getCustomer(filter)
+    this.subscriptions.sink= this.provider_services.getCustomer(filter)
       .subscribe(
         (data: any) => {
           const response = data;
           this.loading = false;
           this.customerDetails = response[0];
+          console.log('customerDetailPatientDetails::',  this.customerDetails);
           this.patientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
             this.display_PatientId = this.customerDetails.memberJaldeeId;
@@ -287,6 +307,8 @@ export class MedicalrecordComponent implements OnInit {
     this.provider_services.getPatientVisitList(this.patientId)
       .subscribe((data: any) => {
         this.lastVisit_dataSource = data;
+        console.log('lastVisit_dataSource::',this.lastVisit_dataSource);
+        this.showHidepreviousDetails=true;
         this.loading_table = false;
       },
         error => {
@@ -345,16 +367,20 @@ export class MedicalrecordComponent implements OnInit {
 
 
   getMedicalRecordUsingId(mrId) {
-    this.provider_services.GetMedicalRecord(mrId)
+    this.subscriptions.sink= this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
+          console.log('getMedicalRecordUsingId',data)
           this.loading = false;
           this.mrNumber = data.mrNumber;
+          this.mRListUsingId= data;
+          console.log('this.mRListUsingId:::',this.mRListUsingId)
           this.mrCreatedDate = data.mrCreatedDate;
           this.activityLogs = data.auditLogs;
           this.visitdate = data.mrConsultationDate;
           if (data.mrVideoAudio) {
             this.uploadFiles = data.mrVideoAudio;
+            console.log('this.uploadFiles',this.uploadFiles)
             // this.image_list_popup = [];
             // for (let i = 0; i < this.uploadFiles.length; i++) {
             //   const imgdet = { 'name': this.uploadFiles[i].originalName, 'keyName': this.uploadFiles[i].keyName, 'size': this.uploadFiles[i].imageSize, 'caption': this.uploadFiles[i].caption , 'url': this.uploadFiles[i].url , 'type': this.uploadFiles[i].type};
@@ -374,6 +400,7 @@ export class MedicalrecordComponent implements OnInit {
           }
           this.medicalService.setServiceDept(this.serviceName, this.department);
           this.customerDetails = data.providerConsumer;
+          console.log('customerDetailMedicalRecordUsingId::',  this.customerDetails)
           this.medicalService.setPatientDetails(this.customerDetails);
           this.patientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
@@ -516,7 +543,7 @@ export class MedicalrecordComponent implements OnInit {
     }
   }
   uploadFileforMr() {
-    this.uploadfiledialogRef = this.dialog.open(MrfileuploadpopupComponent, {
+    this.uploadfiledialogRef = this.dialog.open(UploadPrescriptionComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
@@ -568,6 +595,7 @@ export class MedicalrecordComponent implements OnInit {
 
 
   getLastVisitDate(visit) {
+    // console.log('visitDate::',visit)
     let visitdate = '';
     if (visit.waitlist) {
       visitdate = visit.waitlist.consLastVisitedDate;
@@ -579,9 +607,14 @@ export class MedicalrecordComponent implements OnInit {
     return visitdate;
   }
   isMRCreated(visit) {
+    console.log('visit-medicalRecordBtnName::::',visit)
     let mrCreated = false;
     if (visit.mrCreated) {
+      this.medicalRecordBtnName='Create'
       mrCreated = visit.mrCreated;
+    }
+    else{
+      this.medicalRecordBtnName='View'
     }
     return mrCreated;
 
@@ -619,6 +652,7 @@ export class MedicalrecordComponent implements OnInit {
     // console.log("typeof(dateCreated)", typeof (mrDate))
   }
   getMedicalRecord(visitDetails) {
+    console.log('visitDetails:::',visitDetails)
     // this.selectedRowIndex = visitDetails.mrId;
     if (visitDetails.waitlist) {
       let mrId = 0;
@@ -627,6 +661,7 @@ export class MedicalrecordComponent implements OnInit {
       }
 
       const customerDetails = visitDetails.waitlist.waitlistingFor[0];
+      console.log('customerDetailgetMedicalRecord::',  this.customerDetails)
       const customerId = customerDetails.id;
       const bookingId = visitDetails.waitlist.ynwUuid;
       const bookingType = 'TOKEN';
@@ -645,6 +680,7 @@ export class MedicalrecordComponent implements OnInit {
       }
 
       const customerDetails = visitDetails.appointmnet.appmtFor[0];
+      console.log('customerDetailappointmnet::',  this.customerDetails)
       const customerId = customerDetails.id;
       const bookingId = visitDetails.appointmnet.uid;
       const bookingType = 'APPT';
@@ -658,18 +694,33 @@ export class MedicalrecordComponent implements OnInit {
 
     } else {
 
-      const mrId = visitDetails.mrId;
-      const customerDetails = visitDetails.providerConsumer;
-      const customerId = customerDetails.id;
-      const bookingId = 0;
-      const bookingType = 'FOLLOWUP';
+      // const mrId = visitDetails.mrId;
+      // const customerDetails = visitDetails.providerConsumer;
+      console.log('customerDetailFOLLOWUP::',  this.customerDetails)
+      // const customerId = customerDetails.id;
+      // const bookingId = 0;
+      // const bookingType = 'FOLLOWUP';
       // this.dialogRef.close();
-      this.medicalService.viewVisitDetails = true;
-      this.viewVisitDetails = this.medicalService.viewVisitDetails
-      console.log(this.medicalService.viewVisitDetails)
-      console.log("visit Details", visitDetails)
+      // this.medicalService.viewVisitDetails = true;
+      // this.viewVisitDetails = this.medicalService.viewVisitDetails
+      // console.log(this.medicalService.viewVisitDetails)
+      // console.log("visit Details", visitDetails);
+      if(visitDetails.mrCreated){
+        console.log('1st')
+        this.medicalService.viewVisitDetails = true;
+        this.viewVisitDetails = this.medicalService.viewVisitDetails
+        console.log(this.medicalService.viewVisitDetails)
+        console.log("visit Details", visitDetails);
+        console.log('this.mrId',this.mrId)
+        this.getMedicalRecordUsingId(visitDetails.mrId)
+      }
+      else{
+        console.log('2nd')
+        this.medicalService.viewVisitDetails = false;
+        // this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription']);
+      }
 
-      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+      // this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription']);
 
     }
   }
@@ -688,6 +739,127 @@ export class MedicalrecordComponent implements OnInit {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currentUrl]);
+  }
+  addPrescriptionAndClinical(id,text){
+    console.log('add');
+    if(text==='createPrescription'){
+      this.showHidepreviousDetails = false;
+      this.showHideAddPrescription=true;
+      this.showHideClinicalNotes=false;
+      const routerId='prescription'
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId,routerId]);
+    }
+    else if(text==='craeteClinicalnotes'){
+      this.showHidepreviousDetails = false;
+      this.showHideAddPrescription=false;
+      this.showHideClinicalNotes=true;
+      const routerId='clinicalnotes'
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId,routerId]);
+    }
+    
+
+    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId,routerId]);
+  }
+  getFileType(type){
+    // console.log('type',type)
+    if(type){
+      if(type==='image/png'){
+        return './assets/images/ImgeFileIcon/png.png'
+      }
+      else if(type==='application/pdf'){
+        return './assets/images/ImgeFileIcon/pdf.png'
+      }
+      else if(type==='image/bmp'){
+        return './assets/images/ImgeFileIcon/bmp.png'
+      }
+      else if(type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
+        return './assets/images/ImgeFileIcon/docsWord.png'
+      }
+      else if(type==='video/mp4'){
+        return './assets/images/ImgeFileIcon/video.png'
+      }
+      else if(type==='image/jpg'){
+        return './assets/images/ImgeFileIcon/jpg.png'
+      }
+      else{
+        return './assets/images/ImgeFileIcon/othersFile.png'
+      }
+
+    }
+  }
+  bytesToSize(sizeInBytes:any) {
+    var sizeInMB:any = (sizeInBytes / (1024)).toFixed(2);
+    var totalSizeMb :any =sizeInMB + 'MB' ;
+    return totalSizeMb;
+  }
+  deletePrescriptionFile(fileDetails,index){
+    this.deleteFile(fileDetails)
+
+  }
+  dialogImgView(fileDetails:any){
+    if(fileDetails){
+      if(fileDetails.keyName && (fileDetails.type===(('image/bmp') || ('image/png') || ('image/jpg')))){
+        if(this.fileService && this.fileService.IMAGE_FORMATS){
+          for(var i=0;i<this.fileService.IMAGE_FORMATS.length;i++){
+            if(this.fileService.IMAGE_FORMATS[i]===fileDetails.type){
+              const dialogRef= this.dialog.open(PreviewpdfComponent,{
+                width:'100%',
+                data:{
+                  requestType:'priviewFilePrescription',
+                  data:fileDetails,
+                }
+              })
+              dialogRef.afterClosed().subscribe((res)=>{
+              })
+            }
+          }
+        }
+      }
+      else{
+        if(fileDetails.url){
+          window.open(fileDetails.url);
+        }
+      } 
+    }
+  }
+  originalFilename(fileName){
+    let tempFileName:any;
+    let tempFileNameSecondTYpe:any;
+    if(fileName.length > 0 && fileName.length <30 ){
+       tempFileName= fileName.slice(0,fileName.indexOf('.'))
+      return tempFileName;
+    }
+    else if(fileName.length > 30){
+      tempFileName= fileName.slice(0,fileName.indexOf('.')) ;
+      // console.log('tempFileName',tempFileName)
+      if(tempFileName.length>30){
+       tempFileNameSecondTYpe= tempFileName.slice(0,30) + ' ...'
+       return tempFileNameSecondTYpe;
+      }
+      // return tempFileName;
+    }
+  }
+  deleteFile(file) {
+   const dialogRef= this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you really want to delete this file?'
+      }
+    });
+    this.subscriptions.sink = dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.subscriptions.sink = this.provider_services.deleteMRFile(this.mrId, file.uid)
+          .subscribe((data) => {
+            this.getMedicalRecordUsingId(this.mrId);
+          },
+            error => {
+              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
+      }
+
+    });
   }
 }
 

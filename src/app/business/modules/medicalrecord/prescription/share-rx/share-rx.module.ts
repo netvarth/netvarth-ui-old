@@ -12,6 +12,10 @@ import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spin
 import { MatSelectModule } from "@angular/material/select";
 import { MatOptionModule } from "@angular/material/core";
 import { AddProviderAddonsModule } from "../../../add-provider-addons/add-provider-addons.module";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+
+
 
 @NgModule({
     imports: [
@@ -27,7 +31,9 @@ import { AddProviderAddonsModule } from "../../../add-provider-addons/add-provid
         MatOptionModule,
         FormsModule,
         CapitalizeFirstPipeModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        MatIconModule,
+        MatMenuModule
     ],
     exports: [ShareRxComponent],
     declarations: [ShareRxComponent]

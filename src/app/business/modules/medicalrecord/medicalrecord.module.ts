@@ -13,12 +13,13 @@ import { PrescriptionComponent } from './prescription/prescription.component';
 import { ClinicalnotesModule } from './clinicalnotes/clinicalnotes.module';
 import { PrescriptionModule } from './prescription/prescription.module';
 import { MatTableModule } from '@angular/material/table';
+import { addPrescriptionModule } from './add-prescription/add-prescription.module';
 const routes: Routes = [
   {
     path: '', component: MedicalrecordComponent, children: [
       { path: '', redirectTo: 'clinicalnotes', pathMatch: 'full' },
       { path: 'clinicalnotes', component: ClinicalnotesComponent },
-      { path: 'prescription', component: PrescriptionComponent },
+      { path: 'prescription', component: PrescriptionComponent}
       // { path: 'clinicalnotes', loadChildren: () => import('./clinicalnotes/clinicalnotes.module').then(m => m.ClinicalnotesModule) },
       // { path: 'prescription', loadChildren: () => import('./prescription/prescription.module').then(m => m.PrescriptionModule) }
     ]
@@ -31,6 +32,7 @@ const routes: Routes = [
   { path: 'uploadsignature', loadChildren: () => import('./prescription/upload-digital-signature/uploadsignature/uploadsignature.module').then(m => m.UploadSignatureModule) },
   { path: 'manualsignature', loadChildren: () => import('./prescription/upload-digital-signature/manualsignature/manualsignature.module').then(m => m.ManualSignatureModule) },
   { path: 'fileupload', loadChildren: () => import('./uploadfile/uploadfile.module').then(m => m.UploadfileModule) },
+  { path:'add-prescription',loadChildren :() => import('./add-prescription/add-prescription.module').then(m => m.addPrescriptionModule)}
 
 ];
 @NgModule({
@@ -45,6 +47,7 @@ const routes: Routes = [
     LastVisitModule,
     ClinicalnotesModule,
     PrescriptionModule,
+    addPrescriptionModule,
     [RouterModule.forChild(routes)]
   ],
   providers: [

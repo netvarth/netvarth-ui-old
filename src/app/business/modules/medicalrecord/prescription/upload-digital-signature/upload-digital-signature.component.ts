@@ -158,7 +158,8 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
   }
   manualSignature() {
     this.uploadmanualsignatureRef = this.dialog.open(ManualSignatureComponent, {
-      width: '50%',
+      width: '100%',
+      height:'75%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {

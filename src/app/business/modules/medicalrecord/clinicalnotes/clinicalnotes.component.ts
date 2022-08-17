@@ -7,6 +7,10 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { GeneralComponent } from '../general/general.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Location } from '@angular/common';
+import { MedicalrecordService } from '../medicalrecord.service';
+import { SubSink } from 'subsink';
+
 
 
 
@@ -22,6 +26,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   @Input() details;
   @Input() type;
   @Input() b_id;
+  @Input() mRListUsingId;
   mrId = 0;
   clinicalNotes: any[];
   allergies: any;
@@ -39,6 +44,10 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   Cdata;
   isLoaded = false;
   clinical_constant = projectConstantsLocal.CLINICAL_NOTES;
+  clinicalNotesValue:any;
+  clinicalNotesType:any;
+  clinicalNotesAddList:any=[];
+  private subscriptions = new SubSink();
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
@@ -47,21 +56,25 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    private location: Location,
+    private medicalrecordService: MedicalrecordService,
   ) {
 
 
   }
 
   ngOnInit() {
+    console.log('showClinicalNotesDetails::',this.showClinicalNotesDetails)
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
+    console.log('this.mrId',this.mrId)
+    this.getClinicalNotes( this.mrId)
 
     if (this.mrId === 0 || this.mrId === undefined) {
       this.isLoaded = true;
       for (let i = 0; i < this.clinical_constant.length; i++) {
         this.clinical_constant[i].value = '';
-
       }
       this.clinicalNotes = this.clinical_constant;
 
@@ -74,19 +87,23 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       this.clinicalNotes = this.clinical_constant;
       this.getMRClinicalNotes(this.mrId).then((res: any) => {
         this.clinicalNotes = res;
+        console.log('clinicalNotes:::',this.clinicalNotes)
         this.isLoaded = true;
 
       });
     }
-
-
-
+    console.log('mRListUsingId:::',this.mRListUsingId)
+  }
+  getClinicalNotes(medicalrecordId){
+    this.subscriptions.sink= this.provider_services.GetMedicalRecord(medicalrecordId).subscribe((res)=>{
+      console.log('resmedicalrecordId',res)
+    })
   }
 
   ngOnChanges() {
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
-
+    // this.getClinicalNotes( this.mrId)
     if (this.mrId === 0 || this.mrId === undefined) {
       this.isLoaded = true;
       for (let i = 0; i < this.clinical_constant.length; i++) {
@@ -104,6 +121,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       this.clinicalNotes = this.clinical_constant;
       this.getMRClinicalNotes(this.mrId).then((res: any) => {
         this.clinicalNotes = res;
+        console.log('clinicalNotes2::', this.clinicalNotes)
         this.isLoaded = true;
 
       });
@@ -122,8 +140,11 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     return new Promise((resolve) => {
       $this.provider_services.getClinicalRecordOfMRById(mrId)
         .subscribe((res: any) => {
+          console.log('res',res)
+          this.clinicalNotes = res;
           if (res.clinicalNotes) {
             response = res.clinicalNotes;
+            // this.clinicalNotes= res;
           } else {
             response = res;
           }
@@ -182,5 +203,121 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currentUrl]);
+  }
+  autoGrowTextZone(e) {
+    if (e) {
+      e.target.style.height = "0px";
+      e.target.style.height = (e.target.scrollHeight + 15) + "px";
+    }
+
+  }
+  handleClinicalNotes(data,type){
+    // console.log('data',data);
+    console.log('type',type);
+    this.clinicalNotesValue= data;
+    this.clinicalNotesType=(type);
+    const payload = {
+      'type':this.clinicalNotesType,
+      'clinicalNotes': this.clinicalNotesValue
+    };
+    
+    console.log(payload);
+    this.clinicalNotesAddList.push(payload)
+
+  }
+  saveClinicalNotes(){
+    // console.log('type',type)
+    console.log('this.clinicalNotesValue::',this.clinicalNotesValue)
+    const payload = {
+      'type':this.clinicalNotesType,
+      'clinicalNotes': this.clinicalNotesValue
+    };
+    console.log('payload::',payload)
+    console.log('clinicalNotesAddList:::',this.clinicalNotesAddList)
+    console.log('this.clinicalNotesType',this.clinicalNotesType)
+    this.medicalrecordService.createMR('clinicalNotes', this.clinicalNotesAddList).then((res:any) => {
+      this.mrId= res;
+      console.log('this.mrId::',this.mrId)
+      this.snackbarService.openSnackBar('Medical Record Created Successfully');
+      this.reloadComponent()
+      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId])
+
+    },
+      error => {
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      });
+  }
+  goback(){
+    this.location.back()
+  }
+  getColor(item){
+    if(item.type==='Symptoms'){
+      return 'rgba(0, 222, 213, 0.05)'
+    }
+    else if(item.type==='Observations'){
+      return 'rgba(222, 173, 0, 0.05)'
+    }
+    else if(item.type==='Diagnosis'){
+      return 'rgba(0, 115, 222, 0.05)'
+    }
+    else if(item.type==='Notes'){
+      return 'rgba(0, 222, 75, 0.05)'
+    }
+    else if(item.type==='Allergies'){
+      return 'rgba(222, 107, 0, 0.05)'
+    }
+    else if(item.type==='Complaints'){
+      return 'rgba(251, 125, 125, 0.05)'
+    }
+    else if(item.type==='Vaccination Notes'){
+      return 'rgba(0, 169, 222, 0.05)'
+    }
+
+  }
+  getColorType(item){
+    if(item.type==='Symptoms'){
+      return '#00DED5'
+    }
+    else if(item.type==='Observations'){
+      return '#DEBA00'
+    }
+    else if(item.type==='Diagnosis'){
+      return '#0066DE'
+    }
+    else if(item.type==='Notes'){
+      return '#00DE66'
+    }
+    else if(item.type==='Allergies'){
+      return '#DE5000'
+    }
+    else if(item.type==='Complaints'){
+      return '#E75050'
+    }
+    else if(item.type==='Vaccination Notes'){
+      return '#008EDE'
+    }
+  }
+  getBorderColor(item){
+    if(item.type==='Symptoms'){
+      return '2px solid #00DED5'
+    }
+    else if(item.type==='Observations'){
+      return '2px solid #DEBA00'
+    }
+    else if(item.type==='Diagnosis'){
+      return '2px solid #0066DE'
+    }
+    else if(item.type==='Notes'){
+      return '2px solid #00DE66'
+    }
+    else if(item.type==='Allergies'){
+      return '2px solid #DE5000'
+    }
+    else if(item.type==='Complaints'){
+      return '2px solid #E75050'
+    }
+    else if(item.type==='Vaccination Notes'){
+      return '2px solid #008EDE'
+    }
   }
 }

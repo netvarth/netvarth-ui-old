@@ -1,22 +1,45 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
-    *ngIf="!loading">
-    <h1 class="mat-dialog-title">Share Prescription
+    *ngIf="!loading" style="padding:20px">
+    <!-- <div class="mat-dialog-title">Share Prescription
         <button #queue mat-dialog-close class="modal_close">
             <i class="fa fa-window-close" aria-hidden="true"></i>
         </button>
-    </h1>
-    <mat-dialog-content>
-        <div class="form-group">
+    </div> -->
+    <div class="createTxtIcon">
+        <div class="share">
+            <div class="createTxt">Share Prescription</div>
+            <div class="shareTxt">Share Your Medical   Prescription to others</div>
+        </div>
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon">
+            <mat-icon>clear</mat-icon>
+        </div>
+    </div>
+    <mat-dialog-content style="padding:0px !important">
+        <div style="margin-right: 5px;">
             <!-- <div> Share with {{customerDetail.firstName | capitalizeFirst}}  {{customerDetail.lastName}}</div> -->
-            <mat-form-field>
+            <!-- <mat-form-field>
                 <mat-select name="item" [(ngModel)]="sharewith" placeholder="Share with whom"
                     [ngModelOptions]="{standalone: true}" (selectionChange)="onUserSelect($event)">
                     <mat-option *ngFor="let item of msgreceivers" [value]="item.id">{{item.name}}</mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
+            <div >
+                <div class="leadTitle" >
+                    <div class="labelSize">Share with whom</div>
+                    <div class="astericColor">*</div>
+                </div>
+                <div class="fieldPadding">
+                    <mat-select name="item" [(ngModel)]="sharewith" placeholder="Share with whom"
+                    [ngModelOptions]="{standalone: true}" (selectionChange)="onUserSelect($event)" class="form-control widthWebKit">
+                        <mat-option [value]="item.id" *ngFor="let item of msgreceivers" >
+                            <div *ngIf="item && item.name">{{item.name}}</div>
+                        </mat-option>
+                    </mat-select>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
+        <!-- <div >
             <mat-form-field>
                 <textarea matInput class="form-control" id="message" placeholder="Please Enter Message * "
                     formControlName="message" maxlength="1000">
@@ -25,8 +48,22 @@
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
                 errorMsg="Please enter a message.">
             </app-field-error-display>
+        </div> -->
+        <div  style="margin-right: 5px;">
+            <div class="leadTitle">
+                <div class="labelSize">Message</div>
+                <div class="astericColor">*</div>
+            </div>
+            <div class="fieldPadding">
+                <textarea rowa="10" class="form-control widthWebKit" formControlName="message" #message
+                    (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter message description">
+            </textarea>
+                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
+                    errorMsg="Please enter a message.">
+                </app-field-error-display>
+            </div>
         </div>
-        <div class="mgn-m-lt-15 " *ngIf="showthirdparty">
+        <!-- <div class="mgn-m-lt-15 " *ngIf="showthirdparty">
             <div class="col-md-6 col-sm-6 col-xs-12 mgn-top-10 mgn-bt-10 ">
                 <div class="form-group" *ngIf="showthirdparty">
                     <mat-form-field>
@@ -36,53 +73,157 @@
                     </mat-form-field>
                 </div>
             </div>
-        </div>
-        <div class="mgtop40 form-group" *ngIf="!showthirdparty">
-            <span *ngIf="!(mrPrescriptionDetails &&  mrPrescriptionDetails[0].keyName)">We will create a PDF of your
+        </div> -->
+        <div class="formTop"  *ngIf="showthirdparty" style="margin-right: 5px;">
+            <div class="leadTitle">
+                <div class="labelSize">Email</div>
+            </div>
+            <div>
+              <div class="fieldPadding">
+                <input  type="text" class="form-control widthWebKit" id="thirdpartyemail" (keyup)="resetApiErrors()"
+                placeholder="Email *" [(ngModel)]="thirdpartyemail" [ngModelOptions]="{standalone: true}"
+                autocomplete="off">
+              </div>
+            </div>
+          </div>
+        <div class="form-group" *ngIf="!showthirdparty">
+            <span class="docText" *ngIf="!(mrPrescriptionDetails &&  mrPrescriptionDetails[0].keyName)">We will create a PDF of your
                 prescription and will share Via</span>
-            <span *ngIf="(mrPrescriptionDetails && mrPrescriptionDetails[0].keyName)">Your prescription will share
+            <span class="docText" *ngIf="(mrPrescriptionDetails && mrPrescriptionDetails[0].keyName)">Your prescription will share
                 Via</span>
             <div class="coupon-outer">
-                <mat-checkbox [disabled]="(!phon || phon === 'null') || is_noSMS || countryCode !='+91'"
-                    class="mgright50 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
-                    SMS
+                <mat-checkbox  [disabled]="(!phon || phon === 'null') || is_noSMS || countryCode !='+91'"
+                    class="example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                    <span class="labelCheckName">SMS</span>
                 </mat-checkbox>
-                <mat-checkbox [disabled]=" !email_id" class="mgright50 example-margin" [(ngModel)]="email"
-                    [ngModelOptions]="{standalone: true}">Email
+                <mat-checkbox  [disabled]=" !email_id" class=" example-margin" [(ngModel)]="email"
+                    [ngModelOptions]="{standalone: true}"><span class="labelCheckName">Email</span>
                 </mat-checkbox>
-                <mat-checkbox [disabled]="!phon ||  phon === 'null'" class="mgright50 example-margin"
-                    [(ngModel)]="pushnotify" [ngModelOptions]="{standalone: true}">App
-                    notification
+                <mat-checkbox  [disabled]="!phon ||  phon === 'null'" class=" example-margin"
+                    [(ngModel)]="pushnotify" [ngModelOptions]="{standalone: true}">
+                    <span class="labelCheckName">App notification</span>
                 </mat-checkbox>
-                <mat-checkbox class="mgright50 example-margin" *ngIf="!IsTelegramDisable" [(ngModel)]="telegram"
+                <mat-checkbox  class=" example-margin" *ngIf="!IsTelegramDisable" [(ngModel)]="telegram"
                     [ngModelOptions]="{standalone: true}">
-                    Telegram
+                   <span class="labelCheckName"> Telegram</span>
                 </mat-checkbox>
             </div>
-            <div style="color: red;font: italic" *ngIf="!sms && !email && !pushnotify && !telegram"> Atleast anyone of the options('SMS'/'Email'/'App') should be valid or enabled For Sharing Prescription
+            <div style="color: red;" class="errorCls" *ngIf="!sms && !email && !pushnotify && !telegram"> Atleast anyone of the options('SMS'/'Email'/'App') should be valid or enabled For Sharing Prescription
                 </div>
             <!-- <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div> -->
         </div>
-        <br>
+        <div *ngIf="!showthirdparty" class="mgn-bt-0">
+            <div>
+                <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length === 0">Add digital signature</div>
+                <div class="difitalSigText" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">View digital signature</div>
+                <div style="margin-top: 10px;">
+                    <div >
+                        <!-- <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
+                          <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079;font-size: smaller">
+                            Upload digital signature for sharing Prescription</u>
+                        </span>
+                        <span *ngIf="digitalSign">
+                          <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079; font-size: smaller">
+                            Update digital signature</u>
+                        </span> -->
 
+
+                        <div  *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
+                            <div class=" prescriptionNotes">
+                              <div>
+                                <div class="fileUpload">
+                                  <!-- <a class="mt-1 btn btn-primary" (click)="uploadSignature()">Upload Image</a> -->
+                                  <div>
+                                    <img style="height:30px;width:30px" src="/assets/images/medicalReportIcon/download.png" />
+                                  </div>
+                                  <div>
+                                    <div class="fileTextClr"> Select a file or drag and drop here</div>
+                                  <div class="fileTextClrType">JPG, PNG  file size no more than 5MB</div>
+                                  </div>
+                                  <div>
+                                    <!-- (click)="uploadSignature()" -->
+                                    <button class="shareBtn" >
+                                        <a class="pointer-cursor" style="color: #FF9900;" (click)="imagefile.click()"><input #imagefile
+                                            type="file" accept="/*;capture=camera" style="display:none;"
+                                            (change)="filesSelected($event)">Upload Sign</a>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+
+                            <span class="spaanOr" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">OR</span>
+                            <div class="mobileDevice" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
+                                <span class="mobileOr">OR</span>
+                            </div>
+                              <div >
+                                <div>
+                                  <!-- <a class="mt-1 btn btn-primary" (click)="manualSignature()">Create Signature</a> -->
+                                  <button class="manualSignBtn" (click)="manualSignature()">Create Digital Signature Manually</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                        <div *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
+                            <ng-container class="attachment">
+                                <div class="font-weight-bold">Uploaded Digital Signature</div>
+                                <div class="flexClassSig"
+                                    *ngFor="let item of selectedMessage.files; let i = index">
+                                    <div *ngIf="item.originalName || item.name">
+                                        <div  *ngIf="item.originalName">
+                                            <span class="ln-hgt-40 pointlist" (click)="showimgPopup(item)" style="color: #00DED5; "><i
+                                                    class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;{{item.originalName}}</span>
+                                        </div>
+                                        <div  *ngIf="item.name">
+                                            <span class="ln-hgt-40 pointlist" (click)="showimgPopup(item)" style="color: #00DED5; "><i
+                                                    class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;{{item.name}}</span>
+                                        </div>
+                                    </div>
+                                    <div >
+                                        <span class="">
+                                            <button class="btnMenu" type="button" mat-icon-button [matMenuTriggerFor]="menu">
+                                                <mat-icon>more_vert</mat-icon>
+                                            </button>
+                                            <mat-menu #menu="matMenu">
+                                                <button type="button" (click)="deleteTempImagefrmdb(item,i)" mat-menu-item>
+                                                    <i class="icon-delete"></i>
+                                                    <span>delete</span>
+                                                </button>
+                                            </mat-menu>
+                                        </span>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+
+                      </div>
+                </div>
+            </div>
+        </div>
+        <br>
         <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow && !showthirdparty ">{{smsWarnMsg}} <a
-                (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid
-            undelivered SMS'}}</div>
+                (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>
+                {{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 form-group" *ngIf="showthirdparty">
             <!-- We will create a PDF of your prescription and will share Via sms and email. -->
             <span *ngIf="!mrPrescriptionDetails[0].keyName">We will create a PDF of your prescription and will share Via
                 email.</span>
             <span *ngIf="mrPrescriptionDetails[0].keyName">Your prescription will be shared Via email.</span>
         </div>
+
     </mat-dialog-content>
-    <mat-dialog-actions>
+    <div class="btnClass" >
+        <button type="button" mat-dialog-close type="button"class="btn btn-primary font-weight-bold cancelBtn" [disabled]="disableButton">Cancel</button>
+        <button type="submit" [disabled]="!amForm.valid || disable " type="button"class="btn btn-primary font-weight-bold confirmBtn">Share<i
+                class="fa fa-spinner fa-spin" *ngIf="sharebtnloading"></i></button>
+    </div>
+    <!-- <mat-dialog-actions>
         <div class="col-md-12" style="margin-top: 15px;display: inline-flex;">
             <button type="button" mat-dialog-close class="cs-btn bt2" [disabled]="disableButton">Cancel</button>
             <button type="submit" mat-button [disabled]="!amForm.valid || disable " class="cs-btn btn btn-primary mr10" style="margin-left: 10px">Share<i
                     class="fa fa-spinner fa-spin" *ngIf="sharebtnloading"></i></button>
-                    <!-- btn btn-info -->
         </div>
-    </mat-dialog-actions>
+    </mat-dialog-actions> -->
     <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
     <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
     </app-form-success-display>
