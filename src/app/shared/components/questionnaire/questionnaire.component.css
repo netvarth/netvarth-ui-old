@@ -488,3 +488,65 @@ button {
     width: 100%;
     overflow-x: auto;
  }
+ @media (min-width: 300px) and (max-width: 750px) {
+    .item {
+       
+        font-size: 10px !important;
+    }
+    .item_price {
+        font-size: 9px !important
+       
+    }
+}
+@media  (max-width: 450px)  {
+    .item {
+        font-size: 10px !important;
+    }
+    .item_price {
+        font-size: 9px !important
+       
+    }
+}
+@media (min-width: 600px) and (max-width: 992px) {
+    .items {
+       
+        font-size: 18px !important;
+    }
+    .item_prices {
+        font-size: 16px !important
+       
+    }
+  }
+  @media (max-width: 450px) {
+    .incre{
+        border: 2px solid blue !important;
+        border-radius: 100px !important; 
+        max-width: 20.66667% !important; 
+      }
+  }
+
+.font-weight-bold {
+    font-weight: 700 !important;
+    margin-right: 30px !important;
+  }
+  
+  @media (max-width: 750px) {
+    .incre{
+        max-width: 20.66667% !important; 
+      }
+  }
+    .incre{
+        border: 2px solid blue !important;
+        border-radius: 100px !important; 
+        max-width: 10.66667%; 
+      }
+      @media (max-width: 893px) {
+        .disp-none-small {
+          display: none !important;
+        }
+      }
+      @media (min-width: 800px) {
+        .disp-none-large {
+          display: none !important;
+        }
+      }

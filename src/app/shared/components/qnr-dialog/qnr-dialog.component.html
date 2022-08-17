@@ -1,0 +1,479 @@
+<section style="padding: 20px;">
+
+  <div class="header">
+      <div class="headerText" *ngIf="popUpView === 'qnrView'">Add Item</div>
+      <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+          <!-- <mat-icon>clear</mat-icon> -->
+      </div>
+  </div>
+  <mat-dialog-content class="dialogContent">
+    <section class="cons-inbox no-padding-small" *ngIf="popUpView === 'qnrView'">
+        <div class="container consumer-dashhome no-padding no-padding-small" *ngIf="!type">
+            <div class="card title-gb rounded-0" *ngIf="uuid">
+                <h5 class="mgn-up-10 bold">{{questionnaire_heading | capitalizeFirst}} <a
+                        class="pull-left mgn-rt-20 back-btn" (click)="goBack()"><i class="fa fa-arrow-left"></i></a></h5>
+            </div>
+        </div>
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <div class="d-flex flex-column-fluid pull-right mgn-rt-10 mgn-bt-20"
+            *ngIf="type !== 'qnrLinkProvider' && !buttonDisable && waitlistStatus">
+            <button class="normal-btn edit" mat-flat-button (click)="editQnr()">Edit</button>
+        </div>
+        <div class="col-md-8" [class.qnrDisableState]="disableInput()"
+            [class.no-padding]="uuid && (source === 'consCheckin' || source === 'consAppt' || source === 'consDonationDetails' )">
+            <div class="col-xl-12 force_center" [class.no-padding]="uuid">
+                <div class="" *ngFor="let qnr of groupedQnr | keyvalue">
+                    <div class="qnrsec"  *ngFor="let question of qnr.value"
+                        [class.section-shadow]="getSectionCount() > 1">
+                      
+                            <div class="gridSection" >
+                                <div class="gridColumn"
+                                    >
+                                   
+                                  
+                                    <div class="col-12" *ngIf="repeat_type !== 'repeat_type' && getQuestion(question).dataGridListProperties.dataGridListColumns[0].dataType === 'list'">
+
+                                   
+                                    <div class="col-12" *ngFor="let data of getQuestion(question).dataGridListProperties.dataGridListColumns">
+                                        <div *ngIf="data.order==1 && !isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="getQuestion(question).dataGridListProperties.dataGridListColumns[0].mandatory">*</span>
+                                            </label>
+                                            <div class="col-12">
+                                                <div class="radio-list">
+                                                    <label class="radio" *ngFor="let value of data.listPropertie.values">
+                                                        <input type="radio"
+                                                            [checked]="isChecked(value, getQuestion(question), getQuestion(question).dataGridListProperties.dataGridListColumns[0])"
+                                                            (change)="listChange($event, value, getQuestion(question), data)"
+                                                            [disabled]="buttonDisable || disableInput()">
+                                                        <span></span>
+                                                        {{value}}  <span style="float: right;" *ngIf="basePrice"> Rs: {{getValue(value)}}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                              
+                                        </div>
+                                        <div *ngIf="data.dataType === 'list' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="data.mandatory">*</span>
+                                            </label><br>
+                                            <div *ngIf="data.listPropertie.maxAnswerable">
+                                                <label class="checkbox" *ngFor="let value of data.listPropertie.values">
+                                                    <input type="radio"
+                                                    [checked]="isChecked(value, getQuestion(question), data)"
+                                                        (change)="listChange($event, value, getQuestion(question), data)"
+                                                        [disabled]="buttonDisable || disableInput()">
+                                                    <span></span>
+                                                    {{value}} <span style="float: right;"> Rs: {{getRate(value)}}</span>
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                            <div *ngIf="!data.listPropertie.maxAnswerable">
+                                                <label class="checkbox" *ngFor="let value of data.listPropertie.values">
+                                                    <input type="checkbox"
+                                                    [checked]="isChecked(value, getQuestion(question), data)"
+                                                        (change)="listChange($event, value, getQuestion(question), data)"
+                                                        [disabled]="buttonDisable || disableInput()">
+                                                    <span></span>
+                                                    {{value}} <span style="float: right;"> Rs: {{getRate(value)}}</span>
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+
+<br>
+                                        <div *ngIf="data.dataType === 'plainText' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="!data.mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <label class="checkbox">
+                                                    <input [(ngModel)]="plainText"
+                                                    (input)="onSubmit('inputChange');" [disabled]="buttonDisable || disableInput()"
+                                                    (ngModelChange)="changesApplied($event, getQuestion(question), data)"
+                                                    class="form-control1 form-control-solid" type="text">
+                                                    <span></span>
+                                                     
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+                                        
+                                        <div *ngIf="data.dataType === 'number' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="!data.mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <label class="checkbox">
+                                                    <input [(ngModel)]="inputnumber"
+                                                    (input)="onSubmit('inputChange');" [disabled]="buttonDisable || disableInput()"
+                                                    (ngModelChange)="changesApplied($event, getQuestion(question), data)"
+                                                    class="form-control1 form-control-solid" type="text">
+                                                    <span></span>
+                                                     
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+                                        <div *ngIf="data.dataType === 'date' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="!data.mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <label class="checkbox">
+                                                    <input class="form-control1" [matDatepicker]="picker" [max]="getMaxdate(question)" [min]="getMindate(question)"
+                                                    [(ngModel)]="inputDate"
+                                                    (dateChange)="changesApplied($event, getQuestion(question), data)" [disabled]="buttonDisable || disableInput()"
+                                                    (click)="picker.open()">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker [disabled]="buttonDisable || disableInput()"></mat-datepicker>
+                                                    <span></span>
+                                                     
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+
+                                        <div *ngIf="data.dataType === 'bool' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="!data.mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <label class="radio">
+                                                    <input type="radio" [disabled]="buttonDisable || disableInput()"
+                                                    [checked]="isBooleanChecked('yes', getQuestion(question),data)"
+                                                    (change)="booleanChange($event, 'Yes', getQuestion(question), data)">
+                                                <span></span>
+                                                Yes
+                                                    <span></span>
+                                                     
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" [disabled]="buttonDisable || disableInput()"
+                                                        [checked]="isBooleanChecked('no', getQuestion(question), data)"
+                                                        (change)="booleanChange($event, 'No', getQuestion(question), data)">
+                                                    <span></span>
+                                                    No
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+
+  <!-- for file upload -->
+  <!-- <div class="col-12" *ngIf="data.dataType === 'fileUpload' && data.order!==1 && isSecondcase">
+    <label>{{data.label}}
+        <span class="red" *ngIf="!data.mandatory">*</span>
+    </label>
+    <div class="">
+        <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+          (change)="filesSelected($event)">Click / Drop your files here
+        <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+            attach_file</i></a>
+      </div>
+      <div>
+        <div class="img-section mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+          <ul class="galul">
+            <li *ngFor="let file of selectedMessage.files;let i = index ">
+              <div class="galimg_outer">
+                <div class="gal_img">
+                  <img [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]">
+                </div>
+                <div class="gal_action" (click)="deleteTempImage(i)">
+                  <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+   
+   
+</div> -->
+
+
+
+
+
+                                       
+                                        
+                                    </div>
+                                </div>
+                                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                <div class="col-12" *ngIf="repeat_type === 'repeat_type' && getQuestion(question).labels[0].question.dataGridListProperties.dataGridListColumns[0].dataType === 'list'">
+
+                                   
+                                    <div class="col-12" *ngFor="let data of getQuestion(question).labels[0].question.dataGridListProperties.dataGridListColumns">
+                                        <div *ngIf="data.order==1 && !isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="getQuestion(question).labels[0].question.dataGridListProperties.dataGridListColumns[0].mandatory">*</span>
+                                            </label>
+                                            <div class="col-12">
+                                                <div class="radio-list">
+                                                    <label class="radio" *ngFor="let value of data.listPropertie.values">
+                                                        <input type="radio"
+                                                            [checked]="isChecked(value, getQuestion(question).labels[0].question, getQuestion(question).labels[0].question.dataGridListProperties.dataGridListColumns[0])"
+                                                            (change)="listChange($event, value, getQuestion(question).labels[0].question, data)"
+                                                            [disabled]="buttonDisable || disableInput()">
+                                                        <span></span>
+                                                        {{value}}  <span style="float: right;" *ngIf="basePrice"> Rs: {{getValue(value)}}</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                              
+                                        </div>
+                                        <div *ngIf="data.dataType === 'list' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}} 
+                                                <span class="red" *ngIf="data.mandatory">*</span>
+                                            </label><br>
+                                            <div *ngIf="data.listPropertie.maxAnswerable">
+                                                <label class="checkbox" *ngFor="let value of data.listPropertie.values">
+                                                    <input type="radio"
+                                                    [checked]="isChecked(value, getQuestion(question).labels[0].question, data)"
+                                                        (change)="listChange($event, value, getQuestion(question).labels[0].question, data)"
+                                                        [disabled]="buttonDisable || disableInput()">
+                                                    <span></span>
+                                                    {{value}} <span style="float: right;"> Rs: {{getRate(value)}}</span>
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                            <div *ngIf="!data.listPropertie.maxAnswerable">
+                                                <label class="checkbox" *ngFor="let value of data.listPropertie.values">
+                                                    <input type="checkbox"
+                                                    [checked]="isChecked(value,getQuestion(question).labels[0].question, data)"
+                                                        (change)="listChange($event, value, getQuestion(question).labels[0].question, data)"
+                                                        [disabled]="buttonDisable || disableInput()">
+                                                    <span></span>
+                                                    {{value}} <span style="float: right;"> Rs: {{getRate(value)}}</span>
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+
+<br>
+                                        <div *ngIf="data.dataType === 'plainText' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="!data.mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <label class="checkbox">
+                                                    <input [(ngModel)]="plainText"
+                                                    (input)="onSubmit('inputChange');" [disabled]="buttonDisable || disableInput()"
+                                                    (ngModelChange)="changesApplied($event, getQuestion(question), data)"
+                                                    class="form-control1 form-control-solid" type="text">
+                                                    <span></span>
+                                                     
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+                                        
+                                        <div *ngIf="data.dataType === 'number' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="!data.mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <label class="checkbox">
+                                                    <input [(ngModel)]="inputnumber"
+                                                    (input)="onSubmit('inputChange');" [disabled]="buttonDisable || disableInput()"
+                                                    (ngModelChange)="changesApplied($event, getQuestion(question), data)"
+                                                    class="form-control1 form-control-solid" type="text">
+                                                    <span></span>
+                                                     
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+                                        <div *ngIf="data.dataType === 'date' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="!data.mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <label class="checkbox">
+                                                    <input class="form-control1" [matDatepicker]="picker" [max]="getMaxdate(question)" [min]="getMindate(question)"
+                                                    [(ngModel)]="inputDate"
+                                                    (dateChange)="changesApplied($event, getQuestion(question), data)" [disabled]="buttonDisable || disableInput()"
+                                                    (click)="picker.open()">
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker [disabled]="buttonDisable || disableInput()"></mat-datepicker>
+                                                    <span></span>
+                                                     
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+
+                                        <div *ngIf="data.dataType === 'bool' && data.order!==1 && isSecondcase">
+                                            <label>{{data.label}}
+                                                <span class="red" *ngIf="!data.mandatory">*</span>
+                                            </label>
+                                            <div>
+                                                <label class="radio">
+                                                    <input type="radio" [disabled]="buttonDisable || disableInput()"
+                                                    [checked]="isBooleanChecked('yes', getQuestion(question),data)"
+                                                    (change)="booleanChange($event, 'Yes', getQuestion(question), data)">
+                                                <span></span>
+                                                Yes
+                                                    <span></span>
+                                                     
+                                                </label>
+                                                <label class="radio">
+                                                    <input type="radio" [disabled]="buttonDisable || disableInput()"
+                                                        [checked]="isBooleanChecked('no', getQuestion(question), data)"
+                                                        (change)="booleanChange($event, 'No', getQuestion(question), data)">
+                                                    <span></span>
+                                                    No
+                                                </label>
+                                            </div>
+                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                Please select mandatory fields</div> -->
+                                        </div>
+
+  <!-- for file upload -->
+  <!-- <div class="col-12" *ngIf="data.dataType === 'fileUpload' && data.order!==1 && isSecondcase">
+    <label>{{data.label}}
+        <span class="red" *ngIf="!data.mandatory">*</span>
+    </label>
+    <div class="">
+        <input #logofile type="file" accept="/*;capture=camera" style="display:none;" multiple
+          (change)="filesSelected($event)">Click / Drop your files here
+        <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+            attach_file</i></a>
+      </div>
+      <div>
+        <div class="img-section mgn-up-20" *ngIf="selectedMessage.files && selectedMessage.files.length > 0">
+          <ul class="galul">
+            <li *ngFor="let file of selectedMessage.files;let i = index ">
+              <div class="galimg_outer">
+                <div class="gal_img">
+                  <img [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]">
+                </div>
+                <div class="gal_action" (click)="deleteTempImage(i)">
+                  <i class="fa fa-times-circle" aria-hidden="true"></i>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+   
+   
+</div> -->
+
+
+
+
+
+                                       
+                                        
+                                    </div>
+                                </div>
+                                  
+                                </div>
+                                <div class="act-btns">
+                                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                                    (click)="closeDialogg()">
+                                        Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-primary font-weight-bold"
+                                        (click)="saveDataGridColumn()">Add</button>
+                                </div>
+                            </div>
+                            <br/> <br/>
+                           <div>Total Price : Rs  {{totalPrice}} /-</div>
+                           <div class="mt-2 text-danger">
+                            {{derror}}</div>
+                    </div>
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding submit-pad"
+                    *ngIf="type !== 'qnrLinkProvider' && (uuid || source === 'customer-details' || source === 'proDonation') && !disableInput()">
+                    <button class="normal-btn" mat-flat-button [class.spinner]="buttonDisable"
+                        [class.spinner-darker-success]="buttonDisable" [class.spinner-center]="buttonDisable"
+                        (click)="!buttonDisable && onSubmit('submit')" [disabled]="buttonDisable"
+                        [class.disabled]="buttonDisable">{{(type == 'qnr-link') ? 'Submit' : 'Update'}}</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="cons-inbox no-padding-small" *ngIf="popUpView === 'qnrrepeatView'">
+        <div class="">
+            <div class="card title-gb rounded-0" >
+                <div class="close-btn">
+                    <button type="button" class="close" aria-label="Close" data-dismiss="modal" (click)="closeDialogPopup()">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div>
+                    <h6 class="mgn-up-10 bold">Repeat Same Customization </h6>
+                  </div>
+               
+            </div>
+        </div>
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+       
+        <div class="d-flex flex-column-fluid width-100">
+            <div class="col-xl-12 force_center" [class.no-padding]="uuid">
+                <div class="">
+                    <div class="qnrsec"
+                       >
+                    
+                        <div class="form-group card mgn-0" >
+                            
+                           
+                           <div style="float: left;">{{item.item}}</div>  <div style="float: right;">Rs {{item.price}} /-</div><br/> <br/>
+                           <div class="gridSection" >
+                            <div class="gridColumn">
+                            </div>
+                            <div class="act-btns disp-flex">
+                                <button type="button" class="btn btn-light-primary font-weight-bold"
+                                    (click)="addNew()">
+                                    Add New
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button type="button" class="btn btn-light-primary font-weight-bold"
+                                    (click)="repeatSame(item)">Repeat Same</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </section>
+  </mat-dialog-content>
+  
+</section>

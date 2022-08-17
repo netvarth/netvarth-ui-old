@@ -36,6 +36,7 @@ import { ServiceDisplayModule } from '../../../../ynw_consumer/modules/service-d
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
 import { PaytmService } from '../../../../shared/services/paytm.service';
 import { FileService } from '../../../../shared/services/file-service';
+import { QnrDialogModule } from '../../../../../../src/app/shared/components/qnr-dialog/qnr-dialog.module';
 const routes: Routes = [
     { path: '', component: ConsumerAppointmentComponent},
     { path: 'track/:id', loadChildren:()=> import('./livetrack/livetrack.module').then(m=>m.ConsumerApptLiveTrackModule) },
@@ -79,6 +80,7 @@ const routes: Routes = [
         BookingAccountinfoModule,
         SlotPickerModule,
         AuthenticationModule,
+        QnrDialogModule,
         ServiceDisplayModule,
         [RouterModule.forChild(routes)]
     ],

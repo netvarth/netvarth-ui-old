@@ -1305,5 +1305,29 @@ export class SharedServices {
     const url = 'consumer/orders/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
- 
+  getServiceoptionsAppt(servid,account) {
+    const url = 'consumer/questionnaire/serviceoptions/' + servid + '/0?account=' + account;
+    return this.servicemeta.httpGet(url);
+  }
+  getServiceoptionsWaitlist(servid,account) {
+    const url = 'consumer/questionnaire/serviceoptions/' + servid + '/0?account=' + account;
+    return this.servicemeta.httpGet(url);
+  }
+  // submitConsumerApptServiceOption(body, uuid) {
+  //   alert('option')
+  //   const url = 'consumer/appointment/serviceoptions/resubmit/' + uuid ;
+  //   return this.servicemeta.httpPost(url, body);
+  // }
+  consumerApptServiceoptionUploadStatusUpdate(uid, data) {
+    const url = 'consumer/appointment/serviceoptions/upload/status/' + uid;
+    return this.servicemeta.httpPut(url, data);
+  }
+  submitConsumerApptServiceOption(body, uuid, account) {
+    const url = 'consumer/appointment/serviceoption/' + uuid + '/?account=' + account;
+    return this.servicemeta.httpPost(url, body);
+  }
+  submitConsumerWaitlistServiceOption(body, uuid, account) {
+    const url = 'consumer/waitlist/serviceoption/' + uuid + '/?account=' + account;
+    return this.servicemeta.httpPost(url, body);
+  }
 }

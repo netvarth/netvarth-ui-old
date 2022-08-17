@@ -22,7 +22,7 @@ import { RazorpayService } from "../../../../shared/services/razorpay.service";
 import { Location } from "@angular/common";
 import { ProviderServices } from "../../../../business/services/provider-services.service";
 import { FileService } from "../../../../shared/services/file-service";
-
+import { QnrDialogComponent } from "../../../../../../src/app/shared/components/qnr-dialog/qnr-dialog.component";
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -79,7 +79,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     services: any;    // To store services json
     selectedService: any; // To store selected appointment service details
-    callingModes: any = []; // To store the teleservice calling mode whatsapp/jaldee video/zoom etc 
+    callingModes: any = []; // To store the teleservice calling mode whatsapp/jaldee video/zoom etc
     changePhone;     // Change phone number or not
     departments: any = [];     // departments
 
@@ -100,7 +100,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     parentCustomer: any;// logged in customer
     commObj: any = {}; // communication object
     familyMembers: any = []; // hold the members
-    providerConsumerId; // id of the selected provider consumer 
+    providerConsumerId; // id of the selected provider consumer
     providerConsumerList: any;
     addmemberobj = { 'fname': '', 'lname': '', 'mobile': '', 'gender': '', 'dob': '' };
 
@@ -151,7 +151,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     action = ''; // To navigate between different actions like note/upload/add familymember/members etc
 
     checkPolicy = true;
-    heartfulnessAccount = false; // This one should be removed 
+    heartfulnessAccount = false; // This one should be removed
     isClickedOnce = false;
     apiError = '';
     apiSuccess = '';
@@ -180,6 +180,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     paymentReqInfo : any = { }
     gatewayFee: any;
     profileId: any;
+    serviceOPtionInfo: any;
+    serviceOptionQuestionnaireList: any;
+    groupedQnr: any;
+    finalDataToSend : any;
+    serviceOptionApptt = false;
+    showSlot = true;
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -290,8 +296,25 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 });
             }
         );
+        this.getServiceOptions()
     }
-
+    getServiceOptions(){
+        this.subs.sink = this.sharedServices.getServiceoptionsAppt(this.selectedServiceId , this.accountId)
+            .subscribe(
+                (data) => {
+                    if (data) {
+                        this.serviceOptionQuestionnaireList = data;
+                        if(this.serviceOptionQuestionnaireList.questionnaireId){
+                            this.serviceOptionApptt = true;
+                        }
+                       
+                    }
+                },
+                error => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.btnClicked = false;
+                });
+    }
     gets3urls() {
         const _this = this;
         _this.loadingS3 = true;
@@ -455,7 +478,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     /**
      * To Fetch and Set the Current Provider User Details
-     * @param selectedUserId 
+     * @param selectedUserId
      */
     setUserDetails(selectedUserId) {
         const userDetail = this.users.filter(user => user.id === selectedUserId);
@@ -472,7 +495,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.lStorageService.removeitemfromLocalStorage('source');
                 } else {
                     this.location.back();
-                }               
+                }              
             } else {
                 this.goToStep('prev');
             }
@@ -497,7 +520,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     actionPerformed(status) {
         const _this = this;
-        if (status === 'success') {           
+        if (status === 'success') {          
             _this.initAppointment().then(
                 (status) => {
                     const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -507,20 +530,28 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             if (questions) {
                                 _this.onetimeQuestionnaireList = questions;
                                 console.log("OneTime:", _this.onetimeQuestionnaireList);
-                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                               
+                               
+                                if(this.showSlot){
                                     _this.bookStep = 2;
-                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                }
+                                else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                     _this.bookStep = 3;
-                                } else {
+                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                     _this.bookStep = 4;
+                                } else {
+                                    _this.bookStep = 5;
                                     this.confirmAppointment('next');
                                 }
                                 console.log("Bookstep3:", _this.bookStep);
                             } else {
-                                if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                    _this.bookStep = 3;
-                                } else {
+                                if(this.showSlot){
+                                    _this.bookStep = 2;
+                                }
+                                else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                     _this.bookStep = 4;
+                                } else {
+                                    _this.bookStep = 5;
                                     this.confirmAppointment('next');
                                 }
                             }
@@ -749,20 +780,26 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                             console.log("Questions:", questions);
                                             if (questions) {
                                                 _this.onetimeQuestionnaireList = questions;
-                                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                                if(this.showSlot){
                                                     _this.bookStep = 2;
-                                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                }
+                                                else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                                     _this.bookStep = 3;
-                                                } else {
+                                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                                     _this.bookStep = 4;
+                                                } else {
+                                                    _this.bookStep = 5;
                                                     this.confirmAppointment('next');
                                                 }
                                                 console.log("Bookstep2:", _this.bookStep);
                                             } else {
-                                                if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                                    _this.bookStep = 3;
-                                                } else {
+                                                if(this.showSlot){
+                                                    _this.bookStep = 2;
+                                                }
+                                                else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                                     _this.bookStep = 4;
+                                                } else {
+                                                    _this.bookStep = 5;
                                                     this.confirmAppointment('next');
                                                 }
                                             }
@@ -777,13 +814,53 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                     });
                     break;
-                case 2:
+                    case 2:
+                        this.authService.goThroughLogin().then((status) => {
+                            console.log("Status:", status);
+                            if (status) {
+                                const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+                                _this.initAppointment().then(
+                                    (status) => {
+                                        _this.getOneTimeInfo(activeUser, _this.accountId).then(
+                                            (questions) => {
+                                                console.log("Questions:", questions);
+                                                if (questions) {
+                                                    _this.onetimeQuestionnaireList = questions;
+                                                   if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                                        _this.bookStep = 3;
+                                                    } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                        _this.bookStep = 4;
+                                                    } else {
+                                                        _this.bookStep = 5;
+                                                        this.confirmAppointment('next');
+                                                    }
+                                                    console.log("Bookstep2:", _this.bookStep);
+                                                } else {
+                                                    if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                        _this.bookStep = 4;
+                                                    } else {
+                                                        _this.bookStep = 5;
+                                                        this.confirmAppointment('next');
+                                                    }
+                                                }
+                                                _this.loggedIn = true;
+                                                // _this.loading = false;
+                                            }
+                                        )
+                                    }
+                                );
+                            } else {
+                                this.loggedIn = false;
+                            }
+                        });
+                        break;
+                case 3:
                     _this.validateOneTimeInfo();
                     break;
-                case 3:
+                case 4:
                     this.validateQuestionnaire();
                     break;
-                case 4:
+                case 5:
                     console.log("4 Clicked");
                     if (this.selectedService.consumerNoteMandatory && this.consumerNote == '') {
                         this.snackbarService.openSnackBar('Please provide ' + this.selectedService.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
@@ -793,27 +870,48 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     break;
             }
         } else if (type === 'prev') {
-            if (this.bookStep === 4) {
+            if (this.bookStep === 5) {
                 if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.bookStep = 3;
+                    this.bookStep = 4;
                 } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                    _this.bookStep = 3;
+                }
+                else if (this.showSlot) {
                     _this.bookStep = 2;
                 } else {
                     this.bookStep = 1;
                 }
-            } else if (this.bookStep === 3) {
+            }
+            else if (this.bookStep === 4) {
                 if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                    _this.bookStep = 3;
+                }
+                else if (this.showSlot) {
                     _this.bookStep = 2;
                 } else {
                     this.bookStep = 1;
                 }
-            } else {
+            }
+            else if (this.bookStep === 3) {
+               if (this.showSlot) {
+                    _this.bookStep = 2;
+                } else {
+                    this.bookStep = 1;
+                }
+            }
+            else if (this.bookStep === 3) {
+                if (this.showSlot) {
+                     _this.bookStep = 2;
+                 } else {
+                     this.bookStep = 1;
+                 }
+             } else {
                 this.bookStep--;
             }
         } else {
             this.bookStep = type;
         }
-        if (this.bookStep === 4) {
+        if (this.bookStep === 5) {
             this.confirmAppointment('next');
         }
     }
@@ -942,7 +1040,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (questions) {
                 this.onetimeQuestionnaireList = questions;
                 if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                    this.bookStep = 2;
+                    this.bookStep = 3;
                 }
             }
         })
@@ -992,7 +1090,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     const providerConsumer_parent = _this.providerConsumerList.filter(user => user.firstName === activeUser.firstName && user.LastName === activeUser.LastName);
                     console.log("Family Members:",  _this.familyMembers);    
                     console.log("Member Id", member.id);    
-                    console.log("Parent:", providerConsumer_parent); 
+                    console.log("Parent:", providerConsumer_parent);
                     if (providerConsumer_parent && providerConsumer_parent.length > 0) {
                         parentId =  providerConsumer_parent[0].id;
                     }
@@ -1000,7 +1098,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     console.log("Selected Member:", selectedMember);
                     if (selectedMember && selectedMember.length > 0) {
                         if (selectedMember[0].parent) {
-                            memberId = member.id; 
+                            memberId = member.id;
                         } else {
                             memberId = 0;
                             parentId = activeUser.id;
@@ -1084,9 +1182,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     getBookStep() {
         if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-            this.bookStep = 3;
-        } else {
             this.bookStep = 4;
+        } else {
+            this.bookStep = 5;
             this.confirmAppointment();
         }
     }
@@ -1243,7 +1341,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].lastName){
                             _this.apptDetails_lastName = _this.scheduledAppointment.appmtFor[0].lastName;
                         }
-                        
+                       
                     }
                     if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].firstName){
                         _this.apptDetails_firstName = _this.scheduledAppointment.appmtFor[0].firstName;
@@ -1269,8 +1367,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * 
-     * @param commObj 
+     *
+     * @param commObj
     */
     setCommunications(commObj) {
         this.commObj = commObj;
@@ -1284,7 +1382,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
-                    
+                   
                     this.isPayment = true;
                     this.profileId = this.paymentmodes.profileId;
                     console.log("Profile ID :",this.profileId)
@@ -1292,7 +1390,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     // let convienientPaymentObj = {}
                     // convienientPaymentObj = {
                     //     "profileId" :  this.paymentmodes.profileId,
-                    //     "amount"	: this.paymentDetails.amountRequiredNow
+                    //     "amount" : this.paymentDetails.amountRequiredNow
                     // }
                     // this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
                     //                                // let array = []
@@ -1305,11 +1403,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     //                                     this.convenientFeeObj = res;
                     //                                         this.convenientFee = this.convenientFeeObj.convenienceFee;
                     //                                         console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
-                                                        
+                                                       
                     //                                 }
                     //                                })
                     //                             }
-                      
+                     
 
                     // })
                     // console.log("isConvenienceFee paymentsss:",this.paymentmodes)
@@ -1326,7 +1424,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     //     this.shownonIndianModes = false;
                     // }
 
-                  
+                 
              //  }
             // else {
                // this.paymentmodes = data[0];
@@ -1508,7 +1606,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 let convienientPaymentObj = {}
                 convienientPaymentObj = {
                     "profileId" :  this.profileId,
-                    "amount"	: this.paymentDetails.amountRequiredNow
+                    "amount" : this.paymentDetails.amountRequiredNow
                 }
                 this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
                     // let array = []
@@ -1520,11 +1618,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     if(res){
                         this.convenientFeeObj = res;
                             this.convenientFee = this.convenientFeeObj.convenienceFee;
-                        
+                       
                     }
                     })
                 }
-                  
+                 
 
                 })
         }, error => {
@@ -1573,7 +1671,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         console.log("confirmAppointment");
         console.log(this.commObj)
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
-        
+       
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class'],
@@ -1588,7 +1686,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
-          
+         
             if (this.selectedService.serviceType === 'virtualService' && !this.validateVirtualCallInfo(this.callingModes)) {
                 return false;
             }
@@ -1634,7 +1732,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 let convienientPaymentObj = {}
                 convienientPaymentObj = {
                     "profileId" :  this.profileId,
-                    "amount"	: this.paymentDetails.amountRequiredNow
+                    "amount" : this.paymentDetails.amountRequiredNow
                 }
                 this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
                                                // let array = []
@@ -1646,11 +1744,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                                 if(res){
                                                     this.convenientFeeObj = res;
                                                         this.convenientFee = this.convenientFeeObj.convenienceFee;
-                                                    
+                                                   
                                                 }
                                                })
                                             }
-                  
+                 
 
                 })
             },
@@ -1814,6 +1912,11 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             );
                         } else {
                             _this.submitQuestionnaire(parentUid).then(
+                                () => {
+                                    resolve(true);
+                                }
+                            );
+                            _this.submitserviceOptionQuestionnaire(parentUid).then(
                                 () => {
                                     resolve(true);
                                 }
@@ -2252,7 +2355,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             } else if (response.STATUS == 'TXN_FAILURE') {
                 if (response.error && response.error.description) {
                     this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
-                  } 
+                  }
                 this.finishAppointment(false);
             }
         } else {
@@ -2315,8 +2418,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.disable = false;
     }
     /**
-    * 
-    * @param selectedMembers 
+    *
+    * @param selectedMembers
     */
     memberSelected(selectedMembers) {
         const _this = this;
@@ -2400,4 +2503,85 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         // this.snackbarService.openSnackBar('Payment attempt was cancelled.', { 'panelClass': 'snackbarerror' });
         return false;
     }
+    submitserviceOptionQuestionnaire(uuid) {
+        const _this = this;
+        const data=this.finalDataToSend
+        return new Promise(function (resolve, reject) {
+           
+            // console.log(JSON.stringify(this.serviceOPtionInfo))  
+                const dataToSend: FormData = new FormData();
+                if (data.files) {
+                    for (const pic of data.files) {
+                        dataToSend.append('files', pic, pic['name']);
+                    }
+                }
+                const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                dataToSend.append('question', blobpost_Data);
+                _this.subs.sink = _this.sharedServices.submitConsumerApptServiceOption(dataToSend, uuid, _this.accountId).subscribe((data: any) => {
+                 
+                    resolve(true);
+                },
+                    error => {
+                        _this.isClickedOnce = false;
+                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        // _this.disablebutton = false;
+                        resolve(false);
+                        // this.api_loading_video = false;
+                    });
+           
+        });
+    }
+    getserviceOptionQuestionAnswers(event) {
+        this.serviceOPtionInfo = event;
+       
+        //let finalDgList=[];
+        this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
+            (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
+            return rv;
+          }, {});
+       
+          let finalList=[];
+          let finalSubList=[];
+          for (var key in this.groupedQnr) {
+                      if (this.groupedQnr.hasOwnProperty(key)) {
+                        var val = this.groupedQnr[key];
+                        val.forEach(element => {
+                            if(finalSubList.length===0){
+                                 finalSubList.push(element.dgList[0])
+                            }
+                            else{
+                                finalSubList[0].answer.dataGridList.push(element.dgList[0].answer.dataGridList[0])
+                            }
+                       
+                        });
+                        finalList.push(finalSubList[0]);
+                        finalSubList=[];
+                      }
+                    }
+               
+                    this.finalDataToSend = {
+                        'questionnaireId':  this.serviceOPtionInfo.answers.questionnaireId,
+                        'answerLine': finalList
+                      }
+                   
+
+    }
+   
+    qnrPopup() {
+        const dialogref = this.dialog.open(QnrDialogComponent, {
+            width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+           
+          }
+        });
+        dialogref.afterClosed().subscribe(
+          result => {
+            if (result) {
+               
+            }
+          }
+        );
+      }
 }
