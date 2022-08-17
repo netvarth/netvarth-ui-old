@@ -8,6 +8,8 @@ import { RequestDialogModule } from "../request-dialog/request-dialog.module";
 import { MeetService } from "../../services/meet-service";
 import { MediaService } from "../../services/media-service";
 import { TeleBookingService } from "../../services/tele-bookings-service";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
 
 @NgModule({
     declarations: [
@@ -17,7 +19,9 @@ import { TeleBookingService } from "../../services/tele-bookings-service";
         CommonModule,
         LiveChatRoutingModule,
         RequestDialogModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        MatMenuModule,
+        MatIconModule
     ],
     exports: [
         LiveChatComponent

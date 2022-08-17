@@ -121,13 +121,14 @@ export class TwilioService {
         });
         this.microphone = true;
     }
-    switchCamera(mode?) {
+    switchCamera(media?) {
         const _this = this;
-        if (_this.selectedVideoId === _this.cam1Device) {
-            _this.selectedVideoId = _this.cam2Device;
-        } else {
-            _this.selectedVideoId = _this.cam1Device;
-        }
+        _this.selectedVideoId =media.deviceId;
+        // if (_this.selectedVideoId === _this.cam1Device) {
+        //     _this.selectedVideoId = _this.cam2Device;
+        // } else {
+        //     _this.selectedVideoId = _this.cam1Device;
+        // }
         const localParticipant = _this.activeRoom.localParticipant;
         const tracks = Array.from(localParticipant.videoTracks.values()).map(
             function (trackPublication) {

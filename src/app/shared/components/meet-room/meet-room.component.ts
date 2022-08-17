@@ -550,7 +550,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     /**
      * Method to switch both from and back cameras
      */
-    switchCamera() {
-        this.twilioService.switchCamera();
+    switchCamera(media) {
+        this.twilioService.switchCamera(media);
     }
 }

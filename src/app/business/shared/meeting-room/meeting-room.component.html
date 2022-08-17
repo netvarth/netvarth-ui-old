@@ -123,12 +123,25 @@
                         <i class="fa fa-close red fa-stack-1x"></i>
                     </i>
                 </i>
-                <i *ngIf="twilioService.camDeviceCount > 1" title="Switch Camera" class="round novideo"
+                <!-- <i *ngIf="twilioService.camDeviceCount > 1" title="Switch Camera" class="round novideo"
                     style="opacity: 1;cursor: pointer;" (click)="switchCamera()">
                     <i class="fa fa-stack"><i class="fa fa-camera fa-stack-1x"></i>
                         <i class="fa fa-refresh fa-stack-1x"></i>
                     </i>
-                </i>
+                </i> -->
+                <ng-container  *ngIf="twilioService.camDeviceCount > 1 && media['videoDevices']">
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item *ngFor="let med of media['videoDevices']; let i=index" (click)="switchCamera(med)">
+                          <span>{{(med.label!=''?med.label: ('CAM' + (i+1)))}}</span>
+                        </button>
+                      </mat-menu>
+                      <i mat-icon-button [matMenuTriggerFor]="menu" *ngIf="twilioService.camDeviceCount > 1 && media['videoDevices']" title="Switch Camera" class="round novideo"
+                        style="opacity: 1;cursor: pointer;">
+                        <i class="fa fa-stack"><i class="fa fa-camera fa-stack-1x"></i>
+                                <i class="fa fa-refresh fa-stack-1x"></i>
+                        </i>
+                    </i>
+                </ng-container> 
                 <i title="Disconnect" class="fa fa-phone red round stop" style="opacity: 1;cursor: pointer;"
                     (click)="disconnect()"></i>
                 <!-- <i title="Chat" class="fa fa-comments-o round stop pull-right" style="opacity: 1;cursor: pointer;"

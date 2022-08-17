@@ -2,6 +2,8 @@
 import { CommonModule } from "@angular/common";
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
 import { RouterModule, Routes } from "@angular/router";
 import { RequestDialogModule } from "../../modules/request-dialog/request-dialog.module";
 import { VisualizeModule } from "../../modules/visualizer/visualize.module";
@@ -23,6 +25,8 @@ const routes: Routes = [
         VisualizeModule,
         RequestDialogModule,
         AddInboxMessagesModule,
+        MatMenuModule,
+        MatIconModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [

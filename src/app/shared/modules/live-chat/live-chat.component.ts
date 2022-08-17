@@ -449,8 +449,8 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     /**
      * Method to switch from and back cameras
      */
-    switchCamera() {
-        this.twilioService.switchCamera();
+    switchCamera(media) {
+        this.twilioService.switchCamera(media);
     }
     /**
      * Method to enter to a room. which will invoke the connect method

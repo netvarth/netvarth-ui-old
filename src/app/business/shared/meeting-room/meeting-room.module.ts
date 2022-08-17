@@ -12,6 +12,8 @@ import { RequestDialogModule } from "../../../shared/modules/request-dialog/requ
 import { MeetService } from "../../../shared/services/meet-service";
 import { MediaService } from "../../../shared/services/media-service";
 import { TeleBookingService } from "../../../shared/services/tele-bookings-service";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
 const routes: Routes = [
     { path: '', component: MeetingRoomComponent}
 ]
@@ -27,6 +29,8 @@ const routes: Routes = [
         LoadingSpinnerModule,
         AddInboxMessagesModule,
         RequestDialogModule,
+        MatMenuModule,
+        MatIconModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [
