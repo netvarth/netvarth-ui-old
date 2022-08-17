@@ -328,20 +328,20 @@
     
     </div>
     </div>
-    <div class="col-md-10 col-xs-10 col-sm-10 mgn-bt-10" *ngIf="showItem">
+    <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-12" *ngIf="showItem">
     
     
-    <div class="col-md-10 col-lg-10 col-xs-10 col-sm-10 check-new-group no-padding disp-flex" *ngFor = "let items of itemArray">
+    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 check-new-group no-padding disp-flex" *ngFor = "let items of itemArray">
     
     <div class="col-md-8 col-lg-8 col-xs-8 col-sm-8 check-new-group no-padding disp-none-small">
     <div class="text-capitalize">
     <div class="">
-    <span class="text-primary service custom" style="font-size: 18px;">
+    <span class="text-primary service custom" style="font-size: 16px;">
     {{items.item}}
     </span>
     
     <div class="">
-    <span class="custom text-primary"><span style="font-size: 15px;">Rs : {{items.price}}/-
+    <span class="custom text-primary"><span style="font-size: 14px;">Rs : {{items.price}}/-
     </span> <br>
     </span>
     </div>
@@ -375,16 +375,16 @@
     class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer" (click)="increment(items);"><i class="ki ki-plus icon-xs"></i>
     </div>
     </div>
-    <div class="col-md-2 col-lg-2 col-xs-2 col-sm-2 disp-flex fl-right mgn-up-20 disp-none-large" style=" border: 1px solid blue !important;
+    <div class="col-md-4 col-lg-4 col-xs-4 col-sm-4 disp-flex fl-right mgn-up-20 disp-none-large" style=" border: 1px solid blue !important;
     border-radius: 100px !important; 
     max-width: 20.66667%; ">
     
-    <div class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer" (click)="decrement(items);" style="font-size: 11px;"> <i class="ki ki-minus icon-xs"></i>
+    <div class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer" (click)="decrement(items);" > <span style="font-size: 11px;">-</span>
     </div>&nbsp;&nbsp;&nbsp;
-    <div class="item-pad bodr-btm-up item-qty" style="font-size: 11px;">1
+    <div class="item-pad bodr-btm-up item-qty"><span style="font-size: 11px;">1</span>
     </div>&nbsp;&nbsp;&nbsp;
     <div
-    class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer" (click)="increment(items);" style="font-size: 11px;"><i class="ki ki-plus icon-xs"></i>
+    class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer" (click)="increment(items);"><span style="font-size: 11px;">+</span>
     </div>
     </div>
     </div>
