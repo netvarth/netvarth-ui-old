@@ -1436,7 +1436,11 @@
     <mat-tab-group (selectedTabChange)="tabChange_papers($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Total Papers ({{totalOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
+        <div class="allTabInPannel" *ngIf="!loading">
+                    <app-paper-details [loading]="loading" [orders]="orders"></app-paper-details>
+
+        </div>
+        <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
             
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
@@ -1453,8 +1457,7 @@
               >
               <div (click)="gotoDetails(order)">
               <div class="top-sec">
-                <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
-                  [checked]="orderSelected[i]"></mat-checkbox> -->
+                
                 <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
                 <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
                 <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
@@ -1513,12 +1516,12 @@
 
             </div>
           </ng-container>
-        </div>
+        </div> -->
         <div class="clearfix"></div>
       </mat-tab>
       <mat-tab label="Completed Papers ({{totalPaperdCompletedCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
+        <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
             
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
@@ -1535,8 +1538,6 @@
               >
               <div (click)="gotoDetails(order)">
               <div class="top-sec">
-                <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
-                  [checked]="orderSelected[i]"></mat-checkbox> -->
                 <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
                 <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
                 <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
@@ -1595,6 +1596,10 @@
 
             </div>
           </ng-container>
+        </div> -->
+        <div class="allTabInPannel" *ngIf="!loading">
+          <app-paper-details [loading]="loading" [orders]="completedorders"></app-paper-details>
+          <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>
       </mat-tab>

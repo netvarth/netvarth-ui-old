@@ -16,6 +16,7 @@ import { DisplaylabelpopupModule } from './displaylabel/displaylabel.module';
 import { RouterModule, Routes } from '@angular/router';
 import { OrderActionsModule } from './order-actions/order-actions.module';
 import { PagerModule } from '../../../shared/modules/pager/pager.module';
+import { PaperDetailsModule } from './paper-details/paper-details.module';
 
 const routes: Routes = [
   { path: '', component: OrderDashboardComponent },
@@ -48,6 +49,7 @@ const routes: Routes = [
     DisplaylabelpopupModule,
     OrderActionsModule,
     PagerModule,
+    PaperDetailsModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

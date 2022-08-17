@@ -100,6 +100,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   catalogType: any;
   totalOrdersCount: any;
   totalPaperdCompletedCount: any;
+  completedorders: any;
   
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
@@ -734,6 +735,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
 
     .subscribe(data => {
       this.orders = data;
+      this.completedorders = data;
       this.totalPaperdCompletedCount = this.orders.length;
       this.loading = false;
     });
