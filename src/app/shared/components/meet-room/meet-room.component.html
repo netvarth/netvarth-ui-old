@@ -119,8 +119,8 @@
                 </i> -->
                 <ng-container  *ngIf="twilioService.camDeviceCount > 1 && media['videoDevices']">
                     <mat-menu #menu="matMenu">
-                        <button mat-menu-item *ngFor="let med of media['videoDevices']; let i=index" (click)="switchCamera(med)">
-                          <span>{{(med.label!=''?med.label: ('CAM' + (i+1)))}}</span>
+                        <button mat-menu-item *ngFor="let med of media['videoDevices']; let i=index" (click)="switchCamera(med)" >
+                          <span [ngClass]="{'bold': twilioService.selectedVideoId===med.deviceId}">{{(med.label!=''?med.label: ('CAM ' + (i+1)))}}</span>
                         </button>
                       </mat-menu>
                       <i mat-icon-button [matMenuTriggerFor]="menu" *ngIf="twilioService.camDeviceCount > 1 && media['videoDevices']" title="Switch Camera" class="round novideo"
