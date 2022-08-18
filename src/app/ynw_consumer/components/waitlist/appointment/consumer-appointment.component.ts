@@ -87,7 +87,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     freeSlots: any = [];      // All available slots in custom manner
 
     availableDates: any = []; // to show available appointment dates in calendar
-    bookStep = 1;       // To show the steps onetime info/slot selection/ take appt/questionaire etc
+    bookStep;       // To show the steps onetime info/slot selection/ take appt/questionaire etc
     callingModesDisplayName = projectConstantsLocal.CALLING_MODES; // calling modes list-whatsapp/phone/zoom/googlemeet/jaldeevideo etc.
     isSlotAvailable = false; // To set slot availability
     selectedApptsTime;
@@ -306,6 +306,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.serviceOptionQuestionnaireList = data;
                         if(this.serviceOptionQuestionnaireList.questionnaireId){
                             this.serviceOptionApptt = true;
+                            this.bookStep = 1;
+                        }
+                        else{
+                            this.bookStep = 2;  
                         }
                        
                     }
@@ -486,37 +490,40 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     goBack(type?) {
-        if (type) {
-            if (this.bookStep === 1) {
-                let source = this.lStorageService.getitemfromLocalStorage('source');
-                if (source) {
-                    window.location.href = source;
-                    this.lStorageService.removeitemfromLocalStorage('reqFrom');
-                    this.lStorageService.removeitemfromLocalStorage('source');
+      
+            if (type) {
+                if (this.bookStep === 1) {
+                    let source = this.lStorageService.getitemfromLocalStorage('source');
+                    if (source) {
+                        window.location.href = source;
+                        this.lStorageService.removeitemfromLocalStorage('reqFrom');
+                        this.lStorageService.removeitemfromLocalStorage('source');
+                    } else {
+                        this.location.back();
+                    }              
                 } else {
-                    this.location.back();
-                }              
-            } else {
-                this.goToStep('prev');
+                    this.goToStep('prev');
+                }
             }
-        }
-        if (this.action !== 'addmember') {
-            this.closebutton.nativeElement.click();
-        }
-        setTimeout(() => {
-            if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.departmentEnabled)
-                || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
-                this.action === 'phone' || this.action === 'email') {
-                this.action = '';
-            } else if (this.action === 'addmember') {
-                this.action = 'members';
-            } else if (this.action === 'service' && this.departmentEnabled) {
-                this.action = '';
-            } else if (this.action === 'preInfo') {
-                this.action = '';
+            if (this.action !== 'addmember') {
+                this.closebutton.nativeElement.click();
             }
-        }, 500);
-    }
+            setTimeout(() => {
+                if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.departmentEnabled)
+                    || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
+                    this.action === 'phone' || this.action === 'email') {
+                    this.action = '';
+                } else if (this.action === 'addmember') {
+                    this.action = 'members';
+                } else if (this.action === 'service' && this.departmentEnabled) {
+                    this.action = '';
+                } else if (this.action === 'preInfo') {
+                    this.action = '';
+                }
+            }, 500);
+        }
+       
+    
 
     actionPerformed(status) {
         const _this = this;
@@ -870,43 +877,86 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     break;
             }
         } else if (type === 'prev') {
-            if (this.bookStep === 5) {
-                if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.bookStep = 4;
-                } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                    _this.bookStep = 3;
+            if(!this.serviceOptionApptt){
+                if (this.bookStep === 5) {
+                    if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.bookStep = 4;
+                    } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                        _this.bookStep = 3;
+                    }
+                    else if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                       
+                        this.bookStep = 2;
+                    }
                 }
-                else if (this.showSlot) {
-                    _this.bookStep = 2;
-                } else {
-                    this.bookStep = 1;
+                else if (this.bookStep === 4) {
+                    if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                        _this.bookStep = 3;
+                    }
+                    else if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 2;
+                    }
                 }
-            }
-            else if (this.bookStep === 4) {
-                if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                    _this.bookStep = 3;
+                else if (this.bookStep === 3) {
+                   if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 2;
+                    }
                 }
-                else if (this.showSlot) {
-                    _this.bookStep = 2;
-                } else {
-                    this.bookStep = 1;
-                }
-            }
-            else if (this.bookStep === 3) {
-               if (this.showSlot) {
-                    _this.bookStep = 2;
-                } else {
-                    this.bookStep = 1;
-                }
-            }
-            else if (this.bookStep === 3) {
-                if (this.showSlot) {
-                     _this.bookStep = 2;
+                else if (this.bookStep === 3) {
+                    if (this.showSlot) {
+                         _this.bookStep = 2;
+                     } else {
+                         this.bookStep = 2;
+                     }
                  } else {
-                     this.bookStep = 1;
-                 }
-             } else {
-                this.bookStep--;
+                    this.location.back();
+                }
+            }
+            else{
+                if (this.bookStep === 5) {
+                    if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.bookStep = 4;
+                    } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                        _this.bookStep = 3;
+                    }
+                    else if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 1;
+                    }
+                }
+                else if (this.bookStep === 4) {
+                    if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                        _this.bookStep = 3;
+                    }
+                    else if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 1;
+                    }
+                }
+                else if (this.bookStep === 3) {
+                   if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 1;
+                    }
+                }
+                else if (this.bookStep === 3) {
+                    if (this.showSlot) {
+                         _this.bookStep = 2;
+                     } else {
+                         this.bookStep = 1;
+                     }
+                 } else {
+                    this.bookStep--;
+                } 
             }
         } else {
             this.bookStep = type;
@@ -2504,6 +2554,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         return false;
     }
     submitserviceOptionQuestionnaire(uuid) {
+       
         const _this = this;
         const data=this.finalDataToSend
         return new Promise(function (resolve, reject) {
