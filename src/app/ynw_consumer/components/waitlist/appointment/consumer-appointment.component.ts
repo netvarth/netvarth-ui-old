@@ -296,6 +296,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 });
             }
         );
+        this.serviceOPtionInfo = this.lStorageService.getitemfromLocalStorage('serviceOPtionInfo');
         this.getServiceOptions()
     }
     getServiceOptions(){
@@ -1372,6 +1373,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 (appt: any) => {
                     _this.scheduledAppointment = appt;
                     console.log('Appointment:', _this.scheduledAppointment);
+                   
                     if (_this.appointmentType === 'reschedule') {
                         _this.appmtFor.push({ id: _this.scheduledAppointment.appmtFor[0].id, firstName: _this.scheduledAppointment.appmtFor[0].firstName, lastName: _this.scheduledAppointment.appmtFor[0].lastName, phoneNo: _this.scheduledAppointment.phoneNumber });
                         _this.commObj['communicationPhNo'] = _this.scheduledAppointment.phoneNumber;
@@ -1410,10 +1412,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     _this.getServicebyLocationId(_this.locationId, _this.appmtDate);
                     _this.getSchedulesbyLocationandServiceIdavailability(_this.locationId, _this.selectedServiceId, _this.accountId);
                     resolve(true);
+                   
                 }, () => {
                     resolve(false);
                 });
         })
+     
     }
 
     /**
@@ -2556,36 +2560,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     submitserviceOptionQuestionnaire(uuid) {
        
         const _this = this;
-        const data=this.finalDataToSend
-        return new Promise(function (resolve, reject) {
-           
-            // console.log(JSON.stringify(this.serviceOPtionInfo))  
-                const dataToSend: FormData = new FormData();
-                if (data.files) {
-                    for (const pic of data.files) {
-                        dataToSend.append('files', pic, pic['name']);
-                    }
-                }
-                const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
-                dataToSend.append('question', blobpost_Data);
-                _this.subs.sink = _this.sharedServices.submitConsumerApptServiceOption(dataToSend, uuid, _this.accountId).subscribe((data: any) => {
-                 
-                    resolve(true);
-                },
-                    error => {
-                        _this.isClickedOnce = false;
-                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        // _this.disablebutton = false;
-                        resolve(false);
-                        // this.api_loading_video = false;
-                    });
-           
-        });
-    }
-    getserviceOptionQuestionAnswers(event) {
-        this.serviceOPtionInfo = event;
-       
-        //let finalDgList=[];
         this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
             (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
             return rv;
@@ -2614,8 +2588,37 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         'questionnaireId':  this.serviceOPtionInfo.answers.questionnaireId,
                         'answerLine': finalList
                       }
-                   
-
+        const data=this.finalDataToSend
+        return new Promise(function (resolve, reject) {
+           
+            // console.log(JSON.stringify(this.serviceOPtionInfo))  
+                const dataToSend: FormData = new FormData();
+                if (data.files) {
+                    for (const pic of data.files) {
+                        dataToSend.append('files', pic, pic['name']);
+                    }
+                }
+                const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                dataToSend.append('question', blobpost_Data);
+                _this.subs.sink = _this.sharedServices.submitConsumerApptServiceOption(dataToSend, uuid, _this.accountId).subscribe((data: any) => {
+                  
+                    resolve(true);
+                },
+                
+                    error => {
+                        _this.isClickedOnce = false;
+                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        // _this.disablebutton = false;
+                        resolve(false);
+                        // this.api_loading_video = false;
+                    });
+                  
+        });
+       
+    }
+    getserviceOptionQuestionAnswers(event) {
+        this.serviceOPtionInfo = event;
+        this.lStorageService.setitemonLocalStorage('serviceOPtionInfo', this.serviceOPtionInfo);
     }
    
     qnrPopup() {

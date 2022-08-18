@@ -74,7 +74,7 @@
  <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between">
  <button type="button"
  class="mx-auto text-center next-button btn btn-primary font-weight-bold text-capitalize px-12"
- (click)="goToStep('next');actionCompleted()" [class.disabled]="!isSlotAvailable">
+ (click)="goToStep('next');actionCompleted()" [class.disabled]="!serviceOPtionInfo" [disabled] = "!serviceOPtionInfo">
  Next
  </button>
  </div>

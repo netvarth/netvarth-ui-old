@@ -1825,6 +1825,7 @@ export class QnrDialogComponent implements OnInit {
     return this.totalPrice
   }
   repeatSame(repeatingItem){
+    // console.log(JSON.stringify(repeatingItem))
     this.dialogRef.close({repeatItem:repeatingItem});
   }
   addNew(){

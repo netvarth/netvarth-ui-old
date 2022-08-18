@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { FileService } from '../../services/file-service';
 import { QnrDialogComponent } from '../qnr-dialog/qnr-dialog.component';
+import { LocalStorageService } from '../../services/local-storage.service';
 @Component({
  selector: 'app-questionnaire',
  templateUrl: './questionnaire.component.html',
@@ -107,12 +108,15 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
  finalObjectList: any=[];
  showservice = false;
  quesStore: any;
+    allList: string;
+    popSearches: any;
  constructor(private sharedService: SharedServices,
  private activated_route: ActivatedRoute,
  private snackbarService: SnackbarService,
  private wordProcessor: WordProcessor,
  private sharedFunctionobj: SharedFunctions,
  private providerService: ProviderServices,
+ private lStorageService: LocalStorageService,
  private dateProcessor: DateTimeProcessor,
  public dialog: MatDialog,
  private fileService: FileService,
@@ -149,6 +153,13 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
  
  }
  ngOnInit(): void {
+     if(this.lStorageService.getitemfromLocalStorage('itemArray')){
+        this.itemArray = this.lStorageService.getitemfromLocalStorage('itemArray');
+        if(this.itemArray){
+            this.showItem = true;
+        }
+     }
+  
  this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
  
  if (this.questionnaireList) {
@@ -233,6 +244,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
  this.getAnswers(this.questions, 'get');
  }
  }
+
  }
  // *.component.ts
  asIsOrder(a, b) {
@@ -1399,7 +1411,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
  });
  removeitemdialogRef.afterClosed().subscribe(result => {
  if (result) {
- 
+  
  this.dataGridList = result.data.answerLine;
  this.post_Data = result.data;
  this.showItem = true;
@@ -1410,6 +1422,11 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
  }
  let dummyArray = {id: this.id , sequenceId:this.sequenceId ,item: this.item, price : this.totalPrice, columnItem : this.dataGridList}
  this.itemArray.push(dummyArray)
+ if(this.itemArray){
+    this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
+ }
+ 
+ 
  this.id = this.id+1
  let obj={ sequenceId:this.sequenceId, dgList: this.post_Data.answerLine};
  this.finalObjectList.push(obj);
@@ -1435,8 +1452,12 @@ removeitemdialogRef.afterClosed().subscribe(result => {
  if(result === 'addNew'){
  this.qnrPopup(this.quesStore, true)
  }else{
- let dummyArray = {id: this.id , sequenceId:this.sequenceId ,item: this.item, price : this.totalPrice, columnItem : result.repeatItem.columnItem}
+ let dummyArray = {id: this.id , sequenceId:this.sequenceId ,item: result.repeatItem.item, price : result.repeatItem.price, columnItem : result.repeatItem.columnItem}
  this.itemArray.push(dummyArray)
+ if(this.itemArray){
+    this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
+ }
+ 
  this.id = this.id+1
  let obj={ sequenceId:this.sequenceId, dgList: result.repeatItem.columnItem};
  this.finalObjectList.push(obj); 
@@ -1450,7 +1471,10 @@ decrement(removingItem){
  let index = this.itemArray.findIndex(x=>x.id===removingItem.id)
  if (index > -1) {
  this.itemArray.splice(index, 1); // 2nd parameter means remove one item only
-
+ if(this.itemArray){
+    this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
+ }
+ 
  this.finalObjectList.splice(index,1);
  }
  this.onSubmit('serviceOption')
