@@ -67,8 +67,7 @@
                                                     {{value}} <span style="float: right;"> Rs: {{getRate(value)}}</span>
                                                 </label>
                                             </div>
-                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
-                                                Please select mandatory fields</div> -->
+                                          
                                             <div *ngIf="!data.listPropertie.maxAnswerable">
                                                 <label class="checkbox" *ngFor="let value of data.listPropertie.values">
                                                     <input type="checkbox"
@@ -79,30 +78,9 @@
                                                     {{value}} <span style="float: right;"> Rs: {{getRate(value)}}</span>
                                                 </label>
                                             </div>
-                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
-                                                Please select mandatory fields</div> -->
-                                                <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory"> 
-                                                  Please fill mandotory field</div> -->
-                                        </div>
-                                        
-
-<br>
-                                        <div *ngIf="data.dataType === 'plainText' && data.order!==1 && isSecondcase">
-                                            <label>{{data.label}}
-                                                <span class="red" *ngIf="!data.mandatory">*</span>
-                                            </label>
-                                            <div>
-                                                <label class="checkbox">
-                                                    <input [(ngModel)]="plainText"
-                                                    (input)="onSubmit('inputChange');" [disabled]="buttonDisable || disableInput()"
-                                                    (ngModelChange)="changesApplied($event, getQuestion(question), data)"
-                                                    class="form-control1 form-control-solid" type="text">
-                                                    <span></span>
-                                                     
-                                                </label>
-                                            </div>
-                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
-                                                Please select mandatory fields</div> -->
+                                            <div class="mt-2 text-danger" *ngIf="data.mandatory">
+                                                {{secondrror}}</div>
+                                               
                                         </div>
                                         
                                         <div *ngIf="data.dataType === 'number' && data.order!==1 && isSecondcase">
@@ -119,8 +97,7 @@
                                                      
                                                 </label>
                                             </div>
-                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
-                                                Please select mandatory fields</div> -->
+                                           
                                         </div>
                                         <div *ngIf="data.dataType === 'date' && data.order!==1 && isSecondcase">
                                             <label>{{data.label}}
@@ -138,8 +115,7 @@
                                                      
                                                 </label>
                                             </div>
-                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
-                                                Please select mandatory fields</div> -->
+                                           
                                         </div>
 
                                         <div *ngIf="data.dataType === 'bool' && data.order!==1 && isSecondcase">
@@ -164,8 +140,7 @@
                                                     No
                                                 </label>
                                             </div>
-                                            <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
-                                                Please select mandatory fields</div> -->
+                                           
                                         </div>
 
   <!-- for file upload -->

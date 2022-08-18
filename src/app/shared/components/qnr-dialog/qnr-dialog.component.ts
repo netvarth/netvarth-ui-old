@@ -142,6 +142,8 @@ export class QnrDialogComponent implements OnInit {
   post_Data;
   finalObjectList: any=[];
   itemArray : any = [];
+  secondrror: string;
+  isCheckedSecond;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   public dialogRef: MatDialogRef<QnrDialogComponent>,
   private sharedService: SharedServices,
@@ -721,7 +723,7 @@ export class QnrDialogComponent implements OnInit {
       return new Date(date);
     }
     listChange(ev, value, question, column?) {
-  
+ 
       let itemPrice;
       this.selectedType = value;
       if (question.fieldDataType !== 'dataGrid') {
@@ -782,6 +784,9 @@ export class QnrDialogComponent implements OnInit {
            
           }
           else if(column.order && column.order===2 && column.mandatory===true){
+          
+              this.isCheckedSecond = true;
+            
             this.isListChanged=true;
             itemPrice = this.getRate(value);
           var itemrate: number = +itemPrice;
@@ -1697,12 +1702,23 @@ export class QnrDialogComponent implements OnInit {
         this.isSecondcase = false;
       }else{
          this.selectFirst = true;
+         
         this.derror = '';
         if(this.isSecondcase){
-          this.closeDialog();
+          if(this.isCheckedSecond){
+            this.isCheckedSecond = true;
+            this.closeDialog();
+           }
+           else if (this.isCheckedSecond === undefined){
+            this.isCheckedSecond = false;
+            this.secondrror = 'Mandotory field';
+           }
+         
         }
         this.isSecondcase = true;
       }
+      
+    
     }
     closeDialog() {
       this.postData = {
