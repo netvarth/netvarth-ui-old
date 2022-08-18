@@ -21,14 +21,14 @@
           <div  *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
             <img class="imGBorderRadius" src="assets/images/undefinedUser.png"  />
           </div>
-            <div *ngIf="customerDetails.firstName ||customerDetails.lastName || customerDetails.age || customerDetails.age.year || customerDetails.gender">
+            <div >
               <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge" >
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" />
                 <div class="nameClr">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
               </div>
               <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" />
-                <div class="nameClrOther">{{customerDetails.age.year}} years,</div>
+                <div class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
                 <div class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
               </div>
             </div>
@@ -96,7 +96,7 @@
         <!---prescriptiojn start-->
         <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')">
           <div>
-            <img class="imageSize"  src="/assets/images/medicalReportIcon/prescription.png" />
+            <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
           </div>
           <div class="nameClrOther">
             Create Prescription
@@ -106,7 +106,7 @@
          <!---clinical notes start-->
         <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')">
           <div>
-            <img class="imageSize"  src="/assets/images/medicalReportIcon/clinicalReport.png" />
+            <img class="imageSize"  src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
           </div>
           <div class="nameClrOther">
            Add Clinical Notes
@@ -123,7 +123,7 @@
             <span class="table-heading pl-2"><b>Previous Visits</b></span>
           </div>
         </div>
-        <section class="report pt-2" *ngIf="visitcount !== 0">
+        <section class="report pt-2 webDevice" *ngIf="visitcount !== 0">
           <ng-container *ngIf="!loading && !loading_table">
             <mat-table class="mat-scrool visit-tbl" [dataSource]="lastVisit_dataSource">
               <ng-container matColumnDef="consultationDate">
@@ -164,6 +164,41 @@
             </mat-table>
           </ng-container>
           <div class="clearfix"></div>
+        </section>
+        <section class="mobDevice">
+          <div *ngFor="let visit of previousLIst" class="shadow shadowmb" (click)="getMedicalRecord(visit)">
+           <div class="flexClass1">
+            <div>
+              <div class="lebalName">Medical Id</div>
+              <div *ngIf="visit && visit.mrId" class="elementTextClr MRIDCLR">{{visit.mrId}}</div>
+             </div>
+             <div>
+              <div class="lebalName">Date</div>
+              <div *ngIf="visit" class="elementTextClr">{{getLastVisitDate(visit)}}</div>
+             </div>
+           </div>
+           <div class="flexClass1" style="margin-top:5px">
+            <div>
+              <div class="lebalName">Service</div>
+              <div class="elementTextClr" *ngIf="visit">{{getServiceName(visit)}}</div>
+            </div>
+            <div class="doctorWidth">
+              <div class="lebalName">Doctor</div>
+              <div class="providerName">
+                <div class="arrowIcon">
+                  <img style="margin-top: 5px" src="/assets/images/medicalReportIcon/arrow2.png"/>
+                </div>
+               <div class="elementTextClr"> {{getProviderName(visit)}}</div>
+              </div>
+            </div>
+           </div>
+           <div *ngIf="visit" class="btnTop">
+            <div [ngClass]="visit.mrCreated === true ? 'createBtn':'ViewBtn'">
+              <div *ngIf="visit.mrCreated">View</div>
+              <div *ngIf="!visit.mrCreated">Create</div>
+            </div>
+           </div>
+          </div>
         </section>
       </div>
     </div>
@@ -289,14 +324,14 @@
           <div  *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
             <img class="imGBorderRadius" src="assets/images/undefinedUser.png"  />
           </div>
-            <div *ngIf="customerDetails.firstName ||customerDetails.lastName || customerDetails.age || customerDetails.age.year || customerDetails.gender">
+            <div >
               <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge" >
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" />
                 <div class="nameClr">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
               </div>
               <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" />
-                <div class="nameClrOther">{{customerDetails.age.year}} years,</div>
+                <div class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
                 <div class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
               </div>
             </div>
@@ -405,7 +440,7 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 card" >
       <div  >
         <div class=" p-1 pl0 pt-0">
-          <app-clinicalnotes [mRListUsingId]="mRListUsingId" [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
+          <app-clinicalnotes  [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
         </div>
       </div>
     </div>

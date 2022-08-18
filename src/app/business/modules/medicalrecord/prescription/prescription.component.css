@@ -435,6 +435,8 @@ border: 1.32184px solid #E6E8EB;
 @media(max-width: 800px){
   .prescriptionNotes{
     flex-wrap: wrap;
+    flex-direction: column-reverse !important;
+    gap: 10px !important;
   }
   .spaanOr{
     display: none;
@@ -448,6 +450,10 @@ border: 1.32184px solid #E6E8EB;
     margin-bottom: 10px;
     margin-top: 5px;
     background: #F9F9F9 !important;
+  }
+  .drugInfo{
+    flex-wrap: wrap !important ;
+    gap: 15px !important;
   }
 
 }

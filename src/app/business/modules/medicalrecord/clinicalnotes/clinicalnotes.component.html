@@ -1,4 +1,4 @@
-<div class="mat-expansion-panel-content" *ngIf="isLoaded && showClinicalNotesDetails!='true'">
+<div class="mat-expansion-panel-content" *ngIf="isLoaded && showClinicalNotesDetails!=='true'">
   <div class="w-dta">
     <div>
       <span class="table-heading"><b>Clinical Notes</b></span>
@@ -30,7 +30,7 @@
       <!-- {{clinicalNotes | json}} -->
       <div *ngFor="let list of clinicalNotes;let i = index;">
         <div class="form-group">
-          <label>{{list.displayName}}</label>
+          <label>{{list.displayName }}</label>
           <div class="input-group">
             <div class="input-group-prepend"></div>
             <textarea #clinicalNotesType  [(ngModel)]="list.value" (ngModelChange)="handleClinicalNotes(clinicalNotesType.value,list.displayName)"  
@@ -53,7 +53,7 @@
 
 
 
-<div  *ngIf="isLoaded && showClinicalNotesDetails=='true'">
+<div  *ngIf="isLoaded && showClinicalNotesDetails==='true' ">
   <!-- class="mat-expansion-panel-content" -->
   <!-- {{showClinicalNotesDetails | json}} -->
   <!-- <div class="w-dta">
@@ -89,10 +89,12 @@
       </div>
     </div>
   </div> -->
+  <!-- {{clinicalNotes | json}} -->
   <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding shadow" *ngIf="clinicalNotes.length>0">
     <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate">
       <div class="table-heading">Clinical Notes</div>
-      <div [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}" class="shadow clinicalNotesList" *ngFor="let item of clinicalNotes">
+      <!-- {{clinicalNotes | json}} -->
+      <div *ngFor="let item of clinicalNotes" [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}" class="shadow clinicalNotesList" >
         <div class="notelabel" [ngStyle]="{'color':getColorType(item)}">{{item.type}}</div>
         <div class="noteDes">{{item.clinicalNotes}}</div>
       </div>

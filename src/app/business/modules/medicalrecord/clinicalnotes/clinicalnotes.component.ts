@@ -26,7 +26,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   @Input() details;
   @Input() type;
   @Input() b_id;
-  @Input() mRListUsingId;
+  // @Input() mRListUsingId;
   mrId = 0;
   clinicalNotes: any[];
   allergies: any;
@@ -47,6 +47,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   clinicalNotesValue:any;
   clinicalNotesType:any;
   clinicalNotesAddList:any=[];
+  customerId:any;
   private subscriptions = new SubSink();
   constructor(
 
@@ -66,7 +67,14 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     console.log('showClinicalNotesDetails::',this.showClinicalNotesDetails)
+    console.log('this.activatedRoute.parent.snapshot.params',this.activatedRoute.parent.snapshot.params)
+    // this.patientId = params.get('id');
+    //   this.bookingType = params.get('type');
+    //   this.bookingId = params.get('uid');
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
+    const medicalRecordCustId = this.activatedRoute.parent.snapshot.params['id'];
+    this.customerId= medicalRecordCustId
+    console.log('medicalRecordCustId',medicalRecordCustId)
     this.mrId = parseInt(medicalrecordId, 0);
     console.log('this.mrId',this.mrId)
     this.getClinicalNotes( this.mrId)
@@ -85,14 +93,17 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
       }
       this.clinicalNotes = this.clinical_constant;
-      this.getMRClinicalNotes(this.mrId).then((res: any) => {
-        this.clinicalNotes = res;
-        console.log('clinicalNotes:::',this.clinicalNotes)
-        this.isLoaded = true;
-
-      });
+      // if(this.mrId !==0){
+        this.getMRClinicalNotes(this.mrId).then((res: any) => {
+          this.clinicalNotes = res;
+          console.log('clinicalNotes:::',this.clinicalNotes)
+          this.isLoaded = true;
+  
+        });
+      // }
+      
     }
-    console.log('mRListUsingId:::',this.mRListUsingId)
+    // console.log('mRListUsingId:::',this.mRListUsingId)
   }
   getClinicalNotes(medicalrecordId){
     this.subscriptions.sink= this.provider_services.GetMedicalRecord(medicalrecordId).subscribe((res)=>{
@@ -142,11 +153,20 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
         .subscribe((res: any) => {
           console.log('res',res)
           this.clinicalNotes = res;
+          // if(res.length>0){
+          //   this.clinicalNotes = res;
+          //   // this.showClinicalNotesDetails=true;
+          // }
+          // else{
+          //   // this.showClinicalNotesDetails=false;
+          // }
+          // this.clinicalNotes = res;
           if (res.clinicalNotes) {
             response = res.clinicalNotes;
             // this.clinicalNotes= res;
           } else {
             response = res;
+            // this.clinicalNotes = res;
           }
 
           Object.entries(response).forEach(
@@ -228,19 +248,24 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   saveClinicalNotes(){
     // console.log('type',type)
     console.log('this.clinicalNotesValue::',this.clinicalNotesValue)
-    const payload = {
-      'type':this.clinicalNotesType,
-      'clinicalNotes': this.clinicalNotesValue
-    };
-    console.log('payload::',payload)
-    console.log('clinicalNotesAddList:::',this.clinicalNotesAddList)
-    console.log('this.clinicalNotesType',this.clinicalNotesType)
+    // const payload = {
+    //   'type':this.clinicalNotesType,
+    //   'clinicalNotes': this.clinicalNotesValue
+    // };
+    // console.log('payload::',payload)
+    // console.log('clinicalNotesAddList:::',this.clinicalNotesAddList)
+    // console.log('this.clinicalNotesType',this.clinicalNotesType);
+    // this.customerDetails = data.providerConsumer;
+    // const customerId = this.customerDetails.id;
+      const bookingId = 0;
+      const bookingType = 'FOLLOWUP';
+      const patientId=this.customerId
     this.medicalrecordService.createMR('clinicalNotes', this.clinicalNotesAddList).then((res:any) => {
       this.mrId= res;
       console.log('this.mrId::',this.mrId)
       this.snackbarService.openSnackBar('Medical Record Created Successfully');
-      this.reloadComponent()
-      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId])
+      // this.reloadComponent()
+      this.router.navigate(['provider', 'customers', patientId, bookingType, bookingId, 'medicalrecord', this.mrId,'prescription'])
 
     },
       error => {

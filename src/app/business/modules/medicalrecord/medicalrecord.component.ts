@@ -32,6 +32,7 @@ import { UploadPrescriptionComponent } from './prescription/upload-prescription/
 })
 export class MedicalrecordComponent implements OnInit {
   public lastVisit_dataSource = new MatTableDataSource<any>([]);
+  previousLIst:any;
   lastVisit_displayedColumns = ['consultationDate', 'mrId','serviceName', 'userName', 'mr'];
   accountType: any;
   bookingId: string;
@@ -118,7 +119,7 @@ export class MedicalrecordComponent implements OnInit {
   customerphoneno: any;
   medicalRecordBtnName:string='Create';
   mrDateFromTableRow:any;
-  showHidepreviousDetails:boolean;
+  showHidepreviousDetails:boolean=true;
   showHideAddPrescription:boolean;
   showHideClinicalNotes:boolean;
   medicalRecordID:any;
@@ -308,6 +309,7 @@ export class MedicalrecordComponent implements OnInit {
       .subscribe((data: any) => {
         this.lastVisit_dataSource = data;
         console.log('lastVisit_dataSource::',this.lastVisit_dataSource);
+        this.previousLIst= data;
         this.showHidepreviousDetails=true;
         this.loading_table = false;
       },
@@ -696,9 +698,9 @@ export class MedicalrecordComponent implements OnInit {
     } else {
       // alert('3')
       const mrId = visitDetails.mrId;
-      // const customerDetails = visitDetails.providerConsumer;
+      const customerDetails = visitDetails.providerConsumer;
       console.log('customerDetailFOLLOWUP::',  this.customerDetails)
-      const customerId = this.customerDetails.id;
+      const customerId =customerDetails.id;
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
       // this.dialogRef.close();
@@ -748,15 +750,18 @@ export class MedicalrecordComponent implements OnInit {
       this.showHidepreviousDetails = false;
       this.showHideAddPrescription=true;
       this.showHideClinicalNotes=false;
-      const routerId='prescription'
-      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId,routerId]);
+      const routerId='prescription';
+      console.log(' this.mrId', this.mrId)
+      const mRId=0
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
     }
     else if(text==='craeteClinicalnotes'){
       this.showHidepreviousDetails = false;
       this.showHideAddPrescription=false;
       this.showHideClinicalNotes=true;
-      const routerId='clinicalnotes'
-      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId,routerId]);
+      const routerId='clinicalnotes';
+      const mRId=0
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
     }
     
 

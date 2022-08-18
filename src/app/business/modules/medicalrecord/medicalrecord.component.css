@@ -478,7 +478,7 @@ border: 1.32184px solid #E6E8EB;
     justify-content: space-between;
     align-items: center;
     grid-gap: 24px;
-    gap: 8px;
+    gap: 14px;
     flex-wrap: wrap;
   }
   .nameClr{
@@ -489,7 +489,38 @@ border: 1.32184px solid #E6E8EB;
   .imageSize{
     height:30px;width:30px
   }
+  .mobDevice{
+    display: block !important;
+  }
+  .webDevice{
+    display: none !important;
+  }
+  .elementTextClr{
+    color: #06152B;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .dateCreate{
+    justify-content: flex-start !important;
+    width: 100% !important;
+  }
 
+}
+.shadowmb{
+  margin-bottom: 15px;
+  padding: 15px !important;
+}
+.btnTop{
+  margin-top: 10px;
+}
+.doctorWidth{
+  width: 8.5rem;
+}
+.mobDevice{
+  display: none;
+}
+.webDevice{
+  display: block;
 }
 .mgTop{
   margin-top: 5px;
@@ -588,5 +619,13 @@ border: 1.32184px solid #E6E8EB;
 }
 .dateClr{
   color:#231E1E;
+}
+.lebalName{
+  color: #767980;
+    font-size: 13px;
+    font-weight: 500;
+}
+.MRIDCLR{
+  color:#09C5AF
 }
 

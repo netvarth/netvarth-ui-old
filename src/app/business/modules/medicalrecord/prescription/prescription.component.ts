@@ -18,7 +18,7 @@ import { UploadPrescriptionComponent } from './upload-prescription/upload-prescr
 import { DrugListComponent } from './drug-list/drug-list.component';
 import { UploadDigitalSignatureComponent } from './upload-digital-signature/upload-digital-signature.component';
 
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -158,7 +158,7 @@ export class PrescriptionComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
-    private location: Location,
+    // private location: Location,
       private fb: FormBuilder,
       public fed_service: FormMessageDisplayService,
       // private fileService: FileService,
@@ -486,7 +486,7 @@ export class PrescriptionComponent implements OnInit {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
-    this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
   }
   addNote() {
     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
@@ -661,8 +661,10 @@ export class PrescriptionComponent implements OnInit {
   // }
   }
     goback(txt){
-      console.log('txt',txt)
-      this.location.back();
+      console.log('txt',txt);
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+
+      // this.location.back();
     }
     onSubmit(form_data) {
       this.api_error = '';
