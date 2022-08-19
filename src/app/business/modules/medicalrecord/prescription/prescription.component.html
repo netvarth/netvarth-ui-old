@@ -469,12 +469,13 @@
   <!-- </div> -->
 </ng-container>
 <ng-container *ngIf="!loading && viewVisitDetails">
+  <div *ngIf="!loading && viewVisitDetails" class="card mgn-up-10" >
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList.length !==0">
     <!-- {{viewMrInfo | json}} -->
     <span class="table-heading"><b>Prescription</b></span>
     <!-- {{drugList | json}} -->
   </div>
-  <div *ngIf="uploadlist && uploadlist.length===0 && drugList.length !==0">
+  <div *ngIf="uploadlist && uploadlist.length===0 && drugList.length !==0" >
     <div>
       <!-- <table class="table " id="printableArea">
         <thead class="headerTable">
@@ -542,9 +543,9 @@
           class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
           {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
   
-      <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate" *ngIf="uploadlist && uploadlist.length > 0">
+      <div class=" mgn-up-10 filesCreate" *ngIf="uploadlist && uploadlist.length > 0">
         <div class="shadow" style="height:100% !important">
-          <!-- <div class="pl-2 uploadedText">Uploaded Prescription</div> -->
+          <div class="pl-2 uploadedText">Uploaded Prescription</div>
           <div class="hightLimit">
             <div *ngFor="let file of uploadlist;let i=index" class="allFile">
               <div class="borderClass">
@@ -583,4 +584,5 @@
       </div>
     </div>
   </div>
+</div>
 </ng-container>

@@ -102,10 +102,10 @@
 }
 
 .shadow {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+  /* box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important; */
   padding: 10px !important;
   /* border: 1px solid rgb(231, 228, 228) !important; */
-  background: #FFFFFF;
+  /* background: #FFFFFF; */
   border-radius: 10px;
 }
 
@@ -139,6 +139,9 @@
 mat-row:hover {
   /* background-color: #c8e9f3 !important; */
   /* background-color:  #1DA192 !important; */
+}
+mat-row{
+  height: 60px !important;
 }
 
 mat-cell:first-of-type,
@@ -340,6 +343,7 @@ cursor: pointer;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
     margin-left: 5px;
     border-bottom: 0px solid;
+    height: 60px;
 }
 .createBtn{
   background: #F3874A;

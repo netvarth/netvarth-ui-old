@@ -260,7 +260,7 @@
       <!---prescription start-->
       <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes card"> -->
         <!-- (uploadFiles && uploadFiles.length===0)" -->
-        <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate shadow mgn-up-10" *ngIf="showHideAddPrescription">
+        <div class="p-1 pl0 pt-0 col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10" *ngIf="showHideAddPrescription">
           <div>
             <app-prescription [showHideActivityTYpe]="showHideActivityTYpe"></app-prescription>
           </div>
@@ -329,7 +329,7 @@
       <!---prescription end-->
       <!-- <hr> -->
       <!----clinical notess ection start-->
-      <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate shadow mgn-up-10" *ngIf="showHideClinicalNotes">
+      <div class="p-1 pl0 pt-0 col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10" *ngIf="showHideClinicalNotes">
         <div>
           <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId">
           </app-clinicalnotes>
@@ -484,18 +484,18 @@
       </div>
 
 
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 card" >
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12  no-padding ">
       <div  >
-        <div [ngClass]="{'prescription-details':uploadFiles.length>0}" class=" p-1 pl0 pt-0">
+        <div [ngClass]="{'prescription-details':uploadFiles.length>0}" >
           <app-prescription [viewVisitDetails]="viewVisitDetails"></app-prescription>
         </div>
       </div>
     </div>
 
 
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 card" >
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding">
       <div  >
-        <div class=" p-1 pl0 pt-0">
+        <div >
           <app-clinicalnotes  [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
         </div>
       </div>

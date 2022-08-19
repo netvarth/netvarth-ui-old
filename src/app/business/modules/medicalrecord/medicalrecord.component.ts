@@ -776,6 +776,24 @@ export class MedicalrecordComponent implements OnInit {
   addPrescriptionAndClinical(id,text){
     console.log('add');
     if(text==='createPrescription'){
+      console.log('mrId',this.medicalRecordID)
+      // if(this.mrId===0){
+      //   this.showHidepreviousDetails = false;
+      //   this.showHideAddPrescription=true;
+      //   this.showHideClinicalNotes=false;
+      //   this.showHideActivityTYpe=false;
+      // }
+      // else{
+      //   const mRId=0;
+      // const routerId='prescription';
+      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
+      // this.showHidepreviousDetails = false;
+      // this.showHideAddPrescription=true;
+      // this.showHideClinicalNotes=false;
+      // this.showHideActivityTYpe=false;
+      // }
+
+
       // const mRId=0;
       // const routerId='prescription';
       // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
@@ -788,6 +806,21 @@ export class MedicalrecordComponent implements OnInit {
       
     }
     else if(text==='craeteClinicalnotes'){
+      // if(this.mrId===0){
+      //   this.showHidepreviousDetails = false;
+      // this.showHideAddPrescription=false;
+      // this.showHideClinicalNotes=true;
+      // this.showHideActivityTYpe=false;
+      // }
+      // else{
+      //   const routerId='clinicalnotes';
+      // const mRId=0
+      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
+      //   this.showHidepreviousDetails = false;
+      // this.showHideAddPrescription=false;
+      // this.showHideClinicalNotes=true;
+      // this.showHideActivityTYpe=false;
+      // }
       // const routerId='clinicalnotes';
       // const mRId=0
       // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
@@ -797,10 +830,7 @@ export class MedicalrecordComponent implements OnInit {
       this.showHideActivityTYpe=false;
       
     }
-    
-
-    // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId,routerId]);
-  }
+    }
   getFileType(type){
     // console.log('type',type)
     if(type){
