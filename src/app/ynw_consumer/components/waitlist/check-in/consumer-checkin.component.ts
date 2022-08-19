@@ -160,7 +160,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     editBookingFields: boolean;
     whatsapperror = '';
     showmoreSpec = false;
-    bookStep = 1;
+    bookStep;
     locationName;
     waitlistDetails: any;
     uuidList: any = [];
@@ -478,6 +478,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.serviceOptionQuestionnaireList = data;
                         if(this.serviceOptionQuestionnaireList.questionnaireId){
                             this.serviceOptionApptt = true;
+                            this.bookStep = 1;
+                        }
+                        else{
+                            this.bookStep = 2;  
                         }
                        
                     }
