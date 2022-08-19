@@ -1,3 +1,14 @@
+.btn-primary
+{
+  background-color: #1e4079!important;
+  color: #fff!important;
+  border-color: #1e4079!important;
+}
+
+input[type="radio"]
+{
+  border-color: #1e4079!important;
+}
 .header{
     display: flex;
     justify-content: space-between;
@@ -300,6 +311,10 @@ padding: 3px;
   text-align: end;
     margin-right: 25px;
     margin-bottom: 10px;
+}
+.text-primary
+{
+  color: #1e4079!important;
 }
 .form-controls{
   background-color: #f6f6f6!important;
