@@ -34,6 +34,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   emailId;
   password;
   rePassword;
+  btnClicked = false;
   @Input() accountId;
   @Output() actionPerformed = new EventEmitter<any>();
   otpError: string;
@@ -100,6 +101,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
    */
   sendOTP(mode?) {
     this.phoneError = null;
+    this.btnClicked = true;
     this.lStorageService.removeitemfromLocalStorage('authToken');
     this.lStorageService.removeitemfromLocalStorage('authorization');
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
@@ -122,6 +124,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       this.performSendOTP(loginId, this.emailId, mode);
     } else {
       this.phoneError = 'Mobile number required';
+      this.btnClicked = false;
     }
   }
   performSendOTP(loginId, emailId?, mode?) {
@@ -136,9 +139,13 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     this.subs.sink = this.sharedServices.sendConsumerOTP(credentials).subscribe(
       (response: any) => {
         this.step = 3;
+        this.btnClicked = false;
         if (mode == 'resent') {
           this.snackbarService.openSnackBar(Messages.OTP_RESEND_SUCCESS);
         }        
+      }, (error)=>{
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.btnClicked = false;
       }
     )
   }
@@ -238,7 +245,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
    * OTP Section
    */
   onOtpChange(otp) {
-    this.otpEntered = otp;
+    this.otpEntered = otp;   
     console.log(this.phoneNumber);
     if (this.phoneNumber) {
       const pN = this.phoneNumber.e164Number.trim();
@@ -251,6 +258,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       } else if (this.otpEntered.length < 4) {
         return false;
       } else {
+        this.btnClicked = true;
         this.verifyOTP();
       }
     }
@@ -292,7 +300,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 }
                 _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
                 _this.actionPerformed.emit('success');
+                this.btnClicked =  false;
               }, (error: any) => {
+                this.btnClicked =  false;
                 if (error.status === 401 && error.error === 'Session Already Exist') {
                   const activeUser = _this.lStorageService.getitemfromLocalStorage('ynw-user');
                   if (!activeUser) {
@@ -321,16 +331,17 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                   _this.ngZone.run(
                     () => {
                       _this.step = 2;
+                      this.btnClicked = false;
                     }
                   )
                 }
               })
-
             }
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             this.loading = false;
+            this.btnClicked = false;
           }
         );
     }
