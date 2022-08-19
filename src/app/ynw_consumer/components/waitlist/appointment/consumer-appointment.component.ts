@@ -541,10 +541,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 console.log("OneTime:", _this.onetimeQuestionnaireList);
                                
                                
-                                if(this.showSlot){
-                                    _this.bookStep = 2;
-                                }
-                                else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                     _this.bookStep = 3;
                                 } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                     _this.bookStep = 4;
@@ -554,10 +551,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 }
                                 console.log("Bookstep3:", _this.bookStep);
                             } else {
-                                if(this.showSlot){
-                                    _this.bookStep = 2;
-                                }
-                                else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                               if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                     _this.bookStep = 4;
                                 } else {
                                     _this.bookStep = 5;
