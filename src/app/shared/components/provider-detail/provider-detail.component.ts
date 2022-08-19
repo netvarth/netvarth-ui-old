@@ -415,6 +415,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
           }
         )
       });
+      this.lStorageService.removeitemfromLocalStorage('itemArray');  
+      this.lStorageService.removeitemfromLocalStorage('serviceOPtionInfo'); 
   }
   getAccountIdFromEncId(encId) {
     const _this = this;

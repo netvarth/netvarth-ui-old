@@ -186,6 +186,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     finalDataToSend : any;
     serviceOptionApptt = false;
     showSlot = true;
+    showNext = false;
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -917,6 +918,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                      }
                  } else {
                     this.location.back();
+                   
                 }
             }
             else{
@@ -957,6 +959,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                      }
                  } else {
                     this.bookStep--;
+                    
                 } 
             }
         } else {
@@ -2618,6 +2621,16 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     getserviceOptionQuestionAnswers(event) {
         this.serviceOPtionInfo = event;
+        console.log(JSON.stringify( this.serviceOPtionInfo))
+        if(this.serviceOPtionInfo.answers.answerLine === []){
+            console.log(this.showNext)
+            this.showNext = false;
+        }
+        else{
+            console.log('ggggggggg')
+            console.log(this.showNext)
+            this.showNext = true;
+        }
         this.lStorageService.setitemonLocalStorage('serviceOPtionInfo', this.serviceOPtionInfo);
     }
    

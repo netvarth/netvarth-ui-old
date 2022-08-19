@@ -287,9 +287,18 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     convenientFee: any;
     gatewayFee: any;
     profileId: any;
+    serviceOptionQuestionnaireList: any;
+    serviceOptionApptt = false;
+    btnClicked = false // To avoid double click
+    serviceOPtionInfo: any;
+    groupedQnr: any;
+    finalDataToSend : any;
+    showSlot = true;
+    showNext = false;
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
+        private sharedServices: SharedServices,
         public router: Router,
         public route: ActivatedRoute,
         public dateformat: DateFormatPipe,
@@ -458,8 +467,41 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     })
             })
         });
+        this.serviceOPtionInfo = this.lStorageService.getitemfromLocalStorage('serviceOPtionInfo');
+        this.getServiceOptions();
     }
+    getServiceOptions(){
+        this.subs.sink = this.sharedServices.getServiceoptionsWaitlist(this.selectedServiceId , this.account_id)
+            .subscribe(
+                (data) => {
+                    if (data) {
+                        this.serviceOptionQuestionnaireList = data;
+                        if(this.serviceOptionQuestionnaireList.questionnaireId){
+                            this.serviceOptionApptt = true;
+                        }
+                       
+                    }
+                },
+                error => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.btnClicked = false;
+                });
+    }
+    getserviceOptionQuestionAnswers(event) {
+        this.serviceOPtionInfo = event;
+        if(this.serviceOPtionInfo.answers.answerLine === []){
+            console.log(this.showNext)
+            this.showNext = false;
+        }
+        else{
+            console.log('ggggggggg')
+            console.log(this.showNext)
+            this.showNext = true;
+        }
+        this.lStorageService.setitemonLocalStorage('serviceOPtionInfo', this.serviceOPtionInfo);  
+                    
 
+    }
     setQDetails(queues, qId?) {
         if (queues.length > 0) {
             let selindx = 0;
@@ -1054,6 +1096,12 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
 
                                 }
                             );
+                            _this.submitserviceOptionQuestionnaire(parentUid).then(
+                                () => {
+                                    resolve(true);
+                                    // this.paymentOperation();
+                                }
+                            );
                             // this.submitQuestionnaire(parentUid);
 
                         }
@@ -1150,6 +1198,65 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         });
 
+    }
+    submitserviceOptionQuestionnaire(uuid) {
+
+
+        const _this = this;
+        this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
+            (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
+            return rv;
+          }, {});
+          console.log(JSON.stringify(this.groupedQnr));
+          console.log('*********************************');
+          let finalList=[];
+          let finalSubList=[];
+          for (var key in this.groupedQnr) {
+                      if (this.groupedQnr.hasOwnProperty(key)) {
+                        var val = this.groupedQnr[key];
+                        val.forEach(element => {
+                            if(finalSubList.length===0){
+                                 finalSubList.push(element.dgList[0])
+                            }
+                            else{
+                                finalSubList[0].answer.dataGridList.push(element.dgList[0].answer.dataGridList[0])
+                            }
+                        
+                        });
+                        finalList.push(finalSubList[0]);
+                        finalSubList=[];
+                      }
+                    }
+               
+                    this.finalDataToSend = {
+                        'questionnaireId':  this.serviceOPtionInfo.answers.questionnaireId,
+                        'answerLine': finalList
+                      }
+        const data=this.finalDataToSend
+        return new Promise(function (resolve, reject) {
+            
+            // console.log(JSON.stringify(this.serviceOPtionInfo))   
+                const dataToSend: FormData = new FormData();
+                if (data.files) {
+                    for (const pic of data.files) {
+                        dataToSend.append('files', pic, pic['name']);
+                    }
+                }
+                const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                dataToSend.append('question', blobpost_Data);
+                _this.subs.sink = _this.sharedServices.submitConsumerWaitlistServiceOption(dataToSend, uuid, _this.account_id).subscribe((data: any) => {
+                 
+                    resolve(true);
+                },
+                    error => {
+                        _this.isClickedOnce = false;
+                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        // _this.disablebutton = false;
+                        resolve(false);
+                        // this.api_loading_video = false;
+                    });
+            
+        });
     }
     paymentOperation() {
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
@@ -1485,6 +1592,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                 }
             )
+            _this.submitserviceOptionQuestionnaire(parentUid).then(
+                () => {
+                    resolve(true);
+                }
+            );
         });
     }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
@@ -2321,7 +2433,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             if (questions) {
                 this.onetimeQuestionnaireList = questions;
                 if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                    this.bookStep = 2;
+                    this.bookStep = 3;
                 }
             }
         })
@@ -2396,21 +2508,27 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
                             if (questions) {
                                 _this.onetimeQuestionnaireList = questions;
-                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                if(this.showSlot){
                                     _this.bookStep = 2;
-                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                }
+                                else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                     _this.bookStep = 3;
-                                } else {
+                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                     _this.bookStep = 4;
+                                } else {
+                                    _this.bookStep = 5;
                                     // this.saveCheckin('next');
                                     this.confirmcheckin('next');
                                 }
                                 _this.loggedIn = true;
                             } else {
-                                if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                    _this.bookStep = 3;
-                                } else {
+                                if(this.showSlot){
+                                    _this.bookStep = 2;
+                                }
+                                else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                     _this.bookStep = 4;
+                                } else {
+                                    _this.bookStep = 5;
                                     // this.saveCheckin('next');
                                     this.confirmcheckin('next');
                                 }
@@ -2446,20 +2564,26 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                             // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
                                             if (questions) {
                                                 _this.onetimeQuestionnaireList = questions;
-                                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                                if(this.showSlot){
                                                     _this.bookStep = 2;
-                                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                }
+                                                else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                                     _this.bookStep = 3;
-                                                } else {
+                                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                                     _this.bookStep = 4;
+                                                } else {
+                                                    _this.bookStep = 5;
                                                     this.confirmcheckin('next');
                                                 }
                                                 _this.loggedIn = true;
                                             } else {
-                                                if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                                    _this.bookStep = 3;
-                                                } else {
+                                                if(this.showSlot){
+                                                    _this.bookStep = 2;
+                                                }
+                                                else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                                     _this.bookStep = 4;
+                                                } else {
+                                                    _this.bookStep = 5;
                                                     this.confirmcheckin('next');
                                                 }
                                                 _this.loggedIn = true;
@@ -2474,13 +2598,55 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                     });
                     break;
-                case 2: //Virtual Fields
+                    case 2: // Date/Time--ServiceName
+                    this.authService.goThroughLogin().then((status) => {
+                        console.log("Status:", status);
+                        if (status) {
+                            const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+                            _this.initCheckin().then(
+                                (status) => {
+                                    _this.getOneTimeInfo(activeUser, _this.account_id).then(
+                                        (questions) => {
+                                            console.log("Questions:", questions);
+                                            // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
+                                            if (questions) {
+                                                _this.onetimeQuestionnaireList = questions;
+                                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                                    _this.bookStep = 3;
+                                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                    _this.bookStep = 4;
+                                                } else {
+                                                    _this.bookStep = 5;
+                                                    this.confirmcheckin('next');
+                                                }
+                                                _this.loggedIn = true;
+                                            } else {
+                                                
+                                                if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                    _this.bookStep = 4;
+                                                } else {
+                                                    _this.bookStep = 5;
+                                                    this.confirmcheckin('next');
+                                                }
+                                                _this.loggedIn = true;
+                                            }
+                                            _this.loading = false;
+                                        }
+                                    )
+                                }
+                            );
+                        } else {
+                            _this.loggedIn = false;
+                        }
+                    });
+                    break;
+                case 3: //Virtual Fields
                     _this.validateOneTimeInfo();
                     break;
-                case 3:
+                case 4:
                     this.validateQuestionnaire();
                     break;
-                case 4:
+                case 5:
                     if (this.selectedService.consumerNoteMandatory && this.consumerNote == '') {
                         this.snackbarService.openSnackBar('Please provide ' + this.selectedService.consumerNoteTitle, { 'panelClass': 'snackbarerror' });
                         return false;
@@ -2488,27 +2654,85 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     break;
             }
         } else if (type === 'prev') {
-            if (this.bookStep === 4) {
-                if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-                    this.bookStep = 3;
-                } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                    _this.bookStep = 2;
-                } else {
-                    this.bookStep = 1;
+            if(!this.serviceOptionApptt){
+                if (this.bookStep === 5) {
+                    if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.bookStep = 4;
+                    } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                        _this.bookStep = 3;
+                    }
+                    else if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                       
+                        this.bookStep = 2;
+                    }
                 }
-            } else if (this.bookStep === 3) {
-                if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                    _this.bookStep = 2;
-                } else {
-                    this.bookStep = 1;
+                else if (this.bookStep === 4) {
+                    if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                        _this.bookStep = 3;
+                    }
+                    else if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 2;
+                    }
                 }
-            } else {
-                this.bookStep--;
+                else if (this.bookStep === 3) {
+                   if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 2;
+                    }
+                }
+                else if (this.bookStep === 3) {
+                    if (this.showSlot) {
+                         _this.bookStep = 2;
+                     } else {
+                         this.bookStep = 2;
+                     }
+                 } else {
+                    this.location.back();
+                }
             }
+            else{
+                if (this.bookStep === 5) {
+                    if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+                        this.bookStep = 4;
+                    } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                        _this.bookStep = 3;
+                    } 
+                    else if (this.showSlot) {
+                        _this.bookStep = 2;
+                    }
+                    else {
+                        this.bookStep = 1;
+                    }
+                } else if (this.bookStep === 4) {
+                    if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                        _this.bookStep = 3;
+                    }
+                    else if (this.showSlot) {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 1;
+                    }
+                } 
+                else if (this.bookStep === 3) {
+                    if (this.showSlot) {
+                         _this.bookStep = 2;
+                     } else {
+                         this.bookStep = 1;
+                     }
+                 }else {
+                    this.bookStep--;
+                }
+            }
+           
         } else {
             this.bookStep = type;
         }
-        if (this.bookStep === 4) {
+        if (this.bookStep === 5) {
             this.confirmcheckin('next');
         }
     }
@@ -2516,9 +2740,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     getBookStep() {
         console.log("In Get Bookstep");
         if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-            this.bookStep = 3;
-        } else {
             this.bookStep = 4;
+        } else {
+            this.bookStep = 5;
             this.confirmcheckin();
         }
     }
