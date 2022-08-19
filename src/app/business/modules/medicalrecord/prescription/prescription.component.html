@@ -1,6 +1,6 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <section *ngIf="!loading && !viewVisitDetails ">
-  <div class="card title-gb">
+  <div class="card title-gb" *ngIf="showHideActivityTYpe">
     <h5 class="mgn-up-10 medicalRecord">
       <span class="fa fa-arrow-left pointer-cursor clrChnge" (click)="goback('medical')"></span>
       <span class="clrChnge">Medical Record</span>
@@ -93,7 +93,7 @@
                       [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)"> Save & Add Another</button>
                     <button type="submit" mat-button class="cs-btn bt1 style-button btn-primary" [disabled]="!amForm.valid ">Save &
                       Close</button> -->
-                      <button type="button"class="btn btn-primary font-weight-bold cancelBtn"(click)=" goback('Prescription')">Cancel</button>
+                      <button type="button"class="btn btn-primary font-weight-bold cancelBtn"(click)=" gobackCancel('Prescription')">Cancel</button>
                       <button type="button"class="btn btn-primary font-weight-bold confirmBtn"  [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">
                         <!-- <app-common-innerloading-spinner ></app-common-innerloading-spinner> -->
                         <span >Save</span>

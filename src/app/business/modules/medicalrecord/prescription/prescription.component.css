@@ -455,6 +455,9 @@ border: 1.32184px solid #E6E8EB;
     flex-wrap: wrap !important ;
     gap: 15px !important;
   }
+  .dashedClass{
+    padding: 3rem ;
+  }
 
 }
 .allFile{

@@ -94,7 +94,7 @@
         </div>
          <!---dob && email end---->
         <!---prescriptiojn start-->
-        <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')">
+        <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')" *ngIf=" prescriptionOuter">
           <div>
             <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
           </div>
@@ -104,7 +104,7 @@
         </div>
          <!---prescriptiojn end-->
          <!---clinical notes start-->
-        <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')">
+        <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')" *ngIf=" clinicalOuter">
           <div>
             <img class="imageSize"  src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
           </div>
@@ -202,12 +202,67 @@
         </section>
       </div>
     </div>
+    <!---create section btn start-->
+      <div class="col-xs-12 col-sm-12 mgn-up-10 card" *ngIf="showHideActivityTYpe && mrId !== 0">
+        <div class="shadow flexClass1">
+          <div class="recordInfo">
+            <div class="mrNumber1" *ngIf="mrId !== 0">
+              <div>Medical Records</div>
+              <div *ngIf="mrId !== 0">1</div>
+            </div>
+            <div class="mrNumber2" *ngIf="mrId !== 0">
+              <div>Medical Record ID</div>
+              <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+            </div>
+          </div>
+          <div class="dateCreate" *ngIf="mrId !== 0">
+            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/calendar.png" />
+            <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
+          </div>
+          <div class="dateCreate" *ngIf="mrId !== 0">
+            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/serviceIcon.png" />
+            <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
+          </div>
+          <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)" >
+            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/doctorIcon.png" />
+            <div *ngIf="doctorBName" class="dateClr">{{doctorBName | capitalizeFirst}}</div>
+            <div *ngIf="!doctorBName && doctorName" class="dateClr">{{doctorName | capitalizeFirst}}</div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="showHideActivityTYpe" class="col-xs-12 col-sm-12 mgn-up-10 card ">
+        <div class="nameClrOther2nd record">Create Medical Record</div>
+       <div class="twoActivity">
+         <!---prescriptiojn start-->
+         <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')">
+           <div>
+             <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
+           </div>
+           <div class="nameClrOther2nd">
+             Create Prescription
+           </div>
+         </div>
+          <!---prescriptiojn end-->
+          <!---clinical notes start-->
+         <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')">
+           <div>
+             <img class="imageSize"  src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
+           </div>
+           <div class="nameClrOther2nd">
+            Add Clinical Notes
+           </div>
+         </div>
+          <!---clinical noptes end-->
+       </div>
+      </div>
+    
+    <!---craete section btn end-->
       <!---prescription start-->
       <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes card"> -->
         <!-- (uploadFiles && uploadFiles.length===0)" -->
         <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate shadow mgn-up-10" *ngIf="showHideAddPrescription">
           <div>
-            <app-prescription></app-prescription>
+            <app-prescription [showHideActivityTYpe]="showHideActivityTYpe"></app-prescription>
           </div>
         </div>
 
@@ -404,7 +459,8 @@
           <div class="recordInfo">
             <div class="mrNumber1">
               <div>Medical Records</div>
-              <div *ngIf="mrId !== 0">1</div>
+              <!-- {{activityLogs | json}} -->
+              <div *ngIf="mrId !== 0 && mRListUsingId !==0">{{mRListUsingId}}</div>
             </div>
             <div class="mrNumber2">
               <div>Medical Record ID</div>

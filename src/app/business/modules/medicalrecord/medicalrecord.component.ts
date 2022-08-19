@@ -125,6 +125,9 @@ export class MedicalrecordComponent implements OnInit {
   medicalRecordID:any;
   private subscriptions = new SubSink();
   mRListUsingId:any;
+  showHideActivityTYpe:boolean=false;
+  prescriptionOuter:boolean=true;
+  clinicalOuter:boolean=true;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -375,11 +378,17 @@ export class MedicalrecordComponent implements OnInit {
           console.log('getMedicalRecordUsingId',data)
           this.loading = false;
           this.mrNumber = data.mrNumber;
-          this.mRListUsingId= data;
-          console.log('this.mRListUsingId:::',this.mRListUsingId)
-          this.mrCreatedDate = data.mrCreatedDate;
+          if(data.prescriptions && data.prescriptions.prescriptionsList && data.prescriptions.prescriptionsList.length){
+            this.mRListUsingId= data.prescriptions.prescriptionsList.length;
+            console.log('this.mRListUsingId:::',this.mRListUsingId)
+          }
+          if(data.mrCreatedDate){
+            this.mrCreatedDate = data.mrCreatedDate;
+          }
           this.activityLogs = data.auditLogs;
-          this.visitdate = data.mrConsultationDate;
+          if(data.mrConsultationDate){
+            this.visitdate = data.mrConsultationDate;
+          }
           if (data.mrVideoAudio) {
             this.uploadFiles = data.mrVideoAudio;
             console.log('this.uploadFiles',this.uploadFiles)
@@ -658,7 +667,12 @@ export class MedicalrecordComponent implements OnInit {
     // this.selectedRowIndex = visitDetails.mrId;
     if (visitDetails.waitlist) {
       // alert('1')
-      let mrId = 0;
+      // showHideActivityTYpe
+      if(visitDetails.mrCreated){
+        this.showHideActivityTYpe=false;
+        this.clinicalOuter=true;
+        this.prescriptionOuter=true;
+        let mrId = 0;
       if (visitDetails.waitlist.mrId) {
         mrId = visitDetails.waitlist.mrId;
       }
@@ -674,25 +688,42 @@ export class MedicalrecordComponent implements OnInit {
       console.log(this.medicalService.viewVisitDetails)
 
       this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+      }
+      else{
+        this.showHideActivityTYpe=true;
+        this.showHidepreviousDetails=false;
+        this.clinicalOuter=false;
+        this.prescriptionOuter=false
+      }
+      
 
     } else if (visitDetails.appointmnet) {
       // alert('2')
-      let mrId = 0;
-      if (visitDetails.appointmnet.mrId) {
-        mrId = visitDetails.appointmnet.mrId;
+      if(visitDetails.mrCreated){
+        let mrId = 0;
+        if (visitDetails.appointmnet.mrId) {
+          mrId = visitDetails.appointmnet.mrId;
+        }
+  
+        const customerDetails = visitDetails.appointmnet.appmtFor[0];
+        console.log('customerDetailappointmnet::',  this.customerDetails)
+        const customerId = customerDetails.id;
+        const bookingId = visitDetails.appointmnet.uid;
+        const bookingType = 'APPT';
+        //  this.dialogRef.close();
+        this.medicalService.viewVisitDetails = true;
+        this.viewVisitDetails = this.medicalService.viewVisitDetails
+        console.log(this.medicalService.viewVisitDetails)
+  
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
       }
-
-      const customerDetails = visitDetails.appointmnet.appmtFor[0];
-      console.log('customerDetailappointmnet::',  this.customerDetails)
-      const customerId = customerDetails.id;
-      const bookingId = visitDetails.appointmnet.uid;
-      const bookingType = 'APPT';
-      //  this.dialogRef.close();
-      this.medicalService.viewVisitDetails = true;
-      this.viewVisitDetails = this.medicalService.viewVisitDetails
-      console.log(this.medicalService.viewVisitDetails)
-
-      this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId]);
+      else{
+        this.showHideActivityTYpe=true;
+        this.showHidepreviousDetails=false;
+        this.clinicalOuter=false;
+        this.prescriptionOuter=false
+      }
+      
 
 
     } else {
@@ -703,29 +734,27 @@ export class MedicalrecordComponent implements OnInit {
       const customerId =customerDetails.id;
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
-      // this.dialogRef.close();
-      // this.medicalService.viewVisitDetails = true;
-      // this.viewVisitDetails = this.medicalService.viewVisitDetails
-      // console.log(this.medicalService.viewVisitDetails)
-      // console.log("visit Details", visitDetails);
       if(visitDetails.mrCreated){
-        console.log('1st')
+        console.log('1st');
+        // alert('1stt::')
         this.medicalService.viewVisitDetails = true;
         this.viewVisitDetails = this.medicalService.viewVisitDetails
-        console.log(this.medicalService.viewVisitDetails)
-        console.log("visit Details", visitDetails);
-        console.log('this.mrId',this.mrId)
+        // console.log(this.medicalService.viewVisitDetails)
+        // console.log("visit Details", visitDetails);
+        // console.log('this.mrId',this.mrId)
         // this.getMedicalRecordUsingId(visitDetails.mrId)
         this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription']);
       }
       else{
-        console.log('2nd')
+        console.log('2nd');
+        // alert('2nd::')
+        this.showHideActivityTYpe=true;
+        this.showHidepreviousDetails=false;
+        this.clinicalOuter=false;
+        this.prescriptionOuter=false
         this.medicalService.viewVisitDetails = false;
         // this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription']);
       }
-
-      // this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId , 'prescription']);
-
     }
   }
   getProviderName(visit) {
@@ -747,21 +776,26 @@ export class MedicalrecordComponent implements OnInit {
   addPrescriptionAndClinical(id,text){
     console.log('add');
     if(text==='createPrescription'){
+      // const mRId=0;
+      // const routerId='prescription';
+      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
       this.showHidepreviousDetails = false;
       this.showHideAddPrescription=true;
       this.showHideClinicalNotes=false;
-      const routerId='prescription';
+      this.showHideActivityTYpe=false;
+      
       console.log(' this.mrId', this.mrId)
-      const mRId=0
-      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
+      
     }
     else if(text==='craeteClinicalnotes'){
+      // const routerId='clinicalnotes';
+      // const mRId=0
+      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
       this.showHidepreviousDetails = false;
       this.showHideAddPrescription=false;
       this.showHideClinicalNotes=true;
-      const routerId='clinicalnotes';
-      const mRId=0
-      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', mRId,routerId]);
+      this.showHideActivityTYpe=false;
+      
     }
     
 

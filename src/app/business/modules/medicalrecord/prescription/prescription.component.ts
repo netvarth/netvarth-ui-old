@@ -18,7 +18,7 @@ import { UploadPrescriptionComponent } from './upload-prescription/upload-prescr
 import { DrugListComponent } from './drug-list/drug-list.component';
 import { UploadDigitalSignatureComponent } from './upload-digital-signature/upload-digital-signature.component';
 
-// import { Location } from '@angular/common';
+import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -146,6 +146,7 @@ export class PrescriptionComponent implements OnInit {
   taxDetails: any = [];
   uploadFiles: any = [];
   @Input() viewVisitDetails;
+  @Input() showHideActivityTYpe;
   viewMrInfo:any;
   private subscriptions = new SubSink();
   constructor(
@@ -158,7 +159,7 @@ export class PrescriptionComponent implements OnInit {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
-    // private location: Location,
+    private location: Location,
       private fb: FormBuilder,
       public fed_service: FormMessageDisplayService,
       // private fileService: FileService,
@@ -177,6 +178,7 @@ export class PrescriptionComponent implements OnInit {
     });
   }
   ngOnInit() {
+    console.log('showHideActivityTYpe',this.showHideActivityTYpe)
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
@@ -662,8 +664,12 @@ export class PrescriptionComponent implements OnInit {
   }
     goback(txt){
       console.log('txt',txt);
-      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
 
+      this.location.back();
+    }
+    gobackCancel(txt){
+      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       // this.location.back();
     }
     onSubmit(form_data) {

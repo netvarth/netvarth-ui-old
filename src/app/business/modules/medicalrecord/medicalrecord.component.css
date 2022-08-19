@@ -138,7 +138,7 @@
 
 mat-row:hover {
   /* background-color: #c8e9f3 !important; */
-  background-color:  #1DA192 !important;
+  /* background-color:  #1DA192 !important; */
 }
 
 mat-cell:first-of-type,
@@ -478,7 +478,7 @@ border: 1.32184px solid #E6E8EB;
     justify-content: space-between;
     align-items: center;
     grid-gap: 24px;
-    gap: 14px;
+    gap: 18px;
     flex-wrap: wrap;
   }
   .nameClr{
@@ -627,5 +627,24 @@ border: 1.32184px solid #E6E8EB;
 }
 .MRIDCLR{
   color:#09C5AF
+}
+.twoActivity{
+  display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.nameClrOther2nd{
+  color: #4D515D;
+  font-size: 13px;
+  font-weight: 500;
+
+}
+.record{
+  padding: 10px;
+    font-size: 15px;
+    color: #474D4C;
+}
+.twoActivity{
+  padding: 10px;
 }
 
