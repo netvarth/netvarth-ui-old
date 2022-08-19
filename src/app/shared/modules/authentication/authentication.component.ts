@@ -284,6 +284,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             if (!response.linkedToPrivateDatabase) {
               this.lStorageService.setitemonLocalStorage('authorizationToken', response.token);
               this.step = 2;
+              this.btnClicked = false;
             } else {
               this.lStorageService.setitemonLocalStorage('authorizationToken', response.token);
               const credentials = {
@@ -326,6 +327,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                     )
                   } else {
                     _this.actionPerformed.emit('success');
+                    this.btnClicked = false;
                   }
                 } else if (error.status === 401) {                  
                   _this.ngZone.run(
