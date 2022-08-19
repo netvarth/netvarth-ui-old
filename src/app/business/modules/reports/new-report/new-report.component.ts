@@ -170,6 +170,12 @@ export class NewReportComponent implements OnInit {
   daily_Activity_timePeriod: string;
   daily_StartDate;
   daily_EndDate;
+  customer_timePeriod: string;
+  customer_StartDate;
+  customer_EndDate;
+  customer_crif_status_timePeriod: string;
+  customer_crif_status_StartDate;
+  customer_crif_status_EndDate;
   public reportForm: FormGroup;
   time_period;
   payment_modes;
@@ -261,6 +267,12 @@ export class NewReportComponent implements OnInit {
         else if(this.report_type === 'dailyActivity'){
           this.reportTitle = 'Daily Activity'
         }
+        else if(this.report_type === 'customerReport'){
+          this.reportTitle = 'Customer'
+        }
+        else if(this.report_type === 'customerCrifStatus'){
+          this.reportTitle = 'Customer CRIF Status'
+        }
       }
     });
     this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -268,7 +280,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod= this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod =this.consolidated_timePeriod=this.tat_timePeriod= this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.customer_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod= this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod =this.consolidated_timePeriod=this.tat_timePeriod= this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -522,6 +534,22 @@ export class NewReportComponent implements OnInit {
             this.hide_dateRange = false;
             this.daily_StartDate = res.startDate;
             this.daily_EndDate = res.endDate;          
+          }
+        }
+        case 'customerReport' : {
+          this.customer_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if(res.dateRange === 'DATE_RANGE'){
+            this.hide_dateRange = false;
+            this.customer_StartDate = res.startDate;
+            this.customer_EndDate = res.endDate;          
+          }
+        }
+        case 'customerCrifStatus' : {
+          this.customer_crif_status_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if(res.dateRange === 'DATE_RANGE'){
+            this.hide_dateRange = false;
+            this.customer_crif_status_StartDate = res.startDate;
+            this.customer_crif_status_EndDate = res.endDate;          
           }
         }
       }
@@ -1897,6 +1925,136 @@ export class NewReportComponent implements OnInit {
         const request_payload: any = {};
         request_payload.reportType = 'DAILY_ACTIVITY';
         request_payload.reportDateCategory = this.daily_Activity_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    } 
+    else if (reportType === 'customerReport') {
+      console.log("Report Type :",reportType)
+      if (this.customer_timePeriod === 'DATE_RANGE' && (this.customer_StartDate === undefined || this.customer_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId
+        };
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+          }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.customer_timePeriod === 'DATE_RANGE') {
+          if (this.customer_StartDate === undefined || this.customer_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['dueDate-ge'] = this.dateformat.transformTofilterDate(this.customer_StartDate);
+          filter['dueDate-le'] = this.dateformat.transformTofilterDate(this.customer_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'CUST_REPORT';
+        request_payload.reportDateCategory = this.customer_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    } 
+    else if (reportType === 'customerCrifStatus') {
+      console.log("Report Type :",reportType)
+      if (this.customer_crif_status_timePeriod === 'DATE_RANGE' && (this.customer_crif_status_StartDate === undefined || this.customer_crif_status_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId
+        };
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+          }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.customer_crif_status_timePeriod === 'DATE_RANGE') {
+          if (this.customer_crif_status_StartDate === undefined || this.customer_crif_status_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['dueDate-ge'] = this.dateformat.transformTofilterDate(this.customer_crif_status_StartDate);
+          filter['dueDate-le'] = this.dateformat.transformTofilterDate(this.customer_crif_status_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'CUST_CRIF_STATUS';
+        request_payload.reportDateCategory = this.customer_crif_status_timePeriod;
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);

@@ -48,6 +48,10 @@ export class ReportsComponent implements OnInit {
   employeeActivityReports = [];
   daily_activity_criteria: any[];
   dailyActivityReports = [];
+  customer_report_criteria: any[];
+  customerReports =[];
+  customer_crif_Status_criteria: any;
+  customerCrifStatusReports = [];
   loginReports = [];
   settings: any = [];
   showToken = false;
@@ -110,6 +114,8 @@ export class ReportsComponent implements OnInit {
     this.sanctioned_status_criteria = [];
     this.employee_activity_criteria = [];
     this.daily_activity_criteria = [];
+    this.customer_report_criteria = [];
+    this.customer_crif_Status_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
     this.donation_criteria = [];
@@ -194,6 +200,14 @@ export class ReportsComponent implements OnInit {
 
           case 'DAILY_ACTIVITY': {
             this.daily_activity_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'CUST_REPORT': {
+            this.customer_report_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'CUST_CRIF_STATUS': {
+            this.customer_crif_Status_criteria.push(this.criteria_list[i]);
             break;
           }
 

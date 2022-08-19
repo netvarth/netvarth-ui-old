@@ -72,7 +72,14 @@ export class CRMComponent implements OnInit {
     },
     {
       id:14, type: 'Daily Activity Report'
-    }
+    },
+    {
+      id:15, type: 'Customer Report'
+    },
+    {
+      id:16, type: 'Customer CRIF Status Report'
+    },
+
   ]
   constructor(
     private providerServices: ProviderServices,
@@ -697,6 +704,26 @@ export class CRMComponent implements OnInit {
                               this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToDailyActivity);
                             }
                             break;
+                            case 'Customer Report':
+                              const navigationExtrasToCustomer: NavigationExtras = {
+                                queryParams: {
+                                  report_type: 'customerReport'
+                                }
+                              }
+                              if(navigationExtrasToCustomer){
+                                this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomer);
+                              }
+                              break;
+                              case 'Customer CRIF Status Report':
+                                const navigationExtrasToCustomerCrifStatus: NavigationExtras = {
+                                  queryParams: {
+                                    report_type: 'customerCrifStatus'
+                                  }
+                                }
+                                if(navigationExtrasToCustomerCrifStatus){
+                                  this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomerCrifStatus);
+                                }
+                                break;
       }
     }
   }
@@ -788,6 +815,18 @@ export class CRMComponent implements OnInit {
                               return imgSrc;
                             }
                             break;
+                            case 'Customer Report':
+                              imgSrc = './assets/images/crmImages/otherTemplate.png';
+                              if (imgSrc) {
+                                return imgSrc;
+                              }
+                              break;
+                              case 'Customer CRIF Status Report':
+                                imgSrc = './assets/images/crmImages/otherTemplate.png';
+                                if (imgSrc) {
+                                  return imgSrc;
+                                }
+                                break;
       }
     }
   }
