@@ -57,9 +57,11 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
       });
   }
   gotoMrDetails(mr) {
+    console.log('this.type',this.type)
     let bookingId;
     let bookingType;
-    const mrId = (mr.id) ? mr.id : (this.waitlistmr[0]) ? this.waitlistmr[0].id : 0;
+    // const mrId = (mr.id) ? mr.id : (this.waitlistmr[0]) ? this.waitlistmr[0].id : 0;
+    const mrId=0;
     const consumerId = (this.customerId) ? this.customerId : mr.providerConsumer.id;
     if (mr.bookingType) {
       bookingType = mr.bookingType;
