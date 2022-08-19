@@ -236,6 +236,9 @@ mat-footer-cell:first-of-type {
   .text-dark.text-center.my-3.pointer-cursor {
     margin-bottom: 0px !important;
   }
+  .imageSize{
+    height:30px !important;width:30px !important
+  }
 }
 .medicalRecord{
   display: flex;
@@ -482,7 +485,7 @@ border: 1.32184px solid #E6E8EB;
     justify-content: space-between;
     align-items: center;
     grid-gap: 24px;
-    gap: 18px;
+    gap: 25px;
     flex-wrap: wrap;
   }
   .nameClr{
@@ -513,6 +516,9 @@ border: 1.32184px solid #E6E8EB;
 .shadowmb{
   margin-bottom: 15px;
   padding: 15px !important;
+   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+   background: #FFFFFF;
+   border-radius: 10px;
 }
 .btnTop{
   margin-top: 10px;

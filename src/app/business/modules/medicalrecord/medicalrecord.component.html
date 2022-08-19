@@ -33,7 +33,7 @@
               </div>
             </div>
             <div *ngIf="customerDetails && customerDetails.address">
-              <div class="infoDetails" style="justify-content:flex-start !important">
+              <div class="infoDetails" style="justify-content:flex-start !important;gap:5px !important">
                 <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div>
                 <div class="nameClrOther">{{customerDetails.address}}</div>
               </div>
@@ -53,15 +53,17 @@
               <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
               </div>
-              <div *ngIf="customerDetails" class="nameClrOther">
-                {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
+              <div  class="infoDetails" style="gap:5px !important">
+                <div *ngIf="customerDetails" class="nameClrOther">
+                  {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
+                </div>
+                <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
               </div>
-              <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
             </div> 
           </div>
            <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
             <div class="nameClr" >Phone</div>
-            <div class="infoDetails">
+            <div class="infoDetails" style="gap:5px !important">
               <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
               </div>
@@ -82,7 +84,7 @@
             </div>
           </div>
 
-          <div *ngIf="customerDetails && customerDetails.email">
+          <div *ngIf="customerDetails && customerDetails.email" style="margin-top: 5px;">
             <div class="nameClr">Email</div>
             <div class="infoDetails">
               <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" />
@@ -165,7 +167,7 @@
           </ng-container>
           <div class="clearfix"></div>
         </section>
-        <section class="mobDevice">
+        <section class="mobDevice  mgn-up-10">
           <div *ngFor="let visit of previousLIst" class="shadow shadowmb" (click)="getMedicalRecord(visit)">
            <div class="flexClass1">
             <div>
