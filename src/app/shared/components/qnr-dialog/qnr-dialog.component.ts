@@ -144,6 +144,7 @@ export class QnrDialogComponent implements OnInit {
   itemArray : any = [];
   secondrror: string;
   isCheckedSecond;
+  inputChange: boolean;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
   public dialogRef: MatDialogRef<QnrDialogComponent>,
   private sharedService: SharedServices,
@@ -812,6 +813,9 @@ export class QnrDialogComponent implements OnInit {
           
           }
           else{
+            if(column.mandatory===true){
+              this.isCheckedSecond = true;
+            }
             this.isListChanged=true;
             if (ev.target.checked) {  
             this.items.push(value);
@@ -1709,6 +1713,9 @@ export class QnrDialogComponent implements OnInit {
             this.isCheckedSecond = true;
             this.closeDialog();
            }
+           else if (this.inputChange && this.isCheckedSecond === undefined ){
+            this.closeDialog();
+           }
            else if (this.isCheckedSecond === undefined){
             this.isCheckedSecond = false;
             this.secondrror = 'Mandotory field';
@@ -1867,7 +1874,7 @@ export class QnrDialogComponent implements OnInit {
     });
 }
 changesApplied(ev, question, column?){
- 
+  this.inputChange = true;
    if(column.order && column.order===2){
     let itemPrice;
   
