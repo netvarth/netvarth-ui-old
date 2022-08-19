@@ -651,4 +651,7 @@ border: 1.32184px solid #E6E8EB;
 .twoActivity{
   padding: 10px;
 }
+.medicalId{
+  justify-content: space-around !important;
+}
 

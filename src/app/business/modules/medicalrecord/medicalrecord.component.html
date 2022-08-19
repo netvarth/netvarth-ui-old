@@ -127,12 +127,12 @@
           <ng-container *ngIf="!loading && !loading_table">
             <mat-table class="mat-scrool visit-tbl" [dataSource]="lastVisit_dataSource">
               <ng-container matColumnDef="consultationDate">
-                <mat-header-cell *matHeaderCellDef class="visit-dt-cl"> <b class="headerClr">Date</b></mat-header-cell>
-                <mat-cell *matCellDef="let visit"><div class="elementTextClr">{{getLastVisitDate(visit)}}</div></mat-cell>
+                <mat-header-cell *matHeaderCellDef class="medicalId"> <b class="headerClr">Date</b></mat-header-cell>
+                <mat-cell *matCellDef="let visit"class="medicalId"><div class="elementTextClr">{{getLastVisitDate(visit)}}</div></mat-cell>
               </ng-container>
               <ng-container matColumnDef="mrId">
-                <mat-header-cell *matHeaderCellDef> <b class="headerClr">Medical Id</b></mat-header-cell>
-                <mat-cell *matCellDef="let visit"><div class="elementTextClr">MR-{{visit.mrId}}</div></mat-cell>
+                <mat-header-cell *matHeaderCellDef class="medicalId"> <b class="headerClr">Medical Id</b></mat-header-cell>
+                <mat-cell *matCellDef="let visit" class="medicalId"><div class="elementTextClr">MR-{{visit.mrId}}</div></mat-cell>
               </ng-container>
               <ng-container matColumnDef="serviceName">
                 <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b class="headerClr">Service</b></mat-header-cell>
