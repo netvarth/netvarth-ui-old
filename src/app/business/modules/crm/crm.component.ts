@@ -50,10 +50,10 @@ export class CRMComponent implements OnInit {
       id:6, type: 'Processing Files Report'
     },
     {
-      id:7, type: 'Consolidated Report'
+      id:7, type: 'HO-Consolidated Report'
     },
     {
-      id:8, type: 'Tat Report'
+      id:8, type: 'HO-Tat Report'
     },
     {
       id:9, type: 'Recommended Status Report'
@@ -62,16 +62,16 @@ export class CRMComponent implements OnInit {
       id:10, type: 'Login Report'
     },
     {
-      id:11, type: 'HO Leads Status Report'
+      id:11, type: 'HO-Leads Status Report'
     },
     {
       id:12, type: 'Sanctioned Status Report'
     },
     {
-      id:13, type: 'Employee Average Tat Report'
+      id:13, type: 'Employee-Average Tat Report'
     },
     {
-      id:14, type: 'Daily Activity Report'
+      id:14, type: 'Employee-Daily Activity Report'
     },
     {
       id:15, type: 'Customer Report'
@@ -624,7 +624,7 @@ export class CRMComponent implements OnInit {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToProcessingFiles);
             }
             break;
-            case 'Consolidated Report':
+            case 'HO-Consolidated Report':
               const navigationExtrasToConsolidated: NavigationExtras = {
                 queryParams: {
                   report_type: 'consolidated'
@@ -634,7 +634,7 @@ export class CRMComponent implements OnInit {
                 this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToConsolidated);
               }
               break;
-              case 'Tat Report':
+              case 'HO-Tat Report':
                 const navigationExtrasToTat: NavigationExtras = {
                   queryParams: {
                     report_type: 'tat'
@@ -664,7 +664,7 @@ export class CRMComponent implements OnInit {
                       this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLogin);
                     }
                     break;
-                    case 'HO Leads Status Report':
+                    case 'HO-Leads Status Report':
                       const navigationExtrasToHOLeads: NavigationExtras = {
                         queryParams: {
                           report_type: 'HOLead'
@@ -684,7 +684,7 @@ export class CRMComponent implements OnInit {
                           this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToSanctioned);
                         }
                         break;
-                        case 'Employee Average Tat Report':
+                        case 'Employee-Average Tat Report':
                           const navigationExtrasToEmployeeAverage: NavigationExtras = {
                             queryParams: {
                               report_type: 'employeeAverageTat'
@@ -694,7 +694,7 @@ export class CRMComponent implements OnInit {
                             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToEmployeeAverage);
                           }
                           break;
-                          case 'Daily Activity Report':
+                          case 'Employee-Daily Activity Report':
                             const navigationExtrasToDailyActivity: NavigationExtras = {
                               queryParams: {
                                 report_type: 'dailyActivity'
@@ -767,13 +767,13 @@ export class CRMComponent implements OnInit {
               return imgSrc;
             }
             break;
-            case 'Consolidated Report':
+            case 'HO-Consolidated Report':
               imgSrc = './assets/images/crmImages/consolidated.jfif';
               if (imgSrc) {
                 return imgSrc;
               }
               break;
-              case 'Tat Report':
+              case 'HO-Tat Report':
                 imgSrc = './assets/images/crmImages/otherTemplate.png';
                 if (imgSrc) {
                   return imgSrc;
@@ -791,7 +791,7 @@ export class CRMComponent implements OnInit {
                       return imgSrc;
                     }
                     break;
-                    case 'HO Leads Status Report':
+                    case 'HO-Leads Status Report':
                       imgSrc = './assets/images/crmImages/leadStatus.png';
                       if (imgSrc) {
                         return imgSrc;
@@ -803,13 +803,13 @@ export class CRMComponent implements OnInit {
                           return imgSrc;
                         }
                         break;
-                        case 'Employee Average Tat Report':
+                        case 'Employee-Average Tat Report':
                           imgSrc = './assets/images/crmImages/otherTemplate.png';
                           if (imgSrc) {
                             return imgSrc;
                           }
                           break;
-                          case 'Daily Activity Report':
+                          case 'Employee-Daily Activity Report':
                             imgSrc = './assets/images/crmImages/otherTemplate.png';
                             if (imgSrc) {
                               return imgSrc;

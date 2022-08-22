@@ -244,10 +244,10 @@ export class NewReportComponent implements OnInit {
           this.reportTitle = 'Processing Files'
         }
         else if(this.report_type === 'consolidated'){
-          this.reportTitle = 'Consolidated'
+          this.reportTitle = 'HO-Consolidated'
         }
         else if(this.report_type === 'tat'){
-          this.reportTitle = 'Tat'
+          this.reportTitle = 'HO-Tat'
         }
         else if(this.report_type === 'recommendedStatus'){
           this.reportTitle = 'Recommended Status'
@@ -256,16 +256,16 @@ export class NewReportComponent implements OnInit {
           this.reportTitle = 'Login'
         }
         else if(this.report_type === 'HOLead'){
-          this.reportTitle = 'HO Lead Status'
+          this.reportTitle = 'HO-Lead Status'
         }
         else if(this.report_type === 'sanctionedStatus'){
           this.reportTitle = 'Sanctioned Status'
         }
         else if(this.report_type === 'employeeAverageTat'){
-          this.reportTitle = 'Employee Average Tat'
+          this.reportTitle = 'Employee-Average Tat'
         }
         else if(this.report_type === 'dailyActivity'){
-          this.reportTitle = 'Daily Activity'
+          this.reportTitle = 'Employee-Daily Activity'
         }
         else if(this.report_type === 'customerReport'){
           this.reportTitle = 'Customer'
@@ -1984,8 +1984,8 @@ export class NewReportComponent implements OnInit {
             this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
 
           }
-          filter['dueDate-ge'] = this.dateformat.transformTofilterDate(this.customer_StartDate);
-          filter['dueDate-le'] = this.dateformat.transformTofilterDate(this.customer_EndDate);
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.customer_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.customer_EndDate);
         }
         const request_payload: any = {};
         request_payload.reportType = 'CUST_REPORT';
@@ -2049,8 +2049,8 @@ export class NewReportComponent implements OnInit {
             this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
 
           }
-          filter['dueDate-ge'] = this.dateformat.transformTofilterDate(this.customer_crif_status_StartDate);
-          filter['dueDate-le'] = this.dateformat.transformTofilterDate(this.customer_crif_status_EndDate);
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.customer_crif_status_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.customer_crif_status_EndDate);
         }
         const request_payload: any = {};
         request_payload.reportType = 'CUST_CRIF_STATUS';
