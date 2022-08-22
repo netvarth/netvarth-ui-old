@@ -189,6 +189,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     showNext = false;
     serviceTotalPrice : number;
     total_servicefee : number;
+    readMore = false;
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -2704,5 +2705,8 @@ else{
             }
           }
         );
+      }
+      showText() {
+        this.readMore = !this.readMore;
       }
 }

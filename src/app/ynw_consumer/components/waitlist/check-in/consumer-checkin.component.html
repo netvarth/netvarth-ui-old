@@ -541,6 +541,24 @@
                                                         </div>
                                                     </div>
                                                     <hr />
+
+                                                    <div class="service-group-section mgn-lt-10" *ngIf="!serviceOptionApptt">
+                                                        <div class="text-capitalize">
+                                                          <div class="m-auto" *ngIf="selectedService.preInfoEnabled">
+                                                            <label class="question-header"><b>{{selectedService.preInfoTitle}} :</b></label>
+                                                            
+                                                            <div class="contact-section text-primary">{{(readMore) ? selectedService.preInfoText : selectedService.preInfoText | slice:0:200}}
+                                                              <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right" (click)="showText()"
+                                                                  *ngIf="selectedService.preInfoText.length > 200">
+                                                                  {{(readMore) ? 'less': 'more'}}</a>
+                                                          </div>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                      <div class="clearfix"></div>
+                                                      <div *ngIf="!serviceOptionApptt">
+                                                        <hr />
+                                                      </div>
                                                     <label class="question-header">Booking For</label>
                                                     <br />
                                                     <div class="booking-for-section mgn-lt-10">

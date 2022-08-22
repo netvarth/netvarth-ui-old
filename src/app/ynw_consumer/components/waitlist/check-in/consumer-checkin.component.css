@@ -2330,3 +2330,9 @@ button {
   background-color: #f9e2a7;
   border-color: transparent;
 }
+.contact-section {
+  font-weight: 400;
+}
+.text-primary{
+  color: #1e4079 !important;
+}
