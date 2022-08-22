@@ -120,7 +120,7 @@ export class ActionPopupComponent implements OnInit {
       type: 'reschedule',
       account_id: this.bookingDetails.providerAccount.id,
       unique_id: this.bookingDetails.providerAccount.uniqueId,
-      service_id:this.bookingDetails.service.serviceId
+      service_id:this.bookingDetails.service.id
     }
     if (this.bookingDetails['customId']) {
       queryParams['customId']=this.bookingDetails['customId'];
