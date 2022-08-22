@@ -655,7 +655,69 @@
           </mat-expansion-panel>
       </mat-accordion>
       </div>
-  </div>           
+  </div>   
+    <!--Customer Reports -->
+    <div class="row">
+      <div class="card p0">
+        <mat-accordion class="report">
+          <mat-expansion-panel  [expanded]="true">
+              <mat-expansion-panel-header>
+                  <mat-panel-title class="report_title">
+                      Customer Report
+                     <div class="width100pc" >
+                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'customerReport'}">Create New Report</a>
+                     </div>
+                  </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="customerReports.length===0">
+                <div *ngIf="customer_report_criteria.length === 0" >
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                </div>
+                <table  *ngIf="customer_report_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let customer of customer_report_criteria">
+                    <td>{{customer.reportName}}</td>
+                    <td><a (click)="recreateReport(customer)">Generate</a></td>
+                    <td><a (click)="viewCriteria(customer)">View</a></td>
+                    <td><a (click)="deletCriteria(customer)">Delete</a></td>
+                  </tr>
+                </table>
+            </ng-container>
+          </mat-expansion-panel>
+      </mat-accordion>
+      </div>
+  </div>
+    <!--Customer SRIF Status Reports -->
+    <div class="row">
+      <div class="card p0">
+        <mat-accordion class="report">
+          <mat-expansion-panel  [expanded]="true">
+              <mat-expansion-panel-header>
+                  <mat-panel-title class="report_title">
+                      Customer CRIF Status
+                     <div class="width100pc" >
+                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'customerCrifStatus'}">Create New Report</a>
+                     </div>
+                  </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="customerCrifStatusReports.length===0">
+                <div *ngIf="customer_crif_Status_criteria.length === 0" >
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                </div>
+                <table  *ngIf="customer_crif_Status_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let customerCRIFStatus of customer_crif_Status_criteria">
+                    <td>{{customerCRIFStatus.reportName}}</td>
+                    <td><a (click)="recreateReport(customerCRIFStatus)">Generate</a></td>
+                    <td><a (click)="viewCriteria(customerCRIFStatus)">View</a></td>
+                    <td><a (click)="deletCriteria(customerCRIFStatus)">Delete</a></td>
+                  </tr>
+                </table>
+            </ng-container>
+          </mat-expansion-panel>
+      </mat-accordion>
+      </div>
+  </div>        
       </div>
       <div class="clearfix"></div>
   </div>

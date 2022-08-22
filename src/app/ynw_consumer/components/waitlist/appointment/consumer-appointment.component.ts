@@ -528,7 +528,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     
 
     actionPerformed(status) {
-        const _this = this;
+        if(!this.serviceOptionApptt){
+            const _this = this;
         if (status === 'success') {          
             _this.initAppointment().then(
                 (status) => {
@@ -541,10 +542,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 console.log("OneTime:", _this.onetimeQuestionnaireList);
                                
                                
-                                if(this.showSlot){
-                                    _this.bookStep = 2;
-                                }
-                                else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                     _this.bookStep = 3;
                                 } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                     _this.bookStep = 4;
@@ -554,10 +552,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 }
                                 console.log("Bookstep3:", _this.bookStep);
                             } else {
-                                if(this.showSlot){
-                                    _this.bookStep = 2;
-                                }
-                                else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                     _this.bookStep = 4;
                                 } else {
                                     _this.bookStep = 5;
@@ -571,6 +566,52 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             );
         }
+        }
+else{
+    const _this = this;
+    if (status === 'success') {          
+        _this.initAppointment().then(
+            (status) => {
+                const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+                _this.getOneTimeInfo(activeUser, _this.accountId).then(
+                    (questions) => {
+                        console.log("Questions:", questions);
+                        if (questions) {
+                            _this.onetimeQuestionnaireList = questions;
+                            console.log("OneTime:", _this.onetimeQuestionnaireList);
+                            if(this.showSlot){
+                                _this.bookStep = 2;
+                            }
+                           
+                            else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                _this.bookStep = 3;
+                            } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                _this.bookStep = 4;
+                            } else {
+                                _this.bookStep = 5;
+                                this.confirmAppointment('next');
+                            }
+                            console.log("Bookstep3:", _this.bookStep);
+                        } else {
+                            if(this.showSlot){
+                                _this.bookStep = 2;
+                            }
+                            else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                _this.bookStep = 4;
+                            } else {
+                                _this.bookStep = 5;
+                                this.confirmAppointment('next');
+                            }
+                        }
+                        _this.loggedIn = true;
+                        // _this.loading = false;
+                    }
+                )
+            }
+        );
+    }
+}
+      
     }
 
     getServicebyLocationId(locationId, appmtDate) {

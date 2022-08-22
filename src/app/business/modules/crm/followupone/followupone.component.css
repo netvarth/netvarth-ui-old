@@ -71,3 +71,8 @@
   border: 1px solid #D7FFE9;
   border-radius: 7px !important
 }
+@media (min-width:767px){
+.dateHead{
+  width: 155px;
+}
+}
