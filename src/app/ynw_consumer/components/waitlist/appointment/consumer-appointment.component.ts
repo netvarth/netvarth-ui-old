@@ -187,6 +187,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     serviceOptionApptt = false;
     showSlot = true;
     showNext = false;
+    serviceTotalPrice : number;
+    total_servicefee : number;
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -1690,6 +1692,11 @@ else{
         const param = { 'account': this.accountId };
         this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data).subscribe(data => {
             this.paymentDetails = data;
+            if(this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt){
+                this.serviceTotalPrice =  this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
+
+              this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
+            }
             console.log("PaymentDetails:", this.paymentDetails);
             this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
@@ -1817,6 +1824,12 @@ else{
         this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
+                console.log("PaymentDetailss:", this.paymentDetails);
+                if(this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt){
+                    this.serviceTotalPrice =  this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
+
+                  this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
+                }
                 this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;

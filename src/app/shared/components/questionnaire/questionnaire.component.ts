@@ -110,6 +110,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
  quesStore: any;
     allList: string;
     popSearches: any;
+    serviceTotalPrice : number = 0;
  constructor(private sharedService: SharedServices,
  private activated_route: ActivatedRoute,
  private snackbarService: SnackbarService,
@@ -1422,10 +1423,18 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
  }
  let dummyArray = {id: this.id , sequenceId:this.sequenceId ,item: this.item, price : this.totalPrice, columnItem : this.dataGridList}
  this.itemArray.push(dummyArray)
+ 
  if(this.itemArray){
     this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
  }
+ this.serviceTotalPrice = 0;
+ this.itemArray.forEach((item: any) => {
+    console.log(this.serviceTotalPrice)
  
+   this.serviceTotalPrice  = this.serviceTotalPrice + item.price; 
+   this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
+ });
+ console.log(this.serviceTotalPrice)
  
  this.id = this.id+1
  let obj={ sequenceId:this.sequenceId, dgList: this.post_Data.answerLine};
@@ -1454,10 +1463,19 @@ removeitemdialogRef.afterClosed().subscribe(result => {
  }else{
  let dummyArray = {id: this.id , sequenceId:this.sequenceId ,item: result.repeatItem.item, price : result.repeatItem.price, columnItem : result.repeatItem.columnItem}
  this.itemArray.push(dummyArray)
+ 
  if(this.itemArray){
     this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
  }
+ this.serviceTotalPrice = 0;
+ this.itemArray.forEach((item: any) => {
+    console.log(this.serviceTotalPrice)
  
+   this.serviceTotalPrice  = this.serviceTotalPrice + item.price; 
+  
+ });
+ console.log(this.serviceTotalPrice)
+ this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
  this.id = this.id+1
  let obj={ sequenceId:this.sequenceId, dgList: result.repeatItem.columnItem};
  this.finalObjectList.push(obj); 
@@ -1474,7 +1492,15 @@ decrement(removingItem){
  if(this.itemArray){
     this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
  }
+ this.serviceTotalPrice = 0;
+ this.itemArray.forEach((item: any) => {
+    console.log(this.serviceTotalPrice)
  
+   this.serviceTotalPrice  = this.serviceTotalPrice + item.price; 
+  
+ });
+ console.log(this.serviceTotalPrice)
+ this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
  this.finalObjectList.splice(index,1);
  }
  this.onSubmit('serviceOption')

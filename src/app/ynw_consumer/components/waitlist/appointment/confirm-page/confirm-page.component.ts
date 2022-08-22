@@ -60,6 +60,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
               this.apiloading = false;
               this.lStorageService.removeitemfromLocalStorage('itemArray');  
               this.lStorageService.removeitemfromLocalStorage('serviceOPtionInfo'); 
+              this.lStorageService.removeitemfromLocalStorage('serviceTotalPrice'); 
             });
         }
         if (params.isFrom) {
