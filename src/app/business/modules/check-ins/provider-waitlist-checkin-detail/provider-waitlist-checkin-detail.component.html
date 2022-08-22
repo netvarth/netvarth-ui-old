@@ -173,17 +173,17 @@
                 *ngIf="waitlist_data.waitlistingFor[0].firstName || waitlist_data.waitlistingFor[0].lastName">
                 &nbsp;<b>{{waitlist_data.waitlistingFor[0].firstName | capitalizeFirst}}
                   {{waitlist_data.waitlistingFor[0].lastName}}</b></span>
-              <div class="float-right">
+              <div class="float-right" *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].id">
                 <a (click)="editCustomerDetails()" style="font-size:13px!important;"
                   class="edit-btn pointer-cursor"><b>Edit Details</b></a>
               </div>
             </div>
             <div class="booking-details-body">
               <div style="display: flex;gap: 5px;align-items: center;margin-top: 5px;">
-                <div>
+                <div  *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].id">
                   <img width="20px" src="/assets/images/tokenDetailsIcon/idCardIcon.png" />
                 </div>
-                <span class="itemHead cusHead">{{customer_label | capitalizeFirst}} id : </span>
+                <span class="itemHead cusHead"  *ngIf="waitlist_data.waitlistingFor && waitlist_data.waitlistingFor[0].id">{{customer_label | capitalizeFirst}} id : </span>
                 <span class="itemVal cusHead">{{waitlist_data.waitlistingFor[0].memberJaldeeId}}</span>
               </div>
               <div class="contact-no customerDetails"

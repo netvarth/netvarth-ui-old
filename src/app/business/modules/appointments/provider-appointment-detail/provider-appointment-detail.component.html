@@ -132,7 +132,7 @@
                 *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].gender != 'male' && waitlist_data.appmtFor[0].gender != 'female'">
                 <img src="assets/images/undefinedUser.png" />
               </div>
-              <div class="float-right">
+              <div class="float-right" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id">
                 <a (click)="editCustomerDetails()" style="font-size:13px!important;"
                   class="edit-btn pointer-cursor"><b>Edit Details</b></a>
               </div>
@@ -142,8 +142,8 @@
               <b class="">{{waitlist_data.appmtFor[0].lastName}}</b></span>
             <div class="booking-details-body">
               <div class="jaldee-id" *ngIf="waitlist_data.appointmentEncId">
-                <i class="fa fa-id-card-o icon"></i>&nbsp;
-                <span class="itemHead">{{customer_label | capitalizeFirst}} id : </span>
+                <i class="fa fa-id-card-o icon" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id"></i>&nbsp;
+                <span class="itemHead" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id">{{customer_label | capitalizeFirst}} id : </span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
               </div>
               <div class="contact-no" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">

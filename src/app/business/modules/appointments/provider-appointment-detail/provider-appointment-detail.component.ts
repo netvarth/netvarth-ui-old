@@ -210,6 +210,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: { action: 'edit', id: this.waitlist_data.appmtFor[0].id }
     };
+    console.log("Parmassss :",this.waitlist_data.appmtFor[0].id )
     this.router.navigate(['/provider/customers/create'], navigationExtras);
   }
 
@@ -868,7 +869,8 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
         checkinData: waitlist,
         multiSelection: this.apptMultiSelection,
         timetype: this.timetype,
-        NoViewDetail: "true"
+        NoViewDetail: "true",
+        src : 'detail'
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {

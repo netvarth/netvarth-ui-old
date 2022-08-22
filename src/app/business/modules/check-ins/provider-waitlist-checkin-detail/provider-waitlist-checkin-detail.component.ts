@@ -149,22 +149,23 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   ngOnInit() {
     this.getPos();
     this.api_loading = true;
-    this.getWaitlistNotes(this.waitlist_id)
+   // this.getWaitlistNotes(this.waitlist_id);
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
       this.pdtype = 1;
     }
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.waitlist_id) {
-      this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
-        .subscribe(
-          data => {
-            this.waitlist_notes = data;
-            console.log("Data got :", this.waitlist_notes)
-          },
-          () => {
-          }
-        );
+      // this.getWaitlistNotes(this.waitlist_id);
+      // this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
+      //   .subscribe(
+      //     data => {
+      //       this.waitlist_notes = data;
+      //       console.log("Data got :", this.waitlist_notes)
+      //     },
+      //     () => {
+      //     }
+      //   );
       this.getProviderSettings();
     } else {
       this.goBack();
@@ -607,11 +608,10 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.notedialogRef.afterClosed().subscribe(result => {
       console.log("result ..", result)
       if (result === 'reloadlist') {
-        //this.getWaitlistNotes();
+       // this.getWaitlistNotes();
         console.log("dialog box losed")
-        this.getWaitlistNotes(checkin.ynwUuid);
-
-
+       // this.getWaitlistNotes(checkin.ynwUuid);
+       // this.getWaitlistDetail();
       }
     });
   }
