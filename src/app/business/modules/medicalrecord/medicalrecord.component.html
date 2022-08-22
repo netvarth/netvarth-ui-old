@@ -23,18 +23,18 @@
           </div>
             <div >
               <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge" >
-                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" />
-                <div class="nameClr">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
+                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" /> -->
+                <div class="nameClrFirstlast">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
               </div>
               <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
-                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" />
-                <div class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
-                <div class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
+                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" /> -->
+                <div style="color: #797B80 !important" class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
+                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
               </div>
             </div>
             <div *ngIf="customerDetails && customerDetails.address">
               <div class="infoDetails" style="justify-content:flex-start !important;gap:5px !important">
-                <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div>
+                <!-- <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div> -->
                 <div class="nameClrOther">{{customerDetails.address}}</div>
               </div>
             </div>
@@ -43,16 +43,16 @@
           <div>
             <div class="nameClr" *ngIf="customer_label">{{customer_label | capitalizeFirst}} Id</div>
             <div class="infoDetails" style="justify-content:flex-start !important">
-              <div><img  style="height:15px;width:15px" src="/assets/images/medicalReportIcon/id.png" /></div>
+              <!-- <div><img  style="height:15px;width:15px" src="/assets/images/medicalReportIcon/id.png" /></div> -->
               <div *ngIf="display_PatientId" class="nameClrOther">{{display_PatientId}}</div>
             </div>
           </div>
           <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
             <div class="nameClr" >Phone</div>
             <div class="infoDetails">
-              <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
+              <!-- <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
-              </div>
+              </div> -->
               <div  class="infoDetails" style="gap:5px !important">
                 <div *ngIf="customerDetails" class="nameClrOther">
                   {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
@@ -65,7 +65,7 @@
             <div class="nameClr" >Phone</div>
             <div class="infoDetails" style="gap:5px !important">
               <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
-                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
+                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" /> -->
               </div>
               <div >{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
                 <div class="nameClrOther" *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518</div>
@@ -77,17 +77,17 @@
           <div *ngIf="customerDetails && customerDetails.dob">
             <div class="nameClr">Date Of Birth</div>
             <div class="infoDetails" style="justify-content: flex-start !important;">
-              <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/dob.png" />
+              <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/dob.png" /> -->
               <div>
                 <div class="nameClrOther" *ngIf="customerDetails.dob">{{customerDetails.dob |date:newDateFormat}} </div> 
               </div>
             </div>
           </div>
 
-          <div *ngIf="customerDetails && customerDetails.email" style="margin-top: 5px;">
+          <div *ngIf="customerDetails && customerDetails.email" class="mgTop">
             <div class="nameClr">Email</div>
             <div class="infoDetails">
-              <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" />
+              <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" /> -->
               <div>
                 <div class="nameClrOther" *ngIf="customerDetails.email">{{customerDetails.email}} </div> 
               </div>
@@ -383,18 +383,18 @@
           </div>
             <div >
               <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge" >
-                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" />
-                <div class="nameClr">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
+                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" /> -->
+                <div class="nameClrFirstlast">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
               </div>
               <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
-                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" />
-                <div class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
-                <div class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
+                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" /> -->
+                <div style="color: #797B80 !important" class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
+                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
               </div>
             </div>
             <div *ngIf="customerDetails && customerDetails.address">
-              <div class="infoDetails" style="justify-content:flex-start !important">
-                <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div>
+              <div class="infoDetails" style="justify-content:flex-start !important;gap:5px !important">
+                <!-- <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div> -->
                 <div class="nameClrOther">{{customerDetails.address}}</div>
               </div>
             </div>
@@ -403,27 +403,29 @@
           <div>
             <div class="nameClr" *ngIf="customer_label">{{customer_label | capitalizeFirst}} Id</div>
             <div class="infoDetails" style="justify-content:flex-start !important">
-              <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/id.png" /></div>
+              <!-- <div><img  style="height:15px;width:15px" src="/assets/images/medicalReportIcon/id.png" /></div> -->
               <div *ngIf="display_PatientId" class="nameClrOther">{{display_PatientId}}</div>
             </div>
           </div>
-          <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " >
+          <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
             <div class="nameClr" >Phone</div>
             <div class="infoDetails">
-              <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
+              <!-- <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
+              </div> -->
+              <div  class="infoDetails" style="gap:5px !important">
+                <div *ngIf="customerDetails" class="nameClrOther">
+                  {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
+                </div>
+                <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
               </div>
-              <div *ngIf="customerDetails" class="nameClrOther">
-                {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
-              </div>
-              <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
             </div> 
           </div>
            <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
             <div class="nameClr" >Phone</div>
-            <div class="infoDetails">
+            <div class="infoDetails" style="gap:5px !important">
               <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
-                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
+                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" /> -->
               </div>
               <div >{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
                 <div class="nameClrOther" *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518</div>
@@ -435,17 +437,17 @@
           <div *ngIf="customerDetails && customerDetails.dob">
             <div class="nameClr">Date Of Birth</div>
             <div class="infoDetails" style="justify-content: flex-start !important;">
-              <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/dob.png" />
+              <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/dob.png" /> -->
               <div>
                 <div class="nameClrOther" *ngIf="customerDetails.dob">{{customerDetails.dob |date:newDateFormat}} </div> 
               </div>
             </div>
           </div>
 
-          <div *ngIf="customerDetails && customerDetails.email">
+          <div *ngIf="customerDetails && customerDetails.email" class="mgTop">
             <div class="nameClr">Email</div>
             <div class="infoDetails">
-              <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" />
+              <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" /> -->
               <div>
                 <div class="nameClrOther" *ngIf="customerDetails.email">{{customerDetails.email}} </div> 
               </div>
