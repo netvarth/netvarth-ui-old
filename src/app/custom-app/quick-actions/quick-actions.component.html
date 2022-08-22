@@ -1,13 +1,19 @@
-<div class="main">
-    <div class="card col-xs-6" *ngFor="let quickAction of templateJson.section1.quickActions" (click)="cardActionPerformed(quickAction)">
-        <div class="img-action">
-            <img class="act-img img-responsive" src="{{quickAction.image}}">
-        </div>
-        <div>
-            <h3 class="hed">{{quickAction.title}}</h3>
-        </div>
-        <div>
-            <p class="detai">{{quickAction.description}}</p>
+<div class="col-xs-12 col-sm-12 no-padding">
+    
+    <div class="col-xs-12 mgn-up-10">
+        <h5>Quick Actions</h5>
+    </div>
+    <div class="col-xs-6 col-sm-4 pad-3" *ngFor="let quickAction of actionList" (click)="cardActionPerformed(quickAction)">
+        <div class="card">
+            <div class="img-action">
+                <img class="act-img img-responsive" src="{{quickAction.image}}">
+            </div>
+            <div>
+                <h3 class="hed">{{quickAction.title}}</h3>
+            </div>
+            <div>
+                <p class="detai">{{quickAction.description}}</p>
+            </div>
         </div>
     </div>
 </div>

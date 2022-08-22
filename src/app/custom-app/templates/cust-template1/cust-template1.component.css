@@ -79,9 +79,9 @@
     opacity: .7;
     font-family: Roboto,sans-serif!important;
 }
-.background-changer .body-default,#page {
+/* .background-changer .body-default,#page {
     background-image: linear-gradient(0deg,#f2f2f7,#f2f2f7);
-}
+} */
 #page {
     position: relative;
 }
@@ -138,6 +138,12 @@
 	font-size: 24px;
     font-weight: 700;
 	margin-top:10px;
+}
+body {
+    background-color: #fff !important;
+}
+.panel {
+    border: none !important;
 }
 .ftco-services-2 .services .icon {
     line-height: 1.3;

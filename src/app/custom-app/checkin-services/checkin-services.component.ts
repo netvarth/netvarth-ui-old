@@ -37,7 +37,11 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
       if (actionObj['action'] === 'view') {
         let queryParam = {
           back: 1,
-          customId: this.businessProfile.accEncUid
+          customId: this.businessProfile.accEncUid,
+          accountId: this.businessProfile.id,
+        }
+        if (this.templateJson['theme']) {
+          queryParam['theme'] = this.templateJson.theme;
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam

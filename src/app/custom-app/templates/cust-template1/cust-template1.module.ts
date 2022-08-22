@@ -18,6 +18,8 @@ import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-mes
 import { MatButtonModule } from '@angular/material/button';
 import { CustTemplate1Component } from './cust-template1.component';
 import { BasicProfileModule } from '../../basic-profile/basic-profile.module';
+import { QuickActionsModule } from '../../quick-actions/quick-actions.module';
+import { AdvancedProfileModule } from '../../advanced-profile/advanced-profile.module';
 const routes: Routes = [
     { path: '', component: CustTemplate1Component }
 ];
@@ -41,6 +43,8 @@ const routes: Routes = [
         MatButtonModule,
         AddInboxMessagesModule,
         BasicProfileModule,
+        QuickActionsModule,
+        AdvancedProfileModule,
         [RouterModule.forChild(routes)]
     ],
     schemas: [

@@ -2,33 +2,47 @@
     <div id="footer-bar" class="footer-bar-1">
         <a (click)="menuSelected(templateJson.section1.title)"
             [ngClass]="{'active-nav' : selectedIndex === templateJson.section1.title }" *ngIf="templateJson.section1"><i
-                class="fa fa-home" [ngClass]="templateJson.section1.theme?templateJson.section1.theme:'fa-home'"></i><span>{{templateJson.section1.title}}</span></a>
+                class="fa fa-home"
+                [ngClass]="templateJson.section1.theme?templateJson.section1.theme:'fa-home'"></i><span>{{templateJson.section1.title}}</span></a>
         <a (click)="menuSelected(templateJson.section3.title)"
             [ngClass]="{'active-nav' : selectedIndex === templateJson.section3.title }" *ngIf="templateJson.section3"><i
-                class="fa fa-medkit" [ngClass]="templateJson.section1.theme?templateJson.section1.theme:'fa-medkit'"></i><span>{{templateJson.section3.title}}</span></a>
+                class="fa fa-medkit"
+                [ngClass]="templateJson.section1.theme?templateJson.section1.theme:'fa-medkit'"></i><span>{{templateJson.section3.title}}</span></a>
         <a (click)="menuSelected(templateJson.section4.title)"
             [ngClass]="{'active-nav' : selectedIndex === templateJson.section4.title }" *ngIf="templateJson.section4"><i
-                class="fa fa-users" [ngClass]="templateJson.section4.theme?templateJson.section4.theme:'fa-users'"></i><span>{{templateJson.section4.title}}</span></a>
+                class="fa fa-users"
+                [ngClass]="templateJson.section4.theme?templateJson.section4.theme:'fa-users'"></i><span>{{templateJson.section4.title}}</span></a>
         <a (click)="menuSelected(templateJson.section2.title)"
             [ngClass]="{'active-nav' : selectedIndex === templateJson.section2.title }" *ngIf="templateJson.section2"><i
-                class="fa fa-gear" [ngClass]="templateJson.section2.theme?templateJson.section2.theme:'fa-gear'"></i><span>{{templateJson.section2.title}}</span></a>
+                class="fa fa-gear"
+                [ngClass]="templateJson.section2.theme?templateJson.section2.theme:'fa-gear'"></i><span>{{templateJson.section2.title}}</span></a>
         <a (click)="menuSelected(templateJson.section5.title)"
             [ngClass]="{'active-nav' : selectedIndex === templateJson.section5.title }" *ngIf="templateJson.section5"><i
-                class="fa fa-address-book" [ngClass]="templateJson.section5.theme?templateJson.section5.theme:'fa-address-book'"></i><span>{{templateJson.section5.title}}</span></a>
+                class="fa fa-address-book"
+                [ngClass]="templateJson.section5.theme?templateJson.section5.theme:'fa-address-book'"></i><span>{{templateJson.section5.title}}</span></a>
     </div>
     <div class="page-content header-clear-small">
         <section class="pageitem" *ngIf="templateJson.section1 && selectedIndex==templateJson.section1.title">
-            <div [style.background-image]="'url(' + templateJson['coverPicture'] + ')'" class="cvr-ht">
+            <div class="mgn-up-20" *ngIf="templateJson.section1.profile && templateJson.section1.profileType==='basic'">
+                <app-basic-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-basic-profile>
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section1.profile && templateJson.section1.profileType==='advanced'">
+                <app-advanced-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-advanced-profile>
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section1.quickActions">
+                <app-quick-actions [actionList]="templateJson.section1.quickActions"></app-quick-actions>
+            </div>
+            <!-- <div [style.background-image]="'url(' + templateJson['coverPicture'] + ')'" class="cvr-ht">
             </div>
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 cvr-dp-mgn">
                 <img alt="Profile Image" [src]="templateJson['logo']" id="profile-image1"
                     class="img-circle img-responsive cvr-dp pointer-cursor cvr-dp-bdr ">
-            </div>
-            <div class="col-xs-12 card hyphenate" [innerHtml]="templateJson.headerTitle | safeHtml"></div>
-            <div class="col-xs-12 card" [innerHtml]="templateJson.section1.generalDescription | safeHtml"></div>
+            </div> -->
+            <!-- <div class="col-xs-12 card hyphenate" [innerHtml]="templateJson.headerTitle | safeHtml"></div>
+            <div class="col-xs-12 card" [innerHtml]="templateJson.section1.generalDescription | safeHtml"></div> -->
             <div class="col-xs-12">
-                <!-- <div id="pageheader" class="col-xs-12 card" ></div> -->                                
-                <div class="col-xs-12 mgn-up-10 no-padding"
+                <!-- <div id="pageheader" class="col-xs-12 card" ></div> -->
+                <div class="col-xs-12 mgn-up-20 no-padding"
                     *ngIf="showDepartments && templateJson.section1.departments">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.departmentsDescription"
                         [innerHtml]="templateJson.section1.departmentsDescription | safeHtml">
@@ -40,7 +54,7 @@
                         </app-cons-departments>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.users">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section1.users">
                     <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section1.usersDescription"
                         [innerHtml]="templateJson.section1.usersDescription | safeHtml">
                     </div>
@@ -51,7 +65,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="col-xs-12 mgn-up-10  no-padding" *ngIf="templateJson.section1.appointments">
+                <div class="col-xs-12 mgn-up-20  no-padding" *ngIf="templateJson.section1.appointments">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.appointmentsDescription"
                         [innerHtml]="templateJson.section1.appointmentsDescription | safeHtml">
                     </div>
@@ -62,7 +76,7 @@
                         </app-appointment-services>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.checkins">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section1.checkins">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.checkinsDescription"
                         [innerHtml]="templateJson.section1.checkinsDescription | safeHtml">
                     </div>
@@ -73,7 +87,7 @@
                         </app-checkin-services>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.donations">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section1.donations">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.donationsDescription"
                         [innerHtml]="templateJson.section1.donationsDescripton | safeHtml">
                     </div>
@@ -84,7 +98,7 @@
                         </app-donation-services>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.orders">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section1.orders">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section1.ordersDescripton"
                         [innerHtml]="templateJson.section1.ordersDescripton | safeHtml">
                     </div>
@@ -94,7 +108,7 @@
                         </app-orders>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section1.gallery">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section1.gallery">
                     <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section1.galleryDescription"
                         [innerHtml]="templateJson.section1.galleryDescription | safeHtml">
                     </div>
@@ -110,7 +124,16 @@
                 <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.generalDescription !=''"
                     [innerHtml]="templateJson.section2.generalDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding"
+                <div class="mgn-up-20" *ngIf="templateJson.section2.profile && templateJson.section2.profileType==='basic'">
+                    <app-basic-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-basic-profile>
+                </div>
+                <div class="mgn-up-20" *ngIf="templateJson.section2.profile && templateJson.section2.profileType==='advanced'">
+                    <app-advanced-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-advanced-profile>
+                </div>
+                <div class="mgn-up-20" *ngIf="templateJson.section2.quickActions">
+                    <app-quick-actions [actionList]="templateJson.section2.quickActions"></app-quick-actions>
+                </div>
+                <div class="col-xs-12 mgn-up-20 no-padding"
                     *ngIf="showDepartments && templateJson.section2.departments">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.departmentsDescription"
                         [innerHtml]="templateJson.section2.departmentsDescription | safeHtml">
@@ -122,7 +145,7 @@
                         </app-cons-departments>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.users">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section2.users">
                     <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section2.usersDescription"
                         [innerHtml]="templateJson.section2.usersDescription | safeHtml">
                     </div>
@@ -133,7 +156,7 @@
                     </div>
                     <div class="clearfix"></div>
                 </div>
-                <div class="col-xs-12 mgn-up-10  no-padding" *ngIf="templateJson.section2.appointments">
+                <div class="col-xs-12 mgn-up-20  no-padding" *ngIf="templateJson.section2.appointments">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.appointmentsDescription"
                         [innerHtml]="templateJson.section2.appointmentsDescription | safeHtml">
                     </div>
@@ -144,7 +167,7 @@
                         </app-appointment-services>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.checkins">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section2.checkins">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.checkinsDescription"
                         [innerHtml]="templateJson.section2.checkinsDescription | safeHtml">
                     </div>
@@ -155,7 +178,7 @@
                         </app-checkin-services>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.donations">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section2.donations">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.donationsDescription"
                         [innerHtml]="templateJson.section2.donationsDescripton | safeHtml">
                     </div>
@@ -166,7 +189,7 @@
                         </app-donation-services>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.orders">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section2.orders">
                     <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.ordersDescripton"
                         [innerHtml]="templateJson.section2.ordersDescripton | safeHtml">
                     </div>
@@ -176,7 +199,7 @@
                         </app-orders>
                     </div>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section2.gallery">
+                <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section2.gallery">
                     <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section2.galleryDescription"
                         [innerHtml]="templateJson.section2.galleryDescription | safeHtml">
                     </div>
@@ -186,250 +209,273 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-        </section>       
-        <section class="col-xs-12" *ngIf="templateJson.section3 && selectedIndex==templateJson.section3.title" >
+        </section>
+        <section class="col-xs-12 no-padding" *ngIf="templateJson.section3 && selectedIndex==templateJson.section3.title">
             <!-- <div class="col-xs-12 no-padding"> -->
-                <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.generalDescription !=''" 
+            <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.generalDescription !=''"
                 [innerHtml]="templateJson.section3.generalDescription | safeHtml">
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section3.profile && templateJson.section3.profileType==='basic'">
+                <app-basic-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-basic-profile>
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section3.profile && templateJson.section3.profileType==='advanced'">
+                <app-advanced-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-advanced-profile>
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section3.quickActions">
+                <app-quick-actions [actionList]="templateJson.section3.quickActions"></app-quick-actions>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="showDepartments && templateJson.section3.departments">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.departmentsDescription"
+                    [innerHtml]="templateJson.section3.departmentsDescription | safeHtml">
                 </div>
-            
-            <div class="col-xs-12 mgn-up-10 no-padding"
-                    *ngIf="showDepartments && templateJson.section3.departments">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.departmentsDescription"
-                        [innerHtml]="templateJson.section3.departmentsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding">
-                        <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
-                            [departments]="departments" [cardType]="templateJson.section3.departmentCard">
-                        </app-cons-departments>
-                    </div>
+                <div class="col-xs-12 no-padding">
+                    <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
+                        [departments]="departments" [cardType]="templateJson.section3.departmentCard">
+                    </app-cons-departments>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.users">
-                    <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section3.usersDescription"
-                        [innerHtml]="templateJson.section3.usersDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
-                        <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
-                            [users]="onlineUsers" [cardType]="templateJson.section3.userCard"></app-online-users>
-                    </div>
-                    <div class="clearfix"></div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section3.users">
+                <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section3.usersDescription"
+                    [innerHtml]="templateJson.section3.usersDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10  no-padding" *ngIf="templateJson.section3.appointments">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.appointmentsDescription"
-                        [innerHtml]="templateJson.section3.appointmentsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
-                        <app-appointment-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [apptSettings]="apptSettings" [businessProfile]="businessProfile" [config]="accountConfig"
-                            [filteredServices]="filteredApptServices" [selectedLocation]="selectedLocation">
-                        </app-appointment-services>
-                    </div>
+                <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
+                    <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [users]="onlineUsers"
+                        [cardType]="templateJson.section3.userCard"></app-online-users>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.checkins">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.checkinsDescription"
-                        [innerHtml]="templateJson.section3.checkinsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_checkins">
-                        <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [apptSettings]="apptSettings" [businessProfile]="businessProfile"
-                            [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
-                        </app-checkin-services>
-                    </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-xs-12 mgn-up-20  no-padding" *ngIf="templateJson.section3.appointments">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.appointmentsDescription"
+                    [innerHtml]="templateJson.section3.appointmentsDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.donations">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.donationsDescription"
-                        [innerHtml]="templateJson.section3.donationsDescripton | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
-                        <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [donationServices]="donationServices"
-                            [selectedLocation]="selectedLocation" [cardType]="templateJson.section3.donationCard">
-                        </app-donation-services>
-                    </div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
+                    <app-appointment-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [apptSettings]="apptSettings" [businessProfile]="businessProfile" [config]="accountConfig"
+                        [filteredServices]="filteredApptServices" [selectedLocation]="selectedLocation">
+                    </app-appointment-services>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.orders">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.ordersDescripton"
-                        [innerHtml]="templateJson.section3.ordersDescripton | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding">
-                        <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation">
-                        </app-orders>
-                    </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section3.checkins">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.checkinsDescription"
+                    [innerHtml]="templateJson.section3.checkinsDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section3.gallery">
-                    <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section3.galleryDescription"
-                        [innerHtml]="templateJson.section3.galleryDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="galleryJson && galleryJson.length > 0">
-                        <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_checkins">
+                    <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [apptSettings]="apptSettings" [businessProfile]="businessProfile"
+                        [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
+                    </app-checkin-services>
                 </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section3.donations">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.donationsDescription"
+                    [innerHtml]="templateJson.section3.donationsDescripton | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
+                    <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [donationServices]="donationServices"
+                        [selectedLocation]="selectedLocation" [cardType]="templateJson.section3.donationCard">
+                    </app-donation-services>
+                </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section3.orders">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.ordersDescripton"
+                    [innerHtml]="templateJson.section3.ordersDescripton | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding">
+                    <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation">
+                    </app-orders>
+                </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section3.gallery">
+                <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section3.galleryDescription"
+                    [innerHtml]="templateJson.section3.galleryDescription | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding" *ngIf="galleryJson && galleryJson.length > 0">
+                    <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
+                </div>
+                <div class="clearfix"></div>
+            </div>
         </section>
         <section class="ftco-section bg-light" id="counselling-section"
             *ngIf="templateJson.section4 && selectedIndex==templateJson.section4.title">
-            <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.generalDescription !=''" 
+            <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.generalDescription !=''"
                 [innerHtml]="templateJson.section4.generalDescription | safeHtml">
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section4.profile && templateJson.section4.profileType==='basic'">
+                <app-basic-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-basic-profile>
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section4.profile && templateJson.section4.profileType==='advanced'">
+                <app-advanced-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-advanced-profile>
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section4.quickActions">
+                <app-quick-actions [actionList]="templateJson.section4.quickActions"></app-quick-actions>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="showDepartments && templateJson.section4.departments">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.departmentsDescription"
+                    [innerHtml]="templateJson.section4.departmentsDescription | safeHtml">
                 </div>
-            <div class="col-xs-12 mgn-up-10 no-padding"
-                    *ngIf="showDepartments && templateJson.section4.departments">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.departmentsDescription"
-                        [innerHtml]="templateJson.section4.departmentsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding">
-                        <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
-                            [departments]="departments" [cardType]="templateJson.section4.departmentCard">
-                        </app-cons-departments>
-                    </div>
+                <div class="col-xs-12 no-padding">
+                    <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
+                        [departments]="departments" [cardType]="templateJson.section4.departmentCard">
+                    </app-cons-departments>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section4.users">
-                    <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section4.usersDescription"
-                        [innerHtml]="templateJson.section4.usersDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
-                        <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
-                            [users]="onlineUsers" [cardType]="templateJson.section4.userCard"></app-online-users>
-                    </div>
-                    <div class="clearfix"></div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section4.users">
+                <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section4.usersDescription"
+                    [innerHtml]="templateJson.section4.usersDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10  no-padding" *ngIf="templateJson.section4.appointments">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.appointmentsDescription"
-                        [innerHtml]="templateJson.section4.appointmentsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
-                        <app-appointment-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [apptSettings]="apptSettings" [businessProfile]="businessProfile" [config]="accountConfig"
-                            [filteredServices]="filteredApptServices" [selectedLocation]="selectedLocation">
-                        </app-appointment-services>
-                    </div>
+                <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
+                    <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [users]="onlineUsers"
+                        [cardType]="templateJson.section4.userCard"></app-online-users>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section4.checkins">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.checkinsDescription"
-                        [innerHtml]="templateJson.section4.checkinsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_checkins">
-                        <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [apptSettings]="apptSettings" [businessProfile]="businessProfile"
-                            [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
-                        </app-checkin-services>
-                    </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-xs-12 mgn-up-20  no-padding" *ngIf="templateJson.section4.appointments">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.appointmentsDescription"
+                    [innerHtml]="templateJson.section4.appointmentsDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section4.donations">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.donationsDescription"
-                        [innerHtml]="templateJson.section4.donationsDescripton | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
-                        <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [donationServices]="donationServices"
-                            [selectedLocation]="selectedLocation" [cardType]="templateJson.section4.donationCard">
-                        </app-donation-services>
-                    </div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
+                    <app-appointment-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [apptSettings]="apptSettings" [businessProfile]="businessProfile" [config]="accountConfig"
+                        [filteredServices]="filteredApptServices" [selectedLocation]="selectedLocation">
+                    </app-appointment-services>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section4.orders">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.ordersDescripton"
-                        [innerHtml]="templateJson.section4.ordersDescripton | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding">
-                        <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation">
-                        </app-orders>
-                    </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section4.checkins">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.checkinsDescription"
+                    [innerHtml]="templateJson.section4.checkinsDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section4.gallery">
-                    <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section4.galleryDescription"
-                        [innerHtml]="templateJson.section4.galleryDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="galleryJson && galleryJson.length > 0">
-                        <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_checkins">
+                    <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [apptSettings]="apptSettings" [businessProfile]="businessProfile"
+                        [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
+                    </app-checkin-services>
                 </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section4.donations">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.donationsDescription"
+                    [innerHtml]="templateJson.section4.donationsDescripton | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
+                    <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [donationServices]="donationServices"
+                        [selectedLocation]="selectedLocation" [cardType]="templateJson.section4.donationCard">
+                    </app-donation-services>
+                </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section4.orders">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section4.ordersDescripton"
+                    [innerHtml]="templateJson.section4.ordersDescripton | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding">
+                    <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation">
+                    </app-orders>
+                </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section4.gallery">
+                <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section4.galleryDescription"
+                    [innerHtml]="templateJson.section4.galleryDescription | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding" *ngIf="galleryJson && galleryJson.length > 0">
+                    <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
+                </div>
+                <div class="clearfix"></div>
+            </div>
         </section>
         <section class="ftco-section contact-section" id="contact-section"
             *ngIf="templateJson.section5 && selectedIndex==templateJson.section5.title">
-            <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.generalDescription !=''" 
+            <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.generalDescription !=''"
                 [innerHtml]="templateJson.section5.generalDescription | safeHtml">
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section5.profile && templateJson.section5.profileType==='basic'">
+                <app-basic-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-basic-profile>
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section5.profile && templateJson.section5.profileType==='advanced'">
+                <app-advanced-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-advanced-profile>
+            </div>
+            <div class="mgn-up-20" *ngIf="templateJson.section5.quickActions">
+                <app-quick-actions [actionList]="templateJson.section5.quickActions"></app-quick-actions>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="showDepartments && templateJson.section5.departments">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.departmentsDescription"
+                    [innerHtml]="templateJson.section5.departmentsDescription | safeHtml">
                 </div>
-            <div class="col-xs-12 mgn-up-10 no-padding"
-                    *ngIf="showDepartments && templateJson.section5.departments">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.departmentsDescription"
-                        [innerHtml]="templateJson.section5.departmentsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding">
-                        <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
-                            [departments]="departments" [cardType]="templateJson.section5.departmentCard">
-                        </app-cons-departments>
-                    </div>
+                <div class="col-xs-12 no-padding">
+                    <app-cons-departments [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
+                        [departments]="departments" [cardType]="templateJson.section5.departmentCard">
+                    </app-cons-departments>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section5.users">
-                    <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section5.usersDescription"
-                        [innerHtml]="templateJson.section5.usersDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
-                        <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation"
-                            [users]="onlineUsers" [cardType]="templateJson.section5.userCard"></app-online-users>
-                    </div>
-                    <div class="clearfix"></div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section5.users">
+                <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section5.usersDescription"
+                    [innerHtml]="templateJson.section5.usersDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10  no-padding" *ngIf="templateJson.section5.appointments">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.appointmentsDescription"
-                        [innerHtml]="templateJson.section5.appointmentsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
-                        <app-appointment-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [apptSettings]="apptSettings" [businessProfile]="businessProfile" [config]="accountConfig"
-                            [filteredServices]="filteredApptServices" [selectedLocation]="selectedLocation">
-                        </app-appointment-services>
-                    </div>
+                <div class="col-xs-12 no-padding" *ngIf="onlineUsers">
+                    <app-online-users [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [users]="onlineUsers"
+                        [cardType]="templateJson.section5.userCard"></app-online-users>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section5.checkins">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.checkinsDescription"
-                        [innerHtml]="templateJson.section5.checkinsDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_checkins">
-                        <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [apptSettings]="apptSettings" [businessProfile]="businessProfile"
-                            [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
-                        </app-checkin-services>
-                    </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="col-xs-12 mgn-up-20  no-padding" *ngIf="templateJson.section5.appointments">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.appointmentsDescription"
+                    [innerHtml]="templateJson.section5.appointmentsDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section5.donations">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.donationsDescription"
-                        [innerHtml]="templateJson.section5.donationsDescripton | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
-                        <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [donationServices]="donationServices"
-                            [selectedLocation]="selectedLocation" [cardType]="templateJson.section5.donationCard">
-                        </app-donation-services>
-                    </div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_appointments">
+                    <app-appointment-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [apptSettings]="apptSettings" [businessProfile]="businessProfile" [config]="accountConfig"
+                        [filteredServices]="filteredApptServices" [selectedLocation]="selectedLocation">
+                    </app-appointment-services>
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section5.orders">
-                    <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.ordersDescripton"
-                        [innerHtml]="templateJson.section5.ordersDescripton | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding">
-                        <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
-                            [businessProfile]="businessProfile" [selectedLocation]="selectedLocation">
-                        </app-orders>
-                    </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section5.checkins">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.checkinsDescription"
+                    [innerHtml]="templateJson.section5.checkinsDescription | safeHtml">
                 </div>
-                <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="templateJson.section5.gallery">
-                    <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section5.galleryDescription"
-                        [innerHtml]="templateJson.section5.galleryDescription | safeHtml">
-                    </div>
-                    <div class="col-xs-12 no-padding" *ngIf="galleryJson && galleryJson.length > 0">
-                        <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
-                    </div>
-                    <div class="clearfix"></div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_checkins">
+                    <app-checkin-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [apptSettings]="apptSettings" [businessProfile]="businessProfile"
+                        [filteredServices]="filteredCheckinServices" [selectedLocation]="selectedLocation">
+                    </app-checkin-services>
                 </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section5.donations">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.donationsDescription"
+                    [innerHtml]="templateJson.section5.donationsDescripton | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding" *ngIf="loaded_donations">
+                    <app-donation-services [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [donationServices]="donationServices"
+                        [selectedLocation]="selectedLocation" [cardType]="templateJson.section5.donationCard">
+                    </app-donation-services>
+                </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section5.orders">
+                <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.ordersDescripton"
+                    [innerHtml]="templateJson.section5.ordersDescripton | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding">
+                    <app-orders [terminologiesjson]="terminologiesjson" [templateJson]="templateJson"
+                        [businessProfile]="businessProfile" [selectedLocation]="selectedLocation">
+                    </app-orders>
+                </div>
+            </div>
+            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="templateJson.section5.gallery">
+                <div class="col-xs-12 no-padding  mgn-bt-20" *ngIf="templateJson.section5.galleryDescription"
+                    [innerHtml]="templateJson.section5.galleryDescription | safeHtml">
+                </div>
+                <div class="col-xs-12 no-padding" *ngIf="galleryJson && galleryJson.length > 0">
+                    <app-picture-gallery [galleryJson]="galleryJson"></app-picture-gallery>
+                </div>
+                <div class="clearfix"></div>
+            </div>
         </section>
     </div>
 </div>

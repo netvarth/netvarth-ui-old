@@ -26,8 +26,12 @@ export class DonationServicesComponent implements OnInit {
     if (actionObj['type'] === 'donation') {
       if (actionObj['action'] === 'view') {
         let queryParam = {
-          back:1,
-          customId: this.businessProfile.accEncUid
+          back: 1,
+          customId: this.businessProfile.accEncUid,
+          accountId: this.businessProfile.id,
+        }
+        if (this.templateJson['theme']) {
+          queryParam['theme'] = this.templateJson.theme;
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam

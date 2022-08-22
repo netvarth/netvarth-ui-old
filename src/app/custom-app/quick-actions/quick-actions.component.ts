@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./quick-actions.component.css']
 })
 export class QuickActionsComponent implements OnInit {
-  @Input() templateJson;
+  @Input() actionList;
   // title: any;
   // description: any;
   // image: any;
@@ -15,7 +15,7 @@ export class QuickActionsComponent implements OnInit {
   constructor(private router:Router) { }
   
   ngOnInit(): void {
-    console.log("file",this.templateJson);
+    console.log("file",this.actionList);
     
     
   }

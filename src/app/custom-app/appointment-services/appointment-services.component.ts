@@ -44,8 +44,12 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
         console.log(actionObj['service']);
         console.log(actionObj['service'].id);
         let queryParam = {
-          back:1,
-          customId: this.businessProfile.accEncUid
+          back: 1,
+          customId: this.businessProfile.accEncUid,
+          accountId: this.businessProfile.id,
+        }
+        if (this.templateJson['theme']) {
+          queryParam['theme'] = this.templateJson.theme;
         }
         const navigationExtras: NavigationExtras = {
           queryParams: queryParam

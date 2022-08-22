@@ -49,18 +49,18 @@ export class AttachmentPopupComponent implements OnInit {
           if (fileType[0] == 'video' || fileType[0] == 'audio' || fileType[0] == 'image' || fileType[0] == 'jpg' || fileType[0] == 'png' || fileType[0] == 'jpeg' || fileType[0] == 'gif') {
             this.mediafiles.push(attachment);
           }
-          else {           
+          else {
             this.docfiles.push(attachment);
           }
         } else {
-        
+
           this.docfiles.push(attachment);
         }
       }
     }
   }
   showFile(file) {
-    
+
     this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
@@ -81,24 +81,5 @@ export class AttachmentPopupComponent implements OnInit {
   getImage(fileType) {
     console.log(fileType);
     return this.fileService.getImageByType(fileType);
-}
-  // getImageSource(file) {
-  //   let imgsrc = '/assets/images/pdf.png';
-  //   // console.log(file);
-  //   let type = '';
-  //   type = file.type.split("/");
-  //   // console.log(type[0]);
-  //   if (type[0] == 'video') {
-  //     imgsrc = '/assets/images/video.png';
-  //   } else if (type[0] == 'audio') {
-  //     imgsrc = '/assets/images/audio.png';
-  //   } else if (type[0] == 'image') {
-  //     imgsrc = '/assets/images/imageexamle.png';
-  //   }
-  //   return imgsrc;
-  // }
-  // cancel() {
-  // }
-  // submit() {
-  // }
+  }
 }
