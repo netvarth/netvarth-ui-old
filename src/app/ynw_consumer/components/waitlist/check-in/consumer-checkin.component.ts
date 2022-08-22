@@ -295,6 +295,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     finalDataToSend : any;
     showSlot = true;
     showNext = false;
+    serviceTotalPrice : number;
+    total_servicefee : number;
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -1967,6 +1969,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
+                if(this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt){
+                    this.serviceTotalPrice =  this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
+    
+                  this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
+                }
                 this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
                 this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;

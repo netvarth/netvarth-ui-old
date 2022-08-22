@@ -396,10 +396,10 @@
                 *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails">
                 <div class="web" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                   <div class="text-left">
-                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt" class="ser_price no-mgn-bt bold mgn-rt-10">Service Price :
+                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt" class="ser_price no-mgn-bt bold mgn-rt-10">Service PriceF :
                       <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
  | currency:'&#8377;'}}</span></span>
- <span *ngIf="paymentDetails.showPrice && serviceOptionApptt" class="ser_price no-mgn-bt bold mgn-rt-10">Service Price :
+ <span *ngIf="paymentDetails.showPrice && serviceOptionApptt" class="ser_price no-mgn-bt bold mgn-rt-10">Service Price F:
   <span class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
 | currency:'&#8377;'}}</span></span>
                     <span class="ser_price no-mgn-bt bold">Payment required now :
@@ -414,9 +414,13 @@
                 <div class="disply"
                   *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                   <div class="text-left">
-                    <span *ngIf="paymentDetails.showPrice" class="ser_price no-mgn-bt bold">Service
+                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt" class="ser_price no-mgn-bt bold">Service
                       Price : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
- | currency:'&#8377;'}}</span></span><br *ngIf="paymentDetails.showPrice">
+ | currency:'&#8377;'}}</span></span>
+ <span *ngIf="paymentDetails.showPrice && serviceOptionApptt" class="ser_price no-mgn-bt bold">Service
+  Price : <span class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
+| currency:'&#8377;'}}</span></span>
+ <br *ngIf="paymentDetails.showPrice">
                     <span class="ser_price no-mgn-bt bold mgn-rt-10">Payment required now :
                       <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
  ? payAmount : paymentDetails.amountRequiredNow)|
