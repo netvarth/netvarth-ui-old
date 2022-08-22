@@ -341,12 +341,18 @@ cursor: pointer;
     margin-top: 5px;
     margin-bottom: 5px;
     background: #FFFFFF;
-    border-radius: 9.67697px;
+    border-radius: 4.67697px;
     margin-right: 5px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
     margin-left: 5px;
     border-bottom: 0px solid;
     height: 60px;
+    z-index: 99999;
+}
+.previousVisit{
+  padding: 5px !important;
+  margin-bottom: 15px;
+    /* border: 1px solid red !important */
 }
 .createBtn{
   background: #F3874A;

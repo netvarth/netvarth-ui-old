@@ -118,15 +118,16 @@ export class TasksComponent implements OnInit {
 
     const _this = this;
     this.getLocationList().then(() => {
-      console.log("Locations:", this.locations);
+      // console.log("Locations:", this.locations);
       this.selected_location = this.locations[0];
       const filter = this.setFilter();
       // console.log('filter', filter)
-      _this.getNewTaskCount(filter).then(
+      _this.getTotalTaskActivityCount(filter).then(
         (count) => {
           if (count > 0) {
             this.config.totalItems = count;
              this.handleStatus();
+            //  this.getTotalTaskActivity(filter)
             // _this.getNewTask(filter);
           } else {
             _this.api_loading = false;
@@ -193,6 +194,7 @@ setSystemDate() {
     const filter = this.handleTaskStatus(this.statusFilter);
     this.getTaskStatusListData().then(
       (statuses: any) => {
+        // console.log('statuses',statuses)
         _this.statuses = statuses;
         _this.getNewTaskCount(filter).then(
           (count) => {
@@ -206,15 +208,16 @@ setSystemDate() {
             }
           }
         )
+        _this.getCompletedTaskCount(filter);
       }
     )
-    _this.getCompletedTask(filter);
+    // _this.getCompletedTask(filter);
   }
   getTaskStatusListData() {
     const _this = this;
     return new Promise((resolve, reject) => {
       _this.crmService.getTaskStatus().subscribe((taskStatus: any) => {
-        console.log('taskStatus', taskStatus);
+        // console.log('taskStatus', taskStatus);
         resolve(taskStatus);
         _this.taskStatusList.push(
           // {
@@ -266,7 +269,7 @@ setSystemDate() {
     // console.log('statusValue', statusValue);
     let filter = {}
     // console.log("this.selected_location", this.selected_location)
-    // console.log("filter", filter)
+    // console.log("statusFilter:", filter)
     if (statusValue === 0) {
       this.getTotalTaskActivity(filter)
     }
@@ -288,6 +291,7 @@ setSystemDate() {
     }
     else if (statusValue === 5) {
       this.selected2 = {id: 5, name: 'Completed', image: './assets/images/crmImages/completed2.png',};
+      // this.statusFilter= statusValue;
       this.getCompletedTask(filter);
     }
     else if (statusValue === 13) {
@@ -307,6 +311,7 @@ setSystemDate() {
   }
   getTotalTaskActivity(filter) {
     this.crmService.getTotalTask(filter).subscribe((res: any) => {
+      // console.log('resTotalTask',res)
       this.totalTaskActivityList = res;
       this.api_loading = false;
     })
@@ -315,7 +320,7 @@ setSystemDate() {
     const _this = this;
     return new Promise((resolve, reject) => {
       _this.crmService.getTotalTaskCount(filter).subscribe((data) => {
-        // console.log('dataTotalactivity:::',data)
+        // console.log('dataTotalactivityCount:::',data)
         _this.pagination.totalCnt = data;
         resolve(data);
       },
@@ -386,6 +391,7 @@ setSystemDate() {
           this.crmService.getNewTask(filter)
             .subscribe(
               data => {
+                // console.log('dataNewTask',data)
                 this.config.totalItems = count;
                 this.totalTaskActivityList = data;
                 this.api_loading = false;
@@ -536,7 +542,7 @@ setSystemDate() {
           this.crmService.getCompletedTask(filter)
             .subscribe(
               data => {
-                console.log('data', data)
+                // console.log('dataCompleted', data)
                 this.config.totalItems = count;
                 this.totalTaskActivityList = data;
                 this.api_loading = false;
@@ -557,7 +563,8 @@ setSystemDate() {
     return new Promise((resolve, reject) => {
       this.crmService.getCompletedTaskCount(filter)
         .subscribe(
-          data => {
+          (data:any) => {
+            this.completedTaskCount= data;
             this.pagination.totalCnt = data;
             resolve(data);
           },

@@ -683,4 +683,7 @@ export class ShareRxComponent implements OnInit {
     }
     
   }
+  shareBtn(){
+    this.dialogRef.close();
+  }
 }

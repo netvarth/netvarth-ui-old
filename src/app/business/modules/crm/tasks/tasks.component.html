@@ -43,7 +43,7 @@
     <!----mat tab change to mat select start-->
     <div class="statusSelectDiv">
       <div class="fieldPadding">
-        <mat-select class="form-control" placeholder="New" #userTaskStatus [(value)]="statusFilter"
+        <mat-select  class="form-control" placeholder="New" #userTaskStatus [(value)]="statusFilter"
           [compareWith]="compareFn">
           <mat-select-trigger>
             <div style="display:flex;gap:5px;align-items:center">
@@ -57,7 +57,7 @@
               </div>
             </div>
           </mat-select-trigger>
-          <mat-option *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"
+          <mat-option  *ngFor="let stat of taskStatusList;let index=i" [value]="stat.id"
             (click)="handleTaskStatus(userTaskStatus.value)">
             <span style="display:flex;gap:10px">
               <div>
