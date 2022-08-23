@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../../src/app/shared/constants/project-messages';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { CrmService } from '../crm.service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
@@ -221,8 +221,7 @@ export class LeadsComponent implements OnInit {
         if(this.tempaltename==='Rejected'){
           this.bStatusTableHead = false;
         }
-      }
-      else{
+      } else {
         if(this.dataId){
           filter['status-eq'] = this.dataId;
           filter['isRejected-eq']= false;
@@ -293,13 +292,19 @@ export class LeadsComponent implements OnInit {
    * @param leadUID 
    */
   openLead(leadUID) {
-    if (this.type === 'LoanDisbursement') {
+    // if (this.type === 'LoanDisbursement') {
+    //   return false;
+    // }
+
+    if (this.type === 'Rejected' || this.type==='Loan Sanction' || this.type==='Loan Application Verified') {
       return false;
     }
-    else if (this.type === 'Rejected') {
-      return false;
-    }
-    this.router.navigate(['/provider/viewleadqnr/' + leadUID]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: this.type
+      }
+    };
+    this.router.navigate(['/provider/viewleadqnr/' + leadUID], navigationExtras);
   }
 
   /**

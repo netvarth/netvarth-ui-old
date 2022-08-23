@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -14,7 +14,7 @@ export class CRMComponent implements OnInit {
   crmTitle = '';
   isadminPrivilege: any;
   public step: any;
-  public panelOpenState: boolean=false;
+  public panelOpenState: boolean = false;
   public redirectionList: any = []
   public api_loading: boolean;
   public bLosFieldOpen: boolean = true;
@@ -22,15 +22,15 @@ export class CRMComponent implements OnInit {
   showActivity = true;
   bBorderBottomTYpeA: boolean = false;
   bBorderBottomTypeC: boolean = false;
-  followUpList:any=[];
-  lebalNameLOS:string='LOS';
-  lebalnameREPORT:string='REPORTS';
-  lebalMarkrtingActivity:string='Marketing Activity';
-  lebalScheduleMarkActivity:string='Schedule Marketing Activity';
-  lebalMarketingActivityUpdation:string='Marketing Activity Updation';
-  lebalEnquiry:string='Enquiry';
-  lebalFollowUps:string='Follow Ups';
-  reportType:any=[
+  followUpList: any = [];
+  lebalNameLOS: string = 'LOS';
+  lebalnameREPORT: string = 'REPORTS';
+  lebalMarkrtingActivity: string = 'Marketing Activity';
+  lebalScheduleMarkActivity: string = 'Schedule Marketing Activity';
+  lebalMarketingActivityUpdation: string = 'Marketing Activity Updation';
+  lebalEnquiry: string = 'Enquiry';
+  lebalFollowUps: string = 'Follow Ups';
+  reportType: any = [
     {
       id: 1, type: 'Activity Report',
     },
@@ -39,45 +39,45 @@ export class CRMComponent implements OnInit {
     },
     {
       id: 3, type: 'Enquiry Report'
-    }, 
+    },
     {
       id: 4, type: 'Activity Consolidated Report'
-    }, 
+    },
     {
       id: 5, type: 'Lead Status Report'
     },
     {
-      id:6, type: 'Processing Files Report'
+      id: 6, type: 'Processing Files Report'
     },
     {
-      id:7, type: 'HO-Consolidated Report'
+      id: 7, type: 'HO-Consolidated Report'
     },
     {
-      id:8, type: 'HO-Tat Report'
+      id: 8, type: 'HO-Tat Report'
     },
     {
-      id:9, type: 'Recommended Status Report'
+      id: 9, type: 'Recommended Status Report'
     },
     {
-      id:10, type: 'Login Report'
+      id: 10, type: 'Login Report'
     },
     {
-      id:11, type: 'HO-Leads Status Report'
+      id: 11, type: 'HO-Leads Status Report'
     },
     {
-      id:12, type: 'Sanctioned Status Report'
+      id: 12, type: 'Sanctioned Status Report'
     },
     {
-      id:13, type: 'Employee-Average Tat Report'
+      id: 13, type: 'Employee-Average Tat Report'
     },
     {
-      id:14, type: 'Employee-Daily Activity Report'
+      id: 14, type: 'Employee-Daily Activity Report'
     },
     {
-      id:15, type: 'Customer Report'
+      id: 15, type: 'Customer Report'
     },
     {
-      id:16, type: 'Customer CRIF Status Report'
+      id: 16, type: 'Customer CRIF Status Report'
     },
 
   ]
@@ -121,33 +121,33 @@ export class CRMComponent implements OnInit {
       }
     )
   }
-  dashBoardStatus(user){
-    const _this=this;
-    return new Promise((resolve,reject)=>{
-      _this.crmService.getLeadStatusDashboard().subscribe((res)=>{
-        if(res){
+  dashBoardStatus(user) {
+    const _this = this;
+    return new Promise((resolve, reject) => {
+      _this.crmService.getLeadStatusDashboard().subscribe((res) => {
+        if (res) {
           resolve(res);
           _this.redirectionList.push(res);
           // if(user && user.userType === 1 && user.isadminPrivilege){
           //   this.accordingUserRedirection(user);
           // }
         }
-      },((error)=>{
+      }, ((error) => {
         reject(error);
       }))
     })
   }
-  followUpsList(){
-    const _this=this;
-    return new Promise((resolve,reject)=>{
-      _this.crmService.enquiryStatusdashBoard().subscribe((res)=>{
+  followUpsList() {
+    const _this = this;
+    return new Promise((resolve, reject) => {
+      _this.crmService.enquiryStatusdashBoard().subscribe((res) => {
         resolve(res)
         console.log(res);
-        this.followUpList=res;
+        this.followUpList = res;
       }),
-      ((error)=>{
-        reject(error);
-      })
+        ((error) => {
+          reject(error);
+        })
     })
   }
   fromReportToCrm() {
@@ -156,24 +156,24 @@ export class CRMComponent implements OnInit {
     }
     this.providerServices.reportToCrm = ''
   }
-  accordingUserRedirection(user){
-    if((user && (user.userType === 1)) && user.isadminPrivilege){
+  accordingUserRedirection(user) {
+    if ((user && (user.userType === 1)) && user.isadminPrivilege) {
     }
-    else if(user && user.userType === 2){
+    else if (user && user.userType === 2) {
     }
-    else if(user.userType === 1){
-      this.redirectionList[0].forEach((item)=>{
-        if(item && item.aliasName){
-          if(item.aliasName==='CRIF' ||item.aliasName==='Login Verification' || item.aliasName==='Credit Recommendation' 
-          || item.aliasName==='Loan Sanction' || item.aliasName==='Loan Disbursement' || item.aliasName==='Loan Created' ){
+    else if (user.userType === 1) {
+      this.redirectionList[0].forEach((item) => {
+        if (item && item.aliasName) {
+          if (item.aliasName === 'CRIF' || item.aliasName === 'Login Verification' || item.aliasName === 'Credit Recommendation'
+            || item.aliasName === 'Loan Sanction' || item.aliasName === 'Loan Disbursement' || item.aliasName === 'Loan Created') {
             this.redirectionList[0].splice(this.redirectionList[0].indexOf(item), 1);
           }
         }
       })
     }
-    else{
-      this.redirectionList[0].forEach((item)=>{
-        if(item && item.aliasName==='CRIF'){
+    else {
+      this.redirectionList[0].forEach((item) => {
+        if (item && item.aliasName === 'CRIF') {
           this.redirectionList[0].splice(this.redirectionList[0].indexOf(item), 1);
         }
       })
@@ -335,49 +335,49 @@ export class CRMComponent implements OnInit {
   }
   templateViewActivity(data) {
     console.log(data);
-    if(data && data.name && data.name==='Follow Up 1'){
+    if (data && data.name && data.name === 'Follow Up 1') {
       const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: data.name,
-              id:data.id,
-              name:data.name
-            }
-          }
-          this.router.navigate(['provider', 'followupone'], navigationExtras)
+        queryParams: {
+          type: data.name,
+          id: data.id,
+          name: data.name
+        }
+      }
+      this.router.navigate(['provider', 'followupone'], navigationExtras)
     }
-    else if(data && data.name && data.name==='Follow Up 2'){
+    else if (data && data.name && data.name === 'Follow Up 2') {
       const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: data.name,
-              id:data.id,
-              name:data.name
-            }
-          }
-          this.router.navigate(['provider', 'followupone'], navigationExtras)
+        queryParams: {
+          type: data.name,
+          id: data.id,
+          name: data.name
+        }
+      }
+      this.router.navigate(['provider', 'followupone'], navigationExtras)
     }
-    else if(data && data.name && data.name==='Rejected'){
+    else if (data && data.name && data.name === 'Rejected') {
       return false;
       const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type:data.name,
-              id:data.id,
-              name:data.name
-            }
-          }
-          this.router.navigate(['provider', 'followupone'], navigationExtras)
+        queryParams: {
+          type: data.name,
+          id: data.id,
+          name: data.name
+        }
+      }
+      this.router.navigate(['provider', 'followupone'], navigationExtras)
     }
-    else if(data && data.name && data.name==='Completed'){
+    else if (data && data.name && data.name === 'Completed') {
       return false;
       const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: data.name,
-              id:data.id,
-              name:data.name
-            }
-          }
-          this.router.navigate(['provider', 'followupone'], navigationExtras)
+        queryParams: {
+          type: data.name,
+          id: data.id,
+          name: data.name
+        }
+      }
+      this.router.navigate(['provider', 'followupone'], navigationExtras)
     }
-    
+
 
   }
   redirectionTaskTemplate() {
@@ -386,10 +386,10 @@ export class CRMComponent implements OnInit {
         type: 'activityCreateTemplate'
       }
     }
-    if(navigationExtras){
+    if (navigationExtras) {
       this.router.navigate(['provider', 'task', 'tasktemplate'], navigationExtras);
     }
-    
+
   }
   redirectionTaskActivityList() {
     this.router.navigate(['provider', 'task']);
@@ -397,133 +397,143 @@ export class CRMComponent implements OnInit {
   redirectionToEnquiry() {
     this.router.navigate(['provider', 'CreateEnquiry']);
   }
-  redirectionSeperateTemplate(templateName: any,templateData) {
-    if (templateName && templateName === 'Login Verification') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'LOGIN',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-          dataStatus:templateData.name,
-          templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
+  redirectionSeperateTemplate(templateName: any, templateData) {
+    // if (templateName && templateName === 'Login Verification') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'LOGIN',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //       dataStatus:templateData.name,
+    //       templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    // else if (templateName && templateName === 'CRIF') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'CRIF',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //        dataStatus:templateData.name,
+    //        templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    // else if (templateName && templateName === 'Sales Field Verification') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'SALESVERIFICATION',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //        dataStatus:templateData.name,
+    //        templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    // else if (templateName && templateName === 'Login') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'DOCUMENTUPLOD',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //        dataStatus:templateData.name,
+    //        templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    // else if (templateName && templateName === 'Leads') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'NEWLEAD',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //        dataStatus:templateData.name,
+    //        templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    // else if (templateName && templateName === 'Credit Recommendation') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'CreditRecommendation',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //        dataStatus:templateData.name,
+    //        templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    // else if (templateName && templateName === 'Loan Sanction') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'LoanSanction',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //        dataStatus:templateData.name,
+    //        templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    // else if (templateName && templateName === 'Loan Disbursement') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'LoanDisbursement',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //        dataStatus:templateData.name,
+    //        templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    // else if (templateName && templateName === 'Rejected') {
+    //   const navigationExtras: NavigationExtras = {
+    //     queryParams: {
+    //       type: 'Rejected',
+    //       dataUrl:templateData.dataUrl,
+    //       dataId:templateData.id,
+    //        dataStatus:templateData.name,
+    //        templateName:templateName,
+    //     }
+    //   }
+    //   if(navigationExtras){
+    //     this.router.navigate(['provider', 'lead'], navigationExtras);
+    //   }
+    // }
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: templateData.pageType,
+        dataUrl: templateData.dataUrl,
+        dataId: templateData.id,
+        dataStatus: templateData.name,
+        templateName: templateName,
       }
     }
-    else if (templateName && templateName === 'CRIF') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'CRIF',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-           dataStatus:templateData.name,
-           templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
-      }
-    }
-    else if (templateName && templateName === 'Sales Field Verification') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'SALESVERIFICATION',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-           dataStatus:templateData.name,
-           templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
-      }
-    }
-    else if (templateName && templateName === 'Login') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'DOCUMENTUPLOD',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-           dataStatus:templateData.name,
-           templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
-      }
-    }
-    else if (templateName && templateName === 'Leads') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'NEWLEAD',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-           dataStatus:templateData.name,
-           templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
-      }
-    }
-    else if (templateName && templateName === 'Credit Recommendation') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'CreditRecommendation',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-           dataStatus:templateData.name,
-           templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
-      }
-    }
-    else if (templateName && templateName === 'Loan Sanction') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'LoanSanction',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-           dataStatus:templateData.name,
-           templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
-      }
-    }
-    else if (templateName && templateName === 'Loan Disbursement') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'LoanDisbursement',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-           dataStatus:templateData.name,
-           templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
-      }
-    }
-    else if (templateName && templateName === 'Rejected') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          type: 'Rejected',
-          dataUrl:templateData.dataUrl,
-          dataId:templateData.id,
-           dataStatus:templateData.name,
-           templateName:templateName,
-        }
-      }
-      if(navigationExtras){
-        this.router.navigate(['provider', 'lead'], navigationExtras);
-      }
-    }
+    this.router.navigate(['provider', 'lead'], navigationExtras);
   }
   buttonClicked(type) {
     switch (type) {
@@ -536,7 +546,7 @@ export class CRMComponent implements OnInit {
             type: 'leadCreateTemplate'
           }
         }
-        if(navigationExtras){
+        if (navigationExtras) {
           this.router.navigate(['provider', 'task', 'tasktemplate'], navigationExtras);
         }
     }
@@ -560,8 +570,8 @@ export class CRMComponent implements OnInit {
       this.bBorderBottomTYpeA = false;
     }
   }
-  reportActionType(data){
-    if(data){
+  reportActionType(data) {
+    if (data) {
       switch (data.type) {
         case 'Activity Report':
           const navigationExtras: NavigationExtras = {
@@ -569,7 +579,7 @@ export class CRMComponent implements OnInit {
               report_type: 'crm'
             }
           }
-          if(navigationExtras){
+          if (navigationExtras) {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtras);
           }
           break;
@@ -579,7 +589,7 @@ export class CRMComponent implements OnInit {
               report_type: 'lead'
             }
           }
-          if(navigationExtrasToLead){
+          if (navigationExtrasToLead) {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLead);
           }
           break;
@@ -589,10 +599,10 @@ export class CRMComponent implements OnInit {
               report_type: 'enquiry'
             }
           }
-          if(navigationExtrasToEnquiry){
+          if (navigationExtrasToEnquiry) {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToEnquiry);
           }
-         
+
           break;
         case 'Activity Consolidated Report':
           const navigationExtrasToMonthly: NavigationExtras = {
@@ -600,7 +610,7 @@ export class CRMComponent implements OnInit {
               report_type: 'monthlyActivity'
             }
           }
-          if(navigationExtrasToMonthly){
+          if (navigationExtrasToMonthly) {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToMonthly);
           }
           break;
@@ -610,126 +620,126 @@ export class CRMComponent implements OnInit {
               report_type: 'leadStatus'
             }
           }
-          if(navigationExtrasToLeadStatus){
+          if (navigationExtrasToLeadStatus) {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLeadStatus);
           }
           break;
-          case 'Processing Files Report':
-            const navigationExtrasToProcessingFiles: NavigationExtras = {
-              queryParams: {
-                report_type: 'processingFiles'
-              }
+        case 'Processing Files Report':
+          const navigationExtrasToProcessingFiles: NavigationExtras = {
+            queryParams: {
+              report_type: 'processingFiles'
             }
-            if(navigationExtrasToProcessingFiles){
+          }
+          if (navigationExtrasToProcessingFiles) {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToProcessingFiles);
+          }
+          break;
+        case 'HO-Consolidated Report':
+          const navigationExtrasToConsolidated: NavigationExtras = {
+            queryParams: {
+              report_type: 'consolidated'
             }
-            break;
-            case 'HO-Consolidated Report':
-              const navigationExtrasToConsolidated: NavigationExtras = {
-                queryParams: {
-                  report_type: 'consolidated'
-                }
-              }
-              if(navigationExtrasToConsolidated){
-                this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToConsolidated);
-              }
-              break;
-              case 'HO-Tat Report':
-                const navigationExtrasToTat: NavigationExtras = {
-                  queryParams: {
-                    report_type: 'tat'
-                  }
-                }
-                if(navigationExtrasToTat){
-                  this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToTat);
-                }
-                break;
-                case 'Recommended Status Report':
-                  const navigationExtrasToRecommendedStatus: NavigationExtras = {
-                    queryParams: {
-                      report_type: 'recommendedStatus'
-                    }
-                  }
-                  if(navigationExtrasToRecommendedStatus){
-                    this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToRecommendedStatus);
-                  }
-                  break;
-                  case 'Login Report':
-                    const navigationExtrasToLogin: NavigationExtras = {
-                      queryParams: {
-                        report_type: 'login'
-                      }
-                    }
-                    if(navigationExtrasToLogin){
-                      this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLogin);
-                    }
-                    break;
-                    case 'HO-Leads Status Report':
-                      const navigationExtrasToHOLeads: NavigationExtras = {
-                        queryParams: {
-                          report_type: 'HOLead'
-                        }
-                      }
-                      if(navigationExtrasToHOLeads){
-                        this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToHOLeads);
-                      }
-                      break;
-                      case 'Sanctioned Status Report':
-                        const navigationExtrasToSanctioned: NavigationExtras = {
-                          queryParams: {
-                            report_type: 'sanctionedStatus'
-                          }
-                        }
-                        if(navigationExtrasToSanctioned){
-                          this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToSanctioned);
-                        }
-                        break;
-                        case 'Employee-Average Tat Report':
-                          const navigationExtrasToEmployeeAverage: NavigationExtras = {
-                            queryParams: {
-                              report_type: 'employeeAverageTat'
-                            }
-                          }
-                          if(navigationExtrasToEmployeeAverage){
-                            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToEmployeeAverage);
-                          }
-                          break;
-                          case 'Employee-Daily Activity Report':
-                            const navigationExtrasToDailyActivity: NavigationExtras = {
-                              queryParams: {
-                                report_type: 'dailyActivity'
-                              }
-                            }
-                            if(navigationExtrasToDailyActivity){
-                              this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToDailyActivity);
-                            }
-                            break;
-                            case 'Customer Report':
-                              const navigationExtrasToCustomer: NavigationExtras = {
-                                queryParams: {
-                                  report_type: 'customerReport'
-                                }
-                              }
-                              if(navigationExtrasToCustomer){
-                                this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomer);
-                              }
-                              break;
-                              case 'Customer CRIF Status Report':
-                                const navigationExtrasToCustomerCrifStatus: NavigationExtras = {
-                                  queryParams: {
-                                    report_type: 'customerCrifStatus'
-                                  }
-                                }
-                                if(navigationExtrasToCustomerCrifStatus){
-                                  this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomerCrifStatus);
-                                }
-                                break;
+          }
+          if (navigationExtrasToConsolidated) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToConsolidated);
+          }
+          break;
+        case 'HO-Tat Report':
+          const navigationExtrasToTat: NavigationExtras = {
+            queryParams: {
+              report_type: 'tat'
+            }
+          }
+          if (navigationExtrasToTat) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToTat);
+          }
+          break;
+        case 'Recommended Status Report':
+          const navigationExtrasToRecommendedStatus: NavigationExtras = {
+            queryParams: {
+              report_type: 'recommendedStatus'
+            }
+          }
+          if (navigationExtrasToRecommendedStatus) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToRecommendedStatus);
+          }
+          break;
+        case 'Login Report':
+          const navigationExtrasToLogin: NavigationExtras = {
+            queryParams: {
+              report_type: 'login'
+            }
+          }
+          if (navigationExtrasToLogin) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToLogin);
+          }
+          break;
+        case 'HO-Leads Status Report':
+          const navigationExtrasToHOLeads: NavigationExtras = {
+            queryParams: {
+              report_type: 'HOLead'
+            }
+          }
+          if (navigationExtrasToHOLeads) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToHOLeads);
+          }
+          break;
+        case 'Sanctioned Status Report':
+          const navigationExtrasToSanctioned: NavigationExtras = {
+            queryParams: {
+              report_type: 'sanctionedStatus'
+            }
+          }
+          if (navigationExtrasToSanctioned) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToSanctioned);
+          }
+          break;
+        case 'Employee-Average Tat Report':
+          const navigationExtrasToEmployeeAverage: NavigationExtras = {
+            queryParams: {
+              report_type: 'employeeAverageTat'
+            }
+          }
+          if (navigationExtrasToEmployeeAverage) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToEmployeeAverage);
+          }
+          break;
+        case 'Employee-Daily Activity Report':
+          const navigationExtrasToDailyActivity: NavigationExtras = {
+            queryParams: {
+              report_type: 'dailyActivity'
+            }
+          }
+          if (navigationExtrasToDailyActivity) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToDailyActivity);
+          }
+          break;
+        case 'Customer Report':
+          const navigationExtrasToCustomer: NavigationExtras = {
+            queryParams: {
+              report_type: 'customerReport'
+            }
+          }
+          if (navigationExtrasToCustomer) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomer);
+          }
+          break;
+        case 'Customer CRIF Status Report':
+          const navigationExtrasToCustomerCrifStatus: NavigationExtras = {
+            queryParams: {
+              report_type: 'customerCrifStatus'
+            }
+          }
+          if (navigationExtrasToCustomerCrifStatus) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomerCrifStatus);
+          }
+          break;
       }
     }
   }
-  getImage(data){
-    if(data){
-      let imgSrc:any;
+  getImage(data) {
+    if (data) {
+      let imgSrc: any;
       switch (data.type) {
         case 'Activity Report':
           imgSrc = './assets/images/crmImages/craeteActivity.png';
@@ -761,72 +771,72 @@ export class CRMComponent implements OnInit {
             return imgSrc;
           }
           break;
-          case 'Processing Files Report':
-            imgSrc = './assets/images/crmImages/fileProcessing.png';
-            if (imgSrc) {
-              return imgSrc;
-            }
-            break;
-            case 'HO-Consolidated Report':
-              imgSrc = './assets/images/crmImages/consolidated.jfif';
-              if (imgSrc) {
-                return imgSrc;
-              }
-              break;
-              case 'HO-Tat Report':
-                imgSrc = './assets/images/crmImages/otherTemplate.png';
-                if (imgSrc) {
-                  return imgSrc;
-                }
-                break;
-                case 'Recommended Status Report':
-                  imgSrc = './assets/images/crmImages/otherTemplate.png';
-                  if (imgSrc) {
-                    return imgSrc;
-                  }
-                  break;
-                  case 'Login Report':
-                    imgSrc = './assets/images/crmImages/loginReport.png';
-                    if (imgSrc) {
-                      return imgSrc;
-                    }
-                    break;
-                    case 'HO-Leads Status Report':
-                      imgSrc = './assets/images/crmImages/leadStatus.png';
-                      if (imgSrc) {
-                        return imgSrc;
-                      }
-                      break;
-                      case 'Sanctioned Status Report':
-                        imgSrc = './assets/images/crmImages/otherTemplate.png';
-                        if (imgSrc) {
-                          return imgSrc;
-                        }
-                        break;
-                        case 'Employee-Average Tat Report':
-                          imgSrc = './assets/images/crmImages/otherTemplate.png';
-                          if (imgSrc) {
-                            return imgSrc;
-                          }
-                          break;
-                          case 'Employee-Daily Activity Report':
-                            imgSrc = './assets/images/crmImages/otherTemplate.png';
-                            if (imgSrc) {
-                              return imgSrc;
-                            }
-                            break;
-                            case 'Customer Report':
-                              imgSrc = './assets/images/crmImages/otherTemplate.png';
-                              if (imgSrc) {
-                                return imgSrc;
-                              }
-                              break;
-                              case 'Customer CRIF Status Report':
-                                imgSrc = './assets/images/crmImages/otherTemplate.png';
-                                if (imgSrc) {
-                                  return imgSrc;
-                                }
-                                break;
+        case 'Processing Files Report':
+          imgSrc = './assets/images/crmImages/fileProcessing.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'HO-Consolidated Report':
+          imgSrc = './assets/images/crmImages/consolidated.jfif';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'HO-Tat Report':
+          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Recommended Status Report':
+          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Login Report':
+          imgSrc = './assets/images/crmImages/loginReport.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'HO-Leads Status Report':
+          imgSrc = './assets/images/crmImages/leadStatus.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Sanctioned Status Report':
+          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Employee-Average Tat Report':
+          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Employee-Daily Activity Report':
+          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Customer Report':
+          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Customer CRIF Status Report':
+          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
       }
     }
   }

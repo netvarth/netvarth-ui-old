@@ -1,19 +1,21 @@
 <!-----card header start-->
 <div *ngIf="fileLoading" class="overlay">
   <div class="child">
-    <app-common-innerloading-spinner ></app-common-innerloading-spinner>
-  </div>  
+    <app-common-innerloading-spinner></app-common-innerloading-spinner>
+  </div>
 </div>
 
 <section class="card cardBoxShadow">
   <div class="title-gb no-padding">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head" *ngIf="leadInfo" style="color:#1D3E77">
-      <span *ngIf="!api_loading_UpdateKyc && !api_loading_UpdateKycProceed" class="fa fa-arrow-left pointer-cursor mgn-rt-15" (click)="goBack()"></span>
+      <span *ngIf="!api_loading_UpdateKyc && !api_loading_UpdateKycProceed"
+        class="fa fa-arrow-left pointer-cursor mgn-rt-15" (click)="goBack()"></span>
       {{headerName}}
     </div>
   </div>
 </section>
-<section  class="container card mt-4 mx-auto" *ngIf="leadInfo && leadInfo.status 
+<section class="container card mt-4 mx-auto"
+  *ngIf="leadInfo && leadInfo.status 
 && (leadInfo.status.name==='New' || leadInfo.status.name==='Sales Verified') && (leadInfo.redirectNotes && leadInfo.redirectNotes.length>0)">
   <div *ngIf="leadInfo.redirectNotes && leadInfo.redirectNotes.length>0 ">
     <div *ngIf="leadInfo.redirectNotes && leadInfo.redirectNotes.length>0 " class="notesHeaderSection">
@@ -29,7 +31,8 @@
         <span (click)="noteView(leadInfo)" class="pointer-cursor fa fa-external-link"></span>
       </div> -->
     </div>
-    <div id="myDiv" class="my-2 heightlimitSalesVerified" *ngIf="leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0 ">
+    <div id="myDiv" class="my-2 heightlimitSalesVerified"
+      *ngIf="leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0 ">
       <div>
         <div *ngFor="let note of leadInfo.redirectNotes;let i=index" class="allNotesList">
           <div class="notesListSection" *ngIf="note.note">
@@ -38,20 +41,20 @@
           <div class="notesListSection" style="gap:0.5px;justify-content:flex-start !important">
             <div *ngIf="note.createdDate">({{note.createdDate.slice(0,2) }}</div>
             <div *ngFor="let month of monthName">
-             <div *ngIf="month.count===note.createdDate.slice(3,5)">
-               {{month.monthName}},
-             </div>
+              <div *ngIf="month.count===note.createdDate.slice(3,5)">
+                {{month.monthName}},
+              </div>
             </div>
             <div *ngIf="note.createdDate && note.createdDate.slice(11,13)<12">
-             {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
+              {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
             </div>
             <div *ngIf="note.createdDate && note.createdDate.slice(11,13)===12">
-             {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
+              {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
             </div>
             <div *ngIf="note.createdDate && note.createdDate.slice(11,13)>12">
-             {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
+              {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
             </div>
-         </div>
+          </div>
         </div>
       </div>
     </div>
@@ -63,35 +66,41 @@
     <ng-container *ngFor="let applicant of applicants; let i=index">
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
-        (addApplicant)="receivedApplicantInfo($event, applicant)"
-        (removeApplicant)="removeApplicant($event, applicant)" [leadInfo]="leadInfo"></app-applicant>
+        (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
+        [leadInfo]="leadInfo"></app-applicant>
     </ng-container>
   </ng-container>
-  
+
 
   <ng-container *ngIf="leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified' 
-  || leadInfo.status.name==='Login Verified'">
+  || leadInfo.status.name==='Login Verified' || leadInfo.status.name==='Bank Details' 
+  || leadInfo.status.name==='Bank Details Verified' || leadInfo.status.name==='Two Wheeler Details'
+  || leadInfo.status.name==='Two Wheeler Details Verified' || leadInfo.status.name==='Loan Application'
+  || leadInfo.status.name==='Loan Application Verified'">
     <div class="row d-lg-flex justify-content-lg-start">
       <div class="card">
         <div style="display: flex;
         align-items: center;background-color: #fff;
         gap: 10px;margin-left: 30px;" *ngIf="(leadInfo.customer)">
           <div class="imageClass">
-            <div style="color: #8A8383;" *ngIf="(leadInfo.customer && leadInfo.customer.name )">{{leadInfo.customer.name[0] | capitalizeFirst}}</div>
+            <div style="color: #8A8383;" *ngIf="(leadInfo.customer && leadInfo.customer.name )">
+              {{leadInfo.customer.name[0] | capitalizeFirst}}</div>
           </div>
           <div>
             <div>
               <div style="font-size: 14px;
             color: #000000;
             font-weight: bold;
-            margin-bottom: 4px;" *ngIf="(leadInfo.customer && leadInfo.customer.name )">{{leadInfo.customer.name | capitalizeFirst}}</div>
+            margin-bottom: 4px;" *ngIf="(leadInfo.customer && leadInfo.customer.name )">{{leadInfo.customer.name |
+                capitalizeFirst}}</div>
             </div>
             <div>
               <div style="font-size: 12px;color: #000000;" *ngIf="telephoneNumber">+91{{telephoneNumber}}</div>
             </div>
             <div>
-              <div style="font-size: 12px;color: #000000;" *ngIf="leadInfo && leadInfo.leadId">LeadId-{{leadInfo.leadId}}</div>
-          </div>
+              <div style="font-size: 12px;color: #000000;" *ngIf="leadInfo && leadInfo.leadId">
+                LeadId-{{leadInfo.leadId}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -99,54 +108,61 @@
       <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Credit Score Generated')">
         <div *ngFor="let item of kycInfo;let i=index">
           <!---crif btn start-->
-        <div class=" my-2" >
-          <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
+          <div class=" my-2">
+            <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
                 border: 1px solid #D7FFE9 !important;
                 color: #fff;
                 width: -webkit-fill-available;" (click)="showCrifscoreSection()">
-            {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
-            <span *ngIf="i===1">Co-Applicant </span>
-            <span *ngIf="i>1">Co-Applicant {{i}}</span>
-          </button>
-      </div>
-      <!----crif btn end-->
-      <div *ngIf="showCrifSection">
-          <span class="group-head">CRIF Score of
-            <span *ngIf="i===0">Applicant</span>
-            <span *ngIf="i===1">Co-Applicant </span>
-            <span *ngIf="i>1">Co-Applicant {{i}}</span>
-          </span><br>
-          <div class="bggrey my-2">
+              {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
+              <span *ngIf="i===1">Co-Applicant </span>
+              <span *ngIf="i>1">Co-Applicant {{i}}</span>
+            </button>
+          </div>
+          <!----crif btn end-->
+          <div *ngIf="showCrifSection">
+            <span class="group-head">CRIF Score of
+              <span *ngIf="i===0">Applicant</span>
+              <span *ngIf="i===1">Co-Applicant </span>
+              <span *ngIf="i>1">Co-Applicant {{i}}</span>
+            </span><br>
+            <div class="bggrey my-2">
               <div style="display: flex;gap: 5px">
-                  <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;
+                <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;
           flex-direction: row-reverse; justify-content: left;">
-                      <div class="leadTitle">
-                      </div>
-                      <div class="fieldPadding">
-                          <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
-                              {{crifScore}} </a>
-                          <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
-                              style="margin-left: 25px !important;width: -webkit-fill-available;"
-                              class="btn btn mb-2 action-button action-button-add confirmBtn">
-                              Check CRIF Verification </button>
-                      </div>
-                      <app-common-innerloading-spinner *ngIf="api_loadingprintCrif"></app-common-innerloading-spinner>
-                      <div *ngIf="showPdfIcon">
-                          <a (click)="printCRIF()">
-                              <img class="img" style="height: 50px; width: 50px;"
-                                  src="/assets/images/ImgeFileIcon/pdf.png" />
-                          </a>
-                      </div>
+                  <div class="leadTitle">
                   </div>
+                  <div class="fieldPadding">
+                    <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
+                      {{crifScore}} </a>
+                    <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
+                      style="margin-left: 25px !important;width: -webkit-fill-available;"
+                      class="btn btn mb-2 action-button action-button-add confirmBtn">
+                      Check CRIF Verification </button>
+                  </div>
+                  <app-common-innerloading-spinner *ngIf="api_loadingprintCrif"></app-common-innerloading-spinner>
+                  <div *ngIf="showPdfIcon">
+                    <a (click)="printCRIF()">
+                      <img class="img" style="height: 50px; width: 50px;" src="/assets/images/ImgeFileIcon/pdf.png" />
+                    </a>
+                  </div>
+                </div>
               </div>
+            </div>
           </div>
-      </div>
         </div>
-          </div>
-      <div *ngIf="showQuestionnaire && questionaire" class="quest">
-        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"  [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)"
-          (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
       </div>
+      <div *ngIf="showQuestionnaire && questionaire" class="quest">
+        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
+          [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)">
+        </app-questionnaire>
+      </div>
+      <div *ngIf="leadInfo.status.name==='Bank Details' || leadInfo.status.name==='Two Wheeler Details' 
+      || leadInfo.status.name==='Loan Application'" class="quest">
+      <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
+        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+          (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+      </ng-container>
+    </div>
     </div>
   </ng-container>
   <ng-container class="remarksSection" *ngIf="leadInfo.status.name === 'KYC Updated'">
@@ -163,15 +179,17 @@
           <textarea rows="10" class="form-control" [(ngModel)]="notes" #taskDescription
             (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter remarks description"
             style=" height: 40px !important;background: #FCFCFC !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
-          </div>
-        
+        </div>
+
         <!---cancel save btn start-->
         <div
           style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
           <div style="text-align: center;">
             <ng-container>
               <div>
-                <button [ngClass]="{'cursorDiasable':remarksDisable}" type="button" class="btn btn-primary font-weight-bold confirmBtnRemarks" (click)="!remarksDisable && saveNotes()">Add
+                <button [ngClass]="{'cursorDiasable':remarksDisable}" type="button"
+                  class="btn btn-primary font-weight-bold confirmBtnRemarks"
+                  (click)="!remarksDisable && saveNotes()">Add
                   Remarks</button>
               </div>
             </ng-container>
@@ -195,20 +213,20 @@
               <div class="notesListSection" style="gap:0.5px;justify-content:flex-start !important">
                 <div>({{note.createdDate.slice(0,2) }}</div>
                 <div *ngFor="let month of monthName">
-                 <div *ngIf="month.count===note.createdDate.slice(3,5)">
-                   {{month.monthName}},
-                 </div>
+                  <div *ngIf="month.count===note.createdDate.slice(3,5)">
+                    {{month.monthName}},
+                  </div>
                 </div>
                 <div *ngIf="note.createdDate.slice(11,13)<12">
-                 {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
+                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
                 </div>
                 <div *ngIf="note.createdDate.slice(11,13)===12">
-                 {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
+                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
                 </div>
                 <div *ngIf="note.createdDate.slice(11,13)>12">
-                 {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
+                  {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
                 </div>
-             </div>
+              </div>
             </div>
           </div>
         </div>
@@ -217,32 +235,33 @@
   </ng-container>
   <ng-container *ngIf="leadInfo.status.name==='Login'">
     <ng-container *ngFor="let applicant of applicants; let i=index">
-      <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid" [mode]="'read'"
-        [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
-        (addApplicant)="receivedApplicantInfo($event, applicant)"
-        (removeApplicant)="removeApplicant($event, applicant)" [leadInfo]="leadInfo"></app-applicant>
+      <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
+        [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
+        (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
+        [leadInfo]="leadInfo"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)"
-        (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+        (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
   </ng-container>
 
   <ng-container *ngIf="leadInfo.status.name==='Credit Recommendation'">
-    
+
     <ng-container *ngFor="let applicant of applicants; let i=index">
-      <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid" [mode]="'read'"
-        [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
-        (addApplicant)="receivedApplicantInfo($event, applicant)"
-        (removeApplicant)="removeApplicant($event, applicant)" [leadInfo]="leadInfo" ></app-applicant>
+      <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
+        [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
+        (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
+        [leadInfo]="leadInfo"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)"
-        (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+        (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
     <ng-container *ngIf="showQuestionnaire && questionaire" class="quest">
-        <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"  [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)"
-          (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
+        [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)">
+      </app-questionnaire>
     </ng-container>
   </ng-container>
   <div *ngIf="leadInfo.status.name==='New'" class="mgn-up-20">
@@ -260,27 +279,36 @@
     <ng-container>
       <!-- {{leadInfo.status | json}} -->
       <div class=" mgn-bt-20 mgn-up-10 allBtns">
-        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading_UpdateKyc && goBack()"[ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}">Cancel</button>
-        <button [ngClass]="{'cursorDiasable':  api_loading_UpdateKycProceed}" class="btn btn-primary font-weight-bold confirmBtn" type="button" (click)=" !api_loading_UpdateKyc && updateKyc()"
-         [disabled]="api_loading_UpdateKyc">
-         <!-- *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name !=='Login Verified'" -->
-        <span *ngIf="!api_loading_UpdateKyc">Save</span>
-        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKyc">
-        </app-common-innerloading-spinner>
+        <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
+          (click)="!api_loading_UpdateKyc && goBack()"
+          [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}">Cancel</button>
+        <button [ngClass]="{'cursorDiasable':  api_loading_UpdateKycProceed}"
+          class="btn btn-primary font-weight-bold confirmBtn" type="button"
+          (click)=" !api_loading_UpdateKyc && updateKyc()" [disabled]="api_loading_UpdateKyc">
+          <!-- *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name !=='Login Verified'" -->
+          <span *ngIf="!api_loading_UpdateKyc">Save</span>
+          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKyc">
+          </app-common-innerloading-spinner>
         </button>
-        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc}" type="button" class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
+        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc}" type="button"
+          class="btn btn-primary font-weight-bold confirmBtn" style="background: #D7FEE9 !important;
          border: 1.0803px solid #D7FFE9 !important;color: #38C984 !important;"
-          (click)="!api_loading_UpdateKyc && ProceedStatus()"[disabled]="api_loading_UpdateKycProceed">
-          <span *ngIf="!api_loading_UpdateKycProceed">{{leadInfo.status.name==='Sales Verified' ? 'Login': 'Proceed'}}</span>
-          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKycProceed"></app-common-innerloading-spinner>
+          (click)="!api_loading_UpdateKyc && ProceedStatus()" [disabled]="api_loading_UpdateKycProceed">
+          <span *ngIf="!api_loading_UpdateKycProceed">{{leadInfo.status.name==='Sales Verified' ? 'Login':
+            'Proceed'}}</span>
+          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKycProceed">
+          </app-common-innerloading-spinner>
         </button>
-        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button" class="btn btn-primary font-weight-bold confirmBtn"
-          style="background: #FADDDD !important;color:black !important" (click)="!api_loading_UpdateKyc && reject(leadUID)"
-          *ngIf="leadInfo.status.name!=='Login'">Rejected
+        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button"
+          class="btn btn-primary font-weight-bold confirmBtn"
+          style="background: #FADDDD !important;color:black !important"
+          (click)="!api_loading_UpdateKyc && reject(leadUID)" *ngIf="leadInfo.status.name!=='Login'">Rejected
         </button>
-        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button" class="button-5"
-          (click)="!api_loading_UpdateKyc && redirect(leadUID)"
-          *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name==='KYC Updated'">Redirect
+        <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button"
+          class="button-5" (click)="!api_loading_UpdateKyc && redirect(leadUID)"
+          *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name==='KYC Updated'
+          || leadInfo.status.name==='Bank Details' || leadInfo.status.name==='Two Wheeler Details' 
+          || leadInfo.status.name==='Loan Application'">Redirect
         </button>
       </div>
     </ng-container>

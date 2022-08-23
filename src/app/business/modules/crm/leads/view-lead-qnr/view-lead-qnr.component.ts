@@ -169,17 +169,16 @@ export class ViewLeadQnrComponent implements OnInit {
           else if(leadInfo.status.name === 'KYC Updated'){
             _this.headerName = "CRIF";
           }
-        } else if (leadInfo && leadInfo.status && leadInfo.status.name === 'Login') {
-          _this.headerName = "Login Verification";
+        } else if (leadInfo && leadInfo.status && (leadInfo.status.name === 'Login' ||  leadInfo.status.name === 'Bank Details'
+        || this.leadInfo.status.name==='Loan Application' || this.leadInfo.status.name==='Two Wheeler Details')) {
+          _this.headerName = leadInfo.status.aliasName;
           _this.crmService.getkyc(leadInfo.uid).subscribe(
             (kycInfo) => {
               console.log("KYC Info:", kycInfo);
               _this.initApplicantForm(kycInfo);
             }
-
           )
-        }
-        else if (leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Score Generated') {
+        } else if (leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Score Generated') {
           // console.log('this.kycInfo',this.kycInfo)
           _this.crmService.getkyc(leadInfo.uid).subscribe(
             (kycInfo:any) => {
@@ -204,9 +203,8 @@ export class ViewLeadQnrComponent implements OnInit {
                 _this.initApplicantForm(kycInfo);
               }
             )
-          }
-          else if(leadInfo && leadInfo.status && leadInfo.status.name === 'Sales Verified'){ 
-            _this.headerName = 'Login';
+          } else { 
+            _this.headerName = leadInfo.status.aliasName;
           }
           _this.getQuestionaire();
         }
@@ -578,7 +576,7 @@ export class ViewLeadQnrComponent implements OnInit {
     const dataToSend: FormData = new FormData();
     const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
-    if (this.leadInfo.status.name === 'Login Verified') {
+    if (this.leadInfo.status.name === 'Login Verified' || this.questionaire.transactionType==='LEADSTATUS') {
       _this.providerServices.submitLeadLoginVerifyQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         _this.complete(uuid, type);
       });
@@ -599,7 +597,8 @@ export class ViewLeadQnrComponent implements OnInit {
     const _this = this;
     if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified'
       || this.leadInfo.status.name === 'Login Verified' || this.leadInfo.status.name === 'Credit Recommendation'
-      || this.leadInfo.status.name === 'Login') {
+      || this.leadInfo.status.name === 'Login' || this.leadInfo.status.name === 'Bank Details Verified'
+      || this.leadInfo.status.name==='Loan Application Verified' || this.leadInfo.status.name==='Two Wheeler Details Verified') {
       console.log('updateKyc', this.leadInfo.status.name);
       console.log(this.questionAnswers);
       if (!this.questionAnswers.answers) {
@@ -668,7 +667,7 @@ export class ViewLeadQnrComponent implements OnInit {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
             }, projectConstants.TIMEOUT_DELAY);
           })
-    }
+    } 
   }
   /**
    * Proceed Button
@@ -677,6 +676,8 @@ export class ViewLeadQnrComponent implements OnInit {
     const _this=this;
     if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified'
       || this.leadInfo.status.name === 'Login Verified' || this.leadInfo.status.name === 'Credit Recommendation'
+      || this.leadInfo.status.name === 'Bank Details Verified' || this.leadInfo.status.name==='Loan Application Verified'
+      || this.leadInfo.status.name==='Two Wheeler Details Verified'
     ) {
       // this.api_loading_UpdateKyc=true;
       this.api_loading_UpdateKycProceed = true;
@@ -708,8 +709,7 @@ export class ViewLeadQnrComponent implements OnInit {
               this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
               this.api_loading = false;
             });
-        }
-        else{
+        } else{
           this.providerServices.validateProviderQuestionnaire(this.questionAnswers.answers).subscribe((data: any) => {
             this.api_loading = false;
             if (data.length === 0) {
@@ -725,10 +725,7 @@ export class ViewLeadQnrComponent implements OnInit {
               this.api_loading = false;
             });
         }
-       
       }
-
-
     } else if (this.leadInfo.status.name === 'Login') {
       this.crmService.proceedToLoginVerified(this.leadInfo.status.id, this.leadInfo.uid).subscribe((response) => {
         this.api_loading_UpdateKycProceed = true;
@@ -738,18 +735,10 @@ export class ViewLeadQnrComponent implements OnInit {
         this.api_loading_UpdateKycProceed = false;
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       });
-    }
-
-    // else if (this.leadInfo.status.name === 'Credit Recommendation' ) {
-    //   this.crmService.proceedToLoginVerified(this.leadInfo.uid).subscribe((response) => {
-    //     this.api_loading_UpdateKycProceed=true;
-    //     this.router.navigate(['provider', 'crm']);
-    //   }, (error) => {
-    //     this.api_loading_UpdateKycProceed=false;
-    //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //   });
-    // }
-    else {
+    } else if (this.leadInfo.status.name === 'Bank Details' || this.leadInfo.status.name==='Loan Application' 
+    || this.leadInfo.status.name==='Two Wheeler Details'){
+      this.complete(this.leadInfo.uid);
+    } else {
       this.api_loading_UpdateKycProceed = true;
       let applicantsList = [];
       Object.keys(this.applicantsInfo).forEach((key) => {
