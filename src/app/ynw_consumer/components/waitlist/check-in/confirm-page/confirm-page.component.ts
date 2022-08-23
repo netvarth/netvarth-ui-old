@@ -76,6 +76,9 @@ export class ConfirmPageComponent implements OnInit ,OnDestroy{
   }
 
   ngOnInit() {
+    this.lStorageService.removeitemfromLocalStorage('itemArray');  
+              this.lStorageService.removeitemfromLocalStorage('serviceOPtionInfo'); 
+              this.lStorageService.removeitemfromLocalStorage('serviceTotalPrice'); 
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
