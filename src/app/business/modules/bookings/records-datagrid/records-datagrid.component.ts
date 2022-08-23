@@ -192,7 +192,13 @@ export class RecordsDatagridComponent implements OnInit {
       filter = { 'providerConsumer-eq': this.customerId };
     }
     this.provider_services.getProviderBills(filter).subscribe(data => {
-      this.records = data;
+      if(this.customerId || this.providerId){
+        this.records = data;
+      }
+      else{
+        this.records = [];
+      }
+      console.log("Bills :",this.records)
       this.loading = false;
     })
   }

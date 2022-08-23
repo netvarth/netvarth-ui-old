@@ -47,12 +47,19 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     }
     this.provider_services.GetMedicalRecordList(filter)
       .subscribe((data: any) => {
-        this.mrList = data;
-        this.rxList = this.mrList.filter(mr => mr.prescriptionCreated);
-        if (this.source === 'details') {
-          const uuid = (this.waitlist_data.waitlistStatus) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
-          this.waitlistmr = this.mrList.filter(mr => mr.uuid === uuid);
+        if(this.customerId || this.providerId){
+          this.mrList = data;
+          this.rxList = this.mrList.filter(mr => mr.prescriptionCreated);
+          if (this.source === 'details') {
+            const uuid = (this.waitlist_data.waitlistStatus) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
+            this.waitlistmr = this.mrList.filter(mr => mr.uuid === uuid);
+          }
         }
+        else{
+          this.mrList = [];
+          this.rxList = [];
+        }
+       
         this.loading = false;
       });
   }
