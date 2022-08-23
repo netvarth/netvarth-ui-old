@@ -27,8 +27,7 @@
       <div>
         <span class="table-heading"><b>Clinical Notes</b></span>
       </div>
-      <!-- {{clinicalNotes | json}} -->
-      <div *ngFor="let list of clinicalNotes;let i = index;">
+      <!-- <div *ngFor="let list of clinicalNotes;let i = index;">
         <div class="form-group">
           <label>{{list.displayName }}</label>
           <div class="input-group">
@@ -38,11 +37,81 @@
               placeholder="Enter {{list.displayName}} instructions" maxlength="500"></textarea>
           </div>
         </div>
+      </div> -->
+      <div class="form-group">
+        <label>Symptoms</label>
+        <div class="input-group">
+          <div class="input-group-prepend"></div>
+          <textarea #clinicalNotesTypeSymptomsSymptoms  [(ngModel)]="clinicalNotesTypeSymptoms"  
+          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+            placeholder="Enter Symptoms instructions" maxlength="500"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Observations</label>
+        <div class="input-group">
+          <div class="input-group-prepend"></div>
+          <textarea #clinicalNotesTypeObservationsObservations  [(ngModel)]="clinicalNotesTypeObservations" 
+          
+          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+            placeholder="Enter Observations instructions" maxlength="500"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Diagnosis</label>
+        <div class="input-group">
+          <div class="input-group-prepend"></div>
+          <textarea #clinicalNotesTypeDiagnosisDiagnosis  [(ngModel)]="clinicalNotesTypeDiagnosis" 
+          
+          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+            placeholder="Enter Diagnosis instructions" maxlength="500"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Notes</label>
+        <div class="input-group">
+          <div class="input-group-prepend"></div>
+          <textarea #clinicalNotesNotesNotes  [(ngModel)]="clinicalNotesNotes" 
+          
+          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+            placeholder="Enter Notes instructions" maxlength="500"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Allergies</label>
+        <div class="input-group">
+          <div class="input-group-prepend"></div>
+          <textarea #clinicalNotesAllergiesAllergies  [(ngModel)]="clinicalNotesAllergies" 
+         
+          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+            placeholder="Enter Allergies instructions" maxlength="500"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Complaints</label>
+        <div class="input-group">
+          <div class="input-group-prepend"></div>
+          <textarea #clinicalNotesComplaintsComplaints  [(ngModel)]="clinicalNotesComplaints" 
+          
+          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+            placeholder="Enter Complaints instructions" maxlength="500"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Vaccination Notes</label>
+        <div class="input-group">
+          <div class="input-group-prepend"></div>
+          <textarea #clinicalNotesVaccinationNotesVaccinationNotes  [(ngModel)]="clinicalNotesVaccinationNotes" 
+           
+          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+            placeholder="Enter Vaccination Notes instructions" maxlength="500"></textarea>
+        </div>
       </div>
       <div>
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback()">Cancel</button>
         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" 
-          (click)="saveClinicalNotes()">Save</button>
+          (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
+          ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)">Save</button>
       </div>
     </div>
   </div>
@@ -94,11 +163,13 @@
     <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate">
       <div class="table-heading">Clinical Notes</div>
       <!-- {{clinicalNotes | json}} -->
-      <div *ngFor="let item of clinicalNotes" [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}" class="shadow clinicalNotesList" >
-        <div class="notelabel" [ngStyle]="{'color':getColorType(item)}">{{item.type}}</div>
-        <div class="noteDes">{{item.clinicalNotes}}</div>
+      <div *ngFor="let item of clinicalNotes" >
+        <div *ngIf="item && item.clinicalNotes" [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}" class="shadow clinicalNotesList" >
+          <div class="notelabel" [ngStyle]="{'color':getColorType(item)}"><div *ngIf="item && item.type && item.clinicalNotes">{{item.type}}</div>
+          <div class="noteDes" *ngIf="item && item.clinicalNotes">{{item.clinicalNotes}}</div>
+        </div>
       </div>
-    </div>
+      </div>
    
   </div>
 </div>

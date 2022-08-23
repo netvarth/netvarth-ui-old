@@ -45,7 +45,13 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   isLoaded = false;
   clinical_constant = projectConstantsLocal.CLINICAL_NOTES;
   clinicalNotesValue:any;
-  clinicalNotesType:any;
+  clinicalNotesTypeSymptoms:any;
+  clinicalNotesTypeObservations:any;
+  clinicalNotesTypeDiagnosis:any;
+  clinicalNotesNotes:any;
+  clinicalNotesAllergies:any;
+  clinicalNotesComplaints:any;
+  clinicalNotesVaccinationNotes:any;
   clinicalNotesAddList:any=[];
   customerId:any;
   private subscriptions = new SubSink();
@@ -234,33 +240,104 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   handleClinicalNotes(data,type){
     // console.log('data',data);
     console.log('type',type);
-    this.clinicalNotesValue= data;
-    this.clinicalNotesType=(type);
-    const payload = {
-      'type':this.clinicalNotesType,
-      'clinicalNotes': this.clinicalNotesValue
-    };
-    
-    console.log(payload);
-    this.clinicalNotesAddList.push(payload)
-
-  }
-  saveClinicalNotes(){
-    // console.log('type',type)
-    console.log('this.clinicalNotesValue::',this.clinicalNotesValue)
+    // this.clinicalNotesValue= data;
+    // this.clinicalNotesTypeSymptoms=(type);
     // const payload = {
-    //   'type':this.clinicalNotesType,
+    //   'type':this.clinicalNotesTypeSymptoms,
     //   'clinicalNotes': this.clinicalNotesValue
     // };
-    // console.log('payload::',payload)
-    // console.log('clinicalNotesAddList:::',this.clinicalNotesAddList)
-    // console.log('this.clinicalNotesType',this.clinicalNotesType);
-    // this.customerDetails = data.providerConsumer;
-    // const customerId = this.customerDetails.id;
+    
+    // console.log(payload);
+    // this.clinicalNotesAddList.push(payload)
+
+  }
+  saveClinicalNotes(symtopData,observationData,DiagnosisData,NotesData,AllergiesData,ComplaintsData,VaccinationData){
+    // console.log('symtop',symtopData)
+    // console.log('observation',observationData)
+    // console.log('this.clinicalNotesValue::',this.clinicalNotesValue)
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
-      const patientId=this.customerId
-    this.medicalrecordService.createMR('clinicalNotes', this.clinicalNotesAddList).then((res:any) => {
+      const patientId=this.customerId;
+      let payload:any=[]
+      // console.log('patientId::',patientId);
+      // console.log('clinicalNotesTypeSymptoms',this.clinicalNotesTypeSymptoms);
+      // console.log('clinicalNotesTypeObservations',this.clinicalNotesTypeObservations)
+      payload =[
+        {
+          'type':'Symptoms',
+            'clinicalNotes': symtopData
+        },
+        {
+          'type':'Observations',
+          'clinicalNotes':observationData
+        },
+        {
+          'type':'Diagnosis',
+          'clinicalNotes':DiagnosisData
+        },
+        {
+          'type':'Notes',
+          'clinicalNotes': NotesData
+        },
+        {
+          'type':'Allergies',
+          'clinicalNotes':AllergiesData
+        },
+        {
+          'type':'Complaints',
+          'clinicalNotes': ComplaintsData
+        },
+        {
+          'type':'Vaccination Notes',
+          'clinicalNotes': VaccinationData
+        }
+      ]
+      // if(this.clinicalNotesTypeSymptoms){
+      //    payload = {
+      //     'type':'Symptoms',
+      //     'clinicalNotes': symtopData
+      //   };
+      // }
+      // if(this.clinicalNotesTypeObservations){
+      //   payload = {
+      //     'type':'Observations',
+      //     'clinicalNotes':observationData
+      //   };
+      // }
+      // if(this.clinicalNotesTypeDiagnosis){
+      //   payload = {
+      //     'type':'Diagnosis',
+      //     'clinicalNotes':DiagnosisData
+      //   };
+      // }
+      // if(this.clinicalNotesNotes){
+      //   payload = {
+      //     'type':'Notes',
+      //     'clinicalNotes': NotesData
+      //   };
+      // }
+      // if(this.clinicalNotesAllergies){
+      //   payload = {
+      //     'type':'Allergies',
+      //     'clinicalNotes':AllergiesData
+      //   };
+      // }
+      // if(this.clinicalNotesComplaints){
+      //   payload = {
+      //     'type':'Complaints',
+      //     'clinicalNotes': ComplaintsData
+      //   };
+      // }
+      // if(this.clinicalNotesVaccinationNotes){
+      //   payload = {
+      //     'type':'Vaccination Notes',
+      //     'clinicalNotes': VaccinationData
+      //   };
+      // }
+      console.log(payload);
+      this.clinicalNotesAddList.push(payload)
+      console.log('clinicalNotesAddList',payload)
+    this.medicalrecordService.createMR('clinicalNotes',payload).then((res:any) => {
       this.mrId= res;
       console.log('this.mrId::',this.mrId)
       this.snackbarService.openSnackBar('Medical Record Created Successfully');
