@@ -31,22 +31,22 @@
                     *ngIf="repeat_type !== 'repeat_type' && getQuestion(question).dataGridListProperties.dataGridListColumns[0].dataType === 'list'">
                     <div class="col-12"
                       *ngFor="let data of getQuestion(question).dataGridListProperties.dataGridListColumns">
-                      <div *ngIf="data.order==1 && !isSecondcase" class="px-md-5 px-lg-5">
+                      <div *ngIf="data.order==1 && !isSecondcase">
                         <label class="label text-dark font-weight-bold">{{data.label}}
                           <span class="red"
                             *ngIf="getQuestion(question).dataGridListProperties.dataGridListColumns[0].mandatory">*</span>
                         </label>
                         <div>
-                          <div class="px-md-3 px-lg-3">
-                            <label class="radio" *ngFor="let value of data.listPropertie.values">
+                          <div>
+                            <label class="radio border-radio" *ngFor="let value of data.listPropertie.values">
                               <input type="radio"
                                 [checked]="isChecked(value, getQuestion(question), getQuestion(question).dataGridListProperties.dataGridListColumns[0])"
                                 (change)="listChange($event, value, getQuestion(question), data)"
-                                [disabled]="buttonDisable || disableInput()">
+                                [disabled]="buttonDisable || disableInput()" [class.border-apply]="isCheckedoption">
 
                               {{value}} <span style="float: right;" *ngIf="basePrice"> <i class="fa fa-inr"></i>
                                 {{getValue(value)}}</span>
-                              <hr class="py-1 my-1">
+
                             </label>
                           </div>
                         </div>
@@ -56,24 +56,24 @@
                           <span class="red" *ngIf="data.mandatory">*</span>
                         </label><br>
                         <div *ngIf="data.listPropertie.maxAnswerable">
-                          <label class="checkbox" *ngFor="let value of data.listPropertie.values">
+                          <label class="checkbox border-radio" *ngFor="let value of data.listPropertie.values">
                             <input type="radio" [checked]="isChecked(value, getQuestion(question), data)"
                               (change)="listChange($event, value, getQuestion(question), data)"
                               [disabled]="buttonDisable || disableInput()">
                             <span></span>
                             {{value}} <span style="float: right;"> <i class="fa fa-inr"></i>
                               {{getRate(value)}}</span>
-                            <hr class="py-1 my-1">
+
                           </label>
                         </div>
-                        <div *ngIf="!data.listPropertie.maxAnswerable" class="ml-md-4 ml-lg-4">
-                          <label class="checkbox" *ngFor="let value of data.listPropertie.values">
+                        <div *ngIf="!data.listPropertie.maxAnswerable">
+                          <label class="checkbox border-radio" *ngFor="let value of data.listPropertie.values">
                             <input type="checkbox" [checked]="isChecked(value, getQuestion(question), data)"
                               (change)="listChange($event, value, getQuestion(question), data)"
                               [disabled]="buttonDisable || disableInput()">
                             {{value}} <span style="float: right;"> <i class="fa fa-inr"></i>
                               {{getRate(value)}}</span>
-                            <hr class="py-1 my-1">
+
                           </label>
                         </div>
                         <div class="mt-2 text-danger" *ngIf="data.mandatory">
@@ -83,14 +83,14 @@
                         <label class="label text-dark font-weight-bold">{{data.label}}
                           <span class="red" *ngIf="!data.mandatory">*</span>
                         </label>
-                        <div class="px-md-3 px-lg-3">
-                          <label class="checkbox">
+                        <div>
+                          <label class="checkbox border-radio">
                             <input [(ngModel)]="inputnumber" (input)="onSubmit('inputChange');"
                               [disabled]="buttonDisable || disableInput()"
                               (ngModelChange)="changesApplied($event, getQuestion(question), data)"
                               class="form-control1 form-control-solid" type="text">
                             <span></span>
-                            <hr class="py-1 my-1">
+
                           </label>
                         </div>
                       </div>
@@ -98,8 +98,8 @@
                         <label class="label text-dark font-weight-bold">{{data.label}}
                           <span class="red" *ngIf="!data.mandatory">*</span>
                         </label>
-                        <div class="px-md-3 px-lg-3">
-                          <label class="checkbox">
+                        <div>
+                          <label class="checkbox border-radio">
                             <input class="form-control1" [matDatepicker]="picker" [max]="getMaxdate(question)"
                               [min]="getMindate(question)" [(ngModel)]="inputDate"
                               (dateChange)="changesApplied($event, getQuestion(question), data)"
@@ -109,7 +109,7 @@
                             <mat-datepicker #picker [disabled]="buttonDisable || disableInput()">
                             </mat-datepicker>
                             <span></span>
-                            <hr class="py-1 my-1">
+
                           </label>
                         </div>
                       </div>
@@ -118,7 +118,7 @@
                           <span class="red" *ngIf="!data.mandatory">*</span>
                         </label>
                         <div class="px-md-3 px-lg-3">
-                          <label class="radio">
+                          <label class="radio border-radio">
                             <input type="radio" [disabled]="buttonDisable || disableInput()"
                               [checked]="isBooleanChecked('yes', getQuestion(question),data)"
                               (change)="booleanChange($event, 'Yes', getQuestion(question), data)">
@@ -126,7 +126,7 @@
                             Yes
                             <span></span>
                           </label>
-                          <label class="radio">
+                          <label class="radio border-radio">
                             <input type="radio" [disabled]="buttonDisable || disableInput()"
                               [checked]="isBooleanChecked('no', getQuestion(question), data)"
                               (change)="booleanChange($event, 'No', getQuestion(question), data)">
@@ -175,11 +175,12 @@
                             *ngIf="getQuestion(question).labels[0].question.dataGridListProperties.dataGridListColumns[0].mandatory">*</span>
                         </label>
                         <div class="col-12">
-                          <div class="radio-list">
-                            <label class="radio" *ngFor="let value of data.listPropertie.values">
+                          <div>
+                            <label class="radio border-radio" *ngFor="let value of data.listPropertie.values">
                               <input type="radio"
                                 [checked]="isChecked(value, getQuestion(question).labels[0].question, getQuestion(question).labels[0].question.dataGridListProperties.dataGridListColumns[0])"
-                                (change)="listChange($event, value, getQuestion(question).labels[0].question, data)"
+                                (change)="listChange($event, value,
+                                getQuestion(question).labels[0].question, data)"
                                 [disabled]="buttonDisable || disableInput()">
                               <span></span>
                               {{value}} <span style="float: right;" *ngIf="basePrice"> <i class="fa fa-inr"></i>
@@ -193,7 +194,7 @@
                           <span class="red" *ngIf="data.mandatory">*</span>
                         </label><br>
                         <div *ngIf="data.listPropertie.maxAnswerable">
-                          <label class="checkbox" *ngFor="let value of data.listPropertie.values">
+                          <label class="checkbox  border-radio" *ngFor="let value of data.listPropertie.values">
                             <input type="radio"
                               [checked]="isChecked(value, getQuestion(question).labels[0].question, data)"
                               (change)="listChange($event, value, getQuestion(question).labels[0].question, data)"
@@ -206,7 +207,7 @@
                         <!-- <div class="mt-2 text-danger" *ngIf="data.mandatory">
                                                 Please select mandatory fields</div> -->
                         <div *ngIf="!data.listPropertie.maxAnswerable">
-                          <label class="checkbox" *ngFor="let value of data.listPropertie.values">
+                          <label class="checkbox border-radio" *ngFor="let value of data.listPropertie.values">
                             <input type="checkbox"
                               [checked]="isChecked(value,getQuestion(question).labels[0].question, data)"
                               (change)="listChange($event, value, getQuestion(question).labels[0].question, data)"
@@ -225,7 +226,7 @@
                           <span class="red" *ngIf="!data.mandatory">*</span>
                         </label>
                         <div>
-                          <label class="checkbox">
+                          <label class="checkbox border-radio">
                             <input [(ngModel)]="plainText" (input)="onSubmit('inputChange');"
                               [disabled]="buttonDisable || disableInput()"
                               (ngModelChange)="changesApplied($event, getQuestion(question), data)"
@@ -242,7 +243,7 @@
                           <span class="red" *ngIf="!data.mandatory">*</span>
                         </label>
                         <div>
-                          <label class="checkbox">
+                          <label class="checkbox border-radio">
                             <input [(ngModel)]="inputnumber" (input)="onSubmit('inputChange');"
                               [disabled]="buttonDisable || disableInput()"
                               (ngModelChange)="changesApplied($event, getQuestion(question), data)"
@@ -258,7 +259,7 @@
                           <span class="red" *ngIf="!data.mandatory">*</span>
                         </label>
                         <div>
-                          <label class="checkbox">
+                          <label class="checkbox border-radio">
                             <input class="form-control1" [matDatepicker]="picker" [max]="getMaxdate(question)"
                               [min]="getMindate(question)" [(ngModel)]="inputDate"
                               (dateChange)="changesApplied($event, getQuestion(question), data)"
@@ -279,7 +280,7 @@
                           <span class="red" *ngIf="!data.mandatory">*</span>
                         </label>
                         <div>
-                          <label class="radio">
+                          <label class="radio border-radio">
                             <input type="radio" [disabled]="buttonDisable || disableInput()"
                               [checked]="isBooleanChecked('yes', getQuestion(question),data)"
                               (change)="booleanChange($event, 'Yes', getQuestion(question), data)">
@@ -287,7 +288,7 @@
                             Yes
                             <span></span>
                           </label>
-                          <label class="radio">
+                          <label class="radio border-radio">
                             <input type="radio" [disabled]="buttonDisable || disableInput()"
                               [checked]="isBooleanChecked('no', getQuestion(question), data)"
                               (change)="booleanChange($event, 'No', getQuestion(question), data)">
@@ -338,11 +339,10 @@
                   <h6>Total Price : <i class="fa fa-inr"></i> {{totalPrice}} /-</h6>
                 </div>
                 <div class="mt-3 d-flex justify-content-center mt-3 px-md-5 px-lg-5 text-center">
-                  <button type="button" class="btn btn-light-primary font-weight-bold" (click)="closeDialogg()">
+                  <span class="btn btn-light-primary font-weight-bold" (click)="closeDialogg()">
                     Cancel
-                  </button>
-                  <button type="button" class="btn btn-primary font-weight-bold"
-                    (click)="saveDataGridColumn()">Add</button>
+                  </span>
+                  <span class="btn btn-primary font-weight-bold" (click)="saveDataGridColumn()">Add</span>
                 </div>
               </div>
             </div>
