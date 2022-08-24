@@ -40,7 +40,7 @@
       </div>
 
     </mat-tab>
-    <mat-tab class="notifilabel" label="Appointment Notifications" *ngIf="appointment_status" > 
+    <mat-tab class="notifilabel" label="Appointment Notifications" *ngIf="showToken && appointment_status" > 
       <div *ngIf="type=='Appointment'">
         <app-update-provider-notifications [type]="type" ></app-update-provider-notifications>
 
