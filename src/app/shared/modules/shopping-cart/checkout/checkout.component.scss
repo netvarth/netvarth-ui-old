@@ -503,7 +503,7 @@ box-shadow: 4px 4px 5px gainsboro;
 .paymentmode{
   font-size:16px!important;
 }
-.paymentmode > .mat-radio-button.mat-radio-checked { 
+.paymentmode > .mat-radio-button.mat-radio-checked {
   border-color: blue !important;
   box-shadow: 0 0 5px 5px blue!important
 }
@@ -551,7 +551,7 @@ box-shadow: 4px 4px 5px gainsboro;
       height: 40px !important;
     }
   }
-  
+
 .content.loc-list .card {
   margin-bottom: 0px!important;
 }
@@ -566,35 +566,35 @@ box-shadow: 4px 4px 5px gainsboro;
       border-radius: 10px !important;
       padding: 5px !important;
     }
-  
+
     .btn-warning {
       background-color: rgb(255, 237, 203) !important;
       color: #000 !important;
       border-radius: 10px !important;
       border: none !important;
     }
-  
+
     .person-img {
       border-radius: 50% !important;
     }
-  
+
     .fa-angle-down {
       font-size: 20px !important;
       color: #000 !important;
     }
-  
+
     .fa-spinner {
       color: rgb(96, 248, 210) !important;
     }
-  
+
     .fa-ban {
       color: red !important;
     }
-  
+
     .fa-bars {
       color: #4E73DF !important;
     }
-  
+
     h3 {
       font-weight: bolder !important;
     }
@@ -603,11 +603,11 @@ box-shadow: 4px 4px 5px gainsboro;
     {
       color: rgb(150, 132, 29)!important;
     }
-  
+
     .border-top {
       border-top: 1px solid black !important;
     }
-  
+
     .btn-primary {
       background-color: #1E4079 !important;
       color: #fff !important;
@@ -615,7 +615,7 @@ box-shadow: 4px 4px 5px gainsboro;
       border-radius: 10px !important;
       font-size: 16px !important;
     }
-  
+
     @media screen and (max-width: 576px) and (min-width: 0px) {
       .btn-dark {
         padding: 5px 10px !important;
@@ -682,13 +682,13 @@ box-shadow: 4px 4px 5px gainsboro;
       cursor: pointer;
       font-size: 12px;
     }
-    
+
     /* Hide the default checkbox */
     .container1 input {
       visibility: hidden;
       cursor: pointer;
     }
-    
+
     /* Create a custom checkbox */
     .mark {
       position: absolute;
@@ -696,27 +696,27 @@ box-shadow: 4px 4px 5px gainsboro;
       left: 0;
       height: 20px;
       width: 20px;
-      background-color:#B0EF8F;;
+      background-color:#1e4079;;
       font-weight: bold;
       border-radius: 5px;
     }
-    
+
     .container1:hover input ~ .mark {
-      background-color:#B0EF8F;;
+      background-color:#1e4079;;
     }
-    
+
     .container1 input:checked ~ .mark {
       // background-color: red
-      background-color:#B0EF8F;;
+      background-color:#1e4079;;
     }
-    
+
     /* Create the mark/indicator (hidden when not checked) */
     .mark:after {
       content: "";
       position: absolute;
       display: none;
     }
-    
+
     /* Show the mark when checked */
     .container1 input:checked ~ .mark:after {
       display: block;
@@ -724,7 +724,7 @@ box-shadow: 4px 4px 5px gainsboro;
       width: 6px;
       text-align: center;
     }
-    
+
     /* Style the mark/indicator */
     .container1 .mark:after {
       left: 8px;
@@ -734,7 +734,7 @@ box-shadow: 4px 4px 5px gainsboro;
     transform: rotate(45deg);
     }
     .container1 input:checked ~ .mark{
-      background-color:#B0EF8F;;
+      background-color:#1e4079;;
     }
     .SINO{
       color: #000;

@@ -48,6 +48,7 @@ input[type="checkbox"] {
   font-size: 20px !important;
 } */
 
+
 .example-radio-button {
   display: flex !important;
   padding: 10px;
@@ -339,9 +340,13 @@ textarea {
 /* .uploadFile{ */
 /* width: 31rem; */
 /* } */
+
+
+
 .imageIcon {
   width: 25px;
 }
+
 
 .filesNameSize {
   font-weight: 600;
@@ -430,6 +435,12 @@ textarea {
   height: 6rem;
 }
 
+
+input[type="radio"] {
+  vertical-align: middle !important;
+  /* height: 20px !important; */
+}
+
 .templateList {
   display: flex;
   /* justify-content: space-between;
@@ -445,6 +456,15 @@ textarea {
     /* justify-content: space-evenly; */
     /* align-items: center; */
   }
+
+  input[type="radio"] {
+    height: auto !important;
+  }
+
+  input[type="radio"] {
+    vertical-align: text-bottom !important;
+  }
+
 
   .singleTempalte {
     width: 9rem;
