@@ -146,7 +146,7 @@ export class QnrDialogComponent implements OnInit {
   isCheckedSecond;
   inputChange: boolean;
   selected_radio: boolean;
-  isCheckedoption: boolean;
+  isCheckedoption: boolean = false;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<QnrDialogComponent>,
     private sharedService: SharedServices,
@@ -880,7 +880,6 @@ export class QnrDialogComponent implements OnInit {
 
   isChecked(value, question, column?) {
     this.isCheckedoption = true;
-
     if (question.fieldDataType !== 'dataGrid') {
 
       if (this.answersQnr["labelName"]) {
@@ -1701,6 +1700,7 @@ export class QnrDialogComponent implements OnInit {
     if (!this.selectFirst) {
 
       setTimeout(() => {
+        this.isCheckedoption = false;
         this.derror = 'Please select an item';
       }, 300)
 
