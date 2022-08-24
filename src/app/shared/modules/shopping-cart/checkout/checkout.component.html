@@ -1,10 +1,11 @@
-<section #consumer_order class="container no-padding cons-donate no-padding-small order-checkout" >
+<section #consumer_order class="container no-padding cons-donate no-padding-small order-checkout">
   <div [ngClass]="{'loadingpaytm': loadingPaytm}"></div>
   <div class="content p0 loc-list p-checkin ynw-common-form-nm">
     <div class="panel panel-default">
       <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-          <app-header [accountId]="account_id" [customId]="customId" *ngIf="sharedFunctionobj.checkLogin()" [showHeaderAction]="true"></app-header>
+          <app-header [accountId]="account_id" [customId]="customId" *ngIf="sharedFunctionobj.checkLogin()"
+            [showHeaderAction]="true"></app-header>
         </div>
       </div>
       <div class="panel-body no-padding" *ngIf="source!=='paper'">
@@ -26,7 +27,7 @@
             </div>
             <div class="lbl col-sm-12 col-md-7 col-lg-7 col-xl-7  col-xs-12 bg-grey no-padding-small"
               *ngIf="action=='' &&!loading">
-              
+
               <div class="col-md-12 no-padding-small mgn-up-30">
                 <mat-vertical-stepper [linear]="isLinear" fxLayout="column" #stepper>
                   <mat-step label="Step 1" *ngIf="!onlyvirtualItemsPresent">
@@ -78,15 +79,15 @@
                   <mat-step label="Step 2" *ngIf="qnr">
                     <ng-template matStepLabel>More Info</ng-template>
                     <div>
-                      <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consOrder'" 
-              [questionAnswers]="questionAnswers" [accountId]="account_id"
-              (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+                      <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consOrder'"
+                        [questionAnswers]="questionAnswers" [accountId]="account_id"
+                        (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
                     </div>
-                    <div *ngIf="bookStep=='qnr'"> 
-                      <button class="nxt-btn" mat-flat-button  (click)="validateQuestionnaire()">save</button>
+                    <div *ngIf="bookStep=='qnr'">
+                      <button class="nxt-btn" mat-flat-button (click)="validateQuestionnaire()">save</button>
                     </div>
-                    <div *ngIf="bookStep=='Step 3'"> 
-                      <button class="nxt-btn" mat-flat-button  matStepperNext >Next</button>
+                    <div *ngIf="bookStep=='Step 3'">
+                      <button class="nxt-btn" mat-flat-button matStepperNext>Next</button>
                     </div>
                   </mat-step>
                   <mat-step label="Step 3">
@@ -176,7 +177,7 @@
             <div class="lbl col-sm-12 col-md-5 col-lg-5 col-xl-5 col-xs-12 no-padding-small bg-grey" *ngIf="action==''">
               <!-- Side bar contact -->
               <div class="contact-outer" *ngIf="storeContactNw">
-                <aside *ngIf="showSide" class="side_nav" >
+                <aside *ngIf="showSide" class="side_nav">
                   <h4>Store Contact <i (click)="closeNav()" class="fa fa-times-circle fl-right"></i></h4>
                   <div class="addrs">
                     <span>{{storeContactNw.firstName}}&nbsp;{{storeContactNw.lastName}}</span>
@@ -342,14 +343,19 @@
                                     class="fa fa-info-circle " aria-hidden="true"></i>An advance of <span
                                     class="rupee-font">{{getAmountToPay(cartDetails) | currency:'&#8377;'}}
                                   </span>required</span><br>
-                                  <span style="font-size: small;" *ngIf="convenientFee > 0">
-                                    <span  class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{convenientFee | currency:'&#8377;'}}</span>
+                                <span style="font-size: small;" *ngIf="convenientFee > 0">
+                                  <span class="ser_price no-mgn-bt rupee-font">Convenient Fee:
+                                    {{convenientFee | currency:'&#8377;'}}</span>
                                 </span><br>
-                                <span style="font-size: small;" *ngIf="selected_payment_mode && isInternatonal === false && gatewayFee > 0">
-                                    <span class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{gatewayFee | currency:'&#8377;'}}</span>
+                                <span style="font-size: small;"
+                                  *ngIf="selected_payment_mode && isInternatonal === false && gatewayFee > 0">
+                                  <span class="ser_price no-mgn-bt rupee-font">Convenient Fee:
+                                    {{gatewayFee | currency:'&#8377;'}}</span>
                                 </span>
-                                <span style="font-size: small;" *ngIf="selected_payment_mode && isInternatonal === true && gatewayFee > 0">
-                                    <span  class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{gatewayFee | currency:'&#8377;'}}</span>
+                                <span style="font-size: small;"
+                                  *ngIf="selected_payment_mode && isInternatonal === true && gatewayFee > 0">
+                                  <span class="ser_price no-mgn-bt rupee-font">Convenient Fee:
+                                    {{gatewayFee | currency:'&#8377;'}}</span>
                                 </span>
                                 <div *ngIf="cartDetails.advanceAmount">
                                   <div *ngIf="jcashamount>0" class="jaldeecredit">
@@ -445,7 +451,8 @@
                       <div class="txt-align-center mgn-up-10"
                         *ngIf="paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                         <span (click)="togglepaymentMode()" class="pointer-cursor"><a class="refund_policy">
-                            <span *ngIf="!shownonIndianModes && paymentmodes.internationalPay">Non Indian Payment ? Click
+                            <span *ngIf="!shownonIndianModes && paymentmodes.internationalPay">Non Indian Payment ?
+                              Click
                               here</span>
                             <span *ngIf="shownonIndianModes && paymentmodes.indiaPay">Indian Payment ? Click
                               here</span>
@@ -459,23 +466,22 @@
                           Make Payment
                         </button>
                         <!-- <div>hh</div> -->
-                        
+
                       </div>
-                      <div class="cancelpolicy mgn-rt-5 txt-align-center mgn-up-10" >
+                      <div class="cancelpolicy mgn-rt-5 txt-align-center mgn-up-10">
                         <!-- *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0" -->
-                      <div class="pad_policy" *ngIf="cartDetails.advanceAmount > 0">
-                        <!-- *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" -->
-                          <a data-toggle="modal" data-target="#exampleModal"
-                              class="refund_policy">Cancellation Policy</a>
+                        <div class="pad_policy" *ngIf="cartDetails.advanceAmount > 0">
+                          <!-- *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" -->
+                          <a data-toggle="modal" data-target="#exampleModal" class="refund_policy">Cancellation
+                            Policy</a>
+                        </div>
                       </div>
-                  </div>
-                  <!-- modalbox -->
-                  <div class="modal fade" id="exampleModal" tabindex="-1"
-                  role="dialog" aria-labelledby="exampleModalLabel"
-                  aria-hidden="true">
-                  <app-refundpolicy></app-refundpolicy>
-              </div>
-                     
+                      <!-- modalbox -->
+                      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <app-refundpolicy></app-refundpolicy>
+                      </div>
+
                       <br>
                       <div
                         *ngIf="cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount > cartDetails.advanceAmount) || (checkJcash && jcashamount == cartDetails.advanceAmount))">
@@ -523,8 +529,9 @@
                     <textarea placeholder="Any notes? Write here..." class="txtArea"
                       [(ngModel)]="orderlistNote"></textarea>
                   </div>
-                  <div class="order-label mgn-up-10 mgn-bt-10" *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)"><a
-                      (click)="applyPromocode()" *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
+                  <div class="order-label mgn-up-10 mgn-bt-10"
+                    *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)"><a (click)="applyPromocode()"
+                      *ngIf="selected_coupons.length === 0">Apply Promo Code</a>
                     <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">
                       Promo code {{selected_coupons.toString()}} added,will be applicable in the final bill. <br>
                       <u>Add more</u></a>
@@ -558,18 +565,18 @@
                   </div>
                   <div class="clearfix"></div>
                   <ng-container
-                    *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount)) ">                  
-                      <app-payment-modes [paymentModes]="indian_payment_modes"
-                          (modeSelected)="indian_payment_mode_onchange($event)">
-                      </app-payment-modes>
+                    *ngIf="!shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount)) ">
+                    <app-payment-modes [paymentModes]="indian_payment_modes"
+                      (modeSelected)="indian_payment_mode_onchange($event)">
+                    </app-payment-modes>
                   </ng-container>
                   <ng-container *ngIf="shownonIndianModes && ((checkJcash && jcashamount < cartDetails.advanceAmount))">
-                      <app-payment-modes [paymentModes]="non_indian_modes"
-                          (modeSelected)="non_indian_modes_onchange($event)">
-                      </app-payment-modes>
+                    <app-payment-modes [paymentModes]="non_indian_modes"
+                      (modeSelected)="non_indian_modes_onchange($event)">
+                    </app-payment-modes>
                   </ng-container>
-                    
-                    <!-- <div *ngFor="let modes of indian_payment_modes">
+
+                  <!-- <div *ngFor="let modes of indian_payment_modes">
                       <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                         <div class="text-primary payment-mode-card-styles">
                           <mat-radio-group class="paymentmode card shadow-lg" name="paymentMode"
@@ -586,7 +593,7 @@
                         </div>
                       </div>
                     </div> -->
-                  
+
                   <!-- <ng-container >
                     <div *ngFor="let modes of non_indian_modes">
                       <div class="col-xs-12 col-sm-6 col-md-12 col-lg-12">
@@ -610,20 +617,21 @@
                   <div class="txt-align-center mgn-up-20"
                     *ngIf="paymentmodes && paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
                     <span (click)="togglepaymentMode()" class="pointer-cursor"><a class="refund_policy">
-                        <span *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non Indian Payment ? Click
+                        <span *ngIf="!shownonIndianModes && paymentmodes && paymentmodes.internationalPay">Non Indian
+                          Payment ? Click
                           here</span>
                         <span *ngIf="shownonIndianModes && paymentmodes && paymentmodes.indiaPay">Indian Payment ? Click
                           here</span>
                       </a></span>
                   </div>
-                  <div class="txt-align-center mgn-up-10">                    
+                  <div class="txt-align-center mgn-up-10">
                     <button type="button" class=" next-button btn btn-primary font-weight-bold text-uppercase "
                       [class.disabled]="isClickedOnce"
                       *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       (click)="!isClickedOnce && confirm()">
                       MaKe Payment
                     </button>
-                  
+
                   </div>
                   <br>
                   <div
@@ -767,9 +775,9 @@
             <div class="card" *ngIf="loading">
               <app-common-innerloading-spinner> </app-common-innerloading-spinner>
             </div>
-           
-            
-            
+
+
+
             <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 bg-grey no-padding-small no-padding"
               *ngIf="action=='' &&!loading && bookStep!='Step 3'">
 
@@ -779,9 +787,9 @@
                       aria-hidden="true"></i>&nbsp;Back</span>
                 </div>
                 <div *ngIf="qnr" class="mt-5" class="paperSubmit">
-                    <div class="font-weight-bold paperSubmitTxt">
-                      Submit a Paper
-                    </div>
+                  <div class="font-weight-bold paperSubmitTxt">
+                    Submit a Paper
+                  </div>
                   <div>
                     <app-questionnaire [questionnaireList]="questionnaireList" [source]="'consOrder'"
                       [questionAnswers]="questionAnswers" [accountId]="account_id"
@@ -797,7 +805,8 @@
 
 
 
-            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding-small no-padding bg-grey" *ngIf="action=='' && bookStep=='Step 3'">
+            <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding-small no-padding bg-grey"
+              *ngIf="action=='' && bookStep=='Step 3'">
               <!-- Side bar contact -->
               <div class="contact-outer">
                 <aside *ngIf="showSide" class="side_nav">
@@ -853,109 +862,180 @@
                     </div>
                     <div class="instructionText">Instructions to the author</div>
                     <div class="defultTextIns" *ngIf="defultTextFirstStep">
-                      {{defultTextFirstStep}} 
+                      {{defultTextFirstStep}}
                       <div *ngIf="!termscheck" (click)="termsOpen()" class="terms">{{defultMoreText}}</div>
                       <div *ngIf="termscheck">
                         <div>
-                          <span class="SINO">A.</span> Please make sure that you have made your best efforts in finalizing the documents. Avoid leaving improvements/corrections that you can make to the peer reviewers. 
-                          Ensure that you have done spell check and grammar check of the manuscript using software freely available for these purposes.
+                          <span class="SINO">A.</span> Please make sure that you have made your best efforts in
+                          finalizing the documents. Avoid leaving improvements/corrections that you can make to the peer
+                          reviewers.
+                          Ensure that you have done spell check and grammar check of the manuscript using software
+                          freely available for these purposes.
                         </div>
                         <div>
-                          <span class="SINO">B.</span>Please ensure that your manuscript clears plagiarism check, including that of self plagiarism. 
-                          AuthorDemy.com does not do plagiarism check and will not be of any help if the manuscript is returned from journal based on plagiarism check.
+                          <span class="SINO">B.</span>Please ensure that your manuscript clears plagiarism check,
+                          including that of self plagiarism.
+                          AuthorDemy.com does not do plagiarism check and will not be of any help if the manuscript is
+                          returned from journal based on plagiarism check.
                         </div>
                         <div>
-                          <span class="SINO">C.</span> Please provide pictures and graphs with sufficient clarity. 
-                          Ensure that quality of the images is good and it is easy to read the legends and captions of the axes of the graphs.
+                          <span class="SINO">C.</span> Please provide pictures and graphs with sufficient clarity.
+                          Ensure that quality of the images is good and it is easy to read the legends and captions of
+                          the axes of the graphs.
                         </div>
                         <div>
-                          <span class="SINO">D.</span> Ensure that there is uniformity in the units used throughout the manuscript. For example avoid using °C in one place and K in another place for temperature in the same manuscript. 
-                          Please note the most of the journals encourage the use of SI units. 
+                          <span class="SINO">D.</span> Ensure that there is uniformity in the units used throughout the
+                          manuscript. For example avoid using °C in one place and K in another place for temperature in
+                          the same manuscript.
+                          Please note the most of the journals encourage the use of SI units.
                         </div>
                         <div>
-                          <span class="SINO">E.</span> If the authors are having a targeted journal in mind, ensure that manuscript is well with in the limits for maximum number of words allowed, 
-                          maximum number of tables and figures permitted for the manuscript for that journal. Please note that if peer reviewers recommend major modifications, them, then the revised manuscript may exceed the limits specified for the journal. This may further delay the manuscript submission.
+                          <span class="SINO">E.</span> If the authors are having a targeted journal in mind, ensure that
+                          manuscript is well with in the limits for maximum number of words allowed,
+                          maximum number of tables and figures permitted for the manuscript for that journal. Please
+                          note that if peer reviewers recommend major modifications, them, then the revised manuscript
+                          may exceed the limits specified for the journal. This may further delay the manuscript
+                          submission.
                         </div>
                         <div>
-                          <span class="SINO">F.</span> Make the list of references as per the requirements of the journal. Please ensure that the listing of the authors and inclusion of the title of the paper in the reference list are as 
+                          <span class="SINO">F.</span> Make the list of references as per the requirements of the
+                          journal. Please ensure that the listing of the authors and inclusion of the title of the paper
+                          in the reference list are as
                           per the guidelines provided for the targeted journal.
                         </div>
                         <div>
-                          <span class="SINO">G.</span> Ensure use of proper tense (past, present and future tenses) in the manuscript. For example, literature survey and
-                           experimental details can be in past tense; but the results presented in manuscript can be in present tense.
+                          <span class="SINO">G.</span> Ensure use of proper tense (past, present and future tenses) in
+                          the manuscript. For example, literature survey and
+                          experimental details can be in past tense; but the results presented in manuscript can be in
+                          present tense.
                         </div>
                         <div>
-                          <span class="SINO">H.</span> It would be good to ensure that the English Language used is uniform throughout. Avoid mixing up 
-                          ‘American English’ and ‘UK English’. Depending on the journal and the publisher, it is better to choose one of these and prepare the manuscript fully in that.
+                          <span class="SINO">H.</span> It would be good to ensure that the English Language used is
+                          uniform throughout. Avoid mixing up
+                          ‘American English’ and ‘UK English’. Depending on the journal and the publisher, it is better
+                          to choose one of these and prepare the manuscript fully in that.
                         </div>
                         <div>
-                          <span class="SINO">I.</span> Please be informed that authors have to upload ‘abstract’ in text form and complete manuscript, including abstract in PDF format separately to AuthorDemy.com. In the complete manuscript, it is strongly recommended to include figures and tables where they are referred in the manuscript. Further Table and Figure captions shall accompany the Tables and Figures respectively. 
-                          Avoid uploading manuscripts prepared with text first, then tables and figures and then figure and table captions.
+                          <span class="SINO">I.</span> Please be informed that authors have to upload ‘abstract’ in text
+                          form and complete manuscript, including abstract in PDF format separately to AuthorDemy.com.
+                          In the complete manuscript, it is strongly recommended to include figures and tables where
+                          they are referred in the manuscript. Further Table and Figure captions shall accompany the
+                          Tables and Figures respectively.
+                          Avoid uploading manuscripts prepared with text first, then tables and figures and then figure
+                          and table captions.
                         </div>
                         <div>
-                          <span class="SINO">J.</span> It is recommended to prepare the PDF version 
-                          of the manuscript with at least one and half line spacing. It would help the reviewers to read as well as to comment on the manuscript.
+                          <span class="SINO">J.</span> It is recommended to prepare the PDF version
+                          of the manuscript with at least one and half line spacing. It would help the reviewers to read
+                          as well as to comment on the manuscript.
                         </div>
                         <div>
-                          <span class="SINO">K.</span> It is recommended to include a list of symbols with their description if the symbols used in the manuscript 
-                          are many. Please ensure that same symbol is not used for more than one parameter. 
+                          <span class="SINO">K.</span> It is recommended to include a list of symbols with their
+                          description if the symbols used in the manuscript
+                          are many. Please ensure that same symbol is not used for more than one parameter.
                         </div>
                         <div>
-                          <span class="SINO">L.</span> Ensure that abbreviations are expanded first time when it appears in the manuscript.
+                          <span class="SINO">L.</span> Ensure that abbreviations are expanded first time when it appears
+                          in the manuscript.
                         </div>
                         <div>
-                          <span class="SINO">M.</span> It may be noted that peer-reviewer will not modify or correct your manuscript. He/She would only comment on the manuscript and advise the authors how to improve the manuscript. The peer-reviewer would be an expert in the broad area of the subject of manuscript.
+                          <span class="SINO">M.</span> It may be noted that peer-reviewer will not modify or correct
+                          your manuscript. He/She would only comment on the manuscript and advise the authors how to
+                          improve the manuscript. The peer-reviewer would be an expert in the broad area of the subject
+                          of manuscript.
                         </div>
                         <div>
-                          <span class="SINO">N.</span> Peer reviewer will not comment on the technical content of the manuscript as this is an exhaustive work which needs to be done by the reviewer to whom the editor of the journal would identify. 
+                          <span class="SINO">N.</span> Peer reviewer will not comment on the technical content of the
+                          manuscript as this is an exhaustive work which needs to be done by the reviewer to whom the
+                          editor of the journal would identify.
                         </div>
                         <div>
-                          <span class="SINO">O.</span> AuthorDemy.com does not guarantee that the papers subjected to peer-review would be accepted by the journals for publications. It only helps the authors to improve the quality of the manuscript. This improvement along with the good technical content of the manuscript can significantly improve the chances of publication.
+                          <span class="SINO">O.</span> AuthorDemy.com does not guarantee that the papers subjected to
+                          peer-review would be accepted by the journals for publications. It only helps the authors to
+                          improve the quality of the manuscript. This improvement along with the good technical content
+                          of the manuscript can significantly improve the chances of publication.
                         </div>
                         <div>
-                          <span class="SINO">P.</span> AuthorDemy.com does not expect authors to approach them again for a second peer review of a manuscript already reviewed by AuthorDemy.com peer reviewer. However, If authors feel that one more review is desirable, then authors can submit the manuscript for a second revision with a subsidised cost, preferably with in 12 months of the first peer-review.
+                          <span class="SINO">P.</span> AuthorDemy.com does not expect authors to approach them again for
+                          a second peer review of a manuscript already reviewed by AuthorDemy.com peer reviewer.
+                          However, If authors feel that one more review is desirable, then authors can submit the
+                          manuscript for a second revision with a subsidised cost, preferably with in 12 months of the
+                          first peer-review.
                         </div>
                         <div>
-                          <span class="SINO">Q.</span> As of now, information on peer reviewer would be confidential. Authors shall not ask for who peer-reviewed their manuscript. Authors shall not approach the possible peer reviewers directly based on the information available in the AuthorDemy.com website.s 
+                          <span class="SINO">Q.</span> As of now, information on peer reviewer would be confidential.
+                          Authors shall not ask for who peer-reviewed their manuscript. Authors shall not approach the
+                          possible peer reviewers directly based on the information available in the AuthorDemy.com
+                          website.s
                         </div>
                         <div>
-                          <span class="SINO">R.</span> Authors can log in to the website and find out the status of the review. For any additional information or follow up, they can contact AuthorDemy.com in the e-mail provided in the website. No other communication will be entertained when the manuscript is in peer-review state.
+                          <span class="SINO">R.</span> Authors can log in to the website and find out the status of the
+                          review. For any additional information or follow up, they can contact AuthorDemy.com in the
+                          e-mail provided in the website. No other communication will be entertained when the manuscript
+                          is in peer-review state.
                         </div>
                         <div>
-                          <span class="SINO">S.</span> Once manuscript is submitted to AuthorDemy.com for peer review, the task will be assigned to one of the peer reviewers already registered with AuthroDemy.com. However, in case AuthorDemy.com fails to find a suitable peer reviewer, manuscript will be returned (within seven days) and authors need not make any payment. When a peer-reviewer accepts to carry out the review, the manuscript will be accepted for peer-review by AuthorDemy.com and author need to make the payment for the peer review immediately to take up the peer review without any further delay. Though some time may be lost in this process, AuthorDemy.com shall make best efforts to complete the peer-review within one month of submission of manuscript to AuthroDemy.com.
+                          <span class="SINO">S.</span> Once manuscript is submitted to AuthorDemy.com for peer review,
+                          the task will be assigned to one of the peer reviewers already registered with AuthroDemy.com.
+                          However, in case AuthorDemy.com fails to find a suitable peer reviewer, manuscript will be
+                          returned (within seven days) and authors need not make any payment. When a peer-reviewer
+                          accepts to carry out the review, the manuscript will be accepted for peer-review by
+                          AuthorDemy.com and author need to make the payment for the peer review immediately to take up
+                          the peer review without any further delay. Though some time may be lost in this process,
+                          AuthorDemy.com shall make best efforts to complete the peer-review within one month of
+                          submission of manuscript to AuthroDemy.com.
                         </div>
                         <div>
-                          <span class="SINO">T.</span> In the unlikely event of AuthorDemy.com is not able to complete the review with in 30 days of submission, extension of time for 15 more days would be sought by AuthorDemy.com from the Author. If author is not ready for this extended time, money paid by the author would be returned. If the author agrees for extension and AuthorDemy.com, still fails to complete the review after 45 days of submission, authors will get back the money paid. It may be noted that we do not expect this situation to arise.
+                          <span class="SINO">T.</span> In the unlikely event of AuthorDemy.com is not able to complete
+                          the review with in 30 days of submission, extension of time for 15 more days would be sought
+                          by AuthorDemy.com from the Author. If author is not ready for this extended time, money paid
+                          by the author would be returned. If the author agrees for extension and AuthorDemy.com, still
+                          fails to complete the review after 45 days of submission, authors will get back the money
+                          paid. It may be noted that we do not expect this situation to arise.
                         </div>
                         <div>
-                          <span class="SINO">U.</span> All communication of AuthorDemy.com will be with the corresponding author identified while submitting the paper for review. We will not entertain communication from others, including co-authors. In case one corresponding author wants another author to replace him, he can communicate this to AuthorDemy.com and AuthorDemy.com shall make these changes and inform both the present and old corresponding author appropriately. It may be noted that only an author of the paper can become a corresponding author.  Persons who are not authors of the manuscript cannot become corresponding authors for the manuscript.
+                          <span class="SINO">U.</span> All communication of AuthorDemy.com will be with the
+                          corresponding author identified while submitting the paper for review. We will not entertain
+                          communication from others, including co-authors. In case one corresponding author wants
+                          another author to replace him, he can communicate this to AuthorDemy.com and AuthorDemy.com
+                          shall make these changes and inform both the present and old corresponding author
+                          appropriately. It may be noted that only an author of the paper can become a corresponding
+                          author. Persons who are not authors of the manuscript cannot become corresponding authors for
+                          the manuscript.
                         </div>
                         <div>
-                          <span class="SINO">V.</span> For any additional information, contact AuthorDemy.com in the website provided
+                          <span class="SINO">V.</span> For any additional information, contact AuthorDemy.com in the
+                          website provided
                         </div>
                         <div>
-                          We at AuthorDemy.com expect to meet the expectation of all the authors who approach us for peer-review. We wish all the authors that their manuscript modified as per the comments from AuthorDemy.com shall be accepted in the targeted journals. We hope, with this initiative, there would be a significant improvement in the quality of the paper being submitted and increase in number of the manuscripts being accepted for publications, leading to improved confidence among the researchers on their abilities to prepare good manuscripts for publications.
+                          We at AuthorDemy.com expect to meet the expectation of all the authors who approach us for
+                          peer-review. We wish all the authors that their manuscript modified as per the comments from
+                          AuthorDemy.com shall be accepted in the targeted journals. We hope, with this initiative,
+                          there would be a significant improvement in the quality of the paper being submitted and
+                          increase in number of the manuscripts being accepted for publications, leading to improved
+                          confidence among the researchers on their abilities to prepare good manuscripts for
+                          publications.
                         </div>
                         <div>
                           AuthorDemy.com
                         </div>
                       </div>
-                      <div *ngIf="termscheck" (click)="termsOpen()" class="terms">{{defultMoreText}}</div> 
+                      <div (click)="termsOpen()" class="terms">{{defultMoreText}}</div>
                     </div>
                     <span class="confirmClr my-2 font-weight-bold">Total Payment: ₹{{cartDetails.itemTotal}}</span>
                     <br>
                     <form>
-                      <div class="form-check text-success d-flex mgn-up-10">
+                      <div class="form-check text-primary d-flex mgn-up-10">
                         <label class="container1">I have read and understood all the instructions
                           <input type="checkbox" (click)="terms_check()">
                           <span class="mark"></span>
                         </label>
                       </div>
                     </form>
-                    
+
                   </div>
                 </div>
-<!-- 
+                <!--
                 <span class="mgn-up-20" *ngIf="!image_list_popup && this.orderType === 'SHOPPINGLIST'"
                   (click)="uploadShoppingList()">
                   <a class="uploadshoppinglist-btn">Upload Shopping List</a>
