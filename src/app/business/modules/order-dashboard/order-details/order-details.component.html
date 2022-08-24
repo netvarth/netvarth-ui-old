@@ -1,189 +1,188 @@
 <section class="">
-    <div class="card title-gb">
-        <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Order
-        </h5>
-    </div>
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Order
+    </h5>
+  </div>
 </section>
 <section>
-    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 no-padding order mgn-up-10" *ngIf="!loading">
-        <div class="orderdetails col-md-11 col-xs-12 col-sm-12 col-lg-11">
-            <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
-                <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
-                <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
-                <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
-                    {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
-                <div> {{orderDetails.orderNumber}}</div>
-                <span *ngIf="orderDetails.orderFor.jaldeeId">{{customerLabel | capitalizeFirst}} id :
-                    {{orderDetails.orderFor.jaldeeId}}</span>
-                <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
-                        aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
-                <div *ngIf="orderDetails.email"> <i class="fa fa-envelope" aria-hidden="true"></i>{{orderDetails.email}}
-                </div>
-                <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: display_dateFormat}}
-                    <ng-container *ngIf="orderDetails.orderTimeWindow && orderDetails.orderTimeWindow.timeSlots[0]">,
-                        {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
-                        {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}
-                    </ng-container>
-                </div>
-                <div *ngIf="orderDetails.homeDeliveryAddress" class="bold font11 mgn-bt-10"><i
-                        class="fa fa-address-card-o" aria-hidden="true"></i> Delivery Address</div>
-                <address *ngIf="orderDetails.homeDeliveryAddress">
-                    <span>
-                        {{delivery_address.firstName }} &nbsp;{{delivery_address.lastName}}
-                    </span><br>
-                    <span>
-                        {{delivery_address.address }},{{delivery_address.landMark }}
-                    </span><br>
-                    <span>
-                        {{delivery_address.city }} , {{delivery_address.postalCode}}
-                    </span><br>
-                    <span>
-                        {{delivery_address.countryCode }} {{delivery_address.phoneNumber}}
-                    </span>
-                </address>
-                <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10">
-                    <span style="color:#193ca4">Notes:&nbsp;</span>
-                    <span [innerHTML]="orderDetails.orderNote | nl2br"></span>
-                </div>
-            </div>
-            <div class="col-md-3 col-xs-12 col-sm-6 col-lg-3 no-padding" *ngIf="!isSubmission">
-                <div class="" *ngIf="!small_device_display">
-                    <mat-icon class="msgIcon pointer" (click)="showCommunication()"
-                        *ngIf="communication_history.length >0" matBadge="" matBadgeOverlap=true>sms</mat-icon>
-                    <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
-                    <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i>
-                    <i class="electronic-icon pull-right" *ngIf="!orderDetails.homeDelivery&&!orderDetails.storePickup"></i>
-                </div>
-                <div [class.fl-left]="small_device_display" [class.mgn-up-70]="!small_device_display"> <span
-                        class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
-                </div>
-            </div>
+  <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8 no-padding order mgn-up-10" *ngIf="!loading">
+    <div class="orderdetails col-md-11 col-xs-12 col-sm-12 col-lg-11">
+      <div class="col-md-9 col-xs-12 col-sm-6 col-lg-9 no-padding personal">
+        <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery && small_device_display"></i>
+        <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup && small_device_display"></i>
+        <div class="bold font11" *ngIf="orderDetails.orderFor.firstName || orderDetails.orderFor.lastName">
+          {{orderDetails.orderFor.firstName}} {{orderDetails.orderFor.lastName}}</div>
+        <div> {{orderDetails.orderNumber}}</div>
+        <span *ngIf="orderDetails.orderFor.jaldeeId">{{customerLabel | capitalizeFirst}} id :
+          {{orderDetails.orderFor.jaldeeId}}</span>
+        <div *ngIf="orderDetails.phoneNumber"> <i class="fa fa-phone"
+            aria-hidden="true"></i>{{orderDetails.countryCode}} {{orderDetails.phoneNumber}}</div>
+        <div *ngIf="orderDetails.email"> <i class="fa fa-envelope" aria-hidden="true"></i>{{orderDetails.email}}
         </div>
-        <div class="col-md-11 col-xs-12 col-sm-12 col-lg-11 orderdetails"
-            *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList && !isSubmission">
-            <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20">
-                <div class="pull-left bold font11">
-                    Ordered Items
-                </div>
-                <div class="pull-right viewtypes">
-                    View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType==='list'"
-                        (click)="selectViewType('list')" [matTooltipClass]="tooltipcls" [matTooltip]="'List View'"></i>
-                    <i class="fa fa-th-large pointer-cursor" [class.selectedView]="selectedType==='grid'"
-                        (click)="selectViewType('grid')" [matTooltipClass]="tooltipcls" [matTooltip]="'Grid View'"></i>
-                </div>
-            </div>
-            <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20 mgn-up-20 order no-padding"
-                *ngIf="selectedType==='grid'">
-                <div class="bus-item-O" *ngFor="let item of orderItems">
-                    <app-card [item]="item" (noteClicked)="showConsumerNote($event)"></app-card>
-                </div>
-            </div>
-            <div class="itemlist col-md-10 col-xs-12 col-sm-12 col-lg-10 order" *ngIf="selectedType==='list'">
-                <table style="width: 100%;">
-                    <thead>
-                        <tr>
-                            <th>Sl No</th>
-                            <th>Item Name</th>
-                            <th>Qty</th>
-                            <th>Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of orderDetails.orderItem;let i = index">
-                            <td>{{i+1}}</td>
-                            <td>{{item.name}}</td>
-                            <td>{{item.quantity}}
-                            </td>
-                            <td><span class="rupee-font">{{item.totalPrice|currency:'&#8377;'}}</span>
-                                <i *ngIf="item.consumerNote" [matTooltip]="'Notes'"
-                                    class="icon-note pointer-cursor pull-right" (click)="showConsumerNote(item)"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="bold font11 mgn-bt-10"> {{orderDetails.orderDate | date: 'd MMM, y'}}
+          <ng-container *ngIf="orderDetails.orderTimeWindow && orderDetails.orderTimeWindow.timeSlots[0]">,
+            {{orderDetails.orderTimeWindow.timeSlots[0].sTime}} -
+            {{orderDetails.orderTimeWindow.timeSlots[0].eTime}}
+          </ng-container>
         </div>
-        <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 orderdetails"
-            *ngIf="image_list_popup && orderDetails.shoppingList && !isSubmission">
-            <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10  mgn-bt-10 mgn-up-10">
-                <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
-            </div>
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 order" *ngIf="orderDetails.shoppingList">
-                <ul class="shoppinglist-gal">
-                    <ng-container *ngFor="let file of image_list_popup;let i = index">
-                        <li class="shoppinglist-li">
-                            <div class="shoppinglistbx">
-                                <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
-                                    <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg"
-                                    [src]="file.modal.img" *ngIf="file.modal.img" />
+        <div *ngIf="orderDetails.homeDeliveryAddress" class="bold font11 mgn-bt-10"><i class="fa fa-address-card-o"
+            aria-hidden="true"></i> Delivery Address</div>
+        <address *ngIf="orderDetails.homeDeliveryAddress">
+          <span>
+            {{delivery_address.firstName }} &nbsp;{{delivery_address.lastName}}
+          </span><br>
+          <span>
+            {{delivery_address.address }},{{delivery_address.landMark }}
+          </span><br>
+          <span>
+            {{delivery_address.city }} , {{delivery_address.postalCode}}
+          </span><br>
+          <span>
+            {{delivery_address.countryCode }} {{delivery_address.phoneNumber}}
+          </span>
+        </address>
+        <div *ngIf="orderDetails.orderNote" class="prov-wtlst-note-border shadow-none mgn-bt-10">
+          <span style="color:#193ca4">Notes:&nbsp;</span>
+          <span [innerHTML]="orderDetails.orderNote | nl2br"></span>
+        </div>
+      </div>
+      <div class="col-md-3 col-xs-12 col-sm-6 col-lg-3 no-padding" *ngIf="!isSubmission">
+        <div class="" *ngIf="!small_device_display">
+          <mat-icon class="msgIcon pointer" (click)="showCommunication()" *ngIf="communication_history.length >0"
+            matBadge="" matBadgeOverlap=true>sms</mat-icon>
+          <i class="delivery-icon pull-right" *ngIf="orderDetails.homeDelivery"></i>
+          <i class="storepickup-icon pull-right" *ngIf="orderDetails.storePickup"></i>
+          <i class="electronic-icon pull-right" *ngIf="!orderDetails.homeDelivery&&!orderDetails.storePickup"></i>
+        </div>
+        <div [class.fl-left]="small_device_display" [class.mgn-up-70]="!small_device_display"> <span
+            class="customer-action-btn pointer-cursor" (click)="showOrderActions()">Actions</span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-11 col-xs-12 col-sm-12 col-lg-11 orderdetails"
+      *ngIf="orderDetails && orderDetails.orderItem && orderDetails.orderItem.length > 0 && !orderDetails.shoppingList && !isSubmission">
+      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20">
+        <div class="pull-left bold font11">
+          Ordered Items
+        </div>
+        <div class="pull-right viewtypes">
+          View: <i class="fa fa-list-ul mgn-rt-5 pointer-cursor" [class.selectedView]="selectedType==='list'"
+            (click)="selectViewType('list')" [matTooltipClass]="tooltipcls" [matTooltip]="'List View'"></i>
+          <i class="fa fa-th-large pointer-cursor" [class.selectedView]="selectedType==='grid'"
+            (click)="selectViewType('grid')" [matTooltipClass]="tooltipcls" [matTooltip]="'Grid View'"></i>
+        </div>
+      </div>
+      <div class="gridlist col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-bt-20 mgn-up-20 order no-padding"
+        *ngIf="selectedType==='grid'">
+        <div class="bus-item-O" *ngFor="let item of orderItems">
+          <app-card [item]="item" (noteClicked)="showConsumerNote($event)"></app-card>
+        </div>
+      </div>
+      <div class="itemlist col-md-10 col-xs-12 col-sm-12 col-lg-10 order" *ngIf="selectedType==='list'">
+        <table style="width: 100%;">
+          <thead>
+            <tr>
+              <th>Sl No</th>
+              <th>Item Name</th>
+              <th>Qty</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of orderDetails.orderItem;let i = index">
+              <td>{{i+1}}</td>
+              <td>{{item.name}}</td>
+              <td>{{item.quantity}}
+              </td>
+              <td><span class="rupee-font">{{item.totalPrice|currency:'&#8377;'}}</span>
+                <i *ngIf="item.consumerNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor pull-right"
+                  (click)="showConsumerNote(item)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 orderdetails"
+      *ngIf="image_list_popup && orderDetails.shoppingList && !isSubmission">
+      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10  mgn-bt-10 mgn-up-10">
+        <span style="padding-left: 3px !important;">SHOPPINGLIST</span>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 order" *ngIf="orderDetails.shoppingList">
+        <ul class="shoppinglist-gal">
+          <ng-container *ngFor="let file of image_list_popup;let i = index">
+            <li class="shoppinglist-li">
+              <div class="shoppinglistbx">
+                <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
+                  <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
+                    *ngIf="file.modal.img" />
 
-                                </div>
-                            </div>
-                        </li>
-                    </ng-container>
-                </ul>
-                <ks-modal-gallery [id]="0" [modalImages]="image_list_popup"
-                    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-                    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()">
-                </ks-modal-gallery>
-            </div>
-        </div>
-    </div>
-     
-    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10" *ngIf="!loading && !isSubmission">
-        <div class="card">
-            <h5>Order History</h5>
-            <div class="c-history-outer">
-                <ul class="c-history">
-                    <li class="{{getRandomClass(history.orderStatus)}}" *ngFor="let history of orderlist_history">
-                        <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
-                        <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
-                    </li>
-                </ul>
-                <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
-            </div>
-        </div>
-    </div>
-     <!-- Questionnaire starts-->
-     <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20 card">
-        <div class="" *ngIf="questionnaires.length > 1">
-          <h3 class="">
-            {{customerLabel | capitalizeFirst}} info
-          </h3>
-        </div>
-        <ng-container *ngIf="questionnaires.length > 1">
-          <mat-accordion class="qnr-accord no-padding" *ngFor="let qnr of questionnaires">
-            <mat-expansion-panel>
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  {{(qnr.questionnaireName) ? qnr.questionnaireName : qnr.questionnaireId}}
-                  <div class="qnrstatus">
-                    <span class="greenc" *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
-                    <span class="red" *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span>
-                  </div>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div class="c-details">
-                <app-questionnaire [questionnaireList]="qnr" [source]="'proOrder'" [uuid]="orderDetails.uid"
-                  [type]="'details'" [waitlistStatus]="orderDetails.orderStatus"
-                  (returnAnswers)="getQuestionAnswers($event)">
-                </app-questionnaire>
+                </div>
               </div>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </ng-container>
-        <ng-container *ngIf="questionnaires.length === 1">
-          <div class="c-details" *ngFor="let qnr of questionnaires">
+            </li>
+          </ng-container>
+        </ul>
+        <ks-modal-gallery [id]="0" [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
+          [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
+          (buttonAfterHook)="onButtonAfterHook()">
+        </ks-modal-gallery>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4 mgn-up-10" *ngIf="!loading && !isSubmission">
+    <div class="card">
+      <h5>Order History</h5>
+      <div class="c-history-outer">
+        <ul class="c-history">
+          <li class="{{getRandomClass(history.orderStatus)}}" *ngFor="let history of orderlist_history">
+            <div class="time">{{getformatedTime(history.time)| date: newTimeDateFormat }}</div>
+            <div class="action">{{history.orderStatus | capitalizeFirst}}</div>
+          </li>
+        </ul>
+        <p class="no-result" *ngIf="orderlist_history.length == 0">{{no_history_found}}</p>
+      </div>
+    </div>
+  </div>
+  <!-- Questionnaire starts-->
+  <div class="col-md-10 col-xs-12 col-sm-12 col-lg-10 mgn-up-20 card">
+    <div class="" *ngIf="questionnaires.length > 1">
+      <h3 class="">
+        {{customerLabel | capitalizeFirst}} info
+      </h3>
+    </div>
+    <ng-container *ngIf="questionnaires.length > 1">
+      <mat-accordion class="qnr-accord no-padding" *ngFor="let qnr of questionnaires">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{(qnr.questionnaireName) ? qnr.questionnaireName : qnr.questionnaireId}}
+              <div class="qnrstatus">
+                <span class="greenc" *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
+                <span class="red" *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span>
+              </div>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="c-details">
             <app-questionnaire [questionnaireList]="qnr" [source]="'proOrder'" [uuid]="orderDetails.uid"
               [type]="'details'" [waitlistStatus]="orderDetails.orderStatus"
               (returnAnswers)="getQuestionAnswers($event)">
             </app-questionnaire>
           </div>
-        </ng-container>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </ng-container>
+    <ng-container *ngIf="questionnaires.length === 1">
+      <div class="c-details" *ngFor="let qnr of questionnaires">
+        <app-questionnaire [questionnaireList]="qnr" [source]="'proOrder'" [uuid]="orderDetails.uid" [type]="'details'"
+          [waitlistStatus]="orderDetails.orderStatus" (returnAnswers)="getQuestionAnswers($event)">
+        </app-questionnaire>
       </div>
-      <!-- Questionnaire end-->
+    </ng-container>
+  </div>
+  <!-- Questionnaire end-->
 </section>
 <div class="clearfix"></div>
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
