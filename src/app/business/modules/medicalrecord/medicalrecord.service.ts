@@ -87,6 +87,8 @@ export class MedicalrecordService {
     const $this = this;
     mrObject = $this.mr_payload_new;
     mrObject[key] = value;
+    console.log('mrObject',mrObject['bookingType'] );
+    console.log('$this.patientDetails.id',$this.patientDetails.id)
     if (mrObject['bookingType'] === 'FOLLOWUP') {
 
       return new Promise((resolve, reject) => {

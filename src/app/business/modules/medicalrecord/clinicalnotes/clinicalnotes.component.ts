@@ -54,6 +54,8 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   clinicalNotesVaccinationNotes:any;
   clinicalNotesAddList:any=[];
   customerId:any;
+  medicalRecordInfo:any;
+  @Input() medicalInfo;
   private subscriptions = new SubSink();
   constructor(
 
@@ -72,7 +74,8 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('showClinicalNotesDetails::',this.showClinicalNotesDetails)
+    console.log('showClinicalNotesDetails::',this.showClinicalNotesDetails);
+    console.log('medicalInfo',this.medicalInfo)
     console.log('this.activatedRoute.parent.snapshot.params',this.activatedRoute.parent.snapshot.params)
     // this.patientId = params.get('id');
     //   this.bookingType = params.get('type');
@@ -113,7 +116,8 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   }
   getClinicalNotes(medicalrecordId){
     this.subscriptions.sink= this.provider_services.GetMedicalRecord(medicalrecordId).subscribe((res)=>{
-      console.log('resmedicalrecordId',res)
+      console.log('resmedicalrecordId',res);
+      this.medicalRecordInfo= res;
     })
   }
 
@@ -238,30 +242,12 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
   }
   handleClinicalNotes(data,type){
-    // console.log('data',data);
-    console.log('type',type);
-    // this.clinicalNotesValue= data;
-    // this.clinicalNotesTypeSymptoms=(type);
-    // const payload = {
-    //   'type':this.clinicalNotesTypeSymptoms,
-    //   'clinicalNotes': this.clinicalNotesValue
-    // };
-    
-    // console.log(payload);
-    // this.clinicalNotesAddList.push(payload)
-
   }
   saveClinicalNotes(symtopData,observationData,DiagnosisData,NotesData,AllergiesData,ComplaintsData,VaccinationData){
-    // console.log('symtop',symtopData)
-    // console.log('observation',observationData)
-    // console.log('this.clinicalNotesValue::',this.clinicalNotesValue)
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
       const patientId=this.customerId;
       let payload:any=[]
-      // console.log('patientId::',patientId);
-      // console.log('clinicalNotesTypeSymptoms',this.clinicalNotesTypeSymptoms);
-      // console.log('clinicalNotesTypeObservations',this.clinicalNotesTypeObservations)
       payload =[
         {
           'type':'Symptoms',
@@ -292,62 +278,97 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
           'clinicalNotes': VaccinationData
         }
       ]
-      // if(this.clinicalNotesTypeSymptoms){
-      //    payload = {
-      //     'type':'Symptoms',
-      //     'clinicalNotes': symtopData
-      //   };
-      // }
-      // if(this.clinicalNotesTypeObservations){
-      //   payload = {
-      //     'type':'Observations',
-      //     'clinicalNotes':observationData
-      //   };
-      // }
-      // if(this.clinicalNotesTypeDiagnosis){
-      //   payload = {
-      //     'type':'Diagnosis',
-      //     'clinicalNotes':DiagnosisData
-      //   };
-      // }
-      // if(this.clinicalNotesNotes){
-      //   payload = {
-      //     'type':'Notes',
-      //     'clinicalNotes': NotesData
-      //   };
-      // }
-      // if(this.clinicalNotesAllergies){
-      //   payload = {
-      //     'type':'Allergies',
-      //     'clinicalNotes':AllergiesData
-      //   };
-      // }
-      // if(this.clinicalNotesComplaints){
-      //   payload = {
-      //     'type':'Complaints',
-      //     'clinicalNotes': ComplaintsData
-      //   };
-      // }
-      // if(this.clinicalNotesVaccinationNotes){
-      //   payload = {
-      //     'type':'Vaccination Notes',
-      //     'clinicalNotes': VaccinationData
-      //   };
-      // }
+     
       console.log(payload);
       this.clinicalNotesAddList.push(payload)
-      console.log('clinicalNotesAddList',payload)
-    this.medicalrecordService.createMR('clinicalNotes',payload).then((res:any) => {
+      console.log('clinicalNotesAddList',payload);
+      console.log(' this.mrId', this.mrId)
+
+    // console.log('this.medicalInfo.id',this.medicalInfo)
+    console.log('this.medicalInfo',this.medicalInfo)
+      if(this.medicalInfo !=='MedicalInfoClinicalNotesUpdate' && this.mrId !==0 ){
+        console.log('this.medicalInfo.id',this.medicalInfo)
+      this.provider_services.updateMrClinicalNOtes(payload,this.medicalInfo.id).subscribe((res)=>{
+        this.snackbarService.openSnackBar('Clinical notes added Successfully');
+        this.reloadComponent()
+        this.showClinicalNotesDetails=true;
+      })
+      }
+      else if( this.medicalInfo==='MedicalInfoClinicalNotesUpdate' ){
+        console.log('this.clinicalNotesTypeSymptoms',this.clinicalNotesTypeSymptoms);
+        // alert('jjjj')
+        this.UpdateClinicalNotesList( this.clinicalNotesTypeSymptoms, this.clinicalNotesTypeObservations,this.clinicalNotesTypeDiagnosis,
+         this.clinicalNotesNotes,this.clinicalNotesAllergies,this.clinicalNotesComplaints,this.clinicalNotesVaccinationNotes)
+      }
+      else if(this.medicalInfo===undefined && this.mrId===0){
+        // alert(this.medicalInfo)
+       this.medicalrecordService.createMR('clinicalNotes',payload).then((res:any) => {
       this.mrId= res;
       console.log('this.mrId::',this.mrId)
       this.snackbarService.openSnackBar('Medical Record Created Successfully');
-      // this.reloadComponent()
       this.router.navigate(['provider', 'customers', patientId, bookingType, bookingId, 'medicalrecord', this.mrId,'prescription'])
 
     },
       error => {
         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       });
+      }
+  }
+  UpdateClinicalNotesList(symtopData,observationData,DiagnosisData,NotesData,AllergiesData,ComplaintsData,VaccinationData){
+    let payload:any=[]
+    payload =[
+      {
+        'type':'Symptoms',
+          'clinicalNotes': symtopData
+      },
+      {
+        'type':'Observations',
+        'clinicalNotes':observationData
+      },
+      {
+        'type':'Diagnosis',
+        'clinicalNotes':DiagnosisData
+      },
+      {
+        'type':'Notes',
+        'clinicalNotes': NotesData
+      },
+      {
+        'type':'Allergies',
+        'clinicalNotes':AllergiesData
+      },
+      {
+        'type':'Complaints',
+        'clinicalNotes': ComplaintsData
+      },
+      {
+        'type':'Vaccination Notes',
+        'clinicalNotes': VaccinationData
+      }
+    ]
+    console.log(payload);
+    this.clinicalNotesAddList.push(payload)
+    console.log('clinicalNotesAddList',payload);
+  console.log('this.medicalInfo.id',this.medicalInfo)
+    this.updateMrwithClinicalNotes(payload,this.mrId)
+  }
+
+  updateMrwithClinicalNotes(payload, mrId) {
+    this.provider_services.updateMrClinicalNOtes(payload, mrId)
+      .subscribe((data) => {
+        this.snackbarService.openSnackBar( ' updated successfully');
+        console.log('updated successfully');
+      //   const bookingId = 0;
+      // const bookingType = 'FOLLOWUP';
+      // const patientId=this.customerId;
+      this.reloadComponent()
+        this.showClinicalNotesDetails=true;
+      // this.router.navigate(['provider', 'customers', patientId, bookingType, bookingId, 'medicalrecord', this.mrId,'prescription'])
+
+      },
+        error => {
+          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        });
   }
   goback(){
     this.location.back()
@@ -421,5 +442,35 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     else if(item.type==='Vaccination Notes'){
       return '2px solid #008EDE'
     }
+  }
+  updateClinicalNotes(data){
+    console.log(data);
+    console.log('this.medicalInfo',this.medicalInfo);
+    this.medicalInfo= 'MedicalInfoClinicalNotesUpdate'
+    this.showClinicalNotesDetails= false;
+    this.clinicalNotes.forEach((item)=>{
+      if(item.type==='Symptoms'){
+        this.clinicalNotesTypeSymptoms= item.clinicalNotes
+      }
+      if(item.type==='Observations'){
+        this.clinicalNotesTypeObservations= item.clinicalNotes
+      }
+      if(item.type==='Diagnosis'){
+        this.clinicalNotesTypeDiagnosis= item.clinicalNotes
+      }
+      if(item.type==='Notes'){
+        this.clinicalNotesNotes= item.clinicalNotes
+      }
+      if(item.type==='Allergies'){
+        this.clinicalNotesAllergies= item.clinicalNotes
+      }
+      if(item.type==='Complaints'){
+        this.clinicalNotesComplaints= item.clinicalNotes
+      }
+      if(item.type==='Vaccination Notes'){
+        this.clinicalNotesVaccinationNotes= item.clinicalNotes
+      }
+    })
+    
   }
 }

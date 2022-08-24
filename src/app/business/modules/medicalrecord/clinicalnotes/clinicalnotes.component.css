@@ -122,3 +122,9 @@ textarea{
     font-size: 13px;
     font-weight: 500;
 }
+.flexClass{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}

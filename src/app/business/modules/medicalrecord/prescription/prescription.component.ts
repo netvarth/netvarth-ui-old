@@ -447,19 +447,6 @@ export class PrescriptionComponent implements OnInit {
     }
     console.log('this.mrId',this.mrId)
     if (this.mrId) {
-      // let tempresult=
-      //   [{
-      //     'medicine_name': this.amForm.controls.medicine_name.value,
-      //     'frequency': this.amForm.controls.frequency.value,
-      //     'instructions':this.amForm.controls.instructions.value,
-      //     'duration':this.amForm.controls.duration.value,
-      //     'dosage':this.amForm.controls.dosage.value,
-      //   }]
-      // console.log('updateMRprescription',tempresult);
-      // let passdata = {
-      //   "prescriptionsList": tempresult,
-      //   "notes": this.note
-      // }
       this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
           console.log('resupdateMRprescription',res)

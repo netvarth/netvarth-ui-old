@@ -1027,7 +1027,7 @@ export class CheckinActionsComponent implements OnInit {
         const customerId = customerDetails.id;
         const bookingId = this.checkin.ynwUuid;
         const bookingType = 'TOKEN';
-        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId], { queryParams: { 'calledfrom': 'waitlist' } });
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId,'prescription'], { queryParams: { 'calledfrom': 'waitlist' } });
 
 
     }

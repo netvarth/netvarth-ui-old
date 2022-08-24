@@ -67,7 +67,7 @@
               <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
                 <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" /> -->
               </div>
-              <div >{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
+              <div class="nameClrOther" >{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
                 <div class="nameClrOther" *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518</div>
             </div>
            </div>
@@ -427,7 +427,7 @@
               <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
                 <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" /> -->
               </div>
-              <div >{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
+              <div class="nameClrOther">{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
                 <div class="nameClrOther" *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518</div>
             </div>
            </div>
@@ -491,7 +491,12 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12  no-padding ">
       <div  >
         <div [ngClass]="{'prescription-details':uploadFiles.length>0}" >
+         <ng-container>
           <app-prescription [viewVisitDetails]="viewVisitDetails"></app-prescription>
+         </ng-container>
+          <ng-container *ngIf="medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
+            <app-clinicalnotes [medicalInfo]="medicalInfo" *ngIf="medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0"></app-clinicalnotes>
+        </ng-container>
         </div>
       </div>
     </div>
@@ -500,7 +505,13 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding">
       <div  >
         <div >
-          <app-clinicalnotes  [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
+          <ng-container>
+            <app-clinicalnotes  [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
+          </ng-container>
+          <ng-container *ngIf="medicalInfo && medicalInfo.prescriptionCreated===false" >
+            <app-prescription *ngIf="medicalInfo && medicalInfo.prescriptionCreated===false" ></app-prescription>
+          </ng-container>
+          
         </div>
       </div>
     </div>
