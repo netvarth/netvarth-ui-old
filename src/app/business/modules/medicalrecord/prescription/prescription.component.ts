@@ -311,7 +311,7 @@ export class PrescriptionComponent implements OnInit {
   shareManualRx(type,bookingType,bookingId) {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '100%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      panelClass: ['popup-class'],
       disableClose: true,
       data: {
         mrId: this.mrId,
@@ -656,8 +656,8 @@ export class PrescriptionComponent implements OnInit {
       this.location.back();
     }
     gobackCancel(txt){
-      this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-      // this.location.back();
+      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+      this.location.back();
     }
     onSubmit(form_data) {
       this.api_error = '';

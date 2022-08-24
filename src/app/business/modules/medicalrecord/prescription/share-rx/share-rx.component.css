@@ -31,7 +31,7 @@
 }
 .shareTxt{
     color: rgba(0, 0, 0, 0.6);
-    font-style:14px;
+    font-size:12px;
     font-weight: 500;
 }
 .leadTitle {
@@ -144,7 +144,7 @@ textarea ::placeholder{
   }
   .prescriptionNotes{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
   }
   .shareBtn{
@@ -167,7 +167,7 @@ textarea ::placeholder{
   }
   .fileUpload{
     display: flex;
-    padding: 10px;
+    padding: 30px;
     align-items: center;
     gap: 10px;
     flex-wrap: wrap;
@@ -234,6 +234,12 @@ border-radius: 7.80557px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border: 1px solid #CDCAC6;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 10px;
+    background: #FFFFFF;
+    width: 50%;
   }
   .btnMenu{
     border: none;
@@ -241,6 +247,10 @@ border-radius: 7.80557px;
     background: #FF9900;
     display: inline-flex;
   }
+  /* ::ng-deep .commonpopupmainclass{
+    width: 830px !important;
+    height: 30rem !important;
+  } */
 
 
 
@@ -290,4 +300,19 @@ border-radius: 7.80557px;
       .btnClass{
         margin-right: 0px;
       }
+      .flexClassSig{
+        width: 100% !important;
+      }
+      .fileUpload{
+        justify-content: center !important;
+        padding: 15px;
+        margin-top: 10px !important;
+      }
+      .manualSignBtn{
+        width: 100% !important;
+      }
+      
+  }
+  .dialogContent{
+    max-height: 100% !important;
   }

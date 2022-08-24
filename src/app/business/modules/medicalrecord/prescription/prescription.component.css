@@ -460,8 +460,28 @@ border: 1.32184px solid #E6E8EB;
     padding-left: 6rem;
     padding-right: 6rem;
   }
+  .prescriptionCreate{
+    overflow: auto;
+  }
+  .prescriptionCard{
+    /* height: 100% !important;
+    width: 100% !important;
+    box-shadow: none !important; */
+    height: 100% !important;
+    width: 34rem;
+  }
 
 }
+.prescriptionCard{
+  height: 100% !important;
+    background: #FFFFFF;
+    border: 1.02503px solid #E7E3E3;
+    border-radius: 8.78078px;
+}
+/* ::ng-deep .commonpopupmainclass{
+  width: 830px !important;
+  height: 30rem !important;
+} */
 .allFile{
   margin-top: 10px;
     padding: 10px;
@@ -532,11 +552,13 @@ table thead{
 }
 table thead th{
   color: #767980 !important;
+  font-size: 13px;
 }
 table tbody td{
   color: #06152B !important;
     font-size: 11px;
     font-weight: 600;
+    
 }
 .drugInfo{
   display: flex;
@@ -593,4 +615,8 @@ table tbody td{
 }
 table tbody tr{
   cursor: pointer;
+    border-bottom: 1.02503px solid #E7E3E3;
 }
+/* table tbody tr :hover{
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+} */

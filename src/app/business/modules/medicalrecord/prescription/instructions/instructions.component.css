@@ -39,7 +39,15 @@
     justify-content: space-between;
     align-items: center;
     gap: 10px;
-    margin-right: 2.5rem;
+    margin-right: 1.2rem;
+}
+.medecineDetailsFrequescy{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    grid-gap: 10px;
+    gap: 10px;
+    margin-right: 1.4rem !important;
 }
 .duration{
     font-family: 'Inter';

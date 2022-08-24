@@ -64,7 +64,8 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
       });
   }
   gotoMrDetails(mr) {
-    console.log('this.type',this.type)
+    // console.log('this.type',this.type);
+    // console.log('mr',mr)
     let bookingId;
     let bookingType;
     // const mrId = (mr.id) ? mr.id : (this.waitlistmr[0]) ? this.waitlistmr[0].id : 0;
@@ -78,9 +79,30 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
       bookingId = (this.source === 'customer-details') ? 0 : (this.waitlist_data.ynwUuid) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
     }
     if (this.type === 'rx') {
-      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription']);
-    } else {
+      // alert('prescription')
+    if(mr==='add'){
       this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
+    }
+    else{
+      // console.log(mr)
+      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
+    }
+      
+    } else {
+      // alert('clinicalnotes')
+      // console.log(mr);
+      if(mr==='add'){
+        this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
+      }
+      else{
+        // console.log('this.customerId',this.customerId);
+        // console.log('mrId',mrId)
+
+        this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord',mr.id, 'clinicalnotes']);
+
+        // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
+      }
+      
     }
   }
   gotoMrList() {

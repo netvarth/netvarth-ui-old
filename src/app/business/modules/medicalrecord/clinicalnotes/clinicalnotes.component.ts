@@ -57,6 +57,11 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   medicalRecordInfo:any;
   @Input() medicalInfo;
   private subscriptions = new SubSink();
+  customerphoneno: any;
+  viewVisitDetails: boolean = this.medicalrecordService.viewVisitDetails;
+  patientId: any;
+  bookingId: any;
+  bookingType: any;
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
@@ -77,9 +82,9 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     console.log('showClinicalNotesDetails::',this.showClinicalNotesDetails);
     console.log('medicalInfo',this.medicalInfo)
     console.log('this.activatedRoute.parent.snapshot.params',this.activatedRoute.parent.snapshot.params)
-    // this.patientId = params.get('id');
-    //   this.bookingType = params.get('type');
-    //   this.bookingId = params.get('uid');
+    this.patientId = this.activatedRoute.parent.snapshot.params['id'];
+      this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
+      this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     const medicalRecordCustId = this.activatedRoute.parent.snapshot.params['id'];
     this.customerId= medicalRecordCustId
@@ -370,8 +375,53 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
-  goback(){
-    this.location.back()
+  getCustomerbyId(id) {
+    const filter = { 'id-eq': id };
+    this.provider_services.getCustomer(filter)
+        .subscribe(
+            (data: any) => {
+                this.customerphoneno =data[0].phoneNo;
+            });
+    return this.customerphoneno;
+}
+  goback(type_from){
+    // this.location.back()
+    if(this.customerDetails && this.customerDetails.id){
+      this.getCustomerbyId(this.customerDetails.id)
+    }
+    
+    const back_type = this.medicalrecordService.getReturnTo();
+    console.log('type_from',type_from)
+    if (type_from === 'medical') {
+      this.medicalrecordService.viewVisitDetails = false;
+      this.viewVisitDetails = false;
+      // console.log(' this.patientId', this.patientId);
+      // console.log(' this.bookingType', this.bookingType);
+      // console.log(' this.bookingId', this.bookingId);
+      // console.log('mrId',this.mrId);
+
+      this.location.back();
+      // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+    }
+    else {
+      if (back_type === 'waitlist') {
+        // this.router.navigate(['provider', 'check-ins']);
+        this.router.navigate(['provider', 'check-ins', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+      } else if (back_type === 'appt') {
+        // this.router.navigate(['provider', 'appointments']);
+        this.router.navigate(['provider', 'appointments', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+      } else if (back_type === 'patient') {
+        // this.router.navigate(['provider', 'customers']);
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+
+      } 
+      else if (back_type === 'list') {
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'list']);
+      }
+       else {
+        this.location.back();
+      }
+    }
   }
   getColor(item){
     if(item.type==='Symptoms'){

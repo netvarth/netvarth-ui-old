@@ -685,5 +685,18 @@ export class ShareRxComponent implements OnInit {
   }
   shareBtn(){
     this.dialogRef.close();
+    const success= 'Successfully shared thank you'
+    this.snackbarService.openSnackBar(success, { 'panelClass': 'snackbarerror' });
+  }
+  messageBoxhandle(data){
+    console.log(data)
+    if(data){}
+    else{
+      // alert('not')
+      const msg = this.fed_service.isFieldValid(this.amForm,'message');
+      console.log(msg);
+      const error='Please enter a message'
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    }
   }
 }

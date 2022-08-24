@@ -1,6 +1,6 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
-    *ngIf="!loading" style="padding:20px">
+    *ngIf="!loading" style="padding:25px">
     <!-- <div class="mat-dialog-title">Share Prescription
         <button #queue mat-dialog-close class="modal_close">
             <i class="fa fa-window-close" aria-hidden="true"></i>
@@ -15,7 +15,7 @@
             <mat-icon>clear</mat-icon>
         </div>
     </div>
-    <mat-dialog-content style="padding:0px !important">
+    <mat-dialog-content  class="dialogContent">
         <div style="margin-right: 5px;">
             <!-- <div> Share with {{customerDetail.firstName | capitalizeFirst}}  {{customerDetail.lastName}}</div> -->
             <!-- <mat-form-field>
@@ -55,12 +55,12 @@
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-                <textarea rowa="10" class="form-control widthWebKit" formControlName="message" #message
+                <textarea (ngModelChange)="messageBoxhandle(message.value)" rowa="10" class="form-control widthWebKit" formControlName="message" #message
                     (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter message description">
             </textarea>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
+                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
                     errorMsg="Please enter a message.">
-                </app-field-error-display>
+                </app-field-error-display> -->
             </div>
         </div>
         <!-- <div class="mgn-m-lt-15 " *ngIf="showthirdparty">
@@ -86,7 +86,7 @@
               </div>
             </div>
           </div>
-        <div class="form-group" *ngIf="!showthirdparty">
+        <div class="form-group" *ngIf="!showthirdparty" style="margin-top: 10px;margin-bottom: 0px !important;"> 
             <span class="docText" *ngIf="!(mrPrescriptionDetails &&  mrPrescriptionDetails[0].keyName)">We will create a PDF of your
                 prescription and will share Via</span>
             <span class="docText" *ngIf="(mrPrescriptionDetails && mrPrescriptionDetails[0].keyName)">Your prescription will share
@@ -113,21 +113,11 @@
             <!-- <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div> -->
         </div>
         <div *ngIf="!showthirdparty" class="mgn-bt-0">
-            <div>
+            <div style="margin-top: 10px;">
                 <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length === 0">Add digital signature</div>
-                <div class="difitalSigText" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">View digital signature</div>
-                <div style="margin-top: 10px;">
+                <!-- <div class="difitalSigText" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">View digital signature</div> -->
+                <div >
                     <div >
-                        <!-- <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
-                          <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079;font-size: smaller">
-                            Upload digital signature for sharing Prescription</u>
-                        </span>
-                        <span *ngIf="digitalSign">
-                          <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079; font-size: smaller">
-                            Update digital signature</u>
-                        </span> -->
-
-
                         <div  *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
                             <div class=" prescriptionNotes">
                               <div>
@@ -166,21 +156,23 @@
 
                         <div *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
                             <ng-container class="attachment">
-                                <div class="font-weight-bold">Uploaded Digital Signature</div>
+                                <div style="color: #FF9900;">Uploaded Digital Signature</div>
                                 <div class="flexClassSig"
                                     *ngFor="let item of selectedMessage.files; let i = index">
                                     <div *ngIf="item.originalName || item.name">
                                         <div  *ngIf="item.originalName">
-                                            <span class="ln-hgt-40 pointlist" (click)="showimgPopup(item)" style="color: #00DED5; "><i
-                                                    class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;{{item.originalName}}</span>
+                                            <span class="ln-hgt-40 pointlist" (click)="showimgPopup(item)" style="color: #706969;">
+                                                <img src="/assets/images/medicalReportIcon/uplaodFile.png" />&nbsp;
+                                                {{item.originalName}}</span>
                                         </div>
                                         <div  *ngIf="item.name">
-                                            <span class="ln-hgt-40 pointlist" (click)="showimgPopup(item)" style="color: #00DED5; "><i
-                                                    class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;{{item.name}}</span>
+                                            <span class="ln-hgt-40 pointlist" (click)="showimgPopup(item)" style="color: #706969;"> 
+                                                <img src="/assets/images/medicalReportIcon/uplaodFile.png" />&nbsp;{{item.name}}</span>
                                         </div>
                                     </div>
-                                    <div >
-                                        <span class="">
+                                    <div (click)="deleteTempImagefrmdb(item,i)" class="pointer-cursor">
+                                        <img src="/assets/images/medicalReportIcon/delete.png" />&nbsp;
+                                        <!-- <span class="">
                                             <button class="btnMenu" type="button" mat-icon-button [matMenuTriggerFor]="menu">
                                                 <mat-icon>more_vert</mat-icon>
                                             </button>
@@ -190,7 +182,7 @@
                                                     <span>delete</span>
                                                 </button>
                                             </mat-menu>
-                                        </span>
+                                        </span> -->
                                     </div>
                                 </div>
                             </ng-container>
