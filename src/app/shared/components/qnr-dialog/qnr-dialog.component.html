@@ -1,11 +1,14 @@
-<section style="padding: 20px;">
+<section>
   <div class="header">
-    <h4 class="text-primary font-weight-bold p-4 pb-0" *ngIf="popUpView === 'qnrView'">Add Item</h4>
-    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
-      <!-- <mat-icon>clear</mat-icon> -->
+    <div class=" p-3" *ngIf="popUpView === 'qnrView'">
+      <div>
+        <h4 class="text-primary font-weight-bold">Add Item</h4>
+      </div>
+      <div class="float-right">
+        <i class="fa fa-times"></i>
+      </div>
     </div>
   </div>
-  <hr class="p-0 m-0">
   <mat-dialog-content class="dialogContent">
     <section class="cons-inbox no-padding-small" *ngIf="popUpView === 'qnrView'">
       <div class="container consumer-dashhome no-padding no-padding-small" *ngIf="!type">
@@ -38,14 +41,16 @@
                         </label>
                         <div>
                           <div>
-                            <label class="radio border-radio" *ngFor="let value of data.listPropertie.values">
-                              <input type="radio"
-                                [checked]="isChecked(value, getQuestion(question), getQuestion(question).dataGridListProperties.dataGridListColumns[0])"
-                                (change)="listChange($event, value, getQuestion(question), data)"
-                                [disabled]="buttonDisable || disableInput()" [class.border-apply]="isCheckedoption">
+                            <label class="radio " *ngFor="let value of data.listPropertie.values">
+                              <div class="border-radio">
+                                <input type="radio"
+                                  [checked]="isChecked(value, getQuestion(question), getQuestion(question).dataGridListProperties.dataGridListColumns[0])"
+                                  (change)="listChange($event, value, getQuestion(question), data)"
+                                  [disabled]="buttonDisable || disableInput()" [class.border-apply]="isCheckedoption">
 
-                              {{value}} <span style="float: right;" *ngIf="basePrice"> <i class="fa fa-inr"></i>
-                                {{getValue(value)}}</span>
+                                {{value}} <span style="float: right;" *ngIf="basePrice"> <i class="fa fa-inr"></i>
+                                  {{getValue(value)}}</span>
+                              </div>
 
                             </label>
                           </div>
@@ -357,12 +362,12 @@
         </div>
       </div>
     </section>
-    <section class="cons-inbox no-padding-small" *ngIf="popUpView === 'qnrrepeatView'">
+    <section class="no-padding-small" *ngIf="popUpView === 'qnrrepeatView'">
       <div class="">
-        <div class="card title-gb rounded-0">
+        <div class="">
           <div class="close-btn">
-            <button type="button" class="close" aria-label="Close" data-dismiss="modal" (click)="closeDialogPopup()">
-              <span aria-hidden="true">&times;</span>
+            <button type="button" class="close" data-dismiss="modal" (click)="closeDialogPopup()">
+              <span class="text-danger"><i class="fa fa-times"></i></span>
             </button>
           </div>
           <div>
@@ -370,24 +375,23 @@
           </div>
 
         </div>
+        <hr>
       </div>
       <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
       <div class="d-flex flex-column-fluid width-100">
         <div class="col-xl-12 force_center" [class.no-padding]="uuid">
           <div class="">
             <div class="qnrsec">
-              <div class="form-group card mgn-0">
-                <div style="float: left;">{{item.item}}</div>
-                <div style="float: right;"><i class="fa fa-inr"></i> {{item.price}} /-</div><br /> <br />
+              <div class="form-group mgn-0">
+                <span style="float: left;">{{item.item}}</span>
+                <span style="float: right;"><i class="fa fa-inr"></i> {{item.price}} /-</span><br /> <br />
                 <div class="gridSection">
-                  <div class="gridColumn">
-                  </div>
-                  <div class="act-btns disp-flex">
-                    <button type="button" class="btn btn-light-primary font-weight-bold" (click)="addNew()">
+                  <div class="mt-3 act-btns disp-flex">
+                    <button type="button" class="btn btn-primary font-weight-bold" (click)="addNew()">
                       Add New
-                    </button>&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-light-primary font-weight-bold"
-                      (click)="repeatSame(item)">Repeat Same</button>
+                    </button>
+                    <button type="button" class="btn btn-primary font-weight-bold" (click)="repeatSame(item)">Repeat
+                      Same</button>
                   </div>
                 </div>
               </div>

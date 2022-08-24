@@ -293,80 +293,63 @@
       <div class="">
         <div class="qnrsec" *ngFor="let qnr of groupedQnr | keyvalue" [class.section-shadow]="getSectionCount() > 1">
           <!-- <div class="qnr-section" *ngIf="getSectionCount() > 1">{{qnr.key}}</div> -->
-          <div class="form-group card mgn-0" *ngFor="let question of qnr.value">
-            <div class="qnr-section" *ngIf="getSectionCount() > 1">{{getQuestion(question).question.sectionName}}</div>
-            <label class="col-12 quest">{{getQuestion(question).question.label}}
-              <i class="fa fa-plus-circle pull-right" aria-hidden="true"
-                [class.addicon]="!buttonDisable && !disableInput()"
-                (click)="showDataGridAddSectionn(getQuestion(question).question, true)"></i>
+          <div class="form-group mgn-0 border-dashed text-center" *ngFor="let question of qnr.value">
+            <div class="qnr-section" *ngIf="getSectionCount() > 1">
+              {{getQuestion(question).question.sectionName}}</div>
+            <label class="col-12 quest pointer-cursor"
+              (click)="showDataGridAddSectionn(getQuestion(question).question, true)">{{getQuestion(question).question.label}}
+              <!-- <div class="pull-right btn btn-primary font-weight-bold"
+                (click)="showDataGridAddSectionn(getQuestion(question).question, true)"><i
+                  class="fa fa-plus add-plus"></i>Add Item
+              </div> -->
               <div class="pro-only" *ngIf="showProviderText(getQuestion(question).question)">For Providers</div>
               <span class="red" *ngIf="getQuestion(question).question.mandatory">*</span>
               <div class="form-level-settings" *ngIf="getQuestion(question).question.hint">
-                {{getQuestion(question).question.hint}}</div>
+                {{getQuestion(question).question.hint}}
+              </div>
+              <span class="btn btn-light">&plus; Add Item</span>
+
             </label>
-
-
           </div>
+
+
+
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-12" *ngIf="showItem">
 
 
-          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 check-new-group no-padding disp-flex"
-            *ngFor="let items of itemArray">
+          <div>
+            <div *ngFor=" let items of itemArray">
 
-            <div class="col-md-8 col-lg-8 col-xs-8 col-sm-8 check-new-group no-padding disp-none-small">
-              <div class="text-capitalize">
-                <div class="">
-                  <span class="text-primary service custom font-weight-bold" style="font-size: 16px;">
-                    {{items.item}}
-                  </span>
-
-                  <div class="">
-                    <span class="custom text-primary"><span class="font-weight-bold">Rs : {{items.price}}/-
-                      </span> <br>
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-            <div class="col-md-8 col-lg-8 col-xs-8 col-sm-8 check-new-group no-padding disp-none-large">
-              <div class="text-capitalize">
-                <div class="">
-                  <span class="text-primary service custom font-weight-bold">
-                    {{items.item}}
-                  </span>
-
-                  <div class="">
-                    <span class="custom text-primary font-weight-bold"><span>Rs : {{items.price}}/-
+              <div class="card-border d-flex justify-content-between">
+                <div>
+                  <div class="text-capitalize">
+                    <div class="">
+                      <span class="text-primary">
+                        {{items.item}}
                       </span>
-                    </span>
+                      <span class="disp-none-small">&nbsp;-&nbsp;</span>
+                      <span class="disp-none-large"><br></span>
+                      <span class="text-primary"><span class="font-weight-bold"><i class="fa fa-inr"></i>
+                          {{items.price}}/-
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="d-flex border-apply">
+                  <div (click)="decrement(items);" class="pointer-cursor quantity">
+                    <span>-</span>
+                  </div>
+                  <div class="mx-2 pointer-cursor"><span class="quantity">1</span>
+                  </div>
+                  <div (click)="increment(items);" class="pointer-cursor quantity">
+                    <span>+</span>
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2 col-lg-2 col-xs-2 col-sm-2 disp-flex fl-right mgn-up-20 disp-none-small details">
 
-              <div class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer" (click)="decrement(items);"> <i
-                  class="fa fa-minus"></i>
-              </div>&nbsp;&nbsp;&nbsp;
-              <div class="item-pad bodr-btm-up item-qty">
-                1
-              </div>&nbsp;&nbsp;&nbsp;
-              <div class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer" (click)="increment(items);">
-                <i class="fa fa-plus"></i>
-              </div>
-            </div>
-            <div class="col-md-4 col-lg-4 col-xs-4 col-sm-4 disp-flex fl-right mgn-up-20 disp-none-large details">
-
-              <div class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer" (click)="decrement(items);"> <span
-                  style="font-size: 11px;">-</span>
-              </div>&nbsp;&nbsp;&nbsp;
-              <div class="item-pad bodr-btm-up item-qty"><span style="font-size: 11px;">1</span>
-              </div>&nbsp;&nbsp;&nbsp;
-              <div class="item-pad bodr-rht bodr-btm-up item-qty cusr-pointer" (click)="increment(items);"><span
-                  style="font-size: 11px;">+</span>
-              </div>
             </div>
           </div>
 
