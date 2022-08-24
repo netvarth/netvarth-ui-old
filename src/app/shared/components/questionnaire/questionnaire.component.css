@@ -45,6 +45,14 @@
   font-weight: bold !important;
 }
 
+.quantity-1:hover {
+  background-color: #1e4079 !important;
+  color: #fff !important;
+  font-weight: bold !important;
+  border-radius: 20% !important;
+  padding: -2px 7px !important;
+}
+
 ::ng-deep .mat-checkbox-layout {
   font-weight: normal !important;
 }

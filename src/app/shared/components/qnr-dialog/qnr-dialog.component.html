@@ -1,7 +1,7 @@
 <section>
   <div class="">
-    <div class="d-flex justify-content-between p-3 pt-4 pb-0" *ngIf="popUpView === 'qnrView'">
-      <div>
+    <div class="d-flex justify-content-between p-3 pt-4 pb-0 width-100" *ngIf="popUpView === 'qnrView'">
+      <div class="pt-1">
         <h4 class="text-primary font-weight-bold">Add Item</h4>
       </div>
       <div (click)="closeDialogg()" class="pointer-cursor">
@@ -349,7 +349,9 @@
                   <!-- <span class="btn btn-light-primary font-weight-bold" (click)="closeDialogg()">
                     Cancel
                   </span> -->
-                  <span class="btn btn-primary font-weight-bold" (click)="saveDataGridColumn()">Done</span>
+                  <span class="btn btn-primary font-weight-bold" (click)="saveDataGridColumn()">
+                    <span>{{isSecondcase ? 'Done':'Next'}}</span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -366,14 +368,13 @@
     </section>
     <section class="no-padding-small" *ngIf="popUpView === 'qnrrepeatView'">
       <div class="">
-        <div class="">
-          <div class="close-btn">
-            <button type="button" class="close" data-dismiss="modal" (click)="closeDialogPopup()">
-              <span class="text-danger"><i class="fa fa-times"></i></span>
-            </button>
+        <div class="d-flex justify-content-between">
+
+          <div class="pt-2">
+            <h5 class="text-primary font-weight-bold repeat">Repeat Same Customization </h5>
           </div>
-          <div>
-            <h6 class="mgn-up-10 bold">Repeat Same Customization </h6>
+          <div (click)="closeDialogg()" class="pointer-cursor">
+            <i class="fa fa-times"></i>
           </div>
 
         </div>
@@ -385,16 +386,20 @@
           <div class="">
             <div class="qnrsec">
               <div class="form-group mgn-0">
-                <span style="float: left;">{{item.item}}</span>
-                <span style="float: right;"><i class="fa fa-inr"></i> {{item.price}} /-</span><br /> <br />
-                <div class="gridSection">
-                  <div class="mt-3 act-btns disp-flex">
-                    <button type="button" class="btn btn-primary font-weight-bold" (click)="addNew()">
-                      Add New
-                    </button>
-                    <button type="button" class="btn btn-primary font-weight-bold" (click)="repeatSame(item)">Repeat
-                      Same</button>
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <h6>{{item.item}}</h6>
                   </div>
+                  <div>
+                    <h6><i class="fa fa-inr"></i> {{item.price}} /-</h6>
+                  </div>
+                </div>
+                <div class="mt-3 d-flex justify-content-between">
+                  <button type="button" class="btn btn-primary font-weight-bold" (click)="addNew()">
+                    Add New
+                  </button>
+                  <button type="button" class="btn btn-primary font-weight-bold" (click)="repeatSame(item)">Repeat
+                    Last</button>
                 </div>
               </div>
             </div>

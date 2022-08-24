@@ -317,9 +317,19 @@ textarea {
     width: 21rem;
   }
 
+  input[type="radio"] {
+    vertical-align: middle !important;
+    /* height: 20px !important; */
+  }
+
   .uploadFile {
     width: 100% !important;
   }
+}
+
+
+.repeat {
+  font-size: 15px !important;
 }
 
 .filesDes {
@@ -437,7 +447,7 @@ textarea {
 
 
 input[type="radio"] {
-  vertical-align: middle !important;
+  vertical-align: text-top !important;
   /* height: 20px !important; */
 }
 
@@ -482,6 +492,10 @@ input[type="radio"] {
   font-size: 14px;
   font-weight: 500;
   color: #1e4079;
+}
+
+.fa-times {
+  color: #1e4079 !important;
 }
 
 ::ng-deep .commonpopupmainclassTemplate {
