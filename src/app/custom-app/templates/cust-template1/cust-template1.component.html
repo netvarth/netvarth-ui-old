@@ -133,13 +133,13 @@
                 <div class="col-xs-12 no-padding" *ngIf="templateJson.section2.generalDescription !=''"
                     [innerHtml]="templateJson.section2.generalDescription | safeHtml">
                 </div>
-                <div class="mgn-up-20" *ngIf="templateJson.section2.profile && templateJson.section2.profileType==='basic'">
+                <div class="mgn-up-10" *ngIf="templateJson.section2.profile && templateJson.section2.profileType==='basic'">
                     <app-basic-profile (actionPerformed)="actionPerformed($event)" [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-basic-profile>
                 </div>
-                <div class="mgn-up-20" *ngIf="templateJson.section2.profile && templateJson.section2.profileType==='advanced'">
+                <div class="mgn-up-10" *ngIf="templateJson.section2.profile && templateJson.section2.profileType==='advanced'">
                     <app-advanced-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-advanced-profile>
                 </div>
-                <div class="mgn-up-20" *ngIf="templateJson.section2.quickActions">
+                <div class="mgn-up-10" *ngIf="templateJson.section2.quickActions">
                     <app-quick-actions [actionList]="templateJson.section2.quickActions"></app-quick-actions>
                 </div>
                 <div class="col-xs-12 mgn-up-10 no-padding"
@@ -224,13 +224,13 @@
             <div class="col-xs-12 no-padding" *ngIf="templateJson.section3.generalDescription !=''"
                 [innerHtml]="templateJson.section3.generalDescription | safeHtml">
             </div>
-            <div class="mgn-up-20" *ngIf="templateJson.section3.profile && templateJson.section3.profileType==='basic'">
+            <div class="mgn-up-10" *ngIf="templateJson.section3.profile && templateJson.section3.profileType==='basic'">
                 <app-basic-profile (actionPerformed)="actionPerformed($event)" [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-basic-profile>
             </div>
-            <div class="mgn-up-20" *ngIf="templateJson.section3.profile && templateJson.section3.profileType==='advanced'">
+            <div class="mgn-up-10" *ngIf="templateJson.section3.profile && templateJson.section3.profileType==='advanced'">
                 <app-advanced-profile [businessProfile]="businessProfile" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-advanced-profile>
             </div>
-            <div class="mgn-up-20" *ngIf="templateJson.section3.quickActions">
+            <div class="mgn-up-10" *ngIf="templateJson.section3.quickActions">
                 <app-quick-actions [actionList]="templateJson.section3.quickActions"></app-quick-actions>
             </div>
             <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="showDepartments && templateJson.section3.departments">
@@ -411,7 +411,7 @@
             <div class="mgn-up-10" *ngIf="templateJson.section5.quickActions">
                 <app-quick-actions [actionList]="templateJson.section5.quickActions"></app-quick-actions>
             </div>
-            <div class="col-xs-12 mgn-up-20 no-padding" *ngIf="showDepartments && templateJson.section5.departments">
+            <div class="col-xs-12 mgn-up-10 no-padding" *ngIf="showDepartments && templateJson.section5.departments">
                 <div class="col-xs-12 no-padding" *ngIf="templateJson.section5.departmentsDescription"
                     [innerHtml]="templateJson.section5.departmentsDescription | safeHtml">
                 </div>
