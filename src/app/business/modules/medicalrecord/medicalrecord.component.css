@@ -267,9 +267,9 @@ mat-footer-cell:first-of-type {
 }
 .infoDetails{
   display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
-    gap:3px;
+    gap:50px;
 }
 .nameClrOther{
   color: #4B5057;
