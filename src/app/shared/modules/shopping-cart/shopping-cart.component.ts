@@ -130,10 +130,19 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         if (params.source) {
           this.source = params.source;
         }
+        if(!this.lStorageService.getitemfromLocalStorage('sysdate')) {
+          this.setSystemDate();
+        }        
       });
-
   }
-
+  setSystemDate() {
+    this.shared_services.getSystemDate()
+      .subscribe(
+        res => {
+          this.server_date = res;
+          this.lStorageService.setitemonLocalStorage('sysdate', res);
+        });
+  }
   ngOnInit() {
     console.log("Shopping Cart Component");
     this.businessDetails = this.lStorageService.getitemfromLocalStorage('order_sp');
@@ -193,12 +202,12 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         }
         this.advance_amount = this.catalog_details.advanceAmount;
       }
+      this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
       this.getOrderAvailableDatesForPickup();
       this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
       this.getStoreContact();
-      this.showfuturediv = false;
-      this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+      this.showfuturediv = false;      
       this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
       this.today = new Date(this.today);
       this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
