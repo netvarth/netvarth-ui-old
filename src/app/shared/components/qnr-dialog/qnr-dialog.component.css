@@ -20,8 +20,12 @@ input[type="checkbox"] {
   /* border: 1px solid #1e4079 !important; */
 }
 
+.checkbox-value {
+  padding-left: 55px !important;
+}
+
 .fa-times {
-  font-size: 30px !important;
+  font-size: 24px !important;
 }
 
 .border-apply {
@@ -39,6 +43,10 @@ input[type="checkbox"] {
   font-size: 13px;
   color: #000000;
 }
+
+/* .price-value {
+  font-size: 20px !important;
+} */
 
 .example-radio-button {
   display: flex !important;
