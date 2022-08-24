@@ -8,7 +8,6 @@ import { DomainConfigGenerator } from "../shared/services/domain-config-generato
 import { ConsumerJoinModule } from "../ynw_consumer/components/consumer-join/join.component.module";
 import { CustomAppComponent } from "./custom-app.component";
 import { CustomappService } from "./customapp.service";
-// import { LoginModule } from "./login/login.module";
 const routes: Routes = [
     { path: '', component: CustomAppComponent,
     children: [
@@ -27,7 +26,6 @@ const routes: Routes = [
         ConsumerJoinModule,
         HeaderModule,
         AuthenticationModule,
-        // LoginModule,
         LoadingSpinnerModule,
         [RouterModule.forChild(routes)]
     ],

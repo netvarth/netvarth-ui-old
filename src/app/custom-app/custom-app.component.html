@@ -1,14 +1,15 @@
 <section class="container no-padding-small">
     <section id="section1 " class="bus-page">
-        <div class="no-padding" [ngClass]="theme">
+        <div class="card no-padding" [ngClass]="theme">
             <div class="bus-page-header">
                 <div class="d-flex loading-overlay" *ngIf="loading">
                     <div class="loading-overlay-inner">
                         <app-common-innerloading-spinner></app-common-innerloading-spinner>
                     </div>
                 </div>
-                <div class="panel panel-default no-padding" *ngIf="accountExists && accountId && !loading">
-                    <div class="panel-heading col-xs-12" >
+                <div class="panel panel-default no-padding"
+                    *ngIf="accountExists && accountId && !loading && !loginRequired">
+                    <div class="panel-heading col-xs-12">
                         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
                             <app-header [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="accountEncId"
                                 [showHeaderAction]="true" *ngIf="accountExists && isLoggedIn && accountId">
@@ -22,13 +23,27 @@
                     <div class="clearfix"></div>
                     <div class="panel-body no-padding pad-bt-50">
                         <router-outlet name="template"></router-outlet>
-                    </div>                    
+                    </div>
                 </div>
-            </div>            
+            </div>
             <div class="bus-page-header login-container-outer" *ngIf="loginRequired">
-                <div class="login-container">
-                    <app-authentication (actionPerformed)="loginPerformed($event)" [accountId]="accountId"></app-authentication>
-                    <!-- <app-login [accountId]="accountId" (actionPerformed)="loginPerformed($event)"></app-login> -->
+                <div class="d-flex flex-column flex-root" style="height: 100vh;" [ngClass]="theme?theme:''">
+                    <div class="login login-3 wizard d-flex flex-column flex-lg-row flex-column-fluid no-padding">
+                        <div class="login-aside d-flex flex-column flex-row-auto">
+                            <div class="d-flex flex-column-auto flex-column">
+                                <h3 class="font-weight-bolder text-center font-size-h4 text-dark-50 line-height-xl">
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="login-content flex-row-fluid d-flex flex-column p-10">
+                            <div class="d-flex flex-row-fluid flex-center">
+                                <div class="login-form">
+                                    <app-authentication (actionPerformed)="actionPerformed($event)"
+                                        [accountId]="accountId"></app-authentication>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

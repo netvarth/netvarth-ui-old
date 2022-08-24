@@ -619,7 +619,7 @@ footer.mediExpat.bus-page-footer.site-footer .footer-bottom .footer-links.bd-pd-
   height: 50px !important;
 }
 
-.theme5 mat-sidenav,  .theme5.bg-basic-profile, .theme5.bg-basic-profile .fa  {
+.theme5 mat-sidenav,  .theme5.bg-basic-profile  {
 background: #1AA695 0% 0% no-repeat padding-box !important; 
 }
 .theme5 .mat-button,.theme5 .mat-flat-button, .theme5 .getappointmentbutton {

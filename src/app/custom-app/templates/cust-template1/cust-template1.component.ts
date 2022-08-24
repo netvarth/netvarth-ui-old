@@ -10,6 +10,7 @@ import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer
 import { MatDialog } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -55,7 +56,8 @@ export class CustTemplate1Component implements OnInit {
     private searchdetailserviceobj: SearchDetailServices,
     private authService: AuthService,
     private dialog: MatDialog,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private router: Router
   ) {
 
   }
@@ -125,10 +127,16 @@ export class CustTemplate1Component implements OnInit {
       this.selectedIndex = this.templateJson.section1.title;
     }
   }
-  menuSelected(title){
-    console.log(title);
-    this.selectedIndex = title;
-    this.lStorageService.setitemonLocalStorage('tabIndex', this.selectedIndex);
+  menuSelected(section){
+    console.log(section.title);
+    if (section.type!=='action') {
+      this.selectedIndex = section.title;
+      this.lStorageService.setitemonLocalStorage('tabIndex', this.selectedIndex);
+    } else {
+      let url = section.link + "?accountId=" + this.businessProfile.id + "&customId="+this.businessProfile.accEncUid;
+      this.router.navigateByUrl(url);
+    }
+    
   }
   setUserWaitTime() {
     let apptTimearr = [];
@@ -435,5 +443,21 @@ export class CustTemplate1Component implements OnInit {
           this.doLogin('consumer', passParam);
         }
       });
+  }
+
+  actionPerformed(action) {
+    if (this.templateJson.section1 && this.templateJson.section1.key===action) {
+      this.menuSelected(this.templateJson.section1);
+    }
+    if (this.templateJson.section2 && this.templateJson.section2.key===action) {
+      this.menuSelected(this.templateJson.section2);
+    }
+    if (this.templateJson.section3 && this.templateJson.section3.key===action) {
+      this.menuSelected(this.templateJson.section3);
+    }
+    if (this.templateJson.section4 && this.templateJson.section4.key===action) {
+      this.menuSelected(this.templateJson.section4);
+    }
+    
   }
 }

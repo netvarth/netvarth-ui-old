@@ -21,7 +21,7 @@ export class QuickActionsComponent implements OnInit {
   }
   cardActionPerformed(action) {
     if (action.link) {
-        this.router.navigateByUrl('/consumer');
+        this.router.navigateByUrl(action.link);
     }
   }
 }

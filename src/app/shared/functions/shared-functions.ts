@@ -302,7 +302,7 @@ export class SharedFunctions {
     return searchLabelsList;
   }
   print_PricewithCurrency(price) {
-    return 'â‚¹' + ' ' + price.toFixed(2);;
+    return 'â‚¹' + ' ' + price.toFixed(2);
   }
 
   fileValidation(file) {

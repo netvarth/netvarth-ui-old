@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-basic-profile',
@@ -10,6 +10,7 @@ export class BasicProfileComponent implements OnInit {
   @Input() businessProfile;
   @Input() templateJson;
   @Input() selectedLocation;
+  @Output() actionPerformed = new EventEmitter<any>();
   emailId: any;
   phoneNo: any;
   location: any;
@@ -27,6 +28,10 @@ export class BasicProfileComponent implements OnInit {
     if (this.businessProfile.baseLocation.place) {
       this.location = this.businessProfile.baseLocation.place;      
     }    
+  }
+
+  goHome() {
+    this.actionPerformed.emit('about');
   }
 
 }

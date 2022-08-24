@@ -143,7 +143,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
       });
   }
 
-  loginPerformed(status) {
+  actionPerformed(status) {
     if (status) {
       this.router.navigate(['customapp',this.accountEncId, { outlets : {template: [this.templateJson.template]}}]);
       this.loginRequired = false;
