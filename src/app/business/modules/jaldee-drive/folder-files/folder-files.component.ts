@@ -663,7 +663,6 @@ export class FolderFilesComponent implements OnInit {
       file.fileType === "jfif" 
     ) {
       this.fileviewdialogRef = this.dialog.open(PreviewuploadedfilesComponent, {
-        width: "100%",
         panelClass: [
           "popup-class",
           "commonpopupmainclass",
