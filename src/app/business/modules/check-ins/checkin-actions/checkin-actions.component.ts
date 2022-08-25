@@ -300,13 +300,15 @@ export class CheckinActionsComponent implements OnInit {
     changeSlot() {
         this.action = 'slotChange';
         // this.selectedTime = '';
+        console.log("checkin slot",this.checkin)
         this.activeDate = this.checkin_date;
         console.log("activeDate :", this.activeDate)
-        this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.accountid);
+        this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.checkin.account);
         this.getQueuesbyLocationandServiceIdavailability(this.location_id, this.serv_id, this.accountid);
     }
 
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
+        console.log("Account Id :",accountid);
         this.loading = true;
         this.queuejson = [];
         this.queueQryExecuted = false;
@@ -314,6 +316,7 @@ export class CheckinActionsComponent implements OnInit {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
+                    console.log("Queue :",this.queuejson);
                     this.loading = false;
                     this.queueQryExecuted = true;
                     if (this.queuejson && this.queuejson.length > 0) {
