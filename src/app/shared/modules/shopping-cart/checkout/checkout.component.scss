@@ -13,6 +13,63 @@ flex-basis: 50% !important;
     padding-right: 10px;
 
 }
+.bgorange {
+  background-color: #FFF8E4 !important;
+}
+
+.bggrey
+{
+  background-color: rgba(217, 217, 217, 0.31)!important;
+  padding: 10px !important;
+  border-radius: 10px!important;
+}
+
+.price
+{
+  font-size: 18px!important;
+  font-weight: bold!important;
+}
+
+.price-tag
+{
+  font-size: 15px!important;
+}
+
+
+.submit-paper-btn
+{
+  background-color:#007DFA!important ;
+  color: white!important;
+  padding: 10px 15px!important;
+  font-size: 16px!important;
+  border-color: #007DFA!important;
+  border-radius: 5px!important;
+}
+.welcomeBck {
+  color: #000;
+  font-size: 25px;
+  font-weight: bold !important;
+}
+
+.bgblue
+{
+  color: #fff!important;
+  background-color: #1e4079!important;
+  padding: 15px 20px!important;
+}
+
+.welcometag {
+  color: rgb(100, 99, 99);
+  font-size: 15px;
+  font-weight: bold !important;
+}
+
+
+.bgorange.px-5.py-2 {
+    height: 150px!important;
+}
+
+
 
 .order-checkout .bg-grey {
     background: #f2f2f2;;
@@ -156,6 +213,13 @@ border: 3px dashed #0707eca1 !important;
     .ph-outline {
         width: 100% !important;
     }
+    .bgorange.px-5.py-2 {
+        height: 170px!important;
+    }
+    .disp-none-small {
+    display: none !important;
+  }
+
 }
 ::ng-deep .ph-outline .ph-ip {
     background-color: transparent;
@@ -194,7 +258,9 @@ border: 3px dashed #0707eca1 !important;
 }
 ::ng-deep .nxt-btn {
     background-color: #183e7a !important;
-    color: white !important
+    color: white !important;
+    padding: 5px 10px!important;
+    font-size: 16px!important;
 }
 ::ng-deep .nxt-btn .mat-button-wrapper {
     padding: 40px;
@@ -626,7 +692,7 @@ box-shadow: 4px 4px 5px gainsboro;
     padding: 10px;
     background: #FFFFFF;
     border: 0.867156px solid #FFFFFF;
-    box-shadow: 0px 2.15156px 7.53044px rgb(0 0 0 / 15%);
+    // box-shadow: 0px 2.15156px 7.53044px rgb(0 0 0 / 15%);
     border-radius: 7.95393px;
     }
     .paperSubmitTxt{
@@ -696,18 +762,18 @@ box-shadow: 4px 4px 5px gainsboro;
       left: 0;
       height: 20px;
       width: 20px;
-      background-color:#1e4079;;
+      background-color:#E64E4E;;
       font-weight: bold;
       border-radius: 5px;
     }
 
     .container1:hover input ~ .mark {
-      background-color:#1e4079;;
+      background-color:#E64E4E;;
     }
 
     .container1 input:checked ~ .mark {
       // background-color: red
-      background-color:#1e4079;;
+      background-color:#E64E4E;;
     }
 
     /* Create the mark/indicator (hidden when not checked) */
@@ -734,7 +800,7 @@ box-shadow: 4px 4px 5px gainsboro;
     transform: rotate(45deg);
     }
     .container1 input:checked ~ .mark{
-      background-color:#1e4079;;
+      background-color:#E64E4E;
     }
     .SINO{
       color: #000;

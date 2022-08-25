@@ -10,10 +10,10 @@ import { LocalStorageService } from '../../../../shared/services/local-storage.s
   styleUrls: ['./submissions.component.css']
 })
 export class SubmissionsComponent implements OnInit, OnChanges {
-panelOpenState: false;
-@Input() user_details;
-@Input() orders;
-@Input() custom_id;
+  panelOpenState: any = false;
+  @Input() user_details;
+  @Input() orders;
+  @Input() custom_id;
   ongoing_papers: any = [];
   completed_papers: any = [];
   cancelled_papers: any = [];
@@ -27,22 +27,21 @@ panelOpenState: false;
   ngOnChanges(changes: SimpleChanges): void {
     this.initOrder();
   }
-initOrder() {
-  if (this.orders && this.orders.length > 0) {
-    this.ongoing_papers = this.orders.filter(p => p.orderStatus=="Order Confirmed" || p.orderStatus=="Paper Submitted" || p.orderStatus=="In review");
-    console.log('this.ongoing_papers',this.ongoing_papers)
-    this.completed_papers = this.orders.filter(p => p.orderStatus=="Completed");
-    this.cancelled_papers = this.orders.filter(p => p.orderStatus=="Cancelled");
+  initOrder() {
+    if (this.orders && this.orders.length > 0) {
+      this.ongoing_papers = this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
+      console.log('this.ongoing_papers', this.ongoing_papers)
+      this.completed_papers = this.orders.filter(p => p.orderStatus == "Completed");
+      this.cancelled_papers = this.orders.filter(p => p.orderStatus == "Cancelled");
+    }
   }
-}
 
   ngOnInit(): void {
     this.initOrder();
-    console.log('this.user_details',this.user_details)
+    console.log('this.user_details', this.user_details)
   }
 
-  viewPaper(accountid,uid,providerid)
-  {
+  viewPaper(accountid, uid, providerid) {
     let queryParams = {};
     queryParams['accountId'] = accountid;
     if (this.custom_id) {
@@ -55,14 +54,12 @@ initOrder() {
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };
-    if(this.custom_id)
-    {
-      this.router.navigate(['consumer','orderdetails'],navigationExtras);
+    if (this.custom_id) {
+      this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
     }
   }
 
-  uploadPaper()
-  {
+  uploadPaper() {
     const source = this.lStorageService.getitemfromLocalStorage('source');
     console.log(source);
     if (source) {
