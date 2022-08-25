@@ -128,14 +128,91 @@ margin-top: -1px;
     width: 75%;
     }
     .ageyear{
-        width: 25%;
+        width: 8%;
+        margin-top: -1px !important;
+    }
+    .input1{
+        margin-top: -1px !important;
+    }
+   
+    .monthyear{
+        width : 80px;
+         margin-top: -20px; 
+         height: 34px !important;
+         margin-left: 5px !important;
+
+    }
+}
+@media (max-width: 1000px) {
+   
+    .ageyear{
+        width: 50px;
+        margin-left: 0px !important;
       
+    }
+    .input1[_ngcontent-ulc-c422] {
+        width: 50px !important;
+        box-sizing: border-box;
+        height: 40px;
+        border-radius: 4px;
+        background: #f6f6f6 !important;
+        border-bottom: 1px solid #f6f6f6 !important;
+        border-top: 1px solid #f6f6f6 !important;
+        border-left: 1px solid #f6f6f6 !important;
+        border-right: 1px solid #f6f6f6 !important;
+        padding: 4px;
+        position: relative;
+        margin-top: -6px;
+        margin-bottom: 0;
+        margin-left: 0px !important;
+        display: table-cell;
+        text-align: center;
     }
     .monthyear{
         width : 80px;
          margin-top: -20px; 
          height: 34px !important;
+         margin-left: 5px !important;
+
     }
+    .datePicker{
+        margin-right: 0px !important;
+    }
+}
+@media (min-width: 1000px) {
+   
+    .ageyear{
+        width: 50px;
+        margin-left: 0px !important;
+    }
+    .input1[_ngcontent-ulc-c422] {
+        width: 50px !important;
+        box-sizing: border-box;
+        height: 40px;
+        border-radius: 4px;
+        background: #f6f6f6 !important;
+        border-bottom: 1px solid #f6f6f6 !important;
+        border-top: 1px solid #f6f6f6 !important;
+        border-left: 1px solid #f6f6f6 !important;
+        border-right: 1px solid #f6f6f6 !important;
+        padding: 4px;
+        position: relative;
+        margin-top: -6px;
+        margin-bottom: 0;
+        margin-left: 0px !important;
+        display: table-cell;
+        text-align: center;
+    }
+    .monthyear{
+        width : 80px;
+         margin-top: -20px; 
+         height: 34px !important;
+         margin-left: 5px !important;
+    }
+    .pickerouter{
+        margin-right: 0px !important;
+    }
+   
 }
 .form-text-light
 {
