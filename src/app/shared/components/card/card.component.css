@@ -1281,12 +1281,20 @@ color: red;
       margin: auto;
     }
   }
+  .card1 .card-head-grey {
+    font-size: .7rem !important;
+  }
   .card-head-grey {
     color: #B6B1B1;
     font-size: 12px;
   }
+
   .card-outer-cont {
     height: 100px;
+  }
+  .card1.card-outer-cont {
+    height: 80px;
+    border-bottom: 1px solid #eee;
   }
   .line-clamp-ln2 {
     display: -webkit-box !important;
@@ -1316,6 +1324,12 @@ color: red;
     padding: 5px;
     border-radius: 50%;
 }
+
+.card1.card-outer-cont img, .card1 .card-inner-img-cont i {
+    height: 60px !important;
+    width: 60px !important;
+}
+
 .card-inner-img-cont {
     height: 100%;
 }
@@ -1714,3 +1728,14 @@ button.fx {
   .spinner.spinner-left:before {
     right: .3rem !important;
   }
+
+  .card1 h6 {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+  }
+.card1 .line-clamp-ln2 {
+    line-height: 1.25;
+}
+.mgn-bt-2 {
+    margin-bottom: 2px;
+}

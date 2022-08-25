@@ -1,5 +1,5 @@
 <div class="bus-item-N" *ngFor="let sp of services">
     <app-card [theme]="" [item]="sp" [terminology]='terminologiesjson' [loc]="selectedLocation"
-        (actionPerformed)="cardClicked($event)" [config]="config">
+        (actionPerformed)="cardClicked($event)" [config]="config" cardName="card1">
     </app-card>
 </div>

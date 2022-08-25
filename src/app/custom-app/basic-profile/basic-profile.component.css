@@ -55,11 +55,12 @@ p {
     height: 100%;
 }
 .card-outer-cont img  {
-    height: 80px !important;
-    width: 80px !important;
+    height: 75px !important;
+    width: 75px !important;
     vertical-align: middle;
-    box-shadow: 0 4px 8px rgb(0 0 0 / 20%), 0 6px 20px rgb(0 0 0 / 19%);
-    padding: 5px;
+    /* box-shadow: 0 4px 8px rgb(0 0 0 / 20%), 0 6px 20px rgb(0 0 0 / 19%);
+    padding: 5px; */
+    background-color: #fff;;
     border-radius: 50%;
 }
 .bline {

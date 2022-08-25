@@ -1,7 +1,7 @@
 <!-- Card -->
 <!-- ***START OF NEW CARD*** -->
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''"
-    *ngIf="((service && service.serviceAvailability) || item.type=='donation') && !source">
+    *ngIf="((service && service.serviceAvailability) || item.type=='donation') && !source && !cardName">
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding pointer-cursor card-outer-cont"
         (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
         <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 ">
@@ -64,12 +64,79 @@
             <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
         </div>
     </div>
-  
+
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
         <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event, item)"
             class="getappointmentbutton" [class.disabled]="item['loading']" [class.spinner]="item['loading']"
             [class.spinner-darker-success]="item['loading']"
             [class.spinner-center]="item['loading']">{{buttonCaption}}</button>
+    </div>
+</div>
+<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''"
+    *ngIf="((service && service.serviceAvailability) || item.type=='donation') && !source && cardName">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding pointer-cursor card-outer-cont mgn-bt-5" [ngClass]="cardName"
+        (click)="cardActionPerformed(item.type, 'view', service, loc, null, $event)">
+        <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 ">
+            <h5 class="line-clamp-ln2 mgn-bt-2 mgn-up-5"
+                [ngClass]="{'no-padding':service.serviceType && service.serviceType == 'virtualService'}">{{service.name
+                |
+                capitalizeFirst}}</h5>
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="item.type=='donation'">
+                <p class="card-text donationAmount no-padding mgn-lt-10">
+                    <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
+                    <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or
+                        more</span>
+                </p>
+            </div>
+            <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 mgn-up-5 no-padding">
+                <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
+                <h6 class="no-padding " *ngIf="timings">{{timings}}</h6>
+            </div>
+        </div>
+        <div class="col-md-3 col-xs-3 col-sm-3 col-lg-3 no-padding card-inner-img-cont">
+            <div class="img-circle"
+                *ngIf="service && !service.servicegallery &&  service.serviceType && service.serviceType == 'virtualService'">
+                <i class="fa phon-icon "
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                <i class="fa meet-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                <i class="fa zoom-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                <i class="fa wtsapaud-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                <i class="fa wtsapvid-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                <i class="fa jaldeevideo-icon"
+                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+            </div>
+            <div class="img-circle " *ngIf="service.servicegallery && service.servicegallery.length > 0">
+                <img class=" img-responsive" [src]="service.servicegallery[0].thumbUrl" alt=" Service Image">
+            </div>
+            <div class="img-circle "
+                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
+                <img class=" img-responsive" src="assets/images/donation.png" alt="Donation Image">
+            </div>
+            <div class="img-circle"
+                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'">
+                <img class="img-responsive" src="assets/images/meeting_Artboard.png" alt="Physical Service Image">
+            </div>
+            <div class="img-circle "
+                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'">
+                <img class=" img-responsive" src="assets/images/hindu-temple-clipart.jpg" alt="Physical Service Image">
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
+        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 {{cardName}}">
+            <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption}}</div>
+            <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
+        </div>
+        <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+            <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event, item)"
+                class="getappointmentbutton" [class.disabled]="item['loading']" [class.spinner]="item['loading']"
+                [class.spinner-darker-success]="item['loading']"
+                [class.spinner-center]="item['loading']">{{buttonCaption}}</button>
+        </div>
     </div>
 </div>
 
@@ -85,42 +152,43 @@
         </div>
         <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding">
 
-        <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9 no-padding"></div>
-        <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3 no-padding pull-right">
-            <div class="img-circle card-inner-img pull-right no-padding"
-                *ngIf="service && !service.servicegallery && service.serviceType == 'virtualService'">
-                <i class="fa phon-icon "
-                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
-                <i class="fa meet-icon"
-                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
-                <i class="fa zoom-icon"
-                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
-                <i class="fa wtsapaud-icon"
-                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
-                <i class="fa wtsapvid-icon"
-                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
-                <i class="fa jaldeevideo-icon"
-                    *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+            <div class="col-sm-9 col-xs-9 col-md-9 col-lg-9 no-padding"></div>
+            <div class="col-sm-3 col-xs-3 col-md-3 col-lg-3 no-padding pull-right">
+                <div class="img-circle card-inner-img pull-right no-padding"
+                    *ngIf="service && !service.servicegallery && service.serviceType == 'virtualService'">
+                    <i class="fa phon-icon "
+                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Phone'"></i>
+                    <i class="fa meet-icon"
+                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></i>
+                    <i class="fa zoom-icon"
+                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'Zoom'"></i>
+                    <i class="fa wtsapaud-icon"
+                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='audioService'"></i>
+                    <i class="fa wtsapvid-icon"
+                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'WhatsApp' && service.virtualServiceType ==='videoService'"></i>
+                    <i class="fa jaldeevideo-icon"
+                        *ngIf="service.virtualCallingModes && service.virtualCallingModes.length > 0 && service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                </div>
+                <div class="img-circle card-inner-img"
+                    *ngIf="service.servicegallery && service.servicegallery.length > 0">
+                    <img class="" [src]="service.servicegallery[0].thumbUrl" alt=" Service Image">
+                </div>
+                <div class="img-circle card-inner-img"
+                    *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
+                    <img class="" src="assets/images/donation.png" alt="Donation Image">
+                </div>
+                <div class="img-circle card-inner-img"
+                    *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'">
+                    <img class="" src="assets/images/meeting_Artboard.png" alt="Physical Service Image">
+                </div>
+                <!--  img-responsive -->
+                <div class="img-circle card-inner-img"
+                    *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'">
+                    <img class="" src="assets/images/hindu-temple-clipart.jpg" alt="Physical Service Image">
+                </div>
+            </div>
+
         </div>
-            <div class="img-circle card-inner-img" *ngIf="service.servicegallery && service.servicegallery.length > 0">
-                <img class="" [src]="service.servicegallery[0].thumbUrl" alt=" Service Image">
-            </div>
-            <div class="img-circle card-inner-img"
-                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'donationService'">
-                <img class="" src="assets/images/donation.png" alt="Donation Image">
-            </div>
-            <div class="img-circle card-inner-img"
-                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain != 'religiousPriests'">
-                <img class="" src="assets/images/meeting_Artboard.png" alt="Physical Service Image">
-            </div>
-            <!--  img-responsive -->
-            <div class="img-circle card-inner-img"
-                *ngIf="!service.servicegallery && service.serviceType && service.serviceType != 'virtualService' && service.serviceType == 'physicalService' && domain == 'religiousPriests'">
-                <img class="" src="assets/images/hindu-temple-clipart.jpg" alt="Physical Service Image">
-            </div>
-        </div>
-    
-    </div>
         <div
             [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
             <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
@@ -130,10 +198,10 @@
             <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption}}</div>
             <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
         </div>
-       
-        
+
+
     </div>
-    
+
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
         <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
             class="getappointmentbutton ">{{buttonCaption}}</button>
@@ -398,7 +466,8 @@
 
 <ng-container *ngIf="item.type=='checkin-dashboard'">
     <!--(click)="gotoDetails()"  -->
-    <div class="col-xs-12 col-sm-12 no-padding" (click)="cardActionPerformed(item.type, 'view', null, null, null, $event, item)" [class.history]="time_type==3">
+    <div class="col-xs-12 col-sm-12 no-padding"
+        (click)="cardActionPerformed(item.type, 'view', null, null, null, $event, item)" [class.history]="time_type==3">
 
         <div class="main-sec">
             <div class="token" *ngIf="time_type!==3 && item.token && !item.provider">
@@ -407,9 +476,10 @@
             <div class="user-token" *ngIf="time_type!==3 && item.token && item.provider">
                 {{item.token}}
             </div>
-            <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="item.provider"  >
+            <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="item.provider">
                 <!-- (click)="gotoCustomerDetailsToken(waitlist, $event)" -->
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" (click)="cardActionPerformed(item.type, 'view-patient', null, null, null, $event, item)"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                    (click)="cardActionPerformed(item.type, 'view-patient', null, null, null, $event, item)"
                     *ngIf="item.type=='checkin-dashboard' && (item.waitlistingFor[0].firstName || item.waitlistingFor[0].lastName)">
                     {{item.waitlistingFor[0].firstName}}
                     {{item.waitlistingFor[0].lastName}}
@@ -433,10 +503,9 @@
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="item.provider">
                     Assigned: {{(item.provider.businessName) ? item.provider.businessName :
-                        item.provider.firstName + ' ' + item.provider.lastName}}
+                    item.provider.firstName + ' ' + item.provider.lastName}}
                 </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr"
-                    *ngIf="item.teamId !== 0">
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr" *ngIf="item.teamId !== 0">
                     {{getUsersList(item.teamId)}}
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr"
@@ -496,8 +565,8 @@
                         <i class="icon-note"></i>
                     </span>
                     <span (click)="stopProp($event);checkinActions(item, 'attachment')"
-                        class="cnote pointer-cursor mgn-rt-10" *ngIf="item.hasAttachment"><i
-                            style="font-size: 20px;" class="material-icons">attach_file</i></span>
+                        class="cnote pointer-cursor mgn-rt-10" *ngIf="item.hasAttachment"><i style="font-size: 20px;"
+                            class="material-icons">attach_file</i></span>
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5 mgn-up-10">
                     <a class="action-btn" (click)="stopProp($event);checkinActions(item, 'actions')">
@@ -510,7 +579,8 @@
 </ng-container>
 <ng-container *ngIf="item.type=='appointment-dashboard'">
     <!-- (click)="gotoDetails()" -->
-    <div class="col-xs-12 col-sm-12 no-padding mgn-lt-5" (click)="cardActionPerformed(item.type, 'view', null, null, null, $event, item)"  [class.history]="time_type==3">
+    <div class="col-xs-12 col-sm-12 no-padding mgn-lt-5"
+        (click)="cardActionPerformed(item.type, 'view', null, null, null, $event, item)" [class.history]="time_type==3">
         <div class="main-sec">
             <div class="date mgn-lt-5" *ngIf="time_type!=1">
                 {{appointment.appmtDate | date: newTimeDateFormat}}</div>
@@ -525,7 +595,8 @@
             </div>
             <div class="box1 mgn-lt-5" [class.mgn-bt-minus]="appointment.provider">
                 <!-- (click)="gotoCustomerDetailsAppt(appointment, $event)" -->
-                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name" (click)="cardActionPerformed(item.type, 'view-patient', null, null, null, $event, item)"
+                <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
+                    (click)="cardActionPerformed(item.type, 'view-patient', null, null, null, $event, item)"
                     *ngIf="item.type=='appointment-dashboard' && (appointment.appmtFor[0].firstName || appointment.appmtFor[0].lastName)">
                     {{appointment.appmtFor[0].firstName}}
                     {{appointment.appmtFor[0].lastName}}

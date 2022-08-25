@@ -27,6 +27,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() teams;
     @Input() source;
     @Input() cardType;
+    @Input() cardName;
     // @Input() pos;
     @Input() statusAction;
     service: any;
@@ -143,8 +144,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
 
 
     ngAfterViewInit() {
-            if(this.source == 'paper')
-            {
+            if(this.source == 'paper') {
                 console.log("Came from paper");
                 let element: HTMLElement = document.getElementsByClassName('add-to-cart')[0] as HTMLElement;
                 element.click();

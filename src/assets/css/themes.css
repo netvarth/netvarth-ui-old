@@ -879,8 +879,13 @@ background-color: #c29179 !important;
 .theme5 .c-checkin-new .lnk a {
 color: #c29179 !important;
 }
-
-
+.theme5 .i-actions {
+  background-color: #1AA695 !important;
+  color: #fff !important;
+}
+.footer-bar-1 .active-nav i, .footer-bar-1 .active-nav span, .footer-bar-3 .active-nav i {
+  color: #1AA695 !important;
+}
 .theme5 .mat-tab-label {
 color:black;
 }

@@ -1,14 +1,14 @@
 .color-highlight {
-	color: #da4453 !important
+	color: #da4453;
 }
 
 .bg-highlight {
-	background-color: #da4453 !important;
-	color: #fff !important
+	background-color: #da4453;
+	color: #fff;
 }
 
 .border-highlight {
-	border-color: #da4453 !important
+	border-color: #da4453;
 }
 
 .gradient-highlight {
@@ -67,7 +67,7 @@
 }
 
 .footer-bar-1 .active-nav i, .footer-bar-1 .active-nav span, .footer-bar-3 .active-nav i {
-    color: #da4453!important;
+    color: #da4453;
 }
 #footer-bar a span {
     position: relative;
