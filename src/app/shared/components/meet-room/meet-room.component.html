@@ -117,7 +117,7 @@
                         <i class="fa fa-refresh fa-stack-1x"></i>
                     </i>
                 </i> -->
-                <ng-container  *ngIf="twilioService.camDeviceCount > 1 && media['videoDevices']">
+                <ng-container  *ngIf="twilioService.camDeviceCount > 1 && media && media['videoDevices']">
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item *ngFor="let med of media['videoDevices']; let i=index" (click)="switchCamera(med)" >
                           <span [ngClass]="{'bold': twilioService.selectedVideoId===med.deviceId}">{{(med.label!=''?med.label: ('CAM ' + (i+1)))}}</span>
