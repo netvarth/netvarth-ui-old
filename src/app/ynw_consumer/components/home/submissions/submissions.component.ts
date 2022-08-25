@@ -29,6 +29,7 @@ export class SubmissionsComponent implements OnInit, OnChanges {
   }
   initOrder() {
     if (this.orders && this.orders.length > 0) {
+      console.log('this.orders', this.orders)
       this.ongoing_papers = this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
       console.log('this.ongoing_papers', this.ongoing_papers)
       this.completed_papers = this.orders.filter(p => p.orderStatus == "Completed");

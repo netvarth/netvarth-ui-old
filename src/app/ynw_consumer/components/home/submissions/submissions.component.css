@@ -297,9 +297,14 @@ tbody tr:hover {
 
 
 
+
 @media (max-width: 893px) {
   .disp-none-small {
     display: none !important;
+  }
+
+  .accordions {
+    padding: 20px 20px 20px 40px !important;
   }
 
   .userInfo {
@@ -318,4 +323,16 @@ tbody tr:hover {
 
 .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
   padding: 0px 20px 0px 0px !important;
+}
+
+
+
+.accordions {
+  padding: 20px 20px 20px 60px !important;
+}
+
+@media (max-width: 470px) {
+  .accordions {
+    padding: 20px 20px 20px 40px !important;
+  }
 }
