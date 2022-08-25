@@ -18,6 +18,7 @@ export class AppointmentServicesComponent implements OnInit, OnChanges {
   @Input() businessProfile;
   @Input() filteredServices;
   @Input() config;
+  @Input() cardName;
 
   services;
   serverDate: any;

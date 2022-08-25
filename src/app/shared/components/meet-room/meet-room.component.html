@@ -38,7 +38,7 @@
                         <h1 *ngIf="loading">Getting Ready...</h1>
                         <h1 *ngIf="!loading && twilioService.loading">Redirecting ...</h1>
                     </div>
-                    <div class="video_blinking text-center mgn-bt-20" *ngIf="loading && !twilioService.loading">
+                    <div class="video_blinking text-center mgn-bt-20" *ngIf="!loading && !twilioService.loading">
                         {{status}}
                     </div>
                     <div class="text-center mgn-bt-20" *ngIf="loading && !twilioService.loading">

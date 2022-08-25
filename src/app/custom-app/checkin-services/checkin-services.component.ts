@@ -17,7 +17,7 @@ export class CheckinServicesComponent implements OnInit, OnChanges {
   @Input() apptSettings;
   @Input() businessProfile;
   @Input() filteredServices;
-
+  @Input() cardName;
   serverDate: any;
   services;
 
