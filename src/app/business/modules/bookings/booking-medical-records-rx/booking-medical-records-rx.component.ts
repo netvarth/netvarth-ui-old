@@ -70,6 +70,7 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     let bookingType;
     // const mrId = (mr.id) ? mr.id : (this.waitlistmr[0]) ? this.waitlistmr[0].id : 0;
     const mrId=0;
+    console.log(mrId);
     const consumerId = (this.customerId) ? this.customerId : mr.providerConsumer.id;
     if (mr.bookingType) {
       bookingType = mr.bookingType;
@@ -82,26 +83,26 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
       // alert('prescription')
     if(mr==='add'){
       this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
+      // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
     }
-    else{
-      // console.log(mr)
-      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
-    }
+    // else{
+    //   // console.log(mr)
+    //   this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
+    // }
       
     } else {
       // alert('clinicalnotes')
-      // console.log(mr);
+      console.log(mr);
       if(mr==='add'){
+        // console.log('consumerId',consumerId)
+        // console.log('bookingType',bookingType)
+        // console.log('bookingId',bookingId)
         this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
+        // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
       }
-      else{
-        // console.log('this.customerId',this.customerId);
-        // console.log('mrId',mrId)
-
-        this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord',mr.id, 'clinicalnotes']);
-
-        // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
-      }
+      // else{
+      //   this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord',mr.id, 'clinicalnotes']);
+      // }
       
     }
   }

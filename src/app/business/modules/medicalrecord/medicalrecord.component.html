@@ -236,7 +236,7 @@
         <div class="nameClrOther2nd record">Create Medical Record</div>
        <div class="twoActivity">
          <!---prescriptiojn start-->
-         <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')">
+         <div class="prescriptionOuter" (click)="addPrescriptionAndClinicalSecond(patientId,'createPrescription')">
            <div>
              <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
            </div>
@@ -246,7 +246,7 @@
          </div>
           <!---prescriptiojn end-->
           <!---clinical notes start-->
-         <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')">
+         <div class="clinicalOuter" (click)="addPrescriptionAndClinicalSecond(patientId,'craeteClinicalnotes')">
            <div>
              <img class="imageSize"  src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
            </div>
@@ -262,7 +262,7 @@
       <!---prescription start-->
       <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes card"> -->
         <!-- (uploadFiles && uploadFiles.length===0)" -->
-        <div class="p-1 pl0 pt-0 col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10" *ngIf="showHideAddPrescription">
+        <div class=" col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10" *ngIf="showHideAddPrescription">
           <div>
             <app-prescription [showHideActivityTYpe]="showHideActivityTYpe"></app-prescription>
           </div>
@@ -331,7 +331,7 @@
       <!---prescription end-->
       <!-- <hr> -->
       <!----clinical notess ection start-->
-      <div class="p-1 pl0 pt-0 col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10" *ngIf="showHideClinicalNotes">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10" *ngIf="showHideClinicalNotes">
         <div>
           <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId">
           </app-clinicalnotes>
@@ -494,8 +494,20 @@
          <ng-container>
           <app-prescription [viewVisitDetails]="viewVisitDetails"></app-prescription>
          </ng-container>
-          <ng-container *ngIf="medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
-            <app-clinicalnotes [medicalInfo]="medicalInfo" *ngIf="medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0"></app-clinicalnotes>
+        <ng-container *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
+          <div class="clinicalOuter1 card mgn-up-10 "  *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
+            <div class="clinical pointer-cursor" (click)="addClinical(patientId,'craeteClinicalnotes')">
+              <div>
+                <img class="imageSize"  src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
+              </div>
+              <div class="nameClrOther2nd">
+               Add Clinical Notes
+              </div>
+            </div>
+          </div>
+        </ng-container>
+          <ng-container *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
+            <app-clinicalnotes [medicalInfo]="medicalInfo" *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0"></app-clinicalnotes>
         </ng-container>
         </div>
       </div>
@@ -508,14 +520,29 @@
           <ng-container>
             <app-clinicalnotes  [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
           </ng-container>
-          <ng-container *ngIf="medicalInfo && medicalInfo.prescriptionCreated===false" >
-            <app-prescription *ngIf="medicalInfo && medicalInfo.prescriptionCreated===false" ></app-prescription>
+          <div *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false" class="clearfix" ></div>
+          <ng-container *ngIf="tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
+            {{medicalInfo | json}}
+            {{tempPrescription | json}}
+            <div class=" card mgn-bt-10 mgn-up-10" 
+            *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
+              <div class="clinical pointer-cursor" (click)="addPrescription(patientId,'craeteClinicalnotes')" >
+                <div>
+                  <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
+                </div>
+                <div class="nameClrOther2nd">
+                  Add Prescription
+                </div>
+              </div>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" >
+            <app-prescription *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" ></app-prescription>
           </ng-container>
           
         </div>
       </div>
     </div>
-
   </div>
   
 </section>

@@ -9,7 +9,7 @@
 </section>
 <ng-container *ngIf="!loading && !viewVisitDetails">
   <!-- *ngIf="prescList" -->
-  <div class="mgn-up-10">
+  <div >
     <!-- <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 mgn-bt-10">
       <span class="">
         <h4 class="font-weight-bold">Prescriptions</h4>
@@ -32,8 +32,8 @@
       </div>
     </div> -->
     <section *ngIf="!loading" >
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes shadow" style="margin-top: 10px;">
-        <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate" *ngIf="drugList && uploadlist.length===0">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes shadow" >
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate" *ngIf="drugList && uploadlist.length===0">
           <div class="shadow" style="height:100% !important">
           <div>
             <span class="table-heading"><b>Prescription</b></span>
@@ -93,10 +93,10 @@
                       [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)"> Save & Add Another</button>
                     <button type="submit" mat-button class="cs-btn bt1 style-button btn-primary" [disabled]="!amForm.valid ">Save &
                       Close</button> -->
-                      <button type="button"class="btn btn-primary font-weight-bold cancelBtn"(click)=" gobackCancel('Prescription')">Cancel</button>
-                      <button type="button"class="btn btn-primary font-weight-bold confirmBtn"  [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">
+                      <!-- <button type="button"class="btn btn-primary font-weight-bold cancelBtn"(click)=" gobackCancel('Prescription')">Cancel</button> -->
+                      <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"  [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">
                         <!-- <app-common-innerloading-spinner ></app-common-innerloading-spinner> -->
-                        <span >Save</span>
+                        <span >Add</span>
                     </button>
                   </div>
                 </div>
@@ -113,7 +113,7 @@
         </div>
 
         <div class="prescriptionNotes" style="width:100% !important">
-          <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate" *ngIf="uploadlist && drugList.length===0">
+          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 filesCreate" *ngIf="uploadlist && drugList.length===0">
             <div class="shadow flexClass">
               <div class="text-dark text-center dashedClass" *ngIf="uploadlist ">
                 <img style="height:50px;width:50px" src="/assets/images/medicalReportIcon/uploadIcon.png" />
@@ -221,7 +221,7 @@
                           </div>
                         </div> -->
           </div>
-          <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate" *ngIf="drugList && drugList.length>0">
+          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate" *ngIf="drugList && drugList.length>0">
             <div class="shadow prescriptionCard" >
               <div>
                 <span class="table-headingPrescription"><b>Created Prescription</b></span>
@@ -234,7 +234,7 @@
                   <div >
                     <div >
                       <div>
-                        <table class="table ">
+                        <table class="table">
                           <thead>
                             <tr>
                               <th>No</th>
@@ -247,12 +247,12 @@
                           </thead>
                           <tbody>
                             <tr *ngFor="let drug of drugList; let i = index;" >
-                              <td  data-title="No" (click)="updateForm(drug)">{{i+1}}</td>
-                              <td data-title="Medicine" (click)="updateForm(drug)">{{drug.medicine_name? drug.medicine_name : ''}}</td>
-                              <td data-title="Duration(days)" (click)="updateForm(drug)">{{drug.duration? drug.duration : ''}}</td>
-                              <td data-title="Dosage" (click)="updateForm(drug)">{{drug.dosage? drug.dosage : ''}}</td>
-                              <td data-title="Frequency" (click)="updateForm(drug)">{{drug.frequency? drug.frequency : ''}}</td>
-                              <td data-title="Frequency" *ngIf="drug && drug.instructions" class="pointer-cursor" (click)="instructPopUp(drug)">
+                              <td class="tdLeft pointer-cursor" data-title="No" (click)="updateForm(drug)">{{i+1}}</td>
+                              <td class="tdLeft pointer-cursor" data-title="Medicine" (click)="updateForm(drug)">{{drug.medicine_name? drug.medicine_name : ''}}</td>
+                              <td class="tdLeft pointer-cursor" data-title="Duration(days)" (click)="updateForm(drug)">{{drug.duration? drug.duration : ''}} days</td>
+                              <td class="tdLeft pointer-cursor" data-title="Dosage" (click)="updateForm(drug)">{{drug.dosage? drug.dosage : ''}} dose</td>
+                              <td class="tdLeft pointer-cursor" data-title="Frequency" (click)="updateForm(drug)">{{drug.frequency? drug.frequency : ''}}</td>
+                              <td data-title="Frequency" *ngIf="drug && drug.instructions" class="Instructions tdLeft2 pointer-cursor" (click)="instructPopUp(drug)">
                                 <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
                               </td>
                               <!-- <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 0">
@@ -475,35 +475,43 @@
     <span class="table-heading"><b>Prescription</b></span>
     <!-- {{drugList | json}} -->
   </div>
-  <div *ngIf="uploadlist && uploadlist.length===0 && drugList.length !==0" >
+  <div *ngIf="uploadlist && uploadlist.length===0 && drugList.length !==0" class="overflow" >
     <div>
-      <!-- <table class="table " id="printableArea">
+      <table class="table " id="printableArea">
         <thead class="headerTable">
           <tr>
+            <th>No</th>
             <th class="headerName">Medicine</th>
             <th>Duration(days)</th>
             <th>Dosage</th>
             <th>Frequency</th>
             <th>Instructions</th>
-            <th>Share</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let drug of drugList; let i = index;">
-            <td data-title="Medicine">{{drug.medicine_name? drug.medicine_name : ''}}</td>
-            <td data-title="Duration(days)">{{drug.duration? drug.duration : ''}}</td>
-            <td data-title="Dosage">{{drug.dosage? drug.dosage : ''}}</td>
-            <td data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
-            <td class="Instructions" data-title="Instructions" *ngIf="drug && drug.instructions" (click)="instructPopUp(drug)" class="pointer-cursor">
+            <td class="tdLeft"  data-title="No">{{i+1}}</td>
+            <td class="tdLeft" data-title="Medicine">{{drug.medicine_name? drug.medicine_name : ''}}</td>
+            <td class="tdLeft" data-title="Duration(days)">{{drug.duration? drug.duration : ''}} days</td>
+            <td  class="tdLeft"data-title="Dosage">{{drug.dosage? drug.dosage : ''}} dose</td>
+            <td class="tdLeft" data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
+            <td  class="Instructions tdLeft2 pointer-cursor" data-title="Instructions"  (click)="instructPopUp(drug)">
               <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
             </td>
-            <td class="Share" data-title="Share" *ngIf="drug" (click)="shareManualRx('uploadrx')">Share
-              
+            <td class="Share pointer-cursor tdLeft1" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
+              <button class="shareBtn">Share</button>
+            </td>
+            <td (click)="print('printableArea')" class="Share pointer-cursor tdLeft1" >
+              <button class=" printBtn" (click)="print('printableArea')">Print</button>
             </td>
           </tr>
         </tbody>
-      </table> -->
-      <div *ngFor="let drug of drugList; let i = index;" class="drugList" >
+      </table>
+
+     
+      <!-- <div *ngFor="let drug of drugList; let i = index;" class="drugList" >
         <div *ngIf="drug" class="drugInfo">
           <div *ngIf="drug && drug.medicine_name">
             <div class="drugName">Medecine</div>
@@ -534,7 +542,7 @@
             <button class="shareBtn" (click)="shareManualRx('uploadrx',bookingType,bookingId)">Share</button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div *ngIf="uploadlist && uploadlist.length>0 && drugList.length===0">

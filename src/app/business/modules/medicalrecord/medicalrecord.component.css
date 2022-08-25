@@ -234,6 +234,10 @@ mat-footer-cell:first-of-type {
   .imageSize{
     height:30px !important;width:30px !important
   }
+  .clinical{
+    height: 100%;
+    width: 100% !important;
+  }
 }
 .medicalRecord{
   display: flex;
@@ -290,12 +294,21 @@ mat-footer-cell:first-of-type {
     padding: 5px;
     cursor: pointer;
     height: 100%;
+    display: flex;
+    align-items: baseline;
 }
 .clinicalOuter{
     padding: 5px;
     background: #FFF9E9;
 border-radius: 7.35323px;
 cursor: pointer;
+display: flex;
+    align-items: baseline;
+}
+.clinicalOuter1{
+  padding: 5px;
+  background: #FFF9E9;
+border-radius: 7.35323px;
 }
 .matHeaderRow{
   background: #EBEFF2 !important;
@@ -381,6 +394,9 @@ cursor: pointer;
 }
 .prescriptionCreate{
   width: 100% !important;
+  padding: 0px !important;
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
 }
 .filesCreate{
   width: 100% !important;
@@ -667,5 +683,13 @@ border: 1.32184px solid #E6E8EB;
 }
 .medicalId{
   justify-content: space-around !important;
+}
+.clinical{
+  background: #FFF9E9;
+    border-radius: 11.2836px;
+    width: 20%;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
 }
 

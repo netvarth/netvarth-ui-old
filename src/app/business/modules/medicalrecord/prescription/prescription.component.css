@@ -60,6 +60,10 @@ label{
 .btnClass{
   margin-top: 10px !important;
     margin-bottom: 10px !important;
+    width: -webkit-fill-available;
+}
+.btnWidth{
+  width: -webkit-fill-available;
 }
 .card {
   padding: 15px !important;
@@ -341,7 +345,7 @@ cursor: pointer;
 .prescriptionNotes{
   display: flex;
   justify-content: space-between;
-  /* margin-top: 10px; */
+  margin-top: 10px;
 }
 .prescriptionCreate{
   width: 100% !important;
@@ -437,6 +441,7 @@ border: 1.32184px solid #E6E8EB;
     flex-wrap: wrap;
     flex-direction: column-reverse !important;
     gap: 10px !important;
+    /* margin-top: 10px; */
   }
   .spaanOr{
     display: none;
@@ -611,12 +616,26 @@ table tbody td{
     margin-top: 5px;
 }
 #printableArea{
-  display: none;
+  /* display: none; */
 }
 table tbody tr{
-  cursor: pointer;
+  /* cursor: pointer; */
     border-bottom: 1.02503px solid #E7E3E3;
 }
-/* table tbody tr :hover{
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
-} */
+.table{
+  background: #FFFFFF;
+    border: 1.02503px solid #E7E3E3;
+    border-radius: 8.78078 px;
+}
+.overflow{
+  overflow:auto;
+}
+.tdLeft1{
+  padding-left: 2rem;
+}
+.tdLeft{
+  padding: 1rem;
+}
+.tdLeft2{
+  padding:12px;
+}
