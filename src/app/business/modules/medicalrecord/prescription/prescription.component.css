@@ -61,9 +61,11 @@ label{
   margin-top: 10px !important;
     margin-bottom: 10px !important;
     width: -webkit-fill-available;
+    display: flex !important;
+    justify-content: center !important;
 }
 .btnWidth{
-  width: -webkit-fill-available;
+  width: 50%
 }
 .card {
   padding: 15px !important;
@@ -541,8 +543,9 @@ border: 1.32184px solid #E6E8EB;
 }
 .imageClas{
   display: flex;
-    justify-content: space-between;
-    gap: 5px;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
 }
 .table-headingPrescription{
  color: #22A8FA;
@@ -615,9 +618,7 @@ table tbody td{
     align-items: center;
     margin-top: 5px;
 }
-#printableArea{
-  /* display: none; */
-}
+
 table tbody tr{
   /* cursor: pointer; */
     border-bottom: 1.02503px solid #E7E3E3;
@@ -638,4 +639,10 @@ table tbody tr{
 }
 .tdLeft2{
   padding:12px;
+}
+#prinTarea{
+  display: none;
+}
+.tdLeft11{
+  padding: 1rem !important;
 }

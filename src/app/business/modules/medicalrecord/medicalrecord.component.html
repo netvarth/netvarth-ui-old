@@ -127,7 +127,7 @@
         </div>
         <section class="report pt-2 webDevice" *ngIf="visitcount !== 0">
           <ng-container *ngIf="!loading && !loading_table">
-            <mat-table class="mat-scrool visit-tbl" [dataSource]="lastVisit_dataSource">
+            <mat-table class="visit-tbl" [dataSource]="lastVisit_dataSource">
               <ng-container matColumnDef="consultationDate">
                 <mat-header-cell *matHeaderCellDef class="medicalId"> <b class="headerClr">Date</b></mat-header-cell>
                 <mat-cell *matCellDef="let visit"class="medicalId"><div class="elementTextClr">{{getLastVisitDate(visit)}}</div></mat-cell>
@@ -207,7 +207,7 @@
     <!---create section btn start-->
       <div class="col-xs-12 col-sm-12 mgn-up-10 card" *ngIf="showHideActivityTYpe && mrId !== 0">
         <div class="shadow flexClass1">
-          <div class="recordInfo">
+          <!-- <div class="recordInfo">
             <div class="mrNumber1" *ngIf="mrId !== 0">
               <div>Medical Records</div>
               <div *ngIf="mrId !== 0">1</div>
@@ -229,6 +229,30 @@
             <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/doctorIcon.png" />
             <div *ngIf="doctorBName" class="dateClr">{{doctorBName | capitalizeFirst}}</div>
             <div *ngIf="!doctorBName && doctorName" class="dateClr">{{doctorName | capitalizeFirst}}</div>
+          </div> -->
+          <div class="recordInfo">
+            <div class="mrNumber1">
+              <div>Medical Records</div>
+              <!-- {{activityLogs | json}} -->
+              <div *ngIf="mrId !== 0 || mRListUsingId ">{{mRListUsingId}}</div>
+            </div>
+            <div class="mrNumber2">
+              <div>Medical Record ID</div>
+              <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+            </div>
+          </div>
+          <div class="dateCreate">
+            <div class="mrNumber1">Date</div>
+            <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
+          </div>
+          <div class="dateCreate">
+            <div class="mrNumber1">Service</div>
+            <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
+          </div>
+          <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
+            <div class="mrNumber1">Doctor</div>
+            <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
+            <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
           </div>
         </div>
       </div>
@@ -458,7 +482,7 @@
       </div>
     </div>
 
-      <div class="col-xs-12 col-sm-12 mgn-up-10 card">
+      <div class="col-xs-12 col-sm-12 mgn-up-10 card newCard">
         <div class="shadow flexClass1">
           <div class="recordInfo">
             <div class="mrNumber1">
@@ -472,17 +496,17 @@
             </div>
           </div>
           <div class="dateCreate">
-            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/calendar.png" />
+            <div class="mrNumber1">Date</div>
             <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
           </div>
           <div class="dateCreate">
-            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/serviceIcon.png" />
+            <div class="mrNumber1">Service</div>
             <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
           </div>
           <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
-            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/doctorIcon.png" />
-            <div *ngIf="doctorBName" class="dateClr">{{doctorBName | capitalizeFirst}}</div>
-            <div *ngIf="!doctorBName && doctorName" class="dateClr">{{doctorName | capitalizeFirst}}</div>
+            <div class="mrNumber1">Doctor</div>
+            <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
+            <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
           </div>
         </div>
       </div>

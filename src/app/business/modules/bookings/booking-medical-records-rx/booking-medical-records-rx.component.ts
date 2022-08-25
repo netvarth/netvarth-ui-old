@@ -80,9 +80,14 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
       bookingId = (this.source === 'customer-details') ? 0 : (this.waitlist_data.ynwUuid) ? this.waitlist_data.ynwUuid : this.waitlist_data.uid;
     }
     if (this.type === 'rx') {
-      // alert('prescription')
+      // alert('prescription rx')
     if(mr==='add'){
-      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
+      let routerId='prescription';
+      const qparams = { 'prescription': 'prescription' };
+      const navigationExtras: NavigationExtras = {
+        queryParams: qparams
+      };
+      this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,routerId],navigationExtras);
       // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
     }
     // else{
@@ -91,18 +96,28 @@ export class BookingMedicalRecordsRXComponent implements OnInit {
     // }
       
     } else {
-      // alert('clinicalnotes')
+      // alert('clinicalnotes mr')
       console.log(mr);
       if(mr==='add'){
         // console.log('consumerId',consumerId)
         // console.log('bookingType',bookingType)
         // console.log('bookingId',bookingId)
-        this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,'clinicalnotes']);
+        const routerId='clinicalnotes';
+        const qparams = { 'clinicalnotes': 'clinicalnotes' };
+      const navigationExtras: NavigationExtras = {
+        queryParams: qparams
+      };
+        this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mrId,routerId],navigationExtras);
         // this.router.navigate(['provider', 'customers', consumerId, bookingType, bookingId, 'medicalrecord', mr.id, 'prescription']);
       }
-      // else{
-      //   this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord',mr.id, 'clinicalnotes']);
-      // }
+      else{
+        const routerId='clinicalnotes';
+        const qparams = { 'clinicalnotes': 'clinicalnotes' };
+      const navigationExtras: NavigationExtras = {
+        queryParams: qparams
+      };
+        this.router.navigate(['provider', 'customers', this.customerId, 'FOLLOWUP', 0, 'medicalrecord',mr.id, routerId],navigationExtras);
+      }
       
     }
   }

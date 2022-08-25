@@ -157,6 +157,16 @@
                           <div (click)="dialogImgView(file)">
                             <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" />
                           </div>
+                          <div>
+                            <div class="Share pointer-cursor" (click)="print('printableArea')">
+                              <img class="fileView" src="/assets/images/medicalReportIcon/print.png" />
+                            </div>
+                          </div>
+                          <div>
+                            <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
+                              <img class="fileView" src="/assets/images/medicalReportIcon/share.png" />
+                            </div>
+                          </div>
                           <!-- <div (click)="deletePrescriptionFile(file,i)">
                             <img class="removeIcon" src="./assets/images/ImgeFileIcon/removeCross.png" />
                           </div> -->
@@ -500,11 +510,13 @@
             <td  class="Instructions tdLeft2 pointer-cursor" data-title="Instructions"  (click)="instructPopUp(drug)">
               <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
             </td>
-            <td class="Share pointer-cursor tdLeft1" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
-              <button class="shareBtn">Share</button>
+            <td class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
+              <!-- <button class="shareBtn">Share</button> -->
+              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
             </td>
-            <td (click)="print('printableArea')" class="Share pointer-cursor tdLeft1" >
-              <button class=" printBtn" (click)="print('printableArea')">Print</button>
+            <td (click)="print('printableArea')" class="Share pointer-cursor tdLeft11" >
+              <!-- <button class=" printBtn" >Print</button> -->
+              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
             </td>
           </tr>
         </tbody>
@@ -583,6 +595,16 @@
                     <!-- <div (click)="deletePrescriptionFile(file,i)">
                       <img class="removeIcon" src="./assets/images/ImgeFileIcon/removeCross.png" />
                     </div> -->
+                      <div>
+                        <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')" (click)="printSecond(file)">
+                          <img class="fileView" src="/assets/images/medicalReportIcon/print.png" />
+                        </div>
+                      </div>
+                      <div>
+                        <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
+                          <img class="fileView" src="/assets/images/medicalReportIcon/share.png" />
+                        </div>
+                      </div>
                   </div>
                 </div>
               </div>

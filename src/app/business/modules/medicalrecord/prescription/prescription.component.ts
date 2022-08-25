@@ -300,10 +300,18 @@ export class PrescriptionComponent implements OnInit {
         bookingtype: this.bookingType
       }
     });
-    this.uploadprescriptionRef.afterClosed().subscribe(() => {
+    this.uploadprescriptionRef.afterClosed().subscribe((res) => {
       // this.prescList = false;
       // this.ngOnInit();
-      this.getMrprescription(this.mrId);
+      console.log('res',res)
+      // alert('hhh')
+      if(res===true){
+        this.uploadprescriptionRef.close()
+      }
+      if(this.mrId){
+        this.getMrprescription(this.mrId);
+      }
+      // this.getMrprescription(this.mrId);
     }
     );
   }
@@ -311,6 +319,7 @@ export class PrescriptionComponent implements OnInit {
   shareManualRx(type,bookingType,bookingId) {
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '100%',
+      // height:'85%',
       panelClass: ['popup-class'],
       disableClose: true,
       data: {
@@ -328,7 +337,8 @@ export class PrescriptionComponent implements OnInit {
       }
     });
   }
-  print(divName){
+  print(divName?){
+    console.log(' _this.drugList', this.viewMrInfo)
     // app-instructions
     // var printContents = document.getElementById(divName).innerHTML;
     const params = [
@@ -370,8 +380,59 @@ export class PrescriptionComponent implements OnInit {
       printWindow.close();
     }, 500);
   }
+  //  printImg(url) {
+  //   var win = window.open('');
+  //   win.document.write('<img src="' + url.url + '" onload="window.print();window.close()" />');
+  //   win.focus();
+  // }
+  printpDF(url,fileName){
+  //   const ExportAsConfig = {
+  //   type: 'pdf', // the type you want to download
+  //   //elementId: 'balance-sheet-preview', // the id of html/table element
+  //   elementId: 'contentToConvert', // the id of html/table element
+  //   options: { // html-docx-js document options
+  //     margins: {
+  //       top: '20',
+  //       bottom: '5'
+  //     },
+  //     orientation: 'landscape',
+  //     filename: fileName.originalName,
+  //     image: { type: 'jpeg', quality: 1 },
+  //   }
+  // }
+  // ExportAsConfig.sub
+  }
+  printSecond(url){
+    console.log(url);
+    if(url.type==='.pdf'){
+      // this.print()
+      // this.printpDF(url.url,url.originalName)
+    }
+    const params = [
+      'height=' + screen.height,
+      'width=' + screen.width,
+      'fullscreen=yes'
+    ].join(',');
+    const printWindow = window.open('', '', params);
+    // const _this=this;
+    let checkin_html = '';
+    checkin_html += '<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
+    checkin_html += '<img src="' + url.url + '" />'
+    // checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: absolute;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
+    printWindow.document.write('<html><head><title></title>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write(checkin_html);
+    printWindow.document.write('</body></html>');
+    printWindow.moveTo(0, 0);
+    printWindow.print();
+    printWindow.document.close();
+    setTimeout(() => {
+      printWindow.close();
+    }, 500);
+  }
 
   getMrprescription(mrId) {
+    console.log('mrId::::',mrId)
     this.subscriptions.sink=this.provider_services.getMRprescription(mrId)
       .subscribe((data:any) => {
         console.log('datagetMRprescription',data);

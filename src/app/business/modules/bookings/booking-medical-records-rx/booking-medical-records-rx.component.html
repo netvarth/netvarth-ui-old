@@ -20,10 +20,10 @@
             Diagnosis, Alergies, Prescription, etc.
           </div>
         </div>
-        <ng-container *ngIf="type == 'mr'">
+        <ng-container *ngIf="type == 'mr'" >
           <!-- (click)="gotoMrDetails(mr)" -->
           <div class="inner-card rounded-sm pointer-cursor" *ngFor="let mr of mrList" 
-            [class.wtlstmr]="waitlistmr[0] && waitlistmr[0].uuid==mr.uuid">
+            [class.wtlstmr]="waitlistmr[0] && waitlistmr[0].uuid==mr.uuid" (click)="gotoMrDetails(mr)">
             <a class="inner-card-heading">
               {{mr.mrNumber ? mr.mrNumber : ''}}
             </a>
@@ -38,7 +38,6 @@
         <ng-container *ngIf="type == 'rx'">
           <!-- (click)="gotoMrDetails(prescription)" -->
           <div class="rx-card rounded-sm pointer-cursor no-padding" *ngFor="let prescription of rxList"
-            
             [class.wtlstmr]="waitlistmr[0] && waitlistmr[0].uuid==prescription.uuid">
             <div *ngIf="prescription.prescriptions.prescriptionsList.length > 0">
               <div class="presc" *ngFor="let rx of prescription.prescriptions.prescriptionsList">
