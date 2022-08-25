@@ -39,7 +39,7 @@
       <div class="card shadow hgt-adjust">
         <!-- Wizard Started -->
         <div class="wizard wizard-1" id="kt_wizard_v1" data-wizard-state="step-first" data-wizard-clickable="false"
-          *ngIf="bookStep === 1 && serviceOptionApptt">
+          *ngIf="bookStep === 1 && serviceOptionApptt && appointmentType !== 'reschedule'">
           <!-- Service Info -->
           <div class="col-xs-12" *ngIf="selectedService">
             <app-service-display [virtualModes]="callingModesDisplayName" [service]="selectedService"

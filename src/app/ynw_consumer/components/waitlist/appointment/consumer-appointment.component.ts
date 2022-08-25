@@ -190,6 +190,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     serviceTotalPrice : number;
     total_servicefee : number;
     readMore = false;
+    advPostData: any;
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -309,7 +310,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 (data) => {
                     if (data) {
                         this.serviceOptionQuestionnaireList = data;
-                        if(this.serviceOptionQuestionnaireList.questionnaireId){
+                        if(this.serviceOptionQuestionnaireList.questionnaireId && this.appointmentType !== 'reschedule'){
                             this.serviceOptionApptt = true;
                             this.bookStep = 1;
                         }
@@ -1690,7 +1691,13 @@ else{
         const post_Data = this.generateInputForAppointment();
         post_Data['appmtFor'][0]['apptTime'] = this.selectedSlots[0]['time'];
         post_Data['schedule'] = { 'id': this.selectedSlots[0]['scheduleId'] };
+        // if(this.serviceOptionApptt){
+        //     console.log(JSON.stringify(this.advPostData))
+        //     alert('2')
+        //    post_Data['srvAnswers'] = this.advPostData;
+        // }
         const param = { 'account': this.accountId };
+        console.log(JSON.stringify(post_Data))
         this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data).subscribe(data => {
             this.paymentDetails = data;
             if(this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt){
@@ -2638,6 +2645,7 @@ else{
                        
                         });
                         finalList.push(finalSubList[0]);
+                        this.advPostData = finalList;
                         finalSubList=[];
                       }
                     }

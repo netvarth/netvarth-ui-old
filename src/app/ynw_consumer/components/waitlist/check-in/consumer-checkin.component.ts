@@ -478,7 +478,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 (data) => {
                     if (data) {
                         this.serviceOptionQuestionnaireList = data;
-                        if(this.serviceOptionQuestionnaireList.questionnaireId){
+                        if(this.serviceOptionQuestionnaireList.questionnaireId && this.type !== 'waitlistreschedule'){
                             this.serviceOptionApptt = true;
                             this.bookStep = 1;
                         }
