@@ -1,7 +1,11 @@
 <!--begin::Main-->
 <div class="d-flex flex-column flex-root" style="height: 100vh;">
   <!--begin::Login-->
-  <div class="login login-3 wizard d-flex flex-column flex-lg-row flex-column-fluid no-padding">
+  <div class="child" *ngIf="loading">
+    <app-common-innerloading-spinner>
+    </app-common-innerloading-spinner>
+</div>
+  <div class="login login-3 wizard d-flex flex-column flex-lg-row flex-column-fluid no-padding" *ngIf="!loading">
     <!--begin::Aside-->
     <div class="login-aside d-flex flex-column flex-row-auto">
       <!--begin::Aside Top-->

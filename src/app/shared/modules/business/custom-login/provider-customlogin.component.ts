@@ -49,6 +49,7 @@ export class ProviderCustomLoginComponent implements OnInit {
   idCaption = 'Mobile/Email';
   idPlaceHolder = 'Enter Mobile/Email';
   deviceId: any;
+  loading = true;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -68,7 +69,7 @@ export class ProviderCustomLoginComponent implements OnInit {
 
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
-      console.log("Params:", data);
+    console.log("Params:", data);
       if (data.device) {
         this.lStorageService.setitemonLocalStorage('deviceName', data.device);
       }
@@ -86,7 +87,8 @@ export class ProviderCustomLoginComponent implements OnInit {
     });
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        if (router.url === '/business/login') {
+        console.log(router.url);
+        if (router.url.startsWith('/business/' + this.busLoginId + '/login')) {
           if (this.shared_functions.isBusinessOwner()) {
             this.shared_functions.getGlobalSettings()
               .then(
@@ -108,7 +110,11 @@ export class ProviderCustomLoginComponent implements OnInit {
                       router.navigate(['provider', 'settings']);
                     }
                   }, 500);
+                }, (error)=>{
+                  this.loading = false;
                 });
+          } else {
+              this.loading = false;
           }
         }
       }
