@@ -253,7 +253,7 @@ mat-footer-cell:first-of-type {
 .infoDetails{
   display: flex;
     /* justify-content: space-between; */
-    align-items: end;
+    align-items: center;
     gap:50px;
 }
 .nameClrOther{

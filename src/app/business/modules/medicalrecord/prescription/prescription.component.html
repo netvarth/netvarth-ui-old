@@ -158,7 +158,7 @@
                             <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" />
                           </div>
                           <div>
-                            <div class="Share pointer-cursor" (click)="print('printableArea')">
+                            <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')" (click)="print('printableArea')">
                               <img class="fileView" src="/assets/images/medicalReportIcon/print.png" />
                             </div>
                           </div>

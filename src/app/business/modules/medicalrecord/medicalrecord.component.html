@@ -543,12 +543,10 @@
             <app-clinicalnotes  [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
           </ng-container>
           <div *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false" class="clearfix" ></div>
-          <ng-container *ngIf="tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
-            {{medicalInfo | json}}
-            {{tempPrescription | json}}
-            <div class=" card mgn-bt-10 mgn-up-10" 
+          <ng-container *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
+            <div class=" card mgn-bt-10 mgn-up-10 clinicalOuter1" 
             *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
-              <div class="clinical pointer-cursor" (click)="addPrescription(patientId,'craeteClinicalnotes')" >
+              <div class="clinical  pointer-cursor" (click)="addPrescription(patientId,'craeteClinicalnotes')" >
                 <div>
                   <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
                 </div>
