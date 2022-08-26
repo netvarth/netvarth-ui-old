@@ -1069,7 +1069,7 @@
                           AuthorDemy.com
                         </div>
                       </div>
-                      <div (click)="termsOpen()" class="terms">{{defultMoreText}}</div>
+                      <div *ngIf="termscheck" (click)="termsOpen()" class="terms">{{defultMoreText}}</div>
                     </div>
                     <div class="confirmClr my-2 font-weight-bold bggrey">
                       <span class="price-tag">Total Payment</span><br>

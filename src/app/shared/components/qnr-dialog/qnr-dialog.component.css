@@ -81,6 +81,20 @@ input[type="checkbox"] {
   margin-right: 10px !important;
 }
 
+.addnew {
+  border-color: #1e4079 !important;
+  background-color: #e7ecf5 !important;
+  color: #1e4079 !important;
+  border-radius: 10px !important;
+}
+
+.repeatbtn {
+  border-color: rgb(231, 50, 50) !important;
+  background-color: rgb(250, 242, 242) !important;
+  color: rgb(226, 128, 128) !important;
+  border-radius: 10px !important;
+}
+
 .confirmBtn {
   background: #0D2348 !important;
   box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
