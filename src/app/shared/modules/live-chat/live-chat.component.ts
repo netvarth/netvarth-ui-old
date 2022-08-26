@@ -238,6 +238,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         this.reqDialogRef.afterClosed().subscribe(result => {
             if (result === 'success') {
+                this.disconnect();
             }
         });
     }
@@ -256,37 +257,41 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         _this.mediaService.getMediaDevices().then(
             (media: any) => {
                 _this.media = media;
-                console.log("Media Devices:");
-                console.log(media['videoDevices']);
-                if (media['videoDevices'].length > 0) {
-                    _this.twilioService.camDeviceCount = media['videoDevices'].length;
-                    if (media['videoDevices'].length > 1) {
-                        for(let i=0; i<media['videoDevices'].length; i++) {
-                            console.log(media['videoDevices'][i].label);
-                            if (media['videoDevices'][i].label && media['videoDevices'][i].label.indexOf('back')!=-1) {
-                                _this.twilioService.cam2Device = media['videoDevices'][i].deviceId;
-                                break;
-                            }
-                        }
-                        if (!_this.twilioService.cam2Device && media['videoDevices'].length > 1) {
-                            _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
-                        }
-                    }
-                    _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
-                    _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
-                    // if (media['videoDevices'].length > 1) {
-                    //     _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
-                    // }
-                }
+                // console.log("Media Devices:");
+                // console.log(media['videoDevices']);
+                // if (media['videoDevices'].length > 0) {
+                //     _this.twilioService.camDeviceCount = media['videoDevices'].length;
+                //     if (media['videoDevices'].length > 1) {
+                //         for(let i=0; i<media['videoDevices'].length; i++) {
+                //             console.log(media['videoDevices'][i].label);
+                //             if (media['videoDevices'][i].label && media['videoDevices'][i].label.indexOf('back')!=-1) {
+                //                 _this.twilioService.cam2Device = media['videoDevices'][i].deviceId;
+                //                 break;
+                //             }
+                //         }
+                //         if (!_this.twilioService.cam2Device && media['videoDevices'].length > 1) {
+                //             _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                //         }
+                //     }
+                //     _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
+                //     _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
+                //     // if (media['videoDevices'].length > 1) {
+                //     //     _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                //     // }
+                // }
                 console.log("System Media Devices");
                 console.log(media);
-                console.log("BackCam:" ,_this.twilioService.cam2Device);
-                console.log("FrontCam:" ,_this.twilioService.cam1Device);
+                // console.log("BackCam:" ,_this.twilioService.cam2Device);
+                // console.log("FrontCam:" ,_this.twilioService.cam1Device);
                 _this.generateType(media).then(
                     (mode) => {
                         console.log(mode);
                         if (mode !== 'none') {
                             _this.openRequestDialog(mode);
+                        } else {
+                            _this.twilioService.camDeviceCount = media['videoDevices'].length;
+                            _this.twilioService.activeCamIndex = 0;
+                            _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
                         }
                     }
                 )
@@ -449,9 +454,12 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     /**
      * Method to switch from and back cameras
      */
-    switchCamera(media) {
-        this.twilioService.switchCamera(media);
+     switchCamera(videoDevices) {
+        this.twilioService.switchCamera(videoDevices);
     }
+    // switchCamera(media) {
+    //     this.twilioService.switchCamera(media);
+    // }
     /**
      * Method to enter to a room. which will invoke the connect method
      */

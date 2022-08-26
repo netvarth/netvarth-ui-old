@@ -75,7 +75,7 @@
                         <i class="fa fa-close red fa-stack-1x"></i>
                     </i>
                 </i>
-                <ng-container  *ngIf="twilioService.camDeviceCount > 1 && media && media['videoDevices']">
+                <!-- <ng-container  *ngIf="twilioService.camDeviceCount > 1 && media && media['videoDevices']">
                     <mat-menu #menu="matMenu">
                         <button mat-menu-item *ngFor="let med of media['videoDevices']; let i=index" (click)="switchCamera(med)" >
                           <span [ngClass]="{'bold': twilioService.selectedVideoId===med.deviceId}">{{(med.label!=''?med.label: ('CAM ' + (i+1)))}}</span>
@@ -87,13 +87,13 @@
                                 <i class="fa fa-refresh fa-stack-1x"></i>
                         </i>
                     </i>
-                </ng-container> 
-                <!-- <i *ngIf="twilioService.camDeviceCount > 1" title="Switch Camera" class="round novideo"
-                    style="opacity: 1;cursor: pointer;" (click)="switchCamera()">
+                </ng-container>  -->
+                <i *ngIf="twilioService.camDeviceCount > 1 && media" title="Switch Camera" class="round novideo"
+                    style="opacity: 1;cursor: pointer;" (click)="switchCamera(media['videoDevices'])">
                     <i class="fa fa-stack"><i class="fa fa-camera fa-stack-1x"></i>
                         <i class="fa fa-refresh fa-stack-1x"></i>
                     </i>
-                </i> -->
+                </i>
                 <i title="Disconnect" class="fa fa-phone red round stop" style="opacity: 1;cursor: pointer;"
                     (click)="disconnect()"></i>
                 <i class="fa fa-circle record red blink pull-right" *ngIf="recordingFlag"></i>

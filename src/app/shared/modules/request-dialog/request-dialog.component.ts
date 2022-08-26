@@ -16,6 +16,6 @@ export class RequestDialogComponent {
         this.mode = data.mode;
     }
     dismissModal() {
-        this.dialogRef.close('');
+        this.dialogRef.close('success');
     }
 }

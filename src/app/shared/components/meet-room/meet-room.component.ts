@@ -215,26 +215,26 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
             (media: any) => {
                 _this.media = media;
                 
-                if (media['videoDevices'].length > 0) {
-                    _this.twilioService.camDeviceCount = media['videoDevices'].length;
-                    if (media['videoDevices'].length > 1) {
-                        for(let i=0; i<media['videoDevices'].length; i++) {
-                            console.log(media['videoDevices'][i].label);
-                            if (media['videoDevices'][i].label && media['videoDevices'][i].label.indexOf('back')!=-1) {
-                                _this.twilioService.cam2Device = media['videoDevices'][i].deviceId;
-                                break;
-                            }
-                        }
-                        if (!_this.twilioService.cam2Device && media['videoDevices'].length > 1) {
-                            _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
-                        }
-                    }
-                    _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
-                    _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
-                    // if (media['videoDevices'].length > 1) {
-                    //     _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
-                    // }
-                }
+                // if (media['videoDevices'].length > 0) {
+                //     _this.twilioService.camDeviceCount = media['videoDevices'].length;
+                //     if (media['videoDevices'].length > 1) {
+                //         for(let i=0; i<media['videoDevices'].length; i++) {
+                //             console.log(media['videoDevices'][i].label);
+                //             if (media['videoDevices'][i].label && media['videoDevices'][i].label.indexOf('back')!=-1) {
+                //                 _this.twilioService.cam2Device = media['videoDevices'][i].deviceId;
+                //                 break;
+                //             }
+                //         }
+                //         if (!_this.twilioService.cam2Device && media['videoDevices'].length > 1) {
+                //             _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                //         }
+                //     }
+                //     _this.twilioService.cam1Device = media['videoDevices'][0].deviceId;
+                //     _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
+                //     // if (media['videoDevices'].length > 1) {
+                //     //     _this.twilioService.cam2Device = media['videoDevices'][1].deviceId;
+                //     // }
+                // }
                 console.log("System Media Devices");
                 console.log(media);
                 _this.generateType(media).then(
@@ -242,6 +242,10 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
                         console.log(mode);
                         if (mode !== 'none') {
                             _this.openRequestDialog(mode);
+                        } else {
+                            _this.twilioService.camDeviceCount = media['videoDevices'].length;
+                            _this.twilioService.activeCamIndex = 0;
+                            _this.twilioService.selectedVideoId = media['videoDevices'][0].deviceId;
                         }
                     }
                 )
@@ -424,6 +428,7 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
         });
         this.reqDialogRef.afterClosed().subscribe(result => {
             if (result === 'success') {
+                this.disconnect();
             }
         });
     }
@@ -550,7 +555,10 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     /**
      * Method to switch both from and back cameras
      */
-    switchCamera(media) {
-        this.twilioService.switchCamera(media);
+     switchCamera(videoDevices) {
+        this.twilioService.switchCamera(videoDevices);
     }
+    // switchCamera(media) {
+    //     this.twilioService.switchCamera(media);
+    // }
 }

@@ -18,9 +18,13 @@ export class TwilioService {
     private renderer: Renderer2;
     cameraMode: string;
     previewTracks;
-    cam1Device: string;
+    
     selectedVideoId: string;
+
+    activeCamIndex;
+    cam1Device: string;
     cam2Device: string;
+
     activeRoom;
     previewTracksClone;
     btnClicked = false;
@@ -121,9 +125,20 @@ export class TwilioService {
         });
         this.microphone = true;
     }
-    switchCamera(media?) {
+    // media?
+    switchCamera(videoDevices) {
         const _this = this;
-        _this.selectedVideoId =media.deviceId;
+        this.activeCamIndex++;
+        if (this.activeCamIndex >= videoDevices.length) {
+            this.activeCamIndex = 0;
+        }
+        console.log("Active Cam Index:", this.activeCamIndex);
+        // _this.selectedVideoId =media.deviceId;
+        _this.selectedVideoId = videoDevices[this.activeCamIndex].deviceId;
+        
+        
+        
+        
         // if (_this.selectedVideoId === _this.cam1Device) {
         //     _this.selectedVideoId = _this.cam2Device;
         // } else {
