@@ -313,7 +313,11 @@ tbody tr:hover {
 
   .confirmBtn {
     margin-top: 5px !important;
+    padding: 6px 70px !important;
+
   }
+
+
 
   .paperLength {
     font-size: 13px !important;
@@ -334,5 +338,9 @@ tbody tr:hover {
 @media (max-width: 470px) {
   .accordions {
     padding: 20px 20px 20px 40px !important;
+  }
+
+  .welcometag {
+    font-size: 12px !important;
   }
 }
