@@ -36,7 +36,7 @@
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate" *ngIf="drugList && uploadlist.length===0">
           <div class="shadow" style="height:100% !important">
           <div>
-            <span class="table-heading"><b>Prescription</b></span>
+            <span class="table-heading"><b> Add new medicine</b></span>
         </div>
         <div >
             <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="drugdetail">
@@ -263,8 +263,8 @@
                             <tr *ngFor="let drug of drugList; let i = index;" >
                               <td class="tdLeft pointer-cursor" data-title="No" (click)="updateForm(drug)">{{i+1}}</td>
                               <td class="tdLeft pointer-cursor" data-title="Medicine" (click)="updateForm(drug)">{{drug.medicine_name? drug.medicine_name : ''}}</td>
-                              <td class="tdLeft pointer-cursor" data-title="Duration(days)" (click)="updateForm(drug)" *ngIf="drug && drug.duration">{{drug.duration? drug.duration : ''}} days</td>
-                              <td class="tdLeft pointer-cursor" data-title="Dosage" (click)="updateForm(drug)" *ngIf="drug && drug.dosage">{{drug.dosage? drug.dosage : ''}} dose</td>
+                              <td class="tdLeft pointer-cursor" data-title="Duration(days)" (click)="updateForm(drug)" >{{drug.duration? drug.duration : ''}} </td>
+                              <td class="tdLeft pointer-cursor" data-title="Dosage" (click)="updateForm(drug)" >{{drug.dosage? drug.dosage : ''}} </td>
                               <td class="tdLeft pointer-cursor" data-title="Frequency" (click)="updateForm(drug)">{{drug.frequency? drug.frequency : ''}}</td>
                               <td data-title="Frequency" *ngIf="drug && drug.instructions" class="Instructions tdLeft2 pointer-cursor" (click)="instructPopUp(drug)">
                                 <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
@@ -486,7 +486,7 @@
   <div *ngIf="!loading && viewVisitDetails" class="card mgn-up-10" >
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList.length !==0">
     <!-- {{viewMrInfo | json}} -->
-    <span class="table-heading"><b>Prescription</b></span>
+    <span class="table-heading"><b> View medicine</b></span>
     <!-- {{drugList | json}} -->
   </div>
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList.length !==0" class="overflow" >
@@ -508,8 +508,8 @@
           <tr *ngFor="let drug of drugList; let i = index;">
             <td class="tdLeft"  data-title="No">{{i+1}}</td>
             <td class="tdLeft" data-title="Medicine">{{drug.medicine_name? drug.medicine_name : ''}}</td>
-            <td class="tdLeft" data-title="Duration(days)" *ngIf="drug && drug.duration">{{drug.duration? drug.duration : ''}} days</td>
-            <td  class="tdLeft"data-title="Dosage" *ngIf="drug.dosage">{{drug.dosage? drug.dosage : ''}} dose</td>
+            <td class="tdLeft" data-title="Duration(days)">{{drug.duration? drug.duration : ''}} </td>
+            <td  class="tdLeft"data-title="Dosage" >{{drug.dosage? drug.dosage : ''}} </td>
             <td class="tdLeft" data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
             <td  class="Instructions tdLeft2 pointer-cursor" data-title="Instructions"  (click)="instructPopUp(drug)">
               <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />

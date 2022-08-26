@@ -170,7 +170,7 @@
     </mat-dialog-content>
     <div class="btnClass" >
         <button type="button" mat-dialog-close type="button"class="btn btn-primary font-weight-bold cancelBtn" [disabled]="disableButton">Cancel</button>
-        <button (click)="shareBtn()" type="submit" [disabled]="!amForm.valid || disable " type="button"class="btn btn-primary font-weight-bold confirmBtn">Share<i
+        <button (click)="shareBtn(amForm)" type="submit" [disabled]="!amForm.valid || disable " type="button"class="btn btn-primary font-weight-bold confirmBtn">Share<i
                 class="fa fa-spinner fa-spin" *ngIf="sharebtnloading"></i></button>
     </div>
     <!-- <mat-dialog-actions>

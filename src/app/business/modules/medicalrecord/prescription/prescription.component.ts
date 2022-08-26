@@ -369,6 +369,7 @@ export class PrescriptionComponent implements OnInit {
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
       if (result) {
+        console.log('result',result);
 
       }
     });
@@ -422,21 +423,6 @@ export class PrescriptionComponent implements OnInit {
   //   win.focus();
   // }
   printpDF(url,fileName){
-  //   const ExportAsConfig = {
-  //   type: 'pdf', // the type you want to download
-  //   //elementId: 'balance-sheet-preview', // the id of html/table element
-  //   elementId: 'contentToConvert', // the id of html/table element
-  //   options: { // html-docx-js document options
-  //     margins: {
-  //       top: '20',
-  //       bottom: '5'
-  //     },
-  //     orientation: 'landscape',
-  //     filename: fileName.originalName,
-  //     image: { type: 'jpeg', quality: 1 },
-  //   }
-  // }
-  // ExportAsConfig.sub
   }
   printSecond(url){
     console.log(url);

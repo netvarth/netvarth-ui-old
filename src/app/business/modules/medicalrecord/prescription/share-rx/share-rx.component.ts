@@ -215,16 +215,21 @@ export class ShareRxComponent implements OnInit {
 
         });
   }
-  onSubmit(formdata) {
+  onSubmit(formdata?) {
     this.disable = true;
     this.sharebtnloading = true;
     this.resetApiErrors();
     const vwofrx = document.getElementById('sharerxview');
-    let rxview = '';
-    rxview += '<html style="width: 210mm; height: 297mm; font-size: 1rem; font-family: \'Poppins\', sans-serif !important;"><head><title></title>';
-    rxview += '</head><body >';
-    rxview += vwofrx.innerHTML;
-    rxview += '</body></html>';
+    console.log('vwofrx',vwofrx)
+    console.log('vwofrx',vwofrx.innerHTML)
+    // let rxview = '';
+    // rxview += '<html style="width: 210mm; height: 297mm; font-size: 1rem; font-family: \'Poppins\', sans-serif !important;"><head><title></title>';
+    // rxview += '</head><body >';
+    // rxview += vwofrx;
+    //   rxview +=('<html><head><title></title>');
+    //   rxview +=('</head><body >');
+    // rxview += '</body></html>';
+    // console.log('rxview',rxview)
     if (this.sharewith !== 0) {
       // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
       if (this.thirdpartyemail === '') {
@@ -280,8 +285,8 @@ export class ShareRxComponent implements OnInit {
     if (this.type === 'adddrug') {
       if (this.sharewith !== 0) {
         const passData = {
-          'message': formdata.message,
-          'html': rxview,
+          'message': this.amForm.controls.message.value,
+          'html':  vwofrx.innerHTML,
           'shareThirdParty': {
             'phone': this.thirdpartyphone,
             'email': this.thirdpartyemail
@@ -303,8 +308,8 @@ export class ShareRxComponent implements OnInit {
 
       } else if (this.sharewith === 0) {
         const passData = {
-          'message': formdata.message,
-          'html': rxview,
+          'message': this.amForm.controls.message.value,
+          'html': vwofrx.innerHTML ,
           'medium': {
             'email': this.email,
             'sms': this.sms,
@@ -326,8 +331,8 @@ export class ShareRxComponent implements OnInit {
     } else {
       if (this.sharewith !== 0) {
         const passData = {
-          'message': formdata.message,
-          'html': '',
+          'message': this.amForm.controls.message.value,
+          'html': vwofrx.innerHTML,
           'shareThirdParty': {
             'phone': this.thirdpartyphone,
             'email': this.thirdpartyemail
@@ -349,8 +354,8 @@ export class ShareRxComponent implements OnInit {
 
       } else if (this.sharewith === 0) {
         const passData = {
-          'message': formdata.message,
-          'html': '',
+          'message': this.amForm.controls.message.value,
+          'html': vwofrx.innerHTML,
           'medium': {
             'email': this.email,
             'sms': this.sms,
@@ -597,7 +602,14 @@ export class ShareRxComponent implements OnInit {
       }
     });
   }
-  showdigitalsign() {
+  showdigitalsign( signurl?) {
+    if(signurl){
+      let logourl = '';
+      if (signurl) {
+        logourl = (signurl) ? signurl : '';
+      }
+      return this.shared_functions.showlogoicon(logourl);
+    }
     let logourl = '';
     if (this.signurl) {
       logourl = (this.signurl) ? this.signurl : '';
@@ -688,10 +700,28 @@ export class ShareRxComponent implements OnInit {
     }
     
   }
-  shareBtn(){
-    this.dialogRef.close();
-    const success= 'Successfully shared thank you'
-    this.snackbarService.openSnackBar(success);
+  shareBtn(data){
+    // console.log('data',data)
+    // console.log('sharewith',this.sharewith);
+    // console.log(this.amForm.controls.message.value);
+    // console.log('thirdpartyemail',this.thirdpartyemail);
+    // console.log('this.sms',this.sms);
+    // console.log('email',this.email);
+    // console.log('telegram',this.telegram)
+    // console.log('sharewith',this.sharewith);
+    let shareInfo={
+      'shareWith':this.sharewith,
+      'message':this.amForm.controls.message.value,
+      'thirdpartyemail':this.thirdpartyemail,
+      'sms':this.sms,
+      'email':this.email,
+      'telegram':this.telegram,
+      'mrId':this.mrId
+    }
+    this.onSubmit()
+    this.dialogRef.close(shareInfo);
+    // const success= 'Successfully shared thank you'
+    // this.snackbarService.openSnackBar(success);
   }
   messageBoxhandle(data){
     console.log(data)
