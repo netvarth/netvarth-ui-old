@@ -1,11 +1,6 @@
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
 <form [formGroup]="amForm" class="ynw-common-form" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
     *ngIf="!loading" style="padding:25px">
-    <!-- <div class="mat-dialog-title">Share Prescription
-        <button #queue mat-dialog-close class="modal_close">
-            <i class="fa fa-window-close" aria-hidden="true"></i>
-        </button>
-    </div> -->
     <div class="createTxtIcon">
         <div class="share">
             <div class="createTxt">Share Prescription</div>
@@ -17,13 +12,6 @@
     </div>
     <mat-dialog-content  class="dialogContent">
         <div style="margin-right: 5px;">
-            <!-- <div> Share with {{customerDetail.firstName | capitalizeFirst}}  {{customerDetail.lastName}}</div> -->
-            <!-- <mat-form-field>
-                <mat-select name="item" [(ngModel)]="sharewith" placeholder="Share with whom"
-                    [ngModelOptions]="{standalone: true}" (selectionChange)="onUserSelect($event)">
-                    <mat-option *ngFor="let item of msgreceivers" [value]="item.id">{{item.name}}</mat-option>
-                </mat-select>
-            </mat-form-field> -->
             <div >
                 <div class="leadTitle" >
                     <div class="labelSize">Share with whom</div>
@@ -39,16 +27,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div >
-            <mat-form-field>
-                <textarea matInput class="form-control" id="message" placeholder="Please Enter Message * "
-                    formControlName="message" maxlength="1000">
-          </textarea>
-            </mat-form-field>
-            <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
-                errorMsg="Please enter a message.">
-            </app-field-error-display>
-        </div> -->
         <div  style="margin-right: 5px;">
             <div class="leadTitle">
                 <div class="labelSize">Message</div>
@@ -58,22 +36,8 @@
                 <textarea (ngModelChange)="messageBoxhandle(message.value)" rowa="10" class="form-control widthWebKit" formControlName="message" #message
                     (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter message description">
             </textarea>
-                <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
-                    errorMsg="Please enter a message.">
-                </app-field-error-display> -->
             </div>
         </div>
-        <!-- <div class="mgn-m-lt-15 " *ngIf="showthirdparty">
-            <div class="col-md-6 col-sm-6 col-xs-12 mgn-top-10 mgn-bt-10 ">
-                <div class="form-group" *ngIf="showthirdparty">
-                    <mat-form-field>
-                        <input matInput type="text" class="form-control" id="thirdpartyemail" (keyup)="resetApiErrors()"
-                            placeholder="Email *" [(ngModel)]="thirdpartyemail" [ngModelOptions]="{standalone: true}"
-                            autocomplete="off">
-                    </mat-form-field>
-                </div>
-            </div>
-        </div> -->
         <div class="formTop"  *ngIf="showthirdparty" style="margin-right: 5px;">
             <div class="leadTitle">
                 <div class="labelSize">Email</div>
@@ -114,11 +78,11 @@
         </div>
         <div *ngIf="!showthirdparty" class="mgn-bt-0">
             <div style="margin-top: 10px;">
-                <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length === 0">Add digital signature</div>
+                <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length === 0">Add digital signature</div>
                 <!-- <div class="difitalSigText" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">View digital signature</div> -->
                 <div >
                     <div >
-                        <div  *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
+                        <div  *ngIf="!digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length == 0">
                             <div class=" prescriptionNotes">
                               <div>
                                 <div class="fileUpload">
@@ -141,8 +105,8 @@
                                 </div>
                               </div>
 
-                            <span class="spaanOr" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">OR</span>
-                            <div class="mobileDevice" *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
+                            <span class="spaanOr" *ngIf="!digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length == 0">OR</span>
+                            <div class="mobileDevice" *ngIf="!digitalSign &&selectedMessage &&  selectedMessage.files && selectedMessage.files.length == 0">
                                 <span class="mobileOr">OR</span>
                             </div>
                               <div >
@@ -154,7 +118,7 @@
                             </div>
                           </div>
 
-                        <div *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">
+                        <div *ngIf="digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length > 0">
                             <ng-container class="attachment">
                                 <div style="color: #FF9900;">Uploaded Digital Signature</div>
                                 <div class="flexClassSig"

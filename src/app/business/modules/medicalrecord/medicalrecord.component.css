@@ -516,6 +516,9 @@ border: 1.32184px solid #E6E8EB;
     justify-content: flex-start !important;
     width: 100% !important;
   }
+  .clinicalOuter1{
+    height: 7rem !important;
+  }
 
 }
 .shadowmb{
@@ -672,7 +675,7 @@ border: 1.32184px solid #E6E8EB;
 .clinical{
   background: #FFF9E9;
     border-radius: 11.2836px;
-    width: 20%;
+    width: 25%;
     display: flex;
     /* justify-content: space-between; */
     align-items: center;

@@ -503,7 +503,9 @@ export class ShareRxComponent implements OnInit {
       .subscribe((data) => {
         console.log('data',data);
         // this.selectedMessage= data;
-        this.snackbarService.openSnackBar('Digital sign uploaded successfully');
+        // this.snackbarService.openSnackBar('Digital sign uploaded successfully');
+        const error:string='Digital sign uploaded successfully'
+        this.snackbarService.openSnackBar((error));
         this.digitalSign=true;
         // this.uploadsignatureRef.close()
         // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
@@ -551,7 +553,8 @@ export class ShareRxComponent implements OnInit {
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
-        this.ngOnInit();
+        this.getMrprescription();
+        // this.ngOnInit();
       }, 100);
     }
     );
@@ -585,6 +588,8 @@ export class ShareRxComponent implements OnInit {
           .subscribe((data) => {
             this.selectedMessage.files.splice(index, 1);
             this.getDigitalSign();
+            const error='Digital signature removed successfully'
+            this.snackbarService.openSnackBar(error);
           },
             error => {
               this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -686,7 +691,7 @@ export class ShareRxComponent implements OnInit {
   shareBtn(){
     this.dialogRef.close();
     const success= 'Successfully shared thank you'
-    this.snackbarService.openSnackBar(success, { 'panelClass': 'snackbarerror' });
+    this.snackbarService.openSnackBar(success);
   }
   messageBoxhandle(data){
     console.log(data)

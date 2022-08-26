@@ -1,11 +1,14 @@
 <section>
   <div class="card title-gb">
-    <h5 class="mgn-up-10">
-      <div class="d-flex justify-content-between">
+    <div class="flexClassHeading">
+      <div>
         <div class="heading font-weight-bold">{{heading}}</div>
-        <i class="fa fa-times" mat-dialog-close="true" ></i>
+        <!-- <i class="fa fa-times" mat-dialog-close="true" ></i> -->
       </div>
-    </h5>
+      <div style=" cursor: pointer;" mat-dialog-close  tabindex="-1" class="modal_close closeIcon">
+        <mat-icon>clear</mat-icon>
+    </div>
+    </div>
   </div>
   <div class="card title-gb">
     <!-- <div class="mgn-up-10">
@@ -23,9 +26,9 @@
       <div class="font-weight-bold my-3"> By clicking upload prescription you will have choice of uploading a file or
         taking picture</div>
       <div class="mgn-bt-10">
-        <button mat-button class="cs-btn bt1 btn-primary">
+        <button type="button"class=" font-weight-bold confirmBtn btnWidth" >
           <a class="pointer-cursor" style="color: whitesmoke" (click)="imagefile.click()"><input #imagefile type="file"
-              accept="/*;capture=camera" style="display:none;" (change)="filesSelected($event)">Upload
+              accept="/*;capture=camera" style="display:none;" (change)="filesSelected($event)" >Upload
             Prescription</a>
         </button>
       </div>
@@ -36,44 +39,46 @@
           <div class="table-outer q-itm">
             <div class="pad-10 drugdetailslist">
               <div class="font-weight-bold"> Files uploaded</div>
-              <table class="table ">
+              <table class="table">
                 <thead>
                   <tr>
-                    <th>
+                    <th class="headerTable">
                       File
                     </th>
-                    <th>
+                    <th class="headerTable">
                       Status
                     </th>
-                    <th>
+                    <th class="headerTable">
                       Image size
                     </th>
-                    <th>
+                    <th class="headerTable">
+                      Action
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let file of selectedMessage.files; let i = index;">
-                    <td data-title="File" *ngIf="file.type == '.pdf'|| file.type == 'application/pdf'">
-                      {{file.name}}
+                    <td data-title="File" *ngIf="file.type == '.pdf'|| file.type == 'application/pdf'" class="mobViewTable">
+                      <div *ngIf="file && file.name" class="tableRow">{{file.name}}</div>
                     </td>
-                    <td data-title="File"
-                      *ngIf="file.type == '.png'|| file.type =='image/png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ||file.type =='image/jpeg'">
-                      <img [src]="selectedMessage.base64[0]" *ngIf="selectedMessage.base64[0]"
+                    <td data-title="File" class="mobViewTable"
+                      *ngIf="file.type == '.png'|| file.type =='image/png'|| file.type == '.jpg' ||file.type == '.PNG'||
+                       file.type == '.jpeg' ||file.type =='image/jpeg'">
+                      <img [src]="selectedMessage.base64[0]" *ngIf="selectedMessage && selectedMessage.base64 && (!selectedMessage.base64[0])" 
                         style="width: 25px; height:25px;" class="img-responsive pointer-cursor"
                         (click)="openImageModalRow(image_list_popup[0])">
-                      <img alt="" src="{{file.url}}" *ngIf="!selectedMessage.base64[0]" id="prescription-image1"
+                      <img alt="" src="{{file.url}}" *ngIf="selectedMessage && selectedMessage.base64 && (!selectedMessage.base64[0])" id="prescription-image1"
                         style="width: 25px; height:25px;" class="img-responsive pointer-cursor"
                         (click)="openImageModalRow(image_list_popup[0])">
                     </td>
-                    <td data-title="status">
-                      {{upload_status}}
+                    <td data-title="status" class="mobViewTable"  *ngIf="upload_status">
+                      <div  *ngIf="upload_status" class="tableRow">{{upload_status}}</div>
                     </td>
-                    <td data-title="Image size">
-                      {{imageSize(file.size)}} KB
+                    <td data-title="Image size" class="mobViewTable" *ngIf="file && file.size">
+                     <div class="tableRow"> {{imageSize(file.size)}} KB</div>
                     </td>
-                    <td class="action">
-                      <span class="mbt">
+                    <td  data-title="Action" class="removeCls">
+                      <!-- <span class="mbt">
                         <button type="button" mat-icon-button [matMenuTriggerFor]="menu">
                           <mat-icon>more_vert</mat-icon>
                         </button>
@@ -83,16 +88,19 @@
                             Delete
                           </button>
                         </mat-menu>
-                      </span>
-                      <span class="mbt-mobile-show">
+                      </span> -->
+                      <!-- <span class="mbt-mobile-show">
                         <button class="deletecls" type="button" (click)="deleteTempImage(file,i)">Delete</button>
-                      </span>
+                      </span> -->
+                      <div (click)="deleteTempImage(file,i)">
+                            <img class="removeIcon" src="./assets/images/ImgeFileIcon/removeCross.png" />
+                          </div>
                     </td>
                   </tr>
                 </tbody>
               </table>
               <div *ngIf="selectedMessage.files && selectedMessage.files.length > 0 && showSave" class="mgn-up-10">
-                <button type="submit" mat-button class="cs-btn bt1 btn-primary" [disabled]="disable"
+                <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"  [disabled]="disable"
                   (click)="saveImages()">
                   Save Prescription</button>
               </div>

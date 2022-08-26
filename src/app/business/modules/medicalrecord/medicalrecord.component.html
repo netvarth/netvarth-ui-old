@@ -68,7 +68,7 @@
                 <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" /> -->
               </div>
               <div class="nameClrOther" >{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
-                <div class="nameClrOther" *ngIf="!customerDetails.phoneNo && customerDetails.id">9110762518</div>
+                <div class="nameClrOther" *ngIf="!customerDetails.phoneNo && customerDetails.id">{{customerDetails.phoneNo}}</div>
             </div>
            </div>
         </div>

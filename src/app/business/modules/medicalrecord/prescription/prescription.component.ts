@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { AddDrugComponent } from './add-drug/add-drug.component';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -149,6 +149,8 @@ export class PrescriptionComponent implements OnInit {
   @Input() showHideActivityTYpe;
   viewMrInfo:any;
   private subscriptions = new SubSink();
+  innerWidth: any;
+  ScreenHeight: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -177,6 +179,16 @@ export class PrescriptionComponent implements OnInit {
       }
     });
   }
+  @HostListener('window:resize', ['$event'])
+  onReSize() {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth <= 768) {
+      this.ScreenHeight= '65%'
+    }
+    else {
+       this.ScreenHeight='85%'
+    }
+  }
   ngOnInit() {
     console.log('showHideActivityTYpe',this.showHideActivityTYpe)
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
@@ -198,7 +210,8 @@ export class PrescriptionComponent implements OnInit {
       this.getMedicalRecord(this.mrId);
     }
     this.createForm();
-    console.log('viewVisitDetails1',this.viewVisitDetails)
+    console.log('viewVisitDetails1',this.viewVisitDetails);
+    this.onReSize()
   }
 
   getMedicalRecord(mrId) {
@@ -317,9 +330,10 @@ export class PrescriptionComponent implements OnInit {
   }
 
   shareManualRx(type,bookingType,bookingId) {
+    const height:any=this.ScreenHeight;
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '100%',
-      // height:'85%',
+      height: height,//this.ScreenHeight,
       panelClass: ['popup-class'],
       disableClose: true,
       data: {
