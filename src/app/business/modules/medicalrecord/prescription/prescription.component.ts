@@ -130,7 +130,7 @@ export class PrescriptionComponent implements OnInit {
   maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
   maxNumbers = projectConstantsLocal.VALIDATOR_MAX10;
   max_num_limit = projectConstantsLocal.VALIDATOR_MAX_LAKH;
-  api_loading = true;
+  api_loading:boolean;
   api_loading1 = true;
   disableButton = false;
   drugType;
@@ -300,7 +300,9 @@ export class PrescriptionComponent implements OnInit {
   //   this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'uploadRx']);
   // }
 
-  uploadRx() {
+  uploadRx(data) {
+    console.log('data',data)
+    this.disableFromControl()
     // this.disable = true;
     this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
       width: '50%',
@@ -317,16 +319,36 @@ export class PrescriptionComponent implements OnInit {
       // this.prescList = false;
       // this.ngOnInit();
       console.log('res',res)
+      this.enableFormControl()
       // alert('hhh')
       if(res===true){
-        this.uploadprescriptionRef.close()
+        this.uploadprescriptionRef.close();
+        this.enableFormControl()
+      }
+      if(res=''){
+        this.enableFormControl()
       }
       if(this.mrId){
+        this.enableFormControl()
         this.getMrprescription(this.mrId);
       }
       // this.getMrprescription(this.mrId);
     }
     );
+  }
+  disableFromControl(){
+    this.amForm.controls.medicine_name.disable();
+    this.amForm.controls.duration.disable();
+    this.amForm.controls.frequency.disable();
+    this.amForm.controls.dosage.disable();
+    this.amForm.controls.instructions.disable();
+  }
+  enableFormControl(){
+    this.amForm.controls.medicine_name.enable();
+    this.amForm.controls.duration.enable();
+    this.amForm.controls.frequency.enable();
+    this.amForm.controls.dosage.enable();
+    this.amForm.controls.instructions.enable();
   }
 
   shareManualRx(type,bookingType,bookingId) {
@@ -449,6 +471,7 @@ export class PrescriptionComponent implements OnInit {
     console.log('mrId::::',mrId)
     this.subscriptions.sink=this.provider_services.getMRprescription(mrId)
       .subscribe((data:any) => {
+        this.api_loading=false;
         console.log('datagetMRprescription',data);
         this.viewMrInfo= data;
         if (Object.keys(data).length === 0 && data.constructor === Object) {
@@ -522,6 +545,7 @@ export class PrescriptionComponent implements OnInit {
     }
     console.log('this.mrId',this.mrId)
     if (this.mrId) {
+      this.api_loading=true;
       this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
           console.log('resupdateMRprescription',res)
@@ -535,7 +559,8 @@ export class PrescriptionComponent implements OnInit {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     } else {
-      console.log('createMR',passdata)
+      console.log('createMR',passdata);
+      this.api_loading=true;
       this.medicalrecord_service.createMR('prescriptions', passdata)
         .then((data: number) => {
           console.log('datacreateMR',data)
@@ -746,20 +771,21 @@ export class PrescriptionComponent implements OnInit {
       this.api_error = '';
     }
     saveAndAddOther(form_data) {
+      // this.api_loading=true;
       console.log(form_data);
       this.api_error = '';
       if(form_data.medicine_name === '' && form_data.frequency === ''&& form_data.dosage === ''&& form_data.instructions === ''&& form_data.duration === ''){
         this.api_error = 'Atleast one field required';
+        this.snackbarService.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' });
+
+        alert('kkk')
       } else {
+        alert('elese')
       this.drugDetail.push(form_data);
-      // this.addAnother = true;
       this.saveRx(this.drugDetail)
       this.clearAll();
     }
     }
-    // updateForm(drug){
-
-    // }
     autoGrowTextZone(e) {
       if (e) {
         e.target.style.height = "0px";

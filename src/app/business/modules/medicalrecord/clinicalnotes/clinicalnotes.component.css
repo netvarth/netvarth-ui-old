@@ -128,3 +128,11 @@ textarea{
   align-items: center;
   cursor: pointer;
 }
+.btnWidth{
+  width: 25%
+}
+@media(max-width: 800px){
+  .btnWidth{
+    width: 100% !important;
+  }
+}

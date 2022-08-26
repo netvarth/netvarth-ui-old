@@ -9,6 +9,8 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
 // import { MedicalrecordService } from "../medicalrecord.service";
 import { ClinicalnotesComponent } from "./clinicalnotes.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
+
 // const routes: Routes = [
 //     { path: '', component: ClinicalnotesComponent }
 // ];
@@ -19,6 +21,7 @@ import { ReactiveFormsModule } from "@angular/forms";
         NgbModule,
         FormsModule,
         CapitalizeFirstPipeModule,
+        LoadingSpinnerModule,
         ReactiveFormsModule
         // [RouterModule.forChild(routes)]
     ],

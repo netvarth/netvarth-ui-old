@@ -108,10 +108,13 @@
         </div>
       </div>
       <div>
-        <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback('medical')">Cancel</button>
-        <button type="button" class="btn btn-primary font-weight-bold confirmBtn" 
+        <!-- <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback('medical')">Cancel</button> -->
+        <button  type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"  
           (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
-          ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)">Save</button>
+          ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)">
+          <span *ngIf="!api_loading">Add</span>
+          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
+        </button>
       </div>
     </div>
   </div>

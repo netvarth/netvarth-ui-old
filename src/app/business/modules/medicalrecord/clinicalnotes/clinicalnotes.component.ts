@@ -62,6 +62,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   patientId: any;
   bookingId: any;
   bookingType: any;
+  api_loading:boolean;
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
@@ -79,6 +80,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.api_loading=false;
     console.log('showClinicalNotesDetails::',this.showClinicalNotesDetails);
     console.log('medicalInfo',this.medicalInfo)
     console.log('this.activatedRoute.parent.snapshot.params',this.activatedRoute.parent.snapshot.params)
@@ -249,75 +251,84 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   handleClinicalNotes(data,type){
   }
   saveClinicalNotes(symtopData,observationData,DiagnosisData,NotesData,AllergiesData,ComplaintsData,VaccinationData){
+    if (symtopData || observationData || DiagnosisData || NotesData || AllergiesData || ComplaintsData || VaccinationData) {
+      this.api_loading=true;
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
-      const patientId=this.customerId;
-      let payload:any=[]
-      payload =[
+      const patientId = this.customerId;
+      let payload: any = []
+      payload = [
         {
-          'type':'Symptoms',
-            'clinicalNotes': symtopData
+          'type': 'Symptoms',
+          'clinicalNotes': symtopData
         },
         {
-          'type':'Observations',
-          'clinicalNotes':observationData
+          'type': 'Observations',
+          'clinicalNotes': observationData
         },
         {
-          'type':'Diagnosis',
-          'clinicalNotes':DiagnosisData
+          'type': 'Diagnosis',
+          'clinicalNotes': DiagnosisData
         },
         {
-          'type':'Notes',
+          'type': 'Notes',
           'clinicalNotes': NotesData
         },
         {
-          'type':'Allergies',
-          'clinicalNotes':AllergiesData
+          'type': 'Allergies',
+          'clinicalNotes': AllergiesData
         },
         {
-          'type':'Complaints',
+          'type': 'Complaints',
           'clinicalNotes': ComplaintsData
         },
         {
-          'type':'Vaccination Notes',
+          'type': 'Vaccination Notes',
           'clinicalNotes': VaccinationData
         }
       ]
-     
+
       console.log(payload);
       this.clinicalNotesAddList.push(payload)
-      console.log('clinicalNotesAddList',payload);
+      console.log('clinicalNotesAddList', payload);
       console.log(' this.mrId', this.mrId)
 
-    // console.log('this.medicalInfo.id',this.medicalInfo)
-    console.log('this.medicalInfo',this.medicalInfo)
-      if(this.medicalInfo !=='MedicalInfoClinicalNotesUpdate' && this.mrId !==0 ){
-        console.log('this.medicalInfo.id',this.medicalInfo)
-      this.provider_services.updateMrClinicalNOtes(payload,this.medicalInfo.id).subscribe((res)=>{
-        this.snackbarService.openSnackBar('Clinical notes added Successfully');
-        this.reloadComponent()
-        this.showClinicalNotesDetails=true;
-      })
+      // console.log('this.medicalInfo.id',this.medicalInfo)
+      console.log('this.medicalInfo', this.medicalInfo)
+      if (this.medicalInfo !== 'MedicalInfoClinicalNotesUpdate' && this.mrId !== 0) {
+        console.log('this.medicalInfo.id', this.medicalInfo)
+        this.provider_services.updateMrClinicalNOtes(payload, this.medicalInfo.id).subscribe((res) => {
+          this.snackbarService.openSnackBar('Clinical notes added Successfully');
+          this.reloadComponent()
+          this.showClinicalNotesDetails = true;
+        })
       }
-      else if( this.medicalInfo==='MedicalInfoClinicalNotesUpdate' ){
-        console.log('this.clinicalNotesTypeSymptoms',this.clinicalNotesTypeSymptoms);
+      else if (this.medicalInfo === 'MedicalInfoClinicalNotesUpdate') {
+        console.log('this.clinicalNotesTypeSymptoms', this.clinicalNotesTypeSymptoms);
         // alert('jjjj')
-        this.UpdateClinicalNotesList( this.clinicalNotesTypeSymptoms, this.clinicalNotesTypeObservations,this.clinicalNotesTypeDiagnosis,
-         this.clinicalNotesNotes,this.clinicalNotesAllergies,this.clinicalNotesComplaints,this.clinicalNotesVaccinationNotes)
+        this.UpdateClinicalNotesList(this.clinicalNotesTypeSymptoms, this.clinicalNotesTypeObservations, this.clinicalNotesTypeDiagnosis,
+          this.clinicalNotesNotes, this.clinicalNotesAllergies, this.clinicalNotesComplaints, this.clinicalNotesVaccinationNotes)
       }
-      else if(this.medicalInfo===undefined && this.mrId===0){
+      else if (this.medicalInfo === undefined && this.mrId === 0) {
         // alert(this.medicalInfo)
-       this.medicalrecordService.createMR('clinicalNotes',payload).then((res:any) => {
-      this.mrId= res;
-      console.log('this.mrId::',this.mrId)
-      this.snackbarService.openSnackBar('Medical Record Created Successfully');
-      this.router.navigate(['provider', 'customers', patientId, bookingType, bookingId, 'medicalrecord', this.mrId,'prescription'])
+        this.medicalrecordService.createMR('clinicalNotes', payload).then((res: any) => {
+          this.mrId = res;
+          console.log('this.mrId::', this.mrId)
+          this.snackbarService.openSnackBar('Clinical Notes Created Successfully');
+          this.router.navigate(['provider', 'customers', patientId, bookingType, bookingId, 'medicalrecord', this.mrId, 'prescription'])
 
-    },
-      error => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      });
+        },
+          error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
       }
+    }
+    else{
+      const error='Please add Clinical Notes';
+      this.snackbarService.openSnackBar(error,{ 'panelClass': 'snackbarerror' });
+      this.api_loading=false;
+    }
+      
   }
   UpdateClinicalNotesList(symtopData,observationData,DiagnosisData,NotesData,AllergiesData,ComplaintsData,VaccinationData){
     let payload:any=[]
@@ -361,8 +372,8 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   updateMrwithClinicalNotes(payload, mrId) {
     this.provider_services.updateMrClinicalNOtes(payload, mrId)
       .subscribe((data) => {
-        this.snackbarService.openSnackBar( ' updated successfully');
-        console.log('updated successfully');
+        this.snackbarService.openSnackBar( 'Clinical Notes Updated Successfully');
+        // console.log('updated successfully');
       //   const bookingId = 0;
       // const bookingType = 'FOLLOWUP';
       // const patientId=this.customerId;

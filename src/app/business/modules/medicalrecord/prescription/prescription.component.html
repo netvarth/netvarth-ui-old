@@ -94,9 +94,13 @@
                     <button type="submit" mat-button class="cs-btn bt1 style-button btn-primary" [disabled]="!amForm.valid ">Save &
                       Close</button> -->
                       <!-- <button type="button"class="btn btn-primary font-weight-bold cancelBtn"(click)=" gobackCancel('Prescription')">Cancel</button> -->
-                      <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"  [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">
+                      <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"   [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">
                         <!-- <app-common-innerloading-spinner ></app-common-innerloading-spinner> -->
-                        <span >Add</span>
+                        <span *ngIf="!api_loading">Add</span>
+                        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                        </app-common-innerloading-spinner>
+                        <!-- <span >Add</span> -->
+                       
                     </button>
                   </div>
                 </div>
@@ -120,11 +124,11 @@
                 <div class="fileText" *ngIf="uploadlist && uploadlist.length===0">Click Your Files Here </div>
                 <div  *ngIf="uploadlist && uploadlist.length>0" class="fileText">Check Your Files Here </div>
                 <div *ngIf="uploadlist && uploadlist.length===0">
-                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor" (click)="uploadRx()">Upload
+                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor" (click)="uploadRx(uploadlist)">Upload
                     file</button>
                 </div>
                 <div *ngIf="uploadlist && uploadlist.length>0">
-                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor" (click)="uploadRx()">Check files</button>
+                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor" (click)="uploadRx(uploadlist)">Check files</button>
                 </div>
               </div>
             </div>
@@ -259,8 +263,8 @@
                             <tr *ngFor="let drug of drugList; let i = index;" >
                               <td class="tdLeft pointer-cursor" data-title="No" (click)="updateForm(drug)">{{i+1}}</td>
                               <td class="tdLeft pointer-cursor" data-title="Medicine" (click)="updateForm(drug)">{{drug.medicine_name? drug.medicine_name : ''}}</td>
-                              <td class="tdLeft pointer-cursor" data-title="Duration(days)" (click)="updateForm(drug)">{{drug.duration? drug.duration : ''}} days</td>
-                              <td class="tdLeft pointer-cursor" data-title="Dosage" (click)="updateForm(drug)">{{drug.dosage? drug.dosage : ''}} dose</td>
+                              <td class="tdLeft pointer-cursor" data-title="Duration(days)" (click)="updateForm(drug)" *ngIf="drug && drug.duration">{{drug.duration? drug.duration : ''}} days</td>
+                              <td class="tdLeft pointer-cursor" data-title="Dosage" (click)="updateForm(drug)" *ngIf="drug && drug.dosage">{{drug.dosage? drug.dosage : ''}} dose</td>
                               <td class="tdLeft pointer-cursor" data-title="Frequency" (click)="updateForm(drug)">{{drug.frequency? drug.frequency : ''}}</td>
                               <td data-title="Frequency" *ngIf="drug && drug.instructions" class="Instructions tdLeft2 pointer-cursor" (click)="instructPopUp(drug)">
                                 <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
@@ -504,8 +508,8 @@
           <tr *ngFor="let drug of drugList; let i = index;">
             <td class="tdLeft"  data-title="No">{{i+1}}</td>
             <td class="tdLeft" data-title="Medicine">{{drug.medicine_name? drug.medicine_name : ''}}</td>
-            <td class="tdLeft" data-title="Duration(days)">{{drug.duration? drug.duration : ''}} days</td>
-            <td  class="tdLeft"data-title="Dosage">{{drug.dosage? drug.dosage : ''}} dose</td>
+            <td class="tdLeft" data-title="Duration(days)" *ngIf="drug && drug.duration">{{drug.duration? drug.duration : ''}} days</td>
+            <td  class="tdLeft"data-title="Dosage" *ngIf="drug.dosage">{{drug.dosage? drug.dosage : ''}} dose</td>
             <td class="tdLeft" data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
             <td  class="Instructions tdLeft2 pointer-cursor" data-title="Instructions"  (click)="instructPopUp(drug)">
               <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
