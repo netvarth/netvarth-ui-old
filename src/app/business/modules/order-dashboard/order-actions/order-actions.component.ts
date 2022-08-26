@@ -196,6 +196,15 @@ export class OrderActionsComponent implements OnInit {
                 }
               }
             }
+            else{
+              for (let i = 0; i < this.status.length; i++) {
+                for (let j = 0; j < this.catalogStatuses.length; j++) {
+                  if (this.catalogStatuses[j] === this.status[i].value && this.status[i].pickup) {
+                    this.catalogfilterStats.push(this.catalogStatuses[j]);
+                  }
+                }
+              }
+            }
 
 
         }
