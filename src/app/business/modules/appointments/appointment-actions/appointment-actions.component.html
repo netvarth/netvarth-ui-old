@@ -90,16 +90,18 @@
             </div>
         </div>
         <!-- <div *ngIf="appt.teamId != 0"  class="icon-text">Change Team</div> -->
+        <!-- && (appt.schedule.provider.id === 0) -->
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) &&  (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
+            *ngIf="!data.multiSelection && accountType=='BRANCH'   &&  (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.provider"
             (click)="removeProvider()">
             <div class="action-box-sub">
                 <span class="doctor-change-icon"></span>
                 <div class="icon-text">Unassign {{provider_label | capitalizeFirst}}</div>
             </div>
         </div>
+        <!-- && (appt.schedule.provider.id === 0) -->
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && (appt.schedule.provider.id === 0) && groups && groups.length > 0 &&    (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId != 0"
+            *ngIf="!data.multiSelection && accountType=='BRANCH'  && groups && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId != 0"
             (click)="removeTeam()">
             <div class="action-box-sub">
                 <span class="team-icon-action"></span>
