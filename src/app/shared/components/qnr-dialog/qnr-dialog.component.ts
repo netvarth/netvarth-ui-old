@@ -1,4 +1,3 @@
-
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Location } from '@angular/common';
@@ -147,6 +146,8 @@ export class QnrDialogComponent implements OnInit {
   inputChange: boolean;
   selected_radio: boolean;
   isCheckedoption: boolean = false;
+  isEdit: any;
+  editableItem: any;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     public dialogRef: MatDialogRef<QnrDialogComponent>,
     private sharedService: SharedServices,
@@ -164,7 +165,13 @@ export class QnrDialogComponent implements OnInit {
     if (data.repeat_type) {
       this.repeat_type = data.repeat_type;
     }
-
+    if(data.isEdit){
+      this.isEdit =data.isEdit;
+   
+    }
+    if(data.editableItem){
+      this.editableItem =data.editableItem;
+    }
     this.popUpView = data.view;
     if (data.item_details) {
       this.item_details = data.item_details;
@@ -191,7 +198,7 @@ export class QnrDialogComponent implements OnInit {
       if (this.params.uuid) {
         this.uuid = this.params.uuid;
       }
-
+     
     });
     this.subscription = this.sharedFunctionobj.getMessage().subscribe(message => {
       switch (message.type) {
@@ -206,6 +213,10 @@ export class QnrDialogComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
+//   ngAfterViewChecked(){
+//     console.log(JSON.stringify(this.selectedPriceList))
+//     this.totalPrice = this.getTotalPrice(this.selectedPriceList);
+//  }
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
@@ -282,7 +293,6 @@ export class QnrDialogComponent implements OnInit {
   }
 
   radio_selected() {
-    console.log("true")
     this.selected_radio = true
   }
   groupQuestionsBySection() {
@@ -517,368 +527,370 @@ export class QnrDialogComponent implements OnInit {
     return this.sharedFunctionobj.isNumeric(evt);
   }
   onSubmit(keytype?) {
-    //       Object.keys(this.filestoUpload).forEach(key => {
-    //       if (!this.answers[key]) {
-    //       this.answers[key] = [];
-    //       }
-    //       if (Object.keys(this.filestoUpload[key]).length > 0) {
-    //       Object.keys(this.filestoUpload[key]).forEach(key1 => {
-    //       if (this.filestoUpload[key][key1]) {
-    //       let type = this.filestoUpload[key][key1].type.split('/');
-    //       type = type[0];
-    //       let indx;
-    //       if (type === 'application' || type === 'image') {
-    //       indx = this.selectedMessage.indexOf(this.filestoUpload[key][key1]);
-    //       } else {
-    //       indx = this.audioVideoFiles.indexOf(this.filestoUpload[key][key1]);
-    //       }
-    //       if (indx !== -1) {
-    //       let status = 'add';
-    //       if (this.uploadedFiles[key] && this.uploadedFiles[key][key1]) {
-    //       status = 'update';
-    //       }
-    //       if (this.answers[key] && this.answers[key].length > 0) {
-    //       const filteredAnswer = this.answers[key].filter(answer => answer.caption === key1);
-    //       if (filteredAnswer[0]) {
-    //       const index = this.answers[key].indexOf(filteredAnswer[0]);
-    //       if (index !== -1) {
-    //       this.answers[key].splice(index, 1);
-    //       }
-    //       }
-    //       }
-    //       let type = this.filestoUpload[key][key1].type.split('/');
-    //       type = type[0];
-    //       if (type === 'application' || type === 'image') {
-    //       this.answers[key].push({caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
-    //       } else {
-    //       this.answers[key].push({ caption: key1, action: status, mimeType: this.filestoUpload[key][key1].type, url: this.filestoUpload[key][key1].name, size: this.filestoUpload[key][key1].size, comments: this.comments[key + '=' + key1] });
-    //       }
-    //       }
-    //       } else {
-    //       if (this.answers[key] && this.answers[key].length > 0) {
-    //       const filteredAnswer = this.answers[key].filter(answer => answer.caption === key1);
-    //       if (filteredAnswer[0]) {
-    //       const index = this.answers[key].indexOf(filteredAnswer[0]);
-    //       if (index !== -1) {
-    //       this.answers[key].splice(index, 1);
-    //       }
-    //       }
-    //       }
-    //       }
-    //       });
-    //       }
-
-
-    //       else {
-    //       delete this.answers[key];
-    //       }
-    //       if (this.answers[key] && this.answers[key].length === 0) {
-    //       delete this.answers[key];
-    //       }
-    //       });
-
-    //       Object.keys(this.uploadedFiles).forEach(key => {
-    //       if (!this.answers[key]) {
-    //       this.answers[key] = [];
-    //       }
-    //       if (this.uploadedFiles[key] && Object.keys(this.uploadedFiles[key]).length > 0) {
-    //       Object.keys(this.uploadedFiles[key]).forEach(key1 => {
-    //       if ((!this.filestoUpload[key] || (this.filestoUpload[key] && !this.filestoUpload[key][key1])) && this.uploadedFiles[key][key1] && this.uploadedFiles[key][key1] === 'remove') {
-    //       if (this.answers[key] && this.answers[key].length > 0) {
-    //       const filteredAnswer = this.answers[key].filter(answer => answer.caption === key1);
-    //       if (filteredAnswer[0]) {
-    //       const index = this.answers[key].indexOf(filteredAnswer[0]);
-    //       if (index !== -1) {
-    //       this.answers[key].splice(index, 1);
-    //       }
-    //       }
-    //       }
-    //       this.answers[key].push({ caption: key1, action: 'remove' });
-    //       }
-    //       });
-    //       if (this.answers[key].length === 0) {
-    //       delete this.answers[key];
-    //       }
-    //       }
-    //       });
-
-    //       let data = [];
-    //
-    //       Object.keys(this.dataGridColumnsAnswerList).forEach(key => {
-    //       let newFiled = {};
-    //       let question = this.questions.filter(quest => this.getQuestion(quest).labelName === key);
-    //       question = question[0].question;
-    //       for (let gridAnswer of this.dataGridColumnsAnswerList[key]) {
-    //       let columnData = [];
-    //       Object.keys(gridAnswer).forEach(key1 => {
-    //       let newType = {};
-    //       if(this.qnr_type = 'service_option'){
-    //       const columnDetails = question.dataGridListProperties.dataGridListColumns.filter(clmn => clmn.order === JSON.parse(key1));
-    //       if (columnDetails[0]) {
-    //       const columnType = columnDetails[0].dataType;
-    //       newType[columnType] = gridAnswer[key1];
-    //       columnData.push({
-    //       columnId: columnDetails[0].columnId,
-    //       column: newType
-    //       });
-    //       }
-    //       }
-    //       else{
-    //       const columnDetails = question.dataGridProperties.dataGridColumns.filter(clmn => clmn.order === JSON.parse(key1));
-    //       if (columnDetails[0]) {
-    //       const columnType = columnDetails[0].dataType;
-    //       newType[columnType] = gridAnswer[key1];
-    //       columnData.push({
-    //       columnId: columnDetails[0].columnId,
-    //       column: newType
-    //       });
-    //       }
-    //       }
-
-
-    //       });
-    //       let newMap = {};
-
-    //       newMap['dataGridColumn'] = columnData;
-    //       if (!newFiled[question.fieldDataType]) {
-    //       newFiled[question.fieldDataType] = [];
-    //       }
-    //       newFiled[question.fieldDataType].push(newMap);
-    //       }
-    //       data.push({
-    //       'labelName': key,
-    //       'answer': newFiled
-    //       });
-    //       });
-
-    //       Object.keys(this.answers).forEach(key => {
-    //       this.apiError[key] = [];
-    //       let newMap = {};
-
-    //       let question = this.questions.filter(quest => this.getQuestion(quest).question.labelName === key);
-
-    //       if(question)
-    // {
-
-    //   if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source==='onetime' || this.qnr_type==='service_option') {
-
-    //     question = question[0];
-
-    //     } else {
-
-    //     question = question[0].question;
-    //     }
-    // }
-
-    //       if (this.answers[key] || question.fieldDataType === 'bool') {
-    //       let answer = this.answers[key];
-    //       if (question.fieldDataType === 'date') {
-
-    //       answer = this.dateProcessor.transformToYMDFormat(answer);
-    //       }
-    //       newMap[question.fieldDataType] = answer;
-    //       data.push({
-    //       'labelName': key,
-    //       'answer': newMap
-    //       });
-    //       } else {
-    //       newMap = '';
-    //       data.push({
-    //       'labelName': key,
-    //       });
-    //       }
-    //       });
-
-    //       let postData;
-
-    //       if(this.source === 'proLeadafter'){
-    //         postData = {
-    //           'questionnaireId': (this.questionnaireList[0].id) ? this.questionnaireList[0].id : this.questionnaireList[0].questionnaireId,
-    //           'answerLine': data
-    //         }
-    //       }
-    //     else{
-    //      postData = {
-    //         'questionnaireId': (this.questionnaireList.id) ? this.questionnaireList.id : this.questionnaireList.questionnaireId,
-    //         'answerLine': data
-    //       }
-    //     }
-
-    //       const passData = { 'answers': postData, 'files': this.selectedMessage, 'audioVideo': this.audioVideoFiles, 'filestoUpload': this.filestoUpload, 'dataGridColumnsAnswerList': this.dataGridColumnsAnswerList, 'comments': this.comments };
-    //       if (keytype === 'inputChange') {
-    //         this.changeHappened = true;
-    //       }
-    //       if (keytype === 'submit') {
-    //         if (this.changeHappened) {
-
-    //           this.submitQuestionnaire(passData);
-    //         } else {
-    //           if (!this.type) {
-    //             this.location.back();
-    //           } else {
-    //             if (this.type === 'qnr-link') {
-    //               this.returnAnswers.emit('reload');
-    //             } else {
-    //               this.editQnr();
-    //             }
-    //           }
-    //         }
-    //       } else {
-    //         this.returnAnswers.emit(passData);
-    //       }
   }
   getDate(date) {
     return new Date(date);
   }
   listChange(ev, value, question, column?) {
 
-    let itemPrice;
-    this.selectedType = value;
-    if (question.fieldDataType !== 'dataGrid') {
-
-      if (Object.keys(this.answersQnr).length === 0) {
-
-        itemPrice = this.getValue(value);
-
-        if (itemPrice !== undefined) {
-          var itemrate: number = +itemPrice;
-        }
-        else {
-          var itemrate = 0
-        }
-        this.answersQnr["labelName"] = question.labelName;
-        this.answerQnr["dataGridList"] = [];
-        this.answerQnr["dataGridList"].push(this.answDataGridList)
-        this.ansList.push(value);
-        this.ansDataColumn["list"] = this.ansList;
-        this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
-        this.ansdDtaGridColumnItem["columnId"] = column.columnId;
-        this.ansdDtaGridColumnItem["price"] = itemrate;
-        this.ansdDtaGridColumnItem["quantity"] = 1;
-        this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
-        this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
-        this.answersQnr["answer"] = this.answerQnr;
-
-        this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-
-      }
-      else {
-        if (column.order && column.order === 1 && column.mandatory === true) {
-
-          itemPrice = this.getValue(value);
-          if (itemPrice !== undefined) {
-            var itemrate: number = +itemPrice;
+    if(this.isEdit === 'edit'){
+          let itemPrice;
+          this.selectedType = value;
+          if (question.fieldDataType !== 'dataGrid') {
+     
+           
+              if (column.order && column.order === 1 && column.mandatory === true) {
+               
+                itemPrice = this.getValue(value);
+              
+                if (itemPrice !== undefined) {
+                  var itemrate: number = +itemPrice;
+                }
+                else {
+                  var itemrate = 0
+                }
+     
+                this.ansDataColumn["list"] = [value];
+                this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
+                this.ansdDtaGridColumnItem["columnId"] = column.columnId;
+                this.ansdDtaGridColumnItem["price"] = itemrate;
+                this.ansdDtaGridColumnItem["quantity"] = 1;
+              
+                let ind=this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
+                if (ind > -1) {
+                  this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind,1,this.ansdDtaGridColumnItem); // 2nd parameter means remove one item only
+                }
+               
+                let index = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+                if (index > -1) {
+                  this.selectedPriceList.splice(index, 1); // 2nd parameter means remove one item only
+                }
+                this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+     
+              }
+              else if (column.order && column.order === 2 && column.mandatory === true) {
+                this.isCheckedSecond = true;
+     
+                this.isListChanged = true;
+                itemPrice = this.getRate(value);
+                var itemrate: number = +itemPrice;
+                let ansDataColumn1 = {};
+                ansDataColumn1["list"] = [value];
+                let ansdDtaGridColumnItem1 = {};
+                ansdDtaGridColumnItem1["column"] = ansDataColumn1;
+                ansdDtaGridColumnItem1["columnId"] = column.columnId;
+                ansdDtaGridColumnItem1["price"] = itemrate;
+                ansdDtaGridColumnItem1["quantity"] = 1;
+                
+                let ind=this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
+                if (ind > -1) {
+                  this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind,1,ansdDtaGridColumnItem1); // 2nd parameter means remove one item only
+                }
+                let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+                if (index1 > -1) {
+                  this.selectedPriceList.splice(index1, 1); 
+                }
+                this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+               
+              }
+              else {
+                if (column.mandatory === true) {
+                  this.isCheckedSecond = true;
+                }
+                this.isListChanged = true;
+                if (ev) {
+                 
+               
+                    const index = this.items.indexOf(value);
+                    if (index > -1) {
+                      this.items.splice(index, 1); 
+                      this.items.push(value);
+                    }
+                 
+                }
+               
+                let ansDataColumn1 = {};
+                ansDataColumn1["list"] = this.items;
+                let ansdDtaGridColumnItem1 = {};
+                ansdDtaGridColumnItem1["column"] = ansDataColumn1;
+                ansdDtaGridColumnItem1["columnId"] = column.columnId;
+                ansdDtaGridColumnItem1["price"] = this.getRates(this.items);
+                ansdDtaGridColumnItem1["quantity"] = 1;
+              
+                let ind=this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
+                if (ind > -1) {
+                  this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind,1,ansdDtaGridColumnItem1); // 2nd parameter means remove one item only
+                }
+                let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+                if (index1 > -1) {
+                  this.selectedPriceList.splice(index1, 1);
+                }
+                this.selectedPriceList.push({ item: column.columnId, rate: this.getRates(this.items) })
+              
+              }
+   
+     
           }
           else {
-            var itemrate = 0
-          }
-
-          this.ansDataColumn["list"] = [value];
-          this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
-          this.ansdDtaGridColumnItem["columnId"] = column.columnId;
-          this.ansdDtaGridColumnItem["price"] = itemrate;
-          this.ansdDtaGridColumnItem["quantity"] = 1;
-          this.answDataGridListColumn.pop();
-          this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
-          this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
-          this.answersQnr["answer"] = this.answerQnr;
-          let index = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-          if (index > -1) {
-            this.selectedPriceList.splice(index, 1); // 2nd parameter means remove one item only
-          }
-          this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-
-        }
-        else if (column.order && column.order === 2 && column.mandatory === true) {
-
-          this.isCheckedSecond = true;
-
-          this.isListChanged = true;
-          itemPrice = this.getRate(value);
-          var itemrate: number = +itemPrice;
-          let ansDataColumn1 = {};
-          ansDataColumn1["list"] = [value];
-          let ansdDtaGridColumnItem1 = {};
-          ansdDtaGridColumnItem1["column"] = ansDataColumn1;
-          ansdDtaGridColumnItem1["columnId"] = column.columnId;
-          ansdDtaGridColumnItem1["price"] = itemrate;
-          ansdDtaGridColumnItem1["quantity"] = 1;
-          let index = this.answDataGridListColumn.findIndex(x => x.columnId === column.columnId)
-          if (index > -1) {
-            this.answDataGridListColumn.splice(index, 1); // 2nd parameter means remove one item only
-          }
-          this.answDataGridListColumn.push(ansdDtaGridColumnItem1);
-          this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
-          this.answersQnr["answer"] = this.answerQnr;
-          let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-          if (index1 > -1) {
-            this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
-          }
-          this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-
-        }
-        else {
-          if (column.mandatory === true) {
-            this.isCheckedSecond = true;
-          }
-          this.isListChanged = true;
-          if (ev.target.checked) {
-            this.items.push(value);
-
-          }
-          else {
-            const index = this.items.indexOf(value);
-            if (index > -1) {
-              this.items.splice(index, 1); // 2nd parameter means remove one item only
+     
+            if (ev.target.checked) {
+              if (!this.dataGridListColumns[question.labelName + '=' + column.order]) {
+                this.dataGridListColumns[question.labelName + '=' + column.order] = [];
+              }
+              this.dataGridListColumns[question.labelName + '=' + column.order].push(value);
+            } else {
+              const indx = this.dataGridListColumns[question.labelName + '=' + column.order].indexOf(value);
+              this.dataGridListColumns[question.labelName + '=' + column.order].splice(indx, 1);
             }
+     
+            this.onSubmit('inputChange');
           }
-          // itemPrice = this.getRates(this.items);
-          // var itemrate: number = +itemPrice;
-          let ansDataColumn1 = {};
-          ansDataColumn1["list"] = this.items;
-          let ansdDtaGridColumnItem1 = {};
-          ansdDtaGridColumnItem1["column"] = ansDataColumn1;
-          ansdDtaGridColumnItem1["columnId"] = column.columnId;
-          ansdDtaGridColumnItem1["price"] = this.getRates(this.items);
-          ansdDtaGridColumnItem1["quantity"] = 1;
-          let index = this.answDataGridListColumn.findIndex(x => x.columnId === column.columnId)
-          if (index > -1) {
-            this.answDataGridListColumn.splice(index, 1); // 2nd parameter means remove one item only
-          }
-          this.answDataGridListColumn.push(ansdDtaGridColumnItem1);
-          this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
-          this.answersQnr["answer"] = this.answerQnr;
-          let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-          if (index1 > -1) {
-            this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
-          }
-          this.selectedPriceList.push({ item: column.columnId, rate: this.getRates(this.items) })
-
-        }
-
-      }
-
-
     }
-    else {
 
-      if (ev.target.checked) {
-        if (!this.dataGridListColumns[question.labelName + '=' + column.order]) {
-          this.dataGridListColumns[question.labelName + '=' + column.order] = [];
-        }
-        this.dataGridListColumns[question.labelName + '=' + column.order].push(value);
-      } else {
-        const indx = this.dataGridListColumns[question.labelName + '=' + column.order].indexOf(value);
-        this.dataGridListColumns[question.labelName + '=' + column.order].splice(indx, 1);
-      }
 
-      this.onSubmit('inputChange');
+    
+    else{
+          let itemPrice;
+          this.selectedType = value;
+          if (question.fieldDataType !== 'dataGrid') {
+     
+            if (Object.keys(this.answersQnr).length === 0) {
+     
+              itemPrice = this.getValue(value);
+     
+              if (itemPrice !== undefined) {
+                var itemrate: number = +itemPrice;
+              }
+              else {
+                var itemrate = 0
+              }
+              this.answersQnr["labelName"] = question.labelName;
+              this.answerQnr["dataGridList"] = [];
+              this.answerQnr["dataGridList"].push(this.answDataGridList)
+              this.ansList.push(value);
+              this.ansDataColumn["list"] = this.ansList;
+              this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
+              this.ansdDtaGridColumnItem["columnId"] = column.columnId;
+              this.ansdDtaGridColumnItem["price"] = itemrate;
+              this.ansdDtaGridColumnItem["quantity"] = 1;
+              this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
+              this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
+              this.answersQnr["answer"] = this.answerQnr;
+           
+              this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+     
+            }
+            else {
+              if (column.order && column.order === 1 && column.mandatory === true) {
+     
+                itemPrice = this.getValue(value);
+                if (itemPrice !== undefined) {
+                  var itemrate: number = +itemPrice;
+                }
+                else {
+                  var itemrate = 0
+                }
+     
+                this.ansDataColumn["list"] = [value];
+                this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
+                this.ansdDtaGridColumnItem["columnId"] = column.columnId;
+                this.ansdDtaGridColumnItem["price"] = itemrate;
+                this.ansdDtaGridColumnItem["quantity"] = 1;
+                this.answDataGridListColumn.pop();
+                this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
+                this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
+                this.answersQnr["answer"] = this.answerQnr;
+                let index = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+                if (index > -1) {
+                  this.selectedPriceList.splice(index, 1); // 2nd parameter means remove one item only
+                }
+                this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+     
+              }
+              else if (column.order && column.order === 2 && column.mandatory === true) {
+     
+                this.isCheckedSecond = true;
+     
+                this.isListChanged = true;
+                itemPrice = this.getRate(value);
+                var itemrate: number = +itemPrice;
+                let ansDataColumn1 = {};
+                ansDataColumn1["list"] = [value];
+                let ansdDtaGridColumnItem1 = {};
+                ansdDtaGridColumnItem1["column"] = ansDataColumn1;
+                ansdDtaGridColumnItem1["columnId"] = column.columnId;
+                ansdDtaGridColumnItem1["price"] = itemrate;
+                ansdDtaGridColumnItem1["quantity"] = 1;
+                let index = this.answDataGridListColumn.findIndex(x => x.columnId === column.columnId)
+                if (index > -1) {
+                  this.answDataGridListColumn.splice(index, 1); // 2nd parameter means remove one item only
+                }
+                this.answDataGridListColumn.push(ansdDtaGridColumnItem1);
+                this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
+                this.answersQnr["answer"] = this.answerQnr;
+                let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+                if (index1 > -1) {
+                  this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
+                }
+                this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+     
+              }
+              else {
+                if (column.mandatory === true) {
+                  this.isCheckedSecond = true;
+                }
+                this.isListChanged = true;
+                if (ev.target.checked) {
+                  this.items.push(value);
+     
+                }
+                else {
+                  const index = this.items.indexOf(value);
+                  if (index > -1) {
+                    this.items.splice(index, 1); // 2nd parameter means remove one item only
+                  }
+                }
+                // itemPrice = this.getRates(this.items);
+                // var itemrate: number = +itemPrice;
+                let ansDataColumn1 = {};
+                ansDataColumn1["list"] = this.items;
+                let ansdDtaGridColumnItem1 = {};
+                ansdDtaGridColumnItem1["column"] = ansDataColumn1;
+                ansdDtaGridColumnItem1["columnId"] = column.columnId;
+                ansdDtaGridColumnItem1["price"] = this.getRates(this.items);
+                ansdDtaGridColumnItem1["quantity"] = 1;
+                let index = this.answDataGridListColumn.findIndex(x => x.columnId === column.columnId)
+                if (index > -1) {
+                  this.answDataGridListColumn.splice(index, 1); // 2nd parameter means remove one item only
+                }
+                this.answDataGridListColumn.push(ansdDtaGridColumnItem1);
+                this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
+                this.answersQnr["answer"] = this.answerQnr;
+                let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+                if (index1 > -1) {
+                  this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
+                }
+                this.selectedPriceList.push({ item: column.columnId, rate: this.getRates(this.items) })
+     
+              }
+     
+            }
+            
+     
+          }
+          else {
+     
+            if (ev.target.checked) {
+              if (!this.dataGridListColumns[question.labelName + '=' + column.order]) {
+                this.dataGridListColumns[question.labelName + '=' + column.order] = [];
+              }
+              this.dataGridListColumns[question.labelName + '=' + column.order].push(value);
+            } else {
+              const indx = this.dataGridListColumns[question.labelName + '=' + column.order].indexOf(value);
+              this.dataGridListColumns[question.labelName + '=' + column.order].splice(indx, 1);
+            }
+     
+            this.onSubmit('inputChange');
+          }
     }
     this.totalPrice = this.getTotalPrice(this.selectedPriceList)
   }
 
 
   isChecked(value, question, column?) {
+  
+    if(this.isEdit === 'edit'){
+
+     
+      this.isCheckedoption = true;
+      if (question.fieldDataType !== 'dataGrid') {
+        if(column.order===1){
+          this.answersQnr = this.editableItem.columnItem[0];
+        }
+      else{
+        this.answersQnr =this.answersQnr
+      }
+      
+        
+        
+          let answDataGridListColumnArray = this.answersQnr["answer"].dataGridList[0]["dataGridListColumn"];
+       
+          if (answDataGridListColumnArray) {
+
+       
+          let item = answDataGridListColumnArray.find(x => x.columnId === column.columnId);
+
+          if (item) {
+           
+            let index1 = this.selectedPriceList.findIndex(x => x.item === item.columnId)
+            if (index1 > -1) {
+              this.selectedPriceList.splice(index1, 1); 
+            }
+            this.selectedPriceList.push({ item: column.columnId, rate: item.price })
+            setTimeout(() => {
+              this.totalPrice = this.getTotalPrice(this.selectedPriceList)
+            }, 100);
+         
+           
+            let itemList = item["column"]["list"]
+            if(column.listPropertie.maxAnswerable&&column.listPropertie.maxAnswerable===1)
+            {for (let listItem of itemList) {
+              if (listItem === value) {
+                if(column.order===1){
+                  this.selectFirst = true;
+                  this.selectedType = value
+                }
+                if(column.order===2){
+                  this.isCheckedSecond = true;
+                }
+               
+
+                return true;
+              }
+              else {
+                return false;
+              }
+            }}
+            else{
+              for (let listItem of itemList) {
+                if (listItem === value) {
+                  let index1 = this.selectedPriceList.findIndex(x => x.item === item.columnId)
+                  if (index1 > -1) {
+                    this.selectedPriceList.splice(index1, 1); 
+                  }
+                  this.selectedPriceList.push({ item: column.columnId, rate: item.price })
+                  return true;
+                }
+              }
+            }
+            
+          }
+          else {
+            return false;
+          }
+
+        }
+          else {
+           
+            return false;
+          }
+        } 
+      
+ 
+      else {
+        if (this.dataGridColumns[question.labelName + '=' + column.order]) {
+          const indx = this.dataGridColumns[question.labelName + '=' + column.order].indexOf(value);
+          if (indx !== -1) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      }
+    }
+   else{
     this.isCheckedoption = true;
     if (question.fieldDataType !== 'dataGrid') {
 
@@ -887,7 +899,7 @@ export class QnrDialogComponent implements OnInit {
         let answDataGridListColumnArray = this.answersQnr["answer"].dataGridList[0]["dataGridListColumn"];
         if (answDataGridListColumnArray) {
 
-          // let item=answDataGridListColumnArray[column.order-1]
+         
           let item = answDataGridListColumnArray.find(x => x.columnId === column.columnId);
 
           if (item) {
@@ -929,6 +941,7 @@ export class QnrDialogComponent implements OnInit {
         return false;
       }
     }
+   }
 
 
   }
@@ -1010,27 +1023,6 @@ export class QnrDialogComponent implements OnInit {
     }
 
   }
-
-  submitQuestionnaire(passData) {
-    const dataToSend: FormData = new FormData();
-    // if (passData.files && passData.files.length > 0) {
-    //   for (let pic of passData.files) {
-    //     let type = pic.type.split('/');
-    //     type = type[0];
-    //     if (type === 'application' || type === 'image') {
-    //       dataToSend.append('files', pic['name']);
-    //     }
-    //   }
-    // }
-    const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
-    dataToSend.append('question', blobpost_Data);
-    this.buttonDisable = true;
-    if (this.source === 'consCheckin' || this.source === 'consAppt' || this.source === 'consOrder' || this.source === 'consDonationDetails') {
-      this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend);
-    } else {
-      this.validateProviderQuestionnaireResubmit(passData.answers, dataToSend);
-    }
-  }
   updateConsumerQnr(dataToSend) {
     this.providerService.resubmitProviderCustomerQuestionnaire(this.customerDetails[0].id, dataToSend).subscribe(data => {
       this.editQnr();
@@ -1041,168 +1033,7 @@ export class QnrDialogComponent implements OnInit {
       this.buttonDisable = false;
     });
   }
-  resubmitConsumerWaitlistQuestionnaire(body) {
-    this.sharedService.resubmitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consCheckin');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitConsumerWaitlistQuestionnaire(body) {
-    this.sharedService.submitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consCheckin');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitConsumerDonationQuestionnaire(body) {
-    this.sharedService.submitConsumerWaitlistQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consDonationDetails');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitConsumerDonationQuestionnaire(body) {
-    this.sharedService.resubmitConsumerDonationQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consDonationDetails');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitConsumerApptQuestionnaire(body) {
-    this.sharedService.resubmitConsumerApptQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consAppt');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitConsumerApptQuestionnaire(body) {
-    this.sharedService.submitConsumerApptQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consAppt');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitConsumerOrderQuestionnaire(body) {
-    this.sharedService.resubmitConsumerOrderQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consOrder');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitConsumerOrderQuestionnaire(body) {
-    this.sharedService.submitConsumerOrderQuestionnaire(body, this.uuid, this.accountId).subscribe(data => {
-      this.uploadAudioVideo(data, 'consOrder');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitProviderWaitlistQuestionnaire(body) {
-    this.providerService.resubmitProviderWaitlistQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proCheckin');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitProviderWaitlistQuestionnaire(body) {
-    this.providerService.submitProviderWaitlistQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proCheckin');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitProviderLeadQuestionnaire(body) {
-    this.providerService.resubmitProviderLeadQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proLead');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitProviderLeadQuestionnaire(body) {
-    this.providerService.submitProviderLeadQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proLead');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitProviderLeadafterQuestionnaire(body) {
-    this.providerService.resubmitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proLeadafter');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitProviderLeadafterQuestionnaire(body) {
-    this.providerService.submitProviderLeadafterQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proLeadafter');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitProviderApptQuestionnaire(body) {
-    this.providerService.resubmitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proAppt');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitProviderApptQuestionnaire(body) {
-    this.providerService.submitProviderApptQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proAppt');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitProviderOrderQuestionnaire(body) {
-    this.providerService.resubmitProviderOrderQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proOrder');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitProviderOrderQuestionnaire(body) {
-    this.providerService.submitProviderOrderQuestionnaire(body, this.uuid).subscribe(data => {
-      this.uploadAudioVideo(data, 'proOrder');
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  resubmitDonationQuestionnaire(body) {
-    this.sharedService.resubmitProviderDonationQuestionnaire(this.donationDetails.uid, body).subscribe(data => {
-      this.successGoback();
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  submitDonationQuestionnaire(body) {
-    this.sharedService.submitDonationQuestionnaire(this.donationDetails.uid, body, this.accountId).subscribe(data => {
-      this.editQnr();
-      this.snackbarService.openSnackBar('Updated Successfully');
-      this.buttonDisable = false;
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
+  
   uploadAudioVideo(data, type) {
     if (data.urls && data.urls.length > 0) {
       let postData = {
@@ -1330,10 +1161,14 @@ export class QnrDialogComponent implements OnInit {
     }
   }
   getValue(item) {
-
+    // if(this.isEdit === 'edit'){
+    //   this.selectedType = this.editableItem.item
+    // }
     for (let itemPrice of this.baseArray) {
       let itemRate = itemPrice + '';
+      
       if (itemRate.includes(item)) {
+        
         let rate = itemRate.split(':');
         if (!this.basePriceList.find(x => x.item === item.trim())) {
           this.basePriceList.push({ item: item.trim(), rate: rate[1] });
@@ -1343,19 +1178,20 @@ export class QnrDialogComponent implements OnInit {
     }
   }
   getRate(item) {
-
+ 
     if (this.priceList.length === 0 || !this.isListChanged) {
-
       for (let itemType of Object.keys(JSON.parse(this.priceGridList))) {
+      
         if (itemType === this.selectedType + '') {
+          
           let priceGridSubList = JSON.parse(this.priceGridList)[itemType];
-
+        
           let priceSubKeys = Object.values(priceGridSubList);
-
+         
           for (let keys of priceSubKeys) {
-
+           
             let price = keys[item.trim()]
-
+           
             if (price !== undefined) {
               if (!this.priceList.find(x => x.item === item.trim())) {
                 this.priceList.push({ item: item.trim(), rate: price });
@@ -1367,10 +1203,7 @@ export class QnrDialogComponent implements OnInit {
       }
     }
     else {
-
-
       let price = this.priceList.find(x => x.item === item.trim())
-
       return price.rate;
     }
   }
@@ -1397,91 +1230,6 @@ export class QnrDialogComponent implements OnInit {
 
     }
     return itemrate;
-  }
-  validateProviderQuestionnaireResubmit(answers, dataToSend) {
-    this.providerService.validateProviderQuestionnaireResbmit(answers).subscribe((data: any) => {
-      this.setValidateError(data);
-      if (data.length === 0) {
-        if (this.source === 'customer-details') {
-          this.updateConsumerQnr(dataToSend);
-        } else if (this.source === 'proDonation') {
-          this.resubmitDonationQuestionnaire(dataToSend);
-        } else if (this.source === 'proCheckin') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitProviderWaitlistQuestionnaire(dataToSend);
-          } else {
-            this.submitProviderWaitlistQuestionnaire(dataToSend);
-          }
-        }
-        else if (this.source === 'proLead') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitProviderLeadQuestionnaire(dataToSend);
-          } else {
-            this.submitProviderLeadQuestionnaire(dataToSend);
-          }
-        }
-        else if (this.source === 'proLeadafter') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitProviderLeadafterQuestionnaire(dataToSend);
-          } else {
-            this.submitProviderLeadafterQuestionnaire(dataToSend);
-          }
-        }
-        else if (this.source === 'proOrder') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitProviderOrderQuestionnaire(dataToSend);
-          } else {
-            this.submitProviderOrderQuestionnaire(dataToSend);
-          }
-        } else {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitProviderApptQuestionnaire(dataToSend);
-          } else {
-            this.submitProviderApptQuestionnaire(dataToSend);
-          }
-        }
-      }
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
-  }
-  validateConsumerQuestionnaireResubmit(answers, dataToSend) {
-    this.sharedService.validateConsumerQuestionnaireResbumit(answers, this.accountId).subscribe((data: any) => {
-      this.setValidateError(data);
-      if (data.length === 0) {
-        if (this.source === 'consCheckin') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitConsumerWaitlistQuestionnaire(dataToSend);
-          } else {
-            this.submitConsumerWaitlistQuestionnaire(dataToSend);
-          }
-        } else if (this.source === 'consAppt') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitConsumerApptQuestionnaire(dataToSend);
-          } else {
-            this.submitConsumerApptQuestionnaire(dataToSend);
-          }
-        }
-        else if (this.source === 'consOrder') {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitConsumerOrderQuestionnaire(dataToSend);
-          } else {
-            this.submitConsumerOrderQuestionnaire(dataToSend);
-          }
-        }
-        else {
-          if (this.qnrStatus === 'submitted') {
-            this.resubmitConsumerDonationQuestionnaire(dataToSend);
-          } else {
-            this.submitConsumerDonationQuestionnaire(dataToSend);
-          }
-        }
-      }
-    }, error => {
-      this.buttonDisable = false;
-      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-    });
   }
 
   getImg(question, document) {
@@ -1738,6 +1486,8 @@ export class QnrDialogComponent implements OnInit {
     this.dialogRef.close({ data: this.postData });
   }
   closeDialogg() {
+   console.log(JSON.stringify(this.editableItem.columnItem[0]))
+    this.answersQnr = this.editableItem.columnItem[0];
     this.dialogRef.close();
   }
   closeDialogPopup() {
@@ -1834,7 +1584,6 @@ export class QnrDialogComponent implements OnInit {
     return this.totalPrice
   }
   repeatSame(repeatingItem) {
-    // console.log(JSON.stringify(repeatingItem))
     this.dialogRef.close({ repeatItem: repeatingItem });
   }
   addNew() {
@@ -1992,6 +1741,3 @@ export class QnrDialogComponent implements OnInit {
     // selectedMessageCoApplicant
   }
 }
-
-
-

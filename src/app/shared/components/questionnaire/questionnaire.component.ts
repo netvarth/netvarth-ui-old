@@ -111,6 +111,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   allList: string;
   popSearches: any;
   serviceTotalPrice: number = 0;
+   editableItem: any;
   constructor(private sharedService: SharedServices,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
@@ -158,7 +159,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       this.itemArray = this.lStorageService.getitemfromLocalStorage('itemArray');
       if (this.itemArray) {
         this.showItem = true;
-        console.log("this.itemArray", this.itemArray)
+    
       }
     }
 
@@ -1300,7 +1301,8 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     this.updatedGridIndex[question.labelName] = null;
   }
   showDataGridAddSectionn(question, value) {
-    this.quesStore = question
+    this.quesStore = question;
+    this.lStorageService.setitemonLocalStorage('quesStore', this.quesStore);
     this.showDataGrid[question.labelName] = value;
     this.updatedGridIndex[question.labelName] = null;
     this.qnrPopup(question, true)
@@ -1392,54 +1394,113 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     return s.split("-").reverse().join("-");
   }
   qnrPopup(question, value) {
+if(value=== 'edit'){
+  this.quesStore = this.lStorageService.getitemfromLocalStorage('quesStore');
+   this.showqnr = true;
+   this.editableItem = question;
+   console.log(JSON.stringify(this.quesStore))
+   // this.sequenceId = this.quesStore.sequnceId;
 
-    this.showqnr = true;
-    this.sequenceId = question.sequnceId;
+   // this.questionnaireList= question;
+   const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
+     width: '50%',
+     panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+     disableClose: true,
+     data: {
+       data: this.quesStore,
+       qnr_type: 'service_option',
+       view: 'qnrView',
+       isEdit:'edit',
+       editableItem:  this.editableItem 
+     }
+   });
+   removeitemdialogRef.afterClosed().subscribe(result => {
+     if (result) {
 
-    // this.questionnaireList= question;
-    const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        data: question,
-        qnr_type: 'service_option',
-        view: 'qnrView'
-      }
-    });
-    removeitemdialogRef.afterClosed().subscribe(result => {
-      if (result) {
+       this.dataGridList = result.data.answerLine;
+       this.post_Data = result.data;
+       this.showItem = true;
+       this.item = result.data.answerLine[0].answer.dataGridList[0].dataGridListColumn[0].column.list[0];
+       if (result.data.totalPrice) {
+         this.totalPrice = result.data.totalPrice
+       }
+       let index1 = this.itemArray.findIndex(x => x.id === this.editableItem.id)
+       if (index1 > -1) {
+         this.itemArray.splice(index1, 1);
+       }
+       let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: this.item, price: this.totalPrice, columnItem: this.dataGridList }
+       this.itemArray.push(dummyArray)
 
-        this.dataGridList = result.data.answerLine;
-        this.post_Data = result.data;
-        this.showItem = true;
-        this.item = result.data.answerLine[0].answer.dataGridList[0].dataGridListColumn[0].column.list[0];
+       if (this.itemArray) {
+         this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
+       }
+       this.serviceTotalPrice = 0;
+       this.itemArray.forEach((item: any) => {
+        
 
-        if (result.data.totalPrice) {
-          this.totalPrice = result.data.totalPrice
+         this.serviceTotalPrice = this.serviceTotalPrice + item.price;
+         this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
+       });
+   
+
+       this.id = this.id + 1
+       let obj = { sequenceId: this.sequenceId, dgList: this.post_Data.answerLine };
+       this.finalObjectList.push(obj);
+       this.onSubmit('serviceOption')
+
+     }
+   });
+}
+    else{
+      this.showqnr = true;
+      this.sequenceId = question.sequnceId;
+  
+      // this.questionnaireList= question;
+      const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          data: question,
+          qnr_type: 'service_option',
+          view: 'qnrView',
+          isEdit:'add'
         }
-        let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: this.item, price: this.totalPrice, columnItem: this.dataGridList }
-        this.itemArray.push(dummyArray)
-
-        if (this.itemArray) {
-          this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
+      });
+      removeitemdialogRef.afterClosed().subscribe(result => {
+        if (result) {
+  
+          this.dataGridList = result.data.answerLine;
+          this.post_Data = result.data;
+          this.showItem = true;
+          this.item = result.data.answerLine[0].answer.dataGridList[0].dataGridListColumn[0].column.list[0];
+  
+          if (result.data.totalPrice) {
+            this.totalPrice = result.data.totalPrice
+          }
+          let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: this.item, price: this.totalPrice, columnItem: this.dataGridList }
+          this.itemArray.push(dummyArray)
+  
+          if (this.itemArray) {
+            this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
+          }
+          this.serviceTotalPrice = 0;
+          this.itemArray.forEach((item: any) => {
+          
+  
+            this.serviceTotalPrice = this.serviceTotalPrice + item.price;
+            this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
+          });
+          
+  
+          this.id = this.id + 1
+          let obj = { sequenceId: this.sequenceId, dgList: this.post_Data.answerLine };
+          this.finalObjectList.push(obj);
+          this.onSubmit('serviceOption')
+  
         }
-        this.serviceTotalPrice = 0;
-        this.itemArray.forEach((item: any) => {
-          console.log(this.serviceTotalPrice)
-
-          this.serviceTotalPrice = this.serviceTotalPrice + item.price;
-          this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
-        });
-        console.log(this.serviceTotalPrice)
-
-        this.id = this.id + 1
-        let obj = { sequenceId: this.sequenceId, dgList: this.post_Data.answerLine };
-        this.finalObjectList.push(obj);
-        this.onSubmit('serviceOption')
-
-      }
-    });
+      });
+    }
   }
   increment(item) {
     const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
@@ -1460,18 +1521,18 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         } else {
           let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: result.repeatItem.item, price: result.repeatItem.price, columnItem: result.repeatItem.columnItem }
           this.itemArray.push(dummyArray)
-
+        
           if (this.itemArray) {
             this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
           }
           this.serviceTotalPrice = 0;
           this.itemArray.forEach((item: any) => {
-            console.log(this.serviceTotalPrice)
+          
 
             this.serviceTotalPrice = this.serviceTotalPrice + item.price;
 
           });
-          console.log(this.serviceTotalPrice)
+       
           this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
           this.id = this.id + 1
           let obj = { sequenceId: this.sequenceId, dgList: result.repeatItem.columnItem };
@@ -1491,12 +1552,12 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       }
       this.serviceTotalPrice = 0;
       this.itemArray.forEach((item: any) => {
-        console.log(this.serviceTotalPrice)
+       
 
         this.serviceTotalPrice = this.serviceTotalPrice + item.price;
 
       });
-      console.log(this.serviceTotalPrice)
+    
       this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
       this.finalObjectList.splice(index, 1);
     }

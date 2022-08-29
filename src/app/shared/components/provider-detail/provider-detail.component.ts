@@ -416,6 +416,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         )
       });
       this.lStorageService.removeitemfromLocalStorage('itemArray');  
+      this.lStorageService.removeitemfromLocalStorage('quesStore');
       this.lStorageService.removeitemfromLocalStorage('serviceOPtionInfo'); 
       this.lStorageService.removeitemfromLocalStorage('serviceTotalPrice'); 
   }

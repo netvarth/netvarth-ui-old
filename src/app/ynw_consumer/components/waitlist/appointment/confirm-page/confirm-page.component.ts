@@ -59,6 +59,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
               this.addToCalendar();
               this.apiloading = false;
               this.lStorageService.removeitemfromLocalStorage('itemArray');  
+              this.lStorageService.removeitemfromLocalStorage('quesStore');
               this.lStorageService.removeitemfromLocalStorage('serviceOPtionInfo'); 
               this.lStorageService.removeitemfromLocalStorage('serviceTotalPrice'); 
             });
