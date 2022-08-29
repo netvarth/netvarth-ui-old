@@ -1486,8 +1486,8 @@ export class QnrDialogComponent implements OnInit {
     this.dialogRef.close({ data: this.postData });
   }
   closeDialogg() {
-   console.log(JSON.stringify(this.editableItem.columnItem[0]))
-    this.answersQnr = this.editableItem.columnItem[0];
+  //  console.log(JSON.stringify(this.editableItem.columnItem[0]))
+  //   this.answersQnr = this.editableItem.columnItem[0];
     this.dialogRef.close();
   }
   closeDialogPopup() {
