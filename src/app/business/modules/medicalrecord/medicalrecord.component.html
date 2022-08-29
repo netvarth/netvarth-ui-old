@@ -48,7 +48,7 @@
             </div>
           </div>
           <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
-            <div class="nameClr" >Phone</div>
+            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) ">Phone</div>
             <div class="infoDetails">
               <!-- <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
@@ -431,7 +431,7 @@
             </div>
           </div>
           <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
-            <div class="nameClr" >Phone</div>
+            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) ">Phone</div>
             <div class="infoDetails">
               <!-- <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
@@ -512,9 +512,10 @@
 
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12  no-padding ">
       <div  >
-        <div [ngClass]="{'prescription-details':uploadFiles.length>0}" >
+        <div [ngClass]="{'prescription-details':uploadFiles && uploadFiles.length>0}" >
          <ng-container>
-          <app-prescription [viewVisitDetails]="viewVisitDetails"></app-prescription>
+          <br>
+          <app-prescription [viewVisitDetails]="viewVisitDetails"  [showHideActivityTYpe]="showHideActivityTYpe"></app-prescription>
          </ng-container>
         <ng-container *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
           <div class="clinicalOuter1 card mgn-up-10 "  *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
@@ -546,7 +547,7 @@
           <ng-container *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
             <div class=" card mgn-bt-10 mgn-up-10 clinicalOuter1" 
             *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
-              <div class="clinical  pointer-cursor" (click)="addPrescription(patientId,'craeteClinicalnotes')" >
+              <div class="clinical  pointer-cursor" (click)="addPrescription(patientId,'createPrescription')" >
                 <div>
                   <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
                 </div>
@@ -556,8 +557,9 @@
               </div>
             </div>
           </ng-container>
+          <div *ngIf="tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false" class="clearfix" ></div>
           <ng-container *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" >
-            <app-prescription *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" ></app-prescription>
+            <app-prescription [tempPrescription]="tempPrescription" [viewVisitDetails]="viewVisitDetails"  [showHideActivityTYpe]="showHideActivityTYpe" *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" ></app-prescription>
           </ng-container>
           
         </div>

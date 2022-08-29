@@ -1,6 +1,6 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AddDrugComponent } from './add-drug/add-drug.component';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd, NavigationExtras } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MedicalrecordService } from '../medicalrecord.service';
@@ -37,7 +37,7 @@ import { SubSink } from 'subsink';
   templateUrl: './prescription.component.html',
   styleUrls: ['./prescription.component.css']
 })
-export class PrescriptionComponent implements OnInit {
+export class PrescriptionComponent implements OnInit ,OnChanges{
   bookingId: any;
   bookingType: any;
   patientId: any;
@@ -151,6 +151,12 @@ export class PrescriptionComponent implements OnInit {
   private subscriptions = new SubSink();
   innerWidth: any;
   ScreenHeight: any;
+  addMedecineMobDeviceB: boolean=true;
+  newlyCretedMrId: any;
+  tempText: any='';
+  tempIndex: any;
+  afterEdit: string='';
+  @Input() tempPrescription;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -178,19 +184,29 @@ export class PrescriptionComponent implements OnInit {
         this.router.navigated = false;
       }
     });
+    this.onReSize()
   }
   @HostListener('window:resize', ['$event'])
   onReSize() {
     this.innerWidth = window.innerWidth;
     if (this.innerWidth <= 768) {
-      this.ScreenHeight= '65%'
+      this.ScreenHeight= '65%';
+      if(this.drugList && this.drugList.length>0){
+        this.addMedecineMobDeviceB=false;
+      }
     }
     else {
-       this.ScreenHeight='85%'
+       this.ScreenHeight='85%';
+       this.addMedecineMobDeviceB=true
     }
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    // this. onReSize() 
+  }
   ngOnInit() {
-    console.log('showHideActivityTYpe',this.showHideActivityTYpe)
+    console.log('showHideActivityTYpe',this.showHideActivityTYpe);
+    console.log('tempPrescription',this.tempPrescription)
+    console.log('this.activatedRoute.parent.snapshot.params',this.activatedRoute.parent.snapshot.params)
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
@@ -211,7 +227,7 @@ export class PrescriptionComponent implements OnInit {
     }
     this.createForm();
     console.log('viewVisitDetails1',this.viewVisitDetails);
-    this.onReSize()
+    // this.onReSize()
   }
 
   getMedicalRecord(mrId) {
@@ -454,38 +470,62 @@ export class PrescriptionComponent implements OnInit {
   }
 
   getMrprescription(mrId) {
-    console.log('mrId::::',mrId)
+    console.log('mrId::::',mrId);
+    // this.newlyCretedMrId= mrId;
     this.subscriptions.sink=this.provider_services.getMRprescription(mrId)
       .subscribe((data:any) => {
         this.api_loading=false;
         console.log('datagetMRprescription',data);
         this.viewMrInfo= data;
-        if (Object.keys(data).length === 0 && data.constructor === Object) {
-          this.loading = false;
-          // this.prescList = true;
-          this.uploadFiles = data.mrVideoAudio;
-          console.log('this.uploadFiles',this.uploadFiles)
-        } else {
-          if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
-            this.uploadlist = data['prescriptionsList'];
-            // this.prescList = false;
-            this.image_list_popup = [];
-            const imgobj = new Image(0,
-              { // modal
-                img: this.uploadlist[0].url,
-                description: this.uploadlist[0].caption || ''
-              });
-            this.image_list_popup.push(imgobj);
-            console.log('this.uploadlist::',this.uploadlist)
-
+        if(data){
+          if (Object.keys(data).length === 0 && data.constructor === Object) {
+            this.loading = false;
+            // this.prescList = true;
+            this.uploadFiles = data.mrVideoAudio;
+            console.log('this.uploadFiles',this.uploadFiles)
           } else {
-            this.drugList = data['prescriptionsList'];
-            // this.prescList = false;
-            this.note = data['notes'];
-            this.getDigitalSign();
+            if (data['prescriptionsList'] && data['prescriptionsList'][0] && data['prescriptionsList'][0].keyName) {
+              this.uploadlist = data['prescriptionsList'];
+              // this.prescList = false;
+              this.image_list_popup = [];
+              const imgobj = new Image(0,
+                { // modal
+                  img: this.uploadlist[0].url,
+                  description: this.uploadlist[0].caption || ''
+                });
+              this.image_list_popup.push(imgobj);
+              console.log('this.uploadlist::',this.uploadlist)
+  
+            } else {
+              this.drugList = data['prescriptionsList'];
+              console.log('this.drugList:',this.drugList)
+              console.log(this.tempIndex)
+              if(this.tempIndex >=0){
+                  // delete data['prescriptionsList'];
+                  this.drugList.splice(this.tempIndex, 1);
+              }
+              console.log('afterEdit::',this.afterEdit)
+              // if(this.afterEdit==='afterUpdate'){
+              //   this.reloadComponent()
+              // }
+              if (this.afterEdit === 'afterUpdate') {
+                const qparams = { 'prescription': 'prescription' };
+                const navigationExtras: NavigationExtras = {
+                  queryParams: qparams
+                };
+                console.log('navigationExtras', navigationExtras);
+                // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription'], navigationExtras);
+                // this.saveClose()
+              }
+              
+              // this.prescList = false;
+              this.note = data['notes'];
+              this.getDigitalSign();
+            }
+            this.loading = false;
           }
-          this.loading = false;
         }
+        
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -522,6 +562,14 @@ export class PrescriptionComponent implements OnInit {
     //   }
     // });
   }
+  updateEditPrescription(data){
+    console.log('data',data)
+    this.viewVisitDetails=false;
+    this.loading=false
+    // this.uploadlist.length=0;
+    this.drugList && this.uploadlist && this.uploadlist.length===0;
+    this.afterEdit='afterUpdate'
+  }
 
   saveRx(result) {
     this.loading = true;
@@ -529,23 +577,40 @@ export class PrescriptionComponent implements OnInit {
       "prescriptionsList": result,
       "notes": this.note
     }
-    console.log('this.mrId',this.mrId)
+    console.log('this.mrId',this.mrId);
+    console.log('newlyCretedMrId',this.newlyCretedMrId)
     if (this.mrId) {
+      // alert('edit')
       this.api_loading=true;
       this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
           console.log('resupdateMRprescription',res)
-          this.snackbarService.openSnackBar('Prescription Saved Successfully');
+          this.snackbarService.openSnackBar('Prescription update  Successfully');
           this.getMrprescription(this.mrId);
+          // if (this.afterEdit === 'afterUpdate') {
+          //   const qparams = { 'prescription': 'prescription' };
+          //   const navigationExtras: NavigationExtras = {
+          //     queryParams: qparams
+          //   };
+          //   console.log('navigationExtras', navigationExtras);
+          //   this.saveClose()
+          //   // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription'], navigationExtras);
+          // }
+          // else{
+          //   this.getMrprescription(this.mrId);
+          // }
           // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
 
         },
           error => {
             this.loading = false;
+            this.api_loading=false;
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
-    } else {
+    } 
+    else {
       console.log('createMR',passdata);
+      // alert('craete')
       this.api_loading=true;
       this.medicalrecord_service.createMR('prescriptions', passdata)
         .then((data: number) => {
@@ -557,11 +622,18 @@ export class PrescriptionComponent implements OnInit {
 
         },
           error => {
+            this.api_loading=false;
             this.loading = false;
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
     // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+  }
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
   addNote() {
     const addnotedialogRef = this.dialog.open(AddNoteComponent, {
@@ -620,6 +692,32 @@ export class PrescriptionComponent implements OnInit {
 
 
   }
+  saveClose(){
+    if(this.mrId !==0){
+      // this.getMrprescription(this.mrId)
+      let passdata = {
+        "prescriptionsList":  this.drugList,
+        "notes": this.note
+      }
+      this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res)=>{
+        this.getMrprescription(this.mrId);
+        this.location.back()
+      })
+    }
+    else{
+      this.api_error = 'Create your prescription';
+      this.snackbarService.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' }); 
+    }
+  }
+  addMedecineMobDevice(){
+    this.tempText= undefined;
+    this.addMedecineMobDeviceB=true;
+    console.log('this.tempText',this.tempText)
+   
+  }
+  viewMedecineMobDevice(){
+    this.addMedecineMobDeviceB=true;
+  }
   updatePaperPrescription() {
     this.disable = true;
     this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
@@ -649,9 +747,50 @@ export class PrescriptionComponent implements OnInit {
     return imgsize;
   }
 
-  deleteDrug(index) {
-    this.drugList.splice(index, 1);
-    // delete this.drugList[index];
+  
+  editDrugList(text,form_data,id){
+    console.log(text);
+    console.log('data', form_data);
+    console.log('id', id);
+    console.log(form_data);
+    this.api_error = '';
+    if (form_data && (form_data.medicine_name === '' && form_data.frequency === '' && form_data.dosage === '' && form_data.instructions === '' && form_data.duration === '')) {
+      this.api_error = 'Atleast one field required';
+      this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
+    }
+    else {
+      // alert(form_data);
+      // this.drugDetail=[];
+      this.drugDetail.push(form_data);
+        this.saveRx(this.drugDetail)
+      this.clearAll();
+      this.tempText='';
+      // this.loading = true;
+      // let passdata = {
+      //   "prescriptionsList": this.drugDetail,
+      //   "notes": this.note
+      // }
+      // console.log('this.mrId', id);
+      // console.log('newlyCretedMrIdforUpdate',id)
+      // if (id) {
+      //   alert('edit')
+      //   this.api_loading = true;
+      //   this.provider_services.updateMRprescription(passdata,id).
+      //     subscribe(res => {
+      //       console.log('resupdateMRprescription', res)
+      //       this.snackbarService.openSnackBar('Prescription update  Successfully');
+      //       this.getMrprescription(id);
+      //       this.tempText='';
+
+      //     },
+      //       error => {
+      //         this.loading = false;
+      //         this.api_loading = false;
+      //         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      //       });
+      // }
+    }
+
   }
   editDrug(drug, index) {
     this.editedIndex = index;
@@ -747,7 +886,7 @@ export class PrescriptionComponent implements OnInit {
     }
     onSubmit(form_data) {
       this.api_error = '';
-      if(form_data.medicine_name === '' && form_data.frequency === ''&& form_data.dosage === ''&& form_data.instructions === ''&& form_data.duration === ''){
+      if(form_data && (form_data.medicine_name === '' && form_data.frequency === ''&& form_data.dosage === ''&& form_data.instructions === ''&& form_data.duration === '')){
         this.api_error = 'Atleast one field required';
       } else {
       this.drugDetail.push(form_data);
@@ -764,12 +903,13 @@ export class PrescriptionComponent implements OnInit {
         this.api_error = 'Atleast one field required';
         this.snackbarService.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' });
 
-        alert('kkk')
+        // alert('kkk')
       } else {
-        alert('elese')
+        // alert('elese')
       this.drugDetail.push(form_data);
       this.saveRx(this.drugDetail)
       this.clearAll();
+      this.tempPrescription=false;
     }
     }
     autoGrowTextZone(e) {
@@ -786,16 +926,25 @@ export class PrescriptionComponent implements OnInit {
       this.amForm.get('duration').setValue('');
       this.amForm.get('dosage').setValue('');
     }
-    updateForm(drug) {
-      console.log('this.drugData',this.drugData);
-      console.log('drug:::',drug);
-      this.amForm.patchValue({
-        'medicine_name': drug.medicine_name || '',
-        'frequency': drug.frequency || '',
-        'instructions': drug.instructions || '',
-        'duration': drug.duration || '',
-        'dosage': drug.dosage || ''
-      })
+    updateForm(drug,type,text,index,newlyCretedMrId) {
+      // console.log('type',type)
+      // console.log('this.drugData',this.drugData);
+      // console.log('drug:::',drug);
+      // console.log('newlyCretedMrId::',newlyCretedMrId)
+      this.tempText=type;
+      this.tempIndex=index;
+      // console.log(' this.tempIndex', this.tempIndex)
+      // console.log('tempText',this.tempText)
+      if(drug){
+        this.amForm.patchValue({
+          'medicine_name': drug.medicine_name || '',
+          'frequency': drug.frequency || '',
+          'instructions': drug.instructions || '',
+          'duration': drug.duration || '',
+          'dosage': drug.dosage || ''
+        })
+      }
+      
     }
 
     getFileType(type){
@@ -831,9 +980,99 @@ export class PrescriptionComponent implements OnInit {
       return totalSizeMb;
     }
     deletePrescriptionFile(fileDetails,index){
-      // this.deleteFile(fileDetails)
-  
+      console.log(fileDetails);
+     this.deleteTempImagePrescription(fileDetails,index)
     }
+
+
+    deleteTempImagePrescription(img, index) {
+      // this.showSave = true;
+      const removeprescriptiondialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Do you really want to remove the prescription?',
+          'type': 'prescription'
+        }
+      });
+      removeprescriptiondialogRef.afterClosed().subscribe(result => {
+        console.log('result',result);
+        if (result) {
+          console.log('img',img)
+            console.log('img.keyName',img.keyName)
+            this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
+              .subscribe((data) => {
+                console.log('data',data)
+                this.selectedMessage.files.splice(index, 1);
+                const error='Deleted Successfully prescription';
+                this.snackbarService.openSnackBar(error);
+                this.reloadComponent();
+                // this.getMrprescription(this.mrId);
+              },
+                error => {
+                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
+        }
+      });
+    }
+
+    deleteDrug(index,data) {
+      console.log('data',data)
+      console.log(index);
+     
+      console.log(this.mrId);
+      const removeprescriptiondialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Do you really want to remove the prescription?',
+          'type': 'deleteDrug'
+        }
+      });
+      removeprescriptiondialogRef.afterClosed().subscribe((res)=>{
+        if(res){
+          this.drugList.splice(index, 1);
+          console.log(' this.drugList', this.drugList)
+           let passdata = {
+            "prescriptionsList": this.drugList,
+            "notes": this.note
+          }
+          console.log('this.mrId', this.mrId);
+          console.log('newlyCretedMrIdforUpdate',this.mrId)
+          if (this.mrId) {
+            // alert('edit')
+            this.api_loading = true;
+            this.provider_services.updateMRprescription(passdata,this.mrId).
+              subscribe(res => {
+                console.log('resupdateMRprescription', res)
+                this.snackbarService.openSnackBar('Prescription delete  Successfully');
+                this.getMrprescription(this.mrId);
+                this.tempText='';
+    
+              },
+                error => {
+                  this.loading = false;
+                  this.api_loading = false;
+                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                });
+          }
+        }
+      })
+      
+    }
+
+
+
+
+
+
+
+
+
+
+
     dialogImgView(fileDetails:any){
       if(fileDetails){
         if(fileDetails &&  fileDetails.type && ((fileDetails.type===('.png') || fileDetails.type===('.bmp') || fileDetails.type===('.jpg')))){
@@ -855,19 +1094,19 @@ export class PrescriptionComponent implements OnInit {
       }
     }
     originalFilename(fileName){
-      console.log('fileName1',fileName.length)
+      // console.log('fileName1',fileName.length)
       let tempFileName:any;
       let tempFileNameSecondTYpe:any;
-      if(fileName.length > 0 && fileName.length <30 ){
+      if(fileName && fileName.length > 0 && fileName && fileName.length <30 ){
         console.log(';tempFileName0')
          tempFileName= fileName.slice(0,fileName.indexOf('.'));
          console.log(';tempFileName',tempFileName)
         return tempFileName;
       }
-      else if(fileName.length > 30){
+      else if(fileName && fileName.length > 30){
         tempFileName= fileName.slice(0,fileName.indexOf('.')) ;
-        console.log('tempFileName',tempFileName.length)
-        if(tempFileName.length>30){
+        // console.log('tempFileName',tempFileName.length)
+        if(tempFileName && tempFileName.length>30){
          tempFileNameSecondTYpe= tempFileName.slice(0,30) + ' ...'
          return tempFileNameSecondTYpe;
         }

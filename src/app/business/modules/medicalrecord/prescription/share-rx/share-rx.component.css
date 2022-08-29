@@ -299,6 +299,7 @@ border-radius: 7.80557px;
       }
       .btnClass{
         margin-right: 0px;
+        justify-content: center !important;
       }
       .flexClassSig{
         width: 100% !important;
@@ -311,10 +312,14 @@ border-radius: 7.80557px;
       .manualSignBtn{
         width: 100% !important;
       }
+      .dialogContent{
+        max-height: 40vh !important;
+        overflow-x: hidden;
+      }
       
   }
   .dialogContent{
-    max-height: 100% !important;
+    max-height: 100% ;
   }
   /* #sharerxview{
     display: none;

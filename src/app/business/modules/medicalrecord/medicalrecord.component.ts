@@ -1085,14 +1085,14 @@ export class MedicalrecordComponent implements OnInit {
   originalFilename(fileName){
     let tempFileName:any;
     let tempFileNameSecondTYpe:any;
-    if(fileName.length > 0 && fileName.length <30 ){
+    if(fileName && fileName.length > 0 && fileName && fileName.length <30 ){
        tempFileName= fileName.slice(0,fileName.indexOf('.'))
       return tempFileName;
     }
-    else if(fileName.length > 30){
+    else if(fileName && fileName.length > 30){
       tempFileName= fileName.slice(0,fileName.indexOf('.')) ;
       // console.log('tempFileName',tempFileName)
-      if(tempFileName.length>30){
+      if(tempFileName && tempFileName.length>30){
        tempFileNameSecondTYpe= tempFileName.slice(0,30) + ' ...'
        return tempFileNameSecondTYpe;
       }

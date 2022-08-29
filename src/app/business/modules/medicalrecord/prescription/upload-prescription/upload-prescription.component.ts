@@ -274,7 +274,7 @@ export class UploadPrescriptionComponent implements OnInit {
         this.upload_status = 'Uploaded';
         this.snackbarService.openSnackBar('Prescription uploaded successfully');
         this.goBack()
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+        // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {
           this.disable = false;
@@ -295,6 +295,8 @@ export class UploadPrescriptionComponent implements OnInit {
     this.removeprescriptiondialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (img.view && img.view === true) {
+          console.log('img',img)
+          console.log('img.keyName',img.keyName)
           this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
             .subscribe((data) => {
               this.selectedMessage.files.splice(index, 1);

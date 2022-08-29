@@ -475,7 +475,7 @@ border: 1.32184px solid #E6E8EB;
     width: 100% !important;
     box-shadow: none !important; */
     height: 100% !important;
-    width: 34rem;
+    width: 38rem;
   }
   .btnWidth{
     width: 100% !important;
@@ -483,7 +483,30 @@ border: 1.32184px solid #E6E8EB;
   .btnClass{
     justify-content: center !important;
   }
+  .saveCloseBtn{
+    width: 50% !important;
+  }
+  .btnPosition{
+    text-align: left !important;
+  }
+  .addMedeconeShowHide{
+    display: block !important;
+  }
 
+}
+.addMedicineMobBtn{
+  width: 100% !important;
+  margin-top: 10px;
+}
+.btnPosition{
+  text-align: center !important;
+}
+.saveCloseBtn{
+  margin-top: 10px;
+    width: 25% !important;
+}
+.addMedeconeShowHide{
+  display: none;
 }
 .prescriptionCard{
   height: 100% !important;
