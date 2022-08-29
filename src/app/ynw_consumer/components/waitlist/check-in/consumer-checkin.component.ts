@@ -921,7 +921,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             if (type === 'checkin') {
                 if (this.selectedService.isPrePayment && !this.selected_payment_mode && this.paymentDetails.amountRequiredNow > 0) {
-                    this.snackbarService.openSnackBar('Please select a payment mode', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please select consumerNoteAndFileSavea payment mode', { 'panelClass': 'snackbarerror' });
                     this.isClickedOnce = false;
                     return false;
                 }
@@ -1087,7 +1087,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         if (_this.selectedMessage.files.length > 0) {
                             _this.consumerNoteAndFileSave(parentUid).then(
                                 () => {
-                                    // this.paymentOperation();
+                                // this.paymentOperation();
                                     resolve(true);
                                 }
                             );
@@ -1265,6 +1265,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     paymentOperation() {
+        console.log("Payment Operation Details :",this.paymentDetails)
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
             this.payuPayment(this.selected_payment_mode);
         } else {
@@ -1558,6 +1559,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     consumerNoteAndFileSave(parentUid) {
+        console.log("Parent Id:",parentUid);
         const _this = this;
         return new Promise(function (resolve, reject) {
             const dataToSend: FormData = new FormData();
@@ -1598,13 +1600,41 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                 }
             )
-            _this.submitserviceOptionQuestionnaire(parentUid).then(
-                () => {
-                    resolve(true);
-                }
-            );
+            // _this.submitserviceOptionQuestionnaire(parentUid).then(
+            //     () => {
+            //         resolve(true);
+            //     }
+            // );
         });
     }
+
+    // consumerNoteAndFileSave(parentUid) {
+    //     const _this = this;
+    //     return new Promise(function (resolve, reject) {
+    //         const dataToSend: FormData = new FormData();
+    //         const captions = {};
+    //         let i = 0;
+    //         if (_this.selectedMessage) {
+    //             for (const pic of _this.selectedMessage.files) {
+    //                 dataToSend.append('attachments', pic, pic['name']);
+    //                 captions[i] = (_this.imgCaptions[i]) ? _this.imgCaptions[i] : '';
+    //                 i++;
+    //             }
+    //         }
+    //         const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+    //         dataToSend.append('captions', blobPropdata);
+
+    //         _this.sendWLAttachment(_this.account_id, parentUid, dataToSend).then(
+    //             () => {
+    //                 _this.submitQuestionnaire(parentUid).then(
+    //                     () => {
+    //                         resolve(true);
+    //                     }
+    //                 );
+    //             }
+    //         )
+    //     });
+    // }
     getAvailableTimeSlots(QStartTime, QEndTime, interval) {
         const _this = this;
         const allSlots = _this.jaldeeTimeService.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
