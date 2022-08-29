@@ -399,6 +399,7 @@ export class LeadsComponent implements OnInit {
   getLocationList() {
     const self = this;
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log(loggedUser)
     return new Promise<void>(function (resolve, reject) {
       self.selected_location = null;
       self.providerServices.getProviderLocations()
@@ -408,7 +409,7 @@ export class LeadsComponent implements OnInit {
             self.locations = [];
             for (const loc of locations) {
               if (loc.status === 'ACTIVE') {
-                if (loggedUser.accountType === 'BRANCH' || loggedUser.adminPrivilege) {
+                if (loggedUser.accountType === 'BRANCH' || loggedUser.adminPrivilege || loggedUser.userType === 3) {
                   const userObject = loggedUser.bussLocs.filter(id => parseInt(id) === loc.id);
                   if (userObject.length > 0) {
                     self.locations.push(loc);
