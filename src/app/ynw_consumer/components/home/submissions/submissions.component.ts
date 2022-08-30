@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { NavigationExtras, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
+import { ConsumerServices } from '../../../services/consumer-services.service';
 
 
 @Component({
@@ -18,10 +19,13 @@ export class SubmissionsComponent implements OnInit, OnChanges {
   completed_papers: any = [];
   cancelled_papers: any = [];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  history: any;
 
   constructor(
+    private consumer_services: ConsumerServices,
     private router: Router,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -35,11 +39,17 @@ export class SubmissionsComponent implements OnInit, OnChanges {
       this.completed_papers = this.orders.filter(p => p.orderStatus == "Completed");
       this.cancelled_papers = this.orders.filter(p => p.orderStatus == "Cancelled");
     }
+
   }
 
   ngOnInit(): void {
     this.initOrder();
     console.log('this.user_details', this.user_details)
+    this.consumer_services.getConsumerOrders().subscribe(
+      (data) => {
+        this.history = data;
+        console.log("this.history", this.history.filter(p => p.catalog.catalogType == "submission"))
+      });
   }
 
   viewPaper(accountid, uid, providerid) {
