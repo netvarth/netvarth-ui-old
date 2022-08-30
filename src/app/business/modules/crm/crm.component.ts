@@ -76,10 +76,13 @@ export class CRMComponent implements OnInit {
     {
       id: 15, type: 'Customer Report'
     },
+    
     {
       id: 16, type: 'Customer CRIF Status Report'
     },
-
+    {
+      id: 17, type: 'Customer Wise Enquiry'
+    },
   ]
   constructor(
     private providerServices: ProviderServices,
@@ -724,6 +727,16 @@ export class CRMComponent implements OnInit {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomer);
           }
           break;
+          case 'Customer Wise Enquiry':
+            const navigationExtrasToCustomerEnquiry: NavigationExtras = {
+              queryParams: {
+                report_type: 'customerWiseEnquiry'
+              }
+            }
+            if (navigationExtrasToCustomerEnquiry) {
+              this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomerEnquiry);
+            }
+            break;
         case 'Customer CRIF Status Report':
           const navigationExtrasToCustomerCrifStatus: NavigationExtras = {
             queryParams: {
@@ -831,6 +844,12 @@ export class CRMComponent implements OnInit {
             return imgSrc;
           }
           break;
+          case 'Customer Wise Enquiry':
+            imgSrc = './assets/images/crmImages/otherTemplate.png';
+            if (imgSrc) {
+              return imgSrc;
+            }
+            break;
         case 'Customer CRIF Status Report':
           imgSrc = './assets/images/crmImages/otherTemplate.png';
           if (imgSrc) {

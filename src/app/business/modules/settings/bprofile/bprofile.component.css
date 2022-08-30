@@ -252,7 +252,9 @@
 .fa-cloud-download {
     font-family: 'FontAwesome' !important;
 }
-
+.help-icon{
+    font-family: 'FontAwesome' !important;
+}
 
 .btn.btn-info {
     color: #fff;

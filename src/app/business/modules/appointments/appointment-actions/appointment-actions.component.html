@@ -56,9 +56,9 @@
                 <div *ngIf="!appt.provider" class="icon-text">Assign {{provider_label | capitalizeFirst}}</div>
             </div>
         </div>
-
+<!-- && (this.appt.schedule.provider.id === 0)  -->
         <div class="action-box pointer-cursor"
-            *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0)  && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId == 0"
+            *ngIf="!data.multiSelection && accountType=='BRANCH'  && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId == 0"
             (click)="assignteam()">
             <div class="action-box-sub">
                 <span class="team-icon-action"></span>

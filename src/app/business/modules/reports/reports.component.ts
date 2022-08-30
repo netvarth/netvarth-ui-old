@@ -50,6 +50,8 @@ export class ReportsComponent implements OnInit {
   dailyActivityReports = [];
   customer_report_criteria: any[];
   customerReports =[];
+  customer_wise_enquiry_criteria:any[];
+  customerWiseEnquiryReports=[];
   customer_crif_Status_criteria: any;
   customerCrifStatusReports = [];
   loginReports = [];
@@ -115,6 +117,7 @@ export class ReportsComponent implements OnInit {
     this.employee_activity_criteria = [];
     this.daily_activity_criteria = [];
     this.customer_report_criteria = [];
+    this.customer_wise_enquiry_criteria = [];
     this.customer_crif_Status_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
@@ -208,6 +211,10 @@ export class ReportsComponent implements OnInit {
           }
           case 'CUST_CRIF_STATUS': {
             this.customer_crif_Status_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'CUST_ENQUIRY': {
+            this.customer_wise_enquiry_criteria.push(this.criteria_list[i]);
             break;
           }
 
