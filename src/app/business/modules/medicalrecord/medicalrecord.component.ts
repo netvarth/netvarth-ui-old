@@ -135,6 +135,7 @@ export class MedicalrecordComponent implements OnInit {
   tempText: any;
   creteTypeMr: any;
   calledForm: void;
+  customerDetailsAge: any;
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -187,8 +188,10 @@ export class MedicalrecordComponent implements OnInit {
         this.getMedicalRecordUsingId(this.mrId);
       } else {
         if (this.bookingType === 'APPT') {
+          this.getPatientDetails(this.patientId);
           this.getAppointmentById(this.bookingId);
         } else if (this.bookingType === 'TOKEN') {
+          this.getPatientDetails(this.patientId);
           this.getWaitlistDetails(this.bookingId);
         } else if (this.bookingType === 'FOLLOWUP') {
           this.getPatientDetails(this.patientId);
@@ -301,6 +304,7 @@ export class MedicalrecordComponent implements OnInit {
           this.loading = false;
           this.customerDetails = response[0];
           console.log('customerDetailPatientDetails::',  this.customerDetails);
+          this.customerDetailsAge = this.customerDetails.age.year
           this.patientId = this.customerDetails.id;
           if (this.customerDetails.memberJaldeeId) {
             this.display_PatientId = this.customerDetails.memberJaldeeId;

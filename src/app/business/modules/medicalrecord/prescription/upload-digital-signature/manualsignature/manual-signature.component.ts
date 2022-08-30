@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, HostListener, Inject } from '@angular/core';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
-import { Router, NavigationExtras } from '@angular/router';
+import {  NavigationExtras, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SignaturePad } from 'angular2-signaturepad';
@@ -77,6 +77,7 @@ export class ManualSignatureComponent implements OnInit {
     private wordProcessor: WordProcessor
     // private medicalrecord_service: MedicalrecordService
   ) {
+    console.log('this.data',this.data)
     this.mrId = this.data.mrid;
     this.patientId = this.data.patientid;
     this.bookingType = this.data.bookingtype;
@@ -147,9 +148,10 @@ export class ManualSignatureComponent implements OnInit {
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
+        console.log('data',data)
         this.snackbarService.openSnackBar('Digital sign uploaded successfully');
-        this.uploadmanualsignatureRef.close();
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
+        this.uploadmanualsignatureRef.close(data);
+        this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP', 0, 'medicalrecord', this.mrId, 'prescription']);
       },
         error => {
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

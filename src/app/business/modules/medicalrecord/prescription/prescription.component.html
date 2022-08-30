@@ -264,13 +264,13 @@
                         <table class="table">
                           <thead>
                             <tr>
-                              <th>No</th>
-                              <th>Medicine</th>
-                              <th>Duration(days)</th>
-                              <th>Dosage</th>
-                              <th>Frequency</th>
-                              <th>Instructions</th>
-                              <th>Edit</th>
+                              <th data-title="No">No</th>
+                              <th data-title="Medicine">Medicine</th>
+                              <th data-title="Duration(days)">Duration(days)</th>
+                              <th data-title="Dosage">Dosage</th>
+                              <th  data-title="Frequency">Frequency</th>
+                              <th  data-title="Instructions"></th>
+                              <th data-title="Edit"></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -280,11 +280,13 @@
                               <td class="tdLeft pointer-cursor" data-title="Duration(days)" *ngIf="drug && drug.duration">{{drug.duration? drug.duration : ''}} </td>
                               <td class="tdLeft pointer-cursor" data-title="Dosage" *ngIf="drug && drug.dosage">{{drug.dosage? drug.dosage : ''}} </td>
                               <td class="tdLeft pointer-cursor" data-title="Frequency" *ngIf="drug && drug.frequency">{{drug.frequency? drug.frequency : ''}}</td>
-                              <td data-title="Frequency" *ngIf="drug && drug.instructions" class="Instructions tdLeft2 pointer-cursor" (click)="instructPopUp(drug)">
+                              <td data-title="Instructions" *ngIf="drug && drug.instructions" class="Instructions tdLeft2 pointer-cursor" (click)="instructPopUp(drug)"
+                              #tooltip="matTooltip" matTooltip="Instruction" [matTooltipPosition]="'below'">
                                 <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
                               </td>
-                              <td data-title="edit" *ngIf="drug" class="tdLeft2 pointer-cursor" (click)="updateForm(drug,'update','edit',i,mrId)">
-                                <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" />
+                              <td data-title="Edit" *ngIf="drug" class="tdLeft2 pointer-cursor" (click)="updateForm(drug,'update','edit',i,mrId)"
+                                #tooltip="matTooltip" matTooltip="Edit" [matTooltipPosition]="'below'">
+                                <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" />
                               </td>
                             </tr>
                           </tbody>
@@ -514,11 +516,11 @@
             <th>Duration(days)</th>
             <th>Dosage</th>
             <th>Frequency</th>
-            <th>Instructions</th>
+            <th></th>
             <th></th>
             <th></th>
             <!-- <th>Edit</th> -->
-            <th>Delete</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -528,20 +530,25 @@
             <td class="tdLeft" data-title="Duration(days)" *ngIf="drug && drug.duration">{{drug.duration? drug.duration : ''}} </td>
             <td  class="tdLeft"data-title="Dosage" *ngIf="drug && drug.dosage">{{drug.dosage? drug.dosage : ''}} </td>
             <td class="tdLeft" data-title="Frequency" *ngIf="drug && drug.frequency">{{drug.frequency? drug.frequency : ''}}</td>
-            <td *ngIf="drug"  class="Instructions tdLeft2 pointer-cursor" data-title="Instructions"  (click)="instructPopUp(drug)">
+            <td *ngIf="drug"  class="Instructions tdLeft2 pointer-cursor" data-title="Instructions"  (click)="instructPopUp(drug)"
+            #tooltip="matTooltip" matTooltip="Instruction" [matTooltipPosition]="'below'">
               <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
             </td>
-            <td  class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
+            <td  class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId)"
+            #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
               <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
             </td>
-            <td  *ngIf="drug"(click)="print('printableArea')" class="Share pointer-cursor tdLeft11" >
+            <td  *ngIf="drug"(click)="print('printableArea')" class="Share pointer-cursor tdLeft11" 
+            #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'">
               <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
             </td>
             <!-- <td data-title="edit" class="Share pointer-cursor tdLeft11" (click)="updateEditPrescription(drug)">
               <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" />
             </td> -->
-            <td *ngIf="drug" data-title="Delete"  class="Share pointer-cursor tdLeft11" (click)="deleteDrug(i,drug)">
-              <img class="removeIcon" src="./assets/images/ImgeFileIcon/removeCross.png" />
+            <td *ngIf="drug" data-title="Delete"  class="Share pointer-cursor tdLeft11" (click)="deleteDrug(i,drug)"
+            #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'">
+              <!-- <img class="removeIcon" src="./assets/images/ImgeFileIcon/removeCross.png" /> -->
+              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/delete.png" />
             </td>
           </tr>
         </tbody>
@@ -618,7 +625,7 @@
                       <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" />
                     </div>
                     <div (click)="deletePrescriptionFile(file,i)">
-                      <img class="removeIcon" src="./assets/images/ImgeFileIcon/removeCross.png" />
+                      <img class="fileView" src="/assets/images/medicalReportIcon/delete.png" />
                     </div>
                       <div>
                         <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')" (click)="printSecond(file)">

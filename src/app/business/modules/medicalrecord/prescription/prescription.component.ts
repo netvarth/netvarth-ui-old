@@ -289,11 +289,13 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       }
     });
     this.uploadsignRef.afterClosed().subscribe(() => {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-        this.ngOnInit();
-      }, 100);
+      // this.loading = true;
+      // setTimeout(() => {
+      //   this.loading = false;
+      //   this.ngOnInit();
+      //   this.getMrprescription(this.mrId);
+      // }, 100);
+      this.getMrprescription(this.mrId);
     }
     );
   }

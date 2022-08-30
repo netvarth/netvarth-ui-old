@@ -41,11 +41,25 @@
         <div class="formTop"  *ngIf="showthirdparty" style="margin-right: 5px;">
             <div class="leadTitle">
                 <div class="labelSize">Email</div>
+                <div class="astericColor">*</div>
             </div>
             <div>
               <div class="fieldPadding">
                 <input  type="text" class="form-control widthWebKit" id="thirdpartyemail" (keyup)="resetApiErrors()"
-                placeholder="Email *" [(ngModel)]="thirdpartyemail" [ngModelOptions]="{standalone: true}"
+                placeholder="Email" [(ngModel)]="thirdpartyemail" [ngModelOptions]="{standalone: true}"
+                autocomplete="off">
+              </div>
+            </div>
+          </div>
+          <div class="formTop"  *ngIf="showthirdparty" style="margin-right: 5px;">
+            <div class="leadTitle">
+                <div class="labelSize">Phone</div>
+                <div class="astericColor">*</div>
+            </div>
+            <div>
+              <div class="fieldPadding">
+                <input min="10" max="10"  type="number" class="form-control widthWebKit" id="thirdpartyphone" (keyup)="resetApiErrors()"
+                placeholder="Phone" [(ngModel)]="thirdpartyphone" [ngModelOptions]="{standalone: true}"
                 autocomplete="off">
               </div>
             </div>

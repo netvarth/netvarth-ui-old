@@ -28,8 +28,10 @@
               </div>
               <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
                 <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" /> -->
-                <div style="color: #797B80 !important" class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
-                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
+                <!-- {{customerDetails | json}} -->
+                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetailsAge ">{{customerDetailsAge}} years,</div>
+                <!-- <div style="color: #797B80 !important" class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div> -->
+                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender | capitalizeFirst}}</div>
               </div>
             </div>
             <div *ngIf="customerDetails && customerDetails.address">
@@ -411,8 +413,10 @@
               </div>
               <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
                 <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" /> -->
+                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetailsAge && (customerDetails && customerDetails.age && 
+                (customerDetails.age.year==='' || customerDetails.age.year===undefined))">{{customerDetailsAge}} years,</div>
                 <div style="color: #797B80 !important" class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
-                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender}}</div>
+                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender | capitalizeFirst}}</div>
               </div>
             </div>
             <div *ngIf="customerDetails && customerDetails.address">

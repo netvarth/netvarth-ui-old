@@ -87,6 +87,7 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       this.providerId = user.id;
     }
+    console.log('this.data',this.data)
     this.mrId = this.data.mrid;
     this.patientId = this.data.patientid;
     this.bookingType = this.data.bookingtype;
@@ -151,7 +152,8 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
       this.loading = true;
       setTimeout(() => {
         this.loading = false;
-        this.ngOnInit();
+        // this.ngOnInit();
+        this.getDigitalSign();
       }, 100);
     }
     );
@@ -170,11 +172,13 @@ export class UploadDigitalSignatureComponent implements OnInit, AfterViewInit {
         providerid: this.providerId
       }
     });
-    this.uploadmanualsignatureRef.afterClosed().subscribe(() => {
+    this.uploadmanualsignatureRef.afterClosed().subscribe((res) => {
       this.loading = true;
+      console.log('resuploadmanualsignatureRef',res)
       setTimeout(() => {
         this.loading = false;
         this.ngOnInit();
+        // this.getDigitalSign();
       }, 100);
     }
     );

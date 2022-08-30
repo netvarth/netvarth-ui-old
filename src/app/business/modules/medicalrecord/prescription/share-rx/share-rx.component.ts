@@ -222,21 +222,23 @@ export class ShareRxComponent implements OnInit {
     const vwofrx = document.getElementById('sharerxview');
     console.log('vwofrx',vwofrx)
     console.log('vwofrx',vwofrx.innerHTML)
-    // let rxview = '';
-    // rxview += '<html style="width: 210mm; height: 297mm; font-size: 1rem; font-family: \'Poppins\', sans-serif !important;"><head><title></title>';
-    // rxview += '</head><body >';
-    // rxview += vwofrx;
-    //   rxview +=('<html><head><title></title>');
-    //   rxview +=('</head><body >');
-    // rxview += '</body></html>';
-    // console.log('rxview',rxview)
+    console.log('this.thirdpartyemail',this.thirdpartyemail);
+    console.log('this.sharewith',this.sharewith)
     if (this.sharewith !== 0) {
       // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
       if (this.thirdpartyemail === '') {
         this.api_error = 'Please enter  email';
+        this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
         this.disable = false;
         this.sharebtnloading = false;
-        return;
+        return false;
+      }
+      if(this.thirdpartyphone === ''){
+        this.api_error = 'Please enter  phone number';
+        this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
+        this.disable = false;
+        this.sharebtnloading = false;
+        return false;
       }
       if (this.thirdpartyphone !== '') {
         const curphone = this.thirdpartyphone;
@@ -394,10 +396,12 @@ export class ShareRxComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data) => {
+          console.log('datagetMRprescription',data)
           this.mrPrescriptionDetails = data['prescriptionsList'];
           if (Object.keys(data).length !== 0 && data.constructor === Object) {
             if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
               this.signature_loading = false;
+              this.getDigitalSign();
             } else {
               this.drugList = data['prescriptionsList'];
               this.note = data['notes'];
@@ -554,8 +558,9 @@ export class ShareRxComponent implements OnInit {
         providerid:this.provider_user_Id
       }
     });
-    uploadmanualsignatureRef.afterClosed().subscribe(() => {
+    uploadmanualsignatureRef.afterClosed().subscribe((res) => {
       this.loading = true;
+      console.log(res)
       setTimeout(() => {
         this.loading = false;
         this.getMrprescription();
@@ -701,14 +706,6 @@ export class ShareRxComponent implements OnInit {
     
   }
   shareBtn(data){
-    // console.log('data',data)
-    // console.log('sharewith',this.sharewith);
-    // console.log(this.amForm.controls.message.value);
-    // console.log('thirdpartyemail',this.thirdpartyemail);
-    // console.log('this.sms',this.sms);
-    // console.log('email',this.email);
-    // console.log('telegram',this.telegram)
-    // console.log('sharewith',this.sharewith);
     let shareInfo={
       'shareWith':this.sharewith,
       'message':this.amForm.controls.message.value,
@@ -719,15 +716,17 @@ export class ShareRxComponent implements OnInit {
       'mrId':this.mrId
     }
     this.onSubmit()
-    this.dialogRef.close(shareInfo);
-    // const success= 'Successfully shared thank you'
-    // this.snackbarService.openSnackBar(success);
+    if(this.thirdpartyemail==='' || this.thirdpartyphone===''){
+      this.dialogRef.disableClose=false;
+    }
+    else{
+      this.dialogRef.close(shareInfo);
+    }
   }
   messageBoxhandle(data){
     console.log(data)
     if(data){}
     else{
-      // alert('not')
       const msg = this.fed_service.isFieldValid(this.amForm,'message');
       console.log(msg);
       const error='Please enter a message'

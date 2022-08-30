@@ -16,6 +16,8 @@ import {  MatTableModule } from "@angular/material/table";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 const routes: Routes = [
     { path: '', component: PrescriptionComponent}
 ]
@@ -33,6 +35,7 @@ const routes: Routes = [
         ReactiveFormsModule,
         CapitalizeFirstPipeModule,
         MatTableModule,
+        MatTooltipModule,
         [RouterModule.forChild(routes)],
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],

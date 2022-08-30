@@ -19,7 +19,7 @@
    <div>
     <div class="overView">Over view of created Prescriptions</div>
    </div>
-   <div class="createTxtIcon">
+   <div class="createTxtIcon" *ngIf="medecineInstruction">
     <!-- <div class="cardCustom">
       <div>
         <div class="medicineNameIcon" *ngIf="medecineName">
@@ -53,6 +53,9 @@
         {{medecineInstruction}}
       </dIv>
     </div>
+   </div>
+   <div *ngIf="!medecineInstruction" class="createTxtIcon">
+    <div class="astericColor">Sorry you have no instruction of your medecine</div>
    </div>
    <div class="closeClass">
     <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold confirmBtn">Close</button>
