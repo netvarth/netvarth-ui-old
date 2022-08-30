@@ -496,8 +496,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     goBack(type?) {
-      
             if (type) {
+                console.log(this.bookStep);
                 if (this.bookStep === 1) {
                     let source = this.lStorageService.getitemfromLocalStorage('source');
                     if (source) {
@@ -508,7 +508,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.location.back();
                     }              
                 } else {
-                    this.goToStep('prev');
+                    if (this.bookStep === 2 && !this.serviceOptionApptt){
+                        let source = this.lStorageService.getitemfromLocalStorage('source');
+                        alert(source);
+                        if (source) {
+                            window.location.href = source;
+                            this.lStorageService.removeitemfromLocalStorage('reqFrom');
+                            this.lStorageService.removeitemfromLocalStorage('source');
+                        } else {
+                            this.location.back();
+                        }   
+                    } else {
+                        this.goToStep('prev');
+                    }
+                   
                 }
             }
             if (this.action !== 'addmember') {
@@ -526,7 +539,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 } else if (this.action === 'preInfo') {
                     this.action = '';
                 }
-            }, 500);
+            }, 500);            
         }
        
     
