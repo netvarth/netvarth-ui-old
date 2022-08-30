@@ -263,7 +263,8 @@
                     </div>
                   </td>
                   <td data-title="Status" width="400" class="td4 text-primary" *ngIf="paper && paper.orderStatus">
-                    <div *ngIf=" paper && paper.orderStatus">{{paper.orderStatus}}</div>
+                    <div *ngIf=" paper && paper.orderStatus">
+                      {{paper.orderStatus == 'Order Confirmed' ? 'Paper Submitted' : paper.orderStatus}}</div>
                   </td>
                 </tr>
               </ng-container>

@@ -1,52 +1,52 @@
 <table class="table ">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Date</th>
-            <th>Assigned</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <ng-container *ngFor="let paper of orders">
-            <tr class="pointer-cursor" (click)="gotoDetails(paper)">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Submitted by</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let paper of orders">
+      <tr class="pointer-cursor" (click)="gotoDetails(paper)">
 
-                <td data-title="Name" width="400" class="td1"
-                    *ngIf="paper && paper.consumer && paper.consumer.firstName">
-                    <div class="imgClass">
-                        <div> {{paper.consumer.firstName}}</div>
-                    </div>
-                </td>
-                <td data-title="Date" width="400" class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
-                    <div class="imgClass">
-                        <!-- <div>
+        <td data-title="Name" width="400" class="td1" *ngIf="paper && paper.consumer && paper.consumer.firstName">
+          <div class="imgClass">
+            <div> {{paper.consumer.firstName}}</div>
+          </div>
+        </td>
+        <td data-title="Date" width="400" class="td2" *ngIf="paper && paper.lastStatusUpdatedDate">
+          <div class="imgClass">
+            <!-- <div>
                                 <img class="img mr-2" src="/assets/images/authordemy/date.png" />
                               </div> -->
-                        <div>{{paper.lastStatusUpdatedDate }}</div>
-                    </div>
+            <div>{{paper.lastStatusUpdatedDate }}</div>
+          </div>
 
-                </td>
-                <td data-title="Assigned" width="400" class="td3" *ngIf="paper && paper.orderFor.firstName">
-                    <div class="imgClass">
-                        <!-- <div>
+        </td>
+        <td data-title="Assigned" width="400" class="td3" *ngIf="paper && paper.orderFor.firstName">
+          <div class="imgClass">
+            <!-- <div>
                                 <img class="img mr-2" src="/assets/images/avatar5.png" width="20" height="20"/>
                               </div> -->
-                        <div *ngIf="paper.orderFor.firstName || paper.orderFor.lastName">
-                            {{paper.orderFor.firstName}} {{paper.orderFor.lastName}}
-                        </div>
-                    </div>
-                </td>
-                <td data-title="Status" width="400" class="td4 text-primary" *ngIf="paper && paper.orderStatus">
-                    <div *ngIf=" paper && paper.orderStatus">{{paper.orderStatus}}</div>
-                </td>
-                <td data-title="Status">
-                    <span class="pull-right btn btn-primary" (click)="stopprop($event);showActionPopup(paper, 1)">
-                        Actions</span>
-                </td>
-            </tr>
-        </ng-container>
-    </tbody>
-    <ng-container *ngIf="orders && orders.length===0" class="text-danger">No Papers Found
+            <div *ngIf="paper.orderFor.firstName || paper.orderFor.lastName">
+              {{paper.orderFor.firstName}} {{paper.orderFor.lastName}}
+            </div>
+          </div>
+        </td>
+        <td data-title="Status" width="400" class="td4 text-primary" *ngIf="paper && paper.orderStatus">
+          <div *ngIf=" paper && paper.orderStatus">
+            {{paper.orderStatus == 'Order Confirmed' ? 'Paper Submitted' : paper.orderStatus}}</div>
+        </td>
+        <td data-title="Status">
+          <span class="pull-right btn btn-primary" (click)="stopprop($event);showActionPopup(paper, 1)">
+            Actions</span>
+        </td>
+      </tr>
     </ng-container>
+  </tbody>
+  <ng-container *ngIf="orders && orders.length===0" class="text-danger">No Papers Found
+  </ng-container>
 </table>
