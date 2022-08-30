@@ -359,24 +359,28 @@ export class MedicalrecordComponent implements OnInit {
               this.showHidepreviousDetails = true;
             }
             else {
-              // alert('nan')
-              // console.log('numelse',num);
-              // console.log('text1:',text);
-              // console.log('creteTypeMr', this.creteTypeMr)
               if( this.creteTypeMr.prescription==='prescription'){
                 this.showHidepreviousDetails = false;
               this.showHideAddPrescription=true;
+              this.prescriptionOuter=false;
+              this.clinicalOuter=false
               }
 
               else if(this.creteTypeMr.clinicalnotes==='clinicalnotes'){
                 this.showHidepreviousDetails = false;
                 this.showHideClinicalNotes= true;
+                this.prescriptionOuter=false;
+                this.clinicalOuter=false
               }
               else if(this.creteTypeMr.calledfrom==='appt'){
                  this.showHidepreviousDetails = true;
+                //  this.prescriptionOuter===false;
+                //  this.clinicalOuter===false
               }
               else if(this.creteTypeMr.calledfrom==='waitlist'){
                 this.showHidepreviousDetails = true;
+                // this.prescriptionOuter===false;
+                // this.clinicalOuter===false
               }
               else{
                 this.showHidepreviousDetails = true;

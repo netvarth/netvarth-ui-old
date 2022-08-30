@@ -445,6 +445,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   printSecond(url){
     console.log(url);
     if(url.type==='.pdf'){
+      // window.open(url.url).print()
       // this.print()
       // this.printpDF(url.url,url.originalName)
     }

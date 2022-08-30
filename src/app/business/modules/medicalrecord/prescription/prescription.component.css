@@ -362,7 +362,8 @@ cursor: pointer;
   display: inline-block;
   text-align:center;
   padding-top: 100px;
-  color: #E6E8EB;
+  /* color: #E6E8EB; */
+  color: slategrey;
 }
 
 .spaanOr:before {

@@ -388,7 +388,8 @@ border-radius: 7.35323px;
   display: inline-block;
   text-align:center;
   padding-top: 100px;
-  color: #E6E8EB;
+  /* color: #E6E8EB; */
+  color: slategrey;
 }
 
 .spaanOr:before {
@@ -464,14 +465,16 @@ border: 1.32184px solid #E6E8EB;
     background: #F9F9F9 !important;
     color: #E6E8EB;
 }
-@media(max-width: 800px){
-  .prescriptionNotes{
+@media(max-width: 800px) {
+  .prescriptionNotes {
     flex-wrap: wrap;
   }
-  .spaanOr{
+
+  .spaanOr {
     display: none;
   }
-  .mobileDevice{
+
+  .mobileDevice {
     display: block;
     width: 100%;
     height: 13px;
@@ -481,11 +484,19 @@ border: 1.32184px solid #E6E8EB;
     margin-top: 5px;
     background: #F9F9F9 !important;
   }
-  .flexClass1{
+
+  .flexClass1 {
     flex-wrap: wrap;
     gap: 10px;
+    /* flex-wrap: nowrap !important; */
+    align-items: flex-start !important;
   }
-  .infoDetails{
+  .date{
+    display: block !important;
+    margin-left: 5rem;
+  }
+
+  .infoDetails {
     display: flex;
     justify-content: space-between;
     align-items: end;
@@ -493,33 +504,61 @@ border: 1.32184px solid #E6E8EB;
     gap: 15px;
     flex-wrap: wrap;
   }
-  .nameClr{
+
+  .nameClr {
     font-size: 13px;
     font-weight: 500;
     color: #8E9295;
   }
-  .imageSize{
-    height:30px;width:30px
+
+  .imageSize {
+    height: 30px;
+    width: 30px
   }
-  .mobDevice{
+
+  .mobDevice {
     display: block !important;
   }
-  .webDevice{
+
+  .webDevice {
     display: none !important;
   }
-  .elementTextClr{
+
+  .elementTextClr {
     color: #06152B;
     font-size: 12px;
     font-weight: 600;
   }
-  .dateCreate{
+
+  .dateCreate {
     justify-content: flex-start !important;
     width: 100% !important;
   }
-  .clinicalOuter1{
+
+  .clinicalOuter1 {
     height: 7rem !important;
   }
 
+  .showHideClass{
+    display: block !important;
+    background: #EBEFF2 !important;
+    border-radius: 8.66431px;
+  }
+  .showHideClassDesktop {
+    display: none !important;
+  }
+  .date{
+    margin-left: 5rem !important;
+  }
+
+}
+.showHideClass{
+  display: none ;
+}
+.showHideClassDesktop{
+  display: block ;
+  background: #EBEFF2 !important;
+    border-radius: 8.66431px;
 }
 .shadowmb{
   margin-bottom: 15px;
@@ -623,8 +662,6 @@ border: 1.32184px solid #E6E8EB;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* flex-wrap: wrap;
-  gap: 10px; */
 }
 .recordInfo{
   /* border: 1px solid red; */

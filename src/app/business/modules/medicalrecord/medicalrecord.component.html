@@ -49,15 +49,16 @@
               <div *ngIf="display_PatientId" class="nameClrOther">{{display_PatientId}}</div>
             </div>
           </div>
-          <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
-            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) ">Phone</div>
+          <div *ngIf="customerDetails && (customerDetails.phoneNo) " class="mgTop">
+            <!-- {{customerDetails.phoneNo | json}} -->
+            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) && (customerDetails.phoneNo !== ' ')">Phone</div>
             <div class="infoDetails">
               <!-- <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
               </div> -->
               <div  class="infoDetails" style="gap:5px !important">
-                <div *ngIf="customerDetails" class="nameClrOther">
-                  {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
+                <div *ngIf="customerDetails && customerDetails.phoneNo !==' '" class="nameClrOther">
+                  {{customerDetails.countryCode ?customerDetails.countryCode : ''}} 
                 </div>
                 <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
               </div>
@@ -102,7 +103,7 @@
             <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
           </div>
           <div class="nameClrOther">
-            Create Prescription
+            Create Prescriptionn
           </div>
         </div>
          <!---prescriptiojn end-->
@@ -207,34 +208,10 @@
     </div>
     <!---create section btn start-->
       <div class="col-xs-12 col-sm-12 mgn-up-10 card" *ngIf="showHideActivityTYpe && mrId !== 0">
-        <div class="shadow flexClass1">
-          <!-- <div class="recordInfo">
-            <div class="mrNumber1" *ngIf="mrId !== 0">
-              <div>Medical Records</div>
-              <div *ngIf="mrId !== 0">1</div>
-            </div>
-            <div class="mrNumber2" *ngIf="mrId !== 0">
-              <div>Medical Record ID</div>
-              <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
-            </div>
-          </div>
-          <div class="dateCreate" *ngIf="mrId !== 0">
-            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/calendar.png" />
-            <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
-          </div>
-          <div class="dateCreate" *ngIf="mrId !== 0">
-            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/serviceIcon.png" />
-            <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
-          </div>
-          <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)" >
-            <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/doctorIcon.png" />
-            <div *ngIf="doctorBName" class="dateClr">{{doctorBName | capitalizeFirst}}</div>
-            <div *ngIf="!doctorBName && doctorName" class="dateClr">{{doctorName | capitalizeFirst}}</div>
-          </div> -->
+        <!-- <div class="shadow flexClass1">
           <div class="recordInfo">
             <div class="mrNumber1">
               <div>Medical Records</div>
-              <!-- {{activityLogs | json}} -->
               <div *ngIf="mrId !== 0 || mRListUsingId ">{{mRListUsingId}}</div>
             </div>
             <div class="mrNumber2">
@@ -254,6 +231,62 @@
             <div class="mrNumber1">Doctor</div>
             <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
             <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
+          </div>
+        </div> -->
+        <div class="col-xs-12 col-sm-12 mgn-up-10 card newCard">
+          <div class="showHideClassDesktop">
+            <div class="shadow flexClass1 ">
+              <div class="recordInfo">
+                <div class="mrNumber1">
+                  <div>Medical Records</div>
+                  <div *ngIf="mrId !== 0 && mRListUsingId !==0">{{mRListUsingId}}</div>
+                </div>
+                <div class="mrNumber2">
+                  <div>Medical Record ID</div>
+                  <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+                </div>
+              </div>
+              <div class="dateCreate">
+                <div class="mrNumber1">Date</div>
+                <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
+              </div>
+              <div class="dateCreate">
+                <div class="mrNumber1">Service</div>
+                <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
+              </div>
+              <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
+                <div class="mrNumber1">Doctor</div>
+                <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
+                <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
+              </div>
+            </div>
+          </div>
+         
+          <div class="showHideClass">
+            <div class="shadow flexClass1 ">
+              <div class="recordInfo flexClass1">
+                <div class="mrNumber2" style="display:block !important">
+                  <div>Medical Record ID</div>
+                  <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+                </div>
+                <div  class="mrNumber1 date" style="display:block !important">
+                  <div class="mrNumber1">Date</div>
+                  <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
+                </div>
+              </div>
+              
+              <div  class="recordInfo flexClass1 no-padding"  >
+                <div class="dateCreate">
+                  <div class="mrNumber1">Service</div>
+                  <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
+                </div>
+                <div class="dateCreate date" *ngIf="doctorBName || (!doctorBName && doctorName)">
+                  <div class="mrNumber1">Doctor</div>
+                  <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
+                  <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -435,14 +468,14 @@
             </div>
           </div>
           <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
-            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) ">Phone</div>
+            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) && customerDetails.phoneNo !==' '">Phone</div>
             <div class="infoDetails">
               <!-- <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
                 <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
               </div> -->
               <div  class="infoDetails" style="gap:5px !important">
-                <div *ngIf="customerDetails" class="nameClrOther">
-                  {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
+                <div *ngIf="customerDetails&& customerDetails.phoneNo !==' '" class="nameClrOther">
+                  {{customerDetails.countryCode ?customerDetails.countryCode : ''}} 
                 </div>
                 <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
               </div>
@@ -485,30 +518,58 @@
     </div>
 
       <div class="col-xs-12 col-sm-12 mgn-up-10 card newCard">
-        <div class="shadow flexClass1">
-          <div class="recordInfo">
-            <div class="mrNumber1">
-              <div>Medical Records</div>
-              <!-- {{activityLogs | json}} -->
-              <div *ngIf="mrId !== 0 && mRListUsingId !==0">{{mRListUsingId}}</div>
+        <div class="showHideClassDesktop">
+          <div class="shadow flexClass1 ">
+            <div class="recordInfo">
+              <div class="mrNumber1">
+                <div>Medical Records</div>
+                <div *ngIf="mrId !== 0 && mRListUsingId !==0">{{mRListUsingId}}</div>
+              </div>
+              <div class="mrNumber2">
+                <div>Medical Record ID</div>
+                <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+              </div>
             </div>
-            <div class="mrNumber2">
-              <div>Medical Record ID</div>
-              <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+            <div class="dateCreate ">
+              <div class="mrNumber1">Date</div>
+              <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
+            </div>
+            <div class="dateCreate">
+              <div class="mrNumber1">Service</div>
+              <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
+            </div>
+            <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
+              <div class="mrNumber1">Doctor</div>
+              <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
+              <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
             </div>
           </div>
-          <div class="dateCreate">
-            <div class="mrNumber1">Date</div>
-            <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
-          </div>
-          <div class="dateCreate">
-            <div class="mrNumber1">Service</div>
-            <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
-          </div>
-          <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
-            <div class="mrNumber1">Doctor</div>
-            <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
-            <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
+        </div>
+       
+        <div class="showHideClass">
+          <div class="shadow flexClass1 ">
+            <div class="recordInfo flexClass1">
+              <div class="mrNumber2" style="display:block !important">
+                <div>Medical Record ID</div>
+                <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+              </div>
+              <div  class="mrNumber1 date" style="display:block !important">
+                <div class="mrNumber1">Date</div>
+                <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
+              </div>
+            </div>
+            
+            <div  class="recordInfo flexClass1 no-padding"  >
+              <div class="dateCreate">
+                <div class="mrNumber1">Service</div>
+                <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
+              </div>
+              <div class="dateCreate date" *ngIf="doctorBName || (!doctorBName && doctorName)">
+                <div class="mrNumber1">Doctor</div>
+                <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
+                <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
