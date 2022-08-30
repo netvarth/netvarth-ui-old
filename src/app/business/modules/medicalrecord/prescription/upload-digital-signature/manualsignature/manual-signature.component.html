@@ -2,7 +2,8 @@
   <div >
     <div class="d-flex justify-content-between">
       <div class="heading font-weight-bold">{{heading}}</div>
-      <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon">
+      <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon"
+      #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">
         <mat-icon>clear</mat-icon>
     </div>
     </div>

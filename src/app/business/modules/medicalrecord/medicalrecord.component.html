@@ -595,7 +595,7 @@
           </div>
         </ng-container>
           <ng-container *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
-            <app-clinicalnotes [medicalInfo]="medicalInfo" *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0"></app-clinicalnotes>
+            <app-clinicalnotes  [tempClinicalNOtes]="tempClinicalNOtes" [medicalInfo]="medicalInfo" *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0"></app-clinicalnotes>
         </ng-container>
         </div>
       </div>
@@ -624,7 +624,7 @@
           </ng-container>
           <div *ngIf="tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false" class="clearfix" ></div>
           <ng-container *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" >
-            <app-prescription [tempPrescription]="tempPrescription" [viewVisitDetails]="viewVisitDetails"  [showHideActivityTYpe]="showHideActivityTYpe" *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" ></app-prescription>
+            <app-prescription [tempPrescription]="tempPrescription" [viewVisitDetails]="false"  [showHideActivityTYpe]="showHideActivityTYpe" *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" ></app-prescription>
           </ng-container>
           
         </div>

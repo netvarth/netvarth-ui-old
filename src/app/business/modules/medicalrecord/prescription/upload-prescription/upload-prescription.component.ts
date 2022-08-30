@@ -180,6 +180,7 @@ export class UploadPrescriptionComponent implements OnInit {
                 description: ''
               });
             this.image_list_popup.push(imgobj);
+            this.heading='Selected Prescription file'
           };
           reader.readAsDataURL(file);
           this.showSave = true;
@@ -300,6 +301,7 @@ export class UploadPrescriptionComponent implements OnInit {
           this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
             .subscribe((data) => {
               this.selectedMessage.files.splice(index, 1);
+              this.heading='Create Prescription';
             },
               error => {
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -307,6 +309,7 @@ export class UploadPrescriptionComponent implements OnInit {
         } else {
           this.selectedMessage.files.splice(index, 1);
           this.selectedMessage.base64.splice(index, 1);
+          this.heading='Create Prescription';
         }
       }
     });

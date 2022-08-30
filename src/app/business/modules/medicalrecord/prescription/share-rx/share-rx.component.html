@@ -6,7 +6,8 @@
             <div class="createTxt">Share Prescription</div>
             <div class="shareTxt">Share Your Medical   Prescription to others</div>
         </div>
-        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon">
+        <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon"
+        #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">
             <mat-icon>clear</mat-icon>
         </div>
     </div>

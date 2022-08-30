@@ -66,7 +66,7 @@
     font-size: 13px;
     color: #06152B;
   }
-  @media(max-width: 600px){
+  @media(max-width: 800px){
     .mobViewTable{
         display: grid !important;
     }
@@ -74,5 +74,17 @@
         display: flex;
         width: 50% !important;
         align-items: center;
+        cursor: pointer;
+    }
+    table tbody tr {
+      background: transparent !important;
+    border: none !important;
+    }
+    .table-outer table tbody tr td{
+      font-size: .875rem;
+    vertical-align: top;
+    min-height: 45px;
+    background: #fff !important;
+    margin-bottom: 5px !important;
     }
   }

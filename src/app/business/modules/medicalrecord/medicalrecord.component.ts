@@ -168,6 +168,7 @@ export class MedicalrecordComponent implements OnInit {
     });
   }
   ngOnInit() {
+    console.log('tempClinicalNOtes::',this.tempClinicalNOtes)
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.provider = user.userName
@@ -1130,6 +1131,9 @@ export class MedicalrecordComponent implements OnInit {
     });
   }
   addClinical(data,text){
+    this.tempClinicalNOtes=true;
+  }
+  addClinical1(){
     this.tempClinicalNOtes=true;
   }
   addPrescription(data,text){

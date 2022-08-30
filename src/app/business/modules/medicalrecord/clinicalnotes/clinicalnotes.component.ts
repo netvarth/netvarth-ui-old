@@ -63,6 +63,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   bookingId: any;
   bookingType: any;
   api_loading:boolean;
+  @Input() tempClinicalNOtes;
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
@@ -410,7 +411,9 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       // console.log(' this.bookingType', this.bookingType);
       // console.log(' this.bookingId', this.bookingId);
       // console.log('mrId',this.mrId);
-
+      // this.tempClinicalNOtes1
+      // this.tempClinicalNOtes1.emit()
+      // this.reloadComponent()
       this.location.back();
       // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
     }

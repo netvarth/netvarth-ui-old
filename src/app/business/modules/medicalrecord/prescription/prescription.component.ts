@@ -157,6 +157,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   tempIndex: any;
   afterEdit: string='';
   @Input() tempPrescription;
+  bCreatePresCription:boolean=false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -334,11 +335,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       }
     });
     this.uploadprescriptionRef.afterClosed().subscribe((res) => {
-      // this.prescList = false;
-      // this.ngOnInit();
       console.log('res',res)
       this.enableFormControl()
-      // alert('hhh')
       if(res===true){
         this.uploadprescriptionRef.close();
         this.enableFormControl()
@@ -440,14 +438,52 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   //   win.document.write('<img src="' + url.url + '" onload="window.print();window.close()" />');
   //   win.focus();
   // }
-  printpDF(url,fileName){
+  printPdf(url){
+    // let caption:any=url.caption;
+    let date:any=url.date;
+    let originalName:any=url.originalName;
+    let prefix:any=url.prefix;
+    const params = [
+      'height=' + screen.height,
+      'width=' + screen.width,
+      'fullscreen=yes'
+    ].join(',');
+    const printWindow = window.open('', '', params);
+    let checkin_html = '';
+    checkin_html +='<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
+    checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;background: rgba(29, 161, 146, 0.11);position:absolute;z-index:99999">';
+    // checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3;">caption</td>';
+    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Date</td>';
+    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">File Name</td>';
+    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Prefix</td>';
+    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">File Type</td>';
+    checkin_html += '</thead>';
+      checkin_html += '<tr style="line-height:20px;padding:10px;border-bottom: 1.02503px solid #E7E3E3">';
+      // checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + caption+ '</td>';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + date+'</td>';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + originalName + '</td>';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + prefix+ '</td>';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + '<img style="height:20px;width:20px;" src="/assets/images/ImgeFileIcon/pdf.png" />'+ '</td>';
+    checkin_html += '</table>';
+    checkin_html += '<div style="margin:10px">';
+    checkin_html += '</div>';
+    checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: absolute;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
+    printWindow.document.write('<html><head><title></title>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write(checkin_html);
+    printWindow.document.write('</body></html>');
+    printWindow.moveTo(0, 0);
+    printWindow.print();
+    printWindow.document.close();
+    setTimeout(() => {
+      printWindow.close();
+    }, 500);
+
   }
   printSecond(url){
     console.log(url);
     if(url.type==='.pdf'){
-      // window.open(url.url).print()
-      // this.print()
-      // this.printpDF(url.url,url.originalName)
+      this.printPdf(url)
     }
     const params = [
       'height=' + screen.height,
@@ -504,21 +540,20 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               console.log('this.drugList:',this.drugList)
               console.log(this.tempIndex)
               if(this.tempIndex >=0){
-                  // delete data['prescriptionsList'];
                   this.drugList.splice(this.tempIndex, 1);
               }
               console.log('afterEdit::',this.afterEdit)
-              // if(this.afterEdit==='afterUpdate'){
-              //   this.reloadComponent()
-              // }
               if (this.afterEdit === 'afterUpdate') {
                 const qparams = { 'prescription': 'prescription' };
                 const navigationExtras: NavigationExtras = {
                   queryParams: qparams
                 };
                 console.log('navigationExtras', navigationExtras);
-                // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription'], navigationExtras);
-                // this.saveClose()
+              }
+              else {
+                this.drugList = data['prescriptionsList'];
+              console.log('this.drugList:',this.drugList);
+              this.bCreatePresCription= true;
               }
               
               // this.prescList = false;

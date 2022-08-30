@@ -11,6 +11,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatButtonModule } from "@angular/material/button";
 import { RouterModule, Routes } from "@angular/router";
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
+import {MatTooltipModule} from '@angular/material/tooltip';
 const routes: Routes = [
     { path: '', component: UploadPrescriptionComponent}
 ]
@@ -25,6 +26,7 @@ const routes: Routes = [
         ShareRxModule,
         ConfirmBoxModule,
         CapitalizeFirstPipeModule,
+        MatTooltipModule,
         [RouterModule.forChild(routes)],
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     ],

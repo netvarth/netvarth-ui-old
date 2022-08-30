@@ -12,7 +12,8 @@
   <div>
    <div class="createTxtIcon">
     <div class="createTxt">Created Prescription</div>
-    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon">
+    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon"
+    #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">
       <mat-icon>clear</mat-icon>
     </div>
    </div>

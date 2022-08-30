@@ -14,6 +14,8 @@ import { MatOptionModule } from "@angular/material/core";
 import { AddProviderAddonsModule } from "../../../add-provider-addons/add-provider-addons.module";
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
+import {MatTooltipModule} from '@angular/material/tooltip';
+
 
 
 
@@ -33,7 +35,8 @@ import { MatMenuModule } from "@angular/material/menu";
         CapitalizeFirstPipeModule,
         LoadingSpinnerModule,
         MatIconModule,
-        MatMenuModule
+        MatMenuModule,
+        MatTooltipModule
     ],
     exports: [ShareRxComponent],
     declarations: [ShareRxComponent]

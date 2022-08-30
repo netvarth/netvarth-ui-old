@@ -435,9 +435,11 @@ border: 1.32184px solid #E6E8EB;
 }
 .mobileOr{
   font-size: 12px;
-    padding: 0 10px;
-    background: #F9F9F9 !important;
-    color: #E6E8EB;
+  padding: 0 10px;
+  background: #F9F9F9 !important;
+  color: slategrey;
+  border: 1px solid #E6E8EB;
+  border-radius: 20%;
 }
 @media(max-width: 800px){
   .prescriptionNotes{
@@ -485,7 +487,7 @@ border: 1.32184px solid #E6E8EB;
     justify-content: center !important;
   }
   .saveCloseBtn{
-    width: 50% !important;
+    /* width: 50% !important; */
   }
   .btnPosition{
     text-align: left !important;
@@ -504,7 +506,7 @@ border: 1.32184px solid #E6E8EB;
 }
 .saveCloseBtn{
   margin-top: 10px;
-    width: 25% !important;
+    /* width: 25% !important; */
 }
 .addMedeconeShowHide{
   display: none;
