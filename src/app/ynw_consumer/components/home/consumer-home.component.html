@@ -12,7 +12,7 @@
       <div class="content consumer-dash" *ngIf="!api_loading">
         <div class="c_card card c-checkins" *ngIf="homeView!=='paper_submission'">
           <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-            <div class="col-sm-8 col-md-8 col-lg-8 col-xs-12">
+            <div class="" [ngClass]="!customLink?'col-sm-8 col-md-8 col-lg-8 col-xs-12':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
               <h1 class="ng-tns-c16-8 txt-align hello-msg" *ngIf="usr_details">
                 <span class="ng-tns-c16-8 greeting">
                   Hello {{usr_details.userName}} !
@@ -25,8 +25,8 @@
               </h1>
             </div>
             <div class="col-sm-4 col-md-4 col-lg-4 col-xs-4 bg-visible fl-right tele_button"
-              *ngIf="showTeleBt && !fromApp">
-              <button class="mgn-up-20 find-sp-btn telebt" mat-raised-button (click)="redirectto('profile')"><i
+              *ngIf="showTeleBt && !fromApp && !customLink">
+              <button class="mgn-up-20 find-sp-btn telebt" mat-raised-button (click)="redirectto('profile')" ><i
                   class="fa fa-telegram tbt" aria-hidden="true"></i>
                 &nbsp; {{'Telegram_msg' | translate}}</button>
             </div>
@@ -661,7 +661,7 @@
     </div>
   </div>
 </section>
-<div id="popup" #popupforApp class="modal disply">
+<div id="popup" #popupforApp class="modal disply" *ngIf="customLink">
   <div class="modal-content">
     <div class="modal-header">
       <h6 class="text-center">

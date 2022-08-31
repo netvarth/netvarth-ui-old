@@ -251,6 +251,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   theme: any;
   fromApp = false;
   homeView: any;
+  customLink: boolean = false;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public translate: TranslateService,
@@ -291,6 +292,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       }
       if (qparams && qparams.customId) {
         this.customId = qparams.customId;
+        this.customLink = true;
       } else {
         this.lStorageService.removeitemfromLocalStorage('customId')
         this.lStorageService.removeitemfromLocalStorage('accountId');

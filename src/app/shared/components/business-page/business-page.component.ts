@@ -2887,7 +2887,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         if (status) {
           this.viewDashboard();
         } else {
-          let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId;
+          let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId + '&theme=' + this.theme;
           this.lStorageService.setitemonLocalStorage('target', dashboardUrl);
           this.router.navigate([this.accountEncId, 'login']);
         }
