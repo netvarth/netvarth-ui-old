@@ -62,6 +62,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
   showOrderHist = false;
   private subs = new SubSink();
   customId: any;
+  theme: any;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router, public location: Location,
     public route: ActivatedRoute,
@@ -77,6 +78,9 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
       }
       if (params.customId) {
         this.customId = params.customId;
+      }
+      if(params.theme) {
+        this.theme = params.theme;
       }
       if (params.is_orderShow === 'false') {
         this.getHistroy();

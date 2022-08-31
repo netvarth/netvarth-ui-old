@@ -490,6 +490,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
     }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };
@@ -501,6 +504,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
     }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };
@@ -511,6 +517,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.customId) {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
+    }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
     }
     queryParams['uuid'] = waitlist.ynwUuid;
     queryParams['providerId'] = waitlist.providerAccount.id;
@@ -525,6 +534,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
     }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
+    }
     queryParams['uuid'] = apptlist.uid;
     queryParams['providerId'] = apptlist.providerAccount.id;
     const navigationExtras: NavigationExtras = {
@@ -537,6 +549,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.customId) {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
+    }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
     }
     if (booking.apptStatus) {
       queryParams['uuid'] = booking.uid;
@@ -1205,6 +1220,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.customId) {
       queryParams['customId'] = this.customId;
     }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };
@@ -1221,6 +1239,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
     if (this.customId) {
       queryParams['customId'] = this.customId;
+    }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
@@ -1349,6 +1370,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.customId) {
       queryParams['customId'] = this.customId;
     }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };
@@ -1453,6 +1477,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         queryParams['account_id'] = checkin.providerAccount.id,
           queryParams['customId'] = this.customId;
       }
+      if (this.theme) {
+        queryParams['theme'] = this.theme;
+      }
       const navigationExtras: NavigationExtras = {
         queryParams: queryParams
       };
@@ -1479,6 +1506,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         queryParams['accountId'] = checkin.providerAccount.id,
           queryParams['customId'] = this.customId;
       }
+      if (this.theme) {
+        queryParams['theme'] = this.theme;
+      }
       const navigationExtras: NavigationExtras = {
         queryParams: queryParams
       };
@@ -1494,6 +1524,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         queryParams['accountId'] = checkin.providerAccount.id,
           queryParams['customId'] = this.customId;
       }
+      if (this.theme) {
+        queryParams['theme'] = this.theme;
+      }
       const navigationExtras: NavigationExtras = {
         queryParams: queryParams
       };
@@ -1508,6 +1541,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       if (this.customId) {
         queryParams['accountId'] = checkin.providerAccount.id,
           queryParams['customId'] = this.customId;
+      }
+      if (this.theme) {
+        queryParams['theme'] = this.theme;
       }
       const navigationExtras: NavigationExtras = {
         queryParams: queryParams
@@ -1873,6 +1909,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams['customId'] = this.customId;
       queryParams['accountId'] = this.accountId;
     }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     }
@@ -1883,6 +1922,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (this.customId) {
       queryParams['customId'] = this.customId;
       queryParams['accountId'] = this.accountId;
+    }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams

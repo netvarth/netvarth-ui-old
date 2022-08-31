@@ -31,6 +31,7 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
     private subs = new SubSink();
     loading = false;
     customId: any;
+    theme: any;
     constructor(public shared_functions: SharedFunctions,
         private router: Router,
         public dateformat: DateFormatPipe,
@@ -43,6 +44,9 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
             }
             if (qparams && qparams.customId) {
                 this.customId = qparams.customId;
+            }
+            if (qparams && qparams.theme) {
+                this.theme = qparams.theme;
             }
         });
     }
@@ -104,6 +108,9 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
         let queryParam = {
             'customId': this.customId,
             'accountId': this.accountId
+          }
+          if(this.theme) {
+            queryParam['theme']=this.theme;
           }
           const navigationExtras: NavigationExtras = {
             queryParams: queryParam

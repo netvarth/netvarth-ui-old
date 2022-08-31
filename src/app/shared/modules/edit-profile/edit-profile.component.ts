@@ -73,6 +73,7 @@ export class EditProfileComponent implements OnInit {
   customId: any;
   theme;
   fromApp = false;
+  customLink = false;
   tel_stat: string;
   constructor(private fb: FormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -95,6 +96,7 @@ export class EditProfileComponent implements OnInit {
       }
       if (qparams && qparams.customId) {
         this.customId = qparams.customId;
+        this.customLink = true;
       }
       if (qparams && qparams.theme) {
         this.theme = qparams.theme;

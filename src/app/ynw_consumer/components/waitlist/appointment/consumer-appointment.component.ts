@@ -510,7 +510,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 } else {
                     if (this.bookStep === 2 && !this.serviceOptionApptt){
                         let source = this.lStorageService.getitemfromLocalStorage('source');
-                        alert(source);
                         if (source) {
                             window.location.href = source;
                             this.lStorageService.removeitemfromLocalStorage('reqFrom');
