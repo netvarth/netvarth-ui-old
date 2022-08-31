@@ -64,6 +64,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   bookingType: any;
   api_loading:boolean;
   @Input() tempClinicalNOtes;
+  sign = true;
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
@@ -115,6 +116,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
           this.clinicalNotes = res;
           console.log('clinicalNotes:::',this.clinicalNotes)
           this.isLoaded = true;
+          this.sign=false;
   
         });
       // }
@@ -126,6 +128,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     this.subscriptions.sink= this.provider_services.GetMedicalRecord(medicalrecordId).subscribe((res)=>{
       console.log('resmedicalrecordId',res);
       this.medicalRecordInfo= res;
+      this.sign=false;
     })
   }
 
@@ -152,6 +155,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
         this.clinicalNotes = res;
         console.log('clinicalNotes2::', this.clinicalNotes)
         this.isLoaded = true;
+        this.sign=false;
 
       });
     }
@@ -208,15 +212,6 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
   }
   addOrEditClinicalNotes(object) {
-
-    // const navigationExtras: NavigationExtras = {
-    //   relativeTo: this.activatedRoute,
-    //   queryParams: {
-    //     'data': JSON.stringify(object),
-    //     'clinicalNotes': JSON.stringify(this.clinicalNotes)
-    //   }
-    // };
-    // this.router.navigate(['./edit'], navigationExtras);
     console.log('object', object);
     const dialogref = this.dialog.open(GeneralComponent, {
       width: '100%',
@@ -244,6 +239,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   }
   autoGrowTextZone(e) {
     if (e) {
+      this.sign = false;
       e.target.style.height = "0px";
       e.target.style.height = (e.target.scrollHeight + 15) + "px";
     }
@@ -537,4 +533,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     })
     
   }
+  // autoGrowTextZone() {
+  //   this.sign = false;
+  // }
 }

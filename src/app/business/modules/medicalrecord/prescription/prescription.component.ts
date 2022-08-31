@@ -158,6 +158,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   afterEdit: string='';
   @Input() tempPrescription;
   bCreatePresCription:boolean=false;
+  addPrescription:boolean=true;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -538,12 +539,14 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
             } else {
               this.drugList = data['prescriptionsList'];
               console.log('this.drugList:',this.drugList)
-              console.log(this.tempIndex)
+              console.log(this.tempIndex);
+              this.addPrescription= true;
               if(this.tempIndex >=0){
                   this.drugList.splice(this.tempIndex, 1);
               }
               console.log('afterEdit::',this.afterEdit)
               if (this.afterEdit === 'afterUpdate') {
+                this.addPrescription= true;
                 const qparams = { 'prescription': 'prescription' };
                 const navigationExtras: NavigationExtras = {
                   queryParams: qparams
@@ -952,10 +955,15 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     }
     autoGrowTextZone(e) {
       if (e) {
+       
         e.target.style.height = "0px";
         e.target.style.height = (e.target.scrollHeight + 15) + "px";
       }
   
+    }
+    handleFormControl(data){
+      this.addPrescription= false;
+      console.log(data);
     }
     clearAll() {
       this.amForm.get('medicine_name').setValue('');
@@ -965,14 +973,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       this.amForm.get('dosage').setValue('');
     }
     updateForm(drug,type,text,index,newlyCretedMrId) {
-      // console.log('type',type)
-      // console.log('this.drugData',this.drugData);
-      // console.log('drug:::',drug);
-      // console.log('newlyCretedMrId::',newlyCretedMrId)
       this.tempText=type;
       this.tempIndex=index;
-      // console.log(' this.tempIndex', this.tempIndex)
-      // console.log('tempText',this.tempText)
       if(drug){
         this.amForm.patchValue({
           'medicine_name': drug.medicine_name || '',
@@ -982,6 +984,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           'dosage': drug.dosage || ''
         })
       }
+      this.addPrescription= false;
       
     }
 

@@ -14,6 +14,7 @@ import { ClinicalnotesModule } from './clinicalnotes/clinicalnotes.module';
 import { PrescriptionModule } from './prescription/prescription.module';
 import { MatTableModule } from '@angular/material/table';
 import { addPrescriptionModule } from './add-prescription/add-prescription.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 const routes: Routes = [
   {
     path: '', component: MedicalrecordComponent, children: [
@@ -47,6 +48,7 @@ const routes: Routes = [
     LastVisitModule,
     ClinicalnotesModule,
     PrescriptionModule,
+    MatTooltipModule,
     addPrescriptionModule,
     [RouterModule.forChild(routes)]
   ],

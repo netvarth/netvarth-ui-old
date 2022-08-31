@@ -3,7 +3,8 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 @Component({
   selector: 'app-imagesview',
-  templateUrl: './imagesview.component.html'
+  templateUrl: './imagesview.component.html',
+  styleUrls:['./imagesview.component.css']
 })
 export class ImagesviewComponent implements OnInit {
   imgDetails: any;
@@ -22,8 +23,12 @@ export class ImagesviewComponent implements OnInit {
       const cnow = new Date();
       const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
       this.cacheavoider = dd;
-      this.title = this.imgDetails.title;
-      this.locationImg = this.showimg(this.imgDetails.url);
+      if(this.imgDetails && this.imgDetails.title){
+        this.title = this.imgDetails.title;
+      }
+      if(this.imgDetails && this.imgDetails.url){
+        this.locationImg = this.showimg(this.imgDetails.url);
+      }
   }
   showimg(imgurl) {
     let logourl = '';

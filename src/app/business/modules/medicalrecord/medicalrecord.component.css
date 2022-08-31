@@ -228,6 +228,8 @@ mat-footer-cell:first-of-type {
 }
 .clrChnge{
   color: #1E4079 !important;
+  font-weight: 600;
+  font-size: 17px;
 }
 .nameClr{
   font-size: 13px;

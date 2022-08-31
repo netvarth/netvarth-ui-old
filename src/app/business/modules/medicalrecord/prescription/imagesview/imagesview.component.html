@@ -1,8 +1,19 @@
-<h1 class="mat-dialog-title"> {{title}}
-  <button #locte mat-dialog-close class="modal_close" tabindex="-1">
-    <i class="fa fa-window-close" aria-hidden="true"></i>
-  </button>
-</h1>
+<div class="mat-dialog-title"> 
+  <div class="createTxtIcon">
+    <div class="share">
+      <div class="createTxt">{{title}}</div>
+    </div>
+    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon"
+      #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">
+      <mat-icon>clear</mat-icon>
+    </div>
+  </div>
+</div>
 <mat-dialog-content>
-  <img style="width:100%;margin-top: -20px;" [src]="locationImg" />
+  <div class="card">
+    <img width="100%"  [src]="locationImg" />
+  </div>
 </mat-dialog-content>
+<div class="btnClass1">
+  <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold confirmBtn">Close</button>
+ </div>

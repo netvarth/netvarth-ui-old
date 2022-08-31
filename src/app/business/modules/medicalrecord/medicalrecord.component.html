@@ -1,9 +1,10 @@
 <section>
   <div class="card title-gb">
-    <h5 class="mgn-up-10 medicalRecord">
-      <span class="fa fa-arrow-left pointer-cursor clrChnge" (click)="goback('medical')"></span>
+    <div class="mgn-up-10 medicalRecord">
+      <img style="cursor: pointer;" height="15px" width="15px" src="/assets/images/medicalReportIcon/goBack.png" (click)="goback('medical')"
+      #tooltip="matTooltip" matTooltip="Back" [matTooltipPosition]="'below'" />
       <span class="clrChnge">Medical Record</span>
-    </h5>
+    </div>
   </div>
 </section>
 <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -275,7 +276,7 @@
                 </div>
               </div>
               
-              <div  class="recordInfo flexClass1 no-padding"  >
+              <div  class="recordInfo flexClass1 no-padding" style="flex-wrap: nowrap !important;" >
                 <div class="dateCreate">
                   <div class="mrNumber1">Service</div>
                   <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
@@ -399,34 +400,9 @@
   </div>
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <section *ngIf="!loading && viewVisitDetails" class="medical-record">
   <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding-small">
+    <div class="col-xs-12 col-sm-12 mgn-up-10 card">
     <div class="col-xs-12 col-sm-12 mgn-up-10 card">
       <div class="infoDetails shadow">
         <div *ngIf="customerDetails">
@@ -559,7 +535,7 @@
               </div>
             </div>
             
-            <div  class="recordInfo flexClass1 no-padding"  >
+            <div  class="recordInfo flexClass1 no-padding"  style="flex-wrap:nowrap !important">
               <div class="dateCreate">
                 <div class="mrNumber1">Service</div>
                 <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
@@ -573,6 +549,7 @@
           </div>
         </div>
       </div>
+    </div>
 
 
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12  no-padding ">

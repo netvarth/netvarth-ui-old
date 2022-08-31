@@ -149,19 +149,9 @@
                                                 <img src="/assets/images/medicalReportIcon/uplaodFile.png" />&nbsp;{{item.name}}</span>
                                         </div>
                                     </div>
-                                    <div (click)="deleteTempImagefrmdb(item,i)" class="pointer-cursor">
+                                    <div (click)="deleteTempImagefrmdb(item,i)" class="pointer-cursor"
+                                    #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'">
                                         <img src="/assets/images/medicalReportIcon/delete.png" />&nbsp;
-                                        <!-- <span class="">
-                                            <button class="btnMenu" type="button" mat-icon-button [matMenuTriggerFor]="menu">
-                                                <mat-icon>more_vert</mat-icon>
-                                            </button>
-                                            <mat-menu #menu="matMenu">
-                                                <button type="button" (click)="deleteTempImagefrmdb(item,i)" mat-menu-item>
-                                                    <i class="icon-delete"></i>
-                                                    <span>delete</span>
-                                                </button>
-                                            </mat-menu>
-                                        </span> -->
                                     </div>
                                 </div>
                             </ng-container>

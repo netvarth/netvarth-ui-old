@@ -78,7 +78,7 @@
         <!-- <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback('medical')">Cancel</button> -->
         <button  type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"  
           (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
-          ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)">
+          ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)"[disabled]="sign">
           <span *ngIf="!api_loading">Add</span>
           <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
         </button>
@@ -93,9 +93,10 @@
     <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate">
       <div class="flexClass">
         <div class="table-heading">Clinical Notes</div>
-      <div (click)="updateClinicalNotes(clinicalNotes)"> <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" /></div>
+      <div (click)="updateClinicalNotes(clinicalNotes)" 
+      #tooltip="matTooltip" matTooltip="Edit" [matTooltipPosition]="'below'"> 
+      <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" /></div>
       </div>
-      <!-- {{clinicalNotes | json}} -->
       <div *ngFor="let item of clinicalNotes" >
         <div *ngIf="item && item.clinicalNotes" [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}" class="shadow clinicalNotesList" >
           <div class="notelabel" [ngStyle]="{'color':getColorType(item)}"><div *ngIf="item && item.type && item.clinicalNotes">{{item.type}}</div>

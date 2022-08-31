@@ -180,7 +180,7 @@ export class UploadPrescriptionComponent implements OnInit {
                 description: ''
               });
             this.image_list_popup.push(imgobj);
-            this.heading='Selected Prescription file'
+            this.heading='Prescription'
           };
           reader.readAsDataURL(file);
           this.showSave = true;

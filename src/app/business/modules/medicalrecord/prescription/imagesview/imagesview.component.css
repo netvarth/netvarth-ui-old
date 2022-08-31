@@ -1,0 +1,46 @@
+.confirmBtn{
+    background: #0D2348 !important;
+    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;border-radius: 3.75916px !important;
+    border: 0px solid !important;padding: 6px 12px;color: #fff;
+}
+.createTxtIcon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+.createTxt{
+    font-size: 16px;
+    font-weight: bold;
+    color: #000000;
+}
+.closeIcon{
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    background: #FFFFFF;
+}
+.closeIcon:hover{
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    text-align: center;
+    background: #FFFFFF;
+    border: 0.13368px solid #FFFFFF;
+    box-shadow: 0px 0.534719px 11.8652px rgb(0 0 0 / 17%);
+}
+.shareTxt{
+    color: rgba(0, 0, 0, 0.6);
+    font-size:12px;
+    font-weight: 500;
+}
+.btnClass1{
+    text-align: left;
+    margin-bottom: 15px;
+    margin-left: 1.25rem;
+}

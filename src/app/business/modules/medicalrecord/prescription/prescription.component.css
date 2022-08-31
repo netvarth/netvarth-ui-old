@@ -478,7 +478,7 @@ border: 1.32184px solid #E6E8EB;
     width: 100% !important;
     box-shadow: none !important; */
     height: 100% !important;
-    width: 38rem;
+    width: 45rem;
   }
   .btnWidth{
     width: 100% !important;
@@ -512,15 +512,12 @@ border: 1.32184px solid #E6E8EB;
   display: none;
 }
 .prescriptionCard{
-  height: 100% !important;
+  /* height: 100% !important; */
     background: #FFFFFF;
     border: 1.02503px solid #E7E3E3;
     border-radius: 8.78078px;
 }
-/* ::ng-deep .commonpopupmainclass{
-  width: 830px !important;
-  height: 30rem !important;
-} */
+
 .allFile{
   margin-top: 10px;
     padding: 10px;
@@ -677,4 +674,14 @@ table tbody tr{
 }
 .tdLeft11{
   padding: 1rem !important;
+}
+@media(min-width: 800px) {
+  .tableOuterSide{
+    max-height: 23rem !important;
+    overflow: overlay !important;
+  }
+  table thead{
+    position: sticky !important;
+    top: 0% !important;
+  }
 }
