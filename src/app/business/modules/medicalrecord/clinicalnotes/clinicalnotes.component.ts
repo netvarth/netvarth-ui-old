@@ -65,6 +65,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   api_loading:boolean;
   @Input() tempClinicalNOtes;
   sign = true;
+  btnName:string='Save';
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
@@ -129,7 +130,14 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       console.log('resmedicalrecordId',res);
       this.medicalRecordInfo= res;
       this.sign=false;
-    })
+    },((error)=>{
+      // alert('jjjj')
+      // if(this.showClinicalNotesDetails=true){
+      //   this.reloadComponent()
+      // }
+      // this.reloadComponent()
+    }))
+    
   }
 
   ngOnChanges() {
@@ -505,6 +513,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   }
   updateClinicalNotes(data){
     console.log(data);
+    this.btnName= 'Update'
     console.log('this.medicalInfo',this.medicalInfo);
     this.medicalInfo= 'MedicalInfoClinicalNotesUpdate'
     this.showClinicalNotesDetails= false;

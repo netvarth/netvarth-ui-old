@@ -156,7 +156,7 @@
                             </div>
                           </div>
                           <div>
-                            <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
+                            <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId,file)">
                               <img class="fileView" src="/assets/images/medicalReportIcon/share.png" \
                               #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'"/>
                             </div>
@@ -272,7 +272,7 @@
                                 matTooltip="Print" [matTooltipPosition]="'below'">
                                 <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
                               </td>
-                              <td  class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId)"
+                              <td  class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId,drug)"
                               #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
                                 <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
                               </td>
@@ -322,7 +322,7 @@
         <button *ngIf="drugList && drugList.length>0 && (tempText==='edit' || tempText==='update')" type="button"class="btn btn-primary font-weight-bold confirmBtn addMedicineMobBtn" (click)="viewMedecineMobDevice()" >View Medicine List</button>
       </div> -->
       <div class="btnPosition" >
-        <button type="button"class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn" (click)="saveClose()">Save & Close</button>
+        <button type="button"class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn cursor-pointer" (click)="saveClose()">Save & Close</button>
       </div>
       
     </section>
@@ -494,7 +494,7 @@
   <div *ngIf="!loading && viewVisitDetails" class="card mgn-up-10" >
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0">
     <!-- {{viewMrInfo | json}} -->
-    <span class="table-heading"><b> View medicine</b></span>
+    <span class="table-heading"><b> View prescription</b></span>
     <!-- <span> <img  (click)="updateEditPrescription(drugList)" style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" /></span> -->
   </div>
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" class="overflow" >
@@ -525,7 +525,7 @@
             #tooltip="matTooltip" matTooltip="Instruction" [matTooltipPosition]="'below'">
               <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
             </td>
-            <td  class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId)"
+            <td  class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId,drug)"
             #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
               <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
             </td>
@@ -582,13 +582,18 @@
   </div>
   <div *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
     <div class="filesCreate" *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
-      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
+      <!-- <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
           class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
-          {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
+          {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div> -->
   
       <div class=" mgn-up-10 filesCreate" *ngIf="uploadlist && uploadlist.length > 0">
         <div class="shadow" style="height:100% !important">
-          <div class="pl-2 uploadedText">Uploaded Prescription</div>
+          <div style="display:flex;justify-content:space-between;">
+            <div class="pl-2 uploadedText">Uploaded Prescription</div>
+          <div class="col-md-12 sharedClass" *ngIf="prescriptionShared" style="font-size: smaller;"><div
+            class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
+            {{prescriptionSharedTimestamp | date:dateFormatSp}}</div></div>
+          </div>
           <div class="hightLimit">
             <div *ngFor="let file of uploadlist;let i=index" class="allFile">
               <div class="borderClass">
@@ -628,7 +633,7 @@
                         </div>
                       </div>
                       <div>
-                        <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
+                        <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId,file)">
                           <img class="fileView" src="/assets/images/medicalReportIcon/share.png" 
                           #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'"/>
                         </div>

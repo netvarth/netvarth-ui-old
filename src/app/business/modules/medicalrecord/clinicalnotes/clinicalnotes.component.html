@@ -79,7 +79,7 @@
         <button  type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"  
           (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
           ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)"[disabled]="sign">
-          <span *ngIf="!api_loading">Add</span>
+          <span *ngIf="!api_loading">{{btnName}}</span>
           <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
         </button>
       </div>

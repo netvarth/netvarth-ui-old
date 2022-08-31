@@ -12,19 +12,8 @@
     </div>
   </div>
   <div class=" title-gb">
-    <!-- <div class="mgn-up-10">
-      <label *ngIf="patientDetails.firstName ||patientDetails.lastName">{{customer_label | capitalizeFirst}} Name
-        :</label> &nbsp; <span>{{patientDetails.firstName | capitalizeFirst}} {{patientDetails.lastName}} </span><br>
-      <label>{{customer_label | capitalizeFirst}} Id :</label> &nbsp; <span> {{display_PatientId}}</span><br
-        *ngIf="display_PatientId">
-      <label *ngIf="patientDetails.dob">DOB :&nbsp;</label> <span *ngIf="patientDetails.dob"> {{patientDetails.dob |
-        date:newDateFormat}}</span><br *ngIf="patientDetails.dob">
-      <label *ngIf="patientDetails.gender">Gender :&nbsp;</label> <span *ngIf="patientDetails.gender">
-        {{patientDetails.gender | capitalizeFirst}}</span>
-      <hr>
-    </div> -->
     <div class="pad-10" *ngIf="selectedMessage.files && selectedMessage.files.length == 0">
-      <div class="font-weight-bold my-3"> By clicking upload prescription you will have choice of uploading a file or
+      <div class="font-weight-bold my-3" style="font-size:12px"> By clicking upload prescription you will have choice of uploading a file or
         taking picture</div>
       <div class="mgn-bt-10">
         <button type="button"class=" font-weight-bold confirmBtn btnWidth" >
@@ -37,7 +26,7 @@
       <div class="row">
         <div class="copy">
           <div class="table-outer q-itm">
-            <div class="pad-10 drugdetailslist card">
+            <div class="pad-25 drugdetailslist card">
               <!-- <div class="font-weight-bold">{{heading}}</div> -->
               <table class="table">
                 <thead>
@@ -58,18 +47,19 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let file of selectedMessage.files; let i = index;">
-                    <td data-title="File" *ngIf="file.type == '.pdf'|| file.type == 'application/pdf'" class="mobViewTable">
+                    <td data-title="File" *ngIf="file.type == '.pdf'|| file.type == 'application/pdf'" class="mobViewTable" >
                       <div *ngIf="file && file.name" class="tableRow">{{file.name}}</div>
                     </td>
-                    <td data-title="File" class="mobViewTable"
+                    <td data-title="File" class="mobViewTable pointer-cursor" (click)="openImageModalRow(image_list_popup[0])"
                       *ngIf="file.type == '.png'|| file.type =='image/png'|| file.type == '.jpg' ||file.type == '.PNG'||
                        file.type == '.jpeg' ||file.type =='image/jpeg'">
-                      <img [src]="selectedMessage.base64[0]" *ngIf="selectedMessage && selectedMessage.base64 && (!selectedMessage.base64[0])" 
+                       <div *ngIf="file && file.name" class="tableRow"#tooltip="matTooltip" matTooltip="Uploded Prescription" [matTooltipPosition]="'below'">{{file.name}}</div>
+                      <!-- <img [src]="selectedMessage.base64[0]" *ngIf="selectedMessage && selectedMessage.base64 && (!selectedMessage.base64[0])" 
                         style="width: 25px; height:25px;" class="img-responsive pointer-cursor"
                         (click)="openImageModalRow(image_list_popup[0])">
                       <img alt="" src="{{file.url}}" *ngIf="selectedMessage && selectedMessage.base64 && (!selectedMessage.base64[0])" id="prescription-image1"
                         style="width: 25px; height:25px;" class="img-responsive pointer-cursor"
-                        (click)="openImageModalRow(image_list_popup[0])">
+                        (click)="openImageModalRow(image_list_popup[0])"> -->
                     </td>
                     <td data-title="status" class="mobViewTable"  *ngIf="upload_status">
                       <div  *ngIf="upload_status" class="tableRow">{{upload_status}}</div>

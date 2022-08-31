@@ -261,6 +261,9 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
+          // alert('getAppointmentById')
+          // this.reloadComponent()
+
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
@@ -293,6 +296,7 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
+          // alert('getWaitlistDetails')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
@@ -315,6 +319,7 @@ export class MedicalrecordComponent implements OnInit {
           this.medicalService.setPatientDetails(this.customerDetails);
         },
         error => {
+          // alert('getPatientDetails')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
@@ -398,6 +403,7 @@ export class MedicalrecordComponent implements OnInit {
           this.loading_table = false;
         },
           error => {
+            // alert('getPatientVisitList')
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
       // return true;
@@ -414,6 +420,7 @@ export class MedicalrecordComponent implements OnInit {
           this.loading_table = true;
         },
           error => {
+            // alert('getPatientVisitListCount')
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
@@ -430,6 +437,7 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
+          // alert('modeChanges')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
     } else {
@@ -446,6 +454,7 @@ export class MedicalrecordComponent implements OnInit {
         this.snackbarService.openSnackBar('Medical Record updated successfully');
       },
         error => {
+          // alert('updatemr')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
 
@@ -520,6 +529,8 @@ export class MedicalrecordComponent implements OnInit {
         }
       },
         error => {
+          // alert('getMedicalRecordUsingId')
+          // this.reloadComponent()
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
@@ -564,7 +575,7 @@ export class MedicalrecordComponent implements OnInit {
       //   this.showHidepreviousDetails = false;
       // this.showHideAddPrescription=true;
       // }
-      console.log('this.creteTypeMr',this.creteTypeMr)
+      // console.log('this.creteTypeMr',this.creteTypeMr)
 
       this.location.back();
       // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
@@ -1124,6 +1135,8 @@ export class MedicalrecordComponent implements OnInit {
             this.getMedicalRecordUsingId(this.mrId);
           },
             error => {
+              // alert('deleteFile')
+              // this.reloadComponent()
               this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
       }

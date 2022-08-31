@@ -157,8 +157,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   tempIndex: any;
   afterEdit: string='';
   @Input() tempPrescription;
-  bCreatePresCription:boolean=false;
   addPrescription:boolean=true;
+  tempTextDelete: string;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -192,13 +192,13 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   onReSize() {
     this.innerWidth = window.innerWidth;
     if (this.innerWidth <= 768) {
-      this.ScreenHeight= '65%';
+      this.ScreenHeight=== '55%';
       if(this.drugList && this.drugList.length>0){
         this.addMedecineMobDeviceB=false;
       }
     }
     else {
-       this.ScreenHeight='85%';
+       this.ScreenHeight==='85%';
        this.addMedecineMobDeviceB=true
     }
   }
@@ -325,8 +325,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     this.disableFromControl()
     // this.disable = true;
     this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      width: '100%',
+      panelClass: ['popup-class'],
       disableClose: true,
       data: {
         mrid: this.mrId,
@@ -368,7 +368,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     this.amForm.controls.instructions.enable();
   }
 
-  shareManualRx(type,bookingType,bookingId) {
+  shareManualRx(type,bookingType,bookingId,file) {
     const height:any=this.ScreenHeight;
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '100%',
@@ -381,7 +381,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         patientId: this.patientId,
         docname: this.doctorName,
         bookingType:bookingType,
-        bookingId:bookingId
+        bookingId:bookingId,
+        file:file
       }
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
@@ -556,7 +557,23 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               else {
                 this.drugList = data['prescriptionsList'];
               console.log('this.drugList:',this.drugList);
-              this.bCreatePresCription= true;
+              console.log('this.tempTextDelete',this.tempTextDelete)
+              if(this.tempTextDelete==='TempDelete'){
+                // alert(this.tempTextDelete)
+                if(this.drugList && this.drugList.length <2){
+                  // alert('kkk')
+                  // this.reloadComponent();
+                  // this.location.back()
+                }
+                else{
+                  // alert('reloadComponent')
+                  this.reloadComponent();
+                }                
+              }
+              else{
+                // alert('jjjjj::::')
+                // this.reloadComponent()
+              }
               }
               
               // this.prescList = false;
@@ -735,14 +752,25 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   }
   saveClose(){
     if(this.mrId !==0){
-      // this.getMrprescription(this.mrId)
+      // this.reloadComponent()
+      console.log('this.drugList',this.drugList)
       let passdata = {
         "prescriptionsList":  this.drugList,
         "notes": this.note
       }
+      console.log('this.mrId',this.mrId);
       this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res)=>{
-        this.getMrprescription(this.mrId);
-        this.location.back()
+        // alert('saveClose')
+        console.log('saveCloseREs',res)
+        console.log('this.mrId',this.mrId);
+        if(this.mrId !==0){
+          // this.reloadComponent()
+        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);          // this.getMrprescription(this.mrId);
+        }
+        else{
+          // alert('elsesaveclose')
+          this.location.back()
+        }        
       })
     }
     else{
@@ -800,36 +828,10 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
     }
     else {
-      // alert(form_data);
-      // this.drugDetail=[];
       this.drugDetail.push(form_data);
         this.saveRx(this.drugDetail)
       this.clearAll();
       this.tempText='';
-      // this.loading = true;
-      // let passdata = {
-      //   "prescriptionsList": this.drugDetail,
-      //   "notes": this.note
-      // }
-      // console.log('this.mrId', id);
-      // console.log('newlyCretedMrIdforUpdate',id)
-      // if (id) {
-      //   alert('edit')
-      //   this.api_loading = true;
-      //   this.provider_services.updateMRprescription(passdata,id).
-      //     subscribe(res => {
-      //       console.log('resupdateMRprescription', res)
-      //       this.snackbarService.openSnackBar('Prescription update  Successfully');
-      //       this.getMrprescription(id);
-      //       this.tempText='';
-
-      //     },
-      //       error => {
-      //         this.loading = false;
-      //         this.api_loading = false;
-      //         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-      //       });
-      // }
     }
 
   }
@@ -1046,7 +1048,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               .subscribe((data) => {
                 console.log('data',data)
                 this.selectedMessage.files.splice(index, 1);
-                const error='Deleted Successfully prescription';
+                const error='Prescription successfully deleted';
                 this.snackbarService.openSnackBar(error);
                 this.reloadComponent();
                 // this.getMrprescription(this.mrId);
@@ -1085,11 +1087,18 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           if (this.mrId) {
             // alert('edit')
             this.api_loading = true;
+            // this.drugList.splice(index,1);
             this.provider_services.updateMRprescription(passdata,this.mrId).
               subscribe(res => {
-                console.log('resupdateMRprescription', res)
+                console.log('resupdateMRprescription', res);
+                this.tempTextDelete='TempDelete';
                 this.snackbarService.openSnackBar('Prescription delete  Successfully');
-                this.getMrprescription(this.mrId);
+                // alert('afterDelete')
+                console.log('this.mrId',this.mrId)
+                if(this.mrId){
+                  this.getMrprescription(this.mrId);
+                }
+                // this.getMrprescription(this.mrId);
                 this.tempText='';
     
               },
@@ -1139,9 +1148,9 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       let tempFileName:any;
       let tempFileNameSecondTYpe:any;
       if(fileName && fileName.length > 0 && fileName && fileName.length <30 ){
-        console.log(';tempFileName0')
+        // console.log(';tempFileName0')
          tempFileName= fileName.slice(0,fileName.indexOf('.'));
-         console.log(';tempFileName',tempFileName)
+        //  console.log(';tempFileName',tempFileName)
         return tempFileName;
       }
       else if(fileName && fileName.length > 30){

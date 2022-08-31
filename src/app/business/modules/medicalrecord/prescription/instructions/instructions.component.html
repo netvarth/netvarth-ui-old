@@ -1,45 +1,20 @@
-<section class="card" *ngIf="data && data.requestType==='craetePrescription'">
+<section class="card card2" *ngIf="data && data.requestType==='craetePrescription'">
   <div>
    <div class="createTxtIcon">
-    <div class="createTxt">Created Prescription</div>
+    <div class="medicineTxt">Instruction</div>
     <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon"
     #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">
       <mat-icon>clear</mat-icon>
     </div>
    </div>
-   <div>
+   <!-- <div>
     <div class="overView">Over view of created Prescriptions</div>
-   </div>
+   </div> -->
    <div class="createTxtIcon" *ngIf="medecineInstruction">
-    <!-- <div class="cardCustom">
-      <div>
-        <div class="medicineNameIcon" *ngIf="medecineName">
-         <div>
-          <img height="40px" width="40px" src="/assets/images/medicalReportIcon/medicine.png"/>
-         </div>
-         <div>
-          <div class="medicineTxt">Medicine</div>
-          <div class="medecinename" *ngIf="medecineName">{{medecineName}}</div>
-         </div>
-        </div>
-        <div class="medecineDetails" *ngIf="medicineDurationDays">
-          <div class="duration">Duration(Days)</div>
-          <div class="durationAns">{{medicineDurationDays}}</div>
-        </div>
-        <div class="medecineDetails" *ngIf="medecineDoseDays">
-          <div class="duration">Dose</div>
-          <div class="durationAns">{{medecineDoseDays}}</div>
-        </div>
-        <div class="medecineDetailsFrequescy " *ngIf="medecineDoseFrequency">
-          <div class="duration">Frequency</div>
-          <div class="durationAns">{{medecineDoseFrequency}}</div>
-        </div>
-      </div>
-    </div> -->
     <div class="cardCustom" *ngIf="medecineInstruction" >
-      <div class="medicineTxt">
+      <!-- <div class="medicineTxt">
         Instruction
-      </div>
+      </div> -->
       <dIv class="medecineInstruction">
         {{medecineInstruction}}
       </dIv>

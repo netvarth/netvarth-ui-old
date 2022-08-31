@@ -290,7 +290,7 @@ border-radius: 7.80557px;
         text-align: center;
         margin-bottom: 10px;
         margin-top: 5px;
-        background: #F9F9F9 !important;
+        /* background: #F9F9F9 !important; */
       }
       .prescriptionNotes{
         flex-wrap: wrap;
@@ -315,6 +315,19 @@ border-radius: 7.80557px;
       .dialogContent{
         max-height: 40vh !important;
         overflow-x: hidden;
+      }
+      .coupon-outer{
+        gap:0px !important;
+        justify-content: space-between !important;
+        flex-wrap: wrap !important;
+      }
+      .mobileOr{
+        font-size: 12px;
+        padding: 0 10px;
+        background: #F9F9F9 !important;
+        color: slategrey;
+        border: 1px solid #E6E8EB;
+        border-radius: 20%;
       }
       
   }

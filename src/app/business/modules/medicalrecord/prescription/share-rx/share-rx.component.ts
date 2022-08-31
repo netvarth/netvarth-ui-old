@@ -117,6 +117,7 @@ export class ShareRxComponent implements OnInit {
     base64: [],
     caption: []
   };
+  fileName: any;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -144,6 +145,10 @@ export class ShareRxComponent implements OnInit {
     this.getPatientDetails(this.patientId);
     this.ThemePalette='#06c706';
     console.log('data:;',this.data)
+    if(this.data && this.data.file && this.data.file.url){
+      this.fileName=this.data.file.url;
+    }
+    
 
 
   }
@@ -221,8 +226,8 @@ export class ShareRxComponent implements OnInit {
     this.resetApiErrors();
     const vwofrx = document.getElementById('sharerxview');
     console.log('vwofrx',vwofrx)
-    console.log('vwofrx',vwofrx.innerHTML)
-    console.log('this.thirdpartyemail',this.thirdpartyemail);
+    // console.log('vwofrx',vwofrx.innerHTML)
+    // console.log('this.thirdpartyemail',this.thirdpartyemail);
     console.log('this.sharewith',this.sharewith)
     if (this.sharewith !== 0) {
       // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
@@ -276,9 +281,10 @@ export class ShareRxComponent implements OnInit {
     if (this.sharewith === 0) {
       if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
         this.api_error = 'share via options are not selected';
-        setTimeout(() => {
-          this.api_error = '';
-        }, 3000)
+        this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
+        // setTimeout(() => {
+        //   this.api_error = '';
+        // }, 3000)
         this.disable = false;
         this.sharebtnloading = false;
         return;
@@ -441,6 +447,17 @@ export class ShareRxComponent implements OnInit {
           error => {
             this.digitalSign = false;
           });
+    }
+  }
+  signurlFile(url){
+    // console.log('url',url)
+    // return url.url
+    if(url){
+      let logourl = '';
+      if (url) {
+        logourl = url
+      }
+      return this.shared_functions.showlogoicon(logourl);
     }
   }
   uploadSign() {

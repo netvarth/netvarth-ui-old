@@ -83,11 +83,16 @@
 @media(max-width: 776px){
     .cardCustom{
         width: 100% !important;
-        height: 100% !important;
+        /* height: 100% !important; */
+        height: 12rem !important;
     }
     .createTxtIcon{
         flex-wrap: wrap;
         width: 100%;
+    }
+    .card2{
+        width: 22rem !important;
+    height: 22rem !important;
     }
 }
 .closeIcon{

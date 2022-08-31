@@ -486,9 +486,6 @@ border: 1.32184px solid #E6E8EB;
   .btnClass{
     justify-content: center !important;
   }
-  .saveCloseBtn{
-    /* width: 50% !important; */
-  }
   .btnPosition{
     text-align: left !important;
   }
@@ -684,4 +681,8 @@ table tbody tr{
     position: sticky !important;
     top: 0% !important;
   }
+}
+.sharedClass{
+  font-size: 15px !important;
+    color: #000;
 }
