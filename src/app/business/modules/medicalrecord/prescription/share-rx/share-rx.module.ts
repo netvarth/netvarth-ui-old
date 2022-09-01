@@ -15,6 +15,8 @@ import { AddProviderAddonsModule } from "../../../add-provider-addons/add-provid
 import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule } from "@angular/material/menu";
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import PdfViewerModule
+
 
 
 
@@ -36,7 +38,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         LoadingSpinnerModule,
         MatIconModule,
         MatMenuModule,
-        MatTooltipModule
+        MatTooltipModule,
+        PdfViewerModule
     ],
     exports: [ShareRxComponent],
     declarations: [ShareRxComponent]

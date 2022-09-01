@@ -159,6 +159,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   @Input() tempPrescription;
   addPrescription:boolean=true;
   tempTextDelete: string;
+  screenWidth: string;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -192,13 +193,15 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   onReSize() {
     this.innerWidth = window.innerWidth;
     if (this.innerWidth <= 768) {
-      this.ScreenHeight=== '55%';
+      this.ScreenHeight= '60%';
+      this.screenWidth='55%';
       if(this.drugList && this.drugList.length>0){
         this.addMedecineMobDeviceB=false;
       }
     }
     else {
-       this.ScreenHeight==='85%';
+       this.ScreenHeight='85%';
+       this.screenWidth='75%'
        this.addMedecineMobDeviceB=true
     }
   }
@@ -369,6 +372,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   }
 
   shareManualRx(type,bookingType,bookingId,file) {
+    console.log('file',file)
     const height:any=this.ScreenHeight;
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '100%',
@@ -1070,7 +1074,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': 'Do you really want to remove the prescription?',
+          'message': 'Do you really want to remove the medicine ?',
           'type': 'deleteDrug'
         }
       });

@@ -118,6 +118,7 @@ export class ShareRxComponent implements OnInit {
     caption: []
   };
   fileName: any;
+  src:any;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -148,6 +149,7 @@ export class ShareRxComponent implements OnInit {
     if(this.data && this.data.file && this.data.file.url){
       this.fileName=this.data.file.url;
     }
+    // if(this.data.file.url)
     
 
 
@@ -224,10 +226,20 @@ export class ShareRxComponent implements OnInit {
     this.disable = true;
     this.sharebtnloading = true;
     this.resetApiErrors();
-    const vwofrx = document.getElementById('sharerxview');
+    let vwofrx;
+    if(document && document.getElementById('sharerxview')){
+       vwofrx = document.getElementById('sharerxview');
+    }
+    let sahrePdfVia;
+    if(document && document.getElementById('sharePdf')){
+       sahrePdfVia=document.getElementById('sharePdf');
+    }
+    
+    console.log('sahrePdfVia',sahrePdfVia)
+    console.log('sahrePdfVia',sahrePdfVia)
+    // console.log('sahrePdfViahtml',sahrePdfVia.innerHTML)
+    // console.log('sahrePdfViatext',sahrePdfVia.innerText)
     console.log('vwofrx',vwofrx)
-    // console.log('vwofrx',vwofrx.innerHTML)
-    // console.log('this.thirdpartyemail',this.thirdpartyemail);
     console.log('this.sharewith',this.sharewith)
     if (this.sharewith !== 0) {
       // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
@@ -315,6 +327,7 @@ export class ShareRxComponent implements OnInit {
           });
 
       } else if (this.sharewith === 0) {
+        // alert('1st')
         const passData = {
           'message': this.amForm.controls.message.value,
           'html': vwofrx.innerHTML ,
@@ -361,16 +374,34 @@ export class ShareRxComponent implements OnInit {
           });
 
       } else if (this.sharewith === 0) {
-        const passData = {
-          'message': this.amForm.controls.message.value,
-          'html': vwofrx.innerHTML,
-          'medium': {
-            'email': this.email,
-            'sms': this.sms,
-            'pushNotification': this.pushnotify,
-            'telegram': this.telegram
+        // alert('2nd')
+        let passData:any;
+        if(this.data.file.type==='.pdf'){
+          // alert('.pdf')
+          passData = {
+            'message': this.amForm.controls.message.value,
+            'html': sahrePdfVia.innerHTML   , //vwofrx.innerHTML,
+            'medium': {
+              'email': this.email,
+              'sms': this.sms,
+              'pushNotification': this.pushnotify,
+              'telegram': this.telegram
+            }
+          };
+        }
+        else{
+          // alert('notpdf')
+          passData = {
+            'message': this.amForm.controls.message.value,
+            'html': vwofrx.innerHTML,
+            'medium': {
+              'email': this.email,
+              'sms': this.sms,
+              'pushNotification': this.pushnotify,
+              'telegram': this.telegram
+            }
           }
-        };
+        }
         this.provider_services.shareRx(this.mrId, passData)
           .subscribe((data) => {
             this.snackbarService.openSnackBar('Prescription shared successfully');
@@ -451,7 +482,6 @@ export class ShareRxComponent implements OnInit {
   }
   signurlFile(url){
     // console.log('url',url)
-    // return url.url
     if(url){
       let logourl = '';
       if (url) {

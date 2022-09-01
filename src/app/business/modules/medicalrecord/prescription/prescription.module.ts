@@ -17,6 +17,10 @@ import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.m
 import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatMenuModule} from '@angular/material/menu';
+import { MatIconModule } from "@angular/material/icon";
+import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import PdfViewerModule
+
 
 const routes: Routes = [
     { path: '', component: PrescriptionComponent}
@@ -36,6 +40,9 @@ const routes: Routes = [
         CapitalizeFirstPipeModule,
         MatTableModule,
         MatTooltipModule,
+        MatMenuModule,
+        MatIconModule,
+        PdfViewerModule,
         [RouterModule.forChild(routes)],
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true })
     ],

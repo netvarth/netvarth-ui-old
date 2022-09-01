@@ -513,7 +513,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   }
   updateClinicalNotes(data){
     console.log(data);
-    this.btnName= 'Update'
+    this.btnName= 'Save'
     console.log('this.medicalInfo',this.medicalInfo);
     this.medicalInfo= 'MedicalInfoClinicalNotesUpdate'
     this.showClinicalNotesDetails= false;

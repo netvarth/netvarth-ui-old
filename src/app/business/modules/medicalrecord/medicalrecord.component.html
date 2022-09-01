@@ -125,7 +125,7 @@
       <div >
         <div class="d-flex justify-content-between">
           <div class="pt-2">
-            <span class="table-heading pl-2"><b>Previous Visits</b></span>
+            <span class="table-heading pl-2"><b>Visits</b></span>
           </div>
         </div>
         <section class="report pt-2 webDevice" *ngIf="visitcount !== 0">
@@ -147,9 +147,9 @@
                 <mat-header-cell *matHeaderCellDef class="m-0 p-0 visit-dr-cl"> <b class="headerClr">Doctor</b></mat-header-cell>
                 <mat-cell *matCellDef="let visit">
                   <div class="providerName">
-                    <div class="arrowIcon">
+                    <!-- <div class="arrowIcon">
                       <img style="margin-top: 5px" src="/assets/images/medicalReportIcon/arrow2.png"/>
-                    </div>
+                    </div> -->
                    <div class="elementTextClr"> {{getProviderName(visit)}}</div>
                   </div>
                 </mat-cell>
@@ -158,8 +158,8 @@
                 <mat-header-cell *matHeaderCellDef class="visit-mr-cl"> <b class="headerClr">Medical Record</b></mat-header-cell>
                 <mat-cell class="m-0 p-0" *matCellDef="let row;columns:lastVisit_displayedColumns">
                   <div [ngClass]="row.mrCreated === true ? 'createBtn':'ViewBtn'">
-                    <div *ngIf="row.mrCreated">View</div>
-                    <div *ngIf="!row.mrCreated">Create</div>
+                    <div *ngIf="row.mrCreated">View medical record </div>
+                    <div *ngIf="!row.mrCreated">Create medical record </div>
                   </div>
                 </mat-cell>
               </ng-container>
@@ -190,17 +190,17 @@
             <div class="doctorWidth">
               <div class="lebalName">Doctor</div>
               <div class="providerName">
-                <div class="arrowIcon">
+                <!-- <div class="arrowIcon">
                   <img style="margin-top: 5px" src="/assets/images/medicalReportIcon/arrow2.png"/>
-                </div>
+                </div> -->
                <div class="elementTextClr"> {{getProviderName(visit)}}</div>
               </div>
             </div>
            </div>
            <div *ngIf="visit" class="btnTop">
             <div [ngClass]="visit.mrCreated === true ? 'createBtn':'ViewBtn'">
-              <div *ngIf="visit.mrCreated">View</div>
-              <div *ngIf="!visit.mrCreated">Create</div>
+              <div *ngIf="visit.mrCreated">View medical record </div>
+              <div *ngIf="!visit.mrCreated">Create medical record </div>
             </div>
            </div>
           </div>

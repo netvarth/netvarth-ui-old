@@ -78,6 +78,10 @@ label{
 .uploadedText{
   font-size: 15px !important;
   color: #22A8FA;
+  /* width: 100%; */
+}
+.sharedFlex{
+  display:flex;justify-content:space-between;align-items: center;
 }
 
 
@@ -492,7 +496,30 @@ border: 1.32184px solid #E6E8EB;
   .addMedeconeShowHide{
     display: block !important;
   }
+  .sharedFlex{
+    flex-wrap:wrap;align-items: center;
+  }
+  .imgClasMobile{
+    display: block !important;
 
+  }
+  .imageClas{
+    display: none !important;
+  }
+  .gap{
+    gap:5px !important;
+  }
+  .sharedClass{
+    margin-top: 5px;
+  }
+
+}
+.imgClasMobile{
+  display: none ;
+
+}
+.imageClas{
+  display: flex ;
 }
 .addMedicineMobBtn{
   width: 100% !important;
