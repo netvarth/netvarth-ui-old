@@ -2447,7 +2447,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       window.location.href = source;
       this.lStorageService.removeitemfromLocalStorage('reqFrom');
       this.lStorageService.removeitemfromLocalStorage('source');
-    } else if (this.customId && reqFrom) {
+    } else if (this.customId && reqFrom === 'cuA') {
       this.router.navigate(['customapp', this.customId]);
     } else {
       this.router.navigate([this.customId]);
