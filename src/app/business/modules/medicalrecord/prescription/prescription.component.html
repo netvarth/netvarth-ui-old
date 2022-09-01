@@ -272,19 +272,11 @@
                               #tooltip="matTooltip" matTooltip="Instruction" [matTooltipPosition]="'below'">
                                 <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
                               </td>
-                              <td data-title="Edit" *ngIf="drug" class="tdLeft11 pointer-cursor" (click)="updateForm(drug,'update','edit',i,mrId)"
+                              <td data-title="Edit" *ngIf="drug" class="tdLeft2 pointer-cursor" (click)="updateForm(drug,'update','edit',i,mrId)"
                                 #tooltip="matTooltip" matTooltip="Edit" [matTooltipPosition]="'below'">
                                 <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" />
                               </td>                        
-                              <!-- <td *ngIf="drug" (click)="print('printableArea')" class="Share pointer-cursor tdLeft11" #tooltip="matTooltip"
-                                matTooltip="Print" [matTooltipPosition]="'below'">
-                                <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
-                              </td>
-                              <td  class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId,drug)"
-                              #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
-                                <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
-                              </td> -->
-                              <td *ngIf="drug" data-title="Delete" class="Share pointer-cursor tdLeft11" (click)="deleteDrug(i,drug)"
+                              <td *ngIf="drug" data-title="Delete" class="Share pointer-cursor tdLeft2" (click)="deleteDrug(i,drug)"
                                 #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'">
                                 <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/delete.png" />
                               </td>
@@ -500,10 +492,11 @@
 </ng-container>
 <ng-container *ngIf="!loading && viewVisitDetails">
   <div *ngIf="!loading && viewVisitDetails" class="card mgn-up-10" >
-  <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0">
+  <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" style="display: flex;justify-content: space-between;margin-bottom: 10px;">
     <!-- {{viewMrInfo | json}} -->
     <span class="table-heading"><b> View prescription</b></span>
-    <!-- <span> <img  (click)="updateEditPrescription(drugList)" style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" /></span> -->
+    <span style="cursor:pointer"> <img #tooltip="matTooltip" matTooltip="Update" [matTooltipPosition]="'below'"  
+      (click)="updateEditPrescription(drugList)" style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" /></span>
   </div>
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" class="overflow" >
     <div>
@@ -550,7 +543,7 @@
             <!-- <td data-title="edit" class="Share pointer-cursor tdLeft11" (click)="updateEditPrescription(drug)">
               <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" />
             </td> -->
-            <td *ngIf="drug" data-title="Delete"  class="Share pointer-cursor tdLeft11" (click)="deleteDrug(i,drug)"
+            <td *ngIf="drug" data-title="Delete"  class="Share pointer-cursor tdLeft2" (click)="deleteDrug(i,drug)"
             #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'">
               <!-- <img class="removeIcon" src="./assets/images/ImgeFileIcon/removeCross.png" /> -->
               <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/delete.png" />

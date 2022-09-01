@@ -355,6 +355,9 @@ cursor: pointer;
 }
 .prescriptionCreate{
   width: 100% !important;
+  max-height: 27.5rem;
+    overflow: auto;
+    
 }
 .filesCreate{
   width: 100% !important;
@@ -529,7 +532,7 @@ border: 1.32184px solid #E6E8EB;
   text-align: center !important;
 }
 .saveCloseBtn{
-  margin-top: 10px;
+  margin-top: 20px;
     /* width: 25% !important; */
 }
 .addMedeconeShowHide{
@@ -683,6 +686,7 @@ table tbody tr{
 }
 .overflow{
   overflow:auto;
+  max-height: 20rem;
 }
 .tdLeft1{
   padding-left: 2rem;

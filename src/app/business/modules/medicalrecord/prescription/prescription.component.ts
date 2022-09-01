@@ -628,9 +628,10 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     console.log('data',data)
     this.viewVisitDetails=false;
     this.loading=false
-    // this.uploadlist.length=0;
-    this.drugList && this.uploadlist && this.uploadlist.length===0;
-    this.afterEdit='afterUpdate'
+    this.uploadlist && this.uploadlist.length===0;
+    this.afterEdit='afterUpdate';
+    this.drugList=(data);
+    console.log('this.drugList',this.drugList);
   }
 
   saveRx(result) {
@@ -768,8 +769,14 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         console.log('saveCloseREs',res)
         console.log('this.mrId',this.mrId);
         if(this.mrId !==0){
-          // this.reloadComponent()
-        this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);          // this.getMrprescription(this.mrId);
+          if(this.afterEdit === 'afterUpdate'){
+            this.reloadComponent()
+          }
+          else{
+            this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
+                    // this.getMrprescription(this.mrId);
+          }
+          
         }
         else{
           // alert('elsesaveclose')
@@ -944,17 +951,36 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     }
     saveAndAddOther(form_data) {
       // this.api_loading=true;
-      console.log(form_data);
+      // console.log(form_data);
       this.api_error = '';
       if(form_data.medicine_name === '' && form_data.frequency === ''&& form_data.dosage === ''&& form_data.instructions === ''&& form_data.duration === ''){
         this.api_error = 'Atleast one field required';
         this.snackbarService.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' });
-
-        // alert('kkk')
       } else {
-        // alert('elese')
       this.drugDetail.push(form_data);
-      this.saveRx(this.drugDetail)
+      // this.saveRx(this.drugDetail);
+      // console.log('this.afterEdit',this.afterEdit)
+        if (this.afterEdit === 'afterUpdate') {
+          console.log('this.drugDetail:::', this.drugDetail)
+          console.log('this.drugList', this.drugList);
+          
+          var i = this.drugList.length;
+          while (i--) {
+            for (var j of this.drugDetail) {
+              if (this.drugList[i] && this.drugList[i].medicine_name === j.medicine_name) {
+                this.drugList.splice(i, 1);
+              }
+            }
+          }
+          console.log('this.drugListAfter', this.drugList);
+          let tempArr: any = [];
+          tempArr = [...this.drugDetail, ...this.drugList];
+          //  console.log('tempArr', tempArr)
+          this.saveRx(tempArr);
+        }
+      else{
+        this.saveRx(this.drugDetail);
+      }
       this.clearAll();
       this.tempPrescription=false;
     }
