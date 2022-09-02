@@ -485,7 +485,7 @@ border: 1.32184px solid #E6E8EB;
     width: 100% !important;
     box-shadow: none !important; */
     height: 100% !important;
-    width: 45rem;
+    width: 50rem;
   }
   .btnWidth{
     width: 100% !important;
@@ -716,4 +716,30 @@ table tbody tr{
 .sharedClass{
   font-size: 15px !important;
     color: #000;
+}
+.activeRow{
+  /* background: #FFFFFF;
+    border-radius: 4.67697px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+    border-bottom: 0px solid; */
+    border-radius: 4.67697px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+    border-bottom: 0px solid;
+    background: #F3874A;
+}
+/* table tbody tr .data-selected >:nth-child(1) {
+  background: #F3874A !important;
+} */
+.data-selected {
+  background: #FFFFFF;
+    border-radius: 4.67697px;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+    border-bottom: 0px solid;
+}
+.opacity{
+  display: table-column;
+}
+.tableRow{
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+  height: 60px;
 }

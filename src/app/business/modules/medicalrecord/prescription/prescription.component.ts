@@ -491,27 +491,29 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     if(url.type==='.pdf'){
       this.printPdf(url)
     }
-    const params = [
-      'height=' + screen.height,
-      'width=' + screen.width,
-      'fullscreen=yes'
-    ].join(',');
-    const printWindow = window.open('', '', params);
-    // const _this=this;
-    let checkin_html = '';
-    checkin_html += '<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
-    checkin_html += '<img src="' + url.url + '" />'
-    // checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: absolute;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
-    printWindow.document.write('<html><head><title></title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(checkin_html);
-    printWindow.document.write('</body></html>');
-    printWindow.moveTo(0, 0);
-    printWindow.print();
-    printWindow.document.close();
-    setTimeout(() => {
-      printWindow.close();
-    }, 500);
+    if(url && url.url){
+      const params = [
+        'height=' + screen.height,
+        'width=' + screen.width,
+        'fullscreen=yes'
+      ].join(',');
+      const printWindow = window.open('', '', params);
+      // const _this=this;
+      let checkin_html = '';
+      checkin_html += '<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
+      checkin_html += '<img style="width:100%;height:100%" src="' + url.url + '" />'
+      printWindow.document.write('<html><head><title></title>');
+      printWindow.document.write('</head><body >');
+      printWindow.document.write(checkin_html);
+      printWindow.document.write('</body></html>');
+      printWindow.moveTo(0, 0);
+      printWindow.print();
+      printWindow.document.close();
+      setTimeout(() => {
+        printWindow.close();
+      }, 500);
+    }
+   
   }
 
   getMrprescription(mrId) {
@@ -533,13 +535,16 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               this.uploadlist = data['prescriptionsList'];
               // this.prescList = false;
               this.image_list_popup = [];
-              const imgobj = new Image(0,
-                { // modal
-                  img: this.uploadlist[0].url,
-                  description: this.uploadlist[0].caption || ''
-                });
-              this.image_list_popup.push(imgobj);
-              console.log('this.uploadlist::',this.uploadlist)
+              if(this.uploadlist && this.uploadlist[0] && this.uploadlist[0].url){
+                const imgobj = new Image(0,
+                  { // modal
+                    img: this.uploadlist[0].url,
+                    description: this.uploadlist[0].caption || ''
+                  });
+                this.image_list_popup.push(imgobj);
+                console.log('this.uploadlist::',this.uploadlist)
+              }
+             
   
             } else {
               this.drugList = data['prescriptionsList'];

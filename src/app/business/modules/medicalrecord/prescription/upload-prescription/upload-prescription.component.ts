@@ -259,7 +259,7 @@ export class UploadPrescriptionComponent implements OnInit {
         .then((data: number) => {
           this.mrId = data;
           this.uploadMrPrescription(data, submit_data);
-          this.goBack()
+          // this.goBack()
         },
           error => {
             this.disable = false;
