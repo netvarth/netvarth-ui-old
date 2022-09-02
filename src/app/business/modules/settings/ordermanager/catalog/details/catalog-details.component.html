@@ -140,20 +140,21 @@
                       <!----order type start-->
                       <div class="col-xl-6">
                         <div class="leadTitle">
-                            <div>Order type</div>
-                            <div class="astericColor">*</div>
+                          <div>Order type</div>
+                          <div class="astericColor">*</div>
                         </div>
                         <div class="fieldPadding">
-                            <mat-select class="form-control1 form-control-solid form-control-lg" placeholder="Enter order type" #firststorderTypeValue
-                                formControlName="firststorderType"(ngModelChange)="handleFirstOrderType(firststorderTypeValue.value)">
-                                <mat-option *ngFor="let item of firstOrderTypeJSON;let index=i" [value]="item.name">
-                                    <div *ngIf="item && item.name">
-                                        {{item.name | capitalizeFirst}}
-                                    </div>
-                                </mat-option>
-                            </mat-select>
+                          <mat-select class="form-control1 form-control-solid form-control-lg"
+                            placeholder="Enter order type" #firststorderTypeValue formControlName="firststorderType"
+                            (ngModelChange)="handleFirstOrderType(firststorderTypeValue.value)">
+                            <mat-option *ngFor="let item of firstOrderTypeJSON;let index=i" [value]="item.name">
+                              <div *ngIf="item && item.name">
+                                {{item.name | capitalizeFirst}}
+                              </div>
+                            </mat-option>
+                          </mat-select>
                         </div>
-                    </div>
+                      </div>
 
                       <!----order type end-->
                       <div class="col-xl-6">
@@ -239,7 +240,7 @@
                           <mat-select style="border: 1px solid #E4E6EF !important; border-radius: 0.42rem !important;"
                             placeholder="Catalog status" formControlName="orderStatuses" [multiple]="true">
                             <mat-option *ngFor=" let stat of status" [value]="stat.value"
-                              [disabled]="stat.value === 'Order Received'||stat.value === 'Cancelled' || stat.value === 'Order Confirmed'">
+                              [disabled]="stat.value === 'Cancelled' || stat.value === 'Order Confirmed'">
                               {{stat.value}}
                             </mat-option>
                           </mat-select>
@@ -358,9 +359,9 @@
                             <i class="icon-edit"></i>Edit</button>
                           <button mat-menu-item (click)="deleteCatalogItem(item)">
                             <i class="icon-delete"></i>Remove</button> -->
-                            <button mat-menu-item  (click)="catelogItemqrCodegeneraterOnlineID(catalogItems[i])">
-                              <i class="fa fa-share-alt"></i>Share item
-                            </button>
+                          <button mat-menu-item (click)="catelogItemqrCodegeneraterOnlineID(catalogItems[i])">
+                            <i class="fa fa-share-alt"></i>Share item
+                          </button>
                         </mat-menu>
                         <div class="card card-custom card-shadowless itemselected">
                           <div class="card-body p-0">
@@ -422,7 +423,7 @@
                               <mat-icon>more_horiz</mat-icon>
                             </button>
                             <mat-menu #appMenu="matMenu">
-                             
+
                               <button mat-menu-item  (click)="catelogItemqrCodegeneraterOnlineID(itemsforadd[i])">
                                 <i class="fa fa-share-alt"></i>Share item
                               </button>
@@ -573,7 +574,8 @@
                             <label>Advance amount *</label>
                             <input type="number" class="form-control1 form-control-solid form-control-lg"
                               (keypress)="isNumeric($event)" (keyup)="isvalid($event)" id="advancePayment"
-                              placeholder="Advance Amount " formControlName="advancePayment" autocomplete="off" min="1" />
+                              placeholder="Advance Amount " formControlName="advancePayment" autocomplete="off"
+                              min="1" />
                           </div>
                         </div>
                       </div>
@@ -825,8 +827,9 @@
                       </button>
                     </div>
                     <div>
-                      <button *ngIf="step == 4 || (amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value==='submission'&& step === 3)" 
-                      type="button" (click)="onSubmit(amForm.value)"
+                      <button
+                        *ngIf="step == 4 || (amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value==='submission'&& step === 3)"
+                        type="button" (click)="onSubmit(amForm.value)"
                         class="btn btn-success font-weight-bold text-uppercase px-9 py-1" [disabled]="disableButton">
                         Save
                       </button>
@@ -835,10 +838,11 @@
                         class="btn btn-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoNext()">
                         Next
                       </button> -->
-                      <button *ngIf="step == 1 || step == 2 ||(amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value ==='Order' && step===3) 
-                       || (amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value !=='submission'&& step ===3)" 
-                       type="button"
-                        class="btn btn-primary font-weight-bold text-uppercase px-9 py-1" (click)="gotoNext()">
+                      <button
+                        *ngIf="step == 1 || step == 2 ||(amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value ==='Order' && step===3)
+                       || (amForm && amForm.controls && amForm.controls.firststorderType && amForm.controls.firststorderType.value !=='submission'&& step ===3)"
+                        type="button" class="btn btn-primary font-weight-bold text-uppercase px-9 py-1"
+                        (click)="gotoNext()">
                         Next
                       </button>
 
