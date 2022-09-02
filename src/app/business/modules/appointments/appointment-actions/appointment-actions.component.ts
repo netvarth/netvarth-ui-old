@@ -492,13 +492,13 @@ export class AppointmentActionsComponent implements OnInit {
     if (action !== "Rejected") {
       this.buttonClicked = true;
     }
-    // this.provider_shared_functions.changeWaitlistStatus(
-    //   this,
-    //   this.appt,
-    //   action,
-    //   "appt"
-    // );
-    this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action);
+    this.provider_shared_functions.changeWaitlistStatus(
+      this,
+      this.appt,
+      action,
+      "appt"
+    );
+    //this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action);
 
   }
   changeWaitlistservice() {
