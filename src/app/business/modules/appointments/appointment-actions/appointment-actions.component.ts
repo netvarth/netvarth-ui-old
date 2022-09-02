@@ -492,12 +492,14 @@ export class AppointmentActionsComponent implements OnInit {
     if (action !== "Rejected") {
       this.buttonClicked = true;
     }
-    this.provider_shared_functions.changeWaitlistStatus(
-      this,
-      this.appt,
-      action,
-      "appt"
-    );
+    // this.provider_shared_functions.changeWaitlistStatus(
+    //   this,
+    //   this.appt,
+    //   action,
+    //   "appt"
+    // );
+    this.provider_shared_functions.changeWaitlistStatus(this, this.appt, action);
+
   }
   changeWaitlistservice() {
     this.dialogRef.close();
@@ -716,16 +718,29 @@ export class AppointmentActionsComponent implements OnInit {
     ) {
       this.showMsg = true;
     }
-    if (
-      this.data.multiSelection &&
+    // if (
+    //   !this.data.multiSelection &&
+    //   (this.appt.apptStatus === "Arrived" ||
+    //     this.appt.apptStatus === "Confirmed") &&
+    //   this.data.timetype !== 2 &&
+    //   !this.appt.virtualService &&
+    //   !this.data.teleservice && (this.appt.service.serviceType === 'physicalService')
+    // ) {
+    //   this.showStart = true;
+    // }
+    if (this.data.multiSelection &&
+      (this.data.timetype === 1 || this.data.timetype === 3) &&
       (this.appt.apptStatus === "Arrived" ||
-        this.appt.apptStatus === "Confirmed") &&
-      this.data.timetype !== 2 &&
-      !this.appt.virtualService &&
-      !this.data.teleservice
+        this.appt.apptStatus === "Confirmed" ||
+        this.appt.apptStatus === "Started") &&
+      !this.data.teleservice && !this.appt.virtualService && (this.appt.service.serviceType === 'physicalService')
     ) {
       this.showStart = true;
     }
+  //   if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (this.appt.service.serviceType === 'physicalService') 
+  //&& !this.data.teleservice && !this.appt.virtualService) {
+  //     this.showStart = true;
+  // }
     // this.status_booking = 'new' &&
     if (
       (this.data.timetype === 1 || this.data.timetype === 2)  &&
@@ -1007,6 +1022,7 @@ export class AppointmentActionsComponent implements OnInit {
       });
   }
   showCallingModes(modes) {
+    console.log("Resume called :",modes)
     const navigationExtras: NavigationExtras = {
       queryParams: {
         waiting_id: modes.uid,
@@ -1528,6 +1544,7 @@ export class AppointmentActionsComponent implements OnInit {
       queryParams: {
         type: "followup",
         followup_uuid: this.appt.uid,
+       // providerId:this.appt.provider.id,
         date: moment(this.sel_checkindate).format("YYYY-MM-DD")
       }
     };

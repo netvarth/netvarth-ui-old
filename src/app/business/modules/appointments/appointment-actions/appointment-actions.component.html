@@ -118,14 +118,18 @@
                 <span class="waitlistcall-icon"></span>
                 <div class="icon-text">Alert</div>
             </div>
+
         </div>
-        <div class="action-box pointer-cursor" *ngIf="showStart"
+        <!-- appt.apptStatus == 'Started' || appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' && data.timetype !== 2 && !this.appt.virtualService &&
+        !this.data.teleservice -->
+        <div class="action-box pointer-cursor" *ngIf="showStart" 
             (click)="!buttonClicked && changeWaitlistStatus('Started')">
             <div class="action-box-sub">
-                <span class="start-icon"></span>
+                <span class="start-icon" ></span>
                 <div class="icon-text">Start Service</div>
             </div>
         </div>
+      
         <div class="action-box pointer-cursor teleservice" *ngIf="showTeleserviceStart" [matTooltipClass]="tooltipcls"
             [matTooltip]="'Teleservice'" (click)="showCallingModes(appt)">
             <div class="action-box-sub">
@@ -141,6 +145,7 @@
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></span>
                 <span class="wtsapvid-icon"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
+                    <span class="start-icon" *ngIf="appt.service.serviceType != 'virtualService'"></span>
                 <div class="icon-text">
                     {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
                 </div>              

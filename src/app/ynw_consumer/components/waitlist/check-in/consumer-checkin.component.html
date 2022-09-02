@@ -164,7 +164,49 @@
                                                 </h6>
                                             </div>
                                 </div>
-
+                                <div class="col-md-12 col-xs-12 col-sm-12">                                                        
+                                    <div *ngIf="type === 'waitlistreschedule'"
+                                class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
+                                <a #modal data-toggle="modal"
+                                    data-target="#exampleModalCenter"></a>
+                                <div>
+                                    <label class="question-header">Add notes/upload files you
+                                        may have</label>
+                                </div>
+                                <mat-chip-list class="btns">
+                                    <mat-chip
+                                        [class.mandatoryChip]="selectedService.consumerNoteMandatory && type != 'waitlistreschedule'"
+                                        (click)="handleSideScreen('note');modal.click();">
+                                        <a class="lnk action pointer-cursor"><i
+                                                class="fa fa-file-text-o mgn-rt-5"
+                                                aria-hidden="true"></i>{{selectedService.consumerNoteTitle}}
+                                            <span
+                                                *ngIf="selectedService.consumerNoteMandatory && type != 'waitlistreschedule'">*</span></a>
+                                    </mat-chip>
+                                    <span>
+                                        <mat-chip
+                                            [ngClass]="{'br-top-right-0 br-bottom-right-0 margin-right-0': getAttachLength() > 0}">
+                                            <a class="lnk action pointer-cursor"
+                                                (click)="imagefile1.click();"><input #imagefile1
+                                                    type="file" accept="/*;capture=camera"
+                                                    style="display:none;" multiple
+                                                    (change)="filesSelected($event, 'close')"><i
+                                                    class="fa fa-paperclip mgn-rt-5"
+                                                    aria-hidden="true"></i>Upload File
+                                            </a>
+                                        </mat-chip>
+                                        <mat-chip *ngIf="getAttachLength() > 0"
+                                            class="br-top-left-0 br-bottom-left-0 margin-left-0">
+                                            <a class="lnk action pointer-cursor"
+                                                (click)="viewAttachments()">
+                                                View (<span>{{getAttachLength()}}</span>)
+                                            </a>
+                                        </mat-chip>
+                                    </span>
+                                </mat-chip-list>
+                            </div>
+                                </div><br>
+                                <div class="clearfix"></div>
                                 <div class="action-buttons">                            
                                     <div *ngIf="type != 'waitlistreschedule' && !selectedService.isPrePayment"
                                         class="text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mx-auto">

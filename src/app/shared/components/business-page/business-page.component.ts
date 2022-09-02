@@ -138,6 +138,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   showMore = false;
   gender = '';
   bLogo = '';
+  showArrow = false;
   orgsocial_list;
   emaillist: any = [];
   phonelist: any = [];
@@ -442,6 +443,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
+      console.log("QParams :",qparams)
       if (qparams.src) {
         this.pSource = qparams.src;
       }
@@ -475,6 +477,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const _this = this;
     this.activaterouterobj.paramMap
       .subscribe(params => {
+        console.log("Params :",params)
         this.accountEncId = params.get('id');
         if (this.accountEncId && this.accountEncId.toLowerCase() === 'heartfulnesscovidcare') {
           this.router.navigate(['heartfulnesshealthcare']);
@@ -2228,6 +2231,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   cardClicked(actionObj) {
     console.log('entering into business page',actionObj);
     console.log(actionObj);
+    this.showArrow = true;
     if (actionObj['type'] === 'waitlist') {
       if (actionObj['action'] === 'view') {
         let queryParam = {
