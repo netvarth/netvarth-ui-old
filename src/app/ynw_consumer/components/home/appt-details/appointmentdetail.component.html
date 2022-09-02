@@ -145,7 +145,8 @@
                                                 class="fl-left">View more</a></span>
                                         <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a
                                                 class="fl-left">View less</a></span>
-                                        <span *ngIf="!history" class="opt-actions" (click)="gotoActions(appt)"><a>Actions</a></span>
+                                                <!-- *ngIf="!history" -->
+                                        <span  class="opt-actions" (click)="gotoActions(appt)"><a>Actions</a></span>
                                     </div>
                                     <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                                         <mat-tab-group animationDuration="10ms" class="index-head">
