@@ -3,7 +3,7 @@
     <tr>
       <th>Name</th>
       <th>Date</th>
-      <th>Submitted by</th>
+      <th *ngIf="this.selectedUser && this.selectedUser.firstName">Assigned</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
@@ -26,13 +26,13 @@
           </div>
 
         </td>
-        <td data-title="Assigned" width="400" class="td3" *ngIf="paper && paper.orderFor.firstName">
-          <div class="imgClass">
+        <td data-title="Assigned" width="400" class="td3" *ngIf="this.users && this.users.length >0">
+          <div class=" imgClass">
             <!-- <div>
                                 <img class="img mr-2" src="/assets/images/avatar5.png" width="20" height="20"/>
                               </div> -->
-            <div *ngIf="paper.orderFor.firstName || paper.orderFor.lastName">
-              {{paper.orderFor.firstName}} {{paper.orderFor.lastName}}
+            <div *ngIf="selectedUser && selectedUser.firstName || selectedUser.lastName">
+              {{selectedUser.firstName}} {{selectedUser.lastName}}
             </div>
           </div>
         </td>
