@@ -16,6 +16,7 @@ import { CommunicationComponent } from '../../../../shared/components/communicat
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-order-detail',
@@ -93,7 +94,8 @@ buttons: [
     @Inject(DOCUMENT) public document,
     private consumer_services: ConsumerServices,
     private sharedServices: SharedServices,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    private lStorageService: LocalStorageService
   ) {
     this.subs.sink=this.activated_route.queryParams.subscribe(
       (qParams) => {
@@ -254,7 +256,16 @@ buttons: [
 
   }
   providerDetail(provider) {
-    this.router.navigate(['searchdetail', provider.uniqueId]);
+    if (this.customId) {
+      if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
+        this.router.navigate(['customapp', this.customId]);
+      } else {
+        this.router.navigate([this.customId]);
+      }
+    } else {
+      this.router.navigate(['searchdetail', provider.uniqueId]);
+    }
+    // this.router.navigate(['searchdetail', provider.uniqueId]);
   }
   checkIfFav(id) {
     let fav = false;

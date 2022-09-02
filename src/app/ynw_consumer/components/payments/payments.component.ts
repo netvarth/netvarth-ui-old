@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { SubSink } from 'subsink';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 
 @Component({
@@ -36,7 +37,9 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
         private router: Router,
         public dateformat: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
-        private activated_route: ActivatedRoute,public translate: TranslateService,
+        private activated_route: ActivatedRoute,
+        public translate: TranslateService,
+        private lStorageService: LocalStorageService,
         private shared_services: SharedServices) {
         this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
             if (qparams && qparams.accountId) {
@@ -102,7 +105,18 @@ export class ConsumerPaymentsComponent implements OnInit, OnDestroy {
     }
     providerDetail(id, event) {
         event.stopPropagation();
-        this.router.navigate(['searchdetail', id]);
+
+        if (this.customId) {
+            if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
+              this.router.navigate(['customapp', this.customId]);
+            } else {
+              this.router.navigate([this.customId]);
+            }
+          } else {
+            this.router.navigate(['searchdetail', id]);
+          }
+
+        // this.router.navigate(['searchdetail', id]);
     }
     backToDashboard() {
         let queryParam = {
