@@ -445,6 +445,12 @@ export class ShareRxComponent implements OnInit {
               this.signature_loading = false;
               this.getDigitalSign();
             } else {
+              // if(this.data.length=== data['prescriptionsList'].length){
+              //   this.drugList = data['prescriptionsList'];
+              // }
+              // else{
+              //   this.drugList = this.data
+              // }
               this.drugList = data['prescriptionsList'];
               this.note = data['notes'];
               this.signature_loading = false;

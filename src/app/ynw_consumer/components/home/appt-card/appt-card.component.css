@@ -67,3 +67,11 @@ app-appt-card, app-wl-card {
 mat-grid-tile-footer .mat-flat-button {
     padding:5px !important;
 }
+.cardddd{
+    margin-bottom: 1rem;margin-left: 16rem;
+}
+@media(max-width: 800px){
+    .cardddd{
+        margin-bottom: 0rem !important;margin-left: 1rem !important;
+    }
+}
