@@ -31,6 +31,8 @@ import { ConfirmBoxComponent } from "../../../shared/confirm-box/confirm-box.com
 import { VoiceConfirmComponent } from "../../customers/voice-confirm/voice-confirm.component";
 import { CommunicationService } from "../../../../business/services/communication-service";
 import { AdjustscheduleDelayComponent } from "../schedule-delay/adjust-schedule-delay.component";
+import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
+
 
 @Component({
   selector: "app-appointment-actions",
@@ -118,6 +120,7 @@ export class AppointmentActionsComponent implements OnInit {
   showQnr = false;
   showDelay = false;
   multipleSelection;
+  callingNumber: any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
@@ -133,6 +136,7 @@ export class AppointmentActionsComponent implements OnInit {
     private provider_shared_functions: ProviderSharedFuctions,
     public shared_services: SharedServices,
     private communicationService: CommunicationService,
+    private teleService: TeleBookingService,
     // public _location: Location,
     public dialogRef: MatDialogRef<AppointmentActionsComponent>
   ) {
@@ -158,6 +162,9 @@ export class AppointmentActionsComponent implements OnInit {
     }
     this.status_booking = this.data.status;
     if (!this.data.multiSelection) {
+      if (this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0].callingMode && this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]) {
+        this.callingNumber = this.teleService.getTeleNumber(this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]);
+    }
       this.getPos();
       this.setData();
       this.getInternStatus();
@@ -489,12 +496,14 @@ export class AppointmentActionsComponent implements OnInit {
     });
   }
   changeWaitlistStatus(action) {
+    console.log("Action :",action);
+    const _this = this;
     if (action !== "Rejected") {
-      this.buttonClicked = true;
+      _this.buttonClicked = true;
     }
-    this.provider_shared_functions.changeWaitlistStatus(
-      this,
-      this.appt,
+    _this.provider_shared_functions.changeWaitlistStatus(
+      _this,
+      _this.appt,
       action,
       "appt"
     );
@@ -718,30 +727,15 @@ export class AppointmentActionsComponent implements OnInit {
     ) {
       this.showMsg = true;
     }
-    // if (
-    //   !this.data.multiSelection &&
-    //   (this.appt.apptStatus === "Arrived" ||
-    //     this.appt.apptStatus === "Confirmed") &&
-    //   this.data.timetype !== 2 &&
-    //   !this.appt.virtualService &&
-    //   !this.data.teleservice && (this.appt.service.serviceType === 'physicalService')
-    // ) {
-    //   this.showStart = true;
-    // }
-    if (this.data.multiSelection &&
-      (this.data.timetype === 1 || this.data.timetype === 3) &&
+    if (
       (this.appt.apptStatus === "Arrived" ||
-        this.appt.apptStatus === "Confirmed" ||
-        this.appt.apptStatus === "Started") &&
-      !this.data.teleservice && !this.appt.virtualService && (this.appt.service.serviceType === 'physicalService')
+        this.appt.apptStatus === "Confirmed") &&
+      this.data.timetype !== 2 &&
+      !this.appt.virtualService &&
+      !this.data.teleservice && this.appt.service.serviceType === 'physicalService'
     ) {
       this.showStart = true;
     }
-  //   if ((this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed') && this.data.timetype !== 2 && (this.appt.service.serviceType === 'physicalService') 
-  //&& !this.data.teleservice && !this.appt.virtualService) {
-  //     this.showStart = true;
-  // }
-    // this.status_booking = 'new' &&
     if (
       (this.data.timetype === 1 || this.data.timetype === 2)  &&
       (this.appt.apptStatus === "Arrived" ||
@@ -756,7 +750,7 @@ export class AppointmentActionsComponent implements OnInit {
       (this.appt.apptStatus === "Arrived" ||
         this.appt.apptStatus === "Confirmed" ||
         this.appt.apptStatus === "Started") &&
-      !this.data.teleservice
+      !this.data.teleservice && (this.appt.service.serviceType === 'virtualService')
     ) {
       this.showTeleserviceStart = true;
     }
@@ -1031,6 +1025,7 @@ export class AppointmentActionsComponent implements OnInit {
     };
     this.router.navigate(["provider", "telehealth"], navigationExtras);
     this.dialogRef.close();
+ 
   }
   getPos() {
     this.provider_services.getProviderPOSStatus().subscribe(

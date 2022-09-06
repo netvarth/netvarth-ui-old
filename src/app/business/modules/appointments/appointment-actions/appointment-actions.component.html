@@ -120,8 +120,6 @@
             </div>
 
         </div>
-        <!-- appt.apptStatus == 'Started' || appt.apptStatus == 'Arrived' || appt.apptStatus == 'Confirmed' && data.timetype !== 2 && !this.appt.virtualService &&
-        !this.data.teleservice -->
         <div class="action-box pointer-cursor" *ngIf="showStart" 
             (click)="!buttonClicked && changeWaitlistStatus('Started')">
             <div class="action-box-sub">
@@ -145,10 +143,18 @@
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></span>
                 <span class="wtsapvid-icon"
                     *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
-                    <span class="start-icon" *ngIf="appt.service.serviceType != 'virtualService'"></span>
-                <div class="icon-text">
+                    <span class="start-icon" *ngIf="appt.service.serviceType !== 'virtualService'"></span>
+                <div class="icon-text" *ngIf="appt.service.serviceType !== 'virtualService'">
                     {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
-                </div>              
+                </div>   
+                <div class="icon-text"
+                    *ngIf="appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                    {{appt.apptStatus == 'Started' ? 'Resume' : 'Call'}} Service
+                </div>
+                <div class="icon-text"
+                    *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                    {{appt.apptStatus == 'Started' ? 'Resume Service' : 'Call ' + callingNumber }}
+                </div>           
             </div>
 
         </div>
