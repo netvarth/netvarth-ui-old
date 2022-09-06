@@ -18,6 +18,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SubSink } from 'subsink';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 @Component({
   selector: 'app-tele-home',
   templateUrl: './tele-home.component.html',
@@ -50,6 +51,7 @@ export class TeleHomeComponent implements OnInit {
   customId: any;
   private subscriptions = new SubSink();
   accountId: any;
+  accountConfig: any;
   constructor(
     private sharedFunctions: SharedFunctions,
     private teleService: TeleBookingService,
@@ -64,7 +66,8 @@ export class TeleHomeComponent implements OnInit {
     private authService: AuthService,
     private sharedServices: SharedServices,
     private s3Processor: S3UrlProcessor,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private configService: DomainConfigGenerator,
   ) {
     this.titleService.setTitle('Jaldee - Meetings');
     this.activated_route.params.subscribe(
@@ -113,6 +116,10 @@ export class TeleHomeComponent implements OnInit {
     const _this = this;
     this.getAccountIdFromEncId(this.customId).then(
       (uniqueId: any)=> {
+        _this.configService.getUIAccountConfig(uniqueId).subscribe(
+          (uiconfig: any) => {
+            _this.accountConfig = uiconfig;
+          });
         _this.getBusinessInfo(uniqueId).then((businessProfile: any)=> {
           _this.authService.goThroughLogin().then(
             (status) => {

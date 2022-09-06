@@ -26,7 +26,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   accountExists: boolean;
   accountId: any;
   templateJson;
-  
+  accountConfig: any;
   private subscriptions = new SubSink();
   loading: boolean = true;
   theme: any;
@@ -109,6 +109,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
             _this.customappService.setNews(_this.provider_id);
             _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
               (account_config: any) => {
+                _this.accountConfig = account_config;
                 _this.customappService.setAccountConfig(account_config);
               }
             )
