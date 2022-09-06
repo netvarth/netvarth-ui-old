@@ -190,7 +190,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   onReSize() {
     this.innerWidth = window.innerWidth;
     if (this.innerWidth <= 768) {
-      this.ScreenHeight= '60%';
+      this.ScreenHeight= '85%';
       this.screenWidth='55%';
       if(this.drugList && this.drugList.length>0){
         this.addMedecineMobDeviceB=false;
