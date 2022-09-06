@@ -23,6 +23,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, Image, ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { AuthService } from '../../../../shared/services/auth-service';
 import { CustomerService } from '../../../../shared/services/customer.service';
+import { DomainConfigGenerator } from '../../../../shared/services/domain-config-generator.service';
 
 
 @Component({
@@ -118,6 +119,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     familyMembers: any = []; // hold the members
     amountPlaceHolder: any;
     @ViewChild('consumer_donation') paytmview;
+    accountConfig: any;
     constructor(public fed_service: FormMessageDisplayService,
         // private fb: FormBuilder, 
         public dialog: MatDialog,
@@ -143,6 +145,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         private authService: AuthService,
         private activaterouterobj: ActivatedRoute,
         private customerService: CustomerService,
+        private configService: DomainConfigGenerator,
         public sharedFunctons: SharedFunctions) {
         this.subs.sink = this.route.queryParams.subscribe(
             params => {
@@ -281,6 +284,10 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         if (_this.lStorageService.getitemfromLocalStorage('ios')) {
             _this.from_iOS = true;
         }
+        _this.configService.getUIAccountConfig(this.uniqueId).subscribe(
+            (uiconfig: any) => {
+                _this.accountConfig = uiconfig;
+            });
         _this.gets3curl();
         _this.authService.goThroughLogin().then(
             (status) => {

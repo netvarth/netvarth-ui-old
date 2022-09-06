@@ -23,6 +23,7 @@ import { Location } from "@angular/common";
 import { ProviderServices } from "../../../../business/services/provider-services.service";
 import { FileService } from "../../../../shared/services/file-service";
 import { QnrDialogComponent } from "../../../../../../src/app/shared/components/qnr-dialog/qnr-dialog.component";
+import { DomainConfigGenerator } from "../../../../shared/services/domain-config-generator.service";
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -191,6 +192,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     total_servicefee : number;
     readMore = false;
     advPostData: any;
+    accountConfig: any;
     constructor(
         private activatedRoute: ActivatedRoute,
         private lStorageService: LocalStorageService,
@@ -211,7 +213,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         private location: Location,
         private providerServices: ProviderServices,
         private cdRef: ChangeDetectorRef,
-        private fileService: FileService
+        private fileService: FileService,
+        private configService: DomainConfigGenerator
     ) {
         this.subs.sink = this.activatedRoute.queryParams.subscribe(
             params => {
@@ -253,6 +256,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (params.isFrom && params.isFrom == 'providerdetail') {
                     this.from = 'providerdetail';
                 }
+                
             })
     }
 
@@ -290,6 +294,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (this.appmtDate) {
             this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
         }
+        _this.configService.getUIAccountConfig(this.uniqueId).subscribe(
+            (uiconfig: any) => {
+              _this.accountConfig = uiconfig;
+            });
         // Collecting informations from s3 businessProfile, settings etc.
         this.gets3urls().then(
             () => {

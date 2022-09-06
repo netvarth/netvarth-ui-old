@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
   loading = true;
   subscriptions = new SubSink();
   imgPath: any;
+  accountConfig: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -48,6 +49,7 @@ export class LoginComponent implements OnInit {
     return new Promise(function (resolve, reject) {
       _this.configService.getUIAccountConfig(uniqueId).subscribe(
         (uiconfig: any) => {
+          _this.accountConfig = uiconfig;
           if (uiconfig['theme']) {
             _this.theme = uiconfig['theme'];
             _this.lStorageService.setitemonLocalStorage('theme', uiconfig['theme']);

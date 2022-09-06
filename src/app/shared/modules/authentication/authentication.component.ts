@@ -36,6 +36,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   rePassword;
   btnClicked = false;
   @Input() accountId;
+  @Input() accountConfig;
   @Output() actionPerformed = new EventEmitter<any>();
   otpError: string;
   otpSuccess: string;
@@ -51,6 +52,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   email: any;
   googleLogin: boolean;
+  googleIntegration: boolean;
   constructor(private sharedServices: SharedServices,
     private authService: AuthService,
     private lStorageService: LocalStorageService,
@@ -59,6 +61,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     private cd: ChangeDetectorRef,
     private ngZone: NgZone
   ) {
+    this.loading = true;
   }
   ngOnDestroy(): void {
     this.lStorageService.removeitemfromLocalStorage('login');
@@ -80,8 +83,15 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     };
   }
   ngOnInit(): void {
+    console.log(this.accountConfig);
     this.lStorageService.setitemonLocalStorage('login', true);
-    this.initGoogleButton();
+    if (this.accountConfig && this.accountConfig['googleIntegration']===false) {
+      this.googleIntegration = false;
+    } else {
+      this.googleIntegration = true;
+      this.initGoogleButton();
+    }   
+    this.loading = false;
   }
   
   loadGoogleJS() {
@@ -326,8 +336,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                       }
                     )
                   } else {
+                    _this.authService.doLogout().then(
+                      () => {
                     _this.actionPerformed.emit('success');
                     this.btnClicked = false;
+                      });
                   }
                 } else if (error.status === 401) {                  
                   _this.ngZone.run(

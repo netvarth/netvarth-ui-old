@@ -10,7 +10,8 @@
 }
 .heartfulness_theme1.consumer-dashhome  .c-checkins .ng-tns-c16-8 .find-sp-btn,
 .heartfulness_theme1.consumer-dashhome .consumer-dash .flat-icon-btn,
-.heartfulness_theme1.consumer-dashhome .consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn {
+.heartfulness_theme1.consumer-dashhome .consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn,
+.heartfulness_theme1 .more_btn {
   background: #522e5a 0% 0% no-repeat padding-box !important; 
 }
 .heartfulness_theme1 .mat-button, .heartfulness_theme1 .getappointmentbutton{
@@ -30,10 +31,6 @@
     background-attachment: fixed  !important; 
     background-size: 100% 100%  !important;
     /* color: #fff !important; */
-  }
-  .heartfulness_theme1 .panel-body{
-    background-color: #fff !important;
-    height: 99.5vh;
   }
   .heartfulness_theme1 .panel {
     border: none !important;

@@ -23,8 +23,8 @@
                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                     </app-common-innerloading-spinner>
                 </button>
-                <div class="centeralign mgn-bt-20 mgn-up-30 color-grey">----------------OR-----------------</div>
-                <div class="form-group mobile-no mgn-up-30">
+                <div class="centeralign mgn-bt-20 mgn-up-30 color-grey" *ngIf="googleIntegration">----------------OR-----------------</div>
+                <div class="form-group mobile-no mgn-up-30" *ngIf="googleIntegration">
                     <div id="buttonDiv" class="g-container" #googleBtn></div>
                 </div>
             </div>

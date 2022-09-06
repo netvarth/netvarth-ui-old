@@ -28,6 +28,7 @@ import { JcCouponNoteComponent } from '../../../../shared/modules/jc-coupon-note
 import { CustomerService } from '../../../../shared/services/customer.service';
 import { AuthService } from '../../../../shared/services/auth-service';
 import { FileService } from '../../../../shared/services/file-service';
+import { DomainConfigGenerator } from '../../../../shared/services/domain-config-generator.service';
 
 @Component({
     selector: 'app-consumer-checkin',
@@ -297,6 +298,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     showNext = false;
     serviceTotalPrice : number;
     total_servicefee : number;
+    accountConfig: any;
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
@@ -323,6 +325,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         private customerService: CustomerService,
         private authService: AuthService,
         private fileService: FileService,
+        private configService: DomainConfigGenerator,
         @Inject(DOCUMENT) public document
     ) {
 
@@ -449,6 +452,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (_this.checkin_date) {
             _this.isFutureDate = _this.dateTimeProcessor.isFutureDate(_this.serverDate, _this.checkin_date);
         }
+        _this.configService.getUIAccountConfig(this.provider_id).subscribe(
+        (uiconfig: any) => {
+            _this.accountConfig = uiconfig;
+        });
         _this.gets3urls().then(() => {
             _this.getRescheduledInfo().then(() => {
                 if (_this.selectedServiceId) { _this.getPaymentModes(); }

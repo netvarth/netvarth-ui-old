@@ -16,7 +16,7 @@
         <div class="card card-custom no-margin hgt-adjust">
             <div class="card-body p-0">
                 <app-consumer-join *ngIf="!loggedIn && !customId" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
-                <app-authentication *ngIf="!loggedIn && customId" (actionPerformed)="actionPerformed($event)" [accountId]="account_id"></app-authentication>
+                <app-authentication *ngIf="!loggedIn && customId" [accountConfig]="accountConfig" (actionPerformed)="actionPerformed($event)" [accountId]="account_id"></app-authentication>
                 <app-common-innerloading-spinner *ngIf="loggedIn && loadingS3"></app-common-innerloading-spinner>
             </div>
         </div>

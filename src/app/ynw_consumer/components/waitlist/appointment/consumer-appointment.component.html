@@ -19,7 +19,7 @@
         <app-consumer-join *ngIf="!loggedIn && !customId" (actionPerformed)="actionPerformed($event)">
         </app-consumer-join>
         <app-authentication *ngIf="!loggedIn && customId" (actionPerformed)="actionPerformed($event)"
-          [accountId]="accountId"></app-authentication>
+          [accountId]="accountId" [accountConfig]="accountConfig"></app-authentication>
         <app-common-innerloading-spinner *ngIf="loggedIn && (loadingS3 || loading || !slotLoaded) ">
         </app-common-innerloading-spinner>
       </div>
