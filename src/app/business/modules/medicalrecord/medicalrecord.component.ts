@@ -316,12 +316,21 @@ export class MedicalrecordComponent implements OnInit {
             this.customerDetails = response[0];
           }
           console.log('customerDetailPatientDetails::',  this.customerDetails);
-          this.tempPhoneNumber= this.customerDetails.phoneNo
-          this.customerDetailsAge = this.customerDetails.age.year
-          this.patientId = this.customerDetails.id;
-          if (this.customerDetails.memberJaldeeId) {
+          if(this.customerDetails){
+            if(this.customerDetails.phoneNo){
+              this.tempPhoneNumber= this.customerDetails.phoneNo;
+            }
+            if(this.customerDetails.age && this.customerDetails.age.year){
+              this.customerDetailsAge = this.customerDetails.age.year
+            }
+            if(this.customerDetails.id){
+              this.patientId = this.customerDetails.id;
+
+            }
+          }
+          if (this.customerDetails && this.customerDetails.memberJaldeeId) {
             this.display_PatientId = this.customerDetails.memberJaldeeId;
-          } else if (this.customerDetails.jaldeeId) {
+          } else if (this.customerDetails && this.customerDetails.jaldeeId) {
             this.display_PatientId = this.customerDetails.jaldeeId;
           }
           this.medicalService.setPatientDetails(this.customerDetails);
@@ -360,6 +369,8 @@ export class MedicalrecordComponent implements OnInit {
           this.lastVisit_dataSource = data;
           console.log('lastVisit_dataSource::', this.lastVisit_dataSource);
           this.previousLIst = data;
+          const arrUniq = [...new Map(this.previousLIst.slice().reverse().map(v => [v.id, v])).values()].reverse();
+          console.log('arrUniq',arrUniq)
           console.log('this.mrId', this.mrId);
           console.log(' this.bookingId ', typeof this.bookingId )
           if (this.mrId === 0) {
@@ -575,13 +586,18 @@ export class MedicalrecordComponent implements OnInit {
   goback(type_from) {
     this.getCustomerbyId(this.customerDetails.id)
     const back_type = this.medicalService.getReturnTo();
+    console.log('back_type',back_type)
     console.log('type_from',type_from)
     if (type_from === 'medical') {
+      // alert(type_from)
       this.medicalService.viewVisitDetails = false;
       this.viewVisitDetails = false;
-        this.location.back();
+      // console.log('this.medicalInfo',this.medicalInfo);
+      // console.log('visitDetailsTableValue',this.visitDetailsTableValue)
+      this.location.back();
     }
     else {
+      alert(back_type)
       if (back_type === 'waitlist') {
         this.router.navigate(['provider', 'check-ins']);
       } else if (back_type === 'appt') {
@@ -870,6 +886,7 @@ export class MedicalrecordComponent implements OnInit {
     if (visit.providerName) {
       providerName = visit.providerName;
     } else {
+      console.log('this.provider;',this.provider)
       providerName = this.provider;
     }
     return providerName;

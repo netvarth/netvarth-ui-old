@@ -12,7 +12,7 @@
     <section *ngIf="!loading" class="shadow mgn-up-10">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes " >
         <!-- addMedecineMobDeviceB -->
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate" *ngIf="(drugList && uploadlist && uploadlist.length===0) || drugList===undefined">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreateAdd" *ngIf="(drugList && uploadlist && uploadlist.length===0) || drugList===undefined">
           <div class="shadow" style="height:100% !important">
           <div>
             <!-- *ngIf="drugList && drugList.length>0 && (tempText=== undefined || tempText==='')" -->
@@ -150,7 +150,7 @@
                             #tooltip="matTooltip" matTooltip="Download" [matTooltipPosition]="'below'"/>
                           </div>
                           <div>
-                            <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')" (click)="print('printableArea')">
+                            <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')" (click)="print('printableArea',manualSignInfo)">
                               <img class="fileView" src="/assets/images/medicalReportIcon/print.png" 
                               #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'" />
                             </div>
@@ -248,7 +248,7 @@
                               <th  data-title="Frequency">Frequency</th>
                               <th  data-title="Instructions">Instructions</th>
                               <th data-title="Edit"></th>
-                              <th (click)="print('printableArea')" class="pointer-cursor" #tooltip="matTooltip"
+                              <th (click)="print('printableArea',manualSignInfo)" class="pointer-cursor" #tooltip="matTooltip"
                                 matTooltip="Print" [matTooltipPosition]="'below'">
                                 <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
                               </th>
@@ -492,10 +492,60 @@
 <ng-container *ngIf="!loading && viewVisitDetails">
   <div *ngIf="!loading && viewVisitDetails " class=" mgn-up-10 pad-25" [ngClass]="{card: drugList && drugList.length !==0}" >
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-    <!-- {{viewMrInfo | json}} -->
+   <div>
     <span class="table-heading"><b> View prescription</b></span>
-    <span style="cursor:pointer"> <img #tooltip="matTooltip" matTooltip="Update" [matTooltipPosition]="'below'"  
-      (click)="updateEditPrescription(drugList)" style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" /></span>
+   </div>
+    <div style="display:flex;gap:10px"  class="imageClas">
+      <span class=" pointer-cursor" *ngIf="drugList" (click)="shareManualRx('uploadrx',bookingType,bookingId,drugList)"
+      #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
+      <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
+  </span>
+    <span (click)="print('printableArea',manualSignInfo)" class=" pointer-cursor" #tooltip="matTooltip" matTooltip="Print"
+      [matTooltipPosition]="'below'">
+      <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
+    </span>
+    <span style="cursor:pointer"> <img #tooltip="matTooltip" matTooltip="Update" [matTooltipPosition]="'below'"
+        (click)="updateEditPrescription(drugList)" style="height:20px;width:20px"
+        src="/assets/images/medicalReportIcon/edit.png" /></span>
+    </div>
+
+
+    <div class="imgClasMobile">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngIf="drugList" (click)="shareManualRx('uploadrx',bookingType,bookingId,drugList)" class="gap"> 
+          <div>
+            <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
+          </div>
+          <div>Share</div>
+        </button>
+        <button mat-menu-item class="gap" (click)="print('printableArea',manualSignInfo)">
+          <div class="Share pointer-cursor" >
+            <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
+          </div>
+          <div>Print</div>
+        </button>
+      <button mat-menu-item (click)="updateEditPrescription(drugList)" class="gap" >
+        <div class="Share pointer-cursor" >
+          <img  style="height:17px;width:17px" src="/assets/images/medicalReportIcon/edit.png" />
+        </div>
+        <div>Share</div>
+      </button>
+    </mat-menu>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
   </div>
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" class="overflow" >
     <div>
@@ -508,15 +558,6 @@
             <th>Dosage</th>
             <th>Frequency</th>
             <th>Instructions</th>
-            <th  class=" pointer-cursor" *ngIf="drugList" (click)="shareManualRx('uploadrx',bookingType,bookingId,drugList)"
-            #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
-              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
-            </th>
-            <th  (click)="print('printableArea')" class=" pointer-cursor" 
-            #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'">
-              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
-            </th>
-            <!-- <th>Edit</th> -->
             <th></th>
           </tr>
         </thead>
@@ -584,7 +625,7 @@
       <div class=" mgn-up-10 filesCreate" *ngIf="uploadlist && uploadlist.length > 0">
         <div class="shadow" style="height:100% !important">
           <div class="sharedFlex">
-            <div class="uploadedText">Uploaded Prescription</div>
+            <div class="uploadedText">Uploaded Prescriptionn</div>
           <div class="sharedClass" *ngIf="prescriptionShared"><div
             class="fa fa-lightbulb-o" aria-hidden="true">&nbsp;Prescription last shared on
             {{prescriptionSharedTimestamp | date:dateFormatSp}}</div></div>
@@ -669,7 +710,16 @@
               </div>
             </div>
           </div>
+          <!-- {{uploadlist[0].url | json}} -->
         </div>
+        <div hidden id="sharePdf"  *ngIf="uploadlist && uploadlist[0] && uploadlist[0].type && (uploadlist[0].type==='.pdf')" >
+          <div class="pdf-container">
+              <pdf-viewer   [src]="uploadlist[0].url"  [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
+                  [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
+                  [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+                  style="width: 100%; height: 600px"></pdf-viewer>
+          </div>
+      </div>
       </div>
     </div>
   </div>

@@ -234,7 +234,11 @@ export class ShareRxComponent implements OnInit {
     if(document && document.getElementById('sharePdf')){
        sahrePdfVia=document.getElementById('sharePdf');
     }
-    
+    let thirdPartyHtml;
+    if(document.getElementById('thirdParty')){
+      thirdPartyHtml= document.getElementById('thirdParty')
+    }
+    console.log('thirdPartyHtml',thirdPartyHtml)
     console.log('sahrePdfVia',sahrePdfVia)
     console.log('sahrePdfVia',sahrePdfVia)
     // console.log('sahrePdfViahtml',sahrePdfVia.innerHTML)
@@ -250,13 +254,13 @@ export class ShareRxComponent implements OnInit {
         this.sharebtnloading = false;
         return false;
       }
-      if(this.thirdpartyphone === ''){
-        this.api_error = 'Please enter  phone number';
-        this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
-        this.disable = false;
-        this.sharebtnloading = false;
-        return false;
-      }
+      // if(this.thirdpartyphone === ''){
+      //   this.api_error = 'Please enter  phone number';
+      //   this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
+      //   this.disable = false;
+      //   this.sharebtnloading = false;
+      //   return false;
+      // }
       if (this.thirdpartyphone !== '') {
         const curphone = this.thirdpartyphone;
         const pattern = new RegExp(projectConstantsLocal.VALIDATOR_NUMBERONLY);
@@ -351,6 +355,7 @@ export class ShareRxComponent implements OnInit {
       }
     } else {
       if (this.sharewith !== 0) {
+        // alert('3d')
         const passData = {
           'message': this.amForm.controls.message.value,
           'html': vwofrx.innerHTML,

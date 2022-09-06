@@ -27,11 +27,6 @@ import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.com
 import { PreviewpdfComponent } from '../../crm/leads/view-lead-qnr/previewpdf/previewpdf.component';
 import { SubSink } from 'subsink';
 
-// import { C } from '@angular/cdk/keycodes';
-
-
-
-
 @Component({
   selector: 'app-prescription',
   templateUrl: './prescription.component.html',
@@ -160,6 +155,11 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   addPrescription:boolean=true;
   tempTextDelete: string;
   screenWidth: string;
+  manualSignInfo: any;
+  signature_loading = true;
+  src = '';
+  isPdfLoaded = false;
+  pdfSrc;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -171,11 +171,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private location: Location,
-      private fb: FormBuilder,
-      public fed_service: FormMessageDisplayService,
-      // private fileService: FileService,
-     
-      // private medicalService: MedicalrecordService,
+    private fb: FormBuilder,
+    public fed_service: FormMessageDisplayService,
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -307,7 +304,9 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   getDigitalSign() {
 
     this.provider_services.getDigitalSign(this.provider_user_Id)
-      .subscribe((data) => {
+      .subscribe((data:any) => {
+        console.log('digitalSign',data);
+        this.manualSignInfo = data;
         this.digitalSign = true;
       },
         error => {
@@ -396,10 +395,12 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       }
     });
   }
-  print(divName?){
-    console.log(' _this.drugList', this.viewMrInfo)
-    // app-instructions
-    // var printContents = document.getElementById(divName).innerHTML;
+  print(divName,signatureInfo){
+    let manualPresSignature:any;
+    if(signatureInfo && signatureInfo.url){
+      manualPresSignature=signatureInfo.url;
+    }
+    console.log('manualPresSignature',manualPresSignature)
     const params = [
       'height=' + screen.height,
       'width=' + screen.width,
@@ -408,9 +409,14 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     const printWindow = window.open('', '', params);
     const _this=this;
     let checkin_html = '';
+    checkin_html +='<div style="box-shadow: 0 0 10px rgb(0 0 0 / 5%);border-radius: 5px;padding:15px;background:#f9f9f9f;position:absolute;z-index:99999;height:100%;width:100%">'
     checkin_html +='<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
-    checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;background: rgba(29, 161, 146, 0.11);position:absolute;z-index:99999">';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3;">Medecine</td>';
+    checkin_html +='<div style="text-align:end;width="100%";height:"100%;">'
+    checkin_html +='<div style="font-size:14px;font-weight:bold;padding-right:90px;">Your Digital Signature</div>'
+    checkin_html += '<img style="height:60px;width:60px;padding-right:90px;"  src="' + manualPresSignature + '" />'
+    checkin_html +='</div>'
+    checkin_html += '<table width="100%" style="position:absolute;z-index:99999;padding-right:100px;">';
+    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3;">Medicine</td>';
     checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Duration(days)</td>';
     checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Dosage</td>';
     checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Frequency</td>';
@@ -425,8 +431,9 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].instructions+ '</td>';
     }
     checkin_html += '</table>';
-    checkin_html += '<div style="margin:10px">';
-    checkin_html += '</div>';
+    checkin_html +='</div>'
+    // checkin_html += '<div style="margin:10px">';
+    // checkin_html += '</div>';
     checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: absolute;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
     printWindow.document.write('<html><head><title></title>');
     printWindow.document.write('</head><body >');
@@ -439,16 +446,11 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       printWindow.close();
     }, 500);
   }
-  //  printImg(url) {
-  //   var win = window.open('');
-  //   win.document.write('<img src="' + url.url + '" onload="window.print();window.close()" />');
-  //   win.focus();
-  // }
-  printPdf(url){
-    // let caption:any=url.caption;
+  printPdf(url,html){
     let date:any=url.date;
     let originalName:any=url.originalName;
     let prefix:any=url.prefix;
+    console.log('html',html)
     const params = [
       'height=' + screen.height,
       'width=' + screen.width,
@@ -457,26 +459,29 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     const printWindow = window.open('', '', params);
     let checkin_html = '';
     checkin_html +='<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
-    checkin_html += '<table width="100%" style="border: 1px solid #dbdbdb;background: rgba(29, 161, 146, 0.11);position:absolute;z-index:99999">';
-    // checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3;">caption</td>';
+    checkin_html += '<table width="100%;height:100%" style="border: 1px solid #dbdbdb;background: rgba(29, 161, 146, 0.11);position:absolute;z-index:99999">';
     checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Date</td>';
     checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">File Name</td>';
     checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Prefix</td>';
     checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">File Type</td>';
     checkin_html += '</thead>';
       checkin_html += '<tr style="line-height:20px;padding:10px;border-bottom: 1.02503px solid #E7E3E3">';
-      // checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + caption+ '</td>';
       checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + date+'</td>';
       checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + originalName + '</td>';
       checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + prefix+ '</td>';
       checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + '<img style="height:20px;width:20px;" src="/assets/images/ImgeFileIcon/pdf.png" />'+ '</td>';
     checkin_html += '</table>';
-    checkin_html += '<div style="margin:10px">';
-    checkin_html += '</div>';
-    checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: absolute;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
+    // checkin_html +='<div style="position:absolute;z-index:99999">'
+    checkin_html += '<div>' + html+ '</div>';
+    // checkin_html +='</div>'
+    // checkin_html += '<div style="margin:10px">';
+    // checkin_html += '</div>';
+    // checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: relative;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
     printWindow.document.write('<html><head><title></title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(checkin_html);
+    printWindow.document.write('</head><body>');
+    // console.log(checkin_html)
+        printWindow.document.write(checkin_html);
+
     printWindow.document.write('</body></html>');
     printWindow.moveTo(0, 0);
     printWindow.print();
@@ -485,34 +490,88 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       printWindow.close();
     }, 500);
 
+
+
+    // Create an IFrame.
+    // let resp= url
+    // let pdf = new Blob([resp], { type: 'application/pdf' });
+    //       let objectURL = URL.createObjectURL(pdf);
+    //       let frm = document.createElement('iframe');
+    //       frm.style.display = 'none';
+    //       frm.src = objectURL;
+    //       let temp:any=document.body.appendChild(frm);
+    //       frm.onload = function () {
+    //           console.log('Page was loaded');
+    //           const params = [
+    //   'height=' + screen.height,
+    //   'width=' + screen.width,
+    //   'fullscreen=yes'
+    // ].join(',');
+    // const printWindow = window.open('', '', params);
+    // const innerHtml= document.getElementById('sharePdf').innerHTML;
+    // console.log('innerHtml',innerHtml)
+    //           printWindow.document.write( temp);
+    //           printWindow.print();
+    //           printWindow.document.close();
+    //           setTimeout(() => {
+    //             printWindow.close();
+    //           }, 500);
+    //       }
+
+    
+
+
+
+
+    // console.log(' this.uploadlist[0].this.getData()', this.uploadlist[0])  
+    //   const iframe = document.createElement('iframe');
+    //   iframe.style.display = 'none';       
+    //   iframe.src = this.uploadlist[0].url;
+    //   document.body.append(iframe);
+    //   iframe.contentWindow.print();
+    //   iframe.contentWindow.document.close();
+    // setTimeout(() => {
+    //   iframe.contentWindow.close();
+    // }, 500);
   }
+  
   printSecond(url){
     console.log(url);
     if(url.type==='.pdf'){
-      this.printPdf(url)
+      if(document && document.getElementById('sharePdf')){
+        let html = document.getElementById('sharePdf').innerHTML;
+        if(html &&  url){
+          this.printPdf(url,html)
+        }
+      }
+      
     }
-    if(url && url.url){
-      const params = [
-        'height=' + screen.height,
-        'width=' + screen.width,
-        'fullscreen=yes'
-      ].join(',');
-      const printWindow = window.open('', '', params);
-      // const _this=this;
-      let checkin_html = '';
-      checkin_html += '<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
-      checkin_html += '<img style="width:100%;height:100%" src="' + url.url + '" />'
-      printWindow.document.write('<html><head><title></title>');
-      printWindow.document.write('</head><body >');
-      printWindow.document.write(checkin_html);
-      printWindow.document.write('</body></html>');
-      printWindow.moveTo(0, 0);
-      printWindow.print();
-      printWindow.document.close();
-      setTimeout(() => {
-        printWindow.close();
-      }, 500);
+    else{
+      if(url && url.url){
+        const params = [
+          'height=' + screen.height,
+          'width=' + screen.width,
+          'fullscreen=yes'
+        ].join(',');
+        const printWindow = window.open('', '', params);
+        let checkin_html = '';
+        checkin_html +='<div style="box-shadow: 0 0 10px rgb(0 0 0 / 5%);border-radius: 5px;padding:15px;background:#f9f9f9f;">'
+        checkin_html += '<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
+        checkin_html += '<img style="width:100%;height:100%" src="' + url.url + '" />'
+        checkin_html += '</div>'
+        printWindow.document.write('<html><head><title></title>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write(checkin_html);
+        printWindow.document.write('</body></html>');
+        printWindow.moveTo(0, 0);
+        printWindow.print();
+        printWindow.document.close();
+        setTimeout(() => {
+          printWindow.close();
+        }, 500);
+      }
     }
+    
    
   }
 

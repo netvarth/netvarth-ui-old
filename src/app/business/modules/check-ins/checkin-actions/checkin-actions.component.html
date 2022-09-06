@@ -213,7 +213,8 @@
                 <div class="icon-text">Medical Record</div>
             </div>
         </div>
-        <div *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && !data.multiSelection && showmrrx && subdomain !=='laboratory' && subdomain !=='pharmacy'"
+        <!-- domain === 'healthCare' ||  -->
+        <div *ngIf="(domain === 'veterinaryPetcare') && !data.multiSelection && showmrrx && subdomain !=='laboratory' && subdomain !=='pharmacy'"
             class="action-box pointer-cursor" (click)="prescription()">
             <div class="action-box-sub">
                 <span class="mr-rx-icon"></span>
