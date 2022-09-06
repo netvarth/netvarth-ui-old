@@ -45,8 +45,7 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!=='card_1'">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!=='card_1' && item.type=='donation' || !trimSpace || (trimSpace && (timings || (personsAheadText)))" >
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="item.type=='donation'">
             <p class="card-text donationAmount no-padding mgn-lt-10">
                 <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>

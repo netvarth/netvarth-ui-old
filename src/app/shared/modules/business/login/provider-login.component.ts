@@ -72,7 +72,18 @@ export class ProviderLoginComponent implements OnInit {
         this.lStorageService.setitemonLocalStorage('reqFrom', 'SP_APP');
       }
       if (data.muid) {
-        this.lStorageService.setitemonLocalStorage('mUniqueId', data.muid);
+        const prevMuid = this.lStorageService.getitemfromLocalStorage('mUniqueId');
+        if(data.muid!== prevMuid) {
+          const request = {
+            "mUniqueIdOld": prevMuid,
+            "mUniqueId": data.muid
+          }
+          this.shared_services.updateProviderMUniqueId(request).subscribe(
+            ()=>{
+              this.lStorageService.setitemonLocalStorage('mUniqueId', data.muid);
+            }
+          )          
+        }        
       }
     });
     this.evnt = router.events.subscribe(event => {

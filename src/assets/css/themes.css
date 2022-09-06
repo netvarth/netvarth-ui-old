@@ -5,7 +5,7 @@
     background-color: transparent !important; 
     border-color: transparent !important; 
 }
-.heartfulness_theme1 mat-sidenav {
+.heartfulness_theme1 mat-sidenav, .heartfulness_theme1 .mat-dialog-title{
   background: #522e5a 0% 0% no-repeat padding-box !important; 
 }
 .heartfulness_theme1.consumer-dashhome  .c-checkins .ng-tns-c16-8 .find-sp-btn,
@@ -13,13 +13,16 @@
 .heartfulness_theme1.consumer-dashhome .consumer-dash .c-checkins .ng-tns-c16-8 .flat-btn, table .flat-btn {
   background: #522e5a 0% 0% no-repeat padding-box !important; 
 }
-.heartfulness_theme1 .mat-button, .heartfulness_theme1 .getappointmentbutton {
+.heartfulness_theme1 .mat-button, .heartfulness_theme1 .getappointmentbutton{
     background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     border:none !important;
   }
   .heartfulness_theme1 .panel-heading.top-row {
     background: #522e5a 0% 0% no-repeat padding-box !important;
     height: 50px !important;
+  }
+  .heartfulness_theme1 .panel-default>.panel-heading {
+    background: #522e5a 0% 0% no-repeat padding-box !important;
   }
   .heartfulness_theme1 { 
     background-image: url(../images/heartfulness/BG.jpg) !important; 
@@ -28,11 +31,19 @@
     background-size: 100% 100%  !important;
     /* color: #fff !important; */
   }
+  .heartfulness_theme1 .panel-body{
+    background-color: #fff !important;
+    height: 99.5vh;
+  }
+  .heartfulness_theme1 .panel {
+    border: none !important;
+  }
   .heartfulness_theme1 .bus-item-N, .heartfulness_theme1 h3, .heartfulness_theme1 mat-label,
   .heartfulness_theme1 .consumer-join-component mat-label,
   .heartfulness_theme1 .mat-tab-label-content,
   .heartfulness_theme1 .right-menu-header, .heartfulness_theme1 .back-btn i,
-  .heartfulness_theme1 b.header-bus-title{ 
+  .heartfulness_theme1 b.header-bus-title, .heartfulness_theme1 .panel-heading a,
+  .heartfulness_theme1 .dept-title-h4, .heartfulness_theme1 .btn-attach { 
     color: #fff !important;
   }
   .heartfulness_theme1 .serv-head.service-serv-head, .heartfulness_theme1 .mat-tab-label,

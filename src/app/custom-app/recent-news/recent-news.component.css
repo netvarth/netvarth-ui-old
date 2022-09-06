@@ -1,0 +1,79 @@
+
+.recentNews h2 {
+    color: white !important;
+  }
+  .recentcards {
+    height: 300px;
+    border-radius: 5px;
+  }
+  .recentcards img {
+    height: 100px;
+  }
+  .recentdesc {
+    text-overflow: ellipsis;
+    height: 90px;
+    overflow: hidden;
+  }
+  .gallery-item {
+    display: inline-block;
+    position: relative;
+  }
+  .gallery-button {
+    /* background-color: white; */
+      padding: 5%;
+      font-size: 12px;
+     display: block;
+     position: absolute;
+     /* width: 160px; */
+     /* height: 40px; */
+     margin: auto;
+     top: 0;
+     left: 0;
+     right: 0;
+     cursor: pointer;
+   }
+  
+  
+   .recentcards h6 {
+     margin-top: 5px;
+    font-size: 1.05rem!important;
+    font-weight: bold;
+    line-height: 1.5;
+    color: #000;
+    -webkit-line-clamp: 1 !important;
+    -webkit-box-orient: vertical !important;
+    hyphens: auto;
+  }
+  
+  .recentcards p {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 4 !important;
+    -webkit-box-orient: vertical !important;
+    hyphens: auto;
+    overflow: none;
+  }
+  
+  .card {
+    padding:5% !important;
+  }
+  .owl-theme .owl-controls .owl-page {
+    display: inline-block;
+  }
+  .owl-theme .owl-controls .owl-page span {
+    background: none repeat scroll 0 0 #869791;
+    border-radius: 20px;
+    display: block;
+    height: 12px;
+    margin: 5px 7px;
+    opacity: 0.5;
+    width: 12px;
+  }
+  .newsDetails {
+    height: 150px;
+    overflow: hidden;
+  }
+  h5{
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    margin-bottom: 0 !important;
+}

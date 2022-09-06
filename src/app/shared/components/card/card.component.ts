@@ -30,6 +30,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
     @Input() cardName;
     // @Input() pos;
     @Input() statusAction;
+    @Input() trimSpace;
     service: any;
     user: any;
     department: any;

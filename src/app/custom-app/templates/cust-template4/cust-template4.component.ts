@@ -45,6 +45,8 @@ export class CustTemplate4Component implements OnInit {
   waitlisttime_arr: any = [];
   appttime_arr: any = [];
   deptUsers: any;
+
+  news: any = [];
   // @Input() templateJson;
   // userId;
   // pSource;
@@ -73,6 +75,7 @@ export class CustTemplate4Component implements OnInit {
     this.setSystemDate();
     this.templateJson = this.customappService.getTemplateJson();
     console.log(this.templateJson);
+    this.news = this.customappService.getNewsFeed();
     if (this.customappService.getDonationServices()) {
       this.donationServicesJson = this.s3Processor.getJson(this.customappService.getDonationServices());
     }

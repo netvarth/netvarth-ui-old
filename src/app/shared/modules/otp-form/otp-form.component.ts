@@ -117,15 +117,6 @@ console.log("SubmitData:", this.submitdata);
   resetCounter(val) {
     this.resetCounterVal = val;
   }
-
-  // createForm() {
-  //   this.otp_form = this.fb.group({
-  //     phone_otp: ['', Validators.compose(
-  //       [Validators.required])]
-  //   });
-  //   // this.setMessageType();
-  // }
-
   doOnOtpSubmit() {
     console.log(this.otpEntered);
     if (this.otpEntered) {

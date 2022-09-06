@@ -10,6 +10,7 @@ import { ServiceMeta } from '../../shared/services/service-meta';
 export class ConsumerServices {
 
 
+
   constructor(private servicemeta: ServiceMeta) {}
 
   getWaitlist(params) {
@@ -231,5 +232,9 @@ export class ConsumerServices {
   getConsumerTotalCashspent(){
     const url = 'consumer/wallet/cash/spent';
      return this.servicemeta.httpGet(url);
+  }
+  getPrescriptions(providerConsumerId) {
+    const url = 'provider/mr/prescription/providerConsumer/'+ providerConsumerId;
+    return this.servicemeta.httpGet(url);
   }
 }

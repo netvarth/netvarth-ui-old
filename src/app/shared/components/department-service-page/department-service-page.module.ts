@@ -8,6 +8,8 @@ import { RouterModule, Routes } from "@angular/router";
 import { HeaderModule } from "../../modules/header/header.module";
 import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
 import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
+import { SafeHtmlModule } from "../../pipes/safe-html/safehtml.module";
+import { MatButtonModule } from "@angular/material/button";
 const routes: Routes = [
     {path: '', component: DepartmentServicePageComponent}
 ];
@@ -19,6 +21,8 @@ const routes: Routes = [
         GalleryModule,
         HeaderModule,
         CheckavailabilityModule,
+        SafeHtmlModule,
+        MatButtonModule,
         [RouterModule.forChild(routes)]
     ],
     exports:[

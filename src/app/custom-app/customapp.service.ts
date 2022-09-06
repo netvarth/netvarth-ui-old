@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { projectConstantsLocal } from '../shared/constants/project-constants';
 import { LocalStorageService } from '../shared/services/local-storage.service';
 import { ServiceMeta } from '../shared/services/service-meta';
 
@@ -7,12 +8,13 @@ import { ServiceMeta } from '../shared/services/service-meta';
 })
 export class CustomappService {
 
+
   templateJson;
   accountEncId: any;
   custId;
   businessJsons: any;
   accountConfig;
-
+  newsFeed: any = [];
   constructor(private lStorageService: LocalStorageService, private servicemeta: ServiceMeta) { }
 
   /**
@@ -65,7 +67,7 @@ export class CustomappService {
   getSystemDate() {
     return this.servicemeta.httpGet('provider/server/date');
   }
-
+  
   /**
    * 
    * @param accountId 
@@ -123,6 +125,21 @@ export class CustomappService {
 
   getAccountConfig() {
     return this.accountConfig;
+  }
+  setNews(uniqueId) {
+    this.getNews(uniqueId).subscribe(
+      (news: any) => {
+        console.log(news);
+        this.newsFeed = news;
+      }
+    ) 
+  }
+  getNewsFeed() {
+    return this.newsFeed;
+  }
+  getNews(uniqueId) {
+    const url = projectConstantsLocal.UIS3PATH + uniqueId + "/news_feed.json?"+ new Date();
+    return this.servicemeta.httpGet(url);
   }
 
 }

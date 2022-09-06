@@ -1330,4 +1330,8 @@ export class SharedServices {
     const url = 'consumer/waitlist/serviceoption/' + uuid + '/?account=' + account;
     return this.servicemeta.httpPost(url, body);
   }
+  updateProviderMUniqueId(body) {
+    const url = 'provider/login/updatemobileuniqueid';
+    return this.servicemeta.httpPost(url, body);
+  }
 }

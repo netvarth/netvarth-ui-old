@@ -1,0 +1,32 @@
+<div class="recentNews">
+    <div class="cauroselsection mgn-bt-50">
+        <owl-carousel [options]="customOptions">
+        <!--    <ng-template carouselSlide *ngFor="let newsFeed of newsFeeds"> -->
+                <div class="recentcards card item" *ngFor="let newsFeed of newsFeeds">
+                    <div class="">
+                        <img class="imagesectioninrecentnews gallery-img" src="{{newsFeed.image}}"
+                            alt="Card image cap">
+                        <div class="gallery-button">
+                            <button class="updates"
+                                style="background-color: white;padding: 2%;"><b>{{newsFeed.group}}</b></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="newsDetails"> 
+                            <h6 [innerHtml]="newsFeed.title | safeHtml"></h6>
+                            <p [innerHtml]="newsFeed.description | safeHtml" class="recentdesc"></p>
+                        </div>
+                        <div>
+                            <!--  -->
+                            <a (click)="openNews(newsFeed.link)" *ngIf="newsFeed.linkType==='video'"
+                                class="pull-right btn btn-primary" style="border-radius: 5px;"><b>Watch
+                                    video</b></a>
+                            <a (click)="openNews(newsFeed.link)" *ngIf="newsFeed.linkType!=='video'"
+                                class="pull-right btn btn-primary" style="border-radius: 5px;"><b>View</b></a>
+                        </div>
+                    </div>
+                </div>
+            <!-- </ng-template>-->
+        </owl-carousel> 
+    </div>
+</div>

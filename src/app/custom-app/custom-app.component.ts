@@ -101,15 +101,15 @@ export class CustomAppComponent implements OnInit, OnDestroy {
         this.accountEncId = params.get('id');
         this.lStorageService.setitemonLocalStorage('customId', this.accountEncId);
         this.customappService.setAccountEncId(this.accountEncId );
-
+        
         this.getAccountIdFromEncId(this.accountEncId).then(
           (id: any) => {
             _this.provider_id = id;
             _this.accountExists = true;
-            
+            _this.customappService.setNews(_this.provider_id);
             _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
               (account_config: any) => {
-                this.customappService.setAccountConfig(account_config);
+                _this.customappService.setAccountConfig(account_config);
               }
             )
 

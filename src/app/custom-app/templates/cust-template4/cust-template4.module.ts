@@ -18,6 +18,7 @@ import { ConsumerJoinModule } from '../../../ynw_consumer/components/consumer-jo
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
 import { MatButtonModule } from '@angular/material/button';
+import { RecentNewsModule } from '../../recent-news/recent-news.module';
 
 const routes: Routes = [
   { path: '', component: CustTemplate4Component }
@@ -44,6 +45,7 @@ const routes: Routes = [
     MatDialogModule,
     MatButtonModule,
     AddInboxMessagesModule,
+    RecentNewsModule,
     RouterModule.forChild(routes)
   ],
   exports: [

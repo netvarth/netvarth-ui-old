@@ -19,3 +19,6 @@ textarea {
 .hint {
     color: #1212b8;
 }
+form {
+    height: 100vh;
+}

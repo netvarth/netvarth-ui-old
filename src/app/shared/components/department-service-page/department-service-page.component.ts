@@ -8,7 +8,6 @@ import { ServiceDetailComponent } from '../service-detail/service-detail.compone
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
-import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { JdnComponent } from '../jdn-detail/jdn-detail-component';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../constants/project-constants';
@@ -21,9 +20,9 @@ import { QRCodeGeneratordetailComponent } from '../qrcodegenerator/qrcodegenerat
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
-import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { SearchDetailServices } from '../search-detail/search-detail-services.service';
 import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-department-service-page',
@@ -140,7 +139,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   orderItems: any = [];
   itemQty: number;
   activeCatalog: any;
-  isLoggedIn:boolean;
+  isLoggedIn: boolean;
   qrdialogRef;
   wndw_path = projectConstantsLocal.PATH;
   customPlainGalleryRowConfig: PlainGalleryConfig = {
@@ -269,7 +268,9 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   checkavailabilitydialogref: any;
   theme: any;
   accountId: any;
-  
+  templateJson: any;
+  accountExists: boolean;
+
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -286,7 +287,8 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     public wordProcessor: WordProcessor,
     private domainConfigService: DomainConfigGenerator,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    private authService: AuthService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -294,6 +296,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   }
 
   ngOnInit() {
+    const _this = this;
     console.log("In ngOnit Department Landing Page");
     this.api_loading = true;
     this.userId = null;
@@ -303,7 +306,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
     this.loc_details = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
     this.jdnTooltip = this.wordProcessor.getProjectMesssages('JDN_TOOPTIP');
-    
+
     const isMobile = {
       Android: function () {
         return navigator.userAgent.match(/Android/i);
@@ -339,7 +342,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     }
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     this.activaterouterobj.queryParams.subscribe(qparams => {
-      if(qparams.theme) {
+      if (qparams.theme) {
         this.theme = qparams.theme;
       }
       if (qparams.src) {
@@ -385,8 +388,16 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
             this.domainList = domainConfig;
             this.getAccountIdFromEncId(this.accountEncId).then(
               (id: string) => {
-                this.provider_id = id;
-                this.gets3curl();
+                _this.provider_id = id;
+                _this.accountExists = true;
+                _this.domainConfigService.getHometemplate(_this.provider_id).subscribe(
+                  (templateJson: any) => {
+                    _this.theme = templateJson.theme;
+                    _this.lStorageService.setitemonLocalStorage('theme', this.theme);
+                    this.templateJson = templateJson;
+                    this.gets3curl();
+                  })
+
               }, (error) => {
                 console.log(error);
               }
@@ -1325,9 +1336,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   private getCurrentIndexCustomLayout(image: Image, images: Image[]): number {
     return image ? images.indexOf(image) : -1;
   }
-  getServicesByDepartment(dept) {
-    this.routerobj.navigate(['searchdetail', this.provider_id, dept.departmentId], { queryParams: { source: 'business' } });
-  }
   backtoDetails() {
     this.locationobj.back();
     if (this.pSource === 'business') {
@@ -1388,48 +1396,20 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     }
     return str;
   }
-
-  goThroughLogin() {
-    const _this = this;
-    console.log("Entered to goThroughLogin Method");
-    return new Promise((resolve) => {
-      if (_this.lStorageService.getitemfromLocalStorage('authToken')) {
-        resolve(true);
-      } else {
-        resolve(false);
-      }
-    });
-  }
-  redirectToHistory() {
-    console.log("Inside redirectToHistory");
-    const _this = this;
-    _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          _this.routerobj.navigate(['searchdetail', _this.provider_bussiness_id, 'history']);
-        } else {
-          const passParam = { callback: 'history' };
-          _this.doLogin('consumer', passParam);
-        }
-      }, (error) => {
-        console.log(error);
-      }
-    );
-  }
   communicateHandler() {
     const _this = this;
-    const providforCommunicate = _this.provider_bussiness_id;
-    _this.goThroughLogin().then(
+    const providforCommunicate = this.provider_bussiness_id;
+    _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
           _this.showCommunicate(providforCommunicate);
         } else {
-          const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
-          _this.doLogin('consumer', passParam);
+          let communicateUrl = this.accountEncId + '?callback=communicate';
+          console.log(communicateUrl);
+          console.log(communicateUrl);
+          this.lStorageService.setitemonLocalStorage('target', communicateUrl);
+          this.router.navigate([this.accountEncId, 'login']);
         }
-      }, (error) => {
-        console.log(error);
       }
     );
   }
@@ -1448,44 +1428,46 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   showCommunicate(provid) {
     this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
-      minHeight: '100vh',
-      minWidth: '100vw',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0', 'loginmainclass', 'smallform'],
+      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'loginmainclass', 'smallform'],
       disableClose: true,
       data: {
-        caption: 'Send Message',
+        caption: 'Enquiry',
         user_id: provid,
-        userId: this.userId,
+        // userId: this.userId,
         source: 'consumer-common',
         type: 'send',
         terminologies: this.terminologiesjson,
         name: this.businessjson.businessName,
-        typeOfMsg: 'single'
+        typeOfMsg: 'single',
+        theme:this.theme
       }
     });
     this.commdialogRef.afterClosed().subscribe(() => {
     });
   }
-  checkVirtualRequiredFieldsEntered() {
-    const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.shared_services.getProfile(_this.activeUser.id, 'consumer').subscribe(
-        (data: any) => {
-          console.log("Profile InformationRetrieved successfully");
-          console.log(data);
-          resolve(data);
-        },
-        (error) => {
-          console.log(error);
-          console.log("Get Profile Information Error: ");
-          reject();
-        }
-      );
-    });
-
-  }
+  // showCommunicate(provid) {
+  //   this.commdialogRef = this.dialog.open(AddInboxMessagesComponent, {
+  //     width: '50%',
+  //     minHeight: '100vh',
+  //     minWidth: '100vw',
+  //     panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0', 'loginmainclass', 'smallform'],
+  //     disableClose: true,
+  //     data: {
+  //       caption: 'Send Message',
+  //       user_id: provid,
+  //       userId: this.userId,
+  //       source: 'consumer-common',
+  //       type: 'send',
+  //       terminologies: this.terminologiesjson,
+  //       name: this.businessjson.businessName,
+  //       typeOfMsg: 'single'
+  //     }
+  //   });
+  //   this.commdialogRef.afterClosed().subscribe(() => {
+  //   });
+  // }
   checkinClicked(location, service) {
-    console.log("Checkin Clicked");
+    this.loading = true;
     const current_provider = {
       'id': location.id,
       'place': location.place,
@@ -1493,6 +1475,12 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       'cdate': service.serviceAvailability.availableDate,
       'service': service
     };
+    if (location.time) {
+      current_provider['ctime'] = location.time
+    } if (location.date) {
+      current_provider['cdate'] = location.date
+      service.serviceAvailability.availableDate = location.date
+    }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1518,75 +1506,10 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     }
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        console.log("Current Login status:" + status);
-        if (status) {
-          if (service.serviceType === 'virtualService') {
-            _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              _this.collectRequiredinfo(location.id, location.place, location.googlemapUrl, service.serviceAvailability.availableDate, 'checkin', service, consumerdata);
-            });
-          }
-          else {
-            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
-          }
-        } else {
-          const passParam = { callback: '', current_provider: current_provider };
-          _this.doLogin('consumer', passParam);
-        }
-      });
-  }
-  collectRequiredinfo(id, place, location, date, type, service?, consumerdata?) {
-    console.log("Collect Required Info");
-    const _this = this;
-    let virtualFields = {}
-    if (consumerdata.userProfile.dob && consumerdata.userProfile.pinCode && consumerdata.userProfile.city && consumerdata.userProfile.state && consumerdata.userProfile.preferredLanguages && consumerdata.userProfile.gender) {
-      virtualFields['dob'] = consumerdata.userProfile.dob;
-      virtualFields['pincode'] = consumerdata.userProfile.pinCode;
-      virtualFields['gender'] = consumerdata.userProfile.gender;
-      let locationObj = {};
-      locationObj['Name'] = consumerdata.userProfile.city;
-      locationObj['State'] = consumerdata.userProfile.state;
-      locationObj['Pincode'] = consumerdata.userProfile.pinCode;
-
-      virtualFields['location'] = locationObj;
-      virtualFields['preferredLanguage'] = this.s3Processor.getJson(consumerdata.userProfile.preferredLanguages);
-      if (virtualFields['preferredLanguage'][0] === 'English') {
-        virtualFields['islanguage'] = 'yes';
-      }
-    }
-
-    //   if (type === 'appt') {
-    //     _this.showAppointment(id, place, location, date, service, 'consumer', virtualFields);
-    //   } else {
-    //     _this.showCheckin(id, place, location, date, service, 'consumer', virtualFields);
-    //   }
-    // } else {
-    const virtualdialogRef = _this.dialog.open(VirtualFieldsComponent, {
-      width: '50%',
-      minHeight: '100vh',
-      minWidth: '100vw',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-border-radius-0'],
-      disableClose: true,
-      data: { consumer: consumerdata, service: service, businessDetails: this.businessjson }
-    });
-    virtualdialogRef.afterClosed().subscribe(result => {
-      this.loading_direct = true;
-      if (result) {
-        console.log("Virtual fields updated successfully....");
-        _this.consumerVirtualinfo = result;
-        if (type === 'appt') {
-          _this.showAppointment(id, place, location, date, service, 'consumer', result);
-        } else {
-          _this.showCheckin(id, place, location, date, service, 'consumer', result);
-        }
-      } else {
-        this.loading_direct = false;
-        return false;
-      }
-    });
+    _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, null, 'consumer', current_provider['ctime']);
   }
   appointmentClicked(location, service: any) {
+    this.loading = true;
     const _this = this;
     this.futureAllowed = true;
     const current_provider = {
@@ -1596,6 +1519,14 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       'cdate': service.serviceAvailability.nextAvailableDate,
       'service': service
     };
+    if (location.time) {
+      current_provider['ctime'] = location.time
+    }
+    if (location.date) {
+      current_provider['cdate'] = location.date
+      // console.log('differnt dates....', service.serviceAvailability.nextAvailableDate, location.date)
+      service.serviceAvailability.nextAvailableDate = location.date
+    }
     const todaydt = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
     const today = new Date(todaydt);
     const dd = today.getDate();
@@ -1623,72 +1554,10 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       this.futureAllowed = false;
     }
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
-        } else {
-          const passParam = { callback: 'appointment', current_provider: current_provider };
-          _this.doLogin('consumer', passParam);
-        }
-      });
+    _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer', current_provider['ctime']);
   }
-
-  doLogin(origin?, passParam?) {
-    console.log("In doLogin Method");
-    const _this = this;
-    const current_provider = passParam['current_provider'];
-    const is_test_account = true;
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '50%',
-      // minHeight: '100vh',
-      // minWidth: '100vw',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', 'service-detail-bor-rad-0'],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        console.log("Login is successful. No I can move on....");
-        _this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        const pdata = { 'ttype': 'updateuserdetails' };
-        _this.sharedFunctionobj.sendMessage(pdata);
-        _this.sharedFunctionobj.sendMessage({ ttype: 'main_loading', action: false });
-        if (passParam['callback'] === 'communicate') {
-          _this.showCommunicate(passParam['providerId']);
-        } else if (passParam['callback'] === 'history') {
-          _this.redirectToHistory();
-        } else if (passParam['callback'] === 'donation') {
-          _this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        } else if (passParam['callback'] === 'appointment') {
-          if (current_provider['service']['serviceType'] === 'virtualService') {
-            _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              _this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], 'appt', current_provider['service'], consumerdata);
-            });
-          } else {
-            _this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-          }
-        } else {
-          if (current_provider['service']['serviceType'] === 'virtualService') {
-            _this.checkVirtualRequiredFieldsEntered().then((consumerdata) => {
-              _this.collectRequiredinfo(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googlemapUrl'], current_provider['cdate'], 'checkin', current_provider['service'], consumerdata);
-            });
-          } else {
-            _this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-          }
-        }
-      } else {
-        this.loading_direct = false;
-      }
-    });
-  }
-  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
-    const queryParam = {
+  showCheckin(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?, ctime?) {
+    let queryParam = {
       loc_id: locid,
       locname: locname,
       googleMapUrl: gMapUrl,
@@ -1696,37 +1565,55 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       cur: this.changedate_req,
       unique_id: this.provider_id,
       account_id: this.provider_bussiness_id,
-      tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
       service_id: service.id,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime: ctime
     };
+    if (service['serviceType'] === 'virtualService') {
+      queryParam['tel_serv_stat'] = true;
+    } else {
+      queryParam['tel_serv_stat'] = false;
+    }
+    if (this.theme) {
+      queryParam['theme'] = this.theme;
+    }
     if (service['department']) {
       queryParam['dept'] = service['department'];
     }
+    queryParam['customId'] = this.accountEncId;
     const navigationExtras: NavigationExtras = {
-      queryParams: queryParam
+      queryParams: queryParam,
     };
     this.router.navigate(['consumer', 'checkin'], navigationExtras);
   }
-  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, virtualinfo?) {
-    const queryParam = {
+  showAppointment(locid, locname, gMapUrl, curdate, service: any, origin?, ctime?, virtualinfo?) {
+    let queryParam = {
       loc_id: locid,
       locname: locname,
       googleMapUrl: gMapUrl,
       cur: this.changedate_req,
       unique_id: this.provider_id,
       account_id: this.provider_bussiness_id,
-      tel_serv_stat: this.businessjson.virtualServices,
       user: this.userId,
       futureAppt: this.futureAllowed,
       service_id: service.id,
       sel_date: curdate,
-      virtual_info: JSON.stringify(virtualinfo)
+      virtual_info: JSON.stringify(virtualinfo),
+      ctime: ctime
     };
+    if (service['serviceType'] === 'virtualService') {
+      queryParam['tel_serv_stat'] = true;
+    } else {
+      queryParam['tel_serv_stat'] = false;
+    }
+    if (this.theme) {
+      queryParam['theme'] = this.theme;
+    }
     if (service['department']) {
       queryParam['dept'] = service['department'];
     }
+    queryParam['customId'] = this.accountEncId;
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
     };
@@ -1835,17 +1722,10 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   }
 
   payClicked(locid, locname, cdate, service) {
+    this.loading = true;
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
-      (status) => {
-        if (status) {
-          _this.showDonation(locid, cdate, service);
-        } else {
-          const passParam = { callback: 'donation', loc_id: locid, name: locname, date: cdate, consumer: 'consumer' };
-          _this.doLogin('consumer', passParam);
-        }
-      });
+    this.showDonation(locid, cdate, service);
   }
   showDonation(locid, curdate, service) {
     const navigationExtras: NavigationExtras = {
@@ -1855,7 +1735,10 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         cur: this.changedate_req,
         unique_id: this.provider_id,
         account_id: this.provider_bussiness_id,
-        service_id: service.id
+        accountId: this.provider_bussiness_id,
+        service_id: service.id,
+        theme: this.theme,
+        customId: this.accountEncId
       }
     };
     this.routerobj.navigate(['consumer', 'donations', 'new'], navigationExtras);
@@ -1950,12 +1833,12 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   }
   providerDetClicked(userId) {
     let queryParams = {};
-      if(this.theme) {
-        queryParams['theme'] = this.theme;
-      }
-      const navigationExtras: NavigationExtras = {
-        queryParams: queryParams
-      };
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParams
+    };
     this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
   }
   opencheckavail(actionObj) {
@@ -1975,72 +1858,16 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         actionObj['location']['time'] = result[0];
         actionObj['location']['date'] = result[1];
         // console.log('action..........',actionObj);
-        if(actionObj['service']['bType']=='Appointment') {
-        this.appointmentClicked(actionObj['location'], actionObj['service']);
+        if (actionObj['service']['bType'] == 'Appointment') {
+          this.appointmentClicked(actionObj['location'], actionObj['service']);
         }
-        if(actionObj['service']['bType']=='Waitlist' || !actionObj['service']['bType']) {
+        if (actionObj['service']['bType'] == 'Waitlist' || !actionObj['service']['bType']) {
           console.log("***Waitlist***");
           this.checkinClicked(actionObj['location'], actionObj['service']);
         }
       }
     });
-
   }
-  cardClicked(actionObj) {
-    console.log('entering into business page');
-    console.log(actionObj);
-    if (actionObj['type'] === 'waitlist') {
-      if (actionObj['action'] === 'view') {
-        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
-        let queryParam = {
-          back:1
-        }
-        const navigationExtras: NavigationExtras = {
-          queryParams: queryParam
-        };
-        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
-        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-      } 
-      else if(actionObj['action'] === 'availability'){
-        this.opencheckavail(actionObj);
-      } else {
-        this.checkinClicked(actionObj['location'], actionObj['service']);
-      }
-    }else if (actionObj['type'] === 'appt') {
-      if (actionObj['action'] === 'view') {
-        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
-        let queryParam = {
-          back:1
-        }
-        const navigationExtras: NavigationExtras = {
-          queryParams: queryParam
-        };
-        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
-      } else if(actionObj['action'] === 'availability'){
-        this.opencheckavail(actionObj);
-      } else {
-        this.appointmentClicked(actionObj['location'], actionObj['service']);
-      }
-    } else if (actionObj['type'] === 'donation') {
-      if (actionObj['action'] === 'view') {
-        // this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-        // this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id]);
-        let queryParam = {
-          back:1
-        }
-        const navigationExtras: NavigationExtras = {
-          queryParams: queryParam
-        };
-        this.router.navigate([this.businessjson.accEncUid, 'service', actionObj['service'].id], navigationExtras);
-      } else {
-        this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
-      }
-    } else {
-      this.providerDetClicked(actionObj['userId']);
-    }
-  }
-
   getBusinessHours(location) {
     let message = '';
     for (let i = 0; i < location.display_schedule.length; i++) {
@@ -2234,11 +2061,92 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         businessName: this.businessjson.businessName
       }
     });
-
     this.qrdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
 
       }
     });
+  }
+  dashboardClicked() {
+    const _this = this;
+    _this.loading_direct = true;
+    _this.authService.goThroughLogin().then(
+      (status) => {
+        if (status) {
+          this.viewDashboard();
+        } else {
+          let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId + '&theme=' + this.theme;
+          this.lStorageService.setitemonLocalStorage('target', dashboardUrl);
+          this.router.navigate([this.accountEncId, 'login']);
+        }
+      });
+  }
+  viewDashboard() {
+    let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId=' + this.customId + '&theme=' + this.theme;
+    this.router.navigateByUrl(dashboardUrl);
+  }
+  cardClicked(actionObj) {
+    console.log('entering into business page', actionObj);
+    console.log(actionObj);
+    if (actionObj['type'] === 'waitlist') {
+      if (actionObj['action'] === 'view') {
+        let queryParam = {
+          back: 1,
+          customId: this.accountEncId
+        }
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParam
+        };
+        if (this.userId) {
+          this.router.navigate([this.accountEncId, this.userEncId, 'service', actionObj['service'].id], navigationExtras);
+        } else {
+          this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
+        }
+      }
+      else if (actionObj['action'] === 'availability') {
+        this.opencheckavail(actionObj);
+      } else {
+        this.checkinClicked(actionObj['location'], actionObj['service']);
+      }
+    } else if (actionObj['type'] === 'appt') {
+      if (actionObj['action'] === 'view') {
+        let queryParam = {
+          back: 1,
+          customId: this.accountEncId
+        }
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParam
+        };
+        if (this.userId) {
+          this.router.navigate([this.accountEncId, this.userEncId, 'service', actionObj['service'].id], navigationExtras);
+        } else {
+          this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
+        }
+      }
+      else if (actionObj['action'] === 'availability') {
+        this.opencheckavail(actionObj);
+      } else {
+        this.appointmentClicked(actionObj['location'], actionObj['service']);
+      }
+    } else if (actionObj['type'] === 'donation') {
+      if (actionObj['action'] === 'view') {
+        let queryParam = {
+          back: 1,
+          customId: this.accountEncId
+        }
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParam
+        };
+        if (this.userId) {
+          this.router.navigate([this.accountEncId, this.userEncId, 'service', actionObj['service'].id], navigationExtras);
+        } else {
+          this.router.navigate([this.accountEncId, 'service', actionObj['service'].id], navigationExtras);
+        }
+      } else {
+        this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
+      }
+    } else {
+      this.providerDetClicked(actionObj['userId']);
+    }
   }
 }

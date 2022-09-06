@@ -28,6 +28,7 @@ export class ConsDepartmentsComponent implements OnInit {
     if(this.templateJson['theme']) {
       queryParams['theme'] = this.templateJson['theme'];
       queryParams['customId']= this.businessProfile.accEncUid;
+      queryParams['accountId']=this.businessProfile.id;
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
