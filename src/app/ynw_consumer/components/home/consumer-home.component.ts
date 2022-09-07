@@ -475,6 +475,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
     }
+    if (this.theme) {
+      queryParams['theme'] = this.theme;
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParams
     };
@@ -1290,6 +1293,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     } else {
       pass_ob['uuid'] = waitlist.ynwUuid;
     }
+    pass_ob['theme']=this.theme;
     this.addNote(pass_ob);
   }
 
