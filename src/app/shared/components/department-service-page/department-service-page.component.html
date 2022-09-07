@@ -13,7 +13,7 @@
                             <app-header *ngIf="accountExists && sharedFunctionobj.checkLogin()"
                                 [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="customId"
                                 [showHeaderAction]="true"></app-header>
-                            <div class="view-booking" *ngIf="accountExists">
+                            <div class="view-booking" *ngIf="accountExists && !sharedFunctionobj.checkLogin()">
                                 <a class="pull-right btn link pad-10 dashboard-btn" (click)="dashboardClicked()">My
                                     Bookings</a>
                             </div>

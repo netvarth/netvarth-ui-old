@@ -26,10 +26,10 @@ export class RecentNewsComponent {
         items: 2
       },
       700: {
-        items: 2
+        items: 3
       },
       970: {
-        items: 2
+        items: 4
       }
     }
   }

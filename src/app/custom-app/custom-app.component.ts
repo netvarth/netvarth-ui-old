@@ -209,7 +209,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
         } else {
           // const passParam = { callback: 'dashboard' };
           // this.doLogin('consumer', passParam);
-          let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId='+this.accountEncId;
+          let dashboardUrl = 'consumer?accountId=' + this.accountId + '&customId='+this.accountEncId + '&theme='+ this.theme;
           this.lStorageService.setitemonLocalStorage('target', dashboardUrl);
           this.router.navigate([this.accountEncId , 'login']);
         }
@@ -219,7 +219,8 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   viewDashboard() {
     let queryParam = {
       'customId': this.accountEncId,
-      'accountId': this.accountId
+      'accountId': this.accountId,
+      'theme': this.theme
     }
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
