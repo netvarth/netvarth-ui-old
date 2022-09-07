@@ -40,7 +40,8 @@
   .heartfulness_theme1 .mat-tab-label-content,
   .heartfulness_theme1 .right-menu-header, .heartfulness_theme1 .back-btn i,
   .heartfulness_theme1 b.header-bus-title, .heartfulness_theme1 .panel-heading a,
-  .heartfulness_theme1 .dept-title-h4, .heartfulness_theme1 .btn-attach { 
+  .heartfulness_theme1 .dept-title-h4, .heartfulness_theme1 .btn-attach,
+  .heartfulness_theme1 .attach_sendmsg { 
     color: #fff !important;
   }
   .heartfulness_theme1 .serv-head.service-serv-head, .heartfulness_theme1 .mat-tab-label,
