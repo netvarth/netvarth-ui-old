@@ -169,8 +169,6 @@ export class CheckinActionsComponent implements OnInit {
             if (this.checkin.service.virtualCallingModes && this.checkin.service.virtualCallingModes[0].callingMode && this.checkin.virtualService[this.checkin.service.virtualCallingModes[0].callingMode]) {
                 this.callingNumber = this.teleService.getTeleNumber(this.checkin.virtualService[this.checkin.service.virtualCallingModes[0].callingMode]);
             }
-
-
             this.getPos();
             this.getInternStatus();
         } else {
@@ -206,8 +204,7 @@ export class CheckinActionsComponent implements OnInit {
             this.getUserTeams();
             this.getProviderLocation();
         }
-        if(this.data.status && this.data.src && this.data.status == true && this.data.src == 'detail')
-        {
+        if (this.data.status && this.data.src && this.data.status == true && this.data.src == 'detail') {
             this.action = 'status';
         }
     }
@@ -235,54 +232,6 @@ export class CheckinActionsComponent implements OnInit {
     printCheckin() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', this.checkin.ynwUuid, 'print'], { queryParams: { bookingType: 'checkin' } });
-        // this.qrCodegeneration(this.checkin);
-        // const bprof = this.groupService.getitemFromGroupStorage('ynwbp');
-        // const bname = bprof.bn;
-        // const fname = (this.checkin.waitlistingFor[0].firstName) ? this.checkin.waitlistingFor[0].firstName : '';
-        // const lname = (this.checkin.waitlistingFor[0].lastName) ? this.checkin.waitlistingFor[0].lastName : '';
-        // setTimeout(() => {
-        //     const printContent = document.getElementById('print-section');
-        //     const params = [
-        //         'height=' + screen.height,
-        //         'width=' + screen.width,
-        //         'fullscreen=yes'
-        //     ].join(',');
-        //     const printWindow = window.open('', '', params);
-        //     let checkin_html = '';
-        //     checkin_html += '<table style="width:100%;"><thead>';
-        //     checkin_html += '<tr><td colspan="3" style="border-bottom: 1px solid #eee;text-align:center;line-height:30px;font-size:1.25rem">' + this.dateformat.transformToDIsplayFormat(this.checkin.date) + '<br/>';
-        //     if (this.checkin.token) {
-        //         checkin_html += 'Token# <span style="font-weight:bold">' + this.checkin.token + '</span>';
-        //     }
-        //     checkin_html += '</td></tr>';
-        //     checkin_html += '<tr><td colspan="3" style="text-align:center">' + bname.charAt(0).toUpperCase() + bname.substring(1) + '</td></tr>';
-        //     // checkin_html += '<tr><td colspan="3" style="text-align:center">' + this.checkin.queue.location.place + '</td></tr>';
-        //     checkin_html += '<tr><td width="48%" align="right">Location</td><td>:</td><td>' + this.checkin.queue.location.place + '</td></tr>';
-
-        //     checkin_html += '</thead><tbody>';
-        //     if (fname !== '' || lname !== '') {
-        //         checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + '</td><td>:</td><td>' + fname + ' ' + lname + '</td></tr>';
-        //     } else {
-        //         checkin_html += '<tr><td width="48%" align="right">' + this.customer_label.charAt(0).toUpperCase() + this.customer_label.substring(1) + ' Id </td><td>:</td><td>' + this.checkin.consumer.jaldeeId + '</td></tr>';
-        //     }
-        //     if (this.checkin.service && this.checkin.service.deptName) {
-        //         checkin_html += '<tr><td width="48%" align="right">Department</td><td>:</td><td>' + this.checkin.service.deptName + '</td></tr>';
-        //     }
-        //     checkin_html += '<tr><td width="48%" align="right">Service</td><td>:</td><td>' + this.checkin.service.name + '</td></tr>';
-        //     if (this.checkin.provider && this.checkin.provider.firstName && this.checkin.provider.lastName) {
-        //         checkin_html += '<tr><td width="48%" align="right">' + this.provider_label.charAt(0).toUpperCase() + this.provider_label.substring(1) + '</td><td>:</td><td>' + this.checkin.provider.firstName.charAt(0).toUpperCase() + this.checkin.provider.firstName.substring(1) + ' ' + this.checkin.provider.lastName + '</td></tr>';
-        //     }
-        //     checkin_html += '<tr><td width="48%" align="right">Queue</td><td>:</td><td>' + this.checkin.queue.name + ' [' + this.checkin.queue.queueStartTime + ' - ' + this.checkin.queue.queueEndTime + ']' + '</td></tr>';
-        //     checkin_html += '<tr><td colspan="3" align="center">' + printContent.innerHTML + '</td></tr>';
-        //     checkin_html += '<tr><td colspan="3" align="center">Scan to know your status or log on to ' + this.qr_value + '</td></tr>';
-        //     checkin_html += '</tbody></table>';
-        //     printWindow.document.write('<html><head><title></title>');
-        //     printWindow.document.write('</head><body>');
-        //     printWindow.document.write(checkin_html);
-        //     printWindow.document.write('</body></html>');
-        //     printWindow.moveTo(0, 0);
-        //     printWindow.print();
-        // });
     }
     close() {
         this.dialogRef.close();
@@ -300,7 +249,7 @@ export class CheckinActionsComponent implements OnInit {
     changeSlot() {
         this.action = 'slotChange';
         // this.selectedTime = '';
-        console.log("checkin slot",this.checkin)
+        console.log("checkin slot", this.checkin)
         this.activeDate = this.checkin_date;
         console.log("activeDate :", this.activeDate)
         this.getQueuesbyLocationandServiceId(this.location_id, this.serv_id, this.checkin_date, this.checkin.account);
@@ -308,7 +257,7 @@ export class CheckinActionsComponent implements OnInit {
     }
 
     getQueuesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
-        console.log("Account Id :",accountid);
+        console.log("Account Id :", accountid);
         this.loading = true;
         this.queuejson = [];
         this.queueQryExecuted = false;
@@ -316,7 +265,7 @@ export class CheckinActionsComponent implements OnInit {
             this.shared_services.getQueuesbyLocationandServiceId(locid, servid, pdate, accountid)
                 .subscribe(data => {
                     this.queuejson = data;
-                    console.log("Queue :",this.queuejson);
+                    console.log("Queue :", this.queuejson);
                     this.loading = false;
                     this.queueQryExecuted = true;
                     if (this.queuejson && this.queuejson.length > 0) {
@@ -948,7 +897,7 @@ export class CheckinActionsComponent implements OnInit {
         this.dialogRef.close();
     }
     getPos() {
-        this.provider_services.getProviderPOSStatus().subscribe(data => {
+        this.provider_services.getProviderPOSStatus().then(data => {
             this.pos = data['enablepos'];
             this.getDisplayboardCount();
         },
@@ -1030,7 +979,7 @@ export class CheckinActionsComponent implements OnInit {
         const customerId = customerDetails.id;
         const bookingId = this.checkin.ynwUuid;
         const bookingType = 'TOKEN';
-        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId,'prescription'], { queryParams: { 'calledfrom': 'waitlist' } });
+        this.router.navigate(['provider', 'customers', customerId, bookingType, bookingId, 'medicalrecord', mrId, 'prescription'], { queryParams: { 'calledfrom': 'waitlist' } });
 
 
     }
@@ -1176,11 +1125,6 @@ export class CheckinActionsComponent implements OnInit {
             this.groups = data;
         });
     }
-    // showQnr() {
-    //     console.log(!this.data.multiSelection && this.checkin.releasedQnr && this.checkin.releasedQnr.length > 1 && this.checkin.waitlistStatus !== 'cancelled')
-
-    //     return false;
-    // }
     showQuestionnaires() {
         this.dialogRef.close();
         this.router.navigate(['provider', 'check-ins', 'questionnaires'], { queryParams: { source: 'checkin', uid: this.checkin.ynwUuid } });

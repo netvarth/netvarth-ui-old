@@ -16,6 +16,7 @@ import { QuestionService } from '../../../shared/modules/dynamic-form/dynamic-fo
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import { ProviderServices } from '../../services/provider-services.service';
+import { CommonDataStorageService } from '../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-provider-settings',
@@ -180,13 +181,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     private dialog: MatDialog,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private commonDataStorage: CommonDataStorageService
   ) {
     this.activated_route.queryParams.subscribe(
       qparams => {
         this.showTakeaTour = qparams.firstTimeSignup;
-        // const user = this.groupService.getitemFromGroupStorage('ynw-user');
-        // this.accountType = user.accountType;
         if (this.showTakeaTour) {
           this.getAccountContactInfo();
         }
@@ -196,7 +196,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.shared_functions.getMessage().subscribe(data => {
       switch (data.ttype) {
         case 'upgradelicence':
-          // this.getStatusboardLicenseStatus();
           break;
       }
     });
@@ -252,7 +251,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   miscellaneuostooltip = 'Miscellaneous';
   customerstooltip = '';
   ngOnInit() {
-
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (user.sector) {
       this.domain = user.sector;
@@ -312,8 +310,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.getDisplayboardCountAppointment();
     this.getDisplayboardCountWaitlist();
     this.getOrderStatus();
-    this.getTaskStatus();
-    this.getLeadStatus();
+    // this.getTaskStatus();
+    // this.getLeadStatus();
     this.getSchedulesCount();
     this.getCatalog();
     // this.getStatusboardLicenseStatus();
@@ -443,7 +441,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   }
   getWaitlistMgr() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(
+      .then(
         data => {
           this.waitlist_details = data;
           this.waitlist_status = data['onlineCheckIns'] || false;
@@ -534,7 +532,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
   getApptlistMgr() {
     this.provider_services.getApptlistMgr()
-      .subscribe(
+      .then(
         data => {
           this.apptlist_details = data;
           this.apptlist_status = data['enableToday'] || false;
@@ -584,6 +582,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('account',null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -598,6 +597,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('waitlist',null);
           this.getWaitlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
@@ -613,6 +613,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('waitlist',null);
           this.getWaitlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
@@ -627,6 +628,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('appointment',null);
           this.getApptlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
@@ -642,6 +644,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('appointment',null);
           this.getApptlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
@@ -681,8 +684,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     );
   }
   getpaymentDetails() {
-    this.provider_services.getPaymentSettings()
-      .subscribe(
+    this.provider_services.getAccountSettings()
+      .then(
         data => {
           this.payment_settings = data;
           this.payment_status = (data['onlinePayment']) || false;
@@ -701,6 +704,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     let status;
     (event.checked) ? status = 'enable' : status = 'disable';
     this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
+      this.commonDataStorage.setSettings('account',null);
       this.getpaymentDetails();
       if (!event.checked) {
         this.snackbarService.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
@@ -712,13 +716,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       });
   }
   getPOSSettings() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
+    this.provider_services.getProviderPOSStatus().then(data => {
       this.pos_status = data['enablepos'];
       this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
     });
   }
   getGlobalSettingsStatus() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         // this.onlinepresence_status = data.onlinePresence;
         // this.onlinepresence_statusstr = (this.onlinepresence_status) ? 'On' : 'Off';
@@ -734,6 +738,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
         this.shared_functions.sendMessage({ 'ttype': 'apptStatus', apptStatus: this.createappointment_status });
         this.shared_functions.sendMessage({ 'ttype': 'donationStatus', donationStatus: this.donations_status });
+
+        this.taskstatus = data.enableTask;
+        this.taskstatusstr = (this.taskstatus) ? 'On' : 'Off';
+         
+        this.leadstatus = data.enableLead;
+        this.leadstatusstr = (this.leadstatus) ? 'On' : 'Off';
+         
       });
   }
   handle_posStatus(event) {
@@ -741,6 +752,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     const status = (value) ? 'enabled' : 'disabled';
     this.provider_services.setProviderPOSStatus(value).subscribe(data => {
       this.snackbarService.openSnackBar('POS settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.commonDataStorage.setSettings('pos', null);
       this.getPOSSettings();
       this.getItems();
       this.getDiscounts();
@@ -766,6 +778,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
         this.getSearchstatus();
+        this.commonDataStorage.setSettings('waitlist',null);
         this.getWaitlistMgr();
       },
         error => {
@@ -905,8 +918,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
         break;
       case 'customview':
-        // this.routerobj.navigate(['provider', 'settings', 'general', 'customview']);
-        // break;
         const navigationExtras4: NavigationExtras = {
           queryParams: { type: 'view' }
         };
@@ -1172,26 +1183,6 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
       });
   }
-  // onFormChange(event) {
-  //   const is_check = event.checked;
-  //   const postData = {
-  //     calculationMode: this.waitlist_details.calculationMode,
-  //     trnArndTime: this.waitlist_details.trnArndTime || null,
-  //     providerNotification: this.waitlist_details.providerNotification,
-  //     futureDateWaitlist: is_check,
-  //     showTokenId: this.waitlist_details.showTokenId
-  //   };
-  //   this.provider_services.setWaitlistMgr(postData)
-  //     .subscribe(
-  //       () => {
-  //         this.getWaitlistMgr();
-  //         this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
-  //       },
-  //       error => {
-  //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       });
-  // }
-
   getDepartmentsCount() {
     this.provider_services.getDepartmentCount()
       .subscribe(
@@ -1200,46 +1191,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         });
   }
   getStatusboardLicenseStatus() {
-    // let pkgId;
-    // const user = this.groupService.getitemFromGroupStorage('ynw-user');
-    // if (user && user.accountLicenseDetails && user.accountLicenseDetails.accountLicense && user.accountLicenseDetails.accountLicense.licPkgOrAddonId) {
-    //   pkgId = user.accountLicenseDetails.accountLicense.licPkgOrAddonId;
-    // }
-    // this.provider_services.getLicenseMetadata().subscribe(data => {
-    //   this.licenseMetadata = data;
-    //   for (let i = 0; i < this.licenseMetadata.length; i++) {
-    //     if (this.licenseMetadata[i].pkgId === pkgId) {
-    //       for (let k = 0; k < this.licenseMetadata[i].metrics.length; k++) {
-    //         if (this.licenseMetadata[i].metrics[k].id === 18) {
-    //           if (this.licenseMetadata[i].metrics[k].anyTimeValue === 'true') {
-    //             this.statusboardStatus = true;
-    //             return;
-    //           } else {
-    //             this.statusboardStatus = false;
-    //             return;
-    //           }
-    //         }
-    //       }
-    //     }
-    //   }
-    // });
     this.provider_services.getLicenseAddonmetaData().subscribe(data => {
       this.addonMetadata = data;
-      //   for (let i = 0; i < this.addonMetadata.length; i++) {
-      //     if (this.addonMetadata[i].pkgId === pkgId) {
-      //       for (let k = 0; k < this.addonMetadata[i].metrics.length; k++) {
-      //         if (this.addonMetadata[i].metrics[k].id === 18) {
-      //           if (this.addonMetadata[i].metrics[k].anyTimeValue === 'true') {
-      //             this.statusboardStatus = true;
-      //             return;
-      //           } else {
-      //             this.statusboardStatus = false;
-      //             return;
-      //           }
-      //         }
-      //       }
-      //     }
-      //   }
     });
   }
   handle_appointmentPresence(event) {
@@ -1248,6 +1201,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Appointment creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('account',null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -1262,6 +1216,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Check-in creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('account',null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -1276,6 +1231,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('account',null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -1290,6 +1246,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('account',null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -1493,21 +1450,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       );
   }
   getOrderStatus() {
-    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+    this.provider_services.getProviderOrderSettings().then((data: any) => {
       this.orderstatus = data.enableOrder;
       this.orderstatusstr = (this.orderstatus) ? 'On' : 'Off';
-    });
-  }
-  getTaskStatus() {
-    this.provider_services.getProviderTaskSettings().subscribe((data: any) => {
-      this.taskstatus = data.enableTask;
-      this.taskstatusstr = (this.taskstatus) ? 'On' : 'Off';
-    });
-  }
-  getLeadStatus(){
-    this.provider_services.getProviderLeadSettings().subscribe((data: any) => {
-      this.leadstatus = data.enableLead;
-      this.leadstatusstr = (this.leadstatus) ? 'On' : 'Off';
     });
   }
 }

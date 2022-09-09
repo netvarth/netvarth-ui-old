@@ -9,6 +9,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SubSink } from 'subsink';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-ordermanager',
@@ -40,7 +41,8 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
     private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private commonDataStorage: CommonDataStorageService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
@@ -121,6 +123,7 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
     } else {
       this.subscriptions.sink = this.provider_services.setProviderOrderSStatus(event.checked).subscribe(data => {
         this.snackbarService.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+        this.commonDataStorage.setSettings('order', null);
         this.getOrderStatus();
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -129,14 +132,14 @@ export class OrdermanagerComponent implements OnInit, OnDestroy {
     }
   }
   getOrderStatus() {
-    this.subscriptions.sink = this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+    this.provider_services.getProviderOrderSettings().then((data: any) => {
       this.orderstatus = data.enableOrder;
       this.pos_statusstr = (this.orderstatus) ? 'On' : 'Off';
       this.shared_functions.sendMessage({ 'ttype': 'orderStatus', orderStatus: this.orderstatus });
     });
   }
   getPOSSettings() {
-    this.subscriptions.sink = this.provider_services.getProviderPOSStatus().subscribe(data => {
+    this.provider_services.getProviderPOSStatus().then(data => {
       this.pos = data['enablepos'];
     });
   }

@@ -68,7 +68,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         private groupService: GroupStorageService) { }
 
     ngOnInit() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.liveTrackStatus = data.livetrack;
                 if (!data.virtualService) {

@@ -225,8 +225,8 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.isAvailableNow();
     this.getProviderSettings();
     this.getOrderStatus();
-    this.getTaskStatus();
-    this.getLeadStatus()
+    // this.getTaskStatus();
+    // this.getLeadStatus()
     this.getEnquiryCount();
   }
 
@@ -237,7 +237,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
         if (this.domain === 'healthCare' && !this.showToken && this.count === 0) {
@@ -271,30 +271,19 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.apptstatus = settings.appointment;
       this.checkinStatus = settings.waitlist;
     } else {
-      this.provider_services.getGlobalSettings().subscribe(
+      this.provider_services.getAccountSettings().then(
         (data: any) => {
           this.donationstatus = data.donationFundRaising;
           this.apptstatus = data.appointment;
           this.checkinStatus = data.waitlist;
+          this.taskStatus = data.enableTask;
+          this.leadStatus = data.enableLead;
         });
     }
   }
   getOrderStatus() {
-    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+    this.provider_services.getProviderOrderSettings().then((data: any) => {
       this.orderstatus = data.enableOrder;
-    });
-  }
-  getTaskStatus() {
-    this.provider_services.getProviderTaskSettings().subscribe((data: any) => {
-      this.taskStatus = data.enableTask;
-      // this.leadStatus=false
-    });
-  }
-  getLeadStatus() {
-    this.provider_services.getProviderLeadSettings().subscribe((data: any) => {
-      console.log('data',data)
-      this.leadStatus = data.enableLead;
-      // this.taskStatus=false
     });
   }
   minimizeSideBar() {

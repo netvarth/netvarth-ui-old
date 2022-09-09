@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { CommonDataStorageService } from '../../../../../shared/services/common-datastorage.service';
 
 @Component({
     selector: 'app-livetrack-settings',
@@ -22,6 +23,7 @@ export class LiveTrackSettingsComponent implements OnInit {
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
+        private commonDataStorage: CommonDataStorageService,
         private router: Router) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.customer_label_upper = this.wordProcessor.firstToUpper(this.customer_label);
@@ -43,7 +45,7 @@ export class LiveTrackSettingsComponent implements OnInit {
         this.router.navigate(['/provider/' + this.domain + '/general->livetracking']);
     }
     getLiveTrackStatus() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.livetrack_status = data.livetrack;
                 this.livetrack_statusstr = (this.livetrack_status) ? 'On' : 'Off';
@@ -55,6 +57,7 @@ export class LiveTrackSettingsComponent implements OnInit {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar('Locate your' + ' [customer] ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.commonDataStorage.setSettings('account',null);
                     this.getLiveTrackStatus();
                 },
                 error => {

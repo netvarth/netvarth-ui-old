@@ -9,6 +9,7 @@ import { WordProcessor } from '../../../../../../../../shared/services/word-proc
 import { GroupStorageService } from '../../../../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../../../../shared/services/snackbar.service';
 import { AddproviderAddonComponent } from '../../../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
+import { CommonDataStorageService } from '../../../../../../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-userconsumer-notifications',
@@ -106,6 +107,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     private provider_datastorage: ProviderDataStorageService,
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
+    private commonDataStorage: CommonDataStorageService,
     private snackbarService: SnackbarService) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.onResize();
@@ -136,16 +138,15 @@ export class ConsumerNotificationUserComponent implements OnInit {
       this.userId = + params.id;
     });
     this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
-    this.getNotificationSettings();
+    this.initSettings();
     this.getNotificationList();
-    this.getGlobalSettingsStatus();
     this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     this.mode_of_notify = Messages.FRM_LVL_CUSTMR_NOTIFY_MODE.replace('[customer]', this.customer_label);
     this.getProviderSettings();
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
         if(this.showToken) {
@@ -164,12 +165,16 @@ export class ConsumerNotificationUserComponent implements OnInit {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) { return false; } return true;
   }
-  getGlobalSettingsStatus() {
-    this.provider_services.getGlobalSettings().subscribe(
+  initSettings() {
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;
         this.donations_status = data.donationFundRaising;
+        const global_data = data;
+        this.consumerNotification = global_data.sendNotification;
+        this.notification_statusstr = (this.consumerNotification) ? 'On' : 'Off';
+        this.provider_datastorage.set('waitlistManage', data);
         this.api_loading = false;
       });
   }
@@ -195,6 +200,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     const status = (value) ? 'Enable' : 'Disable';
     this.provider_services.getUserConsumerNotificationSettings(status).subscribe(data => {
       this.snackbarService.openSnackBar('Notifications ' + status + 'ed successfully');
+      this.commonDataStorage.setSettings('account', null);
       this.getNotificationSettings();
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -202,7 +208,7 @@ export class ConsumerNotificationUserComponent implements OnInit {
     });
   }
   getNotificationSettings() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         const global_data = data;
         this.consumerNotification = global_data.sendNotification;

@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';;
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
@@ -15,6 +16,7 @@ export class PhomeComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private activateRoute: ActivatedRoute,
     private groupService: GroupStorageService,
+    private providerServices: ProviderServices
   ) {
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
@@ -23,8 +25,7 @@ export class PhomeComponent implements OnInit {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
-          this.shared_functions.getGlobalSettings()
-            .then(
+          this.providerServices.getAccountSettings().then(
               (settings: any) => {
                 if (router.url === '\/business') {
                   setTimeout(() => {

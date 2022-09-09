@@ -15,6 +15,7 @@ import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { Title } from '@angular/platform-browser';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { AuthService } from '../../../../shared/services/auth-service';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 
 @Component({
   selector: 'app-plogin',
@@ -58,7 +59,8 @@ export class ProviderLoginComponent implements OnInit {
     private snackbarService: SnackbarService,
     private titleService: Title,
     private groupService: GroupStorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private providerServices: ProviderServices
   ) {
     this.titleService.setTitle('Jaldee Business - Login');
     this.activateRoute.queryParams.subscribe(data => {
@@ -91,7 +93,7 @@ export class ProviderLoginComponent implements OnInit {
         console.log(router.url);
         if (router.url.startsWith('/business/login')) {
           if (this.shared_functions.isBusinessOwner()) {
-            this.shared_functions.getGlobalSettings().then(
+            this.providerServices.getAccountSettings().then(
               (settings: any) => {
                 console.log("Settings value:", settings);
                 setTimeout(() => {

@@ -9,6 +9,7 @@ import { WordProcessor } from '../../../../../../shared/services/word-processor.
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { AddproviderAddonComponent } from '../../../../../../business/modules/add-provider-addons/add-provider-addons.component';
+import { CommonDataStorageService } from '../../../../../../shared/services/common-datastorage.service';
 // import { title } from 'process';
 
 @Component({
@@ -117,6 +118,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     private provider_datastorage: ProviderDataStorageService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
+    private commonDataStorage: CommonDataStorageService,
     private snackbarService: SnackbarService) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.onResize();
@@ -158,7 +160,7 @@ export class ConsumerNotificationsComponent implements OnInit {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
         if(this.showToken) {
@@ -178,7 +180,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     if (charCode > 31 && (charCode < 48 || charCode > 57)) { return false; } return true;
   }
   getGlobalSettingsStatus() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;
@@ -207,6 +209,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     const status = (value) ? 'Enable' : 'Disable';
     this.provider_services.setNotificationSettings(status).subscribe(data => {
       this.snackbarService.openSnackBar('Notifications ' + status + 'd successfully');
+      this.commonDataStorage.setSettings('account', null);
       this.getNotificationSettings();
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -214,7 +217,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     });
   }
   getNotificationSettings() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         const global_data = data;
         this.consumerNotification = global_data.sendNotification;
@@ -519,7 +522,7 @@ export class ConsumerNotificationsComponent implements OnInit {
     }
   }
   getOrderStatus() {
-    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+    this.provider_services.getProviderOrderSettings().then((data: any) => {
       this.order_status = data.enableOrder;
     });
   }

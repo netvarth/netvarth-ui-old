@@ -97,7 +97,7 @@ export class UpdateProviderNotificationsComponent implements OnInit {
     this.getSMSCredits();
   }
   getGlobalSettingsStatus() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;

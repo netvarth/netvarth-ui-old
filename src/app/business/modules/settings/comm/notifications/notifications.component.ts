@@ -6,6 +6,7 @@ import { Messages } from '../../../../../shared/constants/project-messages';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { CommonDataStorageService } from '../../../../../shared/services/common-datastorage.service';
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.component.html',
@@ -40,7 +41,8 @@ export class NotificationsComponent implements OnInit {
         private provider_services: ProviderServices,
         private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private commonDataStorage: CommonDataStorageService
     ) {
     }
     ngOnInit() {
@@ -82,7 +84,7 @@ export class NotificationsComponent implements OnInit {
         });
     }
     getSMSglobalSettings() {
-        this.provider_services.getSMSglobalSettings().subscribe(data => {
+        this.provider_services.getAccountSettings().then(data => {
             this.smsGlobalStatus = data['enableSms'];
             this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';
             this.notificationStatus = data['sendNotification'];
@@ -94,6 +96,7 @@ export class NotificationsComponent implements OnInit {
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setNotificationSettings(state).subscribe(data => {
             this.snackbarService.openSnackBar('Send notification  ' + status + ' successfully');
+            this.commonDataStorage.setSettings('account', null);
             this.getSMSglobalSettings();
         }, (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -106,6 +109,7 @@ export class NotificationsComponent implements OnInit {
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setSMSglobalSettings(state).subscribe(data => {
             this.snackbarService.openSnackBar('SMS settings ' + status + ' successfully');
+            this.commonDataStorage.setSettings('account', null);
             this.getSMSglobalSettings();
         }, (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -139,7 +143,7 @@ export class NotificationsComponent implements OnInit {
         this.router.navigate(['provider', 'settings']);
     }
     getGlobalSettingsStatus() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.virtualCallingMode_status = data.virtualService;
                 this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
@@ -151,6 +155,7 @@ export class NotificationsComponent implements OnInit {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.commonDataStorage.setSettings('account', null);
                     this.getGlobalSettingsStatus();
                 },
                 error => {

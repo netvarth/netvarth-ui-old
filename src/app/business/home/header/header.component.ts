@@ -385,8 +385,8 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   }
   showCheckinED() {
     this.waitlistmgr = [];
-    this.shared_service.getWaitlistMgr()
-      .subscribe(data => {
+    this.provider_services.getWaitlistMgr()
+      .then(data => {
         this.waitlistmgr = data;
         this.checkinStatus = 3;
         return false;

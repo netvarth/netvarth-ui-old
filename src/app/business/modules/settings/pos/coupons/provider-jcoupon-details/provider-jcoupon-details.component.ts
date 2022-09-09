@@ -125,7 +125,7 @@ export class ProviderJcouponDetailsComponent implements OnInit {
   }
   getWaltilistmgrSettings() {
     this.provider_servicesobj.getWaitlistMgr()
-      .subscribe((data: any) => {
+      .then((data: any) => {
         this.showToken = data.showTokenId;
       });
   }

@@ -165,7 +165,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;     
       }, () => {

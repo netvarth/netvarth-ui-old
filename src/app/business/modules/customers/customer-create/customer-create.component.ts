@@ -460,7 +460,7 @@ export class CustomerCreateComponent implements OnInit {
   ngOnInit() {}
 
   getGlobalSettingsStatus() {
-    this.provider_services.getGlobalSettings().subscribe((data: any) => {
+    this.provider_services.getAccountSettings().then((data: any) => {
       this.customidFormat = data.jaldeeIdFormat;
       if (
         this.customidFormat &&

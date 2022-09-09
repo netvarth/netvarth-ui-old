@@ -164,8 +164,8 @@ export class UserWaitlistServiceDetailComponent implements OnInit, OnDestroy {
     }
     getPaymentSettings() {
         return new Promise((resolve, reject) => {
-            this.provider_services.getPaymentSettings()
-                .subscribe(
+            this.provider_services.getAccountSettings()
+                .then(
                     data => {
                         this.serviceParams['paymentsettings'] = data;
                         resolve(data);

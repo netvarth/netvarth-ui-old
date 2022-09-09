@@ -5,6 +5,7 @@ import { ProviderServices } from '../../../services/provider-services.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-pos',
@@ -29,6 +30,7 @@ export class POSComponent implements OnInit {
     private provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    private commonDataStorage: CommonDataStorageService,
     private groupService: GroupStorageService) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
@@ -90,6 +92,7 @@ export class POSComponent implements OnInit {
     const status = (value) ? 'enabled' : 'disabled';
     this.provider_services.setProviderPOSStatus(value).subscribe(data => {
       this.snackbarService.openSnackBar('Billing settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      this.commonDataStorage.setSettings('pos', null);
       this.getPOSSettings();
     }, (error) => {
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -97,7 +100,7 @@ export class POSComponent implements OnInit {
     });
   }
   getPOSSettings() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
+    this.provider_services.getProviderPOSStatus().then(data => {
       this.pos_status = data['enablepos'];
       this.pos_statusstr = (this.pos_status) ? 'On' : 'Off';
     });

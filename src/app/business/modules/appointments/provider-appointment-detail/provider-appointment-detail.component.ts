@@ -194,7 +194,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
   }
   getProviderSettings() {
     this.api_loading = true;
-    this.provider_services.getWaitlistMgr().subscribe(
+    this.provider_services.getWaitlistMgr().then(
       data => {
         this.settings = data;
         this.getApptDetails();
@@ -790,7 +790,7 @@ export class ProviderAppointmentDetailComponent implements OnInit, OnDestroy {
     return retdate;
   }
   getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
+    this.provider_services.getProviderPOSStatus().then(data => {
       this.pos = data["enablepos"];
     });
   }

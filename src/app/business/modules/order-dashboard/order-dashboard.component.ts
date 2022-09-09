@@ -211,7 +211,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.router.navigate(['provider', 'orders', order.uid]);
   }
   getGlobalSettings() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
         (data: any) => {
             this.catalogType = data.catalogType;
             console.log(this.catalogType)
@@ -564,7 +564,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     });
   }
   getPos() {
-    this.providerservices.getProviderPOSStatus().subscribe(data => {
+    this.providerservices.getProviderPOSStatus().then(data => {
       this.pos = data['enablepos'];
     });
   }

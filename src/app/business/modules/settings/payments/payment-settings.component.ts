@@ -5,6 +5,7 @@ import { ProviderServices } from '../../../services/provider-services.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
     'selector': 'app-payment-settings',
@@ -26,6 +27,7 @@ export class PaymentSettingsComponent implements OnInit {
         private provider_services: ProviderServices,
         private groupService: GroupStorageService,
         private snackbarService: SnackbarService,
+        private commonDataStorage: CommonDataStorageService,
         private wordProcessor: WordProcessor) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
@@ -43,8 +45,8 @@ export class PaymentSettingsComponent implements OnInit {
         this.router.navigate(['provider', 'settings', 'payments', 'paymentsettings']);
     }
     getpaymentDetails() {
-        this.provider_services.getPaymentSettings()
-            .subscribe(
+        this.provider_services.getAccountSettings()
+            .then(
                 data => {
                     this.payment_settings = data;
                     this.payment_status = (data['onlinePayment']) || false;
@@ -63,6 +65,7 @@ export class PaymentSettingsComponent implements OnInit {
         let status;
         (event.checked) ? status = 'enable' : status = 'disable';
         this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
+            this.commonDataStorage.setSettings('account',null);
             this.getpaymentDetails();
             this.snackbarService.openSnackBar('Jaldee Pay ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
         },

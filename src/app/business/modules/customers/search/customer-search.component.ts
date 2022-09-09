@@ -304,7 +304,7 @@ export class CustomerSearchComponent implements OnInit {
         this.getGlobalSettingsStatus();        
     }
     getGlobalSettingsStatus() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.customidFormat = data.jaldeeIdFormat;
                 this.createForm();

@@ -6,6 +6,7 @@ import { Messages } from '../../../../../../../shared/constants/project-messages
 import { GroupStorageService } from '../../../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
+import { CommonDataStorageService } from '../../../../../../../shared/services/common-datastorage.service';
 @Component({
     selector: 'app-notifications',
     templateUrl: './notifications.component.html',
@@ -37,7 +38,8 @@ export class NotificationsUserComponent implements OnInit {
         private activatedRoot: ActivatedRoute,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
-        private groupService: GroupStorageService
+        private groupService: GroupStorageService,
+        private commonDataStorage: CommonDataStorageService,
     ) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -69,7 +71,7 @@ export class NotificationsUserComponent implements OnInit {
         });
     }
     getSMSglobalSettings() {
-        this.provider_services.getSMSglobalSettings().subscribe(data => {
+        this.provider_services.getAccountSettings().then(data => {
             this.smsGlobalStatus = data['enableSms'];
             this.notificationStatus = data['sendNotification'];
             this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';
@@ -82,6 +84,7 @@ export class NotificationsUserComponent implements OnInit {
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setSMSglobalSettings(state).subscribe(data => {
             this.snackbarService.openSnackBar('SMS settings ' + status + ' successfully');
+            this.commonDataStorage.setSettings('account', null);
             this.getSMSglobalSettings();
         }, (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });

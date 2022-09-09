@@ -573,7 +573,7 @@ export class CustomViewComponent implements OnInit {
     }
     getWaitlistMgr() {
         this.provider_services.getWaitlistMgr()
-            .subscribe(
+            .then(
                 data => {
                     this.waitlistMngr = data;
                 });
@@ -753,7 +753,7 @@ export class CustomViewComponent implements OnInit {
         }
     }
     getOnlinePresence() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.appointment_status = data.appointment;
                 this.waitlist_status = data.waitlist;

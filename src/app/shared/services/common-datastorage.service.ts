@@ -4,6 +4,14 @@ import {Injectable} from '@angular/core';
 
 export class CommonDataStorageService {
 
+  private spSettings = {
+    'account':null,
+    'order': null,
+    'appointments':null,
+    'waitlist':null,
+    'pos':null
+  }
+
   private storage = {
     'terminologies': null,
     'spterminologies':null
@@ -28,6 +36,13 @@ export class CommonDataStorageService {
     };
   }
 
+  getSettings(type) {
+    return this.spSettings[type];
+  }
+
+  setSettings(type, data) {
+    this.spSettings[type] = data;
+  }
 
 }
 

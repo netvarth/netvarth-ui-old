@@ -169,8 +169,8 @@ export class ProviderPaymentSettingsComponent implements OnInit {
         }
     }
     getBankSettings(){
-        this.provider_services.getPaymentSettings()
-        .subscribe((data:any) =>{
+        this.provider_services.getAccountSettings()
+        .then((data:any) =>{
             if(data.isJaldeeBank){
                 this.optJaldeeAccount='enable';
 

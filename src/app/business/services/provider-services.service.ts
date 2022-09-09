@@ -1,16 +1,21 @@
 //import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CommonDataStorageService } from '../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../app.component';
 // Import RxJs required methods
 import { ServiceMeta } from '../../shared/services/service-meta';
+import { GroupStorageService } from '../../shared/services/group-storage.service';
 
 @Injectable()
 export class ProviderServices {
 
   catalogPrefilledInput: any = [];
   taskstatus: string;
-  reportToCrm:any;
-  constructor(private servicemeta: ServiceMeta) { }
+  reportToCrm: any;
+  constructor(
+    private servicemeta: ServiceMeta,
+    private commonDataStorage: CommonDataStorageService,
+    private groupStorageService: GroupStorageService) { }
   getProviderConfig() {
     return this.servicemeta.httpGet('accounts/conf');
   }
@@ -201,25 +206,6 @@ export class ProviderServices {
     const url = 'provider/jaldee/coupons/jcreports/reimburse/' + id + '/requestPayment';
     return this.servicemeta.httpPut(url);
   }
-  // Non working days
-  // getProviderNonworkingdays(id?) {
-  //   if (id) {
-  //     return this.servicemeta.httpGet('provider/settings/nonBusinessDays/' + id);
-  //   } else {
-  //     return this.servicemeta.httpGet('provider/settings/nonBusinessDays');
-  //   }
-  // }
-  // addHoliday(data) {
-  //   return this.servicemeta.httpPost('provider/settings/nonBusinessDays', data);
-  // }
-  // deleteHoliday(id) {
-  //   const path = 'provider/settings/nonBusinessDays/' + id;
-  //   return this.servicemeta.httpDelete(path);
-  // }
-  // editHoliday(data) {
-  //   return this.servicemeta.httpPut('provider/settings/nonBusinessDays', data);
-  // }
-
   // Non working days new Url's
   getProviderNonworkingdays(id?) {
     if (id) {
@@ -305,15 +291,7 @@ export class ProviderServices {
     const url = 'provider/settings/waitlistMgr/onlineCheckIns/' + status;
     return this.servicemeta.httpPut(url);
   }
-  getWaitlistMgr() {
-    const url = 'provider/settings/waitlistMgr/';
-    return this.servicemeta.httpGet(url);
-  }
-  getPaymentSettings() {
-    //const url = 'provider/payment/settings/';
-    const url = 'provider/account/settings';
-    return this.servicemeta.httpGet(url);
-  }
+
   getBankPaymentSettings() {
     const url = 'provider/payment/settings/bankInfo';
     return this.servicemeta.httpGet(url);
@@ -345,12 +323,6 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
   getServicesList(filter?) {
-    // let stat = '';
-    // if (params !== undefined) {
-    //    if (params['status'] !== undefined && params['status'] !== '') {
-    //       stat = '?status-eq=' + params['status'];
-    //    }
-    // }
     const url = 'provider/services';
     return this.servicemeta.httpGet(url, null, filter);
   }
@@ -827,10 +799,6 @@ export class ProviderServices {
     const url = 'provider/bill/settings/' + status;
     return this.servicemeta.httpPut(url);
   }
-  getProviderPOSStatus() {
-    const url = 'provider/bill/settings/pos';
-    return this.servicemeta.httpGet(url);
-  }
   getLabelList() {
     const url = 'provider/waitlist/label';
     return this.servicemeta.httpGet(url);
@@ -855,15 +823,15 @@ export class ProviderServices {
     const url = 'provider/waitlist/label/' + labelId;
     return this.servicemeta.httpDelete(url);
   }
-  getMemberId(groupName,proConId){
+  getMemberId(groupName, proConId) {
     const url = `provider/customers/groupMemId/${groupName}/${proConId}`
     return this.servicemeta.httpGet(url);
   }
-  createGroupMemberId(body){
+  createGroupMemberId(body) {
     const url = `provider/customers/groupMemId/${body.groupName}/${body.proConId}/${body.memId}`
     return this.servicemeta.httpPost(url);
   }
-  updateGroupMemberId(body){
+  updateGroupMemberId(body) {
     const url = `provider/customers/groupMemId/${body.groupName}/${body.proConId}/${body.memId}`
     return this.servicemeta.httpPut(url);
   }
@@ -1003,10 +971,7 @@ export class ProviderServices {
     const url = 'provider/waitlist/live/locate/distance/time/' + uuid;
     return this.servicemeta.httpPost(url);
   }
-  getSMSglobalSettings() {
-    const url = 'provider/account/settings';
-    return this.servicemeta.httpGet(url);
-  }
+
   setJaldeeVideoRecording(status) {
     const url = 'provider/video/settings/' + status;
     return this.servicemeta.httpPut(url);
@@ -1015,10 +980,7 @@ export class ProviderServices {
     const url = 'provider/account/settings/videoCallMinutes';
     return this.servicemeta.httpGet(url);
   }
-  getGlobalSettings() {
-    const url = 'provider/account/settings';
-    return this.servicemeta.httpGet(url);
-  }
+
   setSMSglobalSettings(state) {
     const url = 'provider/account/settings/sms/' + state;
     return this.servicemeta.httpPut(url);
@@ -1486,10 +1448,6 @@ export class ProviderServices {
   getSchedulesCount(filter?) {
     const url = 'provider/appointment/schedule/count';
     return this.servicemeta.httpGet(url, null, filter);
-  }
-  getApptlistMgr() {
-    const url = 'provider/settings/apptMgr';
-    return this.servicemeta.httpGet(url);
   }
   setAcceptOnlineAppointment(status) {
     const url = 'provider/settings/apptMgr/todayAppt/' + status;
@@ -1983,10 +1941,6 @@ export class ProviderServices {
   deleteUplodedCatalogImage(name, id) {
     return this.servicemeta.httpDelete('provider/catalog/' + id + '/image/' + name);
   }
-  getProviderOrderSettings() {
-    const url = 'provider/order/settings';
-    return this.servicemeta.httpGet(url);
-  }
   setProviderOrderSStatus(status) {
     const url = 'provider/order/settings/' + status;
     return this.servicemeta.httpPut(url);
@@ -2082,7 +2036,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getCustomerGroupById(id) {
-    
+
     const url = 'provider/customers/group/' + id;
     return this.servicemeta.httpGet(url);
   }
@@ -2362,14 +2316,6 @@ export class ProviderServices {
     const url = 'provider/payment/paymentProfiles'
     return this.servicemeta.httpGet(url);
   }
-  // getPaymentGateWay(data) {
-  //   const url='consumer/payment'
-  //   return this.servicemeta.httpPost(url,data);  
-  // }
-  // getWalletPaymentGateWay(data){
-  //   const url='consumer/payment/wallet'
-  //   return this.servicemeta.httpPost(url,data);  
-  // }
   changestatustoComplete(idlist, status) {
     const url = 'provider/appointment/multiStatusChange/' + status;
     return this.servicemeta.httpPut(url, idlist);
@@ -2400,96 +2346,75 @@ export class ProviderServices {
   getAllFileAttachments() {
     return this.servicemeta.httpGet('provider/fileShare/');
   }
-  getFileShareCountOnProviderId(id){
+  getFileShareCountOnProviderId(id) {
     return this.servicemeta.httpGet('provider/fileShare/count/' + id);
   }
 
 
- // get files using short url...
- getFilesUploaded(id){
-  return this.servicemeta.httpGet('provider/fileShare/shortUrl/'+id);
-}
-//to share files...
-shareProviderFiles(body){
-  const url = 'provider/fileShare/sharefiles';
-  return this.servicemeta.httpPost(url, body);
-}
-//to remove share files
-removeShareFiles(id,sharedTo){
-  const url = `provider/fileShare/sharefiles/${id}`;
-  return this.servicemeta.httpDelete(url,sharedTo);
-}
-// to change upload status
-changeUploadStatus(id,status){
-  const url = `provider/fileShare/upload/${status}`;
-  return this.servicemeta.httpPut(url,id);
-}
-// to get list of shared owner details.....
-getSharedOwnerFiles(ownerType,providerId){
-  const url = `provider/fileShare/${ownerType}/${providerId}`;
-  return this.servicemeta.httpGet(url);
+  // get files using short url...
+  getFilesUploaded(id) {
+    return this.servicemeta.httpGet('provider/fileShare/shortUrl/' + id);
+  }
+  //to share files...
+  shareProviderFiles(body) {
+    const url = 'provider/fileShare/sharefiles';
+    return this.servicemeta.httpPost(url, body);
+  }
+  //to remove share files
+  removeShareFiles(id, sharedTo) {
+    const url = `provider/fileShare/sharefiles/${id}`;
+    return this.servicemeta.httpDelete(url, sharedTo);
+  }
+  // to change upload status
+  changeUploadStatus(id, status) {
+    const url = `provider/fileShare/upload/${status}`;
+    return this.servicemeta.httpPut(url, id);
+  }
+  // to get list of shared owner details.....
+  getSharedOwnerFiles(ownerType, providerId) {
+    const url = `provider/fileShare/${ownerType}/${providerId}`;
+    return this.servicemeta.httpGet(url);
 
-}
+  }
 
 
-getFilterFileslogs( sdate, edate, startfrom, limit) {
-  let retparam = this.buildFilesParams( sdate, edate);
-  if (startfrom !== '') {
+  getFilterFileslogs(sdate, edate, startfrom, limit) {
+    let retparam = this.buildFilesParams(sdate, edate);
+    if (startfrom !== '') {
+      if (retparam !== '') {
+        retparam += '&';
+      }
+      retparam += 'from=' + startfrom;
+    }
+    if (limit !== '') {
+      if (retparam !== '') {
+        retparam += '&';
+      }
+      retparam += 'count=' + limit;
+    }
     if (retparam !== '') {
-      retparam += '&';
+      retparam = '?' + retparam;
     }
-    retparam += 'from=' + startfrom;
+    const url = 'provider/fileShare';
+    return this.servicemeta.httpGet(url);
   }
-  if (limit !== '') {
-    if (retparam !== '') {
-      retparam += '&';
-    }
-    retparam += 'count=' + limit;
-  }
-  if (retparam !== '') {
-    retparam = '?' + retparam;
-  }
-  const url = 'provider/fileShare';
-  return this.servicemeta.httpGet(url);
-}
 
-buildFilesParams(sdate, edate) {
-  let param = '';
-  // if (ackStatus === 'true') {
-  //   param += 'ackStatus-eq=true';
-  // } else if (ackStatus === 'false') {
-  //   if (ackStatus === 'false') {
-  //     param += 'ackStatus-eq=false';
-  //   }
-  // } else if (ackStatus === 'true,false') {
-  //   param += 'ackStatus-eq=false,true';
-  // }
-  /*if (subcat !== '') {
-    if (param !== '') {
-      param += '&';
+  buildFilesParams(sdate, edate) {
+    let param = '';
+    if (sdate && sdate !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'createdDate-ge=' + sdate;
     }
-    param += 'subCategory-eq=' + subcat;
+    if (edate && edate !== '') {
+      if (param !== '') {
+        param += '&';
+      }
+      param += 'createdDate-le=' + edate;
+    }
+    return param;
   }
-  if (action !== '') {
-    if (param !== '') {
-      param += '&';
-    }
-    param += 'action-eq=' + action;
-  }*/
-  if (sdate && sdate !== '') {
-    if (param !== '') {
-      param += '&';
-    }
-    param += 'createdDate-ge=' + sdate;
-  }
-  if (edate && edate !== '') {
-    if (param !== '') {
-      param += '&';
-    }
-    param += 'createdDate-le=' + edate;
-  }
-  return param;
-}
 
 
   changestatustowaitlistComplete(idlist, status) {
@@ -2530,7 +2455,7 @@ buildFilesParams(sdate, edate) {
       const url = 'provider/report/status/cache/DONE';
       return this.servicemeta.httpGet(url);
     }
-    else{
+    else {
       const url = 'provider/report/status/cache/token/' + filter;
       return this.servicemeta.httpGet(url);
     }
@@ -2547,19 +2472,11 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/account/settings/task/' + status;
     return this.servicemeta.httpPut(url);
   }
-  setProviderLeadStatus(status){
+  setProviderLeadStatus(status) {
     const url = 'provider/account/settings/lead/' + status;
     return this.servicemeta.httpPut(url);
   }
-  getProviderTaskSettings() {
-    const url = 'provider/account/settings';
-    return this.servicemeta.httpGet(url);
-  }
-  getProviderLeadSettings(){
-    const url = 'provider/account/settings';
-    return this.servicemeta.httpGet(url);
-  }
-  WaitlistLead(uid , uuid) {
+  WaitlistLead(uid, uuid) {
     const url = 'provider/lead/' + uid + '/waitlist/' + uuid;
     return this.servicemeta.httpPut(url);
   }
@@ -2595,12 +2512,12 @@ buildFilesParams(sdate, edate) {
     const url = 'provider/lead/questionnaire/status/' + uid;
     return this.servicemeta.httpGet(url);
   }
-  changeLeadQuestionnaireStatus(status,uuid, id) {
+  changeLeadQuestionnaireStatus(status, uuid, id) {
     const url = 'provider/lead/questionnaire/change/' + status + '/' + uuid + '/' + id;
     return this.servicemeta.httpPut(url);
   }
-  updateQNRProceedStatus(status,uuid) {
-    const url = 'provider/lead/questionnaire/proceed/'+ status +'/'+ uuid;
+  updateQNRProceedStatus(status, uuid) {
+    const url = 'provider/lead/questionnaire/proceed/' + status + '/' + uuid;
     return this.servicemeta.httpPut(url);
   }
   getProviderSubmissionOrders(filter = {}) {
@@ -2612,7 +2529,133 @@ buildFilesParams(sdate, edate) {
     return this.servicemeta.httpGet(url, null, filter);
   }
   getPaperQnr(catId, channel) {
-    const url = 'provider/questionnaire/order/submission/' + catId + '/' + channel ;
+    const url = 'provider/questionnaire/order/submission/' + catId + '/' + channel;
     return this.servicemeta.httpGet(url);
   }
-} 
+  getAccountSetting() {
+    const url = 'provider/account/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  getAccountSettings() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const accountSettings = _this.commonDataStorage.getSettings('account');
+
+      if (accountSettings) {
+        console.log("Account Settings:", accountSettings);
+        resolve(accountSettings);
+      } else {
+        console.log("Account Settings No:");
+        _this.getAccountSetting().subscribe(
+          (settings) => {
+            _this.commonDataStorage.setSettings('account', settings);
+            _this.groupStorageService.setitemToGroupStorage('settings', settings);
+            resolve(settings);
+          }, (error) => {
+            reject(error);
+          }
+        )
+      }
+    })
+  }
+  getProviderOrderSettings() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const orderSettings = _this.commonDataStorage.getSettings('order');
+
+      if (orderSettings) {
+        console.log("Order Settings:", orderSettings);
+        resolve(orderSettings);
+      } else {
+        console.log("Order Settings No:");
+        _this.getOrderSettings().subscribe(
+          (settings) => {
+            _this.commonDataStorage.setSettings('order', settings);
+            resolve(settings);
+          }, (error) => {
+            reject(error);
+          }
+        )
+      }
+    })
+  }
+  getOrderSettings() {
+    const url = 'provider/order/settings';
+    return this.servicemeta.httpGet(url);
+  }
+  getPOSSettings() {
+    const url = 'provider/bill/settings/pos';
+    return this.servicemeta.httpGet(url);
+  }
+  getProviderPOSStatus() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const posSettings = _this.commonDataStorage.getSettings('pos');
+
+      if (posSettings) {
+        console.log("posSettings:", posSettings);
+        resolve(posSettings);
+      } else {
+        console.log("POS Settings No:");
+        _this.getPOSSettings().subscribe(
+          (settings) => {
+            _this.commonDataStorage.setSettings('pos', settings);
+            resolve(settings);
+          }, (error) => {
+            reject(error);
+          }
+        )
+      }
+    })
+  }
+  getWLSettings() {
+    const url = 'provider/settings/waitlistMgr/';
+    return this.servicemeta.httpGet(url);
+  }
+  getWaitlistMgr() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const wlSettings = _this.commonDataStorage.getSettings('waitlist');
+
+      if (wlSettings) {
+        console.log("WL Settings:", wlSettings);
+        resolve(wlSettings);
+      } else {
+        console.log("WL Settings No:");
+        _this.getWLSettings().subscribe(
+          (settings) => {
+            _this.commonDataStorage.setSettings('waitlist', settings);
+            resolve(settings);
+          }, (error) => {
+            reject(error);
+          }
+        )
+      }
+    })
+  }
+  getApptMgr() {
+    const url = 'provider/settings/apptMgr';
+    return this.servicemeta.httpGet(url);
+  }
+  getApptlistMgr() {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      const apptSettings = _this.commonDataStorage.getSettings('appointment');
+
+      if (apptSettings) {
+        console.log("Appt Settings:", apptSettings);
+        resolve(apptSettings);
+      } else {
+        console.log("Appt Settings No:");
+        _this.getApptMgr().subscribe(
+          (settings) => {
+            _this.commonDataStorage.setSettings('appointment', settings);
+            resolve(settings);
+          }, (error) => {
+            reject(error);
+          }
+        )
+      }
+    })
+  }
+}

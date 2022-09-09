@@ -552,7 +552,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.calculationmode = this.settings.calculationMode;
         this.showToken = this.settings.showTokenId;
@@ -2549,7 +2549,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
+    this.provider_services.getProviderPOSStatus().then(data => {
       this.pos = data['enablepos'];
     });
   }
@@ -3037,7 +3037,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   getGlobalSettings() {
     return new Promise<void>((resolve) => {
-      this.provider_services.getGlobalSettings().subscribe(
+      this.provider_services.getAccountSettings().then(
         (data: any) => {
           this.checkinStatus = data.waitlist;
           resolve();
@@ -3100,7 +3100,7 @@ export class CheckInsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!this.checkinStatus || !this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
       if (!this.profileExist || !this.locationExist || !this.serviceExist || !this.qExist) {
         this.provider_services.getWaitlistMgr()
-          .subscribe(data => {
+          .then(data => {
             this.settings = data;
             this.showToken = this.settings.showTokenId;
             if (this.showToken) {

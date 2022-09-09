@@ -976,24 +976,23 @@ export class SharedFunctions {
   getNumberArray(n: number): any[] {
     return Array(n);
   }
-  getGlobalSettings() {
-    return new Promise((resolve) => {
-      let settings = this.groupService.getitemFromGroupStorage('settings');
-      if (!settings) {
-        this.provider_services.getGlobalSettings().subscribe(
-          (data: any) => {
-            settings = data;
-            this.groupService.setitemToGroupStorage('settings', data);
-            resolve(data);
-          });
-      } else {
-        resolve(settings);
-      }
-    });
-  }
+  // getGlobalSettings() {
+  //   return new Promise((resolve) => {
+  //     let settings = this.groupService.getitemFromGroupStorage('settings');
+  //     if (!settings) {
+  //       this.provider_services.getAccountSettings().then(
+  //         (data: any) => {
+  //           settings = data;
+  //           this.groupService.setitemToGroupStorage('settings', data);
+  //           resolve(data);
+  //         });
+  //     } else {
+  //       resolve(settings);
+  //     }
+  //   });
+  // }
   gotoActiveHome() {
-    this.getGlobalSettings()
-      .then(
+    this.provider_services.getAccountSettings().then(
         (settings: any) => {
           if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
             if (settings.appointment) {

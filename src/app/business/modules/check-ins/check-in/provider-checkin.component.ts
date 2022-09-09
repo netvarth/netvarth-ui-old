@@ -971,7 +971,7 @@ export class ProviderCheckinComponent implements OnInit {
         const _this = this;
         return new Promise<void>(function (resolve, reject) {
             _this.provider_services.getWaitlistMgr()
-                .subscribe(
+                .then(
                     data => {
                         _this.settingsjson = data;
                         resolve();
@@ -1202,7 +1202,7 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     getGlobalSettings() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.customidFormat = data.jaldeeIdFormat;
             });

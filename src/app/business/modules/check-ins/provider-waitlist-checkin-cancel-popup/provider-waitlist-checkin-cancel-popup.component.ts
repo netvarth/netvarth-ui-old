@@ -102,7 +102,7 @@ export class ProviderWaitlistCheckInCancelPopupComponent implements OnInit {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
         if (this.data.appt || this.data.type === 'appt') {

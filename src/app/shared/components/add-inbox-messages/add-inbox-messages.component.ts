@@ -182,7 +182,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     }
   }
   ngOnInit() {
-    this.provider_services.getSMSglobalSettings().subscribe(data => {
+    this.provider_services.getAccountSettings().then(data => {
       this.smsGlobalStatusEnable = data['enableSms'];
       this.notificationStatusEnable = data['sendNotification'];
       //this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';

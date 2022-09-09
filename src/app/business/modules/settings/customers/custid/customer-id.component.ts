@@ -47,7 +47,7 @@ export class CustomerIdSettingsComponent implements OnInit {
         this.cust_domain_name = Messages.CUSTOMER_NAME.replace('[customer]', this.customer_label);
     }
     getGlobalSettings() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.custIdFormat = data.jaldeeIdFormat.customerSeriesEnum;
                 this.tempCustIdFormat = data.jaldeeIdFormat;

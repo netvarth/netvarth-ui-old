@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
     'selector': 'app-general-settings',
@@ -45,6 +46,7 @@ export class GeneralSettingsComponent implements OnInit {
         private dialog: MatDialog,
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
+        private commonDataStorage: CommonDataStorageService,
         private snackbarService: SnackbarService) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     }
@@ -113,7 +115,7 @@ export class GeneralSettingsComponent implements OnInit {
     getWaitlistMgr() {
         this.loading = true;
         this.provider_services.getWaitlistMgr()
-            .subscribe(
+            .then(
                 data => {
                     this.filterbydepartment = data['filterByDept'];
                     this.deptstatusstr = data['filterByDept'] ? 'On' : 'Off';
@@ -195,6 +197,7 @@ export class GeneralSettingsComponent implements OnInit {
                 this.provider_services.setDeptWaitlistMgr(status)
                     .subscribe(
                         () => {
+                            this.commonDataStorage.setSettings('waitlist',null);
                             this.getWaitlistMgr();
                         },
                         error => {

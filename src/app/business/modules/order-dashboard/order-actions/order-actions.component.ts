@@ -129,7 +129,7 @@ export class OrderActionsComponent implements OnInit {
   }
 
   getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
+    this.provider_services.getProviderPOSStatus().then(data => {
       this.account = data['accountId'];
       this.pos = data['enablepos'];
       this.setActions();
@@ -595,7 +595,7 @@ removeProvider() {
   });
 }
 getGlobalSettings() {
-  this.provider_services.getGlobalSettings().subscribe(
+  this.provider_services.getAccountSettings().then(
       (data: any) => {
           this.catalogType = data.catalogType;
       });

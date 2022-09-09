@@ -119,7 +119,7 @@ export class ProviderUserNotificationUserComponent implements OnInit {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
       }, () => {
@@ -134,7 +134,7 @@ export class ProviderUserNotificationUserComponent implements OnInit {
       });
   }
   getGlobalSettingsStatus() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;

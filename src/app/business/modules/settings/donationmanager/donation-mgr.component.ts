@@ -4,6 +4,7 @@ import { ProviderServices } from '../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-donationmanager',
@@ -19,6 +20,7 @@ export class DonationMgrComponent implements OnInit {
     private shared_functions: SharedFunctions,
     private provider_services: ProviderServices,
     private groupService:GroupStorageService,
+    private commonDataStorage: CommonDataStorageService,
     private snackbarService: SnackbarService) { }
 
   ngOnInit() {
@@ -51,6 +53,7 @@ export class DonationMgrComponent implements OnInit {
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
+          this.commonDataStorage.setSettings('account',null);
           this.getDonationStatus();
         },
         error => {
@@ -61,7 +64,7 @@ export class DonationMgrComponent implements OnInit {
     }
   }
   getDonationStatus() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         this.donations_status = data.donationFundRaising;
         this.donations_statusstr = (this.donations_status) ? 'On' : 'Off';

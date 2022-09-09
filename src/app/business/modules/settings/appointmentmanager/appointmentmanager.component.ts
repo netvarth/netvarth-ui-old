@@ -10,6 +10,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
     selector: 'app-appointmentmanager',
@@ -45,7 +46,8 @@ export class AppointmentmanagerComponent implements OnInit {
         private groupService: GroupStorageService,
         private snackbarService: SnackbarService,
         private wordProcessor: WordProcessor,
-        private sharedFunctions: SharedFunctions
+        private sharedFunctions: SharedFunctions,
+        private commonDataStorage: CommonDataStorageService
     ) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -139,6 +141,7 @@ export class AppointmentmanagerComponent implements OnInit {
                 .subscribe(
                     () => {
                         this.snackbarService.openSnackBar('Appointment manager ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                        this.commonDataStorage.setSettings('account',null);
                         this.getOnlinePresence();
                     },
                     error => {
@@ -150,7 +153,7 @@ export class AppointmentmanagerComponent implements OnInit {
     }
 
     getOnlinePresence() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.createappointment_status = data.appointment;
                 this.createappointment_statusstr = (this.createappointment_status) ? 'On' : 'Off';
@@ -164,6 +167,7 @@ export class AppointmentmanagerComponent implements OnInit {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.commonDataStorage.setSettings('appointment',null);
                     this.getApptlistMgr();
                     this.sharedFunctions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
@@ -179,6 +183,7 @@ export class AppointmentmanagerComponent implements OnInit {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.commonDataStorage.setSettings('appointment',null);
                     this.getApptlistMgr();
                     this.sharedFunctions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
@@ -189,7 +194,7 @@ export class AppointmentmanagerComponent implements OnInit {
     }
     getApptlistMgr() {
         this.provider_services.getApptlistMgr()
-            .subscribe(
+            .then(
                 data => {
                     this.apptlist_details = data;
                     this.apptlist_status = data['enableToday'] || false;

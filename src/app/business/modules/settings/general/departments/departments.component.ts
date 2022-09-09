@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { CommonDataStorageService } from '../../../../../shared/services/common-datastorage.service';
 
 @Component({
     'selector': 'app-departments',
@@ -35,6 +36,7 @@ export class DepartmentsComponent implements OnInit {
         private provider_services: ProviderServices,
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
+        private commonDataStorage: CommonDataStorageService,
         private snackbarService: SnackbarService) {
 
     }
@@ -90,6 +92,7 @@ export class DepartmentsComponent implements OnInit {
                 this.provider_services.setDeptWaitlistMgr(status)
                     .subscribe(
                         () => {
+                            this.commonDataStorage.setSettings('waitlist',null);
                             this.getWaitlistMgr();
                             if (result.deptName) {
                                 this.getDepartments(result.deptName);
@@ -137,7 +140,7 @@ export class DepartmentsComponent implements OnInit {
 
     getWaitlistMgr() {
         this.provider_services.getWaitlistMgr()
-            .subscribe(
+            .then(
                 data => {
                     this.filterbydepartment = data['filterByDept'];
                     this.deptstatusstr = data['filterByDept'] ? 'On' : 'Off';

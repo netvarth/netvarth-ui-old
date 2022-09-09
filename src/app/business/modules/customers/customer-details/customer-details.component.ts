@@ -724,14 +724,14 @@ export class CustomerDetailComponent implements OnInit {
   }
 
   getOrderStatus() {
-    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+    this.provider_services.getProviderOrderSettings().then((data: any) => {
       this.orderstatus = data.enableOrder;
       console.log("OrderStatus : ", this.orderstatus);
     });
   }
 
   getGlobalSettings() {
-    this.provider_services.getGlobalSettings().subscribe((data: any) => {
+    this.provider_services.getAccountSettings().then((data: any) => {
       this.globalSettings = data;
       console.log("Global Settings : ", this.globalSettings);
     });

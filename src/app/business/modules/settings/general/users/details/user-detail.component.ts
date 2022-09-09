@@ -21,6 +21,7 @@ import {
   PhoneNumberFormat,
   SearchCountryField
 } from "ngx-intl-tel-input";
+import { CommonDataStorageService } from "../../../../../../shared/services/common-datastorage.service";
 @Component({
   selector: "app-branchuser-detail",
   templateUrl: "./user-detail.component.html",
@@ -132,7 +133,8 @@ export class BranchUserDetailComponent implements OnInit {
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private commonDataStorage: CommonDataStorageService
   ) {
     this.activated_route.queryParams.subscribe(data => {
       this.actionparam = data;
@@ -606,7 +608,7 @@ export class BranchUserDetailComponent implements OnInit {
       : (this.showAdvancedSection = true);
   }
   getWaitlistMgr() {
-    this.provider_services.getWaitlistMgr().subscribe(
+    this.provider_services.getWaitlistMgr().then(
       data => {
         this.filterBydept = data["filterByDept"];
         if (this.filterBydept) {
@@ -636,6 +638,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.provider_services.setDeptWaitlistMgr("Enable").subscribe(
           () => {
             this.api_loading = true;
+            this.commonDataStorage.setSettings('waitlist',null);
             this.getWaitlistMgr();
           },
           error => {

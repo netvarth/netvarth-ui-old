@@ -12,6 +12,7 @@ import { ShowMessageComponent } from '../../show-messages/show-messages.componen
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
     selector: 'app-waitlistmgr',
@@ -63,7 +64,8 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         private dialog: MatDialog,
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
-        private snackbarService: SnackbarService
+        private snackbarService: SnackbarService,
+        private commonDataStorage: CommonDataStorageService
         // private shared_services: SharedServices
     ) {
         this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist');
@@ -137,7 +139,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.isManualMode = false;
         this.trnArndTime = 0;
         this.provider_services.getWaitlistMgr()
-            .subscribe(
+            .then(
                 data => {
                     this.waitlist_manager = data;
                     this.shared_functions.sendMessage({ ttype: 'waitlistSettings', value: this.waitlist_manager.showTokenId });
@@ -196,7 +198,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.setAcceptOnlineCheckin(is_check);
     }
     getGlobalSettingsStatus() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.waitlist_status = data['waitlist'];
                 this.waitlist_statusstr = this.waitlist_status ? 'On' : 'Off';
@@ -208,6 +210,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.setAcceptOnlineCheckin(is_check)
             .subscribe(
                 () => {
+                    this.commonDataStorage.setSettings('waitlist',null);
                     this.getWaitlistMgr();
                 },
                 error => {
@@ -326,6 +329,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar('Same day online ' + type + ' ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.commonDataStorage.setSettings('waitlist',null);
                     this.getWaitlistMgr();
                     this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
@@ -348,6 +352,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar('Future ' + type + ' ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
+                    this.commonDataStorage.setSettings('waitlist',null);
                     this.getWaitlistMgr();
                     this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
                 },
@@ -375,6 +380,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                 .subscribe(
                     () => {
                         this.snackbarService.openSnackBar('QManager ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
+                        this.commonDataStorage.setSettings('account',null);
                         this.getGlobalSettingsStatus();
                     },
                     error => {
@@ -436,6 +442,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.provider_services.setWaitlistMgr(postData)
                 .subscribe(
                     () => {
+                        this.commonDataStorage.setSettings('waitlist',null);
                         this.getWaitlistMgr();
                         this.is_data_chnge = 0;
                         this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
@@ -457,6 +464,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
                     this.provider_services.setWaitlistMgr(postData)
                         .subscribe(
                             () => {
+                                this.commonDataStorage.setSettings('waitlist',null);
                                 this.getWaitlistMgr();
                                 this.is_data_chnge = 0;
                                 this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
@@ -483,6 +491,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.provider_services.setWaitlistMgr(postData)
                 .subscribe(
                     () => {
+                        this.commonDataStorage.setSettings('waitlist',null);
                         this.getWaitlistMgr();
                         this.is_data_chnge = 0;
                         this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
@@ -498,6 +507,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.provider_services.setWaitlistMgr(postData)
                 .subscribe(
                     () => {
+                        this.commonDataStorage.setSettings('waitlist',null);
                         this.getWaitlistMgr();
                         this.is_data_chnge = 0;
                         this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
@@ -512,6 +522,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.provider_services.setpersonsWaitlistMgr('Enable')
                 .subscribe(
                     () => {
+                        this.commonDataStorage.setSettings('waitlist',null);
                         this.getWaitlistMgr();
                         this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
                     },
@@ -522,6 +533,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.provider_services.setpersonsWaitlistMgr('Disable')
                 .subscribe(
                     () => {
+                        this.commonDataStorage.setSettings('waitlist',null);
                         this.getWaitlistMgr();
                         this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
                     },
@@ -546,6 +558,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
         this.provider_services.setWaitlistMgr(postData)
             .subscribe(
                 () => {
+                    this.commonDataStorage.setSettings('waitlist',null);
                     this.getWaitlistMgr();
                     this.is_data_chnge = 0;
                     this.snackbarService.openSnackBar(Messages.ONLINE_CHECKIN_SAVED);
@@ -569,6 +582,7 @@ export class WaitlistMgrComponent implements OnInit, OnDestroy {
             this.provider_services.setWaitlistMgr(postData)
                 .subscribe(
                     () => {
+                        this.commonDataStorage.setSettings('waitlist',null);
                         this.getWaitlistMgr();
                     });
             this.isManualMode = false;

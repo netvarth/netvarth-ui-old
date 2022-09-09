@@ -149,23 +149,12 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   ngOnInit() {
     this.getPos();
     this.api_loading = true;
-   // this.getWaitlistNotes(this.waitlist_id);
     this.pdtype = this.groupService.getitemFromGroupStorage('pdtyp');
     if (!this.pdtype) {
       this.pdtype = 1;
     }
     this.userDet = this.groupService.getitemFromGroupStorage('ynw-user');
     if (this.waitlist_id) {
-      // this.getWaitlistNotes(this.waitlist_id);
-      // this.provider_services.getProviderWaitlistNotesnew(this.waitlist_id)
-      //   .subscribe(
-      //     data => {
-      //       this.waitlist_notes = data;
-      //       console.log("Data got :", this.waitlist_notes)
-      //     },
-      //     () => {
-      //     }
-      //   );
       this.getProviderSettings();
     } else {
       this.goBack();
@@ -290,7 +279,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getProviderSettings() {
     this.api_loading = true;
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
         this.getWaitlistDetail();
@@ -832,7 +821,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     (this.showTimePicker) ? this.showTimePicker = false : this.showTimePicker = true;
   }
   getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
+    this.provider_services.getProviderPOSStatus().then(data => {
       this.pos = data['enablepos'];
     });
   }
@@ -858,14 +847,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
-      // console.log("data....",data);
       this.getProviderSettings();
-
-
     });
   }
-
-
   changeStatus(checkin?) {
     console.log("opend", checkin)
     let waitlist = [];

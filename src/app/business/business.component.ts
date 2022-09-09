@@ -55,7 +55,7 @@ export class BusinessComponent implements OnInit {
     this.evnt = router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.shared_functions.isBusinessOwner()) {
-          this.shared_functions.getGlobalSettings()
+          this.provider_services.getAccountSettings()
             .then(
               (settings: any) => {
                 console.log("Settings:",settings);
@@ -252,9 +252,6 @@ export class BusinessComponent implements OnInit {
           this.groupService.setitemToGroupStorage('accountId', bProfile.id);
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
-            // const subsectorname = this.shared_functions.retSubSectorNameifRequired(bProfile['serviceSector']['domain'], bProfile['serviceSubSector']['displayName']);
-            // this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
-            //   || '', bProfile['serviceSector']['displayName'] || '', subsectorname || '', '');
             this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']
               || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '', '');
             this.getProviderLogo(bProfile['businessName'] || '', bProfile['serviceSector']['displayName'] || '', bProfile['serviceSubSector']['displayName'] || '');

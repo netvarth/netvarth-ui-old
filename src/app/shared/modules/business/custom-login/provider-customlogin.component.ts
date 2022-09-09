@@ -14,6 +14,7 @@ import { SessionStorageService } from '../../../services/session-storage.service
 import { SnackbarService } from '../../../services/snackbar.service';
 import { GroupStorageService } from '../../../services/group-storage.service';
 import { AuthService } from '../../../services/auth-service';
+import { ProviderServices } from '../../../../business/services/provider-services.service';
 
 @Component({
   selector: 'app-pCustomlogin',
@@ -64,7 +65,8 @@ export class ProviderCustomLoginComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private authService: AuthService
+    private authService: AuthService,
+    private providerServices: ProviderServices
   ) {
 
     this.activateRoute.queryParams.subscribe(data => {
@@ -101,7 +103,7 @@ export class ProviderCustomLoginComponent implements OnInit {
         console.log(router.url);
         if (router.url.startsWith('/business/' + this.busLoginId + '/login')) {
           if (this.shared_functions.isBusinessOwner()) {
-            this.shared_functions.getGlobalSettings()
+            this.providerServices.getAccountSettings()
               .then(
                 (settings: any) => {
                   setTimeout(() => {

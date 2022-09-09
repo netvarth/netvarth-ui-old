@@ -4,6 +4,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
     selector: 'app-jaldee-video-settings',
@@ -22,6 +23,7 @@ export class JaldeeVideoSettingsComponent implements OnInit {
         private router: Router,
         private groupService: GroupStorageService,
         private wordProcessor: WordProcessor,
+        private commonDataStorage: CommonDataStorageService
     ) { }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -43,7 +45,7 @@ export class JaldeeVideoSettingsComponent implements OnInit {
     }
     getRecordingStatus() {
         return new Promise((resolve, reject) => {
-            this.provider_services.getGlobalSettings().subscribe(
+            this.provider_services.getAccountSettings().then(
                 (data: any) => {
                     resolve(data.videoRecording);
                 }, (error) => {
@@ -57,6 +59,7 @@ export class JaldeeVideoSettingsComponent implements OnInit {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar('Jaldee Video settings' + ' updated successfully', { ' panelclass': 'snackbarerror' });
+                    this.commonDataStorage.setSettings('account',null);
                     this.getRecordingStatus().then(
                         (recordStatus) => {
                             this.jaldeeVideoRecord_status = recordStatus;

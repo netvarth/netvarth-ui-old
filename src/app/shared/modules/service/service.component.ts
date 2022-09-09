@@ -946,7 +946,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             });
     }
     getGlobalSettings() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 if (data.livetrack === true) {
                     this.is_lvtrack_enable = true;

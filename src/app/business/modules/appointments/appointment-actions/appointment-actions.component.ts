@@ -1028,7 +1028,7 @@ export class AppointmentActionsComponent implements OnInit {
  
   }
   getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(
+    this.provider_services.getProviderPOSStatus().then(
       data => {
         this.pos = data["enablepos"];
         this.getDisplayboardCount();

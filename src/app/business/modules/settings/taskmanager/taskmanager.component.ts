@@ -10,6 +10,7 @@ import { SharedFunctions } from '../../../../../../src/app/shared/functions/shar
 import { ProviderDataStorageService } from '../../../../../../src/app/business/services/provider-datastorage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ShowMessageComponent } from '../../show-messages/show-messages.component';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 // import { SharedFunctions } from '../../../../../../src/app/shared/functions/shared-functions';
 
 @Component({
@@ -47,7 +48,8 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
     private provider_datastorage: ProviderDataStorageService,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private commonDataStorage: CommonDataStorageService
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
   }
@@ -84,6 +86,7 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
     } else {
       this.subscriptions.sink = this.provider_services.setProviderTaskStatus(this.task_status).subscribe(data => {
         this.snackbarService.openSnackBar('Activity settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+        this.commonDataStorage.setSettings('account',null);
         this.getTaskStatus();
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -91,28 +94,6 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
       });
     }
   }
-  // handleTaskStatus(event) {
-  //   if (this.locationExists) {
-  //   if(event.checked){
-  //     this.task_status =  'Enable';
-  //   }
-  //   else{
-  //     this.task_status =  'Disable';
-  //   }
-  //   const status = (event.checked) ? 'enabled' : 'disabled';
-  //     this.subscriptions.sink = this.provider_services.setProviderTaskStatus(this.task_status).subscribe(data => {
-  //       this.snackbarService.openSnackBar('Task settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
-  //       this.getTaskStatus();
-  //     }, (error) => {
-  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-  //       this.getTaskStatus();
-  //     });
-  //   }
-  //   else{
-  //     this.snackbarService.openSnackBar('Please set location', { 'panelClass': 'snackbarerror' });
-  //   }
-    
-  // }
   getBusinessProfile() {
     this.provider_services.getBussinessProfile()
         .subscribe(
@@ -128,7 +109,7 @@ export class TaskmanagerComponent implements OnInit, OnDestroy {
             });
 }
   getTaskStatus() {
-    this.subscriptions.sink = this.provider_services.getProviderTaskSettings().subscribe((data: any) => {
+    this.provider_services.getAccountSettings().then((data: any) => {
       this.taskstatus = data.enableTask;
       this.pos_statusstr = (this.taskstatus) ? 'On' : 'Off';
       this.shared_functions.sendMessage({ 'ttype': 'taskstatus', taskstatus: this.taskstatus });

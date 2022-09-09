@@ -8,6 +8,7 @@ import { projectConstants } from '../../../app.component';
 import { Messages } from '../../../shared/constants/project-messages';
 import { WordProcessor } from '../../services/word-processor.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { ProviderServices } from '../../../business/services/provider-services.service';
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -81,6 +82,7 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
     public shared_services: SharedServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
+    private providerServices: ProviderServices,
     public router: Router) { this.checkin_label = this.wordProcessor.getTerminologyTerm('waitlist'); }
 
   ngOnInit() {
@@ -244,8 +246,8 @@ export class FooterComponent implements OnInit, OnDestroy, DoCheck {
     this.bottomdivHeader = this.checkin_label.charAt(0).toUpperCase() + this.checkin_label.slice(1) + ' Enable / Disable';
     this.selOpt = 'Checkin';
     this.waitlistmgr = [];
-    this.shared_services.getWaitlistMgr()
-      .subscribe(data => {
+    this.providerServices.getWaitlistMgr()
+      .then(data => {
         this.waitlistmgr = data;
         this.checkinStatus = 3;
       },

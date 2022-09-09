@@ -135,7 +135,7 @@ export class WaitlistuserSchedulesDetailComponent implements OnInit {
         this.api_loading = true;
         this.waitlist_manager = null;
         this.provider_services.getWaitlistMgr()
-            .subscribe(
+            .then(
                 data => {
                     this.waitlist_manager = data;
                     // this.amForm.get('timeSlot').setValue(this.waitlist_manager.trnArndTime);

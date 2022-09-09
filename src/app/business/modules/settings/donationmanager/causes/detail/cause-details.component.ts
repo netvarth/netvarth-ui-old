@@ -133,8 +133,8 @@ export class CauseDetailComponent implements OnInit, OnDestroy {
     }
     getPaymentSettings() {
         return new Promise<void>((resolve, reject) => {
-            this.provider_services.getPaymentSettings()
-                .subscribe(
+            this.provider_services.getAccountSettings()
+                .then(
                     data => {
                         this.serviceParams['paymentsettings'] = data;
                         resolve();

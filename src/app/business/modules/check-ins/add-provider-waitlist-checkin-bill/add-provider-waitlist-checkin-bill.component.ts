@@ -324,7 +324,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
         if (this.source === 'appt') {
@@ -419,7 +419,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
       );
   }
   getPos() {
-    this.provider_services.getProviderPOSStatus().subscribe(data => {
+    this.provider_services.getProviderPOSStatus().then(data => {
       this.pos = data['enablepos'];
     });
   }
@@ -516,8 +516,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
     this.api_success = null;
   }
   getPaymentSettings() {
-    this.provider_services.getPaymentSettings()
-      .subscribe(
+    this.provider_services.getAccountSettings().then(
         (data: any) => {
           this.paymentOnline = data.onlinePayment;
         },

@@ -175,14 +175,14 @@ export class ProviderNotificationsComponent implements OnInit {
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
-      .subscribe(data => {
+      .then(data => {
         this.settings = data;
         this.showToken = this.settings.showTokenId;
       }, () => {
       });
   }
   getGlobalSettingsStatus() {
-    this.provider_services.getGlobalSettings().subscribe(
+    this.provider_services.getAccountSettings().then(
       (data: any) => {
         this.appointment_status = data.appointment;
         this.waitlistStatus = data.waitlist;
@@ -1728,7 +1728,7 @@ export class ProviderNotificationsComponent implements OnInit {
     }
   }
   getOrderStatus() {
-    this.provider_services.getProviderOrderSettings().subscribe((data: any) => {
+    this.provider_services.getProviderOrderSettings().then((data: any) => {
       console.log('order',data)
       this.order_status = data.enableOrder;
     });

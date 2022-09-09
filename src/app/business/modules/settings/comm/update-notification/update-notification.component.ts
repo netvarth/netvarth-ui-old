@@ -5,6 +5,7 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { CommonDataStorageService } from '../../../../../shared/services/common-datastorage.service';
 
 @Component({
     selector: 'app-update-notification',
@@ -24,6 +25,7 @@ export class UpdateNotificationComponent implements OnInit {
         private provider_services: ProviderServices,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public shared_functions: SharedFunctions,
+        private commonDataStorage: CommonDataStorageService,
         private snackbarService: SnackbarService) {
         this.virtualCallModesList = this.data.callingmodeList;        
         this.mode = this.data.mode;
@@ -117,7 +119,7 @@ export class UpdateNotificationComponent implements OnInit {
     }
     getRecordingStatus() {
         return new Promise((resolve, reject) => {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {                
                 resolve(data.videoRecording);                
             }, (error)=>{
@@ -131,6 +133,7 @@ export class UpdateNotificationComponent implements OnInit {
             .subscribe(
                 () => {
                     this.snackbarService.openSnackBar('Jaldee Video settings' + ' updated successfully', { ' panelclass': 'snackbarerror' });
+                    this.commonDataStorage.setSettings('account',null);
                     this.getRecordingStatus().then(
                         (recordStatus)=> {
                             this.jaldeeVideoRecord_status = recordStatus;

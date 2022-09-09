@@ -486,10 +486,10 @@ export class SharedServices {
     const url = 'provider/settings/waitlistMgr/futureCheckIns/' + status;
     return this.servicemeta.httpPut(url);
   }
-  getWaitlistMgr() {
-    const url = 'provider/settings/waitlistMgr/';
-    return this.servicemeta.httpGet(url);
-  }
+  // getWaitlistMgr() {
+  //   const url = 'provider/settings/waitlistMgr/';
+  //   return this.servicemeta.httpGet(url);
+  // }
   getPaymentStatus(type, uuid) {
     const url = type + '/payment/status/' + uuid;
     return this.servicemeta.httpGet(url);

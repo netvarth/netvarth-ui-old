@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
     'selector': 'app-comm-settings',
@@ -40,6 +41,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         private wordProcessor: WordProcessor,
         private groupService: GroupStorageService,
         private snackbarService: SnackbarService,
+        private commonDataStorage:CommonDataStorageService,
         public route: ActivatedRoute) {
         this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
@@ -76,7 +78,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         this.getJaldeeRecordingStatus();
     }
     getGlobalSettingsStatus() {
-        this.provider_services.getGlobalSettings().subscribe(
+        this.provider_services.getAccountSettings().then(
             (data: any) => {
                 this.virtualCallingMode_status = data.virtualService;
                 this.virtualCallingMode_statusstr = (this.virtualCallingMode_status) ? 'On' : 'Off';
@@ -123,6 +125,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setNotificationSettings(state).subscribe(data => {
             this.snackbarService.openSnackBar('Send notification  ' + status + ' successfully');
+            this.commonDataStorage.setSettings('account', null);
             this.getSMSglobalSettings();
         }, (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -135,6 +138,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         const state = (value) ? 'Enable' : 'Disable';
         this.provider_services.setSMSglobalSettings(state).subscribe(data => {
             this.snackbarService.openSnackBar('SMS settings ' + status + ' successfully');
+            this.commonDataStorage.setSettings('account', null);
             this.getSMSglobalSettings();
         }, (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -142,7 +146,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
         });
     }
     getSMSglobalSettings() {
-        this.provider_services.getSMSglobalSettings().subscribe(data => {
+        this.provider_services.getAccountSettings().then(data => {
             this.smsGlobalStatus = data['enableSms'];
             this.notificationStatus = data['sendNotification'];
         });
@@ -256,7 +260,7 @@ export class CommSettingsComponent implements OnInit, AfterViewInit {
     }
     getRecordingStatus() {
         return new Promise((resolve, reject) => {
-            this.provider_services.getGlobalSettings().subscribe(
+            this.provider_services.getAccountSettings().then(
                 (data: any) => {
                     resolve(data.videoRecording);
                 }, (error) => {
