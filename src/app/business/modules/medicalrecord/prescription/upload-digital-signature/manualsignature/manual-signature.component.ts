@@ -77,7 +77,7 @@ export class ManualSignatureComponent implements OnInit {
     private wordProcessor: WordProcessor
     // private medicalrecord_service: MedicalrecordService
   ) {
-    console.log('this.data',this.data)
+    // console.log('this.data',this.data)
     this.mrId = this.data.mrid;
     this.patientId = this.data.patientid;
     this.bookingType = this.data.bookingtype;
@@ -90,7 +90,7 @@ export class ManualSignatureComponent implements OnInit {
   @HostListener('window:resize', ['$event'])
   onResize() {
     this.screenWidth = window.innerWidth;
-    console.log('window widht', window.innerWidth)
+    // console.log('window widht', window.innerWidth)
     if (this.screenWidth <= 780) {
       this.small_device_display = true;
     } else {
@@ -137,7 +137,7 @@ export class ManualSignatureComponent implements OnInit {
   }
 
   drawStart() {
-    console.log('jjjj')
+    // console.log('jjjj')
     this.sign = false;
   }
   goBack() {
@@ -149,7 +149,7 @@ export class ManualSignatureComponent implements OnInit {
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
-        console.log('data',data)
+        // console.log('data',data)
         this.snackbarService.openSnackBar('Digital sign uploaded successfully');
         this.uploadmanualsignatureRef.close(data);
         this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP', 0, 'medicalrecord', this.mrId, 'prescription']);
@@ -167,8 +167,8 @@ export class ManualSignatureComponent implements OnInit {
     canvas.getContext("2d").scale(ratio, ratio);
     this.signaturePad.clear(); // otherwise isEmpty() might return incorrect value
     // this.signaturePad.clear();
-    const signaturePad = new SignaturePad(canvas);
-    console.log('signaturePad',signaturePad)
+    // const signaturePad = new SignaturePad(canvas);
+    // console.log('signaturePad',signaturePad)
 // signaturePad.minWidth = 5;
 // signaturePad.maxWidth = 10;
 // signaturePad.penColor = "rgb(66, 133, 244)";

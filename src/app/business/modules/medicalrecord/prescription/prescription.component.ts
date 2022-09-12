@@ -209,9 +209,9 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     // this. onReSize() 
   }
   ngOnInit() {
-    console.log('showHideActivityTYpe',this.showHideActivityTYpe);
-    console.log('tempPrescription',this.tempPrescription)
-    console.log('this.activatedRoute.parent.snapshot.params',this.activatedRoute.parent.snapshot.params)
+    // console.log('showHideActivityTYpe',this.showHideActivityTYpe);
+    // console.log('tempPrescription',this.tempPrescription)
+    // console.log('this.activatedRoute.parent.snapshot.params',this.activatedRoute.parent.snapshot.params)
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     this.mrId = parseInt(medicalrecordId, 0);
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
@@ -231,7 +231,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       this.getMedicalRecord(this.mrId);
     }
     this.createForm();
-    console.log('viewVisitDetails1',this.viewVisitDetails);
+    // console.log('viewVisitDetails1',this.viewVisitDetails);
     // this.onReSize()
   }
 
@@ -245,7 +245,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           this.prescriptionShared = data.prescShared;
           this.prescriptionSharedTimestamp = data.lastSharedTime;
           this.uploadFiles = data.mrVideoAudio;
-          console.log('this.uploadFiles',this.uploadFiles);
+          // console.log('this.uploadFiles',this.uploadFiles);
         }
       },
         error => {
@@ -308,7 +308,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
 
     this.provider_services.getDigitalSign(this.provider_user_Id)
       .subscribe((data:any) => {
-        console.log('digitalSign',data);
+        // console.log('digitalSign',data);
         this.manualSignInfo = data;
         this.digitalSign = true;
       },
@@ -326,7 +326,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   // }
 
   uploadRx(data) {
-    console.log('data',data)
+    // console.log('data',data)
     this.disableFromControl()
     // this.disable = true;
     this.uploadprescriptionRef = this.dialog.open(UploadPrescriptionComponent, {
@@ -341,7 +341,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       }
     });
     this.uploadprescriptionRef.afterClosed().subscribe((res) => {
-      console.log('res',res)
+      // console.log('res',res)
       this.enableFormControl()
       if(res===true){
         this.uploadprescriptionRef.close();
@@ -374,7 +374,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   }
 
   shareManualRx(type,bookingType,bookingId,file) {
-    console.log('file',file)
+    // console.log('file',file)
     const height:any=this.ScreenHeight;
     this.sharedialogRef = this.dialog.open(ShareRxComponent, {
       width: '100%',
@@ -393,68 +393,113 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('result',result);
+        // console.log('result',result);
 
       }
     });
   }
   print(divName,signatureInfo){
     console.log('signatureInfo',signatureInfo)
-    let manualPresSignature:any;
-    if(signatureInfo && signatureInfo.url){
-      manualPresSignature=signatureInfo.url;
+    if(signatureInfo===undefined){
+      const error='You have no digital Signature';
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      setTimeout(() => {
+        const params = [
+          'height=' + screen.height,
+          'width=' + screen.width,
+          'fullscreen=yes'
+        ].join(',');
+        const printWindow = window.open('', '', params);
+        const _this=this;
+        let checkin_html = '';
+        checkin_html +='<div style="box-shadow: 0 0 10px rgb(0 0 0 / 5%);border-radius: 5px;padding:15px;background:#f9f9f9f;position:absolute;z-index:99999;height:100%;width:100%">'
+        checkin_html +='<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
+        checkin_html += '<table width="100%" style="position:absolute;z-index:99999;padding-right:100px;">';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3;">Medicine</td>';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Duration(days)</td>';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Dosage</td>';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Frequency</td>';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Instruction</td>';
+        checkin_html += '</thead>';
+        for (let i = 0; i < _this.drugList.length; i++) {
+          checkin_html += '<tr style="line-height:20px;padding:10px;border-bottom: 1.02503px solid #E7E3E3">';
+          checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].medicine_name+ '</td>';
+          checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].duration+'</td>';
+          checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' +  _this.drugList[i].dosage + '</td>';
+          checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].frequency+ '</td>';
+          checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].instructions+ '</td>';
+        }
+        checkin_html += '</table>';
+        checkin_html +='</div>'
+        checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: absolute;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
+        printWindow.document.write('<html><head><title></title>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write(checkin_html);
+        printWindow.document.write('</body></html>');
+        printWindow.moveTo(0, 0);
+        printWindow.print();
+        printWindow.document.close();
+        setTimeout(() => {
+          printWindow.close();
+        }, 500);
+      }, 500);
+      
     }
-    console.log('manualPresSignature',manualPresSignature)
-    const params = [
-      'height=' + screen.height,
-      'width=' + screen.width,
-      'fullscreen=yes'
-    ].join(',');
-    const printWindow = window.open('', '', params);
-    const _this=this;
-    let checkin_html = '';
-    checkin_html +='<div style="box-shadow: 0 0 10px rgb(0 0 0 / 5%);border-radius: 5px;padding:15px;background:#f9f9f9f;position:absolute;z-index:99999;height:100%;width:100%">'
-    checkin_html +='<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
-    checkin_html +='<div style="text-align:end;width="100%";height:"100%;">'
-    checkin_html +='<div style="font-size:14px;font-weight:bold;padding-right:90px;">Your Digital Signature</div>'
-    checkin_html += '<img style="height:60px;width:60px;padding-right:90px;"  src="' + manualPresSignature + '" />'
-    checkin_html +='</div>'
-    checkin_html += '<table width="100%" style="position:absolute;z-index:99999;padding-right:100px;">';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3;">Medicine</td>';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Duration(days)</td>';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Dosage</td>';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Frequency</td>';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Instruction</td>';
-    checkin_html += '</thead>';
-    for (let i = 0; i < _this.drugList.length; i++) {
-      checkin_html += '<tr style="line-height:20px;padding:10px;border-bottom: 1.02503px solid #E7E3E3">';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].medicine_name+ '</td>';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].duration+'</td>';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' +  _this.drugList[i].dosage + '</td>';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].frequency+ '</td>';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].instructions+ '</td>';
+    else{
+      let manualPresSignature:any;
+      if(signatureInfo !== undefined && signatureInfo.url){
+        manualPresSignature=signatureInfo.url;
+      }
+      const params = [
+        'height=' + screen.height,
+        'width=' + screen.width,
+        'fullscreen=yes'
+      ].join(',');
+      const printWindow = window.open('', '', params);
+      const _this=this;
+      let checkin_html = '';
+      checkin_html +='<div style="box-shadow: 0 0 10px rgb(0 0 0 / 5%);border-radius: 5px;padding:15px;background:#f9f9f9f;position:absolute;z-index:99999;height:100%;width:100%">'
+      checkin_html +='<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
+      checkin_html +='<div style="text-align:end;width="100%";height:"100%;">'
+      checkin_html +='<div style="font-size:14px;font-weight:bold;padding-right:90px;">Your Digital Signature</div>'
+      checkin_html += '<img style="height:60px;width:60px;padding-right:90px;"  src="' + manualPresSignature + '" />'
+      checkin_html +='</div>'
+      checkin_html += '<table width="100%" style="position:absolute;z-index:99999;padding-right:100px;">';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3;">Medicine</td>';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Duration(days)</td>';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Dosage</td>';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Frequency</td>';
+      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Instruction</td>';
+      checkin_html += '</thead>';
+      for (let i = 0; i < _this.drugList.length; i++) {
+        checkin_html += '<tr style="line-height:20px;padding:10px;border-bottom: 1.02503px solid #E7E3E3">';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].medicine_name+ '</td>';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].duration+'</td>';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' +  _this.drugList[i].dosage + '</td>';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].frequency+ '</td>';
+        checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + _this.drugList[i].instructions+ '</td>';
+      }
+      checkin_html += '</table>';
+      checkin_html +='</div>'
+      checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: absolute;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
+      printWindow.document.write('<html><head><title></title>');
+      printWindow.document.write('</head><body >');
+      printWindow.document.write(checkin_html);
+      printWindow.document.write('</body></html>');
+      printWindow.moveTo(0, 0);
+      printWindow.print();
+      printWindow.document.close();
+      setTimeout(() => {
+        printWindow.close();
+      }, 500);
     }
-    checkin_html += '</table>';
-    checkin_html +='</div>'
-    // checkin_html += '<div style="margin:10px">';
-    // checkin_html += '</div>';
-    checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: absolute;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
-    printWindow.document.write('<html><head><title></title>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write(checkin_html);
-    printWindow.document.write('</body></html>');
-    printWindow.moveTo(0, 0);
-    printWindow.print();
-    printWindow.document.close();
-    setTimeout(() => {
-      printWindow.close();
-    }, 500);
+    
   }
   printPdf(url,html){
     let date:any=url.date;
     let originalName:any=url.originalName;
     let prefix:any=url.prefix;
-    console.log('html',html)
+    // console.log('html',html)
     const params = [
       'height=' + screen.height,
       'width=' + screen.width,
@@ -493,54 +538,10 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     setTimeout(() => {
       printWindow.close();
     }, 500);
-
-
-
-    // Create an IFrame.
-    // let resp= url
-    // let pdf = new Blob([resp], { type: 'application/pdf' });
-    //       let objectURL = URL.createObjectURL(pdf);
-    //       let frm = document.createElement('iframe');
-    //       frm.style.display = 'none';
-    //       frm.src = objectURL;
-    //       let temp:any=document.body.appendChild(frm);
-    //       frm.onload = function () {
-    //           console.log('Page was loaded');
-    //           const params = [
-    //   'height=' + screen.height,
-    //   'width=' + screen.width,
-    //   'fullscreen=yes'
-    // ].join(',');
-    // const printWindow = window.open('', '', params);
-    // const innerHtml= document.getElementById('sharePdf').innerHTML;
-    // console.log('innerHtml',innerHtml)
-    //           printWindow.document.write( temp);
-    //           printWindow.print();
-    //           printWindow.document.close();
-    //           setTimeout(() => {
-    //             printWindow.close();
-    //           }, 500);
-    //       }
-
-    
-
-
-
-
-    // console.log(' this.uploadlist[0].this.getData()', this.uploadlist[0])  
-    //   const iframe = document.createElement('iframe');
-    //   iframe.style.display = 'none';       
-    //   iframe.src = this.uploadlist[0].url;
-    //   document.body.append(iframe);
-    //   iframe.contentWindow.print();
-    //   iframe.contentWindow.document.close();
-    // setTimeout(() => {
-    //   iframe.contentWindow.close();
-    // }, 500);
   }
   
   printSecond(url){
-    console.log(url);
+    // console.log(url);
     if(url.type==='.pdf'){
       if(document && document.getElementById('sharePdf')){
         let html = document.getElementById('sharePdf').innerHTML;
@@ -580,19 +581,19 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   }
 
   getMrprescription(mrId) {
-    console.log('mrId::::',mrId);
+    // console.log('mrId::::',mrId);
     // this.newlyCretedMrId= mrId;
     this.subscriptions.sink=this.provider_services.getMRprescription(mrId)
       .subscribe((data:any) => {
         this.api_loading=false;
-        console.log('datagetMRprescription',data);
+        // console.log('datagetMRprescription',data);
         this.viewMrInfo= data;
         if(data){
           if (Object.keys(data).length === 0 && data.constructor === Object) {
             this.loading = false;
             // this.prescList = true;
             this.uploadFiles = data.mrVideoAudio;
-            console.log('this.uploadFiles',this.uploadFiles)
+            // console.log('this.uploadFiles',this.uploadFiles)
           } else {
             if (data['prescriptionsList'] && data['prescriptionsList'][0] && data['prescriptionsList'][0].keyName) {
               this.uploadlist = data['prescriptionsList'];
@@ -605,7 +606,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
                     description: this.uploadlist[0].caption || ''
                   });
                 this.image_list_popup.push(imgobj);
-                console.log('this.uploadlist::',this.uploadlist)
+                // console.log('this.uploadlist::',this.uploadlist)
                 if(this.uploadlist[0].type==='.pdf'){
                   this.downloadText='Download';
                 }
@@ -617,14 +618,13 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   
             } else {
               this.drugList = data['prescriptionsList'];
-              console.log('this.drugList:',this.drugList)
-              console.log(this.tempIndex);
+              // console.log('this.drugList:',this.drugList)
+              // console.log(this.tempIndex);
               this.addPrescription= true;
               this.newRowIndex++;
               // if(this.tempIndex >=0){
               //     this.drugList.splice(this.tempIndex, 1);
               // }
-              // console.log('afterEdit::',this.afterEdit)
               if (this.afterEdit === 'afterUpdate') {
                 this.addPrescription= true;
                 const qparams = { 'prescription': 'prescription' };
@@ -635,8 +635,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               }
               else {
                 this.drugList = data['prescriptionsList'];
-              console.log('this.drugList:',this.drugList);
-              console.log('this.tempTextDelete',this.tempTextDelete)
+              // console.log('this.drugList:',this.drugList);
+              // console.log('this.tempTextDelete',this.tempTextDelete)
               if(this.tempTextDelete==='TempDelete'){
                 // alert(this.tempTextDelete)
                 if(this.drugList && this.drugList.length <2){
@@ -700,30 +700,30 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     // });
   }
   updateEditPrescription(data){
-    console.log('data',data)
+    // console.log('data',data)
     this.viewVisitDetails=false;
     this.loading=false
     this.uploadlist && this.uploadlist.length===0;
     this.afterEdit='afterUpdate';
     this.drugList=(data);
-    console.log('this.drugList',this.drugList);
+    // console.log('this.drugList',this.drugList);
   }
 
   saveRx(result) {
-    console.log('result',result)
+    // console.log('result',result)
     this.loading = true;
     let passdata = {
       "prescriptionsList": result,
       "notes": this.note
     }
-    console.log('this.mrId',this.mrId);
-    console.log('newlyCretedMrId',this.newlyCretedMrId)
+    // console.log('this.mrId',this.mrId);
+    // console.log('newlyCretedMrId',this.newlyCretedMrId)
     if (this.mrId) {
       // alert('edit')
       this.api_loading=true;
       this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
-          console.log('resupdateMRprescription',res)
+          // console.log('resupdateMRprescription',res)
           this.snackbarService.openSnackBar('Prescription update  Successfully');
           this.getMrprescription(this.mrId);
           if(this.afterEdit==='afterUpdate'){
@@ -737,12 +737,12 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           });
     } 
     else {
-      console.log('createMR',passdata);
+      // console.log('createMR',passdata);
       // alert('craete')
       this.api_loading=true;
       this.medicalrecord_service.createMR('prescriptions', passdata)
         .then((data: number) => {
-          console.log('datacreateMR',data)
+          // console.log('datacreateMR',data)
           this.mrId = data;
           this.snackbarService.openSnackBar('Prescription Saved Successfully');
           this.getMrprescription(this.mrId);
@@ -774,7 +774,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     });
     addnotedialogRef.afterClosed().subscribe(result1 => {
       if (result1) {
-        console.log(result1);
+        // console.log(result1);
         // this.note = result1.message;
         this.loading = true;
         let passdata = {
@@ -783,7 +783,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         }
         this.provider_services.updateMRprescription(passdata, this.mrId).
           subscribe(res => {
-            this.snackbarService.openSnackBar('Prescription updated Successfully');
+            this.snackbarService.openSnackBar('Prescription update Successfully');
             this.getMrprescription(this.mrId);
 
           },
@@ -823,16 +823,16 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   saveClose(){
     if(this.mrId !==0){
       // this.reloadComponent()
-      console.log('this.drugList',this.drugList)
+      // console.log('this.drugList',this.drugList)
       let passdata = {
         "prescriptionsList":  this.drugList,
         "notes": this.note
       }
-      console.log('this.mrId',this.mrId);
+      // console.log('this.mrId',this.mrId);
       this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res)=>{
         // alert('saveClose')
-        console.log('saveCloseREs',res)
-        console.log('this.mrId',this.mrId);
+        // console.log('saveCloseREs',res)
+        // console.log('this.mrId',this.mrId);
         if(this.mrId !==0){
           if(this.afterEdit === 'afterUpdate'){
             this.reloadComponent()
@@ -857,7 +857,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   addMedecineMobDevice(){
     this.tempText= undefined;
     this.addMedecineMobDeviceB=true;
-    console.log('this.tempText',this.tempText)
+    // console.log('this.tempText',this.tempText)
    
   }
   viewMedecineMobDevice(){
@@ -894,10 +894,10 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
 
   
   editDrugList(text,form_data,id){
-    console.log(text);
-    console.log('data', form_data);
-    console.log('id', id);
-    console.log(form_data);
+    // console.log(text);
+    // console.log('data', form_data);
+    // console.log('id', id);
+    // console.log(form_data);
     this.api_error = '';
     if (form_data && (form_data.medicine_name === '' && form_data.frequency === '' && form_data.dosage === '' && form_data.instructions === '' && form_data.duration === '')) {
       this.api_error = 'Atleast one field required';
@@ -909,19 +909,19 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         if (this.afterEdit === 'afterUpdate') {
           delete this.drugList[this.tempIndex]
           this.drugList.slice(this.tempIndex,1)
-          console.log('this.drugDetail:::', this.drugDetail)
-          console.log('this.drugList', this.drugList);
-          console.log('this.drugListAfter', this.drugList);
-          console.log('this.tempIndex',this.tempIndex)
+          // console.log('this.drugDetail:::', this.drugDetail)
+          // console.log('this.drugList', this.drugList);
+          // console.log('this.drugListAfter', this.drugList);
+          // console.log('this.tempIndex',this.tempIndex)
          
-          console.log('this.drugList22', this.drugList);
+          // console.log('this.drugList22', this.drugList);
           let tempArr: any = [];
           tempArr = [...this.drugList];
-           console.log('tempArr', tempArr)
+          //  console.log('tempArr', tempArr)
            tempArr = tempArr.filter(function( element:any,i ) {
             return element !== undefined;
          });
-         console.log('tempArr2', tempArr);
+        //  console.log('tempArr2', tempArr);
           this.saveRx(tempArr);
          
           // this.tempList= tempArr;
@@ -1019,7 +1019,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   // }
   }
     goback(txt){
-      console.log('txt',txt);
+      // console.log('txt',txt);
       // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
 
       this.location.back();
@@ -1051,8 +1051,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       // this.saveRx(this.drugDetail);
       // console.log('this.afterEdit',this.afterEdit)
         if (this.afterEdit === 'afterUpdate') {
-          console.log('this.drugDetail:::', this.drugDetail)
-          console.log('this.drugList', this.drugList);
+          // console.log('this.drugDetail:::', this.drugDetail)
+          // console.log('this.drugList', this.drugList);
           
           var i = this.drugList.length;
           while (i--) {
@@ -1062,7 +1062,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               }
             }
           }
-          console.log('this.drugListAfter', this.drugList);
+          // console.log('this.drugListAfter', this.drugList);
           let tempArr: any = [];
           tempArr = [...this.drugDetail, ...this.drugList];
           //  console.log('tempArr', tempArr)
@@ -1085,7 +1085,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     }
     handleFormControl(data){
       this.addPrescription= false;
-      console.log(data);
+      // console.log(data);
     }
     clearAll() {
       this.amForm.get('medicine_name').setValue('');
@@ -1145,7 +1145,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       return totalSizeMb;
     }
     deletePrescriptionFile(fileDetails,index){
-      console.log(fileDetails);
+      // console.log(fileDetails);
      this.deleteTempImagePrescription(fileDetails,index)
     }
 
@@ -1162,15 +1162,15 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         }
       });
       removeprescriptiondialogRef.afterClosed().subscribe(result => {
-        console.log('result',result);
+        // console.log('result',result);
         if (result) {
-          console.log('img',img)
-            console.log('img.keyName',img.keyName)
+          // console.log('img',img)
+            // console.log('img.keyName',img.keyName)
             this.provider_services.deleteUplodedprescription(img.keyName, this.mrId)
               .subscribe((data) => {
-                console.log('data',data)
+                // console.log('data',data)
                 this.selectedMessage.files.splice(index, 1);
-                const error='Prescription successfully deleted';
+                const error='Prescription successfully delete';
                 this.snackbarService.openSnackBar(error);
                 this.reloadComponent();
                 // this.getMrprescription(this.mrId);
@@ -1183,10 +1183,10 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     }
 
     deleteDrug(index,data) {
-      console.log('data',data)
-      console.log(index);
+      // console.log('data',data)
+      // console.log(index);
      
-      console.log(this.mrId);
+      // console.log(this.mrId);
       const removeprescriptiondialogRef = this.dialog.open(ConfirmBoxComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -1199,24 +1199,24 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       removeprescriptiondialogRef.afterClosed().subscribe((res)=>{
         if(res){
           this.drugList.splice(index, 1);
-          console.log(' this.drugList', this.drugList)
+          // console.log(' this.drugList', this.drugList)
            let passdata = {
             "prescriptionsList": this.drugList,
             "notes": this.note
           }
-          console.log('this.mrId', this.mrId);
-          console.log('newlyCretedMrIdforUpdate',this.mrId)
+          // console.log('this.mrId', this.mrId);
+          // console.log('newlyCretedMrIdforUpdate',this.mrId)
           if (this.mrId) {
             // alert('edit')
             this.api_loading = true;
             // this.drugList.splice(index,1);
             this.provider_services.updateMRprescription(passdata,this.mrId).
               subscribe(res => {
-                console.log('resupdateMRprescription', res);
+                // console.log('resupdateMRprescription', res);
                 this.tempTextDelete='TempDelete';
                 this.snackbarService.openSnackBar('Prescription delete  Successfully');
                 // alert('afterDelete')
-                console.log('this.mrId',this.mrId)
+                // console.log('this.mrId',this.mrId)
                 if(this.mrId){
                   this.getMrprescription(this.mrId);
                 }

@@ -71,14 +71,14 @@
                 <!-- prescription and will share Via -->
             <span class="docText" *ngIf="(mrPrescriptionDetails && mrPrescriptionDetails[0].keyName)">Your presciption will share Via</span>
             <div class="coupon-outer">
-                <mat-checkbox  [disabled]="(!phon || phon === 'null') || is_noSMS || countryCode !='+91'"
+                <mat-checkbox [ngClass]="{hideClass: (!phon || phon === 'null') || is_noSMS || countryCode !='+91'}"  [disabled]="(!phon || phon === 'null') || is_noSMS || countryCode !='+91'"
                     class="example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                     <span class="labelCheckName">SMS</span>
                 </mat-checkbox>
-                <mat-checkbox  [disabled]=" !email_id" class=" example-margin" [(ngModel)]="email"
+                <mat-checkbox [ngClass]="{hideClass: !email_id}"  [disabled]=" !email_id" class=" example-margin" [(ngModel)]="email"
                     [ngModelOptions]="{standalone: true}"><span class="labelCheckName">Email</span>
                 </mat-checkbox>
-                <mat-checkbox  [disabled]="!phon ||  phon === 'null'" class=" example-margin"
+                <mat-checkbox [ngClass]="{hideClass: !phon ||  phon === 'null'}"  [disabled]="!phon ||  phon === 'null'" class=" example-margin"
                     [(ngModel)]="pushnotify" [ngModelOptions]="{standalone: true}">
                     <span class="labelCheckName">App notification</span>
                 </mat-checkbox>
@@ -92,7 +92,7 @@
                 </div>
             <!-- <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div> -->
         </div>
-        <div *ngIf="!showthirdparty" class="mgn-bt-0">
+        <div *ngIf="!showthirdparty"  class="mgn-bt-0">
             <div style="margin-top: 10px;">
                 <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage && selectedMessage.files 
                 && selectedMessage.files.length === 0">Add digital signature</div>
@@ -174,11 +174,10 @@
         <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow && !showthirdparty ">{{smsWarnMsg}} <a
                 (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>
                 {{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
-        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 form-group" *ngIf="showthirdparty">
-            <!-- We will create a PDF of your prescription and will share Via sms and email. -->
-            <span *ngIf="!mrPrescriptionDetails[0].keyName">We will create a PDF of your prescription and will share Via
+        <div  *ngIf="showthirdparty">
+            <span class="sharePresText" *ngIf="!mrPrescriptionDetails[0].keyName">We will create a PDF of your prescription and will share Via
                 email.</span>
-            <span *ngIf="mrPrescriptionDetails[0].keyName">Your prescription will be shared Via email.</span>
+            <span class="sharePresText" *ngIf="mrPrescriptionDetails[0].keyName">Your prescription will be shared Via email.</span>
         </div>
 
         <div class="btnClass" >
@@ -197,7 +196,7 @@
         <img style="height:10px;width:10px" [src]="signurlFile(data.file.url)" />
     </div>
 </div> -->
-<div id="sharePdf" style="height:100%">
+<div id="sharePdf" style="height:100%;">
     <div class="shareview">
         <div style="height:35mm; border-bottom: 1px solid #ddd;">
             <div style="width: 35mm;height: 35mm; float: left;"><img alt="" [src]="showimg()" style="width: 100px;

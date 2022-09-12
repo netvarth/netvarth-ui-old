@@ -142,10 +142,10 @@ export class ShareRxComponent implements OnInit {
     if (this.data.docname) {
       this.doctorName = this.data.docname;
     }
-    console.log(this.data.docname);
+    // console.log(this.data.docname);
     this.getPatientDetails(this.patientId);
     this.ThemePalette='#06c706';
-    console.log('data:;',this.data)
+    // console.log('data:;',this.data)
     if(this.data && this.data.file && this.data.file.url){
       this.fileName=this.data.file.url;
     }
@@ -186,9 +186,9 @@ export class ShareRxComponent implements OnInit {
       .subscribe(
         (data: any) => {
           const response = data;
-          console.log(response);
+          // console.log(response);
           this.customerDetail = response[0];
-          console.log(this.customerDetail)
+          // console.log(this.customerDetail)
           if (this.customerDetail.email) {
             this.email_id = this.customerDetail.email;
           }
@@ -239,12 +239,10 @@ export class ShareRxComponent implements OnInit {
       thirdPartyHtml= document.getElementById('thirdParty')
     }
     console.log('thirdPartyHtml',thirdPartyHtml)
-    console.log('sahrePdfVia',sahrePdfVia)
-    console.log('sahrePdfVia',sahrePdfVia)
-    // console.log('sahrePdfViahtml',sahrePdfVia.innerHTML)
-    // console.log('sahrePdfViatext',sahrePdfVia.innerText)
-    console.log('vwofrx',vwofrx)
-    console.log('this.sharewith',this.sharewith)
+    // console.log('sahrePdfVia',sahrePdfVia)
+    // console.log('sahrePdfVia',sahrePdfVia.innerHTML)
+    // console.log('vwofrx',vwofrx)
+    // console.log('this.sharewith',this.sharewith)
     if (this.sharewith !== 0) {
       // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
       if (this.thirdpartyemail === '') {
@@ -438,7 +436,7 @@ export class ShareRxComponent implements OnInit {
     if (this.mrId) {
       this.provider_services.getMRprescription(this.mrId)
         .subscribe((data) => {
-          console.log('datagetMRprescription',data)
+          // console.log('datagetMRprescription',data)
           this.mrPrescriptionDetails = data['prescriptionsList'];
           if (Object.keys(data).length !== 0 && data.constructor === Object) {
             if (data['prescriptionsList'] && data['prescriptionsList'][0].keyName) {
@@ -479,7 +477,7 @@ export class ShareRxComponent implements OnInit {
       this.provider_services.getDigitalSign(this.provider_user_Id)
         .subscribe((data: any) => {
           this.imagedetails = data;
-          console.log('imagedetails:::',this.imagedetails)
+          // console.log('imagedetails:::',this.imagedetails)
           this.signurl = this.imagedetails.url;
           this.digitalSign = true;
           if (data && data !== null) {
@@ -539,7 +537,7 @@ export class ShareRxComponent implements OnInit {
           reader.readAsDataURL(file);
         }
       }
-      console.log(' this.selectedMessage', this.selectedMessage);
+      // console.log(' this.selectedMessage', this.selectedMessage);
       this.saveDigitalSignImages();
       
     }
@@ -568,7 +566,7 @@ export class ShareRxComponent implements OnInit {
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
       .subscribe((data) => {
-        console.log('data',data);
+        // console.log('data',data);
         // this.selectedMessage= data;
         // this.snackbarService.openSnackBar('Digital sign uploaded successfully');
         const error:string='Digital sign uploaded successfully'
@@ -618,7 +616,7 @@ export class ShareRxComponent implements OnInit {
     });
     uploadmanualsignatureRef.afterClosed().subscribe((res) => {
       this.loading = true;
-      console.log(res)
+      // console.log(res)
       setTimeout(() => {
         this.loading = false;
         this.getMrprescription();
@@ -782,7 +780,7 @@ export class ShareRxComponent implements OnInit {
     }
   }
   messageBoxhandle(data){
-    console.log(data)
+    // console.log(data)
     if(data){}
     else{
       const msg = this.fed_service.isFieldValid(this.amForm,'message');
