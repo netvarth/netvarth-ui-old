@@ -33,6 +33,7 @@ export class ActionPopupComponent implements OnInit {
   fromOrderDetails = false;
   galleryDialog: any;
   private subs=new SubSink();
+  theme: any;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
@@ -47,6 +48,9 @@ export class ActionPopupComponent implements OnInit {
 
   ngOnInit() {
     this.bookingDetails = this.data.booking;
+    if (this.data.theme) {
+      this.theme = this.data.theme;
+    }
     console.log("Consumer Note :",this.bookingDetails);
     if (this.bookingDetails.quantity) {
       this.fromOrderDetails = true;
@@ -118,6 +122,7 @@ export class ActionPopupComponent implements OnInit {
     let queryParams = {
       uuid: this.bookingDetails.uid,
       type: 'reschedule',
+      theme: this.theme,
       account_id: this.bookingDetails.providerAccount.id,
       unique_id: this.bookingDetails.providerAccount.uniqueId,
       service_id:this.bookingDetails.service.id
@@ -167,6 +172,7 @@ export class ActionPopupComponent implements OnInit {
     pass_ob['userId'] = this.bookingDetails.providerAccount.uniqueId;
     pass_ob['name'] = this.bookingDetails.providerAccount.businessName;
     pass_ob['typeOfMsg'] = 'single';
+    pass_ob['theme']=this.theme;
     if (this.type === 'appt') {
       pass_ob['appt'] = this.type;
       pass_ob['uuid'] = this.bookingDetails.uid;
@@ -199,7 +205,8 @@ export class ActionPopupComponent implements OnInit {
     }
     const passData = {
       'type': this.type,
-      'details': this.bookingDetails
+      'details': this.bookingDetails,
+      'theme': this.theme
     };
     this.dialogRef.close();
     this.addnotedialogRef = this.dialog.open(MeetingDetailsComponent, {
@@ -241,7 +248,8 @@ export class ActionPopupComponent implements OnInit {
     }
     let queryParams = {
       account_id: this.bookingDetails.providerAccount.id,
-      status: stat
+      status: stat,
+      theme: this.theme
     }
     if (this.bookingDetails['customId']) {
       queryParams['customId']=this.bookingDetails['customId'];
@@ -263,7 +271,8 @@ export class ActionPopupComponent implements OnInit {
       type: 'waitlistreschedule',
       account_id: this.bookingDetails.providerAccount.id,
       unique_id: this.bookingDetails.providerAccount.uniqueId,
-      service_id:this.bookingDetails.service.id
+      service_id:this.bookingDetails.service.id,
+      theme: this.theme
     }
     if (this.bookingDetails['customId']) {
       queryParams['customId']=this.bookingDetails['customId'];
@@ -283,6 +292,7 @@ export class ActionPopupComponent implements OnInit {
       this.type = 'checkin';
     }
     pass_ob['user_id'] = this.bookingDetails.providerAccount.id;
+    pass_ob['theme']=this.theme;
     if (this.type === 'appt') {
       pass_ob['type'] = this.type;
       pass_ob['uuid'] = this.bookingDetails.uid;
@@ -302,7 +312,8 @@ export class ActionPopupComponent implements OnInit {
          source_id: 'consumerimages',
          accountId:pass_ob.user_id,
          uid:pass_ob.uuid,
-         type:pass_ob.type
+         type:pass_ob.type,
+         theme: this.theme
       }
     });
      this.galleryDialog.afterClosed().subscribe(result => {

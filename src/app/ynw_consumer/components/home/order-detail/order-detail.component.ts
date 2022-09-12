@@ -83,6 +83,7 @@ buttons: [
   source: any;
   accountId: any;
   customId: any;
+  theme: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -106,6 +107,9 @@ buttons: [
         this.providerId = qParams.providerId;
         if(qParams.source)  {
           this.source = qParams.source;
+        }
+        if (qParams && qParams.theme) {
+          this.theme = qParams.theme;
         }
         if (qParams && qParams.accountId) {
         this.accountId = qParams.accountId;
@@ -336,7 +340,7 @@ buttons: [
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: { booking }
+      data: { booking: booking, theme: this.theme }
     });
     this.actiondialogRef.afterClosed().subscribe(data => {
     });

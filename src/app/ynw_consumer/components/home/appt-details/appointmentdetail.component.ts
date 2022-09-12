@@ -73,6 +73,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
   questionnaires: any = [];
   whatsAppNumber: any;
   history: boolean  =false;
+  theme: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -100,6 +101,9 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
         this.accountId = qParams.accountId;
         if (qParams && qParams.customId) {
           this.customId = qParams.customId;
+        }
+        if (qParams && qParams.theme) {
+          this.theme = qParams.theme;
         }
       });
       console.log("Terminologies");
@@ -212,6 +216,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     pass_ob['userId'] = appt.providerAccount.uniqueId;
     pass_ob['name'] = appt.providerAccount.businessName;
     pass_ob['appt'] = 'appt';
+    pass_ob['theme']= this.theme;
     pass_ob['typeOfMsg'] = 'single';
     this.addNote(pass_ob);
   }
@@ -303,7 +308,7 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: { booking }
+      data: { booking: booking, theme: this.theme }
     });
     this.actiondialogRef.afterClosed().subscribe(data => {
     });

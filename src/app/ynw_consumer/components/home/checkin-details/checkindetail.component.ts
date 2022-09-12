@@ -76,6 +76,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
   questionnaires: any = [];
   whatsAppNumber: any;
   history: boolean = false;
+  theme: any;
   constructor(
     private activated_route: ActivatedRoute,
     private dialog: MatDialog,
@@ -100,6 +101,12 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
         this.providerId = qParams.providerId;
         this.type = qParams.type;
         this.accountId = qParams.accountId;
+        if (qParams && qParams.customId) {
+          this.customId = qParams.customId;
+        }
+        if (qParams && qParams.theme) {
+          this.theme = qParams.theme;
+        }
         if (qParams && qParams.customId) {
           this.customId = qParams.customId;
         }
@@ -219,6 +226,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
     pass_ob['user_id'] = this.waitlist.providerAccount.id;
     pass_ob['userId'] = this.waitlist.providerAccount.uniqueId;
     pass_ob['name'] = this.waitlist.providerAccount.businessName;
+    pass_ob['theme']=this.theme;
     pass_ob['typeOfMsg'] = 'single';
     this.addNote(pass_ob);
   }
@@ -301,7 +309,7 @@ export class CheckinDetailComponent implements OnInit, OnDestroy {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
-      data: { booking }
+      data: { booking: booking, theme: this.theme }
     });
     this.actiondialogRef.afterClosed().subscribe(data => {
     });
