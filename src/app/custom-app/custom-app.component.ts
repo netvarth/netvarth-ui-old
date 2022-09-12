@@ -32,6 +32,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   theme: any;
   activeUser: any;
   loginRequired = false;
+  callback: any;
   
 
   constructor(
@@ -47,6 +48,9 @@ export class CustomAppComponent implements OnInit, OnDestroy {
     private lStorageService: LocalStorageService
   ) {
     this.activatedRoute.queryParams.subscribe(qparams => {
+      if (qparams && qparams.callback) {
+        this.callback = qparams.callback;
+      }
       if (qparams && qparams.cl_dt) {
         console.log(qparams.cl_dt);
         if ((qparams.cl_dt=="true" || qparams.cl_dt==true) && !this.lStorageService.getitemfromLocalStorage('cleared')) {
@@ -128,8 +132,16 @@ export class CustomAppComponent implements OnInit, OnDestroy {
                     // const businessProfile = this.s3Processor.getJson(businessJsons['businessProfile']);                
                     _this.accountId = _this.customappService.getAccountId();                    
                     _this.loading = false;
-                    if (this.isLoggedIn || !templateJson.loginRequired) {                      
-                      _this.router.navigate(['customapp',_this.accountEncId, { outlets : {template: [templateJson.template]}}]);
+                    if (this.isLoggedIn || !templateJson.loginRequired) {
+                      let queryParams = {};
+                      if (this.callback) {
+                        queryParams['callback'] = this.callback;
+                      }
+                      const navigationExtras: NavigationExtras = {
+                        queryParams: queryParams
+                      };
+
+                      _this.router.navigate(['customapp',_this.accountEncId, { outlets : {template: [templateJson.template]}}], navigationExtras);
                     } else {
                       _this.loginRequired = true;
                     } 

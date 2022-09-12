@@ -1797,6 +1797,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
     this.commdialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(
+        [], 
+        {
+          relativeTo: this.activaterouterobj,
+          queryParams: { callback: 'none' },
+          queryParamsHandling: 'merge'
+        });
     });
   }
   checkinClicked(location, service) {

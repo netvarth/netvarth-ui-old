@@ -9,7 +9,7 @@ import { CustomappService } from '../../customapp.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -54,6 +54,7 @@ export class CustTemplate4Component implements OnInit {
   // loading = true;
   nextavailableCaption = Messages.NXT_AVAILABLE_TIME_CAPTION;
   server_date: any;
+  callback: string;
   constructor(
     private customappService: CustomappService,
     private s3Processor: S3UrlProcessor,
@@ -63,7 +64,8 @@ export class CustTemplate4Component implements OnInit {
     private authService: AuthService,
     private dialog: MatDialog,
     private lStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {
 
   }
@@ -75,6 +77,12 @@ export class CustTemplate4Component implements OnInit {
         });
   }
   ngOnInit(): void {
+    this.activatedRoute.queryParams.subscribe(qparams => {
+      console.log("QParams :",qparams)
+      if (qparams && qparams.callback) {
+        this.callback = qparams.callback;
+      }
+    });
     this.setSystemDate();
     this.templateJson = this.customappService.getTemplateJson();
     console.log(this.templateJson);
@@ -116,11 +124,12 @@ export class CustTemplate4Component implements OnInit {
     // if(this.templateJson.section1.gallery || this.templateJson.section2.gallery || this.templateJson.section3.gallery) {
 
     // }
-
+    if (this.callback === 'communicate') {
+      this.communicateHandler();
+    }
     if (this.templateJson.section1.donations || this.templateJson.section2.donations || this.templateJson.section3.donations) {
       this.getDonationServices();
     }
-
     if (this.showDepartments) {
       let departmentsS3 = [];
       const depts = this.s3Processor.getJson(this.customappService.getDepartments());
@@ -129,7 +138,6 @@ export class CustTemplate4Component implements OnInit {
       }
       this.departments = departmentsS3;
     }
-
     this.changeLocation(this.selectedLocation);
   }
   setUserWaitTime() {
@@ -390,53 +398,7 @@ export class CustTemplate4Component implements OnInit {
     //   }
     // );
   }
-  // doLogin(origin?, passParam?) {
-  //   // const current_provider = passParam['current_provider'];
-  //   const is_test_account = true;
-  //   const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-  //     width: '40%',
-  //     panelClass: ['loginmainclass', 'popup-class', this.templateJson['theme']],
-  //     disableClose: true,
-  //     data: {
-  //       type: origin,
-  //       is_provider: false,
-  //       test_account: is_test_account,
-  //       theme: this.templateJson['theme'],
-  //       mode: 'dialog',
-  //       moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-  //     }
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result === 'success') {
-  //       // this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-  //       // if (passParam['callback'] === 'communicate') {
-  //       //   
-  //       // } else if (passParam['callback'] === 'history') {
-  //       //   this.redirectToHistory();
-  //       // } else 
-  //       if (passParam['callback'] === 'communicate') {
-  //         this.showCommunicate(passParam['providerId']);
-  //       } 
-  //       // else if (passParam['callback'] === 'donation') {
-  //       //   this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-  //       // } else if (passParam['callback'] === 'appointment') {
-  //       //   this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-  //       // } else if (passParam['callback'] === 'order') {
-  //       //   if (this.orderType === 'SHOPPINGLIST') {
-  //       //     this.shoppinglistupload();
-  //       //   } else {
-  //       //     this.checkout();
-  //       //   }
-  //       // } else {
-  //       //   this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-  //       // }
-  //     } else if (result === 'showsignup') {
-  //       // this.doSignup(passParam);
-  //     } else {
-  //       // this.loading = false;
-  //     }
-  //   });
-  // }
+  
   showCommunicate(provid) {
     const dialogRef  = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
@@ -455,6 +417,13 @@ export class CustTemplate4Component implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(
+        [], 
+        {
+          relativeTo: this.activatedRoute,
+          queryParams: { callback: 'none' },
+          queryParamsHandling: 'merge'
+        });
     });
   }
   communicateHandler() {

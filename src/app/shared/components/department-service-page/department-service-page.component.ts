@@ -269,6 +269,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
   accountId: any;
   templateJson: any;
   accountExists: boolean;
+  callback: string;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -346,7 +347,9 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       }
       if (qparams.src) {
         this.pSource = qparams.src;
-
+      }
+      if (qparams.callback === 'communicate') {
+        this.callback = qparams.callback;
       }
       this.businessjson = [];
       this.servicesjson = [];
@@ -394,7 +397,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
                     _this.theme = templateJson.theme;
                     _this.lStorageService.setitemonLocalStorage('theme', this.theme);
                     this.templateJson = templateJson;
-                    this.gets3curl();
+                    this.gets3curl();                    
                   })
 
               }, (error) => {
@@ -567,6 +570,9 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
             }
           }
           console.log("Here:", accountS3s);
+          if (this.callback === 'communicate') {
+            this.communicateHandler();
+          }
         }, (error) => {
           console.log(error);
         }
@@ -947,7 +953,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     for (let i = 0; i < this.ratingdisabledCnt; i++) {
       this.ratingdisabledArr.push(i);
     }
-
   }
 
   setUserVirtualFields(res) {
@@ -1403,7 +1408,9 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
         if (status) {
           _this.showCommunicate(providforCommunicate);
         } else {
-          let communicateUrl = this.accountEncId + '?callback=communicate';
+          console.log(this.locationobj.path());
+          let communicateUrl = this.locationobj.path() + '&callback=communicate';
+          // let communicateUrl = 'customapp/' + this.accountEncId + '?callback=communicate';
           console.log(communicateUrl);
           console.log(communicateUrl);
           this.lStorageService.setitemonLocalStorage('target', communicateUrl);
@@ -1442,6 +1449,13 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       }
     });
     this.commdialogRef.afterClosed().subscribe(() => {
+      this.router.navigate(
+        [], 
+        {
+          relativeTo: this.activaterouterobj,
+          queryParams: { callback: 'none' },
+          queryParamsHandling: 'merge'
+        });
     });
   }
   // showCommunicate(provid) {
