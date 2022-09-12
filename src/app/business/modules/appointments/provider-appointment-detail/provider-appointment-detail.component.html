@@ -68,18 +68,18 @@
             <span *ngIf="waitlist_data.service.serviceType === 'virtualService'">
               <a *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="showCallingModes(waitlist_data.uid,'Started')"
-              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-play"
+              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12"><i class="fa fa-play"
                 aria-hidden="true"></i> Start</a>
             </span>
              <span *ngIf="waitlist_data.service.serviceType !== 'virtualService'">
               <a *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Started')"
-              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-play"
+              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12"><i class="fa fa-play"
                 aria-hidden="true"></i> Start</a>
             </span>
             <a (click)="changeStatus(waitlist_data)"
               *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
-              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12 my-2"><i class="fa fa-refresh"
+              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12"><i class="fa fa-refresh"
                 aria-hidden="true"></i> Change Status to</a>
             <a style="cursor: no-drop!important"
               *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
@@ -91,23 +91,23 @@
                 aria-hidden="true"></i> Cancelled</a>
           </div>
           <div class="text-center mx-auto">
-            <a class="status-btn btn btn-outline-dark my-2" (click)="addConsumerInboxMessage()"><i
+            <a class="status-btn btn btn-outline-dark my" (click)="addConsumerInboxMessage()"><i
                 class="fa fa-commenting-o" aria-hidden="true"></i> Message</a>
-                <a class="status-btn btn btn-outline-dark my-2 mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] === 'Started'" (click)="showCallingModes(waitlist_data.uid, 'STARTED')"> <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'"
+                <a class="status-btn btn btn-outline-dark my mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] === 'Started'" (click)="showCallingModes(waitlist_data.uid, 'STARTED')"> <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'"
                   [class]="iconClass"></i></span> Resume</a>
-            <a class="status-btn btn btn-outline-dark my-2 mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
+            <a class="status-btn btn btn-outline-dark my mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Cancelled')"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 
-            <a class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' 
+            <a class="status-btn btn btn-disabled my mx-1" style="cursor: no-drop!important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' 
             || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'">
               <i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 
-            <a class="status-btn btn btn-disabled my-2 mx-1" style="cursor: no-drop!important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' 
+            <a class="status-btn btn btn-disabled my mx-1" style="cursor: no-drop!important;margin-top: 0.1rem !important;margin-bottom: 0.1rem !important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' 
              || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'">
               <i class="fa fa-check" aria-hidden="true"></i> Complete</a>
 
-            <a class="status-btn btn btn-outline-dark my-2" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
+            <a class="status-btn btn btn-outline-dark my" style="margin-top: 0.1rem !important;margin-bottom: 0.1rem !important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Completed')"><i class="fa fa-check" aria-hidden="true"></i> Complete</a>
           </div>

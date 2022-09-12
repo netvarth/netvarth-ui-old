@@ -276,11 +276,11 @@
               </div>
             </div>
           </div>
-          <div *ngIf="orders.length == 0">
+          <div *ngIf="todayOrders.length == 0">
             No orders for today
           </div>
-          <ng-container *ngIf="orders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
+          <ng-container *ngIf="todayOrders.length > 0">
+            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of todayOrders;let i=index"
               >
               <div (click)="gotoDetails(order)">
               <div class="top-sec">
@@ -786,11 +786,11 @@
               </div>
             </div>
           </div>
-          <div *ngIf="orders.length == 0">
+          <div *ngIf="futureOrdes.length == 0">
             No future orders
           </div>
-          <ng-container *ngIf="orders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
+          <ng-container *ngIf="futureOrdes.length > 0">
+            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of futureOrdes;let i=index"
               >
               <div (click)="gotoDetails(order)">
               <div class="top-sec">

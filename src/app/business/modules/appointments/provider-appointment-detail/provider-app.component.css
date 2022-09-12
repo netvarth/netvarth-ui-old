@@ -180,7 +180,12 @@
     font-size: 15px !important;
     margin-bottom: 0% !important;
 }
-
+.btn-success {
+    background-color: #00a65a !important;
+    border-color: #008d4c !important;
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.2rem !important;
+}
 
 .notescard.data-card .notescard-header {
     border-radius: 0 !important;

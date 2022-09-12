@@ -23,7 +23,14 @@
     padding-right: 10px !important;
 
 }
-
+.text-center{
+    overflow: auto;
+    margin-top: 2px !important;
+}
+/* .btn-success{
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.1rem !important;
+} */
 .svg-icon.svg-icon-success svg g [fill] {
     -webkit-transition: fill 0.3s ease;
     transition: fill 0.3s ease;
@@ -387,6 +394,7 @@ height: 28px!important;
 .serviceBtnName {
     border: 0.911392px solid rgba(0, 0, 0, 0.8) !important;
     border-radius: 3.39914px !important;
+    margin-top: 2px !important;
 }
 
 .booking-details-body {

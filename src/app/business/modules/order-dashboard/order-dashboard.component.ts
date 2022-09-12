@@ -101,6 +101,8 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   totalOrdersCount: any;
   totalPaperdCompletedCount: any;
   completedorders: any;
+  todayOrders: any=[];
+  futureOrdes: any=[];
   
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
@@ -247,7 +249,8 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
    this.subs.sink=this.providerservices.getProviderTodayOrders(filter)
 
     .subscribe(data => {
-      this.orders = data;
+      this.todayOrders = data;
+      console.log("Today Orders :",this.todayOrders)
       this.loading = false;
     });
 
@@ -259,7 +262,8 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     let filter = {};
     filter = this.setFilterForApi();
     this.subs.sink=this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
-      this.orders = data;
+      this.futureOrdes = data;
+      console.log("Future Orders :",this.futureOrdes)
       this.loading = false;
     });
   
