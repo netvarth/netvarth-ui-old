@@ -56,6 +56,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     caption: []
   };
   uploadlist: any = [];
+  downloadText:any;
   loading = true;
   dateFormatSp = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   disable = false;
@@ -160,6 +161,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   src = '';
   isPdfLoaded = false;
   pdfSrc;
+  tempList: any;
+  newRowIndex = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -396,6 +399,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     });
   }
   print(divName,signatureInfo){
+    console.log('signatureInfo',signatureInfo)
     let manualPresSignature:any;
     if(signatureInfo && signatureInfo.url){
       manualPresSignature=signatureInfo.url;
@@ -602,6 +606,12 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
                   });
                 this.image_list_popup.push(imgobj);
                 console.log('this.uploadlist::',this.uploadlist)
+                if(this.uploadlist[0].type==='.pdf'){
+                  this.downloadText='Download';
+                }
+                else{
+                  this.downloadText='View';
+                }
               }
              
   
@@ -610,10 +620,11 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               console.log('this.drugList:',this.drugList)
               console.log(this.tempIndex);
               this.addPrescription= true;
-              if(this.tempIndex >=0){
-                  this.drugList.splice(this.tempIndex, 1);
-              }
-              console.log('afterEdit::',this.afterEdit)
+              this.newRowIndex++;
+              // if(this.tempIndex >=0){
+              //     this.drugList.splice(this.tempIndex, 1);
+              // }
+              // console.log('afterEdit::',this.afterEdit)
               if (this.afterEdit === 'afterUpdate') {
                 this.addPrescription= true;
                 const qparams = { 'prescription': 'prescription' };
@@ -699,6 +710,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   }
 
   saveRx(result) {
+    console.log('result',result)
     this.loading = true;
     let passdata = {
       "prescriptionsList": result,
@@ -714,20 +726,9 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           console.log('resupdateMRprescription',res)
           this.snackbarService.openSnackBar('Prescription update  Successfully');
           this.getMrprescription(this.mrId);
-          // if (this.afterEdit === 'afterUpdate') {
-          //   const qparams = { 'prescription': 'prescription' };
-          //   const navigationExtras: NavigationExtras = {
-          //     queryParams: qparams
-          //   };
-          //   console.log('navigationExtras', navigationExtras);
-          //   this.saveClose()
-          //   // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription'], navigationExtras);
-          // }
-          // else{
-          //   this.getMrprescription(this.mrId);
-          // }
-          // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-
+          if(this.afterEdit==='afterUpdate'){
+            this.tempList=this.drugList
+          }
         },
           error => {
             this.loading = false;
@@ -903,9 +904,34 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
     }
     else {
-      this.drugDetail.push(form_data);
-        this.saveRx(this.drugDetail)
-      this.clearAll();
+      this.drugList.push(form_data);
+        // this.saveRx(this.drugDetail)
+        if (this.afterEdit === 'afterUpdate') {
+          delete this.drugList[this.tempIndex]
+          this.drugList.slice(this.tempIndex,1)
+          console.log('this.drugDetail:::', this.drugDetail)
+          console.log('this.drugList', this.drugList);
+          console.log('this.drugListAfter', this.drugList);
+          console.log('this.tempIndex',this.tempIndex)
+         
+          console.log('this.drugList22', this.drugList);
+          let tempArr: any = [];
+          tempArr = [...this.drugList];
+           console.log('tempArr', tempArr)
+           tempArr = tempArr.filter(function( element:any,i ) {
+            return element !== undefined;
+         });
+         console.log('tempArr2', tempArr);
+          this.saveRx(tempArr);
+         
+          // this.tempList= tempArr;
+        }
+      else{
+        this.drugList.splice(this.tempIndex,1)
+        this.saveRx(this.drugList);
+        
+      }
+      // this.clearAll();
       this.tempText='';
     }
 
@@ -1081,7 +1107,6 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         })
       }
       this.addPrescription= false;
-      
     }
 
     getFileType(type){
@@ -1104,6 +1129,9 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         }
         else if(type==='.jpg'){
           return './assets/images/ImgeFileIcon/jpg.png'
+        }
+        else if(type==='.jpeg'){
+          return './assets/images/ImgeFileIcon/jpeg.png'
         }
         else{
           return './assets/images/ImgeFileIcon/othersFile.png'
@@ -1219,7 +1247,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
 
     dialogImgView(fileDetails:any){
       if(fileDetails){
-        if(fileDetails &&  fileDetails.type && ((fileDetails.type===('.png') || fileDetails.type===('.bmp') || fileDetails.type===('.jpg')))){
+        if(fileDetails &&  fileDetails.type && ((fileDetails.type !==('.pdf')))){
           const dialogRef= this.dialog.open(PreviewpdfComponent,{
             width:'100%',
             data:{
@@ -1230,12 +1258,28 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           dialogRef.afterClosed().subscribe((res)=>{
           })
         }
+        else if(fileDetails &&  fileDetails.type && ((fileDetails.type ===('.pdf')))){
+          const dialogRef= this.dialog.open(PreviewpdfComponent,{
+            width:'100%',
+            data:{
+              requestType:'priviewFilePrescription',
+              data:fileDetails,
+              mrId:this.mrId
+            }
+          })
+          dialogRef.afterClosed().subscribe((res)=>{
+          })
+          // this.downloadPdf(fileDetails.url)
+        }
         else{
           if(fileDetails.url){
             window.open(fileDetails.url);
           }
         } 
       }
+    }
+    downloadPdf(pdfUrl: string ) {
+      window.location.assign(pdfUrl);
     }
     originalFilename(fileName){
       // console.log('fileName1',fileName.length)

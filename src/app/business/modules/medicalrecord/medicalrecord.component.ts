@@ -886,7 +886,7 @@ export class MedicalrecordComponent implements OnInit {
     if (visit.providerName) {
       providerName = visit.providerName;
     } else {
-      console.log('this.provider;',this.provider)
+      // console.log('this.provider;',this.provider)
       providerName = this.provider;
     }
     return providerName;

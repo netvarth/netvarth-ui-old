@@ -4,6 +4,9 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { PreviewpdfComponent } from "./previewpdf.component";
 import { MatIconModule } from "@angular/material/icon";
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { PdfViewerModule } from 'ng2-pdf-viewer'; // <- import PdfViewerModule
+
 
 
 @NgModule({
@@ -11,7 +14,9 @@ import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-s
         CommonModule,
         MatDialogModule,
         MatIconModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        MatTooltipModule,
+        PdfViewerModule
     ],
     exports: [
         PreviewpdfComponent

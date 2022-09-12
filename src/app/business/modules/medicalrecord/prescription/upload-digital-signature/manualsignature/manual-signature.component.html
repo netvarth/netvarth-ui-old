@@ -21,7 +21,10 @@
 
       <div *ngIf="small_device_display" class="digitalsignature-pad">
 
-        <signature-pad [options]="smallsignaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
+        <signature-pad [options]="smallsignaturePadOptions" (onBeginEvent)="drawStart()"
+        fxFlex="1 1 50" (window:resize)="resizeSignaturePad()"
+        class="signature" 
+        id="sign_canvas" fxFlexAlign.xs="center"></signature-pad>
       </div>
       <div style="margin-top: 10px;">
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="clearSign()">Clear</button>

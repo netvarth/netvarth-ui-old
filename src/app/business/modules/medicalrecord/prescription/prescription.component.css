@@ -747,3 +747,19 @@ table tbody tr{
   width: 100% !important;
   /* height: 100%; */
 }
+/* .highlight{
+  background: #42A948;
+} */
+.highlight1 {
+  animation: highlight 3s;
+  /* background: #1DA192; */
+}
+
+@keyframes highlight1 {
+  0% {
+      background: red
+  }
+  100% {
+      background: none;
+  }
+}

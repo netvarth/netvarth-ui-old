@@ -6,9 +6,13 @@
       </div>
       <div class="headerText">File Preview</div>
     </div>
-    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+    <!-- <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
         <mat-icon>clear</mat-icon>
-    </div>
+    </div> -->
+    <div style=" cursor: pointer;" mat-dialog-close  tabindex="-1" class="closeIcon"
+        #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">
+            <mat-icon>clear</mat-icon>
+        </div>
 </div>
 <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 <mat-dialog-content class="custDialogCon">
@@ -18,15 +22,16 @@
 </mat-dialog-content>
 </section>
 
-<section *ngIf="dialogTYpe==='priviewFilePrescription'">
+<section *ngIf="dialogTYpe==='priviewFilePrescription' && data.data.type !=='.pdf' ">
+  <!-- {{data.data | json}} -->
   <div class="header mat-dialog-title">
     <div style="display:flex;gap:5px">
       <div>
         <img class="imgType" [src]="getFileType(data.data.type)" />
       </div>
-      <div class="headerText">File Preview</div>
+      <div class="headerText">Uploaded Prescription Preview</div>
     </div>
-    <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
+    <div style=" cursor: pointer;" mat-dialog-close class="closeIcon" tabindex="-1">
         <mat-icon>clear</mat-icon>
     </div>
 </div>
@@ -36,5 +41,32 @@
    <img class="image" [src]="data.data.url" />
   </div>
 </mat-dialog-content>
+</section>
+<section *ngIf="dialogTYpe==='priviewFilePrescription' && data.data.type ==='.pdf' ">
+  <div class="header mat-dialog-title">
+    <div style="display:flex;gap:5px">
+      <div>
+        <img class="imgType" [src]="getFileType(data.data.type)" />
+      </div>
+      <div class="headerText">Uploaded Prescription Preview</div>
+    </div>
+    <div style=" cursor: pointer;" mat-dialog-close class="closeIcon" tabindex="-1">
+        <mat-icon>clear</mat-icon>
+    </div>
+</div>
+
+<img id="myimage" [src]='thumbnail' />
+<!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
+<!-- <mat-dialog-content > -->
+  <!-- {{pdfUrl | json}} -->
+  <div id="outerContainer" >
+    <div class="pdf-container">
+        <pdf-viewer [src]="pdfUrl"  [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
+            [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
+            [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+            style="width: 100%; height: 600px;"></pdf-viewer>
+    </div>
+</div>
+<!-- </mat-dialog-content> -->
 </section>
 

@@ -134,7 +134,7 @@
                       <div class="allfileNameDetails">
                         <div class="allfileName">
                           <div class="fileType" *ngIf="file && file.type ">
-                            <img height="25px" width="25px" [src]="getFileType(file.type)" />
+                            <img height="35px" width="35px" [src]="getFileType(file.type)" />
                           </div>
                           <div>
                             <div class="fileName" *ngIf="file && file.originalName">{{originalFilename(file.originalName)}}
@@ -252,10 +252,6 @@
                                 matTooltip="Print" [matTooltipPosition]="'below'">
                                 <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
                               </th>
-                              <!-- <th  class="pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId,drugList)"
-                              #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
-                                <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
-                              </th> -->
                               <th data-title="Delete"></th>
                             </tr>
                           </thead>
@@ -531,7 +527,7 @@
         <div class="Share pointer-cursor" >
           <img  style="height:17px;width:17px" src="/assets/images/medicalReportIcon/edit.png" />
         </div>
-        <div>Share</div>
+        <div>View</div>
       </button>
     </mat-menu>
     </div>
@@ -636,7 +632,7 @@
                 <div class="allfileNameDetails">
                   <div class="allfileName">
                     <div class="fileType" *ngIf="file && file.type ">
-                      <img height="25px" width="25px" [src]="getFileType(file.type)" />
+                      <img height="35px" width="35px" [src]="getFileType(file.type)" />
                     </div>
                     <div>
                       <div class="fileName" *ngIf="file && file.originalName">{{originalFilename(file.originalName)}}
@@ -654,8 +650,12 @@
                   </div>
                   <div class="imageClas">
                     <div (click)="dialogImgView(file)">
-                      <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
-                       #tooltip="matTooltip" matTooltip="Download" [matTooltipPosition]="'below'" />
+                      <!-- <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
+                       #tooltip="matTooltip" matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" /> -->
+                      <img *ngIf="file.type !=='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip"
+                        matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
+                      <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/pdfDwnld.png" #tooltip="matTooltip"
+                        matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
                     </div>
                     <div (click)="deletePrescriptionFile(file,i)">
                       <img class="fileView" src="/assets/images/medicalReportIcon/delete.png"
@@ -682,9 +682,10 @@
                     <mat-menu #menu="matMenu">
                       <button mat-menu-item (click)="dialogImgView(file)" class="gap"> 
                         <div>
-                          <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png"/>
+                          <img *ngIf="file.type !=='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png"/>
+                          <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/pdfDwnld.png"/>
                         </div>
-                        <div>File View</div>
+                        <div *ngIf="downloadText">{{downloadText}}</div>
                       </button>
                       <button mat-menu-item class="gap" (click)="deletePrescriptionFile(file,i)">
                         <div >

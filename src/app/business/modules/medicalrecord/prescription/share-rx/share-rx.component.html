@@ -94,7 +94,8 @@
         </div>
         <div *ngIf="!showthirdparty" class="mgn-bt-0">
             <div style="margin-top: 10px;">
-                <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length === 0">Add digital signature</div>
+                <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage && selectedMessage.files 
+                && selectedMessage.files.length === 0">Add digital signature</div>
                 <!-- <div class="difitalSigText" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">View digital signature</div> -->
                 <div >
                     <div >
@@ -107,17 +108,25 @@
                                     <img style="height:30px;width:30px" src="/assets/images/medicalReportIcon/download.png" />
                                   </div>
                                   <div>
-                                    <div class="fileTextClr"> Select a file or drag and drop here</div>
+                                    <div class="fileTextClr"> Select a file</div>
                                   <div class="fileTextClrType">JPG, PNG  file size no more than 5MB</div>
                                   </div>
                                   <div>
-                                    <!-- (click)="uploadSignature()" -->
                                     <button class="shareBtn" >
                                         <a class="pointer-cursor" style="color: #FF9900;" (click)="imagefile.click()"><input #imagefile
                                             type="file" accept="/*;capture=camera" style="display:none;"
                                             (change)="filesSelected($event)">Upload Sign</a>
                                     </button>
                                   </div>
+                                </div>
+                                <div class="fileUplaodMob"> 
+                                    <div>
+                                        <button class="shareBtn" >
+                                            <div class="pointer-cursor" style="color: #FF9900;" (click)="imagefile.click()"><input #imagefile
+                                                type="file" accept="/*;capture=camera" style="display:none;"
+                                                (change)="filesSelected($event)">Upload your Digital Signature File</div>
+                                        </button>
+                                      </div>
                                 </div>
                               </div>
 
@@ -127,7 +136,6 @@
                             </div>
                               <div >
                                 <div>
-                                  <!-- <a class="mt-1 btn btn-primary" (click)="manualSignature()">Create Signature</a> -->
                                   <button class="manualSignBtn" (click)="manualSignature()">Create Digital Signature Manually</button>
                                 </div>
                               </div>

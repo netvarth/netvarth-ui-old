@@ -2,7 +2,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FileService } from '../../../../../../shared/services/file-service';
-
 @Component({
   selector: 'app-previewpdf',
   templateUrl: './previewpdf.component.html',
@@ -14,11 +13,13 @@ export class PreviewpdfComponent implements OnInit {
   imgSrc:any;
   api_loading:boolean;
   fileTYpe:any;
+  pdfUrl:any;
+  mrid:any;
+  thumbnail: any;
   constructor(
     public dialogRef: MatDialogRef<PreviewpdfComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private fileService: FileService,
- 
   ) {
     console.log('data',data);
   }
@@ -31,7 +32,11 @@ export class PreviewpdfComponent implements OnInit {
       this.fileTYpe= this.data.data.type;
       this.getImageType(this.fileTYpe)
     }
+    if(this.data && this.data.mrId){
+      this.mrid = this.data.mrId;
+    }
   }
+
   getImageType(fileType) {
     return this.fileService.getImageByType(fileType);
   }
@@ -39,15 +44,15 @@ export class PreviewpdfComponent implements OnInit {
     this.dialogRef.close();
   }
   getFileType(type){
-    console.log('type',type)
+    // console.log('type',type)
     if(type){
-      if(type==='image/png'){
+      if(type==='image/png' || type ==='.png'){
         return './assets/images/ImgeFileIcon/png.png'
       }
-      else if(type==='application/pdf'){
+      else if(type==='application/pdf' || type==='.pdf'){
         return './assets/images/ImgeFileIcon/pdf.png'
       }
-      else if(type==='image/bmp'){
+      else if(type==='image/bmp' || type==='.bmp'){
         return './assets/images/ImgeFileIcon/bmp.png'
       }
       else if(type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
@@ -56,8 +61,11 @@ export class PreviewpdfComponent implements OnInit {
       else if(type==='video/mp4'){
         return './assets/images/ImgeFileIcon/video.png'
       }
-      else if(type==='image/jpg'){
+      else if(type==='image/jpg' || type==='.jpg'){
         return './assets/images/ImgeFileIcon/jpg.png'
+      }
+      else if(type==='.jpeg'){
+        return './assets/images/ImgeFileIcon/jpeg.png'
       }
       else{
         return './assets/images/ImgeFileIcon/othersFile.png'

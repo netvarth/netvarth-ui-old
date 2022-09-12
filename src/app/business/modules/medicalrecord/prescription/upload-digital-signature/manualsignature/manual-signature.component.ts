@@ -137,6 +137,7 @@ export class ManualSignatureComponent implements OnInit {
   }
 
   drawStart() {
+    console.log('jjjj')
     this.sign = false;
   }
   goBack() {
@@ -159,7 +160,25 @@ export class ManualSignatureComponent implements OnInit {
   }
   resizeSignaturePad() {
     this.signaturePad.set('canvasWidth', document.getElementById("sign_canvas").offsetWidth);
-    this.signaturePad.clear();
+    const canvas:any = document.querySelector("canvas");
+    const ratio =  Math.max(window.devicePixelRatio || 2, 2);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+    this.signaturePad.clear(); // otherwise isEmpty() might return incorrect value
+    // this.signaturePad.clear();
+    const signaturePad = new SignaturePad(canvas);
+    console.log('signaturePad',signaturePad)
+// signaturePad.minWidth = 5;
+// signaturePad.maxWidth = 10;
+// signaturePad.penColor = "rgb(66, 133, 244)";
+}
+resizeSignaturePadMobile(){
+  // const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+  //   canvas.width = canvas.offsetWidth * ratio;
+  //   canvas.height = canvas.offsetHeight * ratio;
+  //   canvas.getContext("2d").scale(ratio, ratio);
+  //   signaturePad.clear(); // otherwise isEmpty() might return incorrect value
 }
 
 

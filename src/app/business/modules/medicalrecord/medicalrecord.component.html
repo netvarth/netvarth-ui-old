@@ -400,7 +400,7 @@
 <section *ngIf="!loading && viewVisitDetails" class="medical-record">
   <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding-small">
     <div class="col-xs-12 col-sm-12 mgn-up-10 card">
-    <div class="col-xs-12 col-sm-12 mgn-up-10 card">
+    <div class="col-xs-12 col-sm-12 mgn-up-10 card" style="box-shadow: none !important;">
       <div class="infoDetails shadow">
         <div *ngIf="customerDetails">
           <div  *ngIf="customerDetails && customerDetails.gender === 'male'">
@@ -490,7 +490,7 @@
       </div>
     </div>
 
-      <div class="col-xs-12 col-sm-12 mgn-up-10 card newCard">
+      <div class="col-xs-12 col-sm-12 card newCard" style="box-shadow: none !important;">
         <div class="showHideClassDesktop">
           <div class="shadow flexClass1 ">
             <div class="recordInfo">
