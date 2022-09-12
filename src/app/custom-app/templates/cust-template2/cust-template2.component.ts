@@ -10,7 +10,6 @@ import { CouponsComponent } from '../../../shared/components/coupons/coupons.com
 import { JdnComponent } from '../../../shared/components/jdn-detail/jdn-detail-component';
 import { QRCodeGeneratordetailComponent } from '../../../shared/components/qrcodegenerator/qrcodegeneratordetail.component';
 import { SearchDetailServices } from '../../../shared/components/search-detail/search-detail-services.service';
-import { ServiceDetailComponent } from '../../../shared/components/service-detail/service-detail.component';
 import { SignUpComponent } from '../../../shared/components/signup/signup.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -1792,32 +1791,6 @@ export class CustTemplate2Component implements OnInit {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
-  showServiceDetail(serv, busname) {
-    let servData;
-    if (serv.serviceType && serv.serviceType === 'donationService') {
-      servData = {
-        bname: busname,
-        sector: this.businessjson.serviceSector.domain,
-        serdet: serv,
-        serv_type: 'donation'
-      };
-    } else {
-      servData = {
-        bname: busname,
-        sector: this.businessjson.serviceSector.domain,
-        serdet: serv
-      };
-    }
-
-    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.theme],
-      disableClose: true,
-      data: servData
-    });
-    this.servicedialogRef.afterClosed().subscribe(() => {
-    });
-  }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'
@@ -2041,24 +2014,11 @@ export class CustTemplate2Component implements OnInit {
   cardClicked(actionObj) {
 
     if (actionObj['type'] === 'waitlist') {
-      if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-      } else {
         this.checkinClicked(actionObj['location'], actionObj['service']);
-      }
-
     } else if (actionObj['type'] === 'appt') {
-      if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-      } else {
         this.appointmentClicked(actionObj['location'], actionObj['service']);
-      }
     } else if (actionObj['type'] === 'donation') {
-      if (actionObj['action'] === 'view') {
-        this.showServiceDetail(actionObj['service'], this.businessjson.businessName);
-      } else {
         this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
-      }
     } else if (actionObj['type'] === 'item') {
       if (actionObj['action'] === 'view') {
         this.itemDetails(actionObj['service']);

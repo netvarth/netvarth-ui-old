@@ -10,7 +10,6 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 import { RazorpayService } from '../../../../shared/services/razorpay.service';
-import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { MatDialog } from '@angular/material/dialog';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
@@ -978,29 +977,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     isValid(evt) {
         console.log(evt);
         return this.sharedFunctionobj.isValid(evt);
-    }
-    showServiceDetail(serv, busname) {
-        let servData;
-        if (serv.serviceType && serv.serviceType === 'donationService') {
-            servData = {
-                bname: busname,
-                serdet: serv,
-                serv_type: 'donation'
-            };
-        } else {
-            servData = {
-                bname: busname,
-                serdet: serv
-            };
-        }
-        const servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-            disableClose: true,
-            data: servData
-        });
-        servicedialogRef.afterClosed().subscribe(() => {
-        });
     }
     changeService() {
         this.action = 'service';

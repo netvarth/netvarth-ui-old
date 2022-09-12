@@ -5,7 +5,6 @@ import { SharedFunctions } from '../../functions/shared-functions';
 import { Messages } from '../../constants/project-messages';
 import { MatDialog } from '@angular/material/dialog';
 import { trigger, style, transition, animate, keyframes, query, stagger } from '@angular/animations';
-import { ServiceDetailComponent } from '../service-detail/service-detail.component';
 import { AddInboxMessagesComponent } from '../add-inbox-messages/add-inbox-messages.component';
 import { CouponsComponent } from '../coupons/coupons.component';
 import { ButtonsConfig, ButtonsStrategy, AdvancedLayout, PlainGalleryStrategy, PlainGalleryConfig, Image, ButtonType } from '@ks89/angular-modal-gallery';
@@ -1961,32 +1960,6 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
-  showServiceDetail(serv, busname) {
-    let servData;
-    if (serv.serviceType && serv.serviceType === 'donationService') {
-      servData = {
-        bname: busname,
-        sector: this.businessjson.serviceSector.domain,
-        serdet: serv,
-        serv_type: 'donation'
-      };
-    } else {
-      servData = {
-        bname: busname,
-        sector: this.businessjson.serviceSector.domain,
-        serdet: serv
-      };
-    }
-
-    this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-      width: '50%',
-      panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass', this.theme],
-      disableClose: true,
-      data: servData
-    });
-    this.servicedialogRef.afterClosed().subscribe(() => {
-    });
-  }
   getTerminologyTerm(term) {
     if (this.terminologiesjson) {
       const term_only = term.replace(/[\[\]']/g, ''); // term may me with or without '[' ']'

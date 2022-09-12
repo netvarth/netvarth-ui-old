@@ -16,6 +16,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { WordProcessor } from '../../services/word-processor.service';
 import { AuthService } from '../../services/auth-service';
 import { TranslateService } from '@ngx-translate/core';
+import { CommonDataStorageService } from '../../services/common-datastorage.service';
 
 
 
@@ -66,6 +67,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     public translate: TranslateService,
+    private commonDataStorage: CommonDataStorageService,
     @Inject(DOCUMENT) public document
   ) {
     if (this.shared_functions.checkLogin()) {
@@ -144,6 +146,7 @@ export class LoginComponent implements OnInit {
     if (this.data.type === 'provider') {
       post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
       this.sessionStorageService.clearSessionStorage();
+      this.commonDataStorage.clearSpSettings();
       this.authService.providerLogin(post_data)
         .then(
           () => {

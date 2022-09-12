@@ -6,9 +6,10 @@ import { BookingService } from '../../../shared/services/booking-service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
 import { CustomappService } from '../../customapp.service';
-import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -60,7 +61,9 @@ export class CustTemplate4Component implements OnInit {
     private dateTimeProcessor: DateTimeProcessor,
     private searchdetailserviceobj: SearchDetailServices,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private lStorageService: LocalStorageService,
+    private router: Router
   ) {
 
   }
@@ -387,53 +390,53 @@ export class CustTemplate4Component implements OnInit {
     //   }
     // );
   }
-  doLogin(origin?, passParam?) {
-    // const current_provider = passParam['current_provider'];
-    const is_test_account = true;
-    const dialogRef = this.dialog.open(ConsumerJoinComponent, {
-      width: '40%',
-      panelClass: ['loginmainclass', 'popup-class', this.templateJson['theme']],
-      disableClose: true,
-      data: {
-        type: origin,
-        is_provider: false,
-        test_account: is_test_account,
-        theme: this.templateJson['theme'],
-        mode: 'dialog',
-        moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'success') {
-        // this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-        // if (passParam['callback'] === 'communicate') {
-        //   
-        // } else if (passParam['callback'] === 'history') {
-        //   this.redirectToHistory();
-        // } else 
-        if (passParam['callback'] === 'communicate') {
-          this.showCommunicate(passParam['providerId']);
-        } 
-        // else if (passParam['callback'] === 'donation') {
-        //   this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
-        // } else if (passParam['callback'] === 'appointment') {
-        //   this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        // } else if (passParam['callback'] === 'order') {
-        //   if (this.orderType === 'SHOPPINGLIST') {
-        //     this.shoppinglistupload();
-        //   } else {
-        //     this.checkout();
-        //   }
-        // } else {
-        //   this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
-        // }
-      } else if (result === 'showsignup') {
-        // this.doSignup(passParam);
-      } else {
-        // this.loading = false;
-      }
-    });
-  }
+  // doLogin(origin?, passParam?) {
+  //   // const current_provider = passParam['current_provider'];
+  //   const is_test_account = true;
+  //   const dialogRef = this.dialog.open(ConsumerJoinComponent, {
+  //     width: '40%',
+  //     panelClass: ['loginmainclass', 'popup-class', this.templateJson['theme']],
+  //     disableClose: true,
+  //     data: {
+  //       type: origin,
+  //       is_provider: false,
+  //       test_account: is_test_account,
+  //       theme: this.templateJson['theme'],
+  //       mode: 'dialog',
+  //       moreparams: { source: 'searchlist_checkin', bypassDefaultredirection: 1 }
+  //     }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result === 'success') {
+  //       // this.activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+  //       // if (passParam['callback'] === 'communicate') {
+  //       //   
+  //       // } else if (passParam['callback'] === 'history') {
+  //       //   this.redirectToHistory();
+  //       // } else 
+  //       if (passParam['callback'] === 'communicate') {
+  //         this.showCommunicate(passParam['providerId']);
+  //       } 
+  //       // else if (passParam['callback'] === 'donation') {
+  //       //   this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
+  //       // } else if (passParam['callback'] === 'appointment') {
+  //       //   this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+  //       // } else if (passParam['callback'] === 'order') {
+  //       //   if (this.orderType === 'SHOPPINGLIST') {
+  //       //     this.shoppinglistupload();
+  //       //   } else {
+  //       //     this.checkout();
+  //       //   }
+  //       // } else {
+  //       //   this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+  //       // }
+  //     } else if (result === 'showsignup') {
+  //       // this.doSignup(passParam);
+  //     } else {
+  //       // this.loading = false;
+  //     }
+  //   });
+  // }
   showCommunicate(provid) {
     const dialogRef  = this.dialog.open(AddInboxMessagesComponent, {
       width: '50%',
@@ -456,28 +459,45 @@ export class CustTemplate4Component implements OnInit {
   }
   communicateHandler() {
     const _this = this;
-    // _this.loading = true;
+    const providforCommunicate = this.businessProfile.id;
     _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
-          _this.showCommunicate(this.businessProfile.id);
+          _this.showCommunicate(providforCommunicate);
         } else {
-          const passParam = { callback: 'communicate' };
-          this.doLogin('consumer', passParam);
+          let communicateUrl = 'customapp/' + this.businessProfile.accEncUid + '?callback=communicate';
+          console.log(communicateUrl);
+          console.log(communicateUrl);
+          this.lStorageService.setitemonLocalStorage('target', communicateUrl);
+          this.router.navigate([this.businessProfile.accEncUid, 'login']);
         }
-      });
-    // const _this = this;
-    // const providforCommunicate = this.provider_bussiness_id;
-    // _this.goThroughLogin().then(
-    //   (status) => {
-    //     if (status) {
-    //       _this.showCommunicate(providforCommunicate);
-
-    //     } else {
-    //       const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
-    //       this.doLogin('consumer', passParam);
-    //     }
-    //   }
-    // );
+      }
+    );
   }
+  // communicateHandler() {
+  //   const _this = this;
+  //   // _this.loading = true;
+  //   _this.authService.goThroughLogin().then(
+  //     (status) => {
+  //       if (status) {
+  //         _this.showCommunicate(this.businessProfile.id);
+  //       } else {
+  //         const passParam = { callback: 'communicate' };
+  //         this.doLogin('consumer', passParam);
+  //       }
+  //     });
+  //   // const _this = this;
+  //   // const providforCommunicate = this.provider_bussiness_id;
+  //   // _this.goThroughLogin().then(
+  //   //   (status) => {
+  //   //     if (status) {
+  //   //       _this.showCommunicate(providforCommunicate);
+
+  //   //     } else {
+  //   //       const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
+  //   //       this.doLogin('consumer', passParam);
+  //   //     }
+  //   //   }
+  //   // );
+  // }
 }

@@ -7,7 +7,7 @@ export class CommonDataStorageService {
   private spSettings = {
     'account':null,
     'order': null,
-    'appointments':null,
+    'appointment':null,
     'waitlist':null,
     'pos':null
   }
@@ -27,6 +27,16 @@ export class CommonDataStorageService {
 
   set(type, data) {
     this.storage[type] = data;
+  }
+
+  clearSpSettings() {
+    this.spSettings = {
+      'account':null,
+      'order': null,
+      'appointment':null,
+      'waitlist':null,
+      'pos':null
+    }
   }
 
   clear() {

@@ -11,7 +11,6 @@ import { ProviderServices } from '../../../../business/services/provider-service
 import { DateFormatPipe } from '../../../../shared/pipes/date-format/date-format.pipe';
 import { DOCUMENT, Location } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { ServiceDetailComponent } from '../../../../shared/components/service-detail/service-detail.component';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
@@ -1948,29 +1947,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 return '';
             }
         }
-    }
-    showServiceDetail(serv, busname) {
-        let servData;
-        if (serv.serviceType && serv.serviceType === 'donationService') {
-            servData = {
-                bname: busname,
-                serdet: serv,
-                serv_type: 'donation'
-            };
-        } else {
-            servData = {
-                bname: busname,
-                serdet: serv
-            };
-        }
-        this.servicedialogRef = this.dialog.open(ServiceDetailComponent, {
-            width: '50%',
-            panelClass: ['commonpopupmainclass', 'popup-class', 'specialclass'],
-            disableClose: true,
-            data: servData
-        });
-        this.servicedialogRef.afterClosed().subscribe(() => {
-        });
     }
     updateEmail(post_data) {
         const _this = this;

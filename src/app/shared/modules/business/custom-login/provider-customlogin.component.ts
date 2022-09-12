@@ -15,6 +15,7 @@ import { SnackbarService } from '../../../services/snackbar.service';
 import { GroupStorageService } from '../../../services/group-storage.service';
 import { AuthService } from '../../../services/auth-service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-pCustomlogin',
@@ -66,7 +67,8 @@ export class ProviderCustomLoginComponent implements OnInit {
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private authService: AuthService,
-    private providerServices: ProviderServices
+    private providerServices: ProviderServices,
+    private commonDataStorage: CommonDataStorageService
   ) {
 
     this.activateRoute.queryParams.subscribe(data => {
@@ -248,6 +250,7 @@ export class ProviderCustomLoginComponent implements OnInit {
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     // this.shared_functions.clearSessionStorage();
     this.sessionStorageService.clearSessionStorage();
+    this.commonDataStorage.clearSpSettings();
     this.authService.businessLogin(post_data)
       .then(
         () => {

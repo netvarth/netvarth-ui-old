@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
-// import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -39,7 +38,6 @@ export class CheckinAddMemberComponent implements OnInit {
     private wordProcessor: WordProcessor
   ) {
   }
-
   ngOnInit() {
     console.log(this.globalsettings);
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
@@ -56,7 +54,7 @@ export class CheckinAddMemberComponent implements OnInit {
   }
   isNumeric(evt) {
     return !this.sharedFunctionobj.isNumber(evt);
-}
+  }
   valuechange() {
     const retobj = {
       'fname': this.firstname || '',

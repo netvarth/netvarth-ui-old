@@ -16,6 +16,7 @@ import { Title } from '@angular/platform-browser';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { AuthService } from '../../../../shared/services/auth-service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
+import { CommonDataStorageService } from '../../../../shared/services/common-datastorage.service';
 
 @Component({
   selector: 'app-plogin',
@@ -60,7 +61,8 @@ export class ProviderLoginComponent implements OnInit {
     private titleService: Title,
     private groupService: GroupStorageService,
     private authService: AuthService,
-    private providerServices: ProviderServices
+    private providerServices: ProviderServices,
+    private commonDataStorage: CommonDataStorageService
   ) {
     this.titleService.setTitle('Jaldee Business - Login');
     this.activateRoute.queryParams.subscribe(data => {
@@ -214,6 +216,7 @@ export class ProviderLoginComponent implements OnInit {
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     // this.shared_functions.clearSessionStorage();
     this.sessionStorageService.clearSessionStorage();
+    this.commonDataStorage.clearSpSettings();
     this.authService.businessLogin(post_data)
       .then(
         () => {
