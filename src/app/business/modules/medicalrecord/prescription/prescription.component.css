@@ -507,7 +507,7 @@ border: 1.32184px solid #E6E8EB;
 
   }
   .imageClas{
-    display: none !important;
+    display: none !important; 
   }
   .gap{
     gap:5px !important;
@@ -598,7 +598,7 @@ border: 1.32184px solid #E6E8EB;
     overflow-y: auto;
 }
 .imageClas{
-  display: flex;
+  display: flex ;
   justify-content: space-between;
   gap: 15px;
   align-items: center;
