@@ -202,6 +202,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['typeOfMsg'] = 'single';
+    pass_ob['theme']=this.theme;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
   }
@@ -400,6 +401,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
       accountId: checkin.providerAccount.id,
       source: 'history'
     }
+    
     if (this.customId) {
       // queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
@@ -484,6 +486,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
+    pass_ob['theme']=this.theme;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['orders'] = 'orders';
     this.addNote(pass_ob);
