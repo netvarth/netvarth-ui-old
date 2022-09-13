@@ -167,16 +167,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         () => {
           this.setLabel();
         });
-
-      // this.gets3curl()
-      //   .then(
-      //     () => {
-      //       this.setLabel();
-      //     },
-      //     () => {
-      //       this.setLabel();
-      //     }
-      //   );
     } else {
       this.setLabel();
     }
@@ -186,7 +176,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       this.provider_services.getAccountSettings().then(data => {
         this.smsGlobalStatusEnable = data['enableSms'];
         this.notificationStatusEnable = data['sendNotification'];
-        //this.smsGlobalStatusStr = (this.smsGlobalStatus) ? 'On' : 'Off';
         if (this.smsGlobalStatusEnable === true) {
           this.sms = true;
         }
@@ -219,7 +208,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
             else {
               this.IsTelegramDisable = false;
             }
-
           },
           (error) => {
 
@@ -287,14 +275,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         i++;
       }
     }
-    // if(this.typeOfMsg === 'single'){
-    //   if(this.data.source === 'provider-waitlist'){
-    //     if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
-    //       this.api_error = 'share message via options are not selected';
-    //       return this.api_error;
-    //     }
-    //   }
-    // }
     const foruuid = [];
     foruuid.push(this.uuid);
     const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
@@ -684,7 +664,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
               );
           }
         } else {
-          // IsTelegramDisable && !this.telegram  && !this.telegram (IsTelegramDisable && !this.telegram)
           if (this.data.source === 'provider-waitlist') {
             if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
               this.api_error = 'share message via options are not selected';
@@ -712,7 +691,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
     this.disableButton = true;
     if (this.uuid !== null) {
       const dataToSend: FormData = new FormData();
-      // dataToSend.append('message', post_data.communicationMessage);
       post_data['msg'] = post_data.communicationMessage;
       post_data['messageType'] = 'BOOKINGS';
       const captions = {};
@@ -862,7 +840,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   consumerToProviderWaitlistNote(post_data) {
     if (this.uuid !== null) {
       const dataToSend: FormData = new FormData();
-      // dataToSend.append('message', post_data.communicationMessage);
       post_data['msg'] = post_data.communicationMessage;
       post_data['messageType'] = 'BOOKINGS';
       const captions = {};
@@ -954,7 +931,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   providerToConsumerNoteAdd(post_data) {
     if (this.user_id !== null) {
       const dataToSend: FormData = new FormData();
-      // dataToSend.append('message', post_data.communicationMessage);
       post_data['msg'] = post_data.communicationMessage;
       post_data['messageType'] = 'CHAT';
       const captions = {};
@@ -988,7 +964,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   consumerToProviderNoteAdd(post_data) {
     if (this.user_id) {
       const dataToSend: FormData = new FormData();
-      // dataToSend.append('message', post_data.communicationMessage);
       post_data['msg'] = post_data.communicationMessage;
       post_data['messageType'] = 'ENQUIRY';
       const captions = {};
@@ -1006,9 +981,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       dataToSend.append('message', blobpost_Data);
       const filter = {};
       filter['account'] = this.user_id;
-      // if (this.userId) {
-      //   filter['provider'] = this.userId;
-      // }
       this.shared_services.addConsumertoProviderNote(dataToSend, filter)
         .subscribe(
           () => {
@@ -1112,7 +1084,6 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
       });
       this.addondialogRef.afterClosed().subscribe(result => {
         if (result === 'reloadlist') {
-          //this.getSMSCredits();
         }
       });
     }
@@ -1123,8 +1094,5 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
         this.api_error = '2 SMS credit will be used';
       }, 500);
     }
-    // if (event.length === 330) {
-    //   this.snackbarService.openSnackBar('Character limit reached ');
-    // }
   }
 }
