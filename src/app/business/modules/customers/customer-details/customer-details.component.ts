@@ -14,7 +14,6 @@ import { WordProcessor } from "../../../../shared/services/word-processor.servic
 import { GroupStorageService } from "../../../../shared/services/group-storage.service";
 import { DateTimeProcessor } from "../../../../shared/services/datetime-processor.service";
 import { CommunicationPopupComponent } from "../../bookings/communication-popup/communication-popup.component";
-// import { interval as observableInterval } from 'rxjs';
 import { SubSink } from "subsink";
 import { CommunicationService } from "../../../../business/services/communication-service";
 @Component({
@@ -133,7 +132,7 @@ export class CustomerDetailComponent implements OnInit {
   grpId;
   groupName: string;
   groupMemberTextId;
-  groups: any[]=[];
+  groups: any[] = [];
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -182,63 +181,47 @@ export class CustomerDetailComponent implements OnInit {
           this.action = qParams.action;
           this.getCustomers(this.customerId).then(customer => {
             this.customer = customer;
-            if(this.customer[0].groups){
+            if (this.customer[0].groups) {
               const groupIdsArray = JSON.parse(this.customer[0].groups);
-           console.log("customer group :",groupIdsArray)
-           groupIdsArray.map((groupId)=>{
-            this.provider_services.getCustomerGroupById(groupId).subscribe((res:any) =>{
+              console.log("customer group :", groupIdsArray)
+              if (groupIdsArray && groupIdsArray.length > 0) {
+                groupIdsArray.map((groupId) => {
+                  this.provider_services.getCustomerGroupById(groupId).subscribe((res: any) => {
                     this.groups.push(res);
-                    console.log("group",this.groups);
-            })
-           })
-
+                    console.log("group", this.groups);
+                  })
+                })
+              }
             }
-
-            // console.log("localstorage :", localStorage.getItem('groupId'))
             this.getConsumerBills();
             if (this.customer[0].groupMemberId) {
-                console.log("construcot By customers  :", this.customer);
-    
-                this.customer.forEach(element => {
-    
-                //  console.log("groupMemberId :",element.groupMemberId)
+              console.log("construcot By customers  :", this.customer);
+              this.customer.forEach(element => {
                 if (
                   element.groupMemberId !== undefined ||
                   element.groupMemberId !== ""
                 ) {
-                  // this.getCustomers(this.customer.id)
-    
                   element.groupMemberId.forEach(el => {
                     this.grpId = el.groupId;
                     if (this.groupId === el.groupId) {
                       this.grpId = el.groupId;
-                      // console.log("this.grpId :", this.grpId);
                       if (this.grpId) {
                         this.provider_services
                           .getCustomerGroupById(this.groupId)
                           .subscribe((res: any) => {
-                            //  console.log("getCustomerGroup ",res)
                             this.groupName = res.groupName;
-                            // console.log("getCustomerGroup Name", this.groupName)
                             this.provider_services
                               .getMemberId(this.groupName, this.customerId)
                               .subscribe((res: any) => {
                                 this.groupMemberTextId = res;
-                                //   console.log("groupMemberTextId :",this.groupMemberTextId)
                               });
                           });
-                      } else {
-                        // this.getCustomers(this.customer.id)
                       }
                     }
                   });
-                } else {
-                  //  element.groupMemberId = ''
                 }
               });
             }
-            // this.groupId = this.customer[0].groups.substr(2,3)
-            //  console.log("Customer Details :",this.customer[0].groups.substr(2,3))
             console.log("Custome:", this.customer);
             this.customerName = this.customer[0].firstName;
             this.viewCustomer = true;
@@ -255,24 +238,8 @@ export class CustomerDetailComponent implements OnInit {
         });
       }
     });
-
     localStorage.setItem("Detail", "All");
   }
-  // getCustomers(customerId) {
-  //     const _this = this;
-  //     const filter = { 'id-eq': customerId };
-  //     return new Promise(function (resolve, reject) {
-  //         _this.provider_services.getProviderCustomers(filter)
-  //             .subscribe(
-  //                 data => {
-  //                     resolve(data);
-  //                 },
-  //                 () => {
-  //                     reject();
-  //                 }
-  //             );
-  //     });
-  // }
   @HostListener("window:resize", ["$event"])
   onResize() {
     const screenWidth = window.innerWidth;
@@ -285,7 +252,7 @@ export class CustomerDetailComponent implements OnInit {
   getCustomers(customerId) {
     const _this = this;
     const filter = { "id-eq": customerId };
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       _this.provider_services.getProviderCustomers(filter).subscribe(
         (data: any) => {
           if (data[0].whatsAppNum) {
@@ -306,56 +273,6 @@ export class CustomerDetailComponent implements OnInit {
   }
   ngOnInit() {
     this.groupId = localStorage.getItem("groupId");
-
-    // this.getCustomerQnr();
-   // const filter = { "id-eq": this.customerId };
-
-    //    console.log("this.grpId :", this.customer.groupMemberId);
-    // this.provider_services
-    //   .getProviderCustomers(filter)
-    //   .subscribe((customerData: any) => {
-    //     if (customerData[0].groupMemberId) {
-    //         console.log("ngonit By customers  :", customerData);
-
-    //       customerData.forEach(element => {
-
-    //         //  console.log("groupMemberId :",element.groupMemberId)
-    //         if (
-    //           element.groupMemberId !== undefined ||
-    //           element.groupMemberId !== ""
-    //         ) {
-    //           // this.getCustomers(this.customer.id)
-
-    //           element.groupMemberId.forEach(el => {
-    //             this.grpId = el.groupId;
-    //             if (this.groupId === el.groupId) {
-    //               this.grpId = el.groupId;
-    //               // console.log("this.grpId :", this.grpId);
-    //               if (this.grpId) {
-    //                 this.provider_services
-    //                   .getCustomerGroupById(this.groupId)
-    //                   .subscribe((res: any) => {
-    //                     //  console.log("getCustomerGroup ",res)
-    //                     this.groupName = res.groupName;
-    //                     // console.log("getCustomerGroup Name", this.groupName)
-    //                     this.provider_services
-    //                       .getMemberId(this.groupName, this.customerId)
-    //                       .subscribe((res: any) => {
-    //                         this.groupMemberTextId = res;
-    //                         //   console.log("groupMemberTextId :",this.groupMemberTextId)
-    //                       });
-    //                   });
-    //               } else {
-    //                 // this.getCustomers(this.customer.id)
-    //               }
-    //             }
-    //           });
-    //         } else {
-    //           //  element.groupMemberId = ''
-    //         }
-    //       });
-    //     }
-    //   });
   }
   onCancel() {
     if (this.source === "checkin" || this.source === "token") {
@@ -436,15 +353,10 @@ export class CustomerDetailComponent implements OnInit {
         this.ordervisitDetails = data;
         this.todayorderVisitDetailsArray = this.todayordervisitDetails =
           data.todayOrders;
-        // this.OrdersVisitDetailsArray = this.OrdersvisitDetails = data.todayOrders.concat(data.futureOrders,data.historyOrders);
-        // console.log("Object.assign(data.todayOrders, data.futureOrders)",data.todayOrders.concat(data.futureOrders))
-        // this.OrdersvisitDetails = this.OrdersVisitDetailsArray.slice(0, 5);
         this.futureorderVisitDetailsArray = this.futureordervisitDetails =
           data.futureOrders;
-        // this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(0, 5);
         this.historyorderVisitDetailsArray = this.historyOrdervisitDetails =
           data.historyOrders;
-        // this.historyOrdervisitDetails = this.historyorderVisitDetailsArray.slice(0, 5);
         this.loading = false;
       });
   }
@@ -630,11 +542,11 @@ export class CustomerDetailComponent implements OnInit {
           action: "setzero"
         });
       },
-      () => {}
+      () => { }
     );
   }
   sortMessages() {
-    this.communication_history.sort(function(message1, message2) {
+    this.communication_history.sort(function (message1, message2) {
       if (message1.timeStamp < message2.timeStamp) {
         return 11;
       } else if (message1.timeStamp > message2.timeStamp) {
@@ -668,7 +580,6 @@ export class CustomerDetailComponent implements OnInit {
   showorderMore(type) {
     if (type === "today") {
       this.todayordervisitDetails = this.todayorderVisitDetailsArray;
-      // this.OrdersvisitDetails = this.OrdersVisitDetailsArray;
       this.showMoreorderToday = true;
     } else if (type === "future") {
       this.futureordervisitDetails = this.futureorderVisitDetailsArray;
@@ -684,7 +595,6 @@ export class CustomerDetailComponent implements OnInit {
         0,
         5
       );
-      // this.OrdersvisitDetails = this.OrdersVisitDetailsArray.slice(0, 5);
       this.showMoreorderToday = false;
     } else if (type === "future") {
       this.futureordervisitDetails = this.futureorderVisitDetailsArray.slice(
@@ -722,21 +632,18 @@ export class CustomerDetailComponent implements OnInit {
     };
     this.router.navigate(["/provider/customers/create"], navigationExtras);
   }
-
   getOrderStatus() {
     this.provider_services.getProviderOrderSettings().then((data: any) => {
       this.orderstatus = data.enableOrder;
       console.log("OrderStatus : ", this.orderstatus);
     });
   }
-
   getGlobalSettings() {
     this.provider_services.getAccountSettings().then((data: any) => {
       this.globalSettings = data;
       console.log("Global Settings : ", this.globalSettings);
     });
   }
-
   actionPerformed(event) {
     if (event.type === "details") {
       this.gotoCustomerDetail(event.record, event.timeType);
@@ -770,21 +677,18 @@ export class CustomerDetailComponent implements OnInit {
       }
     }
   }
-
   getConsumerBills() {
     const filter = { "providerConsumer-eq": this.customer[0].id };
     this.provider_services.getProviderBills(filter).subscribe(data => {
       this.consumerBills = data;
     });
   }
-
   gotoQnr() {
     this.router.navigate(
       ["provider", "customers", this.customer[0].id, "questionnaires"],
       { queryParams: { uid: this.customer[0].id, source: "customer-details" } }
     );
   }
-
   showCommunications() {
     this.dialog.open(CommunicationPopupComponent, {
       width: "50%",
@@ -804,13 +708,12 @@ export class CustomerDetailComponent implements OnInit {
       }
     });
   }
-
   CustomersInboxMessage() {
     this.communicationService
       .ConsumerInboxMessage(this.customerDetails, "customer-list")
       .then(
-        () => {},
-        () => {}
+        () => { },
+        () => { }
       );
   }
 }
