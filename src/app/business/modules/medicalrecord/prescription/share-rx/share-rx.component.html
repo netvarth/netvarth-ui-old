@@ -82,7 +82,7 @@
                     [(ngModel)]="pushnotify" [ngModelOptions]="{standalone: true}">
                     <span class="labelCheckName">App notification</span>
                 </mat-checkbox>
-                <mat-checkbox  class=" example-margin" *ngIf="!IsTelegramDisable" [(ngModel)]="telegram"
+                <mat-checkbox  class=" example-margin" [ngClass]="{hideClass: !IsTelegramDisable}" *ngIf="!IsTelegramDisable" [(ngModel)]="telegram"
                     [ngModelOptions]="{standalone: true}">
                    <span class="labelCheckName"> Telegram</span>
                 </mat-checkbox>
@@ -92,7 +92,8 @@
                 </div>
             <!-- <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div> -->
         </div>
-        <div *ngIf="!showthirdparty"  class="mgn-bt-0">
+        <!-- *ngIf="!showthirdparty" -->
+        <div   class="mgn-bt-0">
             <div style="margin-top: 10px;">
                 <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage && selectedMessage.files 
                 && selectedMessage.files.length === 0">Add digital signature</div>
