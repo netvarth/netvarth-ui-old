@@ -146,11 +146,18 @@ export class ActionPopupComponent implements OnInit {
     this.shared_functions.doCancelWaitlist(this.bookingDetails, this.type, this)
       .then(
         data => {
-          if (data === 'reloadlist' && this.type === 'checkin') {
-            this.router.navigate(['consumer']);
-            this.dialogRef.close();
-          } else if (data === 'reloadlist' && this.type === 'appointment') {
-            this.router.navigate(['consumer']);
+          if (data === 'reloadlist' && (this.type === 'checkin' || this.type === 'appointment')) {
+            let queryParams = {
+              account_id: this.bookingDetails.providerAccount.id,
+              theme: this.theme
+            }
+            if (this.bookingDetails['customId']) {
+              queryParams['customId']=this.bookingDetails['customId'];
+            }
+            const navigationExtras: NavigationExtras = {
+              queryParams: queryParams
+            };
+            this.router.navigate(['consumer'], navigationExtras);
             this.dialogRef.close();
           }
         },
