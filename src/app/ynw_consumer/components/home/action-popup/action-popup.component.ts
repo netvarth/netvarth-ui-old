@@ -149,6 +149,7 @@ export class ActionPopupComponent implements OnInit {
           if (data === 'reloadlist' && (this.type === 'checkin' || this.type === 'appointment')) {
             let queryParams = {
               account_id: this.bookingDetails.providerAccount.id,
+              accountId:this.bookingDetails.providerAccount.id,
               theme: this.theme
             }
             if (this.bookingDetails['customId']) {

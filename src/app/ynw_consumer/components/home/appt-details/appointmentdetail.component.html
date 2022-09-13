@@ -1,4 +1,4 @@
-<section class="container no-padding-small cust-book-details">
+<section class="container no-padding-small cust-book-details" [ngClass]="theme">
     <div class="content p0 comn-cls checkin-details">
         <div class="row">
             <div class="panel panel-default">
@@ -208,7 +208,7 @@
                                                     <app-questionnaire [questionnaireList]="qnr" [source]="'consAppt'"
                                                         [uuid]="appt.uid" [accountId]="appt.providerAccount.id"
                                                         [type]="'details'" [waitlistStatus]="appt.apptStatus"
-                                                        (returnAnswers)="getQuestionAnswers($event)">
+                                                        (returnAnswers)="getQuestionAnswers($event)" [theme]="theme">
                                                     </app-questionnaire>
                                                 </div>
                                             </mat-expansion-panel>
@@ -219,7 +219,7 @@
                                             <app-questionnaire [questionnaireList]="qnr" [source]="'consAppt'"
                                                 [uuid]="appt.uid" [accountId]="appt.providerAccount.id"
                                                 [type]="'details'" [waitlistStatus]="appt.apptStatus"
-                                                (returnAnswers)="getQuestionAnswers($event)">
+                                                (returnAnswers)="getQuestionAnswers($event)" [theme]="theme">
                                             </app-questionnaire>
                                         </div>
                                     </ng-container>
