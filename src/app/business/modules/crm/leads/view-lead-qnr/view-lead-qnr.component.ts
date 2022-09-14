@@ -23,6 +23,7 @@ export class ViewLeadQnrComponent implements OnInit {
 
   leadUID: any; // To store lead uid to fetch lead information
   leadInfo: any; // To store the lead information
+  inquiryInfo:any;
   applicants: any = []; // By default only applicant will be there
   applicantsInfo = {};
   filesToUpload = [];
@@ -105,6 +106,9 @@ export class ViewLeadQnrComponent implements OnInit {
   afterUpdate:any;
   crifBtnForHide:boolean;
   fileLoading: boolean;
+  type: string;
+  tempType: any;
+  tempInquiryId: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -126,34 +130,47 @@ export class ViewLeadQnrComponent implements OnInit {
         }
       }
     )
+    this.activatedRoute.queryParams.subscribe((queryParams)=>{
+      console.log('queryParams',queryParams)
+      if(queryParams && queryParams.type){
+        this.tempType=queryParams.type;
+      }
+      if(queryParams && queryParams.inquiryId){
+        this.tempInquiryId=queryParams.inquiryId;
+      }
+      // if(this.type===undefined &&  this.tempType==='KYC'){
+      //   this.leadUID= this.tempInquiryId;
+      // }
+    })
   }
 
   initLead() {
     const _this = this;
     _this.questionaire = {};
+    console.log('leadUID',_this.leadUID);
     _this.fetchLeadInfo(_this.leadUID).then(
       (leadInfo: any) => {
+        console.log('1stleadInfo',leadInfo)
         _this.leadInfo = leadInfo; // Setting Lead information.
         console.log('leadInfo::::::',_this.leadInfo)
         if( _this.leadInfo && _this.leadInfo.customer && this.leadInfo.customer.phoneNo){
           _this.telephoneNumber=_this.leadInfo.customer.phoneNo;
         }
-        // _this.getTelephoneNumer(_this.leadInfo.customer.phoneNo);
         _this.api_loading_UpdateKyc = false;
         console.log('leadInfostatus::::::', _this.leadInfo.status)
-        if (leadInfo && leadInfo.status && (leadInfo.status.name === 'New' || leadInfo.status.name === 'KYC Updated')) {
+        if (leadInfo && leadInfo.status && (leadInfo.status.name === 'New' || leadInfo.status.name === 'KYC Updated' || leadInfo.status.name === 'KYC')) {
           if (leadInfo.kycCreated) {
             _this.crmService.getkyc(leadInfo.uid).subscribe(
               (kycInfo) => {
                 console.log("KYC Info:", kycInfo);
                 _this.initApplicantForm(kycInfo);
                 _this.kycInfo=kycInfo;
-                // this.api_loading=false;
                 _this.api_loading_UpdateKyc = false;
-                this.api_loading=false;
+                _this.api_loading=false;
               }
             )
           } else {
+            // alert('alert')
             let applicant = {
               parent: true,
               name: _this.leadInfo.customer.name,
@@ -169,8 +186,11 @@ export class ViewLeadQnrComponent implements OnInit {
           else if(leadInfo.status.name === 'KYC Updated'){
             _this.headerName = "CRIF";
           }
+          else if(leadInfo.status.name === 'KYC'){
+            _this.headerName = "KYC";
+          }
         } else if (leadInfo && leadInfo.status && (leadInfo.status.name === 'Login' ||  leadInfo.status.name === 'Bank Details'
-        || this.leadInfo.status.name==='Loan Application' || this.leadInfo.status.name==='Two Wheeler Details')) {
+        || _this.leadInfo.status.name==='Loan Application' || _this.leadInfo.status.name==='Two Wheeler Details')) {
           _this.headerName = leadInfo.status.aliasName;
           _this.crmService.getkyc(leadInfo.uid).subscribe(
             (kycInfo) => {
@@ -237,7 +257,7 @@ export class ViewLeadQnrComponent implements OnInit {
 
   removeApplicant(applicantInfo, applicationIndex) {
     console.log('applicantInfo',applicantInfo);
-     if (applicantInfo && (applicantInfo['status'] === 'New')) {
+     if (applicantInfo && ((applicantInfo['status'] === 'New') || (applicantInfo['status'] === 'KYC'))) {
       if(applicantInfo && (applicantInfo['creditScore']===true)){
         if (applicantInfo && applicantInfo['applicantid'] && this.leadInfo && this.leadInfo.uid) {
           console.log('applicantInfoapplicantid,applicantInfo',applicantInfo)
@@ -278,7 +298,7 @@ export class ViewLeadQnrComponent implements OnInit {
                 const index = this.applicants.indexOf(applicantInfo['applicantid']);
                 this.applicants.splice(index, 1);
                 this.updateKyc()
-                // console.log("After:", this.applicantsInfo);
+                console.log("After:", this.applicantsInfo);
                 this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
               }
             }
@@ -335,15 +355,29 @@ export class ViewLeadQnrComponent implements OnInit {
    */
   fetchLeadInfo(leadUID) {
     const _this = this;
-    return new Promise(function (resolve, reject) {
-      _this.crmService.getLeadDetails(leadUID).subscribe(
-        (leadInfo: any) => {
-          resolve(leadInfo);
-        }, (error) => {
-          reject(error);
+      return new Promise(function (resolve, reject) { 
+        if(_this.type===undefined &&  _this.tempType==='KYC'){
+          // alert('alert2')
+          _this.crmService.getEnquiryDetails(leadUID).subscribe((inquiryInfo:any)=>{
+            console.log('inquiryInfo',inquiryInfo)
+            resolve(inquiryInfo)
+          },
+          (error)=>{
+            reject(error);
+          }
+          )
         }
-      )
-    })
+        else{
+          _this.crmService.getLeadDetails(leadUID).subscribe(
+            (leadInfo: any) => {
+              resolve(leadInfo);
+            }, (error) => {
+              reject(error);
+            }
+          )
+        }
+      })
+    
   }
   uploadAudioVideo(data) {
     const _this = this;
@@ -467,7 +501,13 @@ export class ViewLeadQnrComponent implements OnInit {
       this.applicantsInfo[applicantIndex]['parentid']['id'] = this.leadInfo.customer.id;
     }
     this.applicantsInfo[applicantIndex]['originUid'] = this.leadInfo.uid;
-    this.applicantsInfo[applicantIndex]['originFrom'] = "Lead";
+    // this.applicantsInfo[applicantIndex]['originFrom'] = "Lead";
+    if(this.type===undefined &&  this.tempType==='KYC'){
+      this.applicantsInfo[applicantIndex]['originFrom'] = "Enquire";
+    }
+    else{
+      this.applicantsInfo[applicantIndex]['originFrom'] = "Lead";
+    }
 
     if (applicantIndex === 0 && !this.applicantsInfo[applicantIndex]['permanentPhone']) {
       this.applicantsInfo[applicantIndex]['permanentPhone'] = this.leadInfo.customer.phoneNo;
@@ -608,7 +648,7 @@ export class ViewLeadQnrComponent implements OnInit {
       }
       this.api_loading_UpdateKyc = true      
       this.submitQuestionnaire(this.leadInfo.uid, 'save');
-    } else if (this.leadInfo.status.name === 'New' || this.leadInfo.status.name === 'KYC Updated') {
+    } else if (this.leadInfo.status.name === 'New' || this.leadInfo.status.name === 'KYC Updated' ||  this.leadInfo.status.name === 'KYC') {
       this.api_loading_UpdateKyc = true;
       console.log('this.kycInfo',this.kycInfo)
       console.log("Applicants Update", this.applicantsInfo);
@@ -639,7 +679,7 @@ export class ViewLeadQnrComponent implements OnInit {
                 }
                 _this.api_loading_UpdateKyc = false;
                 _this.api_loading=false;
-                if(_this.leadInfo.status.name === 'New'){
+                if(_this.leadInfo.status.name === 'New' || _this.leadInfo.status.name === 'KYC'){
                   _this.router.navigate(['/provider/viewleadqnr/' + this.leadUID]);
                 }
                 else{
@@ -763,7 +803,7 @@ export class ViewLeadQnrComponent implements OnInit {
                console.log("Proceeding done4")
                _this.api_loading_UpdateKyc = false;
                _this.api_loading_UpdateKycProceed = false;
-              if (_this.leadInfo.status.name === 'New') {
+              if (_this.leadInfo.status.name === 'New' || _this.leadInfo.status.name === 'KYC') {
                 console.log("Proceeding done")
                 _this.proceedToCrif(applicantsList);
               } else {
@@ -784,7 +824,7 @@ export class ViewLeadQnrComponent implements OnInit {
            console.log("Proceeding done3")
           this.api_loading_UpdateKyc = false;
           this.api_loading_UpdateKycProceed = false;
-          if (this.leadInfo.status.name === 'New') {
+          if (this.leadInfo.status.name === 'New' || this.leadInfo.status.name === 'KYC') {
             console.log("Proceeding done2")
             this.proceedToCrif(applicantsList);
           } else {
@@ -804,7 +844,7 @@ export class ViewLeadQnrComponent implements OnInit {
   }
 
   proceedToCrif(applicantsList) {
-    this.crmService.getproceedStatus(applicantsList).subscribe((response) => {
+    this.crmService.getproceedStatus(this.leadInfo.status.id,applicantsList).subscribe((response) => {
       console.log('afterupdateFollowUpData', response);
       this.api_loading_UpdateKycProceed = false;
       this.router.navigate(['provider', 'crm']);

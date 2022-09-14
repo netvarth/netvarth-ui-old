@@ -292,6 +292,7 @@ export class LeadsComponent implements OnInit {
    * @param leadUID 
    */
   openLead(leadUID) {
+    console.log('leadUID',leadUID)
     // if (this.type === 'LoanDisbursement') {
     //   return false;
     // }

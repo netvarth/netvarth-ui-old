@@ -4,19 +4,18 @@
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
   </div>
 </div>
-
 <section class="card cardBoxShadow">
   <div class="title-gb no-padding">
-    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head" *ngIf="leadInfo" style="color:#1D3E77">
+    <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head"  style="color:#1D3E77">
       <span *ngIf="!api_loading_UpdateKyc && !api_loading_UpdateKycProceed"
         class="fa fa-arrow-left pointer-cursor mgn-rt-15" (click)="goBack()"></span>
       {{headerName}}
     </div>
   </div>
 </section>
-<section class="container card mt-4 mx-auto"
-  *ngIf="leadInfo && leadInfo.status 
-&& (leadInfo.status.name==='New' || leadInfo.status.name==='Sales Verified') && (leadInfo.redirectNotes && leadInfo.redirectNotes.length>0)">
+<section class="container card mt-4 mx-auto"*ngIf="leadInfo && leadInfo.status 
+          && (leadInfo.status.name==='New' || leadInfo.status.name==='Sales Verified') 
+          && (leadInfo.redirectNotes && leadInfo.redirectNotes.length>0)">
   <div *ngIf="leadInfo.redirectNotes && leadInfo.redirectNotes.length>0 ">
     <div *ngIf="leadInfo.redirectNotes && leadInfo.redirectNotes.length>0 " class="notesHeaderSection">
       <div class="notesTexticon">
@@ -62,7 +61,7 @@
 </section>
 <section *ngIf="leadInfo" class="container card mt-4 mx-auto">
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-  <ng-container *ngIf="leadInfo.status && (leadInfo.status.name==='New' || leadInfo.status.name==='KYC Updated')">
+  <ng-container *ngIf="leadInfo.status && (leadInfo.status.name==='New' || leadInfo.status.name==='KYC Updated' || leadInfo.status.name==='KYC')">
     <ng-container *ngFor="let applicant of applicants; let i=index">
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
@@ -264,7 +263,7 @@
       </app-questionnaire>
     </ng-container>
   </ng-container>
-  <div *ngIf="leadInfo.status.name==='New'" class="mgn-up-20">
+  <div *ngIf="leadInfo.status.name==='New' ||leadInfo.status.name==='KYC'  " class="mgn-up-20">
     <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm"
       (click)="addCoApplicant()">
       <div class="applicantBtn">

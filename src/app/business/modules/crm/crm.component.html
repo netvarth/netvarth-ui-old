@@ -116,15 +116,16 @@
                             </mat-panel-description>
                         </mat-expansion-panel-header>
                         <div class="" *ngFor="let item of followUpList">
-                            <button *ngIf="item && (item.name==='Follow Up 1' ||  item.name==='Follow Up 2')" 
+                            <button *ngIf="item && (item.name==='Follow Up 1' ||  item.name==='Follow Up 2' ||  item.name==='KYC')" 
                             style="width:10rem !important" class="button-28" role="button" type="submit">
                                 <div *ngIf="item" tabindex="1" (click)="templateViewActivity(item)">
                                     <div style="display:flex;align-items:center;gap:5px" *ngIf="item && item.name">
-                                        <div>
-                                            <img style="height:25px !important;width:25px !important"  src="/assets/images/crmImages/followUPs.png" />
+                                        <div *ngIf="item">
+                                            <img style="height:30px;width:30px" *ngIf="item"  [src]="getImageFollowUPS(item)">
                                         </div>
                                         <div *ngIf="item && item.name">
-                                            {{item.name}}
+                                            {{getFollowUpAliasName(item)}}
+                                            <!-- {{item.name}} -->
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +156,7 @@
         <div class="threeTab customThreeCardsReport" *ngFor="let item of reportType" >
             <div class="customCard" style="align-items:center !important;height: 5rem;" *ngIf="item" (click)="reportActionType(item)">
                 <div *ngIf="item">
-                    <img *ngIf="item" height="35px" width="35px" [src]="getImage(item)">
+                    <img class="imageReport" *ngIf="item"  [src]="getImage(item)">
                 </div>
                 <div *ngIf="item && item.type">
                     {{item.type}}</div>

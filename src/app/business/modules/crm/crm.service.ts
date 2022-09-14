@@ -442,10 +442,12 @@ export class CrmService {
     return this.servicemeta.httpGet(url);
   }
   addkyc(data){
-    return this.servicemeta.httpPost('provider/customers/KYC/create', data);
+    // return this.servicemeta.httpPost('provider/customers/KYC/create', data);
+    return this.servicemeta.httpPost('provider/KYC/create', data);
   }
   getkyc(id){
-    const url = 'provider/customers/KYC/' + id;
+    // const url = 'provider/customers/KYC/' + id;
+    const url ='provider/KYC/' + id;
     return this.servicemeta.httpGet(url);
   }
   crifVerification(data){
@@ -538,8 +540,9 @@ export class CrmService {
     const url = 'provider/crif/indianstates';
     return this.servicemeta.httpGet(url, null);
   }
-  getproceedStatus(data){
-    return this.servicemeta.httpPost('provider/customers/KYC/proceed', data);
+  getproceedStatus(statusId,data){
+    // return this.servicemeta.httpPost('provider/customers/KYC/proceed', data);
+    return this.servicemeta.httpPost('provider/KYC/proceed/status/'+ statusId, data);
   }
   ProceedStatusToSales(leadUid){
     const url='provider/lead/'+ leadUid + '/status/creditscoregenerated'
@@ -605,11 +608,13 @@ export class CrmService {
     return this.servicemeta.httpPost('provider/crif/processinquiry', body);
   }
   deleteCoApplicant(applicantId,uuid){
-    const url = 'provider/customers/KYC/coapplicant/' + applicantId + '/' + uuid ;
+    // const url = 'provider/customers/KYC/coapplicant/' + applicantId + '/' + uuid ;
+    const url = 'provider/KYC/coapplicant/' + applicantId + '/' + uuid ;
     return this.servicemeta.httpDelete(url)
   }
   enquiryStatusdashBoard(){
-    const url = 'provider/enquire/status';
+    // const url = 'provider/enquire/status';
+    const url = 'provider/enquire/dashboard/status';
     return this.servicemeta.httpGet(url);
   }
   getLeadStatusDashboard(){

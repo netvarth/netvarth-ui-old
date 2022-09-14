@@ -24,6 +24,7 @@ export class FollowUpOneComponent implements OnInit {
   public enquiryId:any;
   public enquiryName:any;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+  followUpList:any;
   constructor(
     private locationobj: Location,
     public router: Router,
@@ -114,15 +115,42 @@ export class FollowUpOneComponent implements OnInit {
       })
       
     })
-    
+  }
+  followUpsList() {
+    const _this = this;
+    return new Promise((resolve, reject) => {
+      _this.crmService.enquiryStatusdashBoard().subscribe((res) => {
+        resolve(res)
+        console.log('followUpsList',res);
+        this.followUpList = res;
+      }),
+        ((error) => {
+          reject(error);
+        })
+    })
   }
   followupClicked(task) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        dataType: 'UpdateFollowUP'
-      }
+    console.log('task',task)
+    if(task && task.status && task.status.name==='KYC'){
+      // alert('hh')
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type:'KYC',
+          inquiryId:task.uid
+        }
+      };
+      this.router.navigate(['/provider/viewleadqnr/' + task.uid], navigationExtras);
     }
-    this.router.navigate(['/provider/viewtask/' + task.uid], navigationExtras);
+    else{
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          dataType: 'UpdateFollowUP'
+        }
+      }
+      console.log('navigationExtras',navigationExtras)
+      this.router.navigate(['/provider/viewtask/' + task.uid], navigationExtras);
+    }
+    
   }
   ngOnInit(): void {
     const _this = this;
@@ -132,6 +160,7 @@ export class FollowUpOneComponent implements OnInit {
       (count) => {
         if (count > 0) {
           _this.getFollowups(filter);
+          this.followUpsList()
         } else {
           _this.api_loading = false;
         }

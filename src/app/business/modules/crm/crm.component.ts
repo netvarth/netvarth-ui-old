@@ -358,6 +358,16 @@ export class CRMComponent implements OnInit {
       }
       this.router.navigate(['provider', 'followupone'], navigationExtras)
     }
+    else if (data && data.name && data.name === 'KYC') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: data.name,
+          id: data.id,
+          name: data.name
+        }
+      }
+      this.router.navigate(['provider', 'followupone'], navigationExtras)
+    }
     else if (data && data.name && data.name === 'Rejected') {
       return false;
       const navigationExtras: NavigationExtras = {
@@ -750,6 +760,52 @@ export class CRMComponent implements OnInit {
       }
     }
   }
+  getFollowUpAliasName(data){
+    if(data){
+      let tempAliasName;
+      if(data.name==='KYC'){
+        tempAliasName = data.name[0].toUpperCase() + data.name.slice(1).toLowerCase();
+        if(tempAliasName){
+          return tempAliasName;
+        }
+      }
+      else{
+        if(data.name){
+          tempAliasName= data.name;
+          if(tempAliasName){
+            return tempAliasName;
+          }
+        }
+        
+      }
+    }
+  }
+  getImageFollowUPS(data){
+    // console.log("data",data)
+    if(data){
+      let imgSrc:any;
+      switch(data.aliasName){
+        case 'KYC':
+          imgSrc='./assets/images/crmImages/followUPs.png';
+          if(imgSrc){
+            return imgSrc;
+          }
+          break;
+        case 'Follow Up 1':
+          imgSrc='./assets/images/crmImages/followUPs.png';
+          if(imgSrc){
+            return imgSrc;
+          }
+          break;
+        case 'Follow Up 2':
+          imgSrc='./assets/images/crmImages/followUPs.png';
+          if(imgSrc){
+            return imgSrc;
+          }
+          break;
+      }
+    }
+  }
   getImage(data) {
     if (data) {
       let imgSrc: any;
@@ -833,19 +889,19 @@ export class CRMComponent implements OnInit {
           }
           break;
         case 'Employee-Daily Activity Report':
-          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          imgSrc = './assets/images/crmImages/dailyReport.jpg';
           if (imgSrc) {
             return imgSrc;
           }
           break;
         case 'Customer Report':
-          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          imgSrc = './assets/images/crmImages/customerReport.png';
           if (imgSrc) {
             return imgSrc;
           }
           break;
           case 'Customer Wise Enquiry':
-            imgSrc = './assets/images/crmImages/otherTemplate.png';
+            imgSrc = './assets/images/crmImages/customerEnquiry.png';
             if (imgSrc) {
               return imgSrc;
             }
