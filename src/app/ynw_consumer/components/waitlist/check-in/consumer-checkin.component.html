@@ -166,7 +166,7 @@
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12">                                                        
                                     <div *ngIf="type === 'waitlistreschedule'"
-                                class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding">
+                                class="col-sm-12 col-xs-12 chk-btns-div col-md-12 no-padding mgn-bt-20">
                                 <a #modal data-toggle="modal"
                                     data-target="#exampleModalCenter"></a>
                                 <div>
@@ -207,7 +207,7 @@
                             </div>
                                 </div><br>
                                 <div class="clearfix"></div>
-                                <div class="action-buttons">                            
+                                <div class="action-button">                            
                                     <div *ngIf="type != 'waitlistreschedule' && !selectedService.isPrePayment"
                                         class="text-center col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 mx-auto">
                                         <button type="button"
@@ -235,7 +235,7 @@
                                             Next
                                         </button>
                                     </div>
-                                    <div class="col-md-12 col-xs-12 col-sm-12" *ngIf="queuesLoaded">
+                                    <div class="text-center col-md-12 col-xs-12 col-sm-12 " *ngIf="queuesLoaded">
                                         <button type="button"
                                             class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                             *ngIf="type === 'waitlistreschedule'"
@@ -445,10 +445,10 @@
                                                 </ng-container>
                                                 <div class="modal-footer">
                                                     <button type="button"
-                                                        class="disp-none btn btn-light-primary font-weight-bold"
+                                                        class="disp-none btn btn-light-primary mat-button font-weight-bold"
                                                         data-dismiss="modal" #closebutton>Cancel</button>
                                                     <button type="button"
-                                                        class="btn btn-primary font-weight-bold hf-btn"
+                                                        class="btn btn-primary mat-button font-weight-bold hf-btn"
                                                         (click)="actionCompleted()">Ok</button>
                                                 </div>
                                                 <div class="error-section" *ngIf="apiError !== ''">

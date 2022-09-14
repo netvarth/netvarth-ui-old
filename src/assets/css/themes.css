@@ -14,7 +14,7 @@
 .heartfulness_theme1 .more_btn {
   background: #522e5a 0% 0% no-repeat padding-box !important; 
 }
-.heartfulness_theme1 .mat-button, .heartfulness_theme1 .getappointmentbutton{
+.heartfulness_theme1 .mat-button,.heartfulness_theme1 .normal-btn, .heartfulness_theme1 .getappointmentbutton{
     background: linear-gradient(45deg, rgba(224,152,208,1) 0%, rgba(180,76,154,1) 100%) !important;
     border:none !important;
   }
@@ -37,11 +37,13 @@
   }
   .heartfulness_theme1 .bus-item-N, .heartfulness_theme1 h3, .heartfulness_theme1 mat-label,
   .heartfulness_theme1 .consumer-join-component mat-label,
-  .heartfulness_theme1 .mat-tab-label-content,
   .heartfulness_theme1 .right-menu-header, .heartfulness_theme1 .back-btn i,
   .heartfulness_theme1 b.header-bus-title, .heartfulness_theme1 .panel-heading a,
   .heartfulness_theme1 .dept-title-h4, .heartfulness_theme1 .btn-attach,
-  .heartfulness_theme1 .attach_sendmsg { 
+  .heartfulness_theme1 .attach_sendmsg,
+  .heartfulness_theme1 .service-view-container .single-loc p,
+  .heartfulness_theme1 .content.bus-page .bus-page-header .bus-title-content .business-name,
+  .heartfulness_theme1 .content.bus-page .bus-page-header .bus-title-content .business-user-name{ 
     color: #fff !important;
   }
   .heartfulness_theme1 .serv-head.service-serv-head, .heartfulness_theme1 .mat-tab-label,
@@ -76,10 +78,14 @@
   .heartfulness_theme1 .c-checkin-new  a.changeitem, .heartfulness_theme1.c-checkin-new .btns .lnk.action i {
     color:#522e5a !important
   }
-  .heartfulness_theme1 .default-value, .heartfulness_theme1 app-slot-picker .freeslots mat-chip.mat-chip-selected {
+  .heartfulness_theme1 .default-value, .heartfulness_theme1 app-slot-picker .freeslots mat-chip.mat-chip-selected,
+  .heartfulness_theme1 .consumer-dash .grid-card .ribbon{
     background-color: #522e5a !important;
     color: white!important;
-}
+  }
+  .heartfulness_theme1 .consumer-dash .grid-card .ribbon:after {
+    border-color: #522e5a transparent #522e5a #522e5a !important;
+  }
   .heartfulness_theme1.c-checkin-new .btns .lnk.action{
     font-size: 0.8rem !important;
     color:#522e5a !important
@@ -88,6 +94,13 @@
     font-size: 2rem !important;
     color:#522e5a !important;
     font-weight: 700 !important;
+}
+.heartfulness_theme1 button.next-button i {
+  color: #fff !important;
+}
+.heartfulness_theme1 button.next-button.disableActn, .heartfulness_theme1 button.next-button.disableActn i {
+  color: #333 !important;
+  box-shadow: none !important;
 }
 .heartfulness_theme1 button.next-button {
   border: 0 !important;
@@ -305,7 +318,7 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
   color: #59345D !important;
 }
 .heartfulness_theme1 .mat-tab-label {
-  color:black;
+  color:black !important;
 }
 /* .mediExpat .panel, 
 .mediExpat .serv-head.service-serv-head, */

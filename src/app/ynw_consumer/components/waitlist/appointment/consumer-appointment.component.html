@@ -621,17 +621,6 @@
                       </div>
                     </div>
                   </div>
-                  <!-- <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer"
- *ngIf="coupon_status">
- <div class="form-group">
- <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
- applied
- successfully</span>
- <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon
- Code(s) not
- valid</span>
- </div>
- </div> -->
                 </div>
               </ng-container>
               <ng-container *ngIf="action=='note'">
@@ -725,9 +714,9 @@
                 </div>
               </ng-container>
               <div class="modal-footer">
-                <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
+                <button type="button" class="disp-none btn btn-light-primary mat-button font-weight-bold" data-dismiss="modal"
                   #closebutton>Cancel</button>
-                <button type="button" class="btn btn-primary font-weight-bold hf-btn"
+                <button type="button" class="btn btn-primary mat-button font-weight-bold hf-btn"
                   (click)="actionCompleted()">Ok</button>
               </div>
               <div class="error-section" *ngIf="apiError !== ''">

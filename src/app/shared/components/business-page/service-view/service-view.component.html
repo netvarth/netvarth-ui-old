@@ -8,7 +8,6 @@
     <div class="container service-view-container" *ngIf="!loading">
         <div class="row pad-bt-10 bus-page-header">            
             <div class="panel panel-default" >
-                <!-- *ngIf="!loading" -->
                 <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
                     <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                         <a class="pull-left back-btn mgn-up-5" *ngIf="userId || back==='1'" (click)="goBack()"><i
@@ -31,7 +30,6 @@
                     [ngStyle]="{ 'background-image': (!profileSettings || (profileSettings && profileSettings['showCoverPicture'])) ? 'url(' + bgCover + ')': ''}">
                 </div>
                 <div class="panel-body">
-                    <!-- *ngIf="!loading" -->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
                             <div class="" [ngClass]="{'cvr-dp-mgn': bgCover}">
@@ -90,7 +88,6 @@
                         </div>
                     </div>
                     <br>
-                    <!-- *ngIf="!loading" style="background-color: #1e4079;"-->
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mgn-up-10 no-padding">
                         <div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 card-outer-cont no-margin service-title-sec">
                             <div class="col-md-2 col-xs-3 col-sm-3 col-lg-1 no-padding card-inner-img-cont">
@@ -137,13 +134,7 @@
                                 <h5 class="line-clamp-ln2 mgn-bt-5">
                                     {{servicename | capitalizeFirst}}
                                 </h5>
-
-                            </div>
-                            <!-- <div *ngIf="servicedetails.serviceType !== 'virtualService'" style="margin-left: 0px;" class="col-md-10 col-xs-9 col-sm-9 col-lg-11 pointer-cursor service-head-cont">
-                                <h5 class="line-clamp-ln2 mgn-bt-5">
-                                    {{servicename | capitalizeFirst}}
-                                </h5>
-                            </div> -->
+                            </div>                          
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 description"
                             *ngIf="servicedetails && servicedetails.description">
@@ -196,8 +187,5 @@
         <ks-modal-gallery [id]="0" [modalImages]="serviceGalleryPopup"
             [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
             (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-        <!-- <ks-modal-gallery [id]="1" [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-            [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
-            (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery> -->
     </div>
 </section>
