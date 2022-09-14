@@ -37,6 +37,6 @@ export class RecentNewsComponent {
   ) { 
   }
   openNews(link) {
-    window.open(link, "_system");
+    window.open(link, "_blank");
   }
 }
