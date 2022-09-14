@@ -1843,7 +1843,7 @@
                   </div>
                 </ng-container>
               </div>
-              <ng-container *ngIf="action=='note'">
+              <!-- <ng-container *ngIf="action=='note'">
                 <div class="col-md-12 mgn-bt-20">
                   <mat-form-field>
                     <textarea matInput class="form-control mt-2" [(ngModel)]="consumerNote" #consumernote
@@ -1858,11 +1858,11 @@
                     </button>
                   </div>
                 </div>
-              </ng-container>
+              </ng-container> -->
             </aside>
           </div>
-          <div class="col-md-12  mgn-up-20 ">
-            <mat-chip-list class="btns" *ngIf="!showAction && thirdParty === '' && queuejson.length > 0">
+          <!-- <div class="col-md-12  mgn-up-20 " *ngIf="!showAction">
+            <mat-chip-list class="btns" *ngIf="thirdParty === '' && queuejson.length > 0">
               <mat-chip class="pro-action" (click)="handleSideScreen('note')">
                 <a>{{(sel_ser_det.consumerNoteTitle) ? sel_ser_det.consumerNoteTitle : 'Notes'}}
                   <span *ngIf="sel_ser_det.consumerNoteMandatory">*</span> </a>
@@ -1876,7 +1876,7 @@
                     *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span></a>
               </mat-chip>
             </mat-chip-list>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@
       <div class="it-des">
         {{service_data.description | capitalizeFirst}}
       </div>
+
       <div class="c-ot">
         <div class="item" *ngIf="!is_donation && showResources">
           <span class="ttle">Number of resources</span>
@@ -274,6 +275,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
               </mat-option>
             </mat-select> -->
 
+
+            
             <mat-radio-group formControlName="serviceType" class="d-flex service-radio">
               <mat-radio-button disableRipple="true" (change)="selectServiceHandler(virtual.value)" *ngIf="!is_donation" [value]="'physicalService'" #virtual class="radio-btn form-control">
                 Onsite Service
@@ -381,8 +384,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             Show service duration
           </mat-checkbox>
         </div>
-       <!-- mgn-lt-5  -->
-        <div class="row mx-1 mgn-up-20" *ngIf="showResources">
+       <!-- mgn-lt-5 *ngIf="showResources" -->
+        <div class="row mx-1 mgn-up-20">
           <section class="mgn-bt-30" *ngIf="!is_donation">
             <label style="margin-bottom: 0 !important" class="col-form-label">Number of resources</label>
             <div class="settings_info">
