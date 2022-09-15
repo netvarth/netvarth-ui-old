@@ -311,6 +311,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   callback;
   accountConfig: any;
   source: string;
+  back: any;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -451,6 +452,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (qparams && qparams.callback) {
         this.callback = qparams.callback;
+      }
+      if (qparams.back) {
+        this.back = qparams.back;
       }
       this.businessjson = [];
       this.servicesjson = [];
@@ -2173,7 +2177,13 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   providerDetClicked(userId) {
-    this.routerobj.navigate([this.accountEncId, userId]);
+    let queryParam = {
+      back: 1
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: queryParam
+    };
+    this.routerobj.navigate([this.accountEncId, userId],navigationExtras);
   }
   opencheckavail(actionObj) {
     console.log("ActionObj:", actionObj);
