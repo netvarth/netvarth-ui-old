@@ -1,9 +1,8 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA,MatDialog } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 //import { FileService } from "../../../../shared/services/file-service";
 import { FileService } from "../../../../shared/services/file-service";
-import { ShowuploadfileComponent } from '../../../../../app/business/modules/medicalrecord/uploadfile/showuploadfile/showuploadfile.component';
 
 @Component({
   selector: 'app-previewuploadedfiles',
@@ -20,31 +19,17 @@ export class PreviewuploadedfilesComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<PreviewuploadedfilesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fileService: FileService,
-    private dialog: MatDialog,
- 
+    private fileService: FileService 
   ) {
     this.details = this.data.file;
-    this.sortMediaFiles(this.details)
-    //console.log("Caption :",this.details.caption);
-   // console.log("Path :",this.details.filePath);
-    console.log("Type :",this.details.fileType);
+    this.sortMediaFiles(this.details);
   }
   ngOnInit() {
   }
 
   getImageType(fileType) {
-    // console.log(fileType);
      return this.fileService.getImageByType(fileType);
  }
-
-  // showimg(imgurl) {
-  //   let logourl = '';
-  //   if (imgurl) {
-  //     logourl = (imgurl) ? imgurl + '?' + this.cacheavoider : '';
-  //   }
-  //   return this.sharedfunctionObj.showlogoicon(logourl);
-  // }
   closeDialog() {
     this.dialogRef.close();
   }
@@ -67,24 +52,4 @@ export class PreviewuploadedfilesComponent implements OnInit {
       }
     }
   }
-
-
-
-
-showFile(file) {
-  this.fileviewdialogRef = this.dialog.open(ShowuploadfileComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'uploadfilecomponentclass'],
-    disableClose: true,
-    data: {
-      file: file
-    }
-  });
-  this.fileviewdialogRef.afterClosed().subscribe(result => {
-    if (result) {
-
-    }
-  });
 }
-}
-

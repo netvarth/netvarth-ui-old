@@ -233,8 +233,8 @@ export class ConsumerServices {
     const url = 'consumer/wallet/cash/spent';
      return this.servicemeta.httpGet(url);
   }
-  getPrescriptions(providerConsumerId) {
-    const url = 'provider/mr/prescription/providerConsumer/'+ providerConsumerId;
+  getPrescriptions(providerConsumerId, accountId) {
+    const url = 'consumer/prescription/providerConsumer/prescription/'+ providerConsumerId + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
 }

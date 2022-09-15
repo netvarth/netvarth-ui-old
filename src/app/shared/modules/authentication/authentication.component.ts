@@ -85,15 +85,15 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.accountConfig);
     this.lStorageService.setitemonLocalStorage('login', true);
-    if (this.accountConfig && this.accountConfig['googleIntegration']===false) {
+    if (this.accountConfig && this.accountConfig['googleIntegration'] === false) {
       this.googleIntegration = false;
     } else {
       this.googleIntegration = true;
       this.initGoogleButton();
-    }   
+    }
     this.loading = false;
   }
-  
+
   loadGoogleJS() {
     const self = this;
     const url = "https://accounts.google.com/gsi/client";
@@ -152,8 +152,8 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         this.btnClicked = false;
         if (mode == 'resent') {
           this.snackbarService.openSnackBar(Messages.OTP_RESEND_SUCCESS);
-        }        
-      }, (error)=>{
+        }
+      }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         this.btnClicked = false;
       }
@@ -255,7 +255,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
    * OTP Section
    */
   onOtpChange(otp) {
-    this.otpEntered = otp;   
+    this.otpEntered = otp;
     console.log(this.phoneNumber);
     if (this.phoneNumber) {
       const pN = this.phoneNumber.e164Number.trim();
@@ -278,9 +278,30 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
     const _this = this;
     this.otpSuccess = '';
     this.otpError = '';
+    this.api_loading = true;
+    console.log(this.otpEntered);
+    if (this.phoneNumber) {
+      const pN = this.phoneNumber.e164Number.trim();
+      let phoneNumber;
+      if (pN.startsWith(this.dialCode)) {
+        phoneNumber = pN.split(this.dialCode)[1];
+      }
+      if (this.phoneNumber.dialCode === '+91' && phoneNumber.startsWith('55') && this.otpEntered.length < 5) {
+        // this.otpError = 'Invalid OTP';
+        this.snackbarService.openSnackBar('Invalid OTP', { 'panelClass': 'snackbarerror' });
+        this.api_loading=false;
+        return false;
+      } else if (this.otpEntered.length < 4) {
+        this.snackbarService.openSnackBar('Invalid OTP', { 'panelClass': 'snackbarerror' });
+        this.api_loading=false;
+        // this.otpError = 'Invalid OTP';
+        return false;
+      }
+    }
     this.loading = true;
     if (this.otpEntered === '' || this.otpEntered === undefined) {
       this.otpError = 'Invalid OTP';
+      this.loading = false;
     } else {
       this.subs.sink = this.sharedServices.verifyConsumerOTP(this.otpEntered)
         .subscribe(
@@ -311,9 +332,9 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 }
                 _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
                 _this.actionPerformed.emit('success');
-                this.btnClicked =  false;
+                this.btnClicked = false;
               }, (error: any) => {
-                this.btnClicked =  false;
+                this.btnClicked = false;
                 if (error.status === 401 && error.error === 'Session Already Exist') {
                   const activeUser = _this.lStorageService.getitemfromLocalStorage('ynw-user');
                   if (!activeUser) {
@@ -338,11 +359,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                   } else {
                     _this.authService.doLogout().then(
                       () => {
-                    _this.actionPerformed.emit('success');
-                    this.btnClicked = false;
+                        _this.actionPerformed.emit('success');
+                        this.btnClicked = false;
                       });
                   }
-                } else if (error.status === 401) {                  
+                } else if (error.status === 401) {
                   _this.ngZone.run(
                     () => {
                       _this.step = 2;

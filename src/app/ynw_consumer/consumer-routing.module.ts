@@ -30,6 +30,7 @@ const routes: Routes = [
       { path: 'questionnaire', loadChildren: () => import('../shared/components/questionnaire/questionnaire.module').then(m => m.QuestionnaireModule) },
       { path: 'mywallet', loadChildren: () =>  import('../ynw_consumer/modules/wallet/wallet.module').then(m => m.WalletModule), canActivate: [AuthGuardConsumer]  },
       { path: 'history', loadChildren:()=> import('../ynw_consumer/components/history/history.module').then(m=>m.ConsumerHistoryModule), canActivate: [AuthGuardConsumer] },
+      { path: 'prescriptions', loadChildren:()=> import('../ynw_consumer/modules/prescriptions/prescriptions.module').then(m=>m.PrescriptionsModule), canActivate: [AuthGuardConsumer]},
     ]
   }
 ];
