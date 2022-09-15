@@ -290,8 +290,16 @@ export class NotesSectionComponent implements OnInit {
 
   getThumbUrl(attachment) {
     if (attachment.s3path.indexOf('.pdf') !== -1) {
+      console.log("Attachemnt:",attachment)
       return attachment.thumbPath;
-    } else {
+    } 
+   else if(attachment.s3path.indexOf('.mp4') !== -1){
+      return 'assets/images/ImgeFileIcon/video.png'
+    }
+  else  if(attachment.s3path.indexOf('.mp3') !== -1){
+      return 'assets/images/audio.png'
+    }
+    else {
       return attachment.s3path;
     }
   }

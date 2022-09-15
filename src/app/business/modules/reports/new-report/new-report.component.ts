@@ -71,6 +71,7 @@ export class NewReportComponent implements OnInit {
   appointment_mode: any;
   appointment_status: any;
   appointment_paymentStatus: any;
+  customer_location : any;
   waitlist_status_list: { displayName: string; value: string; }[];
   waitlist_intstatus_list: { displayName: string; value: string; }[];
   bill_payment_status: { value: string; displayName: string; }[];
@@ -208,6 +209,8 @@ export class NewReportComponent implements OnInit {
   allApptStatusSelected = false;
   allWlIntStatusSelected = false;
   allApptIntStatusSelected = false;
+  location: any;
+  locName: any;
   constructor(
     private router: Router,
     private activated_route: ActivatedRoute,
@@ -304,6 +307,7 @@ export class NewReportComponent implements OnInit {
     this.payment_paymentPurpose = 0;
     this.payment_paymentStatus = this.appointment_paymentStatus = 0;
     this.payment_paymentMode = 0;
+    this.customer_location = 0;
     this.appointment_mode = this.waitlist_mode = this.delivery_mode = 0;
     this.appointment_status = this.waitlist_status = this.order_status = 0;
     this.payment_customer = this.appointment_customer = this.waitlist_customer = this.donation_customer = 'Any';
@@ -353,6 +357,18 @@ export class NewReportComponent implements OnInit {
     this.report_data_service._reports.subscribe(res => {
       this.setReportData(res);
     });
+    this.getProviderLocation();
+  }
+  getProviderLocation() {
+    this.provider_services.getProviderLocations()
+      .subscribe(
+        (data: any) => {
+          this.location = data;
+          console.log("Locations :",this.location)
+          if (this.location.length > 0) {
+            this.locName = this.location[0].place;
+          }
+        });
   }
   setReportData(res) {
     if (Object.keys(res).length !== 0) {
@@ -845,6 +861,177 @@ export class NewReportComponent implements OnInit {
         }
         break;
       }
+      case 'customerReport': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'customerWiseEnquiry': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'customerCrifStatus': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'dailyActivity': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'employeeAverageTat': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'sanctionedStatus': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'HOLead': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'login': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'recommendedStatus': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'tat': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'consolidated': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'processingFiles': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'leadStatus': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'crm': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'monthlyActivity': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'enquiry': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'lead': {
+        if (res === 'All') {
+          this.user = 'All';
+          this.user_id = 0;
+        } else {
+          this.user = res.split(',').length - 1 + ' users selected';
+          this.user_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+
     }
   }
   setQueueData(res) {
@@ -1047,8 +1234,17 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
+          
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1112,8 +1308,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1177,8 +1381,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1242,8 +1454,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1307,8 +1527,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1372,8 +1600,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1437,8 +1673,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1502,8 +1746,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1567,8 +1819,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1632,8 +1892,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1697,8 +1965,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1762,8 +2038,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1827,8 +2111,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1892,8 +2184,17 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+       
+      if (this.user_id === 0 || this.user_id === undefined) {
+        delete this.filterparams.assignee;
+      }
+      if (this.customer_location === 0 || this.customer_location === undefined) {
+        delete this.filterparams.location;
+      }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1952,13 +2253,21 @@ export class NewReportComponent implements OnInit {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         this.filterparams = {
-          'paymentStatus': this.appointment_billpaymentstatus,
-          'schedule': this.appointment_schedule_id,
-          'service': this.appointment_service_id,
+         // 'paymentStatus': this.appointment_billpaymentstatus,
+         // 'schedule': this.appointment_schedule_id,
+          //'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
-          'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          //'appointmentMode': this.appointment_mode,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+      
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2022,8 +2331,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2087,8 +2404,16 @@ export class NewReportComponent implements OnInit {
           'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
-          'apptForId': this.appointment_customerId
+          'apptForId': this.appointment_customerId,
+          'location':this.customer_location,
+          'assignee': this.user_id
         };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
