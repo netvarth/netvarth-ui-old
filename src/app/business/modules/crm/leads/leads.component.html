@@ -56,6 +56,9 @@
                   <th class="head_color">Employee</th>
                   <th class="head_color">Lead Created Date</th>
                   <th class="head_color" *ngIf="bStatusTableHead">Status</th>
+                  <th class="head_color" *ngIf="tempaltename==='Rejected'">Reject From</th>
+                  <th class="head_color" *ngIf="tempaltename==='Rejected'">Reject Date</th>
+                  <th class="head_color" *ngIf="tempaltename==='Rejected'"></th>
                 </tr>
               </thead>
               <tbody>
@@ -153,6 +156,18 @@
                     <td data-title="Lead Details" class="td2"
                       *ngIf="(lead.status && (lead.status.name==='New' || lead.status.name==='Sales Verified'))&& (!lead.isRedirected) && tempaltename !=='Rejected'">
                       Pending
+                    </td>
+                    <td data-title="Lead Details" class="td2" *ngIf="(tempaltename ==='Rejected')">
+                      <div>{{lead.status.aliasName? lead.status.aliasName:''}}</div>
+                    </td>
+                    <td data-title="Lead Details" class="td2" *ngIf="(tempaltename ==='Rejected')">
+                      <div *ngIf="lead.rejectDateString && lead.rejectDateString">
+                        {{ lead.rejectDateString |date: newDateFormat}}
+                      </div>
+                    </td>
+                    <td data-title="Lead Details" class="td2" (click)="openRejectedNotes(lead,$event,tempaltename)"
+                      *ngIf="(tempaltename ==='Rejected')">
+                      <img class="imageREject" src="/assets/images/crmImages/cancelled.png" />
                     </td>
                   </tr>
                 </ng-container>

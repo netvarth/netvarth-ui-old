@@ -1103,14 +1103,15 @@ export class ViewLeadQnrComponent implements OnInit {
       width:"100%",
       panelClass: ["popup-class", "confirmationmainclass"],
       data:{
-        requestType:'rejectedLead',
+        requestType:'createUpdateNotes',
         info:uid,
+        header: 'Add remarks',
       }
     })
     dialogRef.afterClosed().subscribe((response:any)=>{
       console.log('response',response)
-      if(response==='reject'){
-        this.crmService.rejectedStatusLeadkyc(this.leadInfo.uid).subscribe((response) => {
+      if(response){
+        this.crmService.rejectedStatusLeadkyc(this.leadInfo.uid,response).subscribe((response) => {
           console.log('afterupdateFollowUpData', response);
           this.router.navigate(['provider', 'crm']);
         },

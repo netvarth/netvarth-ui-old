@@ -205,7 +205,7 @@
             <div class="fieldPadding">
                 <textarea rows="10" class="form-control" [(ngModel)]="notesTextarea" #taskDescription
                     (ngModelChange)="handleNotesDescription(taskDescription.value)" (keyup)="autoGrowTextZone($event)"
-                    maxlength="1000" placeholder="Enter remarks description"></textarea>
+                    maxlength="1000" placeholder="Enter remarks description" [disabled]="data && data.type ==='Rejected'"></textarea>
             </div>
         </div>
         <div *ngIf="errorMsg" class="errorMsg">
@@ -215,13 +215,20 @@
     <!---cancel save btn start-->
     <div mat-dialog-actions style="display: flex;justify-content: center;align-items: center;">
         <!---cancel save btn start-->
-        <div style="text-align: center;">
+        <div style="text-align: center;" *ngIf="data && data.type !=='Rejected'">
             <ng-container>
                 <div class=" mgn-bt-20 mgn-up-10">
                     <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
                         (click)="cancelCreateNote('Cancel')">Skip</button>
                     <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
                         (click)="saveCreateNote(notesTextarea)">Save</button>
+                </div>
+            </ng-container>
+        </div>
+        <div style="text-align: left;" *ngIf="data && data.type ==='Rejected'">
+            <ng-container>
+                <div class=" mgn-bt-20 mgn-up-10">
+                    <button mat-dialog-close type="button" class="btn btn-primary font-weight-bold confirmBtn">Cancel</button>
                 </div>
             </ng-container>
         </div>

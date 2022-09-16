@@ -183,11 +183,16 @@ export class CrmSelectMemberComponent implements OnInit {
       });
     } else if (this.data.requestType === "createleadSelectCustomer") {
       this.memberList = this.data.memberList;
-      console.log("customermemberlist", this.memberList);
+      // console.log("customermemberlist", this.memberList);
     } else if (this.data.requestType === "createUpdateNotes") {
-      console.log('createUpdateNotes',this.data)
-      console.log("createUpdateNotes");
+      // console.log('createUpdateNotes',this.data)
+      // console.log("createUpdateNotes");
       this.leadUID= this.data['info'];
+      if(this.data && this.data.type==='Rejected'){
+        if(this.data && this.data.info){
+          this.notesTextarea= this.data.info;
+        }
+      }
     } else if (this.data.requestType === "noteDetails") {
       console.log("Notews");
       if(this.data && this.data.noteDetails && this.data.noteDetails.notes && this.data.noteDetails.notes.length>0){

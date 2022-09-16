@@ -7,7 +7,8 @@ import { CrmService } from '../crm.service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
 import * as moment from 'moment';
 import { projectConstantsLocal } from "../../../../shared/constants/project-constants";
-
+import { CrmSelectMemberComponent } from "../../../../business/shared/crm-select-member/crm-select-member.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: 'app-leads',
@@ -74,8 +75,8 @@ export class LeadsComponent implements OnInit {
     public router: Router,
     private crmService: CrmService,
     private activated_route: ActivatedRoute,
-    private providerServices: ProviderServices
-
+    private providerServices: ProviderServices,
+    private dialog: MatDialog,
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
       // console.log('qparams',qparams)
@@ -430,5 +431,22 @@ export class LeadsComponent implements OnInit {
         );
     },
     );
+  }
+  openRejectedNotes(data,event,type){
+    event.stopPropagation();
+    console.log(data);
+    const dialogRef = this.dialog.open(CrmSelectMemberComponent,{
+      width:"100%",
+      panelClass: ["popup-class", "confirmationmainclass"],
+      data:{
+        requestType:'createUpdateNotes',
+        info:data.rejectNotes,
+        header: "View remarks",
+        type:type
+      }
+    })
+    dialogRef.afterClosed().subscribe((response)=>{
+      console.log(response);
+    })
   }
 }

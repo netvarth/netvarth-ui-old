@@ -552,9 +552,9 @@ export class CrmService {
     const url = 'provider/customers/KYC/proceed';
     return this.servicemeta.httpPost(url,null)
   }
-  rejectedStatusLeadkyc(leadUid){
-    const url ='provider/lead/'+leadUid+'/status/rejected'
-      return this.servicemeta.httpPut(url)
+  rejectedStatusLeadkyc(leadUid,body){
+    const url ='provider/lead/'+leadUid+'/reject'
+      return this.servicemeta.httpPut(url,body)
   }
   addKycForAAdhar(data){
     return this.servicemeta.httpPost('provider/customers/KYC/create' +'UID', data);

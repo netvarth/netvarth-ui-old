@@ -1637,3 +1637,7 @@ td {
     display: flex;
     align-items: center;
 }
+.imageREject{
+    height: 25px;
+    width: 25px;
+}
