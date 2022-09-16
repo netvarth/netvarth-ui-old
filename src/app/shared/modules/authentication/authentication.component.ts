@@ -298,6 +298,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         return false;
       }
     }
+    this.api_loading = false;
     this.loading = true;
     if (this.otpEntered === '' || this.otpEntered === undefined) {
       this.otpError = 'Invalid OTP';
