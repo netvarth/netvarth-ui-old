@@ -58,7 +58,8 @@
                   <th class="head_color" *ngIf="bStatusTableHead">Status</th>
                   <th class="head_color" *ngIf="tempaltename==='Rejected'">Reject From</th>
                   <th class="head_color" *ngIf="tempaltename==='Rejected'">Reject Date</th>
-                  <th class="head_color" *ngIf="tempaltename==='Rejected'"></th>
+                  <th class="head_color" *ngIf="tempaltename==='Rejected'">Last Updated On</th>
+                  <th class="head_color" *ngIf="tempaltename==='Rejected' && leads.length>0">Notes</th>
                 </tr>
               </thead>
               <tbody>
@@ -161,8 +162,13 @@
                       <div>{{lead.status.aliasName? lead.status.aliasName:''}}</div>
                     </td>
                     <td data-title="Lead Details" class="td2" *ngIf="(tempaltename ==='Rejected')">
-                      <div *ngIf="lead.rejectDateString && lead.rejectDateString">
+                      <div *ngIf="lead && lead.rejectDateString">
                         {{ lead.rejectDateString |date: newDateFormat}}
+                      </div>
+                    </td>
+                    <td data-title="Lead Details" class="td2" *ngIf="(tempaltename ==='Rejected')">
+                      <div *ngIf="lead.lastStatusUpdatedDateString">
+                        {{lead.lastStatusUpdatedDateString|date: newDateFormat}}
                       </div>
                     </td>
                     <td data-title="Lead Details" class="td2" (click)="openRejectedNotes(lead,$event,tempaltename)"
