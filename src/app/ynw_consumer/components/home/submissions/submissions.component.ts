@@ -2,8 +2,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { NavigationExtras, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
-// import { ConsumerServices } from '../../../services/consumer-services.service';
-
+import { ConsumerServices } from '../../../services/consumer-services.service';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-submissions',
@@ -14,17 +14,22 @@ export class SubmissionsComponent implements OnInit, OnChanges {
   panelOpenState: any = false;
   @Input() user_details;
   @Input() orders;
+  @Input() accountId;
   @Input() custom_id;
+  private subs = new SubSink();
   ongoing_papers: any = [];
   completed_papers: any = [];
   cancelled_papers: any = [];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   history: any;
+  entire_history: any;
 
   constructor(
     // private consumer_services: ConsumerServices,
     private router: Router,
     private lStorageService: LocalStorageService,
+    private consumer_services: ConsumerServices
+
 
   ) { }
 
@@ -34,15 +39,67 @@ export class SubmissionsComponent implements OnInit, OnChanges {
   initOrder() {
     if (this.orders && this.orders.length > 0) {
       console.log('this.orders', this.orders)
-      this.ongoing_papers = this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
-      console.log('this.ongoing_papers', this.ongoing_papers)
-      this.completed_papers = this.orders.filter(p => p.orderStatus == "Completed");
-      this.cancelled_papers = this.orders.filter(p => p.orderStatus == "Cancelled");
+      if (this.entire_history && this.entire_history.length > 0) {
+        this.orders = this.orders.concat(this.entire_history);
+        console.log('this.entire_orders', this.orders);
+
+      }
+
     }
 
   }
 
+
+  getconsumerorders() {
+    const api_filter = {};
+    if (this.accountId) {
+      api_filter['account-eq'] = this.accountId;
+    }
+    this.subs.sink = this.consumer_services.getConsumerOrders(api_filter)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.entire_history = data;
+          console.log('this.entire_history', this.entire_history);
+
+          if (this.entire_history) {
+            this.orders = this.orders.concat(this.entire_history);
+            this.orders = this.orders.filter(p => p.account == this.accountId);
+            this.ongoing_papers = this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
+            console.log('this.ongoing_papers', this.ongoing_papers)
+            this.completed_papers = this.orders.filter(p => p.orderStatus == "Completed");
+            this.cancelled_papers = this.orders.filter(p => p.orderStatus == "Cancelled");
+          }
+        }
+      );
+  }
+
+  getOrderHistory() {
+    const api_filter = {};
+    if (this.accountId) {
+      api_filter['account-eq'] = this.accountId;
+    }
+    this.subs.sink = this.consumer_services.getOrderHistory(api_filter)
+      .subscribe(
+        data => {
+          console.log(data);
+          this.entire_history = data;
+          if (this.entire_history) {
+            this.orders = this.orders.filter(p => p.account == this.accountId);
+            this.orders = this.orders.concat(this.entire_history);
+            // this.orders = this.orders.filter(p => p.catalog.catalogType == "submission");
+            this.ongoing_papers = this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
+            console.log('this.ongoing_papers', this.ongoing_papers);
+            console.log('this.totalorders', this.orders);
+            this.completed_papers = this.orders.filter(p => p.orderStatus == "Completed");
+            this.cancelled_papers = this.orders.filter(p => p.orderStatus == "Cancelled");
+          }
+        }
+      );
+  }
+
   ngOnInit(): void {
+    this.getOrderHistory();
     this.initOrder();
     console.log('this.user_details', this.user_details)
     // this.consumer_services.getConsumerOrders().subscribe(

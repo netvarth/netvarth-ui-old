@@ -165,7 +165,7 @@ h3 {
 }
 
 .allTabInPannel {
-  /* overflow-y: scroll; */
+  overflow-y: scroll;
   /* overflow-x: auto !important; */
   /* max-height: 300px !important; */
 }

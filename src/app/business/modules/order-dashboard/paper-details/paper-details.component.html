@@ -22,7 +22,7 @@
             <!-- <div>
                                 <img class="img mr-2" src="/assets/images/authordemy/date.png" />
                               </div> -->
-            <div>{{paper.lastStatusUpdatedDate  | date: 'MMM d,y' }}</div>
+            <div>{{paper.lastStatusUpdatedDate | date: 'MMM d,y' }}</div>
           </div>
 
         </td>
@@ -38,7 +38,7 @@
         </td>
         <td data-title="Status" width="400" class="td4 text-primary" *ngIf="paper && paper.orderStatus">
           <div *ngIf=" paper && paper.orderStatus">
-            {{paper.orderStatus == 'Order Confirmed' ? 'Paper Submitted' : paper.orderStatus}}</div>
+            {{paper.orderStatus}}</div>
         </td>
         <td data-title="Status">
           <span class="pull-right btn btn-primary" (click)="stopprop($event);showActionPopup(paper, 1)">
