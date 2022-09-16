@@ -166,7 +166,7 @@
                       </div>
                     </td>
                     <td data-title="Lead Details" class="td2" (click)="openRejectedNotes(lead,$event,tempaltename)"
-                      *ngIf="(tempaltename ==='Rejected')">
+                      *ngIf="(tempaltename ==='Rejected') && lead && lead.rejectNotes">
                       <img class="imageREject" src="/assets/images/crmImages/cancelled.png" />
                     </td>
                   </tr>
