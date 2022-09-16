@@ -273,6 +273,18 @@
                           <span>{{selectedApptsTime}}</span></b>
                       </h6>
                     </div>
+                    <div>
+                      <!-- <span *ngIf="selectedService.price" class="ser_price no-mgn-bt bold">Service
+                        Price : <span class="ser_price no-mgn-bt bold rupee-font">{{selectedService.price
+   | currency:'&#8377;'}}</span></span> -->
+   <h6 class="custom text-primary"><b><span *ngIf="selectedService.price && !selectedService.isPrePayment">Service Price : 
+  </span>
+  <span *ngIf="selectedService.price && !selectedService.isPrePayment" class="rupee-font">
+    {{selectedService.price
+      | currency:'&#8377;'}}</span>
+  </b>
+</h6>
+                    </div>
                   </div>
                 </div>
               </div>

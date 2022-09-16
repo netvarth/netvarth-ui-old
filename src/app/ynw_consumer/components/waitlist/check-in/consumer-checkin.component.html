@@ -579,6 +579,15 @@
                                                                         <span><b>{{selectedQTime}}</b></span>
                                                                     </h6>
                                                                 </div>
+                                                                <div *ngIf="selectedService.price && !selectedService.isPrePayment">
+                                                                    <h6 class="text-primary service custom">
+                                                                        <span><b>Service Price : </b></span>
+                                                                        <!-- <span><b>{{selectedService.price}}</b></span> -->
+                                                                        <span *ngIf="selectedService.price" class="rupee-font">
+                                                                            {{selectedService.price
+                                                                              | currency:'&#8377;'}}</span>
+                                                                    </h6>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
