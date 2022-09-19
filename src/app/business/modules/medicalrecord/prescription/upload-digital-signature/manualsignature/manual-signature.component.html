@@ -22,13 +22,14 @@
       <div *ngIf="small_device_display" class="digitalsignature-pad">
 
         <signature-pad [options]="smallsignaturePadOptions" (onBeginEvent)="drawStart()"
-        fxFlex="1 1 50" (window:resize)="resizeSignaturePad()"
+       (window:resize)="resizeSignaturePadMobile()"
         class="signature" 
-        id="sign_canvas" fxFlexAlign.xs="center"></signature-pad>
+        id="sign_canvas"></signature-pad>
       </div>
       <div style="margin-top: 10px;">
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="clearSign()">Clear</button>
         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="drawComplete()" [disabled]="sign">Save</button>
+        <!-- <button (click)="undoSignature()">Undo</button> -->
       </div>
     </div>
   </div>

@@ -264,9 +264,6 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
-          // alert('getAppointmentById')
-          // this.reloadComponent()
-
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
@@ -347,9 +344,6 @@ export class MedicalrecordComponent implements OnInit {
   }
 
   getPatientVisitList(hide?:any,text?:any) {
-    // alert(hide);
-    // console.log('hide',hide)
-    // console.log('text',text)
     if (hide === false && text) {
       if (text === 'createPrescription') {
         this.showHidepreviousDetails = false;
@@ -366,22 +360,17 @@ export class MedicalrecordComponent implements OnInit {
     else if ((hide === undefined)) {
       this.provider_services.getPatientVisitList(this.patientId)
         .subscribe((data: any) => {
+          this.loading_table= false;
           this.lastVisit_dataSource = data;
-          // console.log('lastVisit_dataSource::', this.lastVisit_dataSource);
+          console.log('lastVisit_dataSource::', this.lastVisit_dataSource);
           this.previousLIst = data;
           const arrUniq = [...new Map(this.previousLIst.slice().reverse().map(v => [v.id, v])).values()].reverse();
           console.log('arrUniq',arrUniq)
-          // console.log('this.mrId', this.mrId);
-          // console.log(' this.bookingId ', typeof this.bookingId )
           if (this.mrId === 0) {
-            // alert(this.viewVisitDetails)
-            // console.log(' this.tempText', this.tempText)
             let num= Number(this.bookingId)
-            // console.log('num',num);
             if(num===0){
-              // console.log('numf',num)
-              // alert(num)
               this.showHidepreviousDetails = true;
+              this.loading_table= true;
             }
             else {
               if( this.creteTypeMr.prescription==='prescription'){
@@ -399,22 +388,17 @@ export class MedicalrecordComponent implements OnInit {
               }
               else if(this.creteTypeMr.calledfrom==='appt'){
                  this.showHidepreviousDetails = true;
-                //  this.prescriptionOuter===false;
-                //  this.clinicalOuter===false
+                 this.loading_table= true;
               }
               else if(this.creteTypeMr.calledfrom==='waitlist'){
                 this.showHidepreviousDetails = true;
-                // this.prescriptionOuter===false;
-                // this.clinicalOuter===false
+                this.loading_table= true;
               }
               else{
                 this.showHidepreviousDetails = true;
+                this.loading_table= true;
               }
-              // this.showHidepreviousDetails = false;
-              // this.showHideAddPrescription=true;
-              // this.showHideClinicalNotes= true;
             }
-            // this.showHidepreviousDetails = true;
           }
           else {
             this.viewVisitDetails = true;
@@ -422,10 +406,8 @@ export class MedicalrecordComponent implements OnInit {
           this.loading_table = false;
         },
           error => {
-            // alert('getPatientVisitList')
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
-      // return true;
     }
 
   }
@@ -439,7 +421,6 @@ export class MedicalrecordComponent implements OnInit {
           this.loading_table = true;
         },
           error => {
-            // alert('getPatientVisitListCount')
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
     }
@@ -456,7 +437,6 @@ export class MedicalrecordComponent implements OnInit {
 
       },
         error => {
-          // alert('modeChanges')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
     } else {
@@ -473,7 +453,6 @@ export class MedicalrecordComponent implements OnInit {
         this.snackbarService.openSnackBar('Medical Record update successfully');
       },
         error => {
-          // alert('updatemr')
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
 
@@ -487,7 +466,6 @@ export class MedicalrecordComponent implements OnInit {
     this.subscriptions.sink= this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
-          // console.log('getMedicalRecordUsingId',data)
           this.loading = false;
           this.medicalInfo= data;
           this.mrNumber = data.mrNumber;
@@ -504,18 +482,6 @@ export class MedicalrecordComponent implements OnInit {
           }
           if (data.mrVideoAudio) {
             this.uploadFiles = data.mrVideoAudio;
-            // console.log('this.uploadFiles',this.uploadFiles)
-            // this.image_list_popup = [];
-            // for (let i = 0; i < this.uploadFiles.length; i++) {
-            //   const imgdet = { 'name': this.uploadFiles[i].originalName, 'keyName': this.uploadFiles[i].keyName, 'size': this.uploadFiles[i].imageSize, 'caption': this.uploadFiles[i].caption , 'url': this.uploadFiles[i].url , 'type': this.uploadFiles[i].type};
-            //   this.selectedMessage.files.push(imgdet);
-            //   const imgobj = new Image(i,
-            //     { // modal
-            //       img: imgdet.url,
-            //       description:  this.uploadFiles[i].caption || ''
-            //     });
-            //   this.image_list_popup.push(imgobj);
-            // }
           }
           if (data.department) {
             this.department = data.service.department;
@@ -548,8 +514,6 @@ export class MedicalrecordComponent implements OnInit {
         }
       },
         error => {
-          // alert('getMedicalRecordUsingId')
-          // this.reloadComponent()
           this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
   }
@@ -597,7 +561,7 @@ export class MedicalrecordComponent implements OnInit {
       this.location.back();
     }
     else {
-      alert(back_type)
+      // alert(back_type)
       if (back_type === 'waitlist') {
         this.router.navigate(['provider', 'check-ins']);
       } else if (back_type === 'appt') {

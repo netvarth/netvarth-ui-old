@@ -51,11 +51,12 @@
             </div>
           </div>
           <div *ngIf="customerDetails && (customerDetails.phoneNo) " class="mgTop">
-            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) && (customerDetails.phoneNo !== ' ')">Phone</div>
+            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) && 
+            (customerDetails.phoneNo !== ' ')">Phone</div>
             <div class="infoDetails">
               <div  class="infoDetails" style="gap:5px !important">
                 <div *ngIf="customerDetails && customerDetails.phoneNo !==' '" class="nameClrOther">
-                  {{customerDetails.countryCode ?customerDetails.countryCode : ''}} 
+                  {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
                 </div>
                 <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
               </div>
@@ -117,8 +118,8 @@
          <!---clinical noptes end-->
       </div>
     </div>
+    <app-common-innerloading-spinner *ngIf="loading_table"></app-common-innerloading-spinner>
     <div class="col-xs-12 col-sm-12 mgn-up-10  previousVisit card" *ngIf="showHidepreviousDetails ">
-      <app-common-innerloading-spinner *ngIf="loading_table"></app-common-innerloading-spinner>
       <div >
         <div class="d-flex justify-content-between">
           <div class="pt-2">
@@ -450,6 +451,7 @@
                 <div *ngIf="customerDetails&& customerDetails.phoneNo !==' '" class="nameClrOther">
                   {{customerDetails.countryCode ?customerDetails.countryCode : ''}} 
                 </div>
+                <!-- {{customerDetails.countryCode | json}} -->
                 <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
               </div>
             </div> 

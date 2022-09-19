@@ -18,14 +18,20 @@ import { Location } from '@angular/common';
 export class ManualSignatureComponent implements OnInit {
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
   signaturePadOptions: Object = {
-    'minWidth': 5,
+    'minWidth': 1,
+    'max-width':1.5,
     'canvasWidth': 500,
-    'canvasHeight': 300
+    'canvasHeight': 300,
+    'penColor': "#000",
+    'dotSize':'3.2'
   };
   smallsignaturePadOptions: Object = {
-    'minWidth': 5,
+    'minWidth': .5,
+    'max-width':1,
     'canvasWidth': 200,
-    'canvasHeight': 150
+    'canvasHeight': 150,
+    'penColor': "#000",
+    'dotSize':'3.2'
   };
   display_PatientId: any;
   today = new Date();
@@ -93,18 +99,20 @@ export class ManualSignatureComponent implements OnInit {
     // console.log('window widht', window.innerWidth)
     if (this.screenWidth <= 780) {
       this.small_device_display = true;
+      this.resizeSignaturePadMobile()
     } else {
       this.small_device_display = false;
+      this.resizeSignaturePad()
     }
   }
 
   ngOnInit() {
-    this.onResize()
+    this.onResize();
   }
 
   ngAfterViewInit() {
     // this.signaturePad is now available
-    this.signaturePad.set('minWidth', 5); // set signature_pad options at runtime
+    this.signaturePad.set('minWidth', 2); // set signature_pad options at runtime
     this.signaturePad.clear(); // invoke functions from signature_pad API
 
   }
@@ -159,26 +167,25 @@ export class ManualSignatureComponent implements OnInit {
         });
   }
   resizeSignaturePad() {
+    // alert('jj')
     this.signaturePad.set('canvasWidth', document.getElementById("sign_canvas").offsetWidth);
     const canvas:any = document.querySelector("canvas");
     const ratio =  Math.max(window.devicePixelRatio || 2, 2);
     canvas.width = canvas.offsetWidth * ratio;
     canvas.height = canvas.offsetHeight * ratio;
     canvas.getContext("2d").scale(ratio, ratio);
-    this.signaturePad.clear(); // otherwise isEmpty() might return incorrect value
-    // this.signaturePad.clear();
-    // const signaturePad = new SignaturePad(canvas);
-    // console.log('signaturePad',signaturePad)
-// signaturePad.minWidth = 5;
-// signaturePad.maxWidth = 10;
-// signaturePad.penColor = "rgb(66, 133, 244)";
+    this.signaturePad.clear(); 
 }
 resizeSignaturePadMobile(){
-  // const ratio =  Math.max(window.devicePixelRatio || 1, 1);
-  //   canvas.width = canvas.offsetWidth * ratio;
-  //   canvas.height = canvas.offsetHeight * ratio;
-  //   canvas.getContext("2d").scale(ratio, ratio);
-  //   signaturePad.clear(); // otherwise isEmpty() might return incorrect value
+  this.signaturePad.set('canvasWidth', document.getElementById("sign_canvas").offsetWidth);
+    const canvas:any = document.querySelector("canvas");
+  const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+    canvas.width = canvas.offsetWidth * ratio;
+    canvas.height = canvas.offsetHeight * ratio;
+    canvas.getContext("2d").scale(ratio, ratio);
+    this.signaturePad.clear(); 
+}
+undoSignature(){
 }
 
 

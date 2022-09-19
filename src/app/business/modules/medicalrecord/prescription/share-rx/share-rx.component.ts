@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -119,6 +119,9 @@ export class ShareRxComponent implements OnInit {
   };
   fileName: any;
   src:any;
+  ScreenHeight: any;
+  innerWidth:any;
+  screenWidth: string;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -150,10 +153,10 @@ export class ShareRxComponent implements OnInit {
       this.fileName=this.data.file.url;
     }
     // if(this.data.file.url)
-    
-
+    this.onReSize()
 
   }
+  
   ngOnInit() {
     const cnow = new Date();
     const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
@@ -169,6 +172,19 @@ export class ShareRxComponent implements OnInit {
       this.getBusinessProfile();
     }
     this.getSMSCredits();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onReSize() {
+    this.innerWidth = window.innerWidth;
+    if (this.innerWidth <= 768) {
+      this.ScreenHeight= '85%';
+      this.screenWidth='55%';
+    }
+    else {
+       this.ScreenHeight='85%';
+       this.screenWidth='75%'
+    }
   }
   createForm() {
     this.sharewith = 0;
@@ -239,10 +255,9 @@ export class ShareRxComponent implements OnInit {
       thirdPartyHtml= document.getElementById('thirdParty')
     }
     console.log('thirdPartyHtml',thirdPartyHtml)
-    // console.log('sahrePdfVia',sahrePdfVia)
     // console.log('sahrePdfVia',sahrePdfVia.innerHTML)
-    // console.log('vwofrx',vwofrx)
-    // console.log('this.sharewith',this.sharewith)
+    console.log('vwofrx',vwofrx)
+    console.log('this.sharewith',this.sharewith)
     if (this.sharewith !== 0) {
       // if (this.thirdpartyphone === '' && this.thirdpartyemail === '') {
       if (this.thirdpartyemail === '') {
@@ -317,6 +332,7 @@ export class ShareRxComponent implements OnInit {
         if (this.thirdpartyphone !== '') {
           passData['shareThirdParty']['countryCode'] = '+91';
         }
+        // alert('1stThirdParty')
         this.provider_services.shareRxforThirdparty(this.mrId, passData)
           .subscribe((data) => {
             this.snackbarService.openSnackBar('Prescription shared successfully');
@@ -351,9 +367,9 @@ export class ShareRxComponent implements OnInit {
             this.sharebtnloading = false;
           });
       }
-    } else {
+    } 
+    else {
       if (this.sharewith !== 0) {
-        // alert('3d')
         const passData = {
           'message': this.amForm.controls.message.value,
           'html': vwofrx.innerHTML,
@@ -365,16 +381,18 @@ export class ShareRxComponent implements OnInit {
         if (this.thirdpartyphone !== '') {
           passData['shareThirdParty']['countryCode'] = '+91';
         }
-        this.provider_services.shareRxforThirdparty(this.mrId, passData)
-          .subscribe((data) => {
-            this.snackbarService.openSnackBar('Prescription shared successfully');
-            this.sharebtnloading = false;
-            this.dialogRef.close();
-          }, error => {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-            this.disable = false;
-            this.sharebtnloading = false;
-          });
+        alert('2ndThirdParty')
+        console.log('passData',passData)
+        // this.provider_services.shareRxforThirdparty(this.mrId, passData)
+        //   .subscribe((data) => {
+        //     this.snackbarService.openSnackBar('Prescription shared successfully');
+        //     this.sharebtnloading = false;
+        //     this.dialogRef.close();
+        //   }, error => {
+        //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+        //     this.disable = false;
+        //     this.sharebtnloading = false;
+        //   });
 
       } else if (this.sharewith === 0) {
         // alert('2nd')
@@ -602,9 +620,11 @@ export class ShareRxComponent implements OnInit {
     );
   }
   manualSignature() {
+    // const height:any=this.ScreenHeight;
    const uploadmanualsignatureRef = this.dialog.open(ManualSignatureComponent, {
       width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
+      // height: height,//this.ScreenHeight,
+      panelClass: ['popup-class'],
       disableClose: true,
       data: {
         mrid: this.mrId,
