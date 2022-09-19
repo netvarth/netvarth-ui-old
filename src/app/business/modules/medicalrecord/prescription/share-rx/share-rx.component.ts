@@ -381,18 +381,18 @@ export class ShareRxComponent implements OnInit {
         if (this.thirdpartyphone !== '') {
           passData['shareThirdParty']['countryCode'] = '+91';
         }
-        alert('2ndThirdParty')
-        console.log('passData',passData)
-        // this.provider_services.shareRxforThirdparty(this.mrId, passData)
-        //   .subscribe((data) => {
-        //     this.snackbarService.openSnackBar('Prescription shared successfully');
-        //     this.sharebtnloading = false;
-        //     this.dialogRef.close();
-        //   }, error => {
-        //     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        //     this.disable = false;
-        //     this.sharebtnloading = false;
-        //   });
+        // alert('2ndThirdParty')
+        // console.log('passData',passData)
+        this.provider_services.shareRxforThirdparty(this.mrId, passData)
+          .subscribe((data) => {
+            this.snackbarService.openSnackBar('Prescription shared successfully');
+            this.sharebtnloading = false;
+            this.dialogRef.close();
+          }, error => {
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.disable = false;
+            this.sharebtnloading = false;
+          });
 
       } else if (this.sharewith === 0) {
         // alert('2nd')
