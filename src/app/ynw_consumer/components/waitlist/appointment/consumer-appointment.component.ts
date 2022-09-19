@@ -708,8 +708,10 @@ else{
                 consumerNoteMandatory: activeService.consumerNoteMandatory,
                 consumerNoteTitle: activeService.consumerNoteTitle,
                 maxBookingsAllowed: activeService.maxBookingsAllowed,
-                showOnlyAvailableSlots: activeService.showOnlyAvailableSlots
+                showOnlyAvailableSlots: activeService.showOnlyAvailableSlots,
+                showPrice:activeService.showPrice
             };
+            console.log("Active Service :",this.selectedService)
             if (activeService.provider) {
                 this.selectedUserId = activeService.provider.id;
                 this.setUserDetails(this.selectedUserId);
