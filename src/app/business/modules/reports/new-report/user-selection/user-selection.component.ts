@@ -8,6 +8,7 @@ import { SharedFunctions } from '../../../../../shared/functions/shared-function
 import { ReportDataService } from '../../reports-data.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-user-selection',
@@ -39,6 +40,8 @@ export class UserSelectionComponent implements OnInit {
     private report_service: ReportDataService,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
+    private locationobj: Location
+
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -153,6 +156,7 @@ export class UserSelectionComponent implements OnInit {
     }
   }
   redirecToReports() {
-    this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
+   this.locationobj.back();
+    //this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
   }
 }

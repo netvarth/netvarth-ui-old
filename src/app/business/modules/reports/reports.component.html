@@ -216,7 +216,7 @@
                         </div>
                     </div>
                      <!-- CRM Reports -->
-                     <div class="row">
+                     <div class="row" *ngIf="taskStatus">
                       <div class="card p0">
                         <mat-accordion class="report">
                           <mat-expansion-panel  [expanded]="true">
@@ -249,7 +249,7 @@
                   </div>
 
                   <!-- LEAD Reports -->
-                  <div class="row">
+                  <div class="row" *ngIf="taskStatus">
                     <div class="card p0">
                       <mat-accordion class="report">
                         <mat-expansion-panel  [expanded]="true">
@@ -282,7 +282,7 @@
                 </div>
 
                   <!-- Enquiry Reports -->
-                  <div class="row">
+                  <div class="row" *ngIf="taskStatus">
                     <div class="card p0">
                       <mat-accordion class="report">
                         <mat-expansion-panel  [expanded]="true">
@@ -313,7 +313,7 @@
                     </div>
                 </div>
                  <!-- Monthly Activity Reports -->
-                 <div class="row">
+                 <div class="row" *ngIf="taskStatus">
                   <div class="card p0">
                     <mat-accordion class="report">
                       <mat-expansion-panel  [expanded]="true">
@@ -344,7 +344,7 @@
                   </div>
               </div>
                <!-- LEAD Status Reports -->
-               <div class="row">
+               <div class="row" *ngIf="taskStatus">
                 <div class="card p0">
                   <mat-accordion class="report">
                     <mat-expansion-panel  [expanded]="true">
@@ -376,7 +376,7 @@
             </div>
            
    <!-- Processing Files Reports -->
-   <div class="row">
+   <div class="row" *ngIf="taskStatus">
     <div class="card p0">
       <mat-accordion class="report">
         <mat-expansion-panel  [expanded]="true">
@@ -407,7 +407,7 @@
     </div>
 </div>
   <!--Consolidated Reports -->
-  <div class="row">
+  <div class="row" *ngIf="taskStatus">
     <div class="card p0">
       <mat-accordion class="report">
         <mat-expansion-panel  [expanded]="true">
@@ -438,7 +438,7 @@
     </div>
 </div>
  <!--Tat Reports -->
- <div class="row">
+ <div class="row" *ngIf="taskStatus">
   <div class="card p0">
     <mat-accordion class="report">
       <mat-expansion-panel  [expanded]="true">
@@ -470,7 +470,7 @@
 </div>
 
  <!--Recommended Status Reports -->
- <div class="row">
+ <div class="row" *ngIf="taskStatus">
   <div class="card p0">
     <mat-accordion class="report">
       <mat-expansion-panel  [expanded]="true">
@@ -502,7 +502,7 @@
 </div>
 
  <!--Login Reports -->
- <div class="row">
+ <div class="row" *ngIf="taskStatus">
   <div class="card p0">
     <mat-accordion class="report">
       <mat-expansion-panel  [expanded]="true">
@@ -533,7 +533,7 @@
   </div>
 </div>
           <!--Ho Leads Reports -->
-  <div class="row">
+  <div class="row" *ngIf="taskStatus">
     <div class="card p0">
       <mat-accordion class="report">
         <mat-expansion-panel  [expanded]="true">
@@ -564,7 +564,7 @@
     </div>
 </div>   
         <!--Sanctioned Status Reports -->
-        <div class="row">
+        <div class="row" *ngIf="taskStatus">
           <div class="card p0">
             <mat-accordion class="report">
               <mat-expansion-panel  [expanded]="true">
@@ -595,7 +595,7 @@
           </div>
       </div> 
        <!--Employee Activity Tat Reports -->
-       <div class="row">
+       <div class="row" *ngIf="taskStatus">
         <div class="card p0">
           <mat-accordion class="report">
             <mat-expansion-panel  [expanded]="true">
@@ -626,7 +626,7 @@
         </div>
     </div>      
      <!--Daily Activity Reports -->
-     <div class="row">
+     <div class="row" *ngIf="taskStatus">
       <div class="card p0">
         <mat-accordion class="report">
           <mat-expansion-panel  [expanded]="true">
@@ -657,7 +657,7 @@
       </div>
   </div>   
     <!--Customer Reports -->
-    <div class="row">
+    <div class="row" *ngIf="taskStatus">
       <div class="card p0">
         <mat-accordion class="report">
           <mat-expansion-panel  [expanded]="true">
@@ -688,7 +688,7 @@
       </div>
   </div>
     <!--Customer SRIF Status Reports -->
-    <div class="row">
+    <div class="row" *ngIf="taskStatus">
       <div class="card p0">
         <mat-accordion class="report">
           <mat-expansion-panel  [expanded]="true">
@@ -719,7 +719,7 @@
       </div>
   </div>   
     <!--Customer Wise Enquiry Reports -->
-    <div class="row">
+    <div class="row" *ngIf="taskStatus">
       <div class="card p0">
         <mat-accordion class="report">
           <mat-expansion-panel  [expanded]="true">

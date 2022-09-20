@@ -64,6 +64,7 @@ export class ReportsComponent implements OnInit {
   donation_criteria = [];
   reprtdialogRef: any;
   active_user: any;
+  taskStatus;
   constructor(private router: Router, private report_dataService: ReportDataService,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
@@ -82,6 +83,14 @@ export class ReportsComponent implements OnInit {
     this.getProviderSettings();
     this.getCriteriaList();
     this.active_user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.getGlobalSettings()
+  }
+  getGlobalSettings() {
+      this.provider_services.getAccountSettings().then(
+        (data: any) => {
+          console.log("Global settings :",data)
+          this.taskStatus = data.enableTask;
+        });
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()

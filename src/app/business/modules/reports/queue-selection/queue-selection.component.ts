@@ -9,6 +9,7 @@ import { ReportDataService } from '../reports-data.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-service';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -43,7 +44,9 @@ export class QueueSelectionComponent implements OnInit {
     private report_service: ReportDataService,
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
-    private jaldeeTimeService: JaldeeTimeService
+    private jaldeeTimeService: JaldeeTimeService,
+    private locationobj: Location
+
   ) {
 
     this.activated_route.queryParams.subscribe(qparams => {
@@ -213,7 +216,8 @@ export class QueueSelectionComponent implements OnInit {
   }
 
   redirecToReports() {
-    this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
+    this.locationobj.back();
+   // this.router.navigate(['provider', 'reports', 'new-report'], { queryParams: { report_type: this.reportType } });
   }
 
 }

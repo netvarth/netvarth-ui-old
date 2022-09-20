@@ -209,8 +209,10 @@ export class NewReportComponent implements OnInit {
   allApptStatusSelected = false;
   allWlIntStatusSelected = false;
   allApptIntStatusSelected = false;
-  location: any;
+  allLocationsSelected = false;
+  location: any = [];
   locName: any;
+  locationFilter: any = [];
   constructor(
     private router: Router,
     private activated_route: ActivatedRoute,
@@ -363,8 +365,15 @@ export class NewReportComponent implements OnInit {
     this.provider_services.getProviderLocations()
       .subscribe(
         (data: any) => {
-          this.location = data;
-          console.log("Locations :",this.location)
+          console.log("All Locations :",data)
+          data.map(res=>{
+            if(res.status === 'ACTIVE'){
+              console.log("Active location :",res)
+             return this.location.push(res);
+            }
+          })
+        //  this.location = data;
+          console.log("Active Locs :",this.location)
           if (this.location.length > 0) {
             this.locName = this.location[0].place;
           }
@@ -673,6 +682,34 @@ export class NewReportComponent implements OnInit {
     });
     this.allWlStatusSelected = newStatus;
     console.log(this.waitlistStatusFilter);
+  }
+  setLocationFilter() {
+    this.locationFilter = [];
+    let newStatus = true;
+    this.select.options.forEach((item: MatOption) => {
+      if (!item.selected) {
+        newStatus = false;
+      } else {
+        this.locationFilter.push(item.value);
+      }
+    });
+    this.allLocationsSelected = newStatus;
+    console.log(this.locationFilter);
+  }
+  toggleAllLocationsSelection () {
+    const _this = this;
+    this.locationFilter = [];
+    if (this.allLocationsSelected) {
+      this.select.options.forEach(function (item: MatOption) {
+        item.select();
+        _this.locationFilter.push(item.value);
+      });
+    } else {
+      this.select.options.forEach(function(item: MatOption) {
+        item.deselect();
+      });
+    }
+    console.log(this.locationFilter);
   }
   toggleAllSelection () {
     const _this = this;
@@ -1235,7 +1272,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
           
         };
@@ -1257,9 +1294,8 @@ export class NewReportComponent implements OnInit {
         if (this.appointment_service_id === 0) {
           delete this.filterparams.service;
         }
-        if (this.apptStatusFilter.length > 0) {
-          // this.waitlist_status = this.waitlistStatusFilter.toString();
-          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
           }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
@@ -1309,7 +1345,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1318,6 +1354,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1382,7 +1421,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1391,6 +1430,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1455,7 +1497,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+          //'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1464,6 +1506,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1528,7 +1573,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1537,6 +1582,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1601,7 +1649,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+          //'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1610,6 +1658,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1674,7 +1725,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+          //'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1683,6 +1734,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1747,7 +1801,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1756,6 +1810,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1820,7 +1877,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1829,6 +1886,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1893,7 +1953,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1902,6 +1962,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1966,7 +2029,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1975,6 +2038,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2039,7 +2105,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -2048,6 +2114,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2112,7 +2181,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+          //'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -2121,6 +2190,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2185,7 +2257,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+          //'location':this.customer_location,
           'assignee': this.user_id
         };
        
@@ -2195,6 +2267,9 @@ export class NewReportComponent implements OnInit {
       if (this.customer_location === 0 || this.customer_location === undefined) {
         delete this.filterparams.location;
       }
+      if (this.locationFilter.length > 0) {
+        this.filterparams['location'] = this.locationFilter.toString();
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2258,7 +2333,7 @@ export class NewReportComponent implements OnInit {
           //'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           //'appointmentMode': this.appointment_mode,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
       
@@ -2268,6 +2343,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2332,7 +2410,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -2341,6 +2419,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2405,7 +2486,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-          'location':this.customer_location,
+         // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -2414,6 +2495,9 @@ export class NewReportComponent implements OnInit {
         if (this.customer_location === 0 || this.customer_location === undefined) {
           delete this.filterparams.location;
         }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+          }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2826,7 +2910,18 @@ export class NewReportComponent implements OnInit {
           'startDate': this.appointment_startDate,
           'endDate': this.appointment_endDate
         };
-      } if (this.report_type === 'donation') {
+      } 
+      if (this.report_type === 'crm') {
+        selectedValues = {
+         // 'paymentStatus': this.appointment_billpaymentstatus,
+          'location': this.locationFilter.toString(),
+         // 'appointmentMode': this.appointment_mode,
+          'dateRange': this.appointment_timePeriod,
+          //'startDate': this.appointment_startDate,
+          //'endDate': this.appointment_endDate
+        };
+      }
+      if (this.report_type === 'donation') {
         selectedValues = {
           'donationAmount': this.donation_amount,
           'dateRange': this.donation_timePeriod,
