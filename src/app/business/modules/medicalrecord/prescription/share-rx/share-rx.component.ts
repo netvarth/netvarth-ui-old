@@ -122,6 +122,7 @@ export class ShareRxComponent implements OnInit {
   ScreenHeight: any;
   innerWidth:any;
   screenWidth: string;
+  digitalSignType:boolean=true;
   constructor(
     public dialogRef: MatDialogRef<ShareRxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -148,9 +149,16 @@ export class ShareRxComponent implements OnInit {
     // console.log(this.data.docname);
     this.getPatientDetails(this.patientId);
     this.ThemePalette='#06c706';
-    // console.log('data:;',this.data)
+    console.log('data:;',this.data)
     if(this.data && this.data.file && this.data.file.url){
       this.fileName=this.data.file.url;
+    }
+    if(this.data && this.data.file && (this.data.file.type==='.pdf' || this.data.file.type==='.jpeg' || this.data.file.type==='.bmp' ||
+    this.data.file.type==='.png' || this.data.file.type==='.jpg')){
+      this.digitalSignType=false;
+    }
+    else{
+      this.digitalSignType=true;
     }
     // if(this.data.file.url)
     this.onReSize()
@@ -176,15 +184,18 @@ export class ShareRxComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onReSize() {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth <= 768) {
-      this.ScreenHeight= '85%';
-      this.screenWidth='55%';
+    if(window && window.innerWidth){
+      this.innerWidth = window.innerWidth;
+      if (this.innerWidth <= 768) {
+        this.ScreenHeight= '50%';
+        this.screenWidth='80%';
+      }
+      else {
+        //  this.ScreenHeight='85%';
+         this.screenWidth='50%'
+      } 
     }
-    else {
-       this.ScreenHeight='85%';
-       this.screenWidth='75%'
-    }
+    
   }
   createForm() {
     this.sharewith = 0;
@@ -620,10 +631,10 @@ export class ShareRxComponent implements OnInit {
     );
   }
   manualSignature() {
-    // const height:any=this.ScreenHeight;
+    const height:any=this.ScreenHeight;
    const uploadmanualsignatureRef = this.dialog.open(ManualSignatureComponent, {
-      width: '50%',
-      // height: height,//this.ScreenHeight,
+      width: this.screenWidth,
+      height: height,//this.ScreenHeight,
       panelClass: ['popup-class'],
       disableClose: true,
       data: {

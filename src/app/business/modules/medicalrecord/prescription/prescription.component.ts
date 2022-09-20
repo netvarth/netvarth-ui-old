@@ -1170,7 +1170,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               .subscribe((data) => {
                 // console.log('data',data)
                 this.selectedMessage.files.splice(index, 1);
-                const error='Prescription successfully delete';
+                const error='Prescription successfully deleted';
                 this.snackbarService.openSnackBar(error);
                 this.reloadComponent();
                 // this.getMrprescription(this.mrId);
@@ -1214,7 +1214,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
               subscribe(res => {
                 // console.log('resupdateMRprescription', res);
                 this.tempTextDelete='TempDelete';
-                this.snackbarService.openSnackBar('Prescription delete  Successfully');
+                this.snackbarService.openSnackBar('Prescription deleted  Successfully');
                 // alert('afterDelete')
                 // console.log('this.mrId',this.mrId)
                 if(this.mrId){

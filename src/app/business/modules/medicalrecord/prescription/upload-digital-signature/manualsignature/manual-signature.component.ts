@@ -22,7 +22,7 @@ export class ManualSignatureComponent implements OnInit {
     'max-width':1.5,
     'canvasWidth': 500,
     'canvasHeight': 300,
-    'penColor': "#000",
+    'penColor': "#000000",
     'dotSize':'3.2'
   };
   smallsignaturePadOptions: Object = {
@@ -30,7 +30,7 @@ export class ManualSignatureComponent implements OnInit {
     'max-width':1,
     'canvasWidth': 200,
     'canvasHeight': 150,
-    'penColor': "#000",
+    'penColor': "#000000",
     'dotSize':'3.2'
   };
   display_PatientId: any;
@@ -70,6 +70,9 @@ export class ManualSignatureComponent implements OnInit {
   sign = true;
   screenWidth;
   small_device_display = false;
+  count: number = 0;
+  selectedColor:any='#000000'
+  tempSubmitData:any;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public uploadmanualsignatureRef: MatDialogRef<ManualSignatureComponent>,
@@ -135,6 +138,8 @@ export class ManualSignatureComponent implements OnInit {
     };
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
+    // console.log('blobPropdata',blobPropdata)
+    // this.tempSubmitData= blobPropdata
     if (this.providerId) {
       this.uploadMrDigitalsign(this.providerId, submit_data);
     }
@@ -144,8 +149,7 @@ export class ManualSignatureComponent implements OnInit {
     this.signaturePad.clear();
   }
 
-  drawStart() {
-    // console.log('jjjj')
+  drawStart(event) {
     this.sign = false;
   }
   goBack() {
@@ -186,6 +190,31 @@ resizeSignaturePadMobile(){
     this.signaturePad.clear(); 
 }
 undoSignature(){
+  const data = this.signaturePad.toData();
+    if (data) {
+      console.log(data)
+      data.pop(); // remove the last dot or line from canvas
+      this.signaturePad.fromData(data);
+      console.log('this.signaturePad::',this.signaturePad)
+      if(data && data.length===0){
+        const error='Please draw your digital signature';
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.sign = true;
+      }
+      else{
+        this.sign = false;
+      }
+    }
+}
+colorChange(color){
+  // console.log(color);
+  if(color){
+    this.signaturePad['signaturePad']['penColor']=color;
+    console.log(' this.signaturePad', this.signaturePad);
+  }
+}
+downlaod(){
+  console.log(' this.signaturePad', this.signaturePad);
 }
 
 

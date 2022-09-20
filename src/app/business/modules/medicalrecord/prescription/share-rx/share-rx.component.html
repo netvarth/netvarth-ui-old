@@ -93,14 +93,14 @@
             <!-- <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div> -->
         </div>
         <!-- *ngIf="!showthirdparty" -->
-        <div   class="mgn-bt-0">
+        <div class="mgn-bt-0" *ngIf="digitalSignType">
             <div style="margin-top: 10px;">
                 <div class="difitalSigText" *ngIf="!digitalSign && selectedMessage && selectedMessage.files 
                 && selectedMessage.files.length === 0">Add digital signature</div>
                 <!-- <div class="difitalSigText" *ngIf="digitalSign && selectedMessage.files && selectedMessage.files.length > 0">View digital signature</div> -->
                 <div >
                     <div >
-                        <div  *ngIf="!digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length == 0">
+                        <div  *ngIf="!digitalSign && selectedMessage && selectedMessage.files && selectedMessage.files.length === 0">
                             <div class=" prescriptionNotes">
                               <div>
                                 <div class="fileUpload">

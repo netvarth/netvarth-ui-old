@@ -15,5 +15,9 @@
   </div>
 </mat-dialog-content>
 <div class="btnClass1">
-  <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold confirmBtn">Close</button>
+  <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold cancelBtn">Close</button>
+  <button  type="button"class="btn btn-primary font-weight-bold confirmBtn" (click)="downLoad(imgDetails)">
+    <app-common-innerloading-spinner [spinnerParams]="{diameter:20}" *ngIf="loading"></app-common-innerloading-spinner>
+    <span *ngIf="!loading"><i class="fa fa-download" aria-hidden="true"></i></span>
+    <span *ngIf="!loading" style="margin-left: 5px;">Download</span></button>
  </div>

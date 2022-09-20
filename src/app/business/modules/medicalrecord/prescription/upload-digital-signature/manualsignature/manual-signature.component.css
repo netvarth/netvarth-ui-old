@@ -8,7 +8,7 @@
 }
 
 .heading {
-    font-size: 17px !important;
+    font-size: 15px !important;
     color: #FF9900;;
 }
 
@@ -16,6 +16,7 @@
     color: red !important;
 }
 .digitalsignature-pad{
+    cursor: pointer !important;
     /* position:absolute;z-index:99999 */
 }
 .closeIcon{
@@ -41,11 +42,9 @@
 ::ng-deep .digitalsignature-pad canvas{
     background: #FCFCFC !important;
     border: 1.20589px dashed #C9C9C9 !important;
-    border-radius: 13.2647px !important;
+    border-radius: 5.2647px !important;
     width: 100% !important;
     margin-top: 5px !important;
-    box-shadow: 0 0 5px 1px #999 !important;
-    /* background-image: url(../../../../../../../assets/images/medicalReportIcon/address.png) !important; */
     z-index: 9999999;
 }
 .confirmBtn {
@@ -63,7 +62,7 @@
     box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
     border-radius: 3.75916px !important;
     border: 0px solid !important;
-    margin-right: 10px !important;
+    /* margin-right: 10px !important; */
     padding: 6px 10px;
     color: #fff;
     font-weight: bold;
@@ -73,8 +72,58 @@
     /* height: 550px; */
     padding:20px
   }
+  .caveClrBtn{
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    gap:10px;
+  }
   @media(max-width: 800px){
     .secHeight{
         /* height: 350px; */
     }
+    .heading {
+        font-size: 11px !important;
+        color: #FF9900;;
+    }
+    .caveClrBtn{
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        gap:10px;
+      }
+      ::ng-deep .digitalsignature-pad canvas{
+        height: 20rem !important;
+      }
+
   }
+  .undoBtn{
+    background-color: #1DA192;
+    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+    border-radius: 3.75916px !important;
+    border: 0px solid !important;
+    padding: 6px 10px;
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+  }
+  .clrChangeInput{
+    border: 1px dashed #E6E8EB;
+    text-align: center;
+    background-color: #f4f4f4;
+    border-radius: 5px;
+    height: 30px;
+    width: 50px;
+  }
+  #input-color{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    border: none;
+    background: #ffffff;
+    cursor: pointer;
+  }
+  .input-color-label{
+    cursor: pointer;
+  }
+  
