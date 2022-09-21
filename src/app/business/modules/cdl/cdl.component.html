@@ -157,7 +157,7 @@
     </div>
 
 
-    <div class="col-md-2" *ngIf="user.userType==1">
+    <div class="col-md-2" *ngIf="user.userType==1" (click)="allLoans()">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-clock-o all-loans-icon"></i>

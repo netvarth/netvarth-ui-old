@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {  Router } from '@angular/router';
+// import {  Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class LoansComponent implements OnInit {
   user: any;
-  approvedLoans:any[]=[
+  statusLoansList:any=[
     {
       'loanId':101,
       'CustomerName':'David',
@@ -37,28 +37,47 @@ export class LoansComponent implements OnInit {
       'Dealer':'T Mobiles',
       'status':'Approved'
     },
+    {
+      'loanId':105,
+      'CustomerName':'Babu',
+      'Dealer':'T Mobiles',
+      'status':'Approved'
+    },
   ]
   headerName:string=''
   constructor(
     private groupService: GroupStorageService,
-    private router: Router,
+    // private router: Router,
     private location: Location,
     private activated_route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log("User is", this.user);
-    console.log(this.router);
+    // console.log("User is", this.user);
+    // console.log(this.router);
     this.activated_route.queryParams.subscribe((params)=>{
-      console.log(params);
+      // console.log(params);
       if(params){
         if(params && (params.type==='approvedLoans')){
           let tempHeaderName: string = ''
           tempHeaderName = params.type.substring(0, 8) + " " + params.type.substring(8);
-          console.log('2nd',tempHeaderName);
-          this.headerName = tempHeaderName
-          return this.headerName;
+          if(tempHeaderName){
+            this.headerName = tempHeaderName;
+          }
+          
+        }
+        else if(params && (params.type==='allLoans')){
+          let tempHeaderName: string = ''
+          tempHeaderName = params.type.substring(0, 3) + " " + params.type.substring(3);
+          if(tempHeaderName){
+            this.headerName = tempHeaderName;
+          }
+          console.log('jj')
+          console.log(' this.statusLoansList', this.statusLoansList);
+          const statusListLengthLoan=this.statusLoansList.length;
+          console.log('statusListLengthLoan',statusListLengthLoan)
+          this.statusLoansList[4]['status']='Pending';
         }
         else{
           this.headerName= params.type;
@@ -71,6 +90,10 @@ export class LoansComponent implements OnInit {
   }
   goBack(){
     this.location.back();
+  }
+  loanDetails(data){
+    console.log(data);
+
   }
 
 }

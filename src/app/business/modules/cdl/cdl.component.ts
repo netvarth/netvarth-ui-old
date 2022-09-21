@@ -63,5 +63,13 @@ export class CdlComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
     // this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
   }
+  allLoans(){
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'allLoans'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'loans'],navigationExtras);
+  }
 }
 

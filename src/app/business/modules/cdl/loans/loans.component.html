@@ -24,13 +24,15 @@
             </thead>
             <tbody class="table_data">
               <ng-container>
-                <tr style="cursor:pointer" *ngFor="let item of approvedLoans;let i=index">
+                <tr style="cursor:pointer" *ngFor="let item of statusLoansList;let i=index" (click)="loanDetails(item)">
                     <td data-title="Loan Details" class="td1" *ngIf="item && item.loanId">{{item.loanId}}</td>
                     <td data-title="Loan Details" class="td1" *ngIf="item && item.CustomerName">{{item.CustomerName}}</td>
                     <td data-title="Loan Details" class="td1" *ngIf="item && item.Dealer">{{item.Dealer}}</td>
                     <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status">
-                        <img class="imageApprove" src="/assets/images/cdl/approved.png" />
-                        <div class="approvedColor" *ngIf="item && item.status">{{item.status}}</div>
+                        <div *ngIf="item.status==='Approved'"><img src="/assets/images/cdl/approved.png" class="imageApprove" /></div>
+                        <div *ngIf="item.status==='Pending'"><img src="/assets/images/cdl/pending.png" class="imageApprove" /></div>
+                        <div class="approvedColor" *ngIf="item && item.status && item.status==='Approved'">{{item.status}}</div>
+                        <div class="pendingColor" *ngIf="item && item.status && item.status==='Pending'">{{item.status}}</div>
                     </td>
                 </tr>
               </ng-container>

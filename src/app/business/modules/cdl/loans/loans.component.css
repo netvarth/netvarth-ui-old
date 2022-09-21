@@ -38,3 +38,6 @@ table tbody tr td {
 .marginClass{
     margin-top: 10px;
 }
+.pendingColor{
+    color: #FFD600;
+}
