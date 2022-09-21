@@ -10,14 +10,30 @@
     </div>
   </div>
 </div>
-<div *ngIf="user.userType==5">
-  <img width="100%" height="252px" src="../../../../assets/images/cdl/header.png">
-</div>
-<div *ngIf="user.userType==1" class="row">
-  <div class="col-md-6 no-padding">
+
+<div>
+  <div class="no-padding">
+    <div class="cauroselsection">
+      <owl-carousel [options]="customOptions">
+        <div class="recentcards item" *ngIf="user.userType==5">
+          <img src="../../../../assets/images/cdl/header.jpg" alt="Card image cap">
+        </div>
+        <div class="recentcards item">
+          <img src="../../../../assets/images/cdl/carousal-1.jpg" alt="Card image cap">
+        </div>
+        <div class="recentcards item">
+          <img src="../../../../assets/images/cdl/carousal-2.jpg" alt="Card image cap">
+        </div>
+        <div class="recentcards item">
+          <img src="../../../../assets/images/cdl/carousal-3.jpg" alt="Card image cap">
+        </div>
+      </owl-carousel>
+    </div>
+  </div>
+  <div class="no-padding">
     <div class="card">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
@@ -31,7 +47,7 @@
           </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
@@ -45,7 +61,7 @@
           </div>
         </div>
 
-        <div class="col-md-6 mt-2">
+        <div class="col-md-3">
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
@@ -59,7 +75,7 @@
           </div>
         </div>
 
-        <div class="col-md-6 mt-2">
+        <div class="col-md-3">
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
@@ -72,24 +88,7 @@
             </div>
           </div>
         </div>
-
-
       </div>
-    </div>
-  </div>
-  <div class="col-md-6 pl-0">
-    <div class="cauroselsection mgn-bt-50">
-      <owl-carousel [options]="customOptions">
-        <div class="recentcards item">
-          <img src="../../../../assets/images/cdl/carousal-1.jpg" alt="Card image cap">
-        </div>
-        <div class="recentcards item">
-          <img src="../../../../assets/images/cdl/carousal-2.jpg" alt="Card image cap">
-        </div>
-        <div class="recentcards item">
-          <img src="../../../../assets/images/cdl/carousal-3.jpg" alt="Card image cap">
-        </div>
-      </owl-carousel>
     </div>
   </div>
 </div>

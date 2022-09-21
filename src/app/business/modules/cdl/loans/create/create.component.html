@@ -17,8 +17,9 @@
               <div class="fieldPadding">
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" type="number" placeholder="Enter Phone Number" class="form-control"
-                    formControlName="phone" autocomplete="off" />
-                  <a class="btn btn-verify" (click)="verifyotp()">Verify</a>
+                    autocomplete="off" />
+                  <a class="btn btn-verify" [class.btn-verified]="verification" (click)="verifyotp()">
+                    <span *ngIf="!verification">Verify</span><span *ngIf="verification">Verified</span></a>
                 </div>
               </div>
             </div>
@@ -34,7 +35,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" type="text" placeholder="Enter Customer Name" class="form-control"
-                  formControlName="name" autocomplete="off" />
+                  autocomplete="off" />
               </div>
             </div>
           </div>
@@ -48,7 +49,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" type="email" placeholder="Enter Customer Email" class="form-control"
-                  formControlName="email" autocomplete="off" />
+                  autocomplete="off" />
               </div>
             </div>
           </div>
@@ -63,8 +64,9 @@
               <div class="fieldPadding">
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" type="number" placeholder="Enter Aadhar Number" class="form-control"
-                    formControlName="aadhar" autocomplete="off" />
-                  <a class="btn btn-verify" (click)="verifyaadhar()">Verify</a>
+                    autocomplete="off" />
+                  <a class="btn btn-verify" [class.btn-verified]="verification" (click)="verifyaadhar()">
+                    <span *ngIf="!verification">Verify</span><span *ngIf="verification">Verified</span></a>
                 </div>
               </div>
             </div>
@@ -97,8 +99,9 @@
               <div class="fieldPadding">
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" type="number" placeholder="Enter PAN Number" class="form-control"
-                    formControlName="pan" autocomplete="off" />
-                  <a class="btn btn-verify" (click)="verifypan()">Verify</a>
+                    autocomplete="off" />
+                  <a class="btn btn-verify" [class.btn-verified]="verification" (click)="verifypan()">
+                    <span *ngIf="!verification">Verify</span><span *ngIf="verification">Verified</span></a>
                 </div>
               </div>
             </div>
@@ -114,7 +117,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" type="number" placeholder="Enter Required Loan Amount"
-                  class="form-control" formControlName="amount" autocomplete="off" />
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -129,7 +132,7 @@
                 <div class="form-title">Martial Status</div>
               </div>
               <div class="fieldPadding">
-                <select class="form-control" formControlName="martial_status">
+                <select class="form-control">
                   <option>Single</option>
                   <option>Married</option>
                 </select>
@@ -151,7 +154,7 @@
               </div>
               <div class="fieldPadding">
                 <textarea (keyup)="resetErrors()" type="text" placeholder="Enter Remarks" class="form-control"
-                  formControlName="remarks" autocomplete="off"></textarea>
+                  autocomplete="off"></textarea>
               </div>
             </div>
           </div>

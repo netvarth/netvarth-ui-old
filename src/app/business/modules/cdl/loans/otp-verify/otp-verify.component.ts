@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-otp-verify',
@@ -14,7 +15,12 @@ export class OtpVerifyComponent implements OnInit {
       'height': '40px'
     }
   };
-  constructor() { }
+  constructor(
+    public dialogRef: MatDialogRef<OtpVerifyComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+
+  }
 
   ngOnInit(): void {
   }
@@ -24,7 +30,11 @@ export class OtpVerifyComponent implements OnInit {
   }
 
   verifyOTP() {
+    this.dialogRef.close("verified");
+  }
 
+  close() {
+    this.dialogRef.close();
   }
 
 }

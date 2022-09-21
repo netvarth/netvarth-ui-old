@@ -27,3 +27,13 @@
   border-radius: 5px !important;
   padding: auto 5px !important;
 }
+
+
+.btn-verified {
+  background-color: #20A044 !important;
+  border-color: #20A044 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: auto 5px !important;
+}

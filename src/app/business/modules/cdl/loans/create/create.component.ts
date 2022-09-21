@@ -16,6 +16,7 @@ export class CreateComponent implements OnInit {
     base64: [],
     caption: []
   };
+  verification = false;
 
   constructor(
     private location: Location,
@@ -77,11 +78,12 @@ export class CreateComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        can_remove = true;
-        return true;
-      } else {
-        can_remove = false;
-
+        if (result = "verified") {
+          this.verification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
       }
     });
     return can_remove;
