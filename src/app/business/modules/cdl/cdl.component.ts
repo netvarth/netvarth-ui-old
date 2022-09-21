@@ -9,6 +9,31 @@ import { GroupStorageService } from '../../../../../src/app/shared/services/grou
 })
 export class CdlComponent implements OnInit {
   user: any;
+  customOptions = {
+    loop: true,
+    margin: 10,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    autoplay: true,
+    navSpeed: 200,
+    dots: true,
+    center: true,
+    checkVisible: false,
+    responsiveClass: true,
+    responsive: {
+      0: {
+        items: 1
+      },
+      700: {
+        items: 1
+      },
+      970: {
+        items: 1
+      }
+    }
+  }
+
   constructor(
     private groupService: GroupStorageService,
     private router: Router
