@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DealerComponent } from './dealer.component';
 import { RouterModule, Routes } from '@angular/router';
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { DealerComponent } from './dealer.component';
+
 
 const routes: Routes = [
   { path: '', component: DealerComponent },
@@ -16,6 +18,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    CapitalizeFirstPipeModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

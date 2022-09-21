@@ -53,7 +53,24 @@ export class CdlComponent implements OnInit {
   createDealer() {
     this.router.navigate(['provider', 'cdl', 'dealers', 'create']);
   }
+  allLoans() {
+    this.router.navigate(['provider', 'cdl', 'loans']);
+  }
+  allLeads() {
+    this.router.navigate(['provider', 'cdl', 'loans']);
+  }
+  allDealers() {
+    this.router.navigate(['provider', 'cdl', 'dealers']);
+  }
 
+  requestedDealers() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'requested'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'dealers'], navigationExtras);
+  }
   ApprovedLoans() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -62,14 +79,6 @@ export class CdlComponent implements OnInit {
     };
     this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
     // this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
-  }
-  allLoans(){
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'allLoans'
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans'],navigationExtras);
   }
 }
 
