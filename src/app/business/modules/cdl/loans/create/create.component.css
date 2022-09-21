@@ -1,0 +1,29 @@
+.fa-angle-left {
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+
+.form-title {
+  font-size: 12px !important;
+  color: #1E4079 !important;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+
+
+.btn-verify {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: auto 5px !important;
+}

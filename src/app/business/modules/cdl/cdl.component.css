@@ -1,0 +1,152 @@
+.sub-title {
+  font-size: 12px !important;
+  color: #EBB77A !important;
+}
+
+.border {
+  border: 1px solid rgb(230, 230, 230) !important;
+}
+
+.add-loan-icon {
+  color: #fff !important;
+  background-color: #00D1FF !important;
+  padding: 3px 5px !important;
+  border-radius: 50% !important;
+}
+
+.add-lead-icon {
+  color: #fff !important;
+  background-color: #FFC700 !important;
+  padding: 3px 5px !important;
+  border-radius: 50% !important;
+}
+
+.approved-loan-icon {
+  color: #fff !important;
+  background-color: #3DD1BF !important;
+  padding: 5px !important;
+  border-radius: 50% !important;
+}
+
+.redirected-loan-icon {
+  color: #fff !important;
+  background-color: #FF8B59 !important;
+  padding: 5px !important;
+  border-radius: 50% !important;
+}
+
+.rejected-loan-icon {
+  color: #fff !important;
+  background-color: #FF5959 !important;
+  padding: 3px 5px !important;
+  border-radius: 50% !important;
+}
+
+.emi-calc-icon {
+  color: #fff !important;
+  background-color: #30B4FE !important;
+  padding: 5px !important;
+  border-radius: 50% !important;
+}
+
+.card-title {
+  font-size: 15px !important;
+}
+
+.dashboard-card {
+  padding: 25px 5px !important;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 10px !important;
+}
+
+.approved-loan-head-icon {
+  color: #427A0A !important;
+  background-color: #e8f3de !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 20px !important;
+}
+
+
+.approved-amount-head-icon {
+  color: #1CC5FA !important;
+  background-color: #ddf3fa !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 20px !important;
+}
+
+.total-amount-head-icon {
+  color: #5843BE !important;
+  background-color: #e4e0f6 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 20px !important;
+}
+
+.rejected-loan-head-icon {
+  color: #E84D4D !important;
+  background-color: #fef0f0 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 20px !important;
+}
+
+.head-card-title {
+  font-size: 12px !important;
+}
+
+.id-card-1 {
+  color: #4459AC !important;
+  background-color: #E6EBFF !important;
+  padding: 10px !important;
+  font-size: 25px !important;
+}
+
+.id-card-2 {
+  color: #EB5481 !important;
+  background-color: #FFE6EC !important;
+  padding: 10px !important;
+  font-size: 25px !important;
+}
+
+.id-card-3 {
+  color: #42A5ED !important;
+  background-color: #E6F6FF !important;
+  padding: 10px !important;
+  font-size: 25px !important;
+}
+
+.news-title {
+  font-size: 14px !important;
+}
+
+.news-sub-title {
+  font-size: 10px !important;
+  color: rgb(164, 154, 154);
+}
+
+.head_color {
+  font-size: 15px !important;
+  font-weight: 100 !important;
+  color: #1e4070 !important;
+}
+
+.table_data {
+  font-size: 14px !important;
+  font-weight: 300 !important;
+  color: #092C4C !important;
+}
+
+.fa-user-circle-o {
+  color: #fff !important;
+  background-color: #0C315E !important;
+  padding: 3px !important;
+  border-radius: 50% !important;
+}

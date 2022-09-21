@@ -1,1 +1,286 @@
-<p>cdl works!</p>
+<div class="card">
+  <div class="d-flex">
+    <div>
+      <img width="60" height="60" src="../../../../assets/images/cdl/profile.png">
+    </div>
+    <div class="pt-1">
+      <span class="font-weight-bold">Welcome back, {{user.userName}}</span><br>
+      <span class="sub-title"><i class="fa fa-stop-circle" aria-hidden="true"></i>&nbsp;You have new
+        notifications</span>
+    </div>
+  </div>
+</div>
+<div *ngIf="user.userType!=1">
+  <img width="100%" height="252px" src="../../../../assets/images/cdl/header.png">
+</div>
+<div *ngIf="user.userType==1" class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-4" (click)="CreateLoan()">
+          <div class="dashboard-card text-center border pointer-cursor px-3">
+            <div class="d-flex">
+              <div>
+                <i class="fa fa-certificate approved-loan-head-icon" aria-hidden="true"></i>
+              </div>&nbsp;&nbsp;
+              <div>
+                <span class="head-card-title">Approved Loans</span><br>
+                &nbsp;&nbsp;<span class="font-weight-bold">10</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4" (click)="CreateLoan()">
+          <div class="dashboard-card text-center border pointer-cursor px-3">
+            <div class="d-flex">
+              <div>
+                <i class="fa fa-money approved-amount-head-icon" aria-hidden="true"></i>
+              </div>&nbsp;&nbsp;
+              <div>
+                <span class="head-card-title">Total Approved Amount</span><br>
+                &nbsp;&nbsp;<span class="font-weight-bold"><i class="fa fa-inr"></i>&nbsp;30,000</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4" (click)="CreateLoan()">
+          <div class="dashboard-card text-center border pointer-cursor px-3">
+            <div class="d-flex">
+              <div>
+                <i class="fa fa-signal rejected-loan-head-icon" aria-hidden="true"></i>
+              </div>&nbsp;&nbsp;
+              <div>
+                <span class="head-card-title">Rejected Loans</span><br>
+                &nbsp;&nbsp;<span class="font-weight-bold">1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mt-2" (click)="CreateLoan()">
+          <div class="dashboard-card text-center border pointer-cursor px-3">
+            <div class="d-flex">
+              <div>
+                <i class="fa fa-certificate total-amount-head-icon" aria-hidden="true"></i>
+              </div>&nbsp;&nbsp;
+              <div>
+                <span class="head-card-title">Total for all goals</span><br>
+                &nbsp;&nbsp;<span class="font-weight-bold"><i class="fa fa-usd"></i>&nbsp;5879</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4 pl-0">
+    <img width="100%" height="252px" src="../../../../assets/images/cdl/header.png">
+  </div>
+</div>
+
+<div class="card m-2">
+  <div class="mb-2">
+    <span class="font-weight-bold">Quick Actions</span>
+  </div>
+  <div class="row">
+    <div class="col-md-2" (click)="CreateLoan()">
+      <div class="dashboard-card text-center border p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-plus add-loan-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">Create Loan</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="dashboard-card text-center border p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-plus add-lead-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">Create Lead</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2" (click)="ApprovedLoans()">
+      <div class="dashboard-card text-center border p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-check approved-loan-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">Approved Loans</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="dashboard-card text-center border p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-spinner redirected-loan-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">Redirected Loans</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-2">
+      <div class="dashboard-card text-center border p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-times rejected-loan-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">Rejected Loans</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2">
+      <div class="dashboard-card text-center border p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-calculator emi-calc-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">EMI Calculator</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card">
+      <!-- <div class="pull-left">
+        <nav class="navbar navbar-static-top no-margin" role="navigation">
+          <div class="navbar-custom-menu width100pc">
+            <ul class="nav navbar-nav width100pc">
+              <li class="dropdown messages-menu loc-lst queue-menu pull-right">
+                <i class="icon-location dropdown-toggle " data-toggle="dropdown" style="color:#1D3E77 !important"></i>
+
+                <ul class="dropdown-menu">
+                  <li>
+                    <ul class="menu">
+                      <li>
+                        <a class="pointer-cursor">
+                          <h4>All Loans</h4>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div> -->
+      <div class="table-responsive dash-list">
+        <table class="table" style="background-color: white;">
+          <thead>
+            <tr class="tble-filtr-tr heght">
+              <th class="head_color">Name</th>
+              <th class="head_color">Loan Amount</th>
+              <th class="head_color">Phone</th>
+            </tr>
+          </thead>
+          <tbody class="table_data">
+            <ng-container>
+              <tr style=" cursor:pointer">
+                <td>
+                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Krishna</span>
+                </td>
+                <td>
+                  <span><i class="fa fa-inr"></i>&nbsp;40000</span>
+                </td>
+                <td>
+                  <span>5550001937</span>
+                </td>
+                <td>
+                  <a class="btn btn-primary">View</a>
+                </td>
+              </tr>
+              <tr style=" cursor:pointer">
+                <td>
+                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Mani</span>
+                </td>
+                <td>
+                  <span><i class="fa fa-inr"></i>&nbsp;50000</span>
+                </td>
+                <td>
+                  <span>5550001958</span>
+                </td>
+                <td>
+                  <a class="btn btn-primary">View</a>
+                </td>
+              </tr>
+              <tr style=" cursor:pointer">
+                <td>
+                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Narendra</span>
+                </td>
+                <td>
+                  <span><i class="fa fa-inr"></i>&nbsp;20000</span>
+                </td>
+                <td>
+                  <span>5550009959</span>
+                </td>
+                <td>
+                  <a class="btn btn-primary">View</a>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card">
+      <div class="mb-2">
+        <span class="font-weight-bold">News Feed</span>
+      </div>
+      <div class="d-flex">
+        <div>
+          <i class="fa fa-newspaper-o id-card-1" aria-hidden="true"></i>
+        </div>&nbsp;&nbsp;
+        <div>
+          <span class="news-title">Please check the Credit report</span><br>
+          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
+          </span>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div>
+          <i class="fa fa-newspaper-o id-card-2" aria-hidden="true"></i>
+        </div>&nbsp;&nbsp;
+        <div>
+          <span class="news-title">Please check the Credit report</span><br>
+          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
+          </span>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div>
+          <i class="fa fa-newspaper-o id-card-3" aria-hidden="true"></i>
+        </div>&nbsp;&nbsp;
+        <div>
+          <span class="news-title">Please check the Credit report</span><br>
+          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br>

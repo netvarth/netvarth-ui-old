@@ -1,1 +1,280 @@
-<p>approved works!</p>
+<div class="card pointer-cursor">
+  <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+</div>
+
+
+<div class="card m-2" *ngIf="timetype==1">
+  <span class="font-weight-bold">&nbsp;Approved Loan</span><br><br>
+  <form>
+    <div class="row">
+      <div class="col-md-7">
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select a Scheme</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" formControlName="scheme">
+                  <option>Scheme 1</option>
+                  <option>Scheme 2</option>
+                  <option>Scheme 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Loan Amount</div>
+              </div>
+              <div class="">
+                <mat-slider thumbLabel displayValue="30000" value="30000" valueText="30000" [displayWith]="formatLabel"
+                  tickInterval="50000" step="1000" min="15000" max="100000" aria-label="units"></mat-slider>
+                <div class="d-flex justify-content-between">
+                  <span class="approved-amount"><i class="fa fa-inr"></i>&nbsp;15000</span>
+                  <span class="approved-amount"><i class="fa fa-inr"></i>&nbsp;100000</span>
+                </div>
+              </div>
+            </div><br>
+          </div>
+
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">EMI Tenure</div>
+              </div>
+              <div class="">
+                <mat-slider thumbLabel displayValue="8" value="8" valueText="8 Months" [displayWith]="formatLabel"
+                  tickInterval="6" step="1" min="6" max="12" aria-label="units"></mat-slider>
+                <div class="d-flex justify-content-between">
+                  <span class="approved-amount"><i class="fa fa-inr"></i>&nbsp;6 Months</span>
+                  <span class="approved-amount"><i class="fa fa-inr"></i>&nbsp;12 Months</span>
+                </div>
+              </div>
+            </div><br>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="card card-title">Rate of Interest<br><span class="card-sub-title">10%</span></div>
+                <div class="card card-title">Monthly EMI<br><span class="card-sub-title"><i
+                      class="fa fa-inr"></i>12550</span></div>
+                <div class="card card-title">Total Interest<br><span class="card-sub-title"><i
+                      class="fa fa-inr"></i>12550</span></div>
+                <div class="card card-title">Payable amount<br><span class="card-sub-title"><i
+                      class="fa fa-inr"></i>12550</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Purpose of Loan</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" formControlName="purpose" readonly>
+                  <option>Scheme 1</option>
+                  <option>Scheme 2</option>
+                  <option>Scheme 3</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Remarks</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea (keyup)="resetErrors()" type="text" placeholder="Enter Remarks" class="form-control"
+                  formControlName="remarks" autocomplete="off"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+    </div>
+    <div class="btn btn-primary" (click)="goNext()">
+      Next
+    </div>
+  </form>
+</div>
+
+
+
+
+
+<div class="card m-2" *ngIf="timetype==2">
+  <span class="font-weight-bold">&nbsp;Add Bank Details</span><br><br>
+  <form>
+    <div class="row">
+      <div class="col-md-7">
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Phone Number</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Phone Number" class="form-control"
+                  formControlName="phone" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Customer Name</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="name" placeholder="Enter Customer Name" class="form-control"
+                  formControlName="phone" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Email</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="email" placeholder="Enter Email" class="form-control"
+                  formControlName="phone" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Bank</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" formControlName="purpose">
+                  <option>KOTAK</option>
+                  <option>ICICI</option>
+                  <option>SBI</option>
+                  <option>HDFC</option>
+                  <option>BOI</option>
+                  <option>AXIS</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Account Number</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
+                  formControlName="phone" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Account Number</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
+                  formControlName="phone" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+    <div class="btn btn-primary" (click)="goNext()" *ngIf="timetype==2">
+      Create Loan
+    </div>
+  </form>
+</div>
+
+
+
+<div class="card m-2" *ngIf="timetype==3">
+  <span class="font-weight-bold">&nbsp;Loan Sanctioned</span><br><br>
+  <div class="row">
+    <div class="col-md-10 card-border">
+
+      <div class="col-md-6">
+        <div>
+          <img width="80" height="60" src="../../../../assets/images/cdl/sanctioned.png">&nbsp;&nbsp;
+          <span class="font-weight-bold sanctioned-title">Loan have been sanctioned</span>
+        </div>
+        <div>
+          <span class="font-weight-bold card-title">Date : </span>
+          <span class="font-weight-bold card-small-font">20/09/2022</span><br>
+          <span class="font-weight-bold card-title">Purpose of Loan: </span>
+          <span class="font-weight-bold card-small-font">Car Purchase</span>
+        </div><br>
+        <div class="upload-btn pointer-cursor">
+          Upload Invoice
+        </div>
+      </div>
+
+      <div class="col-md-6 d-flex">
+        <div class="card">
+          <span class="font-weight-bold card-title">Loan Amount</span><br>
+          <span class="font-weight-bold"><i class="fa fa-inr"></i>&nbsp;44000</span>
+        </div>
+        <div class="card">
+          <span class="font-weight-bold card-title">Duration</span><br>
+          <span class="font-weight-bold"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;6 Months</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="btn btn-primary mt-3" (click)="goHome()" *ngIf="timetype==3">
+    Go to Home
+  </div>
+</div>

@@ -2,9 +2,10 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApprovedComponent } from './approved.component';
 import { RouterModule, Routes } from '@angular/router';
+import { MatSliderModule } from '@angular/material/slider';
 
 const routes: Routes = [
-  { path: '', component: ApprovedComponent}
+  { path: '', component: ApprovedComponent }
 ]
 
 @NgModule({
@@ -13,6 +14,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    MatSliderModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
