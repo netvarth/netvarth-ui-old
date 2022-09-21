@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
+import { OtpVerifyComponent } from '../../loans/otp-verify/otp-verify.component';
 
 @Component({
-  selector: 'app-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  selector: 'app-create-dealer',
+  templateUrl: './create-dealer.component.html',
+  styleUrls: ['./create-dealer.component.css']
 })
-export class CreateComponent implements OnInit {
+export class CreateDealerComponent implements OnInit {
 
   selectedMessage = {
     files: [],
@@ -48,27 +48,12 @@ export class CreateComponent implements OnInit {
   }
 
   goNext() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved'])
+    this.router.navigate(['provider', 'cdl', 'dealers', 'approved'])
   }
 
-  filesSelected(event) {
-    console.log('event', event)
-    const input = event.target.files;
-    console.log('input', input)
-    if (input) {
-      for (const file of input) {
-        this.selectedMessage.files.push(file);
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.selectedMessage.base64.push(e.target['result']);
-        };
-        reader.readAsDataURL(file);
-        // }
-      }
-    }
+  imageSelect(event) {
+
   }
-
-
   verifyotp() {
     let can_remove = false;
     const dialogRef = this.dialog.open(OtpVerifyComponent, {

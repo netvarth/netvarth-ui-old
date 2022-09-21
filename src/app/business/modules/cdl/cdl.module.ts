@@ -7,7 +7,8 @@ import { OtpVerifyModule } from './loans/otp-verify/otp-verify.module';
 
 const routes: Routes = [
   { path: '', component: CdlComponent },
-  { path: 'loans', loadChildren: () => import('./loans/loans.module').then(m => m.LoansModule) }
+  { path: 'loans', loadChildren: () => import('./loans/loans.module').then(m => m.LoansModule) },
+  { path: 'dealers', loadChildren: () => import('./dealer/dealer.module').then(m => m.DealerModule) }
 ]
 
 @NgModule({

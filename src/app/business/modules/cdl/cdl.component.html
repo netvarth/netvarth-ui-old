@@ -179,7 +179,7 @@
       </div>
     </div>
 
-    <div class="col-md-2" *ngIf="user.userType==1">
+    <div class="col-md-2" *ngIf="user.userType==1" (click)="createDealer()">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-user create-dealer-icon"></i>
