@@ -1,0 +1,40 @@
+.table{
+    background: #FFFFFF;
+    border: 1.42818px solid #DFE0EB;
+    border-radius: 11.4254px;
+}
+table thead tr th {
+    color: #1D3E77;
+    font-size: 13px;
+    padding: 15px;
+}
+table tbody tr td {
+    color: #000000;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 15px;
+}
+.tble-filtr-tr{
+    border: 1.42818px solid #DFE0EB !important;
+}
+.dash-head{
+    display: flex;
+    gap: 5px;
+}
+.colorHeaderIcon{
+    color:#1D3E77 !important
+}
+.approvedColor{
+    color: #3DD1BF;
+}
+.loanStatus{
+    display:flex;
+    gap: 5px;
+}
+.imageApprove{
+    height: 18px;
+    width: 18px;
+}
+.marginClass{
+    margin-top: 10px;
+}

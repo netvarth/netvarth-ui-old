@@ -1,1 +1,42 @@
-<p>loans works!</p>
+<!-- <div class="card pointer-cursor">
+    <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+  </div> -->
+  <section class="card">
+    <div class="title-gb no-padding">
+      <div class="dash-head">
+       <div> <i class="fa fa-arrow-left colorHeaderIcon"  aria-hidden="true" (click)="goBack()"></i></div>
+       <div class="colorHeaderIcon"*ngIf="headerName">{{headerName |capitalizeFirst}}</div>
+      </div>
+    </div>
+  </section>
+  <div>
+    <div class="col-md-12 marginClass">
+      <div class="card">
+        <div class="table-responsive dash-list">
+          <table class="table">
+            <thead>
+              <tr class="tble-filtr-tr heght">
+                <th class="head_color">Loan Id</th>
+                <th class="head_color">Customer Name</th>
+                <th class="head_color">Dealer</th>
+                <th class="head_color">Status</th>
+              </tr>
+            </thead>
+            <tbody class="table_data">
+              <ng-container>
+                <tr style="cursor:pointer" *ngFor="let item of approvedLoans;let i=index">
+                    <td data-title="Loan Details" class="td1" *ngIf="item && item.loanId">{{item.loanId}}</td>
+                    <td data-title="Loan Details" class="td1" *ngIf="item && item.CustomerName">{{item.CustomerName}}</td>
+                    <td data-title="Loan Details" class="td1" *ngIf="item && item.Dealer">{{item.Dealer}}</td>
+                    <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status">
+                        <img class="imageApprove" src="/assets/images/cdl/approved.png" />
+                        <div class="approvedColor" *ngIf="item && item.status">{{item.status}}</div>
+                    </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>

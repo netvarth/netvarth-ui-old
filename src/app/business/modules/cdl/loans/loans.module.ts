@@ -2,6 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { LoansComponent } from './loans.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+
 
 const routes: Routes = [
   { path: '', component: LoansComponent },
@@ -10,10 +13,16 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [],
+  exports: [LoansComponent],
+  declarations: [LoansComponent],
   imports: [
     CommonModule,
+    CapitalizeFirstPipeModule,
     [RouterModule.forChild(routes)]
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
   ]
 })
 export class LoansModule { }

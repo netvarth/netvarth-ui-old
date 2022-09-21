@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
 
 @Component({
@@ -51,7 +51,13 @@ export class CdlComponent implements OnInit {
   }
 
   ApprovedLoans() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'approvedLoans'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'loans'],navigationExtras);
+    // this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
   }
 }
 
