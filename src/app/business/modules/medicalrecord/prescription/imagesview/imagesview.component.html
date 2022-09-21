@@ -10,8 +10,8 @@
   </div>
 </div>
 <mat-dialog-content>
-  <div class="card">
-    <img width="100%"  [src]="locationImg" />
+  <div class="cardCustom">
+    <img #content width="100%"  [src]="locationImg" />
   </div>
 </mat-dialog-content>
 <div class="btnClass1">
@@ -20,4 +20,6 @@
     <app-common-innerloading-spinner [spinnerParams]="{diameter:20}" *ngIf="loading"></app-common-innerloading-spinner>
     <span *ngIf="!loading"><i class="fa fa-download" aria-hidden="true"></i></span>
     <span *ngIf="!loading" style="margin-left: 5px;">Download</span></button>
+    <button type="button"class="btn btn-primary font-weight-bold cancelBtn" [cdkCopyToClipboard]="imgDetails.url"
+    (click)="copyImage(imgDetails.url,content)"><i class="fa fa-link" aria-hidden="true"></i>Copy Url</button>
  </div>

@@ -57,3 +57,10 @@
     font-weight: bold;
     font-size: 14px;
   }
+  .cardCustom{
+    background: #FCFCFC !important;
+    border: 1.20589px dashed #C9C9C9 !important;
+    border-radius: 5.2647px !important;
+    width: 100% !important;
+    z-index: 9999999;
+  }

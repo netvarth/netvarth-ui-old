@@ -59,17 +59,16 @@
     color: black!important;
     background-image: none!important;
     border-radius: 5.73504px!important;
-    /* box-shadow: inset 0 1px 1px rgba(0,0,0,.08)!important;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s!important; */
     background: #F7F7F7;
     border: none;
 
 }
 ::ng-deep .form-control:focus {
-    border: 2px solid #96d3e2 !important;
+    border: 1px solid #96d3e2 !important;
 }
 textarea{
     resize: none;
+    height: 85px !important;
 }
 .labelSize {
     font-size: 12px;
@@ -240,6 +239,7 @@ border-radius: 7.80557px;
     margin-top: 10px;
     background: #FFFFFF;
     width: 50%;
+    height: 50px;
   }
   .btnMenu{
     border: none;
@@ -346,6 +346,9 @@ border-radius: 7.80557px;
     textarea::placeholder {
       font-size: 12px !important;
       font-style: italic !important;
+    }
+    .resClass{
+      font-size: 12px;
     }
       
   }

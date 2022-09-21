@@ -5,6 +5,7 @@ import { ImagesviewComponent } from "./imagesview.component";
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { MatIconModule } from "@angular/material/icon";
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 @NgModule({
     imports: [
@@ -13,6 +14,7 @@ import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spin
         MatTooltipModule,
         MatIconModule,
         LoadingSpinnerModule,
+        ClipboardModule,
     ],
     exports: [ImagesviewComponent],
     declarations: [ImagesviewComponent]

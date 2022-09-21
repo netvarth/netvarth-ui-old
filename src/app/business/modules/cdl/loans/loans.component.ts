@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-// import {  Router } from '@angular/router';
+import {  Router,NavigationExtras } from '@angular/router';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -47,7 +47,7 @@ export class LoansComponent implements OnInit {
   headerName:string=''
   constructor(
     private groupService: GroupStorageService,
-    // private router: Router,
+    private router: Router,
     private location: Location,
     private activated_route: ActivatedRoute,
   ) { }
@@ -93,7 +93,16 @@ export class LoansComponent implements OnInit {
   }
   loanDetails(data){
     console.log(data);
-
+    const status= data['status'];
+    const customerName=data['CustomerName']
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'loanDetails',
+          status:status,
+          customerName:customerName
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans','loanDetails'],navigationExtras);
   }
 
 }

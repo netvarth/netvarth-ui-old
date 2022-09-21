@@ -187,7 +187,7 @@ export class ShareRxComponent implements OnInit {
     if(window && window.innerWidth){
       this.innerWidth = window.innerWidth;
       if (this.innerWidth <= 768) {
-        this.ScreenHeight= '50%';
+        this.ScreenHeight= '65%';
         this.screenWidth='80%';
       }
       else {

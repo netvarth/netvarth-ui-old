@@ -19,19 +19,19 @@ export class ManualSignatureComponent implements OnInit {
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
   signaturePadOptions: Object = {
     'minWidth': 1,
-    'max-width':1.5,
+    'max-width':1,
     'canvasWidth': 500,
     'canvasHeight': 300,
     'penColor': "#000000",
-    'dotSize':'3.2'
+    'dotSize':'3'
   };
   smallsignaturePadOptions: Object = {
     'minWidth': .5,
-    'max-width':1,
+    'max-width':.8,
     'canvasWidth': 200,
     'canvasHeight': 150,
     'penColor': "#000000",
-    'dotSize':'3.2'
+    'dotSize':'2'
   };
   display_PatientId: any;
   today = new Date();
@@ -73,6 +73,7 @@ export class ManualSignatureComponent implements OnInit {
   count: number = 0;
   selectedColor:any='#000000'
   tempSubmitData:any;
+  selectedColorBg:any=''
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public uploadmanualsignatureRef: MatDialogRef<ManualSignatureComponent>,
@@ -171,23 +172,38 @@ export class ManualSignatureComponent implements OnInit {
         });
   }
   resizeSignaturePad() {
-    // alert('jj')
-    this.signaturePad.set('canvasWidth', document.getElementById("sign_canvas").offsetWidth);
+    const doc= document.getElementById("sign_canvas");
+  this.signaturePad.set('canvasWidth', doc.offsetWidth);
     const canvas:any = document.querySelector("canvas");
-    const ratio =  Math.max(window.devicePixelRatio || 2, 2);
+  const ratio =  Math.max(window.devicePixelRatio || 2, 2);
+  if(canvas && canvas.offsetWidth * ratio){
     canvas.width = canvas.offsetWidth * ratio;
+  }
+  if(canvas && canvas.offsetHeight * ratio){
     canvas.height = canvas.offsetHeight * ratio;
+  }
+  if(ratio){
     canvas.getContext("2d").scale(ratio, ratio);
     this.signaturePad.clear(); 
+  }
 }
 resizeSignaturePadMobile(){
-  this.signaturePad.set('canvasWidth', document.getElementById("sign_canvas").offsetWidth);
+  const doc= document.getElementById("sign_canvas");
+  this.signaturePad.set('canvasWidth', doc.offsetWidth);
     const canvas:any = document.querySelector("canvas");
   const ratio =  Math.max(window.devicePixelRatio || 1, 1);
+  if(canvas && canvas.offsetWidth * ratio){
     canvas.width = canvas.offsetWidth * ratio;
+  }
+  if(canvas && canvas.offsetHeight * ratio){
     canvas.height = canvas.offsetHeight * ratio;
+  }
+  if(ratio){
     canvas.getContext("2d").scale(ratio, ratio);
     this.signaturePad.clear(); 
+  }
+    
+    
 }
 undoSignature(){
   const data = this.signaturePad.toData();
@@ -203,6 +219,9 @@ undoSignature(){
       }
       else{
         this.sign = false;
+        if(this.signaturePad && this.signaturePad['signaturePad'] && this.signaturePad['signaturePad']['penColor']){
+          this.selectedColor= this.signaturePad['signaturePad']['penColor'];
+        }
       }
     }
 }
@@ -210,6 +229,12 @@ colorChange(color){
   // console.log(color);
   if(color){
     this.signaturePad['signaturePad']['penColor']=color;
+    console.log(' this.signaturePad', this.signaturePad);
+  }
+}
+bgColorChange(color){
+  if(color){
+    this.signaturePad['signaturePad']['backgroundColor']=color;
     console.log(' this.signaturePad', this.signaturePad);
   }
 }

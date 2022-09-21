@@ -4,11 +4,17 @@
       <div class="d-flex" style="align-items: center;gap:5px">
         <div class="heading font-weight-bold">{{heading}}</div>
        <div class="clrChangeInput">
-        <input id="input-color" value="#000000"  type="color" [(ngModel)]="selectedColor" (ngModelChange)="colorChange(selectedColor)" >
+        <input id="input-color" type="color" [(ngModel)]="selectedColor" (ngModelChange)="colorChange(selectedColor)" >
         <label class="input-color-label" for="input-color">
           <i class="fa fa-arrow-down" aria-hidden="true"></i>
         </label>
        </div>
+       <!-- <div class="clrChangeInput">
+        <input id="input-colorBG" type="color" [(ngModel)]="selectedColorBg" (ngModelChange)="bgColorChange(selectedColorBg)" >
+        <label class="input-color-label" for="input-colorBG">
+          <i class="fa fa-arrow-down" aria-hidden="true"></i>
+        </label>
+       </div> -->
       </div>
       <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon"
       #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">

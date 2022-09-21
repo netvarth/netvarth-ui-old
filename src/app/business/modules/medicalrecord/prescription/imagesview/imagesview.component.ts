@@ -44,13 +44,16 @@ export class ImagesviewComponent implements OnInit {
     this.dialogRef.close();
   }
   downLoad(data){
-    let imageUrl =this.imgDetails.url;
+    console.log(data)
+    // window.open()
+    let imageUrl =data.url;
     this.loading= true;
-  this.getBase64ImageFromURL(imageUrl).subscribe(base64data => {
-    console.log(base64data);
-    this.base64Image = "data:image/jpg;base64," + base64data;
+  this.getBase64ImageFromURL(imageUrl,data.type).subscribe(base64data => {
+    // console.log(base64data);
+    const new1= data.type.slice(1,data.type.length)
+    console.log(new1)
+    this.base64Image = 'data:image/'+new1+';base64,' + base64data;
     var link = document.createElement("a");
-
     document.body.appendChild(link);
     link.setAttribute("href", this.base64Image);
     link.setAttribute("download", data.originalName);
@@ -58,27 +61,27 @@ export class ImagesviewComponent implements OnInit {
     this.loading=false;
   });
   }
-  getBase64ImageFromURL(url: string) {
+  getBase64ImageFromURL(url: string,type?) {
     return Observable.create((observer: Observer<string>) => {
       const img: HTMLImageElement = new Image();
       img.crossOrigin = "Anonymous";
       img.src = url;
       if (!img.complete) {
         img.onload = () => {
-          observer.next(this.getBase64Image(img));
+          observer.next(this.getBase64Image(img,type));
           observer.complete();
         };
         img.onerror = err => {
           observer.error(err);
         };
       } else {
-        observer.next(this.getBase64Image(img));
+        observer.next(this.getBase64Image(img,type));
         observer.complete();
       }
     });
   }
 
-  getBase64Image(img: HTMLImageElement) {
+  getBase64Image(img: HTMLImageElement,type?) {
     const canvas: HTMLCanvasElement = document.createElement("canvas");
     canvas.width = img.width;
     canvas.height = img.height;
@@ -86,5 +89,25 @@ export class ImagesviewComponent implements OnInit {
     ctx.drawImage(img, 0, 0);
     const dataURL: string = canvas.toDataURL("image/png");
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+   
   }
+   copyImage1(url){
+    var img=document.createElement('img');
+    img.src=url;
+    document.body.appendChild(img);
+    var r = document.createRange();
+    r.setStartBefore(img);
+    r.setEndAfter(img);
+    r.selectNode(img);
+    var sel = window.getSelection();
+    sel.addRange(r);
+    document.execCommand('Copy');
+}
+
+
+copyImage(data,event) {
+  // console.log(data)
+  // console.log(event)
+}
+
 }
