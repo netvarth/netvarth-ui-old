@@ -1109,10 +1109,20 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((response:any)=>{
-      console.log('response',response)
+      // console.log('response',response);
+      // console.log(this.leadInfo.status)
       if(response){
-        this.crmService.rejectedStatusLeadkyc(this.leadInfo.uid,response).subscribe((response) => {
-          console.log('afterupdateFollowUpData', response);
+        // console.log(this.leadInfo.status);
+        let leadType:string='';
+        if(this.leadInfo && this.leadInfo.status && this.leadInfo.status.name==='KYC'){
+          leadType='enquire';
+        }
+        else{
+          leadType='lead';
+        }
+        // console.log('leadType',leadType)
+        this.crmService.rejectedStatusLeadkyc(this.leadInfo.uid,leadType,response).subscribe((response) => {
+          console.log('afterreject', response);
           this.router.navigate(['provider', 'crm']);
         },
           (error) => {
