@@ -175,21 +175,21 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     btnClicked = false // To avoid double click
     apptDetails_firstName;
     apptDetails_lastName;
-    convenientPaymentModes:any=[];
+    convenientPaymentModes: any = [];
     convenientFeeObj: any;
     convenientFee: any;
-    paymentReqInfo : any = { }
+    paymentReqInfo: any = {}
     gatewayFee: any;
     profileId: any;
     serviceOPtionInfo: any;
     serviceOptionQuestionnaireList: any;
     groupedQnr: any;
-    finalDataToSend : any;
+    finalDataToSend: any;
     serviceOptionApptt = false;
     showSlot = true;
     showNext = false;
-    serviceTotalPrice : number;
-    total_servicefee : number;
+    serviceTotalPrice: number;
+    total_servicefee: number;
     readMore = false;
     advPostData: any;
     accountConfig: any;
@@ -256,7 +256,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (params.isFrom && params.isFrom == 'providerdetail') {
                     this.from = 'providerdetail';
                 }
-                
+
             })
     }
 
@@ -296,7 +296,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         _this.configService.getUIAccountConfig(this.uniqueId).subscribe(
             (uiconfig: any) => {
-              _this.accountConfig = uiconfig;
+                _this.accountConfig = uiconfig;
             });
         // Collecting informations from s3 businessProfile, settings etc.
         this.gets3urls().then(
@@ -312,20 +312,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.serviceOPtionInfo = this.lStorageService.getitemfromLocalStorage('serviceOPtionInfo');
         this.getServiceOptions()
     }
-    getServiceOptions(){
-        this.subs.sink = this.sharedServices.getServiceoptionsAppt(this.selectedServiceId , this.accountId)
+    getServiceOptions() {
+        this.subs.sink = this.sharedServices.getServiceoptionsAppt(this.selectedServiceId, this.accountId)
             .subscribe(
                 (data) => {
                     if (data) {
                         this.serviceOptionQuestionnaireList = data;
-                        if(this.serviceOptionQuestionnaireList.questionnaireId && this.appointmentType !== 'reschedule'){
+                        if (this.serviceOptionQuestionnaireList.questionnaireId && this.appointmentType !== 'reschedule') {
                             this.serviceOptionApptt = true;
                             this.bookStep = 1;
                         }
-                        else{
-                            this.bookStep = 2;  
+                        else {
+                            this.bookStep = 2;
                         }
-                       
+
                     }
                 },
                 error => {
@@ -504,9 +504,19 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     goBack(type?) {
-            if (type) {
-                console.log(this.bookStep);
-                if (this.bookStep === 1) {
+        if (type) {
+            console.log(this.bookStep);
+            if (this.bookStep === 1) {
+                let source = this.lStorageService.getitemfromLocalStorage('source');
+                if (source) {
+                    window.location.href = source;
+                    this.lStorageService.removeitemfromLocalStorage('reqFrom');
+                    this.lStorageService.removeitemfromLocalStorage('source');
+                } else {
+                    this.location.back();
+                }
+            } else {
+                if (this.bookStep === 2 && !this.serviceOptionApptt) {
                     let source = this.lStorageService.getitemfromLocalStorage('source');
                     if (source) {
                         window.location.href = source;
@@ -514,128 +524,118 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         this.lStorageService.removeitemfromLocalStorage('source');
                     } else {
                         this.location.back();
-                    }              
-                } else {
-                    if (this.bookStep === 2 && !this.serviceOptionApptt){
-                        let source = this.lStorageService.getitemfromLocalStorage('source');
-                        if (source) {
-                            window.location.href = source;
-                            this.lStorageService.removeitemfromLocalStorage('reqFrom');
-                            this.lStorageService.removeitemfromLocalStorage('source');
-                        } else {
-                            this.location.back();
-                        }   
-                    } else {
-                        this.goToStep('prev');
                     }
-                   
+                } else {
+                    this.goToStep('prev');
                 }
+
             }
-            if (this.action !== 'addmember') {
-                this.closebutton.nativeElement.click();
-            }
-            setTimeout(() => {
-                if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.departmentEnabled)
-                    || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
-                    this.action === 'phone' || this.action === 'email') {
-                    this.action = '';
-                } else if (this.action === 'addmember') {
-                    this.action = 'members';
-                } else if (this.action === 'service' && this.departmentEnabled) {
-                    this.action = '';
-                } else if (this.action === 'preInfo') {
-                    this.action = '';
-                }
-            }, 500);            
         }
-       
-    
+        if (this.action !== 'addmember') {
+            this.closebutton.nativeElement.click();
+        }
+        setTimeout(() => {
+            if (this.action === 'note' || this.action === 'members' || (this.action === 'service' && !this.departmentEnabled)
+                || this.action === 'attachment' || this.action === 'coupons' || this.action === 'departments' ||
+                this.action === 'phone' || this.action === 'email') {
+                this.action = '';
+            } else if (this.action === 'addmember') {
+                this.action = 'members';
+            } else if (this.action === 'service' && this.departmentEnabled) {
+                this.action = '';
+            } else if (this.action === 'preInfo') {
+                this.action = '';
+            }
+        }, 500);
+    }
+
+
 
     actionPerformed(status) {
-        if(!this.serviceOptionApptt){
+        if (!this.serviceOptionApptt) {
             const _this = this;
-        if (status === 'success') {          
-            _this.initAppointment().then(
-                (status) => {
-                    const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-                    _this.getOneTimeInfo(activeUser, _this.accountId).then(
-                        (questions) => {
-                            console.log("Questions:", questions);
-                            if (questions) {
-                                _this.onetimeQuestionnaireList = questions;
-                                console.log("OneTime:", _this.onetimeQuestionnaireList);
-                               
-                               
-                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                                    _this.bookStep = 3;
-                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                    _this.bookStep = 4;
+            if (status === 'success') {
+                _this.initAppointment().then(
+                    (status) => {
+                        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+                        _this.getOneTimeInfo(activeUser, _this.accountId).then(
+                            (questions) => {
+                                console.log("Questions:", questions);
+                                if (questions) {
+                                    _this.onetimeQuestionnaireList = questions;
+                                    console.log("OneTime:", _this.onetimeQuestionnaireList);
+
+
+                                    if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                        _this.bookStep = 3;
+                                    } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        _this.bookStep = 4;
+                                    } else {
+                                        _this.bookStep = 5;
+                                        this.confirmAppointment('next');
+                                    }
+                                    console.log("Bookstep3:", _this.bookStep);
                                 } else {
-                                    _this.bookStep = 5;
-                                    this.confirmAppointment('next');
+                                    if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        _this.bookStep = 4;
+                                    } else {
+                                        _this.bookStep = 5;
+                                        this.confirmAppointment('next');
+                                    }
                                 }
-                                console.log("Bookstep3:", _this.bookStep);
-                            } else {
-                                if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                    _this.bookStep = 4;
-                                } else {
-                                    _this.bookStep = 5;
-                                    this.confirmAppointment('next');
-                                }
+                                _this.loggedIn = true;
+                                // _this.loading = false;
                             }
-                            _this.loggedIn = true;
-                            // _this.loading = false;
-                        }
-                    )
-                }
-            );
-        }
-        }
-else{
-    const _this = this;
-    if (status === 'success') {          
-        _this.initAppointment().then(
-            (status) => {
-                const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-                _this.getOneTimeInfo(activeUser, _this.accountId).then(
-                    (questions) => {
-                        console.log("Questions:", questions);
-                        if (questions) {
-                            _this.onetimeQuestionnaireList = questions;
-                            console.log("OneTime:", _this.onetimeQuestionnaireList);
-                            if(this.showSlot){
-                                _this.bookStep = 2;
-                            }
-                           
-                            else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                                _this.bookStep = 3;
-                            } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                _this.bookStep = 4;
-                            } else {
-                                _this.bookStep = 5;
-                                this.confirmAppointment('next');
-                            }
-                            console.log("Bookstep3:", _this.bookStep);
-                        } else {
-                            if(this.showSlot){
-                                _this.bookStep = 2;
-                            }
-                            else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                _this.bookStep = 4;
-                            } else {
-                                _this.bookStep = 5;
-                                this.confirmAppointment('next');
-                            }
-                        }
-                        _this.loggedIn = true;
-                        // _this.loading = false;
+                        )
                     }
-                )
+                );
             }
-        );
-    }
-}
-      
+        }
+        else {
+            const _this = this;
+            if (status === 'success') {
+                _this.initAppointment().then(
+                    (status) => {
+                        const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+                        _this.getOneTimeInfo(activeUser, _this.accountId).then(
+                            (questions) => {
+                                console.log("Questions:", questions);
+                                if (questions) {
+                                    _this.onetimeQuestionnaireList = questions;
+                                    console.log("OneTime:", _this.onetimeQuestionnaireList);
+                                    if (this.showSlot) {
+                                        _this.bookStep = 2;
+                                    }
+
+                                    else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                        _this.bookStep = 3;
+                                    } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        _this.bookStep = 4;
+                                    } else {
+                                        _this.bookStep = 5;
+                                        this.confirmAppointment('next');
+                                    }
+                                    console.log("Bookstep3:", _this.bookStep);
+                                } else {
+                                    if (this.showSlot) {
+                                        _this.bookStep = 2;
+                                    }
+                                    else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        _this.bookStep = 4;
+                                    } else {
+                                        _this.bookStep = 5;
+                                        this.confirmAppointment('next');
+                                    }
+                                }
+                                _this.loggedIn = true;
+                                // _this.loading = false;
+                            }
+                        )
+                    }
+                );
+            }
+        }
+
     }
 
     getServicebyLocationId(locationId, appmtDate) {
@@ -709,9 +709,9 @@ else{
                 consumerNoteTitle: activeService.consumerNoteTitle,
                 maxBookingsAllowed: activeService.maxBookingsAllowed,
                 showOnlyAvailableSlots: activeService.showOnlyAvailableSlots,
-                showPrice:activeService.showPrice
+                showPrice: activeService.showPrice
             };
-            console.log("Active Service :",this.selectedService)
+            console.log("Active Service :", this.selectedService)
             if (activeService.provider) {
                 this.selectedUserId = activeService.provider.id;
                 this.setUserDetails(this.selectedUserId);
@@ -736,7 +736,7 @@ else{
         const _this = this;
         _this.selectedSlots = [];
         this.slotLoaded = false;
-        console.log("selectedService",_this.selectedService);
+        console.log("selectedService", _this.selectedService);
         const showOnlyAvailable = _this.selectedService.showOnlyAvailableSlots;
         _this.isSlotAvailable = showOnlyAvailable;
         console.log("showOnlyAvailable:", showOnlyAvailable);
@@ -856,7 +856,7 @@ else{
                                             console.log("Questions:", questions);
                                             if (questions) {
                                                 _this.onetimeQuestionnaireList = questions;
-                                                if(this.showSlot){
+                                                if (this.showSlot) {
                                                     _this.bookStep = 2;
                                                 }
                                                 else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
@@ -869,7 +869,7 @@ else{
                                                 }
                                                 console.log("Bookstep2:", _this.bookStep);
                                             } else {
-                                                if(this.showSlot){
+                                                if (this.showSlot) {
                                                     _this.bookStep = 2;
                                                 }
                                                 else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
@@ -890,46 +890,46 @@ else{
                         }
                     });
                     break;
-                    case 2:
-                        this.authService.goThroughLogin().then((status) => {
-                            console.log("Status:", status);
-                            if (status) {
-                                const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-                                _this.initAppointment().then(
-                                    (status) => {
-                                        _this.getOneTimeInfo(activeUser, _this.accountId).then(
-                                            (questions) => {
-                                                console.log("Questions:", questions);
-                                                if (questions) {
-                                                    _this.onetimeQuestionnaireList = questions;
-                                                   if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                                                        _this.bookStep = 3;
-                                                    } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                                        _this.bookStep = 4;
-                                                    } else {
-                                                        _this.bookStep = 5;
-                                                        this.confirmAppointment('next');
-                                                    }
-                                                    console.log("Bookstep2:", _this.bookStep);
+                case 2:
+                    this.authService.goThroughLogin().then((status) => {
+                        console.log("Status:", status);
+                        if (status) {
+                            const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+                            _this.initAppointment().then(
+                                (status) => {
+                                    _this.getOneTimeInfo(activeUser, _this.accountId).then(
+                                        (questions) => {
+                                            console.log("Questions:", questions);
+                                            if (questions) {
+                                                _this.onetimeQuestionnaireList = questions;
+                                                if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                                    _this.bookStep = 3;
+                                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                    _this.bookStep = 4;
                                                 } else {
-                                                    if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                                        _this.bookStep = 4;
-                                                    } else {
-                                                        _this.bookStep = 5;
-                                                        this.confirmAppointment('next');
-                                                    }
+                                                    _this.bookStep = 5;
+                                                    this.confirmAppointment('next');
                                                 }
-                                                _this.loggedIn = true;
-                                                // _this.loading = false;
+                                                console.log("Bookstep2:", _this.bookStep);
+                                            } else {
+                                                if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                                    _this.bookStep = 4;
+                                                } else {
+                                                    _this.bookStep = 5;
+                                                    this.confirmAppointment('next');
+                                                }
                                             }
-                                        )
-                                    }
-                                );
-                            } else {
-                                this.loggedIn = false;
-                            }
-                        });
-                        break;
+                                            _this.loggedIn = true;
+                                            // _this.loading = false;
+                                        }
+                                    )
+                                }
+                            );
+                        } else {
+                            this.loggedIn = false;
+                        }
+                    });
+                    break;
                 case 3:
                     _this.validateOneTimeInfo();
                     break;
@@ -946,7 +946,7 @@ else{
                     break;
             }
         } else if (type === 'prev') {
-            if(!this.serviceOptionApptt){
+            if (!this.serviceOptionApptt) {
                 if (this.bookStep === 5) {
                     if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.bookStep = 4;
@@ -956,7 +956,7 @@ else{
                     else if (this.showSlot) {
                         _this.bookStep = 2;
                     } else {
-                       
+
                         this.bookStep = 2;
                     }
                 }
@@ -971,7 +971,7 @@ else{
                     }
                 }
                 else if (this.bookStep === 3) {
-                   if (this.showSlot) {
+                    if (this.showSlot) {
                         _this.bookStep = 2;
                     } else {
                         this.bookStep = 2;
@@ -979,16 +979,16 @@ else{
                 }
                 else if (this.bookStep === 3) {
                     if (this.showSlot) {
-                         _this.bookStep = 2;
-                     } else {
-                         this.bookStep = 2;
-                     }
-                 } else {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 2;
+                    }
+                } else {
                     this.location.back();
-                   
+
                 }
             }
-            else{
+            else {
                 if (this.bookStep === 5) {
                     if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.bookStep = 4;
@@ -1012,7 +1012,7 @@ else{
                     }
                 }
                 else if (this.bookStep === 3) {
-                   if (this.showSlot) {
+                    if (this.showSlot) {
                         _this.bookStep = 2;
                     } else {
                         this.bookStep = 1;
@@ -1020,14 +1020,14 @@ else{
                 }
                 else if (this.bookStep === 3) {
                     if (this.showSlot) {
-                         _this.bookStep = 2;
-                     } else {
-                         this.bookStep = 1;
-                     }
-                 } else {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 1;
+                    }
+                } else {
                     this.bookStep--;
-                    
-                } 
+
+                }
             }
         } else {
             this.bookStep = type;
@@ -1186,9 +1186,9 @@ else{
 
     getProviderCustomerId(member, accountId) {
         console.log("Member:", member);
-        if(member){
-        this.apptDetails_firstName = member.firstName;
-        this.apptDetails_lastName = member.lastName;
+        if (member) {
+            this.apptDetails_firstName = member.firstName;
+            this.apptDetails_lastName = member.lastName;
         }
         console.log("ProviderList:", this.providerConsumerList);
         const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -1209,11 +1209,11 @@ else{
                 } else {
                     console.log("Hererer");
                     const providerConsumer_parent = _this.providerConsumerList.filter(user => user.firstName === activeUser.firstName && user.LastName === activeUser.LastName);
-                    console.log("Family Members:",  _this.familyMembers);    
-                    console.log("Member Id", member.id);    
+                    console.log("Family Members:", _this.familyMembers);
+                    console.log("Member Id", member.id);
                     console.log("Parent:", providerConsumer_parent);
                     if (providerConsumer_parent && providerConsumer_parent.length > 0) {
-                        parentId =  providerConsumer_parent[0].id;
+                        parentId = providerConsumer_parent[0].id;
                     }
                     const selectedMember = _this.familyMembers.filter(memb => memb.user === member.id);
                     console.log("Selected Member:", selectedMember);
@@ -1318,10 +1318,10 @@ else{
         return new Promise(function (resolve, reject) {
             _this.customerService.getCustomerInfo(activeUser.id).then(data => {
                 _this.parentCustomer = data;
-                if(_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.firstName){
+                if (_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.firstName) {
                     _this.apptDetails_firstName = _this.parentCustomer.userProfile.firstName;
                 }
-                if(_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.lastName){
+                if (_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.lastName) {
                     _this.apptDetails_lastName = _this.parentCustomer.userProfile.lastName;
                 }
                 if (_this.appointmentType != 'reschedule') {
@@ -1443,7 +1443,7 @@ else{
                 (appt: any) => {
                     _this.scheduledAppointment = appt;
                     console.log('Appointment:', _this.scheduledAppointment);
-                   
+
                     if (_this.appointmentType === 'reschedule') {
                         _this.appmtFor.push({ id: _this.scheduledAppointment.appmtFor[0].id, firstName: _this.scheduledAppointment.appmtFor[0].firstName, lastName: _this.scheduledAppointment.appmtFor[0].lastName, phoneNo: _this.scheduledAppointment.phoneNumber });
                         _this.commObj['communicationPhNo'] = _this.scheduledAppointment.phoneNumber;
@@ -1457,18 +1457,18 @@ else{
                             _this.commObj['comWhatsappCountryCode'] = _this.parentCustomer.userProfile.countryCode;
                         }
                         _this.consumerNote = _this.scheduledAppointment.consumerNote;
-                        if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].firstName){
+                        if (_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].firstName) {
                             _this.apptDetails_firstName = _this.scheduledAppointment.appmtFor[0].firstName;
                         }
-                        if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].lastName){
+                        if (_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].lastName) {
                             _this.apptDetails_lastName = _this.scheduledAppointment.appmtFor[0].lastName;
                         }
-                       
+
                     }
-                    if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].firstName){
+                    if (_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].firstName) {
                         _this.apptDetails_firstName = _this.scheduledAppointment.appmtFor[0].firstName;
                     }
-                    if(_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].lastName){
+                    if (_this.scheduledAppointment && _this.scheduledAppointment.appmtFor[0] && _this.scheduledAppointment.appmtFor[0].lastName) {
                         _this.apptDetails_lastName = _this.scheduledAppointment.appmtFor[0].lastName;
                     }
                     _this.locationId = _this.scheduledAppointment.location.id;
@@ -1482,12 +1482,12 @@ else{
                     _this.getServicebyLocationId(_this.locationId, _this.appmtDate);
                     _this.getSchedulesbyLocationandServiceIdavailability(_this.locationId, _this.selectedServiceId, _this.accountId);
                     resolve(true);
-                   
+
                 }, () => {
                     resolve(false);
                 });
         })
-     
+
     }
 
     /**
@@ -1506,11 +1506,11 @@ else{
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
-                   
+
                     this.isPayment = true;
                     this.profileId = this.paymentmodes.profileId;
-                    console.log("Profile ID :",this.profileId)
-               //   if(this.paymentmodes.isConvenienceFee === true){
+                    console.log("Profile ID :", this.profileId)
+                    //   if(this.paymentmodes.isConvenienceFee === true){
                     // let convienientPaymentObj = {}
                     // convienientPaymentObj = {
                     //     "profileId" :  this.paymentmodes.profileId,
@@ -1527,11 +1527,11 @@ else{
                     //                                     this.convenientFeeObj = res;
                     //                                         this.convenientFee = this.convenientFeeObj.convenienceFee;
                     //                                         console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
-                                                       
+
                     //                                 }
                     //                                })
                     //                             }
-                     
+
 
                     // })
                     // console.log("isConvenienceFee paymentsss:",this.paymentmodes)
@@ -1548,12 +1548,12 @@ else{
                     //     this.shownonIndianModes = false;
                     // }
 
-                 
-             //  }
-            // else {
-               // this.paymentmodes = data[0];
-               // console.log("paymentsss:",this.paymentmodes)
-                  if (this.paymentmodes && this.paymentmodes.indiaPay) {
+
+                    //  }
+                    // else {
+                    // this.paymentmodes = data[0];
+                    // console.log("paymentsss:",this.paymentmodes)
+                    if (this.paymentmodes && this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
                     if (this.paymentmodes && this.paymentmodes.internationalPay) {
@@ -1564,7 +1564,7 @@ else{
                     } else {
                         this.shownonIndianModes = false;
                     }
-             // }
+                    // }
                 },
                 error => {
                     this.isPayment = false;
@@ -1722,44 +1722,44 @@ else{
         console.log(JSON.stringify(post_Data))
         this.subs.sink = this.sharedServices.addApptAdvancePayment(param, post_Data).subscribe(data => {
             this.paymentDetails = data;
-            if(this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt){
-                this.serviceTotalPrice =  this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
+            if (this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt) {
+                this.serviceTotalPrice = this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
 
-              this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
+                this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
             }
             console.log("PaymentDetails:", this.paymentDetails);
             this.paymentLength = Object.keys(this.paymentDetails).length;
-                this.checkJcash = true
-                this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
-                this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
-                if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
-                    this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
+            this.checkJcash = true
+            this.jcashamount = this.paymentDetails.eligibleJcashAmt.jCashAmt;
+            this.jcreditamount = this.paymentDetails.eligibleJcashAmt.creditAmt;
+            if (this.checkJcash && this.paymentDetails.amountRequiredNow > this.jcashamount) {
+                this.payAmount = this.paymentDetails.amountRequiredNow - this.jcashamount;
 
-                } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
-                    this.payAmount = 0;
-                }
-                let convienientPaymentObj = {}
-                convienientPaymentObj = {
-                    "profileId" :  this.profileId,
-                    "amount" : this.paymentDetails.amountRequiredNow
-                }
-                this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
-                    // let array = []
-                    console.log("Convenient response :",data)
-                    this.convenientPaymentModes = data;
-                    if(this.convenientPaymentModes){
-                    this.convenientPaymentModes.map((res:any)=>{
-                    this.convenientFeeObj = { }
-                    if(res){
-                        this.convenientFeeObj = res;
+            } else if (this.checkJcash && this.paymentDetails.amountRequiredNow <= this.jcashamount) {
+                this.payAmount = 0;
+            }
+            let convienientPaymentObj = {}
+            convienientPaymentObj = {
+                "profileId": this.profileId,
+                "amount": this.paymentDetails.amountRequiredNow
+            }
+            this.sharedServices.getConvenientFeeOfProvider(this.accountId, convienientPaymentObj).subscribe((data: any) => {
+                // let array = []
+                console.log("Convenient response :", data)
+                this.convenientPaymentModes = data;
+                if (this.convenientPaymentModes) {
+                    this.convenientPaymentModes.map((res: any) => {
+                        this.convenientFeeObj = {}
+                        if (res) {
+                            this.convenientFeeObj = res;
                             this.convenientFee = this.convenientFeeObj.convenienceFee;
-                       
-                    }
+
+                        }
                     })
                 }
-                 
 
-                })
+
+            })
         }, error => {
             this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
@@ -1771,42 +1771,42 @@ else{
     indian_payment_mode_onchange(event) {
         this.paymentMode = event.value;
         this.isInternational = false;
-        this.convenientPaymentModes.map((res:any)=>{
-            this.convenientFeeObj = { }
-            if(res.isInternational === false){
+        this.convenientPaymentModes.map((res: any) => {
+            this.convenientFeeObj = {}
+            if (res.isInternational === false) {
                 this.convenientFeeObj = res;
-                if(this.paymentMode === res.mode){
-                  //  this.convenientFee = this.convenientFeeObj.convenienceFee;
-                 // if(this.convenientFeeObj.consumerGatewayFee)
-                 this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
-                   // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
-                    console.log("gatewayFee for indian:",this.gatewayFee,res.mode)
+                if (this.paymentMode === res.mode) {
+                    //  this.convenientFee = this.convenientFeeObj.convenienceFee;
+                    // if(this.convenientFeeObj.consumerGatewayFee)
+                    this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
+                    // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                    console.log("gatewayFee for indian:", this.gatewayFee, res.mode)
                 }
             }
-           })
+        })
     }
     non_indian_modes_onchange(event) {
         this.paymentMode = event.value;
         this.isInternational = true;
-        this.convenientPaymentModes.map((res:any)=>{
-            this.convenientFeeObj = { }
-            if(res.isInternational === true){
-               this.convenientFeeObj = res;
-               if(this.paymentMode === res.mode){
-                  // this.convenientFee = this.convenientFeeObj.convenienceFee;
-                 //  this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
-                   this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
+        this.convenientPaymentModes.map((res: any) => {
+            this.convenientFeeObj = {}
+            if (res.isInternational === true) {
+                this.convenientFeeObj = res;
+                if (this.paymentMode === res.mode) {
+                    // this.convenientFee = this.convenientFeeObj.convenienceFee;
+                    //  this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                    this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
 
-                   console.log("gatewayFee for  non-indian:",this.gatewayFee,res.mode)
-               }
-           }
-           })
+                    console.log("gatewayFee for  non-indian:", this.gatewayFee, res.mode)
+                }
+            }
+        })
     }
     confirmAppointment(type?) {
         console.log("confirmAppointment");
         console.log(this.commObj)
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
-       
+
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class'],
@@ -1821,7 +1821,7 @@ else{
                 }
             });
         } else {
-         
+
             if (this.selectedService.serviceType === 'virtualService' && !this.validateVirtualCallInfo(this.callingModes)) {
                 return false;
             }
@@ -1855,10 +1855,10 @@ else{
             .subscribe(data => {
                 this.paymentDetails = data;
                 console.log("PaymentDetailss:", this.paymentDetails);
-                if(this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt){
-                    this.serviceTotalPrice =  this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
+                if (this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt) {
+                    this.serviceTotalPrice = this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
 
-                  this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
+                    this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
                 }
                 this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
@@ -1872,24 +1872,24 @@ else{
                 }
                 let convienientPaymentObj = {}
                 convienientPaymentObj = {
-                    "profileId" :  this.profileId,
-                    "amount" : this.paymentDetails.amountRequiredNow
+                    "profileId": this.profileId,
+                    "amount": this.paymentDetails.amountRequiredNow
                 }
-                this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
-                                               // let array = []
-                                               console.log("Convenient response :",data)
-                                               this.convenientPaymentModes = data;
-                                               if(this.convenientPaymentModes){
-                                               this.convenientPaymentModes.map((res:any)=>{
-                                                this.convenientFeeObj = { }
-                                                if(res){
-                                                    this.convenientFeeObj = res;
-                                                        this.convenientFee = this.convenientFeeObj.convenienceFee;
-                                                   
-                                                }
-                                               })
-                                            }
-                 
+                this.sharedServices.getConvenientFeeOfProvider(this.accountId, convienientPaymentObj).subscribe((data: any) => {
+                    // let array = []
+                    console.log("Convenient response :", data)
+                    this.convenientPaymentModes = data;
+                    if (this.convenientPaymentModes) {
+                        this.convenientPaymentModes.map((res: any) => {
+                            this.convenientFeeObj = {}
+                            if (res) {
+                                this.convenientFeeObj = res;
+                                this.convenientFee = this.convenientFeeObj.convenienceFee;
+
+                            }
+                        })
+                    }
+
 
                 })
             },
@@ -2120,7 +2120,7 @@ else{
                             let navigationExtras: NavigationExtras = {
                                 queryParams: queryParams
                             };
-
+                            _this.setAnalytics();
                             _this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
                         }
                     },
@@ -2131,6 +2131,26 @@ else{
                 );
         })
 
+    }
+    setAnalytics() {
+        const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+
+        let analytics = {
+            accId: this.businessProfile.id,
+            domId: this.businessProfile.serviceSector.id,
+            subDomId: this.businessProfile.serviceSubSector.id
+        }
+        console.log("CustomId:", this.customId);
+        if (this.customId) {
+            if (reqFrom && reqFrom == 'cuA') {
+                analytics['metricId'] = 501;
+            } else if (reqFrom && reqFrom == 'CUSTOM_WEBSITE') {
+                analytics['metricId'] = 502;
+            } else if (this.customId) {
+                analytics['metricId'] = 500;
+            }
+            this.sharedServices.updateAnalytics(analytics).subscribe();
+        }
     }
     submitOneTimeInfo() {
         const _this = this;
@@ -2274,6 +2294,7 @@ else{
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
             };
+            this.setAnalytics();
             this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
         }
     }
@@ -2306,11 +2327,11 @@ else{
         if (this.paymentRequestId) {
             this.paymentReqInfo['paymentRequestId'] = this.paymentRequestId;
         }
-        this.convenientPaymentModes.map((res:any)=>{
+        this.convenientPaymentModes.map((res: any) => {
             this.convenientFeeObj = res
-            if(this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternational){
+            if (this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternational) {
                 // this.convenientFeeObj = res;
-                 if(this.paymentMode ===  this.convenientFeeObj.mode){
+                if (this.paymentMode === this.convenientFeeObj.mode) {
                     this.paymentReqInfo['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
                     this.paymentReqInfo['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
                     this.paymentReqInfo['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
@@ -2318,22 +2339,22 @@ else{
                     this.paymentReqInfo['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
                     this.paymentReqInfo['paymentGateway'] = this.convenientFeeObj.gateway
                     console.log("Non-Indian Payment Info", this.paymentReqInfo)
-                 }
-             }
-             if(this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternational){
-             // this.convenientFeeObj = res;
-              if(this.paymentMode ===  this.convenientFeeObj.mode){
-                 this.paymentReqInfo['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
-                 this.paymentReqInfo['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
-                 this.paymentReqInfo['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
-                 this.paymentReqInfo['profileId'] = this.paymentmodes.profileId;
-                 this.paymentReqInfo['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
-                 this.paymentReqInfo['paymentGateway'] = this.convenientFeeObj.gateway
+                }
+            }
+            if (this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternational) {
+                // this.convenientFeeObj = res;
+                if (this.paymentMode === this.convenientFeeObj.mode) {
+                    this.paymentReqInfo['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
+                    this.paymentReqInfo['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
+                    this.paymentReqInfo['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
+                    this.paymentReqInfo['profileId'] = this.paymentmodes.profileId;
+                    this.paymentReqInfo['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
+                    this.paymentReqInfo['paymentGateway'] = this.convenientFeeObj.gateway
 
-                 console.log("Indian Payment Info", this.paymentReqInfo)
-              }
-          }
-           })
+                    console.log("Indian Payment Info", this.paymentReqInfo)
+                }
+            }
+        })
 
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.accountId);
@@ -2359,6 +2380,7 @@ else{
                     this.wallet = data;
                     if (!this.wallet.isGateWayPaymentNeeded && this.wallet.isJCashPaymentSucess) {
                         setTimeout(() => {
+                            this.setAnalytics();
                             this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.accountId, uuid: this.trackUuid } });
                         }, 500);
                     }
@@ -2456,6 +2478,7 @@ else{
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
             };
+            this.setAnalytics();
             this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
         } else {
             this.closeloading();
@@ -2496,7 +2519,7 @@ else{
             } else if (response.STATUS == 'TXN_FAILURE') {
                 if (response.error && response.error.description) {
                     this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
-                  }
+                }
                 this.finishAppointment(false);
             }
         } else {
@@ -2564,7 +2587,7 @@ else{
     */
     memberSelected(selectedMembers) {
         const _this = this;
-        console.log("selected Member :",selectedMembers);
+        console.log("selected Member :", selectedMembers);
         // this.waitlistForPrev = this.waitlist_for;
         _this.appmtFor = selectedMembers;
         console.log(_this.appmtFor);
@@ -2645,98 +2668,98 @@ else{
         return false;
     }
     submitserviceOptionQuestionnaire(uuid) {
-       
+
         const _this = this;
         this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
             (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
             return rv;
-          }, {});
-       
-          let finalList=[];
-          let finalSubList=[];
-          for (var key in this.groupedQnr) {
-                      if (this.groupedQnr.hasOwnProperty(key)) {
-                        var val = this.groupedQnr[key];
-                        val.forEach(element => {
-                            if(finalSubList.length===0){
-                                 finalSubList.push(element.dgList[0])
-                            }
-                            else{
-                                finalSubList[0].answer.dataGridList.push(element.dgList[0].answer.dataGridList[0])
-                            }
-                       
-                        });
-                        finalList.push(finalSubList[0]);
-                        this.advPostData = finalList;
-                        finalSubList=[];
-                      }
+        }, {});
+
+        let finalList = [];
+        let finalSubList = [];
+        for (var key in this.groupedQnr) {
+            if (this.groupedQnr.hasOwnProperty(key)) {
+                var val = this.groupedQnr[key];
+                val.forEach(element => {
+                    if (finalSubList.length === 0) {
+                        finalSubList.push(element.dgList[0])
                     }
-               
-                    this.finalDataToSend = {
-                        'questionnaireId':  this.serviceOPtionInfo.answers.questionnaireId,
-                        'answerLine': finalList
-                      }
-        const data=this.finalDataToSend
+                    else {
+                        finalSubList[0].answer.dataGridList.push(element.dgList[0].answer.dataGridList[0])
+                    }
+
+                });
+                finalList.push(finalSubList[0]);
+                this.advPostData = finalList;
+                finalSubList = [];
+            }
+        }
+
+        this.finalDataToSend = {
+            'questionnaireId': this.serviceOPtionInfo.answers.questionnaireId,
+            'answerLine': finalList
+        }
+        const data = this.finalDataToSend
         return new Promise(function (resolve, reject) {
-           
+
             // console.log(JSON.stringify(this.serviceOPtionInfo))  
-                const dataToSend: FormData = new FormData();
-                if (data.files) {
-                    for (const pic of data.files) {
-                        dataToSend.append('files', pic, pic['name']);
-                    }
+            const dataToSend: FormData = new FormData();
+            if (data.files) {
+                for (const pic of data.files) {
+                    dataToSend.append('files', pic, pic['name']);
                 }
-                const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
-                dataToSend.append('question', blobpost_Data);
-                _this.subs.sink = _this.sharedServices.submitConsumerApptServiceOption(dataToSend, uuid, _this.accountId).subscribe((data: any) => {
-                  
-                    resolve(true);
-                },
-                
-                    error => {
-                        _this.isClickedOnce = false;
-                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        // _this.disablebutton = false;
-                        resolve(false);
-                        // this.api_loading_video = false;
-                    });
-                  
+            }
+            const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
+            dataToSend.append('question', blobpost_Data);
+            _this.subs.sink = _this.sharedServices.submitConsumerApptServiceOption(dataToSend, uuid, _this.accountId).subscribe((data: any) => {
+
+                resolve(true);
+            },
+
+                error => {
+                    _this.isClickedOnce = false;
+                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    // _this.disablebutton = false;
+                    resolve(false);
+                    // this.api_loading_video = false;
+                });
+
         });
-       
+
     }
     getserviceOptionQuestionAnswers(event) {
         this.serviceOPtionInfo = event;
-        console.log(JSON.stringify( this.serviceOPtionInfo))
-        if(this.serviceOPtionInfo.answers.answerLine === []){
+        console.log(JSON.stringify(this.serviceOPtionInfo))
+        if (this.serviceOPtionInfo.answers.answerLine === []) {
             console.log(this.showNext)
             this.showNext = false;
         }
-        else{
+        else {
             console.log('ggggggggg')
             console.log(this.showNext)
             this.showNext = true;
         }
         this.lStorageService.setitemonLocalStorage('serviceOPtionInfo', this.serviceOPtionInfo);
     }
-   
+
     qnrPopup() {
         const dialogref = this.dialog.open(QnrDialogComponent, {
             width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-           
-          }
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+
+            }
         });
         dialogref.afterClosed().subscribe(
-          result => {
-            if (result) {
-               
+            result => {
+                if (result) {
+
+                }
             }
-          }
         );
-      }
-      showText() {
+    }
+    showText() {
         this.readMore = !this.readMore;
-      }
+    }
 }

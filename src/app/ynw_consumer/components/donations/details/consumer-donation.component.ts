@@ -119,6 +119,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
     amountPlaceHolder: any;
     @ViewChild('consumer_donation') paytmview;
     accountConfig: any;
+    businessProfile: any;
     constructor(public fed_service: FormMessageDisplayService,
         // private fb: FormBuilder, 
         public dialog: MatDialog,
@@ -510,7 +511,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             this.snackbarService.openSnackBar('Donation service is not found', { 'panelClass': 'snackbarerror' });
             return;
         }
-       
+
         let paymenttype = this.paymentMode;
         this.donate(paymenttype);
     }
@@ -743,6 +744,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
             };
+            this.setAnalytics();
             this.ngZone.run(() => this.router.navigate(['consumer', 'donations', 'confirm'], navigationExtras));
         } else {
             this.isClickedOnce = false;
@@ -939,7 +941,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 break;
             }
             case 'businessProfile': {
-                // this.businessjson = result;
+                this.businessProfile = result;
                 this.businessInfo['businessName'] = result.businessName;
 
                 if (!this.businessInfo['locationName']) {
@@ -1217,7 +1219,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                         _this.providerConsumerList.push(providerConsumer);
                         resolve(providerConsumer.id);
                     }
-                )    
+                )
             }
         });
     }
@@ -1257,35 +1259,6 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 const blobpost_Data = new Blob([JSON.stringify(_this.oneTimeInfo.answers)], { type: 'application/json' });
                 dataToSend.append('question', blobpost_Data);
                 _this.subs.sink = _this.sharedServices.submitCustomerOnetimeInfo(dataToSend, activeUser.id, _this.accountId).subscribe((data: any) => {
-                    // let postData = {
-                    //     urls: []
-                    // };
-                    // if (data.urls && data.urls.length > 0) {
-                    //     for (const url of data.urls) {
-                    //         this.api_loading_video = true;
-                    //         const file = _this.oneTimeInfo.filestoUpload[url.labelName][url.document];
-                    //         _this.provider_services.videoaudioS3Upload(file, url.url)
-                    //             .subscribe(() => {
-                    //                 postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                    //                 if (data.urls.length === postData['urls'].length) {
-                    //                     this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.accountId, postData)
-                    //                         .subscribe((data) => {
-                    //                             this.paymentOperation(paymenttype);
-                    //                         },
-                    //                             error => {
-                    //                                 this.isClickedOnce = false;
-                    //                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    //                                 this.api_loading_video = false;
-                    //                             });
-                    //                 }
-                    //             },
-                    //                 error => {
-                    //                     this.isClickedOnce = false;
-                    //                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    //                     this.api_loading_video = false;
-                    //                 });
-                    //     }
-                    // }
                     resolve(true);
                 },
                     error => {
@@ -1298,5 +1271,23 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
                 resolve(true);
             }
         });
+    }
+    setAnalytics() {
+        const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+        let analytics = {
+            accId: this.businessProfile.id,
+            domId: this.businessProfile.serviceSector.id,
+            subDomId: this.businessProfile.serviceSubSector.id
+        }
+        if (this.customId) {
+            if (reqFrom && reqFrom == 'cuA') {
+                analytics['metricId'] = 507;
+            } else if (reqFrom && reqFrom == 'CUSTOM_WEBSITE') {
+                analytics['metricId'] = 508;
+            } else if (this.customId) {
+                analytics['metricId'] = 506;
+            }
+            this.sharedServices.updateAnalytics(analytics).subscribe();
+        }
     }
 }

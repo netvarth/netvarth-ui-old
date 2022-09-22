@@ -278,11 +278,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     paymentRequestId; // Retrying failed attempts
 
     serverDate;       // To store the server date
-    filestoUpload: any =[];
+    filestoUpload: any = [];
     uuid: any;
     apiErrors: any[];
 
-    convenientPaymentModes:any=[];
+    convenientPaymentModes: any = [];
     convenientFeeObj: any;
     convenientFee: any;
     gatewayFee: any;
@@ -292,11 +292,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     btnClicked = false // To avoid double click
     serviceOPtionInfo: any;
     groupedQnr: any;
-    finalDataToSend : any;
+    finalDataToSend: any;
     showSlot = true;
     showNext = false;
-    serviceTotalPrice : number;
-    total_servicefee : number;
+    serviceTotalPrice: number;
+    total_servicefee: number;
     accountConfig: any;
     constructor(public fed_service: FormMessageDisplayService,
         public shared_services: SharedServices,
@@ -452,9 +452,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             _this.isFutureDate = _this.dateTimeProcessor.isFutureDate(_this.serverDate, _this.checkin_date);
         }
         _this.configService.getUIAccountConfig(this.provider_id).subscribe(
-        (uiconfig: any) => {
-            _this.accountConfig = uiconfig;
-        });
+            (uiconfig: any) => {
+                _this.accountConfig = uiconfig;
+            });
         _this.gets3urls().then(() => {
             _this.getRescheduledInfo().then(() => {
                 if (_this.selectedServiceId) { _this.getPaymentModes(); }
@@ -478,20 +478,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.serviceOPtionInfo = this.lStorageService.getitemfromLocalStorage('serviceOPtionInfo');
         this.getServiceOptions();
     }
-    getServiceOptions(){
-        this.subs.sink = this.sharedServices.getServiceoptionsWaitlist(this.selectedServiceId , this.account_id)
+    getServiceOptions() {
+        this.subs.sink = this.sharedServices.getServiceoptionsWaitlist(this.selectedServiceId, this.account_id)
             .subscribe(
                 (data) => {
                     if (data) {
                         this.serviceOptionQuestionnaireList = data;
-                        if(this.serviceOptionQuestionnaireList.questionnaireId && this.type !== 'waitlistreschedule'){
+                        if (this.serviceOptionQuestionnaireList.questionnaireId && this.type !== 'waitlistreschedule') {
                             this.serviceOptionApptt = true;
                             this.bookStep = 1;
                         }
-                        else{
-                            this.bookStep = 2;  
+                        else {
+                            this.bookStep = 2;
                         }
-                       
+
                     }
                 },
                 error => {
@@ -501,17 +501,17 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getserviceOptionQuestionAnswers(event) {
         this.serviceOPtionInfo = event;
-        if(this.serviceOPtionInfo.answers.answerLine === []){
+        if (this.serviceOPtionInfo.answers.answerLine === []) {
             console.log(this.showNext)
             this.showNext = false;
         }
-        else{
+        else {
             console.log('ggggggggg')
             console.log(this.showNext)
             this.showNext = true;
         }
-        this.lStorageService.setitemonLocalStorage('serviceOPtionInfo', this.serviceOPtionInfo);  
-                    
+        this.lStorageService.setitemonLocalStorage('serviceOPtionInfo', this.serviceOPtionInfo);
+
 
     }
     setQDetails(queues, qId?) {
@@ -605,7 +605,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     //     "profileId" :  this.paymentmodes.profileId,
                     //     "amount"	: this.paymentDetails.amountRequiredNow
                     // }
-                
+
                     // this.shared_services.getConvenientFeeOfProvider(this.account_id,convienientPaymentObj).subscribe((data:any)=>{
                     //                                // let array = []
                     //                                console.log("Convenient response :",data)
@@ -618,13 +618,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     //                                         this.convenientFee = this.convenientFeeObj.convenienceFee;
                     //                                         // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
                     //                                         console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
-                                                        
+
                     //                                 }
                     //                                })
                     //                             }
-                                                   
+
                     // })
-                    console.log("isConvenienceFee paymentsss:",this.paymentmodes)
+                    console.log("isConvenienceFee paymentsss:", this.paymentmodes)
                     if (this.paymentmodes && this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
@@ -646,36 +646,36 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     indian_payment_mode_onchange(event) {
         this.selected_payment_mode = event.value;
         this.isInternatonal = false;
-        this.convenientPaymentModes.map((res:any)=>{
-            this.convenientFeeObj = { }
-            if(res.isInternational === false){
+        this.convenientPaymentModes.map((res: any) => {
+            this.convenientFeeObj = {}
+            if (res.isInternational === false) {
                 this.convenientFeeObj = res;
-                if(this.selected_payment_mode === res.mode){
-                  //  this.convenientFee = this.convenientFeeObj.convenienceFee;
-                  //  this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                if (this.selected_payment_mode === res.mode) {
+                    //  this.convenientFee = this.convenientFeeObj.convenienceFee;
+                    //  this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
                     this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
 
-                    console.log("convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
+                    console.log("convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
                 }
             }
-           })
+        })
     }
     non_indian_modes_onchange(event) {
         this.selected_payment_mode = event.value;
         this.isInternatonal = true;
-        this.convenientPaymentModes.map((res:any)=>{
-            this.convenientFeeObj = { }
-            if(res.isInternational === true){
-               this.convenientFeeObj = res;
-               if(this.selected_payment_mode === res.mode){
-                 //  this.convenientFee = this.convenientFeeObj.convenienceFee;
-                 //  this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
-                   this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
+        this.convenientPaymentModes.map((res: any) => {
+            this.convenientFeeObj = {}
+            if (res.isInternational === true) {
+                this.convenientFeeObj = res;
+                if (this.selected_payment_mode === res.mode) {
+                    //  this.convenientFee = this.convenientFeeObj.convenienceFee;
+                    //  this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                    this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
 
-                   console.log("convenientFee for  non-indian:",this.convenientFee,res.mode,this.gatewayFee)
-               }
-           }
-           })
+                    console.log("convenientFee for  non-indian:", this.convenientFee, res.mode, this.gatewayFee)
+                }
+            }
+        })
     }
     togglepaymentMode() {
         this.shownonIndianModes = !this.shownonIndianModes;
@@ -729,7 +729,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         const post_Data = {
             'ynwUuid': this.rescheduleUserId,
             'date': this.checkinDate,
-            'queue':this.queueId,
+            'queue': this.queueId,
             'consumerNote': this.consumerNote
         };
         // console.log("Reschedule :",post_Data)
@@ -738,9 +738,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     if (this.selectedMessage.files.length > 0) {
-                       const uid = [];
-                       uid.push(this.rescheduleUserId);
-                        this.consumerNoteAndFileSave(uid);    
+                        const uid = [];
+                        uid.push(this.rescheduleUserId);
+                        this.consumerNoteAndFileSave(uid);
                     } else {
                         let queryParams = {
                             account_id: this.account_id,
@@ -791,9 +791,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 consumerNoteTitle: activeService.consumerNoteTitle,
                 maxBookingsAllowed: activeService.maxBookingsAllowed,
                 showOnlyAvailableSlots: activeService.showOnlyAvailableSlots,
-                showPrice:activeService.showPrice
+                showPrice: activeService.showPrice
             };
-            console.log("Active Service :",this.selectedService)
+            console.log("Active Service :", this.selectedService)
 
             if (activeService.provider) {
                 this.selectedUserId = activeService.provider.id;
@@ -895,7 +895,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     confirmcheckin(type?) {
-      
+
         const _this = this;
         // type === 'checkin' && 
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
@@ -1096,7 +1096,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         if (_this.selectedMessage.files.length > 0) {
                             _this.consumerNoteAndFileSave(parentUid).then(
                                 () => {
-                                // this.paymentOperation();
+                                    // this.paymentOperation();
                                     resolve(true);
                                 }
                             );
@@ -1221,60 +1221,60 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.groupedQnr = this.serviceOPtionInfo.answers.answerLine.reduce(function (rv, x) {
             (rv[x.sequenceId] = rv[x.sequenceId] || []).push(x);
             return rv;
-          }, {});
-          console.log(JSON.stringify(this.groupedQnr));
-          console.log('*********************************');
-          let finalList=[];
-          let finalSubList=[];
-          for (var key in this.groupedQnr) {
-                      if (this.groupedQnr.hasOwnProperty(key)) {
-                        var val = this.groupedQnr[key];
-                        val.forEach(element => {
-                            if(finalSubList.length===0){
-                                 finalSubList.push(element.dgList[0])
-                            }
-                            else{
-                                finalSubList[0].answer.dataGridList.push(element.dgList[0].answer.dataGridList[0])
-                            }
-                        
-                        });
-                        finalList.push(finalSubList[0]);
-                        finalSubList=[];
-                      }
+        }, {});
+        console.log(JSON.stringify(this.groupedQnr));
+        console.log('*********************************');
+        let finalList = [];
+        let finalSubList = [];
+        for (var key in this.groupedQnr) {
+            if (this.groupedQnr.hasOwnProperty(key)) {
+                var val = this.groupedQnr[key];
+                val.forEach(element => {
+                    if (finalSubList.length === 0) {
+                        finalSubList.push(element.dgList[0])
                     }
-               
-                    this.finalDataToSend = {
-                        'questionnaireId':  this.serviceOPtionInfo.answers.questionnaireId,
-                        'answerLine': finalList
-                      }
-        const data=this.finalDataToSend
+                    else {
+                        finalSubList[0].answer.dataGridList.push(element.dgList[0].answer.dataGridList[0])
+                    }
+
+                });
+                finalList.push(finalSubList[0]);
+                finalSubList = [];
+            }
+        }
+
+        this.finalDataToSend = {
+            'questionnaireId': this.serviceOPtionInfo.answers.questionnaireId,
+            'answerLine': finalList
+        }
+        const data = this.finalDataToSend
         return new Promise(function (resolve, reject) {
-            
+
             // console.log(JSON.stringify(this.serviceOPtionInfo))   
-                const dataToSend: FormData = new FormData();
-                if (data.files) {
-                    for (const pic of data.files) {
-                        dataToSend.append('files', pic, pic['name']);
-                    }
+            const dataToSend: FormData = new FormData();
+            if (data.files) {
+                for (const pic of data.files) {
+                    dataToSend.append('files', pic, pic['name']);
                 }
-                const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
-                dataToSend.append('question', blobpost_Data);
-                _this.subs.sink = _this.sharedServices.submitConsumerWaitlistServiceOption(dataToSend, uuid, _this.account_id).subscribe((data: any) => {
-                 
-                    resolve(true);
-                },
-                    error => {
-                        _this.isClickedOnce = false;
-                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        // _this.disablebutton = false;
-                        resolve(false);
-                        // this.api_loading_video = false;
-                    });
-            
+            }
+            const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
+            dataToSend.append('question', blobpost_Data);
+            _this.subs.sink = _this.sharedServices.submitConsumerWaitlistServiceOption(dataToSend, uuid, _this.account_id).subscribe((data: any) => {
+
+                resolve(true);
+            },
+                error => {
+                    _this.isClickedOnce = false;
+                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    // _this.disablebutton = false;
+                    resolve(false);
+                    // this.api_loading_video = false;
+                });
+
         });
     }
     paymentOperation() {
-        console.log("Payment Operation Details :",this.paymentDetails)
+        console.log("Payment Operation Details :", this.paymentDetails)
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
             this.payuPayment(this.selected_payment_mode);
         } else {
@@ -1299,6 +1299,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
             };
+            this.setAnalytics();
             this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
         }
     }
@@ -1328,6 +1329,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
             };
+            this.setAnalytics();
             this.ngZone.run(() => this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras));
         } else {
             this.closeloading();
@@ -1348,7 +1350,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             } else if (response.STATUS == 'TXN_FAILURE') {
                 if (response.error && response.error.description) {
                     this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
-                  } 
+                }
                 this.finishCheckin(false);
             }
         } else {
@@ -1568,7 +1570,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
 
     consumerNoteAndFileSave(parentUid) {
-        console.log("Parent Id:",parentUid);
+        console.log("Parent Id:", parentUid);
         const _this = this;
         return new Promise(function (resolve, reject) {
             const dataToSend: FormData = new FormData();
@@ -1605,6 +1607,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         let navigationExtras: NavigationExtras = {
                             queryParams: queryParams
                         };
+                        this.setAnalytics();
                         _this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
                     }
                 }
@@ -1985,10 +1988,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.subs.sink = this.shared_services.addWaitlistAdvancePayment(param, post_Data)
             .subscribe(data => {
                 this.paymentDetails = data;
-                if(this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt){
-                    this.serviceTotalPrice =  this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
-    
-                  this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
+                if (this.paymentDetails && this.paymentDetails.netTotal && this.serviceOptionApptt) {
+                    this.serviceTotalPrice = this.lStorageService.getitemfromLocalStorage('serviceTotalPrice');
+
+                    this.total_servicefee = this.paymentDetails.netTotal + this.serviceTotalPrice;
                 }
                 this.paymentLength = Object.keys(this.paymentDetails).length;
                 this.checkJcash = true
@@ -2001,27 +2004,27 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 let convienientPaymentObj = {}
                 convienientPaymentObj = {
-                    "profileId" :  this.profileId,
-                    "amount"	: this.paymentDetails.amountRequiredNow
+                    "profileId": this.profileId,
+                    "amount": this.paymentDetails.amountRequiredNow
                 }
-            
-                this.shared_services.getConvenientFeeOfProvider(this.account_id,convienientPaymentObj).subscribe((data:any)=>{
-                                               // let array = []
-                                               console.log("Convenient response :",data)
-                                               this.convenientPaymentModes = data;
-                                               if(this.convenientPaymentModes){
-                                               this.convenientPaymentModes.map((res:any)=>{
-                                                this.convenientFeeObj = { }
-                                                if(res){
-                                                    this.convenientFeeObj = res;
-                                                        this.convenientFee = this.convenientFeeObj.convenienceFee;
-                                                        // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
-                                                        console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
-                                                    
-                                                }
-                                               })
-                                            }
-                                               
+
+                this.shared_services.getConvenientFeeOfProvider(this.account_id, convienientPaymentObj).subscribe((data: any) => {
+                    // let array = []
+                    console.log("Convenient response :", data)
+                    this.convenientPaymentModes = data;
+                    if (this.convenientPaymentModes) {
+                        this.convenientPaymentModes.map((res: any) => {
+                            this.convenientFeeObj = {}
+                            if (res) {
+                                this.convenientFeeObj = res;
+                                this.convenientFee = this.convenientFeeObj.convenienceFee;
+                                // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
+                                console.log("payment convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
+
+                            }
+                        })
+                    }
+
                 })
             },
                 error => {
@@ -2047,11 +2050,11 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         if (this.paymentRequestId) {
             this.waitlistDetails['paymentRequestId'] = this.paymentRequestId;
         }
-        this.convenientPaymentModes.map((res:any)=>{
+        this.convenientPaymentModes.map((res: any) => {
             this.convenientFeeObj = res
-            if(this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternatonal){
+            if (this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternatonal) {
                 // this.convenientFeeObj = res;
-                 if(paymentMode ===  this.convenientFeeObj.mode){
+                if (paymentMode === this.convenientFeeObj.mode) {
                     this.waitlistDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
                     this.waitlistDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
                     this.waitlistDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
@@ -2059,26 +2062,26 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.waitlistDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
                     this.waitlistDetails['paymentGateway'] = this.convenientFeeObj.gateway
                     console.log("Non-Indian Payment Info", this.waitlistDetails)
-                 }
-             }
-             if(this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternatonal){
-             // this.convenientFeeObj = res;
-              if(paymentMode ===  this.convenientFeeObj.mode){
-                 this.waitlistDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
-                 this.waitlistDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
-                 this.waitlistDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
-                 this.waitlistDetails['profileId'] = this.paymentmodes.profileId;
-                 this.waitlistDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
-                 this.waitlistDetails['paymentGateway'] = this.convenientFeeObj.gateway
-                 console.log("Indian Payment Info", this.waitlistDetails)
-              }
-          }
-           })
+                }
+            }
+            if (this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternatonal) {
+                // this.convenientFeeObj = res;
+                if (paymentMode === this.convenientFeeObj.mode) {
+                    this.waitlistDetails['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
+                    this.waitlistDetails['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
+                    this.waitlistDetails['jaldeeConvenienceFee'] = this.convenientFeeObj.convenienceFee;
+                    this.waitlistDetails['profileId'] = this.paymentmodes.profileId;
+                    this.waitlistDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
+                    this.waitlistDetails['paymentGateway'] = this.convenientFeeObj.gateway
+                    console.log("Indian Payment Info", this.waitlistDetails)
+                }
+            }
+        })
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.account_id);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
 
-        console.log("Payment request :",this.waitlistDetails)
+        console.log("Payment request :", this.waitlistDetails)
         if (this.remainingadvanceamount == 0 && this.checkJcash) {
             const postData = {
                 'amountToPay': this.paymentDetails.amountRequiredNow,
@@ -2102,6 +2105,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             multiple = false;
                         }
                         setTimeout(() => {
+                            this.setAnalytics();
                             this.router.navigate(['consumer', 'checkin', 'confirm'], { queryParams: { account_id: this.account_id, uuid: this.uuidList, multiple: multiple } });
                         }, 500);
                     }
@@ -2214,7 +2218,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getQuestionAnswers(event) {
         this.questionAnswers = event;
-        console.log("consCheckin questionnaire :",this.questionAnswers)
+        console.log("consCheckin questionnaire :", this.questionAnswers)
     }
     getConsumerQuestionnaire() {
         const _this = this;
@@ -2250,110 +2254,110 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     setValidateError(errors) {
         this.apiErrors = [];
         if (errors.length > 0) {
-          for (let error of errors) {
-            this.apiErrors[error.questionField] = [];
-           // this.apiError[error.questionField].push(error.error);
-          }
-          //this.buttonDisable = false;
+            for (let error of errors) {
+                this.apiErrors[error.questionField] = [];
+                // this.apiError[error.questionField].push(error.error);
+            }
+            //this.buttonDisable = false;
         }
-      }
+    }
     successGoback() {
         //this.buttonDisable = false;
         // if (!this.type) {
         //   this.location.back();
         // } 
         // else {
-          this.filestoUpload = [];
-         // this.editQnr();
-         // this.returnAnswers.emit('reload');
-          this.questionAnswers.emit('reload');
-          // if (this.type !== 'qnr-link') {
-          //   this.snackbarService.openSnackBar('Updated Successfully');
-          // }
-       // }
-      }
-      //step5
-     uploadAudioVideo(data,uuid?) {
-    console.log("upload Audio :",data)
-    if (data.urls && data.urls.length > 0) {
-      let postData = {
-        urls: []
-      };
-      for (const url of data.urls) {
-        const file = this.filestoUpload[url.labelName][url.document];
-        this.provider_services.videoaudioS3Upload(file, url.url)
-          .subscribe(() => {
-            postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-            if (data.urls.length === postData['urls'].length) {
-                this.shared_services.consumerWaitlistQnrUploadStatusUpdate(this.trackUuid, this.account_id, postData)
-                  .subscribe((data) => {
-                    this.successGoback();
-                  },
-                    error => {
-                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                     // this.buttonDisable = false;
-                    });
-            }
-          },
-            error => {
-              this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-             // this.buttonDisable = false;
-            });
-      }
-    } else {
-     this.successGoback();
+        this.filestoUpload = [];
+        // this.editQnr();
+        // this.returnAnswers.emit('reload');
+        this.questionAnswers.emit('reload');
+        // if (this.type !== 'qnr-link') {
+        //   this.snackbarService.openSnackBar('Updated Successfully');
+        // }
+        // }
     }
-      }
-     //step4
+    //step5
+    uploadAudioVideo(data, uuid?) {
+        console.log("upload Audio :", data)
+        if (data.urls && data.urls.length > 0) {
+            let postData = {
+                urls: []
+            };
+            for (const url of data.urls) {
+                const file = this.filestoUpload[url.labelName][url.document];
+                this.provider_services.videoaudioS3Upload(file, url.url)
+                    .subscribe(() => {
+                        postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+                        if (data.urls.length === postData['urls'].length) {
+                            this.shared_services.consumerWaitlistQnrUploadStatusUpdate(this.trackUuid, this.account_id, postData)
+                                .subscribe((data) => {
+                                    this.successGoback();
+                                },
+                                    error => {
+                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                        // this.buttonDisable = false;
+                                    });
+                        }
+                    },
+                        error => {
+                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            // this.buttonDisable = false;
+                        });
+            }
+        } else {
+            this.successGoback();
+        }
+    }
+    //step4
     resubmitConsumerWaitlistQuestionnaire(body) {
         this.shared_services.resubmitConsumerOrderQuestionnaire(body, this.uuid, this.account_id).subscribe(data => {
-          this.uploadAudioVideo(data);
+            this.uploadAudioVideo(data);
         }, error => {
-         // this.buttonDisable = false;
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            // this.buttonDisable = false;
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
-      }
-      submitConsumerWaitlistQuestionnaire(body,uuid?) {
-        console.log("submit uuid:",uuid)
+    }
+    submitConsumerWaitlistQuestionnaire(body, uuid?) {
+        console.log("submit uuid:", uuid)
         this.shared_services.submitConsumerWaitlistQuestionnaire(body, this.trackUuid, this.account_id).subscribe(data => {
-          this.uploadAudioVideo(data,uuid);
+            this.uploadAudioVideo(data, uuid);
         }, error => {
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
-      }
-     //step3 
-    validateConsumerQuestionnaireResubmit(answers, dataToSend,uuid?) {
-      
+    }
+    //step3 
+    validateConsumerQuestionnaireResubmit(answers, dataToSend, uuid?) {
+
         this.shared_services.validateConsumerQuestionnaireResbumit(answers, this.account_id).subscribe((data: any) => {
-          this.setValidateError(data);
-          if (data.length === 0) {
-             //if (this.source === 'consOrder') {
-              // if (this.qnrStatus === 'submitted') {
-              //   this.resubmitConsumerOrderQuestionnaire(dataToSend);
-              // } else {
-                this.submitConsumerWaitlistQuestionnaire(dataToSend,uuid);
-            //  }
-           // } 
-         
-          }
+            this.setValidateError(data);
+            if (data.length === 0) {
+                //if (this.source === 'consOrder') {
+                // if (this.qnrStatus === 'submitted') {
+                //   this.resubmitConsumerOrderQuestionnaire(dataToSend);
+                // } else {
+                this.submitConsumerWaitlistQuestionnaire(dataToSend, uuid);
+                //  }
+                // } 
+
+            }
         }, error => {
-         // this.buttonDisable = false;
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            // this.buttonDisable = false;
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
         });
-      }
-     //step2 submitQuestionnaireAnswers()
-    submitQuestionnaireAnswers(passData,uuid?) {
-        console.log("Submitttttt : ",uuid)
+    }
+    //step2 submitQuestionnaireAnswers()
+    submitQuestionnaireAnswers(passData, uuid?) {
+        console.log("Submitttttt : ", uuid)
         const dataToSend: FormData = new FormData();
-        if(passData && passData.answers){
+        if (passData && passData.answers) {
             const blobpost_Data = new Blob([JSON.stringify(passData.answers)], { type: 'application/json' });
             dataToSend.append('question', blobpost_Data);
-           // this.buttonDisable = true;
-              this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend,uuid);
+            // this.buttonDisable = true;
+            this.validateConsumerQuestionnaireResubmit(passData.answers, dataToSend, uuid);
         }
-       
-        
-      }
+
+
+    }
 
 
     validateQuestionnaire() {
@@ -2524,7 +2528,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         this.checkPolicy = status;
     }
     actionPerformed(status) {
-        if(!this.serviceOptionApptt){
+        if (!this.serviceOptionApptt) {
             const _this = this;
             if (status === 'success') {
                 const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -2536,7 +2540,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                 // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
                                 if (questions) {
                                     _this.onetimeQuestionnaireList = questions;
-                                  if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                    if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                                         _this.bookStep = 3;
                                     } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                         _this.bookStep = 4;
@@ -2547,7 +2551,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                     }
                                     _this.loggedIn = true;
                                 } else {
-                                   if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                    if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                         _this.bookStep = 4;
                                     } else {
                                         _this.bookStep = 5;
@@ -2563,50 +2567,50 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 );
             }
         }
-        else{
+        else {
             const _this = this;
-        if (status === 'success') {
-            const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-            _this.initCheckin().then(
-                () => {
-                    _this.getOneTimeInfo(activeUser, _this.account_id).then(
-                        (questions) => {
-                            console.log("Questions:", questions);
-                            // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
-                            if (questions) {
-                                _this.onetimeQuestionnaireList = questions;
-                                if(this.showSlot){
-                                    _this.bookStep = 2;
-                                }
-                              else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
-                                    _this.bookStep = 3;
-                                } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                    _this.bookStep = 4;
+            if (status === 'success') {
+                const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+                _this.initCheckin().then(
+                    () => {
+                        _this.getOneTimeInfo(activeUser, _this.account_id).then(
+                            (questions) => {
+                                console.log("Questions:", questions);
+                                // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
+                                if (questions) {
+                                    _this.onetimeQuestionnaireList = questions;
+                                    if (this.showSlot) {
+                                        _this.bookStep = 2;
+                                    }
+                                    else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
+                                        _this.bookStep = 3;
+                                    } else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        _this.bookStep = 4;
+                                    } else {
+                                        _this.bookStep = 5;
+                                        // this.saveCheckin('next');
+                                        this.confirmcheckin('next');
+                                    }
+                                    _this.loggedIn = true;
                                 } else {
-                                    _this.bookStep = 5;
-                                    // this.saveCheckin('next');
-                                    this.confirmcheckin('next');
+                                    if (this.showSlot) {
+                                        _this.bookStep = 2;
+                                    }
+                                    else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
+                                        _this.bookStep = 4;
+                                    } else {
+                                        _this.bookStep = 5;
+                                        // this.saveCheckin('next');
+                                        this.confirmcheckin('next');
+                                    }
+                                    _this.loggedIn = true;
                                 }
-                                _this.loggedIn = true;
-                            } else {
-                                if(this.showSlot){
-                                    _this.bookStep = 2;
-                                }
-                               else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
-                                    _this.bookStep = 4;
-                                } else {
-                                    _this.bookStep = 5;
-                                    // this.saveCheckin('next');
-                                    this.confirmcheckin('next');
-                                }
-                                _this.loggedIn = true;
+                                _this.loading = false;
                             }
-                            _this.loading = false;
-                        }
-                    )
-                }
-            );
-        }
+                        )
+                    }
+                );
+            }
         }
     }
 
@@ -2632,7 +2636,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                             // _this.onetimeQuestionnaireList = { "questionnaireId": "WalkinConsumer", "id": 7, "labels": [{ "transactionType": "CONSUMERCREATION", "transactionId": 0, "channel": "ANY", "questionnaireId": "WalkinConsumer", "questions": [{ "id": 18, "labelName": "General Health3", "sequnceId": "", "fieldDataType": "bool", "fieldScope": "consumer", "label": "Do you have any chronic diseases?", "labelValues": ["Yes", "No"], "billable": false, "mandatory": false, "scopTarget": { "target": [{ "targetUser": "PROVIDER" }, { "targetUser": "CONSUMER" }] } }] }] };
                                             if (questions) {
                                                 _this.onetimeQuestionnaireList = questions;
-                                                if(this.showSlot){
+                                                if (this.showSlot) {
                                                     _this.bookStep = 2;
                                                 }
                                                 else if (_this.onetimeQuestionnaireList && _this.onetimeQuestionnaireList.labels && _this.onetimeQuestionnaireList.labels.length > 0 && _this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
@@ -2645,7 +2649,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                                 }
                                                 _this.loggedIn = true;
                                             } else {
-                                                if(this.showSlot){
+                                                if (this.showSlot) {
                                                     _this.bookStep = 2;
                                                 }
                                                 else if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
@@ -2666,7 +2670,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         }
                     });
                     break;
-                    case 2: // Date/Time--ServiceName
+                case 2: // Date/Time--ServiceName
                     this.authService.goThroughLogin().then((status) => {
                         console.log("Status:", status);
                         if (status) {
@@ -2689,7 +2693,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                                 }
                                                 _this.loggedIn = true;
                                             } else {
-                                                
+
                                                 if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                                     _this.bookStep = 4;
                                                 } else {
@@ -2722,7 +2726,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     break;
             }
         } else if (type === 'prev') {
-            if(!this.serviceOptionApptt){
+            if (!this.serviceOptionApptt) {
                 if (this.bookStep === 5) {
                     if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.bookStep = 4;
@@ -2732,7 +2736,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     else if (this.showSlot) {
                         _this.bookStep = 2;
                     } else {
-                       
+
                         this.bookStep = 2;
                     }
                 }
@@ -2747,7 +2751,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     }
                 }
                 else if (this.bookStep === 3) {
-                   if (this.showSlot) {
+                    if (this.showSlot) {
                         _this.bookStep = 2;
                     } else {
                         this.bookStep = 2;
@@ -2755,21 +2759,21 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 }
                 else if (this.bookStep === 3) {
                     if (this.showSlot) {
-                         _this.bookStep = 2;
-                     } else {
-                         this.bookStep = 2;
-                     }
-                 } else {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 2;
+                    }
+                } else {
                     this.location.back();
                 }
             }
-            else{
+            else {
                 if (this.bookStep === 5) {
                     if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
                         this.bookStep = 4;
                     } else if (this.onetimeQuestionnaireList && this.onetimeQuestionnaireList.labels && this.onetimeQuestionnaireList.labels.length > 0 && this.onetimeQuestionnaireList.labels[0].questions.length > 0) {
                         _this.bookStep = 3;
-                    } 
+                    }
                     else if (this.showSlot) {
                         _this.bookStep = 2;
                     }
@@ -2785,18 +2789,18 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     } else {
                         this.bookStep = 1;
                     }
-                } 
+                }
                 else if (this.bookStep === 3) {
                     if (this.showSlot) {
-                         _this.bookStep = 2;
-                     } else {
-                         this.bookStep = 1;
-                     }
-                 }else {
+                        _this.bookStep = 2;
+                    } else {
+                        this.bookStep = 1;
+                    }
+                } else {
                     this.bookStep--;
                 }
             }
-           
+
         } else {
             this.bookStep = type;
         }
@@ -2826,7 +2830,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     this.location.back();
                 }
             } else {
-                if (this.bookStep === 2 && !this.serviceOptionApptt){
+                if (this.bookStep === 2 && !this.serviceOptionApptt) {
                     let source = this.lStorageService.getitemfromLocalStorage('source');
                     if (source) {
                         window.location.href = source;
@@ -2834,10 +2838,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         this.lStorageService.removeitemfromLocalStorage('source');
                     } else {
                         this.location.back();
-                    }   
+                    }
                 } else {
                     this.goToStep('prev');
-                }  
+                }
             }
         }
         if (this.action !== 'addmember') {
@@ -2956,7 +2960,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         parentId = _this.activeUser.id;
                     }
                 }
-                console.log("Call Started");                
+                console.log("Call Started");
                 _this.shared_services.createProviderCustomer(memberId, parentId, accountId).subscribe(
                     (providerConsumer: any) => {
                         _this.providerConsumerList.push(providerConsumer);
@@ -3010,5 +3014,24 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 resolve(true);
             }
         });
+    }
+    setAnalytics() {
+        const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+
+        let analytics = {
+            accId: this.businessjson.id,
+            domId: this.businessjson.serviceSector.id,
+            subDomId: this.businessjson.serviceSubSector.id
+        }
+        if (this.customId) {
+            if (reqFrom && reqFrom == 'cuA') {
+                analytics['metricId'] = 504;
+            } else if (reqFrom && reqFrom == 'CUSTOM_WEBSITE') {
+                analytics['metricId'] = 505;
+            } else if (this.customId) {
+                analytics['metricId'] = 503;
+            }
+            this.sharedServices.updateAnalytics(analytics).subscribe();
+        }
     }
 }

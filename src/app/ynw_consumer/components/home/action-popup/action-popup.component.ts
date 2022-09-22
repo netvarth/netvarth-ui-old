@@ -149,16 +149,16 @@ export class ActionPopupComponent implements OnInit {
           if (data === 'reloadlist' && (this.type === 'checkin' || this.type === 'appointment')) {
             let queryParams = {
               account_id: this.bookingDetails.providerAccount.id,
-              accountId:this.bookingDetails.providerAccount.id,
               theme: this.theme
             }
             if (this.bookingDetails['customId']) {
               queryParams['customId']=this.bookingDetails['customId'];
+              queryParams['accountId']= this.bookingDetails.providerAccount.id;
             }
-            // const navigationExtras: NavigationExtras = {
-            //   queryParams: queryParams
-            // };
-            this.router.navigate(['consumer']);
+            const navigationExtras: NavigationExtras = {
+              queryParams: queryParams
+            };
+            this.router.navigate(['consumer'], navigationExtras);
             this.dialogRef.close();
           }
         },

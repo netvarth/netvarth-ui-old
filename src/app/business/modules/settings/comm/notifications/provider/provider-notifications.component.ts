@@ -73,8 +73,6 @@ export class ProviderNotificationsComponent implements OnInit {
   notifypushSystemphonenumber = '';
   notifydonateemail = '';
   notifysystememail = '';
-
-
   api_error = null;
   api_success = null;
   ph_arr: any = [];
@@ -142,6 +140,7 @@ export class ProviderNotificationsComponent implements OnInit {
   corpSettings: any;
   addondialogRef: any;
   accountType;
+  type='Account';
   constructor(private sharedfunctionObj: SharedFunctions,
     private routerobj: Router,
     public route: ActivatedRoute,
@@ -1733,8 +1732,6 @@ export class ProviderNotificationsComponent implements OnInit {
       this.order_status = data.enableOrder;
     });
   }
-
-  type='Token'
   tabClick(event: MatTabChangeEvent) {
     const type = event.tab.textLabel;
     // console.log(tab);
@@ -1760,32 +1757,6 @@ export class ProviderNotificationsComponent implements OnInit {
       } else {
         this.type='Account'
       }
-     
-    
     }
   }
-
-  // showNotificationPopup(type) {
-  //   if ((type === 'Token' || type === 'Check-in') && !this.waitlistStatus) {
-  //     this.snackbarService.openSnackBar('Jaldee QManager is disabled in your settings', { 'panelClass': 'snackbarerror' });
-  //   } else if (type === 'Appointment' && !this.appointment_status) {
-  //     this.snackbarService.openSnackBar('Jaldee Appointment Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
-  //   } else if (type === 'Order' && !this.order_status) {
-  //     this.snackbarService.openSnackBar('Jaldee Order Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
-  //   } else if (type === 'Donation' && !this.donations_status) {
-  //     this.snackbarService.openSnackBar('Donation Manager is disabled in your settings', { 'panelClass': 'snackbarerror' });
-  //   } else {
-  //     const dialogref = this.dialog.open(UpdateProviderNotificationsComponent, {
-  //       width: '40%',
-  //       panelClass: ['popup-class', 'commonpopupmainclass'],
-  //       disableClose: true,
-  //       data: {
-  //         type: type
-  //       }
-  //     });
-  //     dialogref.afterClosed().subscribe(
-  //       result => {
-  //       });
-  //   }
-  // }
 }

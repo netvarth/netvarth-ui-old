@@ -1334,4 +1334,8 @@ export class SharedServices {
     const url = 'provider/login/updatemobileuniqueid';
     return this.servicemeta.httpPost(url, body);
   }
+  updateAnalytics(body) {
+    const url = 'provider/analytics/update';
+    return this.servicemeta.httpPost(url, body);
+  }
 }
