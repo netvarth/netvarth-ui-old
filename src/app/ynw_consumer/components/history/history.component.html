@@ -40,6 +40,7 @@
                                             <ng-container *ngIf="his_wait.waitlistStatus">
                                                 <td data-title="Date & Time" class="pointer-cursor"  (click)="showBookingDetails(his_wait)">
                                                     <div class="disp-flex">
+                                                        
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i *ngIf="his_wait.token" [matTooltip]="'Token'"  class="fa token-icon"></i>
                                                             <i *ngIf="!his_wait.token"  [matTooltip]="'check-ins'" class="fa chckn-icon"></i>
@@ -122,6 +123,7 @@
                                             <ng-container *ngIf="his_wait.apptStatus">
                                                 <td data-title="Date & Time" class="pointer-cursor"  (click)="showBookingDetails(his_wait)">
                                                     <div class="disp-flex">
+                                                       
                                                         <div class="circle-htokens" *ngIf="!small_device_display">
                                                             <i class="fa appt-icon"  [matTooltip]="'Appointment'"></i>
                                                         </div>

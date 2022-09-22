@@ -155,10 +155,10 @@ export class ActionPopupComponent implements OnInit {
             if (this.bookingDetails['customId']) {
               queryParams['customId']=this.bookingDetails['customId'];
             }
-            const navigationExtras: NavigationExtras = {
-              queryParams: queryParams
-            };
-            this.router.navigate(['consumer'], navigationExtras);
+            // const navigationExtras: NavigationExtras = {
+            //   queryParams: queryParams
+            // };
+            this.router.navigate(['consumer']);
             this.dialogRef.close();
           }
         },

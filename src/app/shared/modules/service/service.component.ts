@@ -602,12 +602,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
             );
     }
     onSubmit(form_data) {
+        console.log("Data form :",form_data);
 
-
-
-        // if(form_data.priceDynamic === true){
+ // if(form_data.priceDynamic === true){
         //     if(form_data.paymentDescription === ''){
-        //         this.snackbarService.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
+        //         this.snackbarService.openSnackBar('Please provide paymentDescription', { 'panelClass': 'snackbarerror' });
         //     }
         // }
         // this.savedisabled = true;
@@ -669,12 +668,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 form_data.isPrePayment = (!form_data.isPrePayment || form_data.isPrePayment === false) ? false : true;
                 form_data.paymentDescription = (!form_data.priceDynamic || form_data.priceDynamic === false) ?
                     form_data.paymentDescription : form_data.paymentDescription;
-                form_data.priceDynamic = (!form_data.priceDynamic || form_data.priceDynamic === false) ? false : true;
+              //  form_data.priceDynamic = (!form_data.priceDynamic || form_data.priceDynamic === false) ? false : true;
                 const duration = this.shared_service.getTimeinMin(this.duration);
                 form_data.serviceDuration = duration;
                 form_data.serviceDurationEnabled = this.showServiceduration;
                 form_data.showOnlyAvailableSlots = this.showOnlyAvailableSlots;
                     form_data.showPrice = this.showPrice;
+                    
+       
                 
                
             }
@@ -697,6 +698,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     delete form_data['provider'];
                 }
             }
+           
             const serviceActionModel = {};
             serviceActionModel['action'] = this.action;
             serviceActionModel['service'] = form_data;
@@ -708,14 +710,24 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 } else {
                     if (!form_data.virtualCallingModes[0].callingMode) {
                         this.snackbarService.openSnackBar(Messages.SELECT_TELE_TOOL, { 'panelClass': 'snackbarerror' });
-                    } else {
+                    }
+                    
+   else if(form_data.priceDynamic === true && form_data.paymentDescription === ''){
+                this.snackbarService.openSnackBar('Please provide payment description', { 'panelClass': 'snackbarerror' });
+            }
+                     else {
                         this.servicesService.actionPerformed(serviceActionModel);
                     }
                 }
             }
             else {
-
-                this.servicesService.actionPerformed(serviceActionModel);
+                    if(form_data.priceDynamic === true && form_data.paymentDescription === ''){
+                        this.snackbarService.openSnackBar('Please provide payment description', { 'panelClass': 'snackbarerror' });
+                    }
+                    else{
+                        this.servicesService.actionPerformed(serviceActionModel);
+                    }
+                
             }
         }
     }

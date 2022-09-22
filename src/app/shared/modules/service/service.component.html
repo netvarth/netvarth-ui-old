@@ -516,6 +516,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                   placeholder="{{'Any disclaimer note for price *'}}" formControlName="paymentDescription" maxlength="500"
                   rows="6" cols="1"> </textarea>
               <!-- </mat-form-field> -->
+              <!-- <app-field-error-display *ngIf="subdomainsettings.serviceBillable && !is_donation && serviceForm.get('priceDynamic').value === true" [displayError]="fed_service.isFieldValid(serviceForm,'paymentDescription')" [errorMsgs]="fed_service.getErrorMessage(serviceForm,'paymentDescription',
+              {'required' : 'Please enter paymentDescription'})">
+            </app-field-error-display> -->
             </div>
             <div class="form-group" *ngIf="subdomainsettings.serviceBillable && !is_donation">
               <div>

@@ -680,12 +680,16 @@ export class OrderBillComponent implements OnInit, OnDestroy {
         if (status) {
             this.snackbarService.openSnackBar(Messages.PROVIDER_BILL_PAYMENT);
             const navigationExtras: NavigationExtras = {
+                
                 queryParams: {
                     uuid: this.uuid,
                     //  accountId: this.accountId,
+                    customId:this.customId ? this.customId : '',
                     type: 'order',
-                    'paidStatus': true
+                    'paidStatus': true,
+                    
                 }
+                
             };
             if (this.checkIn_type === 'order') {
                 this.ngZone.run(() => this.router.navigate(['consumer', 'history'], { queryParams: { 'is_orderShow': 'true' } }));
