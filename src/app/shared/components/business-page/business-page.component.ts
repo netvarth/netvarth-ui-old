@@ -353,40 +353,40 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.small_device_display = false;
     }
   }
-  @HostListener('window:appinstalled', ['$event'])
-  onAppInstalled(e) {
-    console.log("App Successfully Installed");
-  }
-  @HostListener('window:beforeinstallprompt', ['$event'])
-  onBeforeInstallPrompt(e: { preventDefault: () => void; }) {
+  // @HostListener('window:appinstalled', ['$event'])
+  // onAppInstalled(e) {
+  //   console.log("App Successfully Installed");
+  // }
+  // @HostListener('window:beforeinstallprompt', ['$event'])
+  // onBeforeInstallPrompt(e: { preventDefault: () => void; }) {
 
-    // Prevent Chrome 67 and earlier from automatically showing the prompt
-    e.preventDefault();
-    // Stash the event so it can be triggered later.
-    if (this.accountProperties) {
-      this.deferredPrompt = e;
-      // Update UI to notify the user they can add to home screen
+  //   // Prevent Chrome 67 and earlier from automatically showing the prompt
+  //   e.preventDefault();
+  //   // Stash the event so it can be triggered later.
+  //   if (this.accountProperties) {
+  //     this.deferredPrompt = e;
+  //     // Update UI to notify the user they can add to home screen
 
-      this.popupforCustomApp.nativeElement.style.display = 'block';
+  //     this.popupforCustomApp.nativeElement.style.display = 'block';
 
-      this.btnInstallApp.addEventListener('click', (e: any) => {
-        // console.log('binding');
-        // hide our user interface that shows our A2HS button
-        this.popupforCustomApp.nativeElement.style.display = 'none';
-        // Show the prompt
-        this.deferredPrompt.prompt();
-        // Wait for the user to respond to the prompt
-        this.deferredPrompt.userChoice.then((choiceResult: any) => {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('User clicked Install');
-          } else {
-            console.log('User dismissed prompt');
-          }
-          this.deferredPrompt = null;
-        });
-      });
-    }
-  }
+  //     this.btnInstallApp.addEventListener('click', (e: any) => {
+  //       // console.log('binding');
+  //       // hide our user interface that shows our A2HS button
+  //       this.popupforCustomApp.nativeElement.style.display = 'none';
+  //       // Show the prompt
+  //       this.deferredPrompt.prompt();
+  //       // Wait for the user to respond to the prompt
+  //       this.deferredPrompt.userChoice.then((choiceResult: any) => {
+  //         if (choiceResult.outcome === 'accepted') {
+  //           console.log('User clicked Install');
+  //         } else {
+  //           console.log('User dismissed prompt');
+  //         }
+  //         this.deferredPrompt = null;
+  //       });
+  //     });
+  //   }
+  // }
 
   ngOnInit() {
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable')));
@@ -572,17 +572,17 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
                             _this.theme = _this.accountProperties['theme'];
                             _this.lStorageService.setitemonLocalStorage('theme', _this.theme);
                           }
-                          const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                          if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
-                            _this.popUp.nativeElement.style.display = 'block';
-                          }
+                          // const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
+                          // if (!appPopupDisplayed && _this.profileSettings['showJaldeePopup']) {
+                          //   _this.popUp.nativeElement.style.display = 'block';
+                          // }
                           _this.gets3curl();
                         }, (error: any) => {
                           _this.globalLoading = false;
-                          const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
-                          if (!appPopupDisplayed && _this.searchEnabled) {
-                            _this.popUp.nativeElement.style.display = 'block';
-                          }
+                          // const appPopupDisplayed = _this.lStorageService.getitemfromLocalStorage('a_dsp');
+                          // if (!appPopupDisplayed && _this.searchEnabled) {
+                          //   _this.popUp.nativeElement.style.display = 'block';
+                          // }
                           _this.gets3curl();
                         }
                       )
@@ -691,7 +691,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     return showCatalogItems
   }
   ngAfterViewInit() {
-    this.customAppIOSPopup.nativeElement.style.display = 'none';
+    // this.customAppIOSPopup.nativeElement.style.display = 'none';
     // const appPopupDisplayed = this.lStorageService.getitemfromLocalStorage('a_dsp');
     // if (!appPopupDisplayed && this.uniqueId !== 152877) {
     //   this.popUp.nativeElement.style.display = 'block';
@@ -709,16 +709,16 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // }
   }
-  closeModal() {
-    this.lStorageService.setitemonLocalStorage('a_dsp', true);
-    this.popUp.nativeElement.style.display = 'none';
-  }
-  closeCustomAppModal() {
-    this.popupforCustomApp.nativeElement.style.display = 'none';
-  }
-  closeIOSAppModal() {
-    this.customAppIOSPopup.nativeElement.style.display = 'none';
-  }
+  // closeModal() {
+  //   this.lStorageService.setitemonLocalStorage('a_dsp', true);
+  //   this.popUp.nativeElement.style.display = 'none';
+  // }
+  // closeCustomAppModal() {
+  //   this.popupforCustomApp.nativeElement.style.display = 'none';
+  // }
+  // closeIOSAppModal() {
+  //   this.customAppIOSPopup.nativeElement.style.display = 'none';
+  // }
   ngOnDestroy() {
     if (this.commdialogRef) {
       this.commdialogRef.close();
@@ -984,27 +984,27 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       // this.businessId = this.accEncUid;
       this.accountId = this.businessjson.id;
       this.businessName = this.businessjson.businessName;
-      this.popupforCustomApp.nativeElement.style.display = 'none';
-      this.customAppIOSPopup.nativeElement.style.display = 'none';
+      // this.popupforCustomApp.nativeElement.style.display = 'none';
+      // this.customAppIOSPopup.nativeElement.style.display = 'none';
       //       // Detects if device is on iOS 
 
-      if (this.iosConfig) {
-        const isIOS = () => {
-          const userAgent = window.navigator.userAgent.toLowerCase();
-          return /iphone|ipad|ipod/.test(userAgent);
-        }
-        const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
-        // Checks if should display install popup notification:
-        if (isIOS() && !isInStandaloneMode()) {
-          this.customAppIOSPopup.nativeElement.style.display = 'block';
-        }
-      }
+      // if (this.iosConfig) {
+      //   const isIOS = () => {
+      //     const userAgent = window.navigator.userAgent.toLowerCase();
+      //     return /iphone|ipad|ipod/.test(userAgent);
+      //   }
+      //   const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator['standalone']);
+      //   // Checks if should display install popup notification:
+      //   if (isIOS() && !isInStandaloneMode()) {
+      //     this.customAppIOSPopup.nativeElement.style.display = 'block';
+      //   }
+      // }
       // const path = this.customAppSerice.getManifest(res, projectConstantsLocal.UIS3PATH + this.uniqueId, projectConstantsLocal.PATH);
-      if (this.pwaEnabled) {
-        const path = projectConstantsLocal.UIS3PATH + this.uniqueId + '/manifest.json';
-        document.getElementById('dynamic_manifest_url').setAttribute('href', path);
-        this.btnInstallApp = document.getElementById("btnInstallCustomApp");
-      }
+      // if (this.pwaEnabled) {
+      //   const path = projectConstantsLocal.UIS3PATH + this.uniqueId + '/manifest.json';
+      //   document.getElementById('dynamic_manifest_url').setAttribute('href', path);
+      //   this.btnInstallApp = document.getElementById("btnInstallCustomApp");
+      // }
       // if (this.businessjson.serviceSector.name !== 'healthCare') {
       //   this.service_cap = 'Services';
       // }
