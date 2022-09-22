@@ -915,18 +915,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                                 if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                                     _this.bookStep = 4;
                                                 } else {
-                                                    _this.bookStep = 5;
+                                                    _this.bookStep = 5;                                                    
                                                     this.confirmAppointment('next');
                                                 }
                                             }
                                             _this.loggedIn = true;
                                             // _this.loading = false;
+                                            this.setAnalytics('dateTime_login');
                                         }
                                     )
                                 }
                             );
                         } else {
                             this.loggedIn = false;
+                            this.setAnalytics('dateTime_withoutlogin');
                         }
                     });
                     break;
@@ -1803,10 +1805,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         })
     }
     confirmAppointment(type?) {
-        console.log("confirmAppointment");
-        console.log(this.commObj)
         if (this.selectedService.isPrePayment && (!this.commObj['communicationEmail'] || this.commObj['communicationEmail'] === '')) {
-
             const emaildialogRef = this.dialog.open(ConsumerEmailComponent, {
                 width: '40%',
                 panelClass: ['loginmainclass', 'popup-class'],
@@ -1821,7 +1820,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             });
         } else {
-
             if (this.selectedService.serviceType === 'virtualService' && !this.validateVirtualCallInfo(this.callingModes)) {
                 return false;
             }
@@ -1839,12 +1837,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             } else if (this.selectedService.isPrePayment) {
                 this.addApptAdvancePayment(this.selectedSlots[0]);
             }
-            // }
         }
-
-        // else {
-        //     this.multipleAppt(type, paymenttype)
-        // }
     }
     addApptAdvancePayment(appmtSlot) {
         let post_Data = this.generateInputForAppointment();
@@ -1885,18 +1878,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             if (res) {
                                 this.convenientFeeObj = res;
                                 this.convenientFee = this.convenientFeeObj.convenienceFee;
-
                             }
                         })
                     }
-
-
                 })
-            },
-                error => {
-                    this.isClickedOnce = false;
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
+            },error => {
+                this.isClickedOnce = false;
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
     }
     getVirtualServiceInput() {
         let virtualServiceArray = {};
@@ -1987,7 +1976,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         return post_Data;
     }
-    // _this.paymentOperation(_this.paymentMode);
     async performAppointment() {
         const _this = this;
         if (this.selectedService.isPrePayment && !this.paymentMode && this.paymentDetails.amountRequiredNow > 0) {
@@ -2002,6 +1990,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 () => {
                     count++;
                     if (count === this.selectedSlots.length) {
+                        this.setAnalytics('payment_initiated');
                         this.paymentOperation(this.paymentMode);
                         if (_this.customId) {
                             _this.sharedServices.addProvidertoFavourite(_this.accountId)
@@ -2017,14 +2006,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     takeAppointment(appmtSlot) {
         const _this = this;
         return new Promise(function (resolve, reject) {
-
             console.log("Payment Req Id:", _this.paymentRequestId);
-
             if (_this.paymentRequestId) {
                 resolve(true);
-            }
-            else {
-
+            } else {
                 let post_Data = _this.generateInputForAppointment();
                 // post_Data['appmtSlot'] = appmtSlot;
                 post_Data['appmtFor'][0]['apptTime'] = appmtSlot['time'];
@@ -2063,21 +2048,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                 }
                             );
                         }
-                        // const member = [];
-                        // for (const memb of _this.appmtFor) {
-                        //     member.push(memb.firstName + ' ' + memb.lastName);
-                        // }
-                    },
-                        error => {
-                            _this.isClickedOnce = false;
-                            _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                            // this.apptdisable = false;
-                            // this.disablebutton = false;
-
-                        });
+                    }, error => {
+                        _this.isClickedOnce = false;
+                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    });
             }
         })
-
     }
     consumerNoteAndFileSave(uuid) {
         const _this = this;
@@ -2123,16 +2099,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             _this.setAnalytics();
                             _this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
                         }
-                    },
-                    error => {
+                    }, error => {
                         _this.isClickedOnce = false;
                         _this.wordProcessor.apiErrorAutoHide(_this, error);
                     }
                 );
         })
-
     }
-    setAnalytics() {
+    setAnalytics(source?) {
         const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
 
         let analytics = {
@@ -2143,11 +2117,42 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         console.log("CustomId:", this.customId);
         if (this.customId) {
             if (reqFrom && reqFrom == 'cuA') {
-                analytics['metricId'] = 501;
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 511;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 512;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 516;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 519;
+                } else {
+                    analytics['metricId'] = 501;
+                }
+                
             } else if (reqFrom && reqFrom == 'CUSTOM_WEBSITE') {
-                analytics['metricId'] = 502;
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 513;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 514;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 517;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 520;
+                } else {
+                    analytics['metricId'] = 502;
+                }                
             } else if (this.customId) {
-                analytics['metricId'] = 500;
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 509;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 510;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 515;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 518;
+                } else {
+                    analytics['metricId'] = 500;
+                }
             }
             this.sharedServices.updateAnalytics(analytics).subscribe();
         }
@@ -2164,47 +2169,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 const blobpost_Data = new Blob([JSON.stringify(_this.oneTimeInfo.answers)], { type: 'application/json' });
                 dataToSend.append('question', blobpost_Data);
-                _this.subs.sink = _this.sharedServices.submitCustomerOnetimeInfo(dataToSend, _this.providerConsumerId, _this.accountId).subscribe((data: any) => {
-                    // let postData = {
-                    //     urls: []
-                    // };
-                    // if (data.urls && data.urls.length > 0) {
-                    //     for (const url of data.urls) {
-                    //         this.api_loading_video = true;
-                    //         const file = _this.oneTimeInfo.filestoUpload[url.labelName][url.document];
-                    //         _this.provider_services.videoaudioS3Upload(file, url.url)
-                    //             .subscribe(() => {
-                    //                 postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                    //                 if (data.urls.length === postData['urls'].length) {
-                    //                     this.shared_services.consumerApptQnrUploadStatusUpdate(uuid, this.account_id, postData)
-                    //                         .subscribe((data) => {
-                    //                             this.paymentOperation(paymenttype);
-                    //                         },
-                    //                             error => {
-                    //                                 this.isClickedOnce = false;
-                    //                                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    //                                 this.disablebutton = false;
-                    //                                 this.api_loading_video = false;
-                    //                             });
-                    //                 }
-                    //             },
-                    //                 error => {
-                    //                     this.isClickedOnce = false;
-                    //                     this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    //                     this.disablebutton = false;
-                    //                     this.api_loading_video = false;
-                    //                 });
-                    //     }
-                    // }
+                _this.subs.sink = _this.sharedServices.submitCustomerOnetimeInfo(dataToSend, _this.providerConsumerId, _this.accountId).subscribe((data: any) => {                    
                     resolve(true);
-                },
-                    error => {
-                        _this.isClickedOnce = false;
-                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        // _this.disablebutton = false;
-                        resolve(false);
-                        // this.api_loading_video = false;
-                    });
+                }, error => {
+                    _this.isClickedOnce = false;
+                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    resolve(false);
+                });
             } else {
                 resolve(true);
             }
@@ -2236,37 +2207,31 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                     if (data.urls.length === postData['urls'].length) {
                                         _this.sharedServices.consumerApptQnrUploadStatusUpdate(uuid, _this.accountId, postData)
                                             .subscribe((data) => {
-                                                // _this.paymentOperation(paymenttype);
                                                 resolve(true);
-                                            },
-                                                error => {
-                                                    _this.isClickedOnce = false;
-                                                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                                    // _this.disablebutton = false;
-                                                    _this.api_loading_video = false;
-                                                    resolve(false);
-                                                });
+                                            }, error => {
+                                                _this.isClickedOnce = false;
+                                                _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                                _this.api_loading_video = false;
+                                                resolve(false);
+                                            });
                                     }
-                                },
-                                    error => {
-                                        _this.isClickedOnce = false;
-                                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                        // _this.disablebutton = false;
-                                        _this.api_loading_video = false;
-                                    });
+                                }, error => {
+                                    _this.isClickedOnce = false;
+                                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                    _this.api_loading_video = false;
+                                });
                         }
                     } else {
                         resolve(true);
-                        // _this.paymentOperation(paymenttype);
+
                     }
-                },
-                    error => {
-                        this.isClickedOnce = false;
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        this.disablebutton = false;
-                        this.api_loading_video = false;
-                        resolve(false);
-                    });
+                }, error => {
+                    this.isClickedOnce = false;
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    this.disablebutton = false;
+                    this.api_loading_video = false;
+                    resolve(false);
+                });
             } else {
                 resolve(true);
             }
@@ -2285,9 +2250,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 queryParams['selectedApptsTime'] = this.selectedApptsTime;
                 queryParams['selectedSlots'] = JSON.stringify(this.selectedSlots);
             }
-            // if (this.from) {
-            //     queryParams['isFrom'] = this.from;
-            // }
             if (this.customId) {
                 queryParams['customId'] = this.customId;
             }
@@ -2298,20 +2260,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
         }
     }
-
-    // addCheckInConsumer(post_Data) {
-    //     if (this.selectedService.isPrePayment && !this.paymentMode) {
-    //         this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
-    //         this.isClickedOnce = false;
-    //         return false;
-    //     }
-
-    // }
     payuPayment(paymenttype?) {
         this.makeFailedPayment(paymenttype);
     }
     makeFailedPayment(paymentMode) {
-
         this.paymentReqInfo = {
             'amount': this.paymentDetails.amountRequiredNow,
             'paymentMode': null,
@@ -2319,7 +2271,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             'accountId': this.accountId,
             'purpose': 'prePayment'
         };
-
         this.paymentReqInfo.paymentMode = paymentMode;
         this.paymentReqInfo['serviceId'] = this.selectedServiceId;
         this.paymentReqInfo['isInternational'] = this.isInternational;
@@ -2330,7 +2281,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.convenientPaymentModes.map((res: any) => {
             this.convenientFeeObj = res
             if (this.convenientFeeObj && this.convenientFeeObj.isInternational && this.isInternational) {
-                // this.convenientFeeObj = res;
                 if (this.paymentMode === this.convenientFeeObj.mode) {
                     this.paymentReqInfo['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
                     this.paymentReqInfo['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
@@ -2342,7 +2292,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
             }
             if (this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternational) {
-                // this.convenientFeeObj = res;
                 if (this.paymentMode === this.convenientFeeObj.mode) {
                     this.paymentReqInfo['convenientFee'] = this.convenientFeeObj.consumerGatewayFee;
                     this.paymentReqInfo['convenientFeeTax'] = this.convenientFeeObj.consumerGatewayFeeTax;
@@ -2350,7 +2299,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     this.paymentReqInfo['profileId'] = this.paymentmodes.profileId;
                     this.paymentReqInfo['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
                     this.paymentReqInfo['paymentGateway'] = this.convenientFeeObj.gateway
-
                     console.log("Indian Payment Info", this.paymentReqInfo)
                 }
             }
@@ -2359,10 +2307,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
         this.lStorageService.setitemonLocalStorage('acid', this.accountId);
         this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-
         console.log("paymentReqInfo:", this.paymentReqInfo);
-
-
         if (this.remainingadvanceamount == 0 && this.checkJcash) {
             const postData = {
                 'amountToPay': this.paymentDetails.amountRequiredNow,
@@ -2384,11 +2329,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             this.router.navigate(['consumer', 'appointment', 'confirm'], { queryParams: { account_id: this.accountId, uuid: this.trackUuid } });
                         }, 500);
                     }
-                },
-                    error => {
-                        this.isClickedOnce = false;
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    });
+                }, error => {
+                    this.isClickedOnce = false;
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         } else if (this.remainingadvanceamount > 0 && this.checkJcash) {
             const postData: any = {
                 'amountToPay': this.paymentDetails.amountRequiredNow,
@@ -2406,7 +2350,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             postData.serviceId = this.selectedServiceId;
             this.sharedServices.PayByJaldeewallet(postData)
                 .subscribe((pData: any) => {
-
                     if (pData.isGateWayPaymentNeeded == true && pData.isJCashPaymentSucess == true) {
                         if (pData.paymentGateway == 'PAYTM') {
                             this.payWithPayTM(pData.response, this.accountId);
@@ -2414,12 +2357,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             this.paywithRazorpay(pData.response);
                         }
                     }
-                },
-                    error => {
-                        this.isClickedOnce = false;
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-
-                    });
+                }, error => {
+                    this.isClickedOnce = false;
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         } else {
             this.subs.sink = this.sharedServices.consumerPayment(this.paymentReqInfo)
                 .subscribe((pData: any) => {
@@ -2436,18 +2377,14 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                             this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('CHECKIN_ERROR'), { 'panelClass': 'snackbarerror' });
                         }
                     }
-                },
-                    error => {
-                        this.isClickedOnce = false;
-                        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                        // this.disablebutton = false;
-                    });
+                }, error => {
+                    this.isClickedOnce = false;
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
         }
     }
-
     paywithRazorpay(pData: any) {
-        // 'consumer', 'appt_prepayment', this.trackUuid, this.selectedService.livetrack, this.account_id, this.paymentDetails.amountRequiredNow, this.uuidList, this.customId, this.from
-        pData.paymentMode = this.paymentMode;
+        pData.paymentMode = this.paymentMode;        
         this.razorpayService.initializePayment(pData, this.accountId, this);
     }
     payWithPayTM(pData: any, accountId: any) {
@@ -2455,7 +2392,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         pData.paymentMode = this.paymentMode;
         this.paytmService.initializePayment(pData, accountId, this);
     }
-
     finishAppointment(status) {
         if (status) {
             this.isClickedOnce = false;
@@ -2481,26 +2417,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.setAnalytics();
             this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
         } else {
-            this.closeloading();
-            // this.isClickedOnce = false;
-            // this.loadingPaytm = false;
-            // this.snackbarService.openSnackBar("Payment Failed. Try again", { 'panelClass': 'snackbarerror' });
-            // if (this.from) {
-            //     this.ngZone.run(() => this.router.navigate(['consumer']));
-            // } else {
-            //     let queryParams = {
-            //         accountId: this.accountId,
-            //         uuid: this.trackUuid,
-            //         theme: this.theme
-            //     }
-            //     if (this.customId) {
-            //         queryParams['customId'] = this.customId;
-            //     }
-            //     let navigationExtras: NavigationExtras = {
-            //         queryParams: queryParams
-            //     };
-            //     this.ngZone.run(() => this.router.navigate(['consumer'], navigationExtras));
-            // }
+            this.closeloading();            
         }
     }
 
@@ -2511,10 +2428,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
                     .then((data) => {
                         if (data) {
+                            this.setAnalytics('payment_completed');
                             this.finishAppointment(true);
                         }
-                    }, error => {
-                        // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                     })
             } else if (response.STATUS == 'TXN_FAILURE') {
                 if (response.error && response.error.description) {
@@ -2527,10 +2443,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 this.paytmService.updatePaytmPay(payload, accountId)
                     .then((data) => {
                         if (data) {
+                            this.setAnalytics('payment_completed');
                             this.finishAppointment(true);
                         }
-                    }, error => {
-                        // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                     })
             } else if (response.STATUS == 'TXN_FAILURE') {
                 this.snackbarService.openSnackBar(response.RESPMSG, { 'panelClass': 'snackbarerror' });

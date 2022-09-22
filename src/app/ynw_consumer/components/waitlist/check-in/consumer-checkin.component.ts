@@ -930,25 +930,22 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
             if (type === 'checkin') {
                 if (this.selectedService.isPrePayment && !this.selected_payment_mode && this.paymentDetails.amountRequiredNow > 0) {
-                    this.snackbarService.openSnackBar('Please select consumerNoteAndFileSavea payment mode', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please select a payment mode', { 'panelClass': 'snackbarerror' });
                     this.isClickedOnce = false;
                     return false;
-                }
+                }                
                 if (this.jcashamount > 0 && this.checkJcash) {
                     this.shared_services.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                         .subscribe(data => {
                             console.log('dfsdfdfs' + data)
                             this.remainingadvanceamount = data;
-                            // this.addCheckInConsumer(post_Data, paymenttype);
                             this.performCheckin().then(
                                 () => {
                                     _this.paymentOperation();
                                 }
                             );
                         });
-                }
-                else {
-                    // this.addCheckInConsumer(post_Data, paymenttype);
+                } else {
                     this.performCheckin().then(
                         () => {
                             _this.paymentOperation();
@@ -1045,39 +1042,16 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         }
         return post_Data;
     }
-
-    // saveCheckin(type?) {
-    //     if (type === 'checkin') {
-    //         if (this.interNatioanalPaid) {
-    //             this.isClickedOnce = true
-    //             this.paymentBtnDisabled = false;
-    //         }
-    //         if (this.razorpayEnabled && !this.paytmEnabled) {
-    //             this.isClickedOnce = true
-    //             this.paymentBtnDisabled = false;
-    //         }
-    //     }
-    //     this.confirmcheckin(type);
-    // }
     performCheckin() {
         const _this = this;
         return new Promise(function (resolve, reject) {
-
             console.log("Payment Req Id:", _this.paymentRequestId);
-
             if (_this.paymentRequestId) {
                 resolve(true);
-            }
-            else {
+            } else {
                 let post_Data = _this.generateInputforCheckin();
                 _this.subs.sink = _this.shared_services.addCheckin(_this.account_id, post_Data)
                     .subscribe(data => {
-                        // if (this.customId) {
-                        //     const accountid = this.businessId;
-                        //     this.shared_services.addProvidertoFavourite(accountid)
-                        //         .subscribe(() => {
-                        //         });
-                        // }
                         const retData = data;
                         _this.uuidList = [];
                         let parentUid;
@@ -1096,63 +1070,34 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         if (_this.selectedMessage.files.length > 0) {
                             _this.consumerNoteAndFileSave(parentUid).then(
                                 () => {
-                                    // this.paymentOperation();
                                     resolve(true);
                                 }
                             );
-                            // this.consumerNoteAndFileSave(this.uuidList, parentUid, paymenttype);
                         }
                         else {
                             _this.submitQuestionnaire(parentUid).then(
                                 () => {
-
                                     resolve(true);
-                                    // this.paymentOperation();
-
                                 }
                             );
                             _this.submitserviceOptionQuestionnaire(parentUid).then(
                                 () => {
                                     resolve(true);
-                                    // this.paymentOperation();
                                 }
                             );
-                            // this.submitQuestionnaire(parentUid);
-
                         }
-
-                        // else {
-                        //     if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
-                        //         this.payuPayment(paymenttype);
-                        //     } else {
-                        //         this.paymentOperation(paymenttype);
-                        //     }
-                        // }
-
-                    },
-                        error => {
-                            _this.isClickedOnce = false;
-                            _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                            _this.disablebutton = false;
-                            _this.paytmGateway = false;
-                            _this.razorpayGatway = false;
-                            // _this.paymentBtnDisabled = false;
-                        });
+                    }, error => {
+                        _this.isClickedOnce = false;
+                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        _this.disablebutton = false;
+                        _this.paytmGateway = false;
+                        _this.razorpayGatway = false;
+                    });
             }
         });
     }
-    // addCheckInConsumer(postData, paymentmodetype?) {
-    //     let paymenttype = this.selected_payment_mode;
-    //     if (this.selectedService.isPrePayment && !this.selected_payment_mode) {
-    //         this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
-    //         this.isClickedOnce = false;
-    //         return false;
-    //     }
-
-    // }
     submitQuestionnaire(uuid) {
         const _this = this;
-
         return new Promise(function (resolve, reject) {
             if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                 const dataToSend: FormData = new FormData();
@@ -1177,7 +1122,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                     if (data.urls.length === postData['urls'].length) {
                                         _this.shared_services.consumerWaitlistQnrUploadStatusUpdate(uuid, _this.account_id, postData)
                                             .subscribe((data) => {
-                                                // this.paymentOperation(paymenttype);
                                                 resolve(true);
                                             },
                                                 error => {
@@ -1188,26 +1132,23 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                                     resolve(false);
                                                 });
                                     }
-                                },
-                                    error => {
-                                        _this.isClickedOnce = false;
-                                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                        _this.disablebutton = false;
-                                        _this.api_loading_video = true;
-                                    });
+                                },error => {
+                                    _this.isClickedOnce = false;
+                                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                                    _this.disablebutton = false;
+                                    _this.api_loading_video = true;
+                                });
                         }
                     } else {
                         resolve(true);
-                        // this.paymentOperation(paymenttype);
                     }
-                },
-                    error => {
-                        this.isClickedOnce = false;
-                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        this.disablebutton = false;
-                        this.api_loading_video = true;
-                        resolve(false);
-                    });
+                }, error => {
+                    _this.isClickedOnce = false;
+                    _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                    _this.disablebutton = false;
+                    _this.api_loading_video = true;
+                    resolve(false);
+                });
             } else {
                 resolve(true);
             }
@@ -1274,7 +1215,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         });
     }
     paymentOperation() {
-        console.log("Payment Operation Details :", this.paymentDetails)
+        this.setAnalytics('payment_initiated');
         if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
             this.payuPayment(this.selected_payment_mode);
         } else {
@@ -1341,12 +1282,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
                     .then((data) => {
                         if (data) {
+                            this.setAnalytics('payment_completed');
                             this.finishCheckin(true);
                         }
-                    },
-                        error => {
-                            // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-                        })
+                    })
             } else if (response.STATUS == 'TXN_FAILURE') {
                 if (response.error && response.error.description) {
                     this.snackbarService.openSnackBar(response.error.description, { 'panelClass': 'snackbarerror' });
@@ -1358,12 +1297,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                 this.paytmService.updatePaytmPay(payload, accountId)
                     .then((data) => {
                         if (data) {
+                            this.setAnalytics('payment_completed');
                             this.finishCheckin(true);
                         }
-                    },
-                        error => {
-                            // this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-                        })
+                    })
             } else if (response.STATUS == 'TXN_FAILURE') {
                 this.snackbarService.openSnackBar(response.RESPMSG, { 'panelClass': 'snackbarerror' });
                 this.finishCheckin(false);
@@ -2017,20 +1954,15 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                             this.convenientFeeObj = {}
                             if (res) {
                                 this.convenientFeeObj = res;
-                                this.convenientFee = this.convenientFeeObj.convenienceFee;
-                                // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
-                                console.log("payment convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
-
+                                this.convenientFee = this.convenientFeeObj.convenienceFee;                                
                             }
                         })
                     }
-
                 })
-            },
-                error => {
-                    this.isClickedOnce = false;
-                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                });
+            }, error => {
+                this.isClickedOnce = false;
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            });
     }
     payuPayment(paymenttype?) {
         this.makeFailedPayment(paymenttype);
@@ -2693,7 +2625,6 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                                 }
                                                 _this.loggedIn = true;
                                             } else {
-
                                                 if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                                     _this.bookStep = 4;
                                                 } else {
@@ -2704,11 +2635,13 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                             }
                                             _this.loading = false;
                                         }
-                                    )
+                                    );
+                                    this.setAnalytics('dateTime_login');
                                 }
                             );
                         } else {
                             _this.loggedIn = false;
+                            this.setAnalytics('dateTime_withoutlogin');
                         }
                     });
                     break;
@@ -3015,7 +2948,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             }
         });
     }
-    setAnalytics() {
+    setAnalytics(source?) {
         const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
 
         let analytics = {
@@ -3024,12 +2957,44 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             subDomId: this.businessjson.serviceSubSector.id
         }
         if (this.customId) {
-            if (reqFrom && reqFrom == 'cuA') {
-                analytics['metricId'] = 504;
+            
+        if (reqFrom && reqFrom == 'cuA') {
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 523;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 524;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 528;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 531;
+                } else {
+                    analytics['metricId'] = 504;
+                }
+                
             } else if (reqFrom && reqFrom == 'CUSTOM_WEBSITE') {
-                analytics['metricId'] = 505;
-            } else if (this.customId) {
-                analytics['metricId'] = 503;
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 525;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 526;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 529;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 532;
+                } else {
+                    analytics['metricId'] = 505;
+                }                
+            } else if (this.customId) { 
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 521;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 522;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 527;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 530;
+                } else {
+                    analytics['metricId'] = 503;
+                }
             }
             this.sharedServices.updateAnalytics(analytics).subscribe();
         }

@@ -588,6 +588,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         } else {
             const paymentWay = _this.paymentMode;
             console.log("Going to call donation link:", paymentWay);
+            _this.setAnalytics('payment_initiated');
             _this.subs.sink = _this.sharedServices.addCustomerDonation(post_Data, _this.accountId)
                 .subscribe(data => {
                     _this.donationId = data['uid'];
@@ -765,33 +766,35 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         }
     }
     transactionCompleted(response, payload, accountId) {
+        const _this = this;
         if (response.SRC) {
             if (response.STATUS == 'TXN_SUCCESS') {
-                this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
+                _this.razorpayService.updateRazorPay(payload, accountId, 'consumer')
                     .then((data) => {
                         if (data) {
-                            this.finishDonation(true, response);
+                            _this.setAnalytics('payment_completed');
+                            _this.finishDonation(true, response);
                         }
                     },
                         error => {
-                            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                            _this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
                         })
             } else if (response.STATUS == 'TXN_FAILURE') {
-                this.finishDonation(false);
+                _this.finishDonation(false);
             }
         } else {
             if (response.STATUS == 'TXN_SUCCESS') {
-                this.paytmService.updatePaytmPay(payload, accountId)
+                _this.paytmService.updatePaytmPay(payload, accountId)
                     .then((data) => {
                         if (data) {
-                            this.finishDonation(true, response);
+                            _this.setAnalytics('payment_completed');
+                            _this.finishDonation(true, response);
                         }
-                    },
-                        error => {
-                            this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
-                        })
+                    }, error => {
+                        _this.snackbarService.openSnackBar("Transaction failed", { 'panelClass': 'snackbarerror' });
+                    })
             } else if (response.STATUS == 'TXN_FAILURE') {
-                this.finishDonation(false);
+                _this.finishDonation(false);
             }
         }
     }
@@ -1272,7 +1275,7 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
             }
         });
     }
-    setAnalytics() {
+    setAnalytics(source?) {
         const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
         let analytics = {
             accId: this.businessProfile.id,
@@ -1281,11 +1284,41 @@ export class ConsumerDonationComponent implements OnInit, OnDestroy {
         }
         if (this.customId) {
             if (reqFrom && reqFrom == 'cuA') {
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 535;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 536;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 540;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 543;
+                } else {
                 analytics['metricId'] = 507;
+                }
             } else if (reqFrom && reqFrom == 'CUSTOM_WEBSITE') {
-                analytics['metricId'] = 508;
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 537;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 538;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 541;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 544;
+                } else { 
+                    analytics['metricId'] = 508;
+                }
             } else if (this.customId) {
+                if (source ==='dateTime_login') {
+                    analytics['metricId'] = 533;
+                } else if (source ==='dateTime_withoutlogin') {
+                    analytics['metricId'] = 534;
+                } else if (source ==='payment_initiated') {
+                    analytics['metricId'] = 539;
+                } else if (source ==='payment_completed') {
+                    analytics['metricId'] = 542;
+                } else {
                 analytics['metricId'] = 506;
+                }
             }
             this.sharedServices.updateAnalytics(analytics).subscribe();
         }
