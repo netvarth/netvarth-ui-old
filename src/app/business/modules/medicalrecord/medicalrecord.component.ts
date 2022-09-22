@@ -309,6 +309,7 @@ export class MedicalrecordComponent implements OnInit {
         (data: any) => {
           const response = data;
           this.loading = false;
+          console.log('responseToken',response);
           if(response && response[0]){
             this.customerDetails = response[0];
           }
@@ -865,9 +866,13 @@ export class MedicalrecordComponent implements OnInit {
   addPrescriptionAndClinical(data,text){
     // console.log('add');
     if(text==='createPrescription'){
+      // alert('prescription')
       // console.log('mrId',this.medicalRecordID)
       if(this.mrId===0){
         // alert('if1st prescription')
+        // const mRId=0;
+        // const routerId='prescription';
+        // this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP',0, 'medicalrecord', mRId,routerId])
         this.showHidepreviousDetails = false;
           this.showHideAddPrescription=true;
           this.showHideClinicalNotes=false;
@@ -888,22 +893,14 @@ export class MedicalrecordComponent implements OnInit {
       
     }
     else if(text==='craeteClinicalnotes'){
+      // alert('clinical')
       if(this.mrId===0){
-        // alert('1st if clinicalnotes')
-      //   const qparams = { 'clinicalnotes': 'clinicalnotes' };
-      //       const navigationExtras: NavigationExtras = {
-      //         queryParams: qparams
-      //       };
-      //       const mRId=0;
-      // const routerId='clinicalnotes';
-      //         this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP',0, 'medicalrecord', mRId,routerId],navigationExtras);
           this.showHidepreviousDetails = false;
           this.showHideAddPrescription=false;
           this.showHideClinicalNotes=true;
           this.showHideActivityTYpe=false;
       }
       else{
-        // alert('1st else clinicalnotes')
           const mRId=0;
       const routerId='clinicalnotes';
       this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP',0, 'medicalrecord', mRId,routerId])

@@ -1263,17 +1263,18 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           })
         }
         else if(fileDetails &&  fileDetails.type && ((fileDetails.type ===('.pdf')))){
-          const dialogRef= this.dialog.open(PreviewpdfComponent,{
-            width:'100%',
-            data:{
-              requestType:'priviewFilePrescription',
-              data:fileDetails,
-              mrId:this.mrId
-            }
-          })
-          dialogRef.afterClosed().subscribe((res)=>{
-          })
+          // const dialogRef= this.dialog.open(PreviewpdfComponent,{
+          //   width:'100%',
+          //   data:{
+          //     requestType:'priviewFilePrescription',
+          //     data:fileDetails,
+          //     mrId:this.mrId
+          //   }
+          // })
+          // dialogRef.afterClosed().subscribe((res)=>{
+          // })
           // this.downloadPdf(fileDetails.url)
+          window.open(fileDetails.url);
         }
         else{
           if(fileDetails.url){
