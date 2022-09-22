@@ -11,11 +11,9 @@
   <div>
     <section *ngIf="!loading" class="shadow mgn-up-10">
       <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes " >
-        <!-- addMedecineMobDeviceB -->
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreateAdd" *ngIf="(drugList && uploadlist && uploadlist.length===0) || drugList===undefined">
           <div class="shadow" style="height:100% !important">
           <div>
-            <!-- *ngIf="drugList && drugList.length>0 && (tempText=== undefined || tempText==='')" -->
             <span class="table-heading" *ngIf="(tempText==='' || tempText===undefined)"><b> Add new medicine</b></span>
             <span class="table-heading" *ngIf="(tempText==='edit' || tempText==='update')"><b> View  medicine</b></span>
         </div>
@@ -70,15 +68,9 @@
                 </div>
                 <div>
                   <div class="col-md-10 no-padding glbl-seting-heder btnClass">
-                    <!-- <button *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1 style-button btn-primary"
-                      [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)"> Save & Add Another</button>
-                    <button type="submit" mat-button class="cs-btn bt1 style-button btn-primary" [disabled]="!amForm.valid ">Save &
-                      Close</button> -->
-                      <!-- <button type="button"class="btn btn-primary font-weight-bold cancelBtn"(click)=" gobackCancel('Prescription')">Cancel</button> -->
                       <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"   [disabled]="addPrescription" 
                       (click)="saveAndAddOther(amForm.value)"  *ngIf="!api_loading && tempText===''">
                         <span>Add</span>
-                        <!-- <span  *ngIf="drugList && drugList.length>0" (click)="editDrugList('edit')">Edit</span> -->
                         <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                         </app-common-innerloading-spinner>
                     </button>
@@ -161,9 +153,6 @@
                               #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'"/>
                             </div>
                           </div>
-                          <!-- <div (click)="deletePrescriptionFile(file,i)">
-                            <img class="removeIcon" src="./assets/images/ImgeFileIcon/removeCross.png" />
-                          </div> -->
                         </div>
                       </div>
                     </div>
@@ -171,59 +160,6 @@
                 </div>
               </div>
             </div>
-            <!-- <div class="w-dta">
-                          <div class="row">
-                            <div class="copy">
-                              <div class="table-outer q-itm">
-                                <div class="pad-10 drugdetailslist">
-                                  <table class="table ">
-                                    <thead>
-                                      <tr>
-                                        <th>File</th>
-                                        <th>Last modified</th>
-                                        <th>Image size</th>
-                                      </tr>
-                                    </thead>
-                                    <tbody>
-                                      <tr *ngFor="let file of uploadlist; let i = index;">
-                                        <td data-title="File" class="pointlist" *ngIf="file.type === '.pdf'&& file">
-                                          <a [href]="file.url" download><i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
-                                              style="color: #1E4079; ">{{file.originalName}}</u></a>
-                                        </td>
-                                        <td data-title="File" class="pointlist"
-                                          *ngIf="file && file.type == '.png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ">
-                                          <img alt="{{file.originalName}}" src="{{file.url}}" id="prescription-image1"
-                                            style="width: 25px; height:25px;" class=" img-responsive pointer-cursor"
-                                            (click)="openImageModalRow(image_list_popup[0])">
-                                        </td>
-                                        <td data-title="Last modified">
-                                          {{file.date | date:dateFormatSp}}
-                                        </td>
-                                        <td data-title="Image size">
-                                          {{imageSize(file.imageSize)}} KB
-                                        </td>
-                                      </tr>
-                                    </tbody>
-                                  </table>
-                                </div>
-                                <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"
-                                  [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-                                  [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
-                                  (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-                                <div class="d-md-flex d-lg-flex">
-                                  <div class="mgn-up-10 pl-2">
-                                    <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="updatePaperPrescription()">
-                                      Edit Prescription</button>
-                                  </div>
-                                  <div class="mgn-up-10 pl-2">
-                                    <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="shareManualRx('uploadrx')">
-                                      Share Prescription</button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> -->
           </div>
           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate" *ngIf="drugList && drugList.length>0">
             <div class="shadow prescriptionCard" >
@@ -278,32 +214,7 @@
                             </tr>
                           </tbody>
                         </table>
-                        <!-- <span *ngIf="!note" (click)="addNote()" class="lnk action pointlist"
-                          style="color: #1E4079; font-size: smaller"><u>Instructions to the {{customer_label}}</u></span>
-                        <span *ngIf="note" style="color: #1E4079;">Instructions to the {{customer_label}}</span><br>
-                        <span style="font-size: smaller">{{note}}</span> -->
                       </div>
-                      <!-- <div class="mgn-up-10 pl-2">
-                        <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
-                          <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079;font-size: smaller">
-                            Upload digital signature for sharing Prescription</u>
-                        </span>
-                        <span *ngIf="digitalSign">
-                          <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079; font-size: smaller">
-                            Update digital signature</u>
-                        </span>
-                      </div> -->
-                      <!-- <div class="d-md-flex d-lg-flex">
-                        <div class="mgn-up-10 pl-2">
-                          <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="updatePrescription()">
-                            Edit Prescription</button>
-                        </div>
-                        <div *ngIf="digitalSign" class="mgn-up-10 pl-2">
-                          <button type="button" mat-button class="cs-btn bt1 btn btn-primary"
-                            (click)="shareManualRx('adddrug')">
-                            Share Prescription</button>
-                        </div>
-                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -312,178 +223,12 @@
           </div>
         </div>
       </div>
-      <!-- <div  class="addMedeconeShowHide" >
-        <button *ngIf="drugList && drugList.length>0 && (tempText=== undefined || tempText==='')" type="button"class="btn btn-primary font-weight-bold confirmBtn addMedicineMobBtn" (click)="addMedecineMobDevice()">Add Medecine</button>
-        <button *ngIf="drugList && drugList.length>0 && (tempText==='edit' || tempText==='update')" type="button"class="btn btn-primary font-weight-bold confirmBtn addMedicineMobBtn" (click)="viewMedecineMobDevice()" >View Medicine List</button>
-      </div> -->
       <div class="btnPosition" >
-        <button type="button"class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn cursor-pointer" (click)="saveClose()">Save & Close</button>
+        <button  type="button"class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn cursor-pointer" (click)="saveClose()">Save & Close</button>
       </div>
       
     </section>
   </div>
-  <!-- <ng-container> -->
-    <!-- <div class="" *ngIf="drugList && drugList.length>0">
-      <span><b>Prescription Details</b></span>
-      <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
-          class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
-          {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
-      <div class="w-dta">
-        <div class="row">
-          <div class="copy">
-            <div class="table-outer q-itm">
-              <div class="pad-10 drugdetailslist">
-                <table class="table ">
-                  <thead>
-                    <tr>
-                      <th>Medicine</th>
-                      <th>Duration(days)</th>
-                      <th>Dosage</th>
-                      <th>Frequency</th>
-                      <th>Instructions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let drug of drugList; let i = index;">
-                      <td data-title="Medicine">{{drug.medicine_name? drug.medicine_name : ''}}</td>
-                      <td data-title="Duration(days)">{{drug.duration? drug.duration : ''}}</td>
-                      <td data-title="Dosage">{{drug.dosage? drug.dosage : ''}}</td>
-                      <td data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
-                      <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 0">
-                        <span>{{truncateInst(drug.instructions)}}...<span (click)="instructPopUp(drug)"><u
-                              style="color: #1E4079 ; font-size: smaller;cursor: pointer;">more</u></span></span>
-                      </td>
-                      <td data-title="Instructions" *ngIf="instrutionType(drug.instructions) === 1">
-                        {{drug.instructions? drug.instructions : ''}}
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <span *ngIf="!note" (click)="addNote()" class="lnk action pointlist"
-                  style="color: #1E4079; font-size: smaller"><u>Instructions to the {{customer_label}}</u></span>
-                <span *ngIf="note" style="color: #1E4079;">Instructions to the {{customer_label}}</span><br>
-                <span style="font-size: smaller">{{note}}</span>
-              </div>
-              <div class="mgn-up-10 pl-2">
-                <span *ngIf="!digitalSign && selectedMessage.files && selectedMessage.files.length == 0">
-                  <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079;font-size: smaller">
-                    Upload digital signature for sharing Prescription</u>
-                </span>
-                <span *ngIf="digitalSign">
-                  <u class="lnk action pointlist" (click)="uploadSign()" style="color: #1E4079; font-size: smaller">
-                    Update digital signature</u>
-                </span>
-              </div>
-              <div class="d-md-flex d-lg-flex">
-                <div class="mgn-up-10 pl-2">
-                  <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="updatePrescription()">
-                    Edit Prescription</button>
-                </div>
-                <div *ngIf="digitalSign" class="mgn-up-10 pl-2">
-                  <button type="button" mat-button class="cs-btn bt1 btn btn-primary"
-                    (click)="shareManualRx('adddrug')">
-                    Share Prescription</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-  <!-- </ng-container> -->
-  <!-- <div class="" *ngIf="uploadlist && uploadlist.length>0"> -->
-    <!-- <span><b>Prescription Details</b></span> -->
-<!-- {{uploadlist.length | json}} -->
-    <!-- <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
-        class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
-        {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div> -->
-
-        <!-- <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate"*ngIf="uploadlist && uploadlist.length > 0" >
-          <div class="shadow" style="height:100% !important">
-            <div class="pl-2 uploadedText">Uploaded Prescription</div>
-            <div class="hightLimit">
-              <div *ngFor="let file of uploadlist;let i=index" class="allFile">
-                <div class="borderClass" >
-                  <div class="allfileNameDetails">
-                    <div class="allfileName">
-                      <div class="fileType" *ngIf="file && file.type ">
-                        <img height="25px" width="25px" [src]="getFileType(file.type)"  />
-                      </div>
-                      <div>
-                        <div class="fileName"*ngIf="file && file.originalName">{{originalFilename(file.originalName)}}</div>
-                        <div *ngIf="file && file.imageSize" class="fileSize" >
-                          {{bytesToSize(file.imageSize)}}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="imageClas">
-                      <div (click)="dialogImgView(file)">
-                        <img class="fileView"src="./assets/images/ImgeFileIcon/fileView.png" />
-                      </div>
-                      <div (click)="deletePrescriptionFile(file,i)">
-                        <img class="removeIcon"src="./assets/images/ImgeFileIcon/removeCross.png" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-            </div> -->
-    <!-- <div class="w-dta">
-      <div class="row">
-        <div class="copy">
-          <div class="table-outer q-itm">
-            <div class="pad-10 drugdetailslist">
-              <table class="table ">
-                <thead>
-                  <tr>
-                    <th>File</th>
-                    <th>Last modified</th>
-                    <th>Image size</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let file of uploadlist; let i = index;">
-                    <td data-title="File" class="pointlist" *ngIf="file.type === '.pdf'&& file">
-                      <a [href]="file.url" download><i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;<u
-                          style="color: #1E4079; ">{{file.originalName}}</u></a>
-                    </td>
-                    <td data-title="File" class="pointlist"
-                      *ngIf="file && file.type == '.png'|| file.type == '.jpg' ||file.type == '.PNG'|| file.type == '.jpeg' ">
-                      <img alt="{{file.originalName}}" src="{{file.url}}" id="prescription-image1"
-                        style="width: 25px; height:25px;" class=" img-responsive pointer-cursor"
-                        (click)="openImageModalRow(image_list_popup[0])">
-                    </td>
-                    <td data-title="Last modified">
-                      {{file.date | date:dateFormatSp}}
-                    </td>
-                    <td data-title="Image size">
-                      {{imageSize(file.imageSize)}} KB
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0"
-              [modalImages]="image_list_popup" [plainGalleryConfig]="customPlainGalleryRowConfig"
-              [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
-              (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
-            <div class="d-md-flex d-lg-flex">
-              <div class="mgn-up-10 pl-2">
-                <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="updatePaperPrescription()">
-                  Edit Prescription</button>
-              </div>
-              <div class="mgn-up-10 pl-2">
-                <button type="button" mat-button class="cs-btn bt1 btn btn-primary" (click)="shareManualRx('uploadrx')">
-                  Share Prescription</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-  <!-- </div> -->
 </ng-container>
 <ng-container *ngIf="!loading && viewVisitDetails">
   <div *ngIf="!loading && viewVisitDetails " class=" mgn-up-10 pad-25" [ngClass]="{card: drugList && drugList.length !==0}" >
@@ -504,8 +249,6 @@
         (click)="updateEditPrescription(drugList)" style="height:20px;width:20px"
         src="/assets/images/medicalReportIcon/edit.png" /></span>
     </div>
-
-
     <div class="imgClasMobile">
       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
         <mat-icon>more_vert</mat-icon>
@@ -531,17 +274,6 @@
       </button>
     </mat-menu>
     </div>
-
-
-
-
-
-
-
-
-
-
-
   </div>
   <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" class="overflow" >
     <div>
@@ -576,48 +308,10 @@
           </tr>
         </tbody>
       </table>
-
-     
-      <!-- <div *ngFor="let drug of drugList; let i = index;" class="drugList" >
-        <div *ngIf="drug" class="drugInfo">
-          <div *ngIf="drug && drug.medicine_name">
-            <div class="drugName">Medecine</div>
-            <div *ngIf="drug && drug.medicine_name" class="drugActivity">{{drug.medicine_name}}</div>
-          </div>
-          <div *ngIf="drug && drug.duration">
-            <div  class="drugName">Duration(days)</div>
-            <div *ngIf="drug && drug.duration" class="drugActivity">{{drug.duration}}</div>
-          </div>
-          <div *ngIf="drug && drug.dosage">
-            <div  class="drugName">Dosage</div>
-            <div *ngIf="drug && drug.dosage"class="drugActivity">{{drug.dosage}}</div>
-          </div>
-          <div *ngIf="drug && drug.frequency">
-            <div  class="drugName">Frequency</div>
-            <div *ngIf="drug && drug.frequency" class="drugActivity">{{drug.frequency}}</div>
-          </div>
-        </div>
-        <div  *ngIf="drug && drug.instructions" class="drugInstruction">
-          <div  class="drugName">Instruction</div>
-          <div *ngIf="drug && drug.instructions" class="drugActivity"> {{truncateInst(drug.instructions)}}</div>
-        </div>
-        <div class="drugActivityBtn">
-          <div>
-            <button class="btn btn-primary font-weight-bold printBtn" (click)="print('printableArea')">Print Prescription</button>
-          </div>
-          <div>
-            <button class="shareBtn" (click)="shareManualRx('uploadrx',bookingType,bookingId)">Share</button>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
   <div *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
     <div class="filesCreate" *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
-      <!-- <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
-          class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
-          {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div> -->
-  
       <div class=" mgn-up-10 filesCreate" *ngIf="uploadlist && uploadlist.length > 0">
         <div class="shadow" style="height:100% !important">
           <div class="sharedFlex">
@@ -650,8 +344,6 @@
                   </div>
                   <div class="imageClas">
                     <div (click)="dialogImgView(file)">
-                      <!-- <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
-                       #tooltip="matTooltip" matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" /> -->
                       <img *ngIf="file.type !=='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip"
                         matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
                       <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/pdfDwnld.png" #tooltip="matTooltip"
@@ -662,7 +354,6 @@
                       #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'" />
                     </div>
                       <div>
-                        <!-- && !(file.type ==='.pdf') -->
                         <div class="Share pointer-cursor" *ngIf="file " (click)="printSecond(file)">
                           <img class="fileView" src="/assets/images/medicalReportIcon/print.png" 
                           #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'"/>
@@ -711,7 +402,6 @@
               </div>
             </div>
           </div>
-          <!-- {{uploadlist[0].url | json}} -->
         </div>
         <div hidden id="sharePdf"  *ngIf="uploadlist && uploadlist[0] && uploadlist[0].type && (uploadlist[0].type==='.pdf')" >
           <div class="pdf-container">
@@ -727,229 +417,4 @@
 </div>
 </ng-container>
 
-<ng-container *ngIf="tempPrescription===true && !loading && !viewVisitDetails ">
-  <!-- <div style="margin-top: 20px;">
-    <section *ngIf="!loading" class="shadow">
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes " >
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate">
-          <div class="shadow" style="height:100% !important">
-          <div>
-            <span class="table-heading"><b> Add new medicine</b></span>
-        </div>
-        <div >
-            <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="drugdetail">
-                <div>
-                  <div class="form-group">
-                    <label>Medicine name & size</label>
-                    <input type="text" class="form-control" (keypress)="clearError($event)" placeholder="Medicine name & size"
-                      formControlName="medicine_name" />
-                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
-              {
-              'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
-              })">
-                    </app-field-error-display>
-                  </div>
-              
-                  <div class="form-group">
-                    <label>Duration in days</label>
-                    <input type="number" min="0" class="form-control" (keypress)="clearError($event)" formControlName="duration"
-                      placeholder="Duration in days" />
-                  </div>
-                  <div class="form-group">
-                    <label>Frequency per day</label>
-                    <input type="number" min="0" class="form-control" (keypress)="clearError($event)" placeholder="Frequency per day"
-                      formControlName="frequency" />
-                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
-              {
-              'maxlength' : 'Frequency can contain only ' + maxChars + ' characters'
-              })">
-                    </app-field-error-display>
-                  </div>
-                  <div class="form-group">
-                    <label>Dosage per consumption</label>
-                    <input type="number" min="0" class="form-control" (keypress)="clearError($event)" placeholder="Dosage per consumption"
-                      formControlName="dosage" />
-                  </div>
-                  <div class="form-group">
-                    <label>Additional instructions</label>
-                    <div class="input-group">
-                      <div class="input-group-prepend"></div>
-                      <textarea  (keyup)="autoGrowTextZone($event)" type="text" class="form-control" (keypress)="clearError($event)" id="instructions"
-                        placeholder="Additional instructions" formControlName="instructions" maxlength="500"></textarea>
-                    </div>
-                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
-              {
-              
-              'maxlength' : 'Additional instructions can contain only ' + maxCharslong + ' characters'
-              })">
-                    </app-field-error-display>
-                  </div>
-                </div>
-                <div>
-                  <div class="col-md-10 no-padding glbl-seting-heder btnClass">
-                      <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"   [disabled]="!amForm.valid " 
-                      (click)="saveAndAddOther(amForm.value)"  *ngIf="!api_loading && tempText===''">
-                        <span>Addd</span>
-                        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
-                        </app-common-innerloading-spinner>
-                    </button>
-                    <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"   [disabled]="!amForm.valid " 
-                      *ngIf=" tempText==='update'" (click)="editDrugList('edit',amForm.value,mrId)">
-                        <span >Edit</span>
-                        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
-                        </app-common-innerloading-spinner>
-                    </button>
-                    
-                  </div>
-                </div>
-              </form>
-              <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-              <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-              </app-form-success-display>
-        </div>
-      </div>
-        </div>
-        <span class="spaanOr">OR</span>
-        <div class="mobileDevice">
-          <span class="mobileOr">OR</span>
-        </div>
-
-        <div class="prescriptionNotes" style="width:100% !important">
-          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 filesCreate" *ngIf="uploadlist && drugList && drugList.length===0">
-            <div class="shadow flexClass">
-              <div class="text-dark text-center dashedClass" *ngIf="uploadlist ">
-                <img style="height:50px;width:50px" src="/assets/images/medicalReportIcon/uploadIcon.png" />
-                <div class="fileText" *ngIf="uploadlist && uploadlist.length===0">Click Your Files Here </div>
-                <div  *ngIf="uploadlist && uploadlist.length>0" class="fileText">Check Your Files Here </div>
-                <div *ngIf="uploadlist && uploadlist.length===0">
-                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor" (click)="uploadRx(uploadlist)">Upload
-                    file</button>
-                </div>
-                <div *ngIf="uploadlist && uploadlist.length>0">
-                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor" (click)="uploadRx(uploadlist)">Check files</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="filesCreate" *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
-            <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
-                class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
-                {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
-        
-            <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate" *ngIf="uploadlist && uploadlist.length > 0">
-              <div class="shadow" style="height:100% !important">
-                <div class="pl-2 uploadedText">Uploaded Prescription</div>
-                <div class="hightLimit">
-                  <div *ngFor="let file of uploadlist;let i=index" class="allFile">
-                    <div class="borderClass">
-                      <div class="allfileNameDetails">
-                        <div class="allfileName">
-                          <div class="fileType" *ngIf="file && file.type ">
-                            <img height="25px" width="25px" [src]="getFileType(file.type)" />
-                          </div>
-                          <div>
-                            <div class="fileName" *ngIf="file && file.originalName">{{originalFilename(file.originalName)}}
-                            </div>
-                            <div *ngIf="file && file.imageSize" class="fileSize">
-                              {{bytesToSize(file.imageSize)}}
-                            </div>
-                          </div>
-                        </div>
-                        <div class="imageClas">
-                          <div (click)="dialogImgView(file)">
-                            <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
-                            #tooltip="matTooltip" matTooltip="Download" [matTooltipPosition]="'below'"/>
-                          </div>
-                          <div>
-                            <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')" (click)="print('printableArea')">
-                              <img class="fileView" src="/assets/images/medicalReportIcon/print.png" 
-                              #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'" />
-                            </div>
-                          </div>
-                          <div>
-                            <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId)">
-                              <img class="fileView" src="/assets/images/medicalReportIcon/share.png" \
-                              #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'"/>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate" *ngIf="drugList && drugList.length>0">
-            <div class="shadow prescriptionCard" >
-              <div>
-                <span class="table-headingPrescription"><b>Created Prescription</b></span>
-            </div>
-              <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
-                  class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
-                  {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
-              <div style="margin-top: 10px;" >
-                <div >
-                  <div >
-                    <div >
-                      <div>
-                        <table class="table">
-                          <thead>
-                            <tr>
-                              <th data-title="No">No</th>
-                              <th data-title="Medicine">Medicine</th>
-                              <th data-title="Duration(days)">Duration(days)</th>
-                              <th data-title="Dosage">Dosage</th>
-                              <th  data-title="Frequency">Frequency</th>
-                              <th  data-title="Instructions"></th>
-                              <th data-title="Edit"></th>
-                              <th data-title="Print"></th>
-                              <th data-title="Share"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr *ngFor="let drug of drugList; let i = index;" >
-                              <td class="tdLeft " data-title="No">{{i+1}}</td>
-                              <td class="tdLeft " data-title="Medicine" >{{drug.medicine_name? drug.medicine_name : ''}}</td>
-                              <td class="tdLeft " data-title="Duration(days)" >{{drug.duration? drug.duration : ''}} </td>
-                              <td class="tdLeft " data-title="Dosage" >{{drug.dosage? drug.dosage : ''}} </td>
-                              <td class="tdLeft " data-title="Frequency" >{{drug.frequency? drug.frequency : ''}}</td>
-                              <td data-title="Instructions" *ngIf="drug && drug.instructions" class="Instructions tdLeft2 pointer-cursor" (click)="instructPopUp(drug)"
-                              #tooltip="matTooltip" matTooltip="Instruction" [matTooltipPosition]="'below'">
-                                <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" />
-                              </td>
-                              <td data-title="Edit" *ngIf="drug" class="tdLeft2 pointer-cursor" (click)="updateForm(drug,'update','edit',i,mrId)"
-                                #tooltip="matTooltip" matTooltip="Edit" [matTooltipPosition]="'below'">
-                                <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" />
-                              </td>
-                              <td *ngIf="drug" (click)="print('printableArea')" class="Share pointer-cursor tdLeft11" #tooltip="matTooltip"
-                                matTooltip="Print" [matTooltipPosition]="'below'">
-                                <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
-                              </td>
-                              <td  class="Share pointer-cursor tdLeft11" *ngIf="drug" (click)="shareManualRx('uploadrx',bookingType,bookingId)"
-                              #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
-                                <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="btnPosition" >
-        <button type="button"class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn" (click)="saveClose()">Save & Close</button>
-      </div>
-      
-    </section>
-  </div> -->
-
-  
-
-</ng-container>
+<ng-container *ngIf="tempPrescription===true && !loading && !viewVisitDetails "></ng-container>

@@ -163,6 +163,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   pdfSrc;
   tempList: any;
   newRowIndex = 0;
+  afterSave:boolean;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -710,22 +711,19 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   }
 
   saveRx(result) {
-    // console.log('result',result)
     this.loading = true;
     let passdata = {
       "prescriptionsList": result,
       "notes": this.note
     }
-    // console.log('this.mrId',this.mrId);
-    // console.log('newlyCretedMrId',this.newlyCretedMrId)
     if (this.mrId) {
-      // alert('edit')
       this.api_loading=true;
       this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
           // console.log('resupdateMRprescription',res)
           this.snackbarService.openSnackBar('Prescription update  Successfully');
           this.getMrprescription(this.mrId);
+          // this.afterSave=true;
           if(this.afterEdit==='afterUpdate'){
             this.tempList=this.drugList
           }
@@ -747,7 +745,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           this.snackbarService.openSnackBar('Prescription Saved Successfully');
           this.getMrprescription(this.mrId);
           // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
-
+          // this.afterSave=true;
         },
           error => {
             this.api_loading=false;
@@ -822,35 +820,40 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   }
   saveClose(){
     if(this.mrId !==0){
-      // this.reloadComponent()
-      // console.log('this.drugList',this.drugList)
+      console.log('this.drugList',this.drugList)
       let passdata = {
         "prescriptionsList":  this.drugList,
         "notes": this.note
       }
-      // console.log('this.mrId',this.mrId);
       this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res)=>{
-        // alert('saveClose')
-        // console.log('saveCloseREs',res)
-        // console.log('this.mrId',this.mrId);
         if(this.mrId !==0){
           if(this.afterEdit === 'afterUpdate'){
+            // alert('reload')
             this.reloadComponent()
           }
           else{
-            this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
+            
+            if(this.drugList.length===0){
+              // alert('apiError')
+              this.api_error = 'Please add your prescription';
+              this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' }); 
+            }
+            else{
+              // alert('routing')
+              this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, 
+              this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
+            }
                     // this.getMrprescription(this.mrId);
           }
           
         }
         else{
-          // alert('elsesaveclose')
           this.location.back()
         }        
       })
     }
     else{
-      this.api_error = 'Create your prescription';
+      this.api_error = 'Please add your prescription';
       this.snackbarService.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' }); 
     }
   }
@@ -1085,6 +1088,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     }
     handleFormControl(data){
       this.addPrescription= false;
+      this.afterSave=false;
       // console.log(data);
     }
     clearAll() {

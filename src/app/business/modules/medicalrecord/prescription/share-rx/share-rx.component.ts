@@ -17,6 +17,7 @@ import { UploadSignatureComponent } from '../upload-digital-signature/uploadsign
 import { ManualSignatureComponent } from '../upload-digital-signature/manualsignature/manual-signature.component';
 import { ImagesviewComponent } from '../imagesview/imagesview.component';
 import { ConfirmBoxComponent } from '../../../../shared/confirm-box/confirm-box.component';
+// import { Router } from '@angular/router';
 
 
 
@@ -136,7 +137,8 @@ export class ShareRxComponent implements OnInit {
     private groupService: GroupStorageService,
     private snackbarService: SnackbarService,
     public shared_services: SharedServices,
-    private wordProcessor: WordProcessor
+    private wordProcessor: WordProcessor,
+    // private router: Router,
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_user_Id = this.medicalService.getDoctorId();
@@ -180,6 +182,7 @@ export class ShareRxComponent implements OnInit {
       this.getBusinessProfile();
     }
     this.getSMSCredits();
+    // window.oncontextmenu = function() {return false;} // for disable right click 
   }
 
   @HostListener('window:resize', ['$event'])
@@ -564,10 +567,11 @@ export class ShareRxComponent implements OnInit {
             this.selectedMessage.base64.push(e.target['result']);
           };
           reader.readAsDataURL(file);
+          this.saveDigitalSignImages();
         }
       }
       // console.log(' this.selectedMessage', this.selectedMessage);
-      this.saveDigitalSignImages();
+      // this.saveDigitalSignImages();
       
     }
   }
@@ -594,13 +598,16 @@ export class ShareRxComponent implements OnInit {
   }
   uploadMrDigitalsign(id, submit_data) {
     this.provider_services.uploadMrDigitalsign(id, submit_data)
-      .subscribe((data) => {
-        // console.log('data',data);
-        // this.selectedMessage= data;
+      .subscribe((data:any) => {
+        console.log('data',data);
+        this.selectedMessage.files=[]
+        this.selectedMessage.files.push(data);
         // this.snackbarService.openSnackBar('Digital sign uploaded successfully');
         const error:string='Digital sign uploaded successfully'
         this.snackbarService.openSnackBar((error));
         this.digitalSign=true;
+        // this.selectedMessage.files.push(data)
+        // this.dialog.closeAll()
         // this.uploadsignatureRef.close()
         // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
       },

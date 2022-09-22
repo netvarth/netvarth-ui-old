@@ -63,4 +63,26 @@
     border-radius: 5.2647px !important;
     width: 100% !important;
     z-index: 9999999;
+    padding: 10px;
+    text-align: center;
+  }
+  .image{
+    height: 345px;
+    width: 70%;
+  }
+  .copyBtnBtn{
+    background-color: #FFE7E7 !important;
+    box-sizing: border-box;
+    color: #D33A2C;
+    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+    border-radius: 3.75916px !important;
+    border: 0px solid !important;
+    padding: 6px 10px;
+    font-size: 14px;
+  }
+  @media(max-width: 800px){
+    .image{
+        height: 100%;
+        width: 100%;
+      }
   }
