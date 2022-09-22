@@ -137,7 +137,7 @@
                             <button [ngClass]="{'cursorDiasable': api_loading}" type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="!api_loading && goback()"
                                 >Cancel
                             </button>
-                            <button [ngClass]="{'cursorDiasable': api_loading}" class="btn btn-primary font-weight-bold confirmBtn" type="button"  (click)="!api_loading && saveCreateEnquiry()">
+                            <button [ngClass]="{'cursorDiasable': api_loading}" class="btn btn-primary font-weight-bold confirmBtn" type="button"  (click)="!api_loading && saveCreateEnquiry(createEnquiryForm.value)">
                                     <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
                                     <span *ngIf="!api_loading">Save</span>
                             </button>

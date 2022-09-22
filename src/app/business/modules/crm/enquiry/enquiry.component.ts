@@ -297,24 +297,21 @@ export class enquiryComponent implements OnInit {
   search() {
     this.hideSearch = false;
   }
-  saveCreateEnquiry() {
+  saveCreateEnquiry(data) {
+    console.log(data);
     this.api_loading = true;
-    if (this.createEnquiryForm.controls.proposedAmount.value >= 100000) {
-      if (this.enquiryArr.length !== 0 && this.customer_data !== undefined) {
-        // console.log('first')
-        const createEnquiry: any = {
-          "location": { "id": this.activityLocationIdDialogValue },
-          "customer": { "id": this.customer_data.id },
-          "enquireMasterId": this.enquiryTemplateId,
-          "leadMasterId": this.createEnquiryForm.controls.userTaskCategory.value,
-          "isLeadAutogenerate": true,
-          "originUid": this.activityOriginUidDialogValue,
-          "taskMasterId": this.activityIdDialogValue,
-          "targetPotential": this.createEnquiryForm.controls.proposedAmount.value,
-          "category": { "id": this.createEnquiryForm.controls.sourcingChannel.value }
-        }
-        if (createEnquiry.category.id === '') {
-          const createEnquiry1: any = {
+    // console.log(this.router);
+    if(data.emailValue==='' &&  data.enquiryDetails==='' && data.firstNameValue==='' && data.lastNameValue==='' && 
+    data.phoneNoValue==='' && data.proposedAmount===100000 && data.sourcingChannel==='' && data.userTaskCategory===1){
+      const error = 'Please add customer details';
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.api_loading = false;
+    }
+    else{
+      if (this.createEnquiryForm.controls.proposedAmount.value >= 100000) {
+        if (this.enquiryArr.length !== 0 && this.customer_data !== undefined) {
+          // console.log('first')
+          const createEnquiry: any = {
             "location": { "id": this.activityLocationIdDialogValue },
             "customer": { "id": this.customer_data.id },
             "enquireMasterId": this.enquiryTemplateId,
@@ -325,142 +322,156 @@ export class enquiryComponent implements OnInit {
             "targetPotential": this.createEnquiryForm.controls.proposedAmount.value,
             "category": { "id": this.createEnquiryForm.controls.sourcingChannel.value }
           }
-          this.crmService.createEnquiry(createEnquiry1).subscribe((response) => {
-            setTimeout(() => {
-              this.api_loading = true;
-              this.snackbarService.openSnackBar('Successfully created enquiry');
-              this.createEnquiryForm.reset();
-              this.router.navigate(['provider', 'crm']);
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-            (error) => {
+          if (createEnquiry.category.id === '') {
+            const createEnquiry1: any = {
+              "location": { "id": this.activityLocationIdDialogValue },
+              "customer": { "id": this.customer_data.id },
+              "enquireMasterId": this.enquiryTemplateId,
+              "leadMasterId": this.createEnquiryForm.controls.userTaskCategory.value,
+              "isLeadAutogenerate": true,
+              "originUid": this.activityOriginUidDialogValue,
+              "taskMasterId": this.activityIdDialogValue,
+              "targetPotential": this.createEnquiryForm.controls.proposedAmount.value,
+              "category": { "id": this.createEnquiryForm.controls.sourcingChannel.value }
+            }
+            this.crmService.createEnquiry(createEnquiry1).subscribe((response) => {
               setTimeout(() => {
-                this.api_loading = false;
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              }, projectConstants.TIMEOUT_DELAY);
-            })
-        }
-        else {
-          this.crmService.createEnquiry(createEnquiry).subscribe((response) => {
-            setTimeout(() => {
-              this.api_loading = true;
-              this.snackbarService.openSnackBar('Successfully created enquiry');
-              this.createEnquiryForm.reset();
-              this.router.navigate(['provider', 'crm']);
-            }, projectConstants.TIMEOUT_DELAY);
-          },
-            (error) => {
-              setTimeout(() => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              }, projectConstants.TIMEOUT_DELAY);
-            })
-        }
-
-      }
-      else if (this.enquiryArr.length === 0 || this.customer_data === undefined) {
-        // console.log('this.enquiryArr.length ===0')
-        // console.log('second')
-        const afterCompleteAddData: any = {
-          "firstName": this.createEnquiryForm.controls.firstNameValue.value,
-          "lastName": this.createEnquiryForm.controls.lastNameValue.value,
-          "phoneNo": this.createEnquiryForm.controls.phoneNoValue.value,
-          "email": this.createEnquiryForm.controls.emailValue.value,
-          "countryCode": '+91',
-          "userTaskCategory": this.createEnquiryForm.controls.userTaskCategory.value,
-          "targetPotential": this.createEnquiryForm.controls.proposedAmount.value,
-          "category": { "id": this.createEnquiryForm.controls.sourcingChannel.value }
-        }
-        if (afterCompleteAddData.category.id === '') {
-          return new Promise((resolve, reject) => {
-            this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response: any) => {
-              const _this = this;
-              setTimeout(() => {
-                resolve(response);
-                _this.api_loading = true;
-                _this.enquiryCreateIdAfterRes = response;
-                const createEnquiry: any = {
-                  "location": { "id": _this.activityLocationIdDialogValue },
-                  "customer": { "id": _this.enquiryCreateIdAfterRes },
-                  "enquireMasterId": _this.enquiryTemplateId,
-                  "leadMasterId": _this.createEnquiryForm.controls.userTaskCategory.value,
-                  "isLeadAutogenerate": true,
-                  "originUid": _this.activityOriginUidDialogValue,
-                  "targetPotential": _this.createEnquiryForm.controls.proposedAmount.value,
-                  "category": { "id": 0 }
-                }
-                _this.crmService.createEnquiry(createEnquiry).subscribe((response) => {
-                  setTimeout(() => {
-                    _this.api_loading = true;
-                    _this.snackbarService.openSnackBar('Successfully created enquiry');
-                    _this.router.navigate(['provider', 'crm']);
-                  }, projectConstants.TIMEOUT_DELAY);
-                },
-                  (error) => {
-                    setTimeout(() => {
-                      _this.api_loading = false
-                      _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    }, projectConstants.TIMEOUT_DELAY);
-                  })
+                this.api_loading = true;
+                this.snackbarService.openSnackBar('Successfully created enquiry');
+                this.createEnquiryForm.reset();
+                this.router.navigate(['provider', 'crm']);
               }, projectConstants.TIMEOUT_DELAY);
             },
               (error) => {
-                this.api_loading = false
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+                setTimeout(() => {
+                  this.api_loading = false;
+                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }, projectConstants.TIMEOUT_DELAY);
               })
-          })
-
-
-        }
-        else {
-          const _this = this;
-          return new Promise((resolve, reject) => {
-            this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response: any) => {
+          }
+          else {
+            this.crmService.createEnquiry(createEnquiry).subscribe((response) => {
               setTimeout(() => {
-                resolve(response);
-                _this.api_loading = true;
-                _this.enquiryCreateIdAfterRes = response;
-                const createEnquiry: any = {
-                  "location": { "id": _this.activityLocationIdDialogValue },
-                  "customer": { "id": _this.enquiryCreateIdAfterRes },
-                  "enquireMasterId": _this.enquiryTemplateId,
-                  "leadMasterId": _this.createEnquiryForm.controls.userTaskCategory.value,
-                  "isLeadAutogenerate": true,
-                  "originUid": _this.activityOriginUidDialogValue,
-                  "targetPotential": _this.createEnquiryForm.controls.proposedAmount.value,
-                  "category": { "id": _this.createEnquiryForm.controls.sourcingChannel.value }
-                }
-                _this.crmService.createEnquiry(createEnquiry).subscribe((response) => {
-                  setTimeout(() => {
-                    _this.api_loading = true;
-                    _this.snackbarService.openSnackBar('Successfully created enquiry');
-                    _this.router.navigate(['provider', 'crm']);
-                  }, projectConstants.TIMEOUT_DELAY);
-                },
-                  (error) => {
-                    setTimeout(() => {
-                      _this.api_loading = false
-                      _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-                    }, projectConstants.TIMEOUT_DELAY);
-                  })
+                this.api_loading = true;
+                this.snackbarService.openSnackBar('Successfully created enquiry');
+                this.createEnquiryForm.reset();
+                this.router.navigate(['provider', 'crm']);
               }, projectConstants.TIMEOUT_DELAY);
             },
-              ((error) => {
-                reject(error);
-                _this.api_loading = false
-                _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              (error) => {
+                setTimeout(() => {
+                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }, projectConstants.TIMEOUT_DELAY);
               })
+          }
+
+        }
+        else if (this.enquiryArr.length === 0 || this.customer_data === undefined) {
+          // console.log('this.enquiryArr.length ===0')
+          // console.log('second')
+          const afterCompleteAddData: any = {
+            "firstName": this.createEnquiryForm.controls.firstNameValue.value,
+            "lastName": this.createEnquiryForm.controls.lastNameValue.value,
+            "phoneNo": this.createEnquiryForm.controls.phoneNoValue.value,
+            "email": this.createEnquiryForm.controls.emailValue.value,
+            "countryCode": '+91',
+            "userTaskCategory": this.createEnquiryForm.controls.userTaskCategory.value,
+            "targetPotential": this.createEnquiryForm.controls.proposedAmount.value,
+            "category": { "id": this.createEnquiryForm.controls.sourcingChannel.value }
+          }
+          if (afterCompleteAddData.category.id === '') {
+            return new Promise((resolve, reject) => {
+              this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response: any) => {
+                const _this = this;
+                setTimeout(() => {
+                  resolve(response);
+                  _this.api_loading = true;
+                  _this.enquiryCreateIdAfterRes = response;
+                  const createEnquiry: any = {
+                    "location": { "id": _this.activityLocationIdDialogValue },
+                    "customer": { "id": _this.enquiryCreateIdAfterRes },
+                    "enquireMasterId": _this.enquiryTemplateId,
+                    "leadMasterId": _this.createEnquiryForm.controls.userTaskCategory.value,
+                    "isLeadAutogenerate": true,
+                    "originUid": _this.activityOriginUidDialogValue,
+                    "targetPotential": _this.createEnquiryForm.controls.proposedAmount.value,
+                    "category": { "id": 0 }
+                  }
+                  _this.crmService.createEnquiry(createEnquiry).subscribe((response) => {
+                    setTimeout(() => {
+                      _this.api_loading = true;
+                      _this.snackbarService.openSnackBar('Successfully created enquiry');
+                      _this.router.navigate(['provider', 'crm']);
+                    }, projectConstants.TIMEOUT_DELAY);
+                  },
+                    (error) => {
+                      setTimeout(() => {
+                        _this.api_loading = false
+                        _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      }, projectConstants.TIMEOUT_DELAY);
+                    })
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                (error) => {
+                  this.api_loading = false
+                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+                })
+            })
+
+
+          }
+          else {
+            const _this = this;
+            return new Promise((resolve, reject) => {
+              this.crmService.createProviderCustomer(afterCompleteAddData).subscribe((response: any) => {
+                setTimeout(() => {
+                  resolve(response);
+                  _this.api_loading = true;
+                  _this.enquiryCreateIdAfterRes = response;
+                  const createEnquiry: any = {
+                    "location": { "id": _this.activityLocationIdDialogValue },
+                    "customer": { "id": _this.enquiryCreateIdAfterRes },
+                    "enquireMasterId": _this.enquiryTemplateId,
+                    "leadMasterId": _this.createEnquiryForm.controls.userTaskCategory.value,
+                    "isLeadAutogenerate": true,
+                    "originUid": _this.activityOriginUidDialogValue,
+                    "targetPotential": _this.createEnquiryForm.controls.proposedAmount.value,
+                    "category": { "id": _this.createEnquiryForm.controls.sourcingChannel.value }
+                  }
+                  _this.crmService.createEnquiry(createEnquiry).subscribe((response) => {
+                    setTimeout(() => {
+                      _this.api_loading = true;
+                      _this.snackbarService.openSnackBar('Successfully created enquiry');
+                      _this.router.navigate(['provider', 'crm']);
+                    }, projectConstants.TIMEOUT_DELAY);
+                  },
+                    (error) => {
+                      setTimeout(() => {
+                        _this.api_loading = false
+                        _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                      }, projectConstants.TIMEOUT_DELAY);
+                    })
+                }, projectConstants.TIMEOUT_DELAY);
+              },
+                ((error) => {
+                  reject(error);
+                  _this.api_loading = false
+                  _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                })
+              )
+            }
             )
           }
-          )
         }
       }
+      else {
+        setTimeout(() => {
+          this.api_loading = false;
+          this.snackbarService.openSnackBar('Minimum proposed amount is 100000', { 'panelClass': 'snackbarerror' });
+        }, projectConstants.TIMEOUT_DELAY);
+      }
     }
-    else {
-      setTimeout(() => {
-        this.api_loading = false;
-        this.snackbarService.openSnackBar('Minimum proposed amount is 100000', { 'panelClass': 'snackbarerror' });
-      }, projectConstants.TIMEOUT_DELAY);
-    }
+    
 
   }
   getTemplateEnuiry() {
@@ -517,9 +528,9 @@ export class enquiryComponent implements OnInit {
     this.createEnquiryForm.controls['lastNameValue'].disable();
     this.createEnquiryForm.controls['phoneNoValue'].disable()
     this.createEnquiryForm.controls['emailValue'].disable();
-    this.createEnquiryForm.controls['sourcingChannel'].disable()
-    this.createEnquiryForm.controls['userTaskCategory'].disable();
-    this.createEnquiryForm.controls['proposedAmount'].disable()
+    // this.createEnquiryForm.controls['sourcingChannel'].disable()
+    // this.createEnquiryForm.controls['userTaskCategory'].disable();
+    // this.createEnquiryForm.controls['proposedAmount'].disable()
   }
   defaultPlaceHolder() {
     this.enterFirstName = 'Enter First Name';
