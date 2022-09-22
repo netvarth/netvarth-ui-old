@@ -164,6 +164,10 @@
                                     </div>
                                 </div>
                                 <button type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">{{update_btn}}</button>
+
+                                <p class="error red mgn-up-20">
+                                    *** If you would like to remove your account, send a mail to <a href="mailto:support@jaldee.com" target="_blank">support@jaldee.com</a> or make a call to <a href="tel:7306823011" target="_blank"><i class="fa fa-phone-square pop-phone" aria-hidden="true"></i>+91 7306823011</a>
+                                </p>
                             </form>
                         </div>
                         <div class="right-menu" *ngIf="!customId">
@@ -331,8 +335,6 @@
                         <button type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">{{update_btn}}</button>
                     </form>
                 </div>
-
-
                 <div class="right-menu">
                     <div class="right-menu-header">{{related_links_cap}}</div>
                     <ul class="related-link">
