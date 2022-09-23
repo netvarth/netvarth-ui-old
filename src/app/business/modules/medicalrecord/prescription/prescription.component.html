@@ -76,7 +76,7 @@
                     </button>
                     <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"   [disabled]="addPrescription" 
                       *ngIf=" tempText==='update'" (click)="editDrugList('edit',amForm.value,mrId)">
-                        <span >Edit</span>
+                        <span >Save</span>
                         <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
                         </app-common-innerloading-spinner>
                     </button>
@@ -224,7 +224,7 @@
         </div>
       </div>
       <div class="btnPosition" >
-        <button  type="button"class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn cursor-pointer" (click)="saveClose()">Save & Close</button>
+        <button  type="button"class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn cursor-pointer" (click)="saveClose(amForm.value)">Save & Close</button>
       </div>
       
     </section>
@@ -270,7 +270,7 @@
         <div class="Share pointer-cursor" >
           <img  style="height:17px;width:17px" src="/assets/images/medicalReportIcon/edit.png" />
         </div>
-        <div>View</div>
+        <div>Edit</div>
       </button>
     </mat-menu>
     </div>

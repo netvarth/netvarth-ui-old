@@ -725,6 +725,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
           // console.log('resupdateMRprescription',res)
           this.snackbarService.openSnackBar('Prescription update  Successfully');
           this.getMrprescription(this.mrId);
+          this.clearAll()
           // this.afterSave=true;
           if(this.afterEdit==='afterUpdate'){
             this.tempList=this.drugList
@@ -821,13 +822,58 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
 
 
   }
-  saveClose(){
+  saveClose(value){
     if(this.mrId !==0){
       console.log('this.drugList',this.drugList)
       let passdata = {
         "prescriptionsList":  this.drugList,
         "notes": this.note
       }
+      if( this.drugList===undefined){
+        // alert('apiError')
+        // alert('cretesaveclose');
+        this.drugList=[]
+      this.drugList.push(value);
+      let passdata = {
+        "prescriptionsList": this.drugList,
+        "notes": this.note
+      }
+      this.api_loading=true;
+      this.medicalrecord_service.createMR('prescriptions', passdata)
+        .then((data: number) => {
+          // console.log('datacreateMR',data)
+          this.mrId = data;
+          this.snackbarService.openSnackBar('Prescription Saved Successfully');
+          // this.reloadComponent()
+          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, 
+              this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
+        },
+          error => {
+            this.api_loading=false;
+            this.loading = false;
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+        // this.api_error = 'Please add your prescription';
+        // this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' }); 
+      }
+      else{
+        if (this.drugList && this.drugList.length === 0) {
+          // alert('emptylistdrug')
+          this.drugList.push(value);
+          let passdata = {
+            "prescriptionsList": this.drugList,
+            "notes": this.note
+          }
+          this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res)=>{
+            this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, 
+              this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
+          })
+        }
+        else{
+          // alert('routing')
+        // this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, 
+        // this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
+      
       this.provider_services.updateMRprescription(passdata, this.mrId).subscribe((res)=>{
         if(this.mrId !==0){
           if(this.afterEdit === 'afterUpdate'){
@@ -835,29 +881,60 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
             this.reloadComponent()
           }
           else{
-            
-            if(this.drugList.length===0){
-              // alert('apiError')
-              this.api_error = 'Please add your prescription';
-              this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' }); 
-            }
-            else{
-              // alert('routing')
-              this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, 
+            // alert('2ND ROUTE');
+            // this.reloadComponent()
+            this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, 
               this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
-            }
-                    // this.getMrprescription(this.mrId);
           }
+          // else{
+          //   if(this.drugList && this.drugList.length===0){
+          //     alert('apiError')
+          //     this.api_error = 'Please add your prescription';
+          //     this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' }); 
+          //   }
+          //   else{
+          //     // alert('routing')
+          //     this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, 
+          //     this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
+          //   }
+          //           // this.getMrprescription(this.mrId);
+          // }
           
         }
         else{
           this.location.back()
         }        
       })
+        }
+        
+    }
     }
     else{
-      this.api_error = 'Please add your prescription';
-      this.snackbarService.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' }); 
+      // alert('cretesaveclose')
+      this.drugList.push(value);
+      let passdata = {
+        "prescriptionsList": this.drugList,
+        "notes": this.note
+      }
+      this.api_loading=true;
+      this.medicalrecord_service.createMR('prescriptions', passdata)
+        .then((data: number) => {
+          // console.log('datacreateMR',data)
+          this.mrId = data;
+          this.snackbarService.openSnackBar('Prescription Saved Successfully');
+          // this.reloadComponent()
+          this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, 
+              this.bookingId, 'medicalrecord', this.mrId, 'prescription']);  
+        },
+          error => {
+            this.api_loading=false;
+            this.loading = false;
+            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          });
+      // this.saveRx(this.drugList);
+      // this.api_error = 'Please add your prescription';
+      // // , { 'panelClass': 'snackbarerror' }
+      // this.snackbarService.openSnackBar( this.api_error); 
     }
   }
   addMedecineMobDevice(){
