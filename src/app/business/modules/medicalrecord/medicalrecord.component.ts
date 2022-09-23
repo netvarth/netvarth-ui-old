@@ -881,8 +881,8 @@ export class MedicalrecordComponent implements OnInit {
       else{
         // alert('2nd else prescription')
           const mRId=0;
-      const routerId='prescription';
-      this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP',0, 'medicalrecord', mRId,routerId])
+        const routerId = 'prescription';
+        this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP', 0, 'medicalrecord', mRId, routerId])
         this.showHidepreviousDetails = false;
         this.showHideAddPrescription=true;
         this.showHideClinicalNotes=false;

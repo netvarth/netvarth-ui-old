@@ -18,20 +18,30 @@ import { Location } from '@angular/common';
 export class ManualSignatureComponent implements OnInit {
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
   signaturePadOptions: Object = {
-    'minWidth': 1,
-    'max-width':1,
+    'minWidth': .5,
+    'maxwidth':.5,
     'canvasWidth': 500,
     'canvasHeight': 300,
     'penColor': "#000000",
-    'dotSize':'3'
+    'dotSize':'3',
+    'minDistance':2,
+    // 'background':'#ffffff'
   };
   smallsignaturePadOptions: Object = {
+    // 'minWidth': .5,
+    // 'maxwidth':.5,
+    // 'canvasWidth': 200,
+    // 'canvasHeight': 350,
+    // 'penColor': "#000000",
+    // 'dotSize':'2',
     'minWidth': .5,
-    'max-width':.8,
-    'canvasWidth': 200,
-    'canvasHeight': 150,
+    'maxwidth':.5,
+    'canvasWidth': 500,
+    'canvasHeight': 300,
     'penColor': "#000000",
-    'dotSize':'2'
+    'dotSize':'3',
+    'minDistance':2
+    
   };
   display_PatientId: any;
   today = new Date();
@@ -73,7 +83,9 @@ export class ManualSignatureComponent implements OnInit {
   count: number = 0;
   selectedColor:any='#000000'
   tempSubmitData:any;
-  selectedColorBg:any=''
+  selectedColorBg:any='#ffffff'
+  tempData: any=[];
+  statusColor='#000000'
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     public uploadmanualsignatureRef: MatDialogRef<ManualSignatureComponent>,
@@ -205,6 +217,10 @@ resizeSignaturePadMobile(){
     
     
 }
+redoSignature(){
+  // rgba(0,0,0,0)
+  // this.bgColorChange('rgba(255, 99, 71, 0.8)')
+}
 undoSignature(){
   const data = this.signaturePad.toData();
     if (data) {
@@ -216,6 +232,7 @@ undoSignature(){
         const error='Please draw your digital signature';
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         this.sign = true;
+        this.signaturePad.clear(); 
       }
       else{
         this.sign = false;
@@ -235,13 +252,11 @@ colorChange(color){
 bgColorChange(color){
   if(color){
     this.signaturePad['signaturePad']['backgroundColor']=color;
+    // this.signaturePad['options']['backgroundColor']=color;
     console.log(' this.signaturePad', this.signaturePad);
   }
 }
 downlaod(){
   console.log(' this.signaturePad', this.signaturePad);
 }
-
-
-
 }

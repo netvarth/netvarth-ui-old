@@ -3,18 +3,18 @@
     <div class="d-flex justify-content-between" style="align-items: center;">
       <div class="d-flex" style="align-items: center;gap:5px">
         <div class="heading font-weight-bold">{{heading}}</div>
-       <div class="clrChangeInput">
+       <div class="clrChangeInput"  #tooltip="matTooltip" matTooltip="Pen Color" [matTooltipPosition]="'below'">
         <input id="input-color" type="color" [(ngModel)]="selectedColor" (ngModelChange)="colorChange(selectedColor)" >
         <label class="input-color-label" for="input-color">
           <i class="fa fa-arrow-down" aria-hidden="true"></i>
         </label>
        </div>
-       <!-- <div class="clrChangeInput">
-        <input id="input-colorBG" type="color" [(ngModel)]="selectedColorBg" (ngModelChange)="bgColorChange(selectedColorBg)" >
-        <label class="input-color-label" for="input-colorBG">
+       <div class="clrChangeInput" #tooltip="matTooltip" matTooltip="Background Color" [matTooltipPosition]="'below'">
+        <input id="input-color" type="color" [(ngModel)]="selectedColorBg" (ngModelChange)="bgColorChange(selectedColorBg)" >
+        <label class="input-color-label" for="input-color">
           <i class="fa fa-arrow-down" aria-hidden="true"></i>
         </label>
-       </div> -->
+       </div>
       </div>
       <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1" class="closeIcon"
       #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">
@@ -24,11 +24,11 @@
   </div>
   <div >
     <div >
-      <div *ngIf="!small_device_display" class="digitalsignature-pad">
+      <div *ngIf="!small_device_display" class="digitalsignature-pad" [ngStyle]="{'background-color': selectedColorBg}">
         <signature-pad   [options]="signaturePadOptions" (onBeginEvent)="drawStart($event)"fxFlex="1 1 50" 
         (window:resize)="resizeSignaturePad()"class="signature"id="sign_canvas" fxFlexAlign.xs="center"></signature-pad>
       </div>
-      <div *ngIf="small_device_display" class="digitalsignature-pad">
+      <div *ngIf="small_device_display" class="digitalsignature-pad" [ngStyle]="{'background-color': selectedColorBg}">
         <signature-pad [options]="smallsignaturePadOptions" (onBeginEvent)="drawStart($event)"
        (window:resize)="resizeSignaturePadMobile()"class="signature" id="sign_canvas"></signature-pad>
       </div>
@@ -36,6 +36,7 @@
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="clearSign()">Clear</button>
         <button type="button" class="btn btn-primary font-weight-bold confirmBtn" (click)="drawComplete()" [disabled]="sign">Save</button>
         <button class="undoBtn" type="button" (click)="undoSignature()"> <i class="fa fa-undo" aria-hidden="true"></i> Undo</button>
+        <!-- <button class="undoBtn btn btn-primary font-weight-bold" type="button" (click)="redoSignature()"> <i class="fa fa-undo" aria-hidden="true"></i> Redo</button> -->
       </div>
     </div>
   </div>

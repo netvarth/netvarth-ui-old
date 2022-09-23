@@ -717,6 +717,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       "notes": this.note
     }
     if (this.mrId) {
+      // console.log('updateMr',passdata);
+      // alert('update')
       this.api_loading=true;
       this.provider_services.updateMRprescription(passdata, this.mrId).
         subscribe(res => {
@@ -736,6 +738,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     } 
     else {
       // console.log('createMR',passdata);
+      // console.log('this.mrId',this.mrId)
       // alert('craete')
       this.api_loading=true;
       this.medicalrecord_service.createMR('prescriptions', passdata)
