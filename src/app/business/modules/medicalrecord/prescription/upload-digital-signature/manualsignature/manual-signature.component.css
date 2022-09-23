@@ -56,7 +56,7 @@
 }
 .confirmBtn {
     background: #0D2348 !important;
-    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+    /* box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important; */
     border-radius: 3.75916px !important;
     border: 0px solid !important;
     padding: 6px 12px;
@@ -66,7 +66,7 @@
   }
   .cancelBtn {
     background: #A8ABAF !important;
-    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+    /* box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important; */
     border-radius: 3.75916px !important;
     border: 0px solid !important;
     /* margin-right: 10px !important; */
@@ -87,11 +87,11 @@
   }
   @media(max-width: 800px){
     .heading {
-        font-size: 11px !important;
+        font-size: 15px !important;
         color: #FF9900;;
     }
     .caveClrBtn{
-        margin-top: 10px;
+        margin-top: 15px;
         display: flex;
         justify-content: center;
         gap:10px;
@@ -99,11 +99,70 @@
       ::ng-deep .digitalsignature-pad canvas{
         height: 22rem !important;
       }
+      .clrChangeInput{
+        width: 100% !important;
+        text-align: left !important;
+        height: 100% !important;
+        padding: 10px;
+        display: flex;
+        align-items: end;
+        gap: 10px;
+        border-radius: 10px;
+        align-items: baseline;
+      } 
+      .clrChangeInputBg{
+        width: 100% !important;
+        margin-top: 10px;
+        text-align: left !important;
+        justify-content: flex-start !important;
+        height: 100% !important;
+        padding: 10px;
+        gap: 10px;
+        border-radius: 10px;
+        background-color: #f4f4f4;
+        border-radius: 5px;
+      }
+      .smallDevice{
+        margin-bottom: 10px;
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          grid-gap: 25px;
+          gap: 10px;
+          flex-wrap: wrap;
+      }
+      #input-color{
+        height: 35px !important;
+        width: 35px !important;
+        display: contents !important;
+      }
+      #input-colorBg{
+        height: 35px !important;
+        width: 35px !important;
+      }
+      .input-color-label{
+        font-size: 20px;
+      }
+      .input-color-labelBg{
+        margin-top: 0px !important;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      .selectedColorName{
+        font-size: 17px;
+        font-weight: 500;
+        cursor: pointer;
+      }
+      .imagePen{
+        height: 35px;
+        width: 35px;
+      }
 
   }
   .undoBtn{
-    background-color: #1DA192;
-    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+    /* background-color: #1DA192; */
+    background: #FF9900 !important;
+    /* box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important; */
     border-radius: 3.75916px !important;
     border: 0px solid !important;
     padding: 6px 10px;
@@ -116,7 +175,7 @@
     text-align: center;
     background-color: #f4f4f4;
     border-radius: 5px;
-    height: 30px;
+    height: 32px;
     width: 50px;
   }
   #input-color{
@@ -137,5 +196,40 @@
   }
   .input-color-label{
     cursor: pointer;
+  }
+  .input-color-label2{
+    cursor: pointer;
+  }
+  .input-color-labelBg{
+    margin-top: 10px;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  #input-colorBg{
+    border: none;
+    text-align: center;
+    /* background-color: rgb(168, 171, 175); */
+    border-radius: 25px !important;
+    /* border-radius: 5px; */
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+  }
+  .clrChangeInputBg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 30px ;
+    width: 50px ;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* border: 1px dashed #E6E8EB; */
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .mlClass{
+    margin-left: 5px;
   }
   

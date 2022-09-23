@@ -83,7 +83,7 @@ export class ManualSignatureComponent implements OnInit {
   count: number = 0;
   selectedColor:any='#000000'
   tempSubmitData:any;
-  selectedColorBg:any='#ffffff'
+  selectedColorBg:any='#a8abaf'
   tempData: any=[];
   statusColor='#000000'
   constructor(
@@ -115,10 +115,11 @@ export class ManualSignatureComponent implements OnInit {
     // console.log('window widht', window.innerWidth)
     if (this.screenWidth <= 780) {
       this.small_device_display = true;
-      this.resizeSignaturePadMobile()
+      this.resizeSignaturePadMobile();
     } else {
       this.small_device_display = false;
-      this.resizeSignaturePad()
+      this.resizeSignaturePad();
+      this.selectedColorBg='#ffffff'
     }
   }
 
