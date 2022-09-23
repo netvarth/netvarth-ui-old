@@ -20,20 +20,90 @@
 
 
 .btn-verify {
-  background-color: #1e4079 !important;
-  border-color: #1e4070 !important;
-  color: #fff !important;
+  background-color: hsl(204, 86%, 96%) !important;
+  border-color: hsl(204, 86%, 53%) !important;
+  color: hsl(204, 86%, 53%) !important;
   font-weight: 100 !important;
   border-radius: 5px !important;
   padding: auto 5px !important;
 }
 
+input[type="checkbox"] {
+  width: 50 !important;
+  height: 50 !important;
+}
 
 .btn-verified {
-  background-color: #20A044 !important;
+  background-color: #d1f3d9 !important;
   border-color: #20A044 !important;
-  color: #fff !important;
-  font-weight: 100 !important;
+  color: #20A044 !important;
+  font-weight: bold !important;
   border-radius: 5px !important;
   padding: auto 5px !important;
+}
+
+.select-wrapper {
+  background: url(assets/images/add_image_icon.svg) no-repeat;
+  background-size: cover;
+  display: block;
+  position: relative;
+  width: 33px;
+  height: 26px;
+}
+
+
+/* File Input Styles  */
+
+.file {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.file>input[type='file'] {
+  display: none
+}
+
+.file>label {
+  font-size: 14px !important;
+  font-weight: bold;
+  cursor: pointer;
+  outline: 0;
+  user-select: none;
+  border: 0.5px dashed hsl(204, 86%, 53%);
+  border-radius: 5px;
+  background-color: hsl(204, 86%, 96%);
+  color: hsl(0, 0%, 29%);
+  padding: 8px 20px !important;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.file>label:hover {
+  border-color: hsl(0, 0%, 21%);
+}
+
+.file>label:active {
+  background-color: hsl(0, 0%, 96%);
+}
+
+.file>label>i {
+  padding-right: 5px;
+}
+
+.file--upload>label {
+  color: hsl(204, 86%, 53%);
+  border-color: hsl(204, 86%, 53%);
+}
+
+.file--upload>label:hover {
+  border-color: hsl(204, 86%, 53%);
+  background-color: hsl(204, 86%, 96%);
+}
+
+
+.photo-border {
+  border: 1px solid #D2D6DE !important;
+  padding: 5px 5px 0px 5px !important;
 }

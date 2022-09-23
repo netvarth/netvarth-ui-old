@@ -1,7 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { Country } from 'ngx-intl-tel-input/lib/model/country.model';
+import { Observable } from 'rxjs';
 import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
-
+import { CdlService } from './cdl.service';
 @Component({
   selector: 'app-cdl',
   templateUrl: './cdl.component.html',
@@ -36,13 +39,19 @@ export class CdlComponent implements OnInit {
 
   constructor(
     private groupService: GroupStorageService,
-    private router: Router
+    private router: Router,
+    private http: HttpClient,
+    private cdlservice: CdlService
 
   ) { }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("User is", this.user);
+
+    this.cdlservice.getJSON().subscribe(data => {
+      console.log("data printed", data);
+    });
   }
 
 
@@ -80,5 +89,7 @@ export class CdlComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
     // this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
   }
+
+  getC3(): Observable<Country[]> { return this.http.get<Country[]>('./data.json') }
 }
 

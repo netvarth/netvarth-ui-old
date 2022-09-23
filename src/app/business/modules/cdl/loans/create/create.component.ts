@@ -68,6 +68,10 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  imageSelect(event) {
+
+  }
+
 
   verifyotp() {
     let can_remove = false;
