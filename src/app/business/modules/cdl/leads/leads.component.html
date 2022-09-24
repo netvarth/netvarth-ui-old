@@ -15,26 +15,17 @@
             <tr class="tble-filtr-tr heght">
               <th class="head_color">Loan Id</th>
               <th class="head_color">Customer Name</th>
-              <th class="head_color">Dealer</th>
-              <th class="head_color">Status</th>
+              <th class="head_color">Phone</th>
+              <th class="head_color">Email</th>
             </tr>
           </thead>
           <tbody class="table_data">
             <ng-container>
-              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="loanDetails(item)">
+              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="continueApplication()">
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.loanId">{{item.loanId}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.CustomerName">{{item.CustomerName}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.Dealer">{{item.Dealer}}</td>
-                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status">
-                  <div class="approvedColor text-capitalize" *ngIf="item && item.status && item.status==='approved'"><i
-                      class="fa fa-check-circle"></i>&nbsp;{{item.status}}
-                  </div>
-                  <div class="pendingColor text-capitalize" *ngIf="item && item.status && item.status==='redirected'"><i
-                      class="fa fa-spinner"></i>&nbsp;{{item.status}}
-                  </div>
-                  <div class="rejectedColor text-capitalize" *ngIf="item && item.status && item.status==='rejected'"><i
-                      class="fa fa-times-circle"></i>&nbsp;{{item.status}}
-                  </div>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.phone">{{item.phone}}</td>
+                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.email">{{item.email}}
                 </td>
               </tr>
             </ng-container>

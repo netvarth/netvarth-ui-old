@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-approved',
@@ -9,9 +9,12 @@ import { Router } from '@angular/router';
 })
 export class ApprovedComponent implements OnInit {
   timetype: number = 1;
+  from: any;
+  verification = false;
   constructor(
     private location: Location,
-    private router: Router
+    private router: Router,
+    private activated_route: ActivatedRoute,
 
   ) { }
 
@@ -24,6 +27,14 @@ export class ApprovedComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.activated_route.queryParams.subscribe((params) => {
+      if (params && params.timetype) {
+        this.timetype = params.timetype;
+      }
+      if (params && params.from) {
+        this.from = params.from;
+      }
+    });
   }
 
   resetErrors() {
@@ -37,7 +48,7 @@ export class ApprovedComponent implements OnInit {
     }
   }
   goBack() {
-    if (this.timetype > 1) {
+    if (this.timetype > 1 && (this.from && this.from != 'creditofficer')) {
       this.timetype = this.timetype - 1;
     }
     else {
@@ -48,6 +59,8 @@ export class ApprovedComponent implements OnInit {
   goHome() {
     this.router.navigate(['provider', 'cdl'])
   }
+
+
 
 
 }

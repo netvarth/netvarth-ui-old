@@ -3,6 +3,8 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-create',
@@ -19,11 +21,13 @@ export class CreateComponent implements OnInit {
   aadharverification = false;
   verification = false;
   panverification = false;
+  emailverification = false;
 
   constructor(
     private location: Location,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService
 
 
   ) { }
@@ -41,6 +45,10 @@ export class CreateComponent implements OnInit {
 
   verifypan() {
     this.panverification = true;
+  }
+
+  verifyemail() {
+    this.emailverification = true;
   }
 
   goBack() {
@@ -72,6 +80,32 @@ export class CreateComponent implements OnInit {
 
   }
 
+  saveAsDraft() {
+    this.snackbarService.openSnackBar("Saved to Draft Successfully");
+    this.router.navigate(['provider', 'cdl', 'leads']);
+  }
+
+  checkELigibility() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': '  All added items in your cart for different Provider will be removed ! '
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "eligible") {
+          this.snackbarService.openSnackBar("Eligibility Calculation Done");
+          this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+  }
 
   verifyotp() {
     let can_remove = false;

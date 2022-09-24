@@ -19,6 +19,7 @@ export class CreateDealerComponent implements OnInit {
   aadharverification = false;
   verification = false;
   panverification = false;
+  emailverification = false;
 
   constructor(
     private location: Location,
@@ -41,6 +42,10 @@ export class CreateDealerComponent implements OnInit {
 
   verifypan() {
     this.panverification = true;
+  }
+
+  verifyemail() {
+    this.emailverification = true;
   }
 
   goBack() {

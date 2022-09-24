@@ -1,146 +1,260 @@
 <section class="card">
-    <div class="title-gb no-padding">
-      <div class="dash-head">
-       <div> <i class="fa fa-arrow-left colorHeaderIcon"  aria-hidden="true" (click)="goBack()"></i></div>
-       <div class="colorHeaderIcon"*ngIf="headerName">{{headerName |capitalizeFirst}}</div>
+  <div class="title-gb no-padding">
+    <div class="dash-head">
+      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="colorHeaderIcon" *ngIf="headerName">{{headerName |capitalizeFirst}}</div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="loanDetails card marginClass">
+    <div class="marginClass widthCls">
+      <div class="card">
+        <div [class.approved]="status=='approved'" [class.rejected]="status=='rejected'"
+          [class.redirected]="status=='redirected'">
+          <i class="fa fa-check approved-icon" *ngIf="status=='approved'"></i>
+          <i class="fa fa-spinner redirected-icon" *ngIf="status=='redirected'"></i>
+          <i class="fa fa-times rejected-icon" *ngIf="status=='rejected'"></i>&nbsp;<span class="text-capitalize">Loan
+            {{status}}</span>
+        </div>
+        <div *ngIf="status=='rejected'" class="text-red mt-2">
+          <span>Sorry your loan was rejected because of your credit score</span>
+        </div>
+        <div class="personalDetails mt-2">Personal Details</div>
+        <div *ngIf="customerName" class="paddiNgCls">
+          <span class="customerLabel">Customer Name</span>
+          <span class="customerInfoLabel">{{customerName}}</span>
+        </div>
+        <div *ngIf="employeephNo" class="paddiNgCls">
+          <span class="customerLabel">Phone Number</span>
+          <span class="customerInfoLabel">{{employeephNo}}</span>
+        </div>
+        <div *ngIf="employeeEmail" class="paddiNgCls">
+          <span class="customerLabel">Email</span>
+          <span class="customerInfoLabel">{{employeeEmail}}</span>
+        </div>
+        <div *ngIf="employeeEmail" class="paddiNgCls">
+          <span class="customerLabel">Address 1</span>
+          <span class="customerInfoLabel">{{address1}}</span>
+        </div>
+        <div *ngIf="employeeEmail" class="paddiNgCls">
+          <span class="customerLabel">Address 2</span>
+          <span class="customerInfoLabel">{{address2}}</span>
+        </div>
+        <div *ngIf="employeeEmail" class="paddiNgCls">
+          <span class="customerLabel">City</span>
+          <span class="customerInfoLabel">{{city}}</span>
+        </div>
+        <div *ngIf="employeeEmail" class="paddiNgCls">
+          <span class="customerLabel">State</span>
+          <span class="customerInfoLabel">{{state}}</span>
+        </div>
+        <div *ngIf="employeeEmail" class="paddiNgCls">
+          <span class="customerLabel">Pincode</span>
+          <span class="customerInfoLabel">{{pincode}}</span>
+        </div>
+        <div *ngIf="employeeOffAdd" class="paddiNgCls">
+          <span class="customerLabel">Office Address</span>
+          <span class="customerInfoLabel">{{employeeOffAdd}}</span>
+        </div>
+        <div *ngIf="employeeCityWork" class="paddiNgCls">
+          <span class="customerLabel">City Of Work</span>
+          <span class="customerInfoLabel">{{employeeCityWork}}</span>
+        </div>
+        <div *ngIf="employeeMartialStatus" class="paddiNgCls">
+          <span class="customerLabel">Martial Status</span>
+          <span class="customerInfoLabel">{{employeeMartialStatus}}</span>
+        </div>
+        <div *ngIf="employeeEmployeeTYpe" class="paddiNgCls">
+          <span class="customerLabel">Employee Type</span>
+          <span class="customerInfoLabel">{{employeeEmployeeTYpe}}</span>
+        </div>
+        <div *ngIf="employeeSalary" class="paddiNgCls">
+          <span class="customerLabel">Salary</span>
+          <span class="customerInfoLabel">{{employeeSalary}}</span>
+        </div>
+
+
       </div>
     </div>
-  </section>
-  <section>
-    <div class="loanDetails card marginClass">
-        <div class="marginClass widthCls">
-            <div class="card">
-                <div class="personalDetails">Personal Details</div>
-                <div *ngIf="customerName" class="paddiNgCls">
-                    <span class="customerLabel">Customer Name</span>
-                    <span class="customerInfoLabel" >{{customerName}}</span>
+    <div class=" marginClass widthCls">
+      <div class="card">
+        <div class="personalDetails">KYC Details</div>
+        <div *ngIf="adharNumber" class="flexClass paddiNgCls">
+          <div>
+            <div class="customerLabel">Adhar Number</div>
+            <div class="customerInfoLabel">{{adharNumber}}</div>
+          </div>
+          <div>
+            <button (click)="viewKycDetails('addhar',adharNumber)" class="btn btn-primary font-weight-bold confirmBtn"
+              type="button">
+              <span>View Aadharcard</span>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="panCardNumber" class="flexClass paddiNgCls mt-10">
+          <div>
+            <div class="customerLabel">Pancard Number</div>
+            <div class="customerInfoLabel">{{panCardNumber}}</div>
+          </div>
+          <div>
+            <button (click)="viewKycDetails('panCard',panCardNumber)"
+              class="btn btn-primary font-weight-bold confirmBtn" type="button">
+              <span>View Pancard</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+      <div class="card marginClass">
+        <div class="personalDetails">Bank Details</div>
+        <div class="flexClass paddiNgCls">
+          <div *ngIf="accountNumber">
+            <div class="customerLabel">Account Number</div>
+            <div class="customerInfoLabel">{{accountNumber}}</div>
+          </div>
+          <div>
+            <div class="customerLabel">Bank</div>
+            <div class="customerInfoLabel">{{bankName}}</div>
+          </div>
+
+        </div>
+        <div class="flexClass paddiNgCls mt-10">
+          <div *ngIf="IFSCCode">
+            <div class="customerLabel">IFSC Code</div>
+            <div class="customerInfoLabel">{{IFSCCode}}</div>
+          </div>
+          <div>
+            <div class="customerLabel">No Of EMI Paid Monthly</div>
+            <div class="customerInfoLabel">{{emiPaidNo}}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card marginClass">
+        <div class="personalDetails">Loan Details</div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="bggrey my-2">
+              <div>
+                <div class="border">
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Loan Amount</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;44000</span>
+                    </div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">EMI Tenure</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding">6 Months</span></div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Rate of Interest</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding">10%</span></div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Monthly EMI</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+                    </div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Total Interest</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+                    </div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Payable Amount</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+                    </div>
+                  </div>
+
+
                 </div>
-                <div *ngIf="employeephNo" class="paddiNgCls">
-                    <span class="customerLabel">Phone Number</span>
-                    <span class="customerInfoLabel">{{employeephNo}}</span>
-                </div>
-                <div *ngIf="employeeEmail" class="paddiNgCls">
-                    <span class="customerLabel">Email</span>
-                    <span class="customerInfoLabel">{{employeeEmail}}</span>
-                </div>
-                <div *ngIf="employeeMartialStatus" class="paddiNgCls">
-                    <span class="customerLabel">Martial Status</span>
-                    <span class="customerInfoLabel">{{employeeMartialStatus}}</span>
-                </div>
-                <div *ngIf="employeeEmployeeTYpe" class="paddiNgCls">
-                    <span class="customerLabel">Employee Type</span>
-                    <span class="customerInfoLabel">{{employeeEmployeeTYpe}}</span>
-                </div>
-                <div *ngIf="employeeSalary" class="paddiNgCls">
-                    <span class="customerLabel">Salary</span>
-                    <span class="customerInfoLabel">{{employeeSalary}}</span>
-                </div>
-                <div *ngIf="employeeOffAdd" class="paddiNgCls">
-                    <span class="customerLabel">Office Address</span>
-                    <span class="customerInfoLabel">{{employeeOffAdd}}</span>
-                </div>
-                <div *ngIf="employeeCityWork" class="paddiNgCls">
-                    <span class="customerLabel">City Of Work</span>
-                    <span class="customerInfoLabel">{{employeeCityWork}}</span>
-                </div>
-                <div *ngIf="employeeREsidence" class="paddiNgCls">
-                    <span class="customerLabel">City Of Residence</span>
-                    <span class="customerInfoLabel">{{employeeREsidence}}</span>
-                </div>
-                <div *ngIf="employeeHomeAdd" class="paddiNgCls">
-                    <span class="customerLabel">Home Address</span>
-                    <span class="customerInfoLabel">{{employeeHomeAdd}}</span>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-        <div class=" marginClass widthCls">
-            <div class="card">
-                <div class="personalDetails">KYC Details</div>
-                <div *ngIf="adharNumber" class="flexClass paddiNgCls">
-                    <div>
-                        <div class="customerLabel">Adhar Number</div>
-                        <div class="customerInfoLabel">{{adharNumber}}</div>
-                    </div>
-                    <div>
-                        <button (click)="viewKycDetails('addhar',adharNumber)"  class="btn btn-primary font-weight-bold confirmBtn" type="button">
-                            <span>View</span>
-                    </button>
-                    </div>
-                </div>
-                <div *ngIf="panCardNumber" class="flexClass paddiNgCls mt-10">
-                    <div>
-                        <div class="customerLabel">Pancard Number</div>
-                        <div class="customerInfoLabel">{{panCardNumber}}</div>
-                    </div>
-                    <div>
-                        <button (click)="viewKycDetails('panCard',panCardNumber)"  class="btn btn-primary font-weight-bold confirmBtn" type="button">
-                            <span>View</span>
-                    </button>
-                    </div>
-                </div>
-            
-            </div>
-            <div class="card marginClass">
-                <div class="personalDetails">Bank Details</div>
-                <div class="flexClass paddiNgCls">
-                    <div *ngIf="accountNumber" >
-                        <div class="customerLabel">Account Number</div>
-                        <div class="customerInfoLabel">{{accountNumber}}</div>
-                    </div>
-                    <div>
-                        <div class="customerLabel">Bank</div>
-                        <div class="customerInfoLabel">{{bankName}}</div>
-                    </div>
-                
-                </div>
-                <div class="flexClass paddiNgCls mt-10">
-                    <div *ngIf="IFSCCode">
-                        <div class="customerLabel">IFSC Code</div>
-                        <div class="customerInfoLabel">{{IFSCCode}}</div>
-                    </div>
-                    <div>
-                        <div class="customerLabel">No Of EMI Paid Monthly</div>
-                        <div class="customerInfoLabel">{{emiPaidNo}}</div>
-                    </div>
-                </div>
-            
-            </div>
-        </div>
+
+
+      </div>
     </div>
-  </section>
-  <section class="card marginClass flexClass flexWrap">
-    <div class="marginClass" *ngIf="cibilScore">
-        <div class="customcard">
-            <div class="customerScoreLabel">CIBIL Score</div>
-            <div class="customerScoreInfoLabel">{{cibilScore}}</div>
+  </div>
+</section>
+<section class="col-md-12 card p-3">
+  <div>
+    <span class="font-weight-bold">Remarks</span><br>
+    <span class="mt-2">No Remarks Added</span>
+  </div>
+</section>
+<section class="card marginClass flexClass flexWrap" *ngIf="user.userType==2">
+  <div class="marginClass" *ngIf="cibilScore">
+    <div class="customcard">
+      <div class="d-flex justify-content-between">
+        <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;
+        <div>
+          <div class="customerScoreLabel">CIBIL Score</div>
+          <div class="customerScoreInfoLabel">{{cibilScore}}</div>
         </div>
+      </div>
+      <div class="btn btn-primary py-1">print</div>
     </div>
-    <div class="marginClass" *ngIf="perfiosScore">
-        <div class="customcard">
-            <div class="customerScoreLabel">Perfios Score</div>
-            <div class="customerScoreInfoLabel">{{perfiosScore}}</div>
+  </div>
+  <div class="marginClass" *ngIf="perfiosScore">
+    <div class="customcard">
+      <div class="d-flex justify-content-between">
+        <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;
+        <div>
+          <div class="customerScoreLabel">Perfios Score</div>
+          <div class="customerScoreInfoLabel">{{perfiosScore}}</div>
         </div>
+      </div>
+      <div class="btn btn-primary py-1">print</div>
     </div>
-    <div class="marginClass" *ngIf="totalScore">
-        <div class="customcard">
-            <div class="customerScoreLabel">Total Score</div>
-            <div class="customerScoreInfoLabel">{{totalScore}}</div>
+  </div>
+  <div class="marginClass" *ngIf="totalScore">
+    <div class="customcard">
+      <div class="d-flex justify-content-between">
+        <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;
+        <div>
+          <div class="customerScoreLabel">Total Score</div>
+          <div class="customerScoreInfoLabel">{{totalScore}}</div>
         </div>
+      </div>
+      <div class="btn btn-primary py-1">print</div>
     </div>
-    <div class="marginClass" *ngIf="mafilScore">
-        <div class="customcard">
-            <div class="customerScoreLabel">MAFIL Score</div>
-            <div class="customerScoreInfoLabel">{{mafilScore}}</div>
+  </div>
+  <div class="marginClass" *ngIf="mafilScore">
+    <div class="customcard">
+      <div class="d-flex justify-content-between">
+        <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;
+        <div>
+          <div class="customerScoreLabel">MAFIL Score</div>
+          <div class="customerScoreInfoLabel">{{mafilScore}}</div>
         </div>
+      </div>
+      <div class="btn btn-primary py-1">print</div>
     </div>
-    <div class="marginClass" *ngIf="loanStatus">
-        <div class="customcard">
-            <div class="customerScoreLabel">Status</div>
-            <div *ngIf="loanStatus" class="statusCls">
-                <div *ngIf="loanStatus==='Pending'"><img src="/assets/images/cdl/pending.png" class="image" /></div>
-                <div *ngIf="loanStatus==='Approved'"><img src="/assets/images/cdl/approved.png" class="image" /></div>
-                <div class="customerScoreInfoLabel">{{loanStatus}}</div>
-            </div>
-        </div>
-    </div>
-  </section>
+  </div>
+
+</section>
+
+<section class="d-flex m-2 my-4" *ngIf="user.userType==2">
+  <div class="btn-sanctioned mr-2 pointer-cursor" (click)="sanctionLoan()">
+    Sanction Loan
+  </div>
+
+  <div class="btn-redirect mr-2 pointer-cursor" (click)="redirectLoan()">
+    Redirect Loan
+  </div>
+
+  <div class="btn-reject pointer-cursor" (click)="rejectLoan()">
+    Reject
+  </div>
+</section>

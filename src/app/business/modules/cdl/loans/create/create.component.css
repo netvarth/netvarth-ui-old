@@ -19,6 +19,16 @@
 }
 
 
+.btn-draft {
+  background-color: #d0ac2a !important;
+  border-color: #d0ac2a !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+
+
 .btn-verify {
   background-color: hsl(204, 86%, 96%) !important;
   border-color: hsl(204, 86%, 53%) !important;

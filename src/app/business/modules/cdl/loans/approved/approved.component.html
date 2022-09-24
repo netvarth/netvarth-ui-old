@@ -27,52 +27,50 @@
         </div>
 
 
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Loan Amount</div>
-              </div>
-              <div class="">
-                <mat-slider thumbLabel displayValue="30000" value="30000" valueText="30000" [displayWith]="formatLabel"
-                  tickInterval="50000" step="1000" min="15000" max="100000" aria-label="units"></mat-slider>
-                <div class="d-flex justify-content-between">
-                  <span class="approved-amount"><i class="fa fa-inr"></i>&nbsp;15000</span>
-                  <span class="approved-amount"><i class="fa fa-inr"></i>&nbsp;100000</span>
+
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="bggrey my-2">
+              <div>
+                <div class="border">
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Loan Amount</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;44000</span>
+                    </div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">EMI Tenure</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding">6 Months</span></div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Rate of Interest</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding">10%</span></div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Monthly EMI</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+                    </div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Total Interest</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+                    </div>
+                  </div>
+                  <div class="row text-left">
+                    <div class="col-md-6 card-title">Payable Amount</div>
+                    <div class="col-md-2 card-title no-padding">:</div>
+                    <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+                    </div>
+                  </div>
+
+
                 </div>
-              </div>
-            </div><br>
-          </div>
-
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">EMI Tenure</div>
-              </div>
-              <div class="">
-                <mat-slider thumbLabel displayValue="8" value="8" valueText="8 Months" [displayWith]="formatLabel"
-                  tickInterval="6" step="1" min="6" max="12" aria-label="units"></mat-slider>
-                <div class="d-flex justify-content-between">
-                  <span class="approved-amount"><i class="fa fa-inr"></i>&nbsp;6 Months</span>
-                  <span class="approved-amount"><i class="fa fa-inr"></i>&nbsp;12 Months</span>
-                </div>
-              </div>
-            </div><br>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="card card-title">Rate of Interest<br><span class="card-sub-title">10%</span></div>
-                <div class="card card-title">Monthly EMI<br><span class="card-sub-title"><i
-                      class="fa fa-inr"></i>12550</span></div>
-                <div class="card card-title">Total Interest<br><span class="card-sub-title"><i
-                      class="fa fa-inr"></i>12550</span></div>
-                <div class="card card-title">Payable amount<br><span class="card-sub-title"><i
-                      class="fa fa-inr"></i>12550</span></div>
               </div>
             </div>
           </div>
@@ -88,9 +86,9 @@
               </div>
               <div class="fieldPadding">
                 <select class="form-control" formControlName="purpose" readonly>
-                  <option>Scheme 1</option>
-                  <option>Scheme 2</option>
-                  <option>Scheme 3</option>
+                  <option>Electronics</option>
+                  <option>Car Loan</option>
+                  <option>Bike Loan</option>
                 </select>
               </div>
             </div>
@@ -138,8 +136,12 @@
                 <div class="form-title">Phone Number</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Phone Number" class="form-control"
-                  formControlName="phone" autocomplete="off" />
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" type="number" placeholder="Enter Phone Number" class="form-control"
+                    autocomplete="off" value="9854789584" readonly disabled />
+                  <a class="btn btn-verified">
+                    <span>Verifed</span></a>
+                </div>
               </div>
             </div>
           </div>
@@ -218,10 +220,10 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Account Number</div>
+                <div class="form-title">Bank IFSC</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Bank IFSC" class="form-control"
                   formControlName="phone" autocomplete="off" />
               </div>
             </div>
@@ -251,12 +253,25 @@
         </div>
         <div>
           <span class="font-weight-bold card-title">Date : </span>
-          <span class="font-weight-bold card-small-font">20/09/2022</span><br>
+          <span class="font-weight-bold card-small-font">28/09/2022</span><br>
           <span class="font-weight-bold card-title">Purpose of Loan: </span>
           <span class="font-weight-bold card-small-font">Car Purchase</span>
         </div><br>
-        <div class="upload-btn pointer-cursor">
-          Upload Invoice
+        <div class="pointer-cursor">
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="fieldPadding">
+                  <div class='file file--upload'>
+                    <label for='input-file'>
+                      Upload File
+                    </label>
+                    <input id='input-file' type='file' />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 

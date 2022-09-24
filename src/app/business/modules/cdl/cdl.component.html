@@ -110,20 +110,8 @@
     </div>
 
 
-    <div class="col-md-2" *ngIf="user.userType==1 || user.userType==5">
-      <div class="dashboard-card text-center border p-2 pointer-cursor">
-        <div>
-          <i class="fa fa-plus add-lead-icon"></i>
-        </div>
-        <div class="mt-1">
-          <span class="card-title">Create Lead</span>
-        </div>
-      </div>
-    </div>
 
-
-
-    <div class="col-md-2" (click)="ApprovedLoans()" *ngIf="user.userType==5">
+    <div class="col-md-2" (click)="approvedLoans()" *ngIf="user.userType==5">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-check approved-loan-icon"></i>
@@ -133,7 +121,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-2" *ngIf="user.userType==5">
+    <div class="col-md-2" (click)="redirectedLoans()" *ngIf="user.userType==5">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-spinner redirected-loan-icon"></i>
@@ -145,7 +133,7 @@
     </div>
 
 
-    <div class="col-md-2" *ngIf="user.userType==5">
+    <div class="col-md-2" (click)="rejectedLoans()" *ngIf="user.userType==5">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-times rejected-loan-icon"></i>
@@ -168,13 +156,24 @@
       </div>
     </div>
 
-    <div class="col-md-2" *ngIf="user.userType==2" (click)="allLeads()">
+    <div class="col-md-2" (click)="allLeads()">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-clock-o all-leads-icon"></i>
         </div>
         <div>
           <span class="card-title">All Leads</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2" *ngIf="user.userType==1" (click)="createDealer()">
+      <div class="dashboard-card text-center border p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-user create-dealer-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">Create Dealer</span>
         </div>
       </div>
     </div>
@@ -189,6 +188,7 @@
         </div>
       </div>
     </div>
+
 
     <div class="col-md-2" *ngIf="user.userType==2" (click)="requestedDealers()">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
@@ -213,16 +213,7 @@
     </div>
 
 
-    <div class="col-md-2" *ngIf="user.userType==1" (click)="createDealer()">
-      <div class="dashboard-card text-center border p-2 pointer-cursor">
-        <div>
-          <i class="fa fa-user create-dealer-icon"></i>
-        </div>
-        <div class="mt-1">
-          <span class="card-title">Create Dealer</span>
-        </div>
-      </div>
-    </div>
+
 
     <div class="col-md-2">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
@@ -240,77 +231,43 @@
 <div class="row">
   <div class="col-md-8">
     <div class="card">
-      <!-- <div class="pull-left">
-        <nav class="navbar navbar-static-top no-margin" role="navigation">
-          <div class="navbar-custom-menu width100pc">
-            <ul class="nav navbar-nav width100pc">
-              <li class="dropdown messages-menu loc-lst queue-menu pull-right">
-                <i class="icon-location dropdown-toggle " data-toggle="dropdown" style="color:#1D3E77 !important"></i>
-
-                <ul class="dropdown-menu">
-                  <li>
-                    <ul class="menu">
-                      <li>
-                        <a class="pointer-cursor">
-                          <h4>All Loans</h4>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div> -->
+      <div class="d-flex justify-content-between">
+        <div class="form-group col-md-4 no-padding">
+          <select class="form-control">
+            <option value="all"><span class="text-capitalize">All Loans</span></option>
+            <option value="approved"><span class="text-capitalize">Approved Loans</span></option>
+            <option value="redirected"><span class="text-capitalize">Redirected Loans</span></option>
+            <option value="Rejected"><span class="text-capitalize">Rejected Loans</span></option>
+          </select>
+        </div>
+        <div>
+          <nav class="navbar navbar-light bg-light">
+            <form class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            </form>
+          </nav>
+        </div>
+      </div>
       <div class="table-responsive dash-list">
         <table class="table" style="background-color: white;">
           <thead>
             <tr class="tble-filtr-tr heght">
               <th class="head_color">Name</th>
               <th class="head_color">Loan Amount</th>
-              <th class="head_color">Phone</th>
+              <th class="head_color">Status</th>
             </tr>
           </thead>
           <tbody class="table_data">
-            <ng-container>
-              <tr style=" cursor:pointer">
+            <ng-container *ngFor="let loan of loans">
+              <tr style="cursor:pointer" (click)="loanDetails(loan)">
                 <td>
-                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Krishna</span>
+                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{loan.customerName}}</span>
                 </td>
                 <td>
-                  <span><i class="fa fa-inr"></i>&nbsp;40000</span>
+                  <span><i class="fa fa-inr"></i>&nbsp;{{loan.amount}}</span>
                 </td>
-                <td>
-                  <span>5550001937</span>
-                </td>
-                <td>
-                  <a class="btn btn-primary">View</a>
-                </td>
-              </tr>
-              <tr style=" cursor:pointer">
-                <td>
-                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Mani</span>
-                </td>
-                <td>
-                  <span><i class="fa fa-inr"></i>&nbsp;50000</span>
-                </td>
-                <td>
-                  <span>5550001958</span>
-                </td>
-                <td>
-                  <a class="btn btn-primary">View</a>
-                </td>
-              </tr>
-              <tr style=" cursor:pointer">
-                <td>
-                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Narendra</span>
-                </td>
-                <td>
-                  <span><i class="fa fa-inr"></i>&nbsp;20000</span>
-                </td>
-                <td>
-                  <span>5550009959</span>
+                <td class="text-capitalize">
+                  <span>{{loan.status}}</span>
                 </td>
                 <td>
                   <a class="btn btn-primary">View</a>
@@ -319,7 +276,51 @@
             </ng-container>
           </tbody>
         </table>
-        <span class="text-primary font-weight-bold pointer-cursor">View All</span>
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="!viewmore" (click)="viewMore()">View
+          All</span>
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="viewmore" (click)="viewLess()">View
+          Less</span>
+      </div>
+    </div>
+
+
+    <br>
+    <div class="card" *ngIf="user.userType==5">
+      <div>
+        <span class="font-weight-bold text-primary">All Leads</span>
+      </div>
+      <div class="table-responsive dash-list mt-2">
+        <table class="table" style="background-color: white;">
+          <thead>
+            <tr class="tble-filtr-tr heght">
+              <th class="head_color">Name</th>
+              <th class="head_color">Phone Number</th>
+              <th class="head_color">Email</th>
+            </tr>
+          </thead>
+          <tbody class="table_data">
+            <ng-container *ngFor="let lead of leads">
+              <tr style="cursor:pointer" (click)="continueApplication()">
+                <td>
+                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{lead.CustomerName}}</span>
+                </td>
+                <td>
+                  <span>{{lead.phone}}</span>
+                </td>
+                <td class="text-capitalize">
+                  <span>{{lead.email}}</span>
+                </td>
+                <td>
+                  <a class="btn btn-primary">View</a>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="!viewmoreleads" (click)="viewMoreLeads()">View
+          All</span>
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="viewmoreleads" (click)="viewLessLeads()">View
+          Less</span>
       </div>
     </div>
   </div>
@@ -360,9 +361,43 @@
           </span>
         </div>
       </div>
+
+      <div class="d-flex">
+        <div>
+          <i class="fa fa-newspaper-o id-card-1" aria-hidden="true"></i>
+        </div>&nbsp;&nbsp;
+        <div>
+          <span class="news-title">Please check the Credit report</span><br>
+          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
+          </span>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div>
+          <i class="fa fa-newspaper-o id-card-2" aria-hidden="true"></i>
+        </div>&nbsp;&nbsp;
+        <div>
+          <span class="news-title">Please check the Credit report</span><br>
+          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
+          </span>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div>
+          <i class="fa fa-newspaper-o id-card-3" aria-hidden="true"></i>
+        </div>&nbsp;&nbsp;
+        <div>
+          <span class="news-title">Please check the Credit report</span><br>
+          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
+          </span>
+        </div>
+      </div>
+
+
     </div>
   </div>
-
 
 
   <div class="col-md-4" *ngIf="user.userType==1 || user.userType==2">
@@ -405,6 +440,15 @@
           <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
         </div>
       </div>
+
+      <div class="d-flex mt-2">
+        <div>
+          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+        </div>&nbsp;&nbsp;
+        <div>
+          <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -412,37 +456,14 @@
 <div class="row mt-1" *ngIf="user.userType==1 || user.userType==2">
   <div class="col-md-8">
     <div class="card">
-      <!-- <div class="pull-left">
-        <nav class="navbar navbar-static-top no-margin" role="navigation">
-          <div class="navbar-custom-menu width100pc">
-            <ul class="nav navbar-nav width100pc">
-              <li class="dropdown messages-menu loc-lst queue-menu pull-right">
-                <i class="icon-location dropdown-toggle " data-toggle="dropdown" style="color:#1D3E77 !important"></i>
-
-                <ul class="dropdown-menu">
-                  <li>
-                    <ul class="menu">
-                      <li>
-                        <a class="pointer-cursor">
-                          <h4>All Loans</h4>
-                        </a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div> -->
       <div class="table-responsive dash-list">
-        <span class="font-weight-bold">Dealers</span>
+        <span class="font-weight-bold">All Dealers</span>
         <table class="table" style="background-color: white;">
           <thead>
             <tr class="tble-filtr-tr heght">
               <th class="head_color">Name</th>
-              <th class="head_color">Loan Amount</th>
-              <th class="head_color">Phone</th>
+              <th class="head_color">Location</th>
+              <th class="head_color">Status</th>
             </tr>
           </thead>
           <tbody class="table_data">
@@ -452,10 +473,10 @@
                   <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Krishna</span>
                 </td>
                 <td>
-                  <span><i class="fa fa-inr"></i>&nbsp;40000</span>
+                  <span>Thrissur</span>
                 </td>
                 <td>
-                  <span>5550001937</span>
+                  <span class="active">Active</span>
                 </td>
                 <td>
                   <a class="btn btn-primary">View</a>
@@ -466,10 +487,10 @@
                   <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Mani</span>
                 </td>
                 <td>
-                  <span><i class="fa fa-inr"></i>&nbsp;50000</span>
+                  <span>Kochi</span>
                 </td>
                 <td>
-                  <span>5550001958</span>
+                  <span class="inactive">Inactive</span>
                 </td>
                 <td>
                   <a class="btn btn-primary">View</a>
@@ -480,10 +501,10 @@
                   <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Narendra</span>
                 </td>
                 <td>
-                  <span><i class="fa fa-inr"></i>&nbsp;20000</span>
+                  <span>Kurnool</span>
                 </td>
                 <td>
-                  <span>5550009959</span>
+                  <span class="active">Active</span>
                 </td>
                 <td>
                   <a class="btn btn-primary">View</a>
@@ -495,99 +516,36 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4" *ngIf="user.userType==5">
+  <div class="col-md-4" *ngIf="user.userType==1 || user.userType==2">
     <div class="card">
       <div class="mb-2">
-        <span class="font-weight-bold">News Feed</span>
+        <span class="font-weight-bold">Loans</span>
       </div>
-      <div class="d-flex">
+      <div class="d-flex justify-conent-around mt-2 loan-data">
         <div>
-          <i class="fa fa-newspaper-o id-card-1" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
+          <span>Loan Id : 201</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
         <div>
-          <span class="news-title">Please check the Credit report</span><br>
-          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
-          </span>
+          <span>MyG Mobiles</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span class="active font-weight-bold">Approved</span>
+        </div>
+      </div>
+      <div class="d-flex justify-conent-around mt-2 loan-data">
+        <div>
+          <span>Loan Id : 223</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span>Netvarth</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span class="pending font-weight-bold">Pending</span>
         </div>
       </div>
 
-      <div class="d-flex">
-        <div>
-          <i class="fa fa-newspaper-o id-card-2" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="news-title">Please check the Credit report</span><br>
-          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
-          </span>
-        </div>
-      </div>
-
-      <div class="d-flex">
-        <div>
-          <i class="fa fa-newspaper-o id-card-3" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="news-title">Please check the Credit report</span><br>
-          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
-          </span>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div>
-          <i class="fa fa-newspaper-o id-card-1" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="news-title">Please check the Credit report</span><br>
-          <span class="news-sub-title">We will target growth of 10-15% in gold loans in coming fiscal year
-          </span>
-        </div>
-      </div>
     </div>
   </div>
 
-
-
-  <div class="col-md-4" *ngIf="user.userType==1">
-    <div class="card">
-      <div class="mb-2">
-        <span class="font-weight-bold">Alerts</span>
-      </div>
-      <div class="d-flex mt-2">
-        <div>
-          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-        </div>
-      </div>
-
-      <div class="d-flex mt-2">
-        <div>
-          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-        </div>
-      </div>
-
-      <div class="d-flex mt-2">
-        <div>
-          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-        </div>
-      </div>
-
-      <div class="d-flex mt-2">
-        <div>
-          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-        </div>
-      </div>
-    </div>
-  </div>
 </div>
 <br><br>

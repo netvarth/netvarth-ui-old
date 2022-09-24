@@ -1,99 +1,189 @@
-.colorHeaderIcon{
-    color:#1D3E77 !important
+.colorHeaderIcon {
+  color: #1D3E77 !important
 }
-.dash-head{
-    display: flex;
-    gap: 5px;
+
+.dash-head {
+  display: flex;
+  gap: 5px;
 }
-.personalDetails{
-    color: #30A5FA;
-    font-size: 15px;
-    font-weight: 600;
+
+.personalDetails {
+  color: #30A5FA;
+  font-size: 15px;
+  font-weight: 600;
 }
-.marginClass{
-    margin-top: 10px;
+
+.marginClass {
+  margin-top: 10px;
 }
-.widthCls{
-    width: 100%;
+
+.widthCls {
+  width: 100%;
 }
-.customerLabel{
-    color: rgba(58, 53, 65, 0.68);
-    font-size: 12px;
+
+.customerLabel {
+  color: rgba(58, 53, 65, 0.68);
+  font-size: 12px;
 }
-.customerInfoLabel{
-    color: rgba(58, 53, 65, 0.87);
-    font-size: 12px;
-    font-weight: 600;
-    float: right;
-    width: 13rem;
+
+.customerInfoLabel {
+  color: rgba(58, 53, 65, 0.87);
+  font-size: 12px;
+  font-weight: 600;
+  float: right;
+  width: 13rem;
 }
-.paddiNgCls{
-    padding: 5px;
+
+.paddiNgCls {
+  padding: 5px;
 }
 
 .cancelBtn {
-    background: #A8ABAF !important;
-    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
-    border-radius: 3.75916px !important;
-    border: 0px solid !important;
-    margin-right: 10px !important;
-    padding: 6px 10px;
-    color: #fff;
-    font-weight: bold;
-    font-size: 14px;
-    height: 2.5rem;
-  }
-  
-  .confirmBtn {
-    background: #0D2348 !important;
-    box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
-    border-radius: 3.75916px !important;
-    border: 0px solid !important;
-    padding: 6px 12px;
-    color: #fff;
-  }
-  .flexClass{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .paddingCls{
-    padding: 5px;
-  }
-  .loanDetails{
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-  }
-  .customerScoreLabel{
-    color: #949191;
-  }
-  .customerScoreInfoLabel{
-    color: #000000;
-  }
-  @media(max-width: 768px){
-    .loanDetails{
-        flex-wrap: wrap;
-    }
-    .flexWrap{
-        flex-wrap: wrap;  
-    }
-    .customerInfoLabel{
-        width: 10rem ;
-    }
-  }
-  .image{
-    height: 18px;
-    width: 18px;
+  background: #A8ABAF !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid !important;
+  margin-right: 10px !important;
+  padding: 6px 10px;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  height: 2.5rem;
 }
-.statusCls{
-    display: flex;
-    gap:5px;
+
+.confirmBtn {
+  background: #0D2348 !important;
+  box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
+  border-radius: 3.75916px !important;
+  border: 0px solid !important;
+  padding: 6px 12px;
+  color: #fff;
 }
-.customcard{
-    border: 1px solid #E9E8E8 !important;
-    box-shadow: 0px 109.322px 87.4576px rgb(41 72 152 / 5%), 0px 70.8569px 51.2194px rgb(41 72 152 / 4%), 0px 42.1092px 27.8569px rgb(41 72 152 / 3%), 0px 21.8644px 14.2119px rgb(41 72 152 / 3%), 0px 8.90772px 7.12618px rgb(41 72 152 / 2%), 0px 2.02448px 3.44162px rgb(41 72 152 / 1%) !important;
-    border-radius: 5px;
-    padding: 20px;
-    width: 100%;
+
+.flexClass {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.paddingCls {
+  padding: 5px;
+}
+
+.loanDetails {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.customerScoreLabel {
+  color: #949191;
+}
+
+.customerScoreInfoLabel {
+  color: #000000;
+}
+
+@media(max-width: 768px) {
+  .loanDetails {
+    flex-wrap: wrap;
+  }
+
+  .flexWrap {
+    flex-wrap: wrap;
+  }
+
+  .customerInfoLabel {
+    width: 10rem;
+  }
+}
+
+.approved {
+  color: green !important;
+  background-color: rgb(221, 248, 221) !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+}
+
+.redirected {
+  color: rgb(230, 158, 26) !important;
+  background-color: rgb(255, 229, 181) !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+}
+
+.rejected {
+  color: rgb(229, 48, 48) !important;
+  background-color: rgb(255, 232, 232) !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+}
+
+.image {
+  height: 18px;
+  width: 18px;
+}
+
+.statusCls {
+  display: flex;
+  gap: 5px;
+}
+
+.customcard {
+  border: 1px solid #E9E8E8 !important;
+  box-shadow: 0px 109.322px 87.4576px rgb(41 72 152 / 5%), 0px 70.8569px 51.2194px rgb(41 72 152 / 4%), 0px 42.1092px 27.8569px rgb(41 72 152 / 3%), 0px 21.8644px 14.2119px rgb(41 72 152 / 3%), 0px 8.90772px 7.12618px rgb(41 72 152 / 2%), 0px 2.02448px 3.44162px rgb(41 72 152 / 1%) !important;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+}
+
+.card-title {
+  font-size: 12px !important;
+  color: rgb(186, 182, 182);
+}
+
+.card-sub-title {
+  font-size: 12px !important;
+  color: #0073FF;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  /* padding: 10px 20px !important; */
+  width: 100% !important;
+}
+
+.fa-tachometer {
+  font-size: 25px !important;
+}
+
+.btn-sanctioned {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+
+.btn-redirect {
+  background-color: #f48e5b !important;
+  border-color: #f48e5b !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+
+.btn-reject {
+  background-color: #eb4b4b !important;
+  border-color: #eb4b4b !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
 }

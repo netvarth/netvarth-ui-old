@@ -49,8 +49,13 @@
                 <div class="form-title">Email</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="email" placeholder="Enter Customer Email" class="form-control"
-                  autocomplete="off" />
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" type="email" placeholder="Enter Customer Email" class="form-control"
+                    autocomplete="off" />
+                  <a class="btn btn-verify" [class.btn-verified]="emailverification" (click)="verifyemail()">
+                    <span *ngIf="!emailverification">Verify</span><span *ngIf="emailverification"><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+                </div>
               </div>
             </div>
           </div>
@@ -125,11 +130,68 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Residential Address</div>
+                <div class="form-title">Address 1</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Residential Address"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Address 1" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Address 2</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Address 2" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">City</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter City" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">State</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter State" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Pincode</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Pincode" class="form-control"
+                  autocomplete="off" />
               </div>
             </div>
           </div>
@@ -153,19 +215,7 @@
         </div>
 
 
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Permanent Address</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Permanent Address" class="form-control"
-                  autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
+
 
 
         <div>
@@ -311,7 +361,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Purpose of Loan</div>
+                <div class="form-title">Select Category</div>
               </div>
               <div class="fieldPadding">
                 <select class="form-control">
@@ -404,8 +454,13 @@
       </div>
 
     </div>
-    <div class="btn btn-primary" (click)="goNext()">
-      Next
+    <div class="d-flex">
+      <div class="btn btn-draft mr-2" (click)="saveAsDraft()">
+        Save as Draft
+      </div>
+      <div class="btn btn-primary" (click)="checkELigibility()">
+        Check Eligibility
+      </div>
     </div>
   </form>
 </div>

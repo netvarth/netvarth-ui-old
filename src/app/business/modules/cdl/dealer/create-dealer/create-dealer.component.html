@@ -10,7 +10,7 @@
       <div class="col-md-7">
 
 
-        <div>
+        <!-- <div>
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
@@ -25,7 +25,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div>
           <div class="bggrey my-2">
@@ -70,8 +70,12 @@
                 <div class="form-title">Email</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="email" placeholder="Enter Customer Email" class="form-control"
-                  autocomplete="off" />
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" type="email" placeholder="Enter Customer Email" class="form-control"
+                    autocomplete="off" />
+                  <a class="btn btn-verify" [class.btn-verified]="emailverification" (click)="verifyemail()">
+                    <span *ngIf="!emailverification">Verify</span><span *ngIf="emailverification">Verified</span></a>
+                </div>
               </div>
             </div>
           </div>
@@ -96,23 +100,22 @@
         </div>
 
 
-        <!-- <div>
+        <div>
           <div class="bggrey my-2">
             <div>
-              <div class="d-flex">
-                <div class="form-title"></div>
-              </div>
               <div class="fieldPadding">
-                <div class="upload-doc" (click)="filed.click()">
-                  <span class="select-wrapper">
-                    <input type="file" name="image_src" id="image_src" accept="/*;capture=camera" #filed
-                      (change)="imageSelect($event)">
-                  </span>
+                <div class='file file--upload'>
+                  <label for='input-file'>
+                    Upload File
+                  </label>
+                  <input id='input-file' type='file' />
                 </div>
+                <span
+                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
 
 
         <div>
@@ -136,11 +139,229 @@
         <div>
           <div class="bggrey my-2">
             <div>
+              <div class="fieldPadding">
+                <div class='file file--upload'>
+                  <label for='input-file'>
+                    Upload File
+                  </label>
+                  <input id='input-file' type='file' />
+                </div>
+                <span
+                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
               <div class="d-flex">
-                <div class="form-title">Cheque Number</div>
+                <div class="form-title">Cheque/Passbook</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='input-file'>
+                    Upload File
+                  </label>
+                  <input id='input-file' type='file' />
+                </div>
+                <span
+                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Photo</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='input-file'>
+                    Upload File
+                  </label>
+                  <input id='input-file' type='file' />
+                </div>
+                <span
+                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Domain</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Cheque Number" class="form-control"
+                <select class="form-control">
+                  <option>Electronics</option>
+                  <option>Car Loan</option>
+                  <option>Home Loan</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Sub Domain</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control">
+                  <option>Mobile</option>
+                  <option>Laptop</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Size</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control">
+                  <option>Large</option>
+                  <option>Medium</option>
+                  <option>Small</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="fieldPadding">
+                <div class='file file--upload'>
+                  <label for='input-file'>
+                    Upload File
+                  </label>
+                  <input id='input-file' type='file' />
+                </div>
+                <span
+                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Shop License</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Shop License" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">GST Number</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter GST Number" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Bank</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" formControlName="purpose">
+                  <option>KOTAK</option>
+                  <option>ICICI</option>
+                  <option>SBI</option>
+                  <option>HDFC</option>
+                  <option>BOI</option>
+                  <option>AXIS</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Account Number</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">IFSC Code</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter IFSC Code" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">City of Residence</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter City of Residence" class="form-control"
+                  autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Home Address</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Home Address" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -152,7 +373,7 @@
 
     </div>
     <div class="btn btn-primary" (click)="goNext()">
-      Request to Credit Officer
+      Submit
     </div>
   </form>
 </div>
