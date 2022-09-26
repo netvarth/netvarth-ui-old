@@ -24,7 +24,7 @@ export class PreviewpdfComponent implements OnInit {
     console.log('data',data);
   }
   ngOnInit() {
-    this.api_loading=false;
+    // this.api_loading=false;
     if(this.data && this.data.requestType){
       this.dialogTYpe= this.data.requestType;
     }
@@ -35,6 +35,18 @@ export class PreviewpdfComponent implements OnInit {
     if(this.data && this.data.mrId){
       this.mrid = this.data.mrId;
     }
+    if(this.dialogTYpe==='priviewFilePrescription'){
+      if(this.data && this.data.data && this.data.data.type ==='.pdf'){
+        if(this.data && this.data.data && this.data.data.url){
+          this.pdfUrl= this.data.data.url;
+          this.api_loading=false;
+  
+        }
+  
+  
+      }
+    }
+    
   }
 
   getImageType(fileType) {
@@ -70,6 +82,12 @@ export class PreviewpdfComponent implements OnInit {
       else{
         return './assets/images/ImgeFileIcon/othersFile.png'
       }
+
+    }
+  }
+  download(pdfUrl:any){
+    if(pdfUrl){
+      window.open(pdfUrl)
 
     }
   }

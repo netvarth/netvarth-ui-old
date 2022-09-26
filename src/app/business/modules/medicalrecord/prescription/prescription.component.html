@@ -312,7 +312,7 @@
   </div>
   <div *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
     <div class="filesCreate" *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
-      <div class=" mgn-up-10 filesCreate" *ngIf="uploadlist && uploadlist.length > 0">
+      <div class=" mgn-up-10 filesCreate uploadPresCustomHeight" *ngIf="uploadlist && uploadlist.length > 0">
         <div class="shadow" style="height:100% !important">
           <div class="sharedFlex">
             <div class="uploadedText">Uploaded Prescription</div>
@@ -355,8 +355,10 @@
                     </div>
                       <div>
                         <div class="Share pointer-cursor" *ngIf="file " (click)="printSecond(file)">
-                          <img class="fileView" src="/assets/images/medicalReportIcon/print.png" 
+                          <img *ngIf="file.type !=='.pdf'" class="fileView" src="/assets/images/medicalReportIcon/print.png" 
                           #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'"/>
+                          <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
+                          #tooltip="matTooltip" matTooltip="View" [matTooltipPosition]="'below'"/>
                         </div>
                       </div>
                       <div>
@@ -386,7 +388,11 @@
                       </button>
                       <button mat-menu-item class="gap" (click)="printSecond(file)">
                         <div class="Share pointer-cursor" *ngIf="file " >
-                          <img class="fileView" src="/assets/images/medicalReportIcon/print.png" />
+                          <!-- <img class="fileView" src="/assets/images/medicalReportIcon/print.png" /> -->
+                          <img *ngIf="file.type !=='.pdf'" class="fileView" src="/assets/images/medicalReportIcon/print.png" 
+                          #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'"/>
+                          <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
+                          #tooltip="matTooltip" matTooltip="View" [matTooltipPosition]="'below'"/>
                         </div>
                         <div>Print</div>
                       </button>
@@ -403,14 +409,12 @@
             </div>
           </div>
         </div>
-        <div hidden id="sharePdf"  *ngIf="uploadlist && uploadlist[0] && uploadlist[0].type && (uploadlist[0].type==='.pdf')" >
+        <!-- <div id="sharePdf" class="container"  *ngIf="uploadlist && uploadlist[0] && uploadlist[0].type && (uploadlist[0].type==='.pdf')" >
           <div class="pdf-container">
-              <pdf-viewer   [src]="uploadlist[0].url"  [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
-                  [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
-                  [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
+              <pdf-viewer   [src]="uploadlist[0].url" [original-size]="false"
                   style="width: 100%; height: 600px"></pdf-viewer>
           </div>
-      </div>
+      </div> -->
       </div>
     </div>
   </div>

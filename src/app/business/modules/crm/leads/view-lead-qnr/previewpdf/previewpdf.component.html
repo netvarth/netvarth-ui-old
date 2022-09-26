@@ -6,9 +6,6 @@
       </div>
       <div class="headerText">File Preview</div>
     </div>
-    <!-- <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
-        <mat-icon>clear</mat-icon>
-    </div> -->
     <div style=" cursor: pointer;" mat-dialog-close  tabindex="-1" class="closeIcon"
         #tooltip="matTooltip" matTooltip="Close" [matTooltipPosition]="'below'">
             <mat-icon>clear</mat-icon>
@@ -35,38 +32,43 @@
         <mat-icon>clear</mat-icon>
     </div>
 </div>
-<!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
 <mat-dialog-content class="custDialogCon">
   <div>
    <img class="image" [src]="data.data.url" />
   </div>
 </mat-dialog-content>
+<div class="btnCls">
+  <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold cancelBtn">Close</button>
+  <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold confirmBtn" (click)="download(data.data.url)">
+    <i class="fa fa-download" aria-hidden="true"></i><span class="ml">Download</span></button>
+</div>
 </section>
 <section *ngIf="dialogTYpe==='priviewFilePrescription' && data.data.type ==='.pdf' ">
-  <div class="header mat-dialog-title">
-    <div style="display:flex;gap:5px">
-      <div>
-        <img class="imgType" [src]="getFileType(data.data.type)" />
+  <div >
+    <div>
+      <div class="flexClass">
+        <div class="fikleText">
+          <div>
+            <img class="imgType" [src]="getFileType(data.data.type)" />
+          </div>
+          <div class="headerText">Uploaded Prescription Preview</div>
+        </div>
+        <div style=" cursor: pointer;" mat-dialog-close tabindex="-1" class="closeIcon" #tooltip="matTooltip"
+          matTooltip="Close" [matTooltipPosition]="'below'">
+          <mat-icon>clear</mat-icon>
+        </div>
       </div>
-      <div class="headerText">Uploaded Prescription Preview</div>
-    </div>
-    <div style=" cursor: pointer;" mat-dialog-close class="closeIcon" tabindex="-1">
-        <mat-icon>clear</mat-icon>
-    </div>
-</div>
-
-<img id="myimage" [src]='thumbnail' />
-<!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
-<!-- <mat-dialog-content > -->
-  <!-- {{pdfUrl | json}} -->
-  <div id="outerContainer" >
-    <div class="pdf-container">
-        <pdf-viewer [src]="pdfUrl"  [rotation]="0" [original-size]="false" [show-all]="true" [fit-to-page]="false"
-            [zoom]="1" [zoom-scale]="'page-width'" [stick-to-page]="false" [render-text]="true"
-            [external-link-target]="'blank'" [autoresize]="true" [show-borders]="false"
-            style="width: 100%; height: 600px;"></pdf-viewer>
+      <mat-dialog-content>
+        <div>
+          <pdf-viewer [src]="pdfUrl" [original-size]="false" style="width: 100%; height: 480px"></pdf-viewer>
+        </div>
+      </mat-dialog-content>
+        <div class="btnCls">
+          <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold cancelBtn">Close</button>
+          <button  mat-dialog-close type="button"class="btn btn-primary font-weight-bold confirmBtn" (click)="download(pdfUrl)">
+            <i class="fa fa-download" aria-hidden="true"></i><span class="ml">Download</span></button>
+        </div>
     </div>
 </div>
-<!-- </mat-dialog-content> -->
 </section>
 

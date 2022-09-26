@@ -799,6 +799,9 @@ export class ShareRxComponent implements OnInit {
     }
     
   }
+  closeDialog(){
+    this.dialogRef.close()
+  }
   shareBtn(data){
     let shareInfo={
       'shareWith':this.sharewith,

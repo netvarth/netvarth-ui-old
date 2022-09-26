@@ -402,7 +402,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   print(divName,signatureInfo){
     console.log('signatureInfo',signatureInfo)
     if(signatureInfo===undefined){
-      const error='You have no digital Signature';
+      const error='Please craete your digital Signature via share';
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       setTimeout(() => {
         const params = [
@@ -496,60 +496,69 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     }
     
   }
-  printPdf(url,html){
-    let date:any=url.date;
-    let originalName:any=url.originalName;
-    let prefix:any=url.prefix;
-    // console.log('html',html)
-    const params = [
-      'height=' + screen.height,
-      'width=' + screen.width,
-      'fullscreen=yes'
-    ].join(',');
-    const printWindow = window.open('', '', params);
-    let checkin_html = '';
-    checkin_html +='<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
-    checkin_html += '<table width="100%;height:100%" style="border: 1px solid #dbdbdb;background: rgba(29, 161, 146, 0.11);position:absolute;z-index:99999">';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Date</td>';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">File Name</td>';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Prefix</td>';
-    checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">File Type</td>';
-    checkin_html += '</thead>';
-      checkin_html += '<tr style="line-height:20px;padding:10px;border-bottom: 1.02503px solid #E7E3E3">';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + date+'</td>';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + originalName + '</td>';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + prefix+ '</td>';
-      checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + '<img style="height:20px;width:20px;" src="/assets/images/ImgeFileIcon/pdf.png" />'+ '</td>';
-    checkin_html += '</table>';
-    // checkin_html +='<div style="position:absolute;z-index:99999">'
-    checkin_html += '<div>' + html+ '</div>';
-    // checkin_html +='</div>'
-    // checkin_html += '<div style="margin:10px">';
-    // checkin_html += '</div>';
-    // checkin_html +='<svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height:100%;width:100%; position: relative;"><path d="M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z" style="stroke: none;fill: #e1efe3;"></path></svg>'
-    printWindow.document.write('<html><head><title></title>');
-    printWindow.document.write('</head><body>');
-    // console.log(checkin_html)
-        printWindow.document.write(checkin_html);
+  printPdf(url,html?){
+    console.log(html);
+    console.log(url);
+    const dialogRef= this.dialog.open(PreviewpdfComponent,{
+            width:'100%',
+            height: '88%',
+            data:{
+              requestType:'priviewFilePrescription',
+              data:url,
+              mrId:this.mrId
+            }
+          })
+          dialogRef.afterClosed().subscribe((res)=>{
+          })
+          // this.downloadPdf(fileDetails.url)
 
-    printWindow.document.write('</body></html>');
-    printWindow.moveTo(0, 0);
-    printWindow.print();
-    printWindow.document.close();
-    setTimeout(() => {
-      printWindow.close();
-    }, 500);
+     
+    // let date:any=url.date;
+    // let originalName:any=url.originalName;
+    // let prefix:any=url.prefix;
+    // const params = [
+    //   'height=' + screen.height,
+    //   'width=' + screen.width,
+    //   'fullscreen=yes'
+    // ].join(',');
+    // const printWindow = window.open('', '', params);
+    // let checkin_html = '';
+    // checkin_html +='<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
+    // checkin_html += '<table width="100%;height:100%" style="border: 1px solid #dbdbdb;background: rgba(29, 161, 146, 0.11);position:absolute;z-index:99999">';
+    // checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Date</td>';
+    // checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">File Name</td>';
+    // checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">Prefix</td>';
+    // checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">File Type</td>';
+    // checkin_html += '</thead>';
+    //   checkin_html += '<tr style="line-height:20px;padding:10px;border-bottom: 1.02503px solid #E7E3E3">';
+    //   checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + date+'</td>';
+    //   checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + originalName + '</td>';
+    //   checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + prefix+ '</td>';
+    //   checkin_html += '<td style="padding:10px;border-bottom: 1.02503px solid #E7E3E3">' + '<img style="height:20px;width:20px;" src="/assets/images/ImgeFileIcon/pdf.png" />'+ '</td>';
+    // checkin_html += '</table>';
+    // checkin_html +=html;
+    // printWindow.document.write('<html><head><title></title>');
+    // printWindow.document.write('</head><body>');
+    // printWindow.document.write(checkin_html);
+    // printWindow.document.write('</body></html>');
+    // printWindow.moveTo(0, 0);
+    // printWindow.print();
+    // printWindow.document.close();
+    // setTimeout(() => {
+    //   printWindow.close();
+    // }, 500);
   }
   
   printSecond(url){
-    // console.log(url);
+    console.log(url);
     if(url.type==='.pdf'){
-      if(document && document.getElementById('sharePdf')){
-        let html = document.getElementById('sharePdf').innerHTML;
-        if(html &&  url){
-          this.printPdf(url,html)
-        }
-      }
+      this.printPdf(url)
+      // if(document && document.getElementById('sharePdf')){
+      //   let html = document.getElementById('sharePdf').innerHTML;
+      //   if(html &&  url){
+      //     this.printPdf(url,html)
+      //   }
+      // }
       
     }
     else{
@@ -865,7 +874,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
       }
       else{
         if (this.drugList && this.drugList.length === 0) {
-          alert('emptylistdrug')
+          // alert('emptylistdrug')
           if(value.medicine_name === '' && value.frequency === ''&& value.dosage === ''&& value.instructions === ''&& value.duration === ''){
             this.api_error = 'Atleast one field required';
             this.snackbarService.openSnackBar( this.api_error, { 'panelClass': 'snackbarerror' });
