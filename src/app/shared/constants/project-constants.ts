@@ -1219,6 +1219,10 @@ export const projectConstantsLocal = {
     },
     "AuthorDemy": {
       pathref: 129147
+    },
+    "mafil": {
+      pathref: 153693,
+      "cdl": true
     }
   },
   UIS3PATH: "https://jaldeeuiscale.s3.ap-south-1.amazonaws.com/",

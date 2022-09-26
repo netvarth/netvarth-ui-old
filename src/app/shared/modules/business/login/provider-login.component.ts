@@ -64,6 +64,7 @@ export class ProviderLoginComponent implements OnInit {
     private providerServices: ProviderServices,
     private commonDataStorage: CommonDataStorageService
   ) {
+    this.lStorageService.removeitemfromLocalStorage('cdl');
     this.titleService.setTitle('Jaldee Business - Login');
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
@@ -100,7 +101,9 @@ export class ProviderLoginComponent implements OnInit {
                 console.log("Settings value:", settings);
                 setTimeout(() => {
                   if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                    if (settings.appointment) {
+                    if (this.lStorageService.getitemfromLocalStorage('cdl')) {
+                      router.navigate(['provider', 'cdl']);
+                    } else if (settings.appointment) {
                       router.navigate(['provider', 'appointments']);
                     } else if (settings.waitlist) {
                       router.navigate(['provider', 'check-ins']);

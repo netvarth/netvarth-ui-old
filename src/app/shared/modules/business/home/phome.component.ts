@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';;
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { LocalStorageService } from '../../../../shared/services/local-storage.service';
 import { ProviderServices } from '../../../../business/services/provider-services.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
@@ -16,7 +17,8 @@ export class PhomeComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private activateRoute: ActivatedRoute,
     private groupService: GroupStorageService,
-    private providerServices: ProviderServices
+    private providerServices: ProviderServices,
+    private lStorageService: LocalStorageService
   ) {
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
@@ -30,7 +32,9 @@ export class PhomeComponent implements OnInit {
                 if (router.url === '\/business') {
                   setTimeout(() => {
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                      if (settings.appointment) {
+                      if (this.lStorageService.getitemfromLocalStorage('cdl')) {
+                        router.navigate(['provider', 'cdl']);
+                      } else if (settings.appointment) {
                         router.navigate(['provider', 'appointments']);
                       } else if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);

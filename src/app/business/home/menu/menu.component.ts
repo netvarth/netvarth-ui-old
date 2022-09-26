@@ -10,6 +10,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { AuthService } from '../../../shared/services/auth-service';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-menu',
@@ -47,6 +48,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   checkinStatus:any;
   bCrm:boolean=false;
   public LMSStatus:boolean=true;
+  showCDL: any;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -57,6 +59,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
+    private lStorageService:LocalStorageService,
     private authService: AuthService
   ) {
     this.getEnquiryCount();
@@ -215,6 +218,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.showCDL = this.lStorageService.getitemfromLocalStorage('cdl');
     console.log("User is :",user);
     this.accountType = user.accountType;
     this.isadminPrivilege = user.adminPrivilege

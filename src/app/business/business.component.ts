@@ -64,7 +64,9 @@ export class BusinessComponent implements OnInit {
                   setTimeout(() => {
                      console.log("constructor")
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                      if (settings.appointment) {
+                      if (this.lStorageService.getitemfromLocalStorage('cdl')) {
+                        router.navigate(['provider', 'cdl']);
+                      } else if (settings.appointment) {
                         router.navigate(['provider', 'appointments']);
                       } else if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);

@@ -110,7 +110,9 @@ export class ProviderCustomLoginComponent implements OnInit {
                 (settings: any) => {
                   setTimeout(() => {
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-                      if (settings.appointment) {
+                      if (this.lStorageService.getitemfromLocalStorage('cdl')) {
+                        router.navigate(['provider', 'cdl']);
+                      } else if (settings.appointment) {
                         router.navigate(['provider', 'appointments']);
                       } else if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);
@@ -179,6 +181,9 @@ export class ProviderCustomLoginComponent implements OnInit {
     if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idCaption']) {
       this.idCaption = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idCaption'];
       this.idPlaceHolder = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idPlaceholder'];
+    }
+    if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['cdl']) {
+      this.lStorageService.setitemonLocalStorage('cdl',true);
     }
   }
 
