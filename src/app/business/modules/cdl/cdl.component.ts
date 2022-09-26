@@ -10,9 +10,11 @@ export class CdlComponent implements OnInit {
   user: any;
   loans: any;
   leads: any;
+  mymodel: any;
   viewmore: any = false;
   currentstatus: any = "all";
   status = "all";
+  seacrchFilterOrder: any;
   statusList = ['all', 'approved', 'redirected', 'rejected'];
   viewmoreleads: any;
   statusLoansList: any = [
@@ -20,43 +22,50 @@ export class CdlComponent implements OnInit {
       'loanId': 101,
       'customerName': 'David',
       'amount': '40000',
-      'status': 'approved'
+      'status': 'redirected',
+      'date': '28/09/2022'
     },
     {
       'loanId': 102,
       'customerName': 'Aswin',
       'amount': '50000',
-      'status': 'approved'
+      'status': 'redirected',
+      'date': '27/09/2022'
     },
     {
       'loanId': 103,
       'customerName': 'Atul',
       'amount': '35000',
-      'status': 'approved'
+      'status': 'in progress',
+      'date': '26/09/2022'
     },
     {
       'loanId': 104,
       'customerName': 'Davika',
       'amount': '75000',
-      'status': 'approved'
+      'status': 'approved',
+      'date': '25/09/2022'
     },
     {
       'loanId': 105,
       'customerName': 'Babu',
       'amount': '65000',
-      'status': 'redirected'
+      'status': 'approved',
+      'date': '24/09/2022'
     },
     {
       'loanId': 106,
       'customerName': 'Atul',
       'amount': '674000',
-      'status': 'rejected'
+      'status': 'rejected',
+      'date': '23/09/2022'
     },
     {
       'loanId': 107,
       'customerName': 'Davika',
       'amount': '100000',
-      'status': 'rejected'
+      'status': 'rejected',
+      'date': '22/09/2022'
     },
   ];
   statusLeadsList: any = [
@@ -84,6 +93,32 @@ export class CdlComponent implements OnInit {
       'phone': '9854762587',
       'email': 'davika@gmail.com'
     }
+  ];
+  dealersList = [
+    {
+      'dealerId': 101,
+      'dealer': 'david',
+      'status': 'active',
+      'issuedDate': '19/08/2022'
+    },
+    {
+      'dealerId': 102,
+      'dealer': 'aswin',
+      'status': 'inactive',
+      'issuedDate': '19/08/2022'
+    },
+    {
+      'dealerId': 103,
+      'dealer': 'mani',
+      'status': 'active',
+      'issuedDate': '19/08/2022'
+    },
+    {
+      'dealerId': 104,
+      'dealer': 'krishna',
+      'status': 'requested',
+      'issuedDate': '19/08/2022'
+    },
   ];
   customOptions = {
     loop: true,
@@ -142,6 +177,8 @@ export class CdlComponent implements OnInit {
     this.leads = this.statusLeadsList;
     this.viewmoreleads = true;
   }
+
+
 
   continueApplication() {
     this.router.navigate(['provider', 'cdl', 'loans', 'create']);
@@ -219,6 +256,38 @@ export class CdlComponent implements OnInit {
       }
     };
     this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+  }
+
+  transform(event) {
+    if (event.target.value != 'all') {
+      this.loans = this.statusLoansList.filter(i => i.status == event.target.value);
+    }
+    else {
+      this.loans = this.statusLoansList.slice(0, 3);
+    }
+  }
+  searchText(event) {
+    console.log("event.target.value", event.target.value)
+    if (event.target.value != '') {
+      this.loans = this.statusLoansList.filter(x => x.status.includes(event.target.value));
+    }
+    else {
+      this.loans = this.statusLoansList.slice(0, 3);
+    }
+  }
+
+
+
+
+
+  showDealer(dealer) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        dealer: dealer.dealer,
+        status: dealer.status
+      }
+    }
+    this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
   }
 
 

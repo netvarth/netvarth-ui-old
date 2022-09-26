@@ -9,6 +9,16 @@
   color: #1E4079 !important;
 }
 
+.btn-select {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 5px 20px !important;
+  width: 100% !important;
+}
+
 .btn-primary {
   background-color: #1e4079 !important;
   border-color: #1e4070 !important;
@@ -20,7 +30,7 @@
 
 .card-title {
   font-size: 12px !important;
-  color: rgb(186, 182, 182);
+  color: rgb(112, 106, 106);
 }
 
 .card-border {
@@ -87,6 +97,7 @@ mat-slider.mat-slider.mat-focus-indicator.mat-accent.mat-slider-has-ticks.mat-sl
 input[type="file"] {
   display: none;
 }
+
 
 
 

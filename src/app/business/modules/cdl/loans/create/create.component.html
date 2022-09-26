@@ -133,7 +133,7 @@
                 <div class="form-title">Address 1</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Address 1" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter Address 1" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -148,7 +148,7 @@
                 <div class="form-title">Address 2</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Address 2" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter Address 2" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -162,7 +162,7 @@
                 <div class="form-title">City</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter City" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter City" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -176,7 +176,7 @@
                 <div class="form-title">State</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter State" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter State" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -226,7 +226,7 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="number" placeholder="Enter PAN Number" class="form-control"
+                  <input (keyup)="resetErrors()" type="text" placeholder="Enter PAN Number" class="form-control"
                     autocomplete="off" />
                   <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="verifypan()">
                     <span *ngIf="!panverification">Verify</span><span *ngIf="panverification"><i

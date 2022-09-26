@@ -39,17 +39,9 @@ export class CreateComponent implements OnInit {
 
   }
 
-  verifyaadhar() {
-    this.aadharverification = true;
-  }
 
-  verifypan() {
-    this.panverification = true;
-  }
 
-  verifyemail() {
-    this.emailverification = true;
-  }
+
 
   goBack() {
     this.location.back();
@@ -114,13 +106,82 @@ export class CreateComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': '  All added items in your cart for different Provider will be removed ! '
+        type: 'Mobile Number'
       }
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result = "verified") {
           this.verification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+    return can_remove;
+  }
+
+  verifyemail() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Email'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "verified") {
+          this.emailverification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+    return can_remove;
+  }
+
+  verifyaadhar() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Aadhar Number'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "verified") {
+          this.aadharverification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+    return can_remove;
+  }
+
+  verifypan() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Pan Number'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "verified") {
+          this.panverification = true;
         }
       }
       else {

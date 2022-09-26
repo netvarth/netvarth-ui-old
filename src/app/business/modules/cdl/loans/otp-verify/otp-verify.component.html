@@ -6,11 +6,11 @@
     <div class="col-md-5 form-group otp">
       <span class="font-weight-bold title">Otp Verification</span>
       <label for="phone" class="mgn-bt-20 subtitle">We Will send you a one time password on
-        this Mobile Number</label>
+        this {{type}}</label>
       <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="config"></ng-otp-input>
       <button class="cust-logpg-submt mgn-up-20 mat-button continue-button btn-primary" type="button"
         (click)="verifyOTP()">
-        <span class="text-capitalize">Verify Phone Number</span>
+        <span class="text-capitalize">Verify {{type}}</span>
       </button>
     </div>
     <div class="col-md-7 text-right">

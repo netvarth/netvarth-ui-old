@@ -24,15 +24,15 @@
             </tr>
           </thead>
           <tbody class="table_data">
-            <ng-container>
-              <tr style="cursor:pointer" *ngFor="let item of approvedLoans;let i=index">
-                <td data-title="Loan Details" class="td1">{{item.dealerId}}</td>
+            <ng-container *ngFor="let dealer of dealers;let i=index">
+              <tr style="cursor:pointer" (click)="showDealer(dealer)">
+                <td data-title="Loan Details" class="td1">{{dealer.dealerId}}</td>
                 <td data-title="Loan Details" class="td1 loanStatus">
                   <img class="imageApprove" src="/assets/images/cdl/approved.png" />
-                  <div class="approvedColor">{{item.status}}</div>
+                  <div class="approvedColor text-capitalize">{{dealer.status}}</div>
                 </td>
-                <td data-title="Loan Details" class="td1">{{item.dealer}}</td>
-                <td data-title="Loan Details" class="td1">{{item.issuedDate}}</td>
+                <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.dealer}}</td>
+                <td data-title="Loan Details" class="td1">{{dealer.issuedDate}}</td>
                 <td data-title="Loan Details" class="td1"><button class="btn btn-primary">Actions</button></td>
               </tr>
             </ng-container>

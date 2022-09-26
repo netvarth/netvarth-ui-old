@@ -79,11 +79,11 @@
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
-                <i class="fa fa-certificate total-amount-head-icon" aria-hidden="true"></i>
+                <i class="fa fa-users total-amount-head-icon" aria-hidden="true"></i>
               </div>&nbsp;&nbsp;
               <div class="text-left">
-                <span class="head-card-title">Total for all goals</span><br>
-                <span class="font-weight-bold"><i class="fa fa-usd"></i>&nbsp;5879</span>
+                <span class="head-card-title">Leads</span><br>
+                <span class="font-weight-bold">80</span>
               </div>
             </div>
           </div>
@@ -233,17 +233,21 @@
     <div class="card">
       <div class="d-flex justify-content-between">
         <div class="form-group col-md-4 no-padding">
-          <select class="form-control">
+          <select class="form-control" (change)="transform($event)">
             <option value="all"><span class="text-capitalize">All Loans</span></option>
             <option value="approved"><span class="text-capitalize">Approved Loans</span></option>
+            <option value="in progress"><span class="text-capitalize">In Progress Loans</span></option>
             <option value="redirected"><span class="text-capitalize">Redirected Loans</span></option>
-            <option value="Rejected"><span class="text-capitalize">Rejected Loans</span></option>
+            <option value="rejected"><span class="text-capitalize">Rejected Loans</span></option>
           </select>
         </div>
         <div>
           <nav class="navbar navbar-light bg-light">
             <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <div class="form-group">
+                <input class="form-control" [(ngModel)]="mymodel" type="search" (keyup)="searchText($event)"
+                  class="form-control" placeholder="Search for Items" />{{mymodel}}
+              </div>
             </form>
           </nav>
         </div>
@@ -255,6 +259,7 @@
               <th class="head_color">Name</th>
               <th class="head_color">Loan Amount</th>
               <th class="head_color">Status</th>
+              <th class="head_color">Last Updated Date</th>
             </tr>
           </thead>
           <tbody class="table_data">
@@ -267,7 +272,12 @@
                   <span><i class="fa fa-inr"></i>&nbsp;{{loan.amount}}</span>
                 </td>
                 <td class="text-capitalize">
-                  <span>{{loan.status}}</span>
+                  <span [class.active]="loan.status == 'approved'" [class.inactive]="loan.status == 'rejected'"
+                    [class.requested]="loan.status == 'redirected'"
+                    [class.progress]="loan.status == 'in progress'">{{loan.status}}</span>
+                </td>
+                <td class="text-capitalize">
+                  <span>{{loan.date}}</span>
                 </td>
                 <td>
                   <a class="btn btn-primary">View</a>
@@ -276,9 +286,11 @@
             </ng-container>
           </tbody>
         </table>
-        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="!viewmore" (click)="viewMore()">View
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="!viewmore && loans.length>=3"
+          (click)="viewMore()">View
           All</span>
-        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="viewmore" (click)="viewLess()">View
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="viewmore && loans.length>=3"
+          (click)="viewLess()">View
           Less</span>
       </div>
     </div>
@@ -467,44 +479,19 @@
             </tr>
           </thead>
           <tbody class="table_data">
-            <ng-container>
-              <tr style=" cursor:pointer">
+            <ng-container *ngFor="let dealer of dealersList">
+              <tr style=" cursor:pointer" (click)="showDealer(dealer)">
                 <td>
-                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Krishna</span>
+                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{dealer.dealer}}</span>
+                </td>
+
+                <td>
+                  <span class="text-capitalize" [class.active]="status == 'active'"
+                    [class.active]="dealer.status == 'active'" [class.inactive]="dealer.status == 'inactive'"
+                    [class.requested]="dealer.status == 'requested'">{{dealer.status}}</span>
                 </td>
                 <td>
-                  <span>Thrissur</span>
-                </td>
-                <td>
-                  <span class="active">Active</span>
-                </td>
-                <td>
-                  <a class="btn btn-primary">View</a>
-                </td>
-              </tr>
-              <tr style=" cursor:pointer">
-                <td>
-                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Mani</span>
-                </td>
-                <td>
-                  <span>Kochi</span>
-                </td>
-                <td>
-                  <span class="inactive">Inactive</span>
-                </td>
-                <td>
-                  <a class="btn btn-primary">View</a>
-                </td>
-              </tr>
-              <tr style=" cursor:pointer">
-                <td>
-                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;Narendra</span>
-                </td>
-                <td>
-                  <span>Kurnool</span>
-                </td>
-                <td>
-                  <span class="active">Active</span>
+                  <span>{{dealer.issuedDate}}</span>
                 </td>
                 <td>
                   <a class="btn btn-primary">View</a>

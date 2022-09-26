@@ -4,6 +4,9 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GroupStorageService } from '../../../../../../../src/app/shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { ViewFileComponent } from './view-file/view-file.component';
+import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-loanDetails',
   templateUrl: './loanDetails.component.html',
@@ -47,6 +50,7 @@ export class loanDetailsComponent implements OnInit {
     private location: Location,
     private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
+    private dialog: MatDialog,
   ) { }
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -136,12 +140,18 @@ export class loanDetailsComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
   }
 
-  viewKycDetails(kycType, kycInfo) {
-    if (kycType && kycType === 'addhar') {
-      return false;
-    }
-    else if (kycType && kycType === 'panCard') {
-      return false;
-    }
+
+
+  viewFile(file) {
+    const dialogRef = this.dialog.open(ViewFileComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: file
+      }
+    });
+    dialogRef.afterClosed();
   }
+
 }

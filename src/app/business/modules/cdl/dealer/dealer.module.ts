@@ -8,7 +8,8 @@ import { DealerComponent } from './dealer.component';
 const routes: Routes = [
   { path: '', component: DealerComponent },
   { path: 'create', loadChildren: () => import('./create-dealer/create-dealer.module').then(m => m.CreateDealerModule) },
-  { path: 'approved', loadChildren: () => import('./dealer-approved/dealer-approved.module').then(m => m.DealerApprovedModule) }
+  { path: 'approved', loadChildren: () => import('./dealer-approved/dealer-approved.module').then(m => m.DealerApprovedModule) },
+  { path: 'view', loadChildren: () => import('./view-dealer/view-dealer.module').then(m => m.ViewDealerModule) }
 ]
 
 

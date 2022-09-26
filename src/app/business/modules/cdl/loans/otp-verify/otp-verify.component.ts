@@ -7,6 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./otp-verify.component.css']
 })
 export class OtpVerifyComponent implements OnInit {
+  type: any;
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -23,6 +24,7 @@ export class OtpVerifyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.type = this.data.type
   }
 
   onOtpChange(event) {

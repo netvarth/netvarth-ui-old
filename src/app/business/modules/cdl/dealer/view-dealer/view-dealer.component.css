@@ -1,0 +1,177 @@
+.fa-angle-left {
+  font-size: 18px !important;
+}
+
+.dealer-tag {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), #F44336;
+  color: #FF4C51;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-size: 12px;
+}
+
+.dealer-name {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.dealer-icon {
+  color: #0C315E;
+  background-color: rgba(12, 49, 94, 0.11);
+  font-size: 22px;
+  padding: 10px 13px;
+  border-radius: 10px;
+}
+
+.dealer-icon-info {
+  color: rgba(58, 53, 65, 0.87);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.dealer-icon-sub-info {
+  color: rgba(58, 53, 65, 0.68);
+  font-size: 14px;
+}
+
+.dealer-info {
+  font-size: 14px !important;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  font-size: 16px !important;
+  border-radius: 5px !important;
+}
+
+.btn-danger {
+  background-color: #fff !important;
+  border-color: #FF4C51 !important;
+  color: #FF4C51 !important;
+  font-weight: 100 !important;
+  font-size: 16px !important;
+  border-radius: 5px !important;
+}
+
+.btn-danger:hover {
+  background-color: #FF4C51 !important;
+  border-color: #FF4C51 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  font-size: 16px !important;
+  border-radius: 5px !important;
+  transition-duration: 2s;
+  transition-delay: 1s;
+}
+
+th {
+  color: rgb(142, 142, 142) !important;
+  font-size: 13px !important;
+}
+
+td {
+  color: #000 !important;
+  font-size: 12px !important;
+}
+
+.view-dashboard-btn {
+  padding: 5px 15px !important;
+  font-size: 14px !important;
+  font-weight: bold !important;
+}
+
+.inactivestatus {
+  color: rgb(244, 197, 109);
+}
+
+.font-weight-light {
+  font-weight: 500 !important;
+  font-size: 16px !important;
+}
+
+.btn-verify {
+  background-color: hsl(204, 86%, 96%) !important;
+  border-color: hsl(204, 86%, 53%) !important;
+  color: hsl(204, 86%, 53%) !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: auto 5px !important;
+}
+
+.approved-loan-head-icon {
+  color: #427A0A !important;
+  background-color: #e8f3de !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 20px !important;
+}
+
+
+.approved-amount-head-icon {
+  color: #1CC5FA !important;
+  background-color: #ddf3fa !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 20px !important;
+}
+
+.total-amount-head-icon {
+  color: #5843BE !important;
+  background-color: #e4e0f6 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 20px !important;
+}
+
+.rejected-loan-head-icon {
+  color: #E84D4D !important;
+  background-color: #fef0f0 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 20px !important;
+}
+
+.activestatus {
+  color: rgb(16, 179, 16);
+}
+
+.alerts-icon {
+  color: #e11f1f !important;
+  background-color: #e8c6c1 !important;
+  padding: 10px !important;
+  font-size: 25px !important;
+}
+
+.alerts-title {
+  font-size: 12px !important;
+}
+
+/* not active */
+.nav-pills .nav-link:not(.active) {
+  background-color: #fff !important;
+  color: black !important;
+}
+
+/* active*/
+.nav-pills .nav-link {
+  background-color: rgba(0, 255, 0, 0.5) !important;
+  color: white !important;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li>a,
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+  border: none !important;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:hover,
+.nav-pills>li.active>a:focus {
+  border-bottom: 2px solid #5598FD !important;
+  color: #5598FD !important;
+}

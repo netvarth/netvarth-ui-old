@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 })
 export class DealerComponent implements OnInit {
   user: any;
-  approvedLoans: any = [];
+  dealers: any = [];
   headerName: string = ''
   type: any;
   constructor(
@@ -32,38 +32,38 @@ export class DealerComponent implements OnInit {
     console.log("User is", this.user);
     console.log(this.router);
     if (this.type) {
-      this.approvedLoans = [
+      this.dealers = [
         {
           'dealerId': 104,
-          'dealer': 'Krishna',
-          'status': 'Requested',
+          'dealer': 'krishna',
+          'status': 'requested',
           'issuedDate': '19/08/2022'
         },
       ]
     } else {
-      this.approvedLoans = [
+      this.dealers = [
         {
           'dealerId': 101,
-          'dealer': 'David',
-          'status': 'Approved',
+          'dealer': 'david',
+          'status': 'approved',
           'issuedDate': '19/08/2022'
         },
         {
           'dealerId': 102,
-          'dealer': 'Aswin',
-          'status': 'Approved',
+          'dealer': 'aswin',
+          'status': 'approved',
           'issuedDate': '19/08/2022'
         },
         {
           'dealerId': 103,
-          'dealer': 'Mani',
-          'status': 'Approved',
+          'dealer': 'mani',
+          'status': 'approved',
           'issuedDate': '19/08/2022'
         },
         {
           'dealerId': 104,
-          'dealer': 'Krishna',
-          'status': 'Requested',
+          'dealer': 'krishna',
+          'status': 'requested',
           'issuedDate': '19/08/2022'
         },
       ]
@@ -72,6 +72,16 @@ export class DealerComponent implements OnInit {
   }
   goBack() {
     this.location.back();
+  }
+
+  showDealer(dealer) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        dealer: dealer.dealer,
+        status: dealer.status
+      }
+    }
+    this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
   }
 
 }
