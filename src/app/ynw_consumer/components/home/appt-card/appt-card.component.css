@@ -68,10 +68,22 @@ mat-grid-tile-footer .mat-flat-button {
     padding:5px !important;
 }
 .cardddd{
-    margin-bottom: 1rem;margin-left: 16rem;
+    margin-bottom: 0rem;margin-left: 1rem;
 }
 @media(max-width: 800px){
     .cardddd{
         margin-bottom: 0rem !important;margin-left: 1rem !important;
+    }
+}
+@media(min-width: 1115px){
+    .cardddd{
+        margin-bottom: 1rem !important;margin-left: 11rem !important;
+        justify-content: space-evenly !important;
+    }
+}
+@media((min-width: 575px) and (max-width : 1115px)){
+    .cardddd{
+        margin-bottom: 1rem !important;margin-left: 8.97rem !important;
+        justify-content: space-evenly !important;
     }
 }
