@@ -134,7 +134,7 @@ export class MedicalrecordComponent implements OnInit {
   visitDetailsTableValue:any;
   tempText: any;
   creteTypeMr: any;
-  calledForm: void;
+  calledForm: string;
   customerDetailsAge: any;
   tempPhoneNumber: any;
   constructor(private router: Router,
@@ -152,8 +152,9 @@ export class MedicalrecordComponent implements OnInit {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.visitdate = this.datePipe.transformToDateWithTime(new Date());
     this.activated_route.queryParams.subscribe(queryParams => {
+      console.log('queryParamsCalledFrom',queryParams)
       if (queryParams['calledfrom']) {
-        this.calledForm=this.medicalService.setCalledFrom(queryParams['calledfrom']);
+        this.calledForm=queryParams['calledfrom']//this.medicalService.setCalledFrom(queryParams['calledfrom']);
       }
     });
 
@@ -869,6 +870,14 @@ export class MedicalrecordComponent implements OnInit {
       // alert('prescription')
       // console.log('mrId',this.medicalRecordID)
       if(this.mrId===0){
+        // if(this.calledForm==='appt'){
+        //   let routerId='prescription';
+        //   const qparams = { 'prescription': 'prescription' };
+        //   const navigationExtras: NavigationExtras = {
+        //     queryParams: qparams
+        //   };
+        //   this.router.navigate(['provider', 'customers',  this.patientId, 'FOLLOWUP', 0, 'medicalrecord', this.mrId,routerId],navigationExtras);
+        // }
         // alert('if1st prescription')
         // const mRId=0;
         // const routerId='prescription';
@@ -901,6 +910,7 @@ export class MedicalrecordComponent implements OnInit {
           this.showHideActivityTYpe=false;
       }
       else{
+        // alert(';2nd clicnical')
           const mRId=0;
       const routerId='clinicalnotes';
       this.router.navigate(['provider', 'customers', this.patientId, 'FOLLOWUP',0, 'medicalrecord', mRId,routerId])

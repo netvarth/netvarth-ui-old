@@ -1,8 +1,8 @@
 <section>
   <div class="card title-gb">
     <div class="mgn-up-10 medicalRecord">
-      <img style="cursor: pointer;" height="15px" width="15px" src="/assets/images/medicalReportIcon/goBack.png" (click)="goback('medical')"
-      #tooltip="matTooltip" matTooltip="Back" [matTooltipPosition]="'below'" />
+      <img style="cursor: pointer;" height="15px" width="15px" src="/assets/images/medicalReportIcon/goBack.png"
+        (click)="goback('medical')" #tooltip="matTooltip" matTooltip="Back" [matTooltipPosition]="'below'" />
       <span class="clrChnge">Medical Record</span>
     </div>
   </div>
@@ -13,40 +13,42 @@
     <div class="col-xs-12 col-sm-12 mgn-up-10 card">
       <div class="infoDetails shadow">
         <div *ngIf="customerDetails">
-          <div  *ngIf="customerDetails && customerDetails.gender === 'male'">
-            <img class="imGBorderRadius" src="assets/images/mr_male.svg"  />
+          <div *ngIf="customerDetails && customerDetails.gender === 'male'">
+            <img class="imGBorderRadius" src="assets/images/mr_male.svg" />
           </div>
-          <div  *ngIf="customerDetails && customerDetails.gender === 'female'">
-            <img class="imGBorderRadius" src="assets/images/mr_female.svg"  />
+          <div *ngIf="customerDetails && customerDetails.gender === 'female'">
+            <img class="imGBorderRadius" src="assets/images/mr_female.svg" />
           </div>
-          <div  *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
-            <img class="imGBorderRadius" src="assets/images/undefinedUser.png"  />
+          <div *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
+            <img class="imGBorderRadius" src="assets/images/undefinedUser.png" />
           </div>
-            <div >
-              <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge" >
-                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" /> -->
-                <div class="nameClrFirstlast">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
-              </div>
-              <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
-                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" /> -->
-                <!-- {{customerDetails | json}} -->
-                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetailsAge ">{{customerDetailsAge}} years,</div>
-                <!-- <div style="color: #797B80 !important" class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div> -->
-                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender | capitalizeFirst}}</div>
+          <div>
+            <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge">
+              <div class="nameClrFirstlast">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}
               </div>
             </div>
-            <div *ngIf="customerDetails && customerDetails.address">
-              <div class="infoDetails" style="justify-content:flex-start !important;gap:5px !important">
-                <!-- <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div> -->
-                <div class="nameClrOther">{{customerDetails.address}}</div>
-              </div>
+            <div class="nameAgeYear"
+              *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
+              <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetailsAge ">
+                {{customerDetailsAge}} years,</div>
+              <div style="color: #797B80 !important" class="nameClrOther"
+                *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender | capitalizeFirst}}</div>
             </div>
+          </div>
+          <div *ngIf="customerDetails && customerDetails.address" style="width: 10rem;">
+            <div class="infoDetails" style="justify-content:flex-start !important;gap:5px !important">
+              <div class="nameClrOther" *ngIf="customerDetails.address.length <=20">
+                {{customerDetails.address}}</div>
+              <div class="nameClrOther" *ngIf="customerDetails.address.length >20">
+                {{customerDetails.address.slice(0,20)}}...</div>
+            </div>
+          </div>
         </div>
-        <div *ngIf="customer_label || display_PatientId || customerDetails ||  (customerDetails.phoneNo ||customerDetails.id )">
+        <div
+          *ngIf="customer_label || display_PatientId || customerDetails ||  (customerDetails.phoneNo ||customerDetails.id )">
           <div>
             <div class="nameClr" *ngIf="customer_label">{{customer_label | capitalizeFirst}} Id</div>
             <div class="infoDetails" style="justify-content:flex-start !important">
-              <!-- <div><img  style="height:15px;width:15px" src="/assets/images/medicalReportIcon/id.png" /></div> -->
               <div *ngIf="display_PatientId" class="nameClrOther">{{display_PatientId}}</div>
             </div>
           </div>
@@ -54,33 +56,30 @@
             <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) && 
             (customerDetails.phoneNo !== ' ')">Phone</div>
             <div class="infoDetails">
-              <div  class="infoDetails" style="gap:5px !important">
+              <div class="infoDetails" style="gap:5px !important">
                 <div *ngIf="customerDetails && customerDetails.phoneNo !==' '" class="nameClrOther">
-                  {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} 
+                  {{customerDetails.countryCode ?customerDetails.countryCode : '+91'}}
                 </div>
                 <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
               </div>
-            </div> 
-          </div>
-          <!-- {{tempPhoneNumber | json}} -->
-           <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
-            <div class="nameClr" >Phone</div>
-            <div class="infoDetails" style="gap:5px !important">
-              <!-- <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
-              </div> -->
-              <div class="nameClrOther" *ngIf="tempPhoneNumber">{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
-                <div class="nameClrOther" *ngIf="tempPhoneNumber">{{tempPhoneNumber}}</div>
             </div>
-           </div>
+          </div>
+          <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
+            <div class="nameClr">Phone</div>
+            <div class="infoDetails" style="gap:5px !important">
+              <div class="nameClrOther" *ngIf="tempPhoneNumber">{{customerDetails.countryCode
+                ?customerDetails.countryCode : '+91'}} </div>
+              <div class="nameClrOther" *ngIf="tempPhoneNumber">{{tempPhoneNumber}}</div>
+            </div>
+          </div>
         </div>
         <!---dob && email start---->
         <div *ngIf="customerDetails && (customerDetails.dob || customerDetails.email)">
           <div *ngIf="customerDetails && customerDetails.dob">
             <div class="nameClr">Date Of Birth</div>
             <div class="infoDetails" style="justify-content: flex-start !important;">
-              <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/dob.png" /> -->
               <div>
-                <div class="nameClrOther" *ngIf="customerDetails.dob">{{customerDetails.dob |date:newDateFormat}} </div> 
+                <div class="nameClrOther" *ngIf="customerDetails.dob">{{customerDetails.dob |date:newDateFormat}} </div>
               </div>
             </div>
           </div>
@@ -88,39 +87,40 @@
           <div *ngIf="customerDetails && customerDetails.email" class="mgTop">
             <div class="nameClr">Email</div>
             <div class="infoDetails">
-              <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" /> -->
               <div>
-                <div class="nameClrOther" *ngIf="customerDetails.email">{{customerDetails.email}} </div> 
+                <div class="nameClrOther" *ngIf="customerDetails.email">{{customerDetails.email}} </div>
               </div>
             </div>
           </div>
         </div>
-         <!---dob && email end---->
+        <!---dob && email end---->
         <!---prescriptiojn start-->
-        <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')" *ngIf=" prescriptionOuter">
+        <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')"
+          *ngIf=" prescriptionOuter">
           <div>
-            <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
+            <img class="imageSize" src="/assets/images/medicalReportIcon/CreatePrescription.png" />
           </div>
           <div class="nameClrOther">
             Create Prescription
           </div>
         </div>
-         <!---prescriptiojn end-->
-         <!---clinical notes start-->
-        <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')" *ngIf=" clinicalOuter">
+        <!---prescriptiojn end-->
+        <!---clinical notes start-->
+        <div class="clinicalOuter" (click)="addPrescriptionAndClinical(patientId,'craeteClinicalnotes')"
+          *ngIf=" clinicalOuter">
           <div>
-            <img class="imageSize"  src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
+            <img class="imageSize" src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
           </div>
           <div class="nameClrOther">
-           Add Clinical Notes
+            Add Clinical Notes
           </div>
         </div>
-         <!---clinical noptes end-->
+        <!---clinical noptes end-->
       </div>
     </div>
     <app-common-innerloading-spinner *ngIf="loading_table"></app-common-innerloading-spinner>
     <div class="col-xs-12 col-sm-12 mgn-up-10  previousVisit card" *ngIf="showHidepreviousDetails ">
-      <div >
+      <div>
         <div class="d-flex justify-content-between">
           <div class="pt-2">
             <span class="table-heading pl-2"><b>Visits</b></span>
@@ -131,29 +131,36 @@
             <mat-table class="visit-tbl" [dataSource]="lastVisit_dataSource">
               <ng-container matColumnDef="consultationDate">
                 <mat-header-cell *matHeaderCellDef class="medicalId"> <b class="headerClr">Date</b></mat-header-cell>
-                <mat-cell *matCellDef="let visit"class="medicalId"><div class="elementTextClr">{{getLastVisitDate(visit)}}</div></mat-cell>
+                <mat-cell *matCellDef="let visit" class="medicalId">
+                  <div class="elementTextClr">{{getLastVisitDate(visit)}}</div>
+                </mat-cell>
               </ng-container>
               <ng-container matColumnDef="mrId">
-                <mat-header-cell *matHeaderCellDef class="medicalId"> <b class="headerClr">Medical Id</b></mat-header-cell>
-                <mat-cell *matCellDef="let visit" class="medicalId"><div class="elementTextClr">MR-{{visit.mrId}}</div></mat-cell>
+                <mat-header-cell *matHeaderCellDef class="medicalId"> <b class="headerClr">Medical Id</b>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let visit" class="medicalId">
+                  <div class="elementTextClr">MR-{{visit.mrId}}</div>
+                </mat-cell>
               </ng-container>
               <ng-container matColumnDef="serviceName">
-                <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b class="headerClr">Service</b></mat-header-cell>
-                <mat-cell *matCellDef="let visit"><div class="elementTextClr">{{getServiceName(visit)}}</div></mat-cell>
+                <mat-header-cell *matHeaderCellDef class="visit-sr-cl"> <b class="headerClr">Service</b>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let visit">
+                  <div class="elementTextClr">{{getServiceName(visit)}}</div>
+                </mat-cell>
               </ng-container>
               <ng-container matColumnDef="userName">
-                <mat-header-cell *matHeaderCellDef class="m-0 p-0 visit-dr-cl"> <b class="headerClr">Doctor</b></mat-header-cell>
+                <mat-header-cell *matHeaderCellDef class="m-0 p-0 visit-dr-cl"> <b class="headerClr">Doctor</b>
+                </mat-header-cell>
                 <mat-cell *matCellDef="let visit">
                   <div class="providerName">
-                    <!-- <div class="arrowIcon">
-                      <img style="margin-top: 5px" src="/assets/images/medicalReportIcon/arrow2.png"/>
-                    </div> -->
-                   <div class="elementTextClr"> {{getProviderName(visit)}}</div>
+                    <div class="elementTextClr"> {{getProviderName(visit)}}</div>
                   </div>
                 </mat-cell>
               </ng-container>
               <ng-container matColumnDef="mr">
-                <mat-header-cell *matHeaderCellDef class="visit-mr-cl"> <b class="headerClr">Medical Record</b></mat-header-cell>
+                <mat-header-cell *matHeaderCellDef class="visit-mr-cl"> <b class="headerClr">Medical Record</b>
+                </mat-header-cell>
                 <mat-cell class="m-0 p-0" *matCellDef="let row;columns:lastVisit_displayedColumns">
                   <div [ngClass]="row.mrCreated === true ? 'createBtn':'ViewBtn'">
                     <div *ngIf="row.mrCreated">View medical record </div>
@@ -161,7 +168,8 @@
                   </div>
                 </mat-cell>
               </ng-container>
-              <mat-header-row class="matHeaderRow" *matHeaderRowDef="lastVisit_displayedColumns;sticky: true"></mat-header-row>
+              <mat-header-row class="matHeaderRow" *matHeaderRowDef="lastVisit_displayedColumns;sticky: true">
+              </mat-header-row>
               <mat-row *matRowDef="let row;columns:lastVisit_displayedColumns" (click)="getMedicalRecord(row)"
                 class="pointlist"></mat-row>
             </mat-table>
@@ -170,327 +178,230 @@
         </section>
         <section class="mobDevice  mgn-up-10">
           <div *ngFor="let visit of previousLIst" class="shadow shadowmb" (click)="getMedicalRecord(visit)">
-           <div class="flexClass1">
-            <div>
-              <div class="lebalName">Medical Id</div>
-              <div *ngIf="visit && visit.mrId" class="elementTextClr MRIDCLR">{{visit.mrId}}</div>
-             </div>
-             <div>
-              <div class="lebalName">Date</div>
-              <div *ngIf="visit" class="elementTextClr">{{getLastVisitDate(visit)}}</div>
-             </div>
-           </div>
-           <div class="flexClass1" style="margin-top:5px">
-            <div>
-              <div class="lebalName">Service</div>
-              <div class="elementTextClr" *ngIf="visit">{{getServiceName(visit)}}</div>
-            </div>
-            <div class="doctorWidth">
-              <div class="lebalName">Doctor</div>
-              <div class="providerName">
-                <!-- <div class="arrowIcon">
-                  <img style="margin-top: 5px" src="/assets/images/medicalReportIcon/arrow2.png"/>
-                </div> -->
-               <div class="elementTextClr"> {{getProviderName(visit)}}</div>
+            <div class="flexClass1">
+              <div>
+                <div class="lebalName">Medical Id</div>
+                <div *ngIf="visit && visit.mrId" class="elementTextClr MRIDCLR">{{visit.mrId}}</div>
+              </div>
+              <div>
+                <div class="lebalName">Date</div>
+                <div *ngIf="visit" class="elementTextClr">{{getLastVisitDate(visit)}}</div>
               </div>
             </div>
-           </div>
-           <div *ngIf="visit" class="btnTop">
-            <div [ngClass]="visit.mrCreated === true ? 'createBtn':'ViewBtn'">
-              <div *ngIf="visit.mrCreated">View medical record </div>
-              <div *ngIf="!visit.mrCreated">Create medical record </div>
+            <div class="flexClass1" style="margin-top:5px">
+              <div>
+                <div class="lebalName">Service</div>
+                <div class="elementTextClr" *ngIf="visit">{{getServiceName(visit)}}</div>
+              </div>
+              <div class="doctorWidth">
+                <div class="lebalName">Doctor</div>
+                <div class="providerName">
+                  <div class="elementTextClr"> {{getProviderName(visit)}}</div>
+                </div>
+              </div>
             </div>
-           </div>
+            <div *ngIf="visit" class="btnTop">
+              <div [ngClass]="visit.mrCreated === true ? 'createBtn':'ViewBtn'">
+                <div *ngIf="visit.mrCreated">View medical record </div>
+                <div *ngIf="!visit.mrCreated">Create medical record </div>
+              </div>
+            </div>
           </div>
         </section>
       </div>
     </div>
     <!---create section btn start-->
-      <div class="col-xs-12 col-sm-12 mgn-up-10 card" *ngIf="showHideActivityTYpe && mrId !== 0">
-        <!-- <div class="shadow flexClass1">
-          <div class="recordInfo">
-            <div class="mrNumber1">
-              <div>Medical Records</div>
-              <div *ngIf="mrId !== 0 || mRListUsingId ">{{mRListUsingId}}</div>
-            </div>
-            <div class="mrNumber2">
-              <div>Medical Record ID</div>
-              <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
-            </div>
-          </div>
-          <div class="dateCreate">
-            <div class="mrNumber1">Date</div>
-            <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
-          </div>
-          <div class="dateCreate">
-            <div class="mrNumber1">Service</div>
-            <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
-          </div>
-          <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
-            <div class="mrNumber1">Doctor</div>
-            <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
-            <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
-          </div>
-        </div> -->
-        <div class="col-xs-12 col-sm-12 mgn-up-10 card newCard">
-          <div class="showHideClassDesktop">
-            <div class="shadow flexClass1 ">
-              <div class="recordInfo">
-                <div class="mrNumber1">
-                  <div>Medical Records</div>
-                  <div *ngIf="mrId !== 0 && mRListUsingId !==0">{{mRListUsingId}}</div>
-                </div>
-                <div class="mrNumber2">
-                  <div>Medical Record ID</div>
-                  <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
-                </div>
+    <div class="col-xs-12 col-sm-12 mgn-up-10 card" *ngIf="showHideActivityTYpe && mrId !== 0">
+      <div class="col-xs-12 col-sm-12 mgn-up-10 card newCard">
+        <div class="showHideClassDesktop">
+          <div class="shadow flexClass1 ">
+            <div class="recordInfo">
+              <div class="mrNumber1">
+                <div>Medical Records</div>
+                <div *ngIf="mrId !== 0 && mRListUsingId !==0">{{mRListUsingId}}</div>
               </div>
-              <div class="dateCreate">
+              <div class="mrNumber2">
+                <div>Medical Record ID</div>
+                <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+              </div>
+            </div>
+            <div class="dateCreate">
+              <div class="mrNumber1">Date</div>
+              <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
+            </div>
+            <div class="dateCreate">
+              <div class="mrNumber1">Service</div>
+              <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
+            </div>
+            <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
+              <div class="mrNumber1">Doctor</div>
+              <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
+              <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="showHideClass">
+          <div class="shadow flexClass1 ">
+            <div class="recordInfo flexClass1">
+              <div class="mrNumber2" style="display:block !important">
+                <div>Medical Record ID</div>
+                <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
+              </div>
+              <div class="mrNumber1 date" style="display:block !important">
                 <div class="mrNumber1">Date</div>
                 <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
               </div>
+            </div>
+
+            <div class="recordInfo flexClass1 no-padding" style="flex-wrap: nowrap !important;">
               <div class="dateCreate">
                 <div class="mrNumber1">Service</div>
                 <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
               </div>
-              <div class="dateCreate" *ngIf="doctorBName || (!doctorBName && doctorName)">
+              <div class="dateCreate date" *ngIf="doctorBName || (!doctorBName && doctorName)">
                 <div class="mrNumber1">Doctor</div>
                 <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
                 <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
               </div>
             </div>
           </div>
-         
-          <div class="showHideClass">
-            <div class="shadow flexClass1 ">
-              <div class="recordInfo flexClass1">
-                <div class="mrNumber2" style="display:block !important">
-                  <div>Medical Record ID</div>
-                  <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
-                </div>
-                <div  class="mrNumber1 date" style="display:block !important">
-                  <div class="mrNumber1">Date</div>
-                  <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
-                </div>
-              </div>
-              
-              <div  class="recordInfo flexClass1 no-padding" style="flex-wrap: nowrap !important;" >
-                <div class="dateCreate">
-                  <div class="mrNumber1">Service</div>
-                  <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
-                </div>
-                <div class="dateCreate date" *ngIf="doctorBName || (!doctorBName && doctorName)">
-                  <div class="mrNumber1">Doctor</div>
-                  <div *ngIf="doctorBName" class="dateClr">Dr. {{doctorBName | capitalizeFirst}}</div>
-                  <div *ngIf="!doctorBName && doctorName" class="dateClr">Dr. {{doctorName | capitalizeFirst}}</div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      <div *ngIf="showHideActivityTYpe" class="col-xs-12 col-sm-12 mgn-up-10 card ">
-        <div class="nameClrOther2nd record">Create Medical Record</div>
-       <div class="twoActivity">
-         <!---prescriptiojn start-->
-         <div class="prescriptionOuter" (click)="addPrescriptionAndClinicalSecond(patientId,'createPrescription')">
-           <div>
-             <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
-           </div>
-           <div class="nameClrOther2nd">
-             Create Prescription
-           </div>
-         </div>
-          <!---prescriptiojn end-->
-          <!---clinical notes start-->
-         <div class="clinicalOuter" (click)="addPrescriptionAndClinicalSecond(patientId,'craeteClinicalnotes')">
-           <div>
-             <img class="imageSize"  src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
-           </div>
-           <div class="nameClrOther2nd">
-            Add Clinical Notes
-           </div>
-         </div>
-          <!---clinical noptes end-->
-       </div>
-      </div>
-    
-    <!---craete section btn end-->
-      <!---prescription start-->
-      <!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes card"> -->
-        <!-- (uploadFiles && uploadFiles.length===0)" -->
-        <div class=" col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10" *ngIf="showHideAddPrescription">
+    </div>
+    <div *ngIf="showHideActivityTYpe" class="col-xs-12 col-sm-12 mgn-up-10 card ">
+      <div class="nameClrOther2nd record">Create Medical Record</div>
+      <div class="twoActivity">
+        <!---prescriptiojn start-->
+        <div class="prescriptionOuter" (click)="addPrescriptionAndClinicalSecond(patientId,'createPrescription')">
           <div>
-            <app-prescription [showHideActivityTYpe]="showHideActivityTYpe"></app-prescription>
+            <img class="imageSize" src="/assets/images/medicalReportIcon/CreatePrescription.png" />
+          </div>
+          <div class="nameClrOther2nd">
+            Create Prescription
           </div>
         </div>
-
-        <!-- <span class="spaanOr" *ngIf="uploadFiles && uploadFiles.length===0">OR</span>
-        <div class="mobileDevice" *ngIf="uploadFiles && uploadFiles.length===0">
-          <span class="mobileOr">OR</span>
-        </div>
-        <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate" >
-          <div class="shadow flexClass">
-            <div class="text-dark text-center dashedClass" *ngIf="uploadFiles && uploadFiles.length == 0">
-                <img style="height:50px;width:50px" src="/assets/images/medicalReportIcon/uploadIcon.png" />
-                <div class="fileText">Click Your Files Here </div>
-                <div>
-                  <button type="button"class=" font-weight-bold confirmBtn pointer-cursor"(click)="uploadFileforMr()" >Upload file</button>
-                </div>
-            </div>
-            <div class="pointer-cursor fileUpload text-dark text-center" *ngIf="uploadFiles && uploadFiles.length > 0">
-                <img style="height:50px;width:50px" src="/assets/images/medicalReportIcon/uploadIcon.png" />
-              <div class="twolConfirmBtn">
-                <div>
-                  <button type="button"class=" font-weight-bold confirmBtn pointer-cursor"(click)="uploadedFileforMr()" >Uploaded files</button>
-                </div>
-                <div>
-                  <button type="button"class=" font-weight-bold confirmBtn pointer-cursor"(click)="uploadFileforMr()" >Upload file</button>
-                </div>
-              </div>
-            </div>
+        <!---prescriptiojn end-->
+        <!---clinical notes start-->
+        <div class="clinicalOuter" (click)="addPrescriptionAndClinicalSecond(patientId,'craeteClinicalnotes')">
+          <div>
+            <img class="imageSize" src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
+          </div>
+          <div class="nameClrOther2nd">
+            Add Clinical Notes
           </div>
         </div>
-        <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate"*ngIf="uploadFiles && uploadFiles.length > 0" >
-          <div class="shadow" style="height:100% !important">
-            <div class="pl-2 uploadedText">Uploaded Prescription</div>
-            <div class="hightLimit">
-              <div *ngFor="let file of uploadFiles;let i=index" class="allFile">
-                <div class="borderClass" >
-                  <div class="allfileNameDetails">
-                    <div class="allfileName">
-                      <div class="fileType" *ngIf="file && file.type ">
-                        <img height="25px" width="25px" [src]="getFileType(file.type)"  />
-                      </div>
-                      <div>
-                        <div class="fileName"*ngIf="file && file.originalName">{{originalFilename(file.originalName)}}</div>
-                        <div *ngIf="file && file.imageSize" class="fileSize" >
-                          {{bytesToSize(file.imageSize)}}
-                        </div>
-                      </div>
-                    </div>
-                    <div class="imageClas">
-                      <div (click)="dialogImgView(file)">
-                        <img class="fileView"src="./assets/images/ImgeFileIcon/fileView.png" />
-                      </div>
-                      <div (click)="deletePrescriptionFile(file,i)">
-                        <img class="removeIcon"src="./assets/images/ImgeFileIcon/removeCross.png" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-            </div> -->
-
-      <!-- </div> -->
-      <!---prescription end-->
-      <!-- <hr> -->
-      <!----clinical notess ection start-->
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10" *ngIf="showHideClinicalNotes">
-        <div>
-          <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId">
-          </app-clinicalnotes>
-        </div>
+        <!---clinical noptes end-->
       </div>
- <!----clinical notess ection end-->
+    </div>
+
+    <!---craete section btn end-->
+    <!---prescription start-->
+    <div class=" col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10"
+      *ngIf="showHideAddPrescription">
+      <div>
+        <app-prescription [showHideActivityTYpe]="showHideActivityTYpe"></app-prescription>
+      </div>
+    </div>
+    <!----clinical notess ection start-->
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10"
+      *ngIf="showHideClinicalNotes">
+      <div>
+        <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId">
+        </app-clinicalnotes>
+      </div>
+    </div>
+    <!----clinical notess ection end-->
   </div>
 </section>
 
 <section *ngIf="!loading && viewVisitDetails" class="medical-record">
   <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding-small">
     <div class="col-xs-12 col-sm-12 mgn-up-10 card">
-    <div class="col-xs-12 col-sm-12 mgn-up-10 card" style="box-shadow: none !important;">
-      <div class="infoDetails shadow">
-        <div *ngIf="customerDetails">
-          <div  *ngIf="customerDetails && customerDetails.gender === 'male'">
-            <img class="imGBorderRadius" src="assets/images/mr_male.svg"  />
-          </div>
-          <div  *ngIf="customerDetails && customerDetails.gender === 'female'">
-            <img class="imGBorderRadius" src="assets/images/mr_female.svg"  />
-          </div>
-          <div  *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
-            <img class="imGBorderRadius" src="assets/images/undefinedUser.png"  />
-          </div>
-            <div >
-              <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge" >
-                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/name.png" /> -->
-                <div class="nameClrFirstlast">{{customerDetails.firstName | capitalizeFirst}} {{customerDetails.lastName}}</div>
+      <div class="col-xs-12 col-sm-12 mgn-up-10 card" style="box-shadow: none !important;">
+        <div class="infoDetails shadow">
+          <div *ngIf="customerDetails">
+            <div *ngIf="customerDetails && customerDetails.gender === 'male'">
+              <img class="imGBorderRadius" src="assets/images/mr_male.svg" />
+            </div>
+            <div *ngIf="customerDetails && customerDetails.gender === 'female'">
+              <img class="imGBorderRadius" src="assets/images/mr_female.svg" />
+            </div>
+            <div *ngIf="customerDetails.gender != 'male' && customerDetails.gender != 'female'">
+              <img class="imGBorderRadius" src="assets/images/undefinedUser.png" />
+            </div>
+            <div>
+              <div *ngIf="customerDetails.firstName ||customerDetails.lastName" class="nameAge">
+                <div class="nameClrFirstlast">{{customerDetails.firstName | capitalizeFirst}}
+                  {{customerDetails.lastName}}</div>
               </div>
-              <div class="nameAgeYear" *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
-                <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/age.png" /> -->
+              <div class="nameAgeYear"
+                *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
                 <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetailsAge && (customerDetails && customerDetails.age && 
-                (customerDetails.age.year==='' || customerDetails.age.year===undefined))">{{customerDetailsAge}} years,</div>
-                <div style="color: #797B80 !important" class="nameClrOther"*ngIf="customerDetails && customerDetails.age && customerDetails.age.year">{{customerDetails.age.year}} years,</div>
-                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender | capitalizeFirst}}</div>
-              </div>
-            </div>
-            <div *ngIf="customerDetails && customerDetails.address">
-              <div class="infoDetails" style="justify-content:flex-start !important;gap:5px !important">
-                <!-- <div><img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/address.png" /></div> -->
-                <div class="nameClrOther">{{customerDetails.address}}</div>
-              </div>
-            </div>
-        </div>
-        <div *ngIf="customer_label || display_PatientId || customerDetails &&  (customerDetails.phoneNo ||customerDetails.id )">
-          <div>
-            <div class="nameClr" *ngIf="customer_label">{{customer_label | capitalizeFirst}} Id</div>
-            <div class="infoDetails" style="justify-content:flex-start !important">
-              <!-- <div><img  style="height:15px;width:15px" src="/assets/images/medicalReportIcon/id.png" /></div> -->
-              <div *ngIf="display_PatientId" class="nameClrOther">{{display_PatientId}}</div>
-            </div>
-          </div>
-          <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
-            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) && customerDetails.phoneNo !==' '">Phone</div>
-            <div class="infoDetails">
-              <!-- <div *ngIf="customerDetails && (customerDetails.phoneNo && customerDetails.phoneNo!=' ')">
-                <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/phone.png" />
-              </div> -->
-              <div  class="infoDetails" style="gap:5px !important">
-                <div *ngIf="customerDetails&& customerDetails.phoneNo !==' '" class="nameClrOther">
-                  {{customerDetails.countryCode ?customerDetails.countryCode : ''}} 
+                (customerDetails.age.year==='' || customerDetails.age.year===undefined))">{{customerDetailsAge}} years,
                 </div>
-                <!-- {{customerDetails.countryCode | json}} -->
-                <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
+                <div style="color: #797B80 !important" class="nameClrOther"
+                  *ngIf="customerDetails && customerDetails.age && customerDetails.age.year">
+                  {{customerDetails.age.year}} years,</div>
+                <div style="color: #797B80 !important" class="nameClrOther"
+                  *ngIf="customerDetails && customerDetails.gender">{{customerDetails.gender | capitalizeFirst}}</div>
               </div>
-            </div> 
-          </div>
-           <!-- <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
-            <div class="nameClr" >Phone</div>
-            <div class="infoDetails" style="gap:5px !important">
-              <div *ngIf="!customerDetails.phoneNo && customerDetails.id">
-              </div>
-              <div class="nameClrOther" *ngIf="customerDetails.phoneNo">{{customerDetails.countryCode ?customerDetails.countryCode : '+91'}} </div>
-                <div class="nameClrOther" *ngIf="customerDetails.phoneNo && customerDetails.id">{{customerDetails.phoneNo}}</div>
             </div>
-           </div> -->
-        </div>
-        <!---dob && email start---->
-        <div *ngIf="customerDetails && (customerDetails.dob || customerDetails.email)">
-          <div *ngIf="customerDetails && customerDetails.dob">
-            <div class="nameClr">Date Of Birth</div>
-            <div class="infoDetails" style="justify-content: flex-start !important;">
-              <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/dob.png" /> -->
-              <div>
-                <div class="nameClrOther" *ngIf="customerDetails.dob">{{customerDetails.dob |date:newDateFormat}} </div> 
+            <div *ngIf="customerDetails && customerDetails.address" style="width: 10rem;">
+              <div class="infoDetails" style="justify-content:flex-start !important;gap:5px !important">
+                <div class="nameClrOther" *ngIf="customerDetails.address.length <=20">
+                  {{customerDetails.address}}</div>
+                <div class="nameClrOther" *ngIf="customerDetails.address.length >20">
+                  {{customerDetails.address.slice(0,20)}}...</div>
               </div>
             </div>
           </div>
+          <div
+            *ngIf="customer_label || display_PatientId || customerDetails &&  (customerDetails.phoneNo ||customerDetails.id )">
+            <div>
+              <div class="nameClr" *ngIf="customer_label">{{customer_label | capitalizeFirst}} Id</div>
+              <div class="infoDetails" style="justify-content:flex-start !important">
+                <div *ngIf="display_PatientId" class="nameClrOther">{{display_PatientId}}</div>
+              </div>
+            </div>
+            <div *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) " class="mgTop">
+              <div class="nameClr"
+                *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) && customerDetails.phoneNo !==' '">
+                Phone</div>
+              <div class="infoDetails">
+                <div class="infoDetails" style="gap:5px !important">
+                  <div *ngIf="customerDetails&& customerDetails.phoneNo !==' '" class="nameClrOther">
+                    {{customerDetails.countryCode ?customerDetails.countryCode : ''}}
+                  </div>
+                  <div *ngIf="customerDetails.phoneNo" class="nameClrOther">{{customerDetails.phoneNo}} </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!---dob && email start---->
+          <div *ngIf="customerDetails && (customerDetails.dob || customerDetails.email)">
+            <div *ngIf="customerDetails && customerDetails.dob">
+              <div class="nameClr">Date Of Birth</div>
+              <div class="infoDetails" style="justify-content: flex-start !important;">
+                <div>
+                  <div class="nameClrOther" *ngIf="customerDetails.dob">{{customerDetails.dob |date:newDateFormat}}
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <div *ngIf="customerDetails && customerDetails.email" class="mgTop">
-            <div class="nameClr">Email</div>
-            <div class="infoDetails">
-              <!-- <img style="height:15px;width:15px" src="/assets/images/medicalReportIcon/email.png" /> -->
-              <div>
-                <div class="nameClrOther" *ngIf="customerDetails.email">{{customerDetails.email}} </div> 
+            <div *ngIf="customerDetails && customerDetails.email" class="mgTop">
+              <div class="nameClr">Email</div>
+              <div class="infoDetails">
+                <div>
+                  <div class="nameClrOther" *ngIf="customerDetails.email">{{customerDetails.email}} </div>
+                </div>
               </div>
             </div>
           </div>
+          <!---dob && email end---->
         </div>
-         <!---dob && email end---->
       </div>
-    </div>
 
       <div class="col-xs-12 col-sm-12 card newCard" style="box-shadow: none !important;">
         <div class="showHideClassDesktop">
@@ -520,7 +431,7 @@
             </div>
           </div>
         </div>
-       
+
         <div class="showHideClass">
           <div class="shadow flexClass1 ">
             <div class="recordInfo flexClass1">
@@ -528,13 +439,13 @@
                 <div>Medical Record ID</div>
                 <div *ngIf="mrId !== 0"> {{mrNumber}}</div>
               </div>
-              <div  class="mrNumber1 date" style="display:block !important">
+              <div class="mrNumber1 date" style="display:block !important">
                 <div class="mrNumber1">Date</div>
                 <div *ngIf="mrId !== 0" class="dateClr">{{getDate(mrCreatedDate)}}</div>
               </div>
             </div>
-            
-            <div  class="recordInfo flexClass1 no-padding"  style="flex-wrap:nowrap !important">
+
+            <div class="recordInfo flexClass1 no-padding" style="flex-wrap:nowrap !important">
               <div class="dateCreate">
                 <div class="mrNumber1">Service</div>
                 <div *ngIf="mrId !== 0 && serviceName" class="dateClr">{{serviceName | capitalizeFirst}}</div>
@@ -552,45 +463,52 @@
 
 
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12  no-padding ">
-      <div  >
-        <div [ngClass]="{'prescription-details':uploadFiles && uploadFiles.length>0}" >
-         <ng-container>
-          <!-- <br> -->
-          <app-prescription [viewVisitDetails]="viewVisitDetails"  [showHideActivityTYpe]="showHideActivityTYpe"></app-prescription>
-         </ng-container>
-        <ng-container *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
-          <div class="clinicalOuter1 card mgn-up-10 "  *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
-            <div class="clinical pointer-cursor" (click)="addClinical(patientId,'craeteClinicalnotes')">
-              <div>
-                <img class="imageSize"  src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
-              </div>
-              <div class="nameClrOther2nd">
-               Add Clinical Notes
+      <div>
+        <div [ngClass]="{'prescription-details':uploadFiles && uploadFiles.length>0}">
+          <ng-container>
+            <!-- <br> -->
+            <app-prescription [viewVisitDetails]="viewVisitDetails" [showHideActivityTYpe]="showHideActivityTYpe">
+            </app-prescription>
+          </ng-container>
+          <ng-container
+            *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
+            <div class="clinicalOuter1 card mgn-up-10 "
+              *ngIf="!tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
+              <div class="clinical pointer-cursor" (click)="addClinical(patientId,'craeteClinicalnotes')">
+                <div>
+                  <img class="imageSize" src="/assets/images/medicalReportIcon/AddClinicalNote.png" />
+                </div>
+                <div class="nameClrOther2nd">
+                  Add Clinical Notes
+                </div>
               </div>
             </div>
-          </div>
-        </ng-container>
-          <ng-container *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
-            <app-clinicalnotes  [tempClinicalNOtes]="tempClinicalNOtes" [medicalInfo]="medicalInfo" *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0"></app-clinicalnotes>
-        </ng-container>
+          </ng-container>
+          <ng-container
+            *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
+            <app-clinicalnotes [tempClinicalNOtes]="tempClinicalNOtes" [medicalInfo]="medicalInfo"
+              *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
+            </app-clinicalnotes>
+          </ng-container>
         </div>
       </div>
     </div>
 
 
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 mgn-up-10 no-padding">
-      <div  >
-        <div >
+      <div>
+        <div>
           <ng-container>
-            <app-clinicalnotes  [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
+            <app-clinicalnotes [showClinicalNotesDetails]="'true'"></app-clinicalnotes>
           </ng-container>
-          <div *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false" class="clearfix" ></div>
+          <div *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false" class="clearfix">
+          </div>
           <ng-container *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
-            <div class=" card mgn-bt-10 mgn-up-10 clinicalOuter1" 
-            *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
-              <div class="clinical  pointer-cursor" (click)="addPrescription(patientId,'createPrescription')" >
+            <div class=" card mgn-bt-10 mgn-up-10 clinicalOuter1"
+              *ngIf="!tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false">
+              <div class="clinical  pointer-cursor" (click)="addPrescription(patientId,'createPrescription')">
                 <div>
-                  <img class="imageSize"  src="/assets/images/medicalReportIcon/CreatePrescription.png" />
+                  <img class="imageSize" src="/assets/images/medicalReportIcon/CreatePrescription.png" />
                 </div>
                 <div class="nameClrOther2nd">
                   Add Prescription
@@ -598,14 +516,17 @@
               </div>
             </div>
           </ng-container>
-          <div *ngIf="tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false" class="clearfix" ></div>
-          <ng-container *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" >
-            <app-prescription [tempPrescription]="tempPrescription" [viewVisitDetails]="false"  [showHideActivityTYpe]="showHideActivityTYpe" *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false" ></app-prescription>
+          <div *ngIf="tempPrescription &&  medicalInfo && medicalInfo.prescriptionCreated===false" class="clearfix">
+          </div>
+          <ng-container *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false">
+            <app-prescription [tempPrescription]="tempPrescription" [viewVisitDetails]="false"
+              [showHideActivityTYpe]="showHideActivityTYpe"
+              *ngIf="tempPrescription && medicalInfo && medicalInfo.prescriptionCreated===false"></app-prescription>
           </ng-container>
-          
+
         </div>
       </div>
     </div>
   </div>
-  
+
 </section>

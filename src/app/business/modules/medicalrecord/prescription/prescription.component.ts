@@ -164,6 +164,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   tempList: any;
   newRowIndex = 0;
   afterSave:boolean;
+  small_device_display:boolean=false;
+  printText:string='';
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -196,6 +198,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     if (this.innerWidth <= 768) {
       this.ScreenHeight= '85%';
       this.screenWidth='55%';
+      this.small_device_display = true;
+      this.printText='Downlaod';
       if(this.drugList && this.drugList.length>0){
         this.addMedecineMobDeviceB=false;
       }
@@ -203,7 +207,9 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     else {
        this.ScreenHeight='85%';
        this.screenWidth='75%'
-       this.addMedecineMobDeviceB=true
+       this.addMedecineMobDeviceB=true;
+       this.small_device_display = false;
+       this.printText='Print'
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -553,41 +559,52 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
     console.log(url);
     if(url.type==='.pdf'){
       this.printPdf(url)
-      // if(document && document.getElementById('sharePdf')){
-      //   let html = document.getElementById('sharePdf').innerHTML;
-      //   if(html &&  url){
-      //     this.printPdf(url,html)
-      //   }
-      // }
-      
     }
     else{
-      if(url && url.url){
-        const params = [
-          'height=' + screen.height,
-          'width=' + screen.width,
-          'fullscreen=yes'
-        ].join(',');
-        const printWindow = window.open('', '', params);
-        let checkin_html = '';
-        checkin_html +='<div style="box-shadow: 0 0 10px rgb(0 0 0 / 5%);border-radius: 5px;padding:15px;background:#f9f9f9f;">'
-        checkin_html += '<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
-        checkin_html += '<img style="width:100%;height:100%" src="' + url.url + '" />'
-        checkin_html += '</div>'
-        printWindow.document.write('<html><head><title></title>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write(checkin_html);
-        printWindow.document.write('</body></html>');
-        printWindow.moveTo(0, 0);
-        printWindow.print();
-        printWindow.document.close();
-        setTimeout(() => {
-          printWindow.close();
-        }, 500);
+      // alert('h');
+      console.log('small_device_display',this.small_device_display)
+      if(this.small_device_display===true){
+        const tempurl=url.url;
+        window.open(tempurl);
       }
+      else{
+        if(url && url.url){
+          const params = [
+            'height=' + screen.height,
+            'width=' + screen.width,
+            'fullscreen=yes'
+          ].join(',');
+          const printWindow = window.open('', '', params);
+          let checkin_html = '';
+          checkin_html +='<div style="box-shadow: 0 0 10px rgb(0 0 0 / 5%);border-radius: 5px;padding:15px;background:#f9f9f9f;">'
+          checkin_html += '<div style="display:flex;margin-bottom:10px;align-items:center;gap:5px"><div><img style="height:60px;width:60px;" src="/assets/images/medicalReportIcon/mr.webp" /></div><div style="font-size:14px;font-weight:bold">Prescription Invoice</div></div>'
+          checkin_html += '<img style="width:100%;height:100%" src="' + url.url + '" />'
+          checkin_html += '</div>'
+          printWindow.document.write('<html><head><title></title>');
+          printWindow.document.write('</head><body >');
+          printWindow.document.write(checkin_html);
+          printWindow.document.write('</body></html>');
+          printWindow.moveTo(0, 0);
+          printWindow.print();
+          printWindow.document.close();
+          setTimeout(() => {
+            printWindow.close();
+          }, 500);
+        }
+      }
+      
     }
     
    
+  }
+  getImageicon(data){
+    console.log('data',data);
+    if(data.type !=='.pdf'){
+      return './assets/images/medicalReportIcon/download.png';
+    }
+    else{
+      return './assets/images/medicalReportIcon/download.png';
+    }
   }
 
   getMrprescription(mrId) {
