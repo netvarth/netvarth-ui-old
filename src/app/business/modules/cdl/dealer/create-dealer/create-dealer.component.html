@@ -34,7 +34,7 @@
                 <div class="form-title">Dealer Name</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter Customer Name" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter Dealer Name" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -71,7 +71,7 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="email" placeholder="Enter Customer Email" class="form-control"
+                  <input (keyup)="resetErrors()" type="email" placeholder="Enter Dealer Email" class="form-control"
                     autocomplete="off" />
                   <a class="btn btn-verify" [class.btn-verified]="emailverification" (click)="verifyemail()">
                     <span *ngIf="!emailverification">Verify</span><span *ngIf="emailverification">Verified</span></a>

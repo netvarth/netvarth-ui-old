@@ -22,7 +22,13 @@ export class CreateComponent implements OnInit {
   verification = false;
   panverification = false;
   emailverification = false;
-
+  address1: any = '';
+  address2: any = '';
+  city: any = '';
+  state: any = '';
+  pincode: any = '';
+  addresscheck: any = false;
+  showaddressfields: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -159,6 +165,12 @@ export class CreateComponent implements OnInit {
       if (result) {
         if (result = "verified") {
           this.aadharverification = true;
+          this.address1 = "Vellara Building";
+          this.address2 = "Museum CrossLane";
+          this.city = "Thrissur";
+          this.state = "Kerala";
+          this.pincode = "680020";
+          this.addresscheck = true;
         }
       }
       else {
@@ -189,6 +201,16 @@ export class CreateComponent implements OnInit {
       }
     });
     return can_remove;
+  }
+
+
+  addresschange(event) {
+    if (event.target.checked) {
+      this.showaddressfields = false;
+    }
+    else {
+      this.showaddressfields = true;
+    }
   }
 
 }

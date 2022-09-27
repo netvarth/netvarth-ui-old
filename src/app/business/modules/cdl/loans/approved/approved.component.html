@@ -1,10 +1,11 @@
-<div class="card pointer-cursor">
+<div class="card pointer-cursor" *ngIf="timetype!=3">
   <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
 </div>
 
 
 <div class="card m-2" *ngIf="timetype==1">
-  <span class="font-weight-bold">&nbsp;Select Scheme</span><br><br>
+  <span class="font-weight-bold" *ngIf="from!='schemeslist'">&nbsp;Select Scheme<br><br></span>
+  <span class="font-weight-bold" *ngIf="from=='schemeslist'">&nbsp;All Schemes<br><br></span>
   <form>
     <div class="row">
       <div class="col-md-4">
@@ -47,7 +48,8 @@
                 <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
                 </div>
               </div>
-              <div class="btn btn-select text-center mt-3" (click)="goNext()">
+              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
+                (click)="goNext() && selectedScheme('Scheme 1')">
                 Select
               </div>
             </div>
@@ -96,7 +98,8 @@
                 <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
                 </div>
               </div>
-              <div class="btn btn-select text-center mt-3" (click)="goNext()">
+              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
+                (click)="goNext() && selectedScheme('Scheme 2')">
                 Select
               </div>
             </div>
@@ -145,7 +148,8 @@
                 <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
                 </div>
               </div>
-              <div class="btn btn-select text-center mt-3" (click)="goNext()">
+              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
+                (click)="goNext() && selectedScheme('Scheme 3')">
                 Select
               </div>
             </div>
@@ -194,7 +198,8 @@
                 <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
                 </div>
               </div>
-              <div class="btn btn-select text-center mt-3" (click)="goNext()">
+              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
+                (click)="goNext() && selectedScheme('Scheme 4')">
                 Select
               </div>
             </div>
@@ -243,7 +248,8 @@
                 <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
                 </div>
               </div>
-              <div class="btn btn-select text-center mt-3" (click)="goNext()">
+              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
+                (click)="goNext() && selectedScheme('Scheme 5')">
                 Select
               </div>
             </div>
@@ -292,7 +298,8 @@
                 <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
                 </div>
               </div>
-              <div class="btn btn-select text-center mt-3" (click)="goNext()">
+              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
+                (click)="goNext() && selectedScheme('Scheme 6')">
                 Select
               </div>
             </div>
@@ -326,7 +333,24 @@
                   <input (keyup)="resetErrors()" type="number" placeholder="Enter Phone Number" class="form-control"
                     autocomplete="off" value="9854789584" readonly disabled />
                   <a class="btn btn-verified">
-                    <span>Verifed</span></a>
+                    <i class="fa fa-check"></i>&nbsp;<span>Verifed</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Scheme Selected</div>
+              </div>
+              <div class="fieldPadding">
+                <div *ngIf="selectedScheme">
+                  <input (keyup)="resetErrors()" type="text" class="form-control" autocomplete="off"
+                    [value]="selectedScheme" readonly disabled />
                 </div>
               </div>
             </div>
@@ -347,6 +371,7 @@
             </div>
           </div>
         </div>
+
 
 
         <div>
@@ -394,9 +419,12 @@
               <div class="d-flex">
                 <div class="form-title">Account Number</div>
               </div>
-              <div class="fieldPadding">
+              <div class="d-flex">
                 <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
                   formControlName="phone" autocomplete="off" />
+                <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
+                  <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
+                      class="fa fa-check"></i>&nbsp;Verified</span></a>
               </div>
             </div>
           </div>
@@ -435,7 +463,7 @@
       <div class="col-md-6">
         <div>
           <img width="80" height="60" src="../../../../assets/images/cdl/sanctioned.png">&nbsp;&nbsp;
-          <span class="font-weight-bold sanctioned-title">Loan have been sanctioned</span>
+          <span class="font-weight-bold sanctioned-title">Loan has been sanctioned</span>
         </div>
         <div>
           <span class="font-weight-bold card-title">Date : </span>

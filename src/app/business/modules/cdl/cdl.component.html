@@ -133,13 +133,25 @@
     </div>
 
 
-    <div class="col-md-2" (click)="rejectedLoans()" *ngIf="user.userType==5">
+    <!-- <div class="col-md-2" (click)="rejectedLoans()" *ngIf="user.userType==5">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-times rejected-loan-icon"></i>
         </div>
         <div class="mt-1">
           <span class="card-title">Rejected Loans</span>
+        </div>
+      </div>
+    </div> -->
+
+
+    <div class="col-md-2" (click)="allSchemes()" *ngIf="user.userType==5">
+      <div class="dashboard-card text-center border p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-globe schemes-loan-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">All Schemes</span>
         </div>
       </div>
     </div>
@@ -215,7 +227,7 @@
 
 
 
-    <div class="col-md-2">
+    <div class="col-md-2" (click)="viewFile('emicalc')">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-calculator emi-calc-icon"></i>
@@ -264,7 +276,7 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngFor="let loan of loans">
-              <tr style="cursor:pointer" (click)="loanDetails(loan)">
+              <tr class="pointer-cursor" [class.highlightrow]="loan.status == 'redirected'" (click)="loanDetails(loan)">
                 <td>
                   <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{loan.customerName}}</span>
                 </td>
@@ -272,8 +284,8 @@
                   <span><i class="fa fa-inr"></i>&nbsp;{{loan.amount}}</span>
                 </td>
                 <td class="text-capitalize">
-                  <span [class.active]="loan.status == 'approved'" [class.inactive]="loan.status == 'rejected'"
-                    [class.requested]="loan.status == 'redirected'"
+                  <span [class.active]="loan.status == 'approved' || loan.status == 'auto approved'"
+                    [class.inactive]="loan.status == 'rejected'" [class.requested]="loan.status == 'redirected'"
                     [class.progress]="loan.status == 'in progress'">{{loan.status}}</span>
                 </td>
                 <td class="text-capitalize">

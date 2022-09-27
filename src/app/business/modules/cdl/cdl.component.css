@@ -46,6 +46,13 @@
   border-radius: 50% !important;
 }
 
+.schemes-loan-icon {
+  color: #fff !important;
+  background-color: #1E4079 !important;
+  padding: 3px 5px !important;
+  border-radius: 50% !important;
+}
+
 
 .create-dealer-icon {
   color: #fff !important;
@@ -61,6 +68,10 @@
   font-size: 22px !important;
 }
 
+.highlightrow {
+  background-color: #e6e6e6;
+  border-radius: 10px !important;
+}
 
 .all-leads-icon {
   color: #FFC700 !important;

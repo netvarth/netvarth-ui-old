@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
+import { ViewFileComponent } from './loans/loanDetails/view-file/view-file.component';
 @Component({
   selector: 'app-cdl',
   templateUrl: './cdl.component.html',
@@ -70,14 +72,14 @@ export class CdlComponent implements OnInit {
       'loanId': 105,
       'customerName': 'Babu',
       'amount': '65000',
-      'status': 'approved',
+      'status': 'auto approved',
       'date': '24/09/2022'
     },
     {
       'loanId': 121,
       'customerName': 'Adarsh',
       'amount': '65000',
-      'status': 'approved',
+      'status': 'auto approved',
       'date': '24/09/2022'
     },
     {
@@ -182,6 +184,7 @@ export class CdlComponent implements OnInit {
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
+    private dialog: MatDialog
     // private cdlservice: CdlService
 
   ) { }
@@ -308,7 +311,26 @@ export class CdlComponent implements OnInit {
   }
 
 
+  viewFile(file) {
+    const dialogRef = this.dialog.open(ViewFileComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: file
+      }
+    });
+    dialogRef.afterClosed();
+  }
 
+  allSchemes() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        from: "schemeslist"
+      }
+    }
+    this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+  }
 
 
   showDealer(dealer) {

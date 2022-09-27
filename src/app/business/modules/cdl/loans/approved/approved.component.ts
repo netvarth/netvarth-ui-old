@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 
 @Component({
   selector: 'app-approved',
@@ -10,11 +12,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ApprovedComponent implements OnInit {
   timetype: number = 1;
   from: any;
+  scheme: any;
   verification = false;
+  accountverification = false;
   constructor(
     private location: Location,
+    private dialog: MatDialog,
     private router: Router,
-    private activated_route: ActivatedRoute,
+    private activated_route: ActivatedRoute
+
 
   ) { }
 
@@ -41,14 +47,19 @@ export class ApprovedComponent implements OnInit {
 
   }
 
+  selectedScheme(scheme) {
+    this.selectedScheme = scheme;
+  }
+
   goNext() {
     if (this.timetype >= 1) {
       this.timetype = this.timetype + 1;
       console.log("this.timetype", this.timetype);
     }
+    return true;
   }
   goBack() {
-    if (this.timetype > 1 && (this.from && this.from != 'creditofficer')) {
+    if (this.timetype > 1 && (this.from && this.from != 'creditofficer' && this.from != 'schemeslist')) {
       this.timetype = this.timetype - 1;
     }
     else {
@@ -61,6 +72,27 @@ export class ApprovedComponent implements OnInit {
   }
 
 
-
+  verifyAccount() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Account Number'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "verified") {
+          this.accountverification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+    return can_remove;
+  }
 
 }

@@ -133,8 +133,8 @@
                 <div class="form-title">Address 1</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter Address 1" class="form-control"
-                  autocomplete="off" />
+                <input (keyup)="resetErrors()" [value]="address1" type="text" placeholder="Enter Address 1"
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -148,8 +148,8 @@
                 <div class="form-title">Address 2</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter Address 2" class="form-control"
-                  autocomplete="off" />
+                <input (keyup)="resetErrors()" [value]="address2" type="text" placeholder="Enter Address 2"
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -162,7 +162,7 @@
                 <div class="form-title">City</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter City" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter City" [value]="city" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -176,8 +176,8 @@
                 <div class="form-title">State</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter State" class="form-control"
-                  autocomplete="off" />
+                <input (keyup)="resetErrors()" [value]="state" type="text" placeholder="Enter State"
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -190,8 +190,8 @@
                 <div class="form-title">Pincode</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Pincode" class="form-control"
-                  autocomplete="off" />
+                <input (keyup)="resetErrors()" [value]="pincode" type="number" placeholder="Enter Pincode"
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -204,9 +204,10 @@
             <div>
               <div class="fieldPadding">
                 <div class="form-check">
-                  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                  <input class="form-check-input" [checked]="addresscheck" type="checkbox" value=""
+                    id="flexCheckDefault" (change)="addresschange($event)">
                   <span class="form-check-label" for="flexCheckDefault">
-                    Use this Address as Permanent
+                    Use this Address as current
                   </span>
                 </div>
               </div>
@@ -215,7 +216,78 @@
         </div>
 
 
+        <div *ngIf="showaddressfields">
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Current Address 1</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" type="text" placeholder="Enter Address 1" class="form-control"
+                    autocomplete="off" />
+                </div>
+              </div>
+            </div>
+          </div>
 
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Current Address 2</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" type="text" placeholder="Enter Address 2" class="form-control"
+                    autocomplete="off" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Current Address City</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" type="text" placeholder="Enter City" class="form-control"
+                    autocomplete="off" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Current Address State</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" type="text" placeholder="Enter State" class="form-control"
+                    autocomplete="off" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Current Address Pincode</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" type="number" placeholder="Enter Pincode" class="form-control"
+                    autocomplete="off" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
         <div>
@@ -456,7 +528,7 @@
     </div>
     <div class="d-flex">
       <div class="btn btn-draft mr-2" (click)="saveAsDraft()">
-        Save as Draft
+        Save as Lead
       </div>
       <div class="btn btn-primary" (click)="checkELigibility()">
         Check Eligibility
