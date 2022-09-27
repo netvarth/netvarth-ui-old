@@ -6,7 +6,13 @@
     </div>
   </div>
 </section>
-<section class="mt-2">
+<section>
+  <div class="row mb-2">
+    <div class="card marginClass px-5">
+      <div class="font-weight-bold">Remarks</div>
+      <span class="details-title">Aadhar and Pan are verified</span>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-5">
       <div class="card">
@@ -226,11 +232,6 @@
           </div>
         </div>
         <br *ngIf="user.userType!='2'">
-      </div>
-
-      <div class="card marginClass" [class.height]="user.userType!=2">
-        <div class="font-weight-bold">Remarks</div>
-        <span class="details-title">Aadhar and Pan are verified</span>
       </div>
     </div>
   </div>
