@@ -10,7 +10,6 @@ export class CdlComponent implements OnInit {
   user: any;
   loans: any;
   leads: any;
-  mymodel: any;
   viewmore: any = false;
   currentstatus: any = "all";
   status = "all";
@@ -33,6 +32,13 @@ export class CdlComponent implements OnInit {
       'date': '27/09/2022'
     },
     {
+      'loanId': 109,
+      'customerName': 'Adarsh',
+      'amount': '40000',
+      'status': 'redirected',
+      'date': '27/09/2022'
+    },
+    {
       'loanId': 103,
       'customerName': 'Atul',
       'amount': '35000',
@@ -40,7 +46,21 @@ export class CdlComponent implements OnInit {
       'date': '26/09/2022'
     },
     {
-      'loanId': 104,
+      'loanId': 111,
+      'customerName': 'Krishna',
+      'amount': '35000',
+      'status': 'in progress',
+      'date': '24/09/2022'
+    },
+    {
+      'loanId': 124,
+      'customerName': 'Sravan',
+      'amount': '35000',
+      'status': 'in progress',
+      'date': '26/09/2022'
+    },
+    {
+      'loanId': 131,
       'customerName': 'Davika',
       'amount': '75000',
       'status': 'approved',
@@ -49,6 +69,13 @@ export class CdlComponent implements OnInit {
     {
       'loanId': 105,
       'customerName': 'Babu',
+      'amount': '65000',
+      'status': 'approved',
+      'date': '24/09/2022'
+    },
+    {
+      'loanId': 121,
+      'customerName': 'Adarsh',
       'amount': '65000',
       'status': 'approved',
       'date': '24/09/2022'
@@ -67,6 +94,13 @@ export class CdlComponent implements OnInit {
       'status': 'rejected',
       'date': '22/09/2022'
     },
+    {
+      'loanId': 127,
+      'customerName': 'Narendra',
+      'amount': '100000',
+      'status': 'rejected',
+      'date': '22/09/2022'
+    }
   ];
   statusLeadsList: any = [
     {
@@ -159,8 +193,8 @@ export class CdlComponent implements OnInit {
     // this.cdlservice.getJSON().subscribe(data => {
     //   console.log("data printed", data);
     // });
-    this.loans = this.statusLoansList.slice(0, 3);
-    this.leads = this.statusLeadsList.slice(0, 3);
+    this.loans = this.statusLoansList.slice(0, 4);
+    this.leads = this.statusLeadsList.slice(0, 4);
   }
 
   viewMore() {
@@ -169,7 +203,7 @@ export class CdlComponent implements OnInit {
   }
 
   viewLess() {
-    this.loans = this.statusLoansList.slice(0, 3);
+    this.loans = this.statusLoansList.slice(0, 4);
     this.viewmore = false;
   }
 
@@ -185,19 +219,16 @@ export class CdlComponent implements OnInit {
   }
 
   viewLessLeads() {
-    this.leads = this.statusLeadsList.slice(0, 3);
+    this.leads = this.statusLeadsList.slice(0, 4);
     this.viewmoreleads = false;
   }
 
   loanDetails(data) {
-    console.log(data);
-    const status = data['status'];
-    const customerName = data['CustomerName']
     const navigationExtras: NavigationExtras = {
       queryParams: {
         type: 'loanDetails',
-        status: status,
-        customerName: customerName
+        status: data.status,
+        customerName: data.customerName
       }
     };
     this.router.navigate(['provider', 'cdl', 'loans', 'loanDetails'], navigationExtras);
@@ -263,16 +294,16 @@ export class CdlComponent implements OnInit {
       this.loans = this.statusLoansList.filter(i => i.status == event.target.value);
     }
     else {
-      this.loans = this.statusLoansList.slice(0, 3);
+      this.loans = this.statusLoansList.slice(0, 4);
     }
   }
   searchText(event) {
     console.log("event.target.value", event.target.value)
     if (event.target.value != '') {
-      this.loans = this.statusLoansList.filter(x => x.status.includes(event.target.value));
+      this.loans = this.statusLoansList.filter(x => x.customerName.toLowerCase().includes(event.target.value.toLowerCase()));
     }
     else {
-      this.loans = this.statusLoansList.slice(0, 3);
+      this.loans = this.statusLoansList.slice(0, 4);
     }
   }
 

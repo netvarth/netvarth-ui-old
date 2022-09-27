@@ -154,4 +154,8 @@ export class loanDetailsComponent implements OnInit {
     dialogRef.afterClosed();
   }
 
+  takeAction() {
+    this.router.navigate(['provider', 'cdl', 'loans', 'create']);
+  }
+
 }

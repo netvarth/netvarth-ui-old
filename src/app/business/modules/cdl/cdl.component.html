@@ -15,9 +15,6 @@
   <div class="no-padding">
     <div class="cauroselsection">
       <owl-carousel [options]="customOptions">
-        <div class="recentcards item" *ngIf="user.userType==5">
-          <img src="../../../../assets/images/cdl/header.jpg" alt="Card image cap">
-        </div>
         <div class="recentcards item">
           <img src="../../../../assets/images/cdl/carousal-1.jpg" alt="Card image cap">
         </div>
@@ -26,6 +23,9 @@
         </div>
         <div class="recentcards item">
           <img src="../../../../assets/images/cdl/carousal-3.jpg" alt="Card image cap">
+        </div>
+        <div class="recentcards item">
+          <img src="../../../../assets/images/cdl/carousal-4.jpg" alt="Card image cap">
         </div>
       </owl-carousel>
     </div>
@@ -201,7 +201,7 @@
       </div>
     </div>
 
-    <div class="col-md-2" *ngIf="user.userType==2" (click)="createDealer()">
+    <div class="col-md-2" *ngIf="user.userType==2">
       <div class="dashboard-card text-center border p-2 pointer-cursor">
         <div>
           <i class="fa fa-user create-dealer-icon"></i>
@@ -245,8 +245,8 @@
           <nav class="navbar navbar-light bg-light">
             <form class="form-inline">
               <div class="form-group">
-                <input class="form-control" [(ngModel)]="mymodel" type="search" (keyup)="searchText($event)"
-                  class="form-control" placeholder="Search for Items" />{{mymodel}}
+                <input class="form-control" type="search" (keyup)="searchText($event)" class="form-control"
+                  placeholder="Search with Name,Status,Loan Amount" />
               </div>
             </form>
           </nav>
@@ -286,10 +286,10 @@
             </ng-container>
           </tbody>
         </table>
-        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="!viewmore && loans.length>=3"
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="!viewmore && loans.length>3"
           (click)="viewMore()">View
           All</span>
-        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="viewmore && loans.length>=3"
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="viewmore && loans.length>3"
           (click)="viewLess()">View
           Less</span>
       </div>
@@ -525,6 +525,44 @@
         </div>
         <div>
           <span>Netvarth</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span class="pending font-weight-bold">Pending</span>
+        </div>
+      </div>
+
+      <div class="d-flex justify-conent-around mt-2 loan-data">
+        <div>
+          <span>Loan Id : 235</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span>Krishnadas</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span class="active font-weight-bold">Approved</span>
+        </div>
+      </div>
+
+      <div class="d-flex justify-conent-around mt-2 loan-data">
+        <div>
+          <span>Loan Id : 222</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span>Aswin Sasi</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span class="rejected font-weight-bold">Rejected</span>
+        </div>
+      </div>
+
+
+
+      <div class="d-flex justify-conent-around mt-2 loan-data">
+        <div>
+          <span>Loan Id : 254</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+        <div>
+          <span>Manikandan</span>&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
         <div>
           <span class="pending font-weight-bold">Pending</span>

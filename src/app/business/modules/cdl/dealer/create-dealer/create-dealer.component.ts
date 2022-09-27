@@ -36,16 +36,73 @@ export class CreateDealerComponent implements OnInit {
 
   }
 
+  verifyemail() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Email'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "verified") {
+          this.emailverification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+    return can_remove;
+  }
+
   verifyaadhar() {
-    this.aadharverification = true;
+    let can_remove = false;
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Aadhar Number'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "verified") {
+          this.aadharverification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+    return can_remove;
   }
 
   verifypan() {
-    this.panverification = true;
-  }
-
-  verifyemail() {
-    this.emailverification = true;
+    let can_remove = false;
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Pan Number'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "verified") {
+          this.panverification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+    return can_remove;
   }
 
   goBack() {
@@ -66,7 +123,7 @@ export class CreateDealerComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        'message': '  All added items in your cart for different Provider will be removed ! '
+        type: 'Mobile Number'
       }
     });
     dialogRef.afterClosed().subscribe(result => {

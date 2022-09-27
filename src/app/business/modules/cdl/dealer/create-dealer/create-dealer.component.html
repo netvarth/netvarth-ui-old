@@ -126,7 +126,7 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="number" placeholder="Enter PAN Number" class="form-control"
+                  <input (keyup)="resetErrors()" type="text" placeholder="Enter PAN Number" class="form-control"
                     autocomplete="off" />
                   <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="verifypan()">
                     <span *ngIf="!panverification">Verify</span><span *ngIf="panverification">Verified</span></a>
@@ -270,7 +270,7 @@
                 <div class="form-title">Shop License</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Shop License" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter Shop License" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -284,7 +284,7 @@
                 <div class="form-title">GST Number</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter GST Number" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter GST Number" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -299,7 +299,7 @@
                 <div class="form-title">Select Bank</div>
               </div>
               <div class="fieldPadding">
-                <select class="form-control" formControlName="purpose">
+                <select class="form-control">
                   <option>KOTAK</option>
                   <option>ICICI</option>
                   <option>SBI</option>
@@ -333,7 +333,7 @@
                 <div class="form-title">IFSC Code</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter IFSC Code" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter IFSC Code" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -347,7 +347,7 @@
                 <div class="form-title">City of Residence</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter City of Residence" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter City of Residence" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
@@ -361,7 +361,7 @@
                 <div class="form-title">Home Address</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Home Address" class="form-control"
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter Home Address" class="form-control"
                   autocomplete="off" />
               </div>
             </div>
