@@ -8243,7 +8243,7 @@ owl-carousel .bt3.active {
 
 .btborder1 {
   border-bottom: 1px solid #b6cdd8;
-  margin-bottom: 10px!important;
+  margin-bottom: 10px !important;
 }
 
 .content.loc-list.users .card .copy .mbt {
@@ -8409,6 +8409,11 @@ owl-carousel .bt3.active {
 .mat-chip-list-wrapper {
   margin-top: 15px !important;
   margin-bottom: 15px !important;
+}
+
+.orderlist .mat-chip-list-wrapper {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 .stepper-back-btn {
@@ -13696,7 +13701,7 @@ ngx-intl-tel-input input {
 
 }
 
- .authordemy ngx-intl-tel-input input{
+.authordemy ngx-intl-tel-input input {
   height: 70px;
   margin-bottom: 20px;
   padding: 10px;
@@ -14087,7 +14092,7 @@ ngx-intl-tel-input input[disabled] {
 
 /* .mat-tab-header{
   background-color: #1e297c;
-  
+
 }
 .mat-tab-label-content {
   color: white;

@@ -2759,7 +2759,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
         }
 
       };
-      this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
+      this.router.navigate(['order', 'shoppingcart', 'ordercheckout'], navigationExtras);
     } else if (this.userType === '') {
       const passParam = { callback: 'order' };
       this.doLogin('consumer', passParam);

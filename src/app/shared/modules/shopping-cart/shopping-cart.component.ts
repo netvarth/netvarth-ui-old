@@ -80,7 +80,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
   };
   selected_coupons: any = [];
   couponsList: any = [];
-  selected_coupon;
+  selected_coupon: any;
   showCouponWB: boolean;
   provider_id: any;
   // s3url;
@@ -130,9 +130,9 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
         if (params.source) {
           this.source = params.source;
         }
-        if(!this.lStorageService.getitemfromLocalStorage('sysdate')) {
+        if (!this.lStorageService.getitemfromLocalStorage('sysdate')) {
           this.setSystemDate();
-        }        
+        }
       });
   }
   setSystemDate() {
@@ -207,7 +207,7 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
       this.getOrderAvailableDatesForHome();
       this.fillDateFromLocalStorage();
       this.getStoreContact();
-      this.showfuturediv = false;      
+      this.showfuturediv = false;
       this.today = new Date(this.server_date.split(' ')[0]).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
       this.today = new Date(this.today);
       this.minDate = new Date(this.today.getFullYear(), this.today.getMonth(), this.today.getDate()).toLocaleString(this.dateTimeProcessor.REGION_LANGUAGE, { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION });
@@ -311,7 +311,6 @@ export class ShoppingCartSharedComponent implements OnInit, OnDestroy {
     this.orderList.push(Item);
     this.getTotalItemAndPrice();
     this.getItemQty(Item);
-
   }
   checkCouponExists(couponCode) {
     let found = false;

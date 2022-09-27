@@ -1,11 +1,12 @@
 <app-common-innerloading-spinner *ngIf="apiloading || source === 'paper'"></app-common-innerloading-spinner>
-<section class="container no-padding cons-donate no-padding-small shop-cart" *ngIf="!apiloading && source!=='paper'">
+<!-- <section class="container no-padding cons-donate no-padding-small shop-cart" *ngIf="!apiloading && source!=='paper'">
   <div class="content  p0 loc-list p-checkin ynw-common-form-nm">
     <div class="col-md-12 no-padding-small">
       <div class="panel panel-default">
         <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-            <app-header *ngIf="sharedFunctionobj.checkLogin()" [customId]="customId" [accountId]="account_id"></app-header>
+            <app-header *ngIf="sharedFunctionobj.checkLogin()" [customId]="customId" [accountId]="account_id">
+            </app-header>
           </div>
         </div>
         <div class="panel-body no-padding">
@@ -18,12 +19,13 @@
                 <span class=" mgn-lt-10 amount">Continue shopping</span>
               </h5>
             </div>
-            <!-- revamped section -->
+
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding" *ngIf="action==''">
               <div class="col-sm-7 col-md-7 col-lg-7 col-xs-12 pad-10">
                 <div class="card col-xs-12">
                   <div *ngIf="orderCount === 0">Your cart is empty</div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2 no-padding-small"
+                  <div
+                    class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 mgn-bt-10 bt-lst-bdr l-ht-2 no-padding-small"
                     *ngFor="let item of orders;  let i = index">
                     <div class="col-sm-7 col-md-7 col-lg-7col-xl-7 col-xs-7 no-padding disp-flex">
                       <div (click)="itemDetails(item)" class="col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xs-3 itm_img"
@@ -31,15 +33,16 @@
                         [ngStyle]="{ 'background-image': 'url(' + item.item.itemImages[0].url + ')'}"></div>
                       <div class="col-sm-9 col-md-9 col-lg-9 col-xl-9 col-xs-9">
                         <div class="itm-nme"> {{item.item.displayName}}</div>
-                        <div  *ngIf="catalog_loading && catalog_details && catalog_details.showPrice" class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
+                        <div *ngIf="catalog_loading && catalog_details && catalog_details.showPrice"
+                          class="price rupee-font itm-amt">&#8377;{{getItemPrice(item)}}
                         </div>
                         <div>
-                           <span class="add_nte" (click)="addNotes(item,i)">
-                               {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                           </span> &nbsp;
-                           <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
-                              <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
-                           </span>
+                          <span class="add_nte" (click)="addNotes(item,i)">
+                            {{item.consumerNote ? 'Edit Note':'Add Note'}}
+                          </span> &nbsp;
+                          <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
+                            <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -47,8 +50,8 @@
                       <div *ngIf="getItemQty(item) === 1" (click)="removeItemFromCart(item)"
                         class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer"><i class="fa fa-trash"></i>
                       </div>
-                      <div *ngIf="getItemQty(item) >= 2"
-                        (click)="decrement(item)" class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
+                      <div *ngIf="getItemQty(item) >= 2" (click)="decrement(item)"
+                        class="item-pad bodr-lft bodr-btm-up item-qty cusr-pointer">-
                       </div>
                       <div class="item-pad bodr-btm-up item-qty">{{getItemQty(item)}}
                       </div>
@@ -60,7 +63,6 @@
                 </div>
               </div>
               <div class="col-sm-5 col-md-5 col-lg-5 col-xs-12 pad-10">
-                <!-- Side bar contact -->
                 <div class="contact-outer">
                   <aside *ngIf="showSide" class="side_nav">
                     <h4>Store Contact <i (click)="closeNav()" class="fa fa-times-circle fl-right"></i></h4>
@@ -69,11 +71,18 @@
                       <div *ngIf="storeContact.address">
                         <i class="fa fa-address-card-o" aria-hidden="true"></i> {{storeContact.address}}
                       </div>
-                      <div><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}</div>
-                      <div *ngIf= "storeContact.alternatePhone"><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}} {{storeContact.alternatePhone}}</div>
-                      <div *ngIf="storeContact.email" class="disp-flex word-break-all"><i class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.email}}</div>
-                      <div *ngIf= "storeContact.alternateEmail" class="disp-flex word-break-all"><i class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.alternateEmail}}</div>
-                      <div *ngIf= "storeContact.whatsappNo"><i class="fa wtsapaud-icon mgn-rt-6"></i>{{storeContact.whatsAppCountryCode}} {{storeContact.whatsappNo}}</div>
+                      <div><i class="fa fa-phone mgn-rt-6"></i>{{storeContact.primCountryCode}} {{storeContact.phone}}
+                      </div>
+                      <div *ngIf="storeContact.alternatePhone"><i
+                          class="fa fa-phone mgn-rt-6"></i>{{storeContact.secCountryCode}}
+                        {{storeContact.alternatePhone}}</div>
+                      <div *ngIf="storeContact.email" class="disp-flex word-break-all"><i
+                          class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.email}}</div>
+                      <div *ngIf="storeContact.alternateEmail" class="disp-flex word-break-all"><i
+                          class="fa fa-envelope mgn-rt-6 mgn-up-8"></i>{{storeContact.alternateEmail}}</div>
+                      <div *ngIf="storeContact.whatsappNo"><i
+                          class="fa wtsapaud-icon mgn-rt-6"></i>{{storeContact.whatsAppCountryCode}}
+                        {{storeContact.whatsappNo}}</div>
                     </div>
                   </aside>
                 </div>
@@ -92,7 +101,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey"  *ngIf="isPhysicalItemsPresent()">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey"
+                    *ngIf="isPhysicalItemsPresent()">
                     <div class="oder-sumary-txt" *ngIf="home_delivery && store_pickup">
                       Delivery Type
                     </div>
@@ -115,7 +125,8 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey"  *ngIf="isPhysicalItemsPresent()">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-10 bdr-bt-grey"
+                    *ngIf="isPhysicalItemsPresent()">
                     <div class="oder-sumary-txt">
                       Date/Time
                       <div class="fl-right"><a (click)="changeTime()">Change</a></div>
@@ -132,31 +143,33 @@
                       </span>
                     </div>
                     <div *ngIf="!isfutureAvailableTime" class="red">
-                        <span>No timings are available</span>
-                      </div>
+                      <span>No timings are available</span>
+                    </div>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline" *ngIf="catalog_loading && catalog_details && catalog_details.showPrice">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline"
+                    *ngIf="catalog_loading && catalog_details && catalog_details.showPrice">
                     <div class="oder-sumary-txt">Order Summary</div>
                     <div class="order-label">
                       <div class="flex1">Item Total</div>
                       <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
                     </div>
                     <ng-container *ngIf="orders.length!==0">
-                    <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
-                      <div class="flex1">Delivery Charge</div>
-                      <div class="price rupee-font">&#8377;{{getDeliveryCharge()}}</div>
-                    </div>
-                  </ng-container>
+                      <div class="order-label" *ngIf="(home_delivery && !store_pickup) || choose_type =='home'">
+                        <div class="flex1">Delivery Charge</div>
+                        <div class="price rupee-font">&#8377;{{getDeliveryCharge()}}</div>
+                      </div>
+                    </ng-container>
                   </div>
-                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline" *ngIf="catalog_loading &&catalog_details && catalog_details.showPrice">
+                  <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 sub-tot-outline"
+                    *ngIf="catalog_loading &&catalog_details && catalog_details.showPrice">
                     <div class="flex1">SUB TOTAL<br><small>(Exclusive of all taxes)</small></div>
                     <div class="price rupee-font">&#8377;{{getSubTotal()}}</div>
                   </div>
-                  <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true ||!isfutureAvailableTime" class="confm_btn">Confirm Order</button>
+                  <button (click)="confirmOrder()" [disabled]="disabledConfirmbtn==true ||!isfutureAvailableTime"
+                    class="confm_btn">Confirm Order</button>
                 </div>
               </div>
             </div>
-            <!-- Change date -->
             <div class="panel-body no-padding">
               <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
                 <div class="card p0">
@@ -183,26 +196,28 @@
                         </div>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                          <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="choose_type === 'home'">Delivery
-                            Timings </div>
-                            <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20" *ngIf="choose_type === 'store'"> Store Pickup
-                              Timings  </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20"
+                          *ngIf="choose_type === 'home'">Delivery
+                          Timings </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-20 mgn-bt-20"
+                          *ngIf="choose_type === 'store'"> Store Pickup
+                          Timings </div>
                         <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding mgn-up-20">
-                            <mat-chip-list class="" *ngIf="isfutureAvailableTime" >
-                                <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
-                                (click)="handleQueueSelection(queue, i)">
-                                    {{queue['sTime'] + ' - ' +
-                                    queue['eTime']}}
-                                </mat-chip>
-                            </mat-chip-list>
-                            <div *ngIf="!isfutureAvailableTime">
-                              <p>No timings are available</p>
-                            </div>
+                          <mat-chip-list class="" *ngIf="isfutureAvailableTime">
+                            <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
+                              (click)="handleQueueSelection(queue, i)">
+                              {{queue['sTime'] + ' - ' +
+                              queue['eTime']}}
+                            </mat-chip>
+                          </mat-chip-list>
+                          <div *ngIf="!isfutureAvailableTime">
+                            <p>No timings are available</p>
+                          </div>
                         </div>
                       </div>
                       <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-up-20 mgn-lt-5">
-                        <button (click)="goBackCart(futureAvailableTime ,queue)"   [disabled]="!isfutureAvailableTime" class="btn bt3 btn-default coupon-apply-btn"
-                          type="button">Ok</button>
+                        <button (click)="goBackCart(futureAvailableTime ,queue)" [disabled]="!isfutureAvailableTime"
+                          class="btn bt3 btn-default coupon-apply-btn" type="button">Ok</button>
                       </div>
                     </div>
                     <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes" *ngIf="action=='coupons'">
@@ -271,5 +286,19 @@
       </div>
     </div>
     <div class="clearfix"></div>
+  </div>
+</section> -->
+
+<app-common-innerloading-spinner *ngIf="apiloading || source === 'paper'"></app-common-innerloading-spinner>
+<section class="container no-padding cons-donate no-padding-small shop-cart" *ngIf="!apiloading && source!=='paper'">
+  <div *ngIf="catalog_details && businessDetails && orderList">
+    <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+        <app-header [accountId]="account_id" [customId]="customId" *ngIf="sharedFunctionobj.checkLogin()"
+          [showHeaderAction]="true"></app-header>
+      </div>
+    </div>
+    <app-order-consumer [catalog]="catalog_details" [orderList]="orderList" [business]="businessDetails">
+    </app-order-consumer>
   </div>
 </section>
