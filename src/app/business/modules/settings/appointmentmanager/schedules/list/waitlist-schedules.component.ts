@@ -265,7 +265,8 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
             dstart_time: sttime || null,
             dend_time: edtime || null,
             qcapacity: q.capacity || null,
-            qserveonce: q.parallelServing || null
+            qserveonce: q.parallelServing || null,
+            maxOnlineConsumers: q.consumerParallelServing || null
         });
         for (let j = 0; j < q.services.length; j++) {
             for (let k = 0; k < this.services_list.length; k++) {
@@ -479,7 +480,8 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                 // tslint:disable-next-line:radix
                 dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
-                qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
+                qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+                maxOnlineConsumers: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
             });
         } else {
             this.instantQForm = this.fb.group({
@@ -488,7 +490,8 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
                 // tslint:disable-next-line:radix
                 dend_time: [{ hour: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('HH'), 10), minute: parseInt(moment(this.toDateCaption, ['hh:mm A']).format('mm'), 10) }, Validators.compose([Validators.required])],
                 qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
-                qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])]
+                qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+                maxOnlineConsumers: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
             });
         }
     }
@@ -582,6 +585,7 @@ export class WaitlistSchedulesComponent implements OnInit, OnDestroy {
         instantQInput['onlineCheckin'] = true;
         instantQInput['futureWaitlist'] = false;
         instantQInput['parallelServing'] = instantQ.qserveonce;
+        instantQInput['consumerParallelServing'] = instantQ.maxOnlineConsumers;
         instantQInput['capacity'] = instantQ.qcapacity;
         instantQInput['apptState'] = 'ENABLED';
         instantQInput['instantQueue'] = true;

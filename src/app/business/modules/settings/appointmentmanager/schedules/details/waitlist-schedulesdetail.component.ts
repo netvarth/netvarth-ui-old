@@ -361,6 +361,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         //  qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+        maxOnlineConsumers: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         timeSlot: ['', Validators.compose([Validators.required])],
         startdate: [''],
         enddate: [''],
@@ -376,6 +377,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         qendtime: [this.dend_time, Validators.compose([Validators.required])],
         // qcapacity: [10, Validators.compose([Validators.required, Validators.maxLength(4)])],
         qserveonce: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
+        maxOnlineConsumers: [1, Validators.compose([Validators.required, Validators.maxLength(4)])],
         tokennum: [''],
         timeSlot: ['', Validators.compose([Validators.required])],
         startdate: [''],
@@ -415,6 +417,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       qendtime: edtime || null,
       // qcapacity: this.queue_data.capacity || null,
       qserveonce: this.queue_data.parallelServing || null,
+      maxOnlineConsumers: this.queue_data.consumerParallelServing,
       timeSlot: this.queue_data.timeDuration || 0,
       startdate: this.queue_data.apptSchedule.startDate || null,
       enddate: this.queue_data.apptSchedule.terminator.endDate,
@@ -587,7 +590,12 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
       // }
       // Numeric validation
       if (isNaN(form_data.qserveonce)) {
-        const error = 'Please enter a numeric value for resources available';
+        const error = 'Please enter a numeric value for max available';
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        return;
+      }
+      if (isNaN(form_data.maxOnlineConsumers)) {
+        const error = 'Please enter a numeric value for Max online bookings per slot';
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         return;
       }
@@ -656,6 +664,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
         'apptSchedule': schedulejson,
         'apptState': 'ENABLED',
         'parallelServing': form_data.qserveonce,
+        'consumerParallelServing': form_data.maxOnlineConsumers,
         // 'capacity': form_data.qcapacity,
         'location': this.selected_locationId,
         'services': selser,

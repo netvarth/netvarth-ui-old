@@ -79,8 +79,13 @@
                                         </div>
                                         <div class="c-ot row col-sm-12">
                                             <div class="item">
-                                                <span class="ttle">Resources available</span> <span
+                                                <!-- Resources available -->
+                                                <span class="ttle">Max bookings per slot</span> <span
                                                     class="icon-customer-served">{{queue_data.parallelServing}}</span>
+                                            </div>
+                                            <div class="item">
+                                                <span class="ttle">Max online bookings per slot</span> <span
+                                                    class="icon-customer-served">{{queue_data.consumerParallelServing}}</span>
                                             </div>
                                             <div class="item">
                                                 <span class="ttle">Start date</span>
@@ -255,6 +260,20 @@
                                     </mat-form-field>
                                     <app-field-error-display
                                         [displayError]="fed_service.isFieldValid(amForm,'qserveonce')" [errorMsgs]="fed_service.getErrorMessage(amForm,'qserveonce',
+                    {
+                      'required' : 'Please enter the resources available' ,
+                      'maxlength' : 'Only 4 digits are allowed'
+                    })">
+                                    </app-field-error-display>
+                                </div>
+                                <div class="mgn-lt-10">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput min="1" max="{{parallellimit}}" type="text" class="number-ip-sm"
+                                            placeholder="Max online bookings per slot *" formControlName="maxOnlineConsumers"
+                                            autocomplete="off" (keypress)="isNumeric($event)" (keyup)="isvalid($event)">
+                                    </mat-form-field>
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(amForm,'maxOnlineConsumers')" [errorMsgs]="fed_service.getErrorMessage(amForm,'maxOnlineConsumers',
                     {
                       'required' : 'Please enter the resources available' ,
                       'maxlength' : 'Only 4 digits are allowed'

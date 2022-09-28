@@ -541,10 +541,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
 
             if (accountS3s['businessProfile']) {
               this.processS3s('businessProfile', accountS3s['businessProfile']);
-              this.titleService.setTitle(this.businessjson.businessName);
-              this.metaService.addTags([
-                { name: 'description', content: this.businessjson.businessDesc }
-              ]);
             }
 
             if (accountS3s['virtualFields']) {
@@ -605,10 +601,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       }
       case 'apptServices': {
         this.setAccountApptServices(result);
-        break;
-      }
-      case 'gallery': {
-        this.setAccountGallery(result);
         break;
       }
       case 'location': {
@@ -792,40 +784,6 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
       }
       this.apptTempArray = this.apptfirstArray;
     });
-  }
-
-  setAccountGallery(res) {
-    this.galleryenabledArr = []; // For showing gallery
-    this.image_list_popup = [];
-    this.tempgalleryjson = res;
-    if (this.tempgalleryjson.length > 5) {
-      this.extra_img_count = this.tempgalleryjson.length - 5;
-    }
-    let indx = 0;
-    if (this.bLogo !== '../../../assets/images/img-null.svg') {
-      this.galleryjson[0] = { keyName: 'logo', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
-      indx = 1;
-    }
-    for (let i = 0; i < this.tempgalleryjson.length; i++) {
-      this.galleryjson[(i + indx)] = this.tempgalleryjson[i];
-    }
-    if (this.galleryjson.length > 0) {
-      this.galleryExists = true;
-      for (let i = 0; i < this.galleryjson.length; i++) {
-        const imgobj = new Image(
-          i,
-          { // modal
-            img: this.galleryjson[i].url,
-            description: this.galleryjson[i].caption || ''
-          });
-        this.image_list_popup.push(imgobj);
-      }
-    }
-    this.imgLength = this.image_list_popup.length;
-    const imgLength = this.image_list_popup.length > 5 ? 5 : this.image_list_popup.length;
-    for (let i = 0; i < imgLength; i++) {
-      this.galleryenabledArr.push(i);
-    }
   }
 
   setAccountLocations(res) {
@@ -2134,5 +2092,7 @@ export class DepartmentServicePageComponent implements OnInit, AfterViewInit, On
     } else {
       this.providerDetClicked(actionObj['userId']);
     }
+  }
+  actionPerformed(action) {
   }
 }

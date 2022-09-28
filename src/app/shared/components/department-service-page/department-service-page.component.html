@@ -27,21 +27,24 @@
                     <div class="panel-body no-padding pad-bt-50">
                         <div class="no-padding" [ngClass]="templateJson.theme?templateJson.theme: ''">
                             <div class="section">
-                                <div *ngIf="templateJson && templateJson['logo'] && templateJson && templateJson['logo_position']==='top'"
-                                    id="pageheader" [innerHtml]="templateJson.headerTitle | safeHtml"></div>
-                                <div class="pageitem">
+                                <div class="col-xs-12 mgn-up-10 no-padding">
+                                    <app-basic-profile (actionPerformed)="actionPerformed($event)" [businessProfile]="businessjson" [selectedLocation]="selectedLocation" [templateJson]="templateJson"></app-basic-profile>
+                                </div>
+                                <!-- <div *ngIf="templateJson && templateJson['logo'] && templateJson && templateJson['logo_position']==='top'"
+                                    id="pageheader" [innerHtml]="templateJson.headerTitle | safeHtml"></div> -->
+                                <!-- <div class="pageitem">
                                     <div class="col">
                                         <img src="{{templateJson && templateJson['logo']?templateJson['logo']:''}}"><br>
                                     </div>
                                 </div>
                                 <div *ngIf="templateJson && templateJson['logo_position']!=='top'" id="pageheader"
                                     [innerHtml]="templateJson.headerTitle | safeHtml">
-                                </div>
+                                </div> -->
                                 <div class="clearfix"></div>
-                                <div id="pageheader" class="text-center mgn-up-10" *ngIf="templateJson.showEnquiry">
+                                <!-- <div id="pageheader" class="text-center mgn-up-10" *ngIf="templateJson.showEnquiry">
                                     <button mat-button class="btn_round" (click)="communicateHandler()"> Send Enquiry
                                     </button>
-                                </div>
+                                </div> -->
                                 <div class="pageitem" [innerHtml]="templateJson.headerDescription | safeHtml"
                                     *ngIf="templateJson.headerDescription!=''">
                                 </div>
