@@ -6,6 +6,7 @@ import { GroupStorageService } from '../../../../../../../src/app/shared/service
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { ViewFileComponent } from './view-file/view-file.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 
 @Component({
   selector: 'app-loanDetails',
@@ -112,23 +113,36 @@ export class loanDetailsComponent implements OnInit {
     this.location.back();
   }
   sanctionLoan() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        timetype: 3,
-        from: "creditofficer"
-      }
-    };
-    this.snackbarService.openSnackBar("Loan Sanctioned Successfully");
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     timetype: 1,
+    //     from: "creditofficer"
+    //   }
+    // };
+    this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
   }
   redirectLoan() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'redirected'
+
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "remarks"
       }
-    };
-    this.snackbarService.openSnackBar("Loan Redirected Successfully");
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data) {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'redirected'
+            }
+          };
+          this.snackbarService.openSnackBar("Loan Redirected Successfully");
+          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+        }
+      });
   }
   rejectLoan() {
     const navigationExtras: NavigationExtras = {

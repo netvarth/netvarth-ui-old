@@ -96,7 +96,7 @@ export class CreateComponent implements OnInit {
         panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': '  All added items in your cart for different Provider will be removed ! '
+          from: 'loancreate'
         }
       });
       dialogRef.afterClosed().subscribe(result => {

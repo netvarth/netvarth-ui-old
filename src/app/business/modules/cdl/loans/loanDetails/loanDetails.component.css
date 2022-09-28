@@ -166,6 +166,10 @@
   color: #0073FF;
 }
 
+.remarks-card {
+  background-color: #FFF7F3 !important;
+}
+
 .btn-primary {
   background-color: #1e4079 !important;
   border-color: #1e4070 !important;

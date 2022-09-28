@@ -17,19 +17,19 @@ export class LoansComponent implements OnInit {
       'loanId': 101,
       'CustomerName': 'David',
       'Dealer': 'Venus',
-      'status': 'approved'
+      'status': 'pending'
     },
     {
       'loanId': 102,
       'CustomerName': 'Aswin',
       'Dealer': 'Magnus',
-      'status': 'approved'
+      'status': 'pending'
     },
     {
       'loanId': 103,
       'CustomerName': 'Atul',
       'Dealer': 'Asian Choice',
-      'status': 'approved'
+      'status': 'pending'
     },
     {
       'loanId': 104,
@@ -41,7 +41,7 @@ export class LoansComponent implements OnInit {
       'loanId': 105,
       'CustomerName': 'Babu',
       'Dealer': 'T Mobiles',
-      'status': 'redirected'
+      'status': 'rejected'
     },
     {
       'loanId': 106,

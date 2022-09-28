@@ -75,13 +75,19 @@ export class DealerComponent implements OnInit {
   }
 
   showDealer(dealer) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        dealer: dealer.dealer,
-        status: dealer.status
-      }
+    if (this.type == 'requested') {
+      this.router.navigate(['provider', 'cdl', 'dealers', 'create']);
     }
-    this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
+    else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          dealer: dealer.dealer,
+          status: dealer.status
+        }
+      }
+      this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
+    }
+
   }
 
 }

@@ -44,48 +44,48 @@ export class CdlComponent implements OnInit {
       'loanId': 103,
       'customerName': 'Atul',
       'amount': '35000',
-      'status': 'in progress',
+      'status': 'pending',
       'date': '26/09/2022'
     },
     {
       'loanId': 111,
       'customerName': 'Krishna',
       'amount': '35000',
-      'status': 'in progress',
+      'status': 'pending',
       'date': '24/09/2022'
     },
     {
       'loanId': 124,
       'customerName': 'Sravan',
       'amount': '35000',
-      'status': 'in progress',
+      'status': 'pending',
       'date': '26/09/2022'
     },
     {
       'loanId': 131,
       'customerName': 'Davika',
-      'amount': '75000',
+      'amount': '35000',
       'status': 'approved',
       'date': '25/09/2022'
     },
     {
       'loanId': 105,
       'customerName': 'Babu',
-      'amount': '65000',
+      'amount': '25000',
       'status': 'auto approved',
       'date': '24/09/2022'
     },
     {
       'loanId': 121,
       'customerName': 'Adarsh',
-      'amount': '65000',
+      'amount': '15000',
       'status': 'auto approved',
       'date': '24/09/2022'
     },
     {
       'loanId': 106,
       'customerName': 'Atul',
-      'amount': '674000',
+      'amount': '274000',
       'status': 'rejected',
       'date': '23/09/2022'
     },

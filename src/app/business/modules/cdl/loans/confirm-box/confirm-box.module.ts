@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ConfirmBoxComponent } from './confirm-box.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -9,7 +10,8 @@ import { ConfirmBoxComponent } from './confirm-box.component';
     ConfirmBoxComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    MatDialogModule
   ]
 })
 export class ConfirmBoxModule { }

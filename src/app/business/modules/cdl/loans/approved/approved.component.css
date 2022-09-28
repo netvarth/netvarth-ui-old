@@ -99,7 +99,9 @@ input[type="file"] {
 }
 
 
-
+.img-fluid {
+  padding-bottom: 0px !important;
+}
 
 
 /* File Input Styles  */

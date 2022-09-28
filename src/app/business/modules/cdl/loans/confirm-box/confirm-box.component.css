@@ -8,12 +8,17 @@
   color: rgb(123, 117, 117);
 }
 
+.name-title {
+  font-size: 18px !important;
+  color: #02060d !important;
+}
+
 .btn-primary {
   background-color: #1e4079 !important;
   border-color: #1e4070 !important;
   color: #fff !important;
   font-weight: 100 !important;
-  border-radius: 10px !important;
+  border-radius: 5px !important;
 }
 
 .fa-times {

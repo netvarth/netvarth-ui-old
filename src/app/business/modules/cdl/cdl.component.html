@@ -248,7 +248,7 @@
           <select class="form-control" (change)="transform($event)">
             <option value="all"><span class="text-capitalize">All Loans</span></option>
             <option value="approved"><span class="text-capitalize">Approved Loans</span></option>
-            <option value="in progress"><span class="text-capitalize">In Progress Loans</span></option>
+            <option value="pending"><span class="text-capitalize">Pending Loans</span></option>
             <option value="redirected"><span class="text-capitalize">Redirected Loans</span></option>
             <option value="rejected"><span class="text-capitalize">Rejected Loans</span></option>
           </select>
@@ -286,7 +286,7 @@
                 <td class="text-capitalize">
                   <span [class.active]="loan.status == 'approved' || loan.status == 'auto approved'"
                     [class.inactive]="loan.status == 'rejected'" [class.requested]="loan.status == 'redirected'"
-                    [class.progress]="loan.status == 'in progress'">{{loan.status}}</span>
+                    [class.progress]="loan.status == 'pending'">{{loan.status}}</span>
                 </td>
                 <td class="text-capitalize">
                   <span>{{loan.date}}</span>

@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirm-box',
@@ -7,6 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./confirm-box.component.css']
 })
 export class ConfirmBoxComponent implements OnInit {
+  from: any;
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -17,15 +19,24 @@ export class ConfirmBoxComponent implements OnInit {
   };
   constructor(
     public dialogRef: MatDialogRef<ConfirmBoxComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private router: Router
   ) {
 
   }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.checked()
-    }, 3500)
+    this.from = this.data.from;
+    if (this.from && this.from == 'loancreate') {
+      setTimeout(() => {
+        this.checked()
+      }, 3500);
+    }
+  }
+
+  goHome() {
+    this.close();
+    this.router.navigate(['provider', 'cdl'])
   }
 
   onOtpChange(event) {

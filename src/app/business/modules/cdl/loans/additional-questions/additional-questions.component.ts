@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 @Component({
   selector: 'app-additional-questions',
   templateUrl: './additional-questions.component.html',
@@ -10,14 +11,29 @@ export class AdditionalQuestionsComponent implements OnInit {
 
   constructor(
     private location: Location,
-    private router: Router
+    private dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
   }
   submit() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: 'additionalqa'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+
+      }
+    });
   }
+
+
+
 
 
   goBack() {

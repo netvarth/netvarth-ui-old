@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-approved',
@@ -15,11 +16,13 @@ export class ApprovedComponent implements OnInit {
   scheme: any;
   verification = false;
   accountverification = false;
+  user: any;
   constructor(
     private location: Location,
     private dialog: MatDialog,
     private router: Router,
-    private activated_route: ActivatedRoute
+    private activated_route: ActivatedRoute,
+    private groupService: GroupStorageService
 
 
   ) { }
@@ -33,6 +36,7 @@ export class ApprovedComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.activated_route.queryParams.subscribe((params) => {
       if (params && params.timetype) {
         this.timetype = params.timetype;
@@ -52,7 +56,10 @@ export class ApprovedComponent implements OnInit {
   }
 
   goNext() {
-    if (this.timetype >= 1) {
+    if (this.timetype == 1 && this.user.userType == 2) {
+      this.timetype = 3;
+    }
+    else if (this.timetype >= 1) {
       this.timetype = this.timetype + 1;
       console.log("this.timetype", this.timetype);
     }
