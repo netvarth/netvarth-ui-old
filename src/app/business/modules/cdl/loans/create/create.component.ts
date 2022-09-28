@@ -87,40 +87,45 @@ export class CreateComponent implements OnInit {
   }
 
   checkELigibility() {
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        'message': '  All added items in your cart for different Provider will be removed ! '
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result = "eligible") {
-          if (this.totalPayment <= 50000) {
-            this.snackbarService.openSnackBar("Eligibility Calculation Done");
-            this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
-          }
-          else if (this.totalPayment > 50000 && this.totalPayment <= 200000) {
-            this.router.navigate(['provider', 'cdl', 'loans', 'additionalqa']);
-          }
-          else {
-            this.snackbarService.openSnackBar("Sorry,This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
-            const navigationExtras: NavigationExtras = {
-              queryParams: {
-                type: 'rejected'
-              }
-            }
-            this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
-          }
-
+    if (this.totalPayment == 0) {
+      this.snackbarService.openSnackBar("Please Fill All Fields", { 'panelClass': 'snackbarerror' });
+    }
+    else {
+      const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': '  All added items in your cart for different Provider will be removed ! '
         }
-      }
-      else {
-        console.log("Data Not Saved")
-      }
-    });
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result = "eligible") {
+            if (this.totalPayment <= 50000) {
+              this.snackbarService.openSnackBar("Eligibility Calculation Done");
+              this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+            }
+            else if (this.totalPayment > 50000 && this.totalPayment <= 200000) {
+              this.router.navigate(['provider', 'cdl', 'loans', 'additionalqa']);
+            }
+            else {
+              this.snackbarService.openSnackBar("Sorry,This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
+              const navigationExtras: NavigationExtras = {
+                queryParams: {
+                  type: 'rejected'
+                }
+              }
+              this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+            }
+
+          }
+        }
+        else {
+          console.log("Data Not Saved")
+        }
+      });
+    }
   }
 
   verifyotp() {
