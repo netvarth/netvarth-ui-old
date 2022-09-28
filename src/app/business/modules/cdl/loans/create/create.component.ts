@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
@@ -29,6 +29,9 @@ export class CreateComponent implements OnInit {
   pincode: any = '';
   addresscheck: any = false;
   showaddressfields: any = false;
+  loanAmount: any = 0;
+  totalPayment: any = 0;
+  downPayment: any = 0;
   constructor(
     private location: Location,
     private router: Router,
@@ -95,8 +98,23 @@ export class CreateComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (result = "eligible") {
-          this.snackbarService.openSnackBar("Eligibility Calculation Done");
-          this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+          if (this.totalPayment <= 50000) {
+            this.snackbarService.openSnackBar("Eligibility Calculation Done");
+            this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+          }
+          else if (this.totalPayment > 50000 && this.totalPayment <= 200000) {
+            this.router.navigate(['provider', 'cdl', 'loans', 'additionalqa']);
+          }
+          else {
+            this.snackbarService.openSnackBar("Sorry,This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                type: 'rejected'
+              }
+            }
+            this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+          }
+
         }
       }
       else {
@@ -178,6 +196,13 @@ export class CreateComponent implements OnInit {
       }
     });
     return can_remove;
+  }
+
+
+  payment(event) {
+    this.totalPayment = event.target.value;
+    this.downPayment = Math.round(this.totalPayment * 0.2);
+    this.loanAmount = Math.round(this.totalPayment - this.downPayment);
   }
 
   verifypan() {
