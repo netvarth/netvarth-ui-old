@@ -44,7 +44,7 @@ export class DealerComponent implements OnInit {
       this.dealers = [
         {
           'dealerId': 101,
-          'dealer': 'david',
+          'dealer': 'MyG Thrissur',
           'status': 'approved',
           'issuedDate': '19/08/2022'
         },
@@ -75,19 +75,14 @@ export class DealerComponent implements OnInit {
   }
 
   showDealer(dealer) {
-    if (this.type == 'requested') {
-      this.router.navigate(['provider', 'cdl', 'dealers', 'create']);
-    }
-    else {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          dealer: dealer.dealer,
-          status: dealer.status
-        }
-      }
-      this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
-    }
 
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        dealer: dealer.dealer,
+        status: dealer.status
+      }
+    }
+    this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
   }
 
 }

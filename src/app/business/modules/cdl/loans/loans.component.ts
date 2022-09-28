@@ -15,7 +15,7 @@ export class LoansComponent implements OnInit {
   statusLoansList: any = [
     {
       'loanId': 101,
-      'CustomerName': 'David',
+      'CustomerName': 'Narendra',
       'Dealer': 'Venus',
       'status': 'pending'
     },
@@ -42,6 +42,12 @@ export class LoansComponent implements OnInit {
       'CustomerName': 'Babu',
       'Dealer': 'T Mobiles',
       'status': 'rejected'
+    },
+    {
+      'loanId': 105,
+      'CustomerName': 'Babu',
+      'Dealer': 'T Mobiles',
+      'status': 'redirected'
     },
     {
       'loanId': 106,

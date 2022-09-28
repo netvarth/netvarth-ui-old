@@ -72,5 +72,7 @@ export class ViewDealerComponent implements OnInit {
     };
     this.router.navigate(['provider', 'cdl', 'loans', 'loanDetails'], navigationExtras);
   }
-
+  dealerApproved() {
+    this.router.navigate(['provider', 'cdl', 'dealers']);
+  }
 }

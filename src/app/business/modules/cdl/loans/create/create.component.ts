@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { NavigationExtras, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
@@ -32,16 +32,54 @@ export class CreateComponent implements OnInit {
   loanAmount: any = 0;
   totalPayment: any = 0;
   downPayment: any = 0;
+  phone: any = '';
+  name: any = '';
+  email: any = '';
+  aadhar: any = '';
+  pan: any = '';
+  salary: any = '';
+  office: any = '';
+  emi: any = '';
+  remarks: any = '';
   constructor(
     private location: Location,
     private router: Router,
     private dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private activated_route: ActivatedRoute
 
 
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
+    this.activated_route.queryParams.subscribe((params) => {
+      console.log('params', params);
+      if (params) {
+        if (params.type == 'action') {
+          this.phone = '9854785868';
+          this.name = 'Adarsh';
+          this.email = 'adarshk@gmail.com';
+          this.aadhar = 254878548956;
+          this.address1 = 'Vellara Building';
+          this.address2 = 'Museum CrossLane';
+          this.city = 'Thrissur';
+          this.state = 'Kerala';
+          this.pincode = '518510';
+          this.addresscheck = true;
+          this.pan = 'SDERF2541K';
+          this.salary = '45000';
+          this.office = 'Thrissur';
+          this.emi = '3';
+          this.remarks = "Aadhar and Pan are Verified";
+          this.aadharverification = true;
+          this.verification = true;
+          this.emailverification = true;
+          this.panverification = true;
+        }
+      }
+    });
   }
 
   resetErrors() {

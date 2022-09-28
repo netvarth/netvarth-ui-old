@@ -7,7 +7,7 @@
   </div>
 </section>
 <section>
-  <div class="row mb-2">
+  <div class="row mb-2" *ngIf="user.userType!=2">
 
     <div class="card remarks-card marginClass px-5">
       <div class="my-2">
@@ -18,15 +18,17 @@
           <span>Sorry your loan was rejected because of your credit score</span>
         </div>
       </div>
-      <div>Remarks</div>
-      <span class="details-title">Aadhar and Pan are verified</span>
+      <div *ngIf="status!='pending'">
+        <div>Remarks</div>
+        <span class="details-title">Aadhar and Pan are verified</span>
+      </div>
     </div>
   </div>
-  <div class="row">
+  <div class="row mt-2">
     <div class="col-md-5">
       <div class="card">
 
-        <div *ngIf="status=='redirected'" class="text-warning mt-2 text-right">
+        <div *ngIf="status=='redirected' && user.userType!=2" class="text-warning mt-2 text-right">
           <div class="btn btn-action" (click)="takeAction()">Take Actions</div>
         </div>
         <div class="text-center mt-2">

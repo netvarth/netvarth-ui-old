@@ -145,13 +145,26 @@ export class loanDetailsComponent implements OnInit {
       });
   }
   rejectLoan() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'rejected'
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "remarks"
       }
-    };
-    this.snackbarService.openSnackBar("Loan Rejected Successfully");
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data) {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'rejected'
+            }
+          };
+          this.snackbarService.openSnackBar("Loan Rejected Successfully");
+          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+        }
+      });
   }
 
 
@@ -169,7 +182,12 @@ export class loanDetailsComponent implements OnInit {
   }
 
   takeAction() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'create']);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'action'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'loans', 'create'], navigationExtras);
   }
 
 }

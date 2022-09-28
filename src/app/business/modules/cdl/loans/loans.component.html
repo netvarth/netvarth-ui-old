@@ -39,7 +39,8 @@
                   <div class="approvedColor text-capitalize" *ngIf="item && item.status && item.status==='approved'"><i
                       class="fa fa-check-circle"></i>&nbsp;{{item.status}}
                   </div>
-                  <div class="pendingColor text-capitalize" *ngIf="item && item.status && item.status==='pending'"><i
+                  <div class="pendingColor text-capitalize"
+                    *ngIf="item && item.status && (item.status==='pending' || item.status==='redirected')"><i
                       class="fa fa-spinner"></i>&nbsp;{{item.status}}
                   </div>
                   <div class="rejectedColor text-capitalize" *ngIf="item && item.status && item.status==='rejected'"><i
