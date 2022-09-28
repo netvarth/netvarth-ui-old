@@ -630,6 +630,7 @@ export class CreateTaskComponent implements OnInit {
               (error) => {
                 if (error) {
                   setTimeout(() => {
+                    _this.api_loading_CreateActivity = false;
                     reject(error);
                     _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                   }, projectConstants.TIMEOUT_DELAY);
@@ -667,6 +668,7 @@ export class CreateTaskComponent implements OnInit {
             },
               (error) => {
                 if (error) {
+                  _this.api_loading_CreateActivity = false;
                   setTimeout(() => {
                     reject(error);
                     _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
