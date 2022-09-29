@@ -1232,4 +1232,5 @@ export const projectConstantsLocal = {
   // PATH:'https://scale.jaldee.com/',
   // PATH:'https://www.jaldee.com/',,
   // PATH:'https://test.jaldee.com/jaldee/',
+  SAPATH:"https://sascale.jaldee.com/superadmin/rest/mgmt/",
 };

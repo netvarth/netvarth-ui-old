@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { CommonDataStorageService } from '../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../app.component';
+import { projectConstantsLocal } from '../../../../src/app/shared/constants/project-constants';
 // Import RxJs required methods
 import { ServiceMeta } from '../../shared/services/service-meta';
 import { GroupStorageService } from '../../shared/services/group-storage.service';
@@ -2657,5 +2658,11 @@ export class ProviderServices {
         )
       }
     })
+  }
+  getSearchCustomer(account:any,name:any){
+    // console.log('projectConstants.SAPATH',projectConstantsLocal.SAPATH)
+    const url=projectConstantsLocal.SAPATH + 'searchdetails/' + account+ '/providerconsumer/search?name='+ name + '*';
+    // const url=projectConstantsLocal.SAPATH + 'searchdetails/' + account+ '/providerconsumer/search?name=a*s';
+     return  this.servicemeta.httpGet(url);
   }
 }

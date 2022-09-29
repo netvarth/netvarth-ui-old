@@ -625,4 +625,8 @@ export class CrmService {
     const url = 'provider/lead/dashboard/status';
     return this.servicemeta.httpGet(url);
   }
+  // mandatoryFilesactivity(taskUid,body){
+  //   const url='provider/task/'+ taskUid +'/withfile'
+  //     return this.servicemeta.httpPut(url, body);
+  // }
 }

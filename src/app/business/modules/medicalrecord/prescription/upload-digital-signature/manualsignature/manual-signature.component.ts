@@ -188,6 +188,7 @@ export class ManualSignatureComponent implements OnInit {
     const doc= document.getElementById("sign_canvas");
   this.signaturePad.set('canvasWidth', doc.offsetWidth);
     const canvas:any = document.querySelector("canvas");
+    console.log('window.devicePixelRatio',window.devicePixelRatio)
   const ratio =  Math.max(window.devicePixelRatio || 2, 2);
   if(canvas && canvas.offsetWidth * ratio){
     canvas.width = canvas.offsetWidth * ratio;

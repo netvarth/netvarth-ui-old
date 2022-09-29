@@ -366,8 +366,13 @@
       <div class="notesWidth">
         <div class="notesSection" *ngIf=" activityType !=='UpdateFollowUP' ">
           <div class="fiesWithIcon">
-            <div *ngIf="files">
-              <span class="card-title"><b>{{files}}</b></span>
+            <!-- <div *ngIf="files">
+              <span class="card-title"><b>2{{files}}</b></span>
+            </div> -->
+            <div style="display:flex;gap:5px" *ngIf="files">
+              <div class="card-title"><b *ngIf="files">{{files}}</b></div>
+              <div *ngIf="(taskDetails && taskDetails.status && taskDetails.status.name) && 
+              (taskDetails.status.name==='New' ||  taskDetails.status.name==='Completed') && activityType !=='UpdateFollowUP'" class="astericColor">*</div>
             </div>
             <div *ngIf="taskDetails && taskDetails.attachments && taskDetails.attachments.length>0">
               <span (click)="attatchmentDialog(taskDetails.attachments)"
