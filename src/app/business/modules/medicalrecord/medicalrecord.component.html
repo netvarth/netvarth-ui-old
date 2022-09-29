@@ -53,7 +53,7 @@
             </div>
           </div>
           <div *ngIf="customerDetails && (customerDetails.phoneNo) " class="mgTop">
-            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) && 
+            <div class="nameClr" *ngIf="customerDetails && (customerDetails.phoneNo || customerDetails.countryCode) &&
             (customerDetails.phoneNo !== ' ')">Phone</div>
             <div class="infoDetails">
               <div class="infoDetails" style="gap:5px !important">
@@ -95,8 +95,7 @@
         </div>
         <!---dob && email end---->
         <!---prescriptiojn start-->
-        <div class="prescriptionOuter" (click)="addPrescriptionAndClinical(patientId,'createPrescription')"
-          *ngIf=" prescriptionOuter">
+        <div class="prescriptionOuter" (click)="prescriptionSelect(patientId)" *ngIf=" prescriptionOuter">
           <div>
             <img class="imageSize" src="/assets/images/medicalReportIcon/CreatePrescription.png" />
           </div>
@@ -300,7 +299,7 @@
     <div class=" col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10"
       *ngIf="showHideAddPrescription">
       <div>
-        <app-prescription [showHideActivityTYpe]="showHideActivityTYpe"></app-prescription>
+        <app-prescription [showHideActivityTYpe]="showHideActivityTYpe" [drugs]="drugList"></app-prescription>
       </div>
     </div>
     <!----clinical notess ection start-->
@@ -337,7 +336,7 @@
               </div>
               <div class="nameAgeYear"
                 *ngIf="customerDetails && (customerDetails.age && customerDetails.age.year) || customerDetails.gender">
-                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetailsAge && (customerDetails && customerDetails.age && 
+                <div style="color: #797B80 !important" class="nameClrOther" *ngIf="customerDetailsAge && (customerDetails && customerDetails.age &&
                 (customerDetails.age.year==='' || customerDetails.age.year===undefined))">{{customerDetailsAge}} years,
                 </div>
                 <div style="color: #797B80 !important" class="nameClrOther"

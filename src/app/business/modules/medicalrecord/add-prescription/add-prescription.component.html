@@ -1,5 +1,4 @@
-
-  <!-- <section>
+<!-- <section>
     <div class="card title-gb">
       <h5 class="mgn-up-10 medicalRecord">
         <span class="fa fa-arrow-left pointer-cursor clrChnge" (click)="goback()"></span>
@@ -7,77 +6,79 @@
       </h5>
     </div>
   </section> -->
-  
-  <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
-  <section *ngIf="!api_loading" >
-    <div>
-        <span class="table-heading"><b>Prescription</b></span>
-    </div>
-    <div >
-        <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="drugdetail">
-            <div>
-              <div class="form-group">
-                <label>Medicine name & size</label>
-                <input type="text" class="form-control" (keypress)="clearError($event)" placeholder="Medicine name & size"
-                  formControlName="medicine_name" />
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
+
+<app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+<section *ngIf="!api_loading">
+  <div>
+    <span class="table-heading"><b>Prescription</b></span>
+  </div>
+  <div>
+    <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="drugdetail">
+      <div>
+        <div class="form-group">
+          <label>Medicine name & size</label>
+          <input type="text" class="form-control" (keypress)="clearError($event)" placeholder="Medicine name & size"
+            formControlName="medicine_name" />
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
           {
           'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
           })">
-                </app-field-error-display>
-              </div>
-          
-              <div class="form-group">
-                <label>Duration in days</label>
-                <input type="text" class="form-control" (keypress)="clearError($event)" formControlName="duration"
-                  placeholder="Duration in days" />
-              </div>
-              <div class="form-group">
-                <label>Frequency per day</label>
-                <input type="text" class="form-control" (keypress)="clearError($event)" placeholder="Frequency per day"
-                  formControlName="frequency" />
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
+          </app-field-error-display>
+        </div>
+
+        <div class="form-group">
+          <label>Duration in days</label>
+          <input type="text" class="form-control" (keypress)="clearError($event)" formControlName="duration"
+            placeholder="Duration in days" />
+        </div>
+        <div class="form-group">
+          <label>Frequency per day</label>
+          <input type="text" class="form-control" (keypress)="clearError($event)" placeholder="Frequency per day"
+            formControlName="frequency" />
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
           {
           'maxlength' : 'Frequency can contain only ' + maxChars + ' characters'
           })">
-                </app-field-error-display>
-              </div>
-              <div class="form-group">
-                <label>Dosage per consumption</label>
-                <input type="text" class="form-control" (keypress)="clearError($event)" placeholder="Dosage per consumption"
-                  formControlName="dosage" />
-              </div>
-              <div class="form-group">
-                <label>Additional instructions</label>
-                <div class="input-group">
-                  <div class="input-group-prepend"></div>
-                  <textarea  (keyup)="autoGrowTextZone($event)" type="text" class="form-control" (keypress)="clearError($event)" id="instructions"
-                    placeholder="Additional instructions" formControlName="instructions" maxlength="500"></textarea>
-                </div>
-                <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
+          </app-field-error-display>
+        </div>
+        <div class="form-group">
+          <label>Dosage per consumption</label>
+          <input type="text" class="form-control" (keypress)="clearError($event)" placeholder="Dosage per consumption"
+            formControlName="dosage" />
+        </div>
+        <div class="form-group">
+          <label>Additional instructions</label>
+          <div class="input-group">
+            <div class="input-group-prepend"></div>
+            <textarea (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
+              (keypress)="clearError($event)" id="instructions" placeholder="Additional instructions"
+              formControlName="instructions" maxlength="500"></textarea>
+          </div>
+          <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
           {
-          
+
           'maxlength' : 'Additional instructions can contain only ' + maxCharslong + ' characters'
           })">
-                </app-field-error-display>
-              </div>
-            </div>
-            <div>
-              <div class="col-md-10 no-padding glbl-seting-heder btnClass">
-                <!-- <button *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1 style-button btn-primary"
+          </app-field-error-display>
+        </div>
+      </div>
+      <div>
+        <div class="col-md-10 no-padding glbl-seting-heder btnClass">
+          <!-- <button *ngIf="formMode != 'edit'" type="button" mat-button class="cs-btn bt1 style-button btn-primary"
                   [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)"> Save & Add Another</button>
                 <button type="submit" mat-button class="cs-btn bt1 style-button btn-primary" [disabled]="!amForm.valid ">Save &
                   Close</button> -->
-                  <button type="button"class="btn btn-primary font-weight-bold cancelBtn"(click)=" goback()">Cancel</button>
-                  <button type="button"class="btn btn-primary font-weight-bold confirmBtn"  [disabled]="!amForm.valid " (click)="saveAndAddOther(amForm.value)">
-                    <!-- <app-common-innerloading-spinner ></app-common-innerloading-spinner> -->
-                    <span >Save</span>
-                </button>
-              </div>
-            </div>
-          </form>
-          <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
-          <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
-          </app-form-success-display>
-    </div>
-  </section>
+          <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)=" goback()">Cancel</button>
+          <button type="button" class="btn btn-primary font-weight-bold confirmBtn" [disabled]="!amForm.valid "
+            (click)="saveAndAddOther(amForm.value)">
+            <!-- <app-common-innerloading-spinner ></app-common-innerloading-spinner> -->
+            <span>Save</span>
+          </button>
+        </div>
+      </div>
+    </form>
+    <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+    <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
+    </app-form-success-display>
+  </div>
+</section>

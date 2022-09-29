@@ -1,0 +1,51 @@
+<div>
+  <div class="text-center px-3 py-2 d-flex justify-content-between">
+    <div (click)="close()">
+      <span class="font-weight-bold">Save</span>
+    </div>
+    <div class="pointer-cursor" (click)="close()">
+      <i class="fa fa-times"></i>
+    </div>
+  </div>
+  <hr class="my-0 py-0">
+  <div *ngIf="!templateName">
+    <div class="p-0 pt-3">
+      <div class="mb-2 text-center">
+        <div>
+          <img width="250" src=" ../../../../assets/images/mr-icons/saveastemplate.png">
+        </div>
+        <div>
+          <span class="font-weight-bold">Do You Want to Save this Prescription as Template ?</span>
+        </div>
+      </div>
+    </div>
+    <div class="text-center m-2" class="d-flex justify-content-center">
+      <div class="btn btn-primary mx-2" (click)="save()">Yes</div>
+      <div class="btn btn-primary mx-2" (click)="dontSave()">No</div>
+    </div>
+  </div>
+  <div *ngIf="templateName">
+    <div>
+      <form>
+        <div class="mx-4">
+          <div class="bggrey my-2">
+            <div>
+              <div>
+                <div class="form-title">Template Name</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="templateNameSave($event)" type="text" placeholder="Enter Template Name to Save"
+                  class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+          <div class="text-center m-2" class="d-flex justify-content-center">
+            <div class="btn btn-primary mx-2" (click)="saveTemplate()">Save</div>
+            <div class="btn btn-primary mx-2" (click)="cancel()">Cancel</div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <br>
+</div>

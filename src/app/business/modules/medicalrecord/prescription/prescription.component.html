@@ -10,36 +10,43 @@
 <ng-container *ngIf="!loading && !viewVisitDetails">
   <div>
     <section *ngIf="!loading" class="shadow mgn-up-10">
-      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes " >
-        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreateAdd" *ngIf="(drugList && uploadlist && uploadlist.length===0) || drugList===undefined">
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding prescriptionNotes ">
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreateAdd"
+          *ngIf="(drugList && uploadlist && uploadlist.length===0) || drugList===undefined">
           <div class="shadow" style="height:100% !important">
-          <div>
-            <span class="table-heading" *ngIf="(tempText==='' || tempText===undefined)"><b> Add new medicine</b></span>
-            <span class="table-heading" *ngIf="(tempText==='edit' || tempText==='update')"><b> View  medicine</b></span>
-        </div>
-        <div >
-            <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" class="drugdetail">
+            <div>
+              <span class="table-heading" *ngIf="(tempText==='' || tempText===undefined)"><b> Add new
+                  medicine</b></span>
+              <span class="table-heading" *ngIf="(tempText==='edit' || tempText==='update')"><b> View
+                  medicine</b></span>
+            </div>
+            <div>
+              <form [formGroup]="amForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
+                class="drugdetail">
                 <div>
                   <div class="form-group">
                     <label>Medicine name & size</label>
-                    <input type="text" class="form-control" (keypress)="clearError($event)" placeholder="Medicine name & size"
-                      formControlName="medicine_name" #medicine_name (ngModelChange)="handleFormControl(medicine_name.value)"/>
-                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')" [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
+                    <input type="text" class="form-control" (keypress)="clearError($event)"
+                      placeholder="Medicine name & size" formControlName="medicine_name" #medicine_name
+                      (ngModelChange)="handleFormControl(medicine_name.value)" />
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'medicine_name')"
+                      [errorMsgs]="fed_service.getErrorMessage(amForm,'medicine_name',
               {
               'maxlength' : ' Medicine Name can contain only ' + maxChars + ' characters'
               })">
                     </app-field-error-display>
                   </div>
-              
+
                   <div class="form-group">
                     <label>Duration in days</label>
-                    <input type="text"  class="form-control" (keypress)="clearError($event)" formControlName="duration"
+                    <input type="text" class="form-control" (keypress)="clearError($event)" formControlName="duration"
                       placeholder="Duration in days" #duration (ngModelChange)="handleFormControl(duration.value)" />
                   </div>
                   <div class="form-group">
                     <label>Frequency per day</label>
-                    <input type="text"  class="form-control" (keypress)="clearError($event)" placeholder="Frequency per day"
-                      formControlName="frequency" #frequency (ngModelChange)="handleFormControl(frequency.value)" />
+                    <input type="text" class="form-control" (keypress)="clearError($event)"
+                      placeholder="Frequency per day" formControlName="frequency" #frequency
+                      (ngModelChange)="handleFormControl(frequency.value)" />
                     <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'frequency')" [errorMsgs]="fed_service.getErrorMessage(amForm,'frequency',
               {
               'maxlength' : 'Frequency can contain only ' + maxChars + ' characters'
@@ -48,19 +55,23 @@
                   </div>
                   <div class="form-group">
                     <label>Dosage per consumption</label>
-                    <input type="text"  class="form-control" (keypress)="clearError($event)" placeholder="Dosage per consumption"
-                      formControlName="dosage" #dosage (ngModelChange)="handleFormControl(dosage.value)" />
+                    <input type="text" class="form-control" (keypress)="clearError($event)"
+                      placeholder="Dosage per consumption" formControlName="dosage" #dosage
+                      (ngModelChange)="handleFormControl(dosage.value)" />
                   </div>
                   <div class="form-group">
                     <label>Additional instructions</label>
                     <div class="input-group">
                       <div class="input-group-prepend"></div>
-                      <textarea #instructions (ngModelChange)="handleFormControl(instructions.value)"  (keyup)="autoGrowTextZone($event)" type="text" class="form-control" (keypress)="clearError($event)" id="instructions"
-                        placeholder="Additional instructions" formControlName="instructions" maxlength="500"></textarea>
+                      <textarea #instructions (ngModelChange)="handleFormControl(instructions.value)"
+                        (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
+                        (keypress)="clearError($event)" id="instructions" placeholder="Additional instructions"
+                        formControlName="instructions" maxlength="500"></textarea>
                     </div>
-                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')" [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
+                    <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'instructions')"
+                      [errorMsgs]="fed_service.getErrorMessage(amForm,'instructions',
               {
-              
+
               'maxlength' : 'Additional instructions can contain only ' + maxCharslong + ' characters'
               })">
                     </app-field-error-display>
@@ -68,56 +79,66 @@
                 </div>
                 <div>
                   <div class="col-md-10 no-padding glbl-seting-heder btnClass">
-                      <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"   [disabled]="addPrescription" 
-                      (click)="saveAndAddOther(amForm.value)"  *ngIf="!api_loading && tempText===''">
-                        <span>Add</span>
-                        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
-                        </app-common-innerloading-spinner>
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn btnWidth"
+                      [disabled]="addPrescription" (click)="saveAndAddOther(amForm.value)"
+                      *ngIf="!api_loading && tempText===''">
+                      <span>Add</span>
+                      <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                      </app-common-innerloading-spinner>
                     </button>
-                    <button type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"   [disabled]="addPrescription" 
-                      *ngIf=" tempText==='update'" (click)="editDrugList('edit',amForm.value,mrId)">
-                        <span >Save</span>
-                        <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
-                        </app-common-innerloading-spinner>
+                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn btnWidth"
+                      [disabled]="addPrescription" *ngIf=" tempText==='update'"
+                      (click)="editDrugList('edit',amForm.value,mrId)">
+                      <span>Save</span>
+                      <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+                      </app-common-innerloading-spinner>
                     </button>
-                    
+
                   </div>
                 </div>
               </form>
-              <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}"></app-field-error-display>
+              <app-field-error-display [displayError]="true" *ngIf="api_error" errorMsg="{{api_error}}">
+              </app-field-error-display>
               <app-form-success-display [displayMsg]="true" *ngIf="api_success" successMsg="{{api_success}}">
               </app-form-success-display>
+            </div>
+          </div>
         </div>
-      </div>
-        </div>
-        <span class="spaanOr" *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length===0 || drugList===undefined">OR</span>
-        <div class="mobileDevice" *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length===0 || drugList===undefined">
+        <span class="spaanOr"
+          *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length===0 || drugList===undefined">OR</span>
+        <div class="mobileDevice"
+          *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length===0 || drugList===undefined">
           <span class="mobileOr">OR</span>
         </div>
 
         <div class="prescriptionNotes" style="width:100% !important;display:block !important">
-          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 filesCreate" *ngIf="uploadlist && drugList && drugList.length===0 || drugList===undefined">
+          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 filesCreate"
+            *ngIf="uploadlist && drugList && drugList.length===0 || drugList===undefined">
             <div class="shadow flexClass">
               <div class="text-dark text-center dashedClass" *ngIf="uploadlist ">
                 <img style="height:50px;width:50px" src="/assets/images/medicalReportIcon/uploadIcon.png" />
                 <div class="fileText" *ngIf="uploadlist && uploadlist.length===0">Click Your Files Here </div>
-                <div  *ngIf="uploadlist && uploadlist.length>0" class="fileText">Check Your Files Here </div>
+                <div *ngIf="uploadlist && uploadlist.length>0" class="fileText">Check Your Files Here </div>
                 <div *ngIf="uploadlist && uploadlist.length===0">
-                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor" (click)="uploadRx(uploadlist)">Upload
+                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor"
+                    (click)="uploadRx(uploadlist)">Upload
                     file</button>
                 </div>
                 <div *ngIf="uploadlist && uploadlist.length>0">
-                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor" (click)="uploadRx(uploadlist)">Check files</button>
+                  <button type="button" class=" font-weight-bold confirmBtn pointer-cursor"
+                    (click)="uploadRx(uploadlist)">Check files</button>
                 </div>
               </div>
             </div>
           </div>
-          <div class="filesCreate" *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0 || drugList===undefined">
+          <div class="filesCreate"
+            *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0 || drugList===undefined">
             <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
                 class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
                 {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
-        
-            <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate" *ngIf="uploadlist && uploadlist.length > 0">
+
+            <div class="p-1 pr-0 col-md-4 col-xs-12 col-sm-12 col-lg-4 filesCreate"
+              *ngIf="uploadlist && uploadlist.length > 0">
               <div class="shadow" style="height:100% !important">
                 <div class="pl-2 uploadedText">Uploaded Prescription</div>
                 <div class="hightLimit">
@@ -129,7 +150,8 @@
                             <img height="35px" width="35px" [src]="getFileType(file.type)" />
                           </div>
                           <div>
-                            <div class="fileName" *ngIf="file && file.originalName">{{originalFilename(file.originalName)}}
+                            <div class="fileName" *ngIf="file && file.originalName">
+                              {{originalFilename(file.originalName)}}
                             </div>
                             <div *ngIf="file && file.imageSize" class="fileSize">
                               {{bytesToSize(file.imageSize)}}
@@ -138,19 +160,21 @@
                         </div>
                         <div class="imageClas">
                           <div (click)="dialogImgView(file)">
-                            <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
-                            #tooltip="matTooltip" matTooltip="Download" [matTooltipPosition]="'below'"/>
+                            <img class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip"
+                              matTooltip="Download" [matTooltipPosition]="'below'" />
                           </div>
                           <div>
-                            <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')" (click)="print('printableArea',manualSignInfo)">
-                              <img class="fileView" src="/assets/images/medicalReportIcon/print.png" 
-                              #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'" />
+                            <div class="Share pointer-cursor" *ngIf="file && !(file.type ==='.pdf')"
+                              (click)="print('printableArea',manualSignInfo)">
+                              <img class="fileView" src="/assets/images/medicalReportIcon/print.png"
+                                #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'" />
                             </div>
                           </div>
                           <div>
-                            <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId,file)">
+                            <div class="Share pointer-cursor"
+                              (click)="shareManualRx('uploadrx',bookingType,bookingId,file)">
                               <img class="fileView" src="/assets/images/medicalReportIcon/share.png" \
-                              #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'"/>
+                                #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'" />
                             </div>
                           </div>
                         </div>
@@ -162,17 +186,17 @@
             </div>
           </div>
           <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate" *ngIf="drugList && drugList.length>0">
-            <div class="shadow prescriptionCard" >
+            <div class="shadow prescriptionCard">
               <div>
                 <span class="table-headingPrescription"><b>Created Prescription</b></span>
-            </div>
+              </div>
               <div class="col-md-12" *ngIf="prescriptionShared" style="font-size: smaller;"><i
                   class="fa fa-lightbulb-o pull-right" aria-hidden="true">&nbsp;Prescription last shared on
                   {{prescriptionSharedTimestamp | date:dateFormatSp}}</i></div>
-              <div style="margin-top: 10px;" >
-                <div >
-                  <div >
-                    <div >
+              <div style="margin-top: 10px;">
+                <div>
+                  <div>
+                    <div>
                       <div>
                         <table class="table">
                           <thead>
@@ -181,11 +205,11 @@
                               <th data-title="Medicine">Medicine</th>
                               <th data-title="Duration(days)">Duration(days)</th>
                               <th data-title="Dosage">Dosage</th>
-                              <th  data-title="Frequency">Frequency</th>
-                              <th  data-title="Instructions">Instructions</th>
+                              <th data-title="Frequency">Frequency</th>
+                              <th data-title="Instructions">Instructions</th>
                               <th data-title="Edit"></th>
-                              <th (click)="print('printableArea',manualSignInfo)" class="pointer-cursor" #tooltip="matTooltip"
-                                matTooltip="Print" [matTooltipPosition]="'below'">
+                              <th (click)="print('printableArea',manualSignInfo)" class="pointer-cursor"
+                                #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'">
                                 <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
                               </th>
                               <th data-title="Delete"></th>
@@ -194,21 +218,27 @@
                           <tbody>
                             <tr *ngFor="let drug of drugList; let i = index;">
                               <td class="tdLeft " data-title="No">{{i+1}}</td>
-                              <td class="tdLeft " data-title="Medicine" >{{drug.medicine_name? drug.medicine_name : ''}}</td>
-                              <td class="tdLeft " data-title="Duration(days)" >{{drug.duration? drug.duration : ''}} </td>
-                              <td class="tdLeft " data-title="Dosage" >{{drug.dosage? drug.dosage : ''}} </td>
-                              <td class="tdLeft " data-title="Frequency" >{{drug.frequency? drug.frequency : ''}}</td>
-                              <td data-title="Instructions" *ngIf="drug " class="Instructions tdLeft2 pointer-cursor" (click)="instructPopUp(drug) ; (drug.instructions !=='')"
-                               [ngClass]="{opacity:drug.instructions==='' }">
-                                <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" 
-                                #tooltip="matTooltip" matTooltip="Instruction" [matTooltipPosition]="'below'" />
+                              <td class="tdLeft " data-title="Medicine">{{drug.medicine_name? drug.medicine_name : ''}}
                               </td>
-                              <td data-title="Edit" *ngIf="drug" class="tdLeft2 pointer-cursor" (click)="updateForm(drug,'update','edit',i,mrId)"
-                                #tooltip="matTooltip" matTooltip="Edit" [matTooltipPosition]="'below'">
+                              <td class="tdLeft " data-title="Duration(days)">{{drug.duration? drug.duration : ''}}
+                              </td>
+                              <td class="tdLeft " data-title="Dosage">{{drug.dosage? drug.dosage : ''}} </td>
+                              <td class="tdLeft " data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
+                              <td data-title="Instructions" *ngIf="drug " class="Instructions tdLeft2 pointer-cursor"
+                                (click)="instructPopUp(drug) ; (drug.instructions !=='')"
+                                [ngClass]="{opacity:drug.instructions==='' }">
+                                <img style="height:20px;width:20px"
+                                  src="/assets/images/medicalReportIcon/instruction.png" #tooltip="matTooltip"
+                                  matTooltip="Instruction" [matTooltipPosition]="'below'" />
+                              </td>
+                              <td data-title="Edit" *ngIf="drug" class="tdLeft2 pointer-cursor"
+                                (click)="updateForm(drug,'update','edit',i,mrId)" #tooltip="matTooltip"
+                                matTooltip="Edit" [matTooltipPosition]="'below'">
                                 <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" />
-                              </td>                        
-                              <td *ngIf="drug" data-title="Delete" class="Share pointer-cursor tdLeft2" (click)="deleteDrug(i,drug)"
-                                #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'">
+                              </td>
+                              <td *ngIf="drug" data-title="Delete" class="Share pointer-cursor tdLeft2"
+                                (click)="deleteDrug(i,drug)" #tooltip="matTooltip" matTooltip="Remove"
+                                [matTooltipPosition]="'below'">
                                 <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/delete.png" />
                               </td>
                             </tr>
@@ -223,202 +253,218 @@
           </div>
         </div>
       </div>
-      <div class="btnPosition" >
-        <button  type="button"class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn cursor-pointer" (click)="saveClose(amForm.value)">Save & Close</button>
+      <div class="btnPosition">
+        <button type="button" class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn cursor-pointer"
+          (click)="saveClose(amForm.value)">Save & Close</button>
       </div>
-      
+
     </section>
   </div>
 </ng-container>
 <ng-container *ngIf="!loading && viewVisitDetails">
-  <div *ngIf="!loading && viewVisitDetails " class=" mgn-up-10 pad-25" [ngClass]="{card: drugList && drugList.length !==0}" >
-  <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" style="display: flex;justify-content: space-between;margin-bottom: 10px;">
-   <div>
-    <span class="table-heading"><b> View prescription</b></span>
-   </div>
-    <div   class="imageClas">
-      <span class=" pointer-cursor" *ngIf="drugList" (click)="shareManualRx('uploadrx',bookingType,bookingId,drugList)"
-      #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'">
-      <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
-  </span>
-    <span (click)="print('printableArea',manualSignInfo)" class=" pointer-cursor" #tooltip="matTooltip" matTooltip="Print"
-      [matTooltipPosition]="'below'">
-      <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
-    </span>
-    <span style="cursor:pointer"> <img #tooltip="matTooltip" matTooltip="Update" [matTooltipPosition]="'below'"
-        (click)="updateEditPrescription(drugList)" style="height:20px;width:20px"
-        src="/assets/images/medicalReportIcon/edit.png" /></span>
-    </div>
-    <div class="imgClasMobile">
-      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item *ngIf="drugList" (click)="shareManualRx('uploadrx',bookingType,bookingId,drugList)" class="gap"> 
-          <div>
-            <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
-          </div>
-          <div>Share</div>
+  <div *ngIf="!loading && viewVisitDetails " class=" mgn-up-10 pad-25"
+    [ngClass]="{card: drugList && drugList.length !==0}">
+    <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0"
+      style="display: flex;justify-content: space-between;margin-bottom: 10px;">
+      <div>
+        <span class="table-heading"><b> View prescription</b></span>
+      </div>
+      <div class="imageClas">
+        <span class=" pointer-cursor" *ngIf="drugList"
+          (click)="shareManualRx('uploadrx',bookingType,bookingId,drugList)" #tooltip="matTooltip" matTooltip="Share"
+          [matTooltipPosition]="'below'">
+          <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
+        </span>
+        <span (click)="print('printableArea',manualSignInfo)" class=" pointer-cursor" #tooltip="matTooltip"
+          matTooltip="Print" [matTooltipPosition]="'below'">
+          <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
+        </span>
+        <span style="cursor:pointer"> <img #tooltip="matTooltip" matTooltip="Update" [matTooltipPosition]="'below'"
+            (click)="updateEditPrescription(drugList)" style="height:20px;width:20px"
+            src="/assets/images/medicalReportIcon/edit.png" /></span>
+      </div>
+      <div class="imgClasMobile">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>more_vert</mat-icon>
         </button>
-        <button mat-menu-item class="gap" (click)="print('printableArea',manualSignInfo)">
-          <div class="Share pointer-cursor" >
-            <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
-          </div>
-          <div>Print</div>
-        </button>
-      <button mat-menu-item (click)="updateEditPrescription(drugList)" class="gap" >
-        <div class="Share pointer-cursor" >
-          <img  style="height:17px;width:17px" src="/assets/images/medicalReportIcon/edit.png" />
-        </div>
-        <div>Edit</div>
-      </button>
-    </mat-menu>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item *ngIf="drugList" (click)="shareManualRx('uploadrx',bookingType,bookingId,drugList)"
+            class="gap">
+            <div>
+              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/share.png" />
+            </div>
+            <div>Share</div>
+          </button>
+          <button mat-menu-item class="gap" (click)="print('printableArea',manualSignInfo)">
+            <div class="Share pointer-cursor">
+              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/print.png" />
+            </div>
+            <div>Print</div>
+          </button>
+          <button mat-menu-item (click)="updateEditPrescription(drugList)" class="gap">
+            <div class="Share pointer-cursor">
+              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/edit.png" />
+            </div>
+            <div>Edit</div>
+          </button>
+        </mat-menu>
+      </div>
     </div>
-  </div>
-  <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" class="overflow" >
-    <div>
-      <table class="table " id="printableArea">
-        <thead class="headerTable">
-          <tr>
-            <th>No</th>
-            <th class="headerName">Medicine</th>
-            <th>Duration(days)</th>
-            <th>Dosage</th>
-            <th>Frequency</th>
-            <th>Instructions</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let drug of drugList; let i = index;" class="tableRow">
-            <td class="tdLeft"  data-title="No" *ngIf="drug">{{i+1}}</td>
-            <td class="tdLeft" data-title="Medicine" >{{drug.medicine_name? drug.medicine_name : ''}}</td>
-            <td class="tdLeft" data-title="Duration(days)" >{{drug.duration? drug.duration : ''}} </td>
-            <td  class="tdLeft"data-title="Dosage" >{{drug.dosage? drug.dosage : ''}} </td>
-            <td class="tdLeft" data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
-            <td data-title="Instructions" *ngIf="drug " class="Instructions tdLeft2 pointer-cursor"
-              (click)="instructPopUp(drug) ; (drug.instructions !=='')" [ngClass]="{opacity:drug.instructions==='' }">
-              <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png" #tooltip="matTooltip"
-                matTooltip="Instruction" [matTooltipPosition]="'below'" />
-            </td>
-            <td *ngIf="drug" data-title="Delete"  class="Share pointer-cursor tdLeft2" (click)="deleteDrug(i,drug)"
-            #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'">
-              <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/delete.png" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <div *ngIf="uploadlist && uploadlist.length===0 && drugList && drugList.length !==0" class="overflow">
+      <div>
+        <table class="table " id="printableArea">
+          <thead class="headerTable">
+            <tr>
+              <th>No</th>
+              <th class="headerName">Medicine</th>
+              <th>Duration(days)</th>
+              <th>Dosage</th>
+              <th>Frequency</th>
+              <th>Instructions</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let drug of drugList; let i = index;" class="tableRow">
+              <td class="tdLeft" data-title="No" *ngIf="drug">{{i+1}}</td>
+              <td class="tdLeft" data-title="Medicine">{{drug.medicine_name? drug.medicine_name : ''}}</td>
+              <td class="tdLeft" data-title="Duration(days)">{{drug.duration? drug.duration : ''}} </td>
+              <td class="tdLeft" data-title="Dosage">{{drug.dosage? drug.dosage : ''}} </td>
+              <td class="tdLeft" data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
+              <td data-title="Instructions" *ngIf="drug " class="Instructions tdLeft2 pointer-cursor"
+                (click)="instructPopUp(drug) ; (drug.instructions !=='')" [ngClass]="{opacity:drug.instructions==='' }">
+                <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/instruction.png"
+                  #tooltip="matTooltip" matTooltip="Instruction" [matTooltipPosition]="'below'" />
+              </td>
+              <td *ngIf="drug" data-title="Delete" class="Share pointer-cursor tdLeft2" (click)="deleteDrug(i,drug)"
+                #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'">
+                <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/delete.png" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-  </div>
-  <div *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
-    <div class="filesCreate" *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
-      <div class=" mgn-up-10 filesCreate uploadPresCustomHeight" *ngIf="uploadlist && uploadlist.length > 0">
-        <div class="shadow" style="height:100% !important">
-          <div class="sharedFlex">
-            <div class="uploadedText">Uploaded Prescription</div>
-          <div class="sharedClass" *ngIf="prescriptionShared"><div
-            class="fa fa-lightbulb-o" aria-hidden="true">&nbsp;Prescription last shared on
-            {{prescriptionSharedTimestamp | date:dateFormatSp}}</div></div>
-          </div>
-          <div class="hightLimit">
-            <div *ngFor="let file of uploadlist;let i=index" class="allFile">
-              <div class="borderClass">
-                <div class="allfileNameDetails">
-                  <div class="allfileName">
-                    <div class="fileType" *ngIf="file && file.type ">
-                      <img height="35px" width="35px" [src]="getFileType(file.type)" />
-                    </div>
-                    <div>
-                      <div class="fileName" *ngIf="file && file.originalName">{{originalFilename(file.originalName)}}
+    <div *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
+      <div class="filesCreate" *ngIf="uploadlist && uploadlist.length>0 && drugList && drugList.length===0">
+        <div class=" mgn-up-10 filesCreate uploadPresCustomHeight" *ngIf="uploadlist && uploadlist.length > 0">
+          <div class="shadow" style="height:100% !important">
+            <div class="sharedFlex">
+              <div class="uploadedText">Uploaded Prescription</div>
+              <div class="sharedClass" *ngIf="prescriptionShared">
+                <div class="fa fa-lightbulb-o" aria-hidden="true">&nbsp;Prescription last shared on
+                  {{prescriptionSharedTimestamp | date:dateFormatSp}}</div>
+              </div>
+            </div>
+            <div class="hightLimit">
+              <div *ngFor="let file of uploadlist;let i=index" class="allFile">
+                <div class="borderClass">
+                  <div class="allfileNameDetails">
+                    <div class="allfileName">
+                      <div class="fileType" *ngIf="file && file.type ">
+                        <img height="35px" width="35px" [src]="getFileType(file.type)" />
                       </div>
-                      <div *ngIf="file && file.imageSize" class="fileSize" style="margin-top:3px" >
-                        {{bytesToSize(file.imageSize)}}
-                      </div>
-                      <div *ngIf="file && file.caption" class="fileSize">
-                        {{file.caption}}
-                      </div>
-                      <div *ngIf="file && file.date" class="fileSize">
-                        {{file.date |date:'fullDate'}}
+                      <div>
+                        <div class="fileName" *ngIf="file && file.originalName">{{originalFilename(file.originalName)}}
+                        </div>
+                        <div *ngIf="file && file.imageSize" class="fileSize" style="margin-top:3px">
+                          {{bytesToSize(file.imageSize)}}
+                        </div>
+                        <div *ngIf="file && file.caption" class="fileSize">
+                          {{file.caption}}
+                        </div>
+                        <div *ngIf="file && file.date" class="fileSize">
+                          {{file.date |date:'fullDate'}}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="imageClas">
-                    <div (click)="dialogImgView(file)">
-                      <img *ngIf="file.type !=='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip"
-                        matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
-                      <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/pdfDwnld.png" #tooltip="matTooltip"
-                        matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
-                    </div>
-                    <div (click)="deletePrescriptionFile(file,i)">
-                      <img class="fileView" src="/assets/images/medicalReportIcon/delete.png"
-                      #tooltip="matTooltip" matTooltip="Remove" [matTooltipPosition]="'below'" />
-                    </div>
+                    <div class="imageClas">
+                      <div (click)="dialogImgView(file)">
+                        <img *ngIf="file.type !=='.pdf'" class="fileView"
+                          src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip"
+                          matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
+                        <img *ngIf="file.type ==='.pdf'" class="fileView"
+                          src="./assets/images/ImgeFileIcon/pdfDwnld.png" #tooltip="matTooltip"
+                          matTooltip="{{downloadText}}" [matTooltipPosition]="'below'" />
+                      </div>
+                      <div (click)="deletePrescriptionFile(file,i)">
+                        <img class="fileView" src="/assets/images/medicalReportIcon/delete.png" #tooltip="matTooltip"
+                          matTooltip="Remove" [matTooltipPosition]="'below'" />
+                      </div>
                       <div>
                         <div class="Share pointer-cursor" *ngIf="file " (click)="printSecond(file)">
-                          <img *ngIf="file.type !=='.pdf'" class="fileView" src="/assets/images/medicalReportIcon/print.png" 
-                          #tooltip="matTooltip" matTooltip="Print" [matTooltipPosition]="'below'"/>
-                          <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
-                          #tooltip="matTooltip" matTooltip="View" [matTooltipPosition]="'below'"/>
+                          <img *ngIf="file.type !=='.pdf'" class="fileView"
+                            src="/assets/images/medicalReportIcon/print.png" #tooltip="matTooltip" matTooltip="Print"
+                            [matTooltipPosition]="'below'" />
+                          <img *ngIf="file.type ==='.pdf'" class="fileView"
+                            src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip" matTooltip="View"
+                            [matTooltipPosition]="'below'" />
                         </div>
                       </div>
                       <div>
-                        <div class="Share pointer-cursor" (click)="shareManualRx('uploadrx',bookingType,bookingId,file)">
-                          <img class="fileView" src="/assets/images/medicalReportIcon/share.png" 
-                          #tooltip="matTooltip" matTooltip="Share" [matTooltipPosition]="'below'"/>
+                        <div class="Share pointer-cursor"
+                          (click)="shareManualRx('uploadrx',bookingType,bookingId,file)">
+                          <img class="fileView" src="/assets/images/medicalReportIcon/share.png" #tooltip="matTooltip"
+                            matTooltip="Share" [matTooltipPosition]="'below'" />
                         </div>
                       </div>
-                  </div>
-                  <div class="imgClasMobile">
-                    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-                      <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                      <button mat-menu-item (click)="dialogImgView(file)" class="gap"> 
-                        <div>
-                          <img *ngIf="file.type !=='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png"/>
-                          <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/pdfDwnld.png"/>
-                        </div>
-                        <div *ngIf="downloadText">{{downloadText}}</div>
+                    </div>
+                    <div class="imgClasMobile">
+                      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
                       </button>
-                      <button mat-menu-item class="gap" (click)="deletePrescriptionFile(file,i)">
-                        <div >
-                          <img class="fileView" src="/assets/images/medicalReportIcon/delete.png"/>
-                        </div>
-                        <div>Delete</div>
-                      </button>
-                      <button mat-menu-item class="gap" (click)="printSecond(file)">
-                        <div class="Share pointer-cursor" *ngIf="file " >
-                          <img *ngIf="file.type !=='.pdf'" class="fileView" src="./assets/images/medicalReportIcon/download.png"   
-                          #tooltip="matTooltip" matTooltip="{{printText}}" [matTooltipPosition]="'below'"/>
-                          <img *ngIf="file.type ==='.pdf'" class="fileView" src="./assets/images/ImgeFileIcon/fileView.png" 
-                          #tooltip="matTooltip" matTooltip="View" [matTooltipPosition]="'below'"/>
-                        </div>
-                        <div *ngIf="file.type !=='.pdf'">{{printText}}</div>
-                        <div *ngIf="file.type ==='.pdf'">View</div>
-                      </button>
-                    <button mat-menu-item (click)="shareManualRx('uploadrx',bookingType,bookingId,file)" class="gap" >
-                      <div class="Share pointer-cursor" >
-                        <img class="fileView" src="/assets/images/medicalReportIcon/share.png" />
-                      </div>
-                      <div>Share</div>
-                    </button>
-                  </mat-menu>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="dialogImgView(file)" class="gap">
+                          <div>
+                            <img *ngIf="file.type !=='.pdf'" class="fileView"
+                              src="./assets/images/ImgeFileIcon/fileView.png" />
+                            <img *ngIf="file.type ==='.pdf'" class="fileView"
+                              src="./assets/images/ImgeFileIcon/pdfDwnld.png" />
+                          </div>
+                          <div *ngIf="downloadText">{{downloadText}}</div>
+                        </button>
+                        <button mat-menu-item class="gap" (click)="deletePrescriptionFile(file,i)">
+                          <div>
+                            <img class="fileView" src="/assets/images/medicalReportIcon/delete.png" />
+                          </div>
+                          <div>Delete</div>
+                        </button>
+                        <button mat-menu-item class="gap" (click)="printSecond(file)">
+                          <div class="Share pointer-cursor" *ngIf="file ">
+                            <img *ngIf="file.type !=='.pdf'" class="fileView"
+                              src="./assets/images/medicalReportIcon/download.png" #tooltip="matTooltip"
+                              matTooltip="{{printText}}" [matTooltipPosition]="'below'" />
+                            <img *ngIf="file.type ==='.pdf'" class="fileView"
+                              src="./assets/images/ImgeFileIcon/fileView.png" #tooltip="matTooltip" matTooltip="View"
+                              [matTooltipPosition]="'below'" />
+                          </div>
+                          <div *ngIf="file.type !=='.pdf'">{{printText}}</div>
+                          <div *ngIf="file.type ==='.pdf'">View</div>
+                        </button>
+                        <button mat-menu-item (click)="shareManualRx('uploadrx',bookingType,bookingId,file)"
+                          class="gap">
+                          <div class="Share pointer-cursor">
+                            <img class="fileView" src="/assets/images/medicalReportIcon/share.png" />
+                          </div>
+                          <div>Share</div>
+                        </button>
+                      </mat-menu>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <!-- <div id="sharePdf" class="container"  *ngIf="uploadlist && uploadlist[0] && uploadlist[0].type && (uploadlist[0].type==='.pdf')" >
+          <!-- <div id="sharePdf" class="container"  *ngIf="uploadlist && uploadlist[0] && uploadlist[0].type && (uploadlist[0].type==='.pdf')" >
           <div class="pdf-container">
               <pdf-viewer   [src]="uploadlist[0].url" [original-size]="false"
                   style="width: 100%; height: 600px"></pdf-viewer>
           </div>
       </div> -->
+        </div>
       </div>
     </div>
   </div>
-</div>
 </ng-container>
 
 <ng-container *ngIf="tempPrescription===true && !loading && !viewVisitDetails "></ng-container>

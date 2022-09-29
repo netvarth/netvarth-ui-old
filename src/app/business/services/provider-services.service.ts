@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { CommonDataStorageService } from '../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../app.component';
-import { projectConstantsLocal } from '../../shared/constants/project-constants';
+import { projectConstantsLocal } from '../../../../src/app/shared/constants/project-constants';
 // Import RxJs required methods
 import { ServiceMeta } from '../../shared/services/service-meta';
 import { GroupStorageService } from '../../shared/services/group-storage.service';
@@ -483,6 +483,7 @@ export class ProviderServices {
     const url = 'provider/customers';
     return this.servicemeta.httpGet(url, null, data);
   }
+
   getQueueWaitingTime(queueId, date) {
     const url = 'provider/waitlist/queues/' + queueId + '/' + date + '/waitingTime';
     return this.servicemeta.httpGet(url);
@@ -2659,10 +2660,32 @@ export class ProviderServices {
       }
     })
   }
-  getSearchCustomer(account:any,name:any){
+  getSearchCustomer(account: any, name: any) {
     // console.log('projectConstants.SAPATH',projectConstantsLocal.SAPATH)
-    const url=projectConstantsLocal.SAPATH + 'searchdetails/' + account+ '/providerconsumer/search?name='+ name + '*';
+    const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/providerconsumer/search?name=' + name + '*';
     // const url=projectConstantsLocal.SAPATH + 'searchdetails/' + account+ '/providerconsumer/search?name=a*s';
-     return  this.servicemeta.httpGet(url);
+    return this.servicemeta.httpGet(url);
   }
+
+
+
+
+
+  getTemplate() {
+    const url = 'provider/mr/prescription/template';
+    return this.servicemeta.httpGet(url);
+  }
+  addDatatoTemplate(data) {
+    const url = 'provider/mr/prescription/template';
+    return this.servicemeta.httpPost(url, data);
+  }
+  deleteTemplateById(id) {
+    const url = 'provider/mr/prescription/template/' + id;
+    return this.servicemeta.httpDelete(url);
+  }
+  getTemplateById(id) {
+    const url = 'provider/mr/prescription/template/' + id;
+    return this.servicemeta.httpGet(url);
+  }
+
 }

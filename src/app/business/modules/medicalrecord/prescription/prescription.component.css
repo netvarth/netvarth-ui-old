@@ -1,20 +1,21 @@
-.text-primary
-{
-    color: #1E4079!important;
+.text-primary {
+  color: #1E4079 !important;
 }
-.btn-primary
-{
-    background-color: #1E4079!important;
-    border-radius: 10px!important;
+
+.btn-primary {
+  background-color: #1E4079 !important;
+  border-radius: 10px !important;
 }
-.clrChnge{
-    color: #1E4079 !important;
-  }
-  
+
+.clrChnge {
+  color: #1E4079 !important;
+}
+
 .table-heading {
   font-size: 15px !important;
   color: #1DA192;
 }
+
 .form-control {
   display: block !important;
   width: 100% !important;
@@ -28,15 +29,20 @@
   border: 1px solid #fff !important;
 
 }
-textarea{
+
+
+textarea {
   resize: none;
 }
-label{
+
+label {
   font-size: 12px !important;
 }
-.form-group{
+
+.form-group {
   margin-bottom: 0px !important;
 }
+
 .cancelBtn {
   background: #A8ABAF !important;
   box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
@@ -57,31 +63,39 @@ label{
   padding: 6px 12px;
   color: #fff;
 }
-.btnClass{
+
+.btnClass {
   margin-top: 10px !important;
-    margin-bottom: 10px !important;
-    width: -webkit-fill-available;
-    display: flex !important;
-    justify-content: flex-start !important;
+  margin-bottom: 10px !important;
+  width: -webkit-fill-available;
+  display: flex !important;
+  justify-content: flex-start !important;
 }
-.btnWidth{
+
+.btnWidth {
   width: 50%
 }
+
 .card {
   padding: 15px !important;
   border: 1px solid #E4E4E4;
 }
+
 .table-heading {
   font-size: 15px !important;
   color: #1DA192;
 }
-.uploadedText{
+
+.uploadedText {
   font-size: 15px !important;
   color: #22A8FA;
   /* width: 100%; */
 }
-.sharedFlex{
-  display:flex;justify-content:space-between;align-items: center;
+
+.sharedFlex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 
@@ -91,7 +105,7 @@ label{
 }
 
 .shadow {
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
   padding: 10px !important;
   /* border: 1px solid rgb(231, 228, 228) !important; */
   background: #FFFFFF;
@@ -100,8 +114,8 @@ label{
 
 .imGBorderRadius {
   border-radius: 20px !important;
-  height:70px;
-  width:70px;
+  height: 70px;
+  width: 70px;
   object-fit: cover;
 }
 
@@ -127,7 +141,7 @@ label{
 
 mat-row:hover {
   /* background-color: #c8e9f3 !important; */
-  background-color:  #1DA192 !important;
+  background-color: #1DA192 !important;
 }
 
 mat-cell:first-of-type,
@@ -223,94 +237,110 @@ mat-footer-cell:first-of-type {
     margin-bottom: 0px !important;
   }
 }
-.medicalRecord{
+
+.medicalRecord {
   display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
 }
-.clrChnge{
+
+.clrChnge {
   color: #1E4079 !important;
 }
-.nameClr{
+
+.nameClr {
   color: #48505A;
-    font-size: 13px;
-    font-weight: 600;
+  font-size: 13px;
+  font-weight: 600;
 }
-.nameAge{
+
+.nameAge {
   display: flex;
-    justify-content: flex-start;
-    gap: 5px;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 5px;
+  justify-content: flex-start;
+  gap: 5px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 5px;
 }
-.nameAgeYear{
+
+.nameAgeYear {
   display: flex;
-    justify-content: flex-start;
-    gap: 5px;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-top: 5px;
+  justify-content: flex-start;
+  gap: 5px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 5px;
 }
-.infoDetails{
+
+.infoDetails {
   display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap:3px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3px;
 }
-.nameClrOther{
-    color: #8E9295;
-    font-size: 11px;
+
+.nameClrOther {
+  color: #8E9295;
+  font-size: 11px;
 }
-.card{
+
+.card {
   background: #F9F9F9 !important;
 }
-.prescriptionOuter{
+
+.prescriptionOuter {
   background: #E9F6FE;
-    border-radius: 7.35323px;
-    padding: 5px;
-    cursor: pointer;
+  border-radius: 7.35323px;
+  padding: 5px;
+  cursor: pointer;
 }
-.clinicalOuter{
-    padding: 5px;
-    background: #FFF9E9;
-border-radius: 7.35323px;
-cursor: pointer;
+
+.clinicalOuter {
+  padding: 5px;
+  background: #FFF9E9;
+  border-radius: 7.35323px;
+  cursor: pointer;
 }
-.matHeaderRow{
+
+.matHeaderRow {
   background: #EBEFF2 !important;
-    border-bottom: 0px !important;
+  border-bottom: 0px !important;
 }
-.providerName{
+
+.providerName {
   display: flex;
-    gap: 5px;
-    align-items: center;
+  gap: 5px;
+  align-items: center;
 }
-.arrowIcon{
+
+.arrowIcon {
   background: rgba(76, 119, 223, 0.24);
-    width: 25px;
-    height: 25px;
-    text-align: center;
-    border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  border-radius: 50%;
 }
-.headerClr{
+
+.headerClr {
   color: #767980;
-    font-weight: 500;
+  font-weight: 500;
 }
-.elementTextClr{
+
+.elementTextClr {
   color: #06152B;
   font-weight: bold;
 }
+
 /* Track */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
+  box-shadow: inset 0 0 5px grey;
   border-radius: 10px;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background:#767980; 
+  background: #767980;
   border-radius: 10px;
   /* color: #767980; */
 }
@@ -319,55 +349,62 @@ cursor: pointer;
 ::-webkit-scrollbar-thumb:hover {
   background: #767980;
 }
-.pointlist{
+
+.pointlist {
   cursor: pointer !important;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    background: #FFFFFF;
-    border-radius: 9.67697px;
-    margin-right: 5px;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
-    margin-left: 5px;
-    border-bottom: 0px solid;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background: #FFFFFF;
+  border-radius: 9.67697px;
+  margin-right: 5px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  margin-left: 5px;
+  border-bottom: 0px solid;
 }
-.createBtn{
+
+.createBtn {
   background: #F3874A;
-    border-radius: 5.09106px;
-    text-align: center;
-    color: #fff;
-    padding: 5px;
-    width: -webkit-fill-available;
-    margin-right: 5px;
+  border-radius: 5.09106px;
+  text-align: center;
+  color: #fff;
+  padding: 5px;
+  width: -webkit-fill-available;
+  margin-right: 5px;
 }
-.ViewBtn{
+
+.ViewBtn {
   background: #4EBAF7;
-    border-radius: 5.09106px;
-    text-align: center;
-    color: #fff;
-    padding: 5px;
-    width: -webkit-fill-available;
-    margin-right: 5px;
+  border-radius: 5.09106px;
+  text-align: center;
+  color: #fff;
+  padding: 5px;
+  width: -webkit-fill-available;
+  margin-right: 5px;
 }
-.prescriptionNotes{
+
+.prescriptionNotes {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
 }
-.prescriptionCreate{
+
+.prescriptionCreate {
   width: 100% !important;
   max-height: 27.5rem;
-    overflow: auto;
-    
+  overflow: auto;
+
 }
-.filesCreate{
+
+.filesCreate {
   width: 100% !important;
   height: 100%;
 }
+
 .spaanOr {
   height: 150px;
   width: 25px;
   display: inline-block;
-  text-align:center;
+  text-align: center;
   padding-top: 100px;
   /* color: #E6E8EB; */
   color: slategrey;
@@ -379,12 +416,12 @@ cursor: pointer;
   display: block;
   height: 65px;
   left: 34px;
- transform: translateX(10px);
+  transform: translateX(10px);
   top: 30px;
   width: 1px;
   z-index: 0;
   background: #E6E8EB;
-border: 1.32184px solid #E6E8EB;
+  border: 1.32184px solid #E6E8EB;
 }
 
 .spaanOr:after {
@@ -393,19 +430,21 @@ border: 1.32184px solid #E6E8EB;
   display: block;
   height: 65px;
   left: 32px;
- transform: translateX(10px);
+  transform: translateX(10px);
   top: 140px;
   width: 1px;
   z-index: 0;
   background: #E6E8EB;
-border: 1.32184px solid #E6E8EB;
+  border: 1.32184px solid #E6E8EB;
 }
-.fileUpload{
+
+.fileUpload {
   padding: 4rem;
-    background: #FCFCFC;
-    border: 1.20589px dashed #C9C9C9;
-    border-radius: 13.2647px;
+  background: #FCFCFC;
+  border: 1.20589px dashed #C9C9C9;
+  border-radius: 13.2647px;
 }
+
 .confirmBtn {
   background: #0D2348 !important;
   box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgba(30, 64, 121, 0.15) !important;
@@ -414,33 +453,42 @@ border: 1.32184px solid #E6E8EB;
   padding: 6px 12px;
   color: #fff;
   font-weight: 500 !important;
-    font-size: 12px;
+  font-size: 12px;
 }
-.fileText{
+
+.fileText {
   color: #000000;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 2px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 2px;
 }
-.flexClass{
-  height:100% !important;display: flex;align-items: center;justify-content: center;
-}
-.dashedClass{
-  padding: 5rem;
-    background: #FCFCFC;
-    border: 1.20589px dashed #C9C9C9;
-    border-radius: 13.2647px;
-}
-.twolConfirmBtn{
+
+.flexClass {
+  height: 100% !important;
   display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px;
+  align-items: center;
+  justify-content: center;
 }
-.mobileDevice{
+
+.dashedClass {
+  padding: 5rem;
+  background: #FCFCFC;
+  border: 1.20589px dashed #C9C9C9;
+  border-radius: 13.2647px;
+}
+
+.twolConfirmBtn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.mobileDevice {
   display: none;
 }
-.mobileOr{
+
+.mobileOr {
   font-size: 12px;
   padding: 0 10px;
   background: #F9F9F9 !important;
@@ -448,17 +496,20 @@ border: 1.32184px solid #E6E8EB;
   border: 1px solid #E6E8EB;
   border-radius: 20%;
 }
-@media(max-width: 800px){
-  .prescriptionNotes{
+
+@media(max-width: 800px) {
+  .prescriptionNotes {
     flex-wrap: wrap;
     flex-direction: column-reverse !important;
     gap: 10px !important;
     /* margin-top: 10px; */
   }
-  .spaanOr{
+
+  .spaanOr {
     display: none;
   }
-  .mobileDevice{
+
+  .mobileDevice {
     display: block;
     width: 100%;
     height: 13px;
@@ -468,187 +519,231 @@ border: 1.32184px solid #E6E8EB;
     margin-top: 5px;
     /* background: #F9F9F9 !important; */
   }
-  .drugInfo{
-    flex-wrap: wrap !important ;
+
+  .drugInfo {
+    flex-wrap: wrap !important;
     gap: 15px !important;
   }
-  .dashedClass{
-    padding: 5rem ;
+
+  .dashedClass {
+    padding: 5rem;
     padding-left: 6rem;
     padding-right: 6rem;
   }
-  .prescriptionCreate{
+
+  .prescriptionCreate {
     overflow: auto;
   }
-  .prescriptionCard{
+
+  .prescriptionCard {
     /* height: 100% !important;
     width: 100% !important;
     box-shadow: none !important; */
     height: 100% !important;
     width: 50rem;
   }
-  .btnWidth{
+
+  .btnWidth {
     width: 100% !important;
   }
-  .btnClass{
+
+  .btnClass {
     justify-content: center !important;
   }
-  .btnPosition{
+
+  .btnPosition {
     text-align: left !important;
   }
-  .addMedeconeShowHide{
+
+  .addMedeconeShowHide {
     display: block !important;
   }
-  .sharedFlex{
-    flex-wrap:wrap;align-items: center;
+
+  .sharedFlex {
+    flex-wrap: wrap;
+    align-items: center;
   }
-  .imgClasMobile{
+
+  .imgClasMobile {
     display: block !important;
 
   }
-  .imageClas{
-    display: none !important; 
+
+  .imageClas {
+    display: none !important;
   }
-  .gap{
-    gap:5px !important;
+
+  .gap {
+    gap: 5px !important;
   }
-  .sharedClass{
+
+  .sharedClass {
     margin-top: 5px;
   }
 
 }
-.imgClasMobile{
-  display: none ;
+
+.imgClasMobile {
+  display: none;
 
 }
-.imageClas{
-  display: flex ;
+
+.imageClas {
+  display: flex;
 }
-.addMedicineMobBtn{
+
+.addMedicineMobBtn {
   width: 100% !important;
   margin-top: 10px;
 }
-.btnPosition{
+
+.btnPosition {
   text-align: center !important;
 }
-.saveCloseBtn{
+
+.saveCloseBtn {
   margin-top: 20px;
-    /* width: 25% !important; */
-}
-.addMedeconeShowHide{
-  display: none;
-}
-.prescriptionCard{
-  /* height: 100% !important; */
-    background: #FFFFFF;
-    border: 1.02503px solid #E7E3E3;
-    border-radius: 8.78078px;
+  /* width: 25% !important; */
 }
 
-.allFile{
-  margin-top: 10px;
-    padding: 10px;
-    background: #FFFFFF;
-    border: 1.02503px solid #E7E3E3;
+.addMedeconeShowHide {
+  display: none;
 }
-.allfileName{
+
+.prescriptionCard {
+  /* height: 100% !important; */
+  background: #FFFFFF;
+  border: 1.02503px solid #E7E3E3;
+  border-radius: 8.78078px;
+}
+
+.allFile {
+  margin-top: 10px;
+  padding: 10px;
+  background: #FFFFFF;
+  border: 1.02503px solid #E7E3E3;
+}
+
+.allfileName {
   /* padding: 10px; */
   /* background: #FCFCFC; */
   /* border: 0.715003px solid #C9C9C9; */
   border-radius: 2.76228px;
   display: flex;
-    align-items: center;
-    gap: 5px;
-    border: none !important;padding: 0px !important;
-  
+  align-items: center;
+  gap: 5px;
+  border: none !important;
+  padding: 0px !important;
+
 }
-.fileName{
+
+.fileName {
   font-size: 12px;
   font-weight: bold;
 }
-.removeIcon{
+
+.removeIcon {
   height: 25px;
   width: 25px;
   object-fit: cover;
   cursor: pointer;
 }
-.fileView{
+
+.fileView {
   height: 20px;
   width: 20px;
   object-fit: cover;
   cursor: pointer;
 }
-.fileSize{
+
+.fileSize {
   font-size: 11px;
-    font-weight: 600;
+  font-weight: 600;
 }
-.allfileNameDetails{
-  justify-content: space-between;border: none !important;padding:5px !important;
+
+.allfileNameDetails {
+  justify-content: space-between;
+  border: none !important;
+  padding: 5px !important;
   background: #FCFCFC;
   border-radius: 2.76228px;
   display: flex;
-    align-items: center;
-    gap: 10px;
+  align-items: center;
+  gap: 10px;
 }
-.borderClass{
-  border:1.02503px solid #E7E3E3
+
+.borderClass {
+  border: 1.02503px solid #E7E3E3
 }
-.hightLimit{
+
+.hightLimit {
   max-height: 14rem;
-    overflow-y: auto;
+  overflow-y: auto;
 }
-.imageClas{
-  display: flex ;
+
+.imageClas {
+  display: flex;
   justify-content: space-between;
   gap: 15px;
   align-items: center;
 }
-.table-headingPrescription{
- color: #22A8FA;
+
+.table-headingPrescription {
+  color: #22A8FA;
 }
-.table-outer table{
+
+.table-outer table {
   background: #FFFFFF !important;
-    border: 1.02503px solid #E7E3E3 !important;
-    border-radius: 8.78078px !important;
+  border: 1.02503px solid #E7E3E3 !important;
+  border-radius: 8.78078px !important;
 }
-table thead{
+
+table thead {
   background: #EBEFF2 !important;
 }
-table thead th{
+
+table thead th {
   color: #767980 !important;
   font-size: 13px;
 }
-table tbody td{
+
+table tbody td {
   color: #06152B !important;
-    font-size: 11px;
-    font-weight: 600;
-    
+  font-size: 11px;
+  font-weight: 600;
+
 }
-.drugInfo{
+
+.drugInfo {
   display: flex;
-    justify-content: space-between;
-    align-items: center;
+  justify-content: space-between;
+  align-items: center;
 }
-.drugInstruction{
-    margin-top: 5px;
+
+.drugInstruction {
+  margin-top: 5px;
 }
-.drugActivity{
+
+.drugActivity {
   font-size: 12px;
-    color: #06152B;
-    font-weight: 600;
+  color: #06152B;
+  font-weight: 600;
 }
-.drugName{
+
+.drugName {
   color: #CBCBCB;
   font-size: 13px;
   font-weight: 400;
 }
-.drugList{
-   background: rgba(29, 161, 146, 0.11);
+
+.drugList {
+  background: rgba(29, 161, 146, 0.11);
   border-radius: 6.65005px;
   margin-bottom: 5px;
   padding: 10px;
 }
-.shareBtn{
+
+.shareBtn {
   background: #FFFFFF;
   border: 1.47792px solid #FFA012;
   border-radius: 5.8939px;
@@ -658,95 +753,113 @@ table tbody td{
   color: #FFA012;
   cursor: pointer;
 }
-.printBtn{
+
+.printBtn {
   background: #0D2348 !important;
-    border-radius: 3.75916px !important;
-    border: 0px solid !important;
-    padding: 6px 12px;
-    color: #fff;
-    font-weight: 500 !important;
-    font-size: 12px;
-    cursor: pointer;
-}
-.drugActivityBtn{
-  display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 5px;
+  border-radius: 3.75916px !important;
+  border: 0px solid !important;
+  padding: 6px 12px;
+  color: #fff;
+  font-weight: 500 !important;
+  font-size: 12px;
+  cursor: pointer;
 }
 
-table tbody tr{
+.drugActivityBtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+}
+
+table tbody tr {
   /* cursor: pointer; */
-    border-bottom: 1.02503px solid #E7E3E3;
+  border-bottom: 1.02503px solid #E7E3E3;
 }
-.table{
+
+.table {
   background: #FFFFFF;
-    border: 1.02503px solid #E7E3E3;
-    border-radius: 8.78078 px;
+  border: 1.02503px solid #E7E3E3;
+  border-radius: 8.78078 px;
 }
-.overflow{
-  overflow:auto;
+
+.overflow {
+  overflow: auto;
   max-height: 20rem;
 }
-.tdLeft1{
+
+.tdLeft1 {
   padding-left: 2rem;
 }
-.tdLeft{
+
+.tdLeft {
   padding: 1rem;
 }
-.tdLeft2{
-  padding:12px;
+
+.tdLeft2 {
+  padding: 12px;
 }
-#prinTarea{
+
+#prinTarea {
   display: none;
 }
-.tdLeft11{
+
+.tdLeft11 {
   padding: 1rem !important;
 }
+
 @media(min-width: 800px) {
-  .tableOuterSide{
+  .tableOuterSide {
     max-height: 23rem !important;
     overflow: overlay !important;
   }
-  table thead{
+
+  table thead {
     position: sticky !important;
     top: 0% !important;
   }
 }
-.sharedClass{
+
+.sharedClass {
   font-size: 15px !important;
-    color: #000;
+  color: #000;
 }
-.activeRow{
+
+.activeRow {
   /* background: #FFFFFF;
     border-radius: 4.67697px;
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
     border-bottom: 0px solid; */
-    border-radius: 4.67697px;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
-    border-bottom: 0px solid;
-    background: #F3874A;
+  border-radius: 4.67697px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  border-bottom: 0px solid;
+  background: #F3874A;
 }
+
 /* table tbody tr .data-selected >:nth-child(1) {
   background: #F3874A !important;
 } */
 .data-selected {
   background: #FFFFFF;
-    border-radius: 4.67697px;
-    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
-    border-bottom: 0px solid;
+  border-radius: 4.67697px;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  border-bottom: 0px solid;
 }
-.opacity{
+
+.opacity {
   display: table-column;
 }
-.tableRow{
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)!important;
+
+.tableRow {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
   height: 60px;
 }
-.prescriptionCreateAdd{
+
+.prescriptionCreateAdd {
   width: 100% !important;
   /* height: 100%; */
 }
+
 /* .highlight{
   background: #42A948;
 } */
@@ -757,12 +870,14 @@ table tbody tr{
 
 @keyframes highlight1 {
   0% {
-      background: red
+    background: red
   }
+
   100% {
-      background: none;
+    background: none;
   }
 }
-.disable{
- cursor: not-allowed;
+
+.disable {
+  cursor: not-allowed;
 }

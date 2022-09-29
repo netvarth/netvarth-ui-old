@@ -1,0 +1,44 @@
+<div>
+  <div class="text-center px-3 py-2 d-flex justify-content-between">
+    <div (click)="close()">
+      <span class="font-weight-bold">Create Prescription</span>
+    </div>
+    <div class="pointer-cursor" (click)="close()">
+      <i class="fa fa-times"></i>
+    </div>
+  </div>
+  <hr class="my-0 py-0">
+  <div class="p-0 pt-3">
+    <div *ngIf="templates && templates.length==0" class="mb-5 text-center">
+      <div>
+        <img width="250" src=" ../../../../assets/images/mr-icons/createprescription.png">
+      </div>
+      <div>
+        <span class="font-weight-bold">No Existing Templates</span>
+      </div>
+      <div>
+        <span>Create new prescription and add that into template</span>
+      </div>
+    </div>
+
+    <div *ngIf="templates && templates.length>0" class="mb-3">
+      <div *ngFor="let template of templates" class="mt-2 pointer-cursor">
+        <div class="border p-3 mx-2 text-left shadow">
+          <div class="d-flex justify-content-between">
+            <div (click)="templateSelected(template.id)">
+              <span class="template-name font-weight-bold"
+                *ngIf="template && template.templateName">{{template.templateName}}</span>
+            </div>
+            <div class="px-3 pointer-cursor">
+              <span *ngIf="template && template.id" title="Delete" (click)="deleteTemplate(template.id)"><i
+                  class="fa fa-trash"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="p-2">
+    <div class="btn btn-primary" (click)="createNew()">Create Prescription</div>
+  </div>
+</div>
