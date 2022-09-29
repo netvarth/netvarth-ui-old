@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { CommonDataStorageService } from '../../shared/services/common-datastorage.service';
 import { projectConstants } from '../../app.component';
-import { projectConstantsLocal } from '../../../../src/app/shared/constants/project-constants';
+import { projectConstantsLocal } from '../../shared/constants/project-constants';
 // Import RxJs required methods
 import { ServiceMeta } from '../../shared/services/service-meta';
 import { GroupStorageService } from '../../shared/services/group-storage.service';
