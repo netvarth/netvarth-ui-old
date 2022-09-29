@@ -53,7 +53,9 @@
             </div>
           </div>
         <div class="form-group" *ngIf="!showthirdparty" style="margin-top: 10px;margin-bottom: 0px !important;"> 
-            <span class="docText" *ngIf="!(mrPrescriptionDetails &&  mrPrescriptionDetails[0].keyName)">Share prescription Via</span>
+            <span class="docText" *ngIf="!(mrPrescriptionDetails &&  mrPrescriptionDetails[0].keyName)
+            &&(this.phon==='' && this.email_id==='' && this.IsTelegramDisable===false)
+            ">Share prescription Via</span>
             <span class="docText" *ngIf="(mrPrescriptionDetails && mrPrescriptionDetails[0].keyName)">Your presciption will share Via</span>
             <div class="coupon-outer">
                 <mat-checkbox [ngClass]="{hideClass: (!phon || phon === 'null') || is_noSMS || countryCode !='+91'}"  [disabled]="(!phon || phon === 'null') || is_noSMS || countryCode !='+91'"
@@ -73,7 +75,7 @@
                 </mat-checkbox>
             </div>
             <!-- <div style="color: red;" class="errorCls" *ngIf="!sms && !email && !pushnotify && !telegram"> 
-              Make sure the options you choose valid / enable
+                Make sure the options you choose are valid/ enabled
                 </div> -->
             <!-- <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div> -->
         </div>
@@ -174,82 +176,32 @@
     </mat-dialog-content>
 </form>
 <!-- {{data| json}} -->
-<div id="sharePdf" style="height:100%;">
-    <div class="shareview">
-        <!-- <div style="height:35mm; border-bottom: 1px solid #ddd;">
-            <div style="width: 35mm;height: 35mm; float: left;"><img alt="" [src]="showimg()" style="width: 100px;
-      height: 100px" /></div>
-            <div style="width:155mm; float: left;">
-                <h2 style="margin: 0; padding: 4px 0 4px 0;">{{bname}} </h2>
-                <div *ngIf="userbname" style="margin: 0; padding: 0px 0 4px 0;">{{userbname}}
-                </div>
-                <div *ngIf="!userbname && doctorName" style="margin: 0; padding: 0px 0 4px 0;">{{doctorName}}
-                </div>
-                <div style="margin: 0; padding: 0px 0 4px 0;">{{address}}</div>
-            </div>
-            <div>
-                <table class="sign-table" style="width: 100%; margin: auto;margin-top: 10px">
-                    <tr>
-                        <td style="text-align: right; padding-right: 10px; width: 20%">Signature</td>
-                        <td><img alt="" style="width: 100px; height: 75px;" [src]="showdigitalsign()" /></td>
-                    </tr>
-                </table>
-            </div>
-        </div> -->
+<div  style="height:100%;" >
+    <div class="shareview" id="sharePdf">
         <div style=" width:100%; height: 100%; margin-bottom:10px ;margin-top:10px " class="contentShare">
-            <!-- <table class="sign-table" style="width: 100%; margin: auto;margin-bottom: 20px" *ngIf="customerDetail">
-                <tr>
-                    <td style="padding-right: 10px; width: 60%">
-                        <label>{{customer_label | capitalizeFirst}} &nbsp;</label>
-                        <span *ngIf="customerDetail.firstName">: {{customerDetail.firstName | capitalizeFirst}}
-                            {{customerDetail.lastName}}</span>
-                        <span *ngIf="!customerDetail.firstName && customerDetail.jaldeeId">Id:
-                            {{customerDetail.jaldeeId}}</span>
-                    </td>
-                    <td><label>Gender:&nbsp;</label>
-                        <span *ngIf="customerDetail.gender">{{customerDetail.gender | capitalizeFirst}}</span>
-                        <span *ngIf="!customerDetail.gender">......</span>
-                    </td>
-                    <td *ngIf="customerDetail.dob"><label>Dob:&nbsp;</label>
-                        <span *ngIf="customerDetail.dob">{{customerDetail.dob | date:newDateFormat}}</span>
-                        <span *ngIf="!customerDetail.dob">..........</span>
-                    </td>
-                    <td *ngIf="customerDetail.age && !customerDetail.dob"><label>Age:&nbsp;</label>
-                        <span> <span *ngIf="customerDetail.age.year">{{customerDetail.age.year}} years</span>
-                            <span *ngIf="customerDetail.age.month">{{customerDetail.age.month}} months</span>
-                            <span *ngIf="!customerDetail.age.year && !customerDetail.age.month">.........</span></span>
-                    </td>
-                    <td *ngIf="!customerDetail.age && !customerDetail.dob"><label>Dob:&nbsp;</label>
-                        <span *ngIf="!customerDetail.dob">..........</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td style="padding-top: 10px"><label>Date:&nbsp;</label>
-                        <span>{{curDate | date:newDateFormat}}</span>
-                    </td>
-                </tr>
-            </table> -->
             <div>
+                <a style="background: #0D2348 !important;float:right;
+                                        box-shadow: 0.417685px 2.50611px 8.77138px 1.25305px rgb(30 64 121 / 15%) !important;
+                                        border-radius: 3.75916px px !important;border: 0px solid !important;padding: 6px 12px;
+                                        color: #fff;font-weight: 500 !important;font-size: 12px;"
+                            [href]="data.file.url">Download</a>
                 <pdf-viewer [src]="data.file.url" 
-                    style="width: 100%; height: 600px;"></pdf-viewer>
+                    style="width: 100%; height: 1200px;"></pdf-viewer>
             </div>
         </div>
     </div>
-    
 </div>
 
-<div hidden id="sharerxview" *ngIf="data && data.file && data.file.url">
-    <div class="shareview" style="width: 190mm; height: 260mm">
+<div  id="sharerxview" *ngIf="data && data.file && data.file.url">
+    <div class="shareview " style="width: 190mm; height: 260mm">
         <div *ngIf="data && data.file && data.file.url" style="text-align: center;">
-            <img [src]="signurlFile(data.file.url)" />
+            <img style="height:500px;width:700px;object-fit: cover;" [src]="signurlFile(data.file.url)" />
         </div>
     </div>
 </div>
 
 
-<div hidden id="sharerxview"  *ngIf="data && data.file && !data.file.url">
+<div  id="sharerxview"  *ngIf="data && data.file && !data.file.url">
     <div class="shareview" style="width: 190mm; height: 260mm">
         <!-- <div *ngIf="data && data.file && data.file.url" style="text-align: center;">
             <img [src]="signurlFile(data.file.url)" />

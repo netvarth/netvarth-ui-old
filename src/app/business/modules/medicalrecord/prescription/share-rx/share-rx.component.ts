@@ -142,6 +142,7 @@ export class ShareRxComponent implements OnInit {
   ) {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.provider_user_Id = this.medicalService.getDoctorId();
+    console.log('this.data',this.data)
     this.mrId = this.data.mrId;
     this.type = this.data.type;
     this.patientId = this.data.patientId;
@@ -323,8 +324,18 @@ export class ShareRxComponent implements OnInit {
     }
     if (this.sharewith === 0) {
       if (!this.sms && !this.email && !this.pushnotify && !this.telegram) {
-        this.api_error = 'share via options are not selected';
-        this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
+        console.log(this.phon);
+        console.log(this.email_id);
+        console.log(this.IsTelegramDisable);
+        if(this.phon==='' && this.email_id==='' && this.IsTelegramDisable===true){
+          this.api_error = 'Update the patient details in the patient record to use share options.';
+          this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' })
+        }
+        else{
+          this.api_error = 'share via options are not selected';
+          this.snackbarService.openSnackBar(this.api_error,{ 'panelClass': 'snackbarerror' })
+        }
+        
         // setTimeout(() => {
         //   this.api_error = '';
         // }, 3000)

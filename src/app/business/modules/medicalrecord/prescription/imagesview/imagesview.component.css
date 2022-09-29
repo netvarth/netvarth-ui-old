@@ -67,8 +67,8 @@
     text-align: center;
   }
   .image{
-    height: 345px;
-    width: 70%;
+    height: 100%;
+    width: 100%
   }
   .copyBtnBtn{
     background-color: #FFE7E7 !important;

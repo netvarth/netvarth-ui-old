@@ -166,6 +166,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
   afterSave:boolean;
   small_device_display:boolean=false;
   printText:string='';
+  tempMedicalRecord: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -246,6 +247,7 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
    this.provider_services.GetMedicalRecord(mrId)
       .subscribe((data: any) => {
         if (data) {
+          this.tempMedicalRecord=data;
           if (data.provider && data.provider.id) {
             this.doctorName = data.provider.firstName + ' ' + data.provider.lastName;
           }
@@ -395,7 +397,8 @@ export class PrescriptionComponent implements OnInit ,OnChanges{
         docname: this.doctorName,
         bookingType:bookingType,
         bookingId:bookingId,
-        file:file
+        file:file,
+        info:this.tempMedicalRecord
       }
     });
     this.sharedialogRef.afterClosed().subscribe(result => {
