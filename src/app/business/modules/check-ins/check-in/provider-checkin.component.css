@@ -1025,3 +1025,9 @@ a {
 .border-0 {
   border: 0!important;
 }
+::ng-deep .mat-autocomplete-panel{
+  max-height: 256px !important;
+}
+.flexClass{
+  display:flex;gap:5px
+}

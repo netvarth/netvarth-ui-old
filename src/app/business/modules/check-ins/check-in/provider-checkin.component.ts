@@ -23,6 +23,10 @@ import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-
 import { ThirdpartypopupComponent } from '../thirdpartypopup/thirdpartypopup.component';
 import { Location } from '@angular/common';
 declare var $: any;
+import { Observable } from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+
+
 @Component({
     selector: 'app-provider-checkin',
     templateUrl: './provider-checkin.component.html',
@@ -284,6 +288,16 @@ export class ProviderCheckinComponent implements OnInit {
     selectedQ; // selected Queue Id for walkin
 
 
+
+    //search lucene
+    tempCustomerdata:any=[]
+    options: any[] = [];
+    searchListDb:any[]=[]
+  filteredOptions: Observable<string[]>;
+    tempAcId: any;
+    totalName: string='';
+
+
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -304,6 +318,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
+            console.log('qparams',qparams)
             if (qparams.source) {
                 this.source = qparams.source;
             }
@@ -478,7 +493,52 @@ export class ProviderCheckinComponent implements OnInit {
         // this.getCurrentLocation();
         this.showfuturediv = false;
         this.revealphonenumber = true;
+        // this.filterOption();
+        this.bisinessProfile()
     }
+    bisinessProfile(){
+        this.searchForm.controls.search_input.setValue('');
+        this.provider_services.getBussinessProfile().subscribe((res:any)=>{
+            console.log('BProfileRes',res);
+            if(res){
+                if(res['id']){
+                    this.tempAcId= res['id'];   
+                }
+            }
+        })
+    }
+    searchCustomerLucene(name){
+        console.log(name)
+        console.log('this.account_id',this.tempAcId)
+        this.providerService.getSearchCustomer(this.tempAcId,name.search_input).subscribe((res:any)=>{
+            console.log('res',res);
+            this.options=res;
+            this.filteredOptions=res;
+            console.log(this.filteredOptions);
+        })
+    }
+    handleSearchSelect(data){
+        console.log(data);
+        this.totalName= data['firstName'] ;
+    }
+    handleCategoryselect(data){
+        console.log(data);
+        this.searchForm.patchValue({
+            search_input:'' 
+        })
+        // this.searchForm.controls.search_input.setValue('');
+        // if(data==='Search with Email ID'){
+
+        // }
+    }
+    filterOption(){
+        this.filteredOptions = this.searchForm.controls.search_input.valueChanges.pipe(startWith(''),map((value:any) => this._filter(value || '')),
+          );
+    }
+    _filter(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.options.filter(option => option.toLowerCase().includes(filterValue));
+      }
     openModal() {
         this.display = "block";
     }
@@ -557,6 +617,7 @@ export class ProviderCheckinComponent implements OnInit {
                         this.createNew('create');
                     } else {
                         if (data.length > 1) {
+                            this.tempCustomerdata= data;
                             const customer = data.filter(member => !member.parent);
                             this.customer_data = customer[0];
                             this.foundMultiConsumers = true
@@ -636,19 +697,26 @@ export class ProviderCheckinComponent implements OnInit {
             this.provider_services.getCustomer(post_data)
                 .subscribe(
                     (data: any) => {
-                        if (data.length === 0) {
+                        console.log('data',data)
+                        if (data && data.length === 0) {
                             this.createNew('create');
                         } else {
-                            if (data.length > 1) {
+                            if (data && data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer[0];
+                                if(customer && customer[0]){
+                                    this.customer_data = customer[0];
+                                }
                                 this.foundMultiConsumers = true;
                             } else {
-                                this.customer_data = data[0];
+                                if(data && data[0]){
+                                    this.customer_data = data[0];
+                                }
                                 this.foundMultiConsumers = false;
                             }
-                            this.jaldeeId = this.customer_data.jaldeeId;
-                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                            if(this.customer_data && this.customer_data.jaldeeId){
+                                this.jaldeeId = this.customer_data.jaldeeId;
+                            }
+                            if (this.customer_data && this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                                 this.countryCode = this.customer_data.countryCode;
                             } else {
                                 this.countryCode = '+91';
@@ -1000,20 +1068,25 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.thirdParty === '') {
             this.api_loading1 = true;
             let fn;
-            fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-            fn.subscribe(data => {
-                this.familymembers = [];
-                this.familymembers.push(this.customer_data);
-                for (const mem of data) {
-                    if (mem.id !== this.customer_data.id) {
-                        this.familymembers.push(mem);
+            if(this.customer_data && this.customer_data.id){
+                fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
+            }
+            if(fn){
+                fn.subscribe(data => {
+                    this.familymembers = [];
+                    this.familymembers.push(this.customer_data);
+                    for (const mem of data) {
+                        if (mem.id !== this.customer_data.id) {
+                            this.familymembers.push(mem);
+                        }
                     }
-                }
-                this.api_loading1 = false;
-            },
-                () => {
                     this.api_loading1 = false;
-                });
+                },
+                    () => {
+                        this.api_loading1 = false;
+                    });
+            }
+            
         } else {
             this.api_loading1 = false;
         }

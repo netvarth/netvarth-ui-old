@@ -53,6 +53,7 @@
   border: 1.20589px dashed #C9C9C9 !important;
   border-radius: 5.2647px !important;
   width: 100% !important;
+  /* overflow: hidden; */
 }
 .confirmBtn {
     background: #0D2348 !important;

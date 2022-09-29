@@ -21,6 +21,7 @@ import { FormMessageDisplayModule } from "../../../../shared/modules/form-messag
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { ProviderCheckinComponent } from "./provider-checkin.component";
 import { ThirdpartypopupModule } from "../thirdpartypopup/thirdpartypopup.module";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 const routes: Routes = [
     {path: '', component: ProviderCheckinComponent}
 ]
@@ -49,6 +50,7 @@ const routes: Routes = [
         MatRadioModule,
         QuestionnaireModule,
         CapitalizeFirstPipeModule,
+        MatAutocompleteModule,
         [RouterModule.forChild(routes)]
     ]
 })

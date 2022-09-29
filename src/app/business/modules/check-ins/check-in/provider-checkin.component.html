@@ -24,7 +24,7 @@
               <div class="col-lg-2 col-sm-1 display-lg-show col-md-2 col-xs-1 no-padding border-0 searchbar">
                 <mat-form-field>
                   <mat-select class="categoryfield" [(ngModel)]="categoryvalue">
-                    <mat-option *ngFor="let category of categoryForSearchingarray" [value]="category">
+                    <mat-option *ngFor="let category of categoryForSearchingarray" [value]="category" (click)="handleCategoryselect(categoryvalue)">
                       {{category.slice(12)}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -33,7 +33,7 @@
                 <mat-form-field>
                   <img src="../../../../../assets/images/Group_1512.png" width="50px" height="40px">
                   <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
-                    <mat-option *ngFor="let category of categoryForSearchingarray" [value]="category">
+                    <mat-option *ngFor="let category of categoryForSearchingarray" [value]="category" (click)="handleCategoryselect(categoryvalue)">
                       {{category.slice(12)}}</mat-option>
                   </mat-select>
                 </mat-form-field>
@@ -51,12 +51,41 @@
               <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm" novalidate
                 (keyup)="resetApiErrors()" class="col-lg-4 col-md-4 col-xs-3 col-sm-3 padding-0">
                 <div class="form-group">
-                  <div class="input-group mob-container">
+                  <!-- <div class="input-group mob-container">
                     <input autocomplete="off"
                       placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}" type="text"
                       class="inputstyling" formControlName="search_input" 
                       (keypress)="findCustomer(searchForm.value, $event)">
-                  </div>
+                  </div> -->
+                  <div class="input-group mob-container" *ngIf="categoryvalue==='Search with Email ID'">
+                    <input autocomplete="off" (keyup)="searchCustomerLucene(searchForm.value)"
+                        placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}"
+                        type="email" class="inputstyling" formControlName="search_input"
+                        (keypress)="findCustomer(searchForm.value, $event)" [matAutocomplete]="autoprov">
+                        <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                            <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option)" [value]="option.email">
+                              <div class="flexClass">
+                                <div>{{option.email}}</div>
+                              </div>
+                            </mat-option>
+                          </mat-autocomplete>
+
+                </div>
+                <div class="input-group mob-container" *ngIf="categoryvalue==='Search with Name or ID'">
+                  <input autocomplete="off" (keyup)="searchCustomerLucene(searchForm.value)"
+                      placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}"
+                      type="text" class="inputstyling" formControlName="search_input"
+                      (keypress)="findCustomer(searchForm.value, $event)" [matAutocomplete]="autoprov">
+                      <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                          <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option)" [value]="option.firstName">
+                            <div class="flexClass">
+                              <div>{{option.firstName | capitalizeFirst}}</div>
+                            <div>{{option.lastName | capitalizeFirst}}</div>
+                            </div>
+                          </mat-option>
+                        </mat-autocomplete>
+
+              </div>
                   <div *ngIf="emptyFielderror" class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding">
                     <span class="sts-msg error">Please enter the
                       {{customer_label | capitalizeFirst}} ID or Email</span>

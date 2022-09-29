@@ -770,6 +770,12 @@ border: none !important;
     margin-left: 15px !important;
 }
 }
+::ng-deep .mat-autocomplete-panel{
+  max-height: 256px !important;
+}
+.flexClass{
+  display:flex;gap:5px
+}
 
 
 

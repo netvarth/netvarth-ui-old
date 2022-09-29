@@ -157,6 +157,7 @@ export class SelectAttachmentComponent implements OnInit {
         let i = 0;
         if (_this.selectedMessage) {
           for (const pic of _this.selectedMessage.files) {
+            console.log('pic',pic)
             dataToSend.append("attachments", pic, pic["name"]);
             captions[i] = _this.imgCaptions[i] ? _this.imgCaptions[i] : "";
             i++;

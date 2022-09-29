@@ -22,6 +22,7 @@ import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner
 import { ConfirmBoxModule } from "../../../shared/confirm-box/confirm-box.module";
 import { AppointmentComponent } from "./appointment.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 const routes: Routes= [
     { path: '', component: AppointmentComponent }
 ]
@@ -51,6 +52,7 @@ const routes: Routes= [
         QuestionnaireModule,
         ConfirmBoxModule,
         MatCheckboxModule,
+        MatAutocompleteModule,
         [RouterModule.forChild(routes)]
     ]
 })

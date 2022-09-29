@@ -1,5 +1,5 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -21,6 +21,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
 import { ThirdpartypopupComponent } from '../../check-ins/thirdpartypopup/thirdpartypopup.component';
 import { Location } from '@angular/common';
+import {map, startWith} from 'rxjs/operators';
 declare var $: any;
 @Component({
     selector: 'app-appointment-checkin',
@@ -123,6 +124,7 @@ export class AppointmentComponent implements OnInit {
     dobFormat = projectConstants.DATE_MM_DD_YY_FORMAT;
     fromKiosk = false;
     customer_data: any = [];
+    tempCustomerdata:any=[]
     page_source = null;
     main_heading;
     dispCustomernote = false;
@@ -270,6 +272,11 @@ export class AppointmentComponent implements OnInit {
     fileSizeInKb: number = 1024
     Math = Math
     selectedSchedule: any;
+    options: any[] = [];
+    searchListDb:any[]=[]
+  filteredOptions: Observable<string[]>;
+    tempAcId: any;
+    totalName: string='';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -289,6 +296,7 @@ export class AppointmentComponent implements OnInit {
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
+            console.log('qparams',qparams)
             if (qparams.source) {
                 this.source = qparams.source;
             }
@@ -472,7 +480,52 @@ export class AppointmentComponent implements OnInit {
         // this.getCurrentLocation();
         this.showfuturediv = false;
         this.revealphonenumber = true;
+        // this.filterOption();
+        this.bisinessProfile()
     }
+    bisinessProfile(){
+        this.searchForm.controls.search_input.setValue('');
+        this.provider_services.getBussinessProfile().subscribe((res:any)=>{
+            console.log('BProfileRes',res);
+            if(res){
+                if(res['id']){
+                    this.tempAcId= res['id'];   
+                }
+            }
+        })
+    }
+    searchCustomerLucene(name){
+        console.log(name)
+        console.log('this.account_id',this.tempAcId)
+        this.providerService.getSearchCustomer(this.tempAcId,name.search_input).subscribe((res:any)=>{
+            console.log('res',res);
+            this.options=res;
+            this.filteredOptions=res;
+            console.log(this.filteredOptions);
+        })
+    }
+    handleSearchSelect(data){
+        console.log(data);
+        this.totalName= data['firstName'] ;
+    }
+    handleCategoryselect(data){
+        console.log(data);
+        this.searchForm.patchValue({
+            search_input:'' 
+        })
+        // this.searchForm.controls.search_input.setValue('');
+        // if(data==='Search with Email ID'){
+
+        // }
+    }
+    filterOption(){
+        this.filteredOptions = this.searchForm.controls.search_input.valueChanges.pipe(startWith(''),map((value:any) => this._filter(value || '')),
+          );
+    }
+    _filter(value: string): string[] {
+        const filterValue = value.toLowerCase();
+        return this.options.filter(option => option.toLowerCase().includes(filterValue));
+      }
     openModal() {
         this.display = "block";
     }
@@ -568,6 +621,7 @@ export class AppointmentComponent implements OnInit {
                     } else {
                         if (data.length > 1) {
                             console.log("Consumer Data:", data);
+                            this.tempCustomerdata= data;
                             const customer = data.filter(member => !member.parent);
                             this.customer_data = customer[0];
                             console.log("Real Customer:", this.customer_data);
@@ -649,6 +703,7 @@ export class AppointmentComponent implements OnInit {
             this.provider_services.getCustomer(post_data)
                 .subscribe(
                     (data: any) => {
+                        console.log('data',data)
                         if (data.length === 0) {
                             // if (mode === 'phone') {
                             //     const filter = { 'primaryMobileNo-eq': form_data.search_input };
@@ -659,17 +714,26 @@ export class AppointmentComponent implements OnInit {
                             // }
                             this.createNew('create');
                         } else {
-                            if (data.length > 1) {
+                            if (data && data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                this.customer_data = customer[0];
-                                this.foundMultipleCustomers = true;
+                                if(customer && customer[0]){
+                                    this.customer_data = customer[0];
+                                    this.foundMultipleCustomers = true;
+                                }
+                                
                             } else {
-                                this.customer_data = data[0];
-                                this.foundMultipleCustomers = false
+                                if(data &&  data[0]){
+                                    this.customer_data = data[0];
+                                    this.foundMultipleCustomers = false
+                                }
                             }
-                            this.jaldeeId = this.customer_data.jaldeeId;
-                            this.consumerPhoneNo = this.customer_data.phoneNo;
-                            if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                            if(this.customer_data && this.customer_data.jaldeeId){
+                                this.jaldeeId = this.customer_data.jaldeeId;
+                            }
+                            if(this.customer_data && this.customer_data.phoneNo){
+                                this.consumerPhoneNo = this.customer_data.phoneNo;
+                            }
+                            if (this.customer_data && this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
                                 this.countryCode = this.customer_data.countryCode;
                             } else {
                                 this.countryCode = '+91';
@@ -742,6 +806,7 @@ export class AppointmentComponent implements OnInit {
     }
     
     initAppointment(thirdParty?) {
+        // alert('initAppt')
         if (thirdParty) {
             this.thirdParty = thirdParty;
         this.getGlobalSettings();
@@ -916,23 +981,29 @@ export class AppointmentComponent implements OnInit {
         });
     }
     getFamilyMembers() {
+        // alert('hhh')
         if (this.thirdParty === '') {
             this.api_loading1 = true;
             let fn;
-            fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
-            fn.subscribe(data => {
-                this.familymembers = [];
-                this.familymembers.push(this.customer_data);
-                for (const mem of data) {
-                    if (mem.id !== this.customer_data.id) {
-                        this.familymembers.push(mem);
+            if(this.customer_data&&this.customer_data.id){
+                fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
+            }
+            if(fn){
+                fn.subscribe(data => {
+                    this.familymembers = [];
+                    this.familymembers.push(this.customer_data);
+                    for (const mem of data) {
+                        if (mem.id !== this.customer_data.id) {
+                            this.familymembers.push(mem);
+                        }
                     }
-                }
-                this.api_loading1 = false;
-            },
-                () => {
                     this.api_loading1 = false;
-                });
+                },
+                    () => {
+                        this.api_loading1 = false;
+                    });
+            }
+            
         } else {
             this.api_loading1 = false;
         }

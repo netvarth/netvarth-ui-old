@@ -29,7 +29,7 @@
                                             style="color: black;background-color: #f6f6f6;padding-left: 30px;">
                                             Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label>
                                         <mat-select class="categoryfield" [(ngModel)]="categoryvalue">
-                                            <mat-option *ngFor="let category of categoryForSearchingarray"
+                                            <mat-option *ngFor="let category of categoryForSearchingarray" (click)="handleCategoryselect(categoryvalue)"
                                                 [value]="category">
                                                 <span>{{category.slice(12)}}</span>
                                             </mat-option>
@@ -45,14 +45,13 @@
 
 
                                         <mat-select class="displaysmall" [(ngModel)]="categoryvalue">
-                                            <mat-option *ngFor="let category of categoryForSearchingarray"
+                                            <mat-option *ngFor="let category of categoryForSearchingarray" (click)="handleCategoryselect(categoryvalue)"
                                                 [value]="category">{{category.slice(12)}}</mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
                                 <div *ngIf="categoryvalue=='Search with PhoneNumber'"
                                     class="col-lg-4 col-md-4 col-xs-3 col-sm-3   mgn-bt-10 padding-0 ">
-
                                     <ngx-intl-tel-input [cssClass]="'custom'" class="internumbox padding-0 numberstyle "
                                         [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
                                         [enablePlaceholder]="true" [searchCountryFlag]="true"
@@ -67,11 +66,34 @@
                                     novalidate (keyup)="resetApiErrors()"
                                     class="col-lg-4 col-md-4 col-xs-3 col-sm-3   padding-0">
                                     <div class="form-group">
-                                        <div class="input-group mob-container">
-                                            <input autocomplete="off"
+                                        <div class="input-group mob-container" *ngIf="categoryvalue==='Search with Email ID'">
+                                            <input autocomplete="off" (keyup)="searchCustomerLucene(searchForm.value)"
+                                                placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}"
+                                                type="email" class="inputstyling" formControlName="search_input"
+                                                (keypress)="findCustomer(searchForm.value, $event)" [matAutocomplete]="autoprov">
+                                                <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                                                    <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option)" [value]="option.email">
+                                                      <div class="flexClass">
+                                                        <div>{{option.email}}</div>
+                                                      </div>
+                                                    </mat-option>
+                                                  </mat-autocomplete>
+
+                                        </div>
+                                        <div class="input-group mob-container" *ngIf="categoryvalue==='Search with Name or ID'">
+                                            <input autocomplete="off" (keyup)="searchCustomerLucene(searchForm.value)"
                                                 placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}"
                                                 type="text" class="inputstyling" formControlName="search_input"
-                                                (keypress)="findCustomer(searchForm.value, $event)">
+                                                (keypress)="findCustomer(searchForm.value, $event)" [matAutocomplete]="autoprov">
+                                                <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                                                    <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option)" 
+                                                    [value]="option.firstName">
+                                                      <div class="flexClass">
+                                                        <div>{{option.firstName | capitalizeFirst}}</div>
+                                                      <div>{{option.lastName | capitalizeFirst}}</div>
+                                                      </div>
+                                                    </mat-option>
+                                                  </mat-autocomplete>
 
                                         </div>
                                         <div *ngIf="emptyFielderror"
