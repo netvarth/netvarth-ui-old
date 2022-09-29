@@ -18,6 +18,8 @@
                     class="font-weight-bold text-primary">Go To Cart</span>
                 </div>
               </div>
+            </div>
+            <div class="header container card shadow">
               <div>
                 <div class="">
                   <div class="d-flex justify-content-center">
@@ -54,7 +56,8 @@
                         <div class="d-type">
                           <span>Delivery Type</span>
                         </div>
-                        <div class="font-weight-bold">
+                        <div class="clearfix"></div>
+                        <div class="font-weight-bold text-left">
                           <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
                             <mat-radio-button [value]="'store'" [checked]="storeChecked">
                               Store pick up
@@ -136,7 +139,7 @@
                             Delivery Type
                           </div>
                           <div>
-                            <h6 class="font-weight-bold text-capitalize">
+                            <h6 class="font-weight-bold text-capitalize d-type-value">
                               <span *ngIf="choose_type=='home'">Home Delivery</span>
                               <span *ngIf="choose_type=='store'">Store Pickup</span>
                             </h6>
@@ -147,7 +150,7 @@
                             Date/Time
                           </div>
                           <div *ngIf="isfutureAvailableTime">
-                            <h6 class="font-weight-bold">
+                            <h6 class="font-weight-bold d-type-value">
                               <span *ngIf="!isFuturedate">Today, </span>
                               <span *ngIf="!isFuturedate">
                                 {{nextAvailableTime}}
@@ -387,7 +390,7 @@
                 <app-common-innerloading-spinner> </app-common-innerloading-spinner>
               </div>
               <div [class.opacty]="showSide" class="card mgn-up-30" *ngIf="!loading">
-                <div class="card-heading">
+                <div class="card-heading cart-heading">
                   <h6 class="font-weight-bold">Order Details</h6>
                 </div>
                 <div class="border-top"></div>
@@ -583,18 +586,13 @@
                       </div> -->
 
 
-                      <div class="txt-align-center mgn-up-10">
-
-
-                        <button type="button"
-                          class=" next-button btn btn-primary font-weight-bold text-uppercase checkout-btn"
+                      <div>
+                        <button type="button" class="btn btn-primary font-weight-bold text-uppercase checkout-btn"
                           [class.disabled]="isClickedOnce"
                           *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           (click)="!isClickedOnce && confirm()">
                           Confirm and Pay
                         </button>
-                        <!-- <div>hh</div> -->
-
                       </div>
 
                       <!-- modalbox -->
@@ -1390,23 +1388,25 @@
                           <div class="clearfix"></div>
                         </div>
                       </div>
-                      <div class="txt-align-center mgn-up-10"
-                        *ngIf="paymentmodes && paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
-                        <span (click)="togglepaymentMode()" class="pointer-cursor"><a class="refund_policy">
-                            <span *ngIf="!shownonIndianModes && paymentmodes.internationalPay">Non Indian Payment ?
-                              Click
-                              here</span>
-                            <span *ngIf="shownonIndianModes && paymentmodes.indiaPay">Indian Payment ? Click
-                              here</span>
-                          </a></span>
-                      </div>
+                      <div>
+                        <div class="txt-align-center mgn-up-10"
+                          *ngIf="paymentmodes && paymentmodes.internationalPay  && cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))">
+                          <span (click)="togglepaymentMode()" class="pointer-cursor"><a class="refund_policy">
+                              <span *ngIf="!shownonIndianModes && paymentmodes.internationalPay">Non Indian Payment ?
+                                Click
+                                here</span>
+                              <span *ngIf="shownonIndianModes && paymentmodes.indiaPay">Indian Payment ? Click
+                                here</span>
+                            </a></span>
+                        </div>
 
-                      <div class="cancelpolicy mgn-rt-5 txt-align-center mgn-up-10">
-                        <!-- *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0" -->
-                        <div class="pad_policy" *ngIf="cartDetails.advanceAmount > 0">
-                          <!-- *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" -->
-                          <a data-toggle="modal" data-target="#exampleModal" class="refund_policy">Cancellation
-                            Policy</a>
+                        <div class="cancelpolicy mgn-rt-5 txt-align-center mgn-up-10">
+                          <!-- *ngIf="paymentDetails && paymentDetails.amountRequiredNow > 0" -->
+                          <div class="pad_policy" *ngIf="cartDetails.advanceAmount > 0">
+                            <!-- *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0" -->
+                            <a data-toggle="modal" data-target="#exampleModal" class="refund_policy">Cancellation
+                              Policy</a>
+                          </div>
                         </div>
                       </div>
                       <!-- modalbox -->

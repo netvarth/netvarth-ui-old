@@ -1,10 +1,13 @@
-<div class="container card shadow">
+<div class="container card">
   <div>
     <div class="pointer-cursor">
-      <i class="fa fa-arrow-left" (click)="goBack()"></i>&nbsp;&nbsp;<span
-        class="font-weight-bold text-primary">Back</span>
+      <i class="fa fa-arrow-left" (click)="goBack()"></i>&nbsp;&nbsp;<span class="font-weight-bold text-primary">Go
+        Back</span>
     </div>
   </div>
+</div>
+
+<div class="container card shadow">
   <div>
     <div class="">
       <div class="d-flex justify-content-center">
@@ -25,15 +28,15 @@
 <br>
 <div class="container">
   <div class="row">
-    <div class="col-md-7 col-sm-12">
+    <div class="col-md-7 col-sm-12 px-0">
       <div class="card items-card">
         <div class="card-body">
           <div class="row">
-            <div class="form-group col-md-9 col-sm-9">
+            <div class="form-group col-md-9 col-sm-9 no-padding-small">
               <input [value]="seacrchFilterOrder" class="form-control" (ngModelChange)="transform(seacrchFilterOrder)"
                 [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" />
             </div>
-            <div class="col-md-3 col-sm-3 desktop-only">
+            <div class="col-md-3 col-sm-3 desktop-only no-padding-small text-right pr-0">
               <a class="btn btn-light"><img src="../../../../../assets/images/Group_1512.png" width="21"
                   height="21"><span>&nbsp;Filter</span></a>
             </div>
@@ -46,34 +49,31 @@
             <div *ngFor="let item of catalogItems| filter:seacrchFilterOrder;let i=index">
               <div class="card item-card shadow-lg mt-3">
                 <div class="d-flex justify-content-between">
-                  <div>
-                    <span class="font-weight-bold item-name"
-                      *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
-                    <span class="text-red item-name"
-                      *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
-                        class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
-                    <span class="text-red item-price"
-                      *ngIf="item.item && item.item.price && item.item.showPromotionalPrice"><s><i
-                          class="fa fa-inr"></i>&nbsp;{{item.item.price}}</s>&nbsp;<i
-                        class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
-                    <span class="text-light item-desc"
-                      *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
-                    <div *ngIf="getItemQty(item)>0">
-                      <span class="add_nte" (click)="addNotes(item,i)">
-                        {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                      </span> &nbsp;
-                      <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
-                        <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
-                      </span>
+                  <div class="d-flex">
+                    <div class="mr-2">
+                      <i class="fa fa-cart-plus" aria-hidden="true"></i>
                     </div>
-                    <!-- <div>
-                      <span class="add_nte" (click)="addNotes(item,i)">
-                        {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                      </span> &nbsp;
-                      <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
-                        <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
-                      </span>
-                    </div> -->
+                    <div>
+                      <span class="font-weight-bold item-name"
+                        *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
+                      <span class="text-red item-name"
+                        *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
+                          class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
+                      <span class="text-red item-price"
+                        *ngIf="item.item && item.item.price && item.item.showPromotionalPrice"><s><i
+                            class="fa fa-inr"></i>&nbsp;{{item.item.price}}</s>&nbsp;<i
+                          class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
+                      <span class="text-light item-desc"
+                        *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
+                      <div *ngIf="getItemQty(item)>0">
+                        <span class="add_nte" (click)="addNotes(item,i)">
+                          {{item.consumerNote ? 'Edit Note':'Add Note'}}
+                        </span> &nbsp;
+                        <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
+                          <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
+                        </span>
+                      </div>
+                    </div>
                   </div>
                   <div class="cart">
                     <div>
@@ -85,18 +85,21 @@
                         src="../../../../assets/images/order/Items.svg" class="item-image" width="70" height="70">
                     </div>
 
-                    <div class="cart-btn d-flex justify-content-center">
+                    <div class="cart-btn">
                       <div *ngIf=" getItemQty(item)===0" (click)="increment(item)"
-                        class="cusr-pointer add-qty pointer-cursor">Add&nbsp;+&nbsp;
+                        class="cusr-pointer add-qty pointer-cursor text-center">Add&nbsp;+&nbsp;
                       </div>
-                      <div *ngIf="getItemQty(item) >= 1" (click)="decrement(item)"
-                        class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor">-&nbsp;&nbsp;
-                      </div>
-                      <div class="item-pad bodr-btm-up item-qty" *ngIf="getItemQty(item) >= 1">
-                        {{getItemQty(item)}}&nbsp;&nbsp;
-                      </div>
-                      <div *ngIf="getItemQty(item) >= 1 && getItemQty(item) < item.maxqty" (click)="increment(item)"
-                        class="cusr-pointer add-qty pointer-cursor">+&nbsp;
+                      <div *ngIf="getItemQty(item) >= 1" class=" d-flex justify-content-between">
+                        <div (click)="decrement(item)"
+                          class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding">-
+                        </div>
+                        <div class="item-pad bodr-btm-up item-qty">
+                          {{getItemQty(item)}}
+                        </div>
+                        <div class="cusr-pointer add-qty pointer-cursor item-padding"
+                          [class.pointer-none]="getItemQty(item) >= item.maxqty"
+                          [class.shaded]="getItemQty(item) >= item.maxqty" (click)="increment(item)">+
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -107,11 +110,12 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5 col-sm-12">
+    <div class="col-md-5 col-sm-12 pr-0 no-padding-small">
       <div class="card checkout-card p-0">
         <div class="card-body cart-heading" *ngIf="action!='timeChange'">
           <span><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;Cart</span>
         </div>
+        <hr class="my-0 py-0">
         <div class="card-body cart-heading" *ngIf="action=='timeChange'">
           <div *ngIf="choose_type === 'store'">
             <span><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;Store Pickup Details</span>
@@ -138,19 +142,22 @@
                     *ngIf="item.item && item.item.price && item.item.showPromotionalPrice">&nbsp;<i
                       class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
 
-                  <div class="cart-btn d-flex justify-content-center">
+                  <div class="cart-btn">
                     <div *ngIf=" getItemQty(item)===0" (click)="increment(item)"
-                      class="cusr-pointer add-qty pointer-cursor">
+                      class="cusr-pointer add-qty pointer-cursor text-center">
                       Add&nbsp;+&nbsp;
                     </div>
-                    <div *ngIf="getItemQty(item) >= 1" (click)="decrement(item)"
-                      class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor">-&nbsp;&nbsp;
-                    </div>
-                    <div class="item-pad bodr-btm-up item-qty" *ngIf="getItemQty(item) >= 1">
-                      {{getItemQty(item)}}&nbsp;&nbsp;
-                    </div>
-                    <div *ngIf="getItemQty(item) >= 1 && getItemQty(item) < item.maxqty" (click)="increment(item)"
-                      class="cusr-pointer add-qty pointer-cursor">+
+                    <div *ngIf="getItemQty(item) >= 1" class=" d-flex justify-content-between">
+                      <div (click)="decrement(item)"
+                        class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding">-
+                      </div>
+                      <div class="item-pad bodr-btm-up item-qty">
+                        {{getItemQty(item)}}
+                      </div>
+                      <div (click)="increment(item)" class="cusr-pointer add-qty pointer-cursor item-padding"
+                        [class.pointer-none]="getItemQty(item) >= item.maxqty"
+                        [class.shaded]="getItemQty(item) >= item.maxqty">+
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -354,10 +361,10 @@
             [disabled]="disabledConfirmbtn==true ||!isfutureAvailableTime">Checkout</a>
         </div>
         <div class="mx-auto text-center my-3" *ngIf="orderList && orderList.length==0">
-          <img src="../../../../assets/images/order/empty_cart.jpg" class="item-image" width="100" height="70"><br>
-          <span class="mt-3 text-danger font-weight-bold">Oops! Your Cart is Empty</span><br>
+          <img src="../../../../assets/images/order/empty_cart.gif" class="item-image" width="100"><br>
+          <span class="mt-3 text-primary font-weight-bold">Oops! Your Cart is Empty</span><br>
           <span class="text-blue small-font">Looks like you haven't added<br>anything to your cart yet.</span><br>
-          <span class="text-success">Add Items Now</span><br>
+          <span class="text-primary">Add Items Now</span><br>
           <i class="desktop-only fa fa-2x fa-long-arrow-left left-arrow" aria-hidden="true"></i>
 
         </div>
@@ -380,7 +387,7 @@
     </div>
   </div><br> -->
   <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-7 no-padding">
       <div class="card shadow-lg">
         <div class="d-flex justify-content-between">
           <div>

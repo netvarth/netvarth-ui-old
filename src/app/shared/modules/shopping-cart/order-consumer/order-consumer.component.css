@@ -80,19 +80,26 @@ input[type='search'] {
   padding: 10px 20px !important;
 }
 
+.pointer-none {
+  pointer-events: none !important;
+}
+
+.shaded {
+  color: rgb(233, 0, 0) !important;
+}
 
 .add-qty {
   font-size: 14px !important;
   font-weight: bold !important;
   line-height: 23px !important;
   letter-spacing: 0em !important;
-  text-align: left !important;
+  text-align: center !important;
   color: #23B27D !important;
 }
 
 
 .text-blue {
-  color: #A3BBD9 !important;
+  color: #9f9e9e !important;
 }
 
 .small-font {
@@ -103,8 +110,8 @@ input[type='search'] {
   border: 1px solid #23B27D !important;
   padding: 1px 0px !important;
   background-color: #fff !important;
-  border-radius: 10px !important;
-  width: 60px !important;
+  border-radius: 5px !important;
+  width: 75px !important;
   margin: auto !important;
   color: #23B27D !important;
   /* position: absolute; */
@@ -116,10 +123,11 @@ input[type='search'] {
 
 
 .cart-heading {
-  background-color: #FA7658 !important;
-  color: #fff !important;
+  /* background-color: #1E4079 !important; */
+  color: #1E4079 !important;
   font-weight: bold !important;
   padding: 20px !important;
+  font-size: 18px !important;
 }
 
 .item-name {
@@ -176,7 +184,7 @@ input[type='search'] {
 
 .left-arrow {
   animation: left-arrow 1s ease-in-out infinite;
-  color: #23B27D;
+  color: #1E4079;
 }
 
 
@@ -184,6 +192,11 @@ input[type='search'] {
   font-size: 15px !important;
   font-weight: bold !important;
   color: #1E4079 !important;
+}
+
+
+.item-padding {
+  padding: 0 10px !important;
 }
 
 
