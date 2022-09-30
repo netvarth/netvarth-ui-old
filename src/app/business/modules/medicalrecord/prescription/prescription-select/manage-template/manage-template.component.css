@@ -15,10 +15,10 @@
   font-size: 18px !important;
 }
 
+.overflow-x-scroll {
+  overflow-x: scroll !important;
+}
 
-@media(max-width: 600px) {
-  .overflow-y-scroll {
-    max-height: 500px !important;
-    overflow-y: scroll !important;
-  }
+.font-large {
+  font-size: 20px !important;
 }

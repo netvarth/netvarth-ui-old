@@ -1,0 +1,41 @@
+<div>
+  <div class="text-center px-3 py-2 d-flex justify-content-between">
+    <div>
+      <span class="font-weight-bold" *ngIf="headerTitle">{{headerTitle}}</span>
+    </div>
+    <div class="pointer-cursor" (click)="close()">
+      <i class="fa fa-times"></i>
+    </div>
+  </div>
+  <hr class="my-0 py-0">
+  <div class="p-0 pt-3 py-2 overflow-x-scroll">
+    <div class="text-center">
+      <div>
+        <table class="table table-responsive">
+          <thead>
+            <tr>
+              <th data-title="No">No</th>
+              <th data-title="Medicine">Medicine</th>
+              <th data-title="Duration(days)">Duration(days)</th>
+              <th data-title="Dosage">Dosage</th>
+              <th data-title="Frequency">Frequency</th>
+              <th data-title="Instructions">Instructions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let drug of drugList; let i = index;">
+              <td class="tdLeft " data-title="No">{{i+1}}</td>
+              <td class="tdLeft " data-title="Medicine">{{drug.medicine_name? drug.medicine_name : ''}}
+              </td>
+              <td class="tdLeft " data-title="Duration(days)">{{drug.duration? drug.duration : ''}}
+              </td>
+              <td class="tdLeft " data-title="Dosage">{{drug.dosage? drug.dosage : ''}} </td>
+              <td class="tdLeft " data-title="Frequency">{{drug.frequency? drug.frequency : ''}}</td>
+              <td class="tdLeft " data-title="Instructions">{{drug.instructions? drug.instructions : ''}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

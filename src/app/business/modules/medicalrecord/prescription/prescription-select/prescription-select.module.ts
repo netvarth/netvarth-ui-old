@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PrescriptionSelectComponent } from './prescription-select.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SaveTemplateModule } from './save-template/save-template.module';
+import { ManageTemplateModule } from './manage-template/manage-template.module';
 
 
 
@@ -13,7 +14,8 @@ import { SaveTemplateModule } from './save-template/save-template.module';
   imports: [
     CommonModule,
     MatDialogModule,
-    SaveTemplateModule
+    SaveTemplateModule,
+    ManageTemplateModule
   ]
 })
 export class PrescriptionSelectModule { }

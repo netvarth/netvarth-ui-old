@@ -1,14 +1,17 @@
 <div>
-  <div class="text-center px-3 py-2 d-flex justify-content-between">
+  <div class="text-center px-2 py-2 d-flex justify-content-between font-large">
     <div (click)="close()">
       <span class="font-weight-bold">Create Prescription</span>
     </div>
-    <div class="pointer-cursor" (click)="close()">
+    <div class="pointer-cursor pr-2" (click)="close()">
       <i class="fa fa-times"></i>
     </div>
   </div>
   <hr class="my-0 py-0">
-  <div class="p-0 pt-3">
+  <div class="p-0 pt-3 overflow-y-scroll">
+    <div class="px-2">
+      <span class="font-weight-bold">Choose Template or Create New</span>
+    </div>
     <div *ngIf="templates && templates.length==0" class="mb-5 text-center">
       <div>
         <img width="250" src=" ../../../../assets/images/mr-icons/createprescription.png">
@@ -30,6 +33,8 @@
                 *ngIf="template && template.templateName">{{template.templateName}}</span>
             </div>
             <div class="px-3 pointer-cursor">
+              <span *ngIf="template && template.id" title="View" (click)="viewTemplate(template.id)"><i
+                  class="fa fa-eye"></i></span>&nbsp;&nbsp;&nbsp;
               <span *ngIf="template && template.id" title="Delete" (click)="deleteTemplate(template.id)"><i
                   class="fa fa-trash"></i></span>
             </div>
