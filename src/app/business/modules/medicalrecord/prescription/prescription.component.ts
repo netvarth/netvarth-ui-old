@@ -243,6 +243,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     if (this.drugs && this.drugs.prescriptionDto) {
       console.log("this.drugList = this.drugs.prescriptionDto;")
       this.drugList = this.drugs.prescriptionDto;
+      this.afterEdit = 'afterUpdate';
     }
   }
 
@@ -1213,19 +1214,15 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   }
   saveAndAddOther(form_data) {
     // this.api_loading=true;
-    // console.log(form_data);
+    console.log("this.afterEdit", this.afterEdit);
     this.api_error = '';
     if (form_data.medicine_name === '' && form_data.frequency === '' && form_data.dosage === '' && form_data.instructions === '' && form_data.duration === '') {
       this.api_error = 'Atleast one field required';
       this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
     } else {
       this.drugDetail.push(form_data);
-      // this.saveRx(this.drugDetail);
-      // console.log('this.afterEdit',this.afterEdit)
       if (this.afterEdit === 'afterUpdate') {
-        // console.log('this.drugDetail:::', this.drugDetail)
-        // console.log('this.drugList', this.drugList);
-
+        console.log('this.drugDetail:::', this.drugDetail)
         var i = this.drugList.length;
         while (i--) {
           for (var j of this.drugDetail) {
