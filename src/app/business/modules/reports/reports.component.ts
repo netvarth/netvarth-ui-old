@@ -23,7 +23,7 @@ export class ReportsComponent implements OnInit {
   consolidated_criteria: any[];
   tat_criteria: any[];
   recommended_status_criteria: any[];
-  login_criteria:any[];
+  login_criteria: any[];
   processing_files_criteria: any[];
   enquiry_criteria: any[];
   HO_lead_criteria: any[];
@@ -31,7 +31,7 @@ export class ReportsComponent implements OnInit {
   sanctionedReports = [];
   enquiryReports = [];
   monthlyActivityReports = [];
-  monthly_criteria:any[];
+  monthly_criteria: any[];
   appointmentReports = [];
   donationReports = [];
   paymentReports = [];
@@ -49,9 +49,11 @@ export class ReportsComponent implements OnInit {
   daily_activity_criteria: any[];
   dailyActivityReports = [];
   customer_report_criteria: any[];
-  customerReports =[];
-  customer_wise_enquiry_criteria:any[];
-  customerWiseEnquiryReports=[];
+  customerReports = [];
+  customer_wise_enquiry_criteria: any[];
+  customerWiseEnquiryReports = [];
+  document_collection_criteria: any[];
+  documentCollectedReports = [];
   customer_crif_Status_criteria: any;
   customerCrifStatusReports = [];
   loginReports = [];
@@ -70,7 +72,7 @@ export class ReportsComponent implements OnInit {
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
-    private groupService:GroupStorageService,
+    private groupService: GroupStorageService,
     private lStorageService: LocalStorageService) {
     this.report_dataService.updateCustomers('All');
     this.report_dataService.updatedQueueDataSelection('All');
@@ -86,11 +88,11 @@ export class ReportsComponent implements OnInit {
     this.getGlobalSettings()
   }
   getGlobalSettings() {
-      this.provider_services.getAccountSettings().then(
-        (data: any) => {
-          console.log("Global settings :",data)
-          this.taskStatus = data.enableTask;
-        });
+    this.provider_services.getAccountSettings().then(
+      (data: any) => {
+        console.log("Global settings :", data)
+        this.taskStatus = data.enableTask;
+      });
   }
   getProviderSettings() {
     this.provider_services.getWaitlistMgr()
@@ -127,6 +129,7 @@ export class ReportsComponent implements OnInit {
     this.daily_activity_criteria = [];
     this.customer_report_criteria = [];
     this.customer_wise_enquiry_criteria = [];
+    this.document_collection_criteria = [];
     this.customer_crif_Status_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
@@ -173,7 +176,7 @@ export class ReportsComponent implements OnInit {
             this.enquiry_criteria.push(this.criteria_list[i]);
             break;
           }
-          case 'MONTHLY_ACTIVITY':{
+          case 'MONTHLY_ACTIVITY': {
             this.monthly_criteria.push(this.criteria_list[i])
             break;
           }
@@ -226,6 +229,10 @@ export class ReportsComponent implements OnInit {
             this.customer_wise_enquiry_criteria.push(this.criteria_list[i]);
             break;
           }
+          case 'DOCUMENT_COLLECTION': {
+            this.document_collection_criteria.push(this.criteria_list[i]);
+            break;
+          }
 
         }
       }
@@ -253,43 +260,43 @@ export class ReportsComponent implements OnInit {
 
   }
   viewCriteria(details) {
-    console.log("Detailssssss....",details)
+    console.log("Detailssssss....", details)
     this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         content: details,
-        
+
       }
     });
     this.reprtdialogRef.afterClosed().subscribe(result => {
       if (result) {
       }
     });
-    console.log("View Details :",details.reportName,details.reportType,details.donorName);
-  
-  //   this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
-  //     width: '50%',
-     
-  //     panelClass: ['popup-class', 'commonpopupmainclass'],
-  //     disableClose: true,
-  //     data: {
-  //       purpose : 'view',
-  //       content : details
-        
-  //     }
-  //   });
-  //  this.reprtdialogRef.afterClosed().subscribe(
-  //     result => {
-  //       if (result) {
-  //         // this.getCriteriaList();
-  //         // console.log("Criteria List : ",result, this.getCriteriaList())
-  //       }
-  //     }
-  //   );
+    console.log("View Details :", details.reportName, details.reportType, details.donorName);
+
+    //   this.reprtdialogRef = this.dialog.open(CriteriaDialogComponent, {
+    //     width: '50%',
+
+    //     panelClass: ['popup-class', 'commonpopupmainclass'],
+    //     disableClose: true,
+    //     data: {
+    //       purpose : 'view',
+    //       content : details
+
+    //     }
+    //   });
+    //  this.reprtdialogRef.afterClosed().subscribe(
+    //     result => {
+    //       if (result) {
+    //         // this.getCriteriaList();
+    //         // console.log("Criteria List : ",result, this.getCriteriaList())
+    //       }
+    //     }
+    //   );
     // this.reprtdialogRef.afterClosed().subscribe(result => {
-      
+
     // });
   }
 
@@ -313,9 +320,9 @@ export class ReportsComponent implements OnInit {
         token: data.reportToken
       }
     };
-      // this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
-      this.router.navigate(['provider', 'reports', 'generated-report'] , navigationExtras);
- 
+    // this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
+    this.router.navigate(['provider', 'reports', 'generated-report'], navigationExtras);
+
   }
   generateReportByCriteria(payload) {
     return new Promise((resolve, reject) => {
@@ -333,7 +340,7 @@ export class ReportsComponent implements OnInit {
 
   }
   generatedReport(report) {
-      this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
-      this.router.navigate(['provider', 'reports', 'generated-report'], { queryParams: { reportRecreate: 'recreateReport' } });
+    this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
+    this.router.navigate(['provider', 'reports', 'generated-report'], { queryParams: { reportRecreate: 'recreateReport' } });
   }
 }

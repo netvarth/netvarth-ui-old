@@ -1,648 +1,676 @@
 <section class="card">
   <div class="title-gb no-padding">
     <div class="mgn-up-15 mgn-lt-15 mgn-rt-15 dash-head">
-          Reports
+      Reports
     </div>
   </div>
- 
+
 </section><br><br>
-<section class="card">  
-  <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small" [routerLink]="['/provider/reports/report-list']">
+<section class="card">
+  <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small"
+    [routerLink]="['/provider/reports/report-list']">
     <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add">
       <i class="fa-solid fa-plus"></i>View All Reports</button>
   </a>
   <div class="content w-manager settings comn-cls">
-      <div class="col-md-10 col-xs-12 col-sm-12 col-lg-6 no-padding-small">
+    <div class="col-md-10 col-xs-12 col-sm-12 col-lg-6 no-padding-small">
 
 
-        <!--Appointments-->
-          <div class="row">
-              <div class="card p0">
-                <mat-accordion class="report">
-                  <mat-expansion-panel  [expanded]="true">
-                      <mat-expansion-panel-header>
-                          <mat-panel-title class="report_title">
-                             Appointments
-                             <div class="width100pc" *ngIf="appt_criteria.length > 0">
-                              <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'appointment'}">Create New Report</a>
-                             </div>
-                          </mat-panel-title>
-                      </mat-expansion-panel-header>
-                      <ng-container *ngIf="appointmentReports.length===0">
-                        <div *ngIf="appt_criteria.length === 0">
-                          <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                          <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'appointment'}">Create New Report</a>
-                        </div>
-                        <table *ngIf="appt_criteria.length > 0">
-                          <span class="savd-report">Saved Reports</span>
-                            <!-- <i class="fa fa-chevron-circle-down"></i> -->
-                          
-                           <tr *ngFor="let apt_cr of appt_criteria">
-                            <td>{{apt_cr.reportName}}</td>
-                            <td><a (click)="recreateReport(apt_cr)">Generate</a></td>
-                            <td><a (click)="viewCriteria(apt_cr)">View</a></td>
-                            <td><a (click)="deletCriteria(apt_cr)">Delete</a></td>
-                          </tr>
-                        </table>
-                    </ng-container>
-                  </mat-expansion-panel>
-              </mat-accordion>
-              </div>
-          </div>
-
-          <!---Payments-->
-          <div class="row">
-            <div class="card p0">
-              <mat-accordion class="report">
-                <mat-expansion-panel  [expanded]="true">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title class="report_title">
-                           Payments
-                           <div class="width100pc" *ngIf="payment_criteria.length > 0">
-                            <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'payment'}">Create New Report</a>
-                           </div>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
-                    <ng-container *ngIf="paymentReports.length===0">
-                      <div *ngIf="payment_criteria.length === 0">
-                        <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                        <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'payment'}">Create New Report</a>
-                      </div>
-                      <table *ngIf="payment_criteria.length > 0">
-                        <span class="savd-report">Saved Reports</span>
-                        <tr *ngFor="let pay_cr of payment_criteria">
-                          <td>{{pay_cr.reportName}}</td>
-                          <td><a (click)="recreateReport(pay_cr)">Generate</a></td>
-                          <td><a (click)="viewCriteria(pay_cr)">View</a></td>
-                          <td><a (click)="deletCriteria(pay_cr)">Delete</a></td>
-                        </tr>
-                      </table>
-                  </ng-container>
-                </mat-expansion-panel>
-            </mat-accordion>
-            </div>
-        </div>
-        <!--Tokens/Check-ins-->
-        <div class="row">
-          <div class="card p0">
-            <mat-accordion class="report">
-              <mat-expansion-panel [expanded]="true">
-                  <mat-expansion-panel-header>
-                      <mat-panel-title class="report_title">
-                          <span *ngIf="showToken">Tokens</span>
-                          <span *ngIf="!showToken">Tokens</span>
-                          <div class="width100pc" *ngIf="token_criteria.length > 0">
-                            <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New Report</a>
-                           </div>
-                      </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ng-container *ngIf="checkinReports.length===0">
-                    <div *ngIf="token_criteria.length === 0">
-                      <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                        <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New Report</a>
-                    </div>
-                    <table  *ngIf="token_criteria.length > 0">
-                      <span class="savd-report">Saved Reports</span>
-                      <tr *ngFor="let tkn_cr of token_criteria">
-                        <td>{{tkn_cr.reportName}}</td>
-                        <td><a (click)="recreateReport(tkn_cr)">Generate</a></td>
-                        <td><a (click)="viewCriteria(tkn_cr)">View</a></td>
-                        <td><a (click)="deletCriteria(tkn_cr)">Delete</a></td>
-                      </tr>
-                    </table>
-                </ng-container>
-              </mat-expansion-panel>
-          </mat-accordion>
-          </div>
-      </div>
-        <!-- Donations -->
-        <div class="row">
-          <div class="card p0">
-            <mat-accordion class="report">
-              <mat-expansion-panel  [expanded]="true">
-                  <mat-expansion-panel-header>
-                      <mat-panel-title class="report_title">
-                         Donations
-                         <div class="width100pc" *ngIf="donation_criteria.length > 0">
-                          <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'donation'}">Create New Report</a>
-                         </div>
-                      </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ng-container *ngIf="donationReports.length===0">
-                    <div *ngIf="donation_criteria.length === 0">
-                      <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                      <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'donation'}">Create New Report</a>
-                    </div>
-                    <table  *ngIf="donation_criteria.length > 0">
-                      <span class="savd-report">Saved Reports</span>
-                      <tr *ngFor="let don_cr of donation_criteria">
-                        <td>{{don_cr.reportName}}</td>
-                        <td><a (click)="recreateReport(don_cr)">Generate</a></td>
-                        <td><a (click)="viewCriteria(don_cr)">View</a></td>
-                        <td><a (click)="deletCriteria(don_cr)">Delete</a></td>
-                      </tr>
-                    </table>
-                </ng-container>
-              </mat-expansion-panel>
-          </mat-accordion>
-          </div>
-      </div>
-              <!-- Orders -->
-              <div class="row">
-                <div class="card p0">
-                  <mat-accordion class="report">
-                    <mat-expansion-panel  [expanded]="true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title class="report_title">
-                               Orders
-                               <div class="width100pc" *ngIf="order_criteria.length > 0">
-                                <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'order'}">Create New Report</a>
-                               </div>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ng-container *ngIf="orderReports.length===0">
-                          <div *ngIf="order_criteria.length === 0" >
-                            <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                      <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'order'}">Create New Report</a>
-                          </div>
-                          <table  *ngIf="order_criteria.length > 0">
-                            <span class="savd-report">Saved Reports</span>
-                            <tr *ngFor="let order_cr of order_criteria">
-                              <td>{{order_cr.reportName}}</td>
-                              <td><a (click)="recreateReport(order_cr)">Generate</a></td>
-                              <td><a (click)="viewCriteria(order_cr)">View</a></td>
-                              <td><a (click)="deletCriteria(order_cr)">Delete</a></td>
-                            </tr>
-                          </table>
-                      </ng-container>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                </div>
-            </div>
-                   <!-- Reimburse Reports -->
-                   <div class="row">
-                    <div class="card p0">
-                      <mat-accordion class="report">
-                        <mat-expansion-panel  [expanded]="true">
-                            <mat-expansion-panel-header >
-                                <mat-panel-title class="report_title">
-                                   Reimbursements 
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ng-container>
-                              <div  >
-                                <a [routerLink]="['/provider/settings/pos/coupons/report']" [queryParams]="{ from:'reports' }">List of Reimbursements</a>
-                              </div></ng-container>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    </div>
-                </div>
-                      <!-- Users Reports -->
-                      <div class="row" *ngIf="active_user.accountType==='BRANCH'">
-                        <div class="card p0">
-                          <mat-accordion class="report">
-                            <mat-expansion-panel  [expanded]="true">
-                                <mat-expansion-panel-header>
-                                    <mat-panel-title class="report_title">
-                                       Users 
-                                       <div class="width100pc" >
-                                        <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'user'}">Create New Report</a>
-                                       </div>
-                                    </mat-panel-title>
-                                </mat-expansion-panel-header>
-                         
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                        </div>
-                    </div>
-                     <!-- CRM Reports -->
-                     <div class="row" *ngIf="taskStatus">
-                      <div class="card p0">
-                        <mat-accordion class="report">
-                          <mat-expansion-panel  [expanded]="true">
-                              <mat-expansion-panel-header>
-                                  <mat-panel-title class="report_title">
-                                     CRM 
-                                     <div class="width100pc" >
-                                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">Create New Report</a>
-                                     </div>
-                                  </mat-panel-title>
-                              </mat-expansion-panel-header>
-                              <ng-container *ngIf="crmReports.length===0">
-                                <div *ngIf="crm_criteria.length === 0" >
-                                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                            <!-- <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">Create New Report</a> -->
-                                </div>
-                                <table  *ngIf="crm_criteria.length > 0">
-                                  <span class="savd-report">Saved Reports</span>
-                                  <tr *ngFor="let crm_cr of crm_criteria">
-                                    <td>{{crm_cr.reportName}}</td>
-                                    <td><a (click)="recreateReport(crm_cr)">Generate</a></td>
-                                    <td><a (click)="viewCriteria(crm_cr)">View</a></td>
-                                    <td><a (click)="deletCriteria(crm_cr)">Delete</a></td>
-                                  </tr>
-                                </table>
-                            </ng-container>
-                          </mat-expansion-panel>
-                      </mat-accordion>
-                      </div>
-                  </div>
-
-                  <!-- LEAD Reports -->
-                  <div class="row" *ngIf="taskStatus">
-                    <div class="card p0">
-                      <mat-accordion class="report">
-                        <mat-expansion-panel  [expanded]="true">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title class="report_title">
-                                   CRM LEAD
-                                   <div class="width100pc" >
-                                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'lead'}">Create New Report</a>
-                                   </div>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ng-container *ngIf="crmReports.length===0">
-                              <div *ngIf="crm_criteria.length === 0" >
-                                <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                          <!-- <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">Create New Report</a> -->
-                              </div>
-                              <table  *ngIf="crm_criteria.length > 0">
-                                <span class="savd-report">Saved Reports</span>
-                                <tr *ngFor="let crm_cr of crm_criteria">
-                                  <td>{{crm_cr.reportName}}</td>
-                                  <td><a (click)="recreateReport(crm_cr)">Generate</a></td>
-                                  <td><a (click)="viewCriteria(crm_cr)">View</a></td>
-                                  <td><a (click)="deletCriteria(crm_cr)">Delete</a></td>
-                                </tr>
-                              </table>
-                          </ng-container>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    </div>
-                </div>
-
-                  <!-- Enquiry Reports -->
-                  <div class="row" *ngIf="taskStatus">
-                    <div class="card p0">
-                      <mat-accordion class="report">
-                        <mat-expansion-panel  [expanded]="true">
-                            <mat-expansion-panel-header>
-                                <mat-panel-title class="report_title">
-                                   Enquiry
-                                   <div class="width100pc" >
-                                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'enquiry'}">Create New Report</a>
-                                   </div>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <ng-container *ngIf="enquiryReports.length===0">
-                              <div *ngIf="enquiry_criteria.length === 0" >
-                                <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                              </div>
-                              <table  *ngIf="enquiry_criteria.length > 0">
-                                <span class="savd-report">Saved Reports</span>
-                                <tr *ngFor="let enquiry of enquiry_criteria">
-                                  <td>{{enquiry.reportName}}</td>
-                                  <td><a (click)="recreateReport(enquiry)">Generate</a></td>
-                                  <td><a (click)="viewCriteria(enquiry)">View</a></td>
-                                  <td><a (click)="deletCriteria(enquiry)">Delete</a></td>
-                                </tr>
-                              </table>
-                          </ng-container>
-                        </mat-expansion-panel>
-                    </mat-accordion>
-                    </div>
-                </div>
-                 <!-- Monthly Activity Reports -->
-                 <div class="row" *ngIf="taskStatus">
-                  <div class="card p0">
-                    <mat-accordion class="report">
-                      <mat-expansion-panel  [expanded]="true">
-                          <mat-expansion-panel-header>
-                              <mat-panel-title class="report_title">
-                                Consolidated Activity Report 
-                                 <div class="width100pc" >
-                                  <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'monthlyActivity'}">Create New Report</a>
-                                 </div>
-                              </mat-panel-title>
-                          </mat-expansion-panel-header>
-                          <ng-container *ngIf="monthlyActivityReports.length===0">
-                            <div *ngIf="monthly_criteria.length === 0" >
-                              <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                            </div>
-                            <table  *ngIf="monthly_criteria.length > 0">
-                              <span class="savd-report">Saved Reports</span>
-                              <tr *ngFor="let monthlyActivity of monthly_criteria">
-                                <td>{{monthlyActivity.reportName}}</td>
-                                <td><a (click)="recreateReport(monthlyActivity)">Generate</a></td>
-                                <td><a (click)="viewCriteria(monthlyActivity)">View</a></td>
-                                <td><a (click)="deletCriteria(monthlyActivity)">Delete</a></td>
-                              </tr>
-                            </table>
-                        </ng-container>
-                      </mat-expansion-panel>
-                  </mat-accordion>
-                  </div>
-              </div>
-               <!-- LEAD Status Reports -->
-               <div class="row" *ngIf="taskStatus">
-                <div class="card p0">
-                  <mat-accordion class="report">
-                    <mat-expansion-panel  [expanded]="true">
-                        <mat-expansion-panel-header>
-                            <mat-panel-title class="report_title">
-                                Lead Status
-                               <div class="width100pc" >
-                                <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'leadStatus'}">Create New Report</a>
-                               </div>
-                            </mat-panel-title>
-                        </mat-expansion-panel-header>
-                        <ng-container *ngIf="leadStatusReports.length===0">
-                          <div *ngIf="crm_lead_status_criteria.length === 0" >
-                            <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                          </div>
-                          <table  *ngIf="crm_lead_status_criteria.length > 0">
-                            <span class="savd-report">Saved Reports</span>
-                            <tr *ngFor="let crm_lead_status of crm_lead_status_criteria">
-                              <td>{{crm_lead_status.reportName}}</td>
-                              <td><a (click)="recreateReport(crm_lead_status)">Generate</a></td>
-                              <td><a (click)="viewCriteria(crm_lead_status)">View</a></td>
-                              <td><a (click)="deletCriteria(crm_lead_status)">Delete</a></td>
-                            </tr>
-                          </table>
-                      </ng-container>
-                    </mat-expansion-panel>
-                </mat-accordion>
-                </div>
-            </div>
-           
-   <!-- Processing Files Reports -->
-   <div class="row" *ngIf="taskStatus">
-    <div class="card p0">
-      <mat-accordion class="report">
-        <mat-expansion-panel  [expanded]="true">
-            <mat-expansion-panel-header>
-                <mat-panel-title class="report_title">
-                    Processing Files
-                   <div class="width100pc" >
-                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'processingFiles'}">Create New Report</a>
-                   </div>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ng-container *ngIf="processingFilesReports.length===0">
-              <div *ngIf="processing_files_criteria.length === 0" >
-                <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-              </div>
-              <table  *ngIf="processing_files_criteria.length > 0">
-                <span class="savd-report">Saved Reports</span>
-                <tr *ngFor="let processing_file of processing_files_criteria">
-                  <td>{{processing_file.reportName}}</td>
-                  <td><a (click)="recreateReport(processing_file)">Generate</a></td>
-                  <td><a (click)="viewCriteria(processing_file)">View</a></td>
-                  <td><a (click)="deletCriteria(processing_file)">Delete</a></td>
-                </tr>
-              </table>
-          </ng-container>
-        </mat-expansion-panel>
-    </mat-accordion>
-    </div>
-</div>
-  <!--Consolidated Reports -->
-  <div class="row" *ngIf="taskStatus">
-    <div class="card p0">
-      <mat-accordion class="report">
-        <mat-expansion-panel  [expanded]="true">
-            <mat-expansion-panel-header>
-                <mat-panel-title class="report_title">
-                    HO-Consolidated
-                   <div class="width100pc" >
-                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'consolidated'}">Create New Report</a>
-                   </div>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ng-container *ngIf="consolidatedReports.length===0">
-              <div *ngIf="consolidated_criteria.length === 0" >
-                <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-              </div>
-              <table  *ngIf="consolidated_criteria.length > 0">
-                <span class="savd-report">Saved Reports</span>
-                <tr *ngFor="let consolidate of consolidated_criteria">
-                  <td>{{consolidate.reportName}}</td>
-                  <td><a (click)="recreateReport(consolidate)">Generate</a></td>
-                  <td><a (click)="viewCriteria(consolidate)">View</a></td>
-                  <td><a (click)="deletCriteria(consolidate)">Delete</a></td>
-                </tr>
-              </table>
-          </ng-container>
-        </mat-expansion-panel>
-    </mat-accordion>
-    </div>
-</div>
- <!--Tat Reports -->
- <div class="row" *ngIf="taskStatus">
-  <div class="card p0">
-    <mat-accordion class="report">
-      <mat-expansion-panel  [expanded]="true">
-          <mat-expansion-panel-header>
-              <mat-panel-title class="report_title">
-                  HO-Tat
-                 <div class="width100pc" >
-                  <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'tat'}">Create New Report</a>
-                 </div>
-              </mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-container *ngIf="tatReports.length===0">
-            <div *ngIf="tat_criteria.length === 0" >
-              <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-            </div>
-            <table  *ngIf="tat_criteria.length > 0">
-              <span class="savd-report">Saved Reports</span>
-              <tr *ngFor="let tat of tat_criteria">
-                <td>{{tat.reportName}}</td>
-                <td><a (click)="recreateReport(tat)">Generate</a></td>
-                <td><a (click)="viewCriteria(tat)">View</a></td>
-                <td><a (click)="deletCriteria(tat)">Delete</a></td>
-              </tr>
-            </table>
-        </ng-container>
-      </mat-expansion-panel>
-  </mat-accordion>
-  </div>
-</div>
-
- <!--Recommended Status Reports -->
- <div class="row" *ngIf="taskStatus">
-  <div class="card p0">
-    <mat-accordion class="report">
-      <mat-expansion-panel  [expanded]="true">
-          <mat-expansion-panel-header>
-              <mat-panel-title class="report_title">
-                  Recommended Status
-                 <div class="width100pc" >
-                  <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'recommendedStatus'}">Create New Report</a>
-                 </div>
-              </mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-container *ngIf="recommendedStatusReports.length===0">
-            <div *ngIf="recommended_status_criteria.length === 0" >
-              <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-            </div>
-            <table  *ngIf="recommended_status_criteria.length > 0">
-              <span class="savd-report">Saved Reports</span>
-              <tr *ngFor="let recommedStatus of recommended_status_criteria">
-                <td>{{recommedStatus.reportName}}</td>
-                <td><a (click)="recreateReport(recommedStatus)">Generate</a></td>
-                <td><a (click)="viewCriteria(recommedStatus)">View</a></td>
-                <td><a (click)="deletCriteria(recommedStatus)">Delete</a></td>
-              </tr>
-            </table>
-        </ng-container>
-      </mat-expansion-panel>
-  </mat-accordion>
-  </div>
-</div>
-
- <!--Login Reports -->
- <div class="row" *ngIf="taskStatus">
-  <div class="card p0">
-    <mat-accordion class="report">
-      <mat-expansion-panel  [expanded]="true">
-          <mat-expansion-panel-header>
-              <mat-panel-title class="report_title">
-                  Login Reports
-                 <div class="width100pc" >
-                  <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'login'}">Create New Report</a>
-                 </div>
-              </mat-panel-title>
-          </mat-expansion-panel-header>
-          <ng-container *ngIf="loginReports.length===0">
-            <div *ngIf="login_criteria.length === 0" >
-              <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-            </div>
-            <table  *ngIf="login_criteria.length > 0">
-              <span class="savd-report">Saved Reports</span>
-              <tr *ngFor="let login of login_criteria">
-                <td>{{login.reportName}}</td>
-                <td><a (click)="recreateReport(login)">Generate</a></td>
-                <td><a (click)="viewCriteria(login)">View</a></td>
-                <td><a (click)="deletCriteria(login)">Delete</a></td>
-              </tr>
-            </table>
-        </ng-container>
-      </mat-expansion-panel>
-  </mat-accordion>
-  </div>
-</div>
-          <!--Ho Leads Reports -->
-  <div class="row" *ngIf="taskStatus">
-    <div class="card p0">
-      <mat-accordion class="report">
-        <mat-expansion-panel  [expanded]="true">
-            <mat-expansion-panel-header>
-                <mat-panel-title class="report_title">
-                    HO-Leads Status
-                   <div class="width100pc" >
-                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'HOLead'}">Create New Report</a>
-                   </div>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-            <ng-container *ngIf="HOLeadsReports.length===0">
-              <div *ngIf="HO_lead_criteria.length === 0" >
-                <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-              </div>
-              <table  *ngIf="HO_lead_criteria.length > 0">
-                <span class="savd-report">Saved Reports</span>
-                <tr *ngFor="let hoLead of HO_lead_criteria">
-                  <td>{{hoLead.reportName}}</td>
-                  <td><a (click)="recreateReport(hoLead)">Generate</a></td>
-                  <td><a (click)="viewCriteria(hoLead)">View</a></td>
-                  <td><a (click)="deletCriteria(hoLead)">Delete</a></td>
-                </tr>
-              </table>
-          </ng-container>
-        </mat-expansion-panel>
-    </mat-accordion>
-    </div>
-</div>   
-        <!--Sanctioned Status Reports -->
-        <div class="row" *ngIf="taskStatus">
-          <div class="card p0">
-            <mat-accordion class="report">
-              <mat-expansion-panel  [expanded]="true">
-                  <mat-expansion-panel-header>
-                      <mat-panel-title class="report_title">
-                          Sanctioned Status
-                         <div class="width100pc" >
-                          <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'sanctionedStatus'}">Create New Report</a>
-                         </div>
-                      </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <ng-container *ngIf="sanctionedReports.length===0">
-                    <div *ngIf="sanctioned_status_criteria.length === 0" >
-                      <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
-                    </div>
-                    <table  *ngIf="sanctioned_status_criteria.length > 0">
-                      <span class="savd-report">Saved Reports</span>
-                      <tr *ngFor="let sanctionedStatus of sanctioned_status_criteria">
-                        <td>{{sanctionedStatus.reportName}}</td>
-                        <td><a (click)="recreateReport(sanctionedStatus)">Generate</a></td>
-                        <td><a (click)="viewCriteria(sanctionedStatus)">View</a></td>
-                        <td><a (click)="deletCriteria(sanctionedStatus)">Delete</a></td>
-                      </tr>
-                    </table>
-                </ng-container>
-              </mat-expansion-panel>
-          </mat-accordion>
-          </div>
-      </div> 
-       <!--Employee Activity Tat Reports -->
-       <div class="row" *ngIf="taskStatus">
+      <!--Appointments-->
+      <div class="row">
         <div class="card p0">
           <mat-accordion class="report">
-            <mat-expansion-panel  [expanded]="true">
-                <mat-expansion-panel-header>
-                    <mat-panel-title class="report_title">
-                        Employee-Average Tat
-                       <div class="width100pc" >
-                        <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'employeeAverageTat'}">Create New Report</a>
-                       </div>
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <ng-container *ngIf="employeeActivityReports.length===0">
-                  <div *ngIf="employee_activity_criteria.length === 0" >
-                    <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Appointments
+                  <div class="width100pc" *ngIf="appt_criteria.length > 0">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'appointment'}">Create New Report</a>
                   </div>
-                  <table  *ngIf="employee_activity_criteria.length > 0">
-                    <span class="savd-report">Saved Reports</span>
-                    <tr *ngFor="let employeeActivity of employee_activity_criteria">
-                      <td>{{employeeActivity.reportName}}</td>
-                      <td><a (click)="recreateReport(employeeActivity)">Generate</a></td>
-                      <td><a (click)="viewCriteria(employeeActivity)">View</a></td>
-                      <td><a (click)="deletCriteria(employeeActivity)">Delete</a></td>
-                    </tr>
-                  </table>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="appointmentReports.length===0">
+                <div *ngIf="appt_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'appointment'}">Create
+                    New Report</a>
+                </div>
+                <table *ngIf="appt_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <!-- <i class="fa fa-chevron-circle-down"></i> -->
+
+                  <tr *ngFor="let apt_cr of appt_criteria">
+                    <td>{{apt_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(apt_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(apt_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(apt_cr)">Delete</a></td>
+                  </tr>
+                </table>
               </ng-container>
             </mat-expansion-panel>
-        </mat-accordion>
+          </mat-accordion>
         </div>
-    </div>      
-     <!--Daily Activity Reports -->
-     <div class="row" *ngIf="taskStatus">
-      <div class="card p0">
-        <mat-accordion class="report">
-          <mat-expansion-panel  [expanded]="true">
+      </div>
+
+      <!---Payments-->
+      <div class="row">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
               <mat-expansion-panel-header>
-                  <mat-panel-title class="report_title">
-                      Employee-Daily Activity
-                     <div class="width100pc" >
-                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'dailyActivity'}">Create New Report</a>
-                     </div>
-                  </mat-panel-title>
+                <mat-panel-title class="report_title">
+                  Payments
+                  <div class="width100pc" *ngIf="payment_criteria.length > 0">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'payment'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="paymentReports.length===0">
+                <div *ngIf="payment_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'payment'}">Create New
+                    Report</a>
+                </div>
+                <table *ngIf="payment_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let pay_cr of payment_criteria">
+                    <td>{{pay_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(pay_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(pay_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(pay_cr)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!--Tokens/Check-ins-->
+      <div class="row">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  <span *ngIf="showToken">Tokens</span>
+                  <span *ngIf="!showToken">Tokens</span>
+                  <div class="width100pc" *ngIf="token_criteria.length > 0">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'token'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="checkinReports.length===0">
+                <div *ngIf="token_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'token'}">Create New
+                    Report</a>
+                </div>
+                <table *ngIf="token_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let tkn_cr of token_criteria">
+                    <td>{{tkn_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(tkn_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(tkn_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(tkn_cr)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!-- Donations -->
+      <div class="row">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Donations
+                  <div class="width100pc" *ngIf="donation_criteria.length > 0">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'donation'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="donationReports.length===0">
+                <div *ngIf="donation_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'donation'}">Create New
+                    Report</a>
+                </div>
+                <table *ngIf="donation_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let don_cr of donation_criteria">
+                    <td>{{don_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(don_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(don_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(don_cr)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!-- Orders -->
+      <div class="row">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Orders
+                  <div class="width100pc" *ngIf="order_criteria.length > 0">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'order'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="orderReports.length===0">
+                <div *ngIf="order_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'order'}">Create New
+                    Report</a>
+                </div>
+                <table *ngIf="order_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let order_cr of order_criteria">
+                    <td>{{order_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(order_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(order_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(order_cr)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!-- Reimburse Reports -->
+      <div class="row">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Reimbursements
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container>
+                <div>
+                  <a [routerLink]="['/provider/settings/pos/coupons/report']" [queryParams]="{ from:'reports' }">List of
+                    Reimbursements</a>
+                </div>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!-- Users Reports -->
+      <div class="row" *ngIf="active_user.accountType==='BRANCH'">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Users
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'user'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!-- CRM Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  CRM
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'crm'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="crmReports.length===0">
+                <div *ngIf="crm_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  <!-- <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">Create New Report</a> -->
+                </div>
+                <table *ngIf="crm_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let crm_cr of crm_criteria">
+                    <td>{{crm_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(crm_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(crm_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(crm_cr)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+
+      <!-- LEAD Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  CRM LEAD
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'lead'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="crmReports.length===0">
+                <div *ngIf="crm_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  <!-- <a [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'crm'}">Create New Report</a> -->
+                </div>
+                <table *ngIf="crm_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let crm_cr of crm_criteria">
+                    <td>{{crm_cr.reportName}}</td>
+                    <td><a (click)="recreateReport(crm_cr)">Generate</a></td>
+                    <td><a (click)="viewCriteria(crm_cr)">View</a></td>
+                    <td><a (click)="deletCriteria(crm_cr)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+
+      <!-- Enquiry Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Enquiry
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'enquiry'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="enquiryReports.length===0">
+                <div *ngIf="enquiry_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="enquiry_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let enquiry of enquiry_criteria">
+                    <td>{{enquiry.reportName}}</td>
+                    <td><a (click)="recreateReport(enquiry)">Generate</a></td>
+                    <td><a (click)="viewCriteria(enquiry)">View</a></td>
+                    <td><a (click)="deletCriteria(enquiry)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!-- Monthly Activity Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Consolidated Activity Report
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'monthlyActivity'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="monthlyActivityReports.length===0">
+                <div *ngIf="monthly_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="monthly_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let monthlyActivity of monthly_criteria">
+                    <td>{{monthlyActivity.reportName}}</td>
+                    <td><a (click)="recreateReport(monthlyActivity)">Generate</a></td>
+                    <td><a (click)="viewCriteria(monthlyActivity)">View</a></td>
+                    <td><a (click)="deletCriteria(monthlyActivity)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!-- LEAD Status Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Lead Status
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'leadStatus'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="leadStatusReports.length===0">
+                <div *ngIf="crm_lead_status_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="crm_lead_status_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let crm_lead_status of crm_lead_status_criteria">
+                    <td>{{crm_lead_status.reportName}}</td>
+                    <td><a (click)="recreateReport(crm_lead_status)">Generate</a></td>
+                    <td><a (click)="viewCriteria(crm_lead_status)">View</a></td>
+                    <td><a (click)="deletCriteria(crm_lead_status)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+
+      <!-- Processing Files Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Processing Files
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'processingFiles'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="processingFilesReports.length===0">
+                <div *ngIf="processing_files_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="processing_files_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let processing_file of processing_files_criteria">
+                    <td>{{processing_file.reportName}}</td>
+                    <td><a (click)="recreateReport(processing_file)">Generate</a></td>
+                    <td><a (click)="viewCriteria(processing_file)">View</a></td>
+                    <td><a (click)="deletCriteria(processing_file)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!--Consolidated Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  HO-Consolidated
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'consolidated'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="consolidatedReports.length===0">
+                <div *ngIf="consolidated_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="consolidated_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let consolidate of consolidated_criteria">
+                    <td>{{consolidate.reportName}}</td>
+                    <td><a (click)="recreateReport(consolidate)">Generate</a></td>
+                    <td><a (click)="viewCriteria(consolidate)">View</a></td>
+                    <td><a (click)="deletCriteria(consolidate)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!--Tat Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  HO-Tat
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'tat'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="tatReports.length===0">
+                <div *ngIf="tat_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="tat_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let tat of tat_criteria">
+                    <td>{{tat.reportName}}</td>
+                    <td><a (click)="recreateReport(tat)">Generate</a></td>
+                    <td><a (click)="viewCriteria(tat)">View</a></td>
+                    <td><a (click)="deletCriteria(tat)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+
+      <!--Recommended Status Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Recommended Status
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'recommendedStatus'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="recommendedStatusReports.length===0">
+                <div *ngIf="recommended_status_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="recommended_status_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let recommedStatus of recommended_status_criteria">
+                    <td>{{recommedStatus.reportName}}</td>
+                    <td><a (click)="recreateReport(recommedStatus)">Generate</a></td>
+                    <td><a (click)="viewCriteria(recommedStatus)">View</a></td>
+                    <td><a (click)="deletCriteria(recommedStatus)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+
+      <!--Login Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Login Reports
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'login'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="loginReports.length===0">
+                <div *ngIf="login_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="login_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let login of login_criteria">
+                    <td>{{login.reportName}}</td>
+                    <td><a (click)="recreateReport(login)">Generate</a></td>
+                    <td><a (click)="viewCriteria(login)">View</a></td>
+                    <td><a (click)="deletCriteria(login)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!--Ho Leads Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  HO-Leads Status
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'HOLead'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="HOLeadsReports.length===0">
+                <div *ngIf="HO_lead_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="HO_lead_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let hoLead of HO_lead_criteria">
+                    <td>{{hoLead.reportName}}</td>
+                    <td><a (click)="recreateReport(hoLead)">Generate</a></td>
+                    <td><a (click)="viewCriteria(hoLead)">View</a></td>
+                    <td><a (click)="deletCriteria(hoLead)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!--Sanctioned Status Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Sanctioned Status
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'sanctionedStatus'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="sanctionedReports.length===0">
+                <div *ngIf="sanctioned_status_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="sanctioned_status_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let sanctionedStatus of sanctioned_status_criteria">
+                    <td>{{sanctionedStatus.reportName}}</td>
+                    <td><a (click)="recreateReport(sanctionedStatus)">Generate</a></td>
+                    <td><a (click)="viewCriteria(sanctionedStatus)">View</a></td>
+                    <td><a (click)="deletCriteria(sanctionedStatus)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!--Employee Activity Tat Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Employee-Average Tat
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'employeeAverageTat'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="employeeActivityReports.length===0">
+                <div *ngIf="employee_activity_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="employee_activity_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let employeeActivity of employee_activity_criteria">
+                    <td>{{employeeActivity.reportName}}</td>
+                    <td><a (click)="recreateReport(employeeActivity)">Generate</a></td>
+                    <td><a (click)="viewCriteria(employeeActivity)">View</a></td>
+                    <td><a (click)="deletCriteria(employeeActivity)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+      <!--Daily Activity Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Employee-Daily Activity
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'dailyActivity'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
               </mat-expansion-panel-header>
               <ng-container *ngIf="dailyActivityReports.length===0">
-                <div *ngIf="daily_activity_criteria.length === 0" >
-                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                <div *ngIf="daily_activity_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
                 </div>
-                <table  *ngIf="daily_activity_criteria.length > 0">
+                <table *ngIf="daily_activity_criteria.length > 0">
                   <span class="savd-report">Saved Reports</span>
                   <tr *ngFor="let dailyActivity of daily_activity_criteria">
                     <td>{{dailyActivity.reportName}}</td>
@@ -651,29 +679,30 @@
                     <td><a (click)="deletCriteria(dailyActivity)">Delete</a></td>
                   </tr>
                 </table>
-            </ng-container>
-          </mat-expansion-panel>
-      </mat-accordion>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
       </div>
-  </div>   
-    <!--Customer Reports -->
-    <div class="row" *ngIf="taskStatus">
-      <div class="card p0">
-        <mat-accordion class="report">
-          <mat-expansion-panel  [expanded]="true">
+      <!--Customer Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
               <mat-expansion-panel-header>
-                  <mat-panel-title class="report_title">
-                      Customer Report
-                     <div class="width100pc" >
-                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'customerReport'}">Create New Report</a>
-                     </div>
-                  </mat-panel-title>
+                <mat-panel-title class="report_title">
+                  Customer Report
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'customerReport'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
               </mat-expansion-panel-header>
               <ng-container *ngIf="customerReports.length===0">
-                <div *ngIf="customer_report_criteria.length === 0" >
-                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                <div *ngIf="customer_report_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
                 </div>
-                <table  *ngIf="customer_report_criteria.length > 0">
+                <table *ngIf="customer_report_criteria.length > 0">
                   <span class="savd-report">Saved Reports</span>
                   <tr *ngFor="let customer of customer_report_criteria">
                     <td>{{customer.reportName}}</td>
@@ -682,29 +711,30 @@
                     <td><a (click)="deletCriteria(customer)">Delete</a></td>
                   </tr>
                 </table>
-            </ng-container>
-          </mat-expansion-panel>
-      </mat-accordion>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
       </div>
-  </div>
-    <!--Customer SRIF Status Reports -->
-    <div class="row" *ngIf="taskStatus">
-      <div class="card p0">
-        <mat-accordion class="report">
-          <mat-expansion-panel  [expanded]="true">
+      <!--Customer SRIF Status Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
               <mat-expansion-panel-header>
-                  <mat-panel-title class="report_title">
-                      Customer CRIF Status
-                     <div class="width100pc" >
-                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'customerCrifStatus'}">Create New Report</a>
-                     </div>
-                  </mat-panel-title>
+                <mat-panel-title class="report_title">
+                  Customer CRIF Status
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'customerCrifStatus'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
               </mat-expansion-panel-header>
               <ng-container *ngIf="customerCrifStatusReports.length===0">
-                <div *ngIf="customer_crif_Status_criteria.length === 0" >
-                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                <div *ngIf="customer_crif_Status_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
                 </div>
-                <table  *ngIf="customer_crif_Status_criteria.length > 0">
+                <table *ngIf="customer_crif_Status_criteria.length > 0">
                   <span class="savd-report">Saved Reports</span>
                   <tr *ngFor="let customerCRIFStatus of customer_crif_Status_criteria">
                     <td>{{customerCRIFStatus.reportName}}</td>
@@ -713,29 +743,30 @@
                     <td><a (click)="deletCriteria(customerCRIFStatus)">Delete</a></td>
                   </tr>
                 </table>
-            </ng-container>
-          </mat-expansion-panel>
-      </mat-accordion>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
       </div>
-  </div>   
-    <!--Customer Wise Enquiry Reports -->
-    <div class="row" *ngIf="taskStatus">
-      <div class="card p0">
-        <mat-accordion class="report">
-          <mat-expansion-panel  [expanded]="true">
+      <!--Customer Wise Enquiry Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
               <mat-expansion-panel-header>
-                  <mat-panel-title class="report_title">
-                      Customer Wise Enquiry
-                     <div class="width100pc" >
-                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']" [queryParams]="{report_type:'customerWiseEnquiry'}">Create New Report</a>
-                     </div>
-                  </mat-panel-title>
+                <mat-panel-title class="report_title">
+                  Customer Wise Enquiry
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'customerWiseEnquiry'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
               </mat-expansion-panel-header>
               <ng-container *ngIf="customerWiseEnquiryReports.length===0">
-                <div *ngIf="customer_wise_enquiry_criteria.length === 0" >
-                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports.  </p>
+                <div *ngIf="customer_wise_enquiry_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
                 </div>
-                <table  *ngIf="customer_wise_enquiry_criteria.length > 0">
+                <table *ngIf="customer_wise_enquiry_criteria.length > 0">
                   <span class="savd-report">Saved Reports</span>
                   <tr *ngFor="let customer of customer_wise_enquiry_criteria">
                     <td>{{customer.reportName}}</td>
@@ -744,12 +775,44 @@
                     <td><a (click)="deletCriteria(customer)">Delete</a></td>
                   </tr>
                 </table>
-            </ng-container>
-          </mat-expansion-panel>
-      </mat-accordion>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
       </div>
-  </div>     
+      <!--Customer Wise Enquiry Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Document Collection Report
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'documentCollected'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="documentCollectedReports.length===0">
+                <div *ngIf="document_collection_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="document_collection_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let document of document_collection_criteria">
+                    <td>{{document.reportName}}</td>
+                    <td><a (click)="recreateReport(document)">Generate</a></td>
+                    <td><a (click)="viewCriteria(document)">View</a></td>
+                    <td><a (click)="deletCriteria(document)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
       </div>
-      <div class="clearfix"></div>
+    </div>
+    <div class="clearfix"></div>
   </div>
 </section>

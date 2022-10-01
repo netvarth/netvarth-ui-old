@@ -2,7 +2,7 @@
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToReports()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-       {{reportTitle | capitalizeFirst}} Report
+      {{reportTitle | capitalizeFirst}} Report
     </h5>
   </div>
 </section>
@@ -210,7 +210,8 @@
                   </mat-select>
                 </div>
               </div>
-              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12" *ngIf="appointment_intstatus_list && appointment_intstatus_list.length > 0">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12"
+                *ngIf="appointment_intstatus_list && appointment_intstatus_list.length > 0">
                 <label for="appointmentStatus" class="col-lg-5 col-md-5 col-sm-5 col-xs-6 col-form-label">Internal
                   Status</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
@@ -267,8 +268,8 @@
                 <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                   <mat-form-field>
                     <mat-label>End Date</mat-label>
-                    <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate"
-                      [(ngModel)]="appointment_endDate" class="sc-t" readonly (click)="end.open()">
+                    <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="appointment_endDate"
+                      class="sc-t" readonly (click)="end.open()">
                     <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                     <mat-datepicker #end></mat-datepicker>
                   </mat-form-field>
@@ -329,11 +330,12 @@
               </ng-container>
             </div>
           </div>
-           <!-- crm -->
-           <div class="card p20" *ngIf="report_type=='crm'">
+          <!-- crm -->
+          <div class="card p20" *ngIf="report_type=='crm'">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                   <mat-select class="form-control" [(ngModel)]="crm_timePeriod"
                     (selectionChange)="changeTimePeriod($event)">
@@ -343,7 +345,7 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
                   <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
@@ -357,7 +359,7 @@
               </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
               <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
               <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                 <mat-select class="form-control"  [(ngModel)]="customer_location">
@@ -368,23 +370,22 @@
                 </mat-select>
               </div>
             </div> -->
-            <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-              <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-              <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
 
-                <mat-select #select multiple>
-                  <div class="select-all">
-                    <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                      (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                  </div>
-                  <!-- <mat-option [value]="0">Any</mat-option> -->
-                  <mat-option *ngFor="let loc of location" [value]="loc.id"
-                    (click)="setLocationFilter()">
-                    {{loc.place}}
-                  </mat-option>
-                </mat-select>
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <!-- <mat-option [value]="0">Any</mat-option> -->
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
@@ -421,7 +422,8 @@
           <div class="card p20" *ngIf="report_type=='lead'">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                   <mat-select class="form-control" [(ngModel)]="lead_timePeriod"
                     (selectionChange)="changeTimePeriod($event)">
@@ -431,7 +433,7 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
                   <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
@@ -445,7 +447,7 @@
               </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
               <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
               <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                 <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -456,22 +458,21 @@
                 </mat-select>
               </div>
             </div> -->
-            <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-              <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-              <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
 
-                <mat-select #select multiple>
-                  <div class="select-all">
-                    <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                      (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                  </div>
-                  <mat-option *ngFor="let loc of location" [value]="loc.id"
-                    (click)="setLocationFilter()">
-                    {{loc.place}}
-                  </mat-option>
-                </mat-select>
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
@@ -508,7 +509,8 @@
           <div class="card p20 " *ngIf="report_type=='enquiry'">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                   <mat-select class="form-control" [(ngModel)]="enquiry_timePeriod"
                     (selectionChange)="changeTimePeriod($event)">
@@ -518,7 +520,7 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
                   <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
@@ -532,7 +534,7 @@
               </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
               <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
               <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                 <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -543,22 +545,21 @@
                 </mat-select>
               </div>
             </div> -->
-            <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-              <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-              <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
 
-                <mat-select #select multiple>
-                  <div class="select-all">
-                    <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                      (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                  </div>
-                  <mat-option *ngFor="let loc of location" [value]="loc.id"
-                    (click)="setLocationFilter()">
-                    {{loc.place}}
-                  </mat-option>
-                </mat-select>
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
@@ -595,7 +596,8 @@
           <div class="card p20 " *ngIf="report_type=='monthlyActivity'">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                   <mat-select class="form-control" [(ngModel)]="monthly_timePeriod"
                     (selectionChange)="changeTimePeriod($event)">
@@ -605,7 +607,7 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
                   <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
@@ -619,7 +621,7 @@
               </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
               <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
               <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                 <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -630,22 +632,21 @@
                 </mat-select>
               </div>
             </div> -->
-            <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-              <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-              <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
 
-                <mat-select #select multiple>
-                  <div class="select-all">
-                    <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                      (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                  </div>
-                  <mat-option *ngFor="let loc of location" [value]="loc.id"
-                    (click)="setLocationFilter()">
-                    {{loc.place}}
-                  </mat-option>
-                </mat-select>
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
@@ -678,11 +679,12 @@
               </ng-container>
             </div>
           </div>
-           <!-- lead status report -->
-           <div class="card p20" *ngIf="report_type=='leadStatus'">
+          <!-- lead status report -->
+          <div class="card p20" *ngIf="report_type=='leadStatus'">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                   <mat-select class="form-control" [(ngModel)]="lead_status_timePeriod"
                     (selectionChange)="changeTimePeriod($event)">
@@ -692,7 +694,7 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
                   <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
@@ -706,7 +708,7 @@
               </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
               <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
               <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                 <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -717,29 +719,28 @@
                 </mat-select>
               </div>
             </div> -->
-            <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-              <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-              <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
 
-                <mat-select #select multiple>
-                  <div class="select-all">
-                    <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                      (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                  </div>
-                  <mat-option *ngFor="let loc of location" [value]="loc.id"
-                    (click)="setLocationFilter()">
-                    {{loc.place}}
-                  </mat-option>
-                </mat-select>
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                 <mat-form-field>
                   <mat-label>Start Date</mat-label>
-                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="lead_Status_StartDate"
-                    class="sc-t" readonly (click)="start.open()">
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
+                    [(ngModel)]="lead_Status_StartDate" class="sc-t" readonly (click)="start.open()">
                   <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                   <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
@@ -765,100 +766,14 @@
               </ng-container>
             </div>
           </div>
-            <!-- processing files report -->
-            <div class="card p20" *ngIf="report_type=='processingFiles'">
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                  <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                  <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                    <mat-select class="form-control" [(ngModel)]="processing_files_timePeriod"
-                      (selectionChange)="changeTimePeriod($event)">
-                      <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                        period.displayName }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                
-                <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                    <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                    <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                      [(ngModel)]="user">
-                    <div class="input-group-append ">
-                      <button class="btn btn-primary " type="button"
-                        (click)="goToSelectionPage('user',user_id)">Change</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
-                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                  <mat-select class="form-control" [(ngModel)]="customer_location">
-                    <mat-option [value]="0">Any</mat-option>
-                    <mat-option *ngFor="let loc of location" [value]="loc.id">{{
-                      loc.place }}
-                    </mat-option>
-                  </mat-select>
-                </div>
-              </div> -->
-              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-  
-                  <mat-select #select multiple>
-                    <div class="select-all">
-                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                    </div>
-                    <mat-option *ngFor="let loc of location" [value]="loc.id"
-                      (click)="setLocationFilter()">
-                      {{loc.place}}
-                    </mat-option>
-                  </mat-select>
-                </div>
-              </div>
-              </div>
-              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                  <mat-form-field>
-                    <mat-label>Start Date</mat-label>
-                    <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="processing_files_StartDate"
-                      class="sc-t" readonly (click)="start.open()">
-                    <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                    <mat-datepicker #start></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                  <mat-form-field>
-                    <mat-label>End Date</mat-label>
-                    <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="processing_files_EndDate"
-                      class="sc-t" readonly (click)="end.open()">
-                    <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                    <mat-datepicker #end></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                </p>
-              </div>
-              <hr>
-              <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                  (click)="generateReport('processingFiles');"> Generate Report </button>
-                <ng-container *ngIf="report_loading">
-                  <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                </ng-container>
-              </div>
-            </div>
-              <!-- 'consolidated' report -->
-           <div class="card p20" *ngIf="report_type=='consolidated'">
+          <!-- processing files report -->
+          <div class="card p20" *ngIf="report_type=='processingFiles'">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                  <mat-select class="form-control" [(ngModel)]="consolidated_timePeriod"
+                  <mat-select class="form-control" [(ngModel)]="processing_files_timePeriod"
                     (selectionChange)="changeTimePeriod($event)">
                     <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
                       period.displayName }}
@@ -866,7 +781,7 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
                   <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
@@ -880,7 +795,94 @@
               </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="customer_location">
+                    <mat-option [value]="0">Any</mat-option>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id">{{
+                      loc.place }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div> -->
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
+                    [(ngModel)]="processing_files_StartDate" class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate"
+                    [(ngModel)]="processing_files_EndDate" class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('processingFiles');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- 'consolidated' report -->
+          <div class="card p20" *ngIf="report_type=='consolidated'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="consolidated_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
               <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
               <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                 <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -891,29 +893,28 @@
                 </mat-select>
               </div>
             </div> -->
-            <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-              <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-              <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
 
-                <mat-select #select multiple>
-                  <div class="select-all">
-                    <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                      (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                  </div>
-                  <mat-option *ngFor="let loc of location" [value]="loc.id"
-                    (click)="setLocationFilter()">
-                    {{loc.place}}
-                  </mat-option>
-                </mat-select>
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                 <mat-form-field>
                   <mat-label>Start Date</mat-label>
-                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="consolidate_StartDate"
-                    class="sc-t" readonly (click)="start.open()">
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
+                    [(ngModel)]="consolidate_StartDate" class="sc-t" readonly (click)="start.open()">
                   <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                   <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
@@ -939,100 +940,14 @@
               </ng-container>
             </div>
           </div>
-            <!-- 'Tat' report -->
-            <div class="card p20" *ngIf="report_type=='tat'">
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                  <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                  <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                    <mat-select class="form-control" [(ngModel)]="tat_timePeriod"
-                      (selectionChange)="changeTimePeriod($event)">
-                      <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                        period.displayName }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                
-                <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                    <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                    <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                      [(ngModel)]="user">
-                    <div class="input-group-append ">
-                      <button class="btn btn-primary " type="button"
-                        (click)="goToSelectionPage('user',user_id)">Change</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
-                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                  <mat-select class="form-control" [(ngModel)]="customer_location">
-                    <mat-option [value]="0">Any</mat-option>
-                    <mat-option *ngFor="let loc of location" [value]="loc.id">{{
-                      loc.place }}
-                    </mat-option>
-                  </mat-select>
-                </div>
-              </div> -->
-              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-  
-                  <mat-select #select multiple>
-                    <div class="select-all">
-                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                    </div>
-                    <mat-option *ngFor="let loc of location" [value]="loc.id"
-                      (click)="setLocationFilter()">
-                      {{loc.place}}
-                    </mat-option>
-                  </mat-select>
-                </div>
-              </div>
-              </div>
-              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                  <mat-form-field>
-                    <mat-label>Start Date</mat-label>
-                    <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="tat_StartDate"
-                      class="sc-t" readonly (click)="start.open()">
-                    <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                    <mat-datepicker #start></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                  <mat-form-field>
-                    <mat-label>End Date</mat-label>
-                    <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="tat_EndDate"
-                      class="sc-t" readonly (click)="end.open()">
-                    <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                    <mat-datepicker #end></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                </p>
-              </div>
-              <hr>
-              <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                  (click)="generateReport('tat');"> Generate Report </button>
-                <ng-container *ngIf="report_loading">
-                  <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                </ng-container>
-              </div>
-            </div>
-               <!-- Recommended Status report -->
-           <div class="card p20" *ngIf="report_type=='recommendedStatus'">
+          <!-- 'Tat' report -->
+          <div class="card p20" *ngIf="report_type=='tat'">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                  <mat-select class="form-control" [(ngModel)]="recommended_timePeriod"
+                  <mat-select class="form-control" [(ngModel)]="tat_timePeriod"
                     (selectionChange)="changeTimePeriod($event)">
                     <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
                       period.displayName }}
@@ -1040,7 +955,7 @@
                   </mat-select>
                 </div>
               </div>
-              
+
               <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
                   <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
@@ -1054,7 +969,94 @@
               </div>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="customer_location">
+                    <mat-option [value]="0">Any</mat-option>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id">{{
+                      loc.place }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div> -->
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="tat_StartDate"
+                    class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="tat_EndDate"
+                    class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('tat');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- Recommended Status report -->
+          <div class="card p20" *ngIf="report_type=='recommendedStatus'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="recommended_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
               <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
               <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                 <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -1065,29 +1067,28 @@
                 </mat-select>
               </div>
             </div> -->
-            <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-              <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-              <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
 
-                <mat-select #select multiple>
-                  <div class="select-all">
-                    <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                      (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                  </div>
-                  <mat-option *ngFor="let loc of location" [value]="loc.id"
-                    (click)="setLocationFilter()">
-                    {{loc.place}}
-                  </mat-option>
-                </mat-select>
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
               </div>
-            </div>
             </div>
             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                 <mat-form-field>
                   <mat-label>Start Date</mat-label>
-                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="recommended_StartDate"
-                    class="sc-t" readonly (click)="start.open()">
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
+                    [(ngModel)]="recommended_StartDate" class="sc-t" readonly (click)="start.open()">
                   <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                   <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
@@ -1113,34 +1114,35 @@
               </ng-container>
             </div>
           </div>
-             <!-- Login report -->
-             <div class="card p20" *ngIf="report_type=='login'">
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                  <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                  <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                    <mat-select class="form-control" [(ngModel)]="login_timePeriod"
-                      (selectionChange)="changeTimePeriod($event)">
-                      <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                        period.displayName }}
-                      </mat-option>
-                    </mat-select>
-                  </div>
+          <!-- Login report -->
+          <div class="card p20" *ngIf="report_type=='login'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="login_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
                 </div>
-                
-                <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                    <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                    <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                      [(ngModel)]="user">
-                    <div class="input-group-append ">
-                      <button class="btn btn-primary " type="button"
-                        (click)="goToSelectionPage('user',user_id)">Change</button>
-                    </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                 <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
@@ -1152,83 +1154,83 @@
                   </mat-select>
                 </div>
               </div> -->
-              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
                 <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-  
+
                   <mat-select #select multiple>
                     <div class="select-all">
                       <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
                         (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
                     </div>
-                    <mat-option *ngFor="let loc of location" [value]="loc.id"
-                      (click)="setLocationFilter()">
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
                       {{loc.place}}
                     </mat-option>
                   </mat-select>
                 </div>
               </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="login_StartDate"
+                    class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
               </div>
-              <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                  <mat-form-field>
-                    <mat-label>Start Date</mat-label>
-                    <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="login_StartDate"
-                      class="sc-t" readonly (click)="start.open()">
-                    <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                    <mat-datepicker #start></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                  <mat-form-field>
-                    <mat-label>End Date</mat-label>
-                    <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="login_EndDate"
-                      class="sc-t" readonly (click)="end.open()">
-                    <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                    <mat-datepicker #end></mat-datepicker>
-                  </mat-form-field>
-                </div>
-                <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                </p>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="login_EndDate"
+                    class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
               </div>
-              <hr>
-              <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                  (click)="generateReport('login');"> Generate Report </button>
-                <ng-container *ngIf="report_loading">
-                  <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                </ng-container>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('login');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- HO Lead report -->
+          <div class="card p20" *ngIf="report_type=='HOLead'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="HO_lead_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
+                  </div>
+                </div>
               </div>
             </div>
-              <!-- HO Lead report -->
-              <div class="card p20" *ngIf="report_type=='HOLead'">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                    <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                      <mat-select class="form-control" [(ngModel)]="HO_lead_timePeriod"
-                        (selectionChange)="changeTimePeriod($event)">
-                        <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                          period.displayName }}
-                        </mat-option>
-                      </mat-select>
-                    </div>
-                  </div>
-                  
-                  <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                      <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                      <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                        [(ngModel)]="user">
-                      <div class="input-group-append ">
-                        <button class="btn btn-primary " type="button"
-                          (click)="goToSelectionPage('user',user_id)">Change</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                   <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
                   <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                     <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -1239,83 +1241,83 @@
                     </mat-select>
                   </div>
                 </div> -->
-                <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                  <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                  <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-    
-                    <mat-select #select multiple>
-                      <div class="select-all">
-                        <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                          (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                      </div>
-                      <mat-option *ngFor="let loc of location" [value]="loc.id"
-                        (click)="setLocationFilter()">
-                        {{loc.place}}
-                      </mat-option>
-                    </mat-select>
-                  </div>
-                </div>
-                </div>
-                <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                  <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                    <mat-form-field>
-                      <mat-label>Start Date</mat-label>
-                      <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="HO_lead_StartDate"
-                        class="sc-t" readonly (click)="start.open()">
-                      <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                      <mat-datepicker #start></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                  <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                    <mat-form-field>
-                      <mat-label>End Date</mat-label>
-                      <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="HO_lead_EndDate"
-                        class="sc-t" readonly (click)="end.open()">
-                      <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                      <mat-datepicker #end></mat-datepicker>
-                    </mat-form-field>
-                  </div>
-                  <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                  </p>
-                </div>
-                <hr>
-                <div class="text-center">
-                  <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                    (click)="generateReport('HOLead');"> Generate Report </button>
-                  <ng-container *ngIf="report_loading">
-                    <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                  </ng-container>
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
+                    </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
                 </div>
               </div>
-                <!-- Sanctioned Status Report -->
-                <div class="card p20" *ngIf="report_type=='sanctionedStatus'">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                      <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                      <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                        <mat-select class="form-control" [(ngModel)]="sanctioned_timePeriod"
-                          (selectionChange)="changeTimePeriod($event)">
-                          <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                            period.displayName }}
-                          </mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-                    
-                    <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                      <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                        <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                        <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                          [(ngModel)]="user">
-                        <div class="input-group-append ">
-                          <button class="btn btn-primary " type="button"
-                            (click)="goToSelectionPage('user',user_id)">Change</button>
-                        </div>
-                      </div>
-                    </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="HO_lead_StartDate"
+                    class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="HO_lead_EndDate"
+                    class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('HOLead');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- Sanctioned Status Report -->
+          <div class="card p20" *ngIf="report_type=='sanctionedStatus'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="sanctioned_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
                   </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                     <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
                     <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                       <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -1326,83 +1328,83 @@
                       </mat-select>
                     </div>
                   </div> -->
-                  <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                    <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-      
-                      <mat-select #select multiple>
-                        <div class="select-all">
-                          <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                            (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                        </div>
-                        <mat-option *ngFor="let loc of location" [value]="loc.id"
-                          (click)="setLocationFilter()">
-                          {{loc.place}}
-                        </mat-option>
-                      </mat-select>
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
                     </div>
-                  </div>
-                  </div>
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>Start Date</mat-label>
-                        <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="sanctioned_StartDate"
-                          class="sc-t" readonly (click)="start.open()">
-                        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                        <mat-datepicker #start></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>End Date</mat-label>
-                        <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="sanctioned_EndDate"
-                          class="sc-t" readonly (click)="end.open()">
-                        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                        <mat-datepicker #end></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                    </p>
-                  </div>
-                  <hr>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                      (click)="generateReport('sanctionedStatus');"> Generate Report </button>
-                    <ng-container *ngIf="report_loading">
-                      <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                    </ng-container>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
+                    [(ngModel)]="sanctioned_StartDate" class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="sanctioned_EndDate"
+                    class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('sanctionedStatus');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- Employee Average Tat Report -->
+          <div class="card p20" *ngIf="report_type=='employeeAverageTat'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="employee_Activity_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
                   </div>
                 </div>
-                 <!-- Employee Average Tat Report -->
-                 <div class="card p20" *ngIf="report_type=='employeeAverageTat'">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                      <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                      <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                        <mat-select class="form-control" [(ngModel)]="employee_Activity_timePeriod"
-                          (selectionChange)="changeTimePeriod($event)">
-                          <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                            period.displayName }}
-                          </mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-                    
-                    <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                      <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                        <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                        <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                          [(ngModel)]="user">
-                        <div class="input-group-append ">
-                          <button class="btn btn-primary " type="button"
-                            (click)="goToSelectionPage('user',user_id)">Change</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                     <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
                     <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                       <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -1413,83 +1415,83 @@
                       </mat-select>
                     </div>
                   </div> -->
-                  <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                    <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-      
-                      <mat-select #select multiple>
-                        <div class="select-all">
-                          <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                            (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                        </div>
-                        <mat-option *ngFor="let loc of location" [value]="loc.id"
-                          (click)="setLocationFilter()">
-                          {{loc.place}}
-                        </mat-option>
-                      </mat-select>
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
                     </div>
-                  </div>
-                  </div>
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>Start Date</mat-label>
-                        <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="employee_StartDate"
-                          class="sc-t" readonly (click)="start.open()">
-                        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                        <mat-datepicker #start></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>End Date</mat-label>
-                        <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="employee_EndDate"
-                          class="sc-t" readonly (click)="end.open()">
-                        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                        <mat-datepicker #end></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                    </p>
-                  </div>
-                  <hr>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                      (click)="generateReport('employeeAverageTat');"> Generate Report </button>
-                    <ng-container *ngIf="report_loading">
-                      <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                    </ng-container>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="employee_StartDate"
+                    class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="employee_EndDate"
+                    class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('employeeAverageTat');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- Daily Activity Report -->
+          <div class="card p20" *ngIf="report_type=='dailyActivity'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="daily_Activity_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
                   </div>
                 </div>
-                 <!-- Daily Activity Report -->
-                 <div class="card p20" *ngIf="report_type=='dailyActivity'">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                      <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                      <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                        <mat-select class="form-control" [(ngModel)]="daily_Activity_timePeriod"
-                          (selectionChange)="changeTimePeriod($event)">
-                          <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                            period.displayName }}
-                          </mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-                    
-                    <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                      <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                        <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                        <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                          [(ngModel)]="user">
-                        <div class="input-group-append ">
-                          <button class="btn btn-primary " type="button"
-                            (click)="goToSelectionPage('user',user_id)">Change</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                     <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
                     <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                       <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -1500,82 +1502,82 @@
                       </mat-select>
                     </div>
                   </div> -->
-                  <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                    <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-      
-                      <mat-select #select multiple>
-                        <div class="select-all">
-                          <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                            (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                        </div>
-                        <mat-option *ngFor="let loc of location" [value]="loc.id"
-                          (click)="setLocationFilter()">
-                          {{loc.place}}
-                        </mat-option>
-                      </mat-select>
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
                     </div>
-                  </div>
-                  </div>
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>Start Date</mat-label>
-                        <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="daily_StartDate"
-                          class="sc-t" readonly (click)="start.open()">
-                        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                        <mat-datepicker #start></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>End Date</mat-label>
-                        <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="daily_EndDate"
-                          class="sc-t" readonly (click)="end.open()">
-                        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                        <mat-datepicker #end></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                    </p>
-                  </div>
-                  <hr>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                      (click)="generateReport('dailyActivity');"> Generate Report </button>
-                    <ng-container *ngIf="report_loading">
-                      <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                    </ng-container>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="daily_StartDate"
+                    class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="daily_EndDate"
+                    class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('dailyActivity');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- Customer Report -->
+          <div class="card p20" *ngIf="report_type=='customerReport'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="customer_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
                   </div>
                 </div>
-                 <!-- Customer Report -->
-                 <div class="card p20" *ngIf="report_type=='customerReport'">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                      <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                      <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                        <mat-select class="form-control" [(ngModel)]="customer_timePeriod"
-                          (selectionChange)="changeTimePeriod($event)">
-                          <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                            period.displayName }}
-                          </mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-                    <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                      <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                        <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                        <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                          [(ngModel)]="user">
-                        <div class="input-group-append ">
-                          <button class="btn btn-primary " type="button"
-                            (click)="goToSelectionPage('user',user_id)">Change</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                     <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
                     <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                       <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -1586,84 +1588,84 @@
                       </mat-select>
                     </div>
                   </div> -->
-                  <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                    <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-      
-                      <mat-select #select multiple>
-                        <div class="select-all">
-                          <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                            (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                        </div>
-                        <mat-option *ngFor="let loc of location" [value]="loc.id"
-                          (click)="setLocationFilter()">
-                          {{loc.place}}
-                        </mat-option>
-                      </mat-select>
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
                     </div>
-                  </div>
-                  </div>
-                 
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>Start Date</mat-label>
-                        <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="customer_StartDate"
-                          class="sc-t" readonly (click)="start.open()">
-                        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                        <mat-datepicker #start></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>End Date</mat-label>
-                        <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="customer_EndDate"
-                          class="sc-t" readonly (click)="end.open()">
-                        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                        <mat-datepicker #end></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                    </p>
-                  </div>
-                  <hr>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                      (click)="generateReport('customerReport');"> Generate Report </button>
-                    <ng-container *ngIf="report_loading">
-                      <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                    </ng-container>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="customer_StartDate"
+                    class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="customer_EndDate"
+                    class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('customerReport');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- Customer CRIF Status Report -->
+          <div class="card p20" *ngIf="report_type=='customerCrifStatus'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="customer_crif_status_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
                   </div>
                 </div>
-                 <!-- Customer CRIF Status Report -->
-                 <div class="card p20" *ngIf="report_type=='customerCrifStatus'">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                      <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                      <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                        <mat-select class="form-control" [(ngModel)]="customer_crif_status_timePeriod"
-                          (selectionChange)="changeTimePeriod($event)">
-                          <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                            period.displayName }}
-                          </mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-                    
-                    <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                      <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                        <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                        <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                          [(ngModel)]="user">
-                        <div class="input-group-append ">
-                          <button class="btn btn-primary " type="button"
-                            (click)="goToSelectionPage('user',user_id)">Change</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                     <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
                     <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                       <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -1674,83 +1676,83 @@
                       </mat-select>
                     </div>
                   </div> -->
-                  <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                    <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-      
-                      <mat-select #select multiple>
-                        <div class="select-all">
-                          <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                            (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                        </div>
-                        <mat-option *ngFor="let loc of location" [value]="loc.id"
-                          (click)="setLocationFilter()">
-                          {{loc.place}}
-                        </mat-option>
-                      </mat-select>
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
                     </div>
-                  </div>
-                  </div>
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>Start Date</mat-label>
-                        <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="customer_crif_status_StartDate"
-                          class="sc-t" readonly (click)="start.open()">
-                        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                        <mat-datepicker #start></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>End Date</mat-label>
-                        <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="customer_crif_status_EndDate"
-                          class="sc-t" readonly (click)="end.open()">
-                        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                        <mat-datepicker #end></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                    </p>
-                  </div>
-                  <hr>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                      (click)="generateReport('customerCrifStatus');"> Generate Report </button>
-                    <ng-container *ngIf="report_loading">
-                      <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                    </ng-container>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
+                    [(ngModel)]="customer_crif_status_StartDate" class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate"
+                    [(ngModel)]="customer_crif_status_EndDate" class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('customerCrifStatus');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- Customer Wise Enquiry Report -->
+          <div class="card p20" *ngIf="report_type=='customerWiseEnquiry'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="customer_wise_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+              <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
+                  <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
+                  <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
+                    [(ngModel)]="user">
+                  <div class="input-group-append ">
+                    <button class="btn btn-primary " type="button"
+                      (click)="goToSelectionPage('user',user_id)">Change</button>
                   </div>
                 </div>
-                 <!-- Customer Wise Enquiry Report -->
-                 <div class="card p20" *ngIf="report_type=='customerWiseEnquiry'">
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
-                      <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time Period</label>
-                      <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
-                        <mat-select class="form-control" [(ngModel)]="customer_wise_timePeriod"
-                          (selectionChange)="changeTimePeriod($event)">
-                          <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
-                            period.displayName }}
-                          </mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-                    
-                    <div class="form-group-row col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                      <div class="input-group mb-3 col-md-12 col-sm-12 col-lg-12 col-xs-12 ">
-                        <label for="users" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Users</label>
-                        <input type="text" class="form-control col-lg-7 col-sm-5 col-md-7 col-xs-7" readonly
-                          [(ngModel)]="user">
-                        <div class="input-group-append ">
-                          <button class="btn btn-primary " type="button"
-                            (click)="goToSelectionPage('user',user_id)">Change</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+              </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <!-- <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
                     <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Location</label>
                     <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
                       <mat-select class="form-control" [(ngModel)]="customer_location">
@@ -1761,54 +1763,101 @@
                       </mat-select>
                     </div>
                   </div> -->
-                  <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
-                    <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
-                    <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
-      
-                      <mat-select #select multiple>
-                        <div class="select-all">
-                          <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
-                            (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
-                        </div>
-                        <mat-option *ngFor="let loc of location" [value]="loc.id"
-                          (click)="setLocationFilter()">
-                          {{loc.place}}
-                        </mat-option>
-                      </mat-select>
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
+                <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Locations</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
+
+                  <mat-select #select multiple>
+                    <div class="select-all">
+                      <mat-checkbox [(ngModel)]="allLocationsSelected" [ngModelOptions]="{standalone: true}"
+                        (change)="toggleAllLocationsSelection()">Select All</mat-checkbox>
                     </div>
-                  </div>
-                  </div>
-                  <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>Start Date</mat-label>
-                        <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="customer_wise_StartDate"
-                          class="sc-t" readonly (click)="start.open()">
-                        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
-                        <mat-datepicker #start></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
-                      <mat-form-field>
-                        <mat-label>End Date</mat-label>
-                        <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="customer_wise_EndDate"
-                          class="sc-t" readonly (click)="end.open()">
-                        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
-                        <mat-datepicker #end></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
-                    </p>
-                  </div>
-                  <hr>
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
-                      (click)="generateReport('customerWiseEnquiry');"> Generate Report </button>
-                    <ng-container *ngIf="report_loading">
-                      <app-common-innerloading-spinner> </app-common-innerloading-spinner>
-                    </ng-container>
-                  </div>
+                    <mat-option *ngFor="let loc of location" [value]="loc.id" (click)="setLocationFilter()">
+                      {{loc.place}}
+                    </mat-option>
+                  </mat-select>
                 </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
+                    [(ngModel)]="customer_wise_StartDate" class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate" [(ngModel)]="customer_wise_EndDate"
+                    class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('customerWiseEnquiry');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
+          <!-- Document Collected Status -->
+          <div class="card p20 " *ngIf="report_type=='documentCollected'">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12">
+                <label for="timePeriod" class="col-lg-5 col-sm-5 col-md-5 col-xs-5 col-form-label padd">Time
+                  Period</label>
+                <div class="col-lg-7 col-sm-7 col-md-7 col-xs-7 mb-3">
+                  <mat-select class="form-control" [(ngModel)]="document_collected_timePeriod"
+                    (selectionChange)="changeTimePeriod($event)">
+                    <mat-option *ngFor="let period of donation_timeperiod_list" [value]="period.value">{{
+                      period.displayName }}
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12" [hidden]="hide_dateRange">
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>Start Date</mat-label>
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
+                    [(ngModel)]="document_collected_StartDate" class="sc-t" readonly (click)="start.open()">
+                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                  <mat-datepicker #start></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
+                <mat-form-field>
+                  <mat-label>End Date</mat-label>
+                  <input matInput [matDatepicker]="end" [max]="tday" [min]="minDate"
+                    [(ngModel)]="document_collectioin_EndDate" class="sc-t" readonly (click)="end.open()">
+                  <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                  <mat-datepicker #end></mat-datepicker>
+                </mat-form-field>
+              </div>
+              <p class="font-italic col-md-12 col-sm-12 col-lg-12 col-xs-12">Reports generation is limited to 90 days.
+              </p>
+            </div>
+            <hr>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary btn-lg" [disabled]="btn_disabled"
+                (click)="generateReport('documentCollected');"> Generate Report </button>
+              <ng-container *ngIf="report_loading">
+                <app-common-innerloading-spinner> </app-common-innerloading-spinner>
+              </ng-container>
+            </div>
+          </div>
           <!-- Token/Ckeckin -->
           <div class="card p20" *ngIf="report_type=='token'">
             <div class="col-md-12">
@@ -1822,7 +1871,7 @@
                   </mat-select>
                 </div>
               </div>
-              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"  >
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
                 <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Status</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
 
@@ -1839,7 +1888,8 @@
                 </div>
               </div>
               <!--Added by Mani E.V-->
-              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk" *ngIf="waitlist_intstatus_list && waitlist_intstatus_list.length > 0">
+              <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk"
+                *ngIf="waitlist_intstatus_list && waitlist_intstatus_list.length > 0">
                 <label for="waitlistStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label">Internal
                   Status</label>
                 <div class="col-lg-7 col-sm-7 col-md-7 col-xs-6 mb-3 wlstatus">
@@ -1865,8 +1915,8 @@
                   </mat-select> -->
                 </div>
               </div>
-            <!-- </div> -->
-            <!-- <div class="col-md-12"> -->
+              <!-- </div> -->
+              <!-- <div class="col-md-12"> -->
               <div class="form-group row col-md-6 col-sm-6 col-lg-6 col-xs-12 min-hgt-60-desk">
                 <label for="paymentStatus" class="col-lg-5 col-sm-5 col-md-5 col-xs-6 col-form-label"> Bill Payment
                   Status</label>
@@ -2013,8 +2063,8 @@
               <div class="col-md-4 col-sm-6 col-lg-4 col-xs-12">
                 <mat-form-field>
                   <mat-label>Start Date</mat-label>
-                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate"
-                    [(ngModel)]="donation_startDate" class="sc-t" readonly (click)="start.open()">
+                  <input matInput [matDatepicker]="start" [max]="tday" [min]="minDate" [(ngModel)]="donation_startDate"
+                    class="sc-t" readonly (click)="start.open()">
                   <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                   <mat-datepicker #start></mat-datepicker>
                 </mat-form-field>
@@ -2190,7 +2240,7 @@
               </ng-container>
             </div>
           </div>
-       
+
         </div>
       </div>
     </div>

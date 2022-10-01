@@ -76,13 +76,16 @@ export class CRMComponent implements OnInit {
     {
       id: 15, type: 'Customer Report'
     },
-    
+
     {
       id: 16, type: 'Customer CRIF Status Report'
     },
     {
       id: 17, type: 'Customer Wise Enquiry'
     },
+    {
+      id: 18, type: 'Document Collected Status'
+    }
   ]
   constructor(
     private providerServices: ProviderServices,
@@ -737,16 +740,16 @@ export class CRMComponent implements OnInit {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomer);
           }
           break;
-          case 'Customer Wise Enquiry':
-            const navigationExtrasToCustomerEnquiry: NavigationExtras = {
-              queryParams: {
-                report_type: 'customerWiseEnquiry'
-              }
+        case 'Customer Wise Enquiry':
+          const navigationExtrasToCustomerEnquiry: NavigationExtras = {
+            queryParams: {
+              report_type: 'customerWiseEnquiry'
             }
-            if (navigationExtrasToCustomerEnquiry) {
-              this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomerEnquiry);
-            }
-            break;
+          }
+          if (navigationExtrasToCustomerEnquiry) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomerEnquiry);
+          }
+          break;
         case 'Customer CRIF Status Report':
           const navigationExtrasToCustomerCrifStatus: NavigationExtras = {
             queryParams: {
@@ -757,49 +760,59 @@ export class CRMComponent implements OnInit {
             this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToCustomerCrifStatus);
           }
           break;
+        case 'Document Collected Status':
+          const navigationExtrasToDocumentCollected: NavigationExtras = {
+            queryParams: {
+              report_type: 'documentCollected'
+            }
+          }
+          if (navigationExtrasToDocumentCollected) {
+            this.router.navigate(['provider', 'reports', 'new-report'], navigationExtrasToDocumentCollected);
+          }
+          break;
       }
     }
   }
-  getFollowUpAliasName(data){
-    if(data){
+  getFollowUpAliasName(data) {
+    if (data) {
       let tempAliasName;
-      if(data.name==='KYC'){
+      if (data.name === 'KYC') {
         tempAliasName = data.name[0].toUpperCase() + data.name.slice(1).toLowerCase();
-        if(tempAliasName){
+        if (tempAliasName) {
           return tempAliasName;
         }
       }
-      else{
-        if(data.name){
-          tempAliasName= data.name;
-          if(tempAliasName){
+      else {
+        if (data.name) {
+          tempAliasName = data.name;
+          if (tempAliasName) {
             return tempAliasName;
           }
         }
-        
+
       }
     }
   }
-  getImageFollowUPS(data){
+  getImageFollowUPS(data) {
     // console.log("data",data)
-    if(data){
-      let imgSrc:any;
-      switch(data.aliasName){
+    if (data) {
+      let imgSrc: any;
+      switch (data.aliasName) {
         case 'KYC':
-          imgSrc='./assets/images/crmImages/followUPs.png';
-          if(imgSrc){
+          imgSrc = './assets/images/crmImages/followUPs.png';
+          if (imgSrc) {
             return imgSrc;
           }
           break;
         case 'Follow Up 1':
-          imgSrc='./assets/images/crmImages/followUPs.png';
-          if(imgSrc){
+          imgSrc = './assets/images/crmImages/followUPs.png';
+          if (imgSrc) {
             return imgSrc;
           }
           break;
         case 'Follow Up 2':
-          imgSrc='./assets/images/crmImages/followUPs.png';
-          if(imgSrc){
+          imgSrc = './assets/images/crmImages/followUPs.png';
+          if (imgSrc) {
             return imgSrc;
           }
           break;
@@ -900,13 +913,19 @@ export class CRMComponent implements OnInit {
             return imgSrc;
           }
           break;
-          case 'Customer Wise Enquiry':
-            imgSrc = './assets/images/crmImages/customerEnquiry.png';
-            if (imgSrc) {
-              return imgSrc;
-            }
-            break;
+        case 'Customer Wise Enquiry':
+          imgSrc = './assets/images/crmImages/customerEnquiry.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
         case 'Customer CRIF Status Report':
+          imgSrc = './assets/images/crmImages/otherTemplate.png';
+          if (imgSrc) {
+            return imgSrc;
+          }
+          break;
+        case 'Document Collected Status':
           imgSrc = './assets/images/crmImages/otherTemplate.png';
           if (imgSrc) {
             return imgSrc;

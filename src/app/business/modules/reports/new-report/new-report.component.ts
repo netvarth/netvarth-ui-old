@@ -71,7 +71,7 @@ export class NewReportComponent implements OnInit {
   appointment_mode: any;
   appointment_status: any;
   appointment_paymentStatus: any;
-  customer_location : any;
+  customer_location: any;
   waitlist_status_list: { displayName: string; value: string; }[];
   waitlist_intstatus_list: { displayName: string; value: string; }[];
   bill_payment_status: { value: string; displayName: string; }[];
@@ -83,10 +83,10 @@ export class NewReportComponent implements OnInit {
   donation_timePeriod: string;
   appointment_timePeriod: string;
   crm_timePeriod: string;
-  lead_timePeriod : string;
+  lead_timePeriod: string;
   lead_status_timePeriod: string;
-  enquiry_timePeriod : string;
-  monthly_timePeriod : string;
+  enquiry_timePeriod: string;
+  monthly_timePeriod: string;
   consolidated_timePeriod: string;
   tat_timePeriod: string;
   recommended_timePeriod: string;
@@ -174,12 +174,15 @@ export class NewReportComponent implements OnInit {
   customer_timePeriod: string;
   customer_StartDate;
   customer_EndDate;
-  customer_wise_timePeriod:string;
+  customer_wise_timePeriod: string;
   customer_wise_StartDate;
   customer_wise_EndDate;
   customer_crif_status_timePeriod: string;
   customer_crif_status_StartDate;
   customer_crif_status_EndDate;
+  document_collected_timePeriod: string;
+  document_collected_StartDate: any;
+  document_collectioin_EndDate: any;
   public reportForm: FormGroup;
   time_period;
   payment_modes;
@@ -200,11 +203,11 @@ export class NewReportComponent implements OnInit {
   @ViewChild('apptIntStatusSelect') apptIntStatusSelect: MatSelect;
 
   waitlistStatusFilter: any = [];
-  apptStatusFilter: any= [];
+  apptStatusFilter: any = [];
   apptIntStatusFilter: any = [];
   waitlistIntStatusFilter: any = [];
-  
-  
+
+
   allWlStatusSelected = false;
   allApptStatusSelected = false;
   allWlIntStatusSelected = false;
@@ -233,56 +236,59 @@ export class NewReportComponent implements OnInit {
         if (this.report_type === 'token') {
           this.reportTitle = 'New Check-in/Token';
         }
-        else if(this.report_type==='crm'){
-          this.reportTitle='Activity '
+        else if (this.report_type === 'crm') {
+          this.reportTitle = 'Activity '
         }
-        else if(this.report_type==='lead'){
-          this.reportTitle='Lead '
+        else if (this.report_type === 'lead') {
+          this.reportTitle = 'Lead '
         }
-        else if(this.report_type==='enquiry'){
-          this.reportTitle='Enquiry '
+        else if (this.report_type === 'enquiry') {
+          this.reportTitle = 'Enquiry '
         }
-        else if(this.report_type === 'monthlyActivity'){
+        else if (this.report_type === 'monthlyActivity') {
           this.reportTitle = 'Activity Consolidated '
         }
-        else if(this.report_type === 'leadStatus'){
+        else if (this.report_type === 'leadStatus') {
           this.reportTitle = 'Lead Status'
         }
-        else if(this.report_type === 'processingFiles'){
+        else if (this.report_type === 'processingFiles') {
           this.reportTitle = 'Processing Files'
         }
-        else if(this.report_type === 'consolidated'){
+        else if (this.report_type === 'consolidated') {
           this.reportTitle = 'HO-Consolidated'
         }
-        else if(this.report_type === 'tat'){
+        else if (this.report_type === 'tat') {
           this.reportTitle = 'HO-Tat'
         }
-        else if(this.report_type === 'recommendedStatus'){
+        else if (this.report_type === 'recommendedStatus') {
           this.reportTitle = 'Recommended Status'
         }
-        else if(this.report_type === 'login'){
+        else if (this.report_type === 'login') {
           this.reportTitle = 'Login'
         }
-        else if(this.report_type === 'HOLead'){
+        else if (this.report_type === 'HOLead') {
           this.reportTitle = 'HO-Lead Status'
         }
-        else if(this.report_type === 'sanctionedStatus'){
+        else if (this.report_type === 'sanctionedStatus') {
           this.reportTitle = 'Sanctioned Status'
         }
-        else if(this.report_type === 'employeeAverageTat'){
+        else if (this.report_type === 'employeeAverageTat') {
           this.reportTitle = 'Employee-Average Tat'
         }
-        else if(this.report_type === 'dailyActivity'){
+        else if (this.report_type === 'dailyActivity') {
           this.reportTitle = 'Employee-Daily Activity'
         }
-        else if(this.report_type === 'customerReport'){
+        else if (this.report_type === 'customerReport') {
           this.reportTitle = 'Customer'
         }
-        else if(this.report_type === 'customerCrifStatus'){
+        else if (this.report_type === 'customerCrifStatus') {
           this.reportTitle = 'Customer CRIF Status'
         }
-        else if(this.report_type === 'customerWiseEnquiry'){
+        else if (this.report_type === 'customerWiseEnquiry') {
           this.reportTitle = 'Customer Wise Enquiry'
+        }
+        else if (this.report_type === 'documentCollected') {
+          this.reportTitle = 'Document Collected Status'
         }
         //customerWiseEnquiry
       }
@@ -292,7 +298,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod= this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod =this.consolidated_timePeriod=this.tat_timePeriod= this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -320,8 +326,8 @@ export class NewReportComponent implements OnInit {
 
     if (this.report_type === 'token' || this.report_type === 'appointment') {
       this.provider_services.getAllQuestionnaire().subscribe(
-        (questionaires: any)=> {
-          let questionairesList = questionaires.filter(questionaire => questionaire.transactionType !=='CONSUMERCREATION');
+        (questionaires: any) => {
+          let questionairesList = questionaires.filter(questionaire => questionaire.transactionType !== 'CONSUMERCREATION');
           console.log("Count:", questionairesList);
           if (questionairesList.length > 0) {
             this.isQuestionaire = true;
@@ -329,17 +335,17 @@ export class NewReportComponent implements OnInit {
           }
         }
       )
-        this.provider_services.getInternalStatus()
-          .subscribe(
-            (data: any) => {
-              // this.internalStats = data;
-              console.log("Internal Statuses", data);
+      this.provider_services.getInternalStatus()
+        .subscribe(
+          (data: any) => {
+            // this.internalStats = data;
+            console.log("Internal Statuses", data);
 
-              this.waitlist_intstatus_list = this.appointment_intstatus_list = data.map(function(status) {
-                return { 'value': status.statusId, displayName: status.status }
-              })
+            this.waitlist_intstatus_list = this.appointment_intstatus_list = data.map(function (status) {
+              return { 'value': status.statusId, displayName: status.status }
+            })
 
-            });
+          });
     }
 
 
@@ -365,15 +371,15 @@ export class NewReportComponent implements OnInit {
     this.provider_services.getProviderLocations()
       .subscribe(
         (data: any) => {
-          console.log("All Locations :",data)
-          data.map(res=>{
-            if(res.status === 'ACTIVE'){
-              console.log("Active location :",res)
-             return this.location.push(res);
+          console.log("All Locations :", data)
+          data.map(res => {
+            if (res.status === 'ACTIVE') {
+              console.log("Active location :", res)
+              return this.location.push(res);
             }
           })
-        //  this.location = data;
-          console.log("Active Locs :",this.location)
+          //  this.location = data;
+          console.log("Active Locs :", this.location)
           if (this.location.length > 0) {
             this.locName = this.location[0].place;
           }
@@ -480,116 +486,124 @@ export class NewReportComponent implements OnInit {
             this.enquiry_EndDate = res.endDate;
           }
         }
-        case 'monthlyActivity' : {
+        case 'monthlyActivity': {
           this.monthly_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.monthly_StartDate = res.startDate;
-            this.monthly_EndDate = res.endDate;          
+            this.monthly_EndDate = res.endDate;
           }
         }
-        case 'leadStatus' : {
+        case 'leadStatus': {
           this.lead_status_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.lead_Status_StartDate = res.startDate;
-            this.lead_Status_EndDate = res.endDate;          
+            this.lead_Status_EndDate = res.endDate;
           }
         }
-        case 'processingFiles' : {
+        case 'processingFiles': {
           this.processing_files_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.processing_files_StartDate = res.startDate;
-            this.processing_files_EndDate = res.endDate;          
+            this.processing_files_EndDate = res.endDate;
           }
         }
-        case 'consolidated' : {
+        case 'consolidated': {
           this.consolidated_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.consolidate_StartDate = res.startDate;
-            this.consolidate_EndDate = res.endDate;          
+            this.consolidate_EndDate = res.endDate;
           }
         }
-        case 'tat' : {
+        case 'tat': {
           this.tat_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.tat_StartDate = res.startDate;
-            this.tat_EndDate = res.endDate;          
+            this.tat_EndDate = res.endDate;
           }
         }
-        case 'recommendedStatus' : {
+        case 'recommendedStatus': {
           this.recommended_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.recommended_StartDate = res.startDate;
-            this.recommended_EndDate = res.endDate;          
+            this.recommended_EndDate = res.endDate;
           }
         }
-        case 'login' : {
+        case 'login': {
           this.login_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.login_StartDate = res.startDate;
-            this.login_EndDate = res.endDate;          
+            this.login_EndDate = res.endDate;
           }
         }
-        case 'HOLead' : {
+        case 'HOLead': {
           this.HO_lead_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.HO_lead_StartDate = res.startDate;
-            this.HO_lead_EndDate = res.endDate;          
+            this.HO_lead_EndDate = res.endDate;
           }
         }
-        case 'sanctionedStatus' : {
+        case 'sanctionedStatus': {
           this.sanctioned_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.sanctioned_StartDate = res.startDate;
-            this.sanctioned_EndDate = res.endDate;          
+            this.sanctioned_EndDate = res.endDate;
           }
         }
-        case 'employeeAverageTat' : {
+        case 'employeeAverageTat': {
           this.employee_Activity_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.employee_StartDate = res.startDate;
-            this.employee_EndDate = res.endDate;          
+            this.employee_EndDate = res.endDate;
           }
         }
-        case 'dailyActivity' : {
+        case 'dailyActivity': {
           this.daily_Activity_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.daily_StartDate = res.startDate;
-            this.daily_EndDate = res.endDate;          
+            this.daily_EndDate = res.endDate;
           }
         }
-        case 'customerReport' : {
+        case 'customerReport': {
           this.customer_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.customer_StartDate = res.startDate;
-            this.customer_EndDate = res.endDate;          
+            this.customer_EndDate = res.endDate;
           }
         }
-        case 'customerCrifStatus' : {
+        case 'customerCrifStatus': {
           this.customer_crif_status_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.customer_crif_status_StartDate = res.startDate;
-            this.customer_crif_status_EndDate = res.endDate;          
+            this.customer_crif_status_EndDate = res.endDate;
           }
         }
-        case 'customerWiseEnquiry' : {
+        case 'documentCollected': {
+          this.document_collected_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.document_collected_StartDate = res.startDate;
+            this.document_collectioin_EndDate = res.endDate;
+          }
+        }
+        case 'customerWiseEnquiry': {
           this.customer_wise_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
-          if(res.dateRange === 'DATE_RANGE'){
+          if (res.dateRange === 'DATE_RANGE') {
             this.hide_dateRange = false;
             this.customer_wise_StartDate = res.startDate;
-            this.customer_wise_EndDate = res.endDate;          
+            this.customer_wise_EndDate = res.endDate;
           }
         }
       }
@@ -608,7 +622,7 @@ export class NewReportComponent implements OnInit {
     this.allApptStatusSelected = newStatus;
     console.log(this.apptStatusFilter);
   }
-  toggleAllApptSelection () {
+  toggleAllApptSelection() {
     const _this = this;
     this.apptStatusFilter = [];
     if (this.allApptStatusSelected) {
@@ -617,7 +631,7 @@ export class NewReportComponent implements OnInit {
         _this.apptStatusFilter.push(item.value);
       });
     } else {
-      this.apptStatusSelect.options.forEach(function(item: MatOption) {
+      this.apptStatusSelect.options.forEach(function (item: MatOption) {
         item.deselect();
       });
     }
@@ -628,7 +642,7 @@ export class NewReportComponent implements OnInit {
    * @author Mani E V
    */
 
-   setApptIntStatusFilter() {
+  setApptIntStatusFilter() {
     this.apptIntStatusFilter = [];
     let newStatus = true;
     this.apptIntStatusSelect.options.forEach((item: MatOption) => {
@@ -641,7 +655,7 @@ export class NewReportComponent implements OnInit {
     this.allApptIntStatusSelected = newStatus;
     console.log(this.apptIntStatusFilter);
   }
-  toggleAllApptIntStatusSelection () {
+  toggleAllApptIntStatusSelection() {
     const _this = this;
     this.apptIntStatusFilter = [];
     if (this.allApptIntStatusSelected) {
@@ -650,7 +664,7 @@ export class NewReportComponent implements OnInit {
         _this.apptIntStatusFilter.push(item.value);
       });
     } else {
-      this.apptIntStatusSelect.options.forEach(function(item: MatOption) {
+      this.apptIntStatusSelect.options.forEach(function (item: MatOption) {
         item.deselect();
       });
     }
@@ -696,7 +710,7 @@ export class NewReportComponent implements OnInit {
     this.allLocationsSelected = newStatus;
     console.log(this.locationFilter);
   }
-  toggleAllLocationsSelection () {
+  toggleAllLocationsSelection() {
     const _this = this;
     this.locationFilter = [];
     if (this.allLocationsSelected) {
@@ -705,13 +719,13 @@ export class NewReportComponent implements OnInit {
         _this.locationFilter.push(item.value);
       });
     } else {
-      this.select.options.forEach(function(item: MatOption) {
+      this.select.options.forEach(function (item: MatOption) {
         item.deselect();
       });
     }
     console.log(this.locationFilter);
   }
-  toggleAllSelection () {
+  toggleAllSelection() {
     const _this = this;
     this.waitlistStatusFilter = [];
     if (this.allWlStatusSelected) {
@@ -720,7 +734,7 @@ export class NewReportComponent implements OnInit {
         _this.waitlistStatusFilter.push(item.value);
       });
     } else {
-      this.select.options.forEach(function(item: MatOption) {
+      this.select.options.forEach(function (item: MatOption) {
         item.deselect();
       });
     }
@@ -729,7 +743,7 @@ export class NewReportComponent implements OnInit {
   /**
    * @author Mani E V
    */
-  toggleAllIntStatusSelection () {
+  toggleAllIntStatusSelection() {
     const _this = this;
     this.waitlistIntStatusFilter = [];
     if (this.allWlIntStatusSelected) {
@@ -738,7 +752,7 @@ export class NewReportComponent implements OnInit {
         _this.waitlistIntStatusFilter.push(item.value);
       });
     } else {
-      this.selectIntStatus.options.forEach(function(item: MatOption) {
+      this.selectIntStatus.options.forEach(function (item: MatOption) {
         item.deselect();
       });
     }
@@ -928,6 +942,7 @@ export class NewReportComponent implements OnInit {
         }
         break;
       }
+
       case 'dailyActivity': {
         if (res === 'All') {
           this.user = 'All';
@@ -1224,7 +1239,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1261,7 +1276,7 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     } else if (reportType === 'crm') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.crm_timePeriod === 'DATE_RANGE' && (this.crm_startDate === undefined || this.crm_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1272,9 +1287,9 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
-          
+
         };
         if (this.user_id === 0 || this.user_id === undefined) {
           delete this.filterparams.assignee;
@@ -1296,7 +1311,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1332,9 +1347,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'lead') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.lead_timePeriod === 'DATE_RANGE' && (this.lead_StartDate === undefined || this.lead_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1345,7 +1360,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1356,7 +1371,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1372,7 +1387,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1408,9 +1423,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'enquiry') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.enquiry_timePeriod === 'DATE_RANGE' && (this.enquiry_StartDate === undefined || this.enquiry_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1421,7 +1436,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1432,7 +1447,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1448,7 +1463,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1484,9 +1499,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'monthlyActivity') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.monthly_timePeriod === 'DATE_RANGE' && (this.monthly_StartDate === undefined || this.monthly_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1508,7 +1523,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1524,7 +1539,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1560,9 +1575,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'leadStatus') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.lead_status_timePeriod === 'DATE_RANGE' && (this.lead_Status_StartDate === undefined || this.lead_Status_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1573,7 +1588,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1584,7 +1599,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1600,7 +1615,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1636,9 +1651,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'processingFiles') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.processing_files_timePeriod === 'DATE_RANGE' && (this.processing_files_StartDate === undefined || this.processing_files_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1660,7 +1675,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1676,7 +1691,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1712,9 +1727,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'consolidated') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.consolidated_timePeriod === 'DATE_RANGE' && (this.consolidate_StartDate === undefined || this.consolidate_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1736,7 +1751,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1752,7 +1767,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1788,9 +1803,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'tat') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.tat_timePeriod === 'DATE_RANGE' && (this.tat_StartDate === undefined || this.tat_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1801,7 +1816,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1812,7 +1827,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1828,7 +1843,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1864,9 +1879,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'recommendedStatus') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.recommended_timePeriod === 'DATE_RANGE' && (this.recommended_StartDate === undefined || this.recommended_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1877,7 +1892,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1888,7 +1903,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1904,7 +1919,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -1940,9 +1955,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'login') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.login_timePeriod === 'DATE_RANGE' && (this.login_StartDate === undefined || this.login_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -1953,7 +1968,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -1964,7 +1979,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -1980,7 +1995,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -2016,9 +2031,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'HOLead') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.HO_lead_timePeriod === 'DATE_RANGE' && (this.HO_lead_StartDate === undefined || this.HO_lead_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -2029,7 +2044,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -2040,7 +2055,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2056,7 +2071,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -2092,9 +2107,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'sanctionedStatus') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.sanctioned_timePeriod === 'DATE_RANGE' && (this.sanctioned_StartDate === undefined || this.sanctioned_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -2105,7 +2120,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -2116,7 +2131,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2132,7 +2147,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -2168,9 +2183,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'employeeAverageTat') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.employee_Activity_timePeriod === 'DATE_RANGE' && (this.employee_StartDate === undefined || this.employee_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -2192,7 +2207,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2208,7 +2223,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -2244,9 +2259,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'dailyActivity') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.daily_Activity_timePeriod === 'DATE_RANGE' && (this.daily_StartDate === undefined || this.daily_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -2260,15 +2275,15 @@ export class NewReportComponent implements OnInit {
           //'location':this.customer_location,
           'assignee': this.user_id
         };
-       
-      if (this.user_id === 0 || this.user_id === undefined) {
-        delete this.filterparams.assignee;
-      }
-      if (this.customer_location === 0 || this.customer_location === undefined) {
-        delete this.filterparams.location;
-      }
-      if (this.locationFilter.length > 0) {
-        this.filterparams['location'] = this.locationFilter.toString();
+
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
         }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
@@ -2285,7 +2300,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -2321,22 +2336,22 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'customerReport') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.customer_timePeriod === 'DATE_RANGE' && (this.customer_StartDate === undefined || this.customer_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
         this.filterparams = {
-         // 'paymentStatus': this.appointment_billpaymentstatus,
-         // 'schedule': this.appointment_schedule_id,
+          // 'paymentStatus': this.appointment_billpaymentstatus,
+          // 'schedule': this.appointment_schedule_id,
           //'service': this.appointment_service_id,
           // 'apptStatus': this.appointment_status,
           //'appointmentMode': this.appointment_mode,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
-      
+
         if (this.user_id === 0 || this.user_id === undefined) {
           delete this.filterparams.assignee;
         }
@@ -2345,7 +2360,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2361,7 +2376,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -2397,9 +2412,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'customerWiseEnquiry') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.customer_wise_timePeriod === 'DATE_RANGE' && (this.customer_wise_StartDate === undefined || this.customer_wise_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -2410,7 +2425,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -2421,7 +2436,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2437,7 +2452,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -2473,9 +2488,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
     else if (reportType === 'customerCrifStatus') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.customer_crif_status_timePeriod === 'DATE_RANGE' && (this.customer_crif_status_StartDate === undefined || this.customer_crif_status_EndDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -2486,7 +2501,7 @@ export class NewReportComponent implements OnInit {
           // 'apptStatus': this.appointment_status,
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId,
-         // 'location':this.customer_location,
+          // 'location':this.customer_location,
           'assignee': this.user_id
         };
         if (this.user_id === 0 || this.user_id === undefined) {
@@ -2497,7 +2512,7 @@ export class NewReportComponent implements OnInit {
         }
         if (this.locationFilter.length > 0) {
           this.filterparams['location'] = this.locationFilter.toString();
-          }
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2513,7 +2528,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -2549,7 +2564,83 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    } 
+    }
+    else if (reportType === 'documentCollected') {
+      console.log("Report Type :", reportType)
+      if (this.document_collected_timePeriod === 'DATE_RANGE' && (this.document_collected_StartDate === undefined || this.document_collectioin_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId,
+          // 'location':this.customer_location,
+          'assignee': this.user_id
+        };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+        }
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+        }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.document_collected_timePeriod === 'DATE_RANGE') {
+          if (this.document_collected_StartDate === undefined || this.document_collectioin_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.document_collected_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.document_collectioin_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'DOCUMENT_COLLECTION';
+        request_payload.reportDateCategory = this.document_collected_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
     else if (reportType === 'token') {
       if (this.waitlist_timePeriod === 'DATE_RANGE' && (this.waitlist_startDate === undefined || this.waitlist_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
@@ -2576,8 +2667,8 @@ export class NewReportComponent implements OnInit {
         }
         console.log("Token: ", this.waitlistStatusFilter.toString());
         if (this.waitlistStatusFilter.length > 0) {
-        // this.waitlist_status = this.waitlistStatusFilter.toString();
-        this.filterparams['waitlistStatus'] = this.waitlistStatusFilter.toString();
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['waitlistStatus'] = this.waitlistStatusFilter.toString();
         }
         if (this.waitlistIntStatusFilter.length > 0) {
           this.filterparams['internalStatus'] = this.waitlistIntStatusFilter.toString();
@@ -2611,7 +2702,7 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     } else if (reportType === 'donation') {
-      console.log("Donation Entered Data :",this.donation_donorFirstName,this.donation_donorLastName)
+      console.log("Donation Entered Data :", this.donation_donorFirstName, this.donation_donorLastName)
       if (this.donation_timePeriod === 'DATE_RANGE' && (this.donation_startDate === undefined || this.donation_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -2718,7 +2809,7 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     } else if (reportType === 'user') {
-      console.log("Report Type :",reportType)
+      console.log("Report Type :", reportType)
       if (this.user_timePeriod === 'DATE_RANGE' && (this.user_startDate === undefined || this.user_endDate === undefined)) {
         this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
       } else {
@@ -2759,7 +2850,7 @@ export class NewReportComponent implements OnInit {
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
     }
-   
+
   }
   changeTimePeriod(event) {
     if (event.value === 'DATE_RANGE') {
@@ -2773,7 +2864,7 @@ export class NewReportComponent implements OnInit {
       this.provider_services.generateReport(payload)
         .subscribe(
           data => {
-            console.log("Generated Report :",data)
+            console.log("Generated Report :", data)
             resolve(data);
           },
           error => {
@@ -2782,14 +2873,14 @@ export class NewReportComponent implements OnInit {
           }
         );
     });
-  } 
- 
+  }
+
   generateUserReportByCriteria(payload) {
     return new Promise((resolve, reject) => {
       this.provider_services.generateUserReport(payload.filter)
         .subscribe(
           data => {
-            console.log("Generated User Report :",data)
+            console.log("Generated User Report :", data)
             resolve(data);
           },
           error => {
@@ -2800,24 +2891,24 @@ export class NewReportComponent implements OnInit {
     });
   }
   redirecToReports() {
-    this.provider_services.reportToCrm='FromReport'
+    this.provider_services.reportToCrm = 'FromReport'
     this.locationobj.back();
     // this.router.navigate(['provider', 'reports']);
   }
   passPayloadForReportGeneration(payload) {
-    console.log("Payload :",payload)
+    console.log("Payload :", payload)
     this.btn_disabled = true;
     this.report_loading = true;
-     // user generate report is in progression please dont remove it!
+    // user generate report is in progression please dont remove it!
     if (this.report_type === 'user') {
       this.generateUserReportByCriteria(payload).then(res => {
         this.report_loading = false;
         this.btn_disabled = false;
         this.report_data_service.storeSelectedValues(res);
-        console.log("Resss... User",this.report_data_service.storeSelectedValues(res))
+        console.log("Resss... User", this.report_data_service.storeSelectedValues(res))
         this.lStorageService.setitemonLocalStorage('reportCriteria', payload);
-       // this.generateUserReport(res, payload);
-       // user generate report is in progression please dont remove it!
+        // this.generateUserReport(res, payload);
+        // user generate report is in progression please dont remove it!
         this.generatedReport(res);
       },
         (error) => {
@@ -2826,13 +2917,13 @@ export class NewReportComponent implements OnInit {
           this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
         });
     }
-   
-     else {
+
+    else {
       this.generateReportByCriteria(payload).then(res => {
         this.report_loading = false;
         this.btn_disabled = false;
         this.report_data_service.storeSelectedValues(res);
-        console.log("Resss...",this.report_data_service.storeSelectedValues(res))
+        console.log("Resss...", this.report_data_service.storeSelectedValues(res))
 
         this.lStorageService.setitemonLocalStorage('reportCriteria', payload);
         this.generatedReport(res);
@@ -2842,7 +2933,7 @@ export class NewReportComponent implements OnInit {
           this.btn_disabled = false;
           this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
         });
-   }
+    }
   }
   goToSelectionPage(type, selected_id) {
     this.setSelectedData().then(res => {
@@ -2910,12 +3001,12 @@ export class NewReportComponent implements OnInit {
           'startDate': this.appointment_startDate,
           'endDate': this.appointment_endDate
         };
-      } 
+      }
       if (this.report_type === 'crm') {
         selectedValues = {
-         // 'paymentStatus': this.appointment_billpaymentstatus,
+          // 'paymentStatus': this.appointment_billpaymentstatus,
           'location': this.locationFilter.toString(),
-         // 'appointmentMode': this.appointment_mode,
+          // 'appointmentMode': this.appointment_mode,
           'dateRange': this.appointment_timePeriod,
           //'startDate': this.appointment_startDate,
           //'endDate': this.appointment_endDate
@@ -2953,7 +3044,7 @@ export class NewReportComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        buttonCount:1,
+        buttonCount: 1,
         buttonCaption: 'OK',
         message: 'Your report generation is in progress. You can view the report once it is generated.'
       }
@@ -2961,7 +3052,7 @@ export class NewReportComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.setSelectedData().then(res => {
         this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report));
-        console.log("Report Data :",this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report)))
+        console.log("Report Data :", this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report)))
       },
       );
       this.router.navigate(['provider', 'reports', 'report-list']);
@@ -2996,8 +3087,8 @@ export class NewReportComponent implements OnInit {
         }
         console.log("Token: ", this.waitlistStatusFilter.toString());
         if (this.waitlistStatusFilter.length > 0) {
-        // this.waitlist_status = this.waitlistStatusFilter.toString();
-        this.filterparams['waitlistStatus'] = this.waitlistStatusFilter.toString();
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['waitlistStatus'] = this.waitlistStatusFilter.toString();
         }
         if (this.waitlistIntStatusFilter.length > 0) {
           this.filterparams['internalStatus'] = this.waitlistIntStatusFilter.toString();
@@ -3057,7 +3148,7 @@ export class NewReportComponent implements OnInit {
         if (this.apptStatusFilter.length > 0) {
           // this.waitlist_status = this.waitlistStatusFilter.toString();
           this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
-          }
+        }
         // if (this.appointment_status === 0) {
         //   delete this.filterparams.apptStatus;
         // }
@@ -3093,9 +3184,9 @@ export class NewReportComponent implements OnInit {
         this.passPayloadForReportGeneration(request_payload);
         this.report_data_service.setReportCriteriaInput(request_payload);
       }
-    
-    
+
+
     }
-    
+
   }
 }
