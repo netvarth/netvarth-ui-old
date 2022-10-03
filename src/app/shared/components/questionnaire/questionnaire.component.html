@@ -369,8 +369,7 @@
                 <div *ngFor="let question of qnr.value">
                   <label class="col-12 quest pointer-cursor"
                     (click)="showDataGridAddSectionn(getQuestion(question).question, true)">
-                    <span class="btn btn-light">&plus; Add Item</span>
-
+                    <span class="btn btn-light">&plus; Add Item For {{getQuestion(question).question.label}}</span>
                   </label>
                 </div>
               </div>
