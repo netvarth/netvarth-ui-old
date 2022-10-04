@@ -57,7 +57,8 @@
 
     <!-- Extra Info -->
     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 m-hgt-50 no-padding">
+        <!-- m-hgt-50 -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12  no-padding">
             <!-- serv-width -->
             <div class="pull-left  col-xs-6 no-padding">
                 <div class="prov_lbl">Service</div>
@@ -87,7 +88,8 @@
                     {{booking.appmtFor[0].lastName}}</div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding mgn-up-5">
+        <!-- mgn-up-5 -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding ">
             <div class="pull-left col-xs-6 no-padding" *ngIf="booking.provider">
                 <div class="prov_lbl">Provider</div>
                 <div class="prov_nme">
@@ -126,24 +128,73 @@
             </div>
 
         </div>
-        <br>
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding " style="margin-top: 10px;"
-        (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)">
-            <div class="pull-left col-xs-6 no-padding" *ngIf="showViewPrescritionBtn" (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)">
-                <div class="prov_lbl" (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)"></div>
-                <div class="prov_nme" (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)">
-                    <span ><i class="mr-rx-icon-customer">
-                    </i></span>&nbsp;<span (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)" >View Prescription</span>
+      
+        <!-- <br> -->
+        <!-- (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)" -->
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding " >
+            <div class="pull-left no-padding col-xs-6 mgn-up-5 " *ngIf="showViewPrescritionBtn" [ngClass]="showViewPrescritionBtn ? 'pull-left no-padding col-xs-6 ' : ''" >
+                <div class="prov_lbl" ></div>
+                <!-- (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)" -->
+                <div class="prov_nme" >
+                    <!-- (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)" -->
+                    <!-- <span ><i class="mr-rx-icon-customer">
+                    </i></span>&nbsp;<span  -->
+                        <button mat-flat-button class="btns" (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)" >View Prescription</button>
                 </div>
             </div>
+            <!-- [ngClass]="showViewPrescritionBtn ? 'pull-left no-padding col-xs-6 ' : 'pull-left no-padding col-xs-12'" -->
             
-
+            <div class="pull-left no-padding col-xs-6 mgn-up-5"  >
+                <!-- <div class="prov_lbl">Appointment for</div>
+                <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
+                    {{booking.appmtFor[0].lastName}}</div> -->
+                    <!-- [ngClass]="{cardddd: showViewPrescritionBtn}" -->
+                    <!-- <mat-grid-tile-footer   > -->
+                        <div class="">
+                
+                            <span *ngIf="showQnrBtn" class="mgn-rt-5">app-consumer-appointment
+                                <button  mat-flat-button
+                                    class="btns" (click)="cardActionPerformed('wl', 'details', booking, $event)">More Info</button>
+                            </span>
+                
+                            
+                            <span *ngIf="showJoinOtherVideoBtn" class="mgn-rt-5" (click)="stopprop($event)">
+                                <a [href]="booking.service.virtualCallingModes[0].value" target="_blank">
+                                    <button mat-flat-button class="btns">{{videoBtnCaption}}</button>
+                                </a>
+                            </span>
+                            <span *ngIf="showJoinJaldeeVideoBtn" class="mgn-rt-5" >
+                                <button mat-flat-button class="btns" (click)="cardActionPerformed('appt', 'joinVideo', booking, $event)">{{videoBtnCaption}}</button>
+                            </span>
+   
+                            <span *ngIf="showReceiptBtn" class="mgn-rt-5">
+                                <button mat-flat-button class="btns" (click)="cardActionPerformed('appt', 'viewBill', booking, $event)">Receipt</button>
+                            </span>
+                        </div>
+                    <!-- </mat-grid-tile-footer> -->
+            </div>
         </div>
-    </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding ">
+            <div class="pull-left  col-xs-6 no-padding mgn-up-5">
+                <!-- <div class="prov_lbl">Appointment for</div>
+                <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
+                    {{booking.appmtFor[0].lastName}}</div> -->
+                    <span *ngIf="!showReceiptBtn &&  showPaidInfo" class="amtPaid  rupee-font mgn-rt-5">Paid {{booking.amountPaid | currency:'&#8377;'}}</span>
 
+            </div>
+            <div class="pull-left  col-xs-6 no-padding mgn-up-5">
+                <!-- <div class="prov_lbl">Appointment for</div>
+                <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
+                    {{booking.appmtFor[0].lastName}}</div> -->
+                    <button *ngIf="showPayBtn"
+                    mat-flat-button class="btns rupee-font mgn-rt-5" (click)="cardActionPerformed('appt', 'viewBill', booking, $event)">Pay
+                    {{booking.amountDue | currency:'&#8377;'}}</button>
+            </div>
+            </div>
+    </div>
+   
     <!-- Actions and status -->
-    
-    <mat-grid-tile-footer  [ngClass]="{cardddd: showViewPrescritionBtn}" >
+    <!-- <mat-grid-tile-footer  [ngClass]="{cardddd: showViewPrescritionBtn}" >
         <div class="">
 
             <span *ngIf="showQnrBtn" class="mgn-rt-5">
@@ -168,5 +219,5 @@
                 <button mat-flat-button class="btns" (click)="cardActionPerformed('appt', 'viewBill', booking, $event)">Receipt</button>
             </span>
         </div>
-    </mat-grid-tile-footer>
+    </mat-grid-tile-footer> -->
 </div>

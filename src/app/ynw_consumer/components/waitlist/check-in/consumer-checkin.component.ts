@@ -585,6 +585,10 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
         _this.getQueuesbyLocationServiceAndDate(_this.sel_loc, _this.selectedServiceId, _this.checkinDate, _this.account_id).then(
             (queues: any) => {
                 _this.queuejson = queues;
+                if(queues.length === 0){
+                    // Please choose other date.
+                    this.snackbarService.openSnackBar('No queues available on selected date.', { 'panelClass': 'snackbarerror' });
+                }
                 _this.setQDetails(queues);
             }
         )
@@ -732,15 +736,30 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             'queue': this.queueId,
             'consumerNote': this.consumerNote
         };
-        // console.log("Reschedule :",post_Data)
-        console.log(post_Data)
+         console.log("Reschedule :",post_Data);
+       // console.log(post_Data)
         this.subs.sink = this.shared_services.rescheduleConsumerWaitlist(this.account_id, post_Data)
             .subscribe(
                 () => {
                     if (this.selectedMessage.files.length > 0) {
-                        const uid = [];
-                        uid.push(this.rescheduleUserId);
-                        this.consumerNoteAndFileSave(uid);
+                        //const uid = []
+                       // uid.push(this.rescheduleUserId);
+                        console.log("UID :",this.rescheduleUserId);
+                        this.consumerNoteAndFileSave(this.rescheduleUserId);
+                        // let queryParams = {
+                        //     account_id: this.account_id,
+                        //     uuid: this.rescheduleUserId,
+                        //     type: 'waitlistreschedule',
+                        //     theme: this.theme
+                        // }
+                        // if (this.businessId) {
+                        //     queryParams['customId'] = this.customId;
+                        // }
+                        // let navigationExtras: NavigationExtras = {
+                        //     queryParams: queryParams
+                        // };
+                        // this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
+                        
                     } else {
                         let queryParams = {
                             account_id: this.account_id,
@@ -1520,17 +1539,33 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                     i++;
                 }
             }
+            
             const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
             dataToSend.append('captions', blobPropdata);
 
             _this.sendWLAttachment(_this.account_id, parentUid, dataToSend).then(
-                () => {
+                (res) => {
+                    console.log("File res :",res);
                     if (_this.type !== 'waitlistreschedule') {
                         _this.submitQuestionnaire(parentUid).then(
                             () => {
                                 resolve(true);
                             }
                         );
+                        let queryParams = {
+                            account_id: _this.account_id,
+                            uuid: _this.rescheduleUserId,
+                            type: 'waitlistreschedule',
+                            theme: _this.theme
+                        }
+                        if (_this.businessId) {
+                            queryParams['customId'] = _this.customId;
+                        }
+                        let navigationExtras: NavigationExtras = {
+                            queryParams: queryParams
+                        };
+                        this.setAnalytics();
+                        _this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras)
                     } else {
                         let queryParams = {
                             account_id: _this.account_id,

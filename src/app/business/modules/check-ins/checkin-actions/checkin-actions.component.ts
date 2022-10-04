@@ -69,6 +69,8 @@ export class CheckinActionsComponent implements OnInit {
     loading = false;
     today;
     minDate;
+    apptlist_status: any;
+    futureDateApptlist: any;
     maxDate;
     server_date;
     queuejson: any = [];
@@ -143,6 +145,16 @@ export class CheckinActionsComponent implements OnInit {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }
     ngOnInit() {
+        this.provider_services.getApptlistMgr()
+        .then(
+            data => {
+              console.log("Today Status :",data);
+               // this.apptlist_details = data;
+                this.apptlist_status = data['enableToday'] || false;
+                this.futureDateApptlist = data['futureAppt'] || false;
+              //  this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
+               // this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
+            });
         this.apiloading = true;
         this.setMinMaxDate();
         this.getLabel();
@@ -266,6 +278,9 @@ export class CheckinActionsComponent implements OnInit {
                 .subscribe(data => {
                     this.queuejson = data;
                     console.log("Queue :", this.queuejson);
+                    if(this.checkin.appointmentMode === 'ONLINE_APPOINTMENT' && this.apptlist_status === false){
+                        this.queuejson = [];
+                      }
                     this.loading = false;
                     this.queueQryExecuted = true;
                     if (this.queuejson && this.queuejson.length > 0) {

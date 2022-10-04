@@ -111,6 +111,8 @@ export class AppointmentActionsComponent implements OnInit {
   isUserdisable;
   userid: any;
   user_arr: any;
+  apptlist_status: any;
+  futureDateApptlist: any;
   groups: any;
   statusList: any = [];
   showAssign = false;
@@ -143,6 +145,16 @@ export class AppointmentActionsComponent implements OnInit {
     this.server_date = this.lStorageService.getitemfromLocalStorage("sysdate");
   }
   ngOnInit() {
+    this.provider_services.getApptlistMgr()
+    .then(
+        data => {
+          console.log("Today Status :",data);
+           // this.apptlist_details = data;
+            this.apptlist_status = data['enableToday'] || false;
+            this.futureDateApptlist = data['futureAppt'] || false;
+          //  this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
+           // this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
+        });
     this.setMinMaxDate();
     this.getLabel();
     this.apiloading = true;
@@ -1091,6 +1103,10 @@ export class AppointmentActionsComponent implements OnInit {
       .subscribe(data => {
         this.schedules = data;
         this.loading = false;
+        if(this.appt.appointmentMode === 'ONLINE_APPOINTMENT' && this.apptlist_status === false){
+          this.schedules = [];
+          this.freeSlots = [];
+        }
         for (const scheduleSlots of this.schedules) {
           this.availableSlots = scheduleSlots.availableSlots;
           console.log("availableSlots",this.availableSlots)

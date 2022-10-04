@@ -54,6 +54,10 @@
   .consumer-dash .grid-card button:disabled {
     background-color: grey !important;
 }
+/* .consumer-dash .fit_in {
+    height: 100%;
+    overflow: auto;
+} */
  .mat-grid-tile-footer {
     padding: 0 5px !important;
 }
@@ -78,12 +82,12 @@ mat-grid-tile-footer .mat-flat-button {
 @media(min-width: 1115px){
     .cardddd{
         margin-bottom: 1rem !important;margin-left: 11rem !important;
-        justify-content: space-evenly !important;
+        /* justify-content: space-evenly !important; */
     }
 }
 @media((min-width: 575px) and (max-width : 1115px)){
     .cardddd{
         margin-bottom: 1rem !important;margin-left: 8.97rem !important;
-        justify-content: space-evenly !important;
+        /* justify-content: space-evenly !important; */
     }
 }
