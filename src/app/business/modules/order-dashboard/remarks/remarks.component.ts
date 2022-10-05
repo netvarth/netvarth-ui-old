@@ -75,22 +75,22 @@ export class RemarksComponent implements OnInit {
     private providerService: ProviderServices,
     private activateRoute: ActivatedRoute,
     private wordProcessor: WordProcessor,
-    
+
     public location: Location, public sharedFunctions: SharedFunctions) {
-      this.activateRoute.queryParams.subscribe(params => {
-       
-        if (params.uid) {
-          this.uid = params.uid;
-        }
-        if (params.account) {
-          this.account = params.account;
-        }
-      });
+    this.activateRoute.queryParams.subscribe(params => {
+
+      if (params.uid) {
+        this.uid = params.uid;
+      }
+      if (params.account) {
+        this.account = params.account;
+      }
+    });
   }
 
   ngOnInit() {
     this.getOrderDetails(this.uid);
-   
+
   }
   public ngOnDestroy(): void {
     this.onDestroy$.next();
@@ -105,37 +105,37 @@ export class RemarksComponent implements OnInit {
       this.small_device_display = false;
     }
   }
-  getPaperQnr(){
+  getPaperQnr() {
     this.channel = 'WALKIN';
-    this.provider_services.getPaperQnr(this.catalog_id , this.channel).subscribe((data: any) => {
+    this.provider_services.getPaperQnr(this.catalog_id, this.channel).subscribe((data: any) => {
       this.questionnaireList = data;
       if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
         this.showQuestionnaire = true;
-    } 
-     this.showQuestionnaire = true;
+      }
+      this.showQuestionnaire = true;
     });
   }
   getQuestionAnswers(event) {
     this.questionAnswers = null;
     this.questionAnswers = event;
     console.log(this.questionAnswers)
-}
-  
+  }
+
   getOrderDetails(uid) {
-  
+
     this.loading = true;
     this.providerservice.getProviderOrderById(uid)
-    .subscribe(data => {
-      this.orderDetails = data;
-   
+      .subscribe(data => {
+        this.orderDetails = data;
+
         this.catalog_id = this.orderDetails.catalog.id;
-        if(this.catalog_id){
+        if (this.catalog_id) {
           this.getPaperQnr();
         }
-      this.loading = false;
-    });
+        this.loading = false;
+      });
   }
-  
+
 
   goBack() {
     this.location.back();
@@ -143,56 +143,56 @@ export class RemarksComponent implements OnInit {
   selectViewType(type) {
     this.selectedType = type;
   }
-  
-  
-  
-  
+
+
+
+
   submitQuestionnaire() {
     const dataToSend: FormData = new FormData();
-   
+
     const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     this.providerService.submitProviderOrderQuestionnaire(dataToSend, this.uid).subscribe((data: any) => {
-        let postData = {
-            urls: []
-        };
-        if (data.urls && data.urls.length > 0) {
-            for (const url of data.urls) {
-                this.api_loading_video = true;
-                const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
-                this.provider_services.videoaudioS3Upload(file, url.url)
-                    .subscribe(() => {
-                        postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                        if (data.urls.length === postData['urls'].length) {
-                            this.provider_services.providerOrderQnrUploadStatusUpdate(this.uid, postData)
-                                .subscribe((data) => {
-                                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-                                    this.router.navigate(['provider', 'orders']);
-                                },
-                                    error => {
-                                        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                        this.api_loading = false;
-                                        this.api_loading_video = false;
-                                    });
-                        }
-                    },
-                        error => {
-                            this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                            this.api_loading = false;
-                            this.api_loading_video = false;
-                        });
-            }
-        } else {
-            this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-            this.router.navigate(['provider', 'orders']);
+      let postData = {
+        urls: []
+      };
+      if (data.urls && data.urls.length > 0) {
+        for (const url of data.urls) {
+          this.api_loading_video = true;
+          const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+          this.provider_services.videoaudioS3Upload(file, url.url)
+            .subscribe(() => {
+              postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+              if (data.urls.length === postData['urls'].length) {
+                this.provider_services.providerOrderQnrUploadStatusUpdate(this.uid, postData)
+                  .subscribe((data) => {
+                    this.snackbarService.openSnackBar("Remarks Released Successfully");
+                    this.router.navigate(['provider', 'orders']);
+                  },
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.api_loading = false;
+                      this.api_loading_video = false;
+                    });
+              }
+            },
+              error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
+                this.api_loading_video = false;
+              });
         }
+      } else {
+        this.snackbarService.openSnackBar("Remarks Released Successfully");
+        this.router.navigate(['provider', 'orders']);
+      }
     }, error => {
-        this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-        this.api_loading = false;
-        this.api_loading_video = false;
+      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+      this.api_loading = false;
+      this.api_loading_video = false;
     });
   }
-  
+
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }

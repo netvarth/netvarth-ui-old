@@ -8,31 +8,31 @@
         <div class="quik_link">
           Quick Links
         </div>
-        <mat-grid-list cols="3" rowHeight="90px" [gutterSize]="'30px'" >
-          <mat-grid-tile (click)="newwalkInOrder('WALKIN_ORDER')" class="smorder">
+        <mat-grid-list cols="3" rowHeight="90px" [gutterSize]="'30px'">
+          <mat-grid-tile (click)="newwalkInOrder('WALKIN_ORDER')" class="smorder" *ngIf="catalogType !== 'submission'">
             <div class="flex-shrink-0 text-center" style="width: 50px;margin-top:-20px">
               <i class="fa fa-cart-plus fa-2x pitch_blu"></i>
               <!-- <i class="flaticon2-plus icon-2x pitch_blu"></i> -->
-              </div>
-              <mat-grid-tile-footer>
-               <span> New order</span>
-              </mat-grid-tile-footer>
+            </div>
+            <mat-grid-tile-footer>
+              <span> New order</span>
+            </mat-grid-tile-footer>
           </mat-grid-tile>
           <mat-grid-tile (click)="newphoneInOrder('PHONE_ORDER')" class="smorder">
             <div class="flex-shrink-0 text-center" style="width: 50px; margin-top:-20px">
               <i class="fa fa-phone fa-2x pitch_blu"></i>
-              </div>
-              <mat-grid-tile-footer>
-                <span>New Phone-In</span>
-              </mat-grid-tile-footer>
+            </div>
+            <mat-grid-tile-footer>
+              <span>New Phone-In</span>
+            </mat-grid-tile-footer>
           </mat-grid-tile>
           <mat-grid-tile (click)="searchCustomer()" class="smorder">
             <div class="flex-shrink-0 text-center" style="width: 50px; margin-top:-20px">
               <i class="fa fa-user-plus fa-2x pitch_blu"></i>
-              </div>
-              <mat-grid-tile-footer>
-                <span>Add {{ customer_label }}</span>
-              </mat-grid-tile-footer>
+            </div>
+            <mat-grid-tile-footer>
+              <span>Add {{ customer_label }}</span>
+            </mat-grid-tile-footer>
           </mat-grid-tile>
         </mat-grid-list>
       </div>
@@ -69,21 +69,22 @@
                 <i class="icon-filter-one" (click)="showFilter()">
                 </i>
               </a>
-              <div>                
+              <div>
                 <aside class="filterSidebar newfilter-sidebar" *ngIf="showFilterSection">
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
                       <span class="filter-head-title">Filters</span>
-                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Close filter window'"></i>
                     </div>
                     <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                     <ul class="sidebar-menu accordion" id="accordion2">
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseName2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-user"></i>
@@ -141,8 +142,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseBNo2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-bookmark"></i>
@@ -157,8 +158,9 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (keyup)="keyPressed()"
-                                  class="filterTextbox filter-textbox" placeholder="Enter Order ID">
+                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber"
+                                  (keyup)="keyPressed()" class="filterTextbox filter-textbox"
+                                  placeholder="Enter Order ID">
                               </li>
                             </div>
                           </div>
@@ -167,8 +169,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseStatus2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -197,8 +199,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAMode2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseAMode2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -215,7 +217,8 @@
                               <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allModeSelected" (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
+                                <mat-checkbox [checked]="allModeSelected"
+                                  (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
                                   All</mat-checkbox>
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
@@ -231,8 +234,8 @@
                       <div class="card" *ngIf="providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLabels2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseLabels2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-tags"></i>
@@ -280,67 +283,77 @@
             No orders for today
           </div>
           <ng-container *ngIf="todayOrders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of todayOrders;let i=index"
-              >
+            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of todayOrders;let i=index">
               <div (click)="gotoDetails(order)">
-              <div class="top-sec">
-                <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
+                <div class="top-sec">
+                  <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
-                <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
-                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
-                </span>
+                  <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
+                  <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
+                  <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
+                  </span>
+                </div>
+                <div class="main-sec">
+                  <div *ngIf="order.orderFor.firstName || order.orderFor.lastName" class="bold grey-color">
+                    {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                  <div class="bold grey-color" *ngIf="!order.orderFor.firstName && !order.orderFor.lastName">
+                    {{customer_label | capitalizeFirst}} id:&nbsp; {{order.orderFor.jaldeeId}}</div>
+                  <div class="mgn-up-15 datetime bold grey-color">
+                    {{order.orderDate | date: display_dateFormat}}
+                    <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
+                      {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
+                    </ng-container>
+                  </div>
+                  <div
+                    [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
+                    {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus|
+                    capitalizeFirst}}
+                    <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                      (click)="stopprop($event);showConsumerNote(order)"></i>
+                  </div>
+                  <div class="grey-color" *ngIf="order.provider">
+                    Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
+                    + ' ' + order.provider.lastName}}
+                  </div>
+                  <div class="mgn-up-15 mgn-bt-10">
+                    <i *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Shoppinglist'" class="fa fa-list-alt darkerred"></i> <i
+                      *ngIf="order.orderType === 'SHOPPINGCART'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Shoppingcart'" class="shoppingcart-icon"></i>&nbsp; <span class="bold"
+                      *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
+                    <span
+                      *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
+                      class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
+                      (click)="stopprop($event);gotoBill(order)"
+                      [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
+                      currency:'INR'}}</span>&nbsp;
+                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Online'">
+                    </span>
+                    <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Phone in'">
+                    </span>
+                    <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Walk-in'">
+                    </span>
+                    <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order, 1)">
+                      Actions</span>
+                  </div>
+                </div>
               </div>
-              <div class="main-sec">
-                <div *ngIf="order.orderFor.firstName || order.orderFor.lastName" class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div  class="bold grey-color"*ngIf="!order.orderFor.firstName && !order.orderFor.lastName">
-                          {{customer_label | capitalizeFirst}} id:&nbsp; {{order.orderFor.jaldeeId}}</div>
-                <div class="mgn-up-15 datetime bold grey-color">
-                  {{order.orderDate | date: display_dateFormat}}
-                  <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
-                  {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
-                </ng-container>
-                </div>
-                <div  [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
-                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
-                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
-                    (click)="stopprop($event);showConsumerNote(order)"></i>
-                </div>
-                <div class="grey-color" *ngIf="order.provider">
-                  Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
-                  + ' ' + order.provider.lastName}}
-                </div>
-                <div class="mgn-up-15 mgn-bt-10">
-                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp; <span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
-                  <span
-                    *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
-                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
-                    (click)="stopprop($event);gotoBill(order)"
-                    [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>&nbsp;
-                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order, 1)"> Actions</span>
-                </div>
-              </div>
-            </div>
               <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
-              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
-            </div>
-            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
-            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-                >{{getDisplayformatTruncateLabel(order)}}</span>
-          </div>
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10"
+                *ngIf="getDisplayformatOflabel(order) === 0">
+                <span class="mgn-lt-10"
+                  style="color: #3c8dbc ; font-size: smaller;">{{getDisplayformatTruncateLabel(order)}}<span
+                    (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
+              </div>
+              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10"
+                *ngIf="getDisplayformatOflabel(order) === 1">
+                <span class="mgn-lt-10"
+                  style="color: #3c8dbc ; font-size: smaller;">{{getDisplayformatTruncateLabel(order)}}</span>
+              </div>
 
             </div>
           </ng-container>
@@ -377,20 +390,21 @@
                 </i>
               </a>
               <div>
-              <aside class="filterSidebar newfilter-sidebar" *ngIf="showFilterSection">
+                <aside class="filterSidebar newfilter-sidebar" *ngIf="showFilterSection">
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
                       <span class="filter-head-title">Filters</span>
-                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Close filter window'"></i>
                     </div>
                     <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                     <ul class="sidebar-menu accordion" id="accordion2">
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseName2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-user"></i>
@@ -448,8 +462,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseBNo2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-bookmark"></i>
@@ -464,8 +478,9 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (keyup)="keyPressed()"
-                                  class="filterTextbox filter-textbox" placeholder="Enter Order ID">
+                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber"
+                                  (keyup)="keyPressed()" class="filterTextbox filter-textbox"
+                                  placeholder="Enter Order ID">
                               </li>
                             </div>
                           </div>
@@ -474,8 +489,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseStatus2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -504,8 +519,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAMode2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseAMode2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -522,7 +537,8 @@
                               <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allModeSelected" (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
+                                <mat-checkbox [checked]="allModeSelected"
+                                  (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
                                   All</mat-checkbox>
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
@@ -538,8 +554,8 @@
                       <div class="card" *ngIf="providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLabels2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseLabels2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-tags"></i>
@@ -584,16 +600,17 @@
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
                       <span class="filter-head-title">Filters</span>
-                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Close filter window'"></i>
                     </div>
                     <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                     <ul class="sidebar-menu accordion" id="accordion2">
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseName2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-user"></i>
@@ -651,8 +668,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseBNo2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-bookmark"></i>
@@ -667,8 +684,9 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (keyup)="keyPressed()"
-                                  class="filterTextbox filter-textbox" placeholder="Enter Order ID">
+                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber"
+                                  (keyup)="keyPressed()" class="filterTextbox filter-textbox"
+                                  placeholder="Enter Order ID">
                               </li>
                             </div>
                           </div>
@@ -677,8 +695,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseStatus2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -707,8 +725,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAMode2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseAMode2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -725,7 +743,8 @@
                               <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allModeSelected" (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
+                                <mat-checkbox [checked]="allModeSelected"
+                                  (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
                                   All</mat-checkbox>
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
@@ -741,8 +760,8 @@
                       <div class="card" *ngIf="providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLabels2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseLabels2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-tags"></i>
@@ -790,66 +809,75 @@
             No future orders
           </div>
           <ng-container *ngIf="futureOrdes.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of futureOrdes;let i=index"
-              >
+            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of futureOrdes;let i=index">
               <div (click)="gotoDetails(order)">
-              <div class="top-sec">
-                <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
+                <div class="top-sec">
+                  <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
-                <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
-                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
-                </span>
-              </div>
-              <div class="main-sec">
-                <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div class="mgn-up-15 datetime bold grey-color">
-                  {{order.orderDate | date: display_dateFormat}}
-                  <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
+                  <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
+                  <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
+                  <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
+                  </span>
+                </div>
+                <div class="main-sec">
+                  <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                  <div class="mgn-up-15 datetime bold grey-color">
+                    {{order.orderDate | date: display_dateFormat}}
+                    <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
                       {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                     </ng-container>
-                </div>
-                <div [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
-                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
-                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
-                    (click)="stopprop($event);showConsumerNote(order)"></i>
-                </div>
-                <div class="grey-color" *ngIf="order.provider">
-                  Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
-                  + ' ' + order.provider.lastName}}
-                </div>
-                <div class="mgn-up-15 mgn-bt-10">
-                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp;<span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
-                  <span
-                  *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
-                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
-                    (click)="stopprop($event);gotoBill(order)"
-                    [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>&nbsp;
-                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order, 2)"> Actions</span>
+                  </div>
+                  <div
+                    [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
+                    {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus|
+                    capitalizeFirst}}
+                    <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                      (click)="stopprop($event);showConsumerNote(order)"></i>
+                  </div>
+                  <div class="grey-color" *ngIf="order.provider">
+                    Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
+                    + ' ' + order.provider.lastName}}
+                  </div>
+                  <div class="mgn-up-15 mgn-bt-10">
+                    <i *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Shoppinglist'" class="fa fa-list-alt darkerred"></i> <i
+                      *ngIf="order.orderType === 'SHOPPINGCART'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Shoppingcart'" class="shoppingcart-icon"></i>&nbsp;<span class="bold"
+                      *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
+                    <span
+                      *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
+                      class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
+                      (click)="stopprop($event);gotoBill(order)"
+                      [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
+                      currency:'INR'}}</span>&nbsp;
+                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Online'">
+                    </span>
+                    <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Phone in'">
+                    </span>
+                    <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Walk-in'">
+                    </span>
+                    <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order, 2)">
+                      Actions</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
               <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
-              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
-            </div>
-            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
-            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-                >{{getDisplayformatTruncateLabel(order)}}</span>
-          </div>
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10"
+                *ngIf="getDisplayformatOflabel(order) === 0">
+                <span class="mgn-lt-10"
+                  style="color: #3c8dbc ; font-size: smaller;">{{getDisplayformatTruncateLabel(order)}}<span
+                    (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
+              </div>
+              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10"
+                *ngIf="getDisplayformatOflabel(order) === 1">
+                <span class="mgn-lt-10"
+                  style="color: #3c8dbc ; font-size: smaller;">{{getDisplayformatTruncateLabel(order)}}</span>
+              </div>
             </div>
           </ng-container>
         </div>
@@ -869,20 +897,21 @@
                 </i>
               </a>
               <div>
-               <aside class="filterSidebar newfilter-sidebar" *ngIf="showFilterSection">
+                <aside class="filterSidebar newfilter-sidebar" *ngIf="showFilterSection">
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
                       <span class="filter-head-title">Filters</span>
-                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Close filter window'"></i>
                     </div>
                     <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                     <ul class="sidebar-menu accordion" id="accordion2">
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseName2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-user"></i>
@@ -940,8 +969,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseBNo2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-bookmark"></i>
@@ -956,8 +985,9 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (keyup)="keyPressed()"
-                                  class="filterTextbox filter-textbox" placeholder="Enter Order ID">
+                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber"
+                                  (keyup)="keyPressed()" class="filterTextbox filter-textbox"
+                                  placeholder="Enter Order ID">
                               </li>
                             </div>
                           </div>
@@ -966,8 +996,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseType2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseType2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -1000,8 +1030,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseStatus2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -1030,8 +1060,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAMode2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseAMode2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -1048,7 +1078,8 @@
                               <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allModeSelected" (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
+                                <mat-checkbox [checked]="allModeSelected"
+                                  (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
                                   All</mat-checkbox>
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
@@ -1064,8 +1095,8 @@
                       <div class="card" *ngIf="providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLabels2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseLabels2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-tags"></i>
@@ -1110,16 +1141,17 @@
                   <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
                     <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
                       <span class="filter-head-title">Filters</span>
-                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-                        [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+                      <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right"
+                        (click)="hideFilterSidebar()" [matTooltipClass]="tooltipcls"
+                        [matTooltip]="'Close filter window'"></i>
                     </div>
                     <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
                     <ul class="sidebar-menu accordion" id="accordion2">
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseName2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-user"></i>
@@ -1177,8 +1209,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseBNo2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseBNo2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-bookmark"></i>
@@ -1193,8 +1225,9 @@
                           <div class="card-body">
                             <div class="filterTextinput filter-text-input">
                               <li class="filterli filter-li">
-                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber" (keyup)="keyPressed()"
-                                  class="filterTextbox filter-textbox" placeholder="Enter Order ID">
+                                <input type="text" id="txt_mobile" [(ngModel)]="filter.orderNumber"
+                                  (keyup)="keyPressed()" class="filterTextbox filter-textbox"
+                                  placeholder="Enter Order ID">
                               </li>
                             </div>
                           </div>
@@ -1203,8 +1236,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseType2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseType2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -1237,8 +1270,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseStatus2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseStatus2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -1267,8 +1300,8 @@
                       <div class="card">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAMode2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseAMode2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-circle-o-notch"></i>
@@ -1285,7 +1318,8 @@
                               <li class="filterli filterCheckbox filterCheckboxborder filtercheckboxSize">
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
-                                <mat-checkbox [checked]="allModeSelected" (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
+                                <mat-checkbox [checked]="allModeSelected"
+                                  (change)="setFilterDataCheckbox('orderMode', 'all', $event)">
                                   All</mat-checkbox>
                               </li>
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
@@ -1301,8 +1335,8 @@
                       <div class="card" *ngIf="providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
-                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseLabels2"
-                              aria-expanded="false">
+                            <button class="btn btn-link" type="button" data-toggle="collapse"
+                              data-target="#collapseLabels2" aria-expanded="false">
                               <div>
                                 <div style="display: inline-block !important;">
                                   <i class="fa fa-tags"></i>
@@ -1350,79 +1384,87 @@
             No history orders
           </div>
           <ng-container *ngIf="historyOrders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of historyOrders;let i=index"
-              >
+            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of historyOrders;let i=index">
               <div (click)="gotoDetails(order)">
-              <div class="top-sec">
-                <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
+                <div class="top-sec">
+                  <!-- <mat-checkbox class="custom-frame" (click)="stopprop($event)" (change)="checkOrder(order,i)"
                   [checked]="orderSelected[i]"></mat-checkbox> -->
-                <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
-                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
-                </span>
-              </div>
-              <div class="main-sec">
-                <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div class="mgn-up-15 datetime bold grey-color">
-                  {{order.orderDate | date: display_dateFormat}}
-                  <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
+                  <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
+                  <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
+                  <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
+                  </span>
+                </div>
+                <div class="main-sec">
+                  <div class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
+                  <div class="mgn-up-15 datetime bold grey-color">
+                    {{order.orderDate | date: display_dateFormat}}
+                    <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
                       {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
                     </ng-container>
-                </div>
-                <div [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received' ?'darkred':'darkblue bold'">
-                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
-                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
-                    (click)="stopprop($event);showConsumerNote(order)"></i>
-                </div>
-                
-                <div class="grey-color" *ngIf="order.provider">
-                  Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
-                  + ' ' + order.provider.lastName}}
-                </div>
-                <div class="mgn-up-15 mgn-bt-10">
-                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp;<span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
-                  <span
-                  *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
-                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
-                    (click)="stopprop($event);gotoBill(order)"
-                    [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>&nbsp;
-                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order,3)"> Actions</span>
+                  </div>
+                  <div
+                    [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received' ?'darkred':'darkblue bold'">
+                    {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus|
+                    capitalizeFirst}}
+                    <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
+                      (click)="stopprop($event);showConsumerNote(order)"></i>
+                  </div>
+
+                  <div class="grey-color" *ngIf="order.provider">
+                    Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
+                    + ' ' + order.provider.lastName}}
+                  </div>
+                  <div class="mgn-up-15 mgn-bt-10">
+                    <i *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Shoppinglist'" class="fa fa-list-alt darkerred"></i> <i
+                      *ngIf="order.orderType === 'SHOPPINGCART'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Shoppingcart'" class="shoppingcart-icon"></i>&nbsp;<span class="bold"
+                      *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
+                    <span
+                      *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
+                      class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
+                      (click)="stopprop($event);gotoBill(order)"
+                      [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
+                      currency:'INR'}}</span>&nbsp;
+                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Online'">
+                    </span>
+                    <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Phone in'">
+                    </span>
+                    <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'" [matTooltipClass]="tooltipcls"
+                      [matTooltip]="'Walk-in'">
+                    </span>
+                    <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order,3)"> Actions</span>
+                  </div>
                 </div>
               </div>
-            </div>
               <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
-              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
-            </div>
-            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
-            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-                >{{getDisplayformatTruncateLabel(order)}}</span>
-          </div>
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10"
+                *ngIf="getDisplayformatOflabel(order) === 0">
+                <span class="mgn-lt-10"
+                  style="color: #3c8dbc ; font-size: smaller;">{{getDisplayformatTruncateLabel(order)}}<span
+                    (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
+              </div>
+              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
+                class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10"
+                *ngIf="getDisplayformatOflabel(order) === 1">
+                <span class="mgn-lt-10"
+                  style="color: #3c8dbc ; font-size: smaller;">{{getDisplayformatTruncateLabel(order)}}</span>
+              </div>
 
             </div>
-            
+
           </ng-container>
-          
+
 
         </div>
-                 <!--  class="search_paging" -->
-                 <div  class="search_paging"  *ngIf="historyOrders.length !== 0">
-                  <app-pager  [total_pages]="pagination.totalCnt"
-                  [pagesize]="pagination.perPage" (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
-                </app-pager>
-              </div>
+        <!--  class="search_paging" -->
+        <div class="search_paging" *ngIf="historyOrders.length !== 0">
+          <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+            (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+          </app-pager>
+        </div>
         <div class="clearfix"></div>
       </mat-tab>
     </mat-tab-group>
@@ -1437,17 +1479,17 @@
       <mat-tab label="Total Papers ({{totalOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <div class="allTabInPannel" *ngIf="!loading">
-                    <app-paper-details [loading]="loading" [orders]="orders"></app-paper-details>
+          <app-paper-details [loading]="loading" [orders]="orders"></app-paper-details>
 
         </div>
         <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
-            
+
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
               <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
                 Actions</span>
             </div>
-           
+
           </div>
           <div *ngIf="orders.length == 0">
             No Papers
@@ -1457,7 +1499,7 @@
               >
               <div (click)="gotoDetails(order)">
               <div class="top-sec">
-                
+
                 <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
                 <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
                 <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
@@ -1523,12 +1565,12 @@
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
         <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
-            
+
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
               <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
                 Actions</span>
             </div>
-           
+
           </div>
           <div *ngIf="orders.length == 0">
             No Papers
@@ -1603,7 +1645,7 @@
         </div>
         <div class="clearfix"></div>
       </mat-tab>
-     
+
     </mat-tab-group>
     <div class="clearfix"></div>
   </div>

@@ -15,6 +15,7 @@ import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
 import { OrderConsumerComponent } from './order-consumer/order-consumer.component';
 import { OrderConsumerModule } from './order-consumer/order-consumer.module';
+import { SkeletonLoadingModule } from '../skeleton-loading/skeleton-loading.module';
 
 const routes: Routes = [
   { path: '', component: ShoppingCartSharedComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
     LoadingSpinnerModule,
     AddItemNotesModule,
     OrderConsumerModule,
+    SkeletonLoadingModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

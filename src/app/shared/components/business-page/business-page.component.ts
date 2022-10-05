@@ -29,7 +29,7 @@ import { AuthService } from '../../services/auth-service';
 import { TranslateService } from '@ngx-translate/core';
 import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
 import { AccountService } from '../../services/account.service';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 @Component({
   selector: 'app-business-page',
   templateUrl: './business-page.component.html',
@@ -312,6 +312,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   accountConfig: any;
   source: string;
   back: any;
+  mobileView: any;
+  desktopView: any;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -333,7 +335,8 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     private s3Processor: S3UrlProcessor,
     private authService: AuthService,
     public translate: TranslateService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private deviceService: DeviceDetectorService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -443,7 +446,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.orgsocial_list = projectConstantsLocal.SOCIAL_MEDIA_CONSUMER;
     // this.getInboxUnreadCnt();
     this.activaterouterobj.queryParams.subscribe(qparams => {
-      console.log("QParams :",qparams)
+      console.log("QParams :", qparams)
       if (qparams.src) {
         this.pSource = qparams.src;
       }
@@ -480,7 +483,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const _this = this;
     this.activaterouterobj.paramMap
       .subscribe(params => {
-        console.log("Params :",params)
+        console.log("Params :", params)
         this.accountEncId = params.get('id');
         if (this.accountEncId && this.accountEncId.toLowerCase() === 'heartfulnesscovidcare') {
           this.router.navigate(['heartfulnesshealthcare']);
@@ -597,16 +600,19 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
           )
         }
       });
-      if(this.accountEncId == "53a37k7")
-      {
-        // this.loading_direct = true;
-        // this.globalLoading = true;
-        this.source = "paper";
-      }
-      if(this.source == 'paper')
-      {
-        setTimeout(()=> this.checkout(), 1000);
-      }
+    if (this.accountEncId == "53a37k7") {
+      // this.loading_direct = true;
+      // this.globalLoading = true;
+      this.source = "paper";
+    }
+    if (this.source == 'paper') {
+      setTimeout(() => this.checkout(), 1000);
+    }
+
+
+
+    this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
+    this.desktopView = this.deviceService.isDesktop();
   }
   getproviderBprofileDetails() {
     const self = this;
@@ -649,7 +655,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
   /**
-   * 
+   *
    * @param encId encId/customId which represents the Account
    * @returns the unique provider id which will gives access to the s3
    */
@@ -701,11 +707,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // if(this.source == 'paper')
     // {
-      // this.checkout();
-      
-        // let checkout: HTMLElement = document.getElementsByClassName('btn-chkout')[0] as HTMLElement;
-        
-        // setTimeout(()=> checkout.click(), 2000);
+    // this.checkout();
+
+    // let checkout: HTMLElement = document.getElementsByClassName('btn-chkout')[0] as HTMLElement;
+
+    // setTimeout(()=> checkout.click(), 2000);
 
     // }
   }
@@ -986,7 +992,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.businessName = this.businessjson.businessName;
       // this.popupforCustomApp.nativeElement.style.display = 'none';
       // this.customAppIOSPopup.nativeElement.style.display = 'none';
-      //       // Detects if device is on iOS 
+      //       // Detects if device is on iOS
 
       // if (this.iosConfig) {
       //   const isIOS = () => {
@@ -1802,7 +1808,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
     this.commdialogRef.afterClosed().subscribe(() => {
       this.router.navigate(
-        [], 
+        [],
         {
           relativeTo: this.activaterouterobj,
           queryParams: { callback: 'none' },
@@ -2183,7 +2189,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: queryParam
     };
-    this.routerobj.navigate([this.accountEncId, userId],navigationExtras);
+    this.routerobj.navigate([this.accountEncId, userId], navigationExtras);
   }
   opencheckavail(actionObj) {
     console.log("ActionObj:", actionObj);
@@ -2214,12 +2220,11 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
   }
-  IsAuthordemy(event)
-  {
-    console.log("Authordemy Event",event);
+  IsAuthordemy(event) {
+    console.log("Authordemy Event", event);
   }
   cardClicked(actionObj) {
-    console.log('entering into business page',actionObj);
+    console.log('entering into business page', actionObj);
     console.log(actionObj);
     this.showArrow = true;
     if (actionObj['type'] === 'waitlist') {
@@ -2700,42 +2705,40 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
     let cartUrl = 'order/shoppingcart?account_id=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.uniqueId;
     if (this.userType === 'consumer') {
-      console.log("this.activeCatalog",this.activeCatalog)
-      if(this.activeCatalog.catalogItem.length == 1 && this.activeCatalog.catalogType == 'submission')
-      {
+      console.log("this.activeCatalog", this.activeCatalog)
+      if (this.activeCatalog.catalogItem.length == 1 && this.activeCatalog.catalogType == 'submission') {
         // let cartUrl = 'paper/shoppingcart?account_id=' + this.provider_bussiness_id + '&customId=' + this.accountEncId + '&unique_id=' + this.uniqueId + '&catalog_id=' + this.activeCatalog.id+ '&source=' + "paper";
         // this.router.navigateByUrl(cartUrl);
         const chosenDateTime = {
-        delivery_type: "store",
-        catlog_id: this.activeCatalog.id,
-        nextAvailableTime: this.nextAvailableTime,
-        order_date: this.sel_checkindate,
-        advance_amount: this.activeCatalog.advance_amount,
-        account_id: this.accountId,
-      };
+          delivery_type: "store",
+          catlog_id: this.activeCatalog.id,
+          nextAvailableTime: this.nextAvailableTime,
+          order_date: this.sel_checkindate,
+          advance_amount: this.activeCatalog.advance_amount,
+          account_id: this.accountId,
+        };
 
-      let queryParam = {
-        providerId: this.accountId,
-      };
-      if (this.customId) {
-        queryParam['customId'] = this.customId;
-      }
-      
-      if(this.activeCatalog.id ){
-        queryParam['catalog_Id']= this.activeCatalog.id;
-      }
+        let queryParam = {
+          providerId: this.accountId,
+        };
+        if (this.customId) {
+          queryParam['customId'] = this.customId;
+        }
 
-      queryParam['source']= "paper";
-     
-      const navigationExtras: NavigationExtras = {
-        queryParams: queryParam,
-      };
+        if (this.activeCatalog.id) {
+          queryParam['catalog_Id'] = this.activeCatalog.id;
+        }
 
-      this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-      this.router.navigate(['order', 'shoppingcart', 'checkout'],navigationExtras);
+        queryParam['source'] = "paper";
+
+        const navigationExtras: NavigationExtras = {
+          queryParams: queryParam,
+        };
+
+        this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
+        this.router.navigate(['order', 'shoppingcart', 'checkout'], navigationExtras);
       }
-      else
-      {
+      else {
         this.router.navigateByUrl(cartUrl);
       }
     } else if (this.userType === '') {
@@ -2792,7 +2795,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * 
+   *
    */
   showOrderFooter() {
     let showFooter = false;
@@ -2810,7 +2813,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   /**
-   * 
+   *
    */
   shoppinglistupload() {
     const chosenDateTime = {

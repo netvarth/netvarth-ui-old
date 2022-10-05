@@ -28,7 +28,7 @@ import { S3UrlProcessor } from '../../services/s3-url-processor.service';
 import { SubSink } from '../../../../../node_modules/subsink';
 // import { VirtualFieldsComponent } from '../../../ynw_consumer/components/virtualfields/virtualfields.component';
 import { CheckavailabilityComponent } from '../checkavailability/checkavailability.component';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 
 @Component({
@@ -294,6 +294,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   // consumerVirtualinfo: any;
   checkavailabilitydialogref: any;
   locationdate: any;
+  mobileView: any;
+  desktopView: any;
   constructor(
     private activaterouterobj: ActivatedRoute,
     public sharedFunctionobj: SharedFunctions,
@@ -309,7 +311,8 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     public wordProcessor: WordProcessor,
     private domainConfigService: DomainConfigGenerator,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    private deviceService: DeviceDetectorService
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -419,6 +422,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.lStorageService.removeitemfromLocalStorage('quesStore');
     this.lStorageService.removeitemfromLocalStorage('serviceOPtionInfo');
     this.lStorageService.removeitemfromLocalStorage('serviceTotalPrice');
+
+
+    this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
+    this.desktopView = this.deviceService.isDesktop();
   }
   getAccountIdFromEncId(encId) {
     const _this = this;

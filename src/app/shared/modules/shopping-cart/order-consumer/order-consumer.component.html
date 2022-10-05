@@ -1,93 +1,152 @@
-<div class="container card">
-  <div>
-    <div class="pointer-cursor">
-      <i class="fa fa-arrow-left" (click)="goBack()"></i>&nbsp;&nbsp;<span class="font-weight-bold text-primary">Go
-        Back</span>
-    </div>
-  </div>
+<div class="mt-5" *ngIf="apiloading">
+  <app-skeleton-loading></app-skeleton-loading>
 </div>
 
-<div class="container card shadow">
-  <div>
-    <div class="">
-      <div class="d-flex justify-content-center">
-        <div>
-          <img *ngIf="business && business.logo" src="{{business.logo}}" width="100" height="100"
-            class="rounded-circle">
-        </div>
-        <div class="pl-3 pt-4">
-          <h4 *ngIf=" business && business.bname" class="business-name">{{business.bname}}</h4>
-          <span *ngIf="business && business.blocation" class="business-location"><i
-              class="fa fa-map-marker"></i>&nbsp;&nbsp;{{business.blocation}}</span>
+
+<div *ngIf="desktopView && !apiloading">
+  <div class="container card">
+    <div>
+      <div class="pointer-cursor">
+        <i class="fa fa-arrow-left" (click)="goBack()"></i>&nbsp;&nbsp;<span class="font-weight-bold text-primary">Go
+          Back</span>
+      </div>
+    </div>
+  </div>
+  <div class="container card shadow">
+    <div>
+      <div class="">
+        <div class="d-flex justify-content-center">
+          <div>
+            <img *ngIf="business && business.logo" src="{{business.logo}}" width="100" height="100"
+              class="rounded-circle">
+          </div>
+          <div class="pl-3 pt-4">
+            <h4 *ngIf=" business && business.bname" class="business-name">{{business.bname}}</h4>
+            <span *ngIf="business && business.blocation" class="business-location"><i
+                class="fa fa-map-marker"></i>&nbsp;&nbsp;{{business.blocation}}</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<br>
-<div class="container">
-  <div class="row">
-    <div class="col-md-7 col-sm-12 px-0">
-      <div class="card items-card">
-        <div class="card-body">
-          <div class="row">
-            <div class="form-group col-md-9 col-sm-9 no-padding-small">
-              <input [value]="seacrchFilterOrder" class="form-control" (ngModelChange)="transform(seacrchFilterOrder)"
-                [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" />
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-7 col-sm-12 px-0">
+        <div class="card items-card">
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-md-12 col-sm-12 no-padding-small">
+                <input [value]="seacrchFilterOrder" class="form-control" (ngModelChange)="transform(seacrchFilterOrder)"
+                  [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" />
+              </div>
             </div>
-            <div class="col-md-3 col-sm-3 desktop-only no-padding-small text-right pr-0">
-              <a class="btn btn-light"><img src="../../../../../assets/images/Group_1512.png" width="21"
-                  height="21"><span>&nbsp;Filter</span></a>
-            </div>
-          </div>
-          <h4 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-name">
-            {{this.catalog.catalogName}}</h4>
-          <h6 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-count">
-            {{this.catalog.catalogItem.length}} Items</h6>
-          <div *ngIf="catalogItems">
-            <div *ngFor="let item of catalogItems| filter:seacrchFilterOrder;let i=index">
-              <div class="card item-card shadow-lg mt-3">
-                <div class="d-flex justify-content-between">
-                  <div class="d-flex">
-                    <div class="mr-2">
-                      <i class="fa fa-cart-plus" aria-hidden="true"></i>
+            <h4 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-name">
+              {{this.catalog.catalogName}}</h4>
+            <h6 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-count">
+              {{this.catalog.catalogItem.length}} Items</h6>
+            <div *ngIf="catalogItems">
+              <div *ngFor="let item of catalogItems| filter:seacrchFilterOrder;let i=index">
+                <div class="card item-card shadow-lg mt-3">
+                  <div class="d-flex justify-content-between">
+                    <div class="d-flex">
+                      <div class="mr-2">
+                        <i class="fa fa-circle veg-icon" aria-hidden="true"></i>
+                      </div>
+                      <div class="pt-1">
+                        <span class="font-weight-bold item-name"
+                          *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
+                        <span class="text-red item-name"
+                          *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
+                            class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
+                        <span class="text-red item-price"
+                          *ngIf="item.item && item.item.price && item.item.showPromotionalPrice"><s><i
+                              class="fa fa-inr"></i>&nbsp;{{item.item.price}}</s>&nbsp;<i
+                            class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
+                        <span class="text-light item-desc"
+                          *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
+                        <div *ngIf="getItemQty(item)>0">
+                          <span class="add_nte" (click)="addNotes(item,i)">
+                            {{item.consumerNote ? 'Edit Note':'Add Note'}}
+                          </span> &nbsp;
+                          <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
+                            <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <span class="font-weight-bold item-name"
-                        *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
-                      <span class="text-red item-name"
-                        *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
-                          class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
-                      <span class="text-red item-price"
-                        *ngIf="item.item && item.item.price && item.item.showPromotionalPrice"><s><i
-                            class="fa fa-inr"></i>&nbsp;{{item.item.price}}</s>&nbsp;<i
-                          class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
-                      <span class="text-light item-desc"
-                        *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
-                      <div *ngIf="getItemQty(item)>0">
-                        <span class="add_nte" (click)="addNotes(item,i)">
-                          {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                        </span> &nbsp;
-                        <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
-                          <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
-                        </span>
+                    <div class="cart">
+                      <div>
+                        <img
+                          *ngIf="item.item && item.item.itemImages && item.item.itemImages[0] && item.item.itemImages[0].thumbUrl"
+                          src="{{item.item.itemImages[0].thumbUrl}}" class="item-image" width="70" height="70">
+                        <img
+                          *ngIf="!item.item || !item.item.itemImages || !item.item.itemImages[0] || !item.item.itemImages[0].thumbUrl"
+                          src="../../../../assets/images/order/Items.svg" class="item-image" width="70" height="70">
+                      </div>
+
+                      <div class="cart-btn">
+                        <div *ngIf=" getItemQty(item)===0" (click)="increment(item)"
+                          class="cusr-pointer add-qty pointer-cursor text-center">Add&nbsp;+&nbsp;
+                        </div>
+                        <div *ngIf="getItemQty(item) >= 1" class=" d-flex justify-content-between">
+                          <div (click)="decrement(item)"
+                            class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding">-
+                          </div>
+                          <div class="item-pad bodr-btm-up item-qty">
+                            {{getItemQty(item)}}
+                          </div>
+                          <div class="cusr-pointer add-qty pointer-cursor item-padding"
+                            [class.pointer-none]="getItemQty(item) >= item.maxqty"
+                            [class.shaded]="getItemQty(item) >= item.maxqty" (click)="increment(item)">+
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-5 col-sm-12 pr-0 no-padding-small">
+        <div class="card checkout-card p-0">
+          <div class="card-body cart-heading" *ngIf="action!='timeChange'">
+            <span><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;Cart</span>
+          </div>
+          <hr class="my-0 py-0">
+          <div class="card-body cart-heading" *ngIf="action=='timeChange'">
+            <div *ngIf="choose_type === 'store'">
+              <span><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;Store Pickup Details</span>
+            </div>
+            <div *ngIf="choose_type === 'home'">
+              <span><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;Home Delivery Details</span>
+            </div>
+          </div>
+          <div *ngIf="action!='timeChange'">
+            <div *ngFor="let item of catalogItems; let i=index">
+              <div class=" card item-card mt-2" *ngIf="getItemQty(item) > 0">
+                <div class="d-flex justify-content-between">
+                  <div>
+                    <span class="font-weight-bold item-name"
+                      *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
+                    <span class="text-light item-desc"
+                      *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
+                  </div>
                   <div class="cart">
-                    <div>
-                      <img
-                        *ngIf="item.item && item.item.itemImages && item.item.itemImages[0] && item.item.itemImages[0].thumbUrl"
-                        src="{{item.item.itemImages[0].thumbUrl}}" class="item-image" width="70" height="70">
-                      <img
-                        *ngIf="!item.item || !item.item.itemImages || !item.item.itemImages[0] || !item.item.itemImages[0].thumbUrl"
-                        src="../../../../assets/images/order/Items.svg" class="item-image" width="70" height="70">
-                    </div>
+                    <span class="text-red item-price"
+                      *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
+                        class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
+                    <span class="text-red item-price"
+                      *ngIf="item.item && item.item.price && item.item.showPromotionalPrice">&nbsp;<i
+                        class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
 
-                    <div class="cart-btn">
+                    <div class="cart-btn pr-2">
                       <div *ngIf=" getItemQty(item)===0" (click)="increment(item)"
-                        class="cusr-pointer add-qty pointer-cursor text-center">Add&nbsp;+&nbsp;
+                        class="cusr-pointer add-qty pointer-cursor text-center">
+                        Add&nbsp;+&nbsp;
                       </div>
                       <div *ngIf="getItemQty(item) >= 1" class=" d-flex justify-content-between">
                         <div (click)="decrement(item)"
@@ -96,9 +155,9 @@
                         <div class="item-pad bodr-btm-up item-qty">
                           {{getItemQty(item)}}
                         </div>
-                        <div class="cusr-pointer add-qty pointer-cursor item-padding"
+                        <div (click)="increment(item)" class="cusr-pointer add-qty pointer-cursor item-padding"
                           [class.pointer-none]="getItemQty(item) >= item.maxqty"
-                          [class.shaded]="getItemQty(item) >= item.maxqty" (click)="increment(item)">+
+                          [class.shaded]="getItemQty(item) >= item.maxqty">+
                         </div>
                       </div>
                     </div>
@@ -107,298 +166,140 @@
               </div>
             </div>
           </div>
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 bdr-bt-grey"
+            *ngIf="orderList && orderList.length>0 && isPhysicalItemsPresent() && action!='timeChange'">
+            <div class="clearfix"></div>
+          </div>
+          <div class="mx-auto text-center my-3" *ngIf="orderList && orderList.length==0">
+            <img src="../../../../assets/images/order/empty_cart.png" class="item-image" width="200"><br><br>
+            <span class="mt-5 text-grey font-weight-bold">Your Cart is Empty</span><br>
+            <span class="text-blue small-font">Looks like you haven't added anything to your cart yet.<br>Go ahead &
+              explore categories.</span><br>
+          </div>
+          <div class="m-auto text-center">
+            <a class="btn btn-lg btn-primary checkout-btn" (click)="confirmOrder()"
+              [class.disabled]="orderList && orderList.length==0 ||!isfutureAvailableTime">Checkout</a>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="col-md-5 col-sm-12 pr-0 no-padding-small">
-      <div class="card checkout-card p-0">
-        <div class="card-body cart-heading" *ngIf="action!='timeChange'">
-          <span><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;Cart</span>
-        </div>
-        <hr class="my-0 py-0">
-        <div class="card-body cart-heading" *ngIf="action=='timeChange'">
-          <div *ngIf="choose_type === 'store'">
-            <span><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;Store Pickup Details</span>
-          </div>
-          <div *ngIf="choose_type === 'home'">
-            <span><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;&nbsp;Home Delivery Details</span>
-          </div>
-        </div>
-        <div *ngIf="action!='timeChange'">
-          <div *ngFor="let item of catalogItems; let i=index">
-            <div class=" card item-card mt-2" *ngIf="getItemQty(item) > 0">
-              <div class="d-flex justify-content-between">
-                <div>
-                  <span class="font-weight-bold item-name"
-                    *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
-                  <span class="text-light item-desc"
-                    *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
-                </div>
-                <div class="cart">
-                  <span class="text-red item-price"
-                    *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
-                      class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
-                  <span class="text-red item-price"
-                    *ngIf="item.item && item.item.price && item.item.showPromotionalPrice">&nbsp;<i
-                      class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
-
-                  <div class="cart-btn">
-                    <div *ngIf=" getItemQty(item)===0" (click)="increment(item)"
-                      class="cusr-pointer add-qty pointer-cursor text-center">
-                      Add&nbsp;+&nbsp;
-                    </div>
-                    <div *ngIf="getItemQty(item) >= 1" class=" d-flex justify-content-between">
-                      <div (click)="decrement(item)"
-                        class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding">-
-                      </div>
-                      <div class="item-pad bodr-btm-up item-qty">
-                        {{getItemQty(item)}}
-                      </div>
-                      <div (click)="increment(item)" class="cusr-pointer add-qty pointer-cursor item-padding"
-                        [class.pointer-none]="getItemQty(item) >= item.maxqty"
-                        [class.shaded]="getItemQty(item) >= item.maxqty">+
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+    </div><br>
+    <div class="row">
+      <div class="col-md-7 no-padding">
+        <div class="card shadow-lg">
+          <div class="d-flex justify-content-between">
+            <div>
+              <span class="text-dark font-weight-bold">Need our help?</span><br>
+              <span class="text-light query-text">Call us in case of you face any issues in our service bookings</span>
             </div>
-          </div>
-        </div>
-        <!-- <hr class="my-0 py-0"> -->
-        <!-- <div class="delivery-details col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 mgn-up-20 bdr-bt-grey"
-          *ngIf="orderList && orderList.length>0 && isPhysicalItemsPresent()">
-          <div class="oder-sumary-txt" *ngIf="home_delivery && store_pickup">
-            Delivery Type
-          </div>
-          <div class="order-label my-1">
-            <div *ngIf="home_delivery && store_pickup">
-              <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)">
-                <mat-radio-button [value]="'store'" [checked]="storeChecked">
-                  Store pick up
-                </mat-radio-button> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <mat-radio-button [value]="'home'" [checked]="!storeChecked">
-                  Home delivery
-                </mat-radio-button>
-              </mat-radio-group>
-            </div>
-            <div *ngIf="store_pickup && !home_delivery">
-              store pickup
-            </div>
-            <div *ngIf="home_delivery && !store_pickup">
-              home delivery
-            </div>
-          </div>
-        </div> -->
-
-        <!-- <div class="panel-body no-padding" *ngIf="orderList && orderList.length>0">
-          <div class="col-md-12 col-xs-12 col-sm-12 no-padding">
-            <div class="card p0">
-              <div class="copy locd">
-                <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes" *ngIf="action=='timeChange'">
-                  <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk mgn-up-10 text-primary font-weight-bold">
-                      Choose Date</div>
-                    <div class="pull-left brd-round brd-light mgn-up-10">
-                      <div class="icon-minus pull-left" (click)="calculateDate(-1)">
-                      </div>
-                      <div class="pull-left chkindt">{{sel_checkindate | date: dateFormat}}</div>
-                      <div class="icon-add pull-left" (click)="calculateDate(1)"></div>
-                    </div>
-                    <div class="pickerouter caldiv pull-left mgn-up-10">
-                      <mat-datepicker-toggle matSuffix [for]="picker">
-                      </mat-datepicker-toggle>
-                      <mat-datepicker #picker [dateClass]="dateClass.bind(this)"></mat-datepicker>
-                      <input class="" style="visibility: hidden; width:1px" type="text" [matDatepicker]="picker"
-                        [min]="minDate" [max]="maxDate" [value]="ddate" (dateChange)="handleFutureDateChange($event)">
-                    </div>
-                  </div>
-                  <div class="col-md-12 col-xs-12 col-sm-12 mgn-lt-10">
-                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk my-1 delivery_timings text-primary"
-                      *ngIf="choose_type === 'home'">Delivery
-                      Timings </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12 no-padding lnk text-primary my-1"
-                      *ngIf="choose_type === 'store'"> Store
-                      Pickup
-                      Timings </div>
-                    <div class="col-md-12 col-xs-12 col-sm-12 slotdiv no-padding my-0">
-                      <mat-chip-list class="" *ngIf="isfutureAvailableTime">
-                        <mat-chip *ngFor="let queue of nextAvailableTimeQueue, let i= index"
-                          (click)="handleQueueSelection(queue, i)">
-                          {{queue['sTime'] + ' - ' +
-                          queue['eTime']}}
-                        </mat-chip>
-                      </mat-chip-list>
-                      <div *ngIf="!isfutureAvailableTime">
-                        <p>No timings are available</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20 mgn-lt-5">
-                    <button (click)="goBackCart(futureAvailableTime ,queue)" [disabled]="!isfutureAvailableTime"
-                      class="btn bt3 btn-default coupon-apply-btn mr-2" type="button">Ok</button>
-
-
-      </div>
-    </div>
-    <div class="lbl col-md-12 col-lg-12 col-xs-12 col-sm-12 no-padding notes" *ngIf="action=='coupons'">
-      <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-20">Apply promocode</div>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-up-20">
-        <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" *ngIf="showCouponWB">
-          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 form-level-settings applybill no-padding">
-            <i class="icon-bell"></i>{{applied_inbilltime}}
-          </div>
-          <div class="col-md-4 col-lg-3 col-sm-6 col-xs-8 no-padding">
-            <div class="input-group">
-              <input [ngClass]="{'invalid':!couponvalid}" (keydown)="clearCouponErrors()"
-                placeholder="Enter coupon code" type="text" class="form-control" [(ngModel)]="selected_coupon">
-              <span class="input-group-btn">
-                <button class="btn bt3 btn-default coupon-apply-btn" (click)="applyCoupons(selected_coupon)"
-                  type="button">Add</button>
-              </span>
-            </div>
-          </div>
-          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding" style="color: red;"
-            *ngIf="api_cp_error !== null">
-            {{api_cp_error}}</div>
-          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding mgn-up-10 mgn-bt-20">
-          </div>
-        </div>
-        <div class="col-md-12 col-sm-12 col-lg-12 col-12 mgn-up-20 mgn-bt-30 border-tp pad-up-10"
-          *ngIf="couponsList && couponsList.length>0">
-          <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding"
-            *ngFor="let coupon of couponsList let i=index">
-            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 no-padding coupon-add-msg">
-              <div class="col-md-5 col-sm-7 col-xs-7 col-lg-4 no-padding">
-                {{coupon.couponCode}} </div>
-              <div class="col-md-7 col-sm-5 col-xs-5 col-lg-8 delteTC">
-                <span><a *ngIf="coupon.instructions" (click)="toggleterms(i)"
-                    class="pointer-cursor lnk read-more-checkin">Read
-                    T & C </a></span>
-                <span><a class="pointer-cursor lnk"><i class="pointer-cursor icon-delete mgn-lt-10 lnk"
-                      (click)="removeJCoupon(i)" [matTooltipClass]="tooltipcls"
-                      [matTooltip]="'Remove Coupon'"></i></a></span>
-              </div>
-            </div>
-            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12 mgn-up-10 pre-instr no-padding" *ngIf="coupon.showme">
-              {{coupon.instructions}}
+            <div>
+              <a class="btn btn-primary help-btn">Call 5554545652</a>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 coupon-outer" *ngIf="coupon_status">
-        <div class="form-group">
-          <span *ngIf="coupon_status=='success'" class="coupon_success">Coupon Code(s)
-            applied
-            successfully</span>
-          <span *ngIf="coupon_status=='error'" class="coupon-error">Coupon Code(s) not
-            valid</span>
-        </div>
+    </div><br><br><br>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- Mobile View -->
+
+
+
+
+
+
+<div *ngIf="mobileView && !apiloading">
+  <div class="container card">
+    <div class="d-flex">
+      <div class="pointer-cursor pl-3">
+        <i class="fa fa-angle-left left-angle" (click)="goBack()"></i>
+      </div>
+      <div class="m-auto">
+        <h4 *ngIf=" business && business.bname" class="business-name-mobile">{{business.bname}}</h4>
+        <span *ngIf="business && business.blocation" class="business-location-mobile"><i
+            class="fa fa-map-marker"></i>&nbsp;&nbsp;{{business.blocation}}</span>
       </div>
     </div>
   </div>
-</div>
-</div>
-</div> -->
 
+  <div class="clearfix"></div>
 
-        <!-- <hr> -->
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 bdr-bt-grey"
-          *ngIf="orderList && orderList.length>0 && isPhysicalItemsPresent() && action!='timeChange'">
-          <!-- <div class="oder-sumary-txt">
-            Date/Time
-            <div class="fl-right text-primary" *ngIf="action!='timeChange'"><a (click)=" changeTime()"
-                class="text-primary"><u>Change</u></a></div>
-          </div>
-          <div *ngIf="isfutureAvailableTime" class="order-label mgn-bt-10">
-            <span *ngIf="!isFuturedate">Today, </span>
-            <span *ngIf="!isFuturedate">
-              {{nextAvailableTime}}
-            </span>
-            <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
-            </span>
-            <span *ngIf="isFuturedate">
-              {{nextAvailableTime}}
-            </span>
-          </div>
-          <div *ngIf="!isfutureAvailableTime" class="red">
-            <span>No timings are available</span>
-          </div>
-        </div> -->
-          <!-- <div class="clearfix"></div>
-        <hr class="py-1 my-0"> -->
-          <!-- <div class="m-auto text-primary font-weight-bold"
-          *ngIf="orderList && orderList.length>0 && action!='timeChange'">
-          <div class="clearfix"></div>
-          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 itm_sumry_outline"
-            *ngIf="catalog_loading && catalog_details && catalog_details.showPrice">
-            <div class="oder-sumary-txt">Order Summary</div>
-            <div class="d-flex justify-content-between price-text">
-              <div class="flex1">Item Total</div>
-              <div class="price rupee-font">&#8377;{{getTotalItemPrice()}}</div>
-            </div>
-            <ng-container *ngIf="(home_delivery && !store_pickup) || choose_type=='home'">
-              <div class=" d-flex justify-content-between price-text">
-                <div class="flex1">Delivery Charge</div>
-                <div class="price rupee-font">&#8377;{{getDeliveryCharge()}}</div>
+  <div>
+    <div *ngIf="catalogItems">
+      <div *ngFor="let item of catalogItems| filter:seacrchFilterOrder;let i=index">
+        <div class="card item-card shadow-lg mt-3">
+          <div class="d-flex justify-content-between">
+            <div class="d-flex">
+              <div class="cart">
+                <div>
+                  <img
+                    *ngIf="item.item && item.item.itemImages && item.item.itemImages[0] && item.item.itemImages[0].thumbUrl"
+                    src="{{item.item.itemImages[0].thumbUrl}}" class="item-image-mobile" width="100" height="100">
+                  <img
+                    *ngIf="!item.item || !item.item.itemImages || !item.item.itemImages[0] || !item.item.itemImages[0].thumbUrl"
+                    src="../../../../assets/images/order/Items.svg" class="item-image-mobile" width="100" height="100">
+                </div>
               </div>
-            </ng-container>
-          </div>-->
-          <div class="clearfix"></div>
-          <ng-container>
-            <!-- <hr class="py-1 my-0">
-            <div class="font-weight-bold d-flex justify-content-between">
-              <span>Total Price </span>
-              <span><i class="fa fa-inr"></i>{{getSubTotal()}}</span>
+
+              <div class="ml-3">
+                <span class="font-weight-bold item-name-mobile"
+                  *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
+                <span class="text-red item-name-mobile"
+                  *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
+                    class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
+                <span class="text-red item-price-mobile"
+                  *ngIf="item.item && item.item.price && item.item.showPromotionalPrice"><s><i
+                      class="fa fa-inr"></i>&nbsp;{{item.item.price}}</s>&nbsp;<i
+                    class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
+                <span class="text-light item-desc-mobile"
+                  *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
+                <div *ngIf="getItemQty(item)>0">
+                  <span class="add_nte" (click)="addNotes(item,i)">
+                    {{item.consumerNote ? 'Edit Note':'Add Note'}}
+                  </span> &nbsp;
+                  <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
+                    <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
+                  </span>
+                </div>
+              </div>
             </div>
-            <div class="clearfix"></div>
-            <hr class="py-1 my-0"> -->
-          </ng-container>
-        </div>
-
-        <div class="m-auto text-center" *ngIf="orderList && orderList.length>0 && action!='timeChange'">
-          <a class="btn btn-lg btn-primary checkout-btn" (click)="confirmOrder()"
-            [disabled]="disabledConfirmbtn==true ||!isfutureAvailableTime">Checkout</a>
-        </div>
-        <div class="mx-auto text-center my-3" *ngIf="orderList && orderList.length==0">
-          <img src="../../../../assets/images/order/empty_cart.gif" class="item-image" width="100"><br>
-          <span class="mt-3 text-primary font-weight-bold">Oops! Your Cart is Empty</span><br>
-          <span class="text-blue small-font">Looks like you haven't added<br>anything to your cart yet.</span><br>
-          <span class="text-primary">Add Items Now</span><br>
-          <i class="desktop-only fa fa-2x fa-long-arrow-left left-arrow" aria-hidden="true"></i>
-
+            <div class="d-flex">
+              <div class="cart-btn-mobile">
+                <div *ngIf=" getItemQty(item)===0" (click)="increment(item)"
+                  class="cusr-pointer add-qty-mobile pointer-cursor text-center">
+                  Add&nbsp;+&nbsp;
+                </div>
+                <div *ngIf="getItemQty(item) >= 1" class=" d-flex justify-content-between">
+                  <div (click)="decrement(item)"
+                    class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding">
+                    -
+                  </div>
+                  <div class="item-pad bodr-btm-up item-qty">
+                    {{getItemQty(item)}}
+                  </div>
+                  <div class="cusr-pointer item-qty pointer-cursor item-padding"
+                    [class.pointer-none]="getItemQty(item) >= item.maxqty"
+                    [class.shaded]="getItemQty(item) >= item.maxqty" (click)="increment(item)">+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div><br>
-  <!-- <div class="row">
-    <div class="col-md-7">
-      <div class="card shadow-lg">
-        <div class="d-flex justify-content-between">
-          <div>
-            <span class="text-primary font-weight-bold"><i class="fa fa-list"></i>&nbsp;&nbsp;Shopping list</span><br>
-            <span class="text-light">You can upload shopping list image</span>
-          </div>
-          <div>
-            <a class="btn btn-primary shopping-list-btn">Upload Shopping List</a>
-          </div>
-        </div>
-      </div>
+  <div>
+    <div class="m-auto text-center">
+      <a class="btn btn-primary checkout-btn-mobile" (click)="confirmOrder()"
+        [class.disabled]="!isfutureAvailableTime || (orderList && orderList.length==0)">Checkout</a>
     </div>
-  </div><br> -->
-  <div class="row">
-    <div class="col-md-7 no-padding">
-      <div class="card shadow-lg">
-        <div class="d-flex justify-content-between">
-          <div>
-            <span class="text-dark font-weight-bold">Need our help?</span><br>
-            <span class="text-light query-text">Call us in case of you face any issues in our service bookings</span>
-          </div>
-          <div>
-            <a class="btn btn-primary help-btn">Call 5554545652</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div><br><br><br>
+  </div>
 </div>

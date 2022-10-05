@@ -31,6 +31,7 @@ import { RazorpayService } from "../../../../shared/services/razorpay.service";
 import { PaytmService } from "../../../../shared/services/paytm.service";
 import { ConsumerEmailModule } from "../../../../ynw_consumer/shared/component/consumer-email/consumer-email.module";
 import { MatIconModule } from '@angular/material/icon';
+import { SkeletonLoadingModule } from '../../skeleton-loading/skeleton-loading.module';
 const routes: Routes = [
   { path: '', component: OrderConsumerCheckoutComponent }
 ]
@@ -60,6 +61,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     QuestionnaireModule,
     PaymentModesModule, RefundpolicyModule,
+    SkeletonLoadingModule,
     ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
     [RouterModule.forChild(routes)]
   ],

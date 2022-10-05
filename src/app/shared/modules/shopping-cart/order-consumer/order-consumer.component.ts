@@ -13,7 +13,7 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { Messages } from '../../../constants/project-messages';
 import { MatDialog } from '@angular/material/dialog';
 import { AddItemNotesComponent } from '../add-item-notes/add-item-notes.component';
-
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-order-consumer',
@@ -55,6 +55,8 @@ export class OrderConsumerComponent implements OnInit {
   homeAvailableDates: any = [];
   store_availables: any;
   home_availables: any;
+  mobileView: any;
+  desktopView: any;
   account_id: any;
   provider_id: any;
   from: string;
@@ -95,6 +97,7 @@ export class OrderConsumerComponent implements OnInit {
   catalogImage: any;
   catalogimage_list_popup: any[];
   itemCount: any;
+  deviceInfo: any;
   constructor(
     private location: Location,
     private lStorageService: LocalStorageService,
@@ -104,6 +107,7 @@ export class OrderConsumerComponent implements OnInit {
     private snackbarService: SnackbarService,
     public router: Router,
     private dialog: MatDialog,
+    private deviceService: DeviceDetectorService
 
 
 
@@ -147,8 +151,14 @@ export class OrderConsumerComponent implements OnInit {
     }
     this.fetchCatalog();
     this.getCatalogs(this.provider_account_id);
-  }
 
+
+
+
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
+    this.desktopView = this.deviceService.isDesktop();
+  }
 
   changeTime() {
     this.action = 'timeChange';

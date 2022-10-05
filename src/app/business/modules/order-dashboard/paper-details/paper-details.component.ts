@@ -55,9 +55,16 @@ export class PaperDetailsComponent implements OnInit {
     actiondialogRef.afterClosed().subscribe(data => {
       this.resetList();
       this.getLabel();
+      this.reloadComponent();
     });
   }
 
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+  }
   resetList() {
     this.selectedOrders = [];
     this.orderSelected = [];

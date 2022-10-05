@@ -30,6 +30,8 @@ import { JcCouponNoteComponent } from '../../jc-coupon-note/jc-coupon-note.compo
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
 import { ConsumerEmailComponent } from '../../../../ynw_consumer/shared/component/consumer-email/consumer-email.component';
 import { MatStepper } from '@angular/material/stepper';
+import { DeviceDetectorService } from 'ngx-device-detector';
+import { AddItemNotesComponent } from '../add-item-notes/add-item-notes.component';
 
 @Component({
   selector: 'app-order-consumer-checkout',
@@ -50,13 +52,18 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   disabled = false;
   userEmail = '';
   orderNote: any;
-  deliveryoptions = true;
+  deliveryoptions = false;
   orderlistNote: any;
+  addItemNotesdialogRef: any;
   phonenumber: any;
   customer_countrycode: any;
   notfutureAvailableTime = false;
   chosenDateDetails: any;
   businessDetails: any;
+  order_count: any;
+  desktopView: any;
+  mobileView: any;
+  deviceInfo: any;
   isFuturedate = false;
   sel_checkindate;
   showfuturediv;
@@ -242,6 +249,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     private cdRef: ChangeDetectorRef,
     private paytmService: PaytmService,
     public provider_services: ProviderServices,
+    private deviceService: DeviceDetectorService
   ) {
 
 
@@ -340,9 +348,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       console.log("this.orderList", this.orderList)
       this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
       this.isPhysicalItemsPresent();
-
-
-
     }
 
     this.getConsumerQuestionnaire();
@@ -455,6 +460,11 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     }
 
     // this.catlogArry();
+
+
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
+    this.desktopView = this.deviceService.isDesktop();
 
 
   }
@@ -610,6 +620,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         data => {
           console.log('cartData' + data);
           this.cartDetails = data;
+          console.log("this.cartDetails", this.cartDetails)
           if (this.cartDetails.eligibleJcashAmt) {
             this.checkJcash = true
             this.jcashamount = this.cartDetails.eligibleJcashAmt.jCashAmt;
@@ -643,6 +654,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         data => {
           console.log(data);
           this.cartDetails = data;
+          console.log("this.cartDetails", this.cartDetails)
           this.couponlist = [];
           this.pcouponlist = [];
           if (this.cartDetails.jCouponList) {
@@ -736,6 +748,161 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       this.couponsList[i].showme = true;
     }
   }
+
+  decrement(item) {
+    this.removeFromCart(item);
+  }
+
+  removeFromCart(itemObj) {
+    const item = itemObj.item;
+    for (const i in this.orderList) {
+      if (this.orderList[i].item.itemId === item.itemId) {
+        this.orderList.splice(i, 1);
+        // this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        break;
+      }
+    }
+
+    this.getTotalItemAndPrice();
+    this.getItemQty(itemObj);
+  }
+
+
+  increment(item) {
+    this.addToCart(item);
+  }
+
+  // addToCart(Item) {
+  //   this.orderList.push(Item);
+  //   this.getTotalItemAndPrice();
+  //   this.getItemQty(Item);
+  // }
+
+
+
+  addToCart(itemObj) {
+    const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
+    console.log("spId", typeof (spId), typeof (this.account_id));
+    if (spId === null) {
+      this.orderList = [];
+      this.lStorageService.setitemonLocalStorage('order_spId', this.account_id);
+      this.orderList.push(itemObj);
+      this.lStorageService.setitemonLocalStorage('order', this.orderList);
+      this.getTotalItemAndPrice();
+      this.getItemQty(itemObj);
+    } else {
+      if (this.orderList !== null && this.orderList.length !== 0) {
+        if (spId != this.account_id) {
+          if (this.getConfirmation()) {
+            this.lStorageService.removeitemfromLocalStorage('order');
+          }
+        } else {
+          this.orderList.push(itemObj);
+          this.lStorageService.setitemonLocalStorage('order', this.orderList);
+          this.getTotalItemAndPrice();
+          console.log("Testing order catalog", this.lStorageService.getitemfromLocalStorage('order'))
+          this.getItemQty(itemObj);
+        }
+      } else {
+        this.orderList.push(itemObj);
+        this.lStorageService.setitemonLocalStorage('order', this.orderList);
+        this.getTotalItemAndPrice();
+        this.getItemQty(itemObj);
+      }
+    }
+
+  }
+
+  getConfirmation() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': '  All added items in your cart for different Provider will be removed ! '
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        can_remove = true;
+        this.orderList = [];
+        this.lStorageService.removeitemfromLocalStorage('order_sp');
+        this.lStorageService.removeitemfromLocalStorage('chosenDateTime');
+        this.lStorageService.removeitemfromLocalStorage('order_spId');
+        this.lStorageService.removeitemfromLocalStorage('order');
+        return true;
+      } else {
+        can_remove = false;
+
+      }
+    });
+    return can_remove;
+  }
+
+  getTotalItemAndPrice() {
+    this.price = 0;
+    this.order_count = 0;
+    for (const itemObj of this.orderList) {
+      let item_price = itemObj.item.price;
+      if (itemObj.item.showPromotionalPrice) {
+        item_price = itemObj.item.promotionalPrice;
+      }
+      this.price = this.price + item_price;
+      this.order_count = this.order_count + 1;
+    }
+
+    console.log("Price : ", this.price, this.orderList)
+    return this.price;
+  }
+
+
+  addNotes(item, index) {
+    this.addItemNotesdialogRef = this.dialog.open(AddItemNotesComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: item
+
+    });
+    this.addItemNotesdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.orderList.map((Item, i) => {
+          if (Item.itemId === item.itemId) {
+            Item['consumerNote'] = result;
+          }
+        });
+        this.orders.map((Item, i) => {
+          if (Item.itemId === item.itemId) {
+            Item['consumerNote'] = result;
+          }
+        });
+      }
+    });
+  }
+  deleteNotes(item, index) {
+    console.log(this.orderList);
+    this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Do you want to Delete this Note?',
+      }
+    });
+    this.canceldialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log(this.orderList);
+        this.orderList.map((Item, i) => {
+          if (Item.item.itemId === item.item.itemId) {
+            console.log(Item.consumerNote);
+            Item['consumerNote'] = Item.consumerNote.splice;
+          }
+        });
+      }
+    });
+  }
+
 
   applyCoupons(jCoupon) {
     this.api_cp_error = null;
