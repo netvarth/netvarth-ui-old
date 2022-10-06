@@ -63,7 +63,7 @@
                         type="email" class="inputstyling" formControlName="search_input"
                         (keypress)="findCustomer(searchForm.value, $event)" [matAutocomplete]="autoprov">
                         <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                            <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option)" [value]="option.email">
+                            <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option,searchForm.value)" [value]="option.email">
                               <div class="flexClass">
                                 <div>{{option.email}}</div>
                               </div>
@@ -77,10 +77,10 @@
                       type="text" class="inputstyling" formControlName="search_input"
                       (keypress)="findCustomer(searchForm.value, $event)" [matAutocomplete]="autoprov">
                       <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                          <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option)" [value]="option.firstName">
+                          <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option,searchForm.value)" [value]="option.firstName">
                             <div class="flexClass">
                               <div>{{option.firstName | capitalizeFirst}}</div>
-                            <div>{{option.lastName | capitalizeFirst}}</div>
+                              <div *ngIf="option.lastName !=='null'">{{option.lastName | capitalizeFirst}}</div>
                             </div>
                           </mat-option>
                         </mat-autocomplete>

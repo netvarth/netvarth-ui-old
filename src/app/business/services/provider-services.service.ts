@@ -2660,10 +2660,11 @@ export class ProviderServices {
       }
     })
   }
-  getSearchCustomer(account: any, name: any) {
-    // console.log('projectConstants.SAPATH',projectConstantsLocal.SAPATH)
-    const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/providerconsumer/search?name=' + name + '*';
-    // const url=projectConstantsLocal.SAPATH + 'searchdetails/' + account+ '/providerconsumer/search?name=a*s';
+  getSearchCustomer(account: any, tempName:any, name: any) {
+    // const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/providerconsumer/search?name=' + name + '*';
+        const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/providerconsumer/search?' + tempName + '=' + name + '*';
+
+
     return this.servicemeta.httpGet(url);
   }
 

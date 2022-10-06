@@ -23,12 +23,17 @@ import { ConfirmBoxModule } from "../../../shared/confirm-box/confirm-box.module
 import { AppointmentComponent } from "./appointment.component";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 const routes: Routes= [
     { path: '', component: AppointmentComponent }
 ]
 @NgModule({
     declarations: [AppointmentComponent],
     exports: [AppointmentComponent],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
+      ],
     imports: [
         CommonModule,
         FormsModule,

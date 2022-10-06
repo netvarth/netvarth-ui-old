@@ -494,7 +494,14 @@ export class ProviderCheckinComponent implements OnInit {
         this.showfuturediv = false;
         this.revealphonenumber = true;
         // this.filterOption();
-        this.bisinessProfile()
+        this.bisinessProfile();
+        // this.resetForm();
+        console.log('this.categoryvalue',this.categoryvalue)
+    }
+    resetForm(){
+        this.searchForm.patchValue({
+            search_input:'' 
+        })
     }
     bisinessProfile(){
         this.searchForm.controls.search_input.setValue('');
@@ -509,27 +516,48 @@ export class ProviderCheckinComponent implements OnInit {
     }
     searchCustomerLucene(name){
         console.log(name)
-        console.log('this.account_id',this.tempAcId)
-        this.providerService.getSearchCustomer(this.tempAcId,name.search_input).subscribe((res:any)=>{
+        console.log('this.account_id',this.tempAcId);
+        console.log('categoryvalue',this.categoryvalue);
+        let tempCatValue:any;
+        if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
+            tempCatValue='name';
+        }
+        else if(this.categoryvalue && this.categoryvalue==='Search with Email ID'){
+            tempCatValue='emailId';
+        }
+        this.providerService.getSearchCustomer(this.tempAcId,tempCatValue,name.search_input).subscribe((res:any)=>{
             console.log('res',res);
             this.options=res;
             this.filteredOptions=res;
             console.log(this.filteredOptions);
         })
     }
-    handleSearchSelect(data){
+    handleSearchSelect(data,form_data){
         console.log(data);
-        this.totalName= data['firstName'] ;
+        if(data && data['firstName'] && data['lastName'] && data['lastName'] !== 'null'){
+            this.totalName= (data['firstName'][0].toUpperCase() + data['firstName'].slice(1)) + ' ' + (data['lastName'][0].toUpperCase() + data['lastName'].slice(1)) ;
+            if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
+                if(this.totalName){
+                    this.searchForm.controls.search_input.setValue(this.totalName);
+                }
+            }
+        }
+        else if(data && data['firstName'] && data['lastName'] && data['lastName'] === 'null'){
+            this.totalName= (data['firstName'][0].toUpperCase() + data['firstName'].slice(1));
+            if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
+                if(this.totalName){
+                    this.searchForm.controls.search_input.setValue(this.totalName);
+                }
+            }
+        }
+        console.log(form_data)
+        this.searchCustomer(form_data)
     }
     handleCategoryselect(data){
         console.log(data);
         this.searchForm.patchValue({
             search_input:'' 
         })
-        // this.searchForm.controls.search_input.setValue('');
-        // if(data==='Search with Email ID'){
-
-        // }
     }
     filterOption(){
         this.filteredOptions = this.searchForm.controls.search_input.valueChanges.pipe(startWith(''),map((value:any) => this._filter(value || '')),
