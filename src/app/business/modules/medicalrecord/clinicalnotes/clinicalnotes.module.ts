@@ -8,6 +8,10 @@ import { ClinicalnotesComponent } from "./clinicalnotes.component";
 import { ReactiveFormsModule } from "@angular/forms";
 import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner/loading-spinner.module";
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatIconModule } from "@angular/material/icon";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 
 @NgModule({
@@ -19,7 +23,11 @@ import {MatTooltipModule} from '@angular/material/tooltip';
         CapitalizeFirstPipeModule,
         LoadingSpinnerModule,
         ReactiveFormsModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatIconModule,
+        MatFormFieldModule
     ],
     exports: [ClinicalnotesComponent],
     declarations: [ClinicalnotesComponent]

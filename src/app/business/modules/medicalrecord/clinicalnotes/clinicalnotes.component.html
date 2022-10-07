@@ -1,11 +1,12 @@
-<div class="mat-expansion-panel-content " *ngIf="isLoaded && showClinicalNotesDetails!=='true'" style="margin-top: 10px;">
+<div class="mat-expansion-panel-content " *ngIf="isLoaded && showClinicalNotesDetails!=='true'"
+  style="margin-top: 10px;">
   <div class="w-dta">
     <div class="card">
       <div>
         <span class="table-heading"><b>Clinical Notes</b></span>
         <!-- <span *ngIf="tempClinicalNOtes"> <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/delete.png"  (click)="goback('medical')" /></span> -->
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label>Symptoms</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
@@ -13,24 +14,76 @@
           (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
             placeholder="Enter Symptoms instructions" maxlength="500"></textarea>
         </div>
+      </div> -->
+      <div class="form-group mgn-up-10" >
+        <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
+          <label>Symptoms</label>
+          <mat-chip-list #chipSymptomsList aria-label="Symptoms selection" class="mat-wrap">
+            <mat-chip
+              *ngFor="let symptom of clinicalNotesTypeSymptoms"
+              (removed)="removeSymptoms(symptom)">
+              {{symptom}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input class="form-control" placeholder="Enter symptoms instructions"
+              #symptomsInput
+              [formControl]="symptomsCtrl"
+              [matAutocomplete]="auto1"
+              [matChipInputFor]="chipSymptomsList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="addSymptoms($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let symptom of filteredSymptoms | async" [value]="symptom">
+              {{symptom}}
+            </mat-option>
+          </mat-autocomplete>
+        <!-- </mat-form-field> -->
       </div>
-      <div class="form-group">
+      <!-- <div class="form-group">
         <label>Observations</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
-          <textarea #clinicalNotesTypeObservationsObservations  [(ngModel)]="clinicalNotesTypeObservations" 
-          
-          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+          <textarea #clinicalNotesTypeObservationsObservations [(ngModel)]="clinicalNotesTypeObservations"
+            (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
             placeholder="Enter Observations instructions" maxlength="500"></textarea>
         </div>
+      </div> -->
+      <div class="form-group mgn-up-10" >
+        <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
+          <label>Observations</label>
+          <mat-chip-list #chipObservationsList aria-label="Observations selection" class="mat-wrap">
+            <mat-chip
+              *ngFor="let observation of clinicalNotesTypeObservations"
+              (removed)="removeObservations(observation)">
+              {{observation}}
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+            <input class="form-control" placeholder="Enter observations instructions"
+              #observationsInput
+              [formControl]="observationsCtrl"
+              [matAutocomplete]="auto2"
+              [matChipInputFor]="chipObservationsList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodesO"
+              (matChipInputTokenEnd)="addObservations($event)">
+          </mat-chip-list>
+          <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedObservation($event)">
+            <mat-option *ngFor="let observation of filteredObservations | async" [value]="observation">
+              {{observation}}
+            </mat-option>
+          </mat-autocomplete>
+        <!-- </mat-form-field> -->
       </div>
       <div class="form-group">
         <label>Diagnosis</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
-          <textarea #clinicalNotesTypeDiagnosisDiagnosis  [(ngModel)]="clinicalNotesTypeDiagnosis" 
-          
-          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+          <textarea #clinicalNotesTypeDiagnosisDiagnosis [(ngModel)]="clinicalNotesTypeDiagnosis"
+            (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
             placeholder="Enter Diagnosis instructions" maxlength="500"></textarea>
         </div>
       </div>
@@ -38,19 +91,16 @@
         <label>Notes</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
-          <textarea #clinicalNotesNotesNotes  [(ngModel)]="clinicalNotesNotes" 
-          
-          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
-            placeholder="Enter Notes instructions" maxlength="500"></textarea>
+          <textarea #clinicalNotesNotesNotes [(ngModel)]="clinicalNotesNotes" (keyup)="autoGrowTextZone($event)"
+            type="text" class="form-control" placeholder="Enter Notes instructions" maxlength="500"></textarea>
         </div>
       </div>
       <div class="form-group">
         <label>Allergies</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
-          <textarea #clinicalNotesAllergiesAllergies  [(ngModel)]="clinicalNotesAllergies" 
-         
-          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+          <textarea #clinicalNotesAllergiesAllergies [(ngModel)]="clinicalNotesAllergies"
+            (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
             placeholder="Enter Allergies instructions" maxlength="500"></textarea>
         </div>
       </div>
@@ -58,9 +108,8 @@
         <label>Complaints</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
-          <textarea #clinicalNotesComplaintsComplaints  [(ngModel)]="clinicalNotesComplaints" 
-          
-          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+          <textarea #clinicalNotesComplaintsComplaints [(ngModel)]="clinicalNotesComplaints"
+            (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
             placeholder="Enter Complaints instructions" maxlength="500"></textarea>
         </div>
       </div>
@@ -68,19 +117,18 @@
         <label>Vaccination Notes</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
-          <textarea #clinicalNotesVaccinationNotesVaccinationNotes  [(ngModel)]="clinicalNotesVaccinationNotes" 
-           
-          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+          <textarea #clinicalNotesVaccinationNotesVaccinationNotes [(ngModel)]="clinicalNotesVaccinationNotes"
+            (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
             placeholder="Enter Vaccination Notes instructions" maxlength="500"></textarea>
         </div>
       </div>
       <div>
         <!-- <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback('medical')">Cancel</button> -->
-        <button  type="button"class="btn btn-primary font-weight-bold confirmBtn btnWidth"  
-          (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
-          ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)"[disabled]="sign">
+        <button type="button" class="btn btn-primary font-weight-bold confirmBtn btnWidth" (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
+          ,clinicalNotesAllergies,clinicalNotesComplaints,clinicalNotesVaccinationNotes)" [disabled]="sign">
           <span *ngIf="!api_loading">{{btnName}}</span>
-          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading"></app-common-innerloading-spinner>
+          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading">
+          </app-common-innerloading-spinner>
         </button>
       </div>
     </div>
@@ -88,22 +136,26 @@
 </div>
 
 
-<div  *ngIf="isLoaded && showClinicalNotesDetails==='true'" >
-  <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding shadow mgn-bt-10"*ngIf="clinicalNotes.length>0">
+<div *ngIf="isLoaded && showClinicalNotesDetails==='true'">
+  <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding shadow mgn-bt-10" *ngIf="clinicalNotes.length>0">
     <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate">
       <div class="flexClass">
         <div class="table-heading">Clinical Notes</div>
-      <div (click)="updateClinicalNotes(clinicalNotes)" 
-      #tooltip="matTooltip" matTooltip="Edit" [matTooltipPosition]="'below'"> 
-      <img  style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" /></div>
-      </div>
-      <div *ngFor="let item of clinicalNotes" >
-        <div *ngIf="item && item.clinicalNotes" [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}" class="shadow clinicalNotesList" >
-          <div class="notelabel" [ngStyle]="{'color':getColorType(item)}"><div *ngIf="item && item.type && item.clinicalNotes">{{item.type}}</div>
-          <div class="noteDes" *ngIf="item && item.clinicalNotes">{{item.clinicalNotes}}</div>
+        <div (click)="updateClinicalNotes(clinicalNotes)" #tooltip="matTooltip" matTooltip="Edit"
+          [matTooltipPosition]="'below'">
+          <img style="height:20px;width:20px" src="/assets/images/medicalReportIcon/edit.png" />
         </div>
       </div>
+      <div *ngFor="let item of clinicalNotes">
+        <div *ngIf="item && item.clinicalNotes"
+          [ngStyle]="{'background': getColor(item),'border-left':getBorderColor(item)}"
+          class="shadow clinicalNotesList">
+          <div class="notelabel" [ngStyle]="{'color':getColorType(item)}">
+            <div *ngIf="item && item.type && item.clinicalNotes">{{item.type}}</div>
+            <div class="noteDes" *ngIf="item && item.clinicalNotes">{{item.clinicalNotes}}</div>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
-</div>
 </div>

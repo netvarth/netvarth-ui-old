@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +10,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { SubSink } from 'subsink';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { map, startWith } from 'rxjs/operators';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 
 
@@ -26,6 +32,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   @Input() details;
   @Input() type;
   @Input() b_id;
+  @Input() suggestions: any = [];
   // @Input() mRListUsingId;
   mrId = 0;
   clinicalNotes: any[];
@@ -45,8 +52,8 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   isLoaded = false;
   clinical_constant = projectConstantsLocal.CLINICAL_NOTES;
   clinicalNotesValue:any;
-  clinicalNotesTypeSymptoms:any;
-  clinicalNotesTypeObservations:any;
+  // clinicalNotesTypeSymptoms:any;
+  // clinicalNotesTypeObservations:any;
   clinicalNotesTypeDiagnosis:any;
   clinicalNotesNotes:any;
   clinicalNotesAllergies:any;
@@ -66,6 +73,76 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   @Input() tempClinicalNOtes;
   sign = true;
   btnName:string='Save';
+  filteredOptions: Observable<string[]>;
+  myControl = new FormControl('');
+
+
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  separatorKeysCodesO: number[] = [ENTER, COMMA];
+  symptomsCtrl = new FormControl('');
+  observationsCtrl = new FormControl('');
+  filteredSymptoms:  Observable<string[]>;
+  filteredObservations:  Observable<string[]>;
+  clinicalNotesTypeSymptoms: string[] = [];
+  clinicalNotesTypeObservations: string[] = [];
+  @ViewChild('symptomsInput') symptomsInput: ElementRef<HTMLInputElement>;
+  @ViewChild('observationsInput') observationsInput: ElementRef<HTMLInputElement>;
+
+  addSymptoms(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.clinicalNotesTypeSymptoms.push(value);
+      this.sign =false;
+      console.log(this.clinicalNotesTypeSymptoms);
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+    this.symptomsCtrl.setValue(null);
+  }
+  addObservations(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.clinicalNotesTypeObservations.push(value);
+      console.log(this.clinicalNotesTypeObservations);
+      this.sign =false;
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+    this.observationsCtrl.setValue(null);
+  }
+
+  removeSymptoms(symptom: string): void {
+    const index = this.clinicalNotesTypeSymptoms.indexOf(symptom);
+    if (index >= 0) {
+      this.clinicalNotesTypeSymptoms.splice(index, 1);
+    }
+  }
+  removeObservations(observation: string): void {
+    const index = this.clinicalNotesTypeObservations.indexOf(observation);
+    if (index >= 0) {
+      this.clinicalNotesTypeObservations.splice(index, 1);
+    }
+  }
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.clinicalNotesTypeSymptoms.push(event.option.viewValue);
+    this.symptomsInput.nativeElement.value = '';
+    this.symptomsCtrl.setValue(null);
+    this.sign =false;
+  }
+  selectedObservation(event: MatAutocompleteSelectedEvent): void {
+    this.clinicalNotesTypeObservations.push(event.option.viewValue);
+    this.observationsInput.nativeElement.value = '';
+    this.observationsCtrl.setValue(null);
+    this.sign =false;
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.suggestions.filter(symptom => symptom.toLowerCase().includes(filterValue));
+  }
+
   constructor(
 
     public sharedfunctionObj: SharedFunctions,
@@ -76,13 +153,25 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private location: Location,
-    private medicalrecordService: MedicalrecordService,
+    private medicalrecordService: MedicalrecordService
   ) {
-
-
+    if (!this.showClinicalNotesDetails) {
+      this.filteredSymptoms = this.symptomsCtrl.valueChanges.pipe(
+        startWith(null),
+        map((symptom: string | null) => (symptom ? this._filter(symptom) : this.suggestions.slice())),
+      );
+      this.filteredObservations = this.observationsCtrl.valueChanges.pipe(
+        startWith(null),
+        map((observation: string | null) => (observation ? this._filter(observation) : this.suggestions.slice())),
+      );
+    }
+    
   }
-
   ngOnInit() {
+    console.log(this.suggestions);
+    // .asObservable();
+    this.filteredSymptoms = new BehaviorSubject(this.suggestions);    
+    this.filteredObservations = new BehaviorSubject(this.suggestions); 
     this.api_loading=false;
     console.log('showClinicalNotesDetails::',this.showClinicalNotesDetails);
     console.log('medicalInfo',this.medicalInfo)
@@ -92,7 +181,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     const medicalRecordCustId = this.activatedRoute.parent.snapshot.params['id'];
-    this.customerId= medicalRecordCustId
+    this.customerId= medicalRecordCustId;
     console.log('medicalRecordCustId',medicalRecordCustId)
     this.mrId = parseInt(medicalrecordId, 0);
     console.log('this.mrId',this.mrId)
@@ -170,16 +259,17 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   }
 
   getMRClinicalNotes(mrId) {
-    const $this = this;
-    let response = '';
+    const _this = this;
+    // let response = '';
     for (let i = 0; i < this.clinical_constant.length; i++) {
       this.clinical_constant[i].value = '';
 
     }
+    console.log("Clinical Constant:", this.clinical_constant);
     const compArray = this.clinical_constant;
 
     return new Promise((resolve) => {
-      $this.provider_services.getClinicalRecordOfMRById(mrId)
+      _this.provider_services.getClinicalRecordOfMRById(mrId)
         .subscribe((res: any) => {
           console.log('res',res)
           this.clinicalNotes = res;
@@ -191,23 +281,25 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
           //   // this.showClinicalNotesDetails=false;
           // }
           // this.clinicalNotes = res;
-          if (res.clinicalNotes) {
-            response = res.clinicalNotes;
-            // this.clinicalNotes= res;
-          } else {
-            response = res;
-            // this.clinicalNotes = res;
-          }
-
-          Object.entries(response).forEach(
-            function ([key, v]) {
-              const index = compArray.findIndex(element => element.id === key);
-              compArray[index].value = v;
-
-            });
+          // if (res.clinicalNotes) {
+          //   response = res.clinicalNotes;
+          //   // this.clinicalNotes= res;
+          // } else {
+          //   response = res;
+          //   // this.clinicalNotes = res;
+          // }
+          // Object.entries(response).forEach(
+          //   function ([key, v]) {
+          //     console.log("Key:", key);
+          //     console.log("Value:", v);
+          //     console.log("Type:", typeof(v));
+          //     const index = compArray.findIndex(element => element.id === key);
+          //     compArray[index].value = v;
+          //     console.log(compArray);
+          //   });
         },
           error => {
-            $this.snackbarService.openSnackBar($this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+            _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           });
 
 

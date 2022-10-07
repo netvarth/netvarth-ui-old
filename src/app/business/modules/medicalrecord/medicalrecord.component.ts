@@ -140,6 +140,7 @@ export class MedicalrecordComponent implements OnInit {
   calledForm: string;
   customerDetailsAge: any;
   tempPhoneNumber: any;
+  suggestions: any = [];
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     public provider_services: ProviderServices,
@@ -174,6 +175,12 @@ export class MedicalrecordComponent implements OnInit {
   }
   ngOnInit() {
     // console.log('tempClinicalNOtes::',this.tempClinicalNOtes)
+    const uniqueId = this.groupService.getitemFromGroupStorage('uniqueId');
+    this.provider_services.getClinicalSuggestions(uniqueId).subscribe(
+      (suggestions: any) => {
+        this.suggestions = suggestions;
+      }
+    );
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.accountType = user.accountType;
     this.provider = user.userName

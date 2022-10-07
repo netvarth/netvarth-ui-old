@@ -136,3 +136,10 @@ textarea{
     width: 100% !important;
   }
 }
+.example-chip-list {
+  width: 100%;
+}
+::ng-deep .mat-wrap  .mat-chip-list-wrapper {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}

@@ -2688,5 +2688,8 @@ export class ProviderServices {
     const url = 'provider/mr/prescription/template/' + id;
     return this.servicemeta.httpGet(url);
   }
-
+  getClinicalSuggestions(uniqueId) {
+    const url = projectConstantsLocal.UIS3PATH + uniqueId + '/clinicalnotes.json?dt=' + new Date();
+    return this.servicemeta.httpGet(url);
+  }
 }
