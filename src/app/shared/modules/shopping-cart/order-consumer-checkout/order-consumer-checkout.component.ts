@@ -1897,6 +1897,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
   handleQueueSelection(queue, index) {
     this.queue = queue;
+    console.log("Queue Selected : ", queue, index);
   }
 
   // openPayment() {

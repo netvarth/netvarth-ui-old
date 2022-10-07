@@ -181,7 +181,8 @@
                               <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
                               </span>
                               <span *ngIf="isFuturedate">
-                                {{nextAvailableTime}}
+                                {{queue['sTime'] + ' - ' +
+                                queue['eTime']}}
                               </span>
                             </h6>
                           </div>
@@ -774,11 +775,12 @@
                       </a></span>
                   </div>
                   <div class="txt-align-center mgn-up-10">
-                    <button type="button" class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                    <button type="button"
+                      class="checkout-btn next-button btn btn-primary font-weight-bold text-uppercase "
                       [class.disabled]="isClickedOnce"
                       *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       (click)="!isClickedOnce && confirm()">
-                      MaKe Payment
+                      Proceed to Pay
                     </button>
 
                   </div>
@@ -1582,11 +1584,12 @@
                       </a></span>
                   </div>
                   <div class="txt-align-center mgn-up-10">
-                    <button type="button" class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                    <button type="button"
+                      class="checkout-btn next-button btn btn-primary font-weight-bold text-uppercase "
                       [class.disabled]="isClickedOnce"
                       *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       (click)="!isClickedOnce && confirm()">
-                      MaKe Payment
+                      Proceed to Pay
                     </button>
 
                   </div>
@@ -1797,19 +1800,16 @@
                         <div class="d-flex">
                           <div class="cart-btn-mobile">
                             <div *ngIf=" item.quantity===0" (click)="increment(item)"
-                              class="cusr-pointer add-qty-mobile pointer-cursor text-center">
+                              class="cusr-pointer pointer-cursor text-center">
                               Add&nbsp;+&nbsp;
                             </div>
-                            <div *ngIf="item.quantity >= 1" class=" d-flex justify-content-between">
+                            <div *ngIf="item.quantity >= 1">
                               <div
-                                class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding pointer-none shaded">
-                                -
+                                class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding pointer-none">
+                                Qty : {{item.quantity}}
                               </div>
-                              <div class="item-pad bodr-btm-up item-qty">
-                                {{item.quantity}}
-                              </div>
-                              <div class="cusr-pointer item-qty pointer-cursor item-padding pointer-none shaded">+
-                              </div>
+                              <!-- <div class="cusr-pointer item-qty pointer-cursor item-padding pointer-none shaded">+
+                              </div> -->
                             </div>
                           </div>
                         </div>
@@ -1927,7 +1927,8 @@
                                 <span *ngIf="isFuturedate">{{sel_checkindate | date: newDateFormat}},
                                 </span>
                                 <span *ngIf="isFuturedate">
-                                  {{nextAvailableTime}}
+                                  {{queue['sTime'] + ' - ' +
+                                  queue['eTime']}}
                                 </span>
                               </div>
                             </div>
@@ -2433,11 +2434,12 @@
                       </a></span>
                   </div>
                   <div class="txt-align-center mgn-up-10">
-                    <button type="button" class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                    <button type="button"
+                      class="checkout-btn next-button btn btn-primary font-weight-bold text-uppercase "
                       [class.disabled]="isClickedOnce"
                       *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       (click)="!isClickedOnce && confirm()">
-                      MaKe Payment
+                      Proceed to Pay
                     </button>
 
                   </div>
@@ -2577,13 +2579,13 @@
 
 
 
-            <div *ngIf="cartDetails.advanceAmount >0">
+            <div *ngIf="cartDetails.advanceAmount >0 && this.orderType !== 'SHOPPINGLIST'">
               <div class="my-2">
                 <span class="font-weight-bold title">Payment Details</span>
               </div>
             </div>
-            <div class="card item-card">
-              <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
+            <div class="card item-card" *ngIf="this.orderType !== 'SHOPPINGLIST'">
+              <div class="bill-section">
                 <div class="bill-section-content">
                   <div class="bill-wrapper">
                     <span *ngIf="cartDetails.advanceAmount >0" style="font-size: small;color: red;"><i
@@ -2651,7 +2653,7 @@
 
 
 
-            <div class="m-2">
+            <div class="m-2" *ngIf="this.orderType !== 'SHOPPINGLIST'">
               <button type="button" class="btn btn-primary text-uppercase checkout-btn font-weight-bold"
                 [class.disabled]="isClickedOnce"
                 *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
@@ -3334,11 +3336,12 @@
                       </a></span>
                   </div>
                   <div class="txt-align-center mgn-up-10">
-                    <button type="button" class=" next-button btn btn-primary font-weight-bold text-uppercase "
+                    <button type="button"
+                      class="checkout-btn next-button btn btn-primary font-weight-bold text-uppercase "
                       [class.disabled]="isClickedOnce"
                       *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                       (click)="!isClickedOnce && confirm()">
-                      MaKe Payment
+                      Proceed to Pay
                     </button>
 
                   </div>
