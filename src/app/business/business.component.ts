@@ -252,6 +252,7 @@ export class BusinessComponent implements OnInit {
             this.getAccountContactInfo();
           }
           this.groupService.setitemToGroupStorage('accountId', bProfile.id);
+          this.groupService.setitemToGroupStorage('uniqueId', bProfile.uniqueId);
           if (bProfile['serviceSector'] && bProfile['serviceSector']['domain']) {
             // calling function which saves the business related details to show in the header
             this.shared_functions.setBusinessDetailsforHeaderDisp(bProfile['businessName']

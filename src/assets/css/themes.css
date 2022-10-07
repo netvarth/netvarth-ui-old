@@ -339,6 +339,9 @@ footer.heartfulness_theme1.bus-page-footer.site-footer .footer-bottom .footer-li
     background: #FD7029 0% 0% no-repeat padding-box !important;
     height: 50px !important;
   }
+  .mediExpat mat-sidenav,  .mediExpat.bg-basic-profile, .mediExpat.card.bg-advanced-profile {
+    background: #FD7029 0% 0% no-repeat padding-box !important; 
+  }
   .mediExpat { 
     /* background-image: url(../images/heartfulness/BG.jpg) !important;  */
     /* background: #FD7029; */
