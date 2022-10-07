@@ -277,6 +277,8 @@ export class AppointmentComponent implements OnInit {
   filteredOptions: Observable<string[]>;
     tempAcId: any;
     totalName: string='';
+    countryCodePhone='+91';
+    placeholderTemp:any='7410410123';
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -498,13 +500,15 @@ export class AppointmentComponent implements OnInit {
         console.log(event);
         console.log(data);
         console.log(this.categoryvalue );
+        console.log('SearchCountryField',this.SearchCountryField)
         let tempCatValue:any;
         let tempPhoneNum:any;
-        if(data && data.number){
-            tempPhoneNum=data.number;
+        if(data){
+            tempPhoneNum=data;
         }
         if(this.categoryvalue && this.categoryvalue==='Search with PhoneNumber'){
             tempCatValue='phoneNumber';
+            console.log('this.tempAcId',this.tempAcId)
             this.providerService.getSearchCustomer(this.tempAcId, tempCatValue,tempPhoneNum).subscribe((res: any) => {
                 console.log('res', res);
                 this.options = res;
@@ -518,6 +522,13 @@ export class AppointmentComponent implements OnInit {
         console.log(name);
         console.log('categoryvalue',this.categoryvalue);
         let tempCatValue:any;
+        console.log(parseInt(name['search_input']))
+        let inpUtNum:any=parseInt(name['search_input']);
+        console.log('inpUtNum',inpUtNum)
+        // console.log('inpUtNum',inpUtNum.charAt(0))
+        // if(typeof inpUtNum==='number'){
+        //     tempCatValue='id';
+        // }
         if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
             tempCatValue='name';
         }
@@ -534,6 +545,7 @@ export class AppointmentComponent implements OnInit {
     handleSearchSelectPhone(data,phone){
         console.log(data);
         console.log('phone',phone)
+        this.serchCustomers(phone);
     }
     handleSearchSelect(data,form_data){
         console.log(data);
@@ -636,23 +648,27 @@ export class AppointmentComponent implements OnInit {
             this.searchCustomer(form_data);
         }
     }
+    countryCodePhoneInfo(codeCountrty){
+        console.log('codeCountrty',codeCountrty)
+    }
     serchCustomers(val) {
-        const dialCode = val.dialCode;
-        const pN = val.e164Number.trim();
-        let loginId = pN;
-        if (pN.startsWith(dialCode)) {
-            loginId = pN.split(dialCode)[1];
-        }
+        console.log('val',val)
+        // const dialCode = val.dialCode;
+        // const pN = val.e164Number.trim();
+        // let loginId = pN;
+        // if (pN.startsWith(dialCode)) {
+        //     loginId = pN.split(dialCode)[1];
+        // }
 
         let post_data = {
-            'phoneNo-eq': loginId,
-            'countryCode-eq': dialCode
+            'phoneNo-eq': val,
+            'countryCode-eq': this.countryCodePhone
         };
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
-                    this.qParams['phone'] = loginId;
-                    this.qParams['countryCode'] = dialCode;
+                    this.qParams['phone'] = val;
+                    this.qParams['countryCode'] = this.countryCodePhone;
                     if (data.length === 0) {
                         // if (mode === 'phone') {
                         //     const filter = { 'primaryMobileNo-eq': form_data.search_input };

@@ -296,6 +296,10 @@ export class ProviderCheckinComponent implements OnInit {
   filteredOptions: Observable<string[]>;
     tempAcId: any;
     totalName: string='';
+    countryCodePhone='+91';
+    placeholderTemp:any='7410410123';
+
+
 
 
     constructor(public fed_service: FormMessageDisplayService,
@@ -532,6 +536,35 @@ export class ProviderCheckinComponent implements OnInit {
             console.log(this.filteredOptions);
         })
     }
+    countryCodePhoneInfo(codeCountrty){
+        console.log('codeCountrty',codeCountrty)
+    }
+    searchCustomerLucenePhone(data,event){
+        console.log(event);
+        console.log(data);
+        console.log(this.categoryvalue );
+        console.log('SearchCountryField',this.SearchCountryField)
+        let tempCatValue:any;
+        let tempPhoneNum:any;
+        if(data){
+            tempPhoneNum=data;
+        }
+        if(this.categoryvalue && this.categoryvalue==='Search with PhoneNumber'){
+            tempCatValue='phoneNumber';
+            console.log('this.tempAcId',this.tempAcId)
+            this.providerService.getSearchCustomer(this.tempAcId, tempCatValue,tempPhoneNum).subscribe((res: any) => {
+                console.log('res', res);
+                this.options = res;
+                this.filteredOptions = res;
+                console.log(this.filteredOptions);
+            })
+        }
+    }
+    handleSearchSelectPhone(data,phone){
+        console.log(data);
+        console.log('phone',phone)
+        this.serchCustomers(phone);
+    }
     handleSearchSelect(data,form_data){
         console.log(data);
         if(data && data['firstName'] && data['lastName'] && data['lastName'] !== 'null'){
@@ -622,15 +655,15 @@ export class ProviderCheckinComponent implements OnInit {
         }
     }
     serchCustomers(val) {
-        const dialCode = val.dialCode;
-        const pN = val.e164Number.trim();
-        let loginId = pN;
-        if (pN.startsWith(dialCode)) {
-            loginId = pN.split(dialCode)[1];
-        }
+        // const dialCode = val.dialCode;
+        // const pN = val.e164Number.trim();
+        // let loginId = pN;
+        // if (pN.startsWith(dialCode)) {
+        //     loginId = pN.split(dialCode)[1];
+        // }
         let post_data = {
-            'phoneNo-eq': loginId,
-            'countryCode-eq': dialCode
+            'phoneNo-eq': val,
+            'countryCode-eq': this.countryCodePhone
         };
         if (post_data['phoneNo-eq'] === 0) {
             this.createNew('create');
@@ -638,8 +671,8 @@ export class ProviderCheckinComponent implements OnInit {
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
-                    this.qParams['phone'] = loginId;
-                    this.qParams['countryCode'] = dialCode;
+                    this.qParams['phone'] = val;
+                    this.qParams['countryCode'] =  this.countryCodePhone;
 
                     if (data.length === 0) {
                         this.createNew('create');

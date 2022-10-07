@@ -790,6 +790,10 @@ border: none !important;
     font-size: 1rem !important;
 
 }
+.customDialCode{
+  width: 25% !important;
+    height: 2.5rem !important;
+}
 
 
 
@@ -811,5 +815,19 @@ border: none !important;
   .date-body{
     justify-content: space-between !important;
   }
+  
+}
+@media(max-width: 720px){
+  .customDialCode{
+    height: 100% !important;
+}
+}
+::placeholder {
+  font-style: italic;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
