@@ -494,10 +494,28 @@ export class AppointmentComponent implements OnInit {
             }
         })
     }
+    searchCustomerLucenePhone(data,event){
+        console.log(event);
+        console.log(data);
+        console.log(this.categoryvalue );
+        let tempCatValue:any;
+        let tempPhoneNum:any;
+        if(data && data.number){
+            tempPhoneNum=data.number;
+        }
+        if(this.categoryvalue && this.categoryvalue==='Search with PhoneNumber'){
+            tempCatValue='phoneNumber';
+            this.providerService.getSearchCustomer(this.tempAcId, tempCatValue,tempPhoneNum).subscribe((res: any) => {
+                console.log('res', res);
+                this.options = res;
+                this.filteredOptions = res;
+                console.log(this.filteredOptions);
+            })
+        }
+    }
+    
     searchCustomerLucene(name){
         console.log(name);
-        // console.log('Number.isInteger(name)',Number.isInteger(name))
-        console.log('this.account_id',this.tempAcId);
         console.log('categoryvalue',this.categoryvalue);
         let tempCatValue:any;
         if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
@@ -512,6 +530,10 @@ export class AppointmentComponent implements OnInit {
             this.filteredOptions=res;
             console.log(this.filteredOptions);
         })
+    }
+    handleSearchSelectPhone(data,phone){
+        console.log(data);
+        console.log('phone',phone)
     }
     handleSearchSelect(data,form_data){
         console.log(data);

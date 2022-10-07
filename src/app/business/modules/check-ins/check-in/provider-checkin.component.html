@@ -64,8 +64,13 @@
                         (keypress)="findCustomer(searchForm.value, $event)" [matAutocomplete]="autoprov">
                         <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
                             <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option,searchForm.value)" [value]="option.email">
-                              <div class="flexClass">
-                                <div>{{option.email}}</div>
+                              <div class="flexClass" style="justify-content:space-between">
+                                <div class="flexClass">
+                                    <div>{{option.email}}</div>
+                                  </div>
+                                  <div>
+                                    <i class="fa fa-long-arrow-up customArrow"></i>
+                                  </div>
                               </div>
                             </mat-option>
                           </mat-autocomplete>
@@ -78,9 +83,14 @@
                       (keypress)="findCustomer(searchForm.value, $event)" [matAutocomplete]="autoprov">
                       <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
                           <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option,searchForm.value)" [value]="option.firstName">
-                            <div class="flexClass">
-                              <div>{{option.firstName | capitalizeFirst}}</div>
-                              <div *ngIf="option.lastName !=='null'">{{option.lastName | capitalizeFirst}}</div>
+                            <div class="flexClass" style="justify-content:space-between">
+                              <div class="flexClass">
+                                  <div>{{option.firstName | capitalizeFirst}}</div>
+                                <div *ngIf="option.lastName !=='null'">{{option.lastName | capitalizeFirst}}</div>
+                                </div>
+                                <div>
+                                  <i class="fa fa-long-arrow-up customArrow"></i>
+                                </div>
                             </div>
                           </mat-option>
                         </mat-autocomplete>
