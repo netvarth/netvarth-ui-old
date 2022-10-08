@@ -306,7 +306,8 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 prescriptionCreate shadow mgn-up-10"
       *ngIf="showHideClinicalNotes">
       <div>
-        <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId" [suggestions]="suggestions">
+        <app-clinicalnotes [details]='customerDetails' [type]='bookingType' [b_id]="bookingId"
+          [suggestions]="suggestions">
         </app-clinicalnotes>
       </div>
     </div>
@@ -485,9 +486,10 @@
           </ng-container>
           <ng-container
             *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
-            <app-clinicalnotes [tempClinicalNOtes]="tempClinicalNOtes" [medicalInfo]="medicalInfo" [suggestions]="suggestions"
+            <app-clinicalnotes [tempClinicalNOtes]="tempClinicalNOtes" [medicalInfo]="medicalInfo"
+              [suggestions]="suggestions"
               *ngIf="tempClinicalNOtes && medicalInfo && medicalInfo.clinicalNotes && medicalInfo.clinicalNotes.length===0">
-            </app-clinicalnotes> 
+            </app-clinicalnotes>
           </ng-container>
         </div>
       </div>

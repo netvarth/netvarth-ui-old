@@ -6,43 +6,37 @@
         <span class="table-heading"><b>Clinical Notes</b></span>
         <!-- <span *ngIf="tempClinicalNOtes"> <img style="height:17px;width:17px" src="/assets/images/medicalReportIcon/delete.png"  (click)="goback('medical')" /></span> -->
       </div>
-      <!-- <div class="form-group">
+      <div class="form-group" *ngIf="!suggestions || suggestions.length == 0">
         <label>Symptoms</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
-          <textarea #clinicalNotesTypeSymptomsSymptoms  [(ngModel)]="clinicalNotesTypeSymptoms"  
-          (keyup)="autoGrowTextZone($event)"  type="text" class="form-control"  
+          <textarea #clinicalNotesTypeSymptomsSymptoms [(ngModel)]="clinicalNotesTypeSymptoms"
+            (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
             placeholder="Enter Symptoms instructions" maxlength="500"></textarea>
         </div>
-      </div> -->
-      <div class="form-group mgn-up-10" >
+      </div>
+      <div class="form-group mgn-up-10" *ngIf="suggestions && suggestions.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
-          <label>Symptoms</label>
-          <mat-chip-list #chipSymptomsList aria-label="Symptoms selection" class="mat-wrap">
-            <mat-chip
-              *ngFor="let symptom of clinicalNotesTypeSymptoms"
-              (removed)="removeSymptoms(symptom)">
-              {{symptom}}
-              <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip>
-            <input class="form-control" placeholder="Enter symptoms instructions"
-              #symptomsInput
-              [formControl]="symptomsCtrl"
-              [matAutocomplete]="auto1"
-              [matChipInputFor]="chipSymptomsList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              (matChipInputTokenEnd)="addSymptoms($event)">
-          </mat-chip-list>
-          <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event)">
-            <mat-option *ngFor="let symptom of filteredSymptoms | async" [value]="symptom">
-              {{symptom}}
-            </mat-option>
-          </mat-autocomplete>
+        <label>Symptoms</label>
+        <mat-chip-list #chipSymptomsList aria-label="Symptoms selection" class="mat-wrap">
+          <mat-chip *ngFor="let symptom of clinicalNotesTypeSymptoms" (removed)="removeSymptoms(symptom)">
+            {{symptom}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input class="form-control" placeholder="Enter symptoms instructions" #symptomsInput
+            [formControl]="symptomsCtrl" [matAutocomplete]="auto1" [matChipInputFor]="chipSymptomsList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="addSymptoms($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto1="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let symptom of filteredSymptoms | async" [value]="symptom">
+            {{symptom}}
+          </mat-option>
+        </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
-      <!-- <div class="form-group">
+      <div class="form-group" *ngIf="!suggestions || suggestions.length == 0">
         <label>Observations</label>
         <div class="input-group">
           <div class="input-group-prepend"></div>
@@ -50,32 +44,27 @@
             (keyup)="autoGrowTextZone($event)" type="text" class="form-control"
             placeholder="Enter Observations instructions" maxlength="500"></textarea>
         </div>
-      </div> -->
-      <div class="form-group mgn-up-10" >
+      </div>
+      <div class="form-group mgn-up-10" *ngIf="suggestions && suggestions.length > 0">
         <!-- <mat-form-field class="example-chip-list" appearance="fill"> -->
-          <label>Observations</label>
-          <mat-chip-list #chipObservationsList aria-label="Observations selection" class="mat-wrap">
-            <mat-chip
-              *ngFor="let observation of clinicalNotesTypeObservations"
-              (removed)="removeObservations(observation)">
-              {{observation}}
-              <button matChipRemove>
-                <mat-icon>cancel</mat-icon>
-              </button>
-            </mat-chip>
-            <input class="form-control" placeholder="Enter observations instructions"
-              #observationsInput
-              [formControl]="observationsCtrl"
-              [matAutocomplete]="auto2"
-              [matChipInputFor]="chipObservationsList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodesO"
-              (matChipInputTokenEnd)="addObservations($event)">
-          </mat-chip-list>
-          <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedObservation($event)">
-            <mat-option *ngFor="let observation of filteredObservations | async" [value]="observation">
-              {{observation}}
-            </mat-option>
-          </mat-autocomplete>
+        <label>Observations</label>
+        <mat-chip-list #chipObservationsList aria-label="Observations selection" class="mat-wrap">
+          <mat-chip *ngFor="let observation of clinicalNotesTypeObservations"
+            (removed)="removeObservations(observation)">
+            {{observation}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input class="form-control" placeholder="Enter observations instructions" #observationsInput
+            [formControl]="observationsCtrl" [matAutocomplete]="auto2" [matChipInputFor]="chipObservationsList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodesO" (matChipInputTokenEnd)="addObservations($event)">
+        </mat-chip-list>
+        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedObservation($event)">
+          <mat-option *ngFor="let observation of filteredObservations | async" [value]="observation">
+            {{observation}}
+          </mat-option>
+        </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
       <div class="form-group">
