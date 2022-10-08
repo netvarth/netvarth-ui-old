@@ -431,7 +431,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       this.searchfields.latitude = undefined;
       this.searchfields.longitude = undefined;
     } else {
-      if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
+      if (criteria.length >= projectConstantsLocal.AUTOSUGGEST_MIN_CHAR) {
         const hold_criteria = criteria.toLowerCase();
         for (const locs of this.locationList) {
           const holdlocname = locs.autoname.toLowerCase();
@@ -487,7 +487,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
     } else {
       this.holdisplaySearchlist['kwtitle'] = new Array();
       this.holdisplaySearchlist['onlineid'] = new Array();
-      if (criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
+      if (criteria.length >= projectConstantsLocal.AUTOSUGGEST_MIN_CHAR) {
         this.holdisplaySearchlist['kwtitle'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'kwtitle', origin: 'gloablsearch' });
         this.holdisplaySearchlist['onlineid'].push({ autoname: criteria, name: criteria, domain: '', subdomain: '', typ: 'onlineid', origin: 'gloablsearch' });
       }
@@ -556,7 +556,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
         break;
     }
     const regexp = new RegExp(criteria, 'gi');
-    if (criteria !== '' && criteria.length >= projectConstants.AUTOSUGGEST_MIN_CHAR) {
+    if (criteria !== '' && criteria.length >= projectConstantsLocal.AUTOSUGGEST_MIN_CHAR) {
       // convert the criteria and current text to lower case to find the position of criteria in the string
       const l_criteria = criteria.toLowerCase();
       const l_curtext = curtext.toLowerCase();
