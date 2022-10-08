@@ -1,4 +1,7 @@
-<table class="table ">
+<app-common-innerloading-spinner *ngIf="loading">
+</app-common-innerloading-spinner>
+
+<table class="table" *ngIf="!loading">
   <thead>
     <tr>
       <th>Name</th>

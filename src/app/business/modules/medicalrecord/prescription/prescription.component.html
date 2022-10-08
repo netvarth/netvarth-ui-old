@@ -255,7 +255,7 @@
       </div>
       <div class="btnPosition">
         <button type="button" class="btn btn-primary font-weight-bold confirmBtn saveCloseBtn cursor-pointer"
-          (click)="saveClose(amForm.value)">Save & Close</button>
+          (click)="saveClose(amForm.value)" [disabled]="drugList && drugList.length==0">Save & Close</button>
       </div>
 
     </section>

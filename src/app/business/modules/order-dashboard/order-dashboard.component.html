@@ -1477,175 +1477,21 @@
   <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="catalogType === 'submission'">
     <mat-tab-group (selectedTabChange)="tabChange_papers($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Total Papers ({{totalOrdersCount}})">
-        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <app-common-innerloading-spinner *ngIf="loading && (totalOrders.length==0 || !totalOrdersCount)">
+        </app-common-innerloading-spinner>
         <div class="allTabInPannel" *ngIf="!loading">
-          <app-paper-details [loading]="loading" [orders]="orders"></app-paper-details>
-
+          <app-paper-details [loading]="loading" [orders]="totalOrders"></app-paper-details>
         </div>
-        <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
-          <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
-
-            <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
-              <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
-                Actions</span>
-            </div>
-
-          </div>
-          <div *ngIf="orders.length == 0">
-            No Papers
-          </div>
-          <ng-container *ngIf="orders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
-              >
-              <div (click)="gotoDetails(order)">
-              <div class="top-sec">
-
-                <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
-                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
-                </span>
-              </div>
-              <div class="main-sec">
-                <div *ngIf="order.orderFor.firstName || order.orderFor.lastName" class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div  class="bold grey-color"*ngIf="!order.orderFor.firstName && !order.orderFor.lastName">
-                          {{customer_label | capitalizeFirst}} id:&nbsp; {{order.orderFor.jaldeeId}}</div>
-                <div class="mgn-up-15 datetime bold grey-color">
-                  {{order.orderDate | date: display_dateFormat}}
-                  <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
-                  {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
-                </ng-container>
-                </div>
-                <div  [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
-                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
-                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
-                    (click)="stopprop($event);showConsumerNote(order)"></i>
-                </div>
-                <div class="grey-color" *ngIf="order.provider">
-                  Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
-                  + ' ' + order.provider.lastName}}
-                </div>
-                <div class="mgn-up-15 mgn-bt-10">
-                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp; <span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
-                  <span
-                    *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
-                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
-                    (click)="stopprop($event);gotoBill(order)"
-                    [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>&nbsp;
-                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order, 1)"> Actions</span>
-                </div>
-              </div>
-            </div>
-              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
-              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
-            </div>
-            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
-            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-                >{{getDisplayformatTruncateLabel(order)}}</span>
-          </div>
-
-            </div>
-          </ng-container>
-        </div> -->
         <div class="clearfix"></div>
       </mat-tab>
       <mat-tab label="Completed Papers ({{totalPaperdCompletedCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-        <!-- <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
-          <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-20 mgn-bt-30">
-
-            <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
-              <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
-                Actions</span>
-            </div>
-
-          </div>
-          <div *ngIf="orders.length == 0">
-            No Papers
-          </div>
-          <ng-container *ngIf="orders.length > 0">
-            <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of orders;let i=index"
-              >
-              <div (click)="gotoDetails(order)">
-              <div class="top-sec">
-                <i *ngIf="order.homeDelivery" class="delivery-icon pull-right"></i>
-                <i *ngIf="order.storePickup" class="storepickup-icon pull-right"></i>
-                <span class="pull-right mgn-rt-5 mgn-up-5"> {{order.orderNumber}}
-                </span>
-              </div>
-              <div class="main-sec">
-                <div *ngIf="order.orderFor.firstName || order.orderFor.lastName" class="bold grey-color"> {{order.orderFor.firstName}} {{order.orderFor.lastName}}</div>
-                <div  class="bold grey-color"*ngIf="!order.orderFor.firstName && !order.orderFor.lastName">
-                          {{customer_label | capitalizeFirst}} id:&nbsp; {{order.orderFor.jaldeeId}}</div>
-                <div class="mgn-up-15 datetime bold grey-color">
-                  {{order.orderDate | date: display_dateFormat}}
-                  <ng-container *ngIf="order.orderTimeWindow && order.orderTimeWindow.timeSlots[0]">,
-                  {{order.orderTimeWindow.timeSlots[0].sTime}} - {{order.orderTimeWindow.timeSlots[0].eTime}}
-                </ng-container>
-                </div>
-                <div  [ngClass]="order.orderStatus === 'Cancelled'||order.orderStatus==='Order Received'?'darkred':'darkblue bold'">
-                  {{order.orderStatus==='Order Received' ? 'New Order - Confirmation Pending':order.orderStatus| capitalizeFirst}}
-                  <i *ngIf="order.orderNote" [matTooltip]="'Notes'" class="icon-note pointer-cursor black"
-                    (click)="stopprop($event);showConsumerNote(order)"></i>
-                </div>
-                <div class="grey-color" *ngIf="order.provider">
-                  Assigned to {{(order.provider.businessName) ? order.provider.businessName : order.provider.firstName
-                  + ' ' + order.provider.lastName}}
-                </div>
-                <div class="mgn-up-15 mgn-bt-10">
-                  <i  *ngIf="order.orderType === 'SHOPPINGLIST'" [matTooltipClass]="tooltipcls" [matTooltip]="'Shoppinglist'"class="fa fa-list-alt darkerred"></i> <i *ngIf="order.orderType === 'SHOPPINGCART'"[matTooltipClass]="tooltipcls" [matTooltip]="'Shoppingcart'"class="shoppingcart-icon"></i>&nbsp; <span class="bold" *ngIf="order.totalItemQuantity">{{order.totalItemQuantity}}</span>
-                  <span
-                    *ngIf=" !order.shoppingList && !order.bill || (order.bill && order.bill.billPaymentStatus !== 'PartiallyRefunded' && order.bill.billPaymentStatus !== 'FullyRefunded' && order.bill.billPaymentStatus !== 'Refund') && order.cartAmount > 0"
-                    class="rupee-font bold mgn-lt-10" [class]="getPayClass(order)"
-                    (click)="stopprop($event);gotoBill(order)"
-                    [matTooltip]="getPaymentTooltip(order)">{{order.cartAmount |
-                    currency:'INR'}}</span>&nbsp;
-                    <span class="online-icon " *ngIf="order.orderMode == 'ONLINE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Online'">
-                          </span>
-                          <span class="phonein-icon " *ngIf="order.orderMode == 'PHONE_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Phone in'">
-                          </span>
-                          <span class="walkin-icon " *ngIf="order.orderMode == 'WALKIN_ORDER'"
-                            [matTooltipClass]="tooltipcls" [matTooltip]="'Walk-in'">
-                          </span>
-                  <span class="pull-right act-btn" (click)="stopprop($event);showActionPopup(order, 1)"> Actions</span>
-                </div>
-              </div>
-            </div>
-              <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-              class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 0">
-              <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-               >{{getDisplayformatTruncateLabel(order)}}<span (click)="displayLabel(order)" style="cursor: pointer;">...</span></span>
-            </div>
-            <div [matTooltipClass]="tooltipcls" [matTooltip]="'Label'"
-            class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-m-up-10" *ngIf="getDisplayformatOflabel(order) === 1">
-            <span class="mgn-lt-10" style="color: #3c8dbc ; font-size: smaller;"
-                >{{getDisplayformatTruncateLabel(order)}}</span>
-          </div>
-
-            </div>
-          </ng-container>
-        </div> -->
         <div class="allTabInPannel" *ngIf="!loading">
           <app-paper-details [loading]="loading" [orders]="completedorders"></app-paper-details>
           <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>
       </mat-tab>
-
     </mat-tab-group>
     <div class="clearfix"></div>
   </div>

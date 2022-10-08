@@ -22,10 +22,11 @@ import { SubSink } from 'subsink';
   templateUrl: './order-dashboard.component.html',
   styleUrls: ['./order-dashboard.component.scss']
 })
-export class OrderDashboardComponent implements OnInit,OnDestroy {
+export class OrderDashboardComponent implements OnInit, OnDestroy {
   businessName;
   historyOrders: any = [];
   orders: any = [];
+  totalOrders: any = [];
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_STARTS_MONTH;
   historyOrdersCount;
   loading = false;
@@ -54,7 +55,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     orderStatus: false,
     orderMode: false
   };
-  todaySubscription:Subscription;
+  todaySubscription: Subscription;
   customerIdTooltip = '';
   customer_label = '';
   selected_type = 'all';
@@ -96,14 +97,14 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     perPage: this.filter.page_count
   };
 
-  private subs=new SubSink();
+  private subs = new SubSink();
   catalogType: any;
   totalOrdersCount: any;
   totalPaperdCompletedCount: any;
   completedorders: any;
-  todayOrders: any=[];
-  futureOrdes: any=[];
-  
+  todayOrders: any = [];
+  futureOrdes: any = [];
+
   constructor(public sharedFunctions: SharedFunctions,
     public router: Router, private dialog: MatDialog,
     public providerservices: ProviderServices,
@@ -138,11 +139,11 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.getDefaultCatalogStatus();
     this.doSearch();
     this.getProviderSubmissionOrders();
-    this.getProviderCompletedOrders();
+    // this.getProviderCompletedOrders();
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
-    this.subs.sink= observableInterval(this.refreshTime * 500).subscribe(() => {
+    this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
     this.getGlobalSettings();
@@ -185,14 +186,12 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       }
       case 2: {
         this.getProviderCompletedOrders();
-      
-
         break;
       }
-   
+
     }
   }
-  
+
   tabChange(event) {
     this.hideFilterSidebar();
     this.resetFilter();
@@ -214,12 +213,12 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   }
   getGlobalSettings() {
     this.provider_services.getAccountSettings().then(
-        (data: any) => {
-            this.catalogType = data.catalogType;
-            console.log(this.catalogType)
-        });
-}
-  showActionPopup(order?,timetype?) {
+      (data: any) => {
+        this.catalogType = data.catalogType;
+        console.log(this.catalogType)
+      });
+  }
+  showActionPopup(order?, timetype?) {
     if (order) {
       this.selectedOrders = order;
     }
@@ -229,7 +228,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       disableClose: true,
       data: {
         selectedOrder: this.selectedOrders,
-        type:timetype
+        type: timetype
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
@@ -245,33 +244,33 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-   
-   this.subs.sink=this.providerservices.getProviderTodayOrders(filter)
 
-    .subscribe(data => {
-      this.todayOrders = data;
-      console.log("Today Orders :",this.todayOrders)
-      this.loading = false;
-    });
+    this.subs.sink = this.providerservices.getProviderTodayOrders(filter)
 
-  }  
-   
+      .subscribe(data => {
+        this.todayOrders = data;
+        console.log("Today Orders :", this.todayOrders)
+        this.loading = false;
+      });
+
+  }
+
 
   getProviderFutureOrders() {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-    this.subs.sink=this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
+    this.subs.sink = this.providerservices.getProviderFutureOrders(filter).subscribe(data => {
       this.futureOrdes = data;
-      console.log("Future Orders :",this.futureOrdes)
+      console.log("Future Orders :", this.futureOrdes)
       this.loading = false;
     });
-  
+
   }
   getProviderFutureOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-    this.subs.sink=this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
+    this.subs.sink = this.providerservices.getProviderFutureOrdersCount(filter).subscribe(data => {
       this.futureOrdersCount = data;
     });
 
@@ -279,10 +278,10 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   getProviderTodayOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-    this.subs.sink=this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
+    this.subs.sink = this.providerservices.getProviderTodayOrdersCount(filter).subscribe(data => {
       this.todayOrdersCount = data;
-   
-  });
+
+    });
   }
   getProviderHistoryOrders() {
     this.loading = true;
@@ -291,18 +290,18 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     filter = this.setPaginationFilter(filter);
 
     //if (from_oninit) { this.historyOrdersCount = result; }
-    this.subs.sink=this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
+    this.subs.sink = this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       this.historyOrders = data;
-      console.log("History Orders :",this.historyOrders)
+      console.log("History Orders :", this.historyOrders)
 
       // this.historyOrdersCount = this.pagination.totalCnt;
       // console.log(" historyOrdersCount :",this.historyOrdersCount)
 
       this.loading = false;
-   
-  });
+
+    });
   }
-  
+
   setPaginationFilter(api_filter) {
     if (this.historyOrdersCount <= 10) {
       this.pagination.startpageval = 1;
@@ -314,12 +313,12 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   getProviderHistoryOrdersCount() {
     let filter = {};
     filter = this.setFilterForApi();
-   this.subs.sink= this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
+    this.subs.sink = this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
       this.historyOrdersCount = data;
       this.pagination.totalCnt = data;
 
-    
-  });
+
+    });
   }
   checkOrder(order, index) {
     if (!this.orderSelected[index]) {
@@ -375,18 +374,18 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
     this.filter.page = pg;
-   // this.selectAll = true;
+    // this.selectAll = true;
     this.doSearch();
   }
 
   doSearch() {
-    if(this.catalogType === 'submission'){
+    if (this.catalogType === 'submission') {
       this.setTabSelection_papers(this.selectedTab);
     }
-    else{
+    else {
       this.setTabSelection(this.selectedTab);
     }
-    
+
 
   }
   keyPressed() {
@@ -477,7 +476,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     if (this.orderStatuses.length > 0) {
       api_filter['orderStatus-eq'] = this.orderStatuses.toString();
     }
-    if (this.orderModes.length > 0 ) {
+    if (this.orderModes.length > 0) {
       api_filter['orderMode-eq'] = this.orderModes.toString();
     }
     if (this.paymentStatuses.length > 0) {
@@ -504,7 +503,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     return api_filter;
   }
   getDefaultCatalogStatus() {
-   this.subs.sink= this.providerservices.getDefaultCatalogStatuses().subscribe(data => {
+    this.subs.sink = this.providerservices.getDefaultCatalogStatuses().subscribe(data => {
       this.orderStatusFilter = data;
     });
   }
@@ -514,7 +513,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
       this.getProviderTodayOrdersCount();
     }
     if (this.selectedTab === 2) {
-      this.getProviderFutureOrders(); 
+      this.getProviderFutureOrders();
       this.getProviderFutureOrdersCount();
     }
   }
@@ -530,7 +529,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   }
   gotoBill(order) {
     if (this.pos && (order.orderStatus !== 'Cancelled' || (order.orderStatus === 'Cancelled' && order.bill && order.bill.billPaymentStatus !== 'NotPaid'))) {
-     this.subs.sink= this.providerservices.getWaitlistBill(order.uid)
+      this.subs.sink = this.providerservices.getWaitlistBill(order.uid)
         .subscribe(
           data => {
             this.router.navigate(['provider', 'bill', order.uid], { queryParams: { source: 'order', timetype: this.selectedTab } });
@@ -546,7 +545,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   getPaymentTooltip(order) {
     if (order.bill && order.bill.billPaymentStatus) {
       return this.billPaymentStatuses[order.bill.billPaymentStatus];
-    } else if (order.advanceAmountPaid > 0 ) {
+    } else if (order.advanceAmountPaid > 0) {
       return 'Advance amount paid';
     } else {
       return 'Not Paid';
@@ -583,7 +582,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
   // }
   getLabel() {
     this.providerLabels = [];
-    this.subs.sink=this.providerservices.getLabelList().subscribe(data => {
+    this.subs.sink = this.providerservices.getLabelList().subscribe(data => {
       this.allLabels = data;
       this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
     });
@@ -651,7 +650,7 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     Object.keys(this.selectedLabels).forEach(key => {
       if (this.selectedLabels[key].length > 0) {
         count++;
-        if (!this.labelFilterData.includes(key)) {        
+        if (!this.labelFilterData.includes(key)) {
           if (count === 1) {
             this.labelFilterData = this.labelFilterData + key + '::' + this.selectedLabels[key].join(',');
           } else {
@@ -698,19 +697,19 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         order_type: phnein,
-        
+
       }
     };
-    this.router.navigate(['provider', 'orders', 'order-wizard'],navigationExtras);
+    this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
   }
   newwalkInOrder(walkin) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         order_type: walkin,
-        
+
       }
     };
-    this.router.navigate(['provider', 'orders', 'order-wizard'],navigationExtras);
+    this.router.navigate(['provider', 'orders', 'order-wizard'], navigationExtras);
   }
   searchCustomer() {
     // this.router.navigate(['provider', 'customers', 'add'], { queryParams: { appt: true } });
@@ -720,29 +719,31 @@ export class OrderDashboardComponent implements OnInit,OnDestroy {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-   
-   this.subs.sink=this.providerservices.getProviderSubmissionOrders(filter)
 
-    .subscribe(data => {
-      this.orders = data;
-      this.totalOrdersCount = this.orders.length;
-      this.loading = false;
-    });
+    this.subs.sink = this.providerservices.getProviderSubmissionOrders(filter)
 
-  }  
+      .subscribe(data => {
+        this.orders = data;
+        this.totalOrders = data;
+        this.totalOrdersCount = this.totalOrders.length;
+        this.loading = false;
+        this.getProviderCompletedOrders()
+      });
+
+  }
   getProviderCompletedOrders() {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
-   
-   this.subs.sink=this.providerservices.getProviderCompletedOrders(filter)
 
-    .subscribe(data => {
-      this.orders = data;
-      this.completedorders = data;
-      this.totalPaperdCompletedCount = this.orders.length;
-      this.loading = false;
-    });
+    this.subs.sink = this.providerservices.getProviderCompletedOrders(filter)
 
-  }  
+      .subscribe(data => {
+        this.orders = data;
+        this.completedorders = data;
+        this.totalPaperdCompletedCount = this.orders.length;
+        this.loading = false;
+      });
+
+  }
 }
