@@ -62,11 +62,11 @@ input[type='search'] {
 
 .item-card {
   padding: 20px 10px !important;
-  border-radius: 20px !important;
+  border-radius: 5px !important;
 }
 
 .item-image {
-  border-radius: 20px !important;
+  border-radius: 5px !important;
 }
 
 .btn-light {

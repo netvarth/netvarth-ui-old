@@ -52,7 +52,8 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   disabled = false;
   userEmail = '';
   orderNote: any;
-  deliveryoptions = false;
+  deliveryoptions = true;
+  deliveryoptionsmobile = false;
   orderlistNote: any;
   addItemNotesdialogRef: any;
   phonenumber: any;
@@ -502,11 +503,13 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
 
   editDate() {
     this.deliveryoptions = true;
+    this.deliveryoptionsmobile = true;
 
   }
 
   showDeliveryOptions() {
     this.deliveryoptions = false;
+    this.deliveryoptionsmobile = false;
   }
 
   non_indian_modes_onchange(event) {

@@ -73,24 +73,23 @@
                     <mat-icon>done_all</mat-icon>
                   </ng-template>
                   <mat-step label="Delivery options" state="home" *ngIf="!onlyvirtualItemsPresent">
-
-                    <div *ngIf="deliveryoptions">
-                      <div *ngIf="home_delivery && store_pickup">
-                        <div class="d-type">
-                          <span>Delivery Type</span>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="font-weight-bold text-left">
-                          <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" class="radio-btns">
-                            <mat-radio-button [value]="'store'" [checked]="storeChecked">
-                              Store pick up
-                            </mat-radio-button> &nbsp;&nbsp;&nbsp;
-                            <mat-radio-button [value]="'home'" [checked]="!storeChecked">
-                              Home delivery
-                            </mat-radio-button>
-                          </mat-radio-group>
-                        </div>
+                    <div *ngIf="home_delivery && store_pickup">
+                      <div class="d-type">
+                        <span>Delivery Type</span>
                       </div>
+                      <div class="clearfix"></div>
+                      <div class="font-weight-bold text-left">
+                        <mat-radio-group [(ngModel)]="choose_type" (change)="changeType($event)" class="radio-btns">
+                          <mat-radio-button [value]="'store'" [checked]="storeChecked">
+                            Store pick up
+                          </mat-radio-button> &nbsp;&nbsp;&nbsp;
+                          <mat-radio-button [value]="'home'" [checked]="!storeChecked">
+                            Home delivery
+                          </mat-radio-button>
+                        </mat-radio-group>
+                      </div>
+                    </div>
+                    <div *ngIf="deliveryoptions">
                       <div *ngIf="store_pickup && !home_delivery">
                         Store Pick Up
                       </div>
@@ -442,9 +441,21 @@
                                     <div class="mgn-up-10">
                                       <div class="cardborder">
                                         <div class="d-flex justify-content-between">
-                                          <div class="name">
-                                            <span class="item-name">{{item.name}}</span>
-                                            <div class="quantity item-qty">Quantity : {{item.quantity}}</div>
+                                          <div class="name d-flex mr-2">
+                                            <div class="mr-2">
+                                              <img
+                                                *ngIf="item && item.itemImages && item.itemImages[0] && item.itemImages[0].thumbUrl"
+                                                src="{{item.itemImages[0].thumbUrl}}" class="item-image" width="60"
+                                                height="60">
+                                              <img
+                                                *ngIf="!item || !item.itemImages || !item.itemImages[0] || !item.itemImages[0].thumbUrl"
+                                                src="../../../../assets/images/order/Items.svg" class="item-image"
+                                                width="60" height="60">
+                                            </div>
+                                            <div>
+                                              <div><span class="item-name">{{item.name}}</span></div>
+                                              <div class="quantity item-qty">Quantity : {{item.quantity}}</div>
+                                            </div>
                                           </div>
                                           <div>
                                             <div *ngIf="catalog_details.showPrice" class="price rupee-font">
@@ -618,7 +629,8 @@
 
 
                       <div>
-                        <button type="button" class="btn btn-primary font-weight-bold text-uppercase checkout-btn"
+                        <button type="button"
+                          class="btn btn-primary font-weight-bold text-uppercase checkout-btn font-weight-bold"
                           [class.disabled]="isClickedOnce"
                           *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           (click)="!isClickedOnce && confirm()">
@@ -1847,7 +1859,7 @@
                       </mat-radio-group>
                     </div>
                   </div>
-                  <div *ngIf="deliveryoptions">
+                  <div *ngIf="deliveryoptionsmobile">
                     <div *ngIf="store_pickup && !home_delivery">
                       Store Pick Up
                     </div>
@@ -1910,7 +1922,7 @@
                     </div>
                   </div>
 
-                  <div *ngIf="!deliveryoptions">
+                  <div *ngIf="!deliveryoptionsmobile">
                     <div>
                       <div class="date-size">
                         <div class="d-flex justify-content-between">
@@ -1943,7 +1955,7 @@
                     </div>
                   </div>
                   <div [hidden]="!isfutureAvailableTime">
-                    <button class="nxt-btn" *ngIf="deliveryoptions" (click)="showDeliveryOptions()"
+                    <button class="nxt-btn" *ngIf="deliveryoptionsmobile" (click)="showDeliveryOptions()"
                       mat-flat-button>Save</button>
                   </div>
                 </div>
