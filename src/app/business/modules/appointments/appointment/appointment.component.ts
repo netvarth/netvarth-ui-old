@@ -279,6 +279,8 @@ export class AppointmentComponent implements OnInit {
     totalName: string='';
     countryCodePhone='+91';
     placeholderTemp:any='7410410123';
+    tempDataCustomerInfo;
+    loading:boolean;
     constructor(public fed_service: FormMessageDisplayService,
         private fb: FormBuilder,
         public shared_services: SharedServices,
@@ -484,6 +486,7 @@ export class AppointmentComponent implements OnInit {
         this.revealphonenumber = true;
         // this.filterOption();
         this.bisinessProfile();
+        this.loading= false;
     }
     bisinessProfile(){
         this.searchForm.controls.search_input.setValue('');
@@ -544,11 +547,14 @@ export class AppointmentComponent implements OnInit {
     }
     handleSearchSelectPhone(data,phone){
         console.log(data);
-        console.log('phone',phone)
+        this.tempDataCustomerInfo=data;
+        console.log('phone',phone);
+        this.loading=true;
         this.serchCustomers(phone);
     }
     handleSearchSelect(data,form_data){
         console.log(data);
+        console.log(form_data)
         if(data && data['firstName'] && data['lastName'] && data['lastName'] !== 'null'){
             this.totalName= (data['firstName'][0].toUpperCase() + data['firstName'].slice(1)) + ' ' + (data['lastName'][0].toUpperCase() + data['lastName'].slice(1)) ;
             if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
@@ -565,7 +571,7 @@ export class AppointmentComponent implements OnInit {
                 }
             }
         }
-        console.log(form_data)
+       this.tempDataCustomerInfo=data;
         this.searchCustomer(form_data)
     }
     handleCategoryselect(data){
@@ -683,9 +689,12 @@ export class AppointmentComponent implements OnInit {
                             console.log("Consumer Data:", data);
                             this.tempCustomerdata= data;
                             const customer = data.filter(member => !member.parent);
-                            this.customer_data = customer[0];
+                            console.log('customer',customer)
+                            // this.customer_data = customer[0];
+                            this.customer_data= this.tempDataCustomerInfo
                             console.log("Real Customer:", this.customer_data);
                             this.foundMultipleCustomers = true;
+                            this.loading=false;
                         } else {
                             this.customer_data = data[0];
                             this.foundMultipleCustomers = false;
@@ -777,10 +786,13 @@ export class AppointmentComponent implements OnInit {
                         } else {
                             if (data && data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                if(customer && customer[0]){
-                                    this.customer_data = customer[0];
-                                    this.foundMultipleCustomers = true;
-                                }
+                                console.log('customer',customer)
+                                // if(customer && customer[0]){
+                                //     this.customer_data = customer[0];
+                                //     this.foundMultipleCustomers = true;
+                                // }
+                                this.customer_data= this.tempDataCustomerInfo;
+                                this.foundMultipleCustomers = true;
                                 
                             } else {
                                 if(data &&  data[0]){

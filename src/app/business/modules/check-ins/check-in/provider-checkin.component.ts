@@ -298,6 +298,7 @@ export class ProviderCheckinComponent implements OnInit {
     totalName: string='';
     countryCodePhone='+91';
     placeholderTemp:any='7410410123';
+    tempDataCustomerInfo;
 
 
 
@@ -563,6 +564,7 @@ export class ProviderCheckinComponent implements OnInit {
     handleSearchSelectPhone(data,phone){
         console.log(data);
         console.log('phone',phone)
+        this.tempDataCustomerInfo=data;
         this.serchCustomers(phone);
     }
     handleSearchSelect(data,form_data){
@@ -583,7 +585,8 @@ export class ProviderCheckinComponent implements OnInit {
                 }
             }
         }
-        console.log(form_data)
+        console.log(form_data);
+        this.tempDataCustomerInfo=data;
         this.searchCustomer(form_data)
     }
     handleCategoryselect(data){
@@ -680,8 +683,11 @@ export class ProviderCheckinComponent implements OnInit {
                         if (data.length > 1) {
                             this.tempCustomerdata= data;
                             const customer = data.filter(member => !member.parent);
-                            this.customer_data = customer[0];
-                            this.foundMultiConsumers = true
+                            console.log('customer',customer);
+                            // this.customer_data = customer[0];
+                            // this.foundMultiConsumers = true
+                            this.customer_data= this.tempDataCustomerInfo;
+                                this.foundMultiConsumers = true;
                         } else {
                             this.customer_data = data[0];
                             this.foundMultiConsumers = false
@@ -764,9 +770,12 @@ export class ProviderCheckinComponent implements OnInit {
                         } else {
                             if (data && data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                if(customer && customer[0]){
-                                    this.customer_data = customer[0];
-                                }
+                                console.log('customer',customer)
+                                // if(customer && customer[0]){
+                                //     this.customer_data = customer[0];
+                                // }
+                                // this.foundMultiConsumers = true;
+                                this.customer_data= this.tempDataCustomerInfo;
                                 this.foundMultiConsumers = true;
                             } else {
                                 if(data && data[0]){
