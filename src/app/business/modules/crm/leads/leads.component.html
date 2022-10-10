@@ -141,8 +141,8 @@
                     style="cursor:pointer">
                     <td data-title="Lead Details" class="td1" *ngIf="lead.leadId">{{lead.leadId}}</td>
                     <td data-title="Lead Details" class="td2">
-                      <span *ngIf="lead.customer && lead.customer.name">{{lead.customer.name}}</span>
-                      <span *ngIf="lead.customer && (lead.customer.name===undefined)">---------</span>
+                      <span *ngIf="lead.customer && lead.customer.Name">{{lead.customer.Name}}</span>
+                      <span *ngIf="lead.customer && (lead.customer.Name===undefined)">---------</span>
                     </td>
                     <td data-title="Lead Details" class="td2"><span
                         *ngIf="lead.assignee && lead.assignee.name">{{lead.assignee.name}}</span>
