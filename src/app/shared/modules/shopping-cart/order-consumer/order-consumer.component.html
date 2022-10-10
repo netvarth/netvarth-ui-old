@@ -47,7 +47,7 @@
             <h6 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-count">
               {{this.catalog.catalogItem.length}} Items</h6>
             <div *ngIf="catalogItems">
-              <div *ngFor="let item of catalogItems| filter:seacrchFilterOrder;let i=index">
+              <div *ngFor="let item of catalogItems;let i=index">
                 <div class="card item-card shadow-lg mt-3">
                   <div class="d-flex justify-content-between">
                     <div class="d-flex">
@@ -233,7 +233,7 @@
 
   <div>
     <div *ngIf="catalogItems">
-      <div *ngFor="let item of catalogItems| filter:seacrchFilterOrder;let i=index">
+      <div *ngFor="let item of catalogItems;let i=index">
         <div class="card item-card shadow-lg mt-3">
           <div class="d-flex justify-content-between">
             <div class="d-flex">

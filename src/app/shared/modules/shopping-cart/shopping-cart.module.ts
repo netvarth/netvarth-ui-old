@@ -13,7 +13,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { LoadingSpinnerModule } from '../loading-spinner/loading-spinner.module';
-import { OrderConsumerComponent } from './order-consumer/order-consumer.component';
+// import { OrderConsumerComponent } from './order-consumer/order-consumer.component';
 import { OrderConsumerModule } from './order-consumer/order-consumer.module';
 import { SkeletonLoadingModule } from '../skeleton-loading/skeleton-loading.module';
 
@@ -42,7 +42,7 @@ const routes: Routes = [
   exports: [
     ShoppingCartSharedComponent
   ],
-  declarations: [ShoppingCartSharedComponent, OrderConsumerComponent],
+  declarations: [ShoppingCartSharedComponent],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
