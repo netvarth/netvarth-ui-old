@@ -252,7 +252,7 @@
                            <img class="imageStatus" src="/assets/images/crmImages/statusUpdate.png" />Status change
                           </button> -->
                   </tr>
-                  <tr *ngIf="driveFiles.length === 0" class="my-2 py-2 ">
+                  <tr *ngIf="!dataLoading && driveFiles.length === 0" class="my-2 py-2 ">
                     <td class="text-center my-2 py-2" colspan="4">No files found.</td>
                   </tr>
                   <tr *ngIf="dataLoading">

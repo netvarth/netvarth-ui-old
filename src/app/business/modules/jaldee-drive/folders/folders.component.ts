@@ -17,6 +17,7 @@ export class FoldersComponent implements OnInit {
   customer_label = "";
   provider_label = "";
   foldername: any;
+  searchTerm: any;
   dataLoading = false;
   driveFiles: any[] = [];
   p: number = 1;

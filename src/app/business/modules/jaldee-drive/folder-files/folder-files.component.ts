@@ -763,9 +763,13 @@ export class FolderFilesComponent implements OnInit {
       .getAllFilterAttachments(filter)
       .subscribe((data: any) => {
         console.log("All Files.", data);
+      
 
         if (this.foldertype === "public") {
           this.foldername = "Provider";
+          if(Object.keys(data).length === 0){
+            this.dataLoading = false;
+          }
           if (Object.keys(data).length > 0) {
             Object.keys(data).map((key, index) => {
               console.log("key :", key);
@@ -786,6 +790,9 @@ export class FolderFilesComponent implements OnInit {
           }
         } else if (this.foldertype === "shared") {
           this.foldername = "Consumer";
+          if(Object.keys(data).length === 0){
+            this.dataLoading = false;
+          }
           if (Object.keys(data).length > 0) {
             Object.keys(data).map((key, index) => {
               console.log("key :", key);
@@ -804,6 +811,9 @@ export class FolderFilesComponent implements OnInit {
           }
         } else {
           this.foldername = "My";
+          if(Object.keys(data).length === 0){
+            this.dataLoading = false;
+          }
           if (Object.keys(data).length > 0) {
             Object.keys(data).map((key, index) => {
               // data[key].map((res:any)=>{

@@ -67,3 +67,20 @@
 .card-custom{
  flex-basis: 1;
 }
+@media (max-width:575px){
+  .inputForm{
+    width: 100%;
+    /* display: flex;
+   justify-content: right;
+   align-items: center; */
+  }
+}
+@media (min-width:767px){
+.inputForm{
+  /* display: flex; */
+  /* justify-content: right; */
+  /* align-items: center; */
+  width: 300px !important;
+  float: right;
+}
+}
