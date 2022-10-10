@@ -82,15 +82,15 @@
         align-items: center;background-color: #fff;
         gap: 10px;margin-left: 30px;" *ngIf="(leadInfo.customer)">
           <div class="imageClass">
-            <div style="color: #8A8383;" *ngIf="(leadInfo.customer && leadInfo.customer.name )">
-              {{leadInfo.customer.name[0] | capitalizeFirst}}</div>
+            <div style="color: #8A8383;" *ngIf="(leadInfo.customer && leadInfo.customer.Name )">
+              {{leadInfo.customer.Name[0] | capitalizeFirst}}</div>
           </div>
           <div>
             <div>
               <div style="font-size: 14px;
             color: #000000;
             font-weight: bold;
-            margin-bottom: 4px;" *ngIf="(leadInfo.customer && leadInfo.customer.name )">{{leadInfo.customer.name |
+            margin-bottom: 4px;" *ngIf="(leadInfo.customer && leadInfo.customer.Name )">{{leadInfo.customer.Name |
                 capitalizeFirst}}</div>
             </div>
             <div>

@@ -21,11 +21,11 @@
               <div class="custName">
 
                 <span
-                  *ngIf="taskDetails.customer && taskDetails.customer.name &&taskDetails.customer.name.startsWith('null')">
-                  {{taskDetails.customer.name | slice:4: taskDetails.customer.name.length}}
+                  *ngIf="taskDetails.customer && taskDetails.customer.Name &&taskDetails.customer.Name.startsWith('null')">
+                  {{taskDetails.customer.Name | slice:4: taskDetails.customer.Name.length}}
                 </span>
                 <span
-                  *ngIf="taskDetails.customer && taskDetails.customer.name &&(!taskDetails.customer.name.startsWith('null'))">{{taskDetails.customer.name}}</span>
+                  *ngIf="taskDetails.customer && taskDetails.customer.Name &&(!taskDetails.customer.Name.startsWith('null'))">{{taskDetails.customer.Name}}</span>
               </div>
             </div>
             <div>

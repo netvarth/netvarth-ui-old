@@ -282,9 +282,9 @@ export class ViewTaskComponent implements OnInit {
         if(enquiryList && enquiryList.uid){
           _this.enquiryUid = enquiryList.uid;
         }
-        if (enquiryList && enquiryList.customer && enquiryList.customer.name) {
-          _this.firstCustomerName = enquiryList.customer.name.charAt(0);
-          _this.customerName = enquiryList.customer.name;
+        if (enquiryList && enquiryList.customer && enquiryList.customer.Name) {
+          _this.firstCustomerName = enquiryList.customer.Name.charAt(0);
+          _this.customerName = enquiryList.customer.Name;
         }
         if (enquiryList && enquiryList.customer && enquiryList.customer.phoneNo) {
           _this.customerPhNo = (enquiryList.customer.phoneNo);
@@ -500,9 +500,9 @@ export class ViewTaskComponent implements OnInit {
         ((error)=>{
           reject(error);
         });
-        if (_this.taskDetails && _this.taskDetails.customer && _this.taskDetails.customer.name) {
-          _this.firstCustomerName = _this.taskDetails.customer.name.charAt(0);
-          _this.customerName = _this.taskDetails.customer.name;
+        if (_this.taskDetails && _this.taskDetails.customer && _this.taskDetails.customer.Name) {
+          _this.firstCustomerName = _this.taskDetails.customer.Name.charAt(0);
+          _this.customerName = _this.taskDetails.customer.Name;
         }
         if (_this.taskDetails && _this.taskDetails.customer && _this.taskDetails.customer.phoneNo) {
           _this.customerPhNo = (_this.taskDetails.customer.phoneNo);

@@ -173,7 +173,7 @@ export class ViewLeadQnrComponent implements OnInit {
             // alert('alert')
             let applicant = {
               parent: true,
-              name: _this.leadInfo.customer.name,
+              name: _this.leadInfo.customer.Name,
               phone: _this.leadInfo.customer.phoneNo
             }
             _this.applicants = [0];
@@ -248,7 +248,7 @@ export class ViewLeadQnrComponent implements OnInit {
     for (let kycIndex = 0; kycIndex < kycList.length; kycIndex++) {
       let applicant = kycList[kycIndex];
       if (!applicant.customerName) {
-        applicant['customerName'] = this.leadInfo.customer.name;
+        applicant['customerName'] = this.leadInfo.customer.Name;
       }
       this.applicantsInfo[kycIndex] = applicant;
       this.applicants.push(kycIndex);
