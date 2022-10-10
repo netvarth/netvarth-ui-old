@@ -1054,6 +1054,11 @@ a {
     height: 100% !important;
 }
 }
+::placeholder {
+  font-style: italic !important;
+  color: #707070 !important;
+  opacity: 60% !important;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;

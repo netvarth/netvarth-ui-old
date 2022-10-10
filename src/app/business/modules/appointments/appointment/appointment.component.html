@@ -70,12 +70,14 @@
                                         <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelectPhone(option,phone)"
                                             [value]="option.phoneNo">
                                             <div class="flexClass" style="justify-content:space-between">
+                                                <div>{{option.firstName | capitalizeFirst}}</div>
+                                                <div *ngIf="option.lastName !=='null'">{{option.lastName | capitalizeFirst}}</div>
                                                 <div class="flexClass">
                                                     <div>{{option.phoneNo}}</div>
                                                 </div>
-                                                <div>
+                                                <!-- <div>
                                                     <i class="fa fa-long-arrow-up customArrow"></i>
-                                                </div>
+                                                </div> -->
                                             </div>
                                         </mat-option>
                                     </mat-autocomplete>
@@ -92,13 +94,14 @@
                                                 <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
                                                     <mat-option *ngFor="let option of filteredOptions" (click)="handleSearchSelect(option,searchForm.value)" 
                                                     [value]="option.email">
-                                                      <div class="flexClass" style="justify-content:space-between">
+                                                      <div class="flexClass" style="justify-content: space-between;">
                                                         <div class="flexClass">
                                                             <div>{{option.email}}</div>
                                                           </div>
-                                                          <div>
-                                                            <i class="fa fa-long-arrow-up customArrow"></i>
-                                                          </div>
+                                                          <div class="flexClass">
+                                                            <div>({{option.firstName | capitalizeFirst}}</div>
+                                                            <div *ngIf="option.lastName !=='null'">{{option.lastName | capitalizeFirst}})</div>
+                                                        </div>
                                                       </div>
                                                     </mat-option>
                                                   </mat-autocomplete>
@@ -117,9 +120,9 @@
                                                             <div>{{option.firstName | capitalizeFirst}}</div>
                                                           <div *ngIf="option.lastName !=='null'">{{option.lastName | capitalizeFirst}}</div>
                                                           </div>
-                                                          <div>
+                                                          <!-- <div>
                                                             <i class="fa fa-long-arrow-up customArrow"></i>
-                                                          </div>
+                                                          </div> -->
                                                       </div>
                                                     </mat-option>
                                                   </mat-autocomplete>
