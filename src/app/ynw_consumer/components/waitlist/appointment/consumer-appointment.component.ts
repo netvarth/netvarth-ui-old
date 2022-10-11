@@ -747,6 +747,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 _this.slotLoaded = true;
                 // console.log(_this.freeSlots);
                 // console.log("Slots ful:", data);
+                if(data.length === 0){
+                    // Please choose other date.
+                    this.snackbarService.openSnackBar('No slots available on selected date.', { 'panelClass': 'snackbarerror' });
+                }
                 for (const scheduleSlots of data) {
                     const availableSlots = scheduleSlots.availableSlots;
                     for (const slot of availableSlots) {
@@ -842,6 +846,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     goToStep(type) {
         const _this = this;
         console.log("BookStep1:" + this.bookStep);
+        if(this.allSlots && this.allSlots.length <= 0 && this.slotLoaded){
+            this.bookStep = 1;
+        }
         if (type === 'next') {
             switch (this.bookStep) {
                 case 1: // Date/Time--ServiceName
@@ -1040,6 +1047,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     actionCompleted() {
+        console.log("action complete :")
         if (this.action !== 'members' && this.action !== 'addmember' && this.action !== 'note' && this.action !== 'attachment' && this.action !== 'coupons') {
             if (this.appointmentType == 'reschedule' && this.scheduledAppointment.service && this.scheduledAppointment.service.priceDynamic) {
                 this.subs.sink = this.sharedServices.getAppointmentReschedulePricelist(this.scheduledAppointment.service.id).subscribe(

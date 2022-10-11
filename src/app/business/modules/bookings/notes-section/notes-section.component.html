@@ -13,8 +13,9 @@
         <div class="card-header collapsed" *ngIf="widget"
           [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
           [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
-          <div class="text-capitalize">Notes</div>
+          <div class="text-capitalize">My Notes</div>
           <div class="mgn-lt-auto">
+            <span class="addNoteButton pointer-cursor" (click)="addProviderNote()"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
             <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
               [class.mgn-rt-20]="small_device_display"></i>
             <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
@@ -23,16 +24,12 @@
         <div class="card-body p-3" [class.cardheight]="!widget" id="notes"
           [class.collapse]="widget && small_device_display">
           <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-            <span class="btn btn-primary pointer-cursor" (click)="addProviderNote()">Add Note</span>
-          <span *ngIf="waitlistdata && waitlistdata.consumerNote">
-            <p *ngIf="waitlistdata.consumerNote !== ''">{{waitlistdata.consumerNote}}</p>
-            <p *ngIf="waitlistdata.consumerNote === ''">No Notes Found</p>
-          </span>
+            <!-- <span class="btn btn-primary pointer-cursor" (click)="addProviderNote()">Add Note</span> -->
           <span *ngIf="waitlist_notes && waitlist_notes.length > 0">
               <!-- <hr>
               <span class="text-primary">Private Notes</span> -->
             <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes" *ngFor="let note of waitlist_notes; let i = index">
-              <div class="note_view">
+              <div class="note_view consumerCard">
                 <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
                 <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date"> {{note.timeStamp | date: newDateFormat}}</span> 
                 <div class="note text-primary" [innerHTML]="note.note">
@@ -48,6 +45,32 @@
                   *ngFor="let attachment of note.attachment"><img [src]="getThumbUrl(attachment)"
                     style="width:50px; height:50px" /></a>
               </div>
+            </div>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div class="card card-custom data-card mgn-up-5">
+        <div class="card-header collapsed" *ngIf="widget"
+          [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+          [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#consumerNotes" aria-expanded="false">
+          <div class="text-capitalize">Consumer Notes</div>
+          <div class="mgn-lt-auto">
+            <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
+              [class.mgn-rt-20]="small_device_display"></i>
+            <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
+          </div>
+        </div>
+        <div class="card-body p-3" [class.cardheight]="!widget" id="consumerNotes"
+          [class.collapse]="widget && small_device_display">
+          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+          <span *ngIf="waitlistdata">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes">
+              <div class="note_view  consumerCard">
+                <span class="" *ngIf="waitlistdata">
+                  <p class="status-label note_date" *ngIf="waitlistdata.consumerNote !== ''">{{waitlistdata.consumerNote}}</p>
+                  <p class="status-label note_date" *ngIf="waitlistdata.consumerNote === '' || waitlistdata.consumerNote === undefined">No Notes Found</p>
+                </span>
             </div>
             </div>
           </span>

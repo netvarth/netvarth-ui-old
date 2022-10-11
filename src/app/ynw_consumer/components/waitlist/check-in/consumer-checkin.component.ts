@@ -2588,6 +2588,9 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     goToStep(type) {
         const _this = this;
         console.log("BookStep:" + this.bookStep);
+        if(this.queuejson && this.queuejson.length <= 0 && this.queuesLoaded){
+            this.bookStep = 1;
+        }
         if (type === 'next') {
             switch (this.bookStep) {
                 case 1: // Date/Time--ServiceName

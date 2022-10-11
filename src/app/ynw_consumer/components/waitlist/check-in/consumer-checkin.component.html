@@ -127,7 +127,7 @@
                                     </app-slot-picker>
                                 </div>
                                 <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mt-3 text-center" *ngIf="queuejson && queuejson.length <= 0 && queuesLoaded">                                           
-                                    <b>No slots available on selected date.Please choose other date.</b>                                        
+                                    <b>No queues available on selected date.Please choose other date.</b>                                        
                                 </div>
                                 <div class="clearfix"></div>
                                 <hr/>
@@ -213,7 +213,7 @@
                                         <button type="button"
                                             class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                             (click)="goToStep('next');actionCompleted()"
-                                            [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1)">
+                                            [class.disabled]="(queuejson && queuejson.length == 0)">
                                             Next
                                         </button>
                                     </div>
@@ -222,7 +222,7 @@
                                         <button type="button"
                                             class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
                                             (click)="goToStep('next');actionCompleted()"
-                                            [class.disabled]="(queuejson && queuejson.length == 0 && !api_loading1)">
+                                            [class.disabled]="(queuejson && queuejson.length == 0)">
                                             Next
                                         </button>
                                     </div>
