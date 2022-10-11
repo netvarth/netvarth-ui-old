@@ -38,30 +38,14 @@
           <div class="card-body">
             <div class="row">
               <div class="form-group col-md-12 col-sm-12 no-padding-small">
-                <input  class="form-control" 
-                  [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" [matAutocomplete]="autoprov"
-                  (ngModelChange)="transform(seacrchFilterOrder)"/>
-                  <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                    <mat-option *ngFor="let option of catalogItems" (click)="handleSearchSelect(option,seacrchFilterOrder)" 
-                    [value]="option.item.displayName">
-                      <div class="flexClass" style="justify-content: space-between;">
-                        <div class="flexClass">
-                            <div>{{option.item.displayName  | capitalizeFirst}}</div>
-                          </div>
-                      </div>
-                    </mat-option>
-                  </mat-autocomplete>
+                <input [value]="seacrchFilterOrder" class="form-control" (ngModelChange)="transform(seacrchFilterOrder)"
+                  [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" />
               </div>
             </div>
             <h4 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-name">
               {{this.catalog.catalogName}}</h4>
-            <!-- <h6 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-count">
-              {{this.catalog.catalogItem.length}} Items</h6> -->
-              <h6 class="card-title" class="catalog-count" *ngIf="catalogItems && catalogItems.length">
-                {{catalogItems.length}} Items</h6>
-                <div class="card item-card shadow-lg mt-3" *ngIf="catalogItems && catalogItems.length===0">
-                  <h4>Sorry item not found</h4>
-                </div>
+            <h6 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-count">
+              {{this.catalog.catalogItem.length}} Items</h6>
             <div *ngIf="catalogItems">
               <div *ngFor="let item of catalogItems;let i=index">
                 <div class="card item-card shadow-lg mt-3">
@@ -127,7 +111,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-5 col-sm-12 pr-0 no-padding-small" *ngIf="catalogItems && catalogItems.length !==0">
+      <div class="col-md-5 col-sm-12 pr-0 no-padding-small">
         <div class="card checkout-card p-0">
           <div class="card-body cart-heading" *ngIf="action!='timeChange'">
             <span><i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;&nbsp;Cart</span>
@@ -207,8 +191,8 @@
               <span class="text-dark font-weight-bold">Need our help?</span><br>
               <span class="text-light query-text">Call us in case of you face any issues in our service bookings</span>
             </div>
-            <div>
-              <a class="btn btn-primary help-btn">Call 5554545652</a>
+            <div *ngIf="businessPhoneNumber">
+              <a class="btn btn-primary help-btn">Call {{businessPhoneNumber}}</a>
             </div>
           </div>
         </div>
@@ -245,31 +229,8 @@
     </div>
   </div>
 
-  <!-- <div class="clearfix"></div> -->
-  <div class="card item-card shadow-lg mt-3">
-    <div >
-      <input  class="form-control" 
-        [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" [matAutocomplete]="autoprov"
-        (ngModelChange)="transform(seacrchFilterOrder)"/>
-        <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-          <mat-option *ngFor="let option of catalogItems" (click)="handleSearchSelect(option,seacrchFilterOrder)" 
-          [value]="option.item.displayName">
-            <div class="flexClass" style="justify-content: space-between;">
-              <div class="flexClass">
-                  <div>{{option.item.displayName  | capitalizeFirst}}</div>
-                </div>
-            </div>
-          </mat-option>
-        </mat-autocomplete>
-    </div>
-    <h4 class="card-title catalog-name mt-3" *ngIf="catalog && catalog.catalogName" >
-      {{this.catalog.catalogName}}</h4>
-      <h6 class="card-title catalog-count"  *ngIf="catalogItems && catalogItems.length">
-        {{catalogItems.length}} Items</h6>
-  </div>
-  <div class="card item-card shadow-lg mt-3" *ngIf="catalogItems && catalogItems.length===0">
-    <h4>Sorry item not found</h4>
-  </div>
+  <div class="clearfix"></div>
+
   <div>
     <div *ngIf="catalogItems">
       <div *ngFor="let item of catalogItems;let i=index">
@@ -335,7 +296,7 @@
       </div>
     </div>
   </div><br>
-  <div *ngIf="catalogItems && catalogItems.length !==0">
+  <div>
     <div class="m-auto text-center">
       <a class="btn btn-primary checkout-btn-mobile" (click)="confirmOrder()"
         [class.disabled]="!isfutureAvailableTime || (orderList && orderList.length==0)">Checkout</a>
