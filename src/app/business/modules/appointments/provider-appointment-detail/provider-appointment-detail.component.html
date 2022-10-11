@@ -195,12 +195,12 @@
         </div>
         <div class="clearfix history-notes"></div>
         <div class="card-custom data-card p-0 m-0">
-          <app-notes-section [source]="'customer'" [widget]="true"
+          <app-notes-section [source]="'customer'" [widget]="true" [waitlistdata]="waitlist_data"
             [waitlist_notes]="waitlist_notes">
           </app-notes-section>
         </div>
         <div class="card-custom data-card p-0 m-0" *ngIf="small_device_display">
-          <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data">
+          <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data" [waitlist_notes]="waitlist_notes">
           </app-notes-section>
         </div>
       </div>
@@ -245,7 +245,7 @@
       </div>
       <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small mt-3" *ngIf="!small_device_display">
         <div class="card-custom data-card p-0 m-0">
-          <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data">
+          <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data" [waitlist_notes]="waitlist_notes">
           </app-notes-section>
         </div>
       </div>
