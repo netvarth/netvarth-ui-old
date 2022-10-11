@@ -1191,6 +1191,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
   }
   openAttachmentGallery(question, document) {
+    // alert('kk')
     this.image_list_popup = [];
     let count = 0;
     let imagePath;
@@ -1198,18 +1199,21 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     if (this.filestoUpload[question.labelName] && this.filestoUpload[question.labelName][document]) {
       let type = this.filestoUpload[question.labelName][document].type.split('/');
       if (type[0] === 'video' || type[0] === 'audio') {
+        // console.log('typeaudiovideo',type);
         const indx = this.audioVideoFiles.indexOf(this.filestoUpload[question.labelName][document]);
         this.showAudioVideoFile(this.audioVideoFiles[indx]);
       } else {
         const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
         if (indx !== -1) {
-          if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc') {
+          // console.log('type2',type);
+          if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc' || type[1]==='vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
             if (this.selectedMessage[indx].s3path) {
               window.open(this.selectedMessage[indx].s3path, '_blank');
             } else {
               window.open(this.selectedMessage[indx].path, '_blank');
             }
           } else {
+            // console.log('typetxt1',imagePath);
             imagePath = this.uploadedImages[indx].path;
             caption = this.comments[question.labelName + '=' + document];
           }
@@ -1223,15 +1227,24 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       if (indx !== -1) {
         if (type === 'video' || type === 'audio') {
           this.showAudioVideoFile(this.uploadedImages[indx]);
-        } else if (ext === 'pdf' || ext === 'docx' || ext === 'txt' || ext === 'doc') {
+        } else if (ext === 'pdf' || ext === 'docx' || ext === 'txt' || ext === 'doc' || ext==='vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
           window.open(this.uploadedFiles[question.labelName][document].s3path, '_blank');
         } else {
-          imagePath = this.uploadedImages[indx].s3path;
-          caption = this.uploadedImages[indx].comments;
+          // console.log('typetxt2',this.uploadedImages[indx]);
+          if(this.uploadedImages && this.uploadedImages[indx] &&this.uploadedImages[indx]['keyName'] && 
+          this.uploadedImages[indx]['keyName'].includes('docx') ){
+            window.open(this.uploadedFiles[question.labelName][document].s3path, '_blank');
+          }
+          else{
+            imagePath = this.uploadedImages[indx].s3path;
+            caption = this.uploadedImages[indx].comments;
+          }
+          
         }
       }
     }
     if (imagePath) {
+      
       const imgobj = new Image(
         count,
         {
