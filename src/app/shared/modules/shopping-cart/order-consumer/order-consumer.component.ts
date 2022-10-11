@@ -971,9 +971,9 @@ export class OrderConsumerComponent implements OnInit {
         if(searchFilter.charAt(0)===''){
           this.catalogItems=  this.catalog.catalogItem
         }
-        else{
-          this.snackbarService.openSnackBar('Please give valid input', { 'panelClass': 'snackbarerror' });
-        }
+        // else{
+        //   this.snackbarService.openSnackBar('Please give valid input', { 'panelClass': 'snackbarerror' });
+        // }
       }
       else{
         this.catalogItems=[]
