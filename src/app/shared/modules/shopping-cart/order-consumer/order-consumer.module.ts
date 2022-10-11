@@ -16,6 +16,7 @@ import { LoadingSpinnerModule } from '../../loading-spinner/loading-spinner.modu
 import { SkeletonLoadingModule } from '../../skeleton-loading/skeleton-loading.module';
 import { OrderConsumerComponent } from './order-consumer.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 
 const routes: Routes = [
   { path: 'ordercheckout', loadChildren: () => import('../order-consumer-checkout/order-consumer-checkout.module').then(m => m.OrderConsumerCheckoutModule) },
@@ -39,6 +40,7 @@ const routes: Routes = [
     AddItemNotesModule,
     SkeletonLoadingModule,
     MatAutocompleteModule,
+    CapitalizeFirstPipeModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
