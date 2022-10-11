@@ -126,6 +126,7 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   viewallSpec = false;
   showmoreDesc = false;
   showmoreSpec = false;
+  businessPhoneNumber: any;
   bNameStart = '';
   bNameEnd = '';
   image_list: any = [];
@@ -750,6 +751,10 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     }
     if (this.businessjson.phoneNumbers) {
       this.phonelist = this.businessjson.phoneNumbers;
+    }
+    if (this.businessjson.accountLinkedPhNo) {
+      this.businessPhoneNumber = this.businessjson.accountLinkedPhNo;
+      this.lStorageService.setitemonLocalStorage('businessPhoneNumber', this.businessPhoneNumber);
     }
     // this.getbusinessprofiledetails_json('gallery', true);
     if (this.userType === 'consumer') {

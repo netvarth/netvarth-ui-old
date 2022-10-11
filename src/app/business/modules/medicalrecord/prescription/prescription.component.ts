@@ -653,7 +653,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
             } else {
               this.drugList = data['prescriptionsList'];
               // console.log('this.drugList:',this.drugList)
-              // console.log(this.tempIndex);
+              console.log(this.tempIndex);
               this.addPrescription = true;
               this.newRowIndex++;
               // if(this.tempIndex >=0){
@@ -669,24 +669,24 @@ export class PrescriptionComponent implements OnInit, OnChanges {
               }
               else {
                 this.drugList = data['prescriptionsList'];
-                // console.log('this.drugList:',this.drugList);
+                console.log('this.drugList:', this.drugList);
                 // console.log('this.tempTextDelete',this.tempTextDelete)
-                if (this.tempTextDelete === 'TempDelete') {
-                  // alert(this.tempTextDelete)
-                  if (this.drugList && this.drugList.length < 2) {
-                    // alert('kkk')
-                    // this.reloadComponent();
-                    // this.location.back()
-                  }
-                  else {
-                    // alert('reloadComponent')
-                    this.reloadComponent();
-                  }
-                }
-                else {
-                  // alert('jjjjj::::')
-                  // this.reloadComponent()
-                }
+                // if (this.tempTextDelete === 'TempDelete') {
+                //   // alert(this.tempTextDelete)
+                //   if (this.drugList && this.drugList.length < 2) {
+                //     alert('kkk')
+                //     // this.reloadComponent();
+                //     // this.location.back()
+                //   }
+                //   else {
+                //     // alert('reloadComponent')
+                //     this.reloadComponent();
+                //   }
+                // }
+                // else {
+                //   // alert('jjjjj::::')
+                //   // this.reloadComponent()
+                // }
               }
 
               // this.prescList = false;
