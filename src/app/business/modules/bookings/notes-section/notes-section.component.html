@@ -6,7 +6,7 @@
       </h5>
     </div>
   </section>
-  <section [class.p-4]="!widget">
+  <section [class.p-4]="!widget" *ngIf="source === 'customer'">
     <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
       [class.widgetStyle]="widget">
       <div class="card card-custom data-card">
@@ -50,6 +50,12 @@
           </span>
         </div>
       </div>
+    </div>
+  </section>
+  <section [class.p-4]="!widget" *ngIf="source === 'customerNote'">
+    <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
+      [class.widgetStyle]="widget">
+     
       <div class="card card-custom data-card mgn-up-5">
         <div class="card-header collapsed" *ngIf="widget"
           [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
