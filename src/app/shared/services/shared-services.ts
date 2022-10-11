@@ -4,6 +4,8 @@ import { LocalStorageService } from './local-storage.service';
 // Import RxJs required methods
 import { ServiceMeta } from './service-meta';
 import { GroupStorageService } from './group-storage.service';
+// import { projectConstantsLocal } from '../constants/project-constants';
+import { projectConstantsLocal } from '../constants/project-constants';
 @Injectable()
 export class SharedServices {
 
@@ -1337,5 +1339,9 @@ export class SharedServices {
   updateAnalytics(body) {
     const url = 'provider/analytics/update';
     return this.servicemeta.httpPost(url, body);
+  }
+  getSearchCatalogItem(account: any, tempName:any, name: any) {
+    const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/Item/search?' + tempName + '=' + name + '*';
+    return this.servicemeta.httpGet(url);
   }
 }

@@ -38,14 +38,27 @@
           <div class="card-body">
             <div class="row">
               <div class="form-group col-md-12 col-sm-12 no-padding-small">
-                <input [value]="seacrchFilterOrder" class="form-control" (ngModelChange)="transform(seacrchFilterOrder)"
-                  [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" />
+                <input  class="form-control" 
+                  [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" [matAutocomplete]="autoprov"
+                  (ngModelChange)="transform(seacrchFilterOrder)"/>
+                  <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                    <mat-option *ngFor="let option of catalogItems" (click)="handleSearchSelect(option,seacrchFilterOrder)" 
+                    [value]="option.item.displayName">
+                      <div class="flexClass" style="justify-content: space-between;">
+                        <div class="flexClass">
+                            <div>{{option.item.displayName  | capitalizeFirst}}</div>
+                          </div>
+                      </div>
+                    </mat-option>
+                  </mat-autocomplete>
               </div>
             </div>
             <h4 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-name">
               {{this.catalog.catalogName}}</h4>
-            <h6 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-count">
-              {{this.catalog.catalogItem.length}} Items</h6>
+            <!-- <h6 class="card-title" *ngIf="catalog && catalog.catalogName" class="catalog-count">
+              {{this.catalog.catalogItem.length}} Items</h6> -->
+              <h6 class="card-title" class="catalog-count" *ngIf="catalogItems && catalogItems.length">
+                {{catalogItems.length}} Items</h6>
             <div *ngIf="catalogItems">
               <div *ngFor="let item of catalogItems;let i=index">
                 <div class="card item-card shadow-lg mt-3">
