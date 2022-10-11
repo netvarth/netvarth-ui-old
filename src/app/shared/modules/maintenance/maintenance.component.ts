@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
 // import { Router } from '@angular/router';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-maintenance',
   templateUrl: './maintenance.component.html'
@@ -11,7 +12,7 @@ export class MaintenanceComponent implements OnInit {
   loading = false;
   constructor(
     public shared_services: SharedServices,
-    // private router: Router,
+    private router: Router,
     private lStorageService: LocalStorageService
   ) { }
   ngOnInit() {
@@ -29,7 +30,7 @@ export class MaintenanceComponent implements OnInit {
         //   ()=> {
             if (this.lStorageService.getitemfromLocalStorage('customId')) {
               if(this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
-                window.location.href = 'customapp/' + this.lStorageService.getitemfromLocalStorage('customId') + '?at=' +  this.lStorageService.getitemfromLocalStorage('authToken');
+                this.router.navigate(['customapp'],this.lStorageService.getitemfromLocalStorage('customId'));
               } else if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='CUSTOM_WEBSITE'){
                 let source = this.lStorageService.getitemfromLocalStorage('source');
                 this.lStorageService.removeitemfromLocalStorage('reqFrom');
