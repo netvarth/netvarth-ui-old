@@ -34,7 +34,7 @@
                 <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date"> {{note.timeStamp | date: newDateFormat}}</span> 
                 <div class="note text-primary" [innerHTML]="note.note">
                 </div>
-              
+       
               <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
                 (click)="showImagesection(i)">
                 <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
@@ -52,6 +52,7 @@
       </div>
     </div>
   </section>
+  
   <section [class.p-4]="!widget" *ngIf="source === 'customerNote'">
     <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
       [class.widgetStyle]="widget">
@@ -84,7 +85,7 @@
       </div>
     </div>
   </section>
-  
+
   <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
     [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
     (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
