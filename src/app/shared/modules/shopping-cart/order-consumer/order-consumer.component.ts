@@ -98,6 +98,7 @@ export class OrderConsumerComponent implements OnInit {
   catalogimage_list_popup: any[];
   itemCount: any;
   deviceInfo: any;
+  tempRes: any;
   constructor(
     private location: Location,
     private lStorageService: LocalStorageService,
@@ -958,12 +959,21 @@ export class OrderConsumerComponent implements OnInit {
     let tempCatValue='displayName';
     this.shared_services.getSearchCatalogItem(this.account_id,tempCatValue,searchFilter).subscribe((res:any)=>{
       console.log(res);
+      
       // this.catalogItems=res;
       // let searchFilterItem=res;
       console.log(' this.catalogItems', this.catalogItems);
       // this.catalog.catalogItem.length==res.length;
       if(res.length===0){
-        this.catalogItems= this.catalog.catalogItem
+        // alert('kkk')
+        this.catalogItems=res;
+        this.tempRes=res;
+        if(searchFilter.charAt(0)===''){
+          this.catalogItems=  this.catalog.catalogItem
+        }
+        else{
+          this.snackbarService.openSnackBar('Please give valid input', { 'panelClass': 'snackbarerror' });
+        }
       }
       else{
         this.catalogItems=[]
