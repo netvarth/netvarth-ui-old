@@ -640,3 +640,86 @@ i {
 .mb-10 {
   margin-bottom: 2.5rem!important;
 }
+.inputClass{
+  width: 100%;
+}
+.firstFlex{
+  display: flex;
+  gap: 1px;
+  align-items: center;
+
+
+}
+.imgC{
+  width: 100% !important;
+    height: calc(1.5em + 1.3rem + 2px)!important;
+    cursor: pointer;
+}
+.matMenu{
+  border: none !important;
+    background: #fff !important;
+}
+.categorymain{
+  display: grid !important;
+}
+::ng-deep .mat-menu-panel .mat-menu-content{
+  display: grid !important;
+}
+.bTnFor{
+  border: none !important;
+    background: #fff ;
+}
+.form-control1DialCode{
+  display: block!important;
+    width: 15% !important;
+    height: calc(1.5em + 1.3rem + 2px)!important;
+    padding: 0.65rem 1rem!important;
+    font-size: 1rem!important;
+    font-weight: 400!important;
+    line-height: 1.5!important;
+    color: #3f4254!important;
+    border-color: #f3f6f9!important;
+    background-color: #f3f6f9!important;
+    background-clip: padding-box!important;
+    border: 1px solid #E4E6EF!important;
+    border-radius: 0.42rem!important;
+    box-shadow: none!important;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out!important;
+}
+@media (max-width: 768px){
+  .form-control1DialCode{
+    width: 30% !important;
+    background-color: #f3f6f9!important;
+    border-color: #f3f6f9!important;
+    color: #3f4254!important;
+  }
+}
+.form-control1DialCode.form-control1DialCode-solid{
+  background-color: #f3f6f9!important;
+  border-color: #f3f6f9!important;
+  color: #3f4254!important;
+}
+.flexClass{
+  display: flex;
+  gap: 5px;
+}
+.flexFirst{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.iconCls{
+  font-size: 15px;
+}
+::placeholder {
+  font-style: italic;
+  color: #707070;
+  opacity: 60%;
+  font-size: 14px;
+}
+/* ::ng-deep mat-menu-panel .mat-menu-content .mat-menu-item{
+  color: rgba(0, 0, 0, 0.7);
+} */
+.color{
+  color: #000 !important;
+}

@@ -15,6 +15,15 @@ import { GalleryModule as ModalGalleryModule } from '@ks89/angular-modal-gallery
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { RouterModule, Routes } from "@angular/router";
 import { QuestionnaireModule } from "../../../../../../src/app/shared/components/questionnaire/questionnaire.module";
+import { MatSelectModule } from "@angular/material/select";
+import { MatOptionModule } from "@angular/material/core";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatMenuModule } from "@angular/material/menu";
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+
+
 const routes: Routes = [
     {path: '', component: OrderWizardComponent}
 ]
@@ -36,6 +45,13 @@ const routes: Routes = [
         MatChipsModule,
         QuestionnaireModule,
         CapitalizeFirstPipeModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatMenuModule,
+        MatAutocompleteModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)]
     ]

@@ -122,19 +122,105 @@
 
 
                                 <div class="pb-5" *ngIf="step == 1">
-                                    <form class="form" [formGroup]="searchForm">
+                                    <!-- <form class="form" [formGroup]="searchForm"> -->
                                         <h3 class="mb-10 font-weight-bold text-dark"> Find {{customer_label
                                             |capitalizeFirst }} </h3>
-                                        <!--begin::Input      (keypress)="findCustomer(searchForm.value, $event)"-->
-                                        <div class="form-group disp-flex">
+                                        <!-- <div class="form-group disp-flex">
                                             <input type="text" formControlName="search_input"
                                                 class=" form-control1 form-control1-solid form-control1-lg"
                                                 name="search" placeholder={{searchby}} />
                                             <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
                                               searchCustomer(searchForm.value)"> Find </button>
+                                        </div> -->
+                                        
+                                        <div class="firstFlex">
+                                            <div>
+                                                <div>
+                                                    <button mat-button [matMenuTriggerFor]="menu" class="matMenu">
+                                                        <img src="../../../../../assets/images/Group_1512.png" class="imgC">
+                                                    </button>
+                                                </div>
+                                                <div>
+                                                    <mat-menu #menu="matMenu" class="categorymain">
+                                                        <button *ngFor="let category of categoryForSearchingarray" class="bTnFor"
+                                                            (click)="handleCategoryselect(category)">
+                                                            <button mat-menu-item >
+                                                                <span *ngIf="category">{{category.slice(12)}}</span>
+                                                                <!-- <span *ngIf="categoryvalue==='Search with Phone Number'"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                <span *ngIf="categoryvalue==='Search with Email ID'"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                                                <span *ngIf="categoryvalue==='Search with Name'"><i class="fa fa-check" aria-hidden="true"></i></span> -->
+                                                            </button>
+                                                        </button>
+                                                    </mat-menu>
+                                                </div>
+                                            </div>
+                                            <div class="inputClass">
+                                                <form class="form" [formGroup]="searchForm">
+                                                    <div *ngIf="categoryvalue==='Search with Phone Number'" class="firstFlex">
+                                                        <input autocomplete="off" type="text" class="form-control1DialCode form-control1-solid form-control1-lg"
+                                                            formControlName="search_inputDialCode">
+                                                        <input type="number" formControlName="search_input"
+                                                            class=" form-control1 form-control1-solid form-control1-lg" placeholder={{searchby}} autocomplete="off"
+                                                            (ngModelChange)="handleFormField(categoryvalue,searchForm.value)" [matAutocomplete]="autoprov" />
+                                                        <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                                                            <mat-option *ngFor="let option of customerList"
+                                                                (click)="handleSearchSelectPhone(option,searchForm.value)" [value]="option.phoneNo">
+                                                                <div class="flexFirst">
+                                                                    <div class="flexClass">
+                                                                        <div>{{option.phoneNo}}</div>
+                                                                        <div>({{option.name | capitalizeFirst }})</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <i class="fa fa-search iconCls"aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </mat-option>
+                                                        </mat-autocomplete>
+                                                    </div>
+                                                    <div *ngIf="categoryvalue==='Search with Email ID'">
+                                                        <input type="email" formControlName="search_input"
+                                                            class=" form-control1 form-control1-solid form-control1-lg" placeholder={{searchby}} autocomplete="off"
+                                                            (ngModelChange)="handleFormField(categoryvalue,searchForm.value)" [matAutocomplete]="autoprov" />
+                                                        <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                                                            <mat-option *ngFor="let option of customerList"
+                                                                (click)="handleSearchSelectPhone(option,searchForm.value)" [value]="option.email">
+                                                                <div class="flexFirst">
+                                                                    <div class="flexClass" style="justify-content:space-between">
+                                                                        <div>{{option.email}}</div>
+                                                                        <div>({{option.name | capitalizeFirst }})</div>
+                                                                    </div>
+                                                                    <div>
+                                                                        <i class="fa fa-search iconCls"aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </mat-option>
+                                                        </mat-autocomplete>
+                                                    </div>
+                                                    <div *ngIf="categoryvalue==='Search with Name'">
+                                                        <input type="text" formControlName="search_input"
+                                                            class=" form-control1 form-control1-solid form-control1-lg" placeholder={{searchby}} autocomplete="off"
+                                                            (ngModelChange)="handleFormField(categoryvalue,searchForm.value)" [matAutocomplete]="autoprov" />
+                                                        <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                                                            <mat-option *ngFor="let option of customerList"
+                                                                (click)="handleSearchSelectPhone(option,searchForm.value)" [value]="option.firstName">
+                                                                <div class="flexFirst">
+                                                                    <div class="flexClass" style="justify-content:space-between">
+                                                                        {{option.name | capitalizeFirst }}
+                                                                    </div>
+                                                                    <div>
+                                                                        <i class="fa fa-search iconCls"aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </mat-option>
+                                                        </mat-autocomplete>
+                                                    </div>
+                                                </form>
+                                                <!-- <button type="button" class="btn btn-primary ml-3 px-8 py-1" (click)="
+                                                                                          searchCustomer(searchForm.value)"> Find </button> -->
+                                                </div>
                                         </div>
 
-                                    </form>
+                                    <!-- </form> -->
 
                                     <div class="col-md-5 col-sm-10 col-xs-10 no-padding">
                                         <span *ngIf="emptyFielderror" class="sts-msg error"
@@ -158,7 +244,8 @@
                                                     <div class="bold font11"
                                                         *ngIf="customer_data.firstName || customer_data.lastName">
                                                         {{ customer_data.firstName }} {{ customer_data.lastName }}</div>
-                                                    <div *ngIf="jaldeeId">Id - {{ customer_data.jaldeeId }}</div>
+                                                    <!-- <div *ngIf="jaldeeId">Id - {{ customer_data.jaldeeId }}</div> -->
+                                                    <div *ngIf="customer_data && customer_data.id">Id - {{ customer_data.id }}</div>
                                                     <!-- <div *ngIf="jaldeeId === customer_data.firstName">Id - {{ customer_data.jaldeeId }}</div> -->
 
                                                     <div *ngIf="customer_data.phoneNo.trim()!==''"> <i

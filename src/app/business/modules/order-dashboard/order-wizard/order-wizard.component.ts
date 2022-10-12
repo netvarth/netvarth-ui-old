@@ -173,6 +173,15 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   api_loading = true;
   channel;
   uuid;
+
+  //auto suggestion variable
+  categoryvalue:string='Search with Phone Number';
+  categoryForSearchingarray = ['Search with Phone Number', 'Search with Email ID', 'Search with Name']
+  customerList:any;
+  tempAcId;
+  countryCodePhone='+91';
+  tempDataCustomerInfo;
+  categoryvalueSelect:boolean=false;
   constructor(private fb: FormBuilder,
     private wordProcessor: WordProcessor,
     public router: Router,
@@ -263,10 +272,11 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
-    this.searchby = 'Search by ' + this.customer_label + ' id/name/email/phone number';
+    this.searchby = 'Search by ' + this.customer_label + ' phone number/email/name';
     this.createForm();
     this.getCatalog();
     this.gets3curl();
+    this.bisinessProfile()
     
 
 
@@ -323,7 +333,8 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   }
   createForm() {
     this.searchForm = this.fb.group({
-      search_input: ['', Validators.compose([Validators.required])]
+      search_input: ['', Validators.compose([Validators.required])],
+      search_inputDialCode:['+91',[Validators.required]]
     });
     this.amForm = this.fb.group({
       phoneNumber: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
@@ -346,6 +357,66 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     if (event.key === 'Enter') {
       this.searchCustomer(form_data);
     }
+  }
+  handleCategoryselect(filterName){
+    if(filterName==='Search with Phone Number'){
+      this.searchForm.controls.search_input.setValue('');
+      this.categoryvalue='Search with Phone Number';
+      this.searchby = 'Search by ' + this.customer_label + ' phone number';
+    }
+    else if(filterName==='Search with Email ID'){
+      this.searchForm.controls.search_input.setValue('');
+      this.categoryvalue='Search with Email ID';
+      this.searchby = 'Search by ' + this.customer_label + ' email';
+    }
+    else if(filterName==='Search with Name'){
+      this.searchForm.controls.search_input.setValue('');
+      this.categoryvalue='Search with Name';
+      this.searchby = 'Search by ' + this.customer_label + ' name';
+    }
+  }
+  handleFormField(categoryvalue,customerInfo){
+    // console.log('categoryvalue',categoryvalue)
+    // console.log('customerInfo',customerInfo);
+    if(customerInfo && customerInfo['search_input']){
+      const phNoInput= customerInfo['search_input'];
+      this.getCustomerList(phNoInput);
+    }
+  }
+  handleSearchSelectPhone(custInfo,phNoValue){
+    // console.log('custInfo',custInfo);
+    // console.log('phNoValue',phNoValue);
+    this.tempDataCustomerInfo=custInfo;
+    this.searchCustomer(phNoValue)
+  }
+  bisinessProfile(){
+    this.searchForm.controls.search_input.setValue('');
+    this.provider_services.getBussinessProfile().subscribe((res:any)=>{
+        // console.log('BProfileRes',res);
+        if(res){
+            if(res['id']){
+                this.tempAcId= res['id'];   
+            }
+        }
+    })
+}
+  getCustomerList(tempPhoneNum){
+    let tempCatValue:any;
+    if(this.categoryvalue==='Search with Phone Number'){
+      tempCatValue='phoneNumber';
+    }
+    else if(this.categoryvalue==='Search with Email ID'){
+      tempCatValue='emailId';
+    }
+    else if(this.categoryvalue==='Search with Name'){
+      tempCatValue='name';
+    }
+        this.providerService.getSearchCustomer(this.tempAcId, tempCatValue,tempPhoneNum).subscribe((res)=>{
+          // console.log(res);
+          if(res){
+            this.customerList= res;
+          }
+        })
   }
 
 
@@ -424,9 +495,13 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
 
               this.createNew();
             } else {
+              // console.log('data2',data)
               if (data.length > 1) {
                 const customer = data.filter(member => !member.parent);
-                this.customer_data = customer[0];
+                console.log('customer',customer)
+                this.customer_data= this.tempDataCustomerInfo
+                // this.customer_data = customer[0];
+                this.jaldeeId = this.customer_data.jaldeeId;
 
               } else {
                 this.customer_data = data[0];
@@ -1420,7 +1495,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
                   img: this.selectedImagelist.base64[i],
                   description: this.selectedImagelist.caption[i] || ''
                 }, this.selectedImagelist.files[i].name);
-                console.log("Uploaded Image :",imgobj)
+                // console.log("Uploaded Image :",imgobj)
               this.image_list_popup.push(imgobj);
             }
           }
