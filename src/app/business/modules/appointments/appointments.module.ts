@@ -27,6 +27,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { FormsModule } from '@angular/forms';
 import { BookingHistoryModule } from '../../shared/booking-history/booking-history.module';
 import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
     {
@@ -72,6 +73,7 @@ const routes: Routes = [
         AppointmentActionsModule,
         FormsModule,
         BookingHistoryModule,
+        MatAutocompleteModule,
         [RouterModule.forChild(routes)]
     ],
     declarations: [

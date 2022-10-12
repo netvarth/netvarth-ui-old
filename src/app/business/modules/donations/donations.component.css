@@ -23,12 +23,6 @@
       } */
       
       @media (max-width: 576px) {
-          .dropdown.notifications-menu a {
-              /* padding-top: 2px !important;
-              line-height: 1.4 !important; */
-              /* height: 60px !important; */
-              /* width: 60px !important; */
-          }
           
           .dropdown.notifications-menu a i {
               /* font-size: 30px !important; */
