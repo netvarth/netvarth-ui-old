@@ -80,6 +80,9 @@ export class DonationsComponent implements OnInit {
   selectAll = false;
   filtericonTooltip: any;
   filtericonclearTooltip: any;
+  //auto suggestion variable start
+  customerList;
+  tempAcId: any;
   constructor(private provider_services: ProviderServices,
     public dateformat: DateFormatPipe,
     public router: Router,
@@ -114,6 +117,7 @@ export class DonationsComponent implements OnInit {
     this.domain = user.sector;
     this.getServiceList();
     this.getLocationList();
+    this.bisinessProfile()
   }
   filterClicked(type) {
     this.filters[type] = !this.filters[type];
@@ -612,5 +616,51 @@ export class DonationsComponent implements OnInit {
   printCheckin(donation) {
     this.router.navigate(['provider', 'donations', donation.uid, 'print'],{queryParams:{bookingType:'donation'}});
 }
+handleFormField(formField,context){
+  console.log(formField)
+  console.log(context);
+  this.getCustomerList(formField)
+}
+handleSearchSelect(filterValue,nameInfo){
+  console.log('filterValue',filterValue)
+  console.log(nameInfo);
+  if(filterValue['firstName']){
+    this.filterapplied=true;
+    // this.doSearch()
+    if(filterValue && filterValue['lastName']){
+      this.filter.last_name= filterValue['lastName'];
+    }
+  }
+  
+}
+bisinessProfile(){
+  // this.searchForm.controls.search_input.setValue('');
+  this.provider_services.getBussinessProfile().subscribe((res:any)=>{
+      console.log('BProfileRes',res);
+      if(res){
+          if(res['id']){
+              this.tempAcId= res['id'];   
+          }
+      }
+  })
+}
+  getCustomerList(tempPhoneNum) {
+    let tempCatValue: any;
+    tempCatValue = 'name';
+    this.provider_services.getSearchCustomer(this.tempAcId, tempCatValue, tempPhoneNum).subscribe((res:any) => {
+      console.log(res);
+      if(res.length===0){
+        this.filter.last_name='';
+        this.filter.first_name='';
+        this.clearFilter()
+      }
+      else{
+        if (res) {
+          this.customerList = res;
+        }
+      }
+      
+    })
+  }
 }
 

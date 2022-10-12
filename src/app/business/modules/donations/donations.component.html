@@ -160,20 +160,39 @@
                     <div class="card-body">
                       <div class="filterTextinput filter-text-input">
                         <li class="filterli filter-li">
-                          <!-- <input type="text" #Ffname  class="filterTextbox filter-textbox"
-                            [(ngModel)]="filter.first_name" [ngModelOptions]="{standalone: true}"
-                            placeholder="Enter First Name"> -->
-                            <input type="text" #Ffname  class="filterTextbox" [(ngModel)]="filter.first_name"
-                            placeholder="Enter First Name" (keyup)="keyPressed()">
+                            <input type="text" #Ffname  class="form-control1 form-control1-solid form-control1-lg" [(ngModel)]="filter.first_name"
+                            placeholder="Enter First Name" (keyup)="keyPressed()" [matAutocomplete]="autoprov" (ngModelChange)="handleFormField(filter.first_name,'firstName')">
+                            <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                              <mat-option *ngFor="let option of customerList"[value]="option.firstName" (onSelectionChange)="handleSearchSelect(option,filter.first_name)">
+                                  <div class="flexFirst" *ngIf="option && option.name">
+                                      <div class="flexClass">
+                                          <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
+                                      </div>
+                                      <div>
+                                          <i class="fa fa-search iconCls"aria-hidden="true"></i>
+                                      </div>
+                                  </div>
+                              </mat-option>
+                          </mat-autocomplete>
                         </li>
                       </div>
                       <div class="filterTextinput filter-text-input">
                         <li class="filterli filter-li">
-                          <!-- <input type="text" #Flname  class="filterTextbox filter-textbox"
-                            [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
-                            placeholder="Enter Last Name"> -->
-                            <input type="text" #Llname  class="filterTextbox" (keyup)="keyPressed()"  [(ngModel)]="filter.last_name"
-                            placeholder="Enter Last Name">
+                            <input type="text" #Llname  class="form-control1 form-control1-solid form-control1-lg" (keyup)="keyPressed()"  [(ngModel)]="filter.last_name"
+                            placeholder="Enter Last Name" >
+                            <!-- [matAutocomplete]="autoprov" (ngModelChange)="handleFormField(filter.last_name,'lastName')" -->
+                            <!-- <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete" >
+                              <mat-option *ngFor="let option of customerList" (click)="handleSearchSelect(option,filter.last_name)"[value]="option.last_name">
+                                  <div class="flexFirst" *ngIf="option && option.last_name">
+                                      <div class="flexClass">
+                                          <div *ngIf="option && option.last_name">{{option.last_name | capitalizeFirst }}</div>
+                                      </div>
+                                      <div>
+                                          <i class="fa fa-search iconCls"aria-hidden="true"></i>
+                                      </div>
+                                  </div>
+                              </mat-option>
+                          </mat-autocomplete> -->
                         </li>
                       </div>
                     </div>

@@ -15,6 +15,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { ProviderServices } from '../../services/provider-services.service';
 import { MatSelectModule } from "@angular/material/select";
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 const routes: Routes = [
     { path: '', component: DonationsComponent },
@@ -40,6 +41,7 @@ const routes: Routes = [
         MatIconModule,
         MatCheckboxModule,
         AddInboxMessagesModule,
+        MatAutocompleteModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [DonationsComponent],
