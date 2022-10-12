@@ -12,7 +12,10 @@
     padding-left: 30px;
     margin-bottom: 20px;
 }
-
+.inboxList{
+    height: 147px;
+    overflow: auto;
+}
 .edit-btn {
     font-size: 15px !important;
     border-radius: 10px !important;

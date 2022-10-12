@@ -32,9 +32,8 @@
               <div class="note_view consumerCard">
                 <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
                 <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date"> {{note.timeStamp | date: newDateFormat}}</span> 
-                <div class="note text-primary" [innerHTML]="note.note">
+                <div class="note text-primary" *ngIf="note" [innerHTML]="note.note">
                 </div>
-       
               <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
                 (click)="showImagesection(i)">
                 <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
@@ -48,6 +47,7 @@
             </div>
             </div>
           </span>
+          <span *ngIf="waitlist_notes && waitlist_notes.length <= 0">No notes found</span>
         </div>
       </div>
     </div>
@@ -75,7 +75,7 @@
               <div class="note_view  consumerCard">
                 <span class="" *ngIf="waitlistdata">
                   <p class="status-label note_date" *ngIf="waitlistdata.consumerNote !== ''">{{waitlistdata.consumerNote}}</p>
-                  <p class="status-label note_date" *ngIf="waitlistdata.consumerNote === '' || waitlistdata.consumerNote === undefined">No Notes Found</p>
+                  <p class="status-label note_date" *ngIf="waitlistdata.consumerNote === '' || waitlistdata.consumerNote === undefined">No notes found</p>
                 </span>
             </div>
             </div>
