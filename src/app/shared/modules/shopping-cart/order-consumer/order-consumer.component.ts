@@ -99,6 +99,7 @@ export class OrderConsumerComponent implements OnInit {
   catalogimage_list_popup: any[];
   itemCount: any;
   deviceInfo: any;
+  tempRes: any;
   constructor(
     private location: Location,
     private lStorageService: LocalStorageService,
@@ -955,58 +956,68 @@ export class OrderConsumerComponent implements OnInit {
 
 
   transform(seacrchFilterOrder) {
-    console.log('seacrchFilterOrder', seacrchFilterOrder);
+    // console.log('seacrchFilterOrder', seacrchFilterOrder);
     this.getCataLogDetails(seacrchFilterOrder)
   }
-  handleSearchSelect(cataItem, searchFilter) {
-    console.log(cataItem);
-    console.log('searchFilter', searchFilter);
-
+  handleSearchSelect(cataItem,searchFilter){
+    // console.log(cataItem);
+    // console.log('searchFilter',searchFilter);
+    
   }
-  getCataLogDetails(searchFilter) {
-    let tempCatValue = 'displayName';
-    this.shared_services.getSearchCatalogItem(this.account_id, tempCatValue, searchFilter).subscribe((res: any) => {
-      console.log(res);
-      console.log(' this.catalogItems', this.catalogItems);
-      if (res.length === 0) {
-        this.catalogItems = this.catalog.catalogItem
-      }
-      else {
-        this.catalogItems = []
-        console.log('this.catalog', this.catalog.catalogItem)
-        for (let x = 0; x < this.catalog.catalogItem.length; x++) {
-          for (let i = 0; i < res.length; i++) {
-            if (this.catalog.catalogItem[x].item.itemId === res[i].itemId) {
-              this.catalogItems.push({
-                item: {
-                  'adhoc': this.catalog.catalogItem[x].item.adhoc,
-                  'displayName': this.catalog.catalogItem[x].item.displayName,
-                  'isShowOnLandingpage': this.catalog.catalogItem[x].item.isShowOnLandingpage,
-                  'isStockAvailable': this.catalog.catalogItem[x].item.isStockAvailable,
-                  'itemCode': this.catalog.catalogItem[x].item.itemCode,
-                  'itemId': this.catalog.catalogItem[x].item.itemId,
-                  'itemName': this.catalog.catalogItem[x].item.itemName,
-                  'itemNameInLocal': this.catalog.catalogItem[x].item.itemNameInLocal,
-                  'promotionalPrcnt': this.catalog.catalogItem[x].item.promotionalPrcnt,
-                  'showPrice': this.catalog.catalogItem[x].item.showPrice,
-                  'showPromotionalPrice': this.catalog.catalogItem[x].item.showPromotionalPrice,
-                  'taxable': this.catalog.catalogItem[x].item.taxable,
-                  'itemDesc': this.catalog.catalogItem[x].item.itemDesc,
-                  'itemType': this.catalog.catalogItem[x].item.itemType,
-                  'notes': [],
-                  'price': this.catalog.catalogItem[x].item.price,
-                  'promotionalPriceType': this.catalog.catalogItem[x].item.promotionalPriceType,
-                  'shortDesc': this.catalog.catalogItem[x].item.shortDesc,
-                  'status': this.catalog.catalogItem[x].item.status,
-                }
-              });
-            }
-          }
-
+  getCataLogDetails(searchFilter){
+    let tempCatValue='displayName';
+    this.shared_services.getSearchCatalogItem(this.account_id,tempCatValue,searchFilter).subscribe((res:any)=>{
+      // console.log(res);
+      // console.log(' this.catalogItems', this.catalogItems);
+      if(res.length===0){
+        this.catalogItems=res;
+        this.tempRes=res;
+        if(searchFilter.charAt(0)===''){
+          this.catalogItems=  this.catalog.catalogItem
         }
       }
-
+      else{
+        this.catalogItems=[]
+        console.log('this.catalog',this.catalog.catalogItem)
+        for(let x=0;x<this.catalog.catalogItem.length;x++){
+          for(let i=0;i<res.length;i++){
+            if(this.catalog.catalogItem[x].item.itemId === res[i].itemId){
+                this.catalogItems.push({
+              item:{
+                'adhoc':this.catalog.catalogItem[x].item.adhoc,
+                'displayName':this.catalog.catalogItem[x].item.displayName,
+                'isShowOnLandingpage':this.catalog.catalogItem[x].item.isShowOnLandingpage,
+                'isStockAvailable':this.catalog.catalogItem[x].item.isStockAvailable,
+                'itemCode':this.catalog.catalogItem[x].item.itemCode,
+                'itemId':this.catalog.catalogItem[x].item.itemId,
+                'itemName':this.catalog.catalogItem[x].item.itemName,
+                'itemNameInLocal':this.catalog.catalogItem[x].item.itemNameInLocal,
+                'promotionalPrcnt':this.catalog.catalogItem[x].item.promotionalPrcnt,
+                'showPrice':this.catalog.catalogItem[x].item.showPrice,
+                'showPromotionalPrice':this.catalog.catalogItem[x].item.showPromotionalPrice,
+                'taxable':this.catalog.catalogItem[x].item.taxable,
+                'itemDesc':this.catalog.catalogItem[x].item.itemDesc,
+                'itemType':this.catalog.catalogItem[x].item.itemType,
+                'notes':[],
+                'price':this.catalog.catalogItem[x].item.price,
+                'promotionalPriceType':this.catalog.catalogItem[x].item.promotionalPriceType,
+                'shortDesc':this.catalog.catalogItem[x].item.shortDesc,
+                'status':this.catalog.catalogItem[x].item.status,
+              }
+            });
+            }
+          } 
+        }       
+      }
+          
     })
+  }
+  myMethod(data){
+    console.log(data);
+    // if(data===undefined){
+    //   this.catalogItems=[]
+    // }
+    
   }
 
 }
