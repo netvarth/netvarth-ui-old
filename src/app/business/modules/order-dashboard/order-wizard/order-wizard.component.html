@@ -165,10 +165,10 @@
                                                         <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
                                                             <mat-option *ngFor="let option of customerList"
                                                                 (click)="handleSearchSelectPhone(option,searchForm.value)" [value]="option.phoneNo">
-                                                                <div class="flexFirst">
+                                                                <div class="flexFirst" *ngIf="option && option.phoneNo">
                                                                     <div class="flexClass">
-                                                                        <div>{{option.phoneNo}}</div>
-                                                                        <div>({{option.name | capitalizeFirst }})</div>
+                                                                        <div *ngIf="option && option.phoneNo">{{option.phoneNo}}</div>
+                                                                        <div *ngIf="option && option.name">({{option.name | capitalizeFirst }})</div>
                                                                     </div>
                                                                     <div>
                                                                         <i class="fa fa-search iconCls"aria-hidden="true"></i>
@@ -184,10 +184,10 @@
                                                         <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
                                                             <mat-option *ngFor="let option of customerList"
                                                                 (click)="handleSearchSelectPhone(option,searchForm.value)" [value]="option.email">
-                                                                <div class="flexFirst">
+                                                                <div class="flexFirst"  *ngIf="option && option.email">
                                                                     <div class="flexClass" style="justify-content:space-between">
-                                                                        <div>{{option.email}}</div>
-                                                                        <div>({{option.name | capitalizeFirst }})</div>
+                                                                        <div *ngIf="option && option.email">{{option.email}}</div>
+                                                                        <div *ngIf="option && option.name">({{option.name | capitalizeFirst }})</div>
                                                                     </div>
                                                                     <div>
                                                                         <i class="fa fa-search iconCls"aria-hidden="true"></i>
@@ -203,9 +203,9 @@
                                                         <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
                                                             <mat-option *ngFor="let option of customerList"
                                                                 (click)="handleSearchSelectPhone(option,searchForm.value)" [value]="option.firstName">
-                                                                <div class="flexFirst">
+                                                                <div class="flexFirst" *ngIf="option && option.firstName">
                                                                     <div class="flexClass" style="justify-content:space-between">
-                                                                        {{option.name | capitalizeFirst }}
+                                                                        <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
                                                                     </div>
                                                                     <div>
                                                                         <i class="fa fa-search iconCls"aria-hidden="true"></i>
