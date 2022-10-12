@@ -393,6 +393,12 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable')));
+    this.lStorageService.removeitemfromLocalStorage('appId');
+    this.lStorageService.removeitemfromLocalStorage('installId');
+    this.lStorageService.removeitemfromLocalStorage('theme');
+    if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
+      this.lStorageService.removeitemfromLocalStorage('reqFrom');
+    }
     if (!this.lStorageService.getitemfromLocalStorage('reqFrom')) {
       this.lStorageService.setitemonLocalStorage('reqFrom', 'WEB_LINK');
     }
@@ -742,9 +748,9 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
       this.extChecindialogRef.close();
     }
     this.subscriptions.unsubscribe();
-    if (this.lStorageService.getitemfromLocalStorage('reqFrom') !== 'cuA') {
-      this.lStorageService.removeitemfromLocalStorage('reqFrom');
-    }
+    // if (this.lStorageService.getitemfromLocalStorage('reqFrom') !== 'cuA') {
+    //   this.lStorageService.removeitemfromLocalStorage('reqFrom');
+    // }
 
   }
 

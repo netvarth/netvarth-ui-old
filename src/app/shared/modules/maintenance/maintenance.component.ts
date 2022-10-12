@@ -30,7 +30,7 @@ export class MaintenanceComponent implements OnInit {
         //   ()=> {
             if (this.lStorageService.getitemfromLocalStorage('customId')) {
               if(this.lStorageService.getitemfromLocalStorage('reqFrom')==='cuA') {
-                this.router.navigate(['customapp'],this.lStorageService.getitemfromLocalStorage('customId'));
+                this.router.navigate(['customapp',this.lStorageService.getitemfromLocalStorage('customId')]);
               } else if (this.lStorageService.getitemfromLocalStorage('reqFrom')==='CUSTOM_WEBSITE'){
                 let source = this.lStorageService.getitemfromLocalStorage('source');
                 this.lStorageService.removeitemfromLocalStorage('reqFrom');

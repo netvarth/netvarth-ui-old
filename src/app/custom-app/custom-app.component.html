@@ -14,6 +14,11 @@
                             <app-header [includedfrom]="'pdetails'" [accountId]="accountId" [customId]="accountEncId"
                                 [showHeaderAction]="true" *ngIf="accountExists && isLoggedIn && accountId">
                             </app-header>
+                            <!-- <div style="display: flex;cursor:pointer" *ngFor="let lang of languages"
+                                (click)="changeLocale(lang.value,lang.viewValue)">
+                                <h6> {{lang.viewValue}} <span *ngIf="lang.viewValue != 'Tamil'">|</span>
+                                </h6>
+                            </div> -->
                             <div class="view-booking" *ngIf="accountExists && !isLoggedIn">
                                 <a class="pull-right btn link pad-10 dashboard-btn" (click)="dashboardClicked()">My
                                     Bookings</a>

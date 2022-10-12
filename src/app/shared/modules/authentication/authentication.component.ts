@@ -112,8 +112,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   sendOTP(mode?) {
     this.phoneError = null;
     this.btnClicked = true;
-    this.lStorageService.removeitemfromLocalStorage('authToken');
-    this.lStorageService.removeitemfromLocalStorage('authorization');
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     this.lStorageService.removeitemfromLocalStorage('googleToken');
     if (this.phoneNumber && this.phoneNumber.dialCode === '+91') {
@@ -313,12 +311,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             if (pN.startsWith(this.dialCode)) {
               loginId = pN.split(this.dialCode)[1];
             }
-            if (!response.linkedToPrivateDatabase) {
-              this.lStorageService.setitemonLocalStorage('authorizationToken', response.token);
+            this.lStorageService.setitemonLocalStorage('authorizationToken', response.token);
+            if (!response.linkedToPrivateDatabase) {              
               this.step = 2;
               this.btnClicked = false;
             } else {
-              this.lStorageService.setitemonLocalStorage('authorizationToken', response.token);
               const credentials = {
                 countryCode: this.dialCode,
                 loginId: loginId,
@@ -336,34 +333,22 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 this.btnClicked = false;
               }, (error: any) => {
                 this.btnClicked = false;
-                if (error.status === 401 && error.error === 'Session Already Exist') {
-                  const activeUser = _this.lStorageService.getitemfromLocalStorage('ynw-user');
-                  if (!activeUser) {
-                    _this.authService.doLogout().then(
-                      () => {
-                        _this.authService.consumerAppLogin(credentials).then(
-                          () => {
-                            _this.ngZone.run(
-                              () => {
-                                const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-                                if (reqFrom === 'cuA') {
-                                  const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
-                                  _this.lStorageService.setitemonLocalStorage('refreshToken', token);
-                                }
-                                _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
-                                _this.actionPerformed.emit('success');
-                              }
-                            )
-                          });
-                      }
-                    )
-                  } else {
-                    _this.authService.doLogout().then(
-                      () => {
-                        _this.actionPerformed.emit('success');
-                        this.btnClicked = false;
+                if (error.status === 401 && (error.error === 'Session Already Exist' || error.error === 'Session already exists.')) {
+                  _this.authService.doLogout().then(() => {
+                    _this.lStorageService.removeitemfromLocalStorage('logout');
+                    _this.authService.consumerAppLogin(credentials).then(() => {
+                        _this.ngZone.run(() => {
+                            const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+                            if (reqFrom === 'cuA') {
+                              const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                              _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+                            }
+                            _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+                            _this.actionPerformed.emit('success');
+                          }
+                        )
                       });
-                  }
+                  })
                 } else if (error.status === 401) {
                   _this.ngZone.run(
                     () => {
@@ -385,8 +370,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   }
   handleCredentialResponse(response) {
     const _this = this;
-    // this.lStorageService.removeitemfromLocalStorage('authToken');
-    this.lStorageService.removeitemfromLocalStorage('authorization');
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     this.lStorageService.removeitemfromLocalStorage('googleToken');
     console.log(response);
@@ -408,32 +391,23 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
         }
       )
     }, (error: any) => {
-      if (error.status === 401 && error.error === 'Session Already Exist') {
-        const activeUser = _this.lStorageService.getitemfromLocalStorage('ynw-user');
-        if (!activeUser) {
-          _this.authService.doLogout().then(
-            () => {
-              _this.authService.consumerLoginViaGmail(credentials).then(
-                () => {
-                  _this.ngZone.run(
-                    () => {
-                      const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-                      if (reqFrom === 'cuA') {
-                        const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
-                        _this.lStorageService.setitemonLocalStorage('refreshToken', token);
-                      }
-                      _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
-                      _this.lStorageService.removeitemfromLocalStorage('googleToken');
-
-                      _this.actionPerformed.emit('success');
-                    }
-                  )
-                });
-            }
-          )
-        } else {
-          _this.actionPerformed.emit('success');
-        }
+      if (error.status === 401 && (error.error === 'Session Already Exist' || error.error === 'Session already exists.')) {
+        _this.authService.doLogout().then(() => {
+          _this.authService.consumerLoginViaGmail(credentials).then(() => {
+              _this.ngZone.run(() => {
+                  const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+                  if (reqFrom === 'cuA') {
+                    const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                    _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+                  }
+                  _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+                  _this.lStorageService.removeitemfromLocalStorage('googleToken');
+                  _this.actionPerformed.emit('success');
+                }
+              )
+            });
+          }
+        )
       } else if (error.status === 401) {
         let names = payLoad['name'].split(' ');
         _this.firstName = names[0];

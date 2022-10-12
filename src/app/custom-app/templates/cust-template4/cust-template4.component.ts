@@ -443,30 +443,4 @@ export class CustTemplate4Component implements OnInit {
       }
     );
   }
-  // communicateHandler() {
-  //   const _this = this;
-  //   // _this.loading = true;
-  //   _this.authService.goThroughLogin().then(
-  //     (status) => {
-  //       if (status) {
-  //         _this.showCommunicate(this.businessProfile.id);
-  //       } else {
-  //         const passParam = { callback: 'communicate' };
-  //         this.doLogin('consumer', passParam);
-  //       }
-  //     });
-  //   // const _this = this;
-  //   // const providforCommunicate = this.provider_bussiness_id;
-  //   // _this.goThroughLogin().then(
-  //   //   (status) => {
-  //   //     if (status) {
-  //   //       _this.showCommunicate(providforCommunicate);
-
-  //   //     } else {
-  //   //       const passParam = { callback: 'communicate', providerId: providforCommunicate, provider_name: name };
-  //   //       this.doLogin('consumer', passParam);
-  //   //     }
-  //   //   }
-  //   // );
-  // }
 }

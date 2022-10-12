@@ -24,6 +24,7 @@ import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { SubSink } from 'subsink';
+import { AuthService } from '../../../shared/services/auth-service';
 @Component({
   selector: 'app-cust-template2',
   templateUrl: './cust-template2.component.html',
@@ -310,7 +311,8 @@ export class CustTemplate2Component implements OnInit {
     private snackbarService: SnackbarService,
     private domainConfigService: DomainConfigGenerator,
     private dateTimeProcessor: DateTimeProcessor,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    private authService: AuthService
   ) {
     // this.domainList = this.lStorageService.getitemfromLocalStorage('ynw-bconf');
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -1431,40 +1433,40 @@ export class CustTemplate2Component implements OnInit {
   }
 
 
-  goThroughLogin() {
-    return new Promise((resolve) => {
-      const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-      let qrusr = this.sharedFunctionobj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
-      // qrusr = JSON.parse(qrusr);
-      if (qrusr && qrpw) {
-        const data = {
-          'countryCode': qrusr.countryCode,
-          'loginId': qrusr.loginId,
-          'password': qrpw,
-          'mUniqueId': null
-        };
-        this.shared_services.ConsumerLogin(data).subscribe(
-          (loginInfo: any) => {
-            this.lStorageService.setitemonLocalStorage('qrp', data.password);
-            resolve(true);
-          },
-          (error) => {
-            if (error.status === 401 && error.error === 'Session already exists.') {
-              resolve(true);
-            } else {
-              resolve(false);
-            }
-          }
-        );
-      } else {
-        resolve(false);
-      }
-    });
-  }
+  // goThroughLogin() {
+  //   return new Promise((resolve) => {
+  //     const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
+  //     let qrusr = this.sharedFunctionobj.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+  //     // qrusr = JSON.parse(qrusr);
+  //     if (qrusr && qrpw) {
+  //       const data = {
+  //         'countryCode': qrusr.countryCode,
+  //         'loginId': qrusr.loginId,
+  //         'password': qrpw,
+  //         'mUniqueId': null
+  //       };
+  //       this.shared_services.ConsumerLogin(data).subscribe(
+  //         (loginInfo: any) => {
+  //           this.lStorageService.setitemonLocalStorage('qrp', data.password);
+  //           resolve(true);
+  //         },
+  //         (error) => {
+  //           if (error.status === 401 && error.error === 'Session already exists.') {
+  //             resolve(true);
+  //           } else {
+  //             resolve(false);
+  //           }
+  //         }
+  //       );
+  //     } else {
+  //       resolve(false);
+  //     }
+  //   });
+  // }
   redirectToHistory() {
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
+    _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
           this.routerobj.navigate(['searchdetail', this.provider_bussiness_id, 'history']);
@@ -1487,7 +1489,7 @@ export class CustTemplate2Component implements OnInit {
   communicateHandler() {
     const _this = this;
     const providforCommunicate = this.provider_bussiness_id;
-    _this.goThroughLogin().then(
+    _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
           _this.showCommunicate(providforCommunicate);
@@ -1563,7 +1565,7 @@ export class CustTemplate2Component implements OnInit {
     }
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
+    _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
           //console.log("logged In");
@@ -1614,7 +1616,7 @@ export class CustTemplate2Component implements OnInit {
       this.futureAllowed = false;
     }
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
+    _this.authService.goThroughLogin().then(
       (status) => {
         //  console.log("Login Status:" + status);
         if (status) {
@@ -1890,7 +1892,7 @@ export class CustTemplate2Component implements OnInit {
   payClicked(locid, locname, cdate, service) {
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
+    _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
@@ -2595,7 +2597,7 @@ export class CustTemplate2Component implements OnInit {
   dashboardClicked() {
     const _this = this;
     _this.loading_direct = true;
-    _this.goThroughLogin().then(
+    _this.authService.goThroughLogin().then(
       (status) => {
         if (status) {
           this.viewDashboard();

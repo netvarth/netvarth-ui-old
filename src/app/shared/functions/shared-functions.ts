@@ -100,7 +100,6 @@ export class SharedFunctions {
     const promise = new Promise((resolve, reject) => {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       if (!user.id) {
-        // this.router.navigate(['logout']);
         this.authService.logoutFromJaldee().then();
       }
       this.shared_service.getProfile(user.id, this.isBusinessOwner('returntyp'))

@@ -121,9 +121,6 @@ export class AuthService {
     }
     logoutNoRedirect() {this.doLogout().then(data => {},error => {});}
     logoutFromJaldee(srcUrl?) {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom') !== 'cuA') {
-            this.lStorageService.removeitemfromLocalStorage('authorization');
-        }
         const promise = new Promise<void>((resolve, reject) => {
             const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
             const isCustomProvider = this.lStorageService.getitemfromLocalStorage('busLoginId');
@@ -144,7 +141,6 @@ export class AuthService {
             } else {
                 this.consumerLogout().then(
                     () => {
-                        this.lStorageService.removeitemfromLocalStorage('authToken');
                         if (customId) {
                             if (reqFrom === 'cuA') {
                                 this.lStorageService.removeitemfromLocalStorage('refreshToken');
@@ -179,14 +175,16 @@ export class AuthService {
     }
 
     doLogout() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom') !== 'cuA') {
-            this.lStorageService.removeitemfromLocalStorage('authorization');
-        }
+        this.lStorageService.setitemonLocalStorage('logout', true);
         const promise = new Promise<void>((resolve, reject) => {
             if (this.lStorageService.getitemfromLocalStorage('isBusinessOwner') === 'true') {
                 this.providerLogout().then(data => {resolve();});
             } else {
-                this.consumerLogout().then(data => {resolve();});
+                let authToken = this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                this.consumerLogout().then(data => {
+                    this.lStorageService.setitemonLocalStorage('authorizationToken', authToken);
+                    resolve();
+                });
             }
         });
         return promise;
@@ -283,11 +281,13 @@ export class AuthService {
                     },
                     error => {
                         this.sendMessage({ ttype: 'main_loading', action: false });
+                        console.log(error);
                         if (error.status === 401) {
                             // Not registred consumer or session alredy exists
                             reject(error);
                             // this.logout(); // commented as reported in bug report of getting reloaded on invalid user
                         } else {
+                            
                             if (error.error && typeof (error.error) === 'object') {
                                 error.error = this.API_ERROR;
                             }
@@ -394,7 +394,8 @@ export class AuthService {
      * @returns true/false
      */
     goThroughLogin() {
-        if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
+        this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {            
             const _this = this;
             let qrusr = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
             console.log("Entered to goThroughLogin Method");
@@ -404,10 +405,6 @@ export class AuthService {
                 } else {
                     resolve(false);
                 }
-            });
-        } else if (this.lStorageService.getitemfromLocalStorage('authorization')) {
-            return new Promise((resolve) => {
-                resolve(true);
             });
         } else {
             return new Promise((resolve) => {
