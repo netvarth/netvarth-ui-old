@@ -103,4 +103,8 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  videoaudioS3Upload(file, url) {
+    return this.servicemeta.httpPut(url, file);
+  }
+
 }

@@ -1179,10 +1179,10 @@ export const projectConstantsLocal = {
     {name: 'Brother', displayName: 'Brother'},
     {name: 'MotherInlaw', displayName: 'MotherInlaw'},
     {name: 'FatherInlaw', displayName: 'FatherInlaw'},
-    {name: 'DaughterInlaw', displayName: 'DaughterInlaw'},
-    {name: 'SisterInLaw', displayName: 'SisterInLaw'},
-    {name: 'BrotherInlaw', displayName: 'BrotherInlaw'},
-    {name: 'SonInlaw', displayName: 'SonInlaw'},
+    {name: 'DaughterInlaw', displayName: 'Daughter In law'},
+    {name: 'SisterInLaw', displayName: 'Sister In Law'},
+    {name: 'BrotherInlaw', displayName: 'Brother In law'},
+    {name: 'SonInlaw', displayName: 'Son In law'},
     {name: 'Other', displayName: 'Other'}
   ],
   KYC_LIST: [

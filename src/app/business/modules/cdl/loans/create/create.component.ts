@@ -10,6 +10,8 @@ import { CdlService } from '../../cdl.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { FileService } from '../../../../../shared/services/file-service';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 // import { SharedServices } from '../../../../../shared/services/shared-services';
 // import { SubSink } from 'subsink';
 
@@ -27,9 +29,9 @@ export class CreateComponent implements OnInit {
   };
 
   selectedFiles = {
-    "aadharattachment": { files: [], base64: [], caption: [] },
-    "panattachment": { files: [], base64: [], caption: [] },
-    "customerphoto": { files: [], base64: [], caption: [] }
+    "aadhar": { files: [], base64: [], caption: [] },
+    "pan": { files: [], base64: [], caption: [] },
+    "photo": { files: [], base64: [], caption: [] }
   }
 
 
@@ -62,7 +64,6 @@ export class CreateComponent implements OnInit {
   loanCategories: any;
   loanProducts: any;
   loanTypes: any;
-  fileObjFinal: any;
   user: any;
   customerInfo: any;
   customerDetails: any;
@@ -94,6 +95,8 @@ export class CreateComponent implements OnInit {
   lastName: any;
   loanStatuses: any;
   loanSchemes: any;
+  relations = projectConstantsLocal.RELATIONSHIPS;
+  filesToUpload: any = [];
   constructor(
     private location: Location,
     private router: Router,
@@ -102,7 +105,7 @@ export class CreateComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private createLoanFormBuilder: FormBuilder,
     private groupService: GroupStorageService,
-    // private sharedServices: SharedServices,
+    private wordProcessor: WordProcessor,
     private cdlservice: CdlService,
     private fileService: FileService
   ) {
@@ -145,8 +148,6 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.emicount.setValue(this.loanData.emiPaidAmountMonthly);
             this.createLoan.controls.nomineename.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
             this.createLoan.controls.nomineetype.setValue(this.loanData.loanApplicationKycList[0].nomineeType);
-
-
 
             this.aadharverification = true;
             this.verification = true;
@@ -301,10 +302,21 @@ export class CreateComponent implements OnInit {
   resetErrors() {
 
   }
-
+  
+  getFileInfo(type, list) {
+    console.log('list',list)
+    let fileInfo = list.filter((fileObj) => {
+      console.log('fileObj',fileObj);
+      return fileObj.type === type ? fileObj : '';
+    });
+    console.log('fileInfo',fileInfo)
+    // list=''
+    return fileInfo;
+  }
 
   saveAsLead() {
-    console.log("fileobjinfo ", this.fileObjFinal)
+    
+  
     // if (this.addresscheck) {
     //   this.createLoan.controls.currentaddress1.setValue(this.createLoan.controls.permanentAddress1.value);
     //   this.createLoan.controls.currentaddress2.setValue(this.createLoan.controls.permanentAddress2.value);
@@ -371,7 +383,6 @@ export class CreateComponent implements OnInit {
 
 
     if (this.loanApplication) {
-      console.log("Loan Application Data : ", this.loanApplication)
       if (this.action == "update") {
         this.loanApplication['status'] = {
           "id": this.loanData.status.id
@@ -392,10 +403,39 @@ export class CreateComponent implements OnInit {
         console.log("response");
       }
       else {
-        this.cdlservice.createLoan(this.loanApplication).subscribe((response: any) => {
-          console.log("response", response);
-          this.snackbarService.openSnackBar("Loan Application Created Successfully")
-          this.router.navigate(['provider', 'cdl', 'loans'])
+        console.log(this.filesToUpload);
+
+        for(let i = 0;i<this.filesToUpload.length;i++) {
+          this.filesToUpload[i]['order']=i;
+          if (this.filesToUpload[i]["type"] == 'aadhar') {
+            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments']=[];
+            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'].push(this.filesToUpload[i]);
+          } 
+          if (this.filesToUpload[i]["type"] == 'pan') {
+            this.loanApplication.loanApplicationKycList[0]['panAttachments']=[];
+            this.loanApplication.loanApplicationKycList[0]['panAttachments'].push(this.filesToUpload[i]);
+          } 
+          if (this.filesToUpload[i]["type"] == 'photo') {
+            this.loanApplication['customerPhoto']=[];
+            this.loanApplication['customerPhoto'].push(this.filesToUpload[i]);
+          } 
+        }
+          
+        console.log("Loan Application Data : ", this.loanApplication)
+
+
+        this.cdlservice.createLoan(this.loanApplication).subscribe((s3urls: any) => {
+          console.log("response", s3urls);
+
+
+          if (s3urls.attachmentsUrls.length > 0) {
+            this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
+              (dataS3Url) => {
+                console.log(dataS3Url);
+                this.snackbarService.openSnackBar("Loan Application Created Successfully")
+                this.router.navigate(['provider', 'cdl', 'loans']);
+              });
+            }
         },
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -404,7 +444,50 @@ export class CreateComponent implements OnInit {
     }
   }
 
-
+  uploadAudioVideo(data) {
+    const _this = this;
+    let count = 0;
+    console.log("DAta:",data);
+    return new Promise(async function (resolve, reject) {
+      for (const s3UrlObj of data) {
+        console.log("S3URLOBJ:", s3UrlObj);
+        console.log('_this.filesToUpload',_this.filesToUpload)
+        const file = _this.filesToUpload.filter((fileObj) => {
+          return ((fileObj.order === (s3UrlObj.orderId) ) ? fileObj : '');
+        })[0];
+        console.log("File:", file);
+        if (file) {
+          await _this.uploadFiles(file['file'], s3UrlObj.url).then(
+            () => {
+              count++;
+              console.log("Count", count);
+              console.log("Count", data.length);
+              if (count === data.length) {
+                console.log("HERE");
+                resolve(true);
+              }
+            }
+          );
+        }
+        else{
+          resolve(true);
+        }     
+      }
+    })
+  }
+  uploadFiles(file, url) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.cdlservice.videoaudioS3Upload(file, url)
+        .subscribe(() => {
+          resolve(true);
+        }, error => {
+          console.log('error',error)
+          _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          resolve(false);
+        });
+    })
+  }
 
 
 
@@ -416,45 +499,27 @@ export class CreateComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'loans', 'approved'])
   }
 
-  // filesSelected(event, name) {
-  //   console.log('event', event, name)
-  //   const input = event.target.files;
-  //   console.log('input', input)
-  //   if (input) {
-  //     for (const file of input) {
-  //       this.selectedMessage.files.push(file);
-  //       const reader = new FileReader();
-  //       reader.onload = (e) => {
-  //         this.selectedMessage.base64.push(e.target['result']);
-  //       };
-  //       reader.readAsDataURL(file);
-  //     }
-  //     console.log("this.selectedMessage", this.selectedMessage)
-  //   }
-  // }
 
   filesSelected(event, type) {
-    console.log("Event ", event)
+    console.log("Event ", event,type)
     const input = event.target.files;
-
+    console.log("input ", input)
     this.fileService.filesSelected(event, this.selectedFiles[type]).then(
       () => {
         for (const pic of input) {
           const size = pic["size"] / 1024;
-          const fileObj = {
+          let fileObj = {
             owner: this.businessId,
             fileName: pic["name"],
             fileSize: size / 1024,
             caption: "",
             fileType: pic["type"].split("/")[1],
+            action: 'add'
           }
-          this.fileObjFinal = fileObj;
-          this.fileObjFinal['action'] = 'add';
-          this.fileObjFinal['order'] = 1;
-          console.log('this.fileObjFinal', this.fileObjFinal)
+          fileObj['file'] = pic;    
+          fileObj['type'] = type;
+          this.filesToUpload.push(fileObj);
         }
-
-
       }).catch((error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       })

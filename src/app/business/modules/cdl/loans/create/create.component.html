@@ -94,13 +94,13 @@
                 <div class="form-title">Customer Photo</div>
               </div>
               <div class="fieldPadding photo-border">
-                <div class='file file--upload'>
+                <div >
                   <label for='input-file'>
                     <!-- <i class="material-icons">cloud_upload</i> -->
                     Upload File
                   </label>
-                  <input id='input-file' type='file' formControlName="customerphoto"
-                    (change)="filesSelected($event,'customerphoto')" />
+                  <input type='file' formControlName="customerphoto" #photoAttach
+                    (change)="filesSelected($event,'photo')" />
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -121,7 +121,6 @@
                     class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
                     [class.disabled]="action == 'update'" />
 
-
                   <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="!aadharverification"
                     (click)="verifyaadhar()"><span>Verify</span></a>
 
@@ -132,22 +131,15 @@
             </div>
           </div>
         </div>
-
-
-
         <div>
           <div class="bggrey my-2">
             <div>
-              <!-- <div class="d-flex">
-                <div class="form-title">Aadhar Atachment</div>
-              </div> -->
               <div class="fieldPadding">
-                <div class='file file--upload'>
+                <div >
                   <label for='input-file'>
-                    <!-- <i class="material-icons">cloud_upload</i> -->
                     Upload File
                   </label>
-                  <input id='input-file' type='file' formControlName="aadharattachment" />
+                  <input #aadharAttach type='file' formControlName="aadharattachment" (change)="filesSelected($event, 'aadhar')"/>
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -358,12 +350,12 @@
                         <div class="form-title">Aadhar Atachment</div>
                       </div> -->
               <div class="fieldPadding">
-                <div class='file file--upload'>
+                <div >
                   <label for='input-file'>
                     <!-- <i class="material-icons">cloud_upload</i> -->
                     Upload File
                   </label>
-                  <input id='input-file' type='file' formControlName="panattachment" />
+                  <input #panAttach type='file' formControlName="panattachment" (change)="filesSelected($event, 'pan')"/>
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -371,11 +363,6 @@
             </div>
           </div>
         </div>
-
-
-
-
-
 
         <div>
           <div class="bggrey my-2">
@@ -539,22 +526,12 @@
                 <div class="form-title">Nominee Type</div>
               </div>
               <div class="fieldPadding">
-                <select class="form-control" #nomineetype formControlName="nomineetype" [value]="nomineetype">
-                  <option value="Father">Father</option>
-                  <option value="Husband">Husband</option>
-                  <option value="Mother">Mother</option>
-                  <option value="Son">Son</option>
-                  <option value="Daughter">Daughter</option>
-                  <option value="Wife">Wife</option>
-                  <option value="Brother">Brother</option>
-                  <option value="MotherInlaw">Mother in law</option>
-                  <option value="FatherInlaw">Father in law</option>
-                  <option value="DaughterInlaw">Daughter in law</option>
-                  <option value="SisterInLaw">Sister in Law</option>
-                  <option value="Son in law">Son in law</option>
-                  <option value="BrotherInlaw">Brother in law</option>
-                  <option value="Other">Other</option>
-                </select>
+                <mat-select class="form-control widthWebKit" placeholder="" #nomineetype
+                    formControlName="nomineetype">
+                    <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                        <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
+                    </mat-option>
+                </mat-select>
               </div>
             </div>
           </div>
