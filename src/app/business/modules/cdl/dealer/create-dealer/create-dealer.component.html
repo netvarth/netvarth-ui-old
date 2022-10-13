@@ -5,27 +5,9 @@
 
 <div class="card m-2">
   <span class="font-weight-bold">&nbsp;Create Dealer</span><br><br>
-  <form>
+  <form [formGroup]="createDealer" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-7">
-
-
-        <!-- <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Application Type</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control">
-                  <option>Onbarding Application</option>
-                  <option>Application 1</option>
-                  <option>Application 2</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div> -->
 
         <div>
           <div class="bggrey my-2">
@@ -34,8 +16,8 @@
                 <div class="form-title">Dealer Name</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter Dealer Name" class="form-control"
-                  autocomplete="off" />
+                <input (keyup)="resetErrors()" type="text" formControlName="name" placeholder="Enter Dealer Name"
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -50,8 +32,8 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="number" placeholder="Enter Phone Number" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" type="number" formControlName="phone" placeholder="Enter Phone Number"
+                    class="form-control" autocomplete="off" />
                   <a class="btn btn-verify" [class.btn-verified]="verification" (click)="verifyotp()">
                     <span *ngIf="!verification">Verify</span><span *ngIf="verification">Verified</span></a>
                 </div>
@@ -71,11 +53,47 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="email" placeholder="Enter Dealer Email" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" formControlName="email" type="email" placeholder="Enter Dealer Email"
+                    class="form-control" autocomplete="off" />
                   <a class="btn btn-verify" [class.btn-verified]="emailverification" (click)="verifyemail()">
                     <span *ngIf="!emailverification">Verify</span><span *ngIf="emailverification">Verified</span></a>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Description</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="description" type="text" placeholder="Enter Description"
+                  class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Photo</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='input-file'>
+                    Upload File
+                  </label>
+                  <input id='input-file' type='file' formControlName="photo" />
+                </div>
+                <span
+                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
               </div>
             </div>
           </div>
@@ -89,8 +107,8 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="number" placeholder="Enter Aadhar Number" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" formControlName="aadhar" type="text" placeholder="Enter Aadhar Number"
+                    class="form-control" autocomplete="off" />
                   <a class="btn btn-verify" [class.btn-verified]="aadharverification" (click)="verifyaadhar()">
                     <span *ngIf="!aadharverification">Verify</span><span *ngIf="aadharverification">Verified</span></a>
                 </div>
@@ -108,7 +126,7 @@
                   <label for='input-file'>
                     Upload File
                   </label>
-                  <input id='input-file' type='file' />
+                  <input id='input-file' type='file' formControlName="aadharattachment" />
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -126,8 +144,8 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="text" placeholder="Enter PAN Number" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" formControlName="pan" type="text" placeholder="Enter PAN Number"
+                    class="form-control" autocomplete="off" />
                   <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="verifypan()">
                     <span *ngIf="!panverification">Verify</span><span *ngIf="panverification">Verified</span></a>
                 </div>
@@ -144,7 +162,7 @@
                   <label for='input-file'>
                     Upload File
                   </label>
-                  <input id='input-file' type='file' />
+                  <input id='input-file' type='file' formControlName="panattachment" />
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -153,107 +171,19 @@
           </div>
         </div>
 
+
         <div>
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Cheque/Passbook</div>
+                <div class="form-title">Store Photo</div>
               </div>
               <div class="fieldPadding photo-border">
                 <div class='file file--upload'>
                   <label for='input-file'>
                     Upload File
                   </label>
-                  <input id='input-file' type='file' />
-                </div>
-                <span
-                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Dealer Photo</div>
-              </div>
-              <div class="fieldPadding photo-border">
-                <div class='file file--upload'>
-                  <label for='input-file'>
-                    Upload File
-                  </label>
-                  <input id='input-file' type='file' />
-                </div>
-                <span
-                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Domain</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control">
-                  <option>Electronics</option>
-                  <option>Car Loan</option>
-                  <option>Home Loan</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Sub Domain</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control">
-                  <option>Mobile</option>
-                  <option>Laptop</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Size</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control">
-                  <option>Large</option>
-                  <option>Medium</option>
-                  <option>Small</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="fieldPadding">
-                <div class='file file--upload'>
-                  <label for='input-file'>
-                    Upload File
-                  </label>
-                  <input id='input-file' type='file' />
+                  <input id='input-file' type='file' formControlName="storephoto" />
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -267,15 +197,111 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Shop License</div>
+                <div class="form-title">Address 1</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter Shop License" class="form-control"
-                  autocomplete="off" />
+                <input (keyup)="resetErrors()" formControlName="address1" #partneraddress1 type="text"
+                  placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                  formControlName="partneraddress1" />
               </div>
             </div>
           </div>
         </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Address 2</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="address2" #partneraddress2 type="text"
+                  placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                  formControlName="partneraddress2" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">City</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="city" #partnercity type="text" placeholder="Enter City"
+                  class="form-control" autocomplete="off" formControlName="partnercity" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">State</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="state" #partnerstate type="text"
+                  placeholder="Enter State" class="form-control" autocomplete="off" formControlName="partnerstate" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Pincode</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="pincode" #partnerpincode type="text"
+                  placeholder="Enter Pincode" class="form-control" autocomplete="off"
+                  formControlName="partnerpincode" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Category</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #category formControlName="category">
+                  <option *ngFor="let category of partnerCategories" value="{{category.id}}">
+                    {{category.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Type</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #type formControlName="type">
+                  <option *ngFor="let type of partnerTypes" value="{{type.id}}">
+                    {{type.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div>
           <div class="bggrey my-2">
@@ -285,84 +311,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" type="text" placeholder="Enter GST Number" class="form-control"
-                  autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Select Bank</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control">
-                  <option>KOTAK</option>
-                  <option>ICICI</option>
-                  <option>SBI</option>
-                  <option>HDFC</option>
-                  <option>BOI</option>
-                  <option>AXIS</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Account Number</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
-                  autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">IFSC Code</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter IFSC Code" class="form-control"
-                  autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">City of Residence</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter City of Residence" class="form-control"
-                  autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Home Address</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter Home Address" class="form-control"
-                  autocomplete="off" />
+                  autocomplete="off" formControlName="gst" />
               </div>
             </div>
           </div>
@@ -372,8 +321,13 @@
       </div>
 
     </div>
-    <div class="btn btn-primary" (click)="goNext()">
-      Submit
+    <div class="d-flex">
+      <div class="btn btn-draft mr-2" (click)="saveAsDraft()">
+        Save as Draft
+      </div>
+      <div class="btn btn-primary" (click)="createPartner()">
+        Create Dealer
+      </div>
     </div>
   </form>
 </div>

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 
 /**
- * 
+ *
  */
 export class FileService {
   // Supported images types
@@ -140,7 +140,8 @@ export class FileService {
   }
 
   filesSelected(event, selectedMessage) {
-    const _this=this;
+    console.log("Event 2", event)
+    const _this = this;
     return new Promise(function (resolve, reject) {
       const input = event.target.files;
       console.log("File Selected :", input);

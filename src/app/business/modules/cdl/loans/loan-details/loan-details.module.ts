@@ -8,18 +8,18 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-import {loanDetailsComponent} from './loanDetails.component'
+import { LoanDetailsComponent } from './loan-details.component'
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 
 const routes: Routes = [
-  { path: '', component: loanDetailsComponent }
+  { path: '', component: LoanDetailsComponent }
 ]
 
 
 @NgModule({
-  exports: [loanDetailsComponent],
-  declarations: [loanDetailsComponent],
+  exports: [LoanDetailsComponent],
+  declarations: [LoanDetailsComponent],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -37,4 +37,4 @@ const routes: Routes = [
     NO_ERRORS_SCHEMA
   ]
 })
-export class loanDetailsModule { }
+export class LoanDetailsModule { }

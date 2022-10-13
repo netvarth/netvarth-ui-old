@@ -4,8 +4,8 @@
 
 
 <div class="card m-2">
-  <span class="font-weight-bold">&nbsp;Create Loan</span><br><br>
-  <form>
+  <span class="font-weight-bold">&nbsp;{{headerText}}</span><br><br>
+  <form [formGroup]="createLoan" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-7">
         <div>
@@ -17,10 +17,13 @@
               <div class="fieldPadding">
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
-                    autocomplete="off" [value]="phone" />
-                  <a class="btn btn-verify" [class.btn-verified]="verification" (click)="verifyotp()">
-                    <span *ngIf="!verification">Verify</span><span *ngIf="verification"><i
-                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+                    autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
+                    [class.disabled]="action == 'update'" />
+                  <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
+                    (click)="verifyotp()"><span>Verify</span></a>
+
+                  <a class="btn btn-verify" *ngIf="verification" [class.btn-verified]="verification">
+                    <span *ngIf="verification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
               </div>
             </div>
@@ -35,8 +38,8 @@
                 <div class="form-title">Customer Name</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="name" type="text" placeholder="Enter Customer Name"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" #name [value]="name" type="text" placeholder="Enter Customer Name"
+                  class="form-control" autocomplete="off" formControlName="name" />
               </div>
             </div>
           </div>
@@ -50,12 +53,33 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" [value]="email" type="email" placeholder="Enter Customer Email"
-                    class="form-control" autocomplete="off" />
-                  <a class="btn btn-verify" [class.btn-verified]="emailverification" (click)="verifyemail()">
-                    <span *ngIf="!emailverification">Verify</span><span *ngIf="emailverification"><i
-                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+                  <input (keyup)="resetErrors()" #email [value]="email" type="email" placeholder="Enter Customer Email"
+                    class="form-control" autocomplete="off" formControlName="email"
+                    [class.disabled]="action == 'update'" />
+
+                  <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
+                    (click)="verifyemail()"><span>Verify</span></a>
+
+                  <a class="btn btn-verify" *ngIf="emailverification" [class.btn-verified]="emailverification">
+                    <span *ngIf="emailverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Type</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #loantype formControlName="loantype" [value]="loantype">
+                  <option *ngFor="let loantype of loanTypes" value="{{loantype.id}}">
+                    {{loantype.name}}
+                  </option>
+                </select>
               </div>
             </div>
           </div>
@@ -75,7 +99,8 @@
                     <!-- <i class="material-icons">cloud_upload</i> -->
                     Upload File
                   </label>
-                  <input id='input-file' type='file' />
+                  <input id='input-file' type='file' formControlName="customerphoto"
+                    (change)="filesSelected($event,'customerphoto')" />
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -92,16 +117,22 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" [value]="aadhar" type="text" placeholder="Enter Aadhar Number"
-                    class="form-control" autocomplete="off" />
-                  <a class="btn btn-verify" [class.btn-verified]="aadharverification" (click)="verifyaadhar()">
-                    <span *ngIf="!aadharverification">Verify</span><span *ngIf="aadharverification"><i
-                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+                  <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
+                    class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
+                    [class.disabled]="action == 'update'" />
+
+
+                  <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="!aadharverification"
+                    (click)="verifyaadhar()"><span>Verify</span></a>
+
+                  <a class="btn btn-verify" *ngIf="aadharverification" [class.btn-verified]="aadharverification">
+                    <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
 
 
         <div>
@@ -116,7 +147,7 @@
                     <!-- <i class="material-icons">cloud_upload</i> -->
                     Upload File
                   </label>
-                  <input id='input-file' type='file' />
+                  <input id='input-file' type='file' formControlName="aadharattachment" />
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -133,8 +164,9 @@
                 <div class="form-title">Address 1</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="address1" type="text" placeholder="Enter Address 1"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" [value]="permanentaddress1" #permanentaddress1 [value]="address1"
+                  type="text" placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                  formControlName="permanentaddress1" />
               </div>
             </div>
           </div>
@@ -148,8 +180,9 @@
                 <div class="form-title">Address 2</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="address2" type="text" placeholder="Enter Address 2"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" [value]="permanentaddress2" #permanentaddress2 [value]="address2"
+                  type="text" placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                  formControlName="permanentaddress2" />
               </div>
             </div>
           </div>
@@ -162,8 +195,8 @@
                 <div class="form-title">City</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter City" [value]="city" class="form-control"
-                  autocomplete="off" />
+                <input (keyup)="resetErrors()" [value]="permanentcity" #permanentcity type="text"
+                  placeholder="Enter City" class="form-control" autocomplete="off" formControlName="permanentcity" />
               </div>
             </div>
           </div>
@@ -176,8 +209,8 @@
                 <div class="form-title">State</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="state" type="text" placeholder="Enter State"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" #permanentstate [value]="permanentstate" type="text"
+                  placeholder="Enter State" class="form-control" autocomplete="off" formControlName="permanentstate" />
               </div>
             </div>
           </div>
@@ -190,8 +223,9 @@
                 <div class="form-title">Pincode</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="pincode" type="text" placeholder="Enter Pincode"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" #permanentpincode [value]="permanentpincode" type="text"
+                  placeholder="Enter Pincode" class="form-control" autocomplete="off"
+                  formControlName="permanentpincode" />
               </div>
             </div>
           </div>
@@ -224,8 +258,9 @@
                   <div class="form-title">Current Address 1</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" type="text" placeholder="Enter Address 1" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" [value]="currentaddress1" #currentaddress1 type="text"
+                    placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                    formControlName="currentaddress1" />
                 </div>
               </div>
             </div>
@@ -239,8 +274,9 @@
                   <div class="form-title">Current Address 2</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" type="text" placeholder="Enter Address 2" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" [value]="currentaddress2" #currentaddress2 type="text"
+                    placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                    formControlName="currentaddress2" />
                 </div>
               </div>
             </div>
@@ -253,8 +289,8 @@
                   <div class="form-title">Current Address City</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" type="text" placeholder="Enter City" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" [value]="currentcity" #currentcity type="text" placeholder="Enter City"
+                    class="form-control" autocomplete="off" formControlName="currentcity" />
                 </div>
               </div>
             </div>
@@ -267,8 +303,8 @@
                   <div class="form-title">Current Address State</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" type="text" placeholder="Enter State" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" [value]="currentstate" #currentstate type="text"
+                    placeholder="Enter State" class="form-control" autocomplete="off" formControlName="currentstate" />
                 </div>
               </div>
             </div>
@@ -281,8 +317,9 @@
                   <div class="form-title">Current Address Pincode</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" type="text" placeholder="Enter Pincode" class="form-control"
-                    autocomplete="off" />
+                  <input (keyup)="resetErrors()" [value]="currentpincode" #currentpincode type="text"
+                    placeholder="Enter Pincode" class="form-control" autocomplete="off"
+                    formControlName="currentpincode" />
                 </div>
               </div>
             </div>
@@ -298,11 +335,15 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" [value]="pan" type="text" placeholder="Enter PAN Number"
-                    class="form-control" autocomplete="off" />
-                  <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="verifypan()">
-                    <span *ngIf="!panverification">Verify</span><span *ngIf="panverification"><i
-                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+                  <input (keyup)="resetErrors()" #pannumber [value]="pannumber" type="text"
+                    placeholder="Enter PAN Number" class="form-control" autocomplete="off" formControlName="pannumber"
+                    [class.disabled]="action == 'update'" />
+
+                  <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
+                    (click)="verifypan()"><span>Verify</span></a>
+
+                  <a class="btn btn-verify" *ngIf="panverification" [class.btn-verified]="panverification">
+                    <span *ngIf="panverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
               </div>
             </div>
@@ -322,7 +363,7 @@
                     <!-- <i class="material-icons">cloud_upload</i> -->
                     Upload File
                   </label>
-                  <input id='input-file' type='file' />
+                  <input id='input-file' type='file' formControlName="panattachment" />
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
@@ -343,14 +384,20 @@
                 <div class="form-title">Martial Status</div>
               </div>
               <div class="fieldPadding">
-                <select class="form-control">
-                  <option>Single</option>
-                  <option>Married</option>
+                <select class="form-control" #martialstatus formControlName="martialstatus" [value]="martialstatus">
+                  <option value="Single">Single</option>
+                  <option value="Married">Married</option>
+                  <option value="Widowed">Widowed</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Separated">Separated</option>
                 </select>
               </div>
             </div>
           </div>
         </div>
+
+
+
 
 
         <div>
@@ -360,9 +407,13 @@
                 <div class="form-title">Employment Type</div>
               </div>
               <div class="fieldPadding">
-                <select class="form-control">
-                  <option>Salaried</option>
-                  <option>Student</option>
+                <select class="form-control" #employmenttype formControlName="employmenttype" [value]="employmenttype">
+                  <option value="Salaried">Salaried</option>
+                  <option value="SelfEmployed">SelfEmployed</option>
+                  <option value="Retired">Retired</option>
+                  <option value="Military">Military</option>
+                  <option value="Homemaker">Homemaker</option>
+                  <option value="Student">Student</option>
                 </select>
               </div>
             </div>
@@ -373,39 +424,11 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Salary</div>
+                <div class="form-title">Montly Income</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="salary" type="text" placeholder="Enter Customer Salary"
-                  class="form-control" autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Office Address</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="office" type="text" placeholder="Enter Office Address"
-                  class="form-control" autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">City of Work</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="city" type="text" placeholder="Enter City of Work"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" #salary [value]="salary" type="text" placeholder="Enter Customer Salary"
+                  class="form-control" autocomplete="off" formControlName="salary" />
               </div>
             </div>
           </div>
@@ -421,8 +444,9 @@
                 <div class="form-title">Number of EMI's Paid Monthly</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="emi" type="text" placeholder="Enter Number of EMI Paid Monthly"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" #emicount [value]="emicount" type="text"
+                  placeholder="Enter Number of EMI Paid Monthly" class="form-control" autocomplete="off"
+                  formControlName="emicount" />
               </div>
             </div>
           </div>
@@ -436,10 +460,10 @@
                 <div class="form-title">Select Category</div>
               </div>
               <div class="fieldPadding">
-                <select class="form-control">
-                  <option>Electronics</option>
-                  <option>Car Loan</option>
-                  <option>Home Loan</option>
+                <select class="form-control" #category formControlName="category" [value]="category">
+                  <option *ngFor="let category of loanCategories" value="{{category.id}}">
+                    {{category.name}}
+                  </option>
                 </select>
               </div>
             </div>
@@ -447,20 +471,17 @@
         </div>
 
 
-
         <div>
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Select Device</div>
+                <div class="form-title">Select Product</div>
               </div>
               <div class="fieldPadding">
-                <select class="form-control">
-                  <option>Mobile</option>
-                  <option>Laptop</option>
-                  <option>Television</option>
-                  <option>Air Conditioner</option>
-                  <option>Refridgerator</option>
+                <select class="form-control" #loanproduct formControlName="loanproduct" [value]="loanproduct">
+                  <option *ngFor="let product of loanProducts" value="{{product.id}}">
+                    {{product.productName}}
+                  </option>
                 </select>
               </div>
             </div>
@@ -475,8 +496,9 @@
                 <div class="form-title">Total Payment</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Total Payment" class="form-control"
-                  autocomplete="off" (keyup)="payment($event)" [value]="totalPayment" />
+                <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Total Payment"
+                  class="form-control" autocomplete="off" [value]="totalpayment" (keyup)="payment($event)"
+                  [value]="totalpayment" formControlName="totalpayment" />
               </div>
             </div>
           </div>
@@ -489,8 +511,8 @@
                 <div class="form-title">Down Payment</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Down Payment" class="form-control"
-                  autocomplete="off" [value]="downPayment" />
+                <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
+                  class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment" />
               </div>
             </div>
           </div>
@@ -503,8 +525,50 @@
                 <div class="form-title">Loan Required</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Required Loan Amount"
-                  class="form-control" autocomplete="off" [value]="loanAmount" />
+                <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
+                  class="form-control" autocomplete="off" [value]="loanamount" formControlName="loanamount" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Nominee Type</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #nomineetype formControlName="nomineetype" [value]="nomineetype">
+                  <option value="Father">Father</option>
+                  <option value="Husband">Husband</option>
+                  <option value="Mother">Mother</option>
+                  <option value="Son">Son</option>
+                  <option value="Daughter">Daughter</option>
+                  <option value="Wife">Wife</option>
+                  <option value="Brother">Brother</option>
+                  <option value="MotherInlaw">Mother in law</option>
+                  <option value="FatherInlaw">Father in law</option>
+                  <option value="DaughterInlaw">Daughter in law</option>
+                  <option value="SisterInLaw">Sister in Law</option>
+                  <option value="Son in law">Son in law</option>
+                  <option value="BrotherInlaw">Brother in law</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Nominee Name</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" #nomineename placeholder="Enter Nominee Name"
+                  class="form-control" autocomplete="off" [value]="nomineename" formControlName="nomineename" />
               </div>
             </div>
           </div>
@@ -517,8 +581,8 @@
                 <div class="form-title">Remarks</div>
               </div>
               <div class="fieldPadding">
-                <textarea (keyup)="resetErrors()" [value]="remarks" type="text" placeholder="Enter Remarks"
-                  class="form-control" autocomplete="off"></textarea>
+                <textarea (keyup)="resetErrors()" #remarks [value]="remarks" type="text" placeholder="Enter Remarks"
+                  class="form-control" autocomplete="off" formControlName="remarks"></textarea>
               </div>
             </div>
           </div>
@@ -530,8 +594,8 @@
 
     </div>
     <div class="d-flex">
-      <div class="btn btn-draft mr-2" (click)="saveAsDraft()">
-        Save as Lead
+      <div class="btn btn-draft mr-2" (click)="saveAsLead()">
+        {{btnText}}
       </div>
       <div class="btn btn-primary" (click)="checkELigibility()">
         Check Eligibility

@@ -31,20 +31,33 @@
           </thead>
           <tbody class="table_data">
             <ng-container>
-              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="loanDetails(item)">
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.loanId">{{item.loanId}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.CustomerName">{{item.CustomerName}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.Dealer">{{item.Dealer}}</td>
-                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status">
-                  <div class="approvedColor text-capitalize" *ngIf="item && item.status && item.status==='approved'"><i
-                      class="fa fa-check-circle"></i>&nbsp;{{item.status}}
+              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="loanDetails(item.uid)">
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.id">{{item.id}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
+                  {{item.customer.firstName}} {{item.customer.lastName}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.assignee && item.assignee.name">
+                  {{item.assignee.name}}</td>
+                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status && item.status.name">
+                  <div class="approvedColor text-capitalize"
+                    *ngIf="item && item.status && item.status.name && item.status.name==='New'"><i
+                      class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
+                  </div>
+                  <div class="approvedColor text-capitalize"
+                    *ngIf="item && item.status && item.status.name && item.status.name==='approved'"><i
+                      class="fa fa-check-circle"></i>&nbsp;{{item.status.name}}
                   </div>
                   <div class="pendingColor text-capitalize"
-                    *ngIf="item && item.status && (item.status==='pending' || item.status==='redirected')"><i
-                      class="fa fa-spinner"></i>&nbsp;{{item.status}}
+                    *ngIf="item && item.status && item.status.name && (item.status.name==='pending' || item.status.name==='redirected')">
+                    <i class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
                   </div>
-                  <div class="rejectedColor text-capitalize" *ngIf="item && item.status && item.status==='rejected'"><i
-                      class="fa fa-times-circle"></i>&nbsp;{{item.status}}
+                  <div class="rejectedColor text-capitalize"
+                    *ngIf="item && item.status && item.status.name && item.status.name==='rejected'"><i
+                      class="fa fa-times-circle"></i>&nbsp;{{item.status.name}}
+                  </div>
+                </td>
+                <td>
+                  <div *ngIf="item && item.uid">
+                    <a class="btn btn-primary" (click)="updateLoan(item.uid,'update')">Update</a>
                   </div>
                 </td>
               </tr>

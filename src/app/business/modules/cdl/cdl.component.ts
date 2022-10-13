@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
-import { ViewFileComponent } from './loans/loanDetails/view-file/view-file.component';
+import { ViewFileComponent } from './loans/loan-details/view-file/view-file.component';
 @Component({
   selector: 'app-cdl',
   templateUrl: './cdl.component.html',

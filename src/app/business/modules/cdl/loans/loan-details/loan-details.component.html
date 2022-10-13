@@ -11,8 +11,8 @@
 
     <div class="card remarks-card marginClass px-5">
       <div class="my-2">
-        <div class="font-weight-bold">
-          <span class="text-capitalize">Loan {{status}}</span>
+        <div class="font-weight-bold" *ngIf="loanData && loanData.status">
+          <span class="text-capitalize">{{loanData.status.name}} Loan</span>
         </div>
         <div *ngIf="status=='rejected'" class="text-red mt-2">
           <span>Sorry your loan was rejected because of your credit score</span>
@@ -20,7 +20,7 @@
       </div>
       <div *ngIf="status!='pending'">
         <div>Remarks</div>
-        <span class="details-title">Aadhar and Pan are verified</span>
+        <span class="details-title" *ngIf="loanData && loanData.remarks">{{loanData.remarks}}</span>
       </div>
     </div>
   </div>
@@ -35,7 +35,9 @@
           <img src="../../../../assets/images/cdl/avatar1.png" alt="Card image cap" width="100" height="100">
         </div>
         <div class="text-center my-2">
-          <span class="loan-name" *ngIf="customerName">{{customerName}}</span>
+          <span class="loan-name"
+            *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}
+            {{loanData.customer.lastName}}</span>
         </div>
         <div class="text-center">
           <span class="loan-tag">Customer</span>
@@ -53,68 +55,111 @@
                     <div class="col-md-5 details-title">Phone Number</div>
                     <div class="col-md-1 details-title no-padding">:</div>
                     <div>
-                      <span class="col-md-6 details-sub-title no-padding">9633360166</span>
+                      <span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.customer && loanData.customer.phoneNo">{{loanData.customer.phoneNo}}</span>
                     </div>
                   </div>
                   <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Email</div>
                     <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">adarsh@gmail.com</span></div>
-                  </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Address 1</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">Kuruppam Rd</span></div>
-                  </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Address 2</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">Marar Road Area</span>
+                    <div><span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.customer && loanData.customer.email">{{loanData.customer.email}}</span>
                     </div>
                   </div>
                   <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">City</div>
+                    <div class="col-md-5 details-title">Permanent Address 1</div>
                     <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">Thrissur</span>
+                    <div><span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}}</span>
                     </div>
                   </div>
                   <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">State</div>
+                    <div class="col-md-5 details-title">Permanent Address 2</div>
                     <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">Kerala</span>
-                    </div>
-                  </div>
-
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Pincode</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">680001</span>
+                    <div><span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentAddress2">{{loanData.loanApplicationKycList[0].permanentAddress2}}</span>
                     </div>
                   </div>
                   <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Office Address</div>
+                    <div class="col-md-5 details-title">Permanent Address City</div>
                     <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">Thrissur</span>
+                    <div><span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentCity">{{loanData.loanApplicationKycList[0].permanentCity}}</span>
+                    </div>
+                  </div>
+                  <div class="row text-left my-2">
+                    <div class="col-md-5 details-title">Permanent Address State</div>
+                    <div class="col-md-1 details-title no-padding">:</div>
+                    <div><span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentState">{{loanData.loanApplicationKycList[0].permanentState}}</span>
                     </div>
                   </div>
 
                   <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">City of Work</div>
+                    <div class="col-md-5 details-title">Permanent Address Pincode</div>
                     <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">Thrissur</span>
+                    <div><span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentPin">{{loanData.loanApplicationKycList[0].permanentPin}}</span>
                     </div>
                   </div>
+
+
+                  <div class="row text-left my-2"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].currentAddress1">
+                    <div class="col-md-5 details-title">
+                      Current Address 1</div>
+                    <div class="col-md-1 details-title no-padding">:</div>
+                    <div><span
+                        class="col-md-6 details-sub-title no-padding">{{loanData.loanApplicationKycList[0].currentAddress1}}</span>
+                    </div>
+                  </div>
+                  <div class="row text-left my-2"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].currentAddress2">
+                    <div class="col-md-5 details-title">Current Address 2</div>
+                    <div class="col-md-1 details-title no-padding">:</div>
+                    <div><span
+                        class="col-md-6 details-sub-title no-padding">{{loanData.loanApplicationKycList[0].currentAddress2}}</span>
+                    </div>
+                  </div>
+                  <div class="row text-left my-2"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].currentCity">
+                    <div class="col-md-5 details-title">Current Address City</div>
+                    <div class="col-md-1 details-title no-padding">:</div>
+                    <div><span
+                        class="col-md-6 details-sub-title no-padding">{{loanData.loanApplicationKycList[0].currentCity}}</span>
+                    </div>
+                  </div>
+                  <div class="row text-left my-2"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].currentState">
+                    <div class="col-md-5 details-title">Current Address State</div>
+                    <div class="col-md-1 details-title no-padding">:</div>
+                    <div><span
+                        class="col-md-6 details-sub-title no-padding">{{loanData.loanApplicationKycList[0].currentState}}</span>
+                    </div>
+                  </div>
+
+                  <div class="row text-left my-2"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].currentPin">
+                    <div class="col-md-5 details-title">Current Address Pincode</div>
+                    <div class="col-md-1 details-title no-padding">:</div>
+                    <div><span
+                        class="col-md-6 details-sub-title no-padding">{{loanData.loanApplicationKycList[0].currentPin}}</span>
+                    </div>
+                  </div>
+
                   <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Martial Status</div>
                     <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">Married</span>
+                    <div><span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].maritalStatus">{{loanData.loanApplicationKycList[0].maritalStatus}}</span>
                     </div>
                   </div>
 
                   <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Employee Type</div>
                     <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding">Salaried</span>
+                    <div><span class="col-md-6 details-sub-title no-padding"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].employmentStatus">{{loanData.loanApplicationKycList[0].employmentStatus}}</span>
                     </div>
                   </div>
                 </div>
@@ -151,10 +196,11 @@
         <div class="font-weight-bold">KYC Details</div>
         <div class="row mt-2">
           <div class="col-md-6">
-            <div *ngIf="adharNumber">
+            <div
+              *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaar">
               <div>
                 <div class="text-left details-title">Aadhar Number</div>
-                <div class="text-left details-sub-title">2654 7895 2586</div>
+                <div class="text-left details-sub-title">{{loanData.loanApplicationKycList[0].aadhaar}}</div>
               </div>
               <div class="mt-2">
                 <button (click)="viewFile('aadhar')" class="btn confirmBtn" type="button">
@@ -165,10 +211,11 @@
           </div>
 
           <div class="col-md-6">
-            <div *ngIf="panCardNumber">
+            <div
+              *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].pan">
               <div>
                 <div class="text-left details-title">Pan Number</div>
-                <div class="text-left details-sub-title">GHTPJ2345J</div>
+                <div class="text-left details-sub-title">{{loanData.loanApplicationKycList[0].pan}}</div>
               </div>
               <div class="mt-2">
                 <button (click)="viewFile('pan')" class="btn confirmBtn" type="button">
@@ -205,31 +252,31 @@
       <div class="card marginClass">
         <div class="font-weight-bold">Loan Details</div>
         <div class="row mt-2">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="loanData && loanData.category">
             <div class="details-title">Category</div>
-            <div class="details-sub-title">Electronics</div>
+            <div class="details-sub-title">{{loanData.category.name}}</div>
           </div>
-          <div class="col-md-4">
-            <div class="details-title">Device</div>
-            <div class="details-sub-title">Mobile</div>
+          <div class="col-md-4" *ngIf="loanData && loanData.loanProduct">
+            <div class="details-title">Product</div>
+            <div class="details-sub-title">{{loanData.loanProduct.productName}}</div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="loanData && loanData.requestedAmount">
             <div class="details-title">Loan Required</div>
-            <div class="details-sub-title">80000</div>
+            <div class="details-sub-title">{{loanData.requestedAmount}}</div>
           </div>
         </div>
         <div class="row mt-2">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="loanData && loanData.emiPaidAmountMonthly">
             <div class="details-title">No Of EMI Paid Monthly</div>
-            <div class="details-sub-title">2</div>
+            <div class="details-sub-title">{{loanData.emiPaidAmountMonthly}}</div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="loanData && loanData.downpaymentAmount">
             <div class="details-title">Down payment</div>
-            <div class="details-sub-title">20000</div>
+            <div class="details-sub-title">{{loanData.downpaymentAmount}}</div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="loanData && loanData.invoiceAmount">
             <div class="details-title">Total Payment</div>
-            <div class="details-sub-title">100000</div>
+            <div class="details-sub-title">{{loanData.invoiceAmount}}</div>
           </div>
         </div>
         <br *ngIf="user.userType!='2'">

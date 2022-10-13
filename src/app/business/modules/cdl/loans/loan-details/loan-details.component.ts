@@ -7,13 +7,14 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { ViewFileComponent } from './view-file/view-file.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
+import { CdlService } from '../../cdl.service';
 
 @Component({
-  selector: 'app-loanDetails',
-  templateUrl: './loanDetails.component.html',
-  styleUrls: ['./loanDetails.component.css']
+  selector: 'app-loan-details',
+  templateUrl: './loan-details.component.html',
+  styleUrls: ['./loan-details.component.css']
 })
-export class loanDetailsComponent implements OnInit {
+export class LoanDetailsComponent implements OnInit {
   status: any;
   user: any;
   headerName: string = ''
@@ -45,6 +46,7 @@ export class loanDetailsComponent implements OnInit {
   city: string;
   state: string;
   pincode: string;
+  loanData: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -52,23 +54,16 @@ export class loanDetailsComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
     private dialog: MatDialog,
+    private cdlservice: CdlService
   ) { }
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.activated_route.queryParams.subscribe((params) => {
-      console.log('params', params);
+    this.activated_route.params.subscribe((params) => {
       if (params) {
-        this.paramsValue = params;
-        if (params && params.type && params.type === 'loanDetails') {
-          let tempHeaderName: string = ''
-          tempHeaderName = params.type.substring(0, 4) + " " + params.type.substring(4);
-          if (tempHeaderName) {
-            this.headerName = tempHeaderName;
-          }
-
-          if (params.status) {
-            this.status = params.status;
-          }
+        if (params && params.id) {
+          this.cdlservice.getLoanById(params.id).subscribe((data) => {
+            this.loanData = data;
+          });
           this.personalDetails()
 
         }
@@ -76,25 +71,7 @@ export class loanDetailsComponent implements OnInit {
     })
   }
   personalDetails() {
-    if (this.paramsValue && this.paramsValue.customerName) {
-      this.customerName = this.paramsValue.customerName
-    }
-    this.employeephNo = '+919633360166';
-    this.employeeEmail = this.customerName.toLowerCase() + '@gmail.com';
-    this.employeeMartialStatus = 'Married';
-    this.employeeEmployeeTYpe = 'Salaried';
-    this.employeeSalary = 440000;
-    this.address1 = "Vellara Building,1st Floor";
-    this.address2 = "Museum Crosslane";
-    this.city = "Thrissur";
-    this.state = "Kerala";
-    this.pincode = "680020";
-    this.employeeOffAdd = 'Thrissur';
-    this.employeeCityWork = 'Thrissur';
-    this.employeeREsidence = 'Thrissur';
-    this.employeeHomeAdd = 'Thrissur';
-    this.adharNumber = 5454545545454544;
-    this.panCardNumber = '545454554gasd';
+
     this.accountNumber = '5454545545454544';
     this.IFSCCode = 'KOTAKSDA12F';
     this.bankName = 'KODAK';

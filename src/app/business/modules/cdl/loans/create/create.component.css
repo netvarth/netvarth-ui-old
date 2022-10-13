@@ -117,3 +117,13 @@ input[type="checkbox"] {
   border: 1px solid #D2D6DE !important;
   padding: 5px 5px 0px 5px !important;
 }
+
+
+.disabled {
+  pointer-events: none !important;
+  /* cursor: not-allowed !important; */
+}
+
+.not-allowed {
+  cursor: not-allowed !important;
+}
