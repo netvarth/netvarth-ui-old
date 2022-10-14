@@ -72,21 +72,21 @@ export class NotesSectionComponent implements OnInit {
                 this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
                 this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                 this.getAttachments();
-              
+
               },
               error => {
                 this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
                 this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
               }
             );
-        } else {
+        } else if (this.source === 'appointment') {
           this.shared_services.addProviderAppointmentAttachment(input.uuid, input.value)
             .subscribe(
               () => {
                 this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
                 this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
                 this.getAttachments();
-               
+
               },
               error => {
                 this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
@@ -117,7 +117,7 @@ export class NotesSectionComponent implements OnInit {
   ngOnInit(): void {
     this.onResize();
     this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    console.log("Notes Waitlist data",this.waitlistdata)
+    console.log("Notes Waitlist data", this.waitlistdata)
     if (this.waitlist_data) {
       this.hasAttachment = this.waitlist_data.hasAttachment;
     }
@@ -145,35 +145,34 @@ export class NotesSectionComponent implements OnInit {
   }
 
   addProviderNote() {
-    console.log("dialog box opened",this.waitlistdata)
-    if(this.waitlistdata.appmtFor)
-    {
+    console.log("dialog box opened", this.waitlistdata)
+    if (this.waitlistdata.appmtFor) {
       this.uid = this.waitlistdata.uid
       this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass'],
-      disableClose: true,
-      data: {
-        checkin_id: this.uid,
-        source: "appt"
-      }
-    });
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          checkin_id: this.uid,
+          source: "appt"
+        }
+      });
 
-    this.notedialogRef.afterClosed().subscribe(result => {
-      console.log("result ..", result)
-      if (result === 'reloadlist') {
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            timetype: 3
-          }
-        };
-        this.router.navigate(['provider','appointments',this.uid],navigationExtras)
-      }
-    });
+      this.notedialogRef.afterClosed().subscribe(result => {
+        console.log("result ..", result)
+        if (result === 'reloadlist') {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              timetype: 3
+            }
+          };
+          this.router.navigate(['provider', 'appointments', this.uid], navigationExtras)
+        }
+      });
     }
-    else if(this.waitlistdata.waitlistingFor){
-       this.uid = this.waitlistdata.ynwUuid
-        this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
+    else if (this.waitlistdata.waitlistingFor) {
+      this.uid = this.waitlistdata.ynwUuid
+      this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
         disableClose: true,
@@ -191,10 +190,10 @@ export class NotesSectionComponent implements OnInit {
         }
       });
     }
-    
+
   }
 
-  
+
   sendimages() {
     this.dialog.open(GalleryImportComponent, {
       width: '50%',
@@ -290,13 +289,13 @@ export class NotesSectionComponent implements OnInit {
 
   getThumbUrl(attachment) {
     if (attachment.s3path.indexOf('.pdf') !== -1) {
-      console.log("Attachemnt:",attachment)
+      console.log("Attachemnt:", attachment)
       return attachment.thumbPath;
-    } 
-   else if(attachment.s3path.indexOf('.mp4') !== -1){
+    }
+    else if (attachment.s3path.indexOf('.mp4') !== -1) {
       return 'assets/images/ImgeFileIcon/video.png'
     }
-  else  if(attachment.s3path.indexOf('.mp3') !== -1){
+    else if (attachment.s3path.indexOf('.mp3') !== -1) {
       return 'assets/images/audio.png'
     }
     else {
