@@ -1,39 +1,42 @@
 <section class="" *ngIf="!widget">
-    <div class="card title-gb">
-      <h5 class="mgn-up-10">
-        <span class="fa fa-arrow-left pointer-cursor text-capitalize" (click)="goBack()"></span>&nbsp;&nbsp;
-        Notes
-      </h5>
-    </div>
-  </section>
-  <section [class.p-4]="!widget" *ngIf="source === 'customer'">
-    <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
-      [class.widgetStyle]="widget">
-      <div class="card card-custom data-card">
-        <div class="card-header collapsed" *ngIf="widget"
-          [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
-          [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
-          <div class="text-capitalize">My Notes</div>
-          <div class="mgn-lt-auto">
-            <span class="addNoteButton pointer-cursor" (click)="addProviderNote()"><i class="fa fa-plus-circle" aria-hidden="true"></i></span>
-            <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
-              [class.mgn-rt-20]="small_device_display"></i>
-            <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
-          </div>
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      <span class="fa fa-arrow-left pointer-cursor text-capitalize" (click)="goBack()"></span>&nbsp;&nbsp;
+      Notes
+    </h5>
+  </div>
+</section>
+<section [class.p-4]="!widget" *ngIf="source === 'customer'">
+  <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
+    [class.widgetStyle]="widget">
+    <div class="card card-custom data-card">
+      <div class="card-header collapsed" *ngIf="widget"
+        [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+        [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#notes" aria-expanded="false">
+        <div class="text-capitalize">My Notes</div>
+        <div class="mgn-lt-auto">
+          <span class="addNoteButton pointer-cursor" (click)="addProviderNote()"><i class="fa fa-plus-circle"
+              aria-hidden="true"></i></span>
+          <i class="fa fa-external-link pointer-cursor" aria-hidden="true" [class.mgn-rt-20]="small_device_display"></i>
+          <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
         </div>
-        <div class="card-body p-3" [class.cardheight]="!widget" id="notes"
-          [class.collapse]="widget && small_device_display">
-          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-            <!-- <span class="btn btn-primary pointer-cursor" (click)="addProviderNote()">Add Note</span> -->
-          <span *ngIf="waitlist_notes && waitlist_notes.length > 0">
-              <!-- <hr>
+      </div>
+      <div class="card-body p-3" [class.cardheight]="!widget" id="notes"
+        [class.collapse]="widget && small_device_display">
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <!-- <span class="btn btn-primary pointer-cursor" (click)="addProviderNote()">Add Note</span> -->
+        <span *ngIf="waitlist_notes && waitlist_notes.length > 0">
+          <!-- <hr>
               <span class="text-primary">Private Notes</span> -->
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes" *ngFor="let note of waitlist_notes; let i = index">
-              <div class="note_view consumerCard">
-                <span class="status-label note_name" *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
-                <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span class="status-label note_date"> {{note.timeStamp | date: newDateFormat}}</span> 
-                <div class="note text-primary" *ngIf="note" [innerHTML]="note.note">
-                </div>
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes no-padding my-1"
+            *ngFor="let note of waitlist_notes; let i = index">
+            <div class="note_view consumerCard">
+              <span class="status-label note_name"
+                *ngIf="note.firstName != '' || note.lastName != ''">{{note.firstName}} {{note.lastName}}</span>
+              <span *ngIf="note.noteTime" class="status-label note_date">, {{note.noteTime}}</span> <span
+                class="status-label note_date"> {{note.timeStamp | date: newDateFormat}}</span>
+              <div class="note text-primary" *ngIf="note" [innerHTML]="note.note">
+              </div>
               <div class="result attach" *ngIf="note.attachment && note.attachment.length > 0"
                 (click)="showImagesection(i)">
                 <i class="fa fa-file-text-o" aria-hidden="true"></i> <a class="attach-link">
@@ -45,47 +48,48 @@
                     style="width:50px; height:50px" /></a>
               </div>
             </div>
-            </div>
-          </span>
-          <span *ngIf="waitlist_notes && waitlist_notes.length <= 0">No notes found</span>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section [class.p-4]="!widget" *ngIf="source === 'customerNote'">
-    <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
-      [class.widgetStyle]="widget">
-     
-      <div class="card card-custom data-card mgn-up-5">
-        <div class="card-header collapsed" *ngIf="widget"
-          [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
-          [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#consumerNotes" aria-expanded="false">
-          <div class="text-capitalize">Consumer Notes</div>
-          <div class="mgn-lt-auto">
-            <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
-              [class.mgn-rt-20]="small_device_display"></i>
-            <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
           </div>
-        </div>
-        
-        <div class="card-body p-3" [class.cardheight]="!widget" id="consumerNotes"
-          [class.collapse]="widget && small_device_display">
-          <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-          <span *ngIf="waitlistdata">
-            <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes">
-              <div class="note_view  consumerCard">
-                <span class="" *ngIf="waitlistdata">
-                  <p class="status-label note_date" *ngIf="waitlistdata.consumerNote !== ''">{{waitlistdata.consumerNote}}</p>
-                  <p class="status-label note_date" *ngIf="waitlistdata.consumerNote === '' || waitlistdata.consumerNote === undefined">No notes found</p>
-                </span>
-            </div>
-            </div>
-          </span>
-        </div>
+        </span>
+        <span *ngIf="waitlist_notes && waitlist_notes.length <= 0">No notes found</span>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+<section [class.p-4]="!widget" *ngIf="source === 'customerNote'">
+  <div class="col-xl-12 col-xl-12 col-lg-12 col-md-12 col-sm-12 mgn-bt-5 col-xs-12 m-0 p-0"
+    [class.widgetStyle]="widget">
 
-  <ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
-    [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
-    (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
+    <div class="card card-custom data-card mgn-up-5">
+      <div class="card-header collapsed" *ngIf="widget"
+        [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+        [attr.data-toggle]="small_device_display ? 'collapse' : ''" data-target="#consumerNotes" aria-expanded="false">
+        <div class="text-capitalize">Consumer Notes</div>
+        <div class="mgn-lt-auto">
+          <i class="fa fa-external-link pointer-cursor" aria-hidden="true" [class.mgn-rt-20]="small_device_display"></i>
+          <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
+        </div>
+      </div>
+
+      <div class="card-body p-3" [class.cardheight]="!widget" id="consumerNotes"
+        [class.collapse]="widget && small_device_display">
+        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
+        <span *ngIf="waitlistdata">
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 pnotes no-padding my-1">
+            <div class="note_view  consumerCard">
+              <span class="" *ngIf="waitlistdata">
+                <p class="status-label note_date" *ngIf="waitlistdata.consumerNote !== ''">{{waitlistdata.consumerNote}}
+                </p>
+                <p class="status-label note_date"
+                  *ngIf="waitlistdata.consumerNote === '' || waitlistdata.consumerNote === undefined">No notes found</p>
+              </span>
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<ks-modal-gallery [id]="0" *ngIf="image_list_popup && image_list_popup.length>0" [modalImages]="image_list_popup"
+  [plainGalleryConfig]="customPlainGalleryRowConfig" [buttonsConfig]="customButtonsFontAwesomeConfig"
+  (buttonBeforeHook)="onButtonBeforeHook()" (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
