@@ -3,6 +3,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-appt-card',
   templateUrl: './appt-card.component.html',
@@ -50,6 +51,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
   constructor(
     private wordProcessor: WordProcessor, 
     private dateTimeProcessor: DateTimeProcessor, 
+    public translate: TranslateService
     // private cdref: ChangeDetectorRef
     ) { }
 

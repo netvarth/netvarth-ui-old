@@ -58,10 +58,10 @@
                                                     <a *ngIf="  waitlist.waitlistStatus !== 'done' && waitlist.waitlistStatus !== 'cancelled' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || waitlist.service.virtualCallingModes[0].callingMode == 'Zoom')"
                                                         class="joinMeeting"
                                                         href="{{waitlist.service.virtualCallingModes[0].value}}"
-                                                        target="blank">Join Meeting</a>
+                                                        target="blank">{{'Join Meeting' | translate}}</a>
                                                     <a *ngIf="waitlist.waitlistStatus !== 'cancelled' && type === 'today' && type === 'today' && waitlist.service.serviceType === 'virtualService' && (waitlist.service.virtualCallingModes[0].callingMode == 'VideoCall')"
                                                         class="joinMeeting" (click)="joinMeetitng('wl')"
-                                                        target="blank">Join Now</a>
+                                                        target="blank">{{'Join Now' | translate}}</a>
                                                 </span>
                                             </div>
                                         </div>
@@ -69,17 +69,17 @@
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
                                             <div class="each-item" *ngIf="waitlist.waitlistingFor[0].firstName">
-                                                <span class="item-head">Booking for</span>
+                                                <span class="item-head">{{'Booking for' | translate}}</span>
                                                 <span class="item-label-val">{{waitlist.waitlistingFor[0].firstName |
                                                     capitalizeFirst}}
                                                     {{waitlist.waitlistingFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
                                             <div class="each-item">
-                                                <span class="item-head">Booking id</span>
+                                                <span class="item-head">{{'Booking id' | translate}}</span>
                                                 <span class="item-label-val">{{waitlist.checkinEncId}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.waitlistPhoneNumber">
-                                                <span class="item-head">Phone #</span>
+                                                <span class="item-head">{{'Phone' | translate}} #</span>
                                                 <span class="item-label-val">{{waitlist.countryCode}}
                                                     {{waitlist.waitlistPhoneNumber}}</span>
                                             </div>
@@ -101,18 +101,18 @@
 
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.waitlistingFor[0].email">
-                                                <span class="item-head">Email</span>
+                                                <span class="item-head">{{'Email' | translate}}</span>
                                                 <span class="item-label-val">{{
                                                     waitlist.waitlistingFor[0].email}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="waitlist.amountPaid">
-                                                <span class="item-head">Amount Paid</span>
+                                                <span class="item-head">{{'Amount Paid' | translate}}</span>
                                                 <span class="item-label-val price rupee-font">
                                                     {{waitlist.amountPaid | currency:'&#8377;'}}</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
-                                            <span class="item-head chk-stats">Check your status <i
+                                            <span class="item-head chk-stats">{{'Check your status' | translate}} <i
                                                     class="fa fa-hand-o-down"></i></span>
                                             <div class="mgn-up-10">
                                                 <ngx-qrcode id="print-section" [elementType]="elementType"
@@ -126,7 +126,7 @@
                                         <div *ngIf="(waitlist.service.serviceType === 'virtualService' && waitlist.waitlistStatus !== 'arrived') || waitlist.service.serviceType !== 'virtualService'"
                                             class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item"
                                             style="padding-right: 4px !important; padding-left: 4px !important;">
-                                            <span class="status-label">STATUS</span>
+                                            <span class="status-label">{{'STATUS' | translate}}</span>
                                             <span>
                                                 <div class="item-label-val">
                                                     {{check_in_statuses[waitlist.waitlistStatus | capitalizeFirst]}}
@@ -135,7 +135,7 @@
                                         </div>
                                         <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item"
                                             style="padding-right: 4px !important; padding-left: 4px !important; flex: 1 !important;">
-                                            <span class="status-label">DATE & TIME-WINDOW</span>
+                                            <span class="status-label">{{'DATE & TIME-WINDOW' | translate}}</span>
                                             <span class="item-label-val">{{waitlist.date | date:newDateFormat}}</span>
                                             <span class="item-label-val"><span
                                                     style="display: inline-block !important;">{{waitlist.queue.queueStartTime}}</span>
@@ -146,72 +146,70 @@
                                         <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item txt-align-center"
                                             style="padding-right: 4px !important; padding-left: 4px !important;">
                                             <span class="status-label"
-                                                *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">TOKEN NO</span>
+                                                *ngIf="waitlist.token && waitlist.appxWaitingTime>=0">{{'TOKEN NO' | translate}}</span>
                                             <span class="status-label"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">EST
-                                                WAIT TIME</span>
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
+                                                {{'EST WAIT TIME' | translate}}</span>
                                             <span class="item-label-val"
                                                 *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && !waitlist.serviceTime">
                                                 {{getTimeToDisplay(waitlist.appxWaitingTime)}}
                                             </span>
                                             <span class="status-label"
-                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">STARTS
-                                                AT</span>
+                                                *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">{{'STARTS AT' | translate}}</span>
                                             <span class="item-label-val"
                                                 *ngIf="!waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.serviceTime">
                                                 {{waitlist.serviceTime}}
                                             </span>
 
                                             <span class="status-label"
-                                                *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">TOKEN NO</span>
+                                                *ngIf="waitlist.token && !(waitlist.appxWaitingTime>=0)">{{'TOKEN NO' | translate}}</span>
                                             <span class="item-label-val"
                                                 *ngIf="waitlist.token">{{waitlist.token}}</span>
                                             <span class="est-tok-time"
                                                 *ngIf="waitlist.token && waitlist.appxWaitingTime>=0 && waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !== 'done' && !waitlist.serviceTime">
-                                                Est Wait Time:
+                                                {{'Est Wait Time' | translate}}:
                                                 {{getTimeToDisplay(waitlist.appxWaitingTime)}}
                                             </span>
                                             <span class="est-tok-time"
-                                                *ngIf="waitlist.serviceTime && ( waitlist.appxWaitingTime >=0 && waitlist.token && (waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !=='done'))">Starts
-                                                at : {{waitlist.serviceTime}}</span>
+                                                *ngIf="waitlist.serviceTime && ( waitlist.appxWaitingTime >=0 && waitlist.token && (waitlist.waitlistStatus !== 'cancelled' && waitlist.waitlistStatus !=='done'))">
+                                                {{'Starts at' | translate}} : {{waitlist.serviceTime}}</span>
                                         </div>
                                         <div *ngIf="waitlist.batchName"
                                             class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item"
                                             style="padding-right: 4px !important; padding-left: 4px !important;">
-                                            <span class="status-label">BATCH</span>
+                                            <span class="status-label">{{'BATCH' | translate}}</span>
                                             <span class="item-label-val">{{waitlist.batchName}}</span>
                                         </div>
                                     </div>
                                     <div class="more_view">
                                         <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a
-                                                class="fl-left">View more</a></span>
+                                                class="fl-left">{{'View more' | translate}}</a></span>
                                         <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a
-                                                class="fl-left">View less</a></span>
+                                                class="fl-left">{{'View less' | translate}}</a></span>
                                                 <!-- *ngIf="!history"  -->
-                                        <span class="opt-actions" (click)="gotoActions(waitlist)"><a>Actions</a></span>
+                                        <span class="opt-actions" (click)="gotoActions(waitlist)"><a>{{'Actions' | translate}}</a></span>
                                     </div>
                                     <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                                         <mat-tab-group animationDuration="10ms">
-                                            <mat-tab label="Instructions">
+                                            <mat-tab label="{{'Instructions' | translate}}">
                                                 <span *ngIf="waitlist.service && waitlist.service.postInfoEnabled">
                                                     <h6> {{waitlist.service.postInfoTitle}} </h6>
                                                     <span [innerHTML]="waitlist.service.postInfoText">
                                                     </span>
                                                 </span>
-                                                <span class="mgn-lt-20" *ngIf="waitlist.service && !waitlist.service.postInfoEnabled">No
-                                                    Instructions</span>
+                                                <span class="mgn-lt-20" *ngIf="waitlist.service && !waitlist.service.postInfoEnabled">{{'No Instructions' | translate}}</span>
                                             </mat-tab>
                                             <!-- <mat-tab label="Messages">
                                                 <app-inbox-list [messages]="communication_history"
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab> -->
-                                            <mat-tab label="Messages">
+                                            <mat-tab label="{{'Messages' | translate}}">
                                                 <app-inbox-list [messages]="communication_history"
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab>
-                                            <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
+                                            <mat-tab label="{{cust_notes_cap | capitalizeFirst | translate}}">
                                                 <span class="mgn-lt-20"
                                                     *ngIf="waitlist && waitlist.consumerNote && waitlist.consumerNote !== ''">{{waitlist.consumerNote}}</span>
                                                 <span class="mgn-lt-20"
@@ -235,9 +233,9 @@
                                                         qnr.questionnaireId}}
                                                         <div class="qnrstatus">
                                                             <span class="greenc"
-                                                                *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
+                                                                *ngIf="getQnrStatus(qnr) === 'submitted'">{{'Submitted' | translate}</span>
                                                             <span class="red"
-                                                                *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span>
+                                                                *ngIf="getQnrStatus(qnr) !== 'submitted'">{{'Released' | translate}}</span>
                                                         </div>
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>

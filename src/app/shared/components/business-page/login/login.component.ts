@@ -38,8 +38,15 @@ export class LoginComponent implements OnInit {
     )
     this.activatedRoute.queryParams.subscribe(
       (queryParams: any) => {
-        if (queryParams.target)
+        if (queryParams.target){
           this.target = queryParams.target;
+        }
+        if (queryParams.src) {
+          this.lStorageService.setitemonLocalStorage('source', queryParams.src);
+          this.lStorageService.setitemonLocalStorage('reqFrom', 'CUSTOM_WEBSITE');
+        } else if (!this.lStorageService.getitemfromLocalStorage('reqFrom')){
+          this.lStorageService.setitemonLocalStorage('reqFrom','WEB_LINK');
+        }
       }
     )
   }

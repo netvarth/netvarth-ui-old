@@ -170,6 +170,8 @@ export class ServiceViewComponent implements OnInit {
       if (qparams.src) {
         this.lStorageService.setitemonLocalStorage('source', qparams.src);
         this.lStorageService.setitemonLocalStorage('reqFrom', 'CUSTOM_WEBSITE');
+      } else if (!this.lStorageService.getitemfromLocalStorage('reqFrom')){
+        this.lStorageService.setitemonLocalStorage('reqFrom','WEB_LINK');
       }
       if (qparams.type) {
         this.serviceType = qparams.type;

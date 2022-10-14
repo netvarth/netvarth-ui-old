@@ -18,6 +18,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { MeetingDetailsComponent } from '../../meeting-details/meeting-details.component';
 import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
 import { S3UrlProcessor } from '../../../../shared/services/s3-url-processor.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-appointmentdetail',
@@ -87,7 +88,8 @@ export class ApptDetailComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor,
     private teleBookingService: TeleBookingService,
-    private s3Processor: S3UrlProcessor
+    private s3Processor: S3UrlProcessor,
+    public translate: TranslateService
   ) {
     this.activated_route.queryParams.subscribe(
       (qParams) => {

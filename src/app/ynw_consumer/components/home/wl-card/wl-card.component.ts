@@ -3,6 +3,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-wl-card',
@@ -43,7 +44,9 @@ export class WlCardComponent implements OnInit, OnChanges {
   videoBtnCaption;
   customId: any;
   showQnrBtn = false;
-  constructor(private wordProcessor: WordProcessor, private dateTimeProcessor: DateTimeProcessor) { }
+  constructor(private wordProcessor: WordProcessor, 
+    private dateTimeProcessor: DateTimeProcessor,
+    public translate: TranslateService) { }
 
   ngOnInit(): void {
   }

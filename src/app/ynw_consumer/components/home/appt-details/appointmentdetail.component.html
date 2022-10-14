@@ -18,7 +18,7 @@
                                 </span>
                             </div>
                             <div class="card title-gb">
-                                <h5 class="mgn-up-10 index-head">Appointment Details <a
+                                <h5 class="mgn-up-10 index-head">{{'Appointment Details' | translate}} <a
                                         class="pull-left mgn-rt-20 back-btn" (click)="gotoPrev()"><i
                                             class="fa fa-arrow-left"></i></a></h5>
                             </div>
@@ -58,10 +58,10 @@
                                                     <a *ngIf="appt.apptStatus!=='Completed' && appt.apptStatus !== 'Cancelled' && type === 'today' && appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'GoogleMeet' || appt.service.virtualCallingModes[0].callingMode == 'Zoom')"
                                                         class="joinMeeting"
                                                         href="{{appt.service.virtualCallingModes[0].value}}"
-                                                        target="blank">Join Meeting</a>
+                                                        target="blank">{{'Join Meeting' | translate}}</a>
                                                     <a *ngIf="appt.apptStatus!=='Completed' && appt.apptStatus !== 'Cancelled' && type === 'today' && appt.service.serviceType === 'virtualService' && (appt.service.virtualCallingModes[0].callingMode == 'VideoCall')"
                                                         class="joinMeeting" (click)="joinMeetitng('appt')"
-                                                        target="blank">Join Now</a>
+                                                        target="blank">{{'Join Now' | translate}}</a>
                                                 </span>
                                             </div>
                                         </div>
@@ -69,22 +69,22 @@
                                     <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12">
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6">
                                             <div class="each-item" *ngIf="appt.appmtFor[0].firstName">
-                                                <span class="item-head">Booking for</span>
+                                                <span class="item-head">{{'Booking for' | translate}}</span>
                                                 <span class="item-label-val">{{appt.appmtFor[0].firstName |
                                                     capitalizeFirst}}
                                                     {{appt.appmtFor[0].lastName | capitalizeFirst}}</span>
                                             </div>
                                             <div class="each-item">
-                                                <span class="item-head">Booking id</span>
+                                                <span class="item-head">{{'Booking id' | translate}}</span>
                                                 <span class="item-label-val">{{appt.appointmentEncId}}</span>
                                             </div>
                                             <div class="each-item" *ngIf="appt.phoneNumber">
-                                                <span class="item-head">Phone #</span>
+                                                <span class="item-head">{{'Phone' | translate}} #</span>
                                                 <span class="item-label-val">{{appt.countryCode}}
                                                     {{appt.phoneNumber}}</span>
                                             </div>
                                             <div class="each-item">
-                                                <span class="item-head">Email</span>
+                                                <span class="item-head">{{'Email' | translate}}</span>
                                                 <span class="item-label-val">{{appt.appmtFor[0].email}}
                                                 </span>
                                             </div>
@@ -96,13 +96,13 @@
                                                 </span>
                                             </div>
                                             <div class="each-item" *ngIf="appt.amountPaid">
-                                                <span class="item-head">Amount Paid</span>
+                                                <span class="item-head">{{'Amount Paid' | translate}}</span>
                                                 <span class="item-label-val price rupee-font"> {{appt.amountPaid|
                                                     currency:'&#8377;'}}</span>
                                             </div>
                                         </div>
                                         <div class="col-sm-6 col-md-6 col-lg-6 col-xl-6 col-xs-6 txt-align-center">
-                                            <span class="item-head chk-stats">Check your status <i
+                                            <span class="item-head chk-stats">{{'Check your status' | translate}} <i
                                                     class="fa fa-hand-o-down"></i></span>
                                             <div class="mgn-up-10">
                                                 <ngx-qrcode id="print-section" [elementType]="elementType"
@@ -114,7 +114,7 @@
                                     <div class="mgn-bt-20 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 stats-bar">
                                         <div *ngIf="(appt.service.serviceType === 'virtualService' && appt.apptStatus !== 'Arrived') || appt.service.serviceType !== 'virtualService'"
                                             class="col-md-4 col-lg-4 col-xl-4 col-xs-3 stats-item">
-                                            <span class="status-label">STATUS</span>
+                                            <span class="status-label">{{'STATUS' | translate}}</span>
                                             <span>
                                                 <div class="item-label-val">
                                                     {{check_in_statuses[appt.apptStatus | capitalizeFirst]}}
@@ -122,7 +122,7 @@
                                             </span>
                                         </div>
                                         <div class="col-md-4 col-lg-4 col-xl-4 col-xs-4 stats-item">
-                                            <span class="status-label">DATE & TIME-WINDOW</span>
+                                            <span class="status-label">{{'DATE & TIME-WINDOW' | translate}}</span>
                                             <span class="item-label-val">{{appt.appmtDate | date:newDateFormat}}</span>
                                             <span
                                                 class="item-label-val">{{appt.schedule.apptSchedule.timeSlots[0].sTime}}
@@ -130,39 +130,39 @@
                                                 {{appt.schedule.apptSchedule.timeSlots[0].eTime}}</span>
                                         </div>
                                         <div class="col-md-2 col-lg-2 col-xl-2 col-xs-3 stats-item">
-                                            <span class="status-label" *ngIf="appt.appmtTime">TIME</span>
+                                            <span class="status-label" *ngIf="appt.appmtTime">{{'TIME' | translate}}</span>
                                             <span class="item-label-val"
                                                 *ngIf="appt.appmtTime">{{getSingleTime(appt.appmtTime)}}</span>
                                         </div>
                                         <div *ngIf="appt.batchId"
                                             class="col-md-2 col-lg-2 col-xl-2 col-xs-2 stats-item">
-                                            <span class="status-label">BATCH</span>
+                                            <span class="status-label">{{'BATCH' | translate}}</span>
                                             <span class="item-label-val">{{appt.batchId}}</span>
                                         </div>
                                     </div>
                                     <div class="more_view">
                                         <span class="opt-viewmore" *ngIf="!view_more" (click)="viewMore()"><a
-                                                class="fl-left">View more</a></span>
+                                                class="fl-left">{{'View more' | translate}}</a></span>
                                         <span class="opt-viewmore" *ngIf="view_more" (click)="viewMore()"><a
-                                                class="fl-left">View less</a></span>
+                                                class="fl-left">{{'View less' | translate}}</a></span>
                                                 <!-- *ngIf="!history" -->
-                                        <span  class="opt-actions" (click)="gotoActions(appt)"><a>Actions</a></span>
+                                        <span  class="opt-actions" (click)="gotoActions(appt)"><a>{{'Actions' | translate}}</a></span>
                                     </div>
                                     <div class="more_view" *ngIf="view_more" class="mgn-up-30">
                                         <mat-tab-group animationDuration="10ms" class="index-head">
-                                            <mat-tab label="Instructions">
+                                            <mat-tab label="{{'Instructions' | translate}}">
                                             
                                                     <span *ngIf="appt.service && appt.service.postInfoEnabled">
                                                         <h6> {{appt.service.postInfoTitle}} </h6>
                                                         <span [innerHTML]="appt.service.postInfoText">
                                                         </span>
                                                     </span>
-                                                    <span class="mgn-lt-20" *ngIf="appt.service && !appt.service.postInfoEnabled">No
-                                                        Instructions</span>
+                                                    <span class="mgn-lt-20" *ngIf="appt.service && !appt.service.postInfoEnabled">
+                                                        {{'No Instructions' | translate}}</span>
                                             
                                             </mat-tab>
 
-                                            <mat-tab label="Messages">
+                                            <mat-tab label="{{'Messages' | translate}}">
                                                 <app-inbox-list [messages]="communication_history"
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()">
@@ -174,7 +174,7 @@
                                                     [fromsource]="'consumer-waitlist'"
                                                     (reloadApi)="getCommunicationHistory()"></app-inbox-list>
                                             </mat-tab> -->
-                                            <mat-tab label="{{cust_notes_cap | capitalizeFirst}}">
+                                            <mat-tab label="{{cust_notes_cap | capitalizeFirst | translate}}">
                                                 <span class="mgn-lt-20" 
                                                     *ngIf="appt && appt.consumerNote &&  appt.consumerNote !== ''">{{appt.consumerNote}}</span>
                                                 <span  class="mgn-lt-20" 
@@ -198,9 +198,9 @@
                                                         qnr.questionnaireId}}
                                                         <div class="qnrstatus">
                                                             <span class="greenc"
-                                                                *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
+                                                                *ngIf="getQnrStatus(qnr) === 'submitted'">{{'Submitted' | translate}}</span>
                                                             <span class="red"
-                                                                *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span>
+                                                                *ngIf="getQnrStatus(qnr) !== 'submitted'">{{'Released' | translate}}</span>
                                                         </div>
                                                     </mat-panel-title>
                                                 </mat-expansion-panel-header>

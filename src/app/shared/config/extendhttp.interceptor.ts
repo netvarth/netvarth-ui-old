@@ -91,28 +91,29 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     return this._maintananceSubject;
   }
   private _ifSessionExpired() {
-    this._refreshSubject.subscribe({
+    const _this = this;
+    _this._refreshSubject.subscribe({
       complete: () => {
-        this._refreshSubject = new Subject<any>();
+        _this._refreshSubject = new Subject<any>();
       }
     });
-    console.log(this._refreshSubject.observers.length);
-    if (this._refreshSubject.observers.length === 1) {
+    console.log(_this._refreshSubject.observers.length);
+    if (_this._refreshSubject.observers.length === 1) {
       // Hit refresh-token API passing the refresh token stored into the request
       // to get new access token and refresh token pair
       // this.sessionService.refreshToken().subscribe(this._refreshSubject);
-      this.sessionStorageService.removeitemfromSessionStorage('tabId');
-      let ynw_user = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+      _this.sessionStorageService.removeitemfromSessionStorage('tabId');
+      let ynw_user = _this.shared_functions.getJson(_this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
       // ynw_user = JSON.parse(ynw_user);
       if (!ynw_user) {
         window.location.reload();
       }
       const phone_number = ynw_user['loginId'];
-      const password = this.lStorageService.getitemfromLocalStorage('bpwd');
+      const password = _this.lStorageService.getitemfromLocalStorage('bpwd');
       if (!ynw_user['mUniqueId']) {
-        if (this.lStorageService.getitemfromLocalStorage('mUniqueId')) {
-          ynw_user['mUniqueId'] = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-          this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw_user);
+        if (_this.lStorageService.getitemfromLocalStorage('mUniqueId')) {
+          ynw_user['mUniqueId'] = _this.lStorageService.getitemfromLocalStorage('mUniqueId');
+          _this.lStorageService.setitemonLocalStorage('ynw-credentials', ynw_user);
         }
       }
       const post_data = {
@@ -124,16 +125,16 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
       console.log("_ifSessionExpired:", reqFrom);
       if (reqFrom === 'cuA') {
-        this.authService.refreshToken().then(
+        _this.authService.refreshToken().then(
           (response)=> {
-            this.authService.refresh(response).subscribe(this._refreshSubject);
+            _this.authService.refresh(response).subscribe(_this._refreshSubject);
           }
         )        
       } else {
-        this.shared_services.ProviderLogin(post_data).subscribe(this._refreshSubject);
+        _this.shared_services.ProviderLogin(post_data).subscribe(_this._refreshSubject);
       }      
     }
-    return this._refreshSubject;
+    return _this._refreshSubject;
   }
   private _checkSessionExpiryErr(error: HttpErrorResponse): boolean {
     return (
