@@ -114,6 +114,9 @@ export class TeleHomeComponent implements OnInit {
   }
   initProviderConsumer() {
     const _this = this;
+    if (!this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+      this.lStorageService.setitemonLocalStorage('reqFrom', 'WEB_LINK');
+    }
     this.getAccountIdFromEncId(this.customId).then(
       (uniqueId: any)=> {
         _this.configService.getUIAccountConfig(uniqueId).subscribe(
