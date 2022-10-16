@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../src/app/shared/services/group-storage.service';
+import { CdlService } from './cdl.service';
 import { ViewFileComponent } from './loans/loan-details/view-file/view-file.component';
 @Component({
   selector: 'app-cdl',
@@ -10,7 +11,7 @@ import { ViewFileComponent } from './loans/loan-details/view-file/view-file.comp
 })
 export class CdlComponent implements OnInit {
   user: any;
-  loans: any;
+  loans: any = 0;
   leads: any;
   viewmore: any = false;
   currentstatus: any = "all";
@@ -18,92 +19,7 @@ export class CdlComponent implements OnInit {
   seacrchFilterOrder: any;
   statusList = ['all', 'approved', 'redirected', 'rejected'];
   viewmoreleads: any;
-  statusLoansList: any = [
-    {
-      'loanId': 101,
-      'customerName': 'David',
-      'amount': '40000',
-      'status': 'redirected',
-      'date': '28/09/2022'
-    },
-    {
-      'loanId': 102,
-      'customerName': 'Aswin',
-      'amount': '50000',
-      'status': 'redirected',
-      'date': '27/09/2022'
-    },
-    {
-      'loanId': 109,
-      'customerName': 'Adarsh',
-      'amount': '40000',
-      'status': 'redirected',
-      'date': '27/09/2022'
-    },
-    {
-      'loanId': 103,
-      'customerName': 'Atul',
-      'amount': '35000',
-      'status': 'pending',
-      'date': '26/09/2022'
-    },
-    {
-      'loanId': 111,
-      'customerName': 'Krishna',
-      'amount': '35000',
-      'status': 'pending',
-      'date': '24/09/2022'
-    },
-    {
-      'loanId': 124,
-      'customerName': 'Sravan',
-      'amount': '35000',
-      'status': 'pending',
-      'date': '26/09/2022'
-    },
-    {
-      'loanId': 131,
-      'customerName': 'Davika',
-      'amount': '35000',
-      'status': 'approved',
-      'date': '25/09/2022'
-    },
-    {
-      'loanId': 105,
-      'customerName': 'Babu',
-      'amount': '25000',
-      'status': 'auto approved',
-      'date': '24/09/2022'
-    },
-    {
-      'loanId': 121,
-      'customerName': 'Adarsh',
-      'amount': '15000',
-      'status': 'auto approved',
-      'date': '24/09/2022'
-    },
-    {
-      'loanId': 106,
-      'customerName': 'Atul',
-      'amount': '274000',
-      'status': 'rejected',
-      'date': '23/09/2022'
-    },
-    {
-      'loanId': 107,
-      'customerName': 'Davika',
-      'amount': '100000',
-      'status': 'rejected',
-      'date': '22/09/2022'
-    },
-    {
-      'loanId': 127,
-      'customerName': 'Narendra',
-      'amount': '100000',
-      'status': 'rejected',
-      'date': '22/09/2022'
-    }
-  ];
+  statusLoansList: any;
   statusLeadsList: any = [
     {
       'loanId': 48235,
@@ -184,8 +100,8 @@ export class CdlComponent implements OnInit {
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
-    private dialog: MatDialog
-    // private cdlservice: CdlService
+    private dialog: MatDialog,
+    private cdlservice: CdlService
 
   ) { }
 
@@ -193,11 +109,15 @@ export class CdlComponent implements OnInit {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("User is", this.user);
 
-    // this.cdlservice.getJSON().subscribe(data => {
-    //   console.log("data printed", data);
-    // });
-    this.loans = this.statusLoansList.slice(0, 4);
-    this.leads = this.statusLeadsList.slice(0, 4);
+    this.cdlservice.getLoans().subscribe(data => {
+      this.statusLoansList = data
+      this.loans = this.statusLoansList.slice(0, 4);
+    });
+
+    this.cdlservice.getDealers().subscribe(data => {
+      this.statusLeadsList = data
+      this.leads = this.statusLeadsList.slice(0, 4);
+    });
   }
 
   viewMore() {
@@ -303,7 +223,7 @@ export class CdlComponent implements OnInit {
   searchText(event) {
     console.log("event.target.value", event.target.value)
     if (event.target.value != '') {
-      this.loans = this.statusLoansList.filter(x => x.customerName.toLowerCase().includes(event.target.value.toLowerCase()));
+      this.loans = this.statusLoansList.filter(x => x.customer.firstName.toLowerCase().includes(event.target.value.toLowerCase()));
     }
     else {
       this.loans = this.statusLoansList.slice(0, 4);

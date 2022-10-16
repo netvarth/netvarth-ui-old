@@ -4,552 +4,768 @@
 
 
 <div class="card m-2">
-  <span class="font-weight-bold">&nbsp;{{headerText}}</span><br><br>
+  <div class="col-md-7 d-flex justify-content-between pl-0">
+    <div>
+      <span class="font-weight-bold">&nbsp;{{headerText}} Application</span>
+    </div>
+    <div class="d-flex">
+      <div class="mr-2 my-auto" (click)="closeAll()">
+        <a class="btn btn-light">
+          Close all
+        </a>
+      </div>
+      <div>
+        <a class="btn btn-primary open-all-btn" (click)="expandAll()">
+          Expand all
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <br>
   <form [formGroup]="createLoan" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-7">
-        <div>
-          <div class="bggrey my-2">
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="customerDetailsPanel" (opened)="customerDetailsPanel = true"
+            (closed)="customerDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Customer Details
+              </mat-panel-title>
+            </mat-expansion-panel-header>
             <div>
-              <div class="d-flex">
-                <div class="form-title">Phone Number</div>
-              </div>
-              <div class="fieldPadding">
-                <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
-                    autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
-                    [class.disabled]="action == 'update'" />
-                  <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
-                    (click)="verifyotp()"><span>Verify</span></a>
-
-                  <a class="btn btn-verify" *ngIf="verification" [class.btn-verified]="verification">
-                    <span *ngIf="verification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Customer Name</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" #name [value]="name" type="text" placeholder="Enter Customer Name"
-                  class="form-control" autocomplete="off" formControlName="name" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Email</div>
-              </div>
-              <div class="fieldPadding">
-                <div class="d-flex">
-                  <input (keyup)="resetErrors()" #email [value]="email" type="email" placeholder="Enter Customer Email"
-                    class="form-control" autocomplete="off" formControlName="email"
-                    [class.disabled]="action == 'update'" />
-
-                  <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
-                    (click)="verifyemail()"><span>Verify</span></a>
-
-                  <a class="btn btn-verify" *ngIf="emailverification" [class.btn-verified]="emailverification">
-                    <span *ngIf="emailverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Select Type</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control" #loantype formControlName="loantype" [value]="loantype">
-                  <option *ngFor="let loantype of loanTypes" value="{{loantype.id}}">
-                    {{loantype.name}}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Customer Photo</div>
-              </div>
-              <div class="fieldPadding photo-border">
-                <div >
-                  <label for='input-file'>
-                    <!-- <i class="material-icons">cloud_upload</i> -->
-                    Upload File
-                  </label>
-                  <input type='file' formControlName="customerphoto" #photoAttach
-                    (change)="filesSelected($event,'photo')" />
-                </div>
-                <span
-                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Aadhar Number</div>
-              </div>
-              <div class="fieldPadding">
-                <div class="d-flex">
-                  <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
-                    class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
-                    [class.disabled]="action == 'update'" />
-
-                  <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="!aadharverification"
-                    (click)="verifyaadhar()"><span>Verify</span></a>
-
-                  <a class="btn btn-verify" *ngIf="aadharverification" [class.btn-verified]="aadharverification">
-                    <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="fieldPadding">
-                <div >
-                  <label for='input-file'>
-                    Upload File
-                  </label>
-                  <input #aadharAttach type='file' formControlName="aadharattachment" (change)="filesSelected($event, 'aadhar')"/>
-                </div>
-                <span
-                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Address 1</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="permanentaddress1" #permanentaddress1 [value]="address1"
-                  type="text" placeholder="Enter Address 1" class="form-control" autocomplete="off"
-                  formControlName="permanentaddress1" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Address 2</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="permanentaddress2" #permanentaddress2 [value]="address2"
-                  type="text" placeholder="Enter Address 2" class="form-control" autocomplete="off"
-                  formControlName="permanentaddress2" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">City</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" [value]="permanentcity" #permanentcity type="text"
-                  placeholder="Enter City" class="form-control" autocomplete="off" formControlName="permanentcity" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">State</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" #permanentstate [value]="permanentstate" type="text"
-                  placeholder="Enter State" class="form-control" autocomplete="off" formControlName="permanentstate" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Pincode</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" #permanentpincode [value]="permanentpincode" type="text"
-                  placeholder="Enter Pincode" class="form-control" autocomplete="off"
-                  formControlName="permanentpincode" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="fieldPadding">
-                <div class="form-check">
-                  <input class="form-check-input" [checked]="addresscheck" type="checkbox" value=""
-                    id="flexCheckDefault" (change)="addresschange($event)">
-                  <span class="form-check-label" for="flexCheckDefault">
-                    Use this Address as current
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div *ngIf="showaddressfields">
-          <div>
-            <div class="bggrey my-2">
               <div>
-                <div class="d-flex">
-                  <div class="form-title">Current Address 1</div>
-                </div>
-                <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" [value]="currentaddress1" #currentaddress1 type="text"
-                    placeholder="Enter Address 1" class="form-control" autocomplete="off"
-                    formControlName="currentaddress1" />
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Customer First Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Customer First Name"
+                        class="form-control" autocomplete="off" formControlName="firstname" />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
 
-          <div>
-            <div class="bggrey my-2">
               <div>
-                <div class="d-flex">
-                  <div class="form-title">Current Address 2</div>
-                </div>
-                <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" [value]="currentaddress2" #currentaddress2 type="text"
-                    placeholder="Enter Address 2" class="form-control" autocomplete="off"
-                    formControlName="currentaddress2" />
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Customer Last Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Customer Last Name"
+                        class="form-control" autocomplete="off" formControlName="lastname" />
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div>
-            <div class="bggrey my-2">
+
               <div>
-                <div class="d-flex">
-                  <div class="form-title">Current Address City</div>
-                </div>
-                <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" [value]="currentcity" #currentcity type="text" placeholder="Enter City"
-                    class="form-control" autocomplete="off" formControlName="currentcity" />
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Phone Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
+                          autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
+                          [class.disabled]="action == 'update'" />
+                        <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
+                          (click)="verifyotp()"><span>Verify</span></a>
+
+                        <a class="btn btn-verify" *ngIf="verification" [class.btn-verified]="verification">
+                          <span *ngIf="verification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div>
-            <div class="bggrey my-2">
+
               <div>
-                <div class="d-flex">
-                  <div class="form-title">Current Address State</div>
-                </div>
-                <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" [value]="currentstate" #currentstate type="text"
-                    placeholder="Enter State" class="form-control" autocomplete="off" formControlName="currentstate" />
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Email</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #email [value]="email" type="email"
+                          placeholder="Enter Customer Email" class="form-control" autocomplete="off"
+                          formControlName="email" [class.disabled]="action == 'update'" />
+
+                        <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
+                          (click)="verifyEmail()"><span>Verify</span></a>
+
+                        <a class="btn btn-verify" *ngIf="emailverification" [class.btn-verified]="emailverification">
+                          <span *ngIf="emailverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <div>
-            <div class="bggrey my-2">
+
               <div>
-                <div class="d-flex">
-                  <div class="form-title">Current Address Pincode</div>
-                </div>
-                <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" [value]="currentpincode" #currentpincode type="text"
-                    placeholder="Enter Pincode" class="form-control" autocomplete="off"
-                    formControlName="currentpincode" />
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Customer Photo</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(this.loanData && this.loanData.consumerPhoto && this.loanData.consumerPhoto[0])">
+                        <label for='photoAttach' (click)="photoAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #photoAttach type='file' formControlName="customerphoto"
+                          (change)="filesSelected($event,'photo')" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
+                                  *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)"
+                                *ngIf="action!='update'">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
+
             </div>
-          </div>
-        </div>
+          </mat-expansion-panel>
+        </mat-accordion>
 
+        <br>
 
-        <div>
-          <div class="bggrey my-2">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="kycDetailsPanel" (opened)="kycDetailsPanel = true"
+            (closed)="kycDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                KYC Details
+              </mat-panel-title>
+            </mat-expansion-panel-header>
             <div>
-              <div class="d-flex">
-                <div class="form-title">Pan Number</div>
-              </div>
-              <div class="fieldPadding">
-                <div class="d-flex">
-                  <input (keyup)="resetErrors()" #pannumber [value]="pannumber" type="text"
-                    placeholder="Enter PAN Number" class="form-control" autocomplete="off" formControlName="pannumber"
-                    [class.disabled]="action == 'update'" />
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Aadhar Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
+                          class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
+                          [class.disabled]="action == 'update'" />
 
-                  <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
-                    (click)="verifypan()"><span>Verify</span></a>
+                        <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="!aadharverification"
+                          (click)="verifyaadhar()"><span>Verify</span></a>
 
-                  <a class="btn btn-verify" *ngIf="panverification" [class.btn-verified]="panverification">
-                    <span *ngIf="panverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                        <a class="btn btn-verify" *ngIf="aadharverification" [class.btn-verified]="aadharverification">
+                          <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="fieldPadding">
+                      <div class="file" *ngIf="action!='update'">
+                        <label for='input-file' (click)="aadharAttach.click()">
+                          Upload File
+                        </label>
+                        <input #aadharAttach type='file' (change)="filesSelected($event, 'aadhar')" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['aadhar'] && selectedFiles['aadhar'].files && selectedFiles['aadhar'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['aadhar'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['aadhar'].base64[i], file)"
+                                  *ngIf="selectedFiles['aadhar'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)"
+                                *ngIf="action!='update'">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Pan Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #pannumber [value]="pannumber" type="text"
+                          placeholder="Enter PAN Number" class="form-control" autocomplete="off"
+                          formControlName="pannumber" [class.disabled]="action == 'update'" />
+
+                        <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
+                          (click)="verifypan()"><span>Verify</span></a>
+
+                        <a class="btn btn-verify" *ngIf="panverification" [class.btn-verified]="panverification">
+                          <span *ngIf="panverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <!-- <div class="d-flex">
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <!-- <div class="d-flex">
                         <div class="form-title">Aadhar Atachment</div>
                       </div> -->
-              <div class="fieldPadding">
-                <div >
-                  <label for='input-file'>
-                    <!-- <i class="material-icons">cloud_upload</i> -->
-                    Upload File
-                  </label>
-                  <input #panAttach type='file' formControlName="panattachment" (change)="filesSelected($event, 'pan')"/>
+                    <div class="fieldPadding">
+                      <div class="file" *ngIf="action!='update'">
+                        <label for='input-file' (click)="panAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #panAttach type='file' formControlName="panattachment"
+                          (change)="filesSelected($event, 'pan')" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['pan'] && selectedFiles['pan'].files && selectedFiles['pan'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['pan'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['pan'].base64[i], file)"
+                                  *ngIf="selectedFiles['pan'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['pan'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)" *ngIf="action!='update'">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <span
-                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
               </div>
-            </div>
-          </div>
-        </div>
 
-        <div>
-          <div class="bggrey my-2">
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Address 1</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentaddress1" #permanentaddress1 [value]="address1"
+                        type="text" placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                        formControlName="permanentaddress1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Address 2</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentaddress2" #permanentaddress2 [value]="address2"
+                        type="text" placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                        formControlName="permanentaddress2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">City</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentcity" #permanentcity type="text"
+                        placeholder="Enter City" class="form-control" autocomplete="off"
+                        formControlName="permanentcity" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">State</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentstate [value]="permanentstate" type="text"
+                        placeholder="Enter State" class="form-control" autocomplete="off"
+                        formControlName="permanentstate" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Pincode</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentpincode [value]="permanentpincode" type="text"
+                        placeholder="Enter Pincode" class="form-control" autocomplete="off"
+                        formControlName="permanentpincode" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="fieldPadding">
+                      <div class="form-check">
+                        <input class="form-check-input" [checked]="addresscheck" type="checkbox" value=""
+                          (change)="addresschange($event)">
+                        <span class="form-check-label" for="flexCheckDefault">
+                          Use this Address as current
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div *ngIf="showaddressfields">
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address 1</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentaddress1" #currentaddress1 type="text"
+                          placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                          formControlName="currentaddress1" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address 2</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentaddress2" #currentaddress2 type="text"
+                          placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                          formControlName="currentaddress2" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address City</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentcity" #currentcity type="text"
+                          placeholder="Enter City" class="form-control" autocomplete="off"
+                          formControlName="currentcity" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address State</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentstate" #currentstate type="text"
+                          placeholder="Enter State" class="form-control" autocomplete="off"
+                          formControlName="currentstate" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address Pincode</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentpincode" #currentpincode type="text"
+                          placeholder="Enter Pincode" class="form-control" autocomplete="off"
+                          formControlName="currentpincode" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Bank</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <select class="form-control" formControlName="bank">
+                        <option>KOTAK</option>
+                        <option>ICICI</option>
+                        <option>SBI</option>
+                        <option>HDFC</option>
+                        <option>BOI</option>
+                        <option>AXIS</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Account Number</div>
+                    </div>
+                    <div class="d-flex">
+                      <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number"
+                        class="form-control" formControlName="account" autocomplete="off" />
+                      <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
+                        <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
+                            class="fa fa-check"></i>&nbsp;Verified</span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Bank IFSC</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="number" placeholder="Enter Bank IFSC" class="form-control"
+                        formControlName="ifsc" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+        <br>
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="otherDetailsPanel" (opened)="otherDetailsPanel = true"
+            (closed)="otherDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Other Details
+              </mat-panel-title>
+            </mat-expansion-panel-header>
             <div>
-              <div class="d-flex">
-                <div class="form-title">Martial Status</div>
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Martial Status</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <select class="form-control" #martialstatus formControlName="martialstatus" [value]="martialstatus">
+                      <option value="Single">Single</option>
+                      <option value="Married">Married</option>
+                      <option value="Widowed">Widowed</option>
+                      <option value="Divorced">Divorced</option>
+                      <option value="Separated">Separated</option>
+                    </select>
+                  </div>
+                </div>
               </div>
-              <div class="fieldPadding">
-                <select class="form-control" #martialstatus formControlName="martialstatus" [value]="martialstatus">
-                  <option value="Single">Single</option>
-                  <option value="Married">Married</option>
-                  <option value="Widowed">Widowed</option>
-                  <option value="Divorced">Divorced</option>
-                  <option value="Separated">Separated</option>
-                </select>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <select class="form-control" #category formControlName="category" [value]="category">
+                        <option *ngFor="let category of loanCategories" value="{{category.id}}">
+                          {{category.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Employment Type</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <select class="form-control" #employmenttype formControlName="employmenttype"
+                      [value]="employmenttype">
+                      <option value="Salaried">Salaried</option>
+                      <option value="SelfEmployed">SelfEmployed</option>
+                      <option value="Retired">Retired</option>
+                      <option value="Military">Military</option>
+                      <option value="Homemaker">Homemaker</option>
+                      <option value="Student">Student</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Montly Income</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
+                        placeholder="Enter Customer Salary" class="form-control" autocomplete="off"
+                        formControlName="salary" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Number of EMI's Paid Monthly</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #emicount [value]="emicount" type="text"
+                        placeholder="Enter Number of EMI Paid Monthly" class="form-control" autocomplete="off"
+                        formControlName="emicount" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
             </div>
-          </div>
-        </div>
+          </mat-expansion-panel>
+        </mat-accordion>
 
 
 
+        <br>
 
-
-        <div>
-          <div class="bggrey my-2">
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="loanDetailsPanel" (opened)="loanDetailsPanel = true"
+            (closed)="loanDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                Loan Details
+              </mat-panel-title>
+            </mat-expansion-panel-header>
             <div>
-              <div class="d-flex">
-                <div class="form-title">Employment Type</div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Type</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <select class="form-control" #loantype formControlName="loantype" [value]="loantype">
+                        <option *ngFor="let loantype of loanTypes" value="{{loantype.id}}">
+                          {{loantype.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="fieldPadding">
-                <select class="form-control" #employmenttype formControlName="employmenttype" [value]="employmenttype">
-                  <option value="Salaried">Salaried</option>
-                  <option value="SelfEmployed">SelfEmployed</option>
-                  <option value="Retired">Retired</option>
-                  <option value="Military">Military</option>
-                  <option value="Homemaker">Homemaker</option>
-                  <option value="Student">Student</option>
-                </select>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Product</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <select class="form-control" #loanproduct formControlName="loanproduct" [value]="loanproduct">
+                        <option *ngFor="let product of loanProducts" value="{{product.id}}">
+                          {{product.productName}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Total Payment</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Total Payment"
+                        class="form-control" autocomplete="off" [value]="totalpayment" (keyup)="payment($event)"
+                        [value]="totalpayment" formControlName="totalpayment" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Down Payment</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
+                        class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Loan Required</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
+                        class="form-control" autocomplete="off" [value]="loanamount" formControlName="loanamount" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Type</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" placeholder="" #nomineetype
+                        formControlName="nomineetype">
+                        <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                          <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" #nomineename placeholder="Enter Nominee Name"
+                        class="form-control" autocomplete="off" [value]="nomineename" formControlName="nomineename" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
             </div>
-          </div>
-        </div>
+          </mat-expansion-panel>
+        </mat-accordion>
 
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Montly Income</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" #salary [value]="salary" type="text" placeholder="Enter Customer Salary"
-                  class="form-control" autocomplete="off" formControlName="salary" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Number of EMI's Paid Monthly</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" #emicount [value]="emicount" type="text"
-                  placeholder="Enter Number of EMI Paid Monthly" class="form-control" autocomplete="off"
-                  formControlName="emicount" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Select Category</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control" #category formControlName="category" [value]="category">
-                  <option *ngFor="let category of loanCategories" value="{{category.id}}">
-                    {{category.name}}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Select Product</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control" #loanproduct formControlName="loanproduct" [value]="loanproduct">
-                  <option *ngFor="let product of loanProducts" value="{{product.id}}">
-                    {{product.productName}}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Total Payment</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Total Payment"
-                  class="form-control" autocomplete="off" [value]="totalpayment" (keyup)="payment($event)"
-                  [value]="totalpayment" formControlName="totalpayment" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Down Payment</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
-                  class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Loan Required</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
-                  class="form-control" autocomplete="off" [value]="loanamount" formControlName="loanamount" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Nominee Type</div>
-              </div>
-              <div class="fieldPadding">
-                <mat-select class="form-control widthWebKit" placeholder="" #nomineetype
-                    formControlName="nomineetype">
-                    <mat-option [value]="relation.name" *ngFor="let relation of relations">
-                        <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
-                    </mat-option>
-                </mat-select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Nominee Name</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" #nomineename placeholder="Enter Nominee Name"
-                  class="form-control" autocomplete="off" [value]="nomineename" formControlName="nomineename" />
-              </div>
-            </div>
-          </div>
-        </div>
+        <br>
 
         <div>
           <div class="bggrey my-2">

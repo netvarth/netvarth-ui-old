@@ -31,8 +31,9 @@
         <div *ngIf="status=='redirected' && user.userType!=2" class="text-warning mt-2 text-right">
           <div class="btn btn-action" (click)="takeAction()">Take Actions</div>
         </div>
-        <div class="text-center mt-2">
-          <img src="../../../../assets/images/cdl/avatar1.png" alt="Card image cap" width="100" height="100">
+        <div class="text-center mt-2"
+          *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto[0] && loanData.consumerPhoto[0].s3path">
+          <img [src]="loanData.consumerPhoto[0].s3path" width="100" height="100">
         </div>
         <div class="text-center my-2">
           <span class="loan-name"
@@ -49,7 +50,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="bggrey my-2">
-              <div>
+              <div class="container-fluid">
                 <div>
                   <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Phone Number</div>

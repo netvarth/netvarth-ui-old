@@ -4,6 +4,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoansComponent } from './loans.component';
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { FormsModule } from '@angular/forms';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { SkeletonLoadingModule } from '../../../../shared/modules/skeleton-loading/skeleton-loading.module';
 
 
 const routes: Routes = [
@@ -19,7 +23,11 @@ const routes: Routes = [
   declarations: [LoansComponent],
   imports: [
     CommonModule,
+    FormsModule,
+    MatTooltipModule,
+    MatDatepickerModule,
     CapitalizeFirstPipeModule,
+    SkeletonLoadingModule,
     [RouterModule.forChild(routes)]
   ],
   schemas: [

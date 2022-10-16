@@ -4,7 +4,7 @@
 
 
 <div class="card m-2">
-  <span class="font-weight-bold">&nbsp;Create Dealer</span><br><br>
+  <span class="font-weight-bold">&nbsp;{{headerText}}</span><br><br>
   <form [formGroup]="createDealer" enctype="multipart/form-data">
     <div class="row">
       <div class="col-md-7">
@@ -201,8 +201,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" formControlName="address1" #partneraddress1 type="text"
-                  placeholder="Enter Address 1" class="form-control" autocomplete="off"
-                  formControlName="partneraddress1" />
+                  placeholder="Enter Address 1" class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -217,8 +216,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" formControlName="address2" #partneraddress2 type="text"
-                  placeholder="Enter Address 2" class="form-control" autocomplete="off"
-                  formControlName="partneraddress2" />
+                  placeholder="Enter Address 2" class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -232,7 +230,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" formControlName="city" #partnercity type="text" placeholder="Enter City"
-                  class="form-control" autocomplete="off" formControlName="partnercity" />
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -246,7 +244,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" formControlName="state" #partnerstate type="text"
-                  placeholder="Enter State" class="form-control" autocomplete="off" formControlName="partnerstate" />
+                  placeholder="Enter State" class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -260,8 +258,7 @@
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" formControlName="pincode" #partnerpincode type="text"
-                  placeholder="Enter Pincode" class="form-control" autocomplete="off"
-                  formControlName="partnerpincode" />
+                  placeholder="Enter Pincode" class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -307,6 +304,41 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
+                <div class="form-title">Size</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #size formControlName="size">
+                  <option *ngFor="let size of partnerSizes" value="{{size.name}}">
+                    {{size.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Trade</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #trade formControlName="trade">
+                  <option *ngFor="let trade of partnerTrades" value="{{trade.name}}">
+                    {{trade.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
                 <div class="form-title">GST Number</div>
               </div>
               <div class="fieldPadding">
@@ -326,7 +358,7 @@
         Save as Draft
       </div>
       <div class="btn btn-primary" (click)="createPartner()">
-        Create Dealer
+        {{btnText}}
       </div>
     </div>
   </form>

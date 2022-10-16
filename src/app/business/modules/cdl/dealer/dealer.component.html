@@ -12,6 +12,114 @@
 <div>
   <div class="col-md-12 marginClass">
     <div class="card">
+
+      <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="filter_sidebar">
+        <aside class="filterSidebar filter-sidebar">
+          <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
+            <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
+              <span class="filter-head-title">Filters</span>
+              <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
+                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
+            </div>
+            <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
+            <ul class="sidebar-menu accordion" id="accordion1">
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId"
+                      aria-expanded="false">
+                      <div>
+                        <div style="display: inline-block !important;">
+                          <i class="fa fa-id-badge"></i>
+                        </div>
+                        Dealer Id
+                      </div>
+                      <i class="fa fa-angle-down"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseId" class="collapse in" data-parent="#accordion1">
+                  <div class="card-body" style="padding: 0px !important;">
+                    <div class="filterTextinput filter-text-input">
+                      <li class="filterli filter-li">
+                        <input type="text" [(ngModel)]="filter.id" #id (keyup)="keyPress()"
+                          class="filterTextbox filter-textbox" placeholder="Enter Customer Id">
+                      </li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName"
+                      aria-expanded="false">
+                      <div>
+                        <div style="display: inline-block !important;">
+                          <i class="fa fa-user"></i>
+                        </div>
+                        <span>&nbsp; Name </span>
+                      </div>
+                      <i class="fa fa-angle-down"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseName" class="collapse in" data-parent="#accordion1">
+                  <div class="card-body" style="padding: 0px !important;">
+                    <div class="filterTextinput filter-text-input">
+                      <li class="filterli filter-li">
+                        <input type="text" [(ngModel)]="filter.name" #name (keyup)="keyPress()" maxlength="20"
+                          class="filterTextbox filter-textbox" placeholder="Enter Name">
+                      </li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-header">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDOB"
+                      aria-expanded="false">
+                      <div>
+                        <div style="display: inline-block !important;">
+                          <i class="fa fa-calendar-o"></i>
+                        </div>
+                        <span>&nbsp; Created Date </span>
+                      </div>
+                      <i class="fa fa-angle-down"></i>
+                    </button>
+                  </h2>
+                </div>
+                <div id="collapseDOB" class="collapse in" data-parent="#accordion1">
+                  <div class="card-body" style="padding: 0px !important;">
+                    <div class="filterTextinput filter-text-input">
+                      <li class="filterli filterDatepicker filter-li">
+                        <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday"
+                          [matDatepicker]="picker" #Fdate (dateChange)="keyPress()" class="filterTextbox"
+                          placeholder="Date of birth" readonly (click)="picker.open()">
+                        <mat-datepicker-toggle matSuffix [for]="picker">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </li>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ul>
+          </section>
+          <div class="filter-footer" *ngIf="filterapplied">
+            <button class="btn reset-btn" (click)="clearFilter()">
+              <i class="fa fa-undo"></i>&nbsp;Reset
+            </button>
+            <button class="btn apply-btn" (click)="doSearch()">
+              <i class="fa fa-check"></i>&nbsp;Apply
+            </button>
+          </div>
+        </aside>
+      </div>
+
+
+
       <div class="row text-right">
         <div class="form-group col-md-4 my-3">
           <select class="form-control">
@@ -20,6 +128,17 @@
             <option value="in progress"><span class="text-capitalize">Kottayam</span></option>
             <option value="redirected"><span class="text-capitalize">Kannur</span></option>
           </select>
+        </div>
+        <div>
+          <div class="p-3">
+            <h3 class="align-items-start flex-column">
+              <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
+                <img src="assets/images/provider-filter-icon.png"
+                  style="width: 22px !important; margin-top: -4px !important;">
+                Filter
+              </a>
+            </h3>
+          </div>
         </div>
       </div>
       <div class="table-responsive dash-list">
@@ -35,15 +154,17 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngFor="let dealer of dealers;let i=index">
-              <tr style="cursor:pointer" (click)="showDealer(dealer)">
-                <td data-title="Loan Details" class="td1">{{dealer.dealerId}}</td>
+              <tr style="cursor:pointer" (click)="showDealer(dealer.uid,dealer.partnerStatus,dealer.spInternalStatus)">
+                <td data-title="Loan Details" class="td1">{{dealer.id}}</td>
                 <td data-title="Loan Details" class="td1 loanStatus">
                   <img class="imageApprove" src="/assets/images/cdl/approved.png" />
-                  <div class="approvedColor text-capitalize">{{dealer.status}}</div>
+                  <div class="approvedColor text-capitalize">{{dealer.partnerStatus}}</div>
                 </td>
-                <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.dealer}}</td>
-                <td data-title="Loan Details" class="td1">{{dealer.issuedDate}}</td>
-                <td data-title="Loan Details" class="td1"><button class="btn btn-primary">Actions</button></td>
+                <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.partnerName}}</td>
+                <td data-title="Loan Details" class="td1">{{dealer.partnerMobile}}</td>
+                <td data-title="Loan Details" class="td1" (click)="updateDealer(dealer.uid,'update')">
+                  <button class="btn btn-primary">Update</button>
+                </td>
               </tr>
             </ng-container>
           </tbody>

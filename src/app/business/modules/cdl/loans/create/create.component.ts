@@ -21,7 +21,10 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
-
+  customerDetailsPanel = true;
+  kycDetailsPanel = false;
+  loanDetailsPanel = false;
+  otherDetailsPanel = false;
   selectedMessage = {
     files: [],
     base64: [],
@@ -33,18 +36,21 @@ export class CreateComponent implements OnInit {
     "pan": { files: [], base64: [], caption: [] },
     "photo": { files: [], base64: [], caption: [] }
   }
-
-
+  lebalUplaodFile: string = 'Click & Upload your files here';
+  actionText: any;
   aadharverification = false;
   verification = false;
   panverification = false;
   emailverification = false;
+  accountverification = false;
   address1: any = '';
   address2: any = '';
   city: any = '';
   phoneNumber: any;
   state: any = '';
   pincode: any = '';
+  bankDetails: any;
+  nameData: any;
   addresscheck: any = true;
   showaddressfields: any = false;
   // loanamount: any = 0;
@@ -95,6 +101,7 @@ export class CreateComponent implements OnInit {
   lastName: any;
   loanStatuses: any;
   loanSchemes: any;
+  bankData: any;
   relations = projectConstantsLocal.RELATIONSHIPS;
   filesToUpload: any = [];
   constructor(
@@ -120,7 +127,8 @@ export class CreateComponent implements OnInit {
             this.headerText = "Update Loan";
             this.btnText = "Update Loan";
             this.createLoan.controls.phone.setValue(this.loanData.customer.phoneNo);
-            this.createLoan.controls.name.setValue(this.loanData.customer.firstName + ' ' + this.loanData.customer.lastName);
+            this.createLoan.controls.firstname.setValue(this.loanData.customer.firstName);
+            this.createLoan.controls.lastname.setValue(this.loanData.customer.lastName);
             this.createLoan.controls.email.setValue(this.loanData.customer.email);
             this.createLoan.controls.aadharnumber.setValue(this.loanData.loanApplicationKycList[0].aadhaar);
             this.createLoan.controls.pannumber.setValue(this.loanData.loanApplicationKycList[0].pan);
@@ -154,8 +162,22 @@ export class CreateComponent implements OnInit {
             this.emailverification = true;
             this.panverification = true;
 
+            this.selectedFiles['photo'].files = this.loanData.consumerPhoto;
+            this.selectedFiles['aadhar'].files = this.loanData.loanApplicationKycList[0].aadhaarAttachments;
+            this.selectedFiles['pan'].files = this.loanData.loanApplicationKycList[0].panAttachments;
+
 
           }
+
+          // this.cdlservice.getBankDetailsById(this.loanId).subscribe((data) => {
+          //   this.bankData = data;
+          //   console.log("this.bankData", this.bankData)
+          //   if (this.bankData) {
+          //     // this.createLoan.controls.bank.setValue(this.loanData.emiPaidAmountMonthly);
+          //     // this.createLoan.controls.account.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
+          //     // this.createLoan.controls.ifsc.setValue(this.loanData.loanApplicationKycList[0].nomineeType);
+          //   }
+          // });
         })
       }
     });
@@ -165,7 +187,8 @@ export class CreateComponent implements OnInit {
 
     this.createLoan = this.createLoanFormBuilder.group({
       phone: [null],
-      name: [null],
+      firstname: [null],
+      lastname: [null],
       email: [null],
       loantype: [null],
       customerphoto: [null],
@@ -195,7 +218,12 @@ export class CreateComponent implements OnInit {
       remarks: [null],
       loanproduct: [null],
       nomineetype: [null],
-      nomineename: [null]
+      nomineename: [null],
+      bank: [null],
+      ifsc: [null],
+      account: [null]
+
+
     });
   }
 
@@ -282,7 +310,7 @@ export class CreateComponent implements OnInit {
         if (this.customerDetails[0] && this.customerDetails[0].address) {
           this.createLoan.controls.permanentaddress1.setValue(this.customerDetails[0].address)
         }
-        if (this.customerDetails[0] && this.customerDetails[0].id) {
+        if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].id) {
           this.customerId = this.customerDetails[0].id;
           // this.loanApplication['consumer'] = {
           //   "id": this.loanData.status.id
@@ -298,25 +326,83 @@ export class CreateComponent implements OnInit {
     })
   }
 
+  expandAll() {
+    this.customerDetailsPanel = true;
+    this.kycDetailsPanel = true;
+    this.loanDetailsPanel = true;
+    this.otherDetailsPanel = true;
+  }
+
+  closeAll() {
+    this.customerDetailsPanel = false;
+    this.kycDetailsPanel = false;
+    this.loanDetailsPanel = false;
+    this.otherDetailsPanel = false;
+  }
 
   resetErrors() {
 
   }
-  
+
   getFileInfo(type, list) {
-    console.log('list',list)
+    console.log('list', list)
     let fileInfo = list.filter((fileObj) => {
-      console.log('fileObj',fileObj);
+      console.log('fileObj', fileObj);
       return fileObj.type === type ? fileObj : '';
     });
-    console.log('fileInfo',fileInfo)
+    console.log('fileInfo', fileInfo)
     // list=''
     return fileInfo;
   }
 
+  deleteTempImage(i, type, deleteText) {
+    let files = this.filesToUpload.filter((fileObj) => {
+      // console.log('fileObj',fileObj)
+      if (fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name) {
+        if (fileObj.type) {
+          return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type === type);
+        }
+      }
+    });
+    // console.log("files",files,i)
+    if (files && files.length > 0) {
+      console.log(this.filesToUpload.indexOf(files[0]));
+      if (this.filesToUpload && this.filesToUpload.indexOf(files[0])) {
+        const index = this.filesToUpload.indexOf(files[0]);
+        this.filesToUpload.splice(index, 1);
+      }
+    }
+    this.selectedFiles[type].files.splice(i, 1);
+    this.selectedFiles[type].base64.splice(i, 1);
+    this.selectedFiles[type].caption.splice(i, 1);
+    if (type === 'aadhar') {
+      this.loanData.loanApplicationKycList[0].aadharAttachments.splice(i, 1);
+      this.actionText = 'Delete';
+
+    } else if (type === 'pan') {
+      this.loanData.loanApplicationKycList[0].panAttachments.splice(i, 1);
+      this.actionText = 'Delete';
+    }
+    else if (type === 'photo') {
+      this.loanData.consumerPhoto.splice(i, 1);
+      this.actionText = 'Delete';
+    }
+    else if (type === 'other') {
+      this.loanData.otherAttachments.splice(i, 1);
+      this.actionText = 'Delete';
+    }
+  }
+
+  getImage(url, file) {
+    return this.fileService.getImage(url, file);
+  }
+  getImageType(fileType) {
+    return this.fileService.getImageByType(fileType);
+  }
+
   saveAsLead() {
-    
-  
+
+
     // if (this.addresscheck) {
     //   this.createLoan.controls.currentaddress1.setValue(this.createLoan.controls.permanentAddress1.value);
     //   this.createLoan.controls.currentaddress2.setValue(this.createLoan.controls.permanentAddress2.value);
@@ -324,21 +410,21 @@ export class CreateComponent implements OnInit {
     //   this.createLoan.controls.currentstate.setValue(this.createLoan.controls.permanentState.value);
     //   this.createLoan.controls.currentpincode.setValue(this.createLoan.controls.permanentPin.value);
     // }
-    if (this.createLoan.controls.name.value) {
-      let nameVal = this.createLoan.controls.name.value;
-      const name = nameVal.split(" ");
-      this.firstName = name[0];
-      if (name[1]) {
-        this.lastName = name[1];
-      }
-      else {
-        this.lastName = "";
-      }
-    }
+    // if (this.createLoan.controls.name.value) {
+    //   let nameVal = this.createLoan.controls.name.value;
+    //   const name = nameVal.split(" ");
+    //   this.firstName = name[0];
+    //   if (name[1]) {
+    //     this.lastName = name[1];
+    //   }
+    //   else {
+    //     this.lastName = "";
+    //   }
+    // }
     this.loanApplication = {
       "customer": {
-        "firstName": this.firstName,
-        "lastName": this.lastName,
+        "firstName": this.createLoan.controls.firstname.value,
+        "lastName": this.createLoan.controls.lastname.value,
         "phoneNo": this.createLoan.controls.phone.value,
         "email": this.createLoan.controls.email.value,
         "countryCode": "+91"
@@ -376,7 +462,6 @@ export class CreateComponent implements OnInit {
           "currentPin": this.createLoan.controls.currentpincode.value,
           "currentCity": this.createLoan.controls.currentpincode.value,
           "currentState": this.createLoan.controls.currentstate.value,
-          // "aadhaarAttachments": [this.fileObjFinal]
         }
       ]
     }
@@ -384,6 +469,23 @@ export class CreateComponent implements OnInit {
 
     if (this.loanApplication) {
       if (this.action == "update") {
+
+        for (let i = 0; i < this.filesToUpload.length; i++) {
+          this.filesToUpload[i]['order'] = i;
+          if (this.filesToUpload[i]["type"] == 'aadhar') {
+            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'] = [];
+            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'].push(this.filesToUpload[i]);
+          }
+          if (this.filesToUpload[i]["type"] == 'pan') {
+            this.loanApplication.loanApplicationKycList[0]['panAttachments'] = [];
+            this.loanApplication.loanApplicationKycList[0]['panAttachments'].push(this.filesToUpload[i]);
+          }
+          if (this.filesToUpload[i]["type"] == 'photo') {
+            this.loanApplication['consumerPhoto'] = [];
+            this.loanApplication['consumerPhoto'].push(this.filesToUpload[i]);
+          }
+        }
+
         this.loanApplication['status'] = {
           "id": this.loanData.status.id
         };
@@ -392,8 +494,15 @@ export class CreateComponent implements OnInit {
         };
         this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
         console.log("response");
-        this.cdlservice.updateLoan(this.loanId, this.loanApplication).subscribe((response: any) => {
-          console.log("response", response);
+        this.cdlservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
+          if (s3urls.attachmentsUrls.length > 0) {
+            this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
+              (dataS3Url) => {
+                console.log(dataS3Url);
+                this.snackbarService.openSnackBar("Loan Application Created Successfully")
+                this.router.navigate(['provider', 'cdl', 'loans']);
+              });
+          }
           this.snackbarService.openSnackBar("Loan Application Updated Successfully")
           this.router.navigate(['provider', 'cdl', 'loans'])
         },
@@ -405,22 +514,22 @@ export class CreateComponent implements OnInit {
       else {
         console.log(this.filesToUpload);
 
-        for(let i = 0;i<this.filesToUpload.length;i++) {
-          this.filesToUpload[i]['order']=i;
+        for (let i = 0; i < this.filesToUpload.length; i++) {
+          this.filesToUpload[i]['order'] = i;
           if (this.filesToUpload[i]["type"] == 'aadhar') {
-            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments']=[];
+            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'] = [];
             this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'].push(this.filesToUpload[i]);
-          } 
+          }
           if (this.filesToUpload[i]["type"] == 'pan') {
-            this.loanApplication.loanApplicationKycList[0]['panAttachments']=[];
+            this.loanApplication.loanApplicationKycList[0]['panAttachments'] = [];
             this.loanApplication.loanApplicationKycList[0]['panAttachments'].push(this.filesToUpload[i]);
-          } 
+          }
           if (this.filesToUpload[i]["type"] == 'photo') {
-            this.loanApplication['customerPhoto']=[];
-            this.loanApplication['customerPhoto'].push(this.filesToUpload[i]);
-          } 
+            this.loanApplication['consumerPhoto'] = [];
+            this.loanApplication['consumerPhoto'].push(this.filesToUpload[i]);
+          }
         }
-          
+
         console.log("Loan Application Data : ", this.loanApplication)
 
 
@@ -432,10 +541,23 @@ export class CreateComponent implements OnInit {
             this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
               (dataS3Url) => {
                 console.log(dataS3Url);
-                this.snackbarService.openSnackBar("Loan Application Created Successfully")
-                this.router.navigate(['provider', 'cdl', 'loans']);
               });
-            }
+          }
+          this.bankDetails = {
+            "originUid": s3urls.uid,
+            "loanApplicationUid": s3urls.uid,
+            "bankName": this.createLoan.controls.bank.value,
+            "bankAccountNo": this.createLoan.controls.account.value,
+            "bankIfsc": this.createLoan.controls.ifsc.value,
+            "bankAccountVerified": true
+          }
+          this.cdlservice.saveBankDetails(this.bankDetails).subscribe((data) => {
+            console.log("this.loanProducts", this.loanProducts);
+            this.snackbarService.openSnackBar("Loan Application Created Successfully")
+            this.router.navigate(['provider', 'cdl', 'loans']);
+          }), (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          }
         },
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -447,13 +569,13 @@ export class CreateComponent implements OnInit {
   uploadAudioVideo(data) {
     const _this = this;
     let count = 0;
-    console.log("DAta:",data);
+    console.log("DAta:", data);
     return new Promise(async function (resolve, reject) {
       for (const s3UrlObj of data) {
         console.log("S3URLOBJ:", s3UrlObj);
-        console.log('_this.filesToUpload',_this.filesToUpload)
+        console.log('_this.filesToUpload', _this.filesToUpload)
         const file = _this.filesToUpload.filter((fileObj) => {
-          return ((fileObj.order === (s3UrlObj.orderId) ) ? fileObj : '');
+          return ((fileObj.order === (s3UrlObj.orderId)) ? fileObj : '');
         })[0];
         console.log("File:", file);
         if (file) {
@@ -469,9 +591,9 @@ export class CreateComponent implements OnInit {
             }
           );
         }
-        else{
+        else {
           resolve(true);
-        }     
+        }
       }
     })
   }
@@ -482,7 +604,7 @@ export class CreateComponent implements OnInit {
         .subscribe(() => {
           resolve(true);
         }, error => {
-          console.log('error',error)
+          console.log('error', error)
           _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           resolve(false);
         });
@@ -500,8 +622,9 @@ export class CreateComponent implements OnInit {
   }
 
 
+
   filesSelected(event, type) {
-    console.log("Event ", event,type)
+    console.log("Event ", event, type)
     const input = event.target.files;
     console.log("input ", input)
     this.fileService.filesSelected(event, this.selectedFiles[type]).then(
@@ -516,7 +639,7 @@ export class CreateComponent implements OnInit {
             fileType: pic["type"].split("/")[1],
             action: 'add'
           }
-          fileObj['file'] = pic;    
+          fileObj['file'] = pic;
           fileObj['type'] = type;
           this.filesToUpload.push(fileObj);
         }
@@ -526,6 +649,9 @@ export class CreateComponent implements OnInit {
 
 
   }
+
+
+
 
   imageSelect(event) {
 
@@ -578,12 +704,20 @@ export class CreateComponent implements OnInit {
   verifyotp() {
     if (this.createLoan.controls.phone.value && this.createLoan.controls.phone.value != '' && this.createLoan.controls.phone.value.length == 10) {
       let can_remove = false;
+      if (this.createLoan.controls.firstname.value && this.createLoan.controls.lastname.value) {
+        this.nameData = {
+          "firstName": this.createLoan.controls.firstname.value,
+          "lastName": this.createLoan.controls.lastname.value,
+        }
+      }
+
       const dialogRef = this.dialog.open(OtpVerifyComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
           type: 'Mobile Number',
+          data: this.nameData,
           phoneNumber: this.createLoan.controls.phone.value
         }
       });
@@ -610,27 +744,30 @@ export class CreateComponent implements OnInit {
 
 
 
-  verifyemail() {
-    let can_remove = false;
-    const dialogRef = this.dialog.open(OtpVerifyComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        type: 'Email'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result = "verified") {
-          this.emailverification = true;
+  verifyEmail() {
+    if (this.createLoan.controls.email.value && this.createLoan.controls.email.value != '') {
+      let can_remove = false;
+      const dialogRef = this.dialog.open(OtpVerifyComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          type: 'Email',
+          email: this.createLoan.controls.email.value
         }
-      }
-      else {
-        console.log("Data Not Saved")
-      }
-    });
-    return can_remove;
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(result);
+        this.emailverification = true
+        this.snackbarService.openSnackBar("Email Id Verified");
+      });
+      return can_remove;
+    }
+    else {
+      this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+
+    }
+
   }
 
   verifyaadhar() {
@@ -661,6 +798,31 @@ export class CreateComponent implements OnInit {
     });
     return can_remove;
   }
+
+
+  verifyAccount() {
+    let can_remove = false;
+    const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: 'Account Number'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "verified") {
+          this.accountverification = true;
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+    return can_remove;
+  }
+
 
 
   payment(event) {

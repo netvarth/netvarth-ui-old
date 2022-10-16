@@ -30,6 +30,17 @@ export class CdlService {
   }
 
 
+  getLoansByFilter(filter = {}) {
+    const url = 'provider/loanapplication';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  getDealersByFilter(filter = {}) {
+    const url = 'provider/partner';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+
   createLoan(data) {
     const url = 'provider/loanapplication';
     return this.servicemeta.httpPost(url, data);
@@ -42,9 +53,13 @@ export class CdlService {
   }
 
 
-
   createPartner(data) {
     const url = 'provider/partner';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  savePartner(data) {
+    const url = 'provider/partner/draft';
     return this.servicemeta.httpPost(url, data);
   }
 
@@ -81,6 +96,23 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+
+  getBankDetailsById(id) {
+    const url = 'provider/loanapplication/bank/' + id;
+    return this.servicemeta.httpGet(url, null);
+  }
+
+
+  getDealerById(id) {
+    const url = 'provider/partner/' + id;
+    return this.servicemeta.httpGet(url, null);
+  }
+
+  getDealers() {
+    const url = 'provider/partner';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getLoanStatuses() {
     const url = 'provider/loanapplication/status';
     return this.servicemeta.httpGet(url, null);
@@ -107,4 +139,46 @@ export class CdlService {
     return this.servicemeta.httpPut(url, file);
   }
 
+  approveDealer(id, data) {
+    const url = 'provider/partner/' + id + '/approved';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  suspendDealer(id, data) {
+    const url = 'provider/partner/' + id + '/suspended';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  rejectDealer(id, data) {
+    const url = 'provider/partner/' + id + '/rejected';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+
+  sendPhoneOTP(data, from) {
+    const url = 'provider/loanapplication/generate/phone';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  saveBankDetails(data) {
+    const url = 'provider/loanapplication/bank';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+
+
+  verifyPhoneOTP(otp, data) {
+    const url = 'provider/loanapplication/verify/' + otp + '/phone';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  sendEmailOTP(data) {
+    const url = 'provider/loanapplication/generate/email';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  verifyEmailOTP(otp) {
+    const url = 'provider/loanapplication/verify/' + otp + '/email';
+    return this.servicemeta.httpPost(url);
+  }
 }

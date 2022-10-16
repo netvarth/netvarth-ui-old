@@ -2,10 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 // import { AuthService } from '../../../../../shared/services/auth-service';
 // import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
-import { SharedServices } from '../../../../../shared/services/shared-services';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
 import { CdlService } from '../../cdl.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-otp-verify',
@@ -26,17 +26,24 @@ export class OtpVerifyComponent implements OnInit {
       'height': '40px'
     }
   };
+  customerDetails: any;
+  customerData: any;
   phoneError: any;
   dialCode: any;
+  firstName: any;
+  lastName: any;
+  user: any;
   businessDetails: any;
   private subs = new SubSink();
-
+  customerId: any = 0;
+  from: any;
+  name: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService,
-    private sharedServices: SharedServices,
-    private cdlservice: CdlService
+    private cdlservice: CdlService,
+    private groupService: GroupStorageService
     // private lStorageService: LocalStorageService,
     // private authService: AuthService,
     // private ngZone: NgZone
@@ -45,7 +52,19 @@ export class OtpVerifyComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.type = this.data.type
+    this.from = this.data.from
+
+    if (this.data && this.data.data && this.data.data.firstName) {
+      this.firstName = this.data.data.firstName;
+    }
+    if (this.data && this.data.data && this.data.data.lastName) {
+      this.lastName = this.data.data.lastName;
+    }
+    if (this.data && this.data.data && this.data.data.name) {
+      this.name = this.data.data.name;
+    }
     if (this.data && this.data.phoneNumber) {
       this.phoneNumber = this.data.phoneNumber;
       this.cdlservice.getBusinessProfile().subscribe((data) => {
@@ -53,6 +72,9 @@ export class OtpVerifyComponent implements OnInit {
         if (this.businessDetails && this.businessDetails.id)
           this.sendOTP();
       })
+    }
+    else if (this.data && this.data.email) {
+      this.sendOTP();
     }
 
   }
@@ -67,23 +89,40 @@ export class OtpVerifyComponent implements OnInit {
         this.config.length = 5;
       }
 
-      this.performSendOTP(this.phoneNumber, null, mode);
+      this.performSendOTP(this.phoneNumber, mode);
+
+    }
+    else if (this.data && this.data.email) {
+      this.performEmailOTP(this.data.email);
     }
   }
-  performSendOTP(loginId, emailId?, mode?) {
+  performSendOTP(loginId, mode?) {
     let credentials = {
       countryCode: "+91",
-      loginId: loginId,
-      accountId: this.businessDetails.id
+      number: loginId,
     }
-    if (emailId) {
-      credentials['alternateLoginId'] = emailId;
-    }
-    this.subs.sink = this.sharedServices.sendConsumerOTP(credentials).subscribe(
+    this.subs.sink = this.cdlservice.sendPhoneOTP(credentials, this.from).subscribe(
       (response: any) => {
         if (mode == 'resent') {
           this.snackbarService.openSnackBar("Otp Resend Successfully");
         }
+        else {
+          this.snackbarService.openSnackBar("Otp Sent Successfully");
+        }
+      }, (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
+    )
+  }
+
+
+  performEmailOTP(loginId) {
+    let credentials = {
+      email: loginId,
+    }
+    this.subs.sink = this.cdlservice.sendEmailOTP(credentials).subscribe(
+      (response: any) => {
+        this.snackbarService.openSnackBar("Otp Sent Successfully");
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
@@ -112,6 +151,13 @@ export class OtpVerifyComponent implements OnInit {
         this.otpVerification();
       }
     }
+    else if (this.data && this.data.email) {
+      if (this.otpEntered.length < 4) {
+        return false;
+      } else {
+        this.otpVerification();
+      }
+    }
   }
 
 
@@ -134,24 +180,105 @@ export class OtpVerifyComponent implements OnInit {
     if (this.otpEntered === '' || this.otpEntered === undefined) {
       this.otpError = 'Invalid OTP';
     } else {
-      this.subs.sink = this.sharedServices.verifyConsumerOTP(this.otpEntered)
-        .subscribe(
-          (response: any) => {
-            if (response) {
-              this.snackbarService.openSnackBar("Mobile Number Verification Successful");
-              const data = {
-                type: this.type,
-                msg: "success"
-              }
-              this.dialogRef.close(data);
-            }
-            console.log("Response", response)
-          },
-          error => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-        );
+
+      console.log("Data", this.data)
+      if (this.data && this.data.phoneNumber) {
+        const filter = { 'phoneNo-eq': this.phoneNumber };
+        this.getCustomerDetails(filter);
+      }
+      else {
+        this.verifyEmail();
+      }
     }
   }
+
+
+
+  verifyEmail() {
+    console.log("Email")
+    this.subs.sink = this.cdlservice.verifyEmailOTP(this.otpEntered)
+      .subscribe(
+        (response: any) => {
+          if (response) {
+            this.snackbarService.openSnackBar("Email Verification Successful");
+            const data = {
+              type: "email",
+              msg: "success"
+            }
+            this.dialogRef.close(data);
+          }
+          console.log("Response", response)
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      );
+  }
+
+
+  getCustomerDetails(filter) {
+    this.cdlservice.getCustomerDetails(filter).subscribe((data) => {
+      this.customerDetails = data;
+      if (this.customerDetails && this.customerDetails.length != 0) {
+        this.customerId = this.customerDetails[0].id;
+        this.customerData = {
+          "customer": {
+            "id": this.customerId,
+            "firstName": this.customerDetails[0].firstName,
+            "lastName": this.customerDetails[0].lastName,
+            "phoneNo": this.phoneNumber,
+            "countryCode": "+91"
+          },
+          "location": {
+            "id": this.user.bussLocs[0]
+          },
+          "loanApplicationKycList": [
+            {
+              "isCoApplicant": false
+            }
+          ]
+        }
+      }
+      else {
+        this.customerData = {
+          "customer": {
+            "id": this.customerId,
+            "firstName": this.firstName,
+            "lastName": this.lastName,
+            "phoneNo": this.phoneNumber,
+            "countryCode": "+91"
+          },
+          "location": {
+            "id": this.user.bussLocs[0]
+          },
+          "loanApplicationKycList": [
+            {
+              "isCoApplicant": false
+            }
+          ]
+        }
+      }
+      if (this.customerData) {
+        this.subs.sink = this.cdlservice.verifyPhoneOTP(this.otpEntered, this.customerData)
+          .subscribe(
+            (response: any) => {
+              if (response) {
+                this.snackbarService.openSnackBar("Mobile Number Verification Successful");
+                const data = {
+                  type: this.type,
+                  msg: "success"
+                }
+                this.dialogRef.close(data);
+              }
+              console.log("Response", response)
+            },
+            error => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+          );
+      }
+    });
+  }
+
 
 }

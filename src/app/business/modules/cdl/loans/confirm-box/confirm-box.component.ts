@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class ConfirmBoxComponent implements OnInit {
   from: any;
+  remarks: any;
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -44,7 +45,11 @@ export class ConfirmBoxComponent implements OnInit {
   }
 
   checked() {
-    this.dialogRef.close("eligible");
+    let data = {
+      remarks: this.remarks,
+      type: "remarks"
+    }
+    this.dialogRef.close(data);
   }
 
   close() {
