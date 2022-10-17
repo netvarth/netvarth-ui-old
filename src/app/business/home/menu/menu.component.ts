@@ -274,6 +274,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.donationstatus = settings.donationFundRaising;
       this.apptstatus = settings.appointment;
       this.checkinStatus = settings.waitlist;
+      this.taskStatus =settings.enableTask;
     } else {
       this.provider_services.getAccountSettings().then(
         (data: any) => {
