@@ -544,18 +544,22 @@ export class ApplicantComponent implements OnInit {
     this.selectedFiles[type].caption.splice(i, 1);
     console.log("this.applicant",this.applicant)
     if (type === 'kyc1') {
+      this.filesToUpload.splice(i,1);
       this.applicant.validationIds[0].attachments.splice(i, 1);
       this.actionText='Delete';
 
     } else if (type === 'kyc2') {
+      this.filesToUpload.splice(i,1);
       this.applicant.validationIds[1].attachments.splice(i, 1);
       this.actionText='Delete'; 
     } 
     else if (type === 'kyc3') {
+      this.filesToUpload.splice(i,1);
       this.applicant.validationIds[2].attachments.splice(i, 1); 
       this.actionText='Delete';
     } 
     else if (type === 'other') {
+      this.filesToUpload.splice(i,1);
       this.applicant.otherAttachments.splice(i, 1); 
       this.actionText='Delete';
     }
