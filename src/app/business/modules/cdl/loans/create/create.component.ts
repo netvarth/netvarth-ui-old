@@ -295,8 +295,11 @@ export class CreateComponent implements OnInit {
       if (this.customerDetails && this.customerDetails.length != 0) {
         console.log("this.customerDetails", this.customerDetails)
         if (this.customerDetails[0] && (this.customerDetails[0].firstName || this.customerDetails[0].lastName)) {
-          if (this.customerDetails[0].firstName && this.customerDetails[0].lastName) {
-            this.createLoan.controls.name.setValue(this.customerDetails[0].firstName + " " + this.customerDetails[0].lastName);
+          if (this.customerDetails[0].firstName) {
+            this.createLoan.controls.firstname.setValue(this.customerDetails[0].firstName);
+          }
+          if (this.customerDetails[0].lastName) {
+            this.createLoan.controls.lastname.setValue(this.customerDetails[0].firstName);
           }
           else if (this.customerDetails[0].firstName && !this.customerDetails[0].lastName) {
             this.createLoan.controls.name.setValue(this.customerDetails[0].firstName);
