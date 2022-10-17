@@ -183,6 +183,15 @@ export class NewReportComponent implements OnInit {
   document_collected_timePeriod: string;
   document_collected_StartDate: any;
   document_collectioin_EndDate: any;
+  loan_application_timePeriod:string;
+  loan_application_StartDate: any;
+  loan_application_EndDate: any;
+  loan_user_application_timePeriod:string;
+  loan_user_application_StartDate: any;
+  loan_user_application_EndDate: any;
+  loan_partner_application_timePeriod:string;
+  loan_partner_application_StartDate: any;
+  loan_partner_application_EndDate: any;
   public reportForm: FormGroup;
   time_period;
   payment_modes;
@@ -291,6 +300,15 @@ export class NewReportComponent implements OnInit {
           this.reportTitle = 'Document Collected Status'
         }
         //customerWiseEnquiry
+        else if (this.report_type === 'loan application') {
+          this.reportTitle = 'Loan Application'
+        }
+        else if (this.report_type === 'loan user') {
+          this.reportTitle = 'Loan Application User'
+        }
+        else if (this.report_type === 'loan partner wise') {
+          this.reportTitle = 'Loan Application Partner Wise'
+        }
       }
     });
     this.mxDate = new Date(new Date().setDate(new Date().getDate() - 1));
@@ -298,7 +316,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod  = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -604,6 +622,30 @@ export class NewReportComponent implements OnInit {
             this.hide_dateRange = false;
             this.customer_wise_StartDate = res.startDate;
             this.customer_wise_EndDate = res.endDate;
+          }
+        }
+        case 'loan application': {
+          this.loan_application_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.loan_application_StartDate = res.startDate;
+            this.loan_application_EndDate = res.endDate;
+          }
+        }
+        case 'loan user': {
+          this.loan_user_application_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.loan_user_application_StartDate = res.startDate;
+            this.loan_user_application_EndDate = res.endDate;
+          }
+        }
+        case 'loan partner wise': {
+          this.loan_partner_application_timePeriod = res.dateRange || 'LAST_THIRTY_DAYS';
+          if (res.dateRange === 'DATE_RANGE') {
+            this.hide_dateRange = false;
+            this.loan_partner_application_StartDate = res.startDate;
+            this.loan_partner_application_EndDate = res.endDate;
           }
         }
       }
@@ -2635,6 +2677,234 @@ export class NewReportComponent implements OnInit {
         const request_payload: any = {};
         request_payload.reportType = 'DOCUMENT_COLLECTION';
         request_payload.reportDateCategory = this.document_collected_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
+    else if (reportType === 'loan application') {
+      console.log("Report Type :", reportType)
+      if (this.loan_application_timePeriod === 'DATE_RANGE' && (this.loan_application_StartDate === undefined || this.loan_application_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId,
+          // 'location':this.customer_location,
+          'assignee': this.user_id
+        };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+        }
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+        }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.loan_application_timePeriod === 'DATE_RANGE') {
+          if (this.loan_application_StartDate === undefined || this.loan_application_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.loan_application_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.loan_application_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'LOAN_REPORT';
+        request_payload.reportDateCategory = this.loan_application_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
+    else if (reportType === 'loan user') {
+      console.log("Report Type :", reportType)
+      if (this.loan_user_application_timePeriod === 'DATE_RANGE' && (this.loan_user_application_StartDate === undefined || this.loan_user_application_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId,
+          // 'location':this.customer_location,
+          'assignee': this.user_id
+        };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+        }
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+        }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.loan_user_application_timePeriod === 'DATE_RANGE') {
+          if (this.loan_user_application_StartDate === undefined || this.loan_user_application_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.loan_user_application_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.loan_user_application_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'LOAN_USER_REPORT';
+        request_payload.reportDateCategory = this.loan_user_application_timePeriod;
+        request_payload.filter = filter;
+        request_payload.responseType = 'INLINE';
+        this.passPayloadForReportGeneration(request_payload);
+        this.report_data_service.setReportCriteriaInput(request_payload);
+      }
+    }
+    else if (reportType === 'loan partner wise') {
+      console.log("Report Type :", reportType)
+      if (this.loan_partner_application_timePeriod === 'DATE_RANGE' && (this.loan_partner_application_StartDate === undefined || this.loan_partner_application_EndDate === undefined)) {
+        this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+      } else {
+        this.filterparams = {
+          'paymentStatus': this.appointment_billpaymentstatus,
+          'schedule': this.appointment_schedule_id,
+          'service': this.appointment_service_id,
+          // 'apptStatus': this.appointment_status,
+          'appointmentMode': this.appointment_mode,
+          'apptForId': this.appointment_customerId,
+          // 'location':this.customer_location,
+          'assignee': this.user_id
+        };
+        if (this.user_id === 0 || this.user_id === undefined) {
+          delete this.filterparams.assignee;
+        }
+        if (this.customer_location === 0 || this.customer_location === undefined) {
+          delete this.filterparams.location;
+        }
+        if (this.locationFilter.length > 0) {
+          this.filterparams['location'] = this.locationFilter.toString();
+        }
+        if (!this.appointment_customerId) {
+          delete this.filterparams.appmtFor;
+        }
+        if (this.appointment_schedule_id === 0) {
+          delete this.filterparams.schedule;
+        }
+        if (this.appointment_billpaymentstatus === 0) {
+          delete this.filterparams.paymentStatus;
+        }
+        if (this.appointment_service_id === 0) {
+          delete this.filterparams.service;
+        }
+        if (this.apptStatusFilter.length > 0) {
+          // this.waitlist_status = this.waitlistStatusFilter.toString();
+          this.filterparams['apptStatus'] = this.apptStatusFilter.toString();
+        }
+        // if (this.appointment_status === 0) {
+        //   delete this.filterparams.apptStatus;
+        // }
+        if (this.apptIntStatusFilter.length > 0) {
+          this.filterparams['internalStatus'] = this.apptIntStatusFilter.toString();
+        }
+        if (this.appointment_mode === 0) {
+          delete this.filterparams.appointmentMode;
+        }
+        if (this.appointment_customerId === 0) {
+          delete this.filterparams.providerOwnConsumerId;
+        }
+        const filter = {};
+        for (const key in this.filterparams) {
+          if (this.filterparams.hasOwnProperty(key)) {
+            // assign property to new object with modified key
+            filter[key + '-eq'] = this.filterparams[key];
+          }
+        }
+        if (this.loan_partner_application_timePeriod === 'DATE_RANGE') {
+          if (this.loan_partner_application_StartDate === undefined || this.loan_partner_application_EndDate === undefined) {
+            this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
+
+          }
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.loan_partner_application_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.loan_partner_application_EndDate);
+        }
+        const request_payload: any = {};
+        request_payload.reportType = 'LOAN_PARTENER_REPORT';
+        request_payload.reportDateCategory = this.loan_partner_application_timePeriod;
         request_payload.filter = filter;
         request_payload.responseType = 'INLINE';
         this.passPayloadForReportGeneration(request_payload);

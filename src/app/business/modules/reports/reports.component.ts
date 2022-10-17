@@ -54,6 +54,12 @@ export class ReportsComponent implements OnInit {
   customerWiseEnquiryReports = [];
   document_collection_criteria: any[];
   documentCollectedReports = [];
+  loan_application_criteria: any[];
+  loanApplicatioinReports = [];
+  loan_user_criteria: any[];
+  loanUserReports = [];
+  loan_partner_wise_criteria: any[];
+  loanPartnerWiseReports = [];
   customer_crif_Status_criteria: any;
   customerCrifStatusReports = [];
   loginReports = [];
@@ -130,6 +136,9 @@ export class ReportsComponent implements OnInit {
     this.customer_report_criteria = [];
     this.customer_wise_enquiry_criteria = [];
     this.document_collection_criteria = [];
+    this.loan_application_criteria = [];
+    this.loan_partner_wise_criteria = [];
+    this.loan_user_criteria = [];
     this.customer_crif_Status_criteria = [];
     this.payment_criteria = [];
     this.token_criteria = [];
@@ -231,6 +240,18 @@ export class ReportsComponent implements OnInit {
           }
           case 'DOCUMENT_COLLECTION': {
             this.document_collection_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'LOAN_REPORT': {
+            this.loan_application_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'LOAN_USER_REPORT': {
+            this.loan_user_criteria.push(this.criteria_list[i]);
+            break;
+          }
+          case 'LOAN_PARTENER_REPORT': {
+            this.loan_partner_wise_criteria.push(this.criteria_list[i]);
             break;
           }
 

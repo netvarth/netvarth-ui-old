@@ -812,6 +812,102 @@
           </mat-accordion>
         </div>
       </div>
+      <!--Loan application  Enquiry Reports -->
+      <div class="row" *ngIf="taskStatus">
+        <div class="card p0">
+          <mat-accordion class="report">
+            <mat-expansion-panel [expanded]="true">
+              <mat-expansion-panel-header>
+                <mat-panel-title class="report_title">
+                  Loan Application Report
+                  <div class="width100pc">
+                    <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                      [queryParams]="{report_type:'loan application'}">Create New Report</a>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <ng-container *ngIf="loanApplicatioinReports.length===0">
+                <div *ngIf="loan_application_criteria.length === 0">
+                  <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                </div>
+                <table *ngIf="loan_application_criteria.length > 0">
+                  <span class="savd-report">Saved Reports</span>
+                  <tr *ngFor="let loan of loan_application_criteria">
+                    <td>{{loan.reportName}}</td>
+                    <td><a (click)="recreateReport(loan)">Generate</a></td>
+                    <td><a (click)="viewCriteria(loan)">View</a></td>
+                    <td><a (click)="deletCriteria(loan)">Delete</a></td>
+                  </tr>
+                </table>
+              </ng-container>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </div>
+        <!--Loan user application Reports -->
+        <div class="row" *ngIf="taskStatus">
+          <div class="card p0">
+            <mat-accordion class="report">
+              <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="report_title">
+                    Loan User Application Report
+                    <div class="width100pc">
+                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                        [queryParams]="{report_type:'loan user'}">Create New Report</a>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-container *ngIf="loanUserReports.length===0">
+                  <div *ngIf="loan_user_criteria.length === 0">
+                    <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  </div>
+                  <table *ngIf="loan_user_criteria.length > 0">
+                    <span class="savd-report">Saved Reports</span>
+                    <tr *ngFor="let loan of loan_user_criteria">
+                      <td>{{loan.reportName}}</td>
+                      <td><a (click)="recreateReport(loan)">Generate</a></td>
+                      <td><a (click)="viewCriteria(loan)">View</a></td>
+                      <td><a (click)="deletCriteria(loan)">Delete</a></td>
+                    </tr>
+                  </table>
+                </ng-container>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
+         <!--Loan partner wise application Reports -->
+         <div class="row" *ngIf="taskStatus">
+          <div class="card p0">
+            <mat-accordion class="report">
+              <mat-expansion-panel [expanded]="true">
+                <mat-expansion-panel-header>
+                  <mat-panel-title class="report_title">
+                    Loan User Application Report
+                    <div class="width100pc">
+                      <a class="create_nw_rept" [routerLink]="['/provider/reports/new-report']"
+                        [queryParams]="{report_type:'loan partner wise'}">Create New Report</a>
+                    </div>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+                <ng-container *ngIf="loanPartnerWiseReports.length===0">
+                  <div *ngIf="loan_partner_wise_criteria.length === 0">
+                    <p class="font-italic col-lg-6 col-md-12 col-sm-12 col-xs-12">You haven't created any reports. </p>
+                  </div>
+                  <table *ngIf="loan_partner_wise_criteria.length > 0">
+                    <span class="savd-report">Saved Reports</span>
+                    <tr *ngFor="let loan of loan_partner_wise_criteria">
+                      <td>{{loan.reportName}}</td>
+                      <td><a (click)="recreateReport(loan)">Generate</a></td>
+                      <td><a (click)="viewCriteria(loan)">View</a></td>
+                      <td><a (click)="deletCriteria(loan)">Delete</a></td>
+                    </tr>
+                  </table>
+                </ng-container>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </div>
     </div>
     <div class="clearfix"></div>
   </div>
