@@ -330,26 +330,26 @@ export class CreateDealerComponent implements OnInit {
     this.selectedFiles[type].files.splice(i, 1);
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
-    if (type === 'aadhar') {
-      this.dealerData.loanApplicationKycList[0].aadharAttachments.splice(i, 1);
-      this.actionText = 'Delete';
+    // if (type === 'aadhar') {
+    //   this.dealerData.aadharAttachments.splice(i, 1);
+    //   this.actionText = 'Delete';
 
-    } else if (type === 'pan') {
-      this.dealerData.loanApplicationKycList[0].panAttachments.splice(i, 1);
-      this.actionText = 'Delete';
-    }
-    else if (type === 'photo') {
-      this.dealerData.consumerPhoto.splice(i, 1);
-      this.actionText = 'Delete';
-    }
-    else if (type === 'store') {
-      this.dealerData.otherAttachments.splice(i, 1);
-      this.actionText = 'Delete';
-    }
-    else if (type === 'cheque') {
-      this.dealerData.otherAttachments.splice(i, 1);
-      this.actionText = 'Delete';
-    }
+    // } else if (type === 'pan') {
+    //   this.dealerData.panAttachments.splice(i, 1);
+    //   this.actionText = 'Delete';
+    // }
+    // else if (type === 'photo') {
+    //   this.dealerData.partnerAttachments.splice(i, 1);
+    //   this.actionText = 'Delete';
+    // }
+    // else if (type === 'store') {
+    //   this.dealerData.storeAttachments.splice(i, 1);
+    //   this.actionText = 'Delete';
+    // }
+    // else if (type === 'cheque') {
+    //   this.dealerData.bankAttachments.splice(i, 1);
+    //   this.actionText = 'Delete';
+    // }
   }
 
 

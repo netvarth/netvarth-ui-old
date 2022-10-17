@@ -25,6 +25,7 @@ export class CreateComponent implements OnInit {
   kycDetailsPanel = false;
   loanDetailsPanel = false;
   otherDetailsPanel = false;
+  bankDetailsPanel = false;
   selectedMessage = {
     files: [],
     base64: [],
@@ -220,7 +221,8 @@ export class CreateComponent implements OnInit {
       nomineename: [null],
       bank: [null],
       ifsc: [null],
-      account: [null]
+      account: [null],
+      bankstatements: [null]
 
 
     });
@@ -330,6 +332,7 @@ export class CreateComponent implements OnInit {
     this.kycDetailsPanel = true;
     this.loanDetailsPanel = true;
     this.otherDetailsPanel = true;
+    this.bankDetailsPanel = true;
   }
 
   closeAll() {
@@ -337,6 +340,8 @@ export class CreateComponent implements OnInit {
     this.kycDetailsPanel = false;
     this.loanDetailsPanel = false;
     this.otherDetailsPanel = false;
+    this.bankDetailsPanel = false;
+
   }
 
   resetErrors() {
