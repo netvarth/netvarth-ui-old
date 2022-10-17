@@ -118,7 +118,7 @@ export class CreateComponent implements OnInit {
   ) {
 
     this.activated_route.queryParams.subscribe((params) => {
-      if (params.id) {
+      if (params && params.id) {
         this.cdlservice.getLoanById(params.id).subscribe((data) => {
           this.loanData = data;
           this.action = params.action;
@@ -168,22 +168,21 @@ export class CreateComponent implements OnInit {
 
 
           }
+          // if (this.loanData && this.loanData.id) {
+          this.cdlservice.getBankDetailsById(this.loanId).subscribe((data) => {
+            this.bankData = data;
+            console.log("this.bankData", this.bankData)
+            if (this.bankData) {
+              // this.createLoan.controls.bank.setValue(this.loanData.emiPaidAmountMonthly);
+              // this.createLoan.controls.account.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
+              // this.createLoan.controls.ifsc.setValue(this.loanData.loanApplicationKycList[0].nomineeType);
+            }
+          });
+          // }
 
-          // this.cdlservice.getBankDetailsById(this.loanId).subscribe((data) => {
-          //   this.bankData = data;
-          //   console.log("this.bankData", this.bankData)
-          //   if (this.bankData) {
-          //     // this.createLoan.controls.bank.setValue(this.loanData.emiPaidAmountMonthly);
-          //     // this.createLoan.controls.account.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
-          //     // this.createLoan.controls.ifsc.setValue(this.loanData.loanApplicationKycList[0].nomineeType);
-          //   }
-          // });
         })
       }
     });
-
-
-
 
     this.createLoan = this.createLoanFormBuilder.group({
       phone: [null],
@@ -310,7 +309,7 @@ export class CreateComponent implements OnInit {
         if (this.customerDetails[0] && this.customerDetails[0].address) {
           this.createLoan.controls.permanentaddress1.setValue(this.customerDetails[0].address)
         }
-        if (this.customerDetails && this.customerDetails[0] && this.customerDetails[0].id) {
+        if (this.customerDetails[0] && this.customerDetails[0].id) {
           this.customerId = this.customerDetails[0].id;
           // this.loanApplication['consumer'] = {
           //   "id": this.loanData.status.id
@@ -470,39 +469,44 @@ export class CreateComponent implements OnInit {
     if (this.loanApplication) {
       if (this.action == "update") {
 
-        for (let i = 0; i < this.filesToUpload.length; i++) {
-          this.filesToUpload[i]['order'] = i;
-          if (this.filesToUpload[i]["type"] == 'aadhar') {
-            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'] = [];
-            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'].push(this.filesToUpload[i]);
-          }
-          if (this.filesToUpload[i]["type"] == 'pan') {
-            this.loanApplication.loanApplicationKycList[0]['panAttachments'] = [];
-            this.loanApplication.loanApplicationKycList[0]['panAttachments'].push(this.filesToUpload[i]);
-          }
-          if (this.filesToUpload[i]["type"] == 'photo') {
-            this.loanApplication['consumerPhoto'] = [];
-            this.loanApplication['consumerPhoto'].push(this.filesToUpload[i]);
-          }
-        }
+        // for (let i = 0; i < this.filesToUpload.length; i++) {
+        //   this.filesToUpload[i]['order'] = i;
+        //   if (this.filesToUpload[i]["type"] == 'aadhar') {
+        //     this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'] = [];
+        //     this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'].push(this.filesToUpload[i]);
+        //   }
+        //   if (this.filesToUpload[i]["type"] == 'pan') {
+        //     this.loanApplication.loanApplicationKycList[0]['panAttachments'] = [];
+        //     this.loanApplication.loanApplicationKycList[0]['panAttachments'].push(this.filesToUpload[i]);
+        //   }
+        //   if (this.filesToUpload[i]["type"] == 'photo') {
+        //     this.loanApplication['consumerPhoto'] = [];
+        //     this.loanApplication['consumerPhoto'].push(this.filesToUpload[i]);
+        //   }
+        // }
 
-        this.loanApplication['status'] = {
-          "id": this.loanData.status.id
-        };
-        this.loanApplication.customer = {
-          "id": this.loanData.customer.id
-        };
-        this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
-        console.log("response");
+        if (this.loanData && this.loanData.status && this.loanData.status.id) {
+          this.loanApplication['status'] = {
+            "id": this.loanData.status.id
+          };
+        }
+        if (this.loanData && this.loanData.customer && this.loanData.customer[0].id) {
+          this.loanApplication.customer = {
+            "id": this.loanData.customer[0].id
+          };
+        }
+        if (this.loanData && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
+          this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
+        }
         this.cdlservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
-          if (s3urls.attachmentsUrls.length > 0) {
-            this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
-              (dataS3Url) => {
-                console.log(dataS3Url);
-                this.snackbarService.openSnackBar("Loan Application Created Successfully")
-                this.router.navigate(['provider', 'cdl', 'loans']);
-              });
-          }
+          // if (s3urls.attachmentsUrls.length > 0) {
+          //   this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
+          //     (dataS3Url) => {
+          //       console.log(dataS3Url);
+          //       this.snackbarService.openSnackBar("Loan Application Created Successfully")
+          //       this.router.navigate(['provider', 'cdl', 'loans']);
+          //     });
+          // }
           this.snackbarService.openSnackBar("Loan Application Updated Successfully")
           this.router.navigate(['provider', 'cdl', 'loans'])
         },

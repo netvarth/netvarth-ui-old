@@ -12,7 +12,8 @@ const routes: Routes = [
   { path: 'loans', loadChildren: () => import('./loans/loans.module').then(m => m.LoansModule) },
   { path: 'loans/:id', loadChildren: () => import('./loans/loan-details/loan-details.module').then(m => m.LoanDetailsModule) },
   { path: 'dealers', loadChildren: () => import('./dealer/dealer.module').then(m => m.DealerModule) },
-  { path: 'leads', loadChildren: () => import('./leads/leads.module').then(m => m.LeadsModule) }
+  { path: 'leads', loadChildren: () => import('./leads/leads.module').then(m => m.LeadsModule) },
+  { path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) }
 ]
 
 @NgModule({

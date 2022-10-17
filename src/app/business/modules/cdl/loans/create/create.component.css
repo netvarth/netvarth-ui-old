@@ -247,3 +247,7 @@ input::placeholder {
   font-size: 14px !important;
   font-weight: 700 !important;
 }
+
+input::placeholder {
+  font: 20px/3 sans-serif;
+}

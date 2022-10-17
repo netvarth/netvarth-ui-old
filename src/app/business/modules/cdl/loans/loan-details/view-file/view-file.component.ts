@@ -7,6 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class ViewFileComponent implements OnInit {
   type: any;
+  src = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
   constructor(
     public dialogRef: MatDialogRef<ViewFileComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

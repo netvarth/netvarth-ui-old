@@ -515,7 +515,7 @@
                       <div class="form-title">Bank IFSC</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="number" placeholder="Enter Bank IFSC" class="form-control"
+                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
                         formControlName="ifsc" autocomplete="off" />
                     </div>
                   </div>
@@ -558,22 +558,7 @@
               </div>
 
 
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Select Category</div>
-                    </div>
-                    <div class="fieldPadding">
-                      <select class="form-control" #category formControlName="category" [value]="category">
-                        <option *ngFor="let category of loanCategories" value="{{category.id}}">
-                          {{category.name}}
-                        </option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              </div>
+
 
               <div class="bggrey my-2">
                 <div>
@@ -664,7 +649,22 @@
                 </div>
               </div>
 
-
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <select class="form-control" #category formControlName="category" [value]="category">
+                        <option *ngFor="let category of loanCategories" value="{{category.id}}">
+                          {{category.name}}
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               <div>
                 <div class="bggrey my-2">

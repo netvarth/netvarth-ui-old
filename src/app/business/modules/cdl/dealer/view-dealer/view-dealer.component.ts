@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { CdlService } from '../../cdl.service';
 @Component({
   selector: 'app-view-dealer',
   templateUrl: './view-dealer.component.html',
   styleUrls: ['./view-dealer.component.css']
 })
 export class ViewDealerComponent implements OnInit {
-  dealer: any;
+  dealerId: any;
   status: any;
+  dealeraData: any;
   active: any = "inactive";
+  users: any;
   statusLoansList: any = [
     {
       'loanId': 101,
@@ -36,19 +39,25 @@ export class ViewDealerComponent implements OnInit {
   constructor(
     private location: Location,
     private router: Router,
-    private activatedroute: ActivatedRoute
+    private activatedroute: ActivatedRoute,
+    private cdlservice: CdlService
   ) {
-    this.activatedroute.queryParams.subscribe(qparams => {
-      if (qparams && qparams.dealer) {
-        this.dealer = qparams.dealer;
-      }
-      if (qparams && qparams.status) {
-        this.status = qparams.status;
+    this.activatedroute.params.subscribe(qparams => {
+      if (qparams && qparams.id) {
+        this.dealerId = qparams.id;
       }
     });
   }
 
   ngOnInit(): void {
+
+    this.cdlservice.getDealerById(this.dealerId).subscribe(data => {
+      this.dealeraData = data
+    });
+
+    this.cdlservice.getDealerUsers(this.dealerId).subscribe(data => {
+      this.users = data
+    });
   }
 
   goBack() {

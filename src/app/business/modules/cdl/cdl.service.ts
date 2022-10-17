@@ -102,6 +102,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getDealerUsers(id) {
+    const url = 'provider/partner/' + id + '/users';
+    return this.servicemeta.httpGet(url, null);
+  }
+
 
   getDealerById(id) {
     const url = 'provider/partner/' + id;
@@ -156,7 +161,10 @@ export class CdlService {
 
 
   sendPhoneOTP(data, from) {
-    const url = 'provider/loanapplication/generate/phone';
+    var url = 'provider/loanapplication/generate/phone';
+    if (from == 'partner') {
+      var url = 'provider/partner/generate/phone';
+    }
     return this.servicemeta.httpPost(url, data);
   }
 
@@ -172,13 +180,24 @@ export class CdlService {
     return this.servicemeta.httpPost(url, data);
   }
 
-  sendEmailOTP(data) {
-    const url = 'provider/loanapplication/generate/email';
+  partnerOtpVerify(otp, data) {
+    const url = 'provider/partner/verify/' + otp + '/phone';
     return this.servicemeta.httpPost(url, data);
   }
 
-  verifyEmailOTP(otp) {
-    const url = 'provider/loanapplication/verify/' + otp + '/email';
+  sendEmailOTP(data, from) {
+    var url = 'provider/loanapplication/generate/email';
+    if (from && from == 'partner') {
+      var url = 'provider/partner/generate/email';
+    }
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  verifyEmailOTP(otp, from) {
+    var url = 'provider/loanapplication/verify/' + otp + '/email';
+    if (from && from == 'partner') {
+      var url = 'provider/partner/verify/' + otp + '/email';
+    }
     return this.servicemeta.httpPost(url);
   }
 }

@@ -6,6 +6,7 @@ import { OtpVerifyComponent } from '../../loans/otp-verify/otp-verify.component'
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CdlService } from '../../cdl.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
+import { FileService } from '../../../../../shared/services/file-service';
 
 @Component({
   selector: 'app-create-dealer',
@@ -22,6 +23,15 @@ export class CreateDealerComponent implements OnInit {
     base64: [],
     caption: []
   };
+  selectedFiles = {
+    "photo": { files: [], base64: [], caption: [] },
+    "store": { files: [], base64: [], caption: [] },
+    "aadhar": { files: [], base64: [], caption: [] },
+    "pan": { files: [], base64: [], caption: [] },
+    "cheque": { files: [], base64: [], caption: [] }
+  }
+  filesToUpload: any = [];
+  actionText: any;
   aadharverification = false;
   headerText: any = "Create Dealer";
   btnText: any = "Create Dealer";
@@ -58,7 +68,8 @@ export class CreateDealerComponent implements OnInit {
     private createDealerFormBuilder: FormBuilder,
     private cdlservice: CdlService,
     private snackbarService: SnackbarService,
-    private activated_route: ActivatedRoute
+    private activated_route: ActivatedRoute,
+    private fileService: FileService
 
   ) {
     this.createDealer = this.createDealerFormBuilder.group({
@@ -138,6 +149,33 @@ export class CreateDealerComponent implements OnInit {
 
   }
 
+  filesSelected(event, type) {
+    console.log("Event ", event, type)
+    const input = event.target.files;
+    console.log("input ", input)
+    this.fileService.filesSelected(event, this.selectedFiles[type]).then(
+      () => {
+        for (const pic of input) {
+          const size = pic["size"] / 1024;
+          let fileObj = {
+            owner: this.businessId,
+            fileName: pic["name"],
+            fileSize: size / 1024,
+            caption: "",
+            fileType: pic["type"].split("/")[1],
+            action: 'add'
+          }
+          fileObj['file'] = pic;
+          fileObj['type'] = type;
+          this.filesToUpload.push(fileObj);
+        }
+      }).catch((error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      })
+
+
+  }
+
   verifyemail() {
     let can_remove = false;
     const dialogRef = this.dialog.open(OtpVerifyComponent, {
@@ -145,7 +183,9 @@ export class CreateDealerComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        type: 'Email'
+        type: 'Email',
+        email: this.createDealer.controls.email.value,
+        from: 'partner'
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -219,6 +259,13 @@ export class CreateDealerComponent implements OnInit {
 
   }
 
+  getImage(url, file) {
+    return this.fileService.getImage(url, file);
+  }
+  getImageType(fileType) {
+    return this.fileService.getImageByType(fileType);
+  }
+
 
   getPartnerTypes() {
     this.cdlservice.getPartnerTypes().subscribe((data) => {
@@ -244,7 +291,10 @@ export class CreateDealerComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        type: 'Mobile Number'
+        type: 'Mobile Number',
+        phoneNumber: this.createDealer.controls.phone.value,
+        name: this.createDealer.controls.name.value,
+        from: 'partner'
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -260,7 +310,47 @@ export class CreateDealerComponent implements OnInit {
     return can_remove;
   }
 
+  deleteTempImage(i, type, deleteText) {
+    let files = this.filesToUpload.filter((fileObj) => {
+      // console.log('fileObj',fileObj)
+      if (fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name) {
+        if (fileObj.type) {
+          return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type === type);
+        }
+      }
+    });
+    // console.log("files",files,i)
+    if (files && files.length > 0) {
+      console.log(this.filesToUpload.indexOf(files[0]));
+      if (this.filesToUpload && this.filesToUpload.indexOf(files[0])) {
+        const index = this.filesToUpload.indexOf(files[0]);
+        this.filesToUpload.splice(index, 1);
+      }
+    }
+    this.selectedFiles[type].files.splice(i, 1);
+    this.selectedFiles[type].base64.splice(i, 1);
+    this.selectedFiles[type].caption.splice(i, 1);
+    if (type === 'aadhar') {
+      this.dealerData.loanApplicationKycList[0].aadharAttachments.splice(i, 1);
+      this.actionText = 'Delete';
 
+    } else if (type === 'pan') {
+      this.dealerData.loanApplicationKycList[0].panAttachments.splice(i, 1);
+      this.actionText = 'Delete';
+    }
+    else if (type === 'photo') {
+      this.dealerData.consumerPhoto.splice(i, 1);
+      this.actionText = 'Delete';
+    }
+    else if (type === 'store') {
+      this.dealerData.otherAttachments.splice(i, 1);
+      this.actionText = 'Delete';
+    }
+    else if (type === 'cheque') {
+      this.dealerData.otherAttachments.splice(i, 1);
+      this.actionText = 'Delete';
+    }
+  }
 
 
   createPartner() {

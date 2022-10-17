@@ -130,6 +130,10 @@ export class CdlComponent implements OnInit {
     this.viewmore = false;
   }
 
+  reports() {
+    this.router.navigate(['provider', 'cdl', 'reports']);
+  }
+
   viewMoreLeads() {
     this.leads = this.statusLeadsList;
     this.viewmoreleads = true;

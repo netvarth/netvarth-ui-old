@@ -47,10 +47,10 @@
       </div>
       <div class="text-left dealer-info">
         <div class="my-2">
-          <span><b>Username : </b>@{{dealer}}thrissur</span>
+          <span><b>Username : </b>@dealerthrissur</span>
         </div>
         <div class="my-2">
-          <span class="my-2"><b>Billing Email : </b>{{dealer}}@gmail.com</span><br>
+          <span class="my-2"><b>Billing Email : </b>dealer@gmail.com</span><br>
         </div>
         <div class="my-2">
           <span class="my-2"><b>Status : </b>Active</span><br>
@@ -171,14 +171,50 @@
             </div>
           </div>
           <div class="tab-pane " id="tab2" role="tabpanel">Coming Soon...</div>
-          <div class="tab-pane " id="tab3" role="tabpanel" *ngIf="this.status != 'requested'">Coming Soon...</div>
+          <div class="tab-pane " id="tab3" role="tabpanel" *ngIf="this.status != 'requested'">
+            <div class="text-right">
+              <a class="btn btn-primary font-small"><i class="fa fa-plus"></i>&nbsp;Create User</a>
+            </div>
+            <div class="table-responsive dash-list">
+              <table class="table" style="background-color: white;">
+                <thead>
+                  <tr class="tble-filtr-tr heght">
+                    <th class="head_color">Id</th>
+                    <th class="head_color">Name</th>
+                    <th class="head_color">Phone</th>
+                    <th class="head_color">Email</th>
+                  </tr>
+                </thead>
+                <tbody class="table_data">
+                  <ng-container *ngFor="let user of users">
+                    <tr style="cursor:pointer">
+                      <td class="text-capitalize">
+                        <span *ngIf="user && user.id">{{user.id}}</span>
+                      </td>
+                      <td class="text-capitalize">
+                        <span *ngIf="user && user.partner && user.partner.partnerName"><i class="fa fa-user-circle-o"
+                            aria-hidden="true"></i>&nbsp;{{user.partner.partnerName}}</span>
+                      </td>
+                      <td>
+                        <span *ngIf="user && user.mobileNo"><i class="fa fa-inr"></i>&nbsp;{{user.mobileNo}}</span>
+                      </td>
+                      <td>
+                        <span *ngIf="user && user.email">{{user.email}}</span>
+                      </td>
+
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <div class="tab-pane " id="tab3" role="tabpanel" *ngIf="this.status == 'requested'">
             <div class="text-left dealer-info">
               <div class="my-2">
-                <span><b>Username : </b>@{{dealer}}thrissur</span>
+                <span><b>Username : </b>@dealerthrissur</span>
               </div>
               <div class="my-2">
-                <span class="my-2"><b>Billing Email : </b>{{dealer}}@gmail.com</span><br>
+                <span class="my-2"><b>Billing Email : </b>dealer@gmail.com</span><br>
               </div>
               <div class="my-2">
                 <span class="my-2"><b>Status : </b>Active</span><br>

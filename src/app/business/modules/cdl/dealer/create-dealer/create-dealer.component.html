@@ -34,8 +34,12 @@
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" type="number" formControlName="phone" placeholder="Enter Phone Number"
                     class="form-control" autocomplete="off" />
-                  <a class="btn btn-verify" [class.btn-verified]="verification" (click)="verifyotp()">
-                    <span *ngIf="!verification">Verify</span><span *ngIf="verification">Verified</span></a>
+                  <a class="btn btn-verify" *ngIf="!verification" [class.btn-verified]="verification"
+                    (click)="verifyotp()">
+                    <span>Verify</span></a>
+
+                  <a class="btn btn-verify" *ngIf="verification" [class.btn-verified]="verification"><span><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
               </div>
             </div>
@@ -55,8 +59,13 @@
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" formControlName="email" type="email" placeholder="Enter Dealer Email"
                     class="form-control" autocomplete="off" />
-                  <a class="btn btn-verify" [class.btn-verified]="emailverification" (click)="verifyemail()">
-                    <span *ngIf="!emailverification">Verify</span><span *ngIf="emailverification">Verified</span></a>
+
+                  <a class="btn btn-verify" *ngIf="!emailverification" [class.btn-verified]="emailverification"
+                    (click)="verifyemail()">
+                    <span>Verify</span></a>
+                  <a class="btn btn-verify" *ngIf="emailverification" [class.btn-verified]="emailverification"><span><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+
                 </div>
               </div>
             </div>
@@ -87,13 +96,31 @@
               </div>
               <div class="fieldPadding photo-border">
                 <div class='file file--upload'>
-                  <label for='input-file'>
+                  <label for='photoAttach' (click)="photoAttach.click()">
                     Upload File
                   </label>
-                  <input id='input-file' type='file' formControlName="photo" />
+                  <input #photoAttach type='file' formControlName="photo" (change)="filesSelected($event,'photo')" />
                 </div>
-                <span
-                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+              </div>
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
+                          *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
+                            width="100px" height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
@@ -184,6 +211,28 @@
                     Upload File
                   </label>
                   <input id='input-file' type='file' formControlName="storephoto" />
+                </div>
+                <span
+                  *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Cheque/Passbook Front</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='input-file'>
+                    Upload File
+                  </label>
+                  <input id='input-file' type='file' formControlName="cheque" />
                 </div>
                 <span
                   *ngIf="selectedMessage.files && selectedMessage.files.length > 0">&nbsp;({{selectedMessage.files.length}})</span>

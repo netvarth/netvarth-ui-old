@@ -15,6 +15,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 export class OtpVerifyComponent implements OnInit {
   type: any;
   phoneNumber: any;
+  partnerData: any;
   otpEntered: any;
   otpSuccess: any;
   otpError: any;
@@ -55,23 +56,21 @@ export class OtpVerifyComponent implements OnInit {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.type = this.data.type
     this.from = this.data.from
-
     if (this.data && this.data.data && this.data.data.firstName) {
       this.firstName = this.data.data.firstName;
     }
     if (this.data && this.data.data && this.data.data.lastName) {
       this.lastName = this.data.data.lastName;
     }
-    if (this.data && this.data.data && this.data.data.name) {
-      this.name = this.data.data.name;
+    if (this.data && this.data.name) {
+      this.name = this.data.name;
     }
     if (this.data && this.data.phoneNumber) {
       this.phoneNumber = this.data.phoneNumber;
       this.cdlservice.getBusinessProfile().subscribe((data) => {
         this.businessDetails = data;
-        if (this.businessDetails && this.businessDetails.id)
-          this.sendOTP();
-      })
+      });
+      this.sendOTP();
     }
     else if (this.data && this.data.email) {
       this.sendOTP();
@@ -85,12 +84,8 @@ export class OtpVerifyComponent implements OnInit {
     this.phoneError = null;
     if (this.phoneNumber) {
       this.dialCode = "+91";
-      if (this.phoneNumber.startsWith('55')) {
-        this.config.length = 5;
-      }
-
+      console.log("this.phoneNumber")
       this.performSendOTP(this.phoneNumber, mode);
-
     }
     else if (this.data && this.data.email) {
       this.performEmailOTP(this.data.email);
@@ -101,6 +96,7 @@ export class OtpVerifyComponent implements OnInit {
       countryCode: "+91",
       number: loginId,
     }
+    console.log("coming here", credentials)
     this.subs.sink = this.cdlservice.sendPhoneOTP(credentials, this.from).subscribe(
       (response: any) => {
         if (mode == 'resent') {
@@ -120,7 +116,7 @@ export class OtpVerifyComponent implements OnInit {
     let credentials = {
       email: loginId,
     }
-    this.subs.sink = this.cdlservice.sendEmailOTP(credentials).subscribe(
+    this.subs.sink = this.cdlservice.sendEmailOTP(credentials, this.from).subscribe(
       (response: any) => {
         this.snackbarService.openSnackBar("Otp Sent Successfully");
       }, (error) => {
@@ -143,9 +139,7 @@ export class OtpVerifyComponent implements OnInit {
     this.otpEntered = otp;
     console.log(this.phoneNumber);
     if (this.phoneNumber) {
-      if (this.phoneNumber.startsWith('55') && this.otpEntered.length < 5) {
-        return false;
-      } else if (this.otpEntered.length < 4) {
+      if (this.otpEntered.length < 4) {
         return false;
       } else {
         this.otpVerification();
@@ -169,10 +163,7 @@ export class OtpVerifyComponent implements OnInit {
     this.otpError = '';
     console.log(this.otpEntered);
     if (this.phoneNumber) {
-      if (this.phoneNumber.startsWith('55') && this.otpEntered.length < 5) {
-        this.snackbarService.openSnackBar('Invalid OTP', { 'panelClass': 'snackbarerror' });
-        return false;
-      } else if (this.otpEntered.length < 4) {
+      if (this.otpEntered.length < 4) {
         this.snackbarService.openSnackBar('Invalid OTP', { 'panelClass': 'snackbarerror' });
         return false;
       }
@@ -181,10 +172,17 @@ export class OtpVerifyComponent implements OnInit {
       this.otpError = 'Invalid OTP';
     } else {
 
-      console.log("Data", this.data)
+
       if (this.data && this.data.phoneNumber) {
-        const filter = { 'phoneNo-eq': this.phoneNumber };
-        this.getCustomerDetails(filter);
+        console.log("Data", this.data)
+        if (!this.data.from || (this.data.from && this.data.from != 'partner')) {
+          const filter = { 'phoneNo-eq': this.phoneNumber };
+          this.getCustomerDetails(filter);
+        }
+        else if (this.from && this.from == 'partner') {
+          this.partnerOtpVerify()
+        }
+
       }
       else {
         this.verifyEmail();
@@ -196,7 +194,7 @@ export class OtpVerifyComponent implements OnInit {
 
   verifyEmail() {
     console.log("Email")
-    this.subs.sink = this.cdlservice.verifyEmailOTP(this.otpEntered)
+    this.subs.sink = this.cdlservice.verifyEmailOTP(this.otpEntered, this.from)
       .subscribe(
         (response: any) => {
           if (response) {
@@ -278,6 +276,33 @@ export class OtpVerifyComponent implements OnInit {
           );
       }
     });
+  }
+
+  partnerOtpVerify() {
+    this.partnerData = {
+      "partnerName": this.name,
+      "partnerAliasName": this.name,
+      "partnerMobile": this.phoneNumber
+    }
+    if (this.partnerData) {
+      this.subs.sink = this.cdlservice.partnerOtpVerify(this.otpEntered, this.partnerData)
+        .subscribe(
+          (response: any) => {
+            if (response) {
+              this.snackbarService.openSnackBar("Mobile Number Verification Successful");
+              const data = {
+                type: this.type,
+                msg: "success"
+              }
+              this.dialogRef.close(data);
+            }
+            console.log("Response", response)
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+        );
+    }
   }
 
 
