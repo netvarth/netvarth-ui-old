@@ -8,14 +8,14 @@ export const projectConstantsLocal = {
   PROVIDER_SMALL_DEVICE_BOUNDARY: 767,
   searchpass_criteria: {
     "start": 0,
-		"return": "title,sector,logo,place1,business_phone_no,unique_id",
-		"fq": "",
-		"q": "",
-		"size": 10,
-		"parser": "structured",
-		"options": "",
-		"sort": "",
-		"distance": ""
+    "return": "title,sector,logo,place1,business_phone_no,unique_id",
+    "fq": "",
+    "q": "",
+    "size": 10,
+    "parser": "structured",
+    "options": "",
+    "sort": "",
+    "distance": ""
   },
   myweekdays: [
     'sunday',
@@ -210,9 +210,9 @@ export const projectConstantsLocal = {
     retailStores: { iconClass: 'retailstores_icon' },
     otherMiscellaneous: { iconClass: 'other_icon' },
     educationalInstitution: { iconClass: 'education_icon' },
-    sportsAndEntertainement: { iconClass: 'sports_icon'},
-    communitySocietyAssociation: { iconClass: 'association_icon'},
-    transportation : {iconClass: 'transportation_icon'}
+    sportsAndEntertainement: { iconClass: 'sports_icon' },
+    communitySocietyAssociation: { iconClass: 'association_icon' },
+    transportation: { iconClass: 'transportation_icon' }
   },
   DOMAIN_SERVICES_HINT: {
     healthCare: { helphint: 'In-person consultation, Video consultation, Lab services' },
@@ -227,8 +227,8 @@ export const projectConstantsLocal = {
     otherMiscellaneous: { helphint: 'Add your services here' },
     educationalInstitution: { helphint: 'Add your services here' },
     sportsAndEntertainement: { helphint: 'Add your services here' },
-    communitySocietyAssociation:{helphint:'Add your services here'},
-    transportation:{helphint:'Add your services here'}
+    communitySocietyAssociation: { helphint: 'Add your services here' },
+    transportation: { helphint: 'Add your services here' }
 
   },
   SUBDOMAIN_ICONS: {
@@ -368,115 +368,115 @@ export const projectConstantsLocal = {
     "name": "SETTINGS",
     "displayName": "Settings",
     "subcat": [{
-        "name": "LOCATION",
-        "dispName": "Location"
-      },
-      {
-        "name": "QUEUE",
-        "dispName": "Queues"
-      },
-      {
-        "name": "SERVICE",
-        "dispName": "Service"
-      },
-      {
-        "name": "HOLIDAY",
-        "dispName": "Holiday"
-      },
-      {
-        "name": "WAITLIST",
-        "dispName": "Waitlist"
-      },
-      {
-        "name": "PAYMENT",
-        "dispName": "Payment"
-      },
-      {
-        "name": "COUPOUN",
-        "dispName": "Coupon"
-      },
-      {
-        "name": "ITEM",
-        "dispName": "Item"
-      },
-      {
-        "name": "ADDWORD",
-        "dispName": "Jaldee Adword"
-      },
-      {
-        "name": "TAX",
-        "dispName": "Tax"
-      },
-      {
-        "name": "DISCOUNT",
-        "dispName": "Discount"
-      },
-      {
-        "name": "ACCOUNT",
-        "dispName": "Account"
-      }
+      "name": "LOCATION",
+      "dispName": "Location"
+    },
+    {
+      "name": "QUEUE",
+      "dispName": "Queues"
+    },
+    {
+      "name": "SERVICE",
+      "dispName": "Service"
+    },
+    {
+      "name": "HOLIDAY",
+      "dispName": "Holiday"
+    },
+    {
+      "name": "WAITLIST",
+      "dispName": "Waitlist"
+    },
+    {
+      "name": "PAYMENT",
+      "dispName": "Payment"
+    },
+    {
+      "name": "COUPOUN",
+      "dispName": "Coupon"
+    },
+    {
+      "name": "ITEM",
+      "dispName": "Item"
+    },
+    {
+      "name": "ADDWORD",
+      "dispName": "Jaldee Adword"
+    },
+    {
+      "name": "TAX",
+      "dispName": "Tax"
+    },
+    {
+      "name": "DISCOUNT",
+      "dispName": "Discount"
+    },
+    {
+      "name": "ACCOUNT",
+      "dispName": "Account"
+    }
     ]
   },
   {
     "name": "WAITLIST",
     "displayName": "Waitlist",
     "subcat": [{
-        "name": "CANCEL",
-        "dispName": "Cancel"
-      },
-      {
-        "name": "WAIT",
-        "dispName": "Wait"
-      },
-      {
-        "name": "DELAY",
-        "dispName": "Delay"
-      },
-      {
-        "name": "WAITLIST",
-        "dispName": "Waitlist"
-      },
-      {
-        "name": "RATING",
-        "dispName": "Rating"
-      },
-      {
-        "name": "BILL",
-        "dispName": "Bill"
-      }
+      "name": "CANCEL",
+      "dispName": "Cancel"
+    },
+    {
+      "name": "WAIT",
+      "dispName": "Wait"
+    },
+    {
+      "name": "DELAY",
+      "dispName": "Delay"
+    },
+    {
+      "name": "WAITLIST",
+      "dispName": "Waitlist"
+    },
+    {
+      "name": "RATING",
+      "dispName": "Rating"
+    },
+    {
+      "name": "BILL",
+      "dispName": "Bill"
+    }
     ]
   },
   {
     "name": "LICENSE",
     "displayName": "License",
     "subcat": [{
-        "name": "ADDON",
-        "dispName": "Add-on"
-      },
-      {
-        "name": "INVOICE",
-        "dispName": "Invoice"
-      },
-      {
-        "name": "LICENSE",
-        "dispName": "License"
-      }
+      "name": "ADDON",
+      "dispName": "Add-on"
+    },
+    {
+      "name": "INVOICE",
+      "dispName": "Invoice"
+    },
+    {
+      "name": "LICENSE",
+      "dispName": "License"
+    }
     ]
   },
   {
     "name": "SIGNUP",
     "displayName": "Signup",
     "subcat": [{
-        "name": "PROVIDER",
-        "dispName": "Provider"
-      },
-      {
-        "name": "CONSUMER",
-        "dispName": "Consumer"
-      }
+      "name": "PROVIDER",
+      "dispName": "Provider"
+    },
+    {
+      "name": "CONSUMER",
+      "dispName": "Consumer"
+    }
     ]
   }
-],
+  ],
   AUDITLOG_FILTER_ACTION: [{
     "name": "ADD",
     "dispName": "Add"
@@ -493,7 +493,7 @@ export const projectConstantsLocal = {
     "name": "VIEW",
     "dispName": "View"
   }
-],
+  ],
   ALERT_CNT: 10,
   BUSINESS_NAME_MAX_LENGTH: 50,
   BUSINESS_DESC_MAX_LENGTH: 2000,
@@ -1082,7 +1082,7 @@ export const projectConstantsLocal = {
     { value: 'Queues/Schedules/Services', class: 'fa ico_que' },
     { value: 'Multi User', class: 'fa ico_usr' },
     { value: 'Jaldee Video Calling', class: 'fa ico-video' },
-    {value: 'Jaldee Voice Calling', class: 'fa ico-voice'}
+    { value: 'Jaldee Voice Calling', class: 'fa ico-voice' }
   ],
   videoModes: {
     WhatsApp: { displayName: 'WhatsApp', placeHolder: 'Update WhatsApp ID', title: 'Configure WhatsApp' },
@@ -1108,9 +1108,9 @@ export const projectConstantsLocal = {
     { displayName: 'Paper Submitted', value: 'Paper Submitted', delivery: true, pickup: false, clas: 'papersubmitted' },
     { displayName: 'In review', value: 'In review', delivery: true, pickup: true, clas: 'paperinreview' }
   ],
-  ITEM_TYPES:[
-    {displayName:'physical',value:'PHYSICAL'},
-    {displayName:'virtual',value:'VIRTUAL'}
+  ITEM_TYPES: [
+    { displayName: 'physical', value: 'PHYSICAL' },
+    { displayName: 'virtual', value: 'VIRTUAL' }
   ],
   INBOX_MSG_TYPES: {
     CHAT: 'Chat',
@@ -1133,82 +1133,90 @@ export const projectConstantsLocal = {
     { value: 'tam', viewValue: 'Tamil' }
   ],
   INDIAN_STATES: [
-    {name: 'Andhra Pradesh', displayName: 'Andhra Pradesh'},
-    {name: 'Arunachal Pradesh', displayName: 'Arunachal Pradesh'},
-    {name: 'Assam', displayName: 'Assam'},
-    {name: 'Bihar', displayName: 'Bihar'},
-    {name: 'Chattisgarh', displayName: 'Chattisgarh'},
-    {name: 'Goa', displayName: 'Goa'},
-    {name: 'Gujarat', displayName: 'Gujarat'},
-    {name: 'Haryana', displayName: 'Haryana'},
-    {name: 'Himachal Pradesh', displayName: 'Himachal Pradesh'},
-    {name: 'Jammu & Kashmir', displayName: 'Jammu & Kashmir'},
-    {name: 'Jharkhand', displayName: 'Jharkhand'},
-    {name: 'Karnataka', displayName: 'Karnataka'},
-    {name: 'Kerala', displayName: 'Kerala'},
-    {name: 'Madhya Pradesh', displayName: 'Madhya Pradesh'},
-    {name: 'Maharashtra', displayName: 'Maharashtra'},
-    {name: 'Manipur', displayName: 'Manipur'},
-    {name: 'Meghalaya', displayName: 'Meghalaya'},
-    {name: 'Mizoram', displayName: 'Mizoram'},
-    {name: 'Nagaland', displayName: 'Nagaland'},
-    {name: 'Orissa', displayName: 'Orissa'},
-    {name: 'Punjab', displayName: 'Punjab'},
-    {name: 'Rajasthan', displayName: 'Rajasthan'},
-    {name: 'Sikkim', displayName: 'Sikkim'},
-    {name: 'Tamil Nadu', displayName: 'Tamil Nadu'},
-    {name: 'Telangana', displayName: 'Telangana'},
-    {name: 'Tripura', displayName: 'Tripura'},
-    {name: 'Uttarakhand', displayName: 'Uttarakhand'},
-    {name: 'Uttar Pradesh', displayName: 'Uttar Pradesh'},
-    {name: 'West Bengal', displayName: 'West Bengal'},
-    {name: 'Andaman & Nicobar', displayName: 'Andaman & Nicobar'},
-    {name: 'Dadra and Nagar Haveli', displayName: 'Dadra and Nagar Haveli'},
-    {name: 'Daman & Diu', displayName: 'Daman & Diu'},
-    {name: 'Delhi', displayName: 'Delhi'},
-    {name: 'Lakshadweep', displayName: 'Lakshadweep'},
-    {name: 'Pondicherry', displayName: 'Pondicherry'}
+    { name: 'Andhra Pradesh', displayName: 'Andhra Pradesh' },
+    { name: 'Arunachal Pradesh', displayName: 'Arunachal Pradesh' },
+    { name: 'Assam', displayName: 'Assam' },
+    { name: 'Bihar', displayName: 'Bihar' },
+    { name: 'Chattisgarh', displayName: 'Chattisgarh' },
+    { name: 'Goa', displayName: 'Goa' },
+    { name: 'Gujarat', displayName: 'Gujarat' },
+    { name: 'Haryana', displayName: 'Haryana' },
+    { name: 'Himachal Pradesh', displayName: 'Himachal Pradesh' },
+    { name: 'Jammu & Kashmir', displayName: 'Jammu & Kashmir' },
+    { name: 'Jharkhand', displayName: 'Jharkhand' },
+    { name: 'Karnataka', displayName: 'Karnataka' },
+    { name: 'Kerala', displayName: 'Kerala' },
+    { name: 'Madhya Pradesh', displayName: 'Madhya Pradesh' },
+    { name: 'Maharashtra', displayName: 'Maharashtra' },
+    { name: 'Manipur', displayName: 'Manipur' },
+    { name: 'Meghalaya', displayName: 'Meghalaya' },
+    { name: 'Mizoram', displayName: 'Mizoram' },
+    { name: 'Nagaland', displayName: 'Nagaland' },
+    { name: 'Orissa', displayName: 'Orissa' },
+    { name: 'Punjab', displayName: 'Punjab' },
+    { name: 'Rajasthan', displayName: 'Rajasthan' },
+    { name: 'Sikkim', displayName: 'Sikkim' },
+    { name: 'Tamil Nadu', displayName: 'Tamil Nadu' },
+    { name: 'Telangana', displayName: 'Telangana' },
+    { name: 'Tripura', displayName: 'Tripura' },
+    { name: 'Uttarakhand', displayName: 'Uttarakhand' },
+    { name: 'Uttar Pradesh', displayName: 'Uttar Pradesh' },
+    { name: 'West Bengal', displayName: 'West Bengal' },
+    { name: 'Andaman & Nicobar', displayName: 'Andaman & Nicobar' },
+    { name: 'Dadra and Nagar Haveli', displayName: 'Dadra and Nagar Haveli' },
+    { name: 'Daman & Diu', displayName: 'Daman & Diu' },
+    { name: 'Delhi', displayName: 'Delhi' },
+    { name: 'Lakshadweep', displayName: 'Lakshadweep' },
+    { name: 'Pondicherry', displayName: 'Pondicherry' }
   ],
   RELATIONSHIPS: [
-    {name: 'Father', displayName: 'Father'},
-    {name: 'Husband', displayName: 'Husband'},
-    {name: 'Mother', displayName: 'Mother'},
-    {name: 'Son', displayName: 'Son'},
-    {name: 'Daughter', displayName: 'Daughter'},
-    {name: 'Wife', displayName: 'Wife'},
-    {name: 'Brother', displayName: 'Brother'},
-    {name: 'MotherInlaw', displayName: 'MotherInlaw'},
-    {name: 'FatherInlaw', displayName: 'FatherInlaw'},
-    {name: 'DaughterInlaw', displayName: 'Daughter In law'},
-    {name: 'SisterInLaw', displayName: 'Sister In Law'},
-    {name: 'BrotherInlaw', displayName: 'Brother In law'},
-    {name: 'SonInlaw', displayName: 'Son In law'},
-    {name: 'Other', displayName: 'Other'}
+    { name: 'Father', displayName: 'Father' },
+    { name: 'Husband', displayName: 'Husband' },
+    { name: 'Mother', displayName: 'Mother' },
+    { name: 'Son', displayName: 'Son' },
+    { name: 'Daughter', displayName: 'Daughter' },
+    { name: 'Wife', displayName: 'Wife' },
+    { name: 'Brother', displayName: 'Brother' },
+    { name: 'MotherInlaw', displayName: 'MotherInlaw' },
+    { name: 'FatherInlaw', displayName: 'FatherInlaw' },
+    { name: 'DaughterInlaw', displayName: 'Daughter In law' },
+    { name: 'SisterInLaw', displayName: 'Sister In Law' },
+    { name: 'BrotherInlaw', displayName: 'Brother In law' },
+    { name: 'SonInlaw', displayName: 'Son In law' },
+    { name: 'Other', displayName: 'Other' }
+  ],
+  EMPLOYMENT_TYPES: [
+    { name: 'Salaried', displayName: 'Salaried' },
+    { name: 'Self Employed', displayName: 'Self Employed' },
+    { name: 'Retired', displayName: 'Retired' },
+    { name: 'Military', displayName: 'Military' },
+    { name: 'Home Maker', displayName: 'Home Maker' },
+    { name: 'Student', displayName: 'Student' }
   ],
   KYC_LIST: [
-    {name: 'Passport', displayName: 'Passport',id:0},
-    {name: 'VoterID', displayName: 'VoterID',id:1},
-    {name: 'UID', displayName: 'Aadhaar',id:2},
-    {name: 'RationCard', displayName: 'RationCard',id:3},
-    {name: 'DrivingLicenseNo', displayName: 'DrivingLicenseNo',id:4},
-    {name: 'Pan', displayName: 'Pan',id:5},
-    {name: 'Other', displayName: 'Other',id:6}
+    { name: 'Passport', displayName: 'Passport', id: 0 },
+    { name: 'VoterID', displayName: 'VoterID', id: 1 },
+    { name: 'UID', displayName: 'Aadhaar', id: 2 },
+    { name: 'RationCard', displayName: 'RationCard', id: 3 },
+    { name: 'DrivingLicenseNo', displayName: 'DrivingLicenseNo', id: 4 },
+    { name: 'Pan', displayName: 'Pan', id: 5 },
+    { name: 'Other', displayName: 'Other', id: 6 }
   ],
-  PHONE_TYPES:[
-    {name: 'Residence', displayName: 'Residence'},
-    {name: 'Company', displayName: 'Company'},
-    {name: 'Mobile', displayName: 'Mobile'},
-    {name: 'Permanent', displayName: 'Permanent'},
-    {name: 'Foreign', displayName: 'Foreign'},
-    {name: 'Untagged', displayName: 'Untagged'},
-    {name: 'Other', displayName: 'Other'},
+  PHONE_TYPES: [
+    { name: 'Residence', displayName: 'Residence' },
+    { name: 'Company', displayName: 'Company' },
+    { name: 'Mobile', displayName: 'Mobile' },
+    { name: 'Permanent', displayName: 'Permanent' },
+    { name: 'Foreign', displayName: 'Foreign' },
+    { name: 'Untagged', displayName: 'Untagged' },
+    { name: 'Other', displayName: 'Other' },
   ],
   CUSTOM_PROV_APP: {
     "maben": {
       prefix: "@maben.in",
-      idCaption:"Employee Id",
-      idPlaceholder:"Enter employee id",
-      pathref:128519
+      idCaption: "Employee Id",
+      idPlaceholder: "Enter employee id",
+      pathref: 128519
     },
     "dhyanclinic": {
       pathref: 46805,
@@ -1232,5 +1240,5 @@ export const projectConstantsLocal = {
   // PATH:'https://scale.jaldee.com/',
   // PATH:'https://www.jaldee.com/',,
   // PATH:'https://test.jaldee.com/jaldee/',
-  SAPATH:"https://sascale.jaldee.com/superadmin/rest/mgmt/"
+  SAPATH: "https://sascale.jaldee.com/superadmin/rest/mgmt/"
 };

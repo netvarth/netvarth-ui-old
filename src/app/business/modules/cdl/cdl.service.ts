@@ -98,7 +98,7 @@ export class CdlService {
 
 
   getBankDetailsById(id) {
-    const url = 'provider/loanapplication/bank/' + id;
+    const url = 'provider/loanapplication/' + id + '/bankdetails';
     return this.servicemeta.httpGet(url, null);
   }
 
@@ -172,8 +172,6 @@ export class CdlService {
     const url = 'provider/loanapplication/bank';
     return this.servicemeta.httpPost(url, data);
   }
-
-
 
   verifyPhoneOTP(otp, data) {
     const url = 'provider/loanapplication/verify/' + otp + '/phone';

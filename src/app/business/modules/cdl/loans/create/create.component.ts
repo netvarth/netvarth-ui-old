@@ -12,6 +12,7 @@ import { FileService } from '../../../../../shared/services/file-service';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { SelectSchemeComponent } from '../select-scheme/select-scheme.component';
 // import { SharedServices } from '../../../../../shared/services/shared-services';
 // import { SubSink } from 'subsink';
 
@@ -104,7 +105,9 @@ export class CreateComponent implements OnInit {
   loanSchemes: any;
   bankData: any;
   relations = projectConstantsLocal.RELATIONSHIPS;
+  employmentTypes = projectConstantsLocal.EMPLOYMENT_TYPES;
   filesToUpload: any = [];
+  dealers: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -124,6 +127,7 @@ export class CreateComponent implements OnInit {
           this.loanData = data;
           this.action = params.action;
           this.loanId = params.id;
+          console.log("this.LaonData", this.loanData)
           if (params.action == 'update' && this.loanData) {
             this.headerText = "Update Loan";
             this.btnText = "Update Loan";
@@ -133,7 +137,9 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.email.setValue(this.loanData.customer.email);
             this.createLoan.controls.aadharnumber.setValue(this.loanData.loanApplicationKycList[0].aadhaar);
             this.createLoan.controls.pannumber.setValue(this.loanData.loanApplicationKycList[0].pan);
-            this.createLoan.controls.loantype.setValue(this.loanData.type.id);
+            if (this.loanData && this.loanData.type && this.loanData.type.id) {
+              this.createLoan.controls.loantype.setValue(this.loanData.type.id);
+            }
             this.createLoan.controls.permanentaddress1.setValue(this.loanData.loanApplicationKycList[0].permanentAddress1);
             this.createLoan.controls.permanentaddress2.setValue(this.loanData.loanApplicationKycList[0].permanentAddress2);
             this.createLoan.controls.permanentcity.setValue(this.loanData.loanApplicationKycList[0].permanentCity);
@@ -148,8 +154,12 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.martialstatus.setValue(this.loanData.loanApplicationKycList[0].maritalStatus);
             this.createLoan.controls.employmenttype.setValue(this.loanData.loanApplicationKycList[0].employmentStatus);
             this.createLoan.controls.salary.setValue(this.loanData.loanApplicationKycList[0].monthlyIncome);
-            this.createLoan.controls.category.setValue(this.loanData.category.id);
-            this.createLoan.controls.loanproduct.setValue(this.loanData.loanProduct.id);
+            if (this.loanData && this.loanData.category && this.loanData.category.id) {
+              this.createLoan.controls.category.setValue(this.loanData.category.id);
+            }
+            if (this.loanData && this.loanData.loanProduct && this.loanData.loanProduct.id) {
+              this.createLoan.controls.loanproduct.setValue(this.loanData.loanProduct.id);
+            }
             this.createLoan.controls.totalpayment.setValue(this.loanData.invoiceAmount);
             this.createLoan.controls.downpayment.setValue(this.loanData.downpaymentAmount);
             this.createLoan.controls.loanamount.setValue(this.loanData.requestedAmount);
@@ -158,10 +168,8 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.nomineename.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
             this.createLoan.controls.nomineetype.setValue(this.loanData.loanApplicationKycList[0].nomineeType);
 
-            this.aadharverification = true;
             this.verification = true;
             this.emailverification = true;
-            this.panverification = true;
 
             this.selectedFiles['photo'].files = this.loanData.consumerPhoto;
             this.selectedFiles['aadhar'].files = this.loanData.loanApplicationKycList[0].aadhaarAttachments;
@@ -169,19 +177,18 @@ export class CreateComponent implements OnInit {
 
 
           }
-          // if (this.loanData && this.loanData.id) {
-          this.cdlservice.getBankDetailsById(this.loanId).subscribe((data) => {
-            this.bankData = data;
-            console.log("this.bankData", this.bankData)
-            if (this.bankData) {
-              // this.createLoan.controls.bank.setValue(this.loanData.emiPaidAmountMonthly);
-              // this.createLoan.controls.account.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
-              // this.createLoan.controls.ifsc.setValue(this.loanData.loanApplicationKycList[0].nomineeType);
-            }
-          });
-          // }
-
         })
+        console.log(params.id);
+        this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
+          this.bankData = data;
+          console.log("this.bankData", this.bankData)
+          if (this.bankData) {
+            this.createLoan.controls.bank.setValue(this.loanData.emiPaidAmountMonthly);
+            this.createLoan.controls.account.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
+            this.createLoan.controls.ifsc.setValue(this.loanData.loanApplicationKycList[0].nomineeType);
+          }
+        });
+
       }
     });
 
@@ -222,7 +229,8 @@ export class CreateComponent implements OnInit {
       bank: [null],
       ifsc: [null],
       account: [null],
-      bankstatements: [null]
+      bankstatements: [null],
+      scheme: [null]
 
 
     });
@@ -236,6 +244,7 @@ export class CreateComponent implements OnInit {
     this.getLoanProducts();
     this.getLoanStatuses();
     this.getLoanSchemes();
+    this.getPartners();
     this.cdlservice.getBusinessProfile().subscribe((data) => {
       this.businessDetails = data;
       if (this.businessDetails && this.businessDetails.id) {
@@ -289,24 +298,24 @@ export class CreateComponent implements OnInit {
     })
   }
 
+
+  getPartners() {
+    this.cdlservice.getDealers().subscribe((data) => {
+      this.dealers = data;
+      console.log("this.dealers", this.dealers)
+    })
+  }
+
   getCustomerDetails(filter) {
     this.cdlservice.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
       if (this.customerDetails && this.customerDetails.length != 0) {
         console.log("this.customerDetails", this.customerDetails)
-        if (this.customerDetails[0] && (this.customerDetails[0].firstName || this.customerDetails[0].lastName)) {
-          if (this.customerDetails[0].firstName) {
-            this.createLoan.controls.firstname.setValue(this.customerDetails[0].firstName);
-          }
-          if (this.customerDetails[0].lastName) {
-            this.createLoan.controls.lastname.setValue(this.customerDetails[0].firstName);
-          }
-          else if (this.customerDetails[0].firstName && !this.customerDetails[0].lastName) {
-            this.createLoan.controls.name.setValue(this.customerDetails[0].firstName);
-          }
-          else if (!this.customerDetails[0].firstName && this.customerDetails[0].lastName) {
-            this.createLoan.controls.name.setValue(this.customerDetails[0].lastName);
-          }
+        if (this.customerDetails[0].firstName) {
+          this.createLoan.controls.firstname.setValue(this.customerDetails[0].firstName);
+        }
+        if (this.customerDetails[0].lastName) {
+          this.createLoan.controls.lastname.setValue(this.customerDetails[0].firstName);
         }
         if (this.customerDetails[0] && this.customerDetails[0].email) {
           this.createLoan.controls.email.setValue(this.customerDetails[0].email)
@@ -316,13 +325,8 @@ export class CreateComponent implements OnInit {
         }
         if (this.customerDetails[0] && this.customerDetails[0].id) {
           this.customerId = this.customerDetails[0].id;
-          // this.loanApplication['consumer'] = {
-          //   "id": this.loanData.status.id
-          // };
         }
-
       }
-
       else {
         this.createLoan.controls.name.setValue("")
         this.createLoan.controls.email.setValue("")
@@ -477,22 +481,6 @@ export class CreateComponent implements OnInit {
     if (this.loanApplication) {
       if (this.action == "update") {
 
-        // for (let i = 0; i < this.filesToUpload.length; i++) {
-        //   this.filesToUpload[i]['order'] = i;
-        //   if (this.filesToUpload[i]["type"] == 'aadhar') {
-        //     this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'] = [];
-        //     this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'].push(this.filesToUpload[i]);
-        //   }
-        //   if (this.filesToUpload[i]["type"] == 'pan') {
-        //     this.loanApplication.loanApplicationKycList[0]['panAttachments'] = [];
-        //     this.loanApplication.loanApplicationKycList[0]['panAttachments'].push(this.filesToUpload[i]);
-        //   }
-        //   if (this.filesToUpload[i]["type"] == 'photo') {
-        //     this.loanApplication['consumerPhoto'] = [];
-        //     this.loanApplication['consumerPhoto'].push(this.filesToUpload[i]);
-        //   }
-        // }
-
         if (this.loanData && this.loanData.status && this.loanData.status.id) {
           this.loanApplication['status'] = {
             "id": this.loanData.status.id
@@ -507,14 +495,6 @@ export class CreateComponent implements OnInit {
           this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
         }
         this.cdlservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
-          // if (s3urls.attachmentsUrls.length > 0) {
-          //   this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
-          //     (dataS3Url) => {
-          //       console.log(dataS3Url);
-          //       this.snackbarService.openSnackBar("Loan Application Created Successfully")
-          //       this.router.navigate(['provider', 'cdl', 'loans']);
-          //     });
-          // }
           this.snackbarService.openSnackBar("Loan Application Updated Successfully")
           this.router.navigate(['provider', 'cdl', 'loans'])
         },
@@ -735,8 +715,9 @@ export class CreateComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          if (result = "verified") {
+          if (result.msg == "success") {
             this.verification = true;
+            this.loanId = result.uid;
             const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
             this.getCustomerDetails(filter);
           }
@@ -754,7 +735,86 @@ export class CreateComponent implements OnInit {
 
 
 
+  saveCustomerDetails() {
+    const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
+    this.cdlservice.getCustomerDetails(filter).subscribe((data) => {
+      this.customerDetails = data;
+      if (this.customerDetails[0] && this.customerDetails[0].id) {
+        this.customerId = this.customerDetails[0].id;
+      }
+      this.loanApplication = {
+        "customer": {
+          "id": this.customerId,
+          "firstName": this.createLoan.controls.firstname.value,
+          "lastName": this.createLoan.controls.lastname.value,
+          "email": this.createLoan.controls.email.value
+        },
+        "customerMobileVerified": this.verification,
+        "customerEmailVerified": this.emailverification,
+        "location": { "id": this.user.bussLocs[0] },
+        "assignee": { "id": this.user.id },
+        "loanApplicationKycList": [
+          {
+            "isCoApplicant": false
+          }
+        ]
+      }
+    });
 
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      this.filesToUpload[i]['order'] = i;
+      if (this.filesToUpload[i]["type"] == 'photo') {
+        this.loanApplication['consumerPhoto'] = [];
+        this.loanApplication['consumerPhoto'].push(this.filesToUpload[i]);
+      }
+    }
+
+    console.log(this.loanApplication, this.customerId)
+
+    this.cdlservice.getLoanById(this.loanId).subscribe((data: any) => {
+      if (data && data.status.id) {
+        this.loanApplication['status'] = { "id": data.status.id };
+      }
+      if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
+        this.loanApplication.loanApplicationKycList[0]["id"] = data.loanApplicationKycList[0].id
+      }
+      this.cdlservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
+        if (s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+            });
+        }
+        this.snackbarService.openSnackBar("Customer Details Saved Successfully")
+      },
+        (error) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+        })
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+
+
+  }
+
+
+
+  saveBankDetails() {
+    this.bankDetails = {
+      "originUid": this.loanId,
+      "loanApplicationUid": this.loanId,
+      "bankName": this.createLoan.controls.bank.value,
+      "bankAccountNo": this.createLoan.controls.account.value,
+      "bankIfsc": this.createLoan.controls.ifsc.value,
+      "bankAccountVerified": true
+    }
+    this.cdlservice.saveBankDetails(this.bankDetails).subscribe((data) => {
+      this.snackbarService.openSnackBar("Bank Details Saved Successfully")
+    }), (error) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    }
+  }
 
   verifyEmail() {
     if (this.createLoan.controls.email.value && this.createLoan.controls.email.value != '') {
@@ -770,8 +830,10 @@ export class CreateComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         console.log(result);
-        this.emailverification = true
-        this.snackbarService.openSnackBar("Email Id Verified");
+        if (result && result.msg == "success") {
+          this.emailverification = true
+          this.snackbarService.openSnackBar("Email Id Verified");
+        }
       });
       return can_remove;
     }
@@ -811,6 +873,22 @@ export class CreateComponent implements OnInit {
     return can_remove;
   }
 
+  openSchemes() {
+    const dialogRef = this.dialog.open(SelectSchemeComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        schemes: this.loanSchemes
+      }
+    });
+    dialogRef.afterClosed().subscribe(scheme => {
+      if (scheme) {
+        console.log("selected", scheme);
+        this.createLoan.controls.scheme.setValue(scheme.schemeName);
+      }
+    });
+  }
 
   verifyAccount() {
     let can_remove = false;

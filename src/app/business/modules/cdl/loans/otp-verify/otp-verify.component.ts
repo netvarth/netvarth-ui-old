@@ -67,6 +67,9 @@ export class OtpVerifyComponent implements OnInit {
     }
     if (this.data && this.data.phoneNumber) {
       this.phoneNumber = this.data.phoneNumber;
+      if (this.phoneNumber.startsWith('555')) {
+        this.config.length = 5;
+      }
       this.cdlservice.getBusinessProfile().subscribe((data) => {
         this.businessDetails = data;
       });
@@ -97,6 +100,7 @@ export class OtpVerifyComponent implements OnInit {
       number: loginId,
     }
     console.log("coming here", credentials)
+    // if (!loginId.startsWith('555')) {
     this.subs.sink = this.cdlservice.sendPhoneOTP(credentials, this.from).subscribe(
       (response: any) => {
         if (mode == 'resent') {
@@ -109,6 +113,11 @@ export class OtpVerifyComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       }
     )
+    // }
+    // else {
+    //   this.snackbarService.openSnackBar("Otp Sent Successfully");
+    // }
+
   }
 
 
@@ -139,10 +148,19 @@ export class OtpVerifyComponent implements OnInit {
     this.otpEntered = otp;
     console.log(this.phoneNumber);
     if (this.phoneNumber) {
-      if (this.otpEntered.length < 4) {
-        return false;
-      } else {
-        this.otpVerification();
+      if (this.phoneNumber.startsWith('555')) {
+        if (this.otpEntered.length < 5) {
+          return false;
+        } else {
+          this.otpVerification();
+        }
+      }
+      else {
+        if (this.otpEntered.length < 4) {
+          return false;
+        } else {
+          this.otpVerification();
+        }
       }
     }
     else if (this.data && this.data.email) {
@@ -264,7 +282,8 @@ export class OtpVerifyComponent implements OnInit {
                 this.snackbarService.openSnackBar("Mobile Number Verification Successful");
                 const data = {
                   type: this.type,
-                  msg: "success"
+                  msg: "success",
+                  uid: response.uid
                 }
                 this.dialogRef.close(data);
               }

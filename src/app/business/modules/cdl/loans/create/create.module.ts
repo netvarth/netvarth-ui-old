@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { SelectSchemeModule } from '../select-scheme/select-scheme.module';
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
     MatButtonModule,
     FormsModule,
     MatExpansionModule,
+    SelectSchemeModule,
     [RouterModule.forChild(routes)]
   ]
 })

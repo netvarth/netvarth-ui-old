@@ -76,7 +76,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
                           autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
-                          [class.disabled]="action == 'update'" />
+                          [class.disabled]="action == 'update' || verification" />
                         <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
                           (click)="verifyotp()"><span>Verify</span></a>
 
@@ -99,7 +99,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #email [value]="email" type="email"
                           placeholder="Enter Customer Email" class="form-control" autocomplete="off"
-                          formControlName="email" [class.disabled]="action == 'update'" />
+                          formControlName="email" [class.disabled]="action == 'update' || emailverification" />
 
                         <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
                           (click)="verifyEmail()"><span>Verify</span></a>
@@ -154,7 +154,10 @@
                   </div>
                 </div>
               </div>
-
+            </div>
+            <div>
+              <button [disabled]="!verification || !emailverification" class="btn btn-primary open-all-btn"
+                (click)="saveCustomerDetails()">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -180,7 +183,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
-                          [class.disabled]="action == 'update'" />
+                          [class.disabled]="action == 'update' && aadharverification" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="!aadharverification"
                           (click)="verifyaadhar()"><span>Verify</span></a>
@@ -238,7 +241,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #pannumber [value]="pannumber" type="text"
                           placeholder="Enter PAN Number" class="form-control" autocomplete="off"
-                          formControlName="pannumber" [class.disabled]="action == 'update'" />
+                          formControlName="pannumber" [class.disabled]="action == 'update' && panverification" />
 
                         <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
                           (click)="verifypan()"><span>Verify</span></a>
@@ -496,15 +499,27 @@
                     <div class="form-title">Employment Type</div>
                   </div>
                   <div class="fieldPadding">
-                    <select class="form-control" #employmenttype formControlName="employmenttype"
-                      [value]="employmenttype">
-                      <option value="Salaried">Salaried</option>
-                      <option value="SelfEmployed">SelfEmployed</option>
-                      <option value="Retired">Retired</option>
-                      <option value="Military">Military</option>
-                      <option value="Homemaker">Homemaker</option>
-                      <option value="Student">Student</option>
-                    </select>
+                    <mat-select class="form-control widthWebKit" #employmenttype formControlName="employmenttype">
+                      <mat-option [value]="employment.name" *ngFor="let employment of employmentTypes">
+                        <div *ngIf="employment && employment.displayName">{{employment.displayName}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Scheme</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (click)="openSchemes()" (keyup)="resetErrors()" #scheme type="text"
+                        placeholder="Select Scheme" class="form-control" autocomplete="off" formControlName="scheme"
+                        readonly />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -551,11 +566,11 @@
                       <div class="form-title">Select Type</div>
                     </div>
                     <div class="fieldPadding">
-                      <select class="form-control" #loantype formControlName="loantype" [value]="loantype">
-                        <option *ngFor="let loantype of loanTypes" value="{{loantype.id}}">
-                          {{loantype.name}}
-                        </option>
-                      </select>
+                      <mat-select class="form-control widthWebKit" #loantype formControlName="loantype">
+                        <mat-option [value]="loantype.id" *ngFor="let loantype of loanTypes">
+                          <div *ngIf="loantype && loantype.name">{{loantype.name}}</div>
+                        </mat-option>
+                      </mat-select>
                     </div>
                   </div>
                 </div>
@@ -568,11 +583,11 @@
                       <div class="form-title">Select Category</div>
                     </div>
                     <div class="fieldPadding">
-                      <select class="form-control" #category formControlName="category" [value]="category">
-                        <option *ngFor="let category of loanCategories" value="{{category.id}}">
-                          {{category.name}}
-                        </option>
-                      </select>
+                      <mat-select class="form-control widthWebKit" #category formControlName="category">
+                        <mat-option [value]="category.id" *ngFor="let category of loanCategories">
+                          <div *ngIf="category && category.name">{{category.name}}</div>
+                        </mat-option>
+                      </mat-select>
                     </div>
                   </div>
                 </div>
@@ -585,11 +600,11 @@
                       <div class="form-title">Select Product</div>
                     </div>
                     <div class="fieldPadding">
-                      <select class="form-control" #loanproduct formControlName="loanproduct" [value]="loanproduct">
-                        <option *ngFor="let product of loanProducts" value="{{product.id}}">
-                          {{product.productName}}
-                        </option>
-                      </select>
+                      <mat-select class="form-control widthWebKit" #loanproduct formControlName="loanproduct">
+                        <mat-option [value]="loanproduct.id" *ngFor="let loanproduct of loanProducts">
+                          <div *ngIf="loanproduct && loanproduct.productName">{{loanproduct.productName}}</div>
+                        </mat-option>
+                      </mat-select>
                     </div>
                   </div>
                 </div>
@@ -783,6 +798,9 @@
                 </div>
               </div>
 
+            </div>
+            <div>
+              <button class="btn btn-primary open-all-btn" (click)="saveBankDetails()">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
