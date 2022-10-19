@@ -120,6 +120,16 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  ApprovalRequest(id) {
+    const url = 'provider/loanapplication/' + id + '/approvalrequest';
+    return this.servicemeta.httpPut(url, null);
+  }
+
+  refreshAadharVerify(id) {
+    const url = 'provider/loanapplication/aadhar/status/' + id;
+    return this.servicemeta.httpPut(url, null);
+  }
+
   addressUpdate(data) {
     const url = 'provider/loanapplication/kyc/update';
     return this.servicemeta.httpPut(url, data);
@@ -189,6 +199,16 @@ export class CdlService {
   saveBankDetails(data) {
     const url = 'provider/loanapplication/bank';
     return this.servicemeta.httpPost(url, data);
+  }
+
+  updateBankDetails(data) {
+    const url = 'provider/loanapplication/bank';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  verifyBankDetails(data) {
+    const url = 'provider/loanapplication/verify/bank';
+    return this.servicemeta.httpPut(url, data);
   }
 
   verifyPhoneOTP(otp, data) {

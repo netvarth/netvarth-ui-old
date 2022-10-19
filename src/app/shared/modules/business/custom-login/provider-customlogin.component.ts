@@ -73,7 +73,10 @@ export class ProviderCustomLoginComponent implements OnInit {
 
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
-    console.log("Params:", data);
+      console.log("Params:", data);
+      if (data.type) {
+        this.lStorageService.setitemonLocalStorage('logintype', data.type);
+      }
       if (data.device) {
         this.lStorageService.setitemonLocalStorage('deviceName', data.device);
       }
@@ -83,16 +86,16 @@ export class ProviderCustomLoginComponent implements OnInit {
       }
       if (data.muid) {
         const prevMuid = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-        if(data.muid!== prevMuid) {
+        if (data.muid !== prevMuid) {
           const request = {
             "mUniqueIdOld": prevMuid,
             "mUniqueId": data.muid
           }
           this.shared_services.updateProviderMUniqueId(request).subscribe(
-            ()=>{
+            () => {
               this.lStorageService.setitemonLocalStorage('mUniqueId', data.muid);
             }
-          )          
+          )
         }
       }
     });
@@ -116,22 +119,22 @@ export class ProviderCustomLoginComponent implements OnInit {
                         router.navigate(['provider', 'appointments']);
                       } else if (settings.waitlist) {
                         router.navigate(['provider', 'check-ins']);
-                      }  else if (settings.order) {
+                      } else if (settings.order) {
                         router.navigate(['provider', 'orders']);
-                      } else if(settings.enableTask) {
+                      } else if (settings.enableTask) {
                         router.navigate(['provider', 'crm']);
-                      }  else {
+                      } else {
                         router.navigate(['provider', 'settings']);
                       }
                     } else {
                       router.navigate(['provider', 'settings']);
                     }
                   }, 500);
-                }, (error)=>{
+                }, (error) => {
                   this.loading = false;
                 });
           } else {
-              this.loading = false;
+            this.loading = false;
           }
         }
       }
@@ -183,7 +186,7 @@ export class ProviderCustomLoginComponent implements OnInit {
       this.idPlaceHolder = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['idPlaceholder'];
     }
     if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['cdl']) {
-      this.lStorageService.setitemonLocalStorage('cdl',true);
+      this.lStorageService.setitemonLocalStorage('cdl', true);
     }
   }
 

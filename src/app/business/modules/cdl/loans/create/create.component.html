@@ -120,8 +120,7 @@
                       <div class="form-title">Customer Photo</div>
                     </div>
                     <div class="fieldPadding photo-border">
-                      <div class="file"
-                        *ngIf="!(this.loanData && this.loanData.consumerPhoto && this.loanData.consumerPhoto[0])">
+                      <div class="file">
                         <label for='photoAttach' (click)="photoAttach.click()">
                           <!-- <i class="material-icons">cloud_upload</i> -->
                           Upload File
@@ -184,10 +183,15 @@
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
                           [class.disabled]="action == 'update' && aadharverification" />
 
-                        <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="!aadharverification"
+                        <a class="btn btn-verify" [class.btn-verified]="aadharverification"
+                          *ngIf="!aadharverification && !verifyingUID"
                           (click)="idVerification('UID')"><span>Verify</span></a>
 
-                        <a class="btn btn-verify" *ngIf="aadharverification" [class.btn-verified]="aadharverification">
+                        <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="verifyingUID"
+                          (click)="refreshAadharVerify()"><span>Refresh</span></a>
+
+                        <a class="btn btn-verify" *ngIf="!verifyingUID && aadharverification"
+                          [class.btn-verified]="aadharverification">
                           <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
                       </div>
                     </div>
@@ -260,7 +264,7 @@
                         <div class="form-title">Aadhar Atachment</div>
                       </div> -->
                     <div class="fieldPadding">
-                      <div class="file">
+                      <div class="file" *ngIf="!panverification">
                         <label for='input-file' (click)="panAttach.click()">
                           <!-- <i class="material-icons">cloud_upload</i> -->
                           Upload File
@@ -729,13 +733,13 @@
                     <div class="d-flex">
                       <div class="form-title">Account Number</div>
                     </div>
-                    <div class="d-flex">
-                      <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number"
-                        class="form-control" formControlName="account" autocomplete="off" />
-                      <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
+                    <!-- <div class="d-flex"> -->
+                    <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
+                      formControlName="account" autocomplete="off" />
+                    <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
                         <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
-                            class="fa fa-check"></i>&nbsp;Verified</span></a>
-                    </div>
+                            class="fa fa-check"></i>&nbsp;Verified</span></a> -->
+                    <!-- </div> -->
                   </div>
                 </div>
               </div>
@@ -822,9 +826,6 @@
 
     </div>
     <div class="d-flex">
-      <div class="btn btn-draft mr-2" (click)="saveAsLead()">
-        {{btnText}}
-      </div>
       <div class="btn btn-primary" (click)="checkELigibility()">
         Check Eligibility
       </div>

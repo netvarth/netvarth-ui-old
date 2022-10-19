@@ -1,520 +1,66 @@
-<div class="card pointer-cursor" *ngIf="timetype!=3">
+<div class="card pointer-cursor">
   <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
 </div>
 
 
-<div class="card m-2" *ngIf="timetype==1">
-  <span class="font-weight-bold" *ngIf="from!='schemeslist'">&nbsp;Select Scheme<br><br></span>
-  <span class="font-weight-bold" *ngIf="from=='schemeslist'">&nbsp;All Schemes<br><br></span>
-  <form>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="bggrey my-2">
-          <div>
-            <div class="border">
-              <div>
-                <img src="../../../../assets/images/cdl/carousal-1.jpg" width="100%" height="100">
-              </div>
-              <span class="font-weight-bold">DurgaPuja Scheme</span><br>
-              <div class="card-title my-2">Non Tie Up Scheme</div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Loan Amount</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;44000</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">EMI Tenure</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding">6 Months</span></div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Rate of Interest</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding">10%</span></div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Monthly EMI</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Total Interest</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Payable Amount</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
-                (click)="goNext() && selectedScheme('DurgaPuja Scheme')">
-                Select
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
 
-      <div class="col-md-4">
-        <div class="bggrey my-2">
-          <div>
-            <div class="border">
-              <div>
-                <img src="../../../../assets/images/cdl/carousal-3.jpg" width="100%" height="100">
-              </div>
-              <span class="font-weight-bold">Diwali Scheme</span><br>
-              <div class="card-title my-2">Non Tie Up Scheme</div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Loan Amount</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;44000</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">EMI Tenure</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding">6 Months</span></div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Rate of Interest</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding">10%</span></div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Monthly EMI</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Total Interest</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Payable Amount</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
-                (click)="goNext() && selectedScheme('Diwali Scheme')">
-                Select
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="col-md-4">
-        <div class="bggrey my-2">
-          <div>
-            <div class="border">
-              <div>
-                <img src="../../../../assets/images/cdl/carousal-2.jpg" width="100%" height="100">
-              </div>
-              <span class="font-weight-bold">Ramadhan Scheme</span><br>
-              <div class="card-title my-2">Non Tie Up Scheme</div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Loan Amount</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;44000</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">EMI Tenure</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding">6 Months</span></div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Rate of Interest</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding">10%</span></div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Monthly EMI</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Total Interest</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div class="row text-left my-2">
-                <div class="col-md-6 card-title">Payable Amount</div>
-                <div class="col-md-2 card-title no-padding">:</div>
-                <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                </div>
-              </div>
-              <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
-                (click)="goNext() && selectedScheme('Ramadhan Scheme')">
-                Select
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row">
-        <div class="col-md-4">
-          <div class="bggrey my-2">
-            <div>
-              <div class="border">
-                <span class="font-weight-bold">Scheme 4</span><br>
-                <div class="card-title my-2">Non Tie Up Scheme</div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Loan Amount</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;44000</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">EMI Tenure</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding">6 Months</span></div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Rate of Interest</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding">10%</span></div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Monthly EMI</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Total Interest</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Payable Amount</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
-                  (click)="goNext() && selectedScheme('Scheme 4')">
-                  Select
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="col-md-4">
-          <div class="bggrey my-2">
-            <div>
-              <div class="border">
-                <span class="font-weight-bold">Scheme 5</span><br>
-                <div class="card-title my-2">Non Tie Up Scheme</div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Loan Amount</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;44000</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">EMI Tenure</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding">6 Months</span></div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Rate of Interest</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding">10%</span></div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Monthly EMI</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Total Interest</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Payable Amount</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
-                  (click)="goNext() && selectedScheme('Scheme 5')">
-                  Select
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="col-md-4">
-          <div class="bggrey my-2">
-            <div>
-              <div class="border">
-                <span class="font-weight-bold">Scheme 6</span><br>
-                <div class="card-title my-2">Non Tie Up Scheme</div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Loan Amount</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;44000</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">EMI Tenure</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding">6 Months</span></div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Rate of Interest</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding">10%</span></div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Monthly EMI</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Total Interest</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div class="row text-left my-2">
-                  <div class="col-md-6 card-title">Payable Amount</div>
-                  <div class="col-md-2 card-title no-padding">:</div>
-                  <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
-                  </div>
-                </div>
-                <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3"
-                  (click)="goNext() && selectedScheme('Scheme 6')">
-                  Select
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-  </form>
-</div>
-
-
-
-
-
-<div class="card m-2" *ngIf="timetype==2">
-  <span class="font-weight-bold">&nbsp;Add Bank Details</span><br><br>
-  <form>
-    <div class="row">
-      <div class="col-md-7">
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Phone Number</div>
-              </div>
-              <div class="fieldPadding">
-                <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="number" placeholder="Enter Phone Number" class="form-control"
-                    autocomplete="off" value="9854789584" readonly disabled />
-                  <a class="btn btn-verified">
-                    <i class="fa fa-check"></i>&nbsp;<span>Verifed</span></a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Scheme Selected</div>
-              </div>
-              <div class="fieldPadding">
-                <div *ngIf="selectedScheme">
-                  <input (keyup)="resetErrors()" type="text" class="form-control" autocomplete="off"
-                    [value]="selectedScheme" readonly disabled />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Customer Name</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="name" placeholder="Enter Customer Name" class="form-control"
-                  formControlName="phone" autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Email</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="email" placeholder="Enter Email" class="form-control"
-                  formControlName="phone" autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Select Bank</div>
-              </div>
-              <div class="fieldPadding">
-                <select class="form-control" formControlName="purpose">
-                  <option>KOTAK</option>
-                  <option>ICICI</option>
-                  <option>SBI</option>
-                  <option>HDFC</option>
-                  <option>BOI</option>
-                  <option>AXIS</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Account Number</div>
-              </div>
-              <div class="d-flex">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
-                  formControlName="phone" autocomplete="off" />
-                <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
-                  <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
-                      class="fa fa-check"></i>&nbsp;Verified</span></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Bank IFSC</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="number" placeholder="Enter Bank IFSC" class="form-control"
-                  formControlName="phone" autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-      </div>
-    </div>
-    <div class="btn btn-primary" (click)="goNext()" *ngIf="timetype==2">
-      Create Loan
-    </div>
-  </form>
-</div>
-
-
-
-<div class="card m-2" *ngIf="timetype==3">
-  <span class="font-weight-bold">&nbsp;Loan Sanctioned</span><br><br>
+<div class="card m-2" *ngIf="type=='autoapproved'">
   <div class="row">
-    <div class="col-md-10 card-border">
-
-      <div class="col-md-6">
-        <div>
-          <img width="80" height="60" src="../../../../assets/images/cdl/sanctioned.png">&nbsp;&nbsp;
-          <span class="font-weight-bold sanctioned-title">Loan has been sanctioned</span>
-        </div>
-        <div>
-          <span class="font-weight-bold card-title">Date : </span>
-          <span class="font-weight-bold card-small-font">28/09/2022</span><br>
-          <span class="font-weight-bold card-title">Purpose of Loan: </span>
-          <span class="font-weight-bold card-small-font">Car Purchase</span>
-        </div><br>
-        <div class="pointer-cursor" *ngIf="user.userType != 2">
-          <div>
-            <div class="bggrey my-2">
-              <div>
-                <div class="fieldPadding">
-                  <div class='file file--upload'>
-                    <label for='input-file'>
-                      Upload Invoice
-                    </label>
-                    <input id='input-file' type='file' />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/autoapprove.gif">
       </div>
-
-      <div class="col-md-6 d-flex">
-        <div class="card">
-          <span class="font-weight-bold card-title">Loan Amount</span><br>
-          <span class="font-weight-bold"><i class="fa fa-inr"></i>&nbsp;44000</span>
-        </div>
-        <div class="card">
-          <span class="font-weight-bold card-title">Duration</span><br>
-          <span class="font-weight-bold"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;6 Months</span>
-        </div>
+      <div class="sanctioned-title">
+        <span>Waiting For Customer Verification</span>
       </div>
-
+      <div class="card-sub-title">
+        <span>We Sent a Verification Message to the Customer.</span>
+      </div>
+      <div class="btn btn-primary mt-3" (click)="goHome()">
+        Refresh
+      </div>
     </div>
-
   </div>
-  <div class="btn btn-primary mt-3" (click)="goHome()" *ngIf="timetype==3">
-    Go to Home
+</div>
+
+
+
+<div class="card m-2" *ngIf="type=='approved'">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/autoapprove.gif">
+      </div>
+      <div class="sanctioned-title">
+        <span>Waiting For Credit Officer Approval</span>
+      </div>
+      <div class="card-sub-title">
+        <span>This Loan Application Was Sent for Approval.</span>
+      </div>
+      <div class="btn btn-primary mt-3" (click)="goHome()">
+        Refresh
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card m-2" *ngIf="type=='rejected'">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/autoapprove.gif">
+      </div>
+      <div class="sanctioned-title">
+        <span>Sorry This Loan Application Was Rejected</span>
+      </div>
+      <div class="card-sub-title">
+        <span>This Loan Application Was Rejected Because of Credit Score.</span>
+      </div>
+      <div class="btn btn-primary mt-3" (click)="goHome()">
+        Go to Home
+      </div>
+    </div>
   </div>
 </div>

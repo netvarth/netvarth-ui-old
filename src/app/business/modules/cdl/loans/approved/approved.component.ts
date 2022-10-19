@@ -13,6 +13,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 export class ApprovedComponent implements OnInit {
   timetype: number = 1;
   from: any;
+  type: any;
   scheme: any;
   verification = false;
   accountverification = false;
@@ -43,6 +44,9 @@ export class ApprovedComponent implements OnInit {
       }
       if (params && params.from) {
         this.from = params.from;
+      }
+      if (params && params.type) {
+        this.type = params.type;
       }
     });
   }

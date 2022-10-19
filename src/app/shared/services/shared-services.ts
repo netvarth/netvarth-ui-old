@@ -14,11 +14,11 @@ export class SharedServices {
   licenseMetrics: any = [];
   userData: any;
   constructor(private servicemeta: ServiceMeta,
-     private lStorageService: LocalStorageService,
-     private groupService:GroupStorageService) {
-       this.userData=this.groupService.getitemFromGroupStorage('ynw-user');
+    private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService) {
+    this.userData = this.groupService.getitemFromGroupStorage('ynw-user');
   }
-  getUserData(){
+  getUserData() {
     return this.userData;
   }
   getSystemDate() {
@@ -36,8 +36,13 @@ export class SharedServices {
     return this.servicemeta.httpPost('consumer/login', body);
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
-  ProviderLogin(body) {
-    return this.servicemeta.httpPost('provider/login', body);
+  ProviderLogin(body, type) {
+    if (type == 'partner') {
+      return this.servicemeta.httpPost('partner/login', body);
+    }
+    else {
+      return this.servicemeta.httpPost('provider/login', body);
+    }
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
   ConsumerLogout() {
@@ -254,8 +259,8 @@ export class SharedServices {
     return this.servicemeta.httpGet(path);
   }
   getServicesByLocationId(locid) {
-      const url = 'consumer/waitlist/services/' + locid;
-      return this.servicemeta.httpGet(url);
+    const url = 'consumer/waitlist/services/' + locid;
+    return this.servicemeta.httpGet(url);
   }
   getProviderServicesByLocationId(locid) {
     if (locid) {
@@ -375,8 +380,8 @@ export class SharedServices {
     const url = 'provider/alerts/count' + retparam;
     return this.servicemeta.httpGet(url);
   }
-  getAuditFilterlogs( sdate, edate, startfrom, limit) {
-    let retparam = this.buildAuditsParams( sdate, edate);
+  getAuditFilterlogs(sdate, edate, startfrom, limit) {
+    let retparam = this.buildAuditsParams(sdate, edate);
     if (startfrom !== '') {
       if (retparam !== '') {
         retparam += '&';
@@ -395,7 +400,7 @@ export class SharedServices {
     const url = 'provider/auditlogs' + retparam;
     return this.servicemeta.httpGet(url);
   }
-  getAuditFilterlogsTotalCnt( sdate, edate) {
+  getAuditFilterlogsTotalCnt(sdate, edate) {
     let retparam = this.buildAuditsParams(sdate, edate);
     if (retparam !== '') {
       retparam = '?' + retparam;
@@ -440,7 +445,7 @@ export class SharedServices {
     }
     return param;
   }
-  buildAlertsParams(ackStatus,sdate, edate) {
+  buildAlertsParams(ackStatus, sdate, edate) {
     let param = '';
     if (ackStatus === 'true') {
       param += 'ackStatus-eq=true';
@@ -520,13 +525,13 @@ export class SharedServices {
     const url = 'consumer/waitlist/communicate/' + uuid + '?account=' + accountid;
     return this.servicemeta.httpPost(url, body);
   }
-  getPaymentModesofProvider(provid,serviceId,purpose?) {
-    const url = 'consumer/payment/modes/service/' + provid +'/'+serviceId+ '/'+ purpose;
+  getPaymentModesofProvider(provid, serviceId, purpose?) {
+    const url = 'consumer/payment/modes/service/' + provid + '/' + serviceId + '/' + purpose;
     return this.servicemeta.httpGet(url);
   }
-  getConvenientFeeOfProvider(provid,data?) {
-    const url = 'consumer/payment/modes/convenienceFee/'+provid;
-    return this.servicemeta.httpPut(url,data);
+  getConvenientFeeOfProvider(provid, data?) {
+    const url = 'consumer/payment/modes/convenienceFee/' + provid;
+    return this.servicemeta.httpPut(url, data);
   }
   consumerPayment(data) {
     const url = 'consumer/payment';
@@ -793,7 +798,7 @@ export class SharedServices {
   }
   getSlotsByLocationServiceandDate(locid, servid, pdate?, accountid?) {
     const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
-    
+
     return this.servicemeta.httpGet(url);
   }
   getAvailableDatessByLocationService(locid, servid, accountid?) {
@@ -868,11 +873,11 @@ export class SharedServices {
   }
   generateDonationLink(accountid, data) {
     const url = 'consumer/payment/generate/paylink?account=' + accountid;
-    return this.servicemeta.httpPost(url,data);
+    return this.servicemeta.httpPost(url, data);
   }
   getDonationLinkUuid(uuid) {
-      const url = 'consumer/payment/paylink/donation/' + uuid;
-      return this.servicemeta.httpGet(url);
+    const url = 'consumer/payment/paylink/donation/' + uuid;
+    return this.servicemeta.httpGet(url);
   }
   getCheckinbyEncId(encId) {
     const url = 'consumer/waitlist/enc/' + encId;
@@ -1186,7 +1191,7 @@ export class SharedServices {
   //   return this.servicemeta.httpGet(url);
   // }
   createProviderCustomer(memberId, parentId, accountId) {
-    const url = 'consumer/familyMember/providerconsumer/' + memberId + '/' + parentId+ "?account=" + accountId;
+    const url = 'consumer/familyMember/providerconsumer/' + memberId + '/' + parentId + "?account=" + accountId;
     return this.servicemeta.httpPost(url);
   }
   getProviderCustomerList(parentId, accountId) {
@@ -1194,7 +1199,7 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
   getProviderCustomerOnetimeInfo(jaldeeId, accountId) {
-    const url = 'consumer/providerCustomer/' +jaldeeId + "?account=" + accountId;
+    const url = 'consumer/providerCustomer/' + jaldeeId + "?account=" + accountId;
     return this.servicemeta.httpGet(url);
   }
 
@@ -1268,28 +1273,28 @@ export class SharedServices {
     const url = 'consumer/orders/questionnaire/' + uid + '?account=' + accountId;
     return this.servicemeta.httpGet(url);
   }
-  getAppointmentReschedulePricelist(serviceid) { 
+  getAppointmentReschedulePricelist(serviceid) {
     const url = 'consumer/appointment/schedule/' + serviceid + '/pricelist';
     return this.servicemeta.httpGet(url);
   }
   getNewsFeeds(url) {
     return this.servicemeta.httpGet(url);
   }
-  updateRazorPay(data,id){
-    const url = 'provider/payment/razorpay/update?account='+id;
-    return this.servicemeta.httpPost(url,data);
+  updateRazorPay(data, id) {
+    const url = 'provider/payment/razorpay/update?account=' + id;
+    return this.servicemeta.httpPost(url, data);
   }
-  updateRazorPayForProvider(data){
+  updateRazorPayForProvider(data) {
     const url = 'provider/payment/razorpay/update';
-    return this.servicemeta.httpPost(url,data);
+    return this.servicemeta.httpPost(url, data);
   }
-  updatePaytmPay(data,id) {
-    const url = 'provider/payment/paytm/update?account='+id;
-    return this.servicemeta.httpPost(url,data);
+  updatePaytmPay(data, id) {
+    const url = 'provider/payment/paytm/update?account=' + id;
+    return this.servicemeta.httpPost(url, data);
   }
   updatePaytmPayProvider(data) {
     const url = 'provider/payment/paytm/update';
-    return this.servicemeta.httpPost(url,data);
+    return this.servicemeta.httpPost(url, data);
   }
   getConsumerOrderQuestionnaire(catelogId, accountId) {
     const url = 'consumer/questionnaire/order/' + catelogId + '?account=' + accountId;
@@ -1307,11 +1312,11 @@ export class SharedServices {
     const url = 'consumer/orders/questionnaire/upload/status/' + uid + '?account=' + account;
     return this.servicemeta.httpPut(url, data);
   }
-  getServiceoptionsAppt(servid,account) {
+  getServiceoptionsAppt(servid, account) {
     const url = 'consumer/questionnaire/serviceoptions/' + servid + '/0?account=' + account;
     return this.servicemeta.httpGet(url);
   }
-  getServiceoptionsWaitlist(servid,account) {
+  getServiceoptionsWaitlist(servid, account) {
     const url = 'consumer/questionnaire/serviceoptions/' + servid + '/0?account=' + account;
     return this.servicemeta.httpGet(url);
   }
@@ -1340,7 +1345,7 @@ export class SharedServices {
     const url = 'provider/analytics/update';
     return this.servicemeta.httpPost(url, body);
   }
-  getSearchCatalogItem(account: any, tempName:any, name: any) {
+  getSearchCatalogItem(account: any, tempName: any, name: any) {
     const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/Item/search?' + tempName + '=' + name + '*';
     return this.servicemeta.httpGet(url);
   }
