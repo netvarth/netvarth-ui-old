@@ -1187,10 +1187,10 @@ export const projectConstantsLocal = {
   ],
   EMPLOYMENT_TYPES: [
     { name: 'Salaried', displayName: 'Salaried' },
-    { name: 'Self Employed', displayName: 'Self Employed' },
+    { name: 'SelfEmployed', displayName: 'Self Employed' },
     { name: 'Retired', displayName: 'Retired' },
     { name: 'Military', displayName: 'Military' },
-    { name: 'Home Maker', displayName: 'Home Maker' },
+    { name: 'Homemaker', displayName: 'Home Maker' },
     { name: 'Student', displayName: 'Student' }
   ],
   KYC_LIST: [

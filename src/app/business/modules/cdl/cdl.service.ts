@@ -113,6 +113,24 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+
+
+  verifyIds(type, data) {
+    const url = 'provider/loanapplication/update/' + type;
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  addressUpdate(data) {
+    const url = 'provider/loanapplication/kyc/update';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  loanDetailsSave(data) {
+    const url = 'provider/loanapplication/request';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+
   getDealers() {
     const url = 'provider/partner';
     return this.servicemeta.httpGet(url, null);

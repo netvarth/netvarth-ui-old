@@ -142,8 +142,7 @@
                                     width="100px" height="100px">
                                 </a>
                               </div>
-                              <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)"
-                                *ngIf="action!='update'">
+                              <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
                                 <i class=" fa fa-times-circle" aria-hidden="true"></i>
                               </div>
                             </div>
@@ -186,7 +185,7 @@
                           [class.disabled]="action == 'update' && aadharverification" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="!aadharverification"
-                          (click)="verifyaadhar()"><span>Verify</span></a>
+                          (click)="idVerification('UID')"><span>Verify</span></a>
 
                         <a class="btn btn-verify" *ngIf="aadharverification" [class.btn-verified]="aadharverification">
                           <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
@@ -199,7 +198,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="fieldPadding">
-                      <div class="file" *ngIf="action!='update'">
+                      <div class="file">
                         <label for='input-file' (click)="aadharAttach.click()">
                           Upload File
                         </label>
@@ -218,8 +217,7 @@
                                     width="100px" height="100px">
                                 </a>
                               </div>
-                              <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)"
-                                *ngIf="action!='update'">
+                              <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)">
                                 <i class=" fa fa-times-circle" aria-hidden="true"></i>
                               </div>
                             </div>
@@ -244,7 +242,7 @@
                           formControlName="pannumber" [class.disabled]="action == 'update' && panverification" />
 
                         <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
-                          (click)="verifypan()"><span>Verify</span></a>
+                          (click)="idVerification('Pan')"><span>Verify</span></a>
 
                         <a class="btn btn-verify" *ngIf="panverification" [class.btn-verified]="panverification">
                           <span *ngIf="panverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
@@ -262,7 +260,7 @@
                         <div class="form-title">Aadhar Atachment</div>
                       </div> -->
                     <div class="fieldPadding">
-                      <div class="file" *ngIf="action!='update'">
+                      <div class="file">
                         <label for='input-file' (click)="panAttach.click()">
                           <!-- <i class="material-icons">cloud_upload</i> -->
                           Upload File
@@ -283,7 +281,7 @@
                                     width="100px" height="100px">
                                 </a>
                               </div>
-                              <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)" *ngIf="action!='update'">
+                              <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)">
                                 <i class=" fa fa-times-circle" aria-hidden="true"></i>
                               </div>
                             </div>
@@ -469,9 +467,9 @@
                   </div>
                 </div>
               </div>
-
-
-
+            </div>
+            <div>
+              <button class="btn btn-primary open-all-btn" (click)="saveAddress()">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -685,9 +683,9 @@
                   </div>
                 </div>
               </div>
-
-
-
+            </div>
+            <div>
+              <button class="btn btn-primary open-all-btn" (click)="saveLoanDetails()">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -770,7 +768,7 @@
                           Upload File
                         </label>
                         <input #bankAttach type='file' formControlName="bankstatements"
-                          (change)="filesSelected($event,'photo')" />
+                          (change)="filesSelected($event,'bank')" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">
@@ -785,8 +783,7 @@
                                     width="100px" height="100px">
                                 </a>
                               </div>
-                              <div class="gal_action" (click)="deleteTempImage(i, 'bank',file)"
-                                *ngIf="action!='update'">
+                              <div class="gal_action" (click)="deleteTempImage(i, 'bank',file)">
                                 <i class=" fa fa-times-circle" aria-hidden="true"></i>
                               </div>
                             </div>
