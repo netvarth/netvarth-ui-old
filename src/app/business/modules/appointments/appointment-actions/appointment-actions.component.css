@@ -11,6 +11,24 @@
   display: table;
   box-shadow: 10px 10px 15px 0px #cccccc9c;
 }
+.clm{
+  height: 100px;
+  /* border: 1px solid; */
+}
+.demo-inline-calendar-card {
+  /* width: 300px; */
+  background: none !important;
+}
+/* .demo-inline-calendar-card :hover{
+  background: none !important;
+  box-shadow: 0 4px 20px -5px rgb(66 133 244 / 40%) !important;
+    top: -7px !;
+} */
+.more_btn {
+  background-color:#1e4079 ;
+  color : #fff !important;
+  border:none;
+}
 .textColor{
   color: #61c0dd !important;
 }
@@ -70,6 +88,44 @@
     width: 120px !important;
   }
 }
+
+@media screen and (max-width:767px){
+  .smallDevice{
+    height: 150px;
+    overflow: auto;
+    margin-top: 10px;
+  }
+  .smallCalender{
+    height: 100%;
+    overflow: auto;
+  }
+  .smallDevice h5{
+    margin-top: 5px;
+  }
+  .matChip .mat-chip{
+    min-width: 25% ;
+    max-width: 30% ;
+  }
+}
+@media (min-width:767px) and (max-width:992px){
+  .smallDevice{
+    height: 250px;
+    overflow: auto;
+    margin-top: 10px;
+  }
+  .smallCalender{
+    height: 100%;
+    overflow: auto;
+  }
+  .smallDevice h5{
+    margin-top: 5px;
+  }
+  .matChip .mat-chip{
+    min-width: 25% ;
+    max-width: 30% ;
+  }
+}
+
 .action-box-sub {
   display: table-cell;
   vertical-align: middle;
@@ -99,6 +155,12 @@
 }
 .slotdiv {
   max-height: 250px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-bottom: 20px;
+}
+.slotDivSize{
+  max-height: 350px;
   overflow-y: auto;
   overflow-x: hidden;
   margin-bottom: 20px;
@@ -211,9 +273,22 @@
     align-items: center;
   }
   }
-
+  @media (min-width: 1115px) and (max-width: 1400px){ 
+    .matChip .mat-chip {
+      min-width: 30% !important;
+      max-width: 30% !important;
+      padding: 10px;
+      text-align: center;
+      /* width: 100px; */
+      
+    }
+    }
   .appt-in-chip .mat-chip {
     min-width: 13% ;
     max-width: 13% ;
     
   }
+  /* .btnSize{
+    width: 150px;
+  } */
+ 

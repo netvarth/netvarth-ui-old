@@ -1318,9 +1318,14 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url);
   }
   getSlotsByLocationServiceandDate(locid, servid, pdate, accountid) {
-    const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
+    const url = 'provider/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
     return this.servicemeta.httpGet(url);
   }
+
+  // getSlotsByLocationServiceandDate(locid, servid, pdate, accountid) {
+  //   const url = 'consumer/appointment/schedule/date/' + pdate + '/location/' + locid + '/service/' + servid + '?account=' + accountid;
+  //   return this.servicemeta.httpGet(url);
+  // }
   getAppointmentSlotsByDate(scheduleid, date, serviceid) {
     const url = 'provider/appointment/schedule/' + scheduleid + '/' + date + '/' + serviceid;
     return this.servicemeta.httpGet(url);

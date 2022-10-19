@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { NgModule } from "@angular/core";
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA  } from "@angular/core";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -14,11 +14,14 @@ import { LoadingSpinnerModule } from "../../../../shared/modules/loading-spinner
 import { NgxQRCodeModule } from "ngx-qrcode2";
 import { VoiceConfirmModule } from "../../customers/voice-confirm/voice-confirm.module";
 import { CommunicationService } from "../../../../business/services/communication-service";
+import {MatCardModule} from '@angular/material/card';
+
 
 @NgModule({
     imports: [
         MatDialogModule,
         CommonModule,
+        MatCardModule,
         ListRecordingsModule,
         MatTooltipModule,
         MatCheckboxModule,
@@ -39,6 +42,10 @@ import { CommunicationService } from "../../../../business/services/communicatio
     ],
     providers: [
         CommunicationService
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA,
+        NO_ERRORS_SCHEMA
     ]
 })
 export class AppointmentActionsModule {}

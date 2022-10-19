@@ -41,8 +41,9 @@ import { TeleBookingService } from '../../../../shared/services/tele-bookings-se
 })
 export class AppointmentActionsComponent implements OnInit {
   tooltipcls = "";
-  elementType = "url";
+  elementType = "url"; 
   appt;
+  selected: Date | null;
   provider_label = "";
   qr_value;
   path = projectConstantsLocal.PATH;
@@ -76,6 +77,14 @@ export class AppointmentActionsComponent implements OnInit {
   schedules: any = [];
   availableSlots: any = [];
   freeSlots: any = [];
+  allSlots:any =[
+    '09:00','09:15','09:30','09:45','10:00',
+    '09:00','09:15','09:30','09:45','10:00',
+    '09:00','09:15','09:30','09:45','10:00',
+    '09:00','09:15','09:30','09:45','10:00',
+    '09:00','09:15','09:30','09:45','10:00',
+    '09:00','09:15','09:30','09:45','10:00'
+  ]
   hold_sel_checkindate;
   apptTime;
   today;
@@ -123,6 +132,7 @@ export class AppointmentActionsComponent implements OnInit {
   showDelay = false;
   multipleSelection;
   callingNumber: any;
+  showMoreAvailableSlots = false;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
@@ -145,16 +155,25 @@ export class AppointmentActionsComponent implements OnInit {
     this.server_date = this.lStorageService.getitemfromLocalStorage("sysdate");
   }
   ngOnInit() {
-    this.provider_services.getApptlistMgr()
-    .then(
-        data => {
-          console.log("Today Status :",data);
-           // this.apptlist_details = data;
-            this.apptlist_status = data['enableToday'] || false;
-            this.futureDateApptlist = data['futureAppt'] || false;
-          //  this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
-           // this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
-        });
+    //this.getAppointmentSlots();
+   // console.log("Slots :",this.getAppointmentSlots());
+   
+  //  this.shared_services.getTodaysAvailableTimeSlots(this.sel_schedule_id,
+  //   this.sel_checkindate,
+  //   this.accountid).subscribe((res:any)=>{
+  //     console.log("ressss :",res);
+  //   })
+    // this.provider_services.getApptlistMgr()
+    // .then(
+    //     data => {
+    //     //  console.log("Today Status :",data);
+    //        // this.apptlist_details = data;
+    //         this.apptlist_status = data['enableToday'] || false;
+    //         this.futureDateApptlist = data['futureAppt'] || false;
+    //         console.log("Today Status :",this.apptlist_status);
+    //       //  this.apptlist_statusstr = (this.apptlist_status) ? 'On' : 'Off';
+    //        // this.futureapptlist_statusstr = (this.futureDateApptlist) ? 'On' : 'Off';
+    //     });
     this.setMinMaxDate();
     this.getLabel();
     this.apiloading = true;
@@ -250,6 +269,9 @@ export class AppointmentActionsComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
+  }
+  showMoreTimeSlots() {
+    this.showMoreAvailableSlots = !this.showMoreAvailableSlots;
   }
   setData() {
     this.holdselectedTime = this.appt.appmtTime;
@@ -1091,6 +1113,13 @@ export class AppointmentActionsComponent implements OnInit {
     this.selectedTime = slot.time;
   }
   getAppointmentSlots() {
+    this.provider_services.getApptlistMgr()
+    .then(
+        data => {
+            this.apptlist_status = data['enableToday'] || false;
+            this.futureDateApptlist = data['futureAppt'] || false;
+            console.log("Today Status :",this.apptlist_status);
+        });
     this.freeSlots = [];
     this.loading = true;
     this.provider_services
@@ -1102,25 +1131,32 @@ export class AppointmentActionsComponent implements OnInit {
       )
       .subscribe(data => {
         this.schedules = data;
+        console.log("schedules :",this.schedules);
         this.loading = false;
-        if(this.appt.appointmentMode === 'ONLINE_APPOINTMENT' && this.apptlist_status === false){
-          this.schedules = [];
-          this.freeSlots = [];
-        }
         for (const scheduleSlots of this.schedules) {
           this.availableSlots = scheduleSlots.availableSlots;
           console.log("availableSlots",this.availableSlots)
+          if((this.sel_checkindate === scheduleSlots.date) && this.appt.appointmentMode === 'ONLINE_APPOINTMENT' && (this.apptlist_status === false || this.futureDateApptlist === false)){
+           // this.freeSlots = [];
+            this.availableSlots = [];
+            console.log("Todayssss online:",this.apptlist_status);
+          }
+          else{
           for (const freslot of this.availableSlots) {
+          
             if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
               freslot["scheduleId"] = scheduleSlots["scheduleId"];
-              console.log("freslot scheduleId",freslot["scheduleId"])
+              console.log("freslot ",freslot)
 
               freslot["displayTime"] = this.getSingleTime(freslot.time);
               this.freeSlots.push(freslot);
             }
+           
           }
         }
         this.apptTime = this.freeSlots[0];
+      }
+    
       });
   }
   disableMinus() {
@@ -1161,6 +1197,7 @@ export class AppointmentActionsComponent implements OnInit {
       this.dateTimeProcessor.REGION_LANGUAGE,
       { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION }
     );
+   // this.ngOnInit();
     const date = moment(dte, "YYYY-MM-DD HH:mm").format();
     const newdate = new Date(date);
     const newdate1 = new Date(date);
@@ -1406,6 +1443,7 @@ export class AppointmentActionsComponent implements OnInit {
         .getProviderAvailableDatessByLocationService(locid, servid, accountid)
         .subscribe((data: any) => {
           const availables = data.filter(obj => obj.availableSlots);
+          console.log("Availabelel slots :", availables);
           const availDates = availables.map(function(a) {
             return a.date;
           });
