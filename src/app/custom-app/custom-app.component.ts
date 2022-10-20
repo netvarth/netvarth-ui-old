@@ -34,6 +34,8 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   callback: any;
   languages = projectConstantsLocal.SUPPORTEDLANGUAGES;
   langselected = 'English';
+  paramUniqueId: any;
+  uniqueId: any;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -48,6 +50,10 @@ export class CustomAppComponent implements OnInit, OnDestroy {
     private i18nService: I18nService
   ) {
     this.activatedRoute.queryParams.subscribe(qparams => {
+      if (qparams && qparams.uid) {
+        this.paramUniqueId = qparams.uid;
+        this.lStorageService.setitemonLocalStorage('appUniqueId', qparams.uid);
+      }
       if (qparams && qparams.callback) {
         this.callback = qparams.callback;
       }
@@ -74,6 +80,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
           this.i18nService.changeLocale(qparams.lan);
         }
       }
+      this.i18nService.changeLocale('mal');
     });
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -105,6 +112,10 @@ export class CustomAppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const _this = this;
     _this.lStorageService.setitemonLocalStorage('reqFrom', 'cuA');
+    
+    if (this.lStorageService.getitemfromLocalStorage('appUniqueId')) {
+      this.paramUniqueId = this.lStorageService.getitemfromLocalStorage('appUniqueId');
+    }
     if (!this.lStorageService.getitemfromLocalStorage('sysdate')) {
       this.customappService.getSystemDate().subscribe(
         (date) => {
@@ -121,7 +132,13 @@ export class CustomAppComponent implements OnInit, OnDestroy {
         
         this.getAccountIdFromEncId(this.accountEncId).then(
           (id: any) => {
-            _this.provider_id = id;
+            this.uniqueId = id;
+            if (_this.paramUniqueId) {
+              _this.provider_id = this.paramUniqueId;
+            } else {
+              _this.provider_id = id;
+            }
+            
             _this.accountExists = true;
             _this.customappService.setNews(_this.provider_id);
             _this.domainConfigService.getUIAccountConfig(_this.provider_id).subscribe(
@@ -138,7 +155,7 @@ export class CustomAppComponent implements OnInit, OnDestroy {
                 this.customappService.setTemplateJson(templateJson);
                 console.log("TemplateJson:",templateJson);
                 this.templateJson = templateJson;
-                _this.getBusinessProfile(_this.provider_id).then(
+                _this.getBusinessProfile(_this.uniqueId).then(
                   (businessJsons: any) => {
                     console.log(businessJsons);
                     _this.customappService.setBusinessJsons(businessJsons);
