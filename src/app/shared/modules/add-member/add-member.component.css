@@ -34,3 +34,78 @@
     box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%) !important;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s !important;
 }
+.deleteIcon{
+    height: 85px;
+    width: 85px;
+    background: #F7F7F7;
+    box-shadow: inset 0px 4.875px 4.875px rgb(0 0 0 / 25%);
+    border-radius: 50%;
+   
+    padding: 5px
+}
+.deletePosition{
+    text-align: center;
+    margin-top: 20px;
+}
+.confirmation{
+    text-align: center;
+    margin-top: 10px
+}
+.confirmationTxt{
+    color: #E67367;
+    font-size: 18px;
+    font-weight: 500;
+}
+.confirmationdlt{
+    text-align: center;
+    margin-top: 10px 
+}
+.confirmationTxtDlt{
+    color: #464646;
+    font-size: 14px;
+    font-weight: 500;
+}
+.btnActive{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+.noBtn{
+    background: #ECEBEB;
+    border-radius: 6.89189px;
+    border: none;
+    padding: 10px;
+    width: 5rem;
+    box-shadow: 0px 4.51106px 4.51106px rgb(0 0 0 / 25%);
+}
+.yesBtn{
+    border: none;
+    padding: 10px;
+    width: 5rem;
+    background: #FF4343;
+    box-shadow: 0px 4.51106px 4.51106px rgb(0 0 0 / 25%);
+    border-radius: 6.89189px;
+    color: #fff;
+    font-weight: 600;
+}
+.modal_close{
+    border: none !important;
+}
+.goodByText{
+    font-size: 45px;
+    color: #000000;
+    font-weight: 400;
+}
+.padIng{
+    padding: 10px;
+}
+.textCenter{
+    text-align: center;
+}
+.deletedTxt{
+
+}
+.goodByeImg{
+
+}

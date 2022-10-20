@@ -17,6 +17,7 @@ import { SharedServices } from '../../services/shared-services';
 import { SubSink } from 'subsink';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../services/local-storage.service';
+import { AddMemberComponent } from '../add-member/add-member.component';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -473,6 +474,36 @@ export class EditProfileComponent implements OnInit {
       case 'members':
         this.router.navigate([usertype, 'members'], navigationExtras);
         break;
+        case 'dashboard':
+        this.router.navigate([usertype], navigationExtras);
+        break;
     }
+  }
+  deactiveaccount(mod,usertype){
+    const dialogref = this.dialog.open(AddMemberComponent, {
+      width: '50%',
+      height: '50%',
+      
+      // panelClass: ['popup-class', 'commonpopupmainclass'],
+      // disableClose: true,
+      data:[{requestType:'deactiveAccount'},{data:usertype}]
+    });
+    dialogref.afterClosed().subscribe(
+      result => {
+        console.log('result',result)
+        if (result) {
+          location.reload()
+          // if(usertype ==='provider consumer'){
+          //   usertype='provider'
+          // }
+          // console.log('kkkkkkkkkkk')
+          // this.redirectto('dashboard',usertype)
+        }
+        else if(result===undefined){
+          dialogref.close()
+        }
+      }
+    );
+
   }
 }

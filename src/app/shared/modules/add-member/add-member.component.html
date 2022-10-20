@@ -1,5 +1,5 @@
 <div *ngIf="calledFrom=='checkin'" class="addmem-head">{{fill_foll_details_cap}}</div>
-<div class="ynw-common-form">
+<div *ngIf="data && data[0] && data[0].requestType && data[0].requestType !=='deactiveAccount'" class="ynw-common-form">
     <div class="form-group">
         <label class="form-control-label">{{'First Name' | translate}}</label>
         <input type="text" matInput [(ngModel)]="firstname" (keyup)="valuechange()" class="form-control" id="first_name"
@@ -60,5 +60,45 @@
     <div class="form-group" style="margin-top:10px;">
         <label for="email" class="col-form-label">Email</label>
         <input type="email" matInput class="form-control" [(ngModel)]="email" (keyup)="valuechange()" />
+    </div>
+</div>
+
+<div *ngIf="data && data[0] && data[0].requestType && data[0].requestType==='deactiveAccount'" class="ynw-common-form">
+    <div *ngIf="beforeDelete">
+        <div class="deletePosition">
+            <img class="deleteIcon" src="../../../../assets/images/myjaldee/deleteAccount.png" />
+        </div>
+        <div class="confirmation">
+            <div class="confirmationTxt">Delete Account confirmation</div>
+        </div>
+        <div class="confirmationdlt">
+            <div class="confirmationTxtDlt">
+                Are You Sure You Want to delete your Jaldee Consumer account?
+            </div>
+        </div>
+        <div class="btnActive">
+            <div>
+                <button type="submit" class="noBtn"(click)="closeDialog()" mat-dialog-close="true" >No</button>
+            </div>
+            <div>
+                <button type="submit" class="yesBtn" (click)="deActiveAccount()">Yes</button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!beforeDelete" class="padIng">
+        <div  style="text-align:end">
+            <button mat-dialog-close class="modal_close" (click)="closeDialog()">
+                <i class="fa fa-window-close" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div  class="textCenter mgn-up-5">
+            <div class="goodByText">Goodbye!</div>
+        </div>
+        <div  class="textCenter mgn-up-5">
+            <div class="deletedTxt">Your account has been deleted</div>
+        </div>
+        <div class="textCenter mgn-up-5">
+            <img class="goodByeImg" src="/assets/images/myjaldee/goodbye.png" />
+        </div>
     </div>
 </div>

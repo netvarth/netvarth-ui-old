@@ -1357,4 +1357,9 @@ export class SharedServices {
     const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/Item/search?' + tempName + '=' + name + '*';
     return this.servicemeta.httpGet(url);
   }
+  deactiveAccount(user:any){ 
+    const url =  user +'/login/deActivate';
+    // return this.servicemeta.httpDelete(url);
+    return this.servicemeta.httpDelete(url);
+  }
 }

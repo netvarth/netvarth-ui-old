@@ -45,6 +45,7 @@ export class AddMemberComponent implements OnInit {
   telegramnumber: any;
   countryCode_telegram: any;
   email: any;
+  beforeDelete:boolean;
 
   constructor(
     public dialogRef: MatDialogRef<AddMemberComponent>,
@@ -54,6 +55,10 @@ export class AddMemberComponent implements OnInit {
     public shared_functions: SharedFunctions,
     public translate: TranslateService,
   ) {
+    console.log('data',data)
+    if(data && data[0] && data[0].requestType && data[0].requestType==='deactiveAccount'){
+      this.beforeDelete=true;
+    }
     if (data.type === 'edit') {
       console.log("Member Data",data);
       this.firstname = data.member.userProfile.firstName || '';
@@ -127,5 +132,24 @@ export class AddMemberComponent implements OnInit {
   }
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
+  }
+  closeDialog(){
+    this.dialogRef.close() 
+  }
+  deActiveAccount(){
+    let user;
+    if (this.data && this.data[1] && this.data[1].data) {
+      user = this.data[1].data;
+      console.log('user', user);
+      this.beforeDelete = false;
+      setTimeout(() => {
+        this.sharedservice.deactiveAccount(user).subscribe((res)=>{
+          console.log(res);
+          if(res){
+            this.dialogRef.close()
+          }
+        })
+      }, 2000);
+    }
   }
 }
