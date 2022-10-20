@@ -348,7 +348,7 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </div>
           </div>
         </div>
-        <div class="form-group"
+        <div class="form-group "
           *ngIf="bprofile.accountType === 'BRANCH' && !serviceFrom && action === 'add' && !is_donation && users_list && users_list.length >= 1">
           <mat-checkbox [(ngModel)]="userspecific" [ngModelOptions]="{standalone: true}">
             User specific
@@ -362,7 +362,95 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             </mat-select>
           </div>
         </div>
+        <div class="form-group service-options d-lg-flex justify-content-between">
+        <div class="example-full-width">
+          <label class="label">Appointment Type</label>
+          <!-- <mat-radio-button [value]="profile.profileId" readonly
+                [checked]="service && profile.profileId === service.paymentProfileId">
+                <span class="font-weight-bold">{{profile.displayName}}</span>
+              </mat-radio-button> -->
+              <!-- <div class="example-full-width row">
+                <div class="col-sm-6 col-md-3 col-lg-3 col-xs-6"> -->
+                  <div class="">
+                    <!--  -->
+                    <mat-radio-group  class="" formControlName="serviceBookingType">
+              <mat-radio-button  (change)="selectRequest(request.value)" [checked]="is_checked_booking" [value]="'booking'" #request >
+                <span class="font-weight-bold">Booking</span>
+              </mat-radio-button> &nbsp;
+              <!-- <mat-radio-button *ngIf="action != 'add'"  (change)="selectRequest(request.value)" [checked]="is_checked_request" [value]="'booking'" #request >
+                <span class="font-weight-bold">Booking</span>
+              </mat-radio-button> &nbsp; -->
+            <!-- </div>
+              <div class="col-sm-6 col-md-3 col-lg-3 col-xs-6"> -->
+              <mat-radio-button (change)="selectRequest(request1.value)" [checked]="is_checked_request" [value]="'request'" #request1>
+                <span class="font-weight-bold">Request</span>
+              </mat-radio-button>
+            
+</mat-radio-group>
+            </div>
+            <!-- </div> -->
+          
+            </div>
+            <div *ngIf="is_service_request"
+            class="example-full-width mat-select-virtualservice no-padding">
+            <label class="label">Mode</label>
+            <!-- formControlName="virtualServiceType"  -->
+            <mat-select placeholder="Select mode" #type
+              (selectionChange)="selectServiceRequestModeHandler(type.value)" class="form-control">
+              <mat-option [value]="'dateTime'">
+                Date/Time
+              </mat-option>
+              <mat-option [value]="'date'">
+                Date
+              </mat-option>
+              <mat-option [value]="'noDateTime'">
+               No Date & time
+              </mat-option>
+            </mat-select>
+            
+          <!-- </div> -->
+            </div>
+            <!-- <div *ngIf="is_service_request && service_data"
+            class="example-full-width mat-select-virtualservice no-padding">
+            <label class="label">Mode</label>
+            <mat-select placeholder="Select mode" #type
+              (selectionChange)="selectServiceRequestModeHandler(type.value)" class="form-control">
+              <mat-option *ngIf="service_data.dateTime" [value]="'dateTime'">
+                Date/Time
+              </mat-option>
+              
+              <mat-option *ngIf="service_data.date"  [value]="'date'">
+                Date
+              </mat-option>
+              <mat-option *ngIf="service_data.noDateTime"  [value]="'noDateTime'">
+               No Date & time
+              </mat-option>
+            </mat-select>
+            </div> -->
+          
+        </div>
+        <!-- <div class="example-full-width">
+          <div class="col-sm-12 col-md-6 col-lg-6 col-xs-12">
+            <div *ngIf="is_service_request"
+            class="example-full-width mat-select-virtualservice no-padding">
+            <label class="label">Mode</label>
+            <mat-select formControlName="virtualServiceType" placeholder="Select mode" #type
+              (selectionChange)="selectServiceTypeHandler(type.value)" class="form-control">
+              <mat-option [value]="'dateTime'">
+                Date/Time Mode
+              </mat-option>
+              <mat-option [value]="'date'">
+                Date
+              </mat-option>
+              <mat-option [value]="'noDateTime'">
+               No Date & time
+              </mat-option>
+            </mat-select>
+          </div>
+            </div>
+        </div> -->
       </div>
+      
       <div class="card-header text-capitalize card pointer-cursor" data-toggle="collapse" data-target="#service_time_duration">
         <div>
           <span class="font-weight-bold grouping-heading float-left" *ngIf="!is_donation">Service Time Window</span>

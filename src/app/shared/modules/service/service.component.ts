@@ -69,6 +69,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     rupee_symbol = '₹';
     base_licence = false;
     is_virtual_serv = false;
+    is_service_request = false;
+    is_checked_request = false;
+    is_checked_booking = true;
     button_title = 'Save';
     customer_label = '';
     char_count = 0;
@@ -242,6 +245,15 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
                                 }
+                                
+                                if(this.service_data.serviceBookingType === 'request'){
+                                    this.is_checked_request = true;
+                                    this.is_checked_booking = false;
+                                }
+                                if(this.service_data.serviceBookingType === 'booking'){
+                                    this.is_checked_booking = true;
+                                    this.is_checked_request = false;
+                                }
                                 if (this.paymentProfiles.length !== 0) {
                                     this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
                                 }
@@ -288,6 +300,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'taxable': this.service_data['taxable'] || this.serviceForm.get('taxable').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
+                                            'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
+                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
+                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
                                         });
                                     } else {
                                         this.serviceForm.patchValue({
@@ -300,6 +316,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'virtualServiceType': this.service_data['virtualServiceType'] || this.serviceForm.get('virtualServiceType').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
+                                            'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
+                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
+                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+
                                         });
                                     }
                                     if (this.service_data.serviceType === 'virtualService') {
@@ -334,7 +355,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'priceDynamic': this.service_data['priceDynamic'] ? true : false,
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
-                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value
+                                            'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
+                                            'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
+                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
+                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+
                                         });
                                     } else {
                                         this.serviceForm.patchValue({
@@ -356,6 +382,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'priceDynamic': this.service_data['priceDynamic'] ? true : false,
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
+                                            'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
+                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
+                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+
                                         });
                                         if (this.service_data.serviceType === 'virtualService') {
                                             this.tool_name = this.service_data.virtualCallingModes[0].callingMode;
@@ -488,6 +519,36 @@ export class ServiceComponent implements OnInit, OnDestroy {
         this.is_tool = false;
         this.getVirtualCallingModesList();
     }
+    selectServiceRequestModeHandler(event){
+        console.log("Selected Mode :",event);
+        if(event === 'dateTime'){
+            // this.serviceForm.addControl('dateTime',
+            // new FormControl(event));
+            // this.serviceForm['dateTime'].setValue('true');
+            // this.serviceForm['date'].setValue('false');
+            this.serviceForm.controls['dateTime'].setValue(true);
+            this.serviceForm.controls['date'].setValue(false);
+            this.serviceForm.controls['noDateTime'].setValue(false);
+
+        }
+        else if(event === 'date'){
+            // this.serviceForm.addControl('date',
+            // new FormControl(event));
+            this.serviceForm.controls['dateTime'].setValue(false);
+            this.serviceForm.controls['date'].setValue(true);
+            this.serviceForm.controls['noDateTime'].setValue(false);
+
+
+        }
+        else{
+            this.serviceForm.controls['noDateTime'].setValue(true);
+            this.serviceForm.controls['date'].setValue(false);
+            this.serviceForm.controls['dateTime'].setValue(false);
+
+
+             
+        }
+    }
     selectToolTypeHandler(event) {
         console.log("selectToolTypeHandler :",event)
         this.getVirtualCallingModesList();
@@ -505,6 +566,34 @@ export class ServiceComponent implements OnInit, OnDestroy {
                 }
             }
         );
+    }
+    selectRequest(event){
+        console.log("Service Request :",event);
+        if (event === 'request') {
+            //this.serviceForm.addControl('serviceBookingType') = event;
+            // this.serviceForm.addControl('serviceBookingType',
+            // new FormControl(event));
+            this.serviceForm.controls['serviceBookingType'].setValue(event);
+            this.is_service_request = true;
+            this.is_checked_request = true;
+            this.is_checked_booking = false;
+           // this.is_physical = 1;
+        } else {
+            // this.serviceForm.addControl('serviceBookingType',
+            // new FormControl(event));
+            this.serviceForm.controls['serviceBookingType'].setValue(event);
+
+           // this.serviceForm.controls['serviceBookingType'] = event;
+//this.serviceForm.get('serviceBookingType').setValue('request');
+           // this.serviceForm.controls['virtualServiceType'].disable();
+            this.is_service_request = false;
+            this.is_checked_request = false;
+            this.is_checked_booking = true;
+           // this.is_tool = false;
+           // this.modeselected = false;
+           // this.is_physical = 2;
+        }
+
     }
     changeNotification() {
         if (this.serviceForm.get('notification').value === false) {
@@ -800,7 +889,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],
-                    paymentProfileId: []
+                    paymentProfileId: [],
+                    serviceBookingType:['booking'],
+                    date:[false],
+                    dateTime:[false],
+                    noDateTime:[false]
                 });
                 if (this.paymentProfiles.length > 0) {
                     this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
@@ -823,7 +916,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],
-                    paymentProfileId: []
+                    paymentProfileId: [],
+                    serviceBookingType:['booking'],
+                    date:[false],
+                    dateTime:[false],
+                    noDateTime:[false]
+
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
@@ -854,7 +952,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     taxable: [false],
                     notification: [true],
                     livetrack: [false],
-                    paymentProfileId: []
+                    paymentProfileId: [],
+                    serviceBookingType:['booking'],
+                    date:[false],
+                    dateTime:[false],
+                    noDateTime:[false]
+
                 });
             } else {
                 this.serviceForm = this.fb.group({
@@ -867,7 +970,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     virtualServiceType: [Validators.required, Validators.compose([Validators.maxLength(500)])],
                     notification: [true],
                     livetrack: [false],
-                    paymentProfileId: []
+                    paymentProfileId: [],
+                    serviceBookingType:['booking'],
+                    date:[false],
+                    dateTime:[false],
+                    noDateTime:[false]
+
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
