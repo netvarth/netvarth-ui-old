@@ -95,8 +95,7 @@ export class LoginComponent implements OnInit {
       });
   }
   goToPartnerHome() {
-    console.log(this.partnerParentId, this.partnerId)
-    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans']);
+    this.router.navigate([this.partnerParentId, 'partner', this.partnerId]);
   }
   actionPerformed(response) {
     const _this = this;
