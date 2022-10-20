@@ -472,17 +472,6 @@
           [buttonsConfig]="customButtonsFontAwesomeConfig" (buttonBeforeHook)="onButtonBeforeHook()"
           (buttonAfterHook)="onButtonAfterHook()"></ks-modal-gallery>
         <ng-container *ngIf="orderItems.length >0 && checkVirtualOrPhysical()">
-          <!-- <div class="bus-item-I" *ngFor="let item of orderItems">
-            <app-card [theme]="accountProperties?accountProperties['theme']:''" [item]="item"
-              [terminology]='terminologiesjson' [extras]="orderList" [loc]="selectedLocation" [config]="accountConfig"
-              (actionPerformed)="cardClicked($event)" (IsPaper)="IsAuthordemy($event)" [source]="source"></app-card>
-          </div>
-          <div class="shopping-cart-footer" *ngIf="showOrderFooter()">
-            <div>{{'Your Order' | translate}} ({{ order_count }})
-              <span class="rupee-font">{{'SubTotal' | translate}} :&#8377;{{ price }}&nbsp;</span>
-              <button mat-flat-button class="btn-chkout" (click)="checkout();">{{'Checkout' | translate}}</button>
-            </div>
-          </div> -->
           <div class="card catalog-card p-2" *ngIf="desktopView">
             <div>
               <img (click)="openCatalogImageModalRow(catalogimage_list_popup[0])" [src]="catalogImage"

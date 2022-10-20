@@ -127,14 +127,13 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       console.log("_ifSessionExpired:", reqFrom);
       if (reqFrom === 'cuA') {
         _this.authService.refreshToken().then(
-          (response) => {
+          (response)=> {
             _this.authService.refresh(response).subscribe(_this._refreshSubject);
           }
-        )
+        )        
       } else {
-        let loginType = this.lStorageService.getitemfromLocalStorage('logintype');
-        _this.shared_services.ProviderLogin(post_data, loginType).subscribe(_this._refreshSubject);
-      }
+        _this.shared_services.ProviderLogin(post_data).subscribe(_this._refreshSubject);
+      }      
     }
     return _this._refreshSubject;
   }
@@ -190,7 +189,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
       if (url.match(element)) {
         refresh = true;
       }
-
+    
       return next.handle(this.updateHeader(req, url, refresh)).pipe(
         catchError((error, caught) => {
           if (error instanceof HttpErrorResponse) {
@@ -230,7 +229,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
 
               let reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
 
-              if (reqFrom && reqFrom === 'SP_APP' || (reqFrom === 'cuA' && this.lStorageService.getitemfromLocalStorage('refreshToken'))) {
+              if (reqFrom && reqFrom === 'SP_APP' || (reqFrom === 'cuA' && this.lStorageService.getitemfromLocalStorage('refreshToken'))){
                 return this._ifSessionExpired().pipe(
                   switchMap(() => {
                     return next.handle(this.updateHeader(req, url));
@@ -313,12 +312,11 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     } else if (reqFrom === 'CUSTOM_WEBSITE') {
       req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', reqFrom), withCredentials: true });
       req = req.clone({ headers: req.headers.append('website-link', this.lStorageService.getitemfromLocalStorage('source')), withCredentials: true });
-    } else if (reqFrom === 'WEB_LINK') {
+    } else if(reqFrom === 'WEB_LINK'){
       req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', 'WEB_LINK'), withCredentials: true });
     } else {
       req = req.clone({ headers: req.headers.append('BOOKING_REQ_FROM', reqFrom), withCredentials: true });
     }
-
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       req = req.clone({ headers: req.headers.append('tab', this.sessionStorageService.getitemfromSessionStorage('tabId')), withCredentials: true });
     } else {
@@ -342,7 +340,7 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     } else {
       if ((customId || this.lStorageService.getitemfromLocalStorage('login')) && !this.shared_functions.checkLogin()) {
         req = req.clone({ headers: req.headers.append('Authorization', 'browser'), withCredentials: true });
-      } else if (customId && this.shared_functions.checkLogin()) {
+      } else if (customId && this.shared_functions.checkLogin()){
         this.lStorageService.removeitemfromLocalStorage('Authorization');
       }
     }

@@ -37,6 +37,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   btnClicked = false;
   @Input() accountId;
   @Input() accountConfig;
+  @Input() partnerId;
   @Output() actionPerformed = new EventEmitter<any>();
   otpError: string;
   otpSuccess: string;
@@ -53,6 +54,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   email: any;
   googleLogin: boolean;
   googleIntegration: boolean;
+  isPartner: boolean = false;
   constructor(private sharedServices: SharedServices,
     private authService: AuthService,
     private lStorageService: LocalStorageService,
@@ -85,7 +87,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.accountConfig);
     this.lStorageService.setitemonLocalStorage('login', true);
-    if (this.accountConfig && this.accountConfig['googleIntegration'] === false) {
+    if ((this.accountConfig && this.accountConfig['googleIntegration'] === false) || this.partnerId) {
       this.googleIntegration = false;
     } else {
       this.googleIntegration = true;
@@ -141,10 +143,14 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       loginId: loginId,
       accountId: this.accountId
     }
+    if (this.partnerId) {
+      credentials['partnerId'] = this.partnerId;
+      this.isPartner = true;
+    }
     if (emailId) {
       credentials['alternateLoginId'] = emailId;
     }
-    this.subs.sink = this.sharedServices.sendConsumerOTP(credentials).subscribe(
+    this.subs.sink = this.sharedServices.sendConsumerOTP(credentials, this.isPartner).subscribe(
       (response: any) => {
         this.step = 3;
         this.btnClicked = false;
@@ -302,7 +308,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       this.otpError = 'Invalid OTP';
       this.loading = false;
     } else {
-      this.subs.sink = this.sharedServices.verifyConsumerOTP(this.otpEntered)
+      this.subs.sink = this.sharedServices.verifyConsumerOTP(this.otpEntered, this.isPartner)
         .subscribe(
           (response: any) => {
             this.loading = false;
@@ -316,12 +322,15 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
               this.step = 2;
               this.btnClicked = false;
             } else {
-              const credentials = {
+              let credentials = {
                 countryCode: this.dialCode,
                 loginId: loginId,
                 accountId: this.accountId
               }
-              this.authService.consumerAppLogin(credentials).then((response) => {
+              if (this.partnerId) {
+                credentials['partnerId'] = this.partnerId;
+              }
+              this.authService.consumerAppLogin(credentials, this.isPartner).then((response) => {
                 console.log("Login Response:", response);
                 const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
                 if (reqFrom === 'cuA') {

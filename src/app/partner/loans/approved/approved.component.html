@@ -1,0 +1,66 @@
+<div class="card pointer-cursor">
+  <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+</div>
+
+
+
+
+<div class="card m-2" *ngIf="type=='autoapproved'">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/autoapprove.gif">
+      </div>
+      <div class="sanctioned-title">
+        <span>Waiting For Customer Verification</span>
+      </div>
+      <div class="card-sub-title">
+        <span>We Sent a Verification Message to the Customer.</span>
+      </div>
+      <div class="btn btn-primary mt-3" (click)="goHome()">
+        Refresh
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card m-2" *ngIf="type=='approved'">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/autoapprove.gif">
+      </div>
+      <div class="sanctioned-title">
+        <span>Waiting For Credit Officer Approval</span>
+      </div>
+      <div class="card-sub-title">
+        <span>This Loan Application Was Sent for Approval.</span>
+      </div>
+      <div class="btn btn-primary mt-3" (click)="goHome()">
+        Refresh
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card m-2" *ngIf="type=='rejected'">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/rejected.gif">
+      </div>
+      <div class="sanctioned-title">
+        <span>Sorry This Loan Application Was Rejected</span>
+      </div>
+      <div class="card-sub-title">
+        <span>This Loan Application Was Rejected Because of Credit Score.</span>
+      </div>
+      <div class="btn btn-primary mt-3" (click)="goHome()">
+        Go to Home
+      </div>
+    </div>
+  </div>
+</div>

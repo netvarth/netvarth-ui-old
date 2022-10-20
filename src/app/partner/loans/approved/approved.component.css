@@ -1,0 +1,156 @@
+.fa-angle-left {
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+
+.form-title {
+  font-size: 12px !important;
+  color: #1E4079 !important;
+}
+
+.btn-select {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 5px 20px !important;
+  width: 100% !important;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  /* padding: 10px 20px !important; */
+}
+
+.card-title {
+  font-size: 12px !important;
+  color: rgb(112, 106, 106);
+}
+
+.card-border {
+  border: 2px solid #FED37D !important;
+  padding: 15px !important;
+}
+
+.sanctioned-title {
+  font-size: 20px !important;
+  color: #1E4079 !important;
+  font-weight: bold !important;
+}
+
+.border {
+  border: 1px solid rgb(211, 208, 208);
+  padding: 10px;
+}
+
+.card-sub-title {
+  font-size: 12px !important;
+  color: #000;
+}
+
+.card-small-font {
+  font-size: 12px !important;
+  color: #000;
+}
+
+.upload-btn {
+  background-color: #F6F6F6 !important;
+  border: 0.5px dashed #0073FF !important;
+  padding: 7px 40px !important;
+  color: #0073FF !important;
+  width: 50% !important;
+}
+
+mat-slider.mat-slider.mat-focus-indicator.mat-accent.mat-slider-has-ticks.mat-slider-horizontal.mat-slider-thumb-label-showing {
+  width: 100% !important;
+}
+
+.approved-amount {
+  font-size: 12px !important;
+  color: #1E4079 !important;
+}
+
+
+.btn-verify {
+  background-color: hsl(204, 86%, 96%) !important;
+  border-color: hsl(204, 86%, 53%) !important;
+  color: hsl(204, 86%, 53%) !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: auto 5px !important;
+}
+
+.btn-verified {
+  background-color: #d1f3d9 !important;
+  border-color: #20A044 !important;
+  color: #20A044 !important;
+  font-weight: bold !important;
+  border-radius: 5px !important;
+  padding: auto 5px !important;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+
+.img-fluid {
+  padding-bottom: 0px !important;
+}
+
+
+/* File Input Styles  */
+
+.file {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.file>input[type='file'] {
+  display: none
+}
+
+.file>label {
+  font-size: 14px !important;
+  font-weight: bold;
+  cursor: pointer;
+  outline: 0;
+  user-select: none;
+  border: 0.5px dashed hsl(204, 86%, 53%);
+  border-radius: 5px;
+  background-color: hsl(204, 86%, 96%);
+  color: hsl(0, 0%, 29%);
+  padding: 8px 20px !important;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.file>label:hover {
+  border-color: hsl(0, 0%, 21%);
+}
+
+.file>label:active {
+  background-color: hsl(0, 0%, 96%);
+}
+
+.file>label>i {
+  padding-right: 5px;
+}
+
+.file--upload>label {
+  color: hsl(204, 86%, 53%);
+  border-color: hsl(204, 86%, 53%);
+}
+
+.file--upload>label:hover {
+  border-color: hsl(204, 86%, 53%);
+  background-color: hsl(204, 86%, 96%);
+}

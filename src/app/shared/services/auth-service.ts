@@ -70,9 +70,7 @@ export class AuthService {
           'password': bPwd,
           'mUniqueId': null
         };
-        let loginType = this.lStorageService.getitemfromLocalStorage('logintype');
-
-        this.shared_services.ProviderLogin(data, loginType).subscribe(
+        this.shared_services.ProviderLogin(data).subscribe(
           (loginInfo: any) => {
             this.setLoginData(loginInfo, data, 'provider');
             this.lStorageService.setitemonLocalStorage('bpwd', data.password);
@@ -153,9 +151,16 @@ export class AuthService {
                 this.lStorageService.removeitemfromLocalStorage('source');
                 window.location.href = source;
               } else {
+                let partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
                 if (srcUrl) {
                   this.router.navigateByUrl(srcUrl).then();
-                } else {
+                } else if (partnerId) {
+                  this.router.navigate([customId, 'partner', partnerId, 'login']).then(
+                    () => {
+                      window.location.reload();
+                    }
+                  );
+                }{
                   this.router.navigate([customId]).then(
                     () => {
                       window.location.reload();
@@ -270,12 +275,12 @@ export class AuthService {
     return promise;
   }
 
-  consumerAppLogin(post_data) {
+  consumerAppLogin(post_data, isPartner?) {
     // post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     console.log(post_data);
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
-      this.shared_services.ConsumerLogin(post_data)
+      this.shared_services.ConsumerLogin(post_data, isPartner)
         .subscribe(
           data => {
             resolve(data);
@@ -301,10 +306,9 @@ export class AuthService {
   }
 
   businessLogin(post_data) {
-    let loginType = this.lStorageService.getitemfromLocalStorage('logintype');
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
-      this.shared_services.ProviderLogin(post_data, loginType)
+      this.shared_services.ProviderLogin(post_data)
         .subscribe(
           data => {
             this.providerDataStorage.setWeightageArray([]);
@@ -330,11 +334,9 @@ export class AuthService {
   }
 
   providerLogin(post_data) {
-    let loginType = this.lStorageService.getitemfromLocalStorage('logintype');
-
     this.sendMessage({ ttype: 'main_loading', action: true });
     const promise = new Promise((resolve, reject) => {
-      this.shared_services.ProviderLogin(post_data, loginType)
+      this.shared_services.ProviderLogin(post_data)
         .subscribe(
           data => {
             this.providerDataStorage.setWeightageArray([]);

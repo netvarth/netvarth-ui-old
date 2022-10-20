@@ -32,20 +32,22 @@ export class SharedServices {
     return this.servicemeta.httpPost(type + '/login', body);
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
-  ConsumerLogin(body) {
+  ConsumerLogin(body, isPartner?) {
+    if (isPartner) {
+      return this.servicemeta.httpPost('partner/login', body);
+    }
     return this.servicemeta.httpPost('consumer/login', body);
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
-  ProviderLogin(body, type) {
-    if (type == 'partner') {
-      return this.servicemeta.httpPost('partner/login', body);
-    }
-    else {
+  ProviderLogin(body) {
       return this.servicemeta.httpPost('provider/login', body);
-    }
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
   ConsumerLogout() {
+    let partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
+    if (partnerId) {
+      return this.servicemeta.httpDelete('partner/login');
+    }
     return this.servicemeta.httpDelete('consumer/login');
   }
   ProviderLogout() {
@@ -912,13 +914,19 @@ export class SharedServices {
     return this.servicemeta.httpGet(url);
   }
 
-  sendConsumerOTP(body) {
+  sendConsumerOTP(body, isPartner?) {
     // credential
-    const url = 'consumer/oauth/identify';
+    let url = 'consumer/oauth/identify';
+    if (isPartner) {
+      url = 'partner/oauth/identify';
+    } 
     return this.servicemeta.httpPost(url, body);
   }
-  verifyConsumerOTP(otp) {
-    const url = 'consumer/oauth/otp/' + otp + '/verify';
+  verifyConsumerOTP(otp, isPartner?) {
+    let url = 'consumer/oauth/otp/' + otp + '/verify';
+    if (isPartner) {
+      url = 'partner/oauth/otp/' + otp + '/verify';
+    } 
     return this.servicemeta.httpPost(url);
   }
 
