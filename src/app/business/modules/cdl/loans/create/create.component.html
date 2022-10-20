@@ -181,7 +181,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
-                          [class.disabled]="action == 'update' && aadharverification" />
+                          [class.disabled]="action == 'update' && aadharverification && verifyingUID" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                           *ngIf="!aadharverification && !verifyingUID"
@@ -202,7 +202,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="fieldPadding">
-                      <div class="file">
+                      <div class="file" *ngIf="!aadharverification || verifyingUID">
                         <label for='input-file' (click)="aadharAttach.click()">
                           Upload File
                         </label>
@@ -473,7 +473,8 @@
               </div>
             </div>
             <div>
-              <button class="btn btn-primary open-all-btn" (click)="saveAddress()">Save</button>
+              <button class="btn btn-primary open-all-btn" (click)="saveAddress()"
+                [disabled]="!aadharverification || !panverification">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

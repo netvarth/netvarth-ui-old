@@ -827,8 +827,9 @@ export class CreateComponent implements OnInit {
         this.loanApplication['status'] = { "id": data.status.id };
       }
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
-        this.loanApplication.loanApplicationKycList[0]["id"] = data.loanApplicationKycList[0].id
+        // this.loanApplication.loanApplicationKycList[0]["id"] = data.loanApplicationKycList[0].id
         this.loanApplicationKycId = data.loanApplicationKycList[0].id
+        this.loanApplication.loanApplicationKycList[0]["id"] = this.loanApplicationKycId
       }
       this.cdlservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
@@ -837,6 +838,14 @@ export class CreateComponent implements OnInit {
               console.log(dataS3Url);
             });
         }
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            id: this.loanId,
+            action: 'update'
+          }
+        };
+        console.log("Navigation", navigationExtras)
+        this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
         this.snackbarService.openSnackBar("Customer Details Saved Successfully")
       },
         (error) => {

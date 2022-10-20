@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
     private s3Processor: S3UrlProcessor,
     private lStorageService: LocalStorageService,
     private configService: DomainConfigGenerator,
-    private authService: AuthService) { 
+    private authService: AuthService) {
     this.activatedRoute.params.subscribe(
       (params: any) => {
         this.partnerParentId = params.id;
@@ -39,14 +39,14 @@ export class LoginComponent implements OnInit {
     )
     this.activatedRoute.queryParams.subscribe(
       (queryParams: any) => {
-        if (queryParams.target){
+        if (queryParams.target) {
           this.target = queryParams.target;
         }
         if (queryParams.src) {
           this.lStorageService.setitemonLocalStorage('source', queryParams.src);
           this.lStorageService.setitemonLocalStorage('reqFrom', 'CUSTOM_WEBSITE');
-        } else if (!this.lStorageService.getitemfromLocalStorage('reqFrom')){
-          this.lStorageService.setitemonLocalStorage('reqFrom','WEB_LINK');
+        } else if (!this.lStorageService.getitemfromLocalStorage('reqFrom')) {
+          this.lStorageService.setitemonLocalStorage('reqFrom', 'WEB_LINK');
         }
       }
     )
@@ -95,11 +95,13 @@ export class LoginComponent implements OnInit {
       });
   }
   goToPartnerHome() {
-    this.router.navigate([this.partnerParentId, 'partner', this.partnerId]);
+    console.log(this.partnerParentId, this.partnerId)
+    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans']);
   }
   actionPerformed(response) {
     const _this = this;
     let target = _this.lStorageService.getitemfromLocalStorage('target');
+    console.log("Target", target, response)
     if (target) {
       _this.lStorageService.removeitemfromLocalStorage('target');
       _this.router.navigateByUrl(target);
@@ -127,24 +129,24 @@ export class LoginComponent implements OnInit {
     })
   }
   /**
-    * 
+    *
     * @param encId encId/customId which represents the Account
     * @returns the unique provider id which will gives access to the s3
     */
- getAccountIdFromEncId(encId) {
-  const _this = this;
-  return new Promise(function (resolve, reject) {
-    _this.accountService.getBusinessUniqueId(encId).subscribe(
-      (id) => {
-        resolve(id);
-      },
-      error => {
-        if (error.status === 404) {
-          _this.router.navigate(['/not-found']);
+  getAccountIdFromEncId(encId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.accountService.getBusinessUniqueId(encId).subscribe(
+        (id) => {
+          resolve(id);
+        },
+        error => {
+          if (error.status === 404) {
+            _this.router.navigate(['/not-found']);
+          }
+          reject();
         }
-        reject();
-      }
-    );
-  });
-}
+      );
+    });
+  }
 }
