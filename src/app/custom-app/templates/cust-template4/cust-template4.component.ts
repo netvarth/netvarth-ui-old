@@ -133,8 +133,16 @@ export class CustTemplate4Component implements OnInit {
     if (this.showDepartments) {
       let departmentsS3 = [];
       const depts = this.s3Processor.getJson(this.customappService.getDepartments());
-      for (let dIndex = 0; dIndex < depts.length; dIndex++) {
-        departmentsS3.push({ 'type': 'department', 'item': depts[dIndex] })
+      let filteredDepts;
+      console.log("Department Ids:", this.templateJson.departmentIds);
+      if (this.templateJson.section1.departmentIds && this.templateJson.section1.departmentIds.length > 0) {
+        filteredDepts = depts.filter(i => this.templateJson.section1.departmentIds.indexOf(i.departmentId)!== -1);
+      } else {
+        filteredDepts = depts;
+      }
+      console.log("FilteredDepts:", filteredDepts);
+      for (let dIndex = 0; dIndex < filteredDepts.length; dIndex++) {
+        departmentsS3.push({ 'type': 'department', 'item': filteredDepts[dIndex] })
       }
       this.departments = departmentsS3;
     }
@@ -334,7 +342,14 @@ export class CustTemplate4Component implements OnInit {
     const _this = this;
     const apptServiceList = [];
     _this.bookingService.getAppointmentServices(locationId).then(
-      (appointmentServices: any) => {
+      (appointmentServicesOrg: any) => {
+        let appointmentServices=[];
+        if (_this.templateJson.section1.appointmentServiceIds && this.templateJson.section1.appointmentServiceIds.length > 0) {
+          appointmentServices = appointmentServicesOrg.filter(i => this.templateJson.section1.appointmentServiceIds.indexOf(i.id)!== -1);
+        } else {
+          appointmentServices = appointmentServicesOrg;
+        }
+        
         for (let aptIndex = 0; aptIndex < appointmentServices.length; aptIndex++) {
           apptServiceList.push({ 'type': 'appt', 'item': appointmentServices[aptIndex] });
         }
@@ -352,7 +367,15 @@ export class CustTemplate4Component implements OnInit {
     const self = this;
     const checkinServiceList = [];
     self.bookingService.getCheckinServices(locationId).then(
-      (checkinServices: any) => {
+      (checkinServicesOrg: any) => {
+
+        let checkinServices=[];
+        if (self.templateJson.section1.checkinServiceIds && self.templateJson.section1.checkinServiceIds.length > 0) {
+          checkinServices = checkinServicesOrg.filter(i => self.templateJson.section1.checkinServiceIds.indexOf(i.id)!== -1);
+        } else {
+          checkinServices = checkinServicesOrg;
+        }
+
         console.log("CheckinServices:", checkinServices);
         for (let wlIndex = 0; wlIndex < checkinServices.length; wlIndex++) {
           checkinServiceList.push({ 'type': 'waitlist', 'item': checkinServices[wlIndex] });
