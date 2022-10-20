@@ -100,6 +100,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     bprofile: any = [];
     locationExists = false;
     serv_mode: any;
+    appointmentRequestMode : any;
     serv_type: any;
     is_physical = 0;
     is_donation = false;
@@ -231,10 +232,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         if (this.service_data.paymentProfileId) {
                             this.getPaymentProfileDetails(this.service_data.paymentProfileId)
                         }
+                      
                         if (this.action === 'show' && this.active_user.accountType === 'BRANCH') {
                             this.getDepartments(this.service.department);
                         }
                         if (this.service_data) {
+                           
                             if (this.service_data.status === 'ACTIVE') {
                                 this.servstatus = true;
                             } else {
@@ -242,6 +245,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                             }
                             if (this.action === 'edit') {
                                 this.createForm();
+
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
                                 }
@@ -249,6 +253,11 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 if(this.service_data.serviceBookingType === 'request'){
                                     this.is_checked_request = true;
                                     this.is_checked_booking = false;
+                                    this.serviceForm.patchValue({
+                                    'date':  this.serviceForm.get('date').value,
+                                    'dateTime': this.serviceForm.get('dateTime').value,
+                                    'noDateTime':  this.serviceForm.get('noDateTime').value,
+                                })
                                 }
                                 if(this.service_data.serviceBookingType === 'booking'){
                                     this.is_checked_booking = true;
@@ -301,9 +310,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
-                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
-                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
-                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+                                            'date': this.serviceForm.get('date').value,
+                                            'dateTime': this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.serviceForm.get('noDateTime').value,
+                        
                                         });
                                     } else {
                                         this.serviceForm.patchValue({
@@ -317,9 +327,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
-                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
-                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
-                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+                                            'date': this.serviceForm.get('date').value,
+                                            'dateTime': this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.serviceForm.get('noDateTime').value,
 
                                         });
                                     }
@@ -357,9 +367,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
-                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
-                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
-                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+                                            'date': this.serviceForm.get('date').value,
+                                            'dateTime': this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.serviceForm.get('noDateTime').value,
 
                                         });
                                     } else {
@@ -383,9 +393,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'priceDynamic': this.service_data['priceDynamic'] ? true : false,
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
-                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
-                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
-                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+                                            'date':  this.serviceForm.get('date').value,
+                                            'dateTime':  this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.serviceForm.get('noDateTime').value,
 
                                         });
                                         if (this.service_data.serviceType === 'virtualService') {
@@ -513,6 +523,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         }
     }
     selectServiceTypeHandler(event) {
+        console.log("Tele mode :",event);
         this.tool_name = '';
         this.serv_mode = event;
         this.modeselected = true;
@@ -527,23 +538,23 @@ export class ServiceComponent implements OnInit, OnDestroy {
             // this.serviceForm['dateTime'].setValue('true');
             // this.serviceForm['date'].setValue('false');
             this.serviceForm.controls['dateTime'].setValue(true);
-            this.serviceForm.controls['date'].setValue(false);
-            this.serviceForm.controls['noDateTime'].setValue(false);
+            // this.serviceForm.controls['date'].setValue(false);
+            // this.serviceForm.controls['noDateTime'].setValue(false);
 
         }
         else if(event === 'date'){
             // this.serviceForm.addControl('date',
             // new FormControl(event));
-            this.serviceForm.controls['dateTime'].setValue(false);
+            // this.serviceForm.controls['dateTime'].setValue(false);
             this.serviceForm.controls['date'].setValue(true);
-            this.serviceForm.controls['noDateTime'].setValue(false);
+            // this.serviceForm.controls['noDateTime'].setValue(false);
 
 
         }
         else{
             this.serviceForm.controls['noDateTime'].setValue(true);
-            this.serviceForm.controls['date'].setValue(false);
-            this.serviceForm.controls['dateTime'].setValue(false);
+            // this.serviceForm.controls['date'].setValue(false);
+            // this.serviceForm.controls['dateTime'].setValue(false);
 
 
              
@@ -573,19 +584,17 @@ export class ServiceComponent implements OnInit, OnDestroy {
             //this.serviceForm.addControl('serviceBookingType') = event;
             // this.serviceForm.addControl('serviceBookingType',
             // new FormControl(event));
+            // this.serviceForm.controls['serviceBookingType'].enable();
+            // this.serviceForm.get('serviceBookingType').setValue('');
             this.serviceForm.controls['serviceBookingType'].setValue(event);
             this.is_service_request = true;
             this.is_checked_request = true;
             this.is_checked_booking = false;
            // this.is_physical = 1;
-        } else {
-            // this.serviceForm.addControl('serviceBookingType',
-            // new FormControl(event));
+        }
+        
+        if(event === 'booking') {
             this.serviceForm.controls['serviceBookingType'].setValue(event);
-
-           // this.serviceForm.controls['serviceBookingType'] = event;
-//this.serviceForm.get('serviceBookingType').setValue('request');
-           // this.serviceForm.controls['virtualServiceType'].disable();
             this.is_service_request = false;
             this.is_checked_request = false;
             this.is_checked_booking = true;

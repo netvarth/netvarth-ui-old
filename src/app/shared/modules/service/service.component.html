@@ -394,8 +394,8 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
             <div *ngIf="is_service_request"
             class="example-full-width mat-select-virtualservice no-padding">
             <label class="label">Mode</label>
-            <!-- formControlName="virtualServiceType"  -->
-            <mat-select placeholder="Select mode" #type
+            <!-- formControlName="virtualServiceType" [(value)]="service_data.date || service_data.dateTime || service_data.noDateTime" -->
+            <mat-select   placeholder="Select mode" #type
               (selectionChange)="selectServiceRequestModeHandler(type.value)" class="form-control">
               <mat-option [value]="'dateTime'">
                 Date/Time
@@ -407,9 +407,9 @@ onSubmit(serviceForm.value)" (keyup)="resetApiErrors()" *ngIf="action !== 'show'
                No Date & time
               </mat-option>
             </mat-select>
-            
           <!-- </div> -->
             </div>
+          
             <!-- <div *ngIf="is_service_request && service_data"
             class="example-full-width mat-select-virtualservice no-padding">
             <label class="label">Mode</label>
