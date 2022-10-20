@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PartnerComponent } from './partner.component';
 import { RouterModule, Routes } from '@angular/router';
 import { OwlModule } from 'ngx-owl-carousel';
+import { HeaderModule } from '../shared/modules/header/header.module';
 
 const routes: Routes = [
   { path: '', component: PartnerComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     OwlModule,
+    HeaderModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
 import { CdlService } from '../business/modules/cdl/cdl.service';
+import { SharedFunctions } from '../shared/functions/shared-functions';
+import { AuthService } from '../shared/services/auth-service';
 import { GroupStorageService } from '../shared/services/group-storage.service';
+// import { LocalStorageService } from '../shared/services/local-storage.service';
 import { ViewFileComponent } from './loans/loan-details/view-file/view-file.component';
 
 @Component({
@@ -15,6 +18,7 @@ export class PartnerComponent implements OnInit {
   user: any;
   loans: any = 0;
   leads: any;
+  accountId: any;
   viewmore: any = false;
   currentstatus: any = "all";
   status = "all";
@@ -22,6 +26,7 @@ export class PartnerComponent implements OnInit {
   statusList = ['all', 'approved', 'redirected', 'rejected'];
   viewmoreleads: any;
   statusLoansList: any;
+  customId: any;
   statusLeadsList: any = [
     {
       'loanId': 48235,
@@ -103,6 +108,9 @@ export class PartnerComponent implements OnInit {
     private groupService: GroupStorageService,
     private router: Router,
     private dialog: MatDialog,
+    public sharedFunctionobj: SharedFunctions,
+    private authService: AuthService,
+    // private lStorageService: LocalStorageService,
     private cdlservice: CdlService
 
   ) { }
@@ -110,6 +118,8 @@ export class PartnerComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("User is", this.user);
+    this.accountId = '125479';
+    this.customId = 'mafil';
 
     this.cdlservice.getLoans().subscribe(data => {
       this.statusLoansList = data
@@ -127,11 +137,26 @@ export class PartnerComponent implements OnInit {
     this.viewmore = true;
   }
 
+  getProfile() {
+    this.sharedFunctionobj.getProfile()
+      .then(
+        (data: any) => {
+          console.log(data)
+        },
+      );
+  }
+
+  doLogout() {
+    this.authService.logoutFromJaldee().then();
+  }
+
   viewLess() {
     this.loans = this.statusLoansList.slice(0, 4);
     this.viewmore = false;
   }
+  showMenu() {
 
+  }
   reports() {
     this.router.navigate(['provider', 'cdl', 'reports']);
   }

@@ -10,7 +10,7 @@ import { CdlService } from '../../cdl.service';
 export class ViewDealerComponent implements OnInit {
   dealerId: any;
   status: any;
-  dealeraData: any;
+  dealerData: any;
   active: any = "inactive";
   users: any;
   statusLoansList: any = [
@@ -52,7 +52,8 @@ export class ViewDealerComponent implements OnInit {
   ngOnInit(): void {
 
     this.cdlservice.getDealerById(this.dealerId).subscribe(data => {
-      this.dealeraData = data
+      this.dealerData = data
+      console.log("this.dealerData", this.dealerData)
     });
 
     this.cdlservice.getDealerUsers(this.dealerId).subscribe(data => {

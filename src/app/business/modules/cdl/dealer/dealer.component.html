@@ -162,8 +162,9 @@
                 </td>
                 <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.partnerName}}</td>
                 <td data-title="Loan Details" class="td1">{{dealer.partnerMobile}}</td>
-                <td data-title="Loan Details" class="td1" (click)="updateDealer(dealer.uid,'update')">
-                  <button class="btn btn-primary">Update</button>
+                <td data-title="Loan Details" class="td1"
+                  (click)="showDealer(dealer.uid,dealer.partnerStatus,dealer.spInternalStatus)">
+                  <button class="btn btn-primary">View</button>
                 </td>
               </tr>
             </ng-container>

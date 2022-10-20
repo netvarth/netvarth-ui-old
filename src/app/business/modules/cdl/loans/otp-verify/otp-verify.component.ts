@@ -30,6 +30,7 @@ export class OtpVerifyComponent implements OnInit {
   customerDetails: any;
   customerData: any;
   phoneError: any;
+  loanId: any;
   dialCode: any;
   firstName: any;
   lastName: any;
@@ -61,6 +62,9 @@ export class OtpVerifyComponent implements OnInit {
     }
     if (this.data && this.data.data && this.data.data.lastName) {
       this.lastName = this.data.data.lastName;
+    }
+    if (this.data && this.data.id) {
+      this.loanId = this.data.id;
     }
     if (this.data && this.data.name) {
       this.name = this.data.name;
@@ -212,7 +216,10 @@ export class OtpVerifyComponent implements OnInit {
 
   verifyEmail() {
     console.log("Email")
-    this.subs.sink = this.cdlservice.verifyEmailOTP(this.otpEntered, this.from)
+    let data = {
+      "uid": this.loanId
+    }
+    this.subs.sink = this.cdlservice.verifyEmailOTP(this.otpEntered, this.from, data)
       .subscribe(
         (response: any) => {
           if (response) {

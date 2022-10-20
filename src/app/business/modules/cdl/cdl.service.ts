@@ -229,11 +229,12 @@ export class CdlService {
     return this.servicemeta.httpPost(url, data);
   }
 
-  verifyEmailOTP(otp, from) {
+  verifyEmailOTP(otp, from, data?) {
     var url = 'provider/loanapplication/verify/' + otp + '/email';
     if (from && from == 'partner') {
       var url = 'provider/partner/verify/' + otp + '/email';
+      return this.servicemeta.httpPost(url);
     }
-    return this.servicemeta.httpPost(url);
+    return this.servicemeta.httpPost(url, data);
   }
 }

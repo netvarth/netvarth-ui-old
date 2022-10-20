@@ -7,6 +7,7 @@ import { CdlService } from '../cdl.service';
 // import { projectConstants } from '../../../../app.component';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 
 
@@ -21,9 +22,11 @@ export class LoansComponent implements OnInit {
   loans: any;
   loansList: any;
   filter_sidebar: any;
+  statusList: FormGroup;
   selectedLabels: any;
   filterapplied = false;
   tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
+  loanStatus = projectConstantsLocal.LOAN_STATUS;
   labelFilterData: any;
   filter = {
     firstName: '',
@@ -42,8 +45,13 @@ export class LoansComponent implements OnInit {
     private location: Location,
     private activated_route: ActivatedRoute,
     private cdlservice: CdlService,
+    private statusListFormBuilder: FormBuilder,
     private dateTimeProcessor: DateTimeProcessor
-  ) { }
+  ) {
+    this.statusList = this.statusListFormBuilder.group({
+      status: [null]
+    });
+  }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -59,6 +67,18 @@ export class LoansComponent implements OnInit {
       }
     };
     this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+  }
+
+
+  statusChange(event) {
+    let api_filter = {}
+    api_filter['statusName-eq'] = event.value;
+    if (event.value == 'All') {
+      this.getLoans();
+    }
+    else {
+      this.getLoansByFilter(api_filter);
+    }
   }
 
   getLoans() {

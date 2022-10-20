@@ -131,14 +131,15 @@
       </div>
 
       <div class="row text-right">
-        <div class="form-group col-md-4 my-3">
-          <select class="form-control">
-            <option value="all"><span class="text-capitalize">Thrissur</span></option>
-            <option value="approved"><span class="text-capitalize">Kochi</span></option>
-            <option value="in progress"><span class="text-capitalize">Kottayam</span></option>
-            <option value="redirected"><span class="text-capitalize">Kannur</span></option>
-          </select>
-        </div>
+        <form [formGroup]="statusList">
+          <div class="form-group text-left col-md-4 my-3">
+            <mat-select class="form-control widthWebKit" #status (selectionChange)="statusChange($event)">
+              <mat-option [value]="status.name" *ngFor="let status of loanStatus">
+                <div *ngIf="status && status.displayName">{{status.displayName}}</div>
+              </mat-option>
+            </mat-select>
+          </div>
+        </form>
         <div>
           <div class="p-3">
             <h3 class="align-items-start flex-column">
@@ -169,6 +170,8 @@
                   {{item.customer.firstName}} {{item.customer.lastName}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.assignee && item.assignee.name">
                   {{item.assignee.name}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && !item.assignee ">
+                  --</td>
                 <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status && item.status.name">
                   <div class="approvedColor text-capitalize"
                     *ngIf="item && item.status && item.status.name && item.status.name==='New'"><i
@@ -187,9 +190,14 @@
                       class="fa fa-times-circle"></i>&nbsp;{{item.status.name}}
                   </div>
                 </td>
-                <td>
-                  <div *ngIf="item && item.uid">
+                <td *ngIf="item && item.uid && item.status && item.isActionRequired">
+                  <div>
                     <a class="btn btn-primary" (click)="updateLoan(item.uid,'update')">Update</a>
+                  </div>
+                </td>
+                <td *ngIf="item && item.uid && item.status && !item.isActionRequired">
+                  <div>
+                    <a class="btn btn-primary" (click)="loanDetails(item.uid)">View</a>
                   </div>
                 </td>
               </tr>

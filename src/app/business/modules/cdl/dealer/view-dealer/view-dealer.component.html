@@ -12,7 +12,7 @@
         <img src="../../../../assets/images/cdl/avatar.png" alt="Card image cap" width="100" height="100">
       </div>
       <div class="text-center my-2">
-        <span class="dealer-name">MyG Thrissur</span>
+        <span class="dealer-name" *ngIf="dealerData && dealerData.partnerName">{{dealerData.partnerName}}</span>
       </div>
       <div class="text-center">
         <span class="dealer-tag">Dealer</span>
@@ -46,26 +46,23 @@
         <hr>
       </div>
       <div class="text-left dealer-info">
-        <div class="my-2">
-          <span><b>Username : </b>@dealerthrissur</span>
+        <div class="my-2" *ngIf="dealerData && dealerData.partnerName">
+          <span><b>Username : </b><span class="text-lowercase">{{dealerData.partnerName}}</span></span>
         </div>
-        <div class="my-2">
-          <span class="my-2"><b>Billing Email : </b>dealer@gmail.com</span><br>
+        <div class="my-2" *ngIf="dealerData && dealerData.partnerEmail">
+          <span class="my-2"><b>Email : </b>{{dealerData.partnerEmail}}</span><br>
         </div>
-        <div class="my-2">
-          <span class="my-2"><b>Status : </b>Active</span><br>
+        <div class="my-2" *ngIf="dealerData && dealerData.partnerStatus">
+          <span class="my-2"><b>Status : </b>{{dealerData.partnerStatus}}</span><br>
         </div>
-        <div class="my-2">
-          <span><b>Role : </b>Subscriber</span><br>
+        <div class="my-2" *ngIf="dealerData && dealerData.gstin">
+          <span><b>GST ID : </b>{{dealerData.gstin}}</span><br>
         </div>
-        <div class="my-2">
-          <span><b>GST ID : </b>GFHYB34532JJ4J3</span><br>
+        <div class="my-2" *ngIf="dealerData && dealerData.partnerMobile">
+          <span><b>Contact : </b>+91 {{dealerData.partnerMobile}}</span><br>
         </div>
-        <div class="my-2">
-          <span><b>Contact : </b>+91 9745355216</span><br>
-        </div>
-        <div class="my-2">
-          <span><b>Location : </b>680684, Thrissur</span>
+        <div class="my-2" *ngIf="dealerData && dealerData.partnerPin">
+          <span><b>Location : </b>{{dealerData.partnerState}},{{dealerData.partnerPin}}</span>
         </div>
       </div>
 
@@ -86,7 +83,7 @@
     </div>
   </div>
   <div class="col-md-8">
-    <div class="card">
+    <div class="card min-height">
       <div class="">
         <ul class="nav nav-pills">
           <li class="nav-item active">
@@ -146,6 +143,110 @@
                 </tbody>
               </table>
             </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="mb-2">
+                    <span class="font-weight-bold">Alerts</span>
+                  </div>
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                    </div>&nbsp;&nbsp;
+                    <div>
+                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                    </div>&nbsp;&nbsp;
+                    <div>
+                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                    </div>&nbsp;&nbsp;
+                    <div>
+                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                    </div>&nbsp;&nbsp;
+                    <div>
+                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="my-1 mb-3">
+                    <div class="dashboard-card text-center border pointer-cursor px-3">
+                      <div class="d-flex">
+                        <div>
+                          <i class="fa fa-certificate approved-loan-head-icon" aria-hidden="true"></i>
+                        </div>&nbsp;&nbsp;
+                        <div class="text-left">
+                          <span class="head-card-title">Approved Loans</span><br>
+                          <span class="font-weight-bold">10</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="my-1 mb-3">
+                    <div class="dashboard-card text-center border pointer-cursor px-3">
+                      <div class="d-flex">
+                        <div>
+                          <i class="fa fa-money approved-amount-head-icon" aria-hidden="true"></i>
+                        </div>&nbsp;&nbsp;
+                        <div class="text-left">
+                          <span class="head-card-title">Total Approved Amount</span><br>
+                          <span class="font-weight-bold"><i class="fa fa-inr"></i>&nbsp;30,000</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="my-1 mb-3">
+                    <div class="dashboard-card text-center border pointer-cursor px-3">
+                      <div class="d-flex">
+                        <div>
+                          <i class="fa fa-signal rejected-loan-head-icon" aria-hidden="true"></i>
+                        </div>&nbsp;&nbsp;
+                        <div class="text-left">
+                          <span class="head-card-title">Rejected Loans</span><br>
+                          <span class="font-weight-bold">1</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="my-1">
+                    <div class="dashboard-card text-center border pointer-cursor px-3">
+                      <div class="d-flex">
+                        <div>
+                          <i class="fa fa-users total-amount-head-icon" aria-hidden="true"></i>
+                        </div>&nbsp;&nbsp;
+                        <div class="text-left">
+                          <span class="head-card-title">Leads</span><br>
+                          <span class="font-weight-bold">80</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div class="tab-pane active" id="tab1" role="tabpanel" *ngIf="this.status == 'requested'">
@@ -168,6 +269,110 @@
                   </ng-container>
                 </tbody>
               </table>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="mb-2">
+                    <span class="font-weight-bold">Alerts</span>
+                  </div>
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                    </div>&nbsp;&nbsp;
+                    <div>
+                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                    </div>&nbsp;&nbsp;
+                    <div>
+                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                    </div>&nbsp;&nbsp;
+                    <div>
+                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                    </div>
+                  </div>
+
+                  <div class="d-flex mt-2">
+                    <div>
+                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                    </div>&nbsp;&nbsp;
+                    <div>
+                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="my-1 mb-3">
+                    <div class="dashboard-card text-center border pointer-cursor px-3">
+                      <div class="d-flex">
+                        <div>
+                          <i class="fa fa-certificate approved-loan-head-icon" aria-hidden="true"></i>
+                        </div>&nbsp;&nbsp;
+                        <div class="text-left">
+                          <span class="head-card-title">Approved Loans</span><br>
+                          <span class="font-weight-bold">10</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="my-1 mb-3">
+                    <div class="dashboard-card text-center border pointer-cursor px-3">
+                      <div class="d-flex">
+                        <div>
+                          <i class="fa fa-money approved-amount-head-icon" aria-hidden="true"></i>
+                        </div>&nbsp;&nbsp;
+                        <div class="text-left">
+                          <span class="head-card-title">Total Approved Amount</span><br>
+                          <span class="font-weight-bold"><i class="fa fa-inr"></i>&nbsp;30,000</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="my-1 mb-3">
+                    <div class="dashboard-card text-center border pointer-cursor px-3">
+                      <div class="d-flex">
+                        <div>
+                          <i class="fa fa-signal rejected-loan-head-icon" aria-hidden="true"></i>
+                        </div>&nbsp;&nbsp;
+                        <div class="text-left">
+                          <span class="head-card-title">Rejected Loans</span><br>
+                          <span class="font-weight-bold">1</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="my-1">
+                    <div class="dashboard-card text-center border pointer-cursor px-3">
+                      <div class="d-flex">
+                        <div>
+                          <i class="fa fa-users total-amount-head-icon" aria-hidden="true"></i>
+                        </div>&nbsp;&nbsp;
+                        <div class="text-left">
+                          <span class="head-card-title">Leads</span><br>
+                          <span class="font-weight-bold">80</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="tab-pane " id="tab2" role="tabpanel">Coming Soon...</div>
@@ -196,7 +401,7 @@
                             aria-hidden="true"></i>&nbsp;{{user.partner.partnerName}}</span>
                       </td>
                       <td>
-                        <span *ngIf="user && user.mobileNo"><i class="fa fa-inr"></i>&nbsp;{{user.mobileNo}}</span>
+                        <span *ngIf="user && user.mobileNo">{{user.mobileNo}}</span>
                       </td>
                       <td>
                         <span *ngIf="user && user.email">{{user.email}}</span>
@@ -270,108 +475,6 @@
 
       </div>
     </div><br>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="mb-2">
-            <span class="font-weight-bold">Alerts</span>
-          </div>
-          <div class="d-flex mt-2">
-            <div>
-              <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-            </div>&nbsp;&nbsp;
-            <div>
-              <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-            </div>
-          </div>
 
-          <div class="d-flex mt-2">
-            <div>
-              <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-            </div>&nbsp;&nbsp;
-            <div>
-              <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-            </div>
-          </div>
-
-          <div class="d-flex mt-2">
-            <div>
-              <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-            </div>&nbsp;&nbsp;
-            <div>
-              <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-            </div>
-          </div>
-
-          <div class="d-flex mt-2">
-            <div>
-              <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-            </div>&nbsp;&nbsp;
-            <div>
-              <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="my-1 mb-3">
-            <div class="dashboard-card text-center border pointer-cursor px-3">
-              <div class="d-flex">
-                <div>
-                  <i class="fa fa-certificate approved-loan-head-icon" aria-hidden="true"></i>
-                </div>&nbsp;&nbsp;
-                <div class="text-left">
-                  <span class="head-card-title">Approved Loans</span><br>
-                  <span class="font-weight-bold">10</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="my-1 mb-3">
-            <div class="dashboard-card text-center border pointer-cursor px-3">
-              <div class="d-flex">
-                <div>
-                  <i class="fa fa-money approved-amount-head-icon" aria-hidden="true"></i>
-                </div>&nbsp;&nbsp;
-                <div class="text-left">
-                  <span class="head-card-title">Total Approved Amount</span><br>
-                  <span class="font-weight-bold"><i class="fa fa-inr"></i>&nbsp;30,000</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="my-1 mb-3">
-            <div class="dashboard-card text-center border pointer-cursor px-3">
-              <div class="d-flex">
-                <div>
-                  <i class="fa fa-signal rejected-loan-head-icon" aria-hidden="true"></i>
-                </div>&nbsp;&nbsp;
-                <div class="text-left">
-                  <span class="head-card-title">Rejected Loans</span><br>
-                  <span class="font-weight-bold">1</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="my-1">
-            <div class="dashboard-card text-center border pointer-cursor px-3">
-              <div class="d-flex">
-                <div>
-                  <i class="fa fa-users total-amount-head-icon" aria-hidden="true"></i>
-                </div>&nbsp;&nbsp;
-                <div class="text-left">
-                  <span class="head-card-title">Leads</span><br>
-                  <span class="font-weight-bold">80</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div><br><br>

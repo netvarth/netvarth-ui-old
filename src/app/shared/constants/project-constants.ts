@@ -1193,6 +1193,19 @@ export const projectConstantsLocal = {
     { name: 'Homemaker', displayName: 'Home Maker' },
     { name: 'Student', displayName: 'Student' }
   ],
+  LOAN_STATUS: [
+    { name: 'All', displayName: 'All Loans' },
+    { name: 'Draft', displayName: 'Leads' },
+    { name: 'New', displayName: 'New' },
+    { name: 'Approved', displayName: 'Approved' },
+    { name: 'ApprovalPending', displayName: 'Approval Pending' },
+    { name: 'Pending', displayName: 'Pending' },
+    // { name: 'Cancelled', displayName: 'Cancelled' },
+    { name: 'Rejected', displayName: 'Rejected' },
+    { name: 'ConsumerAccepted', displayName: 'Consumer Acceptedr' },
+    { name: 'PartnerAccepted', displayName: 'Partner Accepted' },
+    { name: 'Success', displayName: 'Success' }
+  ],
   KYC_LIST: [
     { name: 'Passport', displayName: 'Passport', id: 0 },
     { name: 'VoterID', displayName: 'VoterID', id: 1 },

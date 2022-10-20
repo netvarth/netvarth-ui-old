@@ -265,9 +265,8 @@ export class CreateComponent implements OnInit {
       ifsc: [null],
       account: [null],
       bankstatements: [null],
-      scheme: [null]
-
-
+      scheme: [null],
+      dealer: [null]
     });
   }
 
@@ -357,7 +356,7 @@ export class CreateComponent implements OnInit {
           this.createLoan.controls.firstname.setValue(this.customerDetails[0].firstName);
         }
         if (this.customerDetails[0].lastName) {
-          this.createLoan.controls.lastname.setValue(this.customerDetails[0].firstName);
+          this.createLoan.controls.lastname.setValue(this.customerDetails[0].lastName);
         }
         if (this.customerDetails[0] && this.customerDetails[0].email) {
           this.createLoan.controls.email.setValue(this.customerDetails[0].email)
@@ -1044,6 +1043,11 @@ export class CreateComponent implements OnInit {
       if (data && data.id) {
         this.loanApplication["id"] = data.id
       }
+      if (data && data.id) {
+        this.loanApplication["id"] = data.id
+      }
+
+      this.loanApplication["partner"] = { 'id': this.createLoan.controls.dealer.value }
 
       this.cdlservice.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
@@ -1142,6 +1146,7 @@ export class CreateComponent implements OnInit {
         disableClose: true,
         data: {
           type: 'Email',
+          id: this.loanId,
           email: this.createLoan.controls.email.value
         }
       });

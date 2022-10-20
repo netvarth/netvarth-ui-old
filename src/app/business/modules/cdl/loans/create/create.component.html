@@ -181,7 +181,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
-                          [class.disabled]="action == 'update' && aadharverification && verifyingUID" />
+                          [class.disabled]="action == 'update' && aadharverification && verifyingUID" maxlength="12" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                           *ngIf="!aadharverification && !verifyingUID"
@@ -495,6 +495,21 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Select Dealer</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #dealer formControlName="dealer">
+                      <mat-option [value]="dealer.id" *ngFor="let dealer of dealers">
+                        <div *ngIf="dealer && dealer.partnerName">{{dealer.partnerName}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
 
               <div class="bggrey my-2">
                 <div>
