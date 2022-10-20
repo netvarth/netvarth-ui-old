@@ -12,6 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SelectSchemeModule } from '../select-scheme/select-scheme.module';
+import { OtpVerifyModule } from '../otp-verify/otp-verify.module';
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
     FormsModule,
     MatExpansionModule,
     SelectSchemeModule,
+    OtpVerifyModule,
     [RouterModule.forChild(routes)]
   ]
 })

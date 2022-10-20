@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PartnerComponent } from './partner.component';
 import { RouterModule, Routes } from '@angular/router';
+import { OwlModule } from 'ngx-owl-carousel';
 
 const routes: Routes = [
-  { path: '', component: PartnerComponent},
-  { path: 'login', loadChildren: () => import('../partner/login/login.module').then(m => m.LoginModule) },,
+  { path: '', component: PartnerComponent },
+  { path: 'login', loadChildren: () => import('../partner/login/login.module').then(m => m.LoginModule) }, ,
   { path: 'loans', loadChildren: () => import('./loans/loans.module').then(m => m.LoansModule) },
   { path: 'loans/:id', loadChildren: () => import('./loans/loan-details/loan-details.module').then(m => m.LoanDetailsModule) },
 ]
@@ -16,6 +17,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    OwlModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
