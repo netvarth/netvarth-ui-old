@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConsumerAgreementComponent } from './consumer-agreement.component';
 import { RouterModule, Routes } from '@angular/router';
+import { AgreementComponent } from './agreement.component';
 
 
 
 const routes: Routes = [
-  { path: '', component: ConsumerAgreementComponent }
+  { path: '', component: AgreementComponent }
 ]
 
 
 @NgModule({
-  declarations: [
-    ConsumerAgreementComponent
-  ],
+  declarations: [AgreementComponent],
   imports: [
     CommonModule,
     [RouterModule.forChild(routes)]
   ]
 })
-export class ConsumerAgreementModule { }
+export class AgreementModule { }

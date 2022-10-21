@@ -19,7 +19,7 @@ const routes: Routes = [
 
   { path: 'not-found', loadChildren: () => import('./shared/modules/not-found/not-found.module').then(m => m.NotFoundModule) },
   { path: 'searchdetail', loadChildren: () => import('./shared/components/search-detail/search-detail.module').then(m => m.SearchDetailModule) },
-  { path: 'mafil/agreement', loadChildren: () => import('./business/modules/cdl/loans/consumer-agreement/consumer-agreement.module').then(m => m.ConsumerAgreementModule) },
+  { path: 'mafil/agreement', loadChildren: () => import('./shared/components/agreement/agreement.module').then(m => m.AgreementModule) },
   { path: 'terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
   { path: 'business/terms', loadChildren: () => import('./shared/modules/terms-static/terms-static.module').then(m => m.TermsStaticModule) },
   { path: 'displayboard/:id', loadChildren: () => import('./business/modules/displayboard-content/displayboard-content.module').then(m => m.DisplayboardLayoutContentModule) },

@@ -104,7 +104,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     JaldeeTimeService,
     Title,
     CommonDataStorageService,
-    {provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices, Injector]},
+    { provide: ErrorHandler, useClass: GlobalErrorHandler, deps: [SharedServices, Injector] },
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [GlobalService], multi: true },
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },

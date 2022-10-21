@@ -59,14 +59,25 @@ export class LoansComponent implements OnInit {
 
   }
 
-  updateLoan(id, action) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        id: id,
-        action: action
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+  updateLoan(id, action, status) {
+    if (status != 'Approved') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          id: id,
+          action: action
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+    }
+    else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'autoapproved'
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+    }
+
   }
 
 

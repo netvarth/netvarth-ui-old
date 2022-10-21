@@ -25,7 +25,6 @@ const routes: Routes = [
   { path: 'update', loadChildren: () => import('./create/create.module').then(m => m.CreateModule) },
   { path: 'approved', loadChildren: () => import('./approved/approved.module').then(m => m.ApprovedModule) },
   { path: 'additionalqa', loadChildren: () => import('./additional-questions/additional-questions.module').then(m => m.AdditionalQuestionsModule) },
-  { path: 'agreement', loadChildren: () => import('./consumer-agreement/consumer-agreement.module').then(m => m.ConsumerAgreementModule) },
 
 ]
 

@@ -165,7 +165,9 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngIf="loans && loans.length > 0">
-              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="updateLoan(item.uid,'update')">
+              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index"
+                (click)="updateLoan(item.uid,'update',item.spInternalStatus)">
+
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.id">{{item.id}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
                   {{item.customer.firstName}} {{item.customer.lastName}}</td>
@@ -173,30 +175,15 @@
                   {{item.partner.partnerName}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && !item.partner ">
                   --</td>
-                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status && item.status.name">
-                  <div class="approvedColor text-capitalize"
-                    *ngIf="item && item.status && item.status.name && item.status.name==='New'"><i
-                      class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
-                  </div>
-                  <div class="approvedColor text-capitalize"
-                    *ngIf="item && item.status && item.status.name && item.status.name==='approved'"><i
-                      class="fa fa-check-circle"></i>&nbsp;{{item.status.name}}
-                  </div>
-                  <div class="pendingColor text-capitalize"
-                    *ngIf="item && item.status && item.status.name && (item.status.name==='pending' || item.status.name==='redirected')">
-                    <i class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
-                  </div>
-                  <div class="rejectedColor text-capitalize"
-                    *ngIf="item && item.status && item.status.name && item.status.name==='rejected'"><i
-                      class="fa fa-times-circle"></i>&nbsp;{{item.status.name}}
-                  </div>
+                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item  && item.spInternalStatus">
+                  {{item.spInternalStatus}}
                 </td>
-                <td *ngIf="item && item.uid && item.status && item.isActionRequired">
+                <td *ngIf="item && item.uid  && item.isActionRequired">
                   <div>
-                    <a class="btn btn-primary" (click)="updateLoan(item.uid,'update')">Update</a>
+                    <a class="btn btn-primary" (click)="updateLoan(item.uid,'update',item.spInternalStatus)">Update</a>
                   </div>
                 </td>
-                <td *ngIf="item && item.uid && item.status && !item.isActionRequired">
+                <td *ngIf="item && item.uid  && !item.isActionRequired">
                   <div>
                     <a class="btn btn-primary" (click)="loanDetails(item.uid)">View</a>
                   </div>
