@@ -244,7 +244,25 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
               _this.cd.detectChanges();
             });
           }, (error) => {
+            if (error.status === 401 && (error.error === 'Session Already Exist' || error.error === 'Session already exists.')) {
+            _this.authService.doLogout().then(() => {
+              _this.lStorageService.removeitemfromLocalStorage('logout');
+              _this.authService.consumerAppLogin(credentials).then(() => {
+                  _this.ngZone.run(() => {
+                      const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+                      if (reqFrom === 'cuA') {
+                        const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                        _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+                      }
+                      _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+                      _this.actionPerformed.emit('success');
+                    }
+                  )
+                });
+            })
+          } else {
             _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }           
           })
         }, (error) => {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
