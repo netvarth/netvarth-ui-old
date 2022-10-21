@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CdlService } from '../../../business/modules/cdl/cdl.service';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../shared/services/snackbar.service';
 // import { AuthService } from '../../../../../shared/services/auth-service';
 // import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
 import { SubSink } from 'subsink';
+import { PartnerService } from '../../partner.service';
 
 @Component({
   selector: 'app-otp-verify',
@@ -43,7 +43,7 @@ export class OtpVerifyComponent implements OnInit {
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService,
-    private cdlservice: CdlService,
+    private partnerservice: PartnerService,
     private groupService: GroupStorageService
     // private lStorageService: LocalStorageService,
     // private authService: AuthService,
@@ -70,7 +70,7 @@ export class OtpVerifyComponent implements OnInit {
       if (this.phoneNumber.startsWith('555')) {
         this.config.length = 5;
       }
-      this.cdlservice.getBusinessProfile().subscribe((data) => {
+      this.partnerservice.getBusinessProfile().subscribe((data) => {
         this.businessDetails = data;
       });
       this.sendOTP();
@@ -101,7 +101,7 @@ export class OtpVerifyComponent implements OnInit {
     }
     console.log("coming here", credentials)
     // if (!loginId.startsWith('555')) {
-    this.subs.sink = this.cdlservice.sendPhoneOTP(credentials, this.from).subscribe(
+    this.subs.sink = this.partnerservice.sendPhoneOTP(credentials, this.from).subscribe(
       (response: any) => {
         if (mode == 'resent') {
           this.snackbarService.openSnackBar("Otp Resend Successfully");
@@ -125,7 +125,7 @@ export class OtpVerifyComponent implements OnInit {
     let credentials = {
       email: loginId,
     }
-    this.subs.sink = this.cdlservice.sendEmailOTP(credentials, this.from).subscribe(
+    this.subs.sink = this.partnerservice.sendEmailOTP(credentials, this.from).subscribe(
       (response: any) => {
         this.snackbarService.openSnackBar("Otp Sent Successfully");
       }, (error) => {
@@ -212,7 +212,7 @@ export class OtpVerifyComponent implements OnInit {
 
   verifyEmail() {
     console.log("Email")
-    this.subs.sink = this.cdlservice.verifyEmailOTP(this.otpEntered, this.from)
+    this.subs.sink = this.partnerservice.verifyEmailOTP(this.otpEntered, this.from)
       .subscribe(
         (response: any) => {
           if (response) {
@@ -233,7 +233,7 @@ export class OtpVerifyComponent implements OnInit {
 
 
   getCustomerDetails(filter) {
-    this.cdlservice.getCustomerDetails(filter).subscribe((data) => {
+    this.partnerservice.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
       if (this.customerDetails && this.customerDetails.length != 0) {
         this.customerId = this.customerDetails[0].id;
@@ -275,7 +275,7 @@ export class OtpVerifyComponent implements OnInit {
         }
       }
       if (this.customerData) {
-        this.subs.sink = this.cdlservice.verifyPhoneOTP(this.otpEntered, this.customerData)
+        this.subs.sink = this.partnerservice.verifyPhoneOTP(this.otpEntered, this.customerData)
           .subscribe(
             (response: any) => {
               if (response) {
@@ -304,7 +304,7 @@ export class OtpVerifyComponent implements OnInit {
       "partnerMobile": this.phoneNumber
     }
     if (this.partnerData) {
-      this.subs.sink = this.cdlservice.partnerOtpVerify(this.otpEntered, this.partnerData)
+      this.subs.sink = this.partnerservice.partnerOtpVerify(this.otpEntered, this.partnerData)
         .subscribe(
           (response: any) => {
             if (response) {

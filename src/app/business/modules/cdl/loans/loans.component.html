@@ -164,13 +164,13 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngIf="loans && loans.length > 0">
-              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="loanDetails(item.uid)">
+              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="updateLoan(item.uid,'update')">
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.id">{{item.id}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
                   {{item.customer.firstName}} {{item.customer.lastName}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.assignee && item.assignee.name">
-                  {{item.assignee.name}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && !item.assignee ">
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.partner && item.partner.partnerName">
+                  {{item.partner.partnerName}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && !item.partner ">
                   --</td>
                 <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status && item.status.name">
                   <div class="approvedColor text-capitalize"

@@ -4,8 +4,9 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { projectConstantsLocal } from '../../shared/constants/project-constants';
 import { GroupStorageService } from '../../shared/services/group-storage.service';
-import { CdlService } from '../../business/modules/cdl/cdl.service';
 import { DateTimeProcessor } from '../../shared/services/datetime-processor.service';
+import { PartnerService } from '../partner.service';
+import { LocalStorageService } from '../../shared/services/local-storage.service';
 // import { projectConstants } from '../../../../app.component';
 
 
@@ -31,6 +32,8 @@ export class LoansComponent implements OnInit {
     lastName: '',
     date: ''
   };
+  partnerId: any;
+  partnerParentId: any;
   filters: any;
   minday = new Date(1900, 0, 1);
   maxday = new Date();
@@ -41,12 +44,15 @@ export class LoansComponent implements OnInit {
     private router: Router,
     private location: Location,
     private activated_route: ActivatedRoute,
-    private cdlservice: CdlService,
+    private partnerservice: PartnerService,
+    private lStorageService: LocalStorageService,
     private dateTimeProcessor: DateTimeProcessor
   ) { }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
+    this.partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
     this.getLoans()
 
   }
@@ -58,12 +64,12 @@ export class LoansComponent implements OnInit {
         action: action
       }
     };
-    this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'update'], navigationExtras);
   }
 
   getLoans() {
     this.loading = true;
-    this.cdlservice.getLoans().subscribe((data) => {
+    this.partnerservice.getLoans().subscribe((data) => {
       this.loansList = data;
       if (this.loansList) {
         this.activated_route.queryParams.subscribe((params) => {
@@ -113,7 +119,7 @@ export class LoansComponent implements OnInit {
   }
 
   loanDetails(id) {
-    this.router.navigate(['provider', 'cdl', 'loans', id]);
+    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'id']);
   }
 
   setFilterForApi() {
@@ -182,7 +188,7 @@ export class LoansComponent implements OnInit {
 
 
   getLoansByFilter(filter) {
-    this.cdlservice.getLoansByFilter(filter).subscribe((data) => {
+    this.partnerservice.getLoansByFilter(filter).subscribe((data) => {
       this.loans = data;
       console.log("this.loans", this.loans)
     })

@@ -44,6 +44,7 @@ export class LoanDetailsComponent implements OnInit {
   address1: string;
   address2: string;
   city: string;
+  bankData: any;
   state: string;
   pincode: string;
   loanData: any;
@@ -63,29 +64,17 @@ export class LoanDetailsComponent implements OnInit {
         if (params && params.id) {
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
+            this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
+              this.bankData = data;
+              console.log("BankData", this.bankData)
+            });
           });
-          this.personalDetails()
 
         }
       }
     })
   }
-  personalDetails() {
 
-    this.accountNumber = '5454545545454544';
-    this.IFSCCode = 'KOTAKSDA12F';
-    this.bankName = 'KODAK';
-    this.emiPaidNo = 2;
-    this.cibilScore = 250;
-    this.mafilScore = 200;
-    this.totalScore = 440;
-    this.perfiosScore = 120;
-    if (this.paramsValue && this.paramsValue.status) {
-      this.loanStatus = this.paramsValue.status;
-    }
-
-
-  }
   goBack() {
     this.location.back();
   }
@@ -98,6 +87,7 @@ export class LoanDetailsComponent implements OnInit {
     // };
     this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
   }
+
   redirectLoan() {
 
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
@@ -146,13 +136,14 @@ export class LoanDetailsComponent implements OnInit {
 
 
 
-  viewFile(file) {
+  viewFile(file, s3path?) {
     const dialogRef = this.dialog.open(ViewFileComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        type: file
+        type: file,
+        url: s3path
       }
     });
     dialogRef.afterClosed();

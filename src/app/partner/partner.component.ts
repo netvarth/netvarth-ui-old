@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
-import { CdlService } from '../business/modules/cdl/cdl.service';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { AuthService } from '../shared/services/auth-service';
 import { GroupStorageService } from '../shared/services/group-storage.service';
-// import { LocalStorageService } from '../shared/services/local-storage.service';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 import { ViewFileComponent } from './loans/loan-details/view-file/view-file.component';
+import { PartnerService } from './partner.service';
 
 @Component({
   selector: 'app-partner',
@@ -25,6 +25,8 @@ export class PartnerComponent implements OnInit {
   seacrchFilterOrder: any;
   statusList = ['all', 'approved', 'redirected', 'rejected'];
   viewmoreleads: any;
+  partnerParentId: any;
+  partnerId: any;
   statusLoansList: any;
   customId: any;
   statusLeadsList: any = [
@@ -110,23 +112,23 @@ export class PartnerComponent implements OnInit {
     private dialog: MatDialog,
     public sharedFunctionobj: SharedFunctions,
     private authService: AuthService,
-    // private lStorageService: LocalStorageService,
-    private cdlservice: CdlService
+    private lStorageService: LocalStorageService,
+    private partnerservice: PartnerService
 
   ) { }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log("User is", this.user);
-    this.accountId = '125479';
-    this.customId = 'mafil';
+    this.partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
+    this.partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
 
-    this.cdlservice.getLoans().subscribe(data => {
+    console.log("User is", this.user);
+    this.partnerservice.getLoans().subscribe(data => {
       this.statusLoansList = data
       this.loans = this.statusLoansList.slice(0, 4);
     });
 
-    this.cdlservice.getDealers().subscribe(data => {
+    this.partnerservice.getDealers().subscribe(data => {
       this.statusLeadsList = data
       this.leads = this.statusLeadsList.slice(0, 4);
     });
@@ -157,19 +159,10 @@ export class PartnerComponent implements OnInit {
   showMenu() {
 
   }
-  reports() {
-    this.router.navigate(['provider', 'cdl', 'reports']);
-  }
 
   viewMoreLeads() {
     this.leads = this.statusLeadsList;
     this.viewmoreleads = true;
-  }
-
-
-
-  continueApplication() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'create']);
   }
 
   viewLessLeads() {
@@ -185,63 +178,43 @@ export class PartnerComponent implements OnInit {
         customerName: data.customerName
       }
     };
-    this.router.navigate(['provider', 'cdl', 'loans', 'loanDetails'], navigationExtras);
+    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'loanDetails'], navigationExtras);
   }
 
 
   CreateLoan() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'create']);
+    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'create']);
   }
 
-  createDealer() {
-    this.router.navigate(['provider', 'cdl', 'dealers', 'create']);
-  }
   allLoans() {
-    this.router.navigate(['provider', 'cdl', 'loans']);
-  }
-  allLeads() {
-    this.router.navigate(['provider', 'cdl', 'leads']);
-  }
-  allDealers() {
-    this.router.navigate(['provider', 'cdl', 'dealers']);
-  }
-  createLead() {
-    this.router.navigate(['provider', 'cdl', 'leads', 'create']);
+    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans']);
   }
 
-  requestedDealers() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'requested'
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'dealers'], navigationExtras);
-  }
-  approvedLoans() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'approved'
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
-  }
-  redirectedLoans() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'redirected'
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
-  }
+  // approvedLoans() {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       type: 'approved'
+  //     }
+  //   };
+  //   this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+  // }
+  // redirectedLoans() {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       type: 'redirected'
+  //     }
+  //   };
+  //   this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+  // }
 
-  rejectedLoans() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'rejected'
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
-  }
+  // rejectedLoans() {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       type: 'rejected'
+  //     }
+  //   };
+  //   this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+  // }
 
   transform(event) {
     if (event.target.value != 'all') {
@@ -274,25 +247,14 @@ export class PartnerComponent implements OnInit {
     dialogRef.afterClosed();
   }
 
-  allSchemes() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        from: "schemeslist"
-      }
-    }
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
-  }
-
-
-  showDealer(dealer) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        dealer: dealer.dealer,
-        status: dealer.status
-      }
-    }
-    this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
-  }
+  // allSchemes() {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       from: "schemeslist"
+  //     }
+  //   }
+  //   this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+  // }
 
 
 

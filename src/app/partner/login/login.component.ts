@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
         this.partnerParentId = params.id;
         this.partnerId = params.partnerId;
         this.lStorageService.setitemonLocalStorage("partnerId", this.partnerId);
+        this.lStorageService.setitemonLocalStorage("partnerParentId", this.partnerParentId);
+
       }
     )
     this.activatedRoute.queryParams.subscribe(

@@ -120,7 +120,8 @@
                       <div class="form-title">Customer Photo</div>
                     </div>
                     <div class="fieldPadding photo-border">
-                      <div class="file">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0)">
                         <label for='photoAttach' (click)="photoAttach.click()">
                           <!-- <i class="material-icons">cloud_upload</i> -->
                           Upload File
@@ -181,7 +182,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
-                          [class.disabled]="action == 'update' && aadharverification && verifyingUID" maxlength="12" />
+                          [class.disabled]="action == 'update' && aadharverification && !verifyingUID" maxlength="12" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                           *ngIf="!aadharverification && !verifyingUID"
@@ -243,7 +244,8 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #pannumber [value]="pannumber" type="text"
                           placeholder="Enter PAN Number" class="form-control" autocomplete="off"
-                          formControlName="pannumber" [class.disabled]="action == 'update' && panverification" />
+                          formControlName="pannumber" [class.disabled]="action == 'update' && panverification"
+                          maxlength="10" />
 
                         <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
                           (click)="idVerification('Pan')"><span>Verify</span></a>
@@ -782,7 +784,8 @@
                       <div class="form-title">Bank Statements</div>
                     </div>
                     <div class="fieldPadding photo-border">
-                      <div class="file">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0)">
                         <label for='bankAttach' (click)="bankAttach.click()">
                           <!-- <i class="material-icons">cloud_upload</i> -->
                           Upload File

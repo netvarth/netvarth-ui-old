@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+// import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-import { SnackbarService } from '../../../shared/services/snackbar.service';
+// import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ViewFileComponent } from './view-file/view-file.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
-import { CdlService } from '../../../business/modules/cdl/cdl.service';
+import { PartnerService } from '../../partner.service';
 
 @Component({
   selector: 'app-loan-details',
@@ -48,20 +47,20 @@ export class LoanDetailsComponent implements OnInit {
   pincode: string;
   loanData: any;
   constructor(
-    private snackbarService: SnackbarService,
-    private router: Router,
+    // private snackbarService: SnackbarService,
+    // private router: Router,
     private location: Location,
     private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
     private dialog: MatDialog,
-    private cdlservice: CdlService
+    private partnerservice: PartnerService
   ) { }
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.activated_route.params.subscribe((params) => {
       if (params) {
         if (params && params.id) {
-          this.cdlservice.getLoanById(params.id).subscribe((data) => {
+          this.partnerservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
           });
           this.personalDetails()
@@ -89,61 +88,6 @@ export class LoanDetailsComponent implements OnInit {
   goBack() {
     this.location.back();
   }
-  sanctionLoan() {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     timetype: 1,
-    //     from: "creditofficer"
-    //   }
-    // };
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
-  }
-  redirectLoan() {
-
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        from: "remarks"
-      }
-    });
-    dialogRef.afterClosed().subscribe(
-      (data) => {
-        if (data) {
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: 'redirected'
-            }
-          };
-          this.snackbarService.openSnackBar("Loan Redirected Successfully");
-          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
-        }
-      });
-  }
-  rejectLoan() {
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        from: "remarks"
-      }
-    });
-    dialogRef.afterClosed().subscribe(
-      (data) => {
-        if (data) {
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: 'rejected'
-            }
-          };
-          this.snackbarService.openSnackBar("Loan Rejected Successfully");
-          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
-        }
-      });
-  }
-
 
 
   viewFile(file) {
@@ -158,13 +102,13 @@ export class LoanDetailsComponent implements OnInit {
     dialogRef.afterClosed();
   }
 
-  takeAction() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'action'
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans', 'create'], navigationExtras);
-  }
+  // takeAction() {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       type: 'action'
+  //     }
+  //   };
+  //   this.router.navigate(['provider', 'cdl', 'loans', 'create'], navigationExtras);
+  // }
 
 }

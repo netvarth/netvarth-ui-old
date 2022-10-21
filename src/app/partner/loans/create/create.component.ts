@@ -12,7 +12,8 @@ import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SelectSchemeComponent } from '../select-scheme/select-scheme.component';
-import { CdlService } from '../../../business/modules/cdl/cdl.service';
+import { PartnerService } from '../../partner.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 // import { SharedServices } from '../../../../../shared/services/shared-services';
 // import { SubSink } from 'subsink';
 
@@ -107,6 +108,8 @@ export class CreateComponent implements OnInit {
   relations = projectConstantsLocal.RELATIONSHIPS;
   employmentTypes = projectConstantsLocal.EMPLOYMENT_TYPES;
   filesToUpload: any = [];
+  partnerId: any;
+  partnerParentId: any;
   dealers: any;
   constructor(
     private location: Location,
@@ -117,13 +120,14 @@ export class CreateComponent implements OnInit {
     private createLoanFormBuilder: FormBuilder,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private cdlservice: CdlService,
-    private fileService: FileService
+    private partnerservice: PartnerService,
+    private fileService: FileService,
+    private lStorageService: LocalStorageService
   ) {
 
     this.activated_route.queryParams.subscribe((params) => {
       if (params && params.id) {
-        this.cdlservice.getLoanById(params.id).subscribe((data) => {
+        this.partnerservice.getLoanById(params.id).subscribe((data) => {
           this.loanData = data;
           this.action = params.action;
           this.loanId = params.id;
@@ -201,7 +205,7 @@ export class CreateComponent implements OnInit {
           }
         })
         console.log(params.id);
-        this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
+        this.partnerservice.getBankDetailsById(params.id).subscribe((data) => {
           this.bankData = data;
           console.log("this.bankData", this.bankData)
           if (this.bankData) {
@@ -262,6 +266,8 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
+    this.partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
     console.log("user", this.user);
     this.getLoanCategories();
     this.getLoanTypes();
@@ -269,7 +275,7 @@ export class CreateComponent implements OnInit {
     this.getLoanStatuses();
     this.getLoanSchemes();
     this.getPartners();
-    this.cdlservice.getBusinessProfile().subscribe((data) => {
+    this.partnerservice.getBusinessProfile().subscribe((data) => {
       this.businessDetails = data;
       if (this.businessDetails && this.businessDetails.id) {
         this.businessId = this.businessDetails.id;
@@ -279,13 +285,13 @@ export class CreateComponent implements OnInit {
 
 
   getLoanCategories() {
-    this.cdlservice.getLoanCategoryList().subscribe((data) => {
+    this.partnerservice.getLoanCategoryList().subscribe((data) => {
       this.loanCategories = data;
     })
   }
 
   getLoanSchemes() {
-    this.cdlservice.getLoanSchemes().subscribe((data) => {
+    this.partnerservice.getLoanSchemes().subscribe((data) => {
       this.loanSchemes = data;
       console.log("this.loanSchemes", this.loanSchemes)
     })
@@ -293,7 +299,7 @@ export class CreateComponent implements OnInit {
 
 
   getBusinessProfile() {
-    this.cdlservice.getBusinessProfile().subscribe((data) => {
+    this.partnerservice.getBusinessProfile().subscribe((data) => {
       this.businessDetails = data;
       console.log("this.businessDetails", this.businessDetails)
     })
@@ -301,14 +307,14 @@ export class CreateComponent implements OnInit {
 
 
   getLoanTypes() {
-    this.cdlservice.getLoanTypeList().subscribe((data) => {
+    this.partnerservice.getLoanTypeList().subscribe((data) => {
       this.loanTypes = data;
       console.log("this.loanTypes", this.loanTypes)
     })
   }
 
   getLoanStatuses() {
-    this.cdlservice.getLoanStatuses().subscribe((data) => {
+    this.partnerservice.getLoanStatuses().subscribe((data) => {
       this.loanStatuses = data;
       console.log("this.loanStatuses", this.loanStatuses)
     })
@@ -316,7 +322,7 @@ export class CreateComponent implements OnInit {
 
 
   getLoanProducts() {
-    this.cdlservice.getLoanProducts().subscribe((data) => {
+    this.partnerservice.getLoanProducts().subscribe((data) => {
       this.loanProducts = data;
       console.log("this.loanProducts", this.loanProducts)
     })
@@ -324,14 +330,14 @@ export class CreateComponent implements OnInit {
 
 
   getPartners() {
-    this.cdlservice.getDealers().subscribe((data) => {
+    this.partnerservice.getDealers().subscribe((data) => {
       this.dealers = data;
       console.log("this.dealers", this.dealers)
     })
   }
 
   getCustomerDetails(filter) {
-    this.cdlservice.getCustomerDetails(filter).subscribe((data) => {
+    this.partnerservice.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
       if (this.customerDetails && this.customerDetails.length != 0) {
         console.log("this.customerDetails", this.customerDetails)
@@ -522,7 +528,7 @@ export class CreateComponent implements OnInit {
   //       if (this.loanData && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
   //         this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
   //       }
-  //       this.cdlservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
+  //       this.partnerservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
   //         this.snackbarService.openSnackBar("Loan Application Updated Successfully")
   //         this.router.navigate(['provider', 'cdl', 'loans'])
   //       },
@@ -553,7 +559,7 @@ export class CreateComponent implements OnInit {
   //       console.log("Loan Application Data : ", this.loanApplication)
 
 
-  //       this.cdlservice.createLoan(this.loanApplication).subscribe((s3urls: any) => {
+  //       this.partnerservice.createLoan(this.loanApplication).subscribe((s3urls: any) => {
   //         console.log("response", s3urls);
 
 
@@ -571,7 +577,7 @@ export class CreateComponent implements OnInit {
   //           "bankIfsc": this.createLoan.controls.ifsc.value,
   //           "bankAccountVerified": true
   //         }
-  //         this.cdlservice.saveBankDetails(this.bankDetails).subscribe((data) => {
+  //         this.partnerservice.saveBankDetails(this.bankDetails).subscribe((data) => {
   //           console.log("this.loanProducts", this.loanProducts);
   //           this.snackbarService.openSnackBar("Loan Application Created Successfully")
   //           this.router.navigate(['provider', 'cdl', 'loans']);
@@ -620,7 +626,7 @@ export class CreateComponent implements OnInit {
   uploadFiles(file, url) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      _this.cdlservice.videoaudioS3Upload(file, url)
+      _this.partnerservice.videoaudioS3Upload(file, url)
         .subscribe(() => {
           resolve(true);
         }, error => {
@@ -637,9 +643,9 @@ export class CreateComponent implements OnInit {
     this.location.back();
   }
 
-  goNext() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved'])
-  }
+  // goNext() {
+  //   this.router.navigate(['provider', 'cdl', 'loans', 'approved'])
+  // }
 
 
 
@@ -695,10 +701,10 @@ export class CreateComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           if (result = "eligible") {
-            this.cdlservice.ApprovalRequest(this.loanId).subscribe((data: any) => {
+            this.partnerservice.ApprovalRequest(this.loanId).subscribe((data: any) => {
               if (data.isAutoApproval && data.isApproved) {
                 this.snackbarService.openSnackBar("Loan Auto Approved");
-                this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+                this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'approved']);
               }
               else if (!data.isAutoApproval && data.isApproved) {
                 const navigationExtras: NavigationExtras = {
@@ -707,7 +713,7 @@ export class CreateComponent implements OnInit {
                   }
                 }
                 this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
-                this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+                this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'approved'], navigationExtras);
               }
               else if (!data.isAutoApproval && data.isApproved) {
                 const navigationExtras: NavigationExtras = {
@@ -716,7 +722,7 @@ export class CreateComponent implements OnInit {
                   }
                 }
                 this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
-                this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+                this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'approved'], navigationExtras);
               }
               else if (!data.isAutoApproval && !data.isApproved) {
                 const navigationExtras: NavigationExtras = {
@@ -725,7 +731,7 @@ export class CreateComponent implements OnInit {
                   }
                 }
                 this.snackbarService.openSnackBar("Sorry This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
-                this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+                this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'approved'], navigationExtras);
               }
               console.log("Response", data);
             },
@@ -785,7 +791,7 @@ export class CreateComponent implements OnInit {
 
   saveCustomerDetails() {
     const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
-    this.cdlservice.getCustomerDetails(filter).subscribe((data) => {
+    this.partnerservice.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
       if (this.customerDetails[0] && this.customerDetails[0].id) {
         this.customerId = this.customerDetails[0].id;
@@ -821,7 +827,7 @@ export class CreateComponent implements OnInit {
 
     console.log(this.loanApplication, this.customerId)
 
-    this.cdlservice.getLoanById(this.loanId).subscribe((data: any) => {
+    this.partnerservice.getLoanById(this.loanId).subscribe((data: any) => {
       console.log('Loan Data', data)
       if (this.loanApplication && data && data.status && data.status.id) {
         this.loanApplication['status'] = { "id": data.status.id };
@@ -831,7 +837,7 @@ export class CreateComponent implements OnInit {
         this.loanApplicationKycId = data.loanApplicationKycList[0].id
         this.loanApplication.loanApplicationKycList[0]["id"] = this.loanApplicationKycId
       }
-      this.cdlservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
+      this.partnerservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
@@ -845,7 +851,7 @@ export class CreateComponent implements OnInit {
           }
         };
         console.log("Navigation", navigationExtras)
-        this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+        this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'update'], navigationExtras);
         this.snackbarService.openSnackBar("Customer Details Saved Successfully")
       },
         (error) => {
@@ -863,7 +869,7 @@ export class CreateComponent implements OnInit {
 
 
   refreshAadharVerify() {
-    this.cdlservice.refreshAadharVerify(this.loanApplicationKycId).subscribe((data: any) => {
+    this.partnerservice.refreshAadharVerify(this.loanApplicationKycId).subscribe((data: any) => {
       if (data) {
         this.aadharverification = true;
         this.verifyingUID = false;
@@ -890,7 +896,7 @@ export class CreateComponent implements OnInit {
       this.loanApplication["aadhaar"] = this.createLoan.controls.aadharnumber.value;
     }
 
-    this.cdlservice.getLoanById(this.loanId).subscribe((data: any) => {
+    this.partnerservice.getLoanById(this.loanId).subscribe((data: any) => {
 
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
         this.loanApplication["id"] = data.loanApplicationKycList[0].id
@@ -907,7 +913,7 @@ export class CreateComponent implements OnInit {
         }
       }
 
-      this.cdlservice.verifyIds(type, this.loanApplication).subscribe((s3urls: any) => {
+      this.partnerservice.verifyIds(type, this.loanApplication).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
@@ -954,13 +960,13 @@ export class CreateComponent implements OnInit {
       "currentState": this.createLoan.controls.currentstate.value
     }
 
-    this.cdlservice.getLoanById(this.loanId).subscribe((data: any) => {
+    this.partnerservice.getLoanById(this.loanId).subscribe((data: any) => {
 
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
         this.loanApplication["id"] = data.loanApplicationKycList[0].id
       }
 
-      this.cdlservice.addressUpdate(this.loanApplication).subscribe((s3urls: any) => {
+      this.partnerservice.addressUpdate(this.loanApplication).subscribe((s3urls: any) => {
         this.snackbarService.openSnackBar("Address Details Updated Successfully")
       },
         (error) => {
@@ -1005,7 +1011,7 @@ export class CreateComponent implements OnInit {
       ]
     }
 
-    this.cdlservice.getLoanById(this.loanId).subscribe((data: any) => {
+    this.partnerservice.getLoanById(this.loanId).subscribe((data: any) => {
 
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
         this.loanApplication.loanApplicationKycList[0]["id"] = data.loanApplicationKycList[0].id
@@ -1014,7 +1020,7 @@ export class CreateComponent implements OnInit {
         this.loanApplication["id"] = data.id
       }
 
-      this.cdlservice.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
+      this.partnerservice.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
       },
         (error) => {
@@ -1053,14 +1059,14 @@ export class CreateComponent implements OnInit {
     }
 
     if (!this.bankData) {
-      this.cdlservice.saveBankDetails(this.bankDetails).subscribe((s3urls: any) => {
+      this.partnerservice.saveBankDetails(this.bankDetails).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
               console.log(dataS3Url);
             });
         }
-        this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
+        this.partnerservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
           if (data) {
             this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
           }
@@ -1073,14 +1079,14 @@ export class CreateComponent implements OnInit {
       }
     }
     else {
-      this.cdlservice.updateBankDetails(this.bankDetails).subscribe((s3urls: any) => {
+      this.partnerservice.updateBankDetails(this.bankDetails).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
               console.log(dataS3Url);
             });
         }
-        this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
+        this.partnerservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
           if (data) {
             this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
           }

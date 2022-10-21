@@ -201,6 +201,10 @@ export class CreateComponent implements OnInit {
               this.aadharverification = true;
             }
 
+            if (this.loanData && this.loanData.partner && this.loanData.partner.id) {
+              this.createLoan.controls.dealer.setValue(this.loanData.partner.id);
+            }
+
             this.verification = true;
             this.emailverification = true;
 
@@ -714,13 +718,18 @@ export class CreateComponent implements OnInit {
           if (result = "eligible") {
             this.cdlservice.ApprovalRequest(this.loanId).subscribe((data: any) => {
               if (data.isAutoApproval && data.isApproved) {
+                const navigationExtras: NavigationExtras = {
+                  queryParams: {
+                    type: 'autoapproved'
+                  }
+                }
                 this.snackbarService.openSnackBar("Loan Auto Approved");
-                this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+                this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
               }
               else if (!data.isAutoApproval && data.isApproved) {
                 const navigationExtras: NavigationExtras = {
                   queryParams: {
-                    type: 'autoapproved'
+                    type: 'approved'
                   }
                 }
                 this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
@@ -989,8 +998,7 @@ export class CreateComponent implements OnInit {
       }
 
       this.cdlservice.addressUpdate(this.loanApplication).subscribe((s3urls: any) => {
-        this.kycDetailsPanel = false;
-        this.loanDetailsPanel = true;
+        this.panelsManage(false, false, true, false);
         this.snackbarService.openSnackBar("Address Details Updated Successfully")
       },
         (error) => {
@@ -1004,6 +1012,13 @@ export class CreateComponent implements OnInit {
 
   }
 
+
+  panelsManage(customer, kyc, loan, bank) {
+    this.customerDetailsPanel = customer;
+    this.kycDetailsPanel = kyc;
+    this.loanDetailsPanel = loan;
+    this.bankDetailsPanel = bank;
+  }
 
   saveLoanDetails() {
     this.loanApplication = {
@@ -1050,6 +1065,7 @@ export class CreateComponent implements OnInit {
       this.loanApplication["partner"] = { 'id': this.createLoan.controls.dealer.value }
 
       this.cdlservice.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
+        this.panelsManage(false, false, false, true);
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
       },
         (error) => {
@@ -1100,8 +1116,9 @@ export class CreateComponent implements OnInit {
             this.cdlservice.getBankDetailsById(this.loanId).subscribe((bankInfo) => {
               this.bankData = bankInfo;
             });
-            this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
           }
+          this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
+
         }),
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -1122,9 +1139,8 @@ export class CreateComponent implements OnInit {
             });
         }
         this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
-          if (data) {
-            this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
-          }
+          this.snackbarService.openSnackBar("Bank Details Updated Successfully")
+
         }),
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
