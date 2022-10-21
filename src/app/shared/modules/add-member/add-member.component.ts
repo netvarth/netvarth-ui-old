@@ -133,8 +133,9 @@ export class AddMemberComponent implements OnInit {
   isNumeric(evt) {
     return this.shared_functions.isNumeric(evt);
   }
-  closeDialog(){
-    this.dialogRef.close() 
+  closeDialog(txt){
+    console.log(txt);
+    this.dialogRef.close(txt) 
   }
   deActiveAccount(){
     let user;
@@ -142,11 +143,12 @@ export class AddMemberComponent implements OnInit {
       user = this.data[1].data;
       console.log('user', user);
       this.beforeDelete = false;
+      // this.dialogRef.close('afterResClose')
       setTimeout(() => {
-        this.sharedservice.deactiveAccount(user).subscribe((res)=>{
+        this.sharedservice.deactiveAccount(user).subscribe((res) => {
           console.log(res);
-          if(res){
-            this.dialogRef.close()
+          if (res) {
+            this.dialogRef.close('afterResClose')
           }
         })
       }, 2000);

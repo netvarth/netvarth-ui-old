@@ -78,7 +78,7 @@
         </div>
         <div class="btnActive">
             <div>
-                <button type="submit" class="noBtn"(click)="closeDialog()" mat-dialog-close="true" >No</button>
+                <button  class="noBtn" (click)="closeDialog('close')" mat-dialog-close >No</button>
             </div>
             <div>
                 <button type="submit" class="yesBtn" (click)="deActiveAccount()">Yes</button>
@@ -87,7 +87,7 @@
     </div>
     <div *ngIf="!beforeDelete" class="padIng">
         <div  style="text-align:end">
-            <button mat-dialog-close class="modal_close" (click)="closeDialog()">
+            <button mat-dialog-close class="modal_close" (click)="closeDialog('close')">
                 <i class="fa fa-window-close" aria-hidden="true"></i>
             </button>
         </div>

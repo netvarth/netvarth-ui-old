@@ -18,6 +18,7 @@ import { SubSink } from 'subsink';
 import { TranslateService } from '@ngx-translate/core';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { AddMemberComponent } from '../add-member/add-member.component';
+import { AuthService } from '../../services/auth-service';
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
@@ -89,7 +90,8 @@ export class EditProfileComponent implements OnInit {
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
     public translate: TranslateService,
-    private lStorageService: LocalStorageService
+    private lStorageService: LocalStorageService,
+    private authService:AuthService
   ) {
     this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
       if (qparams && qparams.accountId) {
@@ -481,25 +483,21 @@ export class EditProfileComponent implements OnInit {
   }
   deactiveaccount(mod,usertype){
     const dialogref = this.dialog.open(AddMemberComponent, {
-      width: '50%',
+      // width: '50%',
       height: '50%',
       
-      // panelClass: ['popup-class', 'commonpopupmainclass'],
-      // disableClose: true,
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
       data:[{requestType:'deactiveAccount'},{data:usertype}]
     });
     dialogref.afterClosed().subscribe(
       result => {
         console.log('result',result)
-        if (result) {
-          location.reload()
-          // if(usertype ==='provider consumer'){
-          //   usertype='provider'
-          // }
-          // console.log('kkkkkkkkkkk')
-          // this.redirectto('dashboard',usertype)
-        }
-        else if(result===undefined){
+        if (result==='afterResClose') {
+          // window.location.reload();
+          this.authService.logoutFromJaldee().then();
+                }
+        else if(result==='close'){
           dialogref.close()
         }
       }

@@ -170,14 +170,14 @@
                                 </p>
                             </form>
                         </div>
-                        <div class="right-menu" *ngIf="!customId">
+                        <div class="right-menu" >
                             <div class="right-menu-header">{{related_links_cap}}</div>
                             <ul class="related-link">
-                                <li (click)="redirectto('change-password','consumer')" class="icon-password" *ngIf="!fromApp">
+                                <li (click)="redirectto('change-password','consumer')" class="icon-password" *ngIf="!fromApp && !customId">
                                     {{change_password_cap}}</li>
-                                <li (click)="redirectto('change-mobile', 'consumer')" class="icon-mobile">
+                                <li (click)="redirectto('change-mobile', 'consumer')" class="icon-mobile" *ngIf="!customId">
                                     {{change_mobile_cap}}</li>
-                                <li (click)="redirectto('members', 'consumer')" class="icon-members">
+                                <li (click)="redirectto('members', 'consumer')" class="icon-members"*ngIf="!customId">
                                     {{family_members_cap}}</li>
                                 <li (click)="deactiveaccount('deactive', 'consumer')" style="padding-left: 0px;">
                                     <span ><i class="fa fa-trash" aria-hidden="true"></i></span>
