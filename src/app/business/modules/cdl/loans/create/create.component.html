@@ -639,8 +639,8 @@
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Total Payment"
-                        class="form-control" autocomplete="off" [value]="totalpayment" (keyup)="payment($event)"
-                        [value]="totalpayment" formControlName="totalpayment" />
+                        class="form-control" autocomplete="off" [value]="totalpayment" [value]="totalpayment"
+                        formControlName="totalpayment" />
                     </div>
                   </div>
                 </div>
@@ -654,7 +654,8 @@
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
-                        class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment" />
+                        class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment"
+                        (keyup)="payment($event)" />
                     </div>
                   </div>
                 </div>

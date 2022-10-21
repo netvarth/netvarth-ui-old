@@ -18,6 +18,11 @@ export class CdlService {
   }
 
 
+  getCustomers() {
+    const url = 'provider/customers';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getLoanTypeList() {
     const url = 'provider/loanapplication/type';
     return this.servicemeta.httpGet(url, null);
@@ -105,6 +110,12 @@ export class CdlService {
   getDealerUsers(id) {
     const url = 'provider/partner/' + id + '/users';
     return this.servicemeta.httpGet(url, null);
+  }
+
+
+  manualLoanApproval(id, data) {
+    const url = 'provider/loanapplication/' + id + '/manualapproval';
+    return this.servicemeta.httpPut(url, data);
   }
 
 

@@ -24,7 +24,11 @@
 
 .slider-height,
 .recentcards {
-  height: 200px !important;
+  height: 250px !important;
+}
+
+.min-height {
+  min-height: 400px !important;
 }
 
 .add-lead-icon {

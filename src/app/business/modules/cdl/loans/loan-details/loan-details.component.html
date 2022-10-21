@@ -241,8 +241,8 @@
       </div>
       <div class="card marginClass">
         <div class="font-weight-bold">Bank Details&nbsp;<img src="../../../../assets/images/cdl/check.png" width="20"
-            *ngIf="bankData.bankAccountVerified"><img src="../../../../assets/images/cdl/cancel.png" width="20"
-            *ngIf="!bankData.bankAccountVerified"></div>
+            *ngIf="bankData && bankData.bankAccountVerified"><img src="../../../../assets/images/cdl/cancel.png"
+            width="20" *ngIf="bankData && !bankData.bankAccountVerified"></div>
         <div class="row mt-2">
           <div class="col-md-4" *ngIf="bankData && bankData.bankAccountNo">
             <div class="details-title">Account Number</div>
@@ -257,13 +257,14 @@
             <div class="details-sub-title">{{bankData.bankIfsc}}</div>
           </div>
         </div>
-        <div class="row mt-2">
-          <div class="col-md-4"
-            *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
+        <div class="row mt-2"
+          *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
+          <div class="col-md-4">
             <div class="details-title">Bank Statements</div>
           </div>
         </div>
-        <div class="row mt-2">
+        <div class="row mt-2"
+          *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
           <div class="col-md-4">
             <a [href]="bankData.bankStatementAttachments[0].s3path" target="_blank"
               class="btn btn-primary btn-primary-full">

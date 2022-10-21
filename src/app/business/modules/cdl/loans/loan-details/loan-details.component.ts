@@ -45,6 +45,7 @@ export class LoanDetailsComponent implements OnInit {
   address2: string;
   city: string;
   bankData: any;
+  loanId: any;
   state: string;
   pincode: string;
   loanData: any;
@@ -62,6 +63,7 @@ export class LoanDetailsComponent implements OnInit {
     this.activated_route.params.subscribe((params) => {
       if (params) {
         if (params && params.id) {
+          this.loanId = params.id;
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
             this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
@@ -79,13 +81,28 @@ export class LoanDetailsComponent implements OnInit {
     this.location.back();
   }
   sanctionLoan() {
-    // const navigationExtras: NavigationExtras = {
-    //   queryParams: {
-    //     timetype: 1,
-    //     from: "creditofficer"
-    //   }
-    // };
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        loanId: this.loanId,
+        type: "sanction",
+        from: "creditofficer"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data) {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'sanctioned'
+            }
+          };
+          this.snackbarService.openSnackBar("Loan Sanctioned Successfully");
+          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+        }
+      });
   }
 
   redirectLoan() {

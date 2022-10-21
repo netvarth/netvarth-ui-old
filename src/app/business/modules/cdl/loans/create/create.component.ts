@@ -101,6 +101,7 @@ export class CreateComponent implements OnInit {
   businessId: any;
   firstName: any;
   lastName: any;
+  downPayment: any;
   loanStatuses: any;
   loanSchemes: any;
   from: any;
@@ -1255,9 +1256,8 @@ export class CreateComponent implements OnInit {
 
 
   payment(event) {
-    // this.totalpayment = event.target.value;
-    // this.downpayment = Math.round(this.totalpayment * 0.2);
-    // this.loanamount = Math.round(this.totalpayment - this.downpayment);
+    this.downPayment = Number(event.target.value);
+    this.createLoan.controls.loanamount.setValue(this.createLoan.controls.totalpayment.value - this.downPayment)
   }
 
   verifypan() {

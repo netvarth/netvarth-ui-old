@@ -19,13 +19,13 @@
           <img src="../../../../assets/images/cdl/carousal-1.jpg" alt="Card image cap">
         </div>
         <div class="recentcards item">
-          <img src="../../../../assets/images/cdl/carousal-2.jpg" alt="Card image cap">
+          <img src="../../../../assets/images/cdl/carousal-2.png" alt="Card image cap">
         </div>
         <div class="recentcards item">
-          <img src="../../../../assets/images/cdl/carousal-3.jpg" alt="Card image cap">
+          <img src="../../../../assets/images/cdl/carousal-3.png" alt="Card image cap">
         </div>
         <div class="recentcards item">
-          <img src="../../../../assets/images/cdl/carousal-4.jpg" alt="Card image cap">
+          <img src="../../../../assets/images/cdl/carousal-4.png" alt="Card image cap">
         </div>
       </owl-carousel>
     </div>
@@ -334,43 +334,6 @@
           All</span>
       </div>
     </div>
-
-
-    <br>
-    <div class="card" *ngIf="user.userType==2">
-      <div>
-        <span class="font-weight-bold text-primary">All Leads</span>
-      </div>
-      <div class="table-responsive dash-list">
-        <table class="table">
-          <thead>
-            <tr class="tble-filtr-tr heght">
-              <th class="head_color">Dealer Id</th>
-              <th class="head_color">Status</th>
-              <th class="head_color">Dealer</th>
-              <th class="head_color">Phone</th>
-              <th class="head_color"></th>
-            </tr>
-          </thead>
-          <tbody class="table_data">
-            <ng-container *ngFor="let dealer of dealers;let i=index">
-              <tr style="cursor:pointer" (click)="showDealer(dealer.uid)">
-                <td data-title="Loan Details" class="td1">{{dealer.id}}</td>
-                <td data-title="Loan Details" class="td1 loanStatus">
-                  <img class="imageApprove" src="/assets/images/cdl/approved.png" />
-                  <div class="approvedColor text-capitalize">{{dealer.partnerStatus}}</div>
-                </td>
-                <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.partnerName}}</td>
-                <td data-title="Loan Details" class="td1">{{dealer.partnerMobile}}</td>
-                <td data-title="Loan Details" class="td1" (click)="showDealer(dealer.uid)">
-                  <a class="btn btn-primary">View</a>
-                </td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
   <div class="col-md-4" *ngIf="user.userType==5">
     <div class="card">
@@ -449,57 +412,23 @@
 
 
   <div class="col-md-4" *ngIf="user.userType==1 || user.userType==2">
-    <div class="card">
+    <div class="card min-height">
       <div class="mb-2">
         <span class="font-weight-bold">Alerts</span>
       </div>
-      <div class="d-flex mt-2">
-        <div>
+      <div class="d-flex mt-2" *ngFor="let loan of loans">
+        <div *ngIf="loan && loan.alertMessage">
           <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
         </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan Id : 1234 is Approved</span>
+        <div *ngIf="loan && loan.alertMessage">
+          <span class="alerts-title">{{loan.alertMessage}}</span>
         </div>
       </div>
 
-      <div class="d-flex mt-2">
-        <div>
-          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan Id : 2458 is Rejected</span>
-        </div>
-      </div>
-
-      <div class="d-flex mt-2">
-        <div>
-          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan Id : 7854 is Redirected</span>
-        </div>
-      </div>
-
-      <div class="d-flex mt-2">
-        <div>
-          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan Id : 4758 is Auto Approved</span>
-        </div>
-      </div>
-
-      <div class="d-flex mt-2">
-        <div>
-          <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-        </div>&nbsp;&nbsp;
-        <div>
-          <span class="alerts-title">Loan Id : 4578 is Approved</span>
-        </div>
-      </div>
     </div>
   </div>
 </div>
+<br>
 
 <div class="row mt-1" *ngIf="user.userType==1 || user.userType==2">
   <div class="col-md-8">
@@ -539,73 +468,23 @@
     </div>
   </div>
   <div class="col-md-4" *ngIf="user.userType==1 || user.userType==2">
-    <div class="card">
+    <div class="card" *ngIf="customers">
       <div class="mb-2">
-        <span class="font-weight-bold">Loans</span>
+        <span class="font-weight-bold">Customers</span>
       </div>
-      <div class="d-flex justify-conent-around mt-2 loan-data">
-        <div>
-          <span>Loan Id : 201</span>&nbsp;&nbsp;&nbsp;&nbsp;
+      <div class="d-flex justify-conent-around mt-2 loan-data" *ngFor="let customer of customers">
+        <div *ngIf="customer.id">
+          <span>Customer Id : {{customer.id}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
-        <div>
-          <span>MyG Mobiles</span>&nbsp;&nbsp;&nbsp;&nbsp;
+        <div *ngIf="customer.firstName">
+          <span>{{customer.firstName}} {{customer.lastName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
         </div>
-        <div>
-          <span class="active font-weight-bold">Approved</span>
-        </div>
-      </div>
-      <div class="d-flex justify-conent-around mt-2 loan-data">
-        <div>
-          <span>Loan Id : 223</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-          <span>Netvarth</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-          <span class="pending font-weight-bold">Pending</span>
-        </div>
-      </div>
-
-      <div class="d-flex justify-conent-around mt-2 loan-data">
-        <div>
-          <span>Loan Id : 235</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-          <span>Krishnadas</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-          <span class="active font-weight-bold">Approved</span>
-        </div>
-      </div>
-
-      <div class="d-flex justify-conent-around mt-2 loan-data">
-        <div>
-          <span>Loan Id : 222</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-          <span>Aswin Sasi</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-          <span class="rejected font-weight-bold">Rejected</span>
-        </div>
-      </div>
-
-
-
-      <div class="d-flex justify-conent-around mt-2 loan-data">
-        <div>
-          <span>Loan Id : 254</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-          <span>Manikandan</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div>
-          <span class="pending font-weight-bold">Pending</span>
+        <div *ngIf="customer.status">
+          <span class="active">{{customer.status}}</span>
         </div>
       </div>
 
     </div>
   </div>
-
 </div>
 <br><br>

@@ -19,6 +19,8 @@ export class CdlComponent implements OnInit {
   statusList = ['all', 'approved', 'redirected', 'rejected'];
   statusLoansList: any;
   dealers: any;
+  customersList: any;
+  customers: any;
   statusdealersList: any = [
     {
       'loanId': 48235,
@@ -117,6 +119,11 @@ export class CdlComponent implements OnInit {
     this.cdlservice.getDealers().subscribe(data => {
       this.statusdealersList = data
       this.dealers = this.statusdealersList.slice(0, 4);
+    });
+
+    this.cdlservice.getCustomers().subscribe(data => {
+      this.customersList = data
+      this.customers = this.customersList.slice(0, 10);
     });
   }
 
@@ -226,7 +233,6 @@ export class CdlComponent implements OnInit {
       this.loans = this.statusLoansList.slice(0, 4);
     }
   }
-
 
   viewFile(file) {
     const dialogRef = this.dialog.open(ViewFileComponent, {
