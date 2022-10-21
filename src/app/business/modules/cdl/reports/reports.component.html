@@ -1,30 +1,42 @@
+<section class="card">
+  <div class="title-gb no-padding">
+    <div class="dash-head">
+      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i>&nbsp;Back</div>
+    </div>
+  </div>
+</section>
+
+
 <section>
-    <div class="m-2">
-        <!-- <div class="card mb-2">
+  <div class="m-2">
+    <!-- <div class="card mb-2">
           <span class="font-weight-bold ml-4">Reports</span>
         </div> -->
-        <div class="customCard" id="C" >
-            <!-- [ngClass]="{'borderBottom': bBorderBottomTypeC}" -->
-        <div class="eachTab">
-          <div>
-            <img style="width: 35px;height:35px" src="/assets/images/crmImages/reports.png" />
-          </div>
-          <div class="topicName">
-            Reports
+    <div class="customCard" id="C">
+      <!-- [ngClass]="{'borderBottom': bBorderBottomTypeC}" -->
+      <div class="eachTab">
+        <div>
+          <img style="width: 35px;height:35px" src="/assets/images/crmImages/reports.png" />
+        </div>
+        <div class="topicName">
+          Reports
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4 col-lg-4" *ngFor="let item of reportType">
+        <div class="card" style="align-items:center !important;height: 5rem;" *ngIf="item"
+          (click)="reportActionType(item)">
+          <div class="d-flex">
+            <div *ngIf="item">
+              <img class="imageReport" *ngIf="item" [src]="getImage(item)">
+            </div>&nbsp;&nbsp;
+            <div *ngIf="item && item.type" class="d-flex justify-content-center">
+              {{item.type}}
+            </div>
           </div>
         </div>
       </div>
-        <div class="row">
-          <div class="col-md-4 col-lg-4"  *ngFor="let item of reportType">
-            <div class="customCard" style="align-items:center !important;height: 5rem;" *ngIf="item"
-              (click)="reportActionType(item)">
-              <div *ngIf="item">
-                <img class="imageReport" *ngIf="item" [src]="getImage(item)">
-              </div>
-              <div *ngIf="item && item.type">
-                {{item.type}}</div>
-            </div>
-          </div>
-          </div>
-          </div>
+    </div>
+  </div>
 </section>

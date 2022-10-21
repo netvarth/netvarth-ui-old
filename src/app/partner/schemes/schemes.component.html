@@ -1,0 +1,71 @@
+<section class="card">
+  <div class="title-gb no-padding">
+    <div class="dash-head">
+      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="colorHeaderIcon" *ngIf="headerName">{{headerName |capitalizeFirst}}</div>
+    </div>
+  </div>
+</section>
+
+
+<section class="card" *ngIf="loading">
+  <div>
+    <app-skeleton-loading></app-skeleton-loading>
+  </div>
+</section>
+
+
+<div *ngIf="!loading">
+  <div class="col-md-12 marginClass">
+    <div class="card">
+
+
+      <div class="table-responsive dash-list">
+        <table class="table">
+          <thead>
+            <tr class="tble-filtr-tr heght">
+              <th class="head_color">Scheme Name</th>
+              <th class="head_color">Tenure</th>
+              <th class="head_color">Rate of Interest</th>
+              <th class="head_color">Status</th>
+            </tr>
+          </thead>
+          <tbody class="table_data">
+            <ng-container *ngIf="loans && loans.length > 0">
+              <tr style="cursor:pointer" *ngFor="let item of schemeList;let i=index">
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.id">{{item.id}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
+                  {{item.customer.firstName}} {{item.customer.lastName}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.assignee && item.assignee.name">
+                  {{item.assignee.name}}</td>
+                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status && item.status.name">
+                  <div class="approvedColor text-capitalize"
+                    *ngIf="item && item.status && item.status.name && item.status.name==='New'"><i
+                      class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
+                  </div>
+                  <div class="approvedColor text-capitalize"
+                    *ngIf="item && item.status && item.status.name && item.status.name==='approved'"><i
+                      class="fa fa-check-circle"></i>&nbsp;{{item.status.name}}
+                  </div>
+                  <div class="pendingColor text-capitalize"
+                    *ngIf="item && item.status && item.status.name && (item.status.name==='pending' || item.status.name==='redirected')">
+                    <i class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
+                  </div>
+                  <div class="rejectedColor text-capitalize"
+                    *ngIf="item && item.status && item.status.name && item.status.name==='rejected'"><i
+                      class="fa fa-times-circle"></i>&nbsp;{{item.status.name}}
+                  </div>
+                </td>
+              </tr>
+            </ng-container>
+            <ng-container *ngIf="schemeList && schemeList.length == 0">
+              <tr class="my-2">
+                <td class="text-primary">No Schemes Found</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -467,8 +467,12 @@
                 <div class="form-title">GST Number</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter GST Number" class="form-control"
-                  autocomplete="off" formControlName="gst" />
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" type="text" placeholder="Enter GST Number" class="form-control"
+                    autocomplete="off" formControlName="gst" />
+                  <a class="btn btn-verify" [class.btn-verified]="gstverification" (click)="verifygst()">
+                    <span *ngIf="!gstverification">Verify</span><span *ngIf="gstverification">Verified</span></a>
+                </div>
               </div>
             </div>
           </div>

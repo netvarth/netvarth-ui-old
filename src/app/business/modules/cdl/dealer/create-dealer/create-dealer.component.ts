@@ -34,6 +34,7 @@ export class CreateDealerComponent implements OnInit {
   filesToUpload: any = [];
   actionText: any;
   aadharverification = false;
+  gstverification = false;
   headerText: any = "Create Dealer";
   btnText: any = "Create Dealer";
   action: any;
@@ -213,6 +214,7 @@ export class CreateDealerComponent implements OnInit {
   }
 
   verifyaadhar() {
+
     let can_remove = false;
     const dialogRef = this.dialog.open(OtpVerifyComponent, {
       width: '50%',
@@ -233,6 +235,23 @@ export class CreateDealerComponent implements OnInit {
       }
     });
     return can_remove;
+  }
+
+
+
+  verifygst() {
+    let gstDetails = {
+      "gstin": this.createDealer.controls.gst.value
+    }
+    this.cdlservice.gstVerify(this.dealerId, gstDetails).subscribe((data) => {
+      if (data) {
+        this.gstverification = true;
+        this.snackbarService.openSnackBar("Gst Verified Successfully")
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
   }
 
   verifypan() {
@@ -309,10 +328,9 @@ export class CreateDealerComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result = "verified") {
-          this.verification = true;
-        }
+      if (result && result.uid) {
+        this.dealerId = result.uid;
+        this.verification = true;
       }
       else {
         console.log("Data Not Saved")

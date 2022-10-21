@@ -318,7 +318,8 @@ export class OtpVerifyComponent implements OnInit {
               this.snackbarService.openSnackBar("Mobile Number Verification Successful");
               const data = {
                 type: this.type,
-                msg: "success"
+                msg: "success",
+                uid: response.uid
               }
               this.dialogRef.close(data);
             }

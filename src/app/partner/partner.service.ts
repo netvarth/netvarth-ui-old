@@ -18,6 +18,11 @@ export class PartnerService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getSchemes() {
+    const url = 'partner/loanapplication/schemes';
+    return this.servicemeta.httpGet(url, null);
+  }
+
 
   getLoanTypeList() {
     const url = 'partner/loanapplication/type';
@@ -49,7 +54,7 @@ export class PartnerService {
 
 
   getCustomerDetails(filter = {}) {
-    const url = 'partner/loanapplication/customers/details';
+    const url = 'partner/loanapplication/consumers/details';
     return this.servicemeta.httpGet(url, null, filter);
   }
 

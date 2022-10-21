@@ -17,6 +17,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  gstVerify(id, data) {
+    const url = 'provider/partner/validate/gst/' + id;
+    return this.servicemeta.httpPut(url, data);
+  }
+
 
   getCustomers() {
     const url = 'provider/customers';

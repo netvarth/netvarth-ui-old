@@ -247,14 +247,9 @@ export class PartnerComponent implements OnInit {
     dialogRef.afterClosed();
   }
 
-  // allSchemes() {
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: {
-  //       from: "schemeslist"
-  //     }
-  //   }
-  //   this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
-  // }
+  allSchemes() {
+    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'schemes']);
+  }
 
 
 

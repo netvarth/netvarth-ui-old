@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-reports',
@@ -15,17 +16,20 @@ export class ReportsComponent implements OnInit {
     {
       id: 2, type: 'Loan Application User Report'
     },
-  {
+    {
       id: 3, type: 'Loan Application Partner Wise Report'
     }
-   
+
   ]
-  constructor(private router: Router,
-    ) { }
+  constructor(
+    private router: Router,
+    private location: Location,
+
+  ) { }
 
   ngOnInit(): void {
   }
-  
+
   reportActionType(data) {
     if (data) {
       switch (data.type) {
@@ -65,6 +69,11 @@ export class ReportsComponent implements OnInit {
   }
 
 
+  goBack() {
+    this.location.back();
+  }
+
+
 
   getImage(data) {
     if (data) {
@@ -82,14 +91,14 @@ export class ReportsComponent implements OnInit {
             return imgSrc;
           }
           break;
-          case 'Loan Application Partner Wise Report':
+        case 'Loan Application Partner Wise Report':
           imgSrc = './assets/images/crmImages/leadReporterMob.png';
           if (imgSrc) {
             return imgSrc;
           }
           break;
-}
-     
+      }
+
     }
   }
 

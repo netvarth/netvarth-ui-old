@@ -194,7 +194,7 @@ export class OtpVerifyComponent implements OnInit {
       if (this.data && this.data.phoneNumber) {
         console.log("Data", this.data)
         if (!this.data.from || (this.data.from && this.data.from != 'partner')) {
-          const filter = { 'phoneNo-eq': this.phoneNumber };
+          const filter = { 'primaryMobileNo-eq': this.phoneNumber };
           this.getCustomerDetails(filter);
         }
         else if (this.from && this.from == 'partner') {
