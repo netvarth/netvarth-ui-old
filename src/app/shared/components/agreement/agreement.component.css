@@ -1,0 +1,23 @@
+.policy {
+  width: 70%;
+  padding: 15px;
+  margin: 15%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  font-size: 22px
+}
+
+p {
+  font-size: 20px;
+  line-height: 30px;
+  text-align: left;
+}
+
+
+.bg-danger {
+  background-color: #ED1A22 !important;
+}
+
+.text-light {
+  color: #fff !important;
+}
