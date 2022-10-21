@@ -21,58 +21,7 @@ export class CdlComponent implements OnInit {
   dealers: any;
   customersList: any;
   customers: any;
-  statusdealersList: any = [
-    {
-      'loanId': 48235,
-      'CustomerName': 'David',
-      'phone': '5784589456',
-      'email': 'david@gmail.com'
-    },
-    {
-      'loanId': 48236,
-      'CustomerName': 'Aswin',
-      'phone': '6987453214',
-      'email': 'aswin@gmail.com'
-    },
-    {
-      'loanId': 48237,
-      'CustomerName': 'Atul',
-      'phone': '8645784586',
-      'email': 'atul@gmail.com'
-    },
-    {
-      'loanId': 48238,
-      'CustomerName': 'Davika',
-      'phone': '9854762587',
-      'email': 'davika@gmail.com'
-    }
-  ];
-  dealersList = [
-    {
-      'dealerId': 101,
-      'dealer': 'david',
-      'status': 'active',
-      'issuedDate': '19/08/2022'
-    },
-    {
-      'dealerId': 102,
-      'dealer': 'aswin',
-      'status': 'inactive',
-      'issuedDate': '19/08/2022'
-    },
-    {
-      'dealerId': 103,
-      'dealer': 'mani',
-      'status': 'active',
-      'issuedDate': '19/08/2022'
-    },
-    {
-      'dealerId': 104,
-      'dealer': 'krishna',
-      'status': 'requested',
-      'issuedDate': '19/08/2022'
-    },
-  ];
+  statusdealersList: any;
   customOptions = {
     loop: true,
     margin: 10,
@@ -82,7 +31,7 @@ export class CdlComponent implements OnInit {
     pullDrag: true,
     autoplay: true,
     navSpeed: 200,
-    dots: true,
+    dots: false,
     center: true,
     checkVisible: false,
     responsiveClass: true,

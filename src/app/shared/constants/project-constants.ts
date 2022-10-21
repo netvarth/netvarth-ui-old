@@ -1202,7 +1202,7 @@ export const projectConstantsLocal = {
     { name: 'Pending', displayName: 'Pending' },
     // { name: 'Cancelled', displayName: 'Cancelled' },
     { name: 'Rejected', displayName: 'Rejected' },
-    { name: 'ConsumerAccepted', displayName: 'Consumer Acceptedr' },
+    { name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
     { name: 'PartnerAccepted', displayName: 'Partner Accepted' },
     { name: 'Success', displayName: 'Success' }
   ],

@@ -89,7 +89,7 @@ export class PartnerComponent implements OnInit {
     pullDrag: true,
     autoplay: true,
     navSpeed: 200,
-    dots: true,
+    dots: false,
     center: true,
     checkVisible: false,
     responsiveClass: true,

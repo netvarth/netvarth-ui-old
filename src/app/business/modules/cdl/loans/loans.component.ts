@@ -60,7 +60,7 @@ export class LoansComponent implements OnInit {
   }
 
   updateLoan(id, action, status) {
-    if (status != 'Approved') {
+    if (status == 'New') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           id: id,
@@ -68,6 +68,17 @@ export class LoansComponent implements OnInit {
         }
       };
       this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+    }
+    else if (status == 'ConsumerAccepted' || status == 'ApprovalRequired' || status == 'partnerAccepted' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
+      this.loanDetails(id)
+    }
+    else if (status == 'ApprovalPending' && this.user.userType != 2) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'approved'
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
     }
     else {
       const navigationExtras: NavigationExtras = {
@@ -83,7 +94,7 @@ export class LoansComponent implements OnInit {
 
   statusChange(event) {
     let api_filter = {}
-    api_filter['statusName-eq'] = event.value;
+    api_filter['spInternalStatus-eq'] = event.value;
     if (event.value == 'All') {
       this.getLoans();
     }

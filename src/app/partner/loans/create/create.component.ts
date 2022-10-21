@@ -772,7 +772,7 @@ export class CreateComponent implements OnInit {
           if (result.msg == "success") {
             this.verification = true;
             this.loanId = result.uid;
-            const filter = { 'primaryMobileNo-eq': this.createLoan.controls.phone.value };
+            const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
             this.getCustomerDetails(filter);
           }
         }
@@ -790,7 +790,7 @@ export class CreateComponent implements OnInit {
 
 
   saveCustomerDetails() {
-    const filter = { 'primaryMobileNo-eq': this.createLoan.controls.phone.value };
+    const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
     this.partnerservice.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
       if (this.customerDetails[0] && this.customerDetails[0].id) {

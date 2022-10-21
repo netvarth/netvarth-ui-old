@@ -54,6 +54,7 @@ export class OtpVerifyComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    console.log("this.user", this.user)
     this.type = this.data.type
     this.from = this.data.from
     if (this.data && this.data.data && this.data.data.firstName) {
@@ -194,7 +195,7 @@ export class OtpVerifyComponent implements OnInit {
       if (this.data && this.data.phoneNumber) {
         console.log("Data", this.data)
         if (!this.data.from || (this.data.from && this.data.from != 'partner')) {
-          const filter = { 'primaryMobileNo-eq': this.phoneNumber };
+          const filter = { 'phoneNo-eq': this.phoneNumber };
           this.getCustomerDetails(filter);
         }
         else if (this.from && this.from == 'partner') {
@@ -235,7 +236,7 @@ export class OtpVerifyComponent implements OnInit {
   getCustomerDetails(filter) {
     this.partnerservice.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
-      if (this.customerDetails && this.customerDetails.length != 0) {
+      if (this.customerDetails && this.customerDetails[0]) {
         this.customerId = this.customerDetails[0].id;
         this.customerData = {
           "customer": {
@@ -245,9 +246,9 @@ export class OtpVerifyComponent implements OnInit {
             "phoneNo": this.phoneNumber,
             "countryCode": "+91"
           },
-          "location": {
-            "id": this.user.bussLocs[0]
-          },
+          // "location": {
+          //   "id": this.user.bussLocs[0]
+          // },
           "loanApplicationKycList": [
             {
               "isCoApplicant": false
@@ -264,9 +265,9 @@ export class OtpVerifyComponent implements OnInit {
             "phoneNo": this.phoneNumber,
             "countryCode": "+91"
           },
-          "location": {
-            "id": this.user.bussLocs[0]
-          },
+          // "location": {
+          //   "id": this.user.bussLocs[0]
+          // },
           "loanApplicationKycList": [
             {
               "isCoApplicant": false

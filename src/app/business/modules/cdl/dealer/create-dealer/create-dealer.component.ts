@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../../loans/otp-verify/otp-verify.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -39,6 +39,7 @@ export class CreateDealerComponent implements OnInit {
   btnText: any = "Create Dealer";
   action: any;
   dealerId: any;
+  from: any;
   verification = false;
   panverification = false;
   emailverification = false;
@@ -109,8 +110,12 @@ export class CreateDealerComponent implements OnInit {
           this.dealerData = data;
           this.action = params.action;
           this.dealerId = params.id;
+          this.from = params.from;
           console.log("this.dealerData", this.dealerData)
           if (params.action == 'update' && this.dealerData) {
+            if (this.from && this.from == 'create') {
+              this.verification = true;
+            }
             this.headerText = "Update Dealer";
             this.btnText = "Update Dealer";
             this.createDealer.controls.name.setValue(this.dealerData.partnerName);
@@ -331,12 +336,26 @@ export class CreateDealerComponent implements OnInit {
       if (result && result.uid) {
         this.dealerId = result.uid;
         this.verification = true;
+        this.updateDealer(this.dealerId, 'update')
       }
       else {
         console.log("Data Not Saved")
       }
     });
     return can_remove;
+  }
+
+
+
+  updateDealer(id, action) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: id,
+        action: action,
+        from: 'create'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
   }
 
   deleteTempImage(i, type, deleteText) {
