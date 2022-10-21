@@ -18,10 +18,7 @@
           <span>Sorry your loan was rejected because of your credit score</span>
         </div>
       </div>
-      <div *ngIf="status!='pending'">
-        <div>Remarks</div>
-        <span class="details-title" *ngIf="loanData && loanData.remarks">{{loanData.remarks}}</span>
-      </div>
+
     </div>
   </div>
   <div class="row mt-2">
@@ -74,13 +71,13 @@
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}}</span>
                     </div>
                   </div>
-                  <div class="row text-left my-2">
+                  <!-- <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Permanent Address 2</div>
                     <div class="col-md-1 details-title no-padding">:</div>
                     <div><span class="col-md-6 details-sub-title no-padding"
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentAddress2">{{loanData.loanApplicationKycList[0].permanentAddress2}}</span>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Permanent Address City</div>
                     <div class="col-md-1 details-title no-padding">:</div>
@@ -310,6 +307,17 @@
         </div>
         <br *ngIf="user.userType!='2'">
       </div>
+
+
+
+      <div class="card marginClass min-height">
+        <div *ngIf="status!='pending'">
+          <div class="font-weight-bold">Remarks</div>
+          <span class="details-title" *ngIf="loanData && loanData.remarks">{{loanData.remarks}}</span>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </section>

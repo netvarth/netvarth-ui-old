@@ -12,15 +12,14 @@ import { ViewFileComponent } from './loans/loan-details/view-file/view-file.comp
 export class CdlComponent implements OnInit {
   user: any;
   loans: any = 0;
-  leads: any;
   viewmore: any = false;
   currentstatus: any = "all";
   status = "all";
   seacrchFilterOrder: any;
   statusList = ['all', 'approved', 'redirected', 'rejected'];
-  viewmoreleads: any;
   statusLoansList: any;
-  statusLeadsList: any = [
+  dealers: any;
+  statusdealersList: any = [
     {
       'loanId': 48235,
       'CustomerName': 'David',
@@ -75,6 +74,7 @@ export class CdlComponent implements OnInit {
   customOptions = {
     loop: true,
     margin: 10,
+    autoHeight: true,
     mouseDrag: true,
     touchDrag: true,
     pullDrag: true,
@@ -115,8 +115,8 @@ export class CdlComponent implements OnInit {
     });
 
     this.cdlservice.getDealers().subscribe(data => {
-      this.statusLeadsList = data
-      this.leads = this.statusLeadsList.slice(0, 4);
+      this.statusdealersList = data
+      this.dealers = this.statusdealersList.slice(0, 4);
     });
   }
 
@@ -134,31 +134,24 @@ export class CdlComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'reports']);
   }
 
-  viewMoreLeads() {
-    this.leads = this.statusLeadsList;
-    this.viewmoreleads = true;
-  }
-
 
 
   continueApplication() {
     this.router.navigate(['provider', 'cdl', 'loans', 'create']);
   }
 
-  viewLessLeads() {
-    this.leads = this.statusLeadsList.slice(0, 4);
-    this.viewmoreleads = false;
-  }
 
   loanDetails(data) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'loanDetails',
-        status: data.status,
-        customerName: data.customerName
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans', 'loanDetails'], navigationExtras);
+    this.router.navigate(['provider', 'cdl', 'loans', data]);
+  }
+
+  viewMoreLoans() {
+    this.router.navigate(['provider', 'cdl', 'loans']);
+  }
+
+
+  viewMoreDealers() {
+    this.router.navigate(['provider', 'cdl', 'dealers']);
   }
 
 
@@ -172,14 +165,14 @@ export class CdlComponent implements OnInit {
   allLoans() {
     this.router.navigate(['provider', 'cdl', 'loans']);
   }
-  allLeads() {
-    this.router.navigate(['provider', 'cdl', 'leads']);
+  alldealers() {
+    this.router.navigate(['provider', 'cdl', 'dealers']);
   }
   allDealers() {
     this.router.navigate(['provider', 'cdl', 'dealers']);
   }
   createLead() {
-    this.router.navigate(['provider', 'cdl', 'leads', 'create']);
+    this.router.navigate(['provider', 'cdl', 'dealers', 'create']);
   }
 
   requestedDealers() {
@@ -260,11 +253,10 @@ export class CdlComponent implements OnInit {
   showDealer(dealer) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        dealer: dealer.dealer,
-        status: dealer.status
+        id: dealer
       }
     }
-    this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
+    this.router.navigate(['provider', 'cdl', 'dealers', 'approve'], navigationExtras);
   }
 
 

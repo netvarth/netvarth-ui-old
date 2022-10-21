@@ -133,7 +133,8 @@
       <div class="row text-right">
         <form [formGroup]="statusList">
           <div class="form-group text-left col-md-4 my-3">
-            <mat-select class="form-control widthWebKit" #status (selectionChange)="statusChange($event)">
+            <mat-select class="form-control widthWebKit" #status (selectionChange)="statusChange($event)"
+              placeholder="All Loans">
               <mat-option [value]="status.name" *ngFor="let status of loanStatus">
                 <div *ngIf="status && status.displayName">{{status.displayName}}</div>
               </mat-option>

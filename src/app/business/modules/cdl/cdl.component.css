@@ -22,6 +22,11 @@
   border-radius: 50% !important;
 }
 
+.slider-height,
+.recentcards {
+  height: 200px !important;
+}
+
 .add-lead-icon {
   color: #fff !important;
   background-color: #FFC700 !important;

@@ -181,7 +181,7 @@
       </div>
     </div>
 
-    <div class="col-md-2" (click)="allLeads()">
+    <!-- <div class="col-md-2" (click)="allLeads()">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-clock-o all-leads-icon"></i>
@@ -190,7 +190,7 @@
           <span class="card-title">All Leads</span>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="col-md-2" *ngIf="user.userType==1" (click)="createDealer()">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
@@ -289,13 +289,15 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngIf="loans && loans.length > 0">
-              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="loanDetails(item.uid)">
+              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index">
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.id">{{item.id}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
                   {{item.customer.firstName}} {{item.customer.lastName}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.assignee && item.assignee.name">
-                  {{item.assignee.name}}</td>
-                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status && item.status.name">
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.partner && item.partner.partnerName">
+                  {{item.partner.partnerName}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && !item.partner">
+                  --</td>
+                <td data-title=" Loan Details" class="td1 loanStatus" *ngIf="item && item.status && item.status.name">
                   <div class="approvedColor text-capitalize"
                     *ngIf="item && item.status && item.status.name && item.status.name==='New'"><i
                       class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
@@ -314,7 +316,7 @@
                   </div>
                 </td>
                 <td>
-                  <div *ngIf="item && item.uid">
+                  <div *ngIf="item && item.uid" (click)="loanDetails(item.uid)">
                     <a class="btn btn-primary">View</a>
                   </div>
                 </td>
@@ -327,53 +329,46 @@
             </ng-container>
           </tbody>
         </table>
-        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="!viewmore && loans.length>3"
-          (click)="viewMore()">View
+        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="loans && loans.length>3"
+          (click)="viewMoreLoans()">View
           All</span>
-        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="viewmore && loans.length>3"
-          (click)="viewLess()">View
-          Less</span>
       </div>
     </div>
 
 
     <br>
-    <div class="card" *ngIf="user.userType==5">
+    <div class="card" *ngIf="user.userType==2">
       <div>
         <span class="font-weight-bold text-primary">All Leads</span>
       </div>
-      <div class="table-responsive dash-list mt-2">
-        <table class="table" style="background-color: white;">
+      <div class="table-responsive dash-list">
+        <table class="table">
           <thead>
             <tr class="tble-filtr-tr heght">
-              <th class="head_color">Name</th>
-              <th class="head_color">Phone Number</th>
-              <th class="head_color">Email</th>
+              <th class="head_color">Dealer Id</th>
+              <th class="head_color">Status</th>
+              <th class="head_color">Dealer</th>
+              <th class="head_color">Phone</th>
+              <th class="head_color"></th>
             </tr>
           </thead>
           <tbody class="table_data">
-            <ng-container *ngFor="let lead of leads">
-              <tr style="cursor:pointer" (click)="continueApplication()">
-                <td>
-                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{lead.CustomerName}}</span>
+            <ng-container *ngFor="let dealer of dealers;let i=index">
+              <tr style="cursor:pointer" (click)="showDealer(dealer.uid)">
+                <td data-title="Loan Details" class="td1">{{dealer.id}}</td>
+                <td data-title="Loan Details" class="td1 loanStatus">
+                  <img class="imageApprove" src="/assets/images/cdl/approved.png" />
+                  <div class="approvedColor text-capitalize">{{dealer.partnerStatus}}</div>
                 </td>
-                <td>
-                  <span>{{lead.phone}}</span>
-                </td>
-                <td class="text-capitalize">
-                  <span>{{lead.email}}</span>
-                </td>
-                <td>
+                <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.partnerName}}</td>
+                <td data-title="Loan Details" class="td1">{{dealer.partnerMobile}}</td>
+                <td data-title="Loan Details" class="td1" (click)="showDealer(dealer.uid)">
                   <a class="btn btn-primary">View</a>
                 </td>
               </tr>
             </ng-container>
           </tbody>
         </table>
-        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="!viewmoreleads" (click)="viewMoreLeads()">View
-          All</span>
-        <span class="text-primary font-weight-bold pointer-cursor" *ngIf="viewmoreleads" (click)="viewLessLeads()">View
-          Less</span>
       </div>
     </div>
   </div>
@@ -509,38 +504,37 @@
 <div class="row mt-1" *ngIf="user.userType==1 || user.userType==2">
   <div class="col-md-8">
     <div class="card">
+      <div>
+        <span class="font-weight-bold text-primary">Dealers</span>
+      </div>
       <div class="table-responsive dash-list">
-        <span class="font-weight-bold">All Dealers</span>
-        <table class="table" style="background-color: white;">
+        <table class="table">
           <thead>
             <tr class="tble-filtr-tr heght">
-              <th class="head_color">Name</th>
-              <th class="head_color">Location</th>
+              <th class="head_color">Dealer Id</th>
               <th class="head_color">Status</th>
+              <th class="head_color">Dealer</th>
+              <th class="head_color">Phone</th>
+              <th class="head_color"></th>
             </tr>
           </thead>
           <tbody class="table_data">
-            <ng-container *ngFor="let dealer of dealersList">
-              <tr style=" cursor:pointer" (click)="showDealer(dealer)">
-                <td>
-                  <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{dealer.dealer}}</span>
+            <ng-container *ngFor="let dealer of dealers;let i=index">
+              <tr style="cursor:pointer" (click)="showDealer(dealer.uid)">
+                <td data-title="Loan Details" class="td1">{{dealer.id}}</td>
+                <td data-title="Loan Details" class="td1 loanStatus">
+                  <div class="approvedColor text-capitalize">{{dealer.partnerStatus}}</div>
                 </td>
-
-                <td>
-                  <span class="text-capitalize" [class.active]="status == 'active'"
-                    [class.active]="dealer.status == 'active'" [class.inactive]="dealer.status == 'inactive'"
-                    [class.requested]="dealer.status == 'requested'">{{dealer.status}}</span>
-                </td>
-                <td>
-                  <span>{{dealer.issuedDate}}</span>
-                </td>
-                <td>
+                <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.partnerName}}</td>
+                <td data-title="Loan Details" class="td1">{{dealer.partnerMobile}}</td>
+                <td data-title="Loan Details" class="td1" (click)="showDealer(dealer.uid)">
                   <a class="btn btn-primary">View</a>
                 </td>
               </tr>
             </ng-container>
           </tbody>
         </table>
+        <span class="text-primary font-weight-bold pointer-cursor" (click)="viewMoreDealers()">View All</span>
       </div>
     </div>
   </div>
