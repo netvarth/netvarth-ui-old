@@ -49,7 +49,7 @@ export class PartnerService {
 
 
   getCustomerDetails(filter = {}) {
-    const url = 'provider/customers';
+    const url = 'partner/loanapplication/customers/details';
     return this.servicemeta.httpGet(url, null, filter);
   }
 
