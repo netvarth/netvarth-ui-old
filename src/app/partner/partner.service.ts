@@ -53,6 +53,12 @@ export class PartnerService {
   }
 
 
+  getLoanFromOutside(loan, account) {
+    const url = 'provider/loanapplication/agreement/' + loan + '?account=' + account;
+    return this.servicemeta.httpGet(url, null);
+  }
+
+
   getCustomerDetails(filter = {}) {
     const url = 'partner/loanapplication/consumers/details';
     return this.servicemeta.httpGet(url, null, filter);
@@ -159,6 +165,11 @@ export class PartnerService {
     return this.servicemeta.httpPost(url, data);
   }
 
+  sendAgreementOTP(data) {
+    const url = 'provider/loanapplication/generate/acceptance';
+    return this.servicemeta.httpPost(url, data);
+  }
+
   saveBankDetails(data) {
     const url = 'partner/loanapplication/bank';
     return this.servicemeta.httpPost(url, data);
@@ -177,6 +188,11 @@ export class PartnerService {
   verifyPhoneOTP(otp, data) {
     const url = 'partner/loanapplication/verify/' + otp + '/phone';
     return this.servicemeta.httpPost(url, data);
+  }
+
+  verifyagreementOTP(id, otp) {
+    const url = 'provider/loanapplication/verify/' + id + '/acceptance/' + otp + '/phone';
+    return this.servicemeta.httpPost(url, null);
   }
 
   partnerOtpVerify(otp, data) {

@@ -7,8 +7,8 @@
   font-size: 22px
 }
 
-p {
-  font-size: 20px;
+span {
+  font-size: 16px;
   line-height: 30px;
   text-align: left;
 }
@@ -20,4 +20,22 @@ p {
 
 .text-light {
   color: #fff !important;
+}
+
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 2px !important;
+}
+
+
+.btn-danger {
+  background-color: #ef2c4c !important;
+  border-color: #ef2c4c !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 2px !important;
 }

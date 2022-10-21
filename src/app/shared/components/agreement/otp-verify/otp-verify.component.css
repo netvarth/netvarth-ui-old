@@ -1,0 +1,24 @@
+.title {
+  font-size: 20px !important;
+  color: #1E4079 !important;
+}
+
+.subtitle {
+  font-size: 12px !important;
+  color: rgb(123, 117, 117);
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 10px !important;
+  padding: 5px !important;
+}
+
+.fa-times {
+  font-weight: 100 !important;
+  font-size: 18px !important;
+  color: #1e4079 !important;
+}
