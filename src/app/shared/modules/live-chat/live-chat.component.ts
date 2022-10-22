@@ -54,6 +54,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     videoTrack;
     previewTracks = [];
     previewTracksClone = [];
+    theme: any;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -84,6 +85,9 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 }
                 if (qParams['account']) {
                     _this.account = qParams['account'];
+                }
+                if(qParams['theme']){
+                    this.theme = qParams['theme'];
                 }
             }
         )
@@ -389,6 +393,9 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             if (customId) {
                 queryParams['customId'] = customId;
                 queryParams['accountId']= _this.account;
+            }
+            if (this.theme) {
+                queryParams['theme']=this.theme;
             }
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
