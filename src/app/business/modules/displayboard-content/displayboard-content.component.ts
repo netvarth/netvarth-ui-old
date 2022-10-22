@@ -346,13 +346,24 @@ export class DisplayboardLayoutContentComponent implements OnInit, OnDestroy {
             }
         } else if (field.name === 'primaryMobileNo') {
             let full_phone = '';
+            console.log(this.type);
             if (this.type === 'waitlist') {
                 if (checkin['waitlistingFor'][0]['phoneNo'] && checkin['waitlistingFor'][0]['phoneNo'] !== 'null') {
                     full_phone = checkin['waitlistingFor'][0]['phoneNo'];
+                } else if (checkin['consumer']['phoneNo']) {
+                    full_phone = checkin['consumer']['phoneNo'];
+                } else {
+                    full_phone = "**********";
                 }
-            } else {
+            } else {                
                 if (checkin.phoneNumber) {
                     full_phone = checkin.phoneNumber;
+                } else if (checkin['consumer'] && checkin['consumer']['userProfile']['primaryMobileNo']) {
+                    full_phone = checkin['consumer']['userProfile']['primaryMobileNo'];                    
+                } else if (checkin['providerConsumer'] && checkin['providerConsumer']['phoneNo'].trim()!="") {
+                    full_phone = checkin['providerConsumer']['phoneNo'];
+                } else {
+                    full_phone = "**********";
                 }
             }
             if (full_phone) {
