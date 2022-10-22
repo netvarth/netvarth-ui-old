@@ -19,6 +19,8 @@ export class CreateDealerComponent implements OnInit {
   partnerTypes: any;
   partnerCategories: any;
   dealerData: any;
+  dealerApplication: any;
+  verifyingUID: any;
   selectedMessage = {
     files: [],
     base64: [],
@@ -165,6 +167,66 @@ export class CreateDealerComponent implements OnInit {
   resetErrors() {
 
   }
+
+
+
+  idVerification(type) {
+
+    this.dealerApplication = {
+      "uid": this.dealerId
+    }
+
+    if (type == 'Pan') {
+      this.dealerApplication["pan"] = this.createDealer.controls.pannumber.value;
+    }
+    else if (type == 'UID') {
+      this.dealerApplication["aadhaar"] = this.createDealer.controls.aadharnumber.value;
+    }
+
+    this.cdlservice.getDealerById(this.dealerId).subscribe((data: any) => {
+      if (data && data.dealerApplicationKycList && data.dealerApplicationKycList[0] && data.dealerApplicationKycList[0].id) {
+        this.dealerApplication["id"] = data.dealerApplicationKycList[0].id
+      }
+      for (let i = 0; i < this.filesToUpload.length; i++) {
+        this.filesToUpload[i]['order'] = i;
+        if (this.filesToUpload[i]["type"] == 'pan' && type == 'Pan') {
+          this.dealerApplication['panAttachments'] = [];
+          this.dealerApplication['panAttachments'].push(this.filesToUpload[i]);
+        }
+        if (this.filesToUpload[i]["type"] == 'aadhar' && type == 'UID') {
+          this.dealerApplication['aadhaarAttachments'] = [];
+          this.dealerApplication['aadhaarAttachments'].push(this.filesToUpload[i]);
+        }
+      }
+
+      this.cdlservice.verifyIds(type, this.dealerApplication).subscribe((s3urls: any) => {
+        if (s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+            });
+        }
+        if (type == 'Pan') {
+          this.panverification = true;
+          this.snackbarService.openSnackBar(type + " Verified Successfully")
+        }
+        else if (type == 'UID') {
+          this.verifyingUID = true;
+          this.snackbarService.openSnackBar("We have sent the verification link to mobile.Please Verify and click on refresh")
+        }
+      },
+        (error) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+        })
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+
+
+  }
+
+
 
   filesSelected(event, type) {
     console.log("Event ", event, type)

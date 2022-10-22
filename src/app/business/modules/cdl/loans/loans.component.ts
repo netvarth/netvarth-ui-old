@@ -69,6 +69,14 @@ export class LoansComponent implements OnInit {
       };
       this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
     }
+    else if (status == 'PartnerAccepted') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'partnerAccepted'
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+    }
     else if (status == 'ConsumerAccepted' || status == 'ApprovalRequired' || status == 'partnerAccepted' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
       this.loanDetails(id)
     }

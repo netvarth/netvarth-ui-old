@@ -147,7 +147,7 @@
                 <div class="text-left details-sub-title">{{dealerData.aadhaar}}</div>
               </div>
               <div class="mt-2">
-                <button (click)="viewFile('aadhar')" class="btn confirmBtn" type="button">
+                <button (click)="viewFile('aadhar')" class="btn btn-primary" type="button">
                   <span>View Aadharcard</span>
                 </button>
               </div>
@@ -160,10 +160,11 @@
                 <div class="text-left details-title">Pan Number</div>
                 <div class="text-left details-sub-title">{{dealerData.pan}}</div>
               </div>
-              <div class="mt-2">
-                <button (click)="viewFile('pan')" class="btn confirmBtn" type="button">
+              <div class="mt-2"
+                *ngIf="dealerData && dealerData.panAttachments && dealerData.panAttachments[0] && dealerData.panAttachments[0].s3path">
+                <a [href]="dealerData.panAttachments[0].s3path" target="_blank" class="btn btn-primary" type="button">
                   <span>View Pancard</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -176,8 +177,22 @@
                 <div class="text-left details-sub-title">{{dealerData.gstin}}</div>
               </div>
               <div class="mt-2">
-                <button (click)="viewFile('aadhar')" class="btn confirmBtn" type="button">
+                <button (click)="viewFile('aadhar')" class="btn btn-primary" type="button">
                   <span>View GSTIN</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div *ngIf="dealerData && dealerData.gstin">
+              <div>
+                <div class="text-left details-title">License</div>
+                <div class="text-left details-sub-title">{{dealerData.gstin}}</div>
+              </div>
+              <div class="mt-2">
+                <button (click)="viewFile('cibil')" class="btn btn-primary" type="button">
+                  <span>View License</span>
                 </button>
               </div>
             </div>

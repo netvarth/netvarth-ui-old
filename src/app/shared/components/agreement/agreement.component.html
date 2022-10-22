@@ -1,4 +1,4 @@
-<div class="policy card p-0">
+<div class="policy card p-0" *ngIf="type && type=='agreement'">
   <div class="bg-danger text-light pt-2 p-3 pb-2">
     <h3 class="title">Consumer Agreement</h3>
   </div>
@@ -10,22 +10,41 @@
   </div>
   <div class="pl-2">
     <div>
-      <span class="font-weight-bold">Applicant Name : </span><span> Krishna</span>
+      <span class="font-weight-bold">Applicant Name : </span>
+      <span *ngIf="loanData && loanData.customer && loanData.customer.firstName"> {{loanData.customer.firstName}}</span>
+      <span *ngIf="loanData && loanData.customer && loanData.customer.lastName"> {{loanData.customer.lastName}}</span>
+
     </div>
     <div>
-      <span class="font-weight-bold">Mobile : </span><span> 848949991156</span>
+      <span class="font-weight-bold">Mobile : </span>
+      <span *ngIf="loanData && loanData.customer && loanData.customer.phoneNo"> {{loanData.customer.phoneNo}}</span>
+
     </div>
     <div>
-      <span class="font-weight-bold">Loan Amount : </span><span> 50000</span>
+      <span class="font-weight-bold">Total Amount : </span>
+      <span *ngIf="loanData && loanData.invoiceAmount">
+        {{loanData.invoiceAmount}}</span>
     </div>
     <div>
-      <span class="font-weight-bold">Down Payment : </span><span> 20000</span>
+      <span class="font-weight-bold">Down Payment : </span>
+      <span *ngIf="loanData && loanData.downpaymentAmount">
+        {{loanData.downpaymentAmount}}</span>
     </div>
     <div>
-      <span class="font-weight-bold">Loan Required : </span><span> 30000</span>
+      <span class="font-weight-bold">Loan Required : </span>
+      <span *ngIf="loanData && loanData.requestedAmount">
+        {{loanData.requestedAmount}}</span>
+
     </div>
     <div>
-      <span class="font-weight-bold">Scheme : </span><span> Diwali Scheme</span>
+      <span class="font-weight-bold">Sanctioned Amount : </span>
+      <span *ngIf="loanData && loanData.sanctionedAmount">
+        {{loanData.sanctionedAmount}}</span>
+    </div>
+    <div>
+      <span class="font-weight-bold">Scheme : </span>
+      <span *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeName">
+        {{loanData.loanScheme.schemeName}}</span>
     </div>
   </div>
   <div class="p-2">
@@ -49,11 +68,28 @@
         </a>
       </div>
       <div>
-        <a class="btn btn-danger">
+        <a class="btn btn-danger" (click)="reject()">
           Reject
         </a>
       </div>
     </div>
   </div>
   <br>
+</div>
+
+
+
+
+
+<div class="policy card" *ngIf="type && (type=='accepted' || type=='rejected')">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/thankyou.gif" width="600px">
+      </div>
+      <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
+        Go to Home
+      </div> -->
+    </div>
+  </div>
 </div>

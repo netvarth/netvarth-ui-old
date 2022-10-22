@@ -194,20 +194,12 @@ export class OtpVerifyComponent implements OnInit {
       this.otpError = 'Invalid OTP';
     } else {
 
-
-      if (this.data && this.data.phoneNumber) {
+      if (this.phoneNumber) {
         console.log("Data", this.data)
-        if (!this.data.from || (this.data.from && this.data.from != 'partner')) {
+        if (this.phoneNumber) {
           const filter = { 'phoneNo-eq': this.phoneNumber };
           this.getCustomerDetails(filter);
         }
-        else if (this.from && this.from == 'partner') {
-          this.partnerOtpVerify()
-        }
-
-      }
-      else {
-        this.verifyEmail();
       }
     }
   }

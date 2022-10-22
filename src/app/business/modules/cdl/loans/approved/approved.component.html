@@ -26,6 +26,61 @@
 
 
 
+<div class="card m-2" *ngIf="type=='partnerAccepted'">
+  <span class="font-weight-bold">&nbsp;Loan Sanctioned</span><br><br>
+  <div class="row">
+    <div class="col-md-10 card-border">
+
+      <div class="col-md-6">
+        <div>
+          <img width="80" height="60" src="../../../../assets/images/cdl/sanctioned.png">&nbsp;&nbsp;
+          <span class="font-weight-bold sanctioned-title">Loan has been sanctioned</span>
+        </div>
+        <div>
+          <span class="font-weight-bold card-title">Date : </span>
+          <span class="font-weight-bold card-small-font">22/10/2022</span><br>
+          <span class="font-weight-bold card-title">Purpose of Loan: </span>
+          <span class="font-weight-bold card-small-font">Mobile Purchase</span>
+        </div><br>
+        <div class="pointer-cursor" *ngIf="user.userType != 2">
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="fieldPadding">
+                  <div class='file file--upload'>
+                    <label for='input-file'>
+                      Upload Invoice
+                    </label>
+                    <input id='input-file' type='file' />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 d-flex">
+        <div class="card">
+          <span class="font-weight-bold card-title">Loan Amount</span><br>
+          <span class="font-weight-bold"><i class="fa fa-inr"></i>&nbsp;44000</span>
+        </div>
+        <div class="card">
+          <span class="font-weight-bold card-title">Duration</span><br>
+          <span class="font-weight-bold"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;6 Months</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="btn btn-primary mt-3" (click)="goHome()">
+    Go to Home
+  </div>
+</div>
+
+
+
 <div class="card m-2" *ngIf="type=='approved'">
   <div class="row">
     <div class="text-center">

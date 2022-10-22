@@ -71,9 +71,7 @@ export class OtpVerifyComponent implements OnInit {
       if (this.phoneNumber.startsWith('555')) {
         this.config.length = 5;
       }
-      this.partnerservice.getBusinessProfile().subscribe((data) => {
-        this.businessDetails = data;
-      });
+
       this.sendOTP();
     }
     else if (this.data && this.data.email) {

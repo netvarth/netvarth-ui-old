@@ -19,6 +19,7 @@ export class ConfirmBoxComponent implements OnInit {
   sanctionAmount: any = false;
   type: any;
   loanId: any;
+  downloadsrc = "https://scale.jaldee.com/shortUrl/Njg5My0xLTI3MTM3";
   loanData: any;
   sanctionedAmount: any = 0;
   config = {
@@ -67,6 +68,12 @@ export class ConfirmBoxComponent implements OnInit {
       }, 3500);
     }
 
+    if (this.from && this.from == 'analyzebank') {
+      setTimeout(() => {
+        this.downloadExcel()
+      }, 3500);
+    }
+
     this.getLoanSchemes();
   }
 
@@ -79,6 +86,12 @@ export class ConfirmBoxComponent implements OnInit {
 
   }
 
+
+
+  downloadExcel() {
+    window.open(this.downloadsrc, "_self");
+    this.dialogRef.close();
+  }
   payment(event) {
     this.sanctionedAmount = event.target.value;
     this.downPayment = this.totalPayment - this.sanctionedAmount;

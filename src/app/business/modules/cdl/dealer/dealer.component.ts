@@ -75,7 +75,7 @@ export class DealerComponent implements OnInit {
     if (status == 'New' && spInternalStatus == 'Approved') {
       this.router.navigate(['provider', 'cdl', 'dealers', 'view', dealerId]);
     }
-    else if (status == 'New' && spInternalStatus == 'Pending') {
+    else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           id: dealerId

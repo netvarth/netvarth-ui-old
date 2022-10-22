@@ -105,6 +105,28 @@ export class LoanDetailsComponent implements OnInit {
       });
   }
 
+
+  analyze() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: 'analyzebank'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "eligible") {
+
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+  }
+
   redirectLoan() {
 
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {

@@ -272,6 +272,15 @@
             </a>
           </div>
         </div>
+
+        <div class="row mt-2"
+          *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
+          <div class="col-md-4">
+            <a (click)="analyze()" class="btn btn-primary btn-primary-full">
+              <span>Analyze Statements</span>
+            </a>
+          </div>
+        </div>
         <br>
       </div>
 

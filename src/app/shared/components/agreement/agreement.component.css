@@ -39,3 +39,10 @@ span {
   font-weight: 100 !important;
   border-radius: 2px !important;
 }
+
+
+.sanctioned-title {
+  font-size: 15px !important;
+  color: #1E4079 !important;
+  font-weight: bold !important;
+}

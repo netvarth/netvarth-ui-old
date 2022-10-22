@@ -141,18 +141,17 @@ export class OtpVerifyComponent implements OnInit {
 
 
   partnerOtpVerify() {
-    this.subs.sink = this.partnerservice.verifyagreementOTP(this.otpEntered, this.uid)
+    this.subs.sink = this.partnerservice.verifyagreementOTP(this.uid, this.otpEntered)
       .subscribe(
         (response: any) => {
-          if (response) {
-            this.snackbarService.openSnackBar("Mobile Number Verification Successful");
-            const data = {
-              type: this.type,
-              msg: "success",
-              uid: response.uid
-            }
-            this.dialogRef.close(data);
+          this.snackbarService.openSnackBar("Mobile Number Verification Successful");
+          const data = {
+            type: this.type,
+            msg: "success",
+            uid: response.uid
           }
+          this.dialogRef.close(data);
+
           console.log("Response", response)
         },
         error => {

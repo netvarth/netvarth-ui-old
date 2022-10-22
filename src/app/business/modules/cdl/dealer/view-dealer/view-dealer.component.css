@@ -10,6 +10,8 @@
   font-size: 12px;
 }
 
+
+
 .dealer-name {
   font-size: 18px;
   font-weight: bold;
@@ -186,4 +188,14 @@ td {
 
 .min-height {
   min-height: 570px !important;
+}
+
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
 }
