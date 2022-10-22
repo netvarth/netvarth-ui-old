@@ -492,7 +492,6 @@ export class CreateDealerComponent implements OnInit {
     if (this.dealerData) {
       console.log("Loan Application Data : ", this.dealerData)
       if (this.action != 'update') {
-
         for (let i = 0; i < this.filesToUpload.length; i++) {
           this.filesToUpload[i]['order'] = i;
           if (this.filesToUpload[i]["type"] == 'photo') {
@@ -533,9 +532,38 @@ export class CreateDealerComponent implements OnInit {
       }
       else {
 
+        for (let i = 0; i < this.filesToUpload.length; i++) {
+          this.filesToUpload[i]['order'] = i;
+          if (this.filesToUpload[i]["type"] == 'photo') {
+            this.dealerData['partnerAttachments'] = [];
+            this.dealerData['partnerAttachments'].push(this.filesToUpload[i]);
+          }
+          if (this.filesToUpload[i]["type"] == 'aadhar') {
+            this.dealerData['aadhaarAttachments'] = [];
+            this.dealerData['aadhaarAttachments'].push(this.filesToUpload[i]);
+          }
+          if (this.filesToUpload[i]["type"] == 'pan') {
+            this.dealerData['panAttachments'] = [];
+            this.dealerData['panAttachments'].push(this.filesToUpload[i]);
+          }
+          if (this.filesToUpload[i]["type"] == 'store') {
+            this.dealerData['storeAttachments'] = [];
+            this.dealerData['storeAttachments'].push(this.filesToUpload[i]);
+          }
+          if (this.filesToUpload[i]["type"] == 'cheque') {
+            this.dealerData['bankAttachments'] = [];
+            this.dealerData['bankAttachments'].push(this.filesToUpload[i]);
+          }
+        }
+
         this.dealerData['uid'] = this.dealerId;
-        this.cdlservice.updateDealer(this.dealerId, this.dealerData).subscribe((response: any) => {
-          console.log("response", response);
+        this.cdlservice.updateDealer(this.dealerId, this.dealerData).subscribe((s3urls: any) => {
+          if (s3urls.attachmentsUrls.length > 0) {
+            this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
+              (dataS3Url) => {
+                console.log(dataS3Url);
+              });
+          }
           this.snackbarService.openSnackBar("Dealer Updated Successfully")
           this.router.navigate(['provider', 'cdl', 'dealers'])
         },
