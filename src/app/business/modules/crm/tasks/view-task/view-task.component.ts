@@ -153,37 +153,37 @@ export class ViewTaskComponent implements OnInit {
   updateEnqLeadMasterId: any;
   updateEnqLeadAutoGenerate: any;
   updateEnqAssignId: any;
-  updateEnqStatusName:any;
-  titleLebal:string='Activity Name';
-  desCriptionLebal:string='Description';
-  areaLebal:string='Area';
-  employeeLebal:string='Employee';
-  dueDateLebal:string='Due Date';
-  lebalCategory:string='Category';
-  lebalType:string='Type';
-  lebalLocation:string='Location';
-  lebalManager:string='Manager';
-  lebalEstDuration:string='Est Duration';
-  lebalDays:string='Days';
-  lebalHours:string='Hours';
-  lebalMinutes:string='Minutes';
-  lebalStatus:string='Status';
-  lebalTargetPotential:string='Target Potential';
-  lebalBusinessPotential:string='Business Potential';
-  lebalActualPotential:string='Activity Number';
-  cancelBtn:string='Cancel';
-  completeBtn:string='Complete';
-  files:string='Files';
-  uploadFilesrelated:string='Click or Upload Files related to activity';
-  uploadedFiles:string='( Uploaded Files )';
-  fileType:string='File Type :';
-  size:string='Size :';
-  remarks:string='Activity Remarks';
-  addRemarks:'Add Remarks';
-  savedRemarks:string='( Saved Remarks)';
-  noOfDataCollected:string='No of data collected';
-  actualPotential:any;
-    constructor(
+  updateEnqStatusName: any;
+  titleLebal: string = 'Activity Name';
+  desCriptionLebal: string = 'Description';
+  areaLebal: string = 'Area';
+  employeeLebal: string = 'Employee';
+  dueDateLebal: string = 'Due Date';
+  lebalCategory: string = 'Category';
+  lebalType: string = 'Type';
+  lebalLocation: string = 'Location';
+  lebalManager: string = 'Manager';
+  lebalEstDuration: string = 'Est Duration';
+  lebalDays: string = 'Days';
+  lebalHours: string = 'Hours';
+  lebalMinutes: string = 'Minutes';
+  lebalStatus: string = 'Status';
+  lebalTargetPotential: string = 'Target Potential';
+  lebalBusinessPotential: string = 'Business Potential';
+  lebalActualPotential: string = 'Activity Number';
+  cancelBtn: string = 'Cancel';
+  completeBtn: string = 'Complete';
+  files: string = 'Files';
+  uploadFilesrelated: string = 'Click or Upload Files related to activity';
+  uploadedFiles: string = '( Uploaded Files )';
+  fileType: string = 'File Type :';
+  size: string = 'Size :';
+  remarks: string = 'Activity Remarks';
+  addRemarks: 'Add Remarks';
+  savedRemarks: string = '( Saved Remarks)';
+  noOfDataCollected: string = 'No of data collected';
+  actualPotential: any;
+  constructor(
     private crmService: CrmService,
     public _location: Location,
     public dialog: MatDialog,
@@ -248,7 +248,7 @@ export class ViewTaskComponent implements OnInit {
 
   }
   userInfo() {
-    if(this.groupService &&  this.groupService.getitemFromGroupStorage('ynw-user')){
+    if (this.groupService && this.groupService.getitemFromGroupStorage('ynw-user')) {
       const user = this.groupService.getitemFromGroupStorage('ynw-user');
       if (user) {
         if (user.firstName || user.lastName) {
@@ -257,7 +257,7 @@ export class ViewTaskComponent implements OnInit {
         }
         if (user.id) {
           this.assigneeId = user.id;
-          if(this.assigneeId){
+          if (this.assigneeId) {
             this.updateMemberId = this.assigneeId;
           }
         }
@@ -269,17 +269,17 @@ export class ViewTaskComponent implements OnInit {
         }
       }
     }
-    
+
 
   }
   getEnquiryDetailsRefresh() {
-    const _this=this;
-    return new Promise((resolve,reject)=>{
+    const _this = this;
+    return new Promise((resolve, reject) => {
       _this.crmService.getEnquiryDetails(_this.enquiryId).subscribe((enquiryList: any) => {
         resolve(enquiryList);
         _this.taskDetails = enquiryList;
-        console.log('taskDetails:::',_this.taskDetails)
-        if(enquiryList && enquiryList.uid){
+        console.log('taskDetails:::', _this.taskDetails)
+        if (enquiryList && enquiryList.uid) {
           _this.enquiryUid = enquiryList.uid;
         }
         if (enquiryList && enquiryList.customer && enquiryList.customer.Name) {
@@ -289,21 +289,21 @@ export class ViewTaskComponent implements OnInit {
         if (enquiryList && enquiryList.customer && enquiryList.customer.phoneNo) {
           _this.customerPhNo = (enquiryList.customer.phoneNo);
         }
-        if(enquiryList){
+        if (enquiryList) {
           _this.getUpdateFollowUPValue(enquiryList);
         }
-        if(enquiryList && enquiryList.status && enquiryList.status.name){
+        if (enquiryList && enquiryList.status && enquiryList.status.name) {
           _this.headerName = enquiryList.status.name;
         }
       }),
-      ((error)=>{
-        reject(error);
-      })
+        ((error) => {
+          reject(error);
+        })
     })
   }
   getTaskDetailsRefresh() {
-    const _this=this;
-    return new Promise((resolve,reject)=>{
+    const _this = this;
+    return new Promise((resolve, reject) => {
       if (_this.activityType === undefined && _this.taskUid) {
         _this.crmService.getTaskDetails(_this.taskUid).subscribe(data => {
           resolve(data);
@@ -326,7 +326,7 @@ export class ViewTaskComponent implements OnInit {
               _this.bTaskFollowUpResult = true;
             }
           }
-  
+
           if (_this.activityType !== 'UpdateFollowUP') {
             if (_this.taskDetails) {
               if (_this.taskDetails.title != undefined) {
@@ -476,7 +476,7 @@ export class ViewTaskComponent implements OnInit {
             if (_this.taskDetails) {
               if (_this.taskDetails.actualPotential) {
                 _this.bTaskActualPotential = true;
-                _this.actualPotential= _this.taskDetails.actualPotential
+                _this.actualPotential = _this.taskDetails.actualPotential
                 // _this.taskDetailsForm.patchValue({
                 //   actualPotential: _this.taskDetails.actualPotential
                 // })
@@ -497,9 +497,9 @@ export class ViewTaskComponent implements OnInit {
             _this.crmService.taskToCraeteViaServiceData = _this.taskDetails
           }
         }),
-        ((error)=>{
-          reject(error);
-        });
+          ((error) => {
+            reject(error);
+          });
         if (_this.taskDetails && _this.taskDetails.customer && _this.taskDetails.customer.Name) {
           _this.firstCustomerName = _this.taskDetails.customer.Name.charAt(0);
           _this.customerName = _this.taskDetails.customer.Name;
@@ -509,86 +509,86 @@ export class ViewTaskComponent implements OnInit {
         }
       }
     })
-    
+
   }
   //mew ui method start
   getUpdateFollowUPValue(enquiryDetails) {
     if (enquiryDetails && enquiryDetails.title) {
-      this.updateEnqTitle= enquiryDetails.title
+      this.updateEnqTitle = enquiryDetails.title
     }
-    else{
-      this.updateEnqTitle=''
+    else {
+      this.updateEnqTitle = ''
     }
     if (enquiryDetails && enquiryDetails.assignee) {
       this.updateMemberId = enquiryDetails.assignee.id;
     }
-    if(enquiryDetails && enquiryDetails.description){
-      this.updateEnqDes= enquiryDetails.description;
+    if (enquiryDetails && enquiryDetails.description) {
+      this.updateEnqDes = enquiryDetails.description;
     }
-    else{
-      this.updateEnqDes=''
+    else {
+      this.updateEnqDes = ''
     }
-    if(enquiryDetails && enquiryDetails.category && enquiryDetails.category.id){
-      this.updateEnqCategory= enquiryDetails.category.id;
+    if (enquiryDetails && enquiryDetails.category && enquiryDetails.category.id) {
+      this.updateEnqCategory = enquiryDetails.category.id;
     }
-    else{
-      this.updateEnqCategory=''
+    else {
+      this.updateEnqCategory = ''
     }
-    if(enquiryDetails && enquiryDetails.type && enquiryDetails.type.id){
-      this.updateEnqType= enquiryDetails.type.id;
+    if (enquiryDetails && enquiryDetails.type && enquiryDetails.type.id) {
+      this.updateEnqType = enquiryDetails.type.id;
     }
-    else{
-      this.updateEnqType=''
+    else {
+      this.updateEnqType = ''
     }
-    if(enquiryDetails && enquiryDetails.status && enquiryDetails.status.id && enquiryDetails.status.name){
-      this.updateEnqStatus= enquiryDetails.status.id;
-      this.updateEnqStatusName= enquiryDetails.status.name;
+    if (enquiryDetails && enquiryDetails.status && enquiryDetails.status.id && enquiryDetails.status.name) {
+      this.updateEnqStatus = enquiryDetails.status.id;
+      this.updateEnqStatusName = enquiryDetails.status.name;
     }
-    else{
-      this.updateEnqStatus=''
+    else {
+      this.updateEnqStatus = ''
     }
-    if(enquiryDetails && enquiryDetails.priority && enquiryDetails.priority.id){
-      this.updateEnqPriority= enquiryDetails.priority.id;
+    if (enquiryDetails && enquiryDetails.priority && enquiryDetails.priority.id) {
+      this.updateEnqPriority = enquiryDetails.priority.id;
     }
-    else{
-      this.updateEnqPriority=''
+    else {
+      this.updateEnqPriority = ''
     }
-    if(enquiryDetails && enquiryDetails.location && enquiryDetails.location.id){
-      this.updateEnqLocation= enquiryDetails.location.id;
+    if (enquiryDetails && enquiryDetails.location && enquiryDetails.location.id) {
+      this.updateEnqLocation = enquiryDetails.location.id;
     }
-    else{
-      this.updateEnqLocation=''
+    else {
+      this.updateEnqLocation = ''
     }
-    if(enquiryDetails && enquiryDetails.customer && enquiryDetails.customer.id){
-      this.updateEnqCustomer= enquiryDetails.customer.id;
+    if (enquiryDetails && enquiryDetails.customer && enquiryDetails.customer.id) {
+      this.updateEnqCustomer = enquiryDetails.customer.id;
     }
-    else{
-      this.updateEnqCustomer=''
+    else {
+      this.updateEnqCustomer = ''
     }
-    if(enquiryDetails && enquiryDetails.leadMasterId){
-      this.updateEnqLeadMasterId= enquiryDetails.leadMasterId;
+    if (enquiryDetails && enquiryDetails.leadMasterId) {
+      this.updateEnqLeadMasterId = enquiryDetails.leadMasterId;
     }
-    else{
-      this.updateEnqLeadMasterId=''
+    else {
+      this.updateEnqLeadMasterId = ''
     }
-    if(enquiryDetails && enquiryDetails.isLeadAutogenerate){
-      this.updateEnqLeadAutoGenerate= enquiryDetails.isLeadAutogenerate
+    if (enquiryDetails && enquiryDetails.isLeadAutogenerate) {
+      this.updateEnqLeadAutoGenerate = enquiryDetails.isLeadAutogenerate
     }
-    else{
-      this.updateEnqLeadAutoGenerate=''
+    else {
+      this.updateEnqLeadAutoGenerate = ''
     }
-    if(enquiryDetails && enquiryDetails.notes && enquiryDetails.notes.length>0){
-      this.notesTextarea= enquiryDetails.notes
+    if (enquiryDetails && enquiryDetails.notes && enquiryDetails.notes.length > 0) {
+      this.notesTextarea = enquiryDetails.notes
     }
-    else{
-      this.notesTextarea=''
+    else {
+      this.notesTextarea = ''
     }
-    if(enquiryDetails && enquiryDetails.assignee && enquiryDetails.assignee.id){
+    if (enquiryDetails && enquiryDetails.assignee && enquiryDetails.assignee.id) {
       // this.updateEnqAssignId= enquiryDetails.assignee.id;
     }
-    if(enquiryDetails && enquiryDetails.generatedBy && enquiryDetails.generatedBy.id){
-      this.selectMember= enquiryDetails.generatedBy.name;
-      this.updateEnqAssignId= enquiryDetails.generatedBy.id;
+    if (enquiryDetails && enquiryDetails.generatedBy && enquiryDetails.generatedBy.id) {
+      this.selectMember = enquiryDetails.generatedBy.name;
+      this.updateEnqAssignId = enquiryDetails.generatedBy.id;
       // _this.selectMember = _this.taskDetails.assignee.name;
       //           _this.updateMemberId = _this.taskDetails.assignee.id;
     }
@@ -3171,11 +3171,11 @@ export class ViewTaskComponent implements OnInit {
     this.taskError = null;
   }
   autoGrowTextZone(e) {
-    if(e){
+    if (e) {
       e.target.style.height = "0px";
       e.target.style.height = (e.target.scrollHeight + 15) + "px";
     }
-    
+
   }
   getLocation() {
     const _this = this;
@@ -3211,7 +3211,7 @@ export class ViewTaskComponent implements OnInit {
 
   }
   selectMemberDialog(handleselectMember: any) {
-    if(this.activityType !=='UpdateFollowUP'){
+    if (this.activityType !== 'UpdateFollowUP') {
       const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
         width: '100%',
         panelClass: ['popup-class', 'confirmationmainclass'],
@@ -3246,7 +3246,7 @@ export class ViewTaskComponent implements OnInit {
           }
         }
       })
-      
+
     }
   }
   dateClass(date: Date): MatCalendarCellCssClasses {
@@ -3413,15 +3413,15 @@ export class ViewTaskComponent implements OnInit {
       const createNoteData: any = {
         "note": this.notesTextarea
       }
-      console.log('createNoteData',createNoteData);
-      console.log('this.taskDetails.attachments',this.taskDetails.attachments.length)
+      console.log('createNoteData', createNoteData);
+      console.log('this.taskDetails.attachments', this.taskDetails.attachments.length)
       if (this.updateUserType === ('PROVIDER' || 'CONSUMER') && this.taskDetails && updateTaskData) {
-        if(this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length===0){
-          const error='Please upload attatchments';
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length === 0) {
+          const error = 'Please upload attatchments';
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
-        else{
-          if(this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length>0){
+        else {
+          if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length > 0) {
             this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response) => {
               if (response) {
                 this.api_loadingSaveTask = true;
@@ -3457,106 +3457,105 @@ export class ViewTaskComponent implements OnInit {
                 }, projectConstants.TIMEOUT_DELAY);
               })
           }
-          else{
+          else {
             this.api_loadingSaveTask = false;
             this.hideBackBtn = true;
             const error = 'Please upload attachments';
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          } 
+          }
         }
       }
     }
   }
-  sendMessage( ) {
+  sendMessage() {
     if (this.taskDetails && this.taskDetails.attachments) {
       let post_data = {};
-      if(this.taskDetailsForm.controls.taskTitle.value){
-        post_data['title']=this.taskDetailsForm.controls.taskTitle.value;
+      if (this.taskDetailsForm.controls.taskTitle.value) {
+        post_data['title'] = this.taskDetailsForm.controls.taskTitle.value;
       }
-      if(this.taskDetailsForm.controls.taskDescription.value){
-        post_data['description']=this.taskDetailsForm.controls.taskDescription.value;
+      if (this.taskDetailsForm.controls.taskDescription.value) {
+        post_data['description'] = this.taskDetailsForm.controls.taskDescription.value;
       }
-      if(this.updateUserType){
-        post_data['userType']=this.updateUserType;
+      if (this.updateUserType) {
+        post_data['userType'] = this.updateUserType;
       }
-      if(this.taskDetailsForm.controls.userTaskCategory.value){
+      if (this.taskDetailsForm.controls.userTaskCategory.value) {
         // post_data['category']=
         // {'id':post_data['id']}=this.taskDetailsForm.controls.userTaskCategory.value;
-        post_data['category']={'id':post_data['id']=this.taskDetailsForm.controls.userTaskCategory.value}
+        post_data['category'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskCategory.value }
       }
-      if(this.taskDetailsForm.controls.userTaskType.value){
+      if (this.taskDetailsForm.controls.userTaskType.value) {
         // post_data['type']={'id':post_data['id']}=this.taskDetailsForm.controls.userTaskType.value;
-        post_data['type']={'id':post_data['id']=this.taskDetailsForm.controls.userTaskType.value}
+        post_data['type'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskType.value }
       }
-      if(this.taskDetailsForm.controls.taskStatus.value){
-        post_data['status']={'id':post_data['id']=this.taskDetailsForm.controls.taskStatus.value}
+      if (this.taskDetailsForm.controls.taskStatus.value) {
+        post_data['status'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.taskStatus.value }
       }
-      if(this.taskDetailsForm.controls.userTaskPriority.value){
-        post_data['priority']={'id':post_data['id']=this.taskDetailsForm.controls.userTaskPriority.value}
+      if (this.taskDetailsForm.controls.userTaskPriority.value) {
+        post_data['priority'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskPriority.value }
       }
-      if(this.updteLocationId){
-        post_data['location']={'id':post_data['id']=this.updteLocationId }
+      if (this.updteLocationId) {
+        post_data['location'] = { 'id': post_data['id'] = this.updteLocationId }
       }
-      if(this.updateMemberId){
-        post_data['assignee']={'id':post_data['id']=this.updateMemberId}
+      if (this.updateMemberId) {
+        post_data['assignee'] = { 'id': post_data['id'] = this.updateMemberId }
       }
-      if(this.updateManagerId){
-        post_data['manager']={'id':post_data['id']= this.updateManagerId}
+      if (this.updateManagerId) {
+        post_data['manager'] = { 'id': post_data['id'] = this.updateManagerId }
       }
-      if(this.taskDetailsForm.controls.targetResult.value)
-      {
-        post_data['targetResult']=this.taskDetailsForm.controls.targetResult.value;
+      if (this.taskDetailsForm.controls.targetResult.value) {
+        post_data['targetResult'] = this.taskDetailsForm.controls.targetResult.value;
       }
-      if(this.taskDetailsForm.controls.targetPotential.value){
-        post_data['targetPotential']=this.taskDetailsForm.controls.targetPotential.value;
+      if (this.taskDetailsForm.controls.targetPotential.value) {
+        post_data['targetPotential'] = this.taskDetailsForm.controls.targetPotential.value;
       }
-      if(this.estTime){
-        post_data['estDuration']=this.estTime;
+      if (this.estTime) {
+        post_data['estDuration'] = this.estTime;
       }
-      if(this.actualResult){
-        post_data['actualResult']=this.actualResult;
+      if (this.actualResult) {
+        post_data['actualResult'] = this.actualResult;
       }
-      if(this.actualPotential){
-        post_data['actualPotential']=this.actualPotential;
+      if (this.actualPotential) {
+        post_data['actualPotential'] = this.actualPotential;
       }
-      if(this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value, 'yyyy-MM-dd')){
-        post_data['dueDate']=this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value, 'yyyy-MM-dd');
+      if (this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value, 'yyyy-MM-dd')) {
+        post_data['dueDate'] = this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value, 'yyyy-MM-dd');
       }
-      if(this.taskDetailsForm.controls.areaName.value){
-        post_data['locationArea']=this.taskDetailsForm.controls.areaName.value;
+      if (this.taskDetailsForm.controls.areaName.value) {
+        post_data['locationArea'] = this.taskDetailsForm.controls.areaName.value;
       }
-      
+
       const dataToSend: FormData = new FormData();
-      console.log('post_data',post_data)
+      console.log('post_data', post_data)
       const captions = {};
-      const tempattachments={}
-      console.log('this.taskDetails.attachments',this.taskDetails.attachments)
+      const tempattachments = {}
+      console.log('this.taskDetails.attachments', this.taskDetails.attachments)
       let i = 0;
       // let pic;
-      if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length>0) {
-        for ( const pic of this.taskDetails.attachments) {
-          console.log('pic',pic);
+      if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length > 0) {
+        for (const pic of this.taskDetails.attachments) {
+          console.log('pic', pic);
           // const tempFileName= pic['originalName']+ '.' +pic['type']
-          dataToSend.append("attachments", pic,pic['originalName']);
-          console.log('dataToSend2',dataToSend)
+          dataToSend.append("attachments", pic, pic['originalName']);
+          console.log('dataToSend2', dataToSend)
           captions[i] = 'caption';
-          tempattachments[i]=pic;
+          tempattachments[i] = pic;
           i++;
-        //   const blobPropdataAttatch = new Blob([JSON.stringify(tempattachments)], { type: 'image/png' });
-        // dataToSend.append('attachments', blobPropdataAttatch,pic['originalName']);
+          //   const blobPropdataAttatch = new Blob([JSON.stringify(tempattachments)], { type: 'image/png' });
+          // dataToSend.append('attachments', blobPropdataAttatch,pic['originalName']);
         }
       }
       const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
       dataToSend.append('captions', blobPropdata);
       const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
       dataToSend.append('task', blobpost_Data);
-      console.log('dataToSendlast',dataToSend)
+      console.log('dataToSendlast', dataToSend)
       // this.crmService.mandatoryFilesactivity(this.taskDetails.taskUid,dataToSend).subscribe((res)=>{
       //   console.log(res)
       // },((error)=>{
       //   console.log(error);
       // }))
-      
+
     }
   }
   handleNotesDescription(textValue: any) {
@@ -3624,22 +3623,22 @@ export class ViewTaskComponent implements OnInit {
     }
   }
   selectStatus(status: any) {
-     if (status && (status.name === 'Rejected')) {
+    if (status && (status.name === 'Rejected')) {
       if (this.enquiryId) {
         this.api_loadingCancelledStatus = true;
         this.hideBackBtn = false;
-        if(document.getElementById('A') && document.getElementById('C').style && document.getElementById('A').style.boxShadow){
+        if (document.getElementById('A') && document.getElementById('C').style && document.getElementById('A').style.boxShadow) {
           document.getElementById('A').style.boxShadow = "none";
         }
-        else if(document.getElementById('C') && document.getElementById('C').style && document.getElementById('C').style.boxShadow){
+        else if (document.getElementById('C') && document.getElementById('C').style && document.getElementById('C').style.boxShadow) {
           document.getElementById('C').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
         }
         // console.log(this.notesTextarea);
-        const noteAddData:any={
-          "note":this.notesTextarea,
+        const noteAddData: any = {
+          "note": this.notesTextarea,
         }
-        this.crmService.statusToRejectedFollowUP(this.enquiryId,noteAddData).subscribe((response) => {
-          console.log('response',response)
+        this.crmService.statusToRejectedFollowUP(this.enquiryId, noteAddData).subscribe((response) => {
+          console.log('response', response)
           if (response) {
             setTimeout(() => {
               this.taskDetailsForm.reset();
@@ -3665,29 +3664,30 @@ export class ViewTaskComponent implements OnInit {
     else if (status && (status.name === 'Proceed')) {
       if (this.enquiryId) {
         console.log(this.taskDetails.status.id)
-        let statusId=this.taskDetails.status.id;
-        const updateEnquiryData={
-          "status":{"id":this.updateEnqStatus},
-          "priority":{"id":this.updateEnqPriority},
-          "location":{"id":this.updateEnqLocation},
-          "customer":{"id":this.updateEnqCustomer},
+        let statusId = this.taskDetails.status.id;
+        const updateEnquiryData = {
+          "status": { "id": this.updateEnqStatus },
+          "priority": { "id": this.updateEnqPriority },
+          "location": { "id": this.updateEnqLocation },
+          "customer": { "id": this.updateEnqCustomer },
           "leadMasterId": this.updateEnqLeadMasterId,
           "isLeadAutogenerate": this.updateEnqLeadAutoGenerate,
           // "note": this.notesTextarea,
-          "assignee":{"id":this.updateEnqAssignId}
+          "assignee": { "id": this.updateEnqAssignId },
+          "category": { "id": this.updateEnqCategory }
         }
         this.api_loadingCompletedStatus = true;
         this.hideBackBtn = false;
-        if(document.getElementById('A') && document.getElementById('C').style && document.getElementById('A').style.boxShadow){
+        if (document.getElementById('A') && document.getElementById('C').style && document.getElementById('A').style.boxShadow) {
           document.getElementById('A').style.boxShadow = "0px 4px 11px rgb(0 0 0 / 15%)";
         }
-        else if(document.getElementById('C') && document.getElementById('C').style && document.getElementById('C').style.boxShadow){
+        else if (document.getElementById('C') && document.getElementById('C').style && document.getElementById('C').style.boxShadow) {
           document.getElementById('C').style.boxShadow = "none";
         }
         if (this.taskDetails.status.name !== 'Proceed') {
-          console.log('updateEnquiryData',updateEnquiryData);
-          this.crmService.statusToProceed(this.enquiryId,statusId,updateEnquiryData).subscribe((response) => {
-            console.log('response',response)
+          console.log('updateEnquiryData', updateEnquiryData);
+          this.crmService.statusToProceed(this.enquiryId, statusId, updateEnquiryData).subscribe((response) => {
+            console.log('response', response)
             if (response) {
               setTimeout(() => {
                 this.taskDetailsForm.reset();
@@ -3706,7 +3706,7 @@ export class ViewTaskComponent implements OnInit {
             })
         }
         else {
-          this.crmService.statusToProceedFollowUp2(this.enquiryId,statusId,updateEnquiryData).subscribe((response) => {
+          this.crmService.statusToProceedFollowUp2(this.enquiryId, statusId, updateEnquiryData).subscribe((response) => {
             if (response) {
               setTimeout(() => {
                 this.taskDetailsForm.reset();
@@ -3793,25 +3793,25 @@ export class ViewTaskComponent implements OnInit {
     })
   }
   goBack(data) {
-    console.log('data',data)
-    if(this.activityType==='UpdateFollowUP'){
-      if((data && data.status)&&((data.status.name===('Follow Up 1') ||(data.status.name=== 'Follow Up 2' )|| 
-      (data.status.name=== 'Completed' )|| (data.status.name=== 'Rejected')))){
+    console.log('data', data)
+    if (this.activityType === 'UpdateFollowUP') {
+      if ((data && data.status) && ((data.status.name === ('Follow Up 1') || (data.status.name === 'Follow Up 2') ||
+        (data.status.name === 'Completed') || (data.status.name === 'Rejected')))) {
         this._location.back();
       }
-      else{
+      else {
         this.router.navigate(['provider', 'crm']);
       }
     }
-    else{
-      if(data && data.status && (data.status.name==='New' || data.status.name==='Completed')){
+    else {
+      if (data && data.status && (data.status.name === 'New' || data.status.name === 'Completed')) {
         this._location.back();
       }
-      else{
+      else {
         this.router.navigate(['provider', 'crm']);
       }
     }
-      }
+  }
   openAddNoteDialog(addNoteText: any) {
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
       width: "100%",
