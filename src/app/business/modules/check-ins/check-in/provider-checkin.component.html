@@ -311,7 +311,7 @@
                       <span class="p-0 m-0 sel-domain-termi">Select {{provider_label | capitalizeFirst}}</span>
                       <span class="required">*</span>
                       <mat-form-field *ngIf="users.length == 1">
-                        <input matInput class="inputbox" *ngFor="let user of users" [readonly]="true"
+                        <input matInput class="inputbox singleUser" style="padding: 10px 0px 10px 15px !important;" *ngFor="let user of users" [readonly]="true"
                           value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                       </mat-form-field>
                       <mat-form-field *ngIf="users.length > 1" class="py-0 my-0">
