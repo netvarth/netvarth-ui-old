@@ -327,6 +327,10 @@ export class ExtendHttpInterceptor implements HttpInterceptor {
     // authorizationToken --- For OTP Login/Signup
     if (this.lStorageService.getitemfromLocalStorage('logout')) {
       this.lStorageService.removeitemfromLocalStorage("authorizationToken");
+      if (this.lStorageService.getitemfromLocalStorage('appId') && this.lStorageService.getitemfromLocalStorage('installId')) {
+        let authToken = this.lStorageService.getitemfromLocalStorage('appId') + '-' + this.lStorageService.getitemfromLocalStorage('installId');
+        req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });
+      }
     } else if (refresh) {
       let authToken = this.lStorageService.getitemfromLocalStorage("refreshToken");
       req = req.clone({ headers: req.headers.append('Authorization', authToken), withCredentials: true });

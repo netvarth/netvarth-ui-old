@@ -1362,4 +1362,9 @@ export class SharedServices {
     // return this.servicemeta.httpDelete(url);
     return this.servicemeta.httpDelete(url);
   }
+
+  getUsersByLocation(locationId, accountId) {
+    const url = 'consumer/users/filter?status-eq=ACTIVE&businessLocs-eq=' + locationId + '&account-eq=' + accountId;
+    return this.servicemeta.httpGet(url);
+  }
 }

@@ -254,8 +254,7 @@
         "Close":"അടയ്ക്കുക",
         "Install App":"ആപ്പ് ഇൻസ്റ്റാൾ ചെയ്യുക",
         "Privacy":"സ്വകാര്യത",
-        "Terms & Conditions":"നിബന്ധനകളും വ്യവസ്ഥകളും",
-        "Get Appointment":"നിയമനം നേടുക",
+        "Terms & Conditions":"നിബന്ധനകളും വ്യവസ്ഥകളും",        
         "Donate":"സംഭാവനചെയ്യുക",
 
         "Service": "സേവനം",
@@ -309,8 +308,11 @@
 "Messages":"സന്ദേശങ്ങൾ",
 "Instructions":"നിർദ്ദേശങ്ങൾ",
 "Patient Note":"രോഗിയുടെ കുറിപ്പ്",
-"Next Available Time":"അടുത്ത ലഭ്യമായ സമയം"
-
-
-
+"Next Available Time":"അടുത്ത ലഭ്യമായ സമയം",
+"Send Enquiry":"അന്വേഷണം",
+"Get Appointment":"അപ്പോയിൻറ്മെൻറ് എടുക്കുക",
+"Get Token":"ടോക്കൺ എടുക്കുക",
+"Recent News": "അടുത്തിടെ പോസ്റ്റ് ചെയ്തത്",
+"View":"കാണുക",
+"Watch video":"വീഡിയോ കാണൂ"
 }

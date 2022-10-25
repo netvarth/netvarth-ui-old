@@ -8,6 +8,14 @@ import { DomainConfigGenerator } from "../shared/services/domain-config-generato
 import { ConsumerJoinModule } from "../ynw_consumer/components/consumer-join/join.component.module";
 import { CustomAppComponent } from "./custom-app.component";
 import { CustomappService } from "./customapp.service";
+
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from '../shared/constants/project-constants';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
+}
 const routes: Routes = [
     { path: '', component: CustomAppComponent,
     children: [
@@ -27,6 +35,14 @@ const routes: Routes = [
         HeaderModule,
         AuthenticationModule,
         LoadingSpinnerModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: homeHttpLoaderFactory,
+                deps: [HttpClient]
+            },
+        }),
         [RouterModule.forChild(routes)]
     ],
     exports: [CustomAppComponent],

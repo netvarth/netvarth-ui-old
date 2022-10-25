@@ -48,18 +48,18 @@
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!=='card_1' && item.type=='donation' || !trimSpace || (trimSpace && (timings || (personsAheadText)))" >
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="item.type=='donation'">
             <p class="card-text donationAmount no-padding mgn-lt-10">
-                <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
+                <span class="rupee-font bold">{{'Donate' | translate}} <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                 <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or
                     more</span>
             </p>
         </div>
         <div
             [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
-            <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
+            <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption | translate}}</div>
             <h6 class="no-padding " *ngIf="timings">{{timings}}</h6>
         </div>
         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6" [ngClass]="timings?'bord-left':''">
-            <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption}}</div>
+            <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption | translate}}</div>
             <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
         </div>
     </div>
@@ -68,7 +68,7 @@
         <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event, item)"
             class="getappointmentbutton" [class.disabled]="item['loading']" [class.spinner]="item['loading']"
             [class.spinner-darker-success]="item['loading']"
-            [class.spinner-center]="item['loading']">{{buttonCaption}}</button>
+            [class.spinner-center]="item['loading']">{{buttonCaption | translate}}</button>
     </div>
 </div>
 <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding" [ngClass]="theme?theme:''"
@@ -82,13 +82,13 @@
                 capitalizeFirst}}</h5>
             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12" *ngIf="item.type=='donation'">
                 <p class="card-text donationAmount no-padding mgn-lt-10">
-                    <span class="rupee-font bold">Donate <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
+                    <span class="rupee-font bold">{{'Donate' | translate}} <i class="fa fa-inr"></i> {{service.minDonationAmount}}</span>
                     <span class="rupee-font bold" *ngIf="service.maxDonationAmount != service.minDonationAmount"> or
                         more</span>
                 </p>
             </div>
             <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 mgn-up-5 no-padding">
-                <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
+                <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption | translate}}</div>
                 <h6 class="no-padding " *ngIf="timings">{{timings}}</h6>
             </div>
         </div>
@@ -127,14 +127,14 @@
     </div>
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 {{cardName}}">
-            <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption}}</div>
+            <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption | translate}}</div>
             <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
         </div>
         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
             <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event, item)"
                 class="getappointmentbutton" [class.disabled]="item['loading']" [class.spinner]="item['loading']"
                 [class.spinner-darker-success]="item['loading']"
-                [class.spinner-center]="item['loading']">{{buttonCaption}}</button>
+                [class.spinner-center]="item['loading']">{{buttonCaption | translate}}</button>
         </div>
     </div>
 </div>
@@ -190,11 +190,11 @@
         </div>
         <div
             [ngClass]="(timings&&personsAheadText)?'col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding':'col-sm-12 col-xs-12 col-md-12 col-lg-12 no-padding'">
-            <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption}}</div>
+            <div class="no-padding card-head-grey" *ngIf="timings">{{timingCaption | translate}}</div>
             <h6 class="no-padding " *ngIf="timings">{{timings}}</h6>
         </div>
         <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6" [ngClass]="timings?'bord-left':''">
-            <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption}}</div>
+            <div class="no-padding card-head-grey" *ngIf="personsAheadText">{{personsAheadCaption | translate}}</div>
             <h6 class="no-padding" *ngIf="personsAheadText">{{personsAheadText}}</h6>
         </div>
 
@@ -203,7 +203,7 @@
 
     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
         <button (click)="cardActionPerformed(item.type, null, service, loc, null, $event)"
-            class="getappointmentbutton ">{{buttonCaption}}</button>
+            class="getappointmentbutton ">{{buttonCaption | translate}}</button>
     </div>
 </div>
 <div *ngIf="item.type=='pitem'">
@@ -333,7 +333,7 @@
                     <div class="amount" style="height: 44px !important;" *ngIf="!item.showpric">&nbsp;</div>
                     <div class="quantity">
                         <div class="outstock" *ngIf="!service.isStockAvailable && item.type=='item'">
-                            Sold Out
+                            {{'Sold Out' | translate}}
                         </div>
                         <button (click)="cardActionPerformed(item.type, 'add', item, loc, null, $event)"
                             class="add-to-cart"
@@ -386,23 +386,23 @@
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!='card_1'">
             <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding"
                 *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
-                <div class="no-padding card-head-grey">{{user.apptTime.caption}}</div>
+                <div class="no-padding card-head-grey">{{user.apptTime.caption | translate}}</div>
                 <h6 class="no-padding">{{user.apptTime.date}}</h6>
             </div>
             <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding"
                 *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
-                <div class="no-padding card-head-grey">{{user.waitingTime.caption}}</div>
+                <div class="no-padding card-head-grey">{{user.waitingTime.caption | translate}}</div>
                 <h6 class="no-padding">{{user.waitingTime.date}}</h6>
             </div>
             <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding"
                 *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
-                <div class="no-padding card-head-grey">{{user.apptTime.caption}}</div>
+                <div class="no-padding card-head-grey">{{user.apptTime.caption | translate}}</div>
                 <h6 class="no-padding">{{user.apptTime.date}}</h6>
             </div>
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
             <button (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)"
-                class="getappointmentbutton">Book Now</button>
+                class="getappointmentbutton">{{ 'Book Now' | translate }}</button>
         </div>
     </div>
 </div>
@@ -427,7 +427,7 @@
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
             <button (click)="cardActionPerformed(item.type, null, null, null, department.departmentId, $event)"
-                class="getappointmentbutton">Book Now</button>
+                class="getappointmentbutton">{{ 'Book Now' | translate }}</button>
         </div>
     </div>
 </div>
@@ -439,7 +439,7 @@
     </div>
     <div class="card-item-content">
         <h4 class="card-title font-weight-bold text-center">
-            <a class="pointer-cursor"><b>Add Item</b> </a>
+            <a class="pointer-cursor"><b>{{'Add Item' | translate}}</b> </a>
         </h4>
     </div>
 </div>
@@ -509,7 +509,7 @@
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr"
                     *ngIf=" item.internalStatus">
-                    - {{item.internalStatus}}
+                    - {{item.internalStatus | translate}}
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="item.waitlistingFor[0].bookingLocation && (item.waitlistingFor[0].bookingLocation.district || item.waitlistingFor[0].bookingLocation.state)">
@@ -549,11 +549,11 @@
                 <div>
                     <div class="col-xs-12 col-sm-12 no-padding view-details"
                         *ngIf="time_type!=1 && item.type=='checkin-dashboard'">
-                        <span class="b1">Date : </span> <span class="b2">{{item.date | date:
+                        <span class="b1">{{'Date' | translate}} : </span> <span class="b2">{{item.date | date:
                             newTimeDateFormat}}</span>
                     </div>
                     <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="getLabels(item)">
-                        <span class="b1">Label : </span> <span class="b2"> {{getLabels(item)}}</span>
+                        <span class="b1">{{'Label' | translate}} : </span> <span class="b2"> {{getLabels(item)}}</span>
                     </div>
                 </div>
             </div>
@@ -569,7 +569,7 @@
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5 mgn-up-10">
                     <a class="action-btn" (click)="stopProp($event);checkinActions(item, 'actions')">
-                        Actions
+                        {{'Actions' | translate}}
                     </a>
                 </div>
             </div>
@@ -620,12 +620,12 @@
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr"
                     *ngIf="appointment.provider">
-                    Assigned: {{(appointment.provider.businessName) ? appointment.provider.businessName :
+                    {{'Assigned' | translate}}: {{(appointment.provider.businessName) ? appointment.provider.businessName :
                     appointment.provider.firstName + ' ' + appointment.provider.lastName}}
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding dash-item user-txt-clr"
                     *ngIf="appointment.internalStatus">
-                    - {{appointment.internalStatus}}
+                    - {{appointment.internalStatus | translate}}
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding consumer-name"
                     *ngIf="appointment.appmtFor[0].bookingLocation && (appointment.appmtFor[0].bookingLocation.district || appointment.appmtFor[0].bookingLocation.state)">
@@ -662,7 +662,7 @@
                 </div>
                 <div>
                     <div class="col-xs-12 col-sm-12 no-padding view-details" *ngIf="getLabels(appointment)">
-                        <span class="b1">Label : </span> <span class="b2"> {{getLabels(appointment)}}</span>
+                        <span class="b1">{{'Label' | translate}} : </span> <span class="b2"> {{getLabels(appointment)}}</span>
                     </div>
                 </div>
             </div>
@@ -678,7 +678,7 @@
                 </div>
                 <div class="col-md-12 col-xs-12 col-sm-12 no-padding mgn-lt-5 mgn-up-10">
                     <a class="action-btn" (click)="stopProp($event);checkinActions(appointment, 'actions')">
-                        Actions
+                        {{'Actions' | translate}}
                     </a>
                 </div>
             </div>

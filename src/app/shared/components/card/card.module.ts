@@ -8,7 +8,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spinner.module';
-
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
+}
 
 @NgModule({
     declarations: [
@@ -22,7 +28,15 @@ import { LoadingSpinnerModule } from '../../modules/loading-spinner/loading-spin
         MatIconModule,
         MatButtonModule,
         MatTooltipModule,
-        LoadingSpinnerModule
+        LoadingSpinnerModule,
+        HttpClientModule,
+        TranslateModule.forChild({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: homeHttpLoaderFactory,
+                deps: [HttpClient]
+            },
+        })
     ],
     exports: [
         CardComponent

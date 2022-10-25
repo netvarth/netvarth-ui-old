@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-recent-news',
@@ -34,7 +35,9 @@ export class RecentNewsComponent {
     }
   }
   constructor(
+    public translate: TranslateService
   ) { 
+    
   }
   openNews(link) {
     window.open(link, "_blank");

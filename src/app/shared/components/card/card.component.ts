@@ -5,6 +5,7 @@ import { WordProcessor } from '../../services/word-processor.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { projectConstantsLocal } from '../../constants/project-constants';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
     'selector': 'app-card',
     'templateUrl': './card.component.html',
@@ -60,6 +61,7 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
         private wordProcessor: WordProcessor,
         private datePipe: DateFormatPipe,
         private dateTimeProcessor: DateTimeProcessor,
+        public translate: TranslateService,
         private cdref: ChangeDetectorRef) {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
     }

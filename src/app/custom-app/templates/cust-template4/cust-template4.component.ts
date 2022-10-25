@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -65,6 +66,7 @@ export class CustTemplate4Component implements OnInit {
     private dialog: MatDialog,
     private lStorageService: LocalStorageService,
     private router: Router,
+    public translate: TranslateService,
     private activatedRoute: ActivatedRoute
   ) {
 

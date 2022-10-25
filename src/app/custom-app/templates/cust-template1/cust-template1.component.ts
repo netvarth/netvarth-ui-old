@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddInboxMessagesComponent } from '../../../shared/components/add-inbox-messages/add-inbox-messages.component';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -57,7 +58,8 @@ export class CustTemplate1Component implements OnInit {
     private authService: AuthService,
     private dialog: MatDialog,
     private lStorageService: LocalStorageService,
-    private router: Router
+    private router: Router,
+    public translate: TranslateService
   ) {
 
   }
@@ -121,11 +123,11 @@ export class CustTemplate1Component implements OnInit {
 
     this.changeLocation(this.selectedLocation);
 
-    if (this.lStorageService.getitemfromLocalStorage('tabIndex')) {
-      this.selectedIndex = this.lStorageService.getitemfromLocalStorage('tabIndex');
-    } else {
+    // if (this.lStorageService.getitemfromLocalStorage('tabIndex')) {
+    //   this.selectedIndex = this.lStorageService.getitemfromLocalStorage('tabIndex');
+    // } else {
       this.selectedIndex = this.templateJson.section1.title;
-    }
+    // }
   }
   menuSelected(section){
     console.log(section.title);

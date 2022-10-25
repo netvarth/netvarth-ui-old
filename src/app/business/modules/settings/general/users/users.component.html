@@ -1,5 +1,5 @@
  <!-- ***start Header part for Webview***** -->
-<section class="display-min-none">
+ <section class="display-min-none">
   <div class="card title-gb">
       <h5 class="mgn-up-10">
           <a class="user-title" style="cursor:auto;">
@@ -58,10 +58,10 @@
               Actions  
             </button>
             <mat-menu #appMenu="matMenu">
-                <button mat-menu-item  (click)="addBranchSP()" >
+                <button�mat-menu-item  (click)="addBranchSP()">
                   Create User
                 </button>
-                <button  mat-menu-item  *ngIf="selectedTeam == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
+                <button mat-menu-item  *ngIf="selectedTeam == 'all'" data-toggle="modal" data-target="#exampleModalCenter">
                     Create Team
                 </button>
                 <button mat-menu-item *ngIf="showusers && (loc_list && loc_list.length > 1)" (click)="addlocation()">
@@ -305,9 +305,9 @@
                                                       <th class="display-min-none" style="min-width: 125px;">User Type
                                                       </th>
                                                       <!-- <th class="display-min-none" style="min-width: 125px;">Contact Info</th> -->
-                                                      <th *ngIf="domain !== 'finance'" class="display-min-none" style="width: 30%;">Specializations
+                                                      <th *ngIf="domain !== 'finance'" class="display-min-none" >Specializations
                                                       </th>
-                                                      <th *ngIf="domain === 'finance'" class="display-min-none" style="width: 30%;">Business Locations
+                                                      <th class="display-min-none">Business Locations
                                                       </th>
                                                       <th class="display-min-none">Languages</th>
                                                       <!-- <th class="display-min-none">Booking#</th> -->
@@ -387,7 +387,7 @@
                                                                           </span></div>
                                                                       
                                                                       <div class="mgn-up-5"
-                                                                          *ngIf="user.businessLocations && domain === 'finance'"> <span
+                                                                          *ngIf="user.businessLocations"> <span
                                                                               class="b2">
                                                                               <!-- {{getBussLoc(user.bussLocations)}} -->
                                                                               {{user.businessLocations}}
@@ -434,8 +434,8 @@
                                                             </span>
                                                       </td>
 
-                                                      <td class="display-min-none" *ngIf="domain === 'finance'">
-                                                        <span *ngIf="user.businessLocations && domain === 'finance'">
+                                                      <td class="display-min-none">
+                                                        <span>
                                                           <!-- {{getBussLoc(user.bussLocations)}} -->
                                                           {{user.businessLocations}}
                                                         </span>
@@ -566,9 +566,9 @@
                                                     <th class="display-min-none" style="min-width: 125px;">User Type
                                                     </th>
                                                     <th class="display-min-none" style="min-width: 125px;">Contact Info</th>
-                                                    <th *ngIf="domain !== 'finance'" class="display-min-none" style="width: 30%;">Specializations
+                                                    <th *ngIf="domain !== 'finance'" class="display-min-none" >Specializations
                                                     </th>
-                                                    <th *ngIf="domain === 'finance'" class="display-min-none" style="width: 30%;">Business Locations
+                                                    <th class="display-min-none" >Business Locations
                                                     </th>
 
 
@@ -637,7 +637,7 @@
                                                                         </span></div>
                                                                     
                                                                     <div class="mgn-up-5"
-                                                                        *ngIf="user.businessLocations && domain === 'finance'"> <span
+                                                                        *ngIf="user.businessLocations"> <span
                                                                             class="b2">Business Locations &nbsp;
                                                                             <i class="fa fa-map-marker mgn-rt-5" style="color: blue;" aria-hidden="true"></i>
                                                                             {{user.businessLocations}}
@@ -689,7 +689,7 @@
                                                   </td>
 
                                                   <td class="display-min-none" *ngIf="domain === 'finance'">
-                                                    <span *ngIf="user.businessLocations && domain === 'finance'">
+                                                    <span *ngIf="user.businessLocations">
                                                       <!-- {{getBussLoc(user.bussLocations)}} -->
                                                       {{user.businessLocations}}
                                                     </span>

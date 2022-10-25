@@ -19,10 +19,10 @@
                         <div>
                             <!--  -->
                             <a (click)="openNews(newsFeed.link)" *ngIf="newsFeed.linkType==='video'"
-                                class="pull-right btn btn-primary" style="border-radius: 5px;"><b>Watch
-                                    video</b></a>
+                                class="pull-right btn btn-primary" style="border-radius: 5px;"><b>
+                                    {{'Watch video' | translate}}</b></a>
                             <a (click)="openNews(newsFeed.link)" *ngIf="newsFeed.linkType!=='video'"
-                                class="pull-right btn btn-primary" style="border-radius: 5px;"><b>View</b></a>
+                                class="pull-right btn btn-primary" style="border-radius: 5px;"><b>{{'View' | translate}}</b></a>
                         </div>
                     </div>
                 </div>

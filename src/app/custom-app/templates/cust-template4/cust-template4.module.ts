@@ -18,7 +18,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { AddInboxMessagesModule } from '../../../shared/components/add-inbox-messages/add-inbox-messages.module';
 import { MatButtonModule } from '@angular/material/button';
 import { RecentNewsModule } from '../../recent-news/recent-news.module';
-
+import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { projectConstantsLocal } from '../../../shared/constants/project-constants';
+export function homeHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
+}
 const routes: Routes = [
   { path: '', component: CustTemplate4Component }
 ];
@@ -44,6 +50,14 @@ const routes: Routes = [
     MatButtonModule,
     AddInboxMessagesModule,
     RecentNewsModule,
+    HttpClientModule,
+    TranslateModule.forChild({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: homeHttpLoaderFactory,
+          deps: [HttpClient]
+      },
+  }),
     RouterModule.forChild(routes)
   ],
   exports: [
