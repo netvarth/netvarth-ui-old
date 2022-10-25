@@ -39,6 +39,7 @@ export class OtpVerifyComponent implements OnInit {
   customerId: any = 0;
   from: any;
   name: any;
+  loanId: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -65,6 +66,9 @@ export class OtpVerifyComponent implements OnInit {
     }
     if (this.data && this.data.name) {
       this.name = this.data.name;
+    }
+    if (this.data && this.data.uid) {
+      this.loanId = this.data.uid;
     }
     if (this.data && this.data.phoneNumber) {
       this.phoneNumber = this.data.phoneNumber;
@@ -211,7 +215,11 @@ export class OtpVerifyComponent implements OnInit {
 
   verifyEmail() {
     console.log("Email")
-    this.subs.sink = this.partnerservice.verifyEmailOTP(this.otpEntered, this.from)
+    let data =
+    {
+      "uid": this.loanId
+    }
+    this.subs.sink = this.partnerservice.verifyEmailOTP(this.otpEntered, this.from, data)
       .subscribe(
         (response: any) => {
           if (response) {

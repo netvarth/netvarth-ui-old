@@ -558,8 +558,8 @@ export class CreateDealerComponent implements OnInit {
 
         this.dealerData['uid'] = this.dealerId;
         this.cdlservice.updateDealer(this.dealerId, this.dealerData).subscribe((s3urls: any) => {
-          if (s3urls.attachmentsUrls.length > 0) {
-            this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
+          if (s3urls && s3urls.length > 0) {
+            this.uploadAudioVideo(s3urls).then(
               (dataS3Url) => {
                 console.log(dataS3Url);
               });

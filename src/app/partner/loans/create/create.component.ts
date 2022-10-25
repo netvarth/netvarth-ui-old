@@ -1111,7 +1111,8 @@ export class CreateComponent implements OnInit {
         disableClose: true,
         data: {
           type: 'Email',
-          email: this.createLoan.controls.email.value
+          email: this.createLoan.controls.email.value,
+          uid: this.loanId
         }
       });
       dialogRef.afterClosed().subscribe(result => {

@@ -212,7 +212,7 @@ export class PartnerService {
     var url = 'partner/loanapplication/verify/' + otp + '/email';
     if (from && from == 'partner') {
       var url = 'partner/partner/verify/' + otp + '/email';
-      return this.servicemeta.httpPost(url);
+      return this.servicemeta.httpPost(url, data);
     }
     return this.servicemeta.httpPost(url, data);
   }
