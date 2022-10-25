@@ -80,7 +80,6 @@ export class CustomAppComponent implements OnInit, OnDestroy {
           this.i18nService.changeLocale(qparams.lan);
         }
       }
-      this.i18nService.changeLocale('mal');
     });
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
