@@ -337,7 +337,9 @@
         style="background-color: rgb(207, 198, 198);padding: 10px;font-weight: bold;display: flex;align-items: baseline;justify-content: space-between;">
         <div>
             <div style="font-size: 17px !important;padding-left: 20px;font-weight: 700;">Reschedule Appointment for
-                {{appt.appmtFor[0].firstName |capitalizeFirst}} {{appt.appmtFor[0].lastName |capitalizeFirst}}</div>
+                 <span *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName |capitalizeFirst}} {{appt.appmtFor[0].lastName |capitalizeFirst}}</span>
+                 <span *ngIf="(appt.appmtFor[0].firstName === undefined || appt.appmtFor[0].firstName === '') && (appt.appmtFor[0].lastName === undefined || appt.appmtFor[0].lastName === '')">{{appt.appmtFor[0].memberJaldeeId | capitalizeFirst}}</span>
+                </div>
         </div>
         <div>
             <i style="font-size: 17px !important" class="fa fa-close" aria-hidden="true" mat-dialog-close
@@ -352,7 +354,7 @@
             <p *ngIf="appt.provider">{{provider_label | capitalizeFirst}} : {{(appt.provider.businessName) ?
                 appt.provider.businessName : appt.provider.firstName
                 + ' ' + appt.provider.lastName}}</p>
-            <p>Location: {{appt.location.place}}</p>
+            <p *ngIf="appt.location.place">Location: {{appt.location.place}}</p>
             <p>Service :
                 <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                     class="fa meet-icon"></i>
@@ -477,11 +479,13 @@
     <div class="row">
         <div class="col-md-6 col-xs-12 col-sm-12 smallCalender">
             <h4>Select Date & Time</h4>
-            <div class="">
-                <mat-card class="demo-inline-calendar-card">
-                    <mat-calendar></mat-calendar>
-                    <!--  [(selected)]="selected" -->
-                  </mat-card>
+            <div class="colxs-12">
+                 <mat-card class="demo-inline-calendar-card matCard">
+                    <mat-calendar [dateClass]="dateClass.bind(this)" [(selected)]="selected" (selectedChange)="appointmentDateChanged($event)" [(ngModel)]="selected"></mat-calendar>
+                  </mat-card> 
+                  <!-- <app-date-pagination (date_change_event)="appointmentDateChanged($event)" [selected_date]="appt.appmtDate"
+              [availableDates]="availableDates" >
+            </app-date-pagination> -->
                   <!-- <p>Selected date: {{selected}}</p> -->
             </div>
         </div>
@@ -489,8 +493,8 @@
             <!-- mgn-bt-20 slotdiv no-padding queue-outer -->
             <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                 <h5>Available Slots</h5>
-            <mat-chip-list class="appt-in-chip matChip">
-                <mat-chip *ngFor="let slot of allSlots | slice:0:12" class="text-center"
+            <mat-chip-list class="matChip">
+                <mat-chip *ngFor="let slot of allSlots | slice:0:14" class="text-center"
                     >
                     {{slot}}
                 </mat-chip>
@@ -499,7 +503,7 @@
           </div>
           <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots" class="slotDivSize">
             <h5>Available Slots</h5>
-            <mat-chip-list class="appt-in-chip matChip">
+            <mat-chip-list class="matChip">
                 <mat-chip *ngFor="let slot of allSlots" 
                     >
                     {{slot}}
@@ -508,8 +512,8 @@
             </mat-chip-list>
           </div>
            
-          <div class="text-center mx-auto mb-2" *ngIf="allSlots && allSlots.length > 12">
-            <button type="button" class="more_btn text-capitalize px-2 py-1"
+          <div class="text-center mx-auto mb-2" *ngIf="allSlots && allSlots.length > 14">
+            <button type="button" class="text-capitalize px-2 py-1 btnSize"
                 (click)="showMoreTimeSlots()">
                 Show <span *ngIf="!showMoreAvailableSlots">More</span>
                 <span *ngIf="showMoreAvailableSlots">Less</span>
@@ -521,8 +525,8 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default modal_close" data-dismiss="modal" mat-dialog-close >Close</button>
-        <button type="button" class="btn btn-primary">Next</button>
+        <button type="button" class="btn btn-default modal_close closeBtn" data-dismiss="modal" mat-dialog-close >Close</button>
+        <button type="button" class="btn btn-primary nextBtn">Next</button>
     </div>
     
 </div>

@@ -137,7 +137,7 @@
                     <label for="exampleInputPassword1">Select Locations<span class="text-danger">*</span></label>
                   </div>
                   <label *ngFor="let loc of loc_list" class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
-											<input type="checkbox" name="Checkboxes16" [checked] = ""  (change)="getLocIdsUserIds(loc,   loc.id ,$event)">
+											<input type="checkbox" name="Checkboxes16" [checked] = "loc.baseLocation"  (change)="getLocIdsUserIds(loc,   loc.id ,$event)">
 											<span style="margin-right: 0.75rem;"></span> 
                        {{loc.place | capitalizeFirst}} {{loc.address | capitalizeFirst}}
                        <a [href]="loc.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate"></a>

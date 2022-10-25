@@ -872,7 +872,7 @@ export class BranchUsersComponent implements OnInit {
         }
     }
     getLocIdsUserIds(loc, id, values) {
-        if (values.currentTarget.checked) {
+        if (loc.baseLocation || values.currentTarget.checked) {
             this.locIds.push(id);
         } else {
             const index = this.locIds.filter(x => x === id);
@@ -893,6 +893,7 @@ export class BranchUsersComponent implements OnInit {
             _this.provider_services.getProviderLocations()
             .subscribe(data => {
                 _this.locationsjson = data;
+                console.log("Locationsss :",data);
                 for (const loc of _this.locationsjson) {
                     if (loc.status === 'ACTIVE') {
                         _this.loc_list.push(loc);

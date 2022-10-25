@@ -170,6 +170,13 @@
 .singleDepmt{
   height: 35px !important;
 }
+.singleUser{
+  height: 35px !important;
+  padding-left: 15px !important;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  border: 1px solid #ccc!important;
+}
 
 /* .mob-container input {
     height:35px !important;

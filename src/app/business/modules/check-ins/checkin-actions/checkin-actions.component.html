@@ -321,8 +321,11 @@
         style="background-color: rgb(207, 198, 198);padding: 10px;font-weight: bold;display: flex;align-items: baseline;justify-content: space-between;">
         <div>
             <div style="font-size: 17px !important;padding-left: 20px;font-weight: 700;">Reschedule Token for
-                {{checkin.waitlistingFor[0].firstName |capitalizeFirst}} {{checkin.waitlistingFor[0].lastName
-                |capitalizeFirst}}</div>
+                <!-- {{checkin.waitlistingFor[0].firstName |capitalizeFirst}} {{checkin.waitlistingFor[0].lastName
+                |capitalizeFirst}} -->
+                <span *ngIf="checkin.waitlistingFor[0].firstName || checkin.waitlistingFor[0].lastName">{{checkin.waitlistingFor[0].firstName |capitalizeFirst}} {{checkin.waitlistingFor[0].lastName |capitalizeFirst}}</span>
+                <span *ngIf="(checkin.waitlistingFor[0].firstName === undefined || checkin.waitlistingFor[0].firstName === '') && (checkin.waitlistingFor[0].lastName === undefined || checkin.waitlistingFor[0].lastName === '')">{{checkin.waitlistingFor[0].memberJaldeeId | capitalizeFirst}}</span>
+            </div>
         </div>
         <div>
             <i style="font-size: 17px !important" class="fa fa-close" aria-hidden="true" mat-dialog-close
@@ -340,7 +343,7 @@
                 + ' ' + checkin.provider.lastName}}
                 <!-- {{checkin.provider.businessName}} -->
             </p>
-            <p>Location: {{checkin.queue.location.place}}</p>
+            <p *ngIf="checkin.queue.location.place">Location: {{checkin.queue.location.place}}</p>
             <p>Service :
                 <i *ngIf="checkin.service.serviceType === 'virtualService' && checkin.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                     class="fa meet-icon"></i>

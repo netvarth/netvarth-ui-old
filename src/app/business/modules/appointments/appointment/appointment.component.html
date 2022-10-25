@@ -353,7 +353,7 @@
                                                     capitalizeFirst}}</span>
                                             <span class="required">*</span>
                                             <mat-form-field *ngIf="users.length == 1">
-                                                <input matInput class="inputbox" *ngFor="let user of users"
+                                                <input matInput class="inputbox singleUser" style="padding:10px 0px 10px 15px !important;" *ngFor="let user of users"
                                                     [readonly]="true"
                                                     value="{{(user.businessName) ? user.businessName : user.firstName + ' ' + user.lastName}}">
                                             </mat-form-field>
@@ -916,7 +916,13 @@
                                         (click)="saveCheckin()" [class.spinner]="api_loading"
                                         [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
                                         [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
-                                        *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
+                                        *ngIf="!questionnaireList.labels && sel_ser_det && (sel_ser_det.serviceBookingType !== 'request')">{{showCheckinButtonCaption()}}</button>
+                                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                                        (click)="saveCheckin()" [class.spinner]="api_loading"
+                                        [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
+                                        [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
+                                        *ngIf="!questionnaireList.labels && sel_ser_det && (sel_ser_det.serviceBookingType === 'request')">Send Request</button>
+                                        
                                 </div>
                             </ng-container>
                         </div>
@@ -1259,7 +1265,12 @@
                                     [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
                                     [class.spinner-center]="api_loading" [disabled]="api_loading"
                                     [class.disabled]="api_loading"
-                                    *ngIf="!questionnaireList.labels">{{showCheckinButtonCaption()}}</button>
+                                    *ngIf="!questionnaireList.labels && sel_ser_det && (sel_ser_det.serviceBookingType !== 'request')">{{showCheckinButtonCaption()}}</button>
+                                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                                        (click)="saveCheckin()" [class.spinner]="api_loading"
+                                        [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
+                                        [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
+                                        *ngIf="sel_ser_det && (sel_ser_det.serviceBookingType === 'request')">Send Request</button>
                             </div>
                         </ng-container>
                     </div>

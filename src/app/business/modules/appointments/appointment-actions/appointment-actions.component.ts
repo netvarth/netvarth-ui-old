@@ -33,7 +33,6 @@ import { CommunicationService } from "../../../../business/services/communicatio
 import { AdjustscheduleDelayComponent } from "../schedule-delay/adjust-schedule-delay.component";
 import { TeleBookingService } from '../../../../shared/services/tele-bookings-service';
 
-
 @Component({
   selector: "app-appointment-actions",
   templateUrl: "./appointment-actions.component.html",
@@ -155,6 +154,7 @@ export class AppointmentActionsComponent implements OnInit {
     this.server_date = this.lStorageService.getitemfromLocalStorage("sysdate");
   }
   ngOnInit() {
+   
     //this.getAppointmentSlots();
    // console.log("Slots :",this.getAppointmentSlots());
    
@@ -178,6 +178,15 @@ export class AppointmentActionsComponent implements OnInit {
     this.getLabel();
     this.apiloading = true;
     this.appt = this.data.checkinData;
+    this.lStorageService.setitemonLocalStorage("scheduleId",this.appt.schedule.id);
+    this.sel_schedule_id = this.lStorageService.getitemfromLocalStorage("scheduleId");
+    console.log("Schedule Id :", this.sel_schedule_id);
+    this.provider_services
+    .getAppointmentSlotsByScheduleid(
+      this.sel_schedule_id
+    ).subscribe((data:any)=>{
+      console.log("Slotssss data :",data);
+    })
     this.multipleSelection = this.data.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
@@ -270,6 +279,11 @@ export class AppointmentActionsComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
+  date_value_changed(){
+    console.log("date change :");
+
+  }
+  
   showMoreTimeSlots() {
     this.showMoreAvailableSlots = !this.showMoreAvailableSlots;
   }
@@ -1136,7 +1150,10 @@ export class AppointmentActionsComponent implements OnInit {
         for (const scheduleSlots of this.schedules) {
           this.availableSlots = scheduleSlots.availableSlots;
           console.log("availableSlots",this.availableSlots)
-          if((this.sel_checkindate === scheduleSlots.date) && this.appt.appointmentMode === 'ONLINE_APPOINTMENT' && (this.apptlist_status === false || this.futureDateApptlist === false)){
+          console.log("sel_checkindate",this.sel_checkindate)
+          console.log("scheduleSlots.date",scheduleSlots.date)
+
+          if((scheduleSlots.date === this.sel_checkindate) && this.appt.appointmentMode === 'ONLINE_APPOINTMENT' && (!this.apptlist_status)){
            // this.freeSlots = [];
             this.availableSlots = [];
             console.log("Todayssss online:",this.apptlist_status);
@@ -1218,7 +1235,7 @@ export class AppointmentActionsComponent implements OnInit {
     if (type === "pre") {
       if (strtDt.getTime() >= nDt.getTime()) {
         this.sel_checkindate = ndate;
-        this.getAppointmentSlots();
+       this.getAppointmentSlots();
       }
     } else {
       if (nDt.getTime() >= strtDt.getTime()) {
@@ -1226,6 +1243,8 @@ export class AppointmentActionsComponent implements OnInit {
         this.getAppointmentSlots();
       }
     }
+    this.getAppointmentSlots();
+
   }
   setMinMaxDate() {
     this.today = new Date(this.server_date.split(" ")[0]).toLocaleString(
@@ -1245,6 +1264,8 @@ export class AppointmentActionsComponent implements OnInit {
   }
   handleFutureDateChange(e) {
     const tdate = e.targetElement.value;
+    this.getAppointmentSlots();
+    console.log("tdate :",tdate)
     const newdate = tdate
       .split("/")
       .reverse()
@@ -1258,7 +1279,8 @@ export class AppointmentActionsComponent implements OnInit {
     const seldate =
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.sel_checkindate = seldate;
-    this.getAppointmentSlots();
+    //if((this.sel_checkindate === seldate) && this.appt.appointmentMode !== 'ONLINE_APPOINTMENT' && (this.apptlist_status || this.futureDateApptlist)){
+    // }
     this.getSchedulesbyLocationandServiceIdavailability(
       this.locId,
       this.servId,
@@ -1436,6 +1458,38 @@ export class AppointmentActionsComponent implements OnInit {
       }
     );
   }
+  // next_date(n) {
+  //   console.log("Selected Date:", this.selected_date);
+  //   let tommorow = new Date(this.selected_date);
+  //   console.log("Tommorow Date:", this.selected_date);
+  //   tommorow.setDate(tommorow.getDate() + n);
+  //   this.default_value = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
+  //   this.selected_date = this.dateTimeProcessor.getStringFromDate_YYYYMMDD(new Date(tommorow));
+  //   // this.selectedDate = this.sel_checkindate;
+  //   tommorow.setDate(tommorow.getDate() + 1);
+  //   this.next_date_value = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
+  //   tommorow.setDate(tommorow.getDate() + 1);
+  //   this.next_date_value_1 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
+  //   tommorow.setDate(tommorow.getDate() + 1);
+  //   this.next_date_value_2 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
+  //   tommorow.setDate(tommorow.getDate() - 4);
+  //   this.prev_date_value = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
+  //   tommorow.setDate(tommorow.getDate() - 1);
+  //   this.prev_date_value_1 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
+  //   tommorow.setDate(tommorow.getDate() - 1);
+  //   this.prev_date_value_2 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
+  //   console.log("Result Date:", this.selected_date);
+  //   this.date_change_event.emit(this.selected_date);
+  //   this.date_handling_btn()
+  // }
+  appointmentDateChanged(appmtDate) {
+   // this.selectedSlots = [];
+      console.log("In Appointment Date Changed Method:", appmtDate);
+    // this.appmtDate = appmtDate;
+   //  this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
+    // this.slotLoaded = false;
+    // this.getAvailableSlotByLocationandService(this.locationId, this.selectedServiceId, this.appmtDate, this.accountId);
+ }
   getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
     const _this = this;
     if (locid && servid && accountid) {

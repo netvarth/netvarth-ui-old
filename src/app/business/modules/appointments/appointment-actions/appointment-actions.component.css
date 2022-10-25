@@ -98,13 +98,60 @@
   .smallCalender{
     height: 100%;
     overflow: auto;
+   
+  }
+  .matCard{
+    box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
+    border: none !important;
+    border-radius: 7.1468px;
+    top: -5px;
   }
   .smallDevice h5{
     margin-top: 5px;
   }
   .matChip .mat-chip{
-    min-width: 25% ;
-    max-width: 30% ;
+    /* min-width: 25% ;
+    max-width: 30% ; */
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+    width: 120px;
+    height: 39.31px;
+    /* left: 747.92px;
+    top: 263.8px; */
+    background: #FAFAFC;
+    color: black;
+    box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25);
+    border-radius: 7.1468px;
+  }
+}
+@media(max-width:360px) {
+
+    .matChip .mat-chip{
+    /* min-width: 25% ;
+    max-width: 30% ; */
+    position: relative;
+    justify-content: center;
+    justify-items: center;
+    width: 110px;
+    height: 39.31px;
+    /* left: 747.92px;
+    top: 263.8px; */
+    background: #FAFAFC;
+    color: black;
+    box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25);
+    border-radius: 7.1468px;
+  }
+  .smallCalender{
+    height: 100%;
+    overflow: auto;
+   
+  }
+  .matCard{
+    box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
+    border: none !important;
+    border-radius: 7.1468px;
+    top: -5px;
   }
 }
 @media (min-width:767px) and (max-width:992px){
@@ -112,17 +159,35 @@
     height: 250px;
     overflow: auto;
     margin-top: 10px;
+    
   }
   .smallCalender{
     height: 100%;
     overflow: auto;
   }
+  .matCard{
+    box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
+    border: none !important;
+    border-radius: 7.1468px;
+    top: -5px;
+  }
   .smallDevice h5{
     margin-top: 5px;
   }
   .matChip .mat-chip{
-    min-width: 25% ;
-    max-width: 30% ;
+    /* min-width: 25% ;
+    max-width: 30% ; */
+    position: relative;
+      justify-content: center;
+      justify-items: center;
+      width: 146.51px;
+      height: 39.31px;
+      /* left: 747.92px;
+      top: 263.8px; */
+      background: #FAFAFC;
+      color: black;
+      box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25);
+      border-radius: 7.1468px;
   }
 }
 
@@ -273,14 +338,35 @@
     align-items: center;
   }
   }
-  @media (min-width: 1115px) and (max-width: 1400px){ 
+  @media (min-width: 900px) and (max-width: 1400px){ 
     .matChip .mat-chip {
-      min-width: 30% !important;
-      max-width: 30% !important;
-      padding: 10px;
-      text-align: center;
+      /* min-width: 30% !important;
+      max-width: 30% !important; */
+      /* padding: 10px; */
+      position: relative;
+      justify-content: center;
+      justify-items: center;
+      width: 146.51px;
+      height: 39.31px;
+      /* left: 747.92px;
+      top: 263.8px; */
+      background: #FAFAFC;
+      color: black;
+      box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25);
+      border-radius: 7.1468px;
       /* width: 100px; */
       
+    }
+   
+    .smallCalender{
+      height: 100%;
+      overflow: auto;
+    }
+    .matCard{
+      box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
+      border: none !important;
+      border-radius: 7.1468px;
+      top: -5px;
     }
     }
   .appt-in-chip .mat-chip {
@@ -288,7 +374,43 @@
     max-width: 13% ;
     
   }
-  /* .btnSize{
-    width: 150px;
-  } */
- 
+  .btnSize{
+    position: relative;
+    width: 220px;
+    height: 42.65px;
+    background: #FAFAFC;
+    color: #1E4079;
+    /* left: 662.63px;
+    top: 552.13px; */
+    border: 1.2543px solid #1E4079;
+    border-radius: 20px;
+  }
+  .btnSize:hover{
+    background: #1E4079;
+    color: white;
+  }
+  .matChip .mat-chip:focus{
+    background: #1E4079;
+    color: white;
+  }
+  .mat-calendar-body-today:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
+    background: #1E4079 !important;
+    color: white !important;
+  }
+  .nextBtn{
+    position: relative;
+    width: 87.58px;
+    background: #1E4079;
+    border: 1.11631px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 1.11631px 1.11631px rgba(0, 0, 0, 0.16);
+    border-radius: 5.58156px;
+  }
+  .closeBtn{
+    position: relative;
+    width: 87.58px;
+    background: #ffff;
+    border: 1.11631px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0px 1.11631px 1.11631px rgba(0, 0, 0, 0.16);
+    border-radius: 5.58156px;
+    color: black;
+  }
