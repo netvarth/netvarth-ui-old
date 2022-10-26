@@ -50,18 +50,18 @@ export class CustomAppComponent implements OnInit, OnDestroy {
     private i18nService: I18nService
   ) {
     this.activatedRoute.queryParams.subscribe(qparams => {
+      if (qparams && qparams.cl_dt) {
+        console.log(qparams.cl_dt);
+        if ((qparams.cl_dt=="true" || qparams.cl_dt==true) && !this.lStorageService.getitemfromLocalStorage('cleared')) {
+          this.clearStorage();
+        }
+      }
       if (qparams && qparams.uid) {
         this.paramUniqueId = qparams.uid;
         this.lStorageService.setitemonLocalStorage('appUniqueId', qparams.uid);
       }
       if (qparams && qparams.callback) {
         this.callback = qparams.callback;
-      }
-      if (qparams && qparams.cl_dt) {
-        console.log(qparams.cl_dt);
-        if ((qparams.cl_dt=="true" || qparams.cl_dt==true) && !this.lStorageService.getitemfromLocalStorage('cleared')) {
-          this.clearStorage();
-        }
       }
       if (qparams && qparams.inst_id) {
         this.lStorageService.setitemonLocalStorage('installId', qparams.inst_id);
@@ -76,11 +76,10 @@ export class CustomAppComponent implements OnInit, OnDestroy {
         this.lStorageService.setitemonLocalStorage('ios', true);
       }
       if (qparams && qparams.lan) {
-        if (!this.lStorageService.getitemfromLocalStorage('translatevariable')) {
+        // if (!this.lStorageService.getitemfromLocalStorage('translatevariable')) {
           this.i18nService.changeLocale(qparams.lan);
-        }
+        // }
       }
-      this.i18nService.changeLocale('mal');
     });
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
