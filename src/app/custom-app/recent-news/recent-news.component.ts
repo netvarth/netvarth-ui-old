@@ -40,6 +40,6 @@ export class RecentNewsComponent {
     
   }
   openNews(link) {
-    window.open(link, "_blank");
+    window.open(link, "_self");
   }
 }
