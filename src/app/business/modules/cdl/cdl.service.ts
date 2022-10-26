@@ -185,6 +185,8 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+
+
   getPartnerCategories() {
     const url = 'provider/partner/category';
     return this.servicemeta.httpGet(url, null);
@@ -205,6 +207,12 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+
+  changeScheme(loanId, schemeId) {
+    const url = 'provider/loanapplication/' + loanId + '/scheme/' + schemeId;
+    return this.servicemeta.httpPut(url, null);
+  }
+
   suspendDealer(id, data) {
     const url = 'provider/partner/' + id + '/suspended';
     return this.servicemeta.httpPut(url, data);
@@ -213,6 +221,12 @@ export class CdlService {
   rejectDealer(id, data) {
     const url = 'provider/partner/' + id + '/rejected';
     return this.servicemeta.httpPut(url, data);
+  }
+
+
+  changeInternalStatus(id, status) {
+    const url = 'provider/loanapplication/' + id + '/spinternalstatus/' + status;
+    return this.servicemeta.httpPut(url, null);
   }
 
 
@@ -231,6 +245,21 @@ export class CdlService {
 
   updateBankDetails(data) {
     const url = 'provider/loanapplication/bank';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  savePartnerBankDetails(data) {
+    const url = 'provider/partner/bank';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  updatePartnerBankDetails(data) {
+    const url = 'provider/partner/bank';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  verifyPartnerBankDetails(data) {
+    const url = 'provider/partner/verify/bank';
     return this.servicemeta.httpPut(url, data);
   }
 

@@ -35,6 +35,7 @@ export class CreateDealerComponent implements OnInit {
   }
   filesToUpload: any = [];
   actionText: any;
+  bankData: any;
   aadharverification = false;
   gstverification = false;
   headerText: any = "Create Dealer";
@@ -99,7 +100,10 @@ export class CreateDealerComponent implements OnInit {
       gst: [null],
       size: [null],
       trade: [null],
-      cheque: [null]
+      cheque: [null],
+      bank: [null],
+      account: [null],
+      ifsc: [null]
     });
 
 
@@ -132,8 +136,12 @@ export class CreateDealerComponent implements OnInit {
             this.createDealer.controls.pincode.setValue(this.dealerData.partnerPin);
             this.createDealer.controls.city.setValue(this.dealerData.partnerCity);
             this.createDealer.controls.state.setValue(this.dealerData.partnerState);
-            this.createDealer.controls.type.setValue(this.dealerData.type.id);
-            this.createDealer.controls.category.setValue(this.dealerData.category.id);
+            if (this.dealerData && this.dealerData.type && this.dealerData.type.id) {
+              this.createDealer.controls.type.setValue(this.dealerData.type.id);
+            }
+            if (this.dealerData && this.dealerData.category && this.dealerData.category.id) {
+              this.createDealer.controls.category.setValue(this.dealerData.category.id);
+            }
             this.createDealer.controls.size.setValue(this.dealerData.partnerSize);
             this.createDealer.controls.trade.setValue(this.dealerData.partnerTrade);
 
@@ -143,6 +151,20 @@ export class CreateDealerComponent implements OnInit {
             this.selectedFiles['pan'].files = this.dealerData.panAttachments;
             this.selectedFiles['store'].files = this.dealerData.storeAttachments;
             this.selectedFiles['cheque'].files = this.dealerData.bankAttachments;
+
+
+
+            this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
+              this.bankData = data;
+              console.log("this.bankData", this.bankData)
+              if (this.bankData) {
+                this.createDealer.controls.bank.setValue(this.bankData.bankName);
+                this.createDealer.controls.account.setValue(this.bankData.bankAccountNo);
+                this.createDealer.controls.ifsc.setValue(this.bankData.bankIfsc);
+                // this.accountverification = this.bankData.bankAccountVerified;
+                this.selectedFiles['cheque'].files = this.bankData.bankAttachments;
+              }
+            });
 
 
 
@@ -463,9 +485,81 @@ export class CreateDealerComponent implements OnInit {
   }
 
 
+  saveBankDetails() {
+
+    let bankInfo = {
+      "uid": this.dealerData.uid,
+      "bankName": this.createDealer.controls.bank.value,
+      "bankAccountNo": this.createDealer.controls.account.value,
+      "bankIfsc": this.createDealer.controls.ifsc.value
+    }
+
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      this.filesToUpload[i]['order'] = i;
+      if (this.filesToUpload[i]["type"] == 'cheque') {
+        bankInfo['bankAttachments'] = [];
+        bankInfo['bankAttachments'].push(this.filesToUpload[i]);
+      }
+    }
+    if (this.dealerData && this.dealerData.id) {
+      bankInfo['id'] = this.dealerData.id
+    }
+
+    const verifyBank = {
+      "id": this.dealerData.id,
+    }
+
+
+
+    if (this.bankData == null) {
+      this.cdlservice.savePartnerBankDetails(bankInfo).subscribe((s3urls: any) => {
+        if (s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+            });
+        }
+        this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
+          if (data) {
+            this.cdlservice.getBankDetailsById(this.dealerId).subscribe((bankInfo) => {
+              this.bankData = bankInfo;
+            });
+          }
+          this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
+
+        }),
+          (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          }
+      }), (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      }
+    }
+    else {
+
+      this.cdlservice.updateBankDetails(bankInfo).subscribe((s3urls: any) => {
+        console.log("Coming Here")
+
+        if (s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+            });
+        }
+        this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
+          this.snackbarService.openSnackBar("Bank Details Updated Successfully")
+
+        }),
+          (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          }
+      }), (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      }
+    }
+  }
+
   createPartner() {
-
-
     this.dealerData = {
       "partnerName": this.createDealer.controls.name.value,
       "partnerMobile": this.createDealer.controls.phone.value,
@@ -558,6 +652,7 @@ export class CreateDealerComponent implements OnInit {
         console.log("filesToUpload", this.filesToUpload)
         this.dealerData['uid'] = this.dealerId;
         this.cdlservice.updateDealer(this.dealerId, this.dealerData).subscribe((s3urls: any) => {
+          this.saveBankDetails();
           if (s3urls && s3urls.length > 0) {
             this.uploadAudioVideo(s3urls).then(
               (dataS3Url) => {
@@ -641,7 +736,7 @@ export class CreateDealerComponent implements OnInit {
   }
 
 
-  saveAsDraft() {
+  saveAsLead() {
     this.dealerData = {
       "partnerName": this.createDealer.controls.name.value,
       "partnerMobile": this.createDealer.controls.phone.value,
@@ -662,12 +757,39 @@ export class CreateDealerComponent implements OnInit {
     }
 
     console.log("This.dealerData", this.dealerData);
-
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      this.filesToUpload[i]['order'] = i;
+      if (this.filesToUpload[i]["type"] == 'photo') {
+        this.dealerData['partnerAttachments'] = [];
+        this.dealerData['partnerAttachments'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'store') {
+        this.dealerData['storeAttachments'] = [];
+        this.dealerData['storeAttachments'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'aadhar') {
+        this.dealerData['aadhaarAttachments'] = [];
+        this.dealerData['aadhaarAttachments'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'pan') {
+        this.dealerData['panAttachments'] = [];
+        this.dealerData['panAttachments'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'cheque') {
+        this.dealerData['bankAttachments'] = [];
+        this.dealerData['bankAttachments'].push(this.filesToUpload[i]);
+      }
+    }
 
     if (this.dealerData) {
       console.log("Loan Application Data : ", this.dealerData)
-      this.cdlservice.savePartner(this.dealerData).subscribe((response: any) => {
-        console.log("response", response);
+      this.cdlservice.savePartner(this.dealerData).subscribe((s3urls: any) => {
+        if (s3urls && s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+            });
+        }
         this.snackbarService.openSnackBar("Dealer Saved As Draft Successfully")
         this.router.navigate(['provider', 'cdl', 'dealers'])
       },

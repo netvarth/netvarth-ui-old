@@ -108,7 +108,7 @@
     <span class="font-weight-bold">Quick Actions</span>
   </div>
   <div class="row">
-    <div class="col-md-2" (click)="CreateLoan()" *ngIf="user.userType==1 || user.userType==5">
+    <div class="col-md-2 mt-2" (click)="CreateLoan()" *ngIf="user.userType==1 || user.userType==5">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor shadow">
         <div>
           <i class="fa fa-plus add-loan-icon"></i>
@@ -121,7 +121,7 @@
 
 
 
-    <div class="col-md-2" (click)="approvedLoans()" *ngIf="user.userType==5">
+    <div class="col-md-2 mt-2" (click)="approvedLoans()" *ngIf="user.userType==5">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-check approved-loan-icon"></i>
@@ -131,7 +131,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-2" (click)="redirectedLoans()" *ngIf="user.userType==5">
+    <!-- <div class="col-md-2 mt-2" (click)="redirectedLoans()" *ngIf="user.userType==5">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-spinner redirected-loan-icon"></i>
@@ -140,10 +140,11 @@
           <span class="card-title">Redirected Loans</span>
         </div>
       </div>
-    </div>
+    </div> -->
 
 
-    <!-- <div class="col-md-2" (click)="rejectedLoans()" *ngIf="user.userType==5">
+
+    <div class="col-md-2 mt-2" (click)="rejectedLoans()" *ngIf="user.userType==5">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-times rejected-loan-icon"></i>
@@ -152,10 +153,10 @@
           <span class="card-title">Rejected Loans</span>
         </div>
       </div>
-    </div> -->
+    </div>
 
 
-    <div class="col-md-2" (click)="allSchemes()" *ngIf="user.userType==5">
+    <div class="col-md-2 mt-2" (click)="allSchemes()" *ngIf="user.userType==5">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-globe schemes-loan-icon"></i>
@@ -167,7 +168,7 @@
     </div>
 
 
-    <div class="col-md-2" *ngIf="user.userType==1 || user.userType==2" (click)="allLoans()">
+    <div class="col-md-2 mt-2" *ngIf="user.userType==1 || user.userType==2" (click)="allLoans()">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-clock-o all-loans-icon"></i>
@@ -178,7 +179,18 @@
       </div>
     </div>
 
-    <div class="col-md-2" *ngIf="user.userType==1" (click)="createDealer()">
+    <div class="col-md-2 mt-2" (click)="pendingLoans()" *ngIf="user.userType==2">
+      <div class="dashboard-card text-center shadow p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-clock-o redirected-loan-icon"></i>
+        </div>
+        <div class="mt-1">
+          <span class="card-title">Pending Loans</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-2 mt-2" *ngIf="user.userType==1" (click)="createDealer()">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-user create-dealer-icon"></i>
@@ -189,7 +201,7 @@
       </div>
     </div>
 
-    <div class="col-md-2" *ngIf="user.userType==1 || user.userType==2" (click)="allDealers()">
+    <div class="col-md-2 mt-2" *ngIf="user.userType==1 || user.userType==2" (click)="allDealers()">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-users all-leads-icon"></i>
@@ -201,7 +213,20 @@
     </div>
 
 
-    <div class="col-md-2" *ngIf="user.userType==2" (click)="requestedDealers()">
+
+    <div class="col-md-2 mt-2" *ngIf="user.userType==1 || user.userType==2" (click)="allLeads()">
+      <div class="dashboard-card text-center shadow p-2 pointer-cursor">
+        <div>
+          <i class="fa fa-users all-leads-icon"></i>
+        </div>
+        <div>
+          <span class="card-title">All Leads</span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col-md-2 mt-2" *ngIf="user.userType==2" (click)="requestedDealers()">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-users all-leads-icon"></i>
@@ -212,7 +237,7 @@
       </div>
     </div>
 
-    <div class="col-md-2" *ngIf="user.userType==2">
+    <div class="col-md-2 mt-2" *ngIf="user.userType==2">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-user create-dealer-icon"></i>
@@ -226,7 +251,7 @@
 
 
 
-    <div class="col-md-2" (click)="viewFile('emicalc')">
+    <div class="col-md-2 mt-2" (click)="viewFile('emicalc')">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-calculator emi-calc-icon"></i>
@@ -239,7 +264,7 @@
 
 
 
-    <div class="col-md-2" (click)="reports()">
+    <div class="col-md-2 mt-2" (click)="reports()">
       <div class="dashboard-card text-center shadow p-2 pointer-cursor">
         <div>
           <i class="fa fa-files-o all-leads-icon"></i>

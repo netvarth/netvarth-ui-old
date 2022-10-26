@@ -146,10 +146,12 @@
                 <div class="text-left details-title">Aadhar Number</div>
                 <div class="text-left details-sub-title">{{dealerData.aadhaar}}</div>
               </div>
-              <div class="mt-2">
-                <button (click)="viewFile('aadhar')" class="btn btn-primary" type="button">
-                  <span>View Aadharcard</span>
-                </button>
+              <div class="mt-2"
+                *ngIf="dealerData && dealerData.aadhaarAttachments && dealerData.aadhaarAttachments[0] && dealerData.aadhaarAttachments[0].s3path">
+                <a [href]="dealerData.aadhaarAttachments[0].s3path" target="_blank" class="btn btn-primary"
+                  type="button">
+                  <span>View Aadhar</span>
+                </a>
               </div>
             </div>
           </div>
@@ -169,6 +171,36 @@
             </div>
           </div>
         </div>
+
+
+        <div class="row mt-2">
+          <div class="col-md-6">
+            <div *ngIf="dealerData && dealerData.gstin">
+              <div>
+                <div class="text-left details-title">GSTIN</div>
+                <div class="text-left details-sub-title">{{dealerData.gstin}}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <div
+              *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0] && dealerData.storeAttachments[0].s3path">
+              <div>
+                <div class="text-left details-title">Store</div>
+                <div class="text-left details-sub-title"></div>
+              </div>
+              <div class="mt-2"
+                *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0] && dealerData.storeAttachments[0].s3path">
+                <a [href]="dealerData.storeAttachments[0].s3path" target="_blank" class="btn btn-primary" type="button">
+                  <span>View Store Photo</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <div class="row mt-3">
           <div class="col-md-6">
             <div *ngIf="dealerData && dealerData.gstin">
@@ -179,20 +211,6 @@
               <div class="mt-2">
                 <button (click)="viewFile('aadhar')" class="btn btn-primary" type="button">
                   <span>View GSTIN</span>
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div *ngIf="dealerData && dealerData.gstin">
-              <div>
-                <div class="text-left details-title">License</div>
-                <div class="text-left details-sub-title">{{dealerData.gstin}}</div>
-              </div>
-              <div class="mt-2">
-                <button (click)="viewFile('cibil')" class="btn btn-primary" type="button">
-                  <span>View License</span>
                 </button>
               </div>
             </div>

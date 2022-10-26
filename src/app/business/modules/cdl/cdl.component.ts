@@ -165,6 +165,25 @@ export class CdlComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
   }
 
+
+  pendingLoans() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'ApprovalPending'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+  }
+
+  allLeads() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'Draft'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'dealers'], navigationExtras);
+  }
+
   transform(event) {
     if (event.target.value != 'all') {
       this.loans = this.statusLoansList.filter(i => i.status == event.target.value);

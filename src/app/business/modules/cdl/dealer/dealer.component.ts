@@ -104,6 +104,9 @@ export class DealerComponent implements OnInit {
             else if (params && (params.type === 'rejected')) {
               this.headerName = "Rejected Dealers";
             }
+            else if (params && (params.type === 'Draft')) {
+              this.headerName = "All Leads";
+            }
             else {
               this.headerName = "All Dealers";
             }
@@ -117,8 +120,12 @@ export class DealerComponent implements OnInit {
 
 
           if (params.type && params.type != 'all') {
-            this.dealers = this.dealerList.filter(i => i.status == params.type)
-            console.log("dealers List : ", this.dealers);
+            const api_filter = {};
+            api_filter['partnerStatus-eq'] = params.type;
+            this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
+              this.dealers = data;
+              console.log("Dealers List : ", this.dealers);
+            })
           }
           else {
             this.dealers = this.dealerList;

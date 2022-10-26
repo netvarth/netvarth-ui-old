@@ -43,7 +43,7 @@
                     <div class="filterTextinput filter-text-input">
                       <li class="filterli filter-li">
                         <input type="text" [(ngModel)]="filter.id" #id (keyup)="keyPress()"
-                          class="filterTextbox filter-textbox" placeholder="Enter Customer Id">
+                          class="filterTextbox filter-textbox" placeholder="Enter Dealer Id">
                       </li>
                     </div>
                   </div>
@@ -154,7 +154,7 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngFor="let dealer of dealers;let i=index">
-              <tr style="cursor:pointer" (click)="showDealer(dealer.uid,dealer.partnerStatus,dealer.spInternalStatus)">
+              <tr style="cursor:pointer" (click)="updateDealer(dealer.uid,'update')">
                 <td data-title="Loan Details" class="td1">{{dealer.id}}</td>
                 <td data-title="Loan Details" class="td1 loanStatus">
                   <img class="imageApprove" src="/assets/images/cdl/approved.png" />

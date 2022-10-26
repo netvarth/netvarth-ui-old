@@ -721,7 +721,8 @@ export class CreateComponent implements OnInit {
               if (data.isAutoApproval && data.isApproved) {
                 const navigationExtras: NavigationExtras = {
                   queryParams: {
-                    type: 'autoapproved'
+                    type: 'autoapproved',
+                    uid: this.loanId
                   }
                 }
                 this.snackbarService.openSnackBar("Loan Auto Approved");
@@ -730,7 +731,8 @@ export class CreateComponent implements OnInit {
               else if (!data.isAutoApproval && data.isApproved) {
                 const navigationExtras: NavigationExtras = {
                   queryParams: {
-                    type: 'approved'
+                    type: 'approved',
+                    uid: this.loanId
                   }
                 }
                 this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
@@ -739,7 +741,8 @@ export class CreateComponent implements OnInit {
               else if (!data.isAutoApproval && data.isApproved) {
                 const navigationExtras: NavigationExtras = {
                   queryParams: {
-                    type: 'approved'
+                    type: 'approved',
+                    uid: this.loanId
                   }
                 }
                 this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
@@ -748,7 +751,8 @@ export class CreateComponent implements OnInit {
               else if (!data.isAutoApproval && !data.isApproved) {
                 const navigationExtras: NavigationExtras = {
                   queryParams: {
-                    type: 'rejected'
+                    type: 'rejected',
+                    uid: this.loanId
                   }
                 }
                 this.snackbarService.openSnackBar("Sorry This Loan Was Rejected", { 'panelClass': 'snackbarerror' });

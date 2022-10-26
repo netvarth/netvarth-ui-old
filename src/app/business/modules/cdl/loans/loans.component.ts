@@ -72,7 +72,8 @@ export class LoansComponent implements OnInit {
     else if (status == 'PartnerAccepted') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'partnerAccepted'
+          type: 'partnerAccepted',
+          uid: id
         }
       };
       this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
@@ -83,7 +84,8 @@ export class LoansComponent implements OnInit {
     else if (status == 'ApprovalPending' && this.user.userType != 2) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'approved'
+          type: 'approved',
+          uid: id
         }
       };
       this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
@@ -91,7 +93,9 @@ export class LoansComponent implements OnInit {
     else {
       const navigationExtras: NavigationExtras = {
         queryParams: {
-          type: 'autoapproved'
+          type: 'autoapproved',
+          uid: id,
+          timetype: 2
         }
       };
       this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
@@ -127,6 +131,9 @@ export class LoansComponent implements OnInit {
             else if (params && (params.type === 'rejected')) {
               this.headerName = "Rejected Loans";
             }
+            else if (params && (params.type === 'ApprovalPending')) {
+              this.headerName = "Approval Pending Loans";
+            }
             else {
               this.headerName = "All Loans";
             }
@@ -140,15 +147,18 @@ export class LoansComponent implements OnInit {
 
 
           if (params.type && params.type != 'all') {
-            this.loans = this.loansList.filter(i => i.status == params.type)
-            console.log("Loans List : ", this.loans);
-            this.loading = false;
+            const api_filter = {};
+            api_filter['spInternalStatus-eq'] = params.type;
+            this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+              this.loans = data;
+              console.log("Loans List : ", this.loans);
+              this.loading = false;
+            })
           }
           else {
             this.loans = this.loansList;
             this.loading = false;
           }
-
         });
       }
       console.log("Loans List : ", this.loansList);

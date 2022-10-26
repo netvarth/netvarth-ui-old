@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { CdlService } from '../../cdl.service';
 
 @Component({
   selector: 'app-approved',
@@ -15,15 +16,19 @@ export class ApprovedComponent implements OnInit {
   from: any;
   type: any;
   scheme: any;
+  loanId: any;
   verification = false;
   accountverification = false;
   user: any;
+  loanSchemes: any;
+  schemeSelected: any;
   constructor(
     private location: Location,
     private dialog: MatDialog,
     private router: Router,
     private activated_route: ActivatedRoute,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private cdlservice: CdlService
 
 
   ) { }
@@ -48,7 +53,13 @@ export class ApprovedComponent implements OnInit {
       if (params && params.type) {
         this.type = params.type;
       }
+      if (params && params.uid) {
+        this.loanId = params.uid;
+      }
     });
+
+    this.getLoanSchemes();
+
   }
 
   resetErrors() {
@@ -56,7 +67,10 @@ export class ApprovedComponent implements OnInit {
   }
 
   selectedScheme(scheme) {
-    this.selectedScheme = scheme;
+    this.schemeSelected = scheme;
+    if (this.schemeSelected) {
+      this.gotoNext();
+    }
   }
 
   goNext() {
@@ -82,6 +96,33 @@ export class ApprovedComponent implements OnInit {
     this.router.navigate(['provider', 'cdl'])
   }
 
+
+  refreshCustomerAcceptance() {
+    this.cdlservice.changeInternalStatus(this.loanId, 'ConsumerAccepted').subscribe((data) => {
+      if (data) {
+        this.router.navigate(['provider', 'cdl', 'loans']);
+      };
+    })
+  }
+
+
+  getLoanSchemes() {
+    this.cdlservice.getLoanSchemes().subscribe((data) => {
+      this.loanSchemes = data;
+      console.log("this.loanSchemes", this.loanSchemes)
+    })
+  }
+
+
+  gotoNext() {
+    this.cdlservice.changeScheme(this.loanId, this.schemeSelected.id).subscribe((data: any) => {
+      if (data) {
+        if (this.timetype == 1) {
+          this.timetype = 2
+        }
+      }
+    })
+  }
 
   verifyAccount() {
     let can_remove = false;
