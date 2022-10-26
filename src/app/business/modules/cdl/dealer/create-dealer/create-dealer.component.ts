@@ -177,10 +177,10 @@ export class CreateDealerComponent implements OnInit {
     }
 
     if (type == 'Pan') {
-      this.dealerApplication["pan"] = this.createDealer.controls.pannumber.value;
+      this.dealerApplication["pan"] = this.createDealer.controls.pan.value;
     }
     else if (type == 'UID') {
-      this.dealerApplication["aadhaar"] = this.createDealer.controls.aadharnumber.value;
+      this.dealerApplication["aadhaar"] = this.createDealer.controls.aadhar.value;
     }
 
     this.cdlservice.getDealerById(this.dealerId).subscribe((data: any) => {
@@ -199,7 +199,7 @@ export class CreateDealerComponent implements OnInit {
         }
       }
 
-      this.cdlservice.verifyIds(type, this.dealerApplication).subscribe((s3urls: any) => {
+      this.cdlservice.verifyPartnerIds(type, this.dealerApplication).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
@@ -517,8 +517,8 @@ export class CreateDealerComponent implements OnInit {
         }
 
         this.cdlservice.createPartner(this.dealerData).subscribe((s3urls: any) => {
-          if (s3urls.attachmentsUrls.length > 0) {
-            this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
+          if (s3urls && s3urls.length > 0) {
+            this.uploadAudioVideo(s3urls).then(
               (dataS3Url) => {
                 console.log(dataS3Url);
               });
@@ -538,6 +538,10 @@ export class CreateDealerComponent implements OnInit {
             this.dealerData['partnerAttachments'] = [];
             this.dealerData['partnerAttachments'].push(this.filesToUpload[i]);
           }
+          if (this.filesToUpload[i]["type"] == 'store') {
+            this.dealerData['storeAttachments'] = [];
+            this.dealerData['storeAttachments'].push(this.filesToUpload[i]);
+          }
           if (this.filesToUpload[i]["type"] == 'aadhar') {
             this.dealerData['aadhaarAttachments'] = [];
             this.dealerData['aadhaarAttachments'].push(this.filesToUpload[i]);
@@ -546,16 +550,12 @@ export class CreateDealerComponent implements OnInit {
             this.dealerData['panAttachments'] = [];
             this.dealerData['panAttachments'].push(this.filesToUpload[i]);
           }
-          if (this.filesToUpload[i]["type"] == 'store') {
-            this.dealerData['storeAttachments'] = [];
-            this.dealerData['storeAttachments'].push(this.filesToUpload[i]);
-          }
           if (this.filesToUpload[i]["type"] == 'cheque') {
             this.dealerData['bankAttachments'] = [];
             this.dealerData['bankAttachments'].push(this.filesToUpload[i]);
           }
         }
-
+        console.log("filesToUpload", this.filesToUpload)
         this.dealerData['uid'] = this.dealerId;
         this.cdlservice.updateDealer(this.dealerId, this.dealerData).subscribe((s3urls: any) => {
           if (s3urls && s3urls.length > 0) {
@@ -618,6 +618,26 @@ export class CreateDealerComponent implements OnInit {
           resolve(false);
         });
     })
+  }
+
+
+
+  refreshAadharVerify() {
+    this.cdlservice.refreshPartnerAadharVerify(this.dealerId).subscribe((data: any) => {
+      if (data) {
+        this.aadharverification = true;
+        this.cdlservice.getDealerById(this.dealerId).subscribe((data: any) => {
+          if (data) {
+            this.createDealer.controls.address1.setValue(data.partnerAddress1);
+            this.createDealer.controls.address2.setValue(data.partnerAddress2);
+            this.createDealer.controls.city.setValue(data.partnerCity);
+            this.createDealer.controls.state.setValue(data.partnerState);
+            this.createDealer.controls.pincode.setValue(data.partnerPin);
+          }
+          this.verifyingUID = false;
+        })
+      }
+    });
   }
 
 

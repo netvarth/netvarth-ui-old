@@ -136,7 +136,7 @@
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" formControlName="aadhar" type="text" placeholder="Enter Aadhar Number"
                     class="form-control" autocomplete="off" maxlength="12" />
-                  <!-- <a class="btn btn-verify" [class.btn-verified]="aadharverification"
+                  <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                     *ngIf="!aadharverification && !verifyingUID" (click)="idVerification('UID')"><span>Verify</span></a>
 
                   <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="verifyingUID"
@@ -144,7 +144,7 @@
 
                   <a class="btn btn-verify" *ngIf="!verifyingUID && aadharverification"
                     [class.btn-verified]="aadharverification">
-                    <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a> -->
+                    <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
               </div>
             </div>
@@ -199,8 +199,8 @@
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" formControlName="pan" type="text" placeholder="Enter PAN Number"
                     class="form-control" autocomplete="off" maxlength="10" />
-                  <!-- <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="verifypan()">
-                    <span *ngIf="!panverification">Verify</span><span *ngIf="panverification">Verified</span></a> -->
+                  <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="idVerification('Pan')">
+                    <span *ngIf="!panverification">Verify</span><span *ngIf="panverification">Verified</span></a>
                 </div>
               </div>
             </div>
@@ -493,9 +493,9 @@
       <div class="btn btn-draft mr-2" (click)="saveAsDraft()">
         Save as Draft
       </div>
-      <div class="btn btn-primary" (click)="createPartner()">
+      <button class="btn btn-primary" (click)="createPartner()">
         {{btnText}}
-      </div>
+      </button>
     </div>
   </form>
 </div>

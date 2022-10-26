@@ -136,6 +136,12 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+
+  verifyPartnerIds(type, data) {
+    const url = 'provider/partner/update/' + type;
+    return this.servicemeta.httpPut(url, data);
+  }
+
   ApprovalRequest(id) {
     const url = 'provider/loanapplication/' + id + '/approvalrequest';
     return this.servicemeta.httpPut(url, null);
@@ -143,6 +149,12 @@ export class CdlService {
 
   refreshAadharVerify(id) {
     const url = 'provider/loanapplication/aadhar/status/' + id;
+    return this.servicemeta.httpPut(url, null);
+  }
+
+
+  refreshPartnerAadharVerify(id) {
+    const url = 'provider/partner/aadhar/status/' + id;
     return this.servicemeta.httpPut(url, null);
   }
 

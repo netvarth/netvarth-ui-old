@@ -134,7 +134,7 @@ export class CatalogItemComponent implements OnInit {
     }
   }
   /**
-  * 
+  *
   * @param encId encId/customId which represents the Account
   * @returns the unique provider id which will gives access to the s3
   */
@@ -167,14 +167,14 @@ export class CatalogItemComponent implements OnInit {
           () => {
             _this.domainConfigService.getUIAccountConfig(s3UniqueId).subscribe(
               (uiconfig: any) => {
-                // _this.viewMode = 
+                // _this.viewMode =
                 if (uiconfig['mode']) {
-                  _this.homeView= uiconfig['mode'];   
-                  _this.setItemDetails(_this.catalogId, _this.itemId, _this.accountId);             
+                  _this.homeView = uiconfig['mode'];
+                  _this.setItemDetails(_this.catalogId, _this.itemId, _this.accountId);
                 }
-              }, ()=> {
+              }, () => {
                 _this.setItemDetails(this.catalogId, _this.itemId, _this.accountId);
-              })            
+              })
           }
         )
       }
@@ -290,10 +290,18 @@ export class CatalogItemComponent implements OnInit {
         this.activeCatalog = this.orderService.getCatalogById(catalogs, catalogId);
         let catalogItem = this.orderService.getCatalogItemById(this.activeCatalog, itemId);
         const showpric = this.activeCatalog.showPrice;
-        this.cartItem = catalogItem.item;
-        this.minQuantity = catalogItem.minQuantity;
-        this.maxQuantity = catalogItem.maxQuantity;
-        if (catalogItem.item) {
+        if (catalogItem && catalogItem.item) {
+          this.cartItem = catalogItem.item;
+        }
+        if (catalogItem && catalogItem.minQuantity) {
+          this.minQuantity = catalogItem.minQuantity;
+        }
+        if (catalogItem && catalogItem.maxQuantity) {
+          this.maxQuantity = catalogItem.maxQuantity;
+        }
+        // this.minQuantity = catalogItem.minQuantity;
+        // this.maxQuantity = catalogItem.maxQuantity;
+        if (catalogItem && catalogItem.item) {
           this.orderItem = { 'type': 'item', 'minqty': catalogItem.minQuantity, 'maxqty': catalogItem.maxQuantity, 'id': catalogItem.id, 'item': catalogItem.item, 'showpric': showpric };
         }
         const businessObject = {
@@ -302,7 +310,7 @@ export class CatalogItemComponent implements OnInit {
         };
         this.lStorageService.setitemonLocalStorage('order_sp', businessObject);
         this.itemQuantity = this.orderService.getItemQty(this.cartItems, itemId);
-        if (this.cartItem.showPromotionalPrice) {
+        if (this.cartItem && this.cartItem.showPromotionalPrice) {
           if (this.cartItem.promotionalPriceType === 'FIXED') {
             this.isPromotionalpriceFixed = true;
           } else {
@@ -326,9 +334,9 @@ export class CatalogItemComponent implements OnInit {
   }
 
   /**
-   * 
-   * @param uniqueId 
-   * @returns 
+   *
+   * @param uniqueId
+   * @returns
    */
   getBusinessAccountInfo(uniqueId) {
     const _this = this;
@@ -559,12 +567,12 @@ export class CatalogItemComponent implements OnInit {
       + this.s3UniqueId + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
     console.log("cartUrl :", cartUrl);
     if (this.activeCatalog.catalogType == 'submission') {
-      cartUrl+='&source=paper';
+      cartUrl += '&source=paper';
     }
     console.log("cartUrl :", cartUrl);
     if (this.userType === 'consumer') {
-        // cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id='
-        //   + this.s3UniqueId + '&source=paper' + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
+      // cartUrl = 'order/shoppingcart?account_id=' + this.accountId + '&customId=' + this.businessCustomId + '&unique_id='
+      //   + this.s3UniqueId + '&source=paper' + '&logo=' + this.bLogo + '&isFrom=' + (this.from ? this.from : '');
       this.router.navigateByUrl(cartUrl);
     } else {
       this.lStorageService.setitemonLocalStorage('target', cartUrl);

@@ -802,9 +802,7 @@ export class CreateComponent implements OnInit {
     }
     else {
       this.snackbarService.openSnackBar("Please Enter a Valid Mobile Number", { 'panelClass': 'snackbarerror' });
-
     }
-
   }
 
 
