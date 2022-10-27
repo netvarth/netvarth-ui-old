@@ -30,7 +30,7 @@
   <div class="no-padding" *ngIf="user.userType==1 || user.userType==2">
     <div class="card">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3 mt-2">
           <div class="dashboard-card text-center border px-3">
             <div class="d-flex">
               <div>
@@ -38,13 +38,28 @@
               </div>&nbsp;&nbsp;
               <div class="text-left">
                 <span class="head-card-title">Approved Loans</span><br>
-                <span class="font-weight-bold">10</span>
+                <span class="font-weight-bold" *ngIf="approvedLoansCount">{{approvedLoansCount}}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-md-3">
+
+        <div class="col-md-3 mt-2">
+          <div class="dashboard-card text-center border px-3">
+            <div class="d-flex">
+              <div>
+                <i class="fa fa-clock-o approved-amount-head-icon" aria-hidden="true"></i>
+              </div>&nbsp;&nbsp;
+              <div class="text-left">
+                <span class="head-card-title">Pending Loans</span><br>
+                <span class="font-weight-bold" *ngIf="pendingLoansCount">{{pendingLoansCount}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 mt-2">
           <div class="dashboard-card text-center border px-3">
             <div class="d-flex">
               <div>
@@ -58,7 +73,7 @@
           </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3 mt-2">
           <div class="dashboard-card text-center border px-3">
             <div class="d-flex">
               <div>
@@ -66,13 +81,13 @@
               </div>&nbsp;&nbsp;
               <div class="text-left">
                 <span class="head-card-title">Rejected Loans</span><br>
-                <span class="font-weight-bold">1</span>
+                <span class="font-weight-bold" *ngIf="rejectedLoansCount">{{rejectedLoansCount}}</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col-md-3" *ngIf="user.userType==1">
+        <div class="col-md-3 mt-2" *ngIf="user.userType==1">
           <div class="dashboard-card text-center border px-3">
             <div class="d-flex">
               <div>
@@ -85,7 +100,7 @@
             </div>
           </div>
         </div>
-        <!-- <div class="col-md-3" *ngIf="user.userType==2">
+        <!-- <div class="col-md-3 mt-2" *ngIf="user.userType==2">
           <div class="dashboard-card text-center border px-3 pointer-cursor">
             <div class="d-flex" (click)="reports()">
               <div>
@@ -483,18 +498,28 @@
       <div class="mb-2">
         <span class="font-weight-bold">Customers</span>
       </div>
-      <div class="d-flex justify-conent-around mt-2 loan-data" *ngFor="let customer of customers">
-        <div *ngIf="customer.id">
-          <span>Customer Id : {{customer.id}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div *ngIf="customer.firstName">
-          <span>{{customer.firstName}} {{customer.lastName}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
-        </div>
-        <div *ngIf="customer.status">
-          <span class="active">{{customer.status}}</span>
-        </div>
+      <div class="d-flex justify-conent-around mt-2 loan-data">
+        <table>
+          <tbody class="small-font">
+            <ng-container *ngFor="let customer of customers;let i=index">
+              <tr style="cursor:pointer">
+                <td class="mr-2" *ngIf="customer.id">Id : {{customer.id}}</td>
+                <td class="loanStatus">
+                  <div class="approvedColor text-capitalize mx-3 my-1" *ngIf="customer.firstName">{{customer.firstName}}
+                    {{customer.lastName}}</div>
+                </td>
+                <td class="text-capitalize" *ngIf="customer.status">
+                  <span class="active">{{customer.status}}</span>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
       </div>
-
+      <div>
+        <span class="text-primary font-weight-bold pointer-cursor" (click)="viewAllCustomers()">View
+          All</span>
+      </div>
     </div>
   </div>
 </div>

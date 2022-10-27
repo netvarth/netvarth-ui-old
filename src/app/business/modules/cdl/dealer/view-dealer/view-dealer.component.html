@@ -1,6 +1,6 @@
 <section>
   <div class="card">
-    <span class="pointer-cursor" (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;Back</span>
+    <span class="pointer-cursor" (click)="goBacktoDealers()"><i class="fa fa-angle-left"></i>&nbsp;Back</span>
   </div>
 </section>
 <br>
@@ -8,8 +8,9 @@
 <div class="row">
   <div class="col-md-4">
     <div class="card">
-      <div class="text-center">
-        <img src="../../../../assets/images/cdl/avatar.png" alt="Card image cap" width="100" height="100">
+      <div class="text-center"
+        *ngIf="dealerData && dealerData.partnerAttachments && dealerData.partnerAttachments[0] && dealerData.partnerAttachments[0].s3path">
+        <img [src]="dealerData.partnerAttachments[0].s3path" alt="Card image cap" width="100" height="100">
       </div>
       <div class="text-center my-2">
         <span class="dealer-name" *ngIf="dealerData && dealerData.partnerName">{{dealerData.partnerName}}</span>
@@ -124,8 +125,8 @@
                   </tr>
                 </thead>
                 <tbody class="table_data">
-                  <ng-container *ngFor="let loan of statusLoansList">
-                    <tr style="cursor:pointer" (click)="loanDetails(loan)">
+                  <ng-container *ngIf="statusLoansList && statusLoansList.length>0">
+                    <tr style="cursor:pointer" *ngFor="let loan of statusLoansList" (click)="loanDetails(loan)">
                       <td>
                         <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{loan.customerName}}</span>
                       </td>
@@ -140,6 +141,9 @@
                       </td>
                     </tr>
                   </ng-container>
+                  <ng-container>
+                    <tr>No Loans Found</tr>
+                  </ng-container>
                 </tbody>
               </table>
             </div>
@@ -150,39 +154,21 @@
                   <div class="mb-2">
                     <span class="font-weight-bold">Alerts</span>
                   </div>
-                  <div class="d-flex mt-2">
-                    <div>
-                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-                    </div>&nbsp;&nbsp;
-                    <div>
-                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                  <div *ngIf="loans && loans.length > 0">
+                    <div class="d-flex mt-2" *ngFor="let loan of loans">
+                      <div *ngIf="loan && loan.alertMessage">
+                        <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                      </div>&nbsp;&nbsp;
+                      <div *ngIf="loan && loan.alertMessage">
+                        <span class="alerts-title">{{loan.alertMessage}}</span>
+                      </div>
                     </div>
                   </div>
-
-                  <div class="d-flex mt-2">
-                    <div>
-                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-                    </div>&nbsp;&nbsp;
-                    <div>
-                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-                    </div>
-                  </div>
-
-                  <div class="d-flex mt-2">
-                    <div>
-                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-                    </div>&nbsp;&nbsp;
-                    <div>
-                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
-                    </div>
-                  </div>
-
-                  <div class="d-flex mt-2">
-                    <div>
-                      <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-                    </div>&nbsp;&nbsp;
-                    <div>
-                      <span class="alerts-title">Loan redirected to dealer ex. "DL617 Loan Application No 456".</span>
+                  <div *ngIf="loans && loans.length == 0">
+                    <div class="d-flex mt-2">
+                      <div>
+                        <span class="alerts-title">No Alerts Found</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -375,7 +361,41 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane " id="tab2" role="tabpanel">Coming Soon...</div>
+          <div class="tab-pane " id="tab2" role="tabpanel">
+            <div class="table-responsive dash-list">
+              <table class="table" style="background-color: white;">
+                <thead>
+                  <tr class="tble-filtr-tr heght">
+                    <th class="head_color">Name</th>
+                    <th class="head_color">Loan Amount</th>
+                    <th class="head_color">Status</th>
+                    <th class="head_color">Last Update on</th>
+                  </tr>
+                </thead>
+                <tbody class="table_data">
+                  <ng-container *ngIf="statusLoansList && statusLoansList.length>0">
+                    <tr style="cursor:pointer" *ngFor="let loan of statusLoansList" (click)="loanDetails(loan)">
+                      <td>
+                        <span><i class="fa fa-user-circle-o" aria-hidden="true"></i>&nbsp;{{loan.customerName}}</span>
+                      </td>
+                      <td>
+                        <span><i class="fa fa-inr"></i>&nbsp;{{loan.amount}}</span>
+                      </td>
+                      <td class="text-capitalize">
+                        <span>{{loan.status}}</span>
+                      </td>
+                      <td class="text-capitalize">
+                        <span>{{loan.updated}}</span>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="users && users.length==0">
+                    <tr>No Loans Found</tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <div class="tab-pane " id="tab3" role="tabpanel" *ngIf="this.status != 'requested'">
             <div class="text-right">
               <a class="btn btn-primary font-small"><i class="fa fa-plus"></i>&nbsp;Create User</a>
@@ -391,8 +411,8 @@
                   </tr>
                 </thead>
                 <tbody class="table_data">
-                  <ng-container *ngFor="let user of users">
-                    <tr style="cursor:pointer">
+                  <ng-container *ngIf="users && users.length>0">
+                    <tr style="cursor:pointer" *ngFor="let user of users">
                       <td class="text-capitalize">
                         <span *ngIf="user && user.id">{{user.id}}</span>
                       </td>
@@ -408,6 +428,9 @@
                       </td>
 
                     </tr>
+                  </ng-container>
+                  <ng-container *ngIf="users && users.length==0">
+                    <tr>No Users Found</tr>
                   </ng-container>
                 </tbody>
               </table>
@@ -438,7 +461,55 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane" id="tab4" role="tabpanel">Coming Soon...</div>
+          <div class="tab-pane" id="tab4" role="tabpanel">
+            <div>
+              <div *ngIf="customers">
+                <div class="mb-2">
+                  <span class="font-weight-bold">Customers</span>
+                </div>
+                <div class="d-flex justify-conent-around mt-2 loan-data">
+                  <table class="table" style="background-color: white;">
+                    <thead>
+                      <tr class="tble-filtr-tr heght">
+                        <th class="head_color">Id</th>
+                        <th class="head_color">Name</th>
+                        <th class="head_color">Phone</th>
+                        <th class="head_color">Email</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table_data">
+                      <ng-container *ngFor="let customer of customers;let i=index">
+                        <tr style="cursor:pointer">
+                          <td class="mr-2" *ngIf="customer.id">{{customer.id}}</td>
+                          <td class="loanStatus">
+                            <div class="approvedColor text-capitalize mx-3 my-1" *ngIf="customer.firstName">
+                              {{customer.firstName}}
+                              {{customer.lastName}}</div>
+                          </td>
+                          <td class="text-capitalize" *ngIf="customer.phoneNo">
+                            <span class="">{{customer.phoneNo}}</span>
+                          </td>
+                          <td class="text-capitalize" *ngIf="!customer.phoneNo">
+                            <span class="">--</span>
+                          </td>
+                          <td class="text-capitalize" *ngIf="customer.email">
+                            <span class="">{{customer.email}}</span>
+                          </td>
+                          <td class="text-capitalize" *ngIf="!customer.email">
+                            <span class="">--</span>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+                <div>
+                  <span class="text-primary font-weight-bold pointer-cursor" (click)="viewAllCustomers()">View
+                    All</span>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="tab-pane " id="tab5" role="tabpanel">
             <div class="my-2">
               <span class="font-weight-light">View Dealer Dashboard</span><br>

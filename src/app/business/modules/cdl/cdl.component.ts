@@ -22,6 +22,9 @@ export class CdlComponent implements OnInit {
   customersList: any;
   customers: any;
   statusdealersList: any;
+  approvedLoansCount: any = 0;
+  pendingLoansCount: any = 0;
+  rejectedLoansCount: any = 0;
   customOptions = {
     loop: true,
     margin: 10,
@@ -74,6 +77,10 @@ export class CdlComponent implements OnInit {
       this.customersList = data
       this.customers = this.customersList.slice(0, 10);
     });
+
+    this.getApprovedloansCount();
+    this.getPendingloansCount();
+    this.getRejectedloansCount();
   }
 
   viewMore() {
@@ -90,7 +97,9 @@ export class CdlComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'reports']);
   }
 
-
+  viewAllCustomers() {
+    this.router.navigate(['provider', 'customers']);
+  }
 
   continueApplication() {
     this.router.navigate(['provider', 'cdl', 'loans', 'create']);
@@ -134,7 +143,7 @@ export class CdlComponent implements OnInit {
   requestedDealers() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        type: 'requested'
+        spInternalStatus: 'Draft'
       }
     };
     this.router.navigate(['provider', 'cdl', 'dealers'], navigationExtras);
@@ -178,11 +187,43 @@ export class CdlComponent implements OnInit {
   allLeads() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        type: 'Draft'
+        spInternalStatus: 'New'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'dealers'], navigationExtras);
+    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
   }
+
+
+  getApprovedloansCount() {
+    const api_filter = {};
+    api_filter['spInternalStatus-eq'] = 'Approved';
+    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+      if (data) {
+        this.approvedLoansCount = data.length
+      }
+    });
+  }
+
+  getPendingloansCount() {
+    const api_filter = {};
+    api_filter['spInternalStatus-eq'] = 'ApprovalPending';
+    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+      if (data) {
+        this.pendingLoansCount = data.length
+      }
+    });
+  }
+
+  getRejectedloansCount() {
+    const api_filter = {};
+    api_filter['spInternalStatus-eq'] = 'Rejected';
+    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+      if (data) {
+        this.rejectedLoansCount = data.length
+      }
+    });
+  }
+
 
   transform(event) {
     if (event.target.value != 'all') {

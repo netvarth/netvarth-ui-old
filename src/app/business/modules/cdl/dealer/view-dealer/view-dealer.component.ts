@@ -13,29 +13,10 @@ export class ViewDealerComponent implements OnInit {
   dealerData: any;
   active: any = "inactive";
   users: any;
-  statusLoansList: any = [
-    {
-      'loanId': 101,
-      'customerName': 'David',
-      'amount': '40000',
-      'status': 'approved',
-      'updated': '28/09/2022'
-    },
-    {
-      'loanId': 105,
-      'customerName': 'Babu',
-      'amount': '65000',
-      'status': 'redirected',
-      'updated': '28/09/2022'
-    },
-    {
-      'loanId': 107,
-      'customerName': 'Davika',
-      'amount': '100000',
-      'status': 'rejected',
-      'updated': '28/09/2022'
-    },
-  ];
+  loans: any;
+  customersList: any;
+  customers: any;
+  statusLoansList: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -58,11 +39,39 @@ export class ViewDealerComponent implements OnInit {
 
     this.cdlservice.getDealerUsers(this.dealerId).subscribe(data => {
       this.users = data
+      console.log("this.users", this.users)
     });
+
+    this.cdlservice.getCustomers().subscribe(data => {
+      this.customersList = data
+      this.customers = this.customersList.slice(0, 10);
+    });
+
+    this.getPartnerLoans();
+
+  }
+
+
+  viewAllCustomers() {
+    this.router.navigate(['provider', 'customers']);
+  }
+
+  getPartnerLoans() {
+    const api_filter = {};
+    api_filter['partner-eq'] = this.dealerId;
+    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+      this.statusLoansList = data;
+      this.loans = data;
+      console.log("Loans List : ", this.statusLoansList);
+    })
   }
 
   goBack() {
     this.location.back();
+  }
+
+  goBacktoDealers() {
+    this.router.navigate(['provider', 'cdl', 'dealers']);
   }
 
   changeActive(event) {

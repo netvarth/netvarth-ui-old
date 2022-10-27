@@ -121,14 +121,16 @@
 
 
       <div class="row text-right">
-        <div class="form-group col-md-4 my-3">
-          <select class="form-control">
-            <option value="all"><span class="text-capitalize">Thrissur</span></option>
-            <option value="approved"><span class="text-capitalize">Kochi</span></option>
-            <option value="in progress"><span class="text-capitalize">Kottayam</span></option>
-            <option value="redirected"><span class="text-capitalize">Kannur</span></option>
-          </select>
-        </div>
+        <form [formGroup]="statusList">
+          <div class="form-group text-left col-md-4 my-3">
+            <mat-select class="form-control widthWebKit" #status (selectionChange)="statusChange($event)"
+              placeholder="All Dealers">
+              <mat-option [value]="status.name" *ngFor="let status of dealerStatus">
+                <div *ngIf="status && status.displayName">{{status.displayName}}</div>
+              </mat-option>
+            </mat-select>
+          </div>
+        </form>
         <div>
           <div class="p-3">
             <h3 class="align-items-start flex-column">
@@ -158,7 +160,7 @@
                 <td data-title="Loan Details" class="td1">{{dealer.id}}</td>
                 <td data-title="Loan Details" class="td1 loanStatus">
                   <img class="imageApprove" src="/assets/images/cdl/approved.png" />
-                  <div class="approvedColor text-capitalize">{{dealer.partnerStatus}}</div>
+                  <div class="approvedColor text-capitalize">{{dealer.spInternalStatus}}</div>
                 </td>
                 <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.partnerName}}</td>
                 <td data-title="Loan Details" class="td1">{{dealer.partnerMobile}}</td>

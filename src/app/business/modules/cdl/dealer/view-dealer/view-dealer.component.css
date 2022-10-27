@@ -186,6 +186,10 @@ td {
 }
 
 
+.text-primary {
+  color: #1E4079 !important;
+}
+
 .min-height {
   min-height: 570px !important;
 }

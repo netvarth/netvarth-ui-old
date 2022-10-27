@@ -1206,6 +1206,13 @@ export const projectConstantsLocal = {
     { name: 'PartnerAccepted', displayName: 'Partner Accepted' },
     { name: 'Success', displayName: 'Success' }
   ],
+  DEALER_STATUS: [
+    { name: 'All', displayName: 'All Dealers' },
+    { name: 'Draft', displayName: 'Leads' },
+    { name: 'Approved', displayName: 'Approved' },
+    { name: 'ApprovalPending', displayName: 'Approval Pending' },
+    { name: 'Rejected', displayName: 'Rejected' },
+  ],
   KYC_LIST: [
     { name: 'Passport', displayName: 'Passport', id: 0 },
     { name: 'VoterID', displayName: 'VoterID', id: 1 },

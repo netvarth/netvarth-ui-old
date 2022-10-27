@@ -38,7 +38,7 @@ export class LoansComponent implements OnInit {
   minday = new Date(1900, 0, 1);
   maxday = new Date();
   loading: any;
-
+  spInternalStatus: any;
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
@@ -50,6 +50,12 @@ export class LoansComponent implements OnInit {
   ) {
     this.statusList = this.statusListFormBuilder.group({
       status: [null]
+    });
+
+    this.activated_route.queryParams.subscribe(qparams => {
+      if (qparams && qparams.spInternalStatus) {
+        this.spInternalStatus = qparams.spInternalStatus;
+      }
     });
   }
 
@@ -116,54 +122,65 @@ export class LoansComponent implements OnInit {
   }
 
   getLoans() {
-    this.loading = true;
-    this.cdlservice.getLoans().subscribe((data) => {
-      this.loansList = data;
-      if (this.loansList) {
-        this.activated_route.queryParams.subscribe((params) => {
-          if (params) {
-            if (params && (params.type === 'approved')) {
-              this.headerName = "Approved Loans";
+    if (this.spInternalStatus) {
+      this.loading = true;
+      const api_filter = {};
+      api_filter['spInternalStatus-eq'] = this.spInternalStatus;
+      this.cdlservice.getLoansByFilter(api_filter).subscribe((data) => {
+        this.loansList = data;
+        this.loans = this.loansList;
+        this.loading = false;
+      });
+    }
+    else {
+      this.loading = true;
+      this.cdlservice.getLoans().subscribe((data) => {
+        this.loansList = data;
+        if (this.loansList) {
+          this.activated_route.queryParams.subscribe((params) => {
+            if (params) {
+              if (params && (params.type === 'approved')) {
+                this.headerName = "Approved Loans";
+              }
+              else if (params && (params.type === 'redirected')) {
+                this.headerName = "Redirected Loans";
+              }
+              else if (params && (params.type === 'rejected')) {
+                this.headerName = "Rejected Loans";
+              }
+              else if (params && (params.type === 'ApprovalPending')) {
+                this.headerName = "Approval Pending Loans";
+              }
+              else {
+                this.headerName = "All Loans";
+              }
+
             }
-            else if (params && (params.type === 'redirected')) {
-              this.headerName = "Redirected Loans";
+
+            else {
+              this.headerName = params.type;
+              return this.headerName;
             }
-            else if (params && (params.type === 'rejected')) {
-              this.headerName = "Rejected Loans";
-            }
-            else if (params && (params.type === 'ApprovalPending')) {
-              this.headerName = "Approval Pending Loans";
+
+
+            if (params.type && params.type != 'all') {
+              const api_filter = {};
+              api_filter['spInternalStatus-eq'] = params.type;
+              this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+                this.loans = data;
+                console.log("Loans List : ", this.loans);
+                this.loading = false;
+              })
             }
             else {
-              this.headerName = "All Loans";
-            }
-
-          }
-
-          else {
-            this.headerName = params.type;
-            return this.headerName;
-          }
-
-
-          if (params.type && params.type != 'all') {
-            const api_filter = {};
-            api_filter['spInternalStatus-eq'] = params.type;
-            this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
-              this.loans = data;
-              console.log("Loans List : ", this.loans);
+              this.loans = this.loansList;
               this.loading = false;
-            })
-          }
-          else {
-            this.loans = this.loansList;
-            this.loading = false;
-          }
-        });
-      }
-      console.log("Loans List : ", this.loansList);
-
-    })
+            }
+          });
+        }
+        console.log("Loans List : ", this.loansList);
+      })
+    }
   }
 
 

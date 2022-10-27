@@ -511,52 +511,53 @@ export class CreateDealerComponent implements OnInit {
 
 
 
-    if (this.bankData == null) {
-      this.cdlservice.savePartnerBankDetails(bankInfo).subscribe((s3urls: any) => {
-        if (s3urls.length > 0) {
-          this.uploadAudioVideo(s3urls).then(
-            (dataS3Url) => {
-              console.log(dataS3Url);
-            });
-        }
-        this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
-          if (data) {
-            this.cdlservice.getBankDetailsById(this.dealerId).subscribe((bankInfo) => {
-              this.bankData = bankInfo;
-            });
-          }
-          this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
+    // if (this.bankData == null) {
+    //   this.cdlservice.savePartnerBankDetails(bankInfo).subscribe((s3urls: any) => {
+    //     if (s3urls.length > 0) {
+    //       this.uploadAudioVideo(s3urls).then(
+    //         (dataS3Url) => {
+    //           console.log(dataS3Url);
+    //         });
+    //     }
+    //     this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
+    //       if (data) {
+    //         this.cdlservice.getBankDetailsById(this.dealerId).subscribe((bankInfo) => {
+    //           this.bankData = bankInfo;
+    //         });
+    //       }
+    //       this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
 
-        }),
-          (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          }
-      }), (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    //     }),
+    //       (error) => {
+    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    //       }
+    //   }), (error) => {
+    //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    //   }
+    // }
+    // else {
+
+
+    this.cdlservice.updatePartnerBankDetails(bankInfo).subscribe((s3urls: any) => {
+      console.log("Coming Here")
+
+      if (s3urls.length > 0) {
+        this.uploadAudioVideo(s3urls).then(
+          (dataS3Url) => {
+            console.log(dataS3Url);
+          });
       }
-    }
-    else {
+      this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
+        this.snackbarService.openSnackBar("Bank Details Updated Successfully")
 
-      this.cdlservice.updateBankDetails(bankInfo).subscribe((s3urls: any) => {
-        console.log("Coming Here")
-
-        if (s3urls.length > 0) {
-          this.uploadAudioVideo(s3urls).then(
-            (dataS3Url) => {
-              console.log(dataS3Url);
-            });
+      }),
+        (error) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         }
-        this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
-          this.snackbarService.openSnackBar("Bank Details Updated Successfully")
-
-        }),
-          (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          }
-      }), (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-      }
+    }), (error) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
     }
+    // }
   }
 
   createPartner() {

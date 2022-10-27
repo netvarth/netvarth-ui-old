@@ -3,9 +3,19 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
 import { DealerComponent } from './dealer.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { SkeletonLoadingModule } from '../../../../shared/modules/skeleton-loading/skeleton-loading.module';
+import { SelectSchemeModule } from '../loans/select-scheme/select-scheme.module';
 
 
 const routes: Routes = [
@@ -24,11 +34,21 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    CapitalizeFirstPipeModule,
     FormsModule,
+    MatDatepickerModule,
     MatTooltipModule,
     CapitalizeFirstPipeModule,
-    MatDatepickerModule,
+    SkeletonLoadingModule,
+    MatDialogModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatOptionModule,
+    MatButtonModule,
+    MatExpansionModule,
+    SelectSchemeModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
