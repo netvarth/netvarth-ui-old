@@ -1364,7 +1364,7 @@ export class SharedServices {
   }
 
   getUsersByLocation(locationId, accountId) {
-    const url = 'consumer/users/filter?status-eq=ACTIVE&businessLocs-eq=' + locationId + '&account-eq=' + accountId;
+    const url = 'consumer/users/' + accountId + '/' + locationId;
     return this.servicemeta.httpGet(url);
   }
 }
