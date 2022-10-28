@@ -393,6 +393,7 @@
     <div class="row info-bar locations" *ngIf="locationjson.length > 0 && !api_loading && !loading && !loading_direct">
       <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-bt-50 no-padding">
         <div class="serv-head service-serv-head col-md-12 col-xs-12 col-sm-12">
+          <app-common-innerloading-spinner *ngIf="loading_locations"></app-common-innerloading-spinner>
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-bt-20"
             *ngIf="serviceCount==0 && userCount > 0 && businessjson.serviceSector.name === 'healthCare'"
             [class.mgn-bt-10]="!showDepartments">

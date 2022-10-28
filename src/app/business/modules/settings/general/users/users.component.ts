@@ -872,12 +872,28 @@ export class BranchUsersComponent implements OnInit {
         }
     }
     getLocIdsUserIds(loc, id, values) {
-        if (loc.baseLocation || values.currentTarget.checked) {
-            this.locIds.push(id);
+        console.log("Loc:", loc);
+        console.log("Id:", id);
+        console.log("Values:",values);
+
+        if(values.checked) {
+            console.log("Checked");
+            const index = this.locIds.indexOf(id);
+            if (index === -1) {
+                this.locIds.push(id);
+            }
         } else {
-            const index = this.locIds.filter(x => x === id);
-            this.locIds.pop(index);
+            console.log("UnChecked");
+            const index = this.locIds.indexOf(id);
+            this.locIds.splice(index,1);
         }
+        console.log(this.locIds);
+        // if (loc.baseLocation || values.currentTarget.checked) {
+        //     this.locIds.push(id);
+        // } else {
+        //     const index = this.locIds.filter(x => x === id);
+        //     this.locIds.pop(index);
+        // }
     }
     addlocation() {
         this.userIds = [];
@@ -910,6 +926,9 @@ export class BranchUsersComponent implements OnInit {
     locationclose() {
         this.showcheckbox = false;
         this.addlocationcheck = false
+    }
+    clearLocations() {
+        this.locIds = [];
     }
     assignLocationToUsers() {
         if (this.locIds.length === 0) {

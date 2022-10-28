@@ -13,6 +13,9 @@ table{
   -webkit-hyphens: auto;
   hyphens: auto;
 }
+::ng-deep .filter-checkbox.wrap .mat-checkbox-layout{
+  white-space: normal !important;
+}
 .green {
   color:green;
 }

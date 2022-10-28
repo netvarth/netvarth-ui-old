@@ -314,6 +314,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
   back: any;
   mobileView: any;
   desktopView: any;
+  loading_locations: boolean;
 
   constructor(
     private activaterouterobj: ActivatedRoute,
@@ -931,10 +932,21 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       }
       case 'departmentProviders': {
-        this.deptUsers = result;
-        if (!this.userId) {
-          this.setUserWaitTime();
+
+        // this.getUsersByLocation().then(
+        //   (response) => {
+        //     if (!response) {
+        //       this.deptUsers = result;
+        //     } else {
+        //       this.deptUsers = response;
+        //     }
+        if (this.showDepartments) {
+          if (!this.userId) {
+            this.setUserWaitTime();
+          }
         }
+        //   }
+        // )        
         break;
       }
       case 'jaldeediscount': {
@@ -958,6 +970,22 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       }
     }
+  }
+
+  getUsersByLocation() {
+    const _this = this;
+    return new Promise(function (resolve) {
+      if (!_this.showDepartments) {
+        _this.shared_services.getUsersByLocation(_this.selectedLocation.id, _this.accountId).subscribe(
+          (users) => {
+            resolve(users);
+          }, () => {
+            resolve(false);
+          })
+      } else {
+        resolve(false);
+      }
+    })
   }
   setUserWaitTime() {
     let apptTimearr = [];
@@ -1521,8 +1549,23 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   changeLocation(loc) {
-    console.log("fgf" + JSON.stringify(loc));
+    const _this = this;
     this.selectedLocation = loc;
+    if (!this.userId) {
+      // this.servicesAndProviders = [];
+      this.loading_locations = true;
+      this.getUsersByLocation().then(
+        (response) => {
+          _this.loading_locations = false;
+          if (!response) {
+            
+            // this.deptUsers = result;
+          } else {
+            _this.deptUsers = response;
+          }
+          _this.setUserWaitTime();
+        })
+    }
     this.generateServicesAndDoctorsForLocation(this.uniqueId, this.selectedLocation.id);
 
   }

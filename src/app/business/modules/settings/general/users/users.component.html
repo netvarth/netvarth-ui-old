@@ -136,13 +136,20 @@
                   <div class="form-group">
                     <label for="exampleInputPassword1">Select Locations<span class="text-danger">*</span></label>
                   </div>
-                  <label *ngFor="let loc of loc_list" class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
+                  <mat-checkbox *ngFor="let loc of loc_list" class="filter-checkbox wrap" 
+                      [checked]="locIds.indexOf(loc.id)!==-1"
+                                (change)="getLocIdsUserIds(loc,   loc.id ,$event)">
+                                <!-- {{language.displayName}} -->
+                                {{loc.place | capitalizeFirst}}  {{loc.address | capitalizeFirst}}
+                                <a [href]="loc.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate"></a>
+                            </mat-checkbox>
+                  <!-- <label *ngFor="let loc of loc_list" class="checkbox checkbox-outline checkbox-outline-2x checkbox-primary mt-4 fnt-p8">
 											<input type="checkbox" name="Checkboxes16" [checked] = "loc.baseLocation"  (change)="getLocIdsUserIds(loc,   loc.id ,$event)">
 											<span style="margin-right: 0.75rem;"></span> 
                        {{loc.place | capitalizeFirst}} {{loc.address | capitalizeFirst}}
                        <a [href]="loc.googleMapUrl" target="_blank" class="icon-location" matTooltip="Click to navigate"></a>
                        <br>
-									</label>
+									</label> -->
                 </div>
                 <div class="modal-footer"  *ngIf="!showAddCustomerHint" >
                   <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal"
@@ -277,7 +284,7 @@
                   *ngIf="addlocationcheck"><i class="fa fa-times mgn-rt-5" aria-hidden="true"></i>
                   Cancel</button>
                   
-                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" 
+                  <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="clearLocations()"
                   *ngIf="addlocationcheck && this.userIds.length > 0" data-toggle="modal" data-target="#exampleModalCenterlocation">
                   Assign to Locations</button>
              </div>            
