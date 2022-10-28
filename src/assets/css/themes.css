@@ -1,5 +1,6 @@
 .heartfulness_theme1 .panel,.heartfulness_theme1 .panel-default,
 .heartfulness_theme1 .serv-head.service-serv-head,
+.heartfulness_theme1 .service-view-container .service-title-sec,
 .heartfulness_theme1 mat-toolbar  {
     background: #522e5a 0% 0% no-repeat padding-box !important; 
     background-color: transparent !important; 
@@ -42,10 +43,17 @@
   .heartfulness_theme1 .dept-title-h4, .heartfulness_theme1 .btn-attach,
   .heartfulness_theme1 .attach_sendmsg,
   .heartfulness_theme1 .service-view-container .single-loc p,
+  .heartfulness_theme1 .service-view-container .service-li-value,
+  .heartfulness_theme1 .service-view-container .locbtn,
+  .heartfulness_theme1 .service-view-container .locbtn a,
   .heartfulness_theme1 .content.bus-page .bus-page-header .bus-title-content .business-name,
   .heartfulness_theme1 .content.bus-page .bus-page-header .bus-title-content .business-user-name{ 
     color: #fff !important;
   }
+  .heartfulness_theme1 .service-view-container .service-li-title {
+    color: #bfb3b3 !important
+  }
+ 
   .heartfulness_theme1 .serv-head.service-serv-head, .heartfulness_theme1 .mat-tab-label,
   .heartfulness_theme1 .serv-head.service-serv-head h5, .heartfulness_theme1 .mat-select-value,
   .heartfulness_theme1.bus-page .dept-title-h4,.heartfulness_theme1 .lgmem .lgin,

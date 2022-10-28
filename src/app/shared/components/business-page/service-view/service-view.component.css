@@ -445,7 +445,7 @@ p.pro-desc {
 
 .locbtn {
   margin-top: -10px !important;
-  color: #1E4079 !important;
+  color: #1E4079;
   border: none;
   background: none;
   font-weight: bold;
@@ -459,7 +459,7 @@ p.pro-desc {
 }
 
 .locbtn a {
-  color: #1E4079 !important;
+  color: #1E4079;
 }
 
 .service-icon {
@@ -552,7 +552,7 @@ ul.service-ul li {
   color: #3c8dbc;
 }
 .service-title-sec {
-  background-color: #1e4079 !important;
+  background-color: #1e4079;
 }
 .service-li-title {
   color: #2653B7;
