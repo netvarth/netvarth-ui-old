@@ -932,7 +932,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
       }
       case 'departmentProviders': {
-
+ this.deptUsers = result;
         // this.getUsersByLocation().then(
         //   (response) => {
         //     if (!response) {
@@ -1549,23 +1549,22 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
   changeLocation(loc) {
-    const _this = this;
     this.selectedLocation = loc;
-    if (!this.userId) {
+    // if (!this.userId) {
       // this.servicesAndProviders = [];
-      this.loading_locations = true;
-      this.getUsersByLocation().then(
-        (response) => {
-          _this.loading_locations = false;
-          if (!response) {
+      // this.loading_locations = true;
+      // this.getUsersByLocation().then(
+      //   (response) => {
+      //     _this.loading_locations = false;
+      //     if (!response) {
             
-            // this.deptUsers = result;
-          } else {
-            _this.deptUsers = response;
-          }
-          _this.setUserWaitTime();
-        })
-    }
+      //       // this.deptUsers = result;
+      //     } else {
+      //       _this.deptUsers = response;
+      //     }
+      //     _this.setUserWaitTime();
+      //   })
+    // }
     this.generateServicesAndDoctorsForLocation(this.uniqueId, this.selectedLocation.id);
 
   }
