@@ -2203,8 +2203,10 @@ export class AppointmentComponent implements OnInit {
                 }
             }
         }
-        this.tempDataCustomerInfo = data;
-        this.searchCustomer(form_data);
+        this.customer_data = data;
+        this.initConsumerAppointment(data);
+        // this.tempDataCustomerInfo = data;
+        // this.searchCustomer(form_data);
     }
 
     /**
