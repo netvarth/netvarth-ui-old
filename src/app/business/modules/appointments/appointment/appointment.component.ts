@@ -123,7 +123,7 @@ export class AppointmentComponent implements OnInit {
     dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
     dobFormat = projectConstants.DATE_MM_DD_YY_FORMAT;
     fromKiosk = false;
-    customer_data: any = [];
+    customer_data: any;
     tempCustomerdata:any=[]
     page_source = null;
     main_heading;
@@ -546,11 +546,29 @@ export class AppointmentComponent implements OnInit {
         })
     }
     handleSearchSelectPhone(data,phone){
-        console.log(data);
+        console.log("handleSearchSelectPhone:" + JSON.stringify(data));
         this.tempDataCustomerInfo=data;
+        this.customer_data = data;
         console.log('phone',phone);
-        this.loading=true;
-        this.serchCustomers(phone);
+        // this.loading=true;
+        // this.serchCustomers(phone);
+        // this.customer_data = data[0];
+                            this.foundMultipleCustomers = false;
+                        // }
+                        this.jaldeeId = this.customer_data.jaldeeId;
+                        this.consumerPhoneNo = this.customer_data.phoneNo;
+                        if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                            this.countryCode = this.customer_data.countryCode;
+                        } else {
+                            this.countryCode = '+91';
+                        }
+                        if (this.source === 'appt-block') {
+                            this.showBlockHint = true;
+                            this.heading = 'Confirm your Appointment';
+                        } else {
+                            this.getFamilyMembers();
+                            this.initAppointment();
+                        }
     }
     handleSearchSelect(data,form_data){
         console.log(data);
@@ -658,7 +676,7 @@ export class AppointmentComponent implements OnInit {
         console.log('codeCountrty',codeCountrty)
     }
     serchCustomers(val) {
-        console.log('val',val)
+        console.log('Search Customers:',val);
         // const dialCode = val.dialCode;
         // const pN = val.e164Number.trim();
         // let loginId = pN;
@@ -690,8 +708,9 @@ export class AppointmentComponent implements OnInit {
                             this.tempCustomerdata= data;
                             const customer = data.filter(member => !member.parent);
                             console.log('customer',customer)
-                            // this.customer_data = customer[0];
-                            this.customer_data= this.tempDataCustomerInfo
+                            this.customer_data = customer[0];
+                            // console.log("TempCustomer:",this.tempDataCustomerInfo);
+                            // this.customer_data= this.tempDataCustomerInfo[0];
                             console.log("Real Customer:", this.customer_data);
                             this.foundMultipleCustomers = true;
                             this.loading=false;
@@ -791,7 +810,7 @@ export class AppointmentComponent implements OnInit {
                                 //     this.customer_data = customer[0];
                                 //     this.foundMultipleCustomers = true;
                                 // }
-                                this.customer_data= this.tempDataCustomerInfo;
+                                this.customer_data= this.tempDataCustomerInfo[0];
                                 this.foundMultipleCustomers = true;
                                 
                             } else {
