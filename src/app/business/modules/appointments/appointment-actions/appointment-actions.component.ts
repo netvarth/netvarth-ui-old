@@ -42,7 +42,9 @@ export class AppointmentActionsComponent implements OnInit {
   tooltipcls = "";
   elementType = "url"; 
   appt;
-  selected: Date | null;
+  // selected: Date | null;
+  selectedDate: Date = new Date();
+
   provider_label = "";
   qr_value;
   path = projectConstantsLocal.PATH;
@@ -155,7 +157,7 @@ export class AppointmentActionsComponent implements OnInit {
   }
   ngOnInit() {
    
-    //this.getAppointmentSlots();
+    this.getAppointmentSlots();
    // console.log("Slots :",this.getAppointmentSlots());
    
   //  this.shared_services.getTodaysAvailableTimeSlots(this.sel_schedule_id,
@@ -178,7 +180,10 @@ export class AppointmentActionsComponent implements OnInit {
     this.getLabel();
     this.apiloading = true;
     this.appt = this.data.checkinData;
+    console.log("Request Data :",this.appt);
     this.lStorageService.setitemonLocalStorage("scheduleId",this.appt.schedule.id);
+    this.lStorageService.setitemonLocalStorage("selDate",this.sel_checkindate);
+    this.sel_checkindate = this.lStorageService.getitemfromLocalStorage("selDate");
     this.sel_schedule_id = this.lStorageService.getitemfromLocalStorage("scheduleId");
     console.log("Schedule Id :", this.sel_schedule_id);
     this.provider_services
@@ -187,6 +192,7 @@ export class AppointmentActionsComponent implements OnInit {
     ).subscribe((data:any)=>{
       console.log("Slotssss data :",data);
     })
+    this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
     this.multipleSelection = this.data.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
@@ -1124,6 +1130,7 @@ export class AppointmentActionsComponent implements OnInit {
   }
   timeSelected(slot) {
     this.apptTime = slot;
+    console.log("Selected Time :",this.apptTime);
     this.selectedTime = slot.time;
   }
   getAppointmentSlots() {
@@ -1263,8 +1270,8 @@ export class AppointmentActionsComponent implements OnInit {
     this.maxDate = new Date(this.today.getFullYear() + 4, 12, 31);
   }
   handleFutureDateChange(e) {
+    console.log("Date picker :",e);
     const tdate = e.targetElement.value;
-    this.getAppointmentSlots();
     console.log("tdate :",tdate)
     const newdate = tdate
       .split("/")
@@ -1279,6 +1286,8 @@ export class AppointmentActionsComponent implements OnInit {
     const seldate =
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.sel_checkindate = seldate;
+    console.log("handle selected date :",this.sel_checkindate);
+
     //if((this.sel_checkindate === seldate) && this.appt.appointmentMode !== 'ONLINE_APPOINTMENT' && (this.apptlist_status || this.futureDateApptlist)){
     // }
     this.getSchedulesbyLocationandServiceIdavailability(
@@ -1482,14 +1491,70 @@ export class AppointmentActionsComponent implements OnInit {
   //   this.date_change_event.emit(this.selected_date);
   //   this.date_handling_btn()
   // }
-  appointmentDateChanged(appmtDate) {
-   // this.selectedSlots = [];
-      console.log("In Appointment Date Changed Method:", appmtDate);
-    // this.appmtDate = appmtDate;
-   //  this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
-    // this.slotLoaded = false;
-    // this.getAvailableSlotByLocationandService(this.locationId, this.selectedServiceId, this.appmtDate, this.accountId);
+  appointmentDateChanged(e) {
+    const tdate = e;
+    this.ngOnInit();
+   console.log("In Appointment Date Changed Method:", tdate);
+    const newdate = tdate;
+      // .split("/")
+      // .reverse()
+      // .join("-");
+      //moment(newdate).format("YYYY-MM-DD")
+      console.log("New Date :",newdate);
+      // console.log("New Date :",newdate.split(" ").reverse().join("-"));
+    const futrDte = new Date(newdate);
+    console.log("Future Date :",futrDte);
+    const obtmonth = futrDte.getMonth() + 1;
+    let cmonth = "" + obtmonth;
+    if (obtmonth < 10) {
+      cmonth = "0" + obtmonth;
+    }
+    const seldate =
+      futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
+    this.sel_checkindate = seldate;
+    console.log("selected date :",this.sel_checkindate);
+    this.getSchedulesbyLocationandServiceIdavailability(
+      this.locId,
+      this.servId,
+      this.accountid
+    );
+    this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
+    //this.getAppointmentSlots();
+    
+    
  }
+
+getSlotsBySheduleandDate(scheduleId,selDate){
+  this.freeSlots = [];
+  this.loading = true;
+  this.provider_services.getSlotsByScheduleandDate(scheduleId,selDate).
+  subscribe((res:any)=>{
+    this.schedules = res;
+    this.loading = false;
+    for (const scheduleSlots of this.schedules) {
+      this.availableSlots = scheduleSlots.availableSlots;
+      console.log("availableSlots",this.availableSlots)
+      console.log("sel_checkindate",this.sel_checkindate)
+      console.log("scheduleSlots.date",scheduleSlots.date)
+
+      for (const freslot of this.availableSlots) {
+      
+        if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
+          freslot["scheduleId"] = scheduleSlots["scheduleId"];
+          console.log("freslot ",freslot)
+
+          freslot["displayTime"] = this.getSingleTime(freslot.time);
+          this.freeSlots.push(freslot);
+        }
+       
+      }
+    
+    this.apptTime = this.freeSlots[0];
+  }
+  })
+}
+
+
   getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
     const _this = this;
     if (locid && servid && accountid) {
@@ -1507,10 +1572,95 @@ export class AppointmentActionsComponent implements OnInit {
         });
     }
   }
+  sendAcceptRequest(){
+    let post_data = {
+     // date: this.appt.appmtDate
+        "appmtDate":this.sel_checkindate,
+        "consumerNote":this.appt.consumerNote,
+        "countryCode": this.appt.countryCode,
+        // "appointmentMode": this.appt.appointmentMode,
+        "uid": this.appt.uid,
+        "appmtFor":[{
+          'id':this.appt.appmtFor[0].id,
+          'firstName':this.appt.appmtFor[0].firstName,
+          'lastName':this.appt.appmtFor[0].lastName,
+          'apptTime': this.selectedTime
+        }]
+
+    };
+    // if(this.sel_checkindate){
+    //   post_data['appmtDate'] = this.sel_checkindate
+    // }
+    // if(this.selectedTime){
+    //   post_data['apptTime'] = this.sel_checkindate
+    // }
+    // if(this.appt.appointmentMode){
+    //   post_data['appointmentMode'] = {'id':this.appt.appointmentMode}
+
+    // }
+     if(this.appt.schedule.id){
+      post_data['schedule'] = {'id':this.appt.schedule.id}
+     }
+     if(this.appt.service){
+      post_data['service'] = {
+        "id": this.appt.service.id,
+        "serviceType": this.appt.service.serviceType
+      }
+      
+     }
+     if(this.appt.provider){
+      post_data['provider'] = {'id':this.appt.provider.id}
+    }
+    if(this.appt.providerConsumer){
+      post_data['consumer'] = {'id':this.appt.providerConsumer.id}
+    }
+   // const customerDetails = this.appt.appmtFor[0];
+
+    //  post_data['appmtFor'] = JSON.parse(JSON.stringify(this.appt.appmtFor));
+    //  post_data['appmtFor'][0]['id'] = this.appt.appmtFor[0].id;
+    //  post_data['appmtFor'][0]['firstName'] = this.appt.appmtFor[0].firstName;
+    //  post_data['appmtFor'][0]['lastName'] = this.appt.appmtFor[0].lastName;
+    // post_data['appmtFor'][0]['apptTime'] = this.selectedTime;
+     // post_data['date'] = appt.appmtDate;
+
+    console.log("send data:",post_data);
+    this.provider_services.postAppointmentRequest(post_data).
+    subscribe((res:any)=>{
+      console.log("Response :",res);
+     this.snackbarService.openSnackBar('Appointment request confirmed successfully',{
+      panelClass: "snackbarnormal"
+    });
+    this.dialogRef.close('reload');
+  },
+  error => {
+    this.snackbarService.openSnackBar(error.error, {
+      panelClass: "snackbarerror"
+    });
+  });
+    
+
+  }
   dateClass(date: Date): MatCalendarCellCssClasses {
     return this.availableDates.indexOf(moment(date).format("YYYY-MM-DD")) !== -1
       ? "example-custom-date-class"
       : "";
+  }
+  removeApptRequest(appt){
+    console.log("request :",appt.uid);
+    this.shared_services.deleteApptRequest(appt.uid).
+    subscribe((res:any)=>{
+      console.log("Req res:",res);
+      this.snackbarService.openSnackBar('Appointment request rejected successfully',{
+        panelClass: "snackbarnormal"
+      });
+      this.dialogRef.close('reload');
+    },
+    error => {
+      this.snackbarService.openSnackBar(error.error, {
+        panelClass: "snackbarerror"
+      });
+    });
+    
   }
   sendimages() {
     this.galleryDialog = this.dialog.open(GalleryImportComponent, {

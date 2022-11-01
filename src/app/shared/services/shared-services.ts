@@ -786,6 +786,19 @@ export class SharedServices {
   addCustomerAppointment(accountid, postData) {
     return this.servicemeta.httpPost('consumer/appointment?account=' + accountid, postData);
   }
+  postProviderAppointmentRequest(postData){
+    // const url = 'provider/appointment/service/request?account=' + accountid;
+    return this.servicemeta.httpPost('provider/appointment/service/request',postData);
+  }
+  postAppointmentRequest(accountid,postData){
+    // const url = 'consumer/appointment/service/request?account=' + accountid;
+    return this.servicemeta.httpPost('consumer/appointment/service/request?account=' + accountid,postData);
+  }
+  
+  deleteApptRequest(uuid){
+    const url = 'provider/appointment/service/request/reject/'+uuid;
+    return this.servicemeta.httpPut(url);
+  }
   getSchedulesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
     const dd = (pdate !== undefined) ? '/' + pdate + '?account=' + accountid : '';
     const url = 'consumer/appointment/schedule/location/' + locid + '/service/' + servid + '/date' + dd;

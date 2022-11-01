@@ -174,8 +174,16 @@ export class ApptCardComponent implements OnInit, OnChanges {
     return this.dateTimeProcessor.convertMinutesToHourMinute(min);
   }
   getSingleTime(slot) {
-    const slots = slot.split('-');
-    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+    if(slot){
+      const slots = slot.split('-');
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+    }
+  }
+  getApptTime(slot) {
+    if(slot){
+      const slots = slot.split('-');
+      return ',' + this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+    }
   }
   stopprop(event) {
     event.stopPropagation();

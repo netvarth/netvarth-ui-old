@@ -494,7 +494,7 @@
                                     </div>
                                     <!---appt date start-->
                                     <div class="date-outer p-0 m-0 walkin-form-fields-appointment ">
-                                        <div class="appt_date">
+                                        <div class="appt_date" *ngIf="!sel_ser_det.noDateTime">
                                             <div>
                                                 <div class="appt_date2">
                                                     <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
@@ -567,7 +567,7 @@
                         <div>
                             <ng-container *ngIf="queuejson.length > 0 && servicesjson.length > 0">
                                 <div class="col-md-12 form-group queue-outer mgn-bt-20 no-padding matchipapptSlot"
-                                    *ngIf="freeSlots.length>0">
+                                    *ngIf="freeSlots.length>0 && !sel_ser_det.date && !sel_ser_det.noDateTime">
                                     <div class="appt_date2">
                                         <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
                                         <div class="date-head">Appointment Slot</div>
@@ -893,7 +893,7 @@
                                         *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
                                     <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
                                         (click)="goBack()" *ngIf="!questionnaireList.labels">Cancel</button>
-                                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                                    <!-- <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
                                         (click)="saveCheckin()" [class.spinner]="api_loading"
                                         [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
                                         [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
@@ -903,7 +903,17 @@
                                         [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
                                         [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
                                         *ngIf="!questionnaireList.labels && sel_ser_det && (sel_ser_det.serviceBookingType === 'request')">Send
-                                        Request</button>
+                                        Request</button> -->
+                                        <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                                        (click)="saveCheckin()" [class.spinner]="api_loading"
+                                        [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
+                                        [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
+                                        *ngIf="!questionnaireList.labels && sel_ser_det && (sel_ser_det.serviceBookingType !== 'request' && (!sel_ser_det.date || !sel_ser_det.dateTime || !sel_ser_det.noDateTime))">{{showCheckinButtonCaption()}}</button>
+                                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                                        (click)="saveCheckin()" [class.spinner]="api_loading"
+                                        [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
+                                        [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
+                                        *ngIf="!questionnaireList.labels && sel_ser_det && (sel_ser_det.serviceBookingType === 'request' && (sel_ser_det.date || sel_ser_det.dateTime || sel_ser_det.noDateTime))">Send Request</button>
 
                                 </div>
                             </ng-container>
@@ -967,7 +977,7 @@
                                     </ng-container>
                                 </div>
                                 <div class="col-md-8 date-outer p-0 m-0 walkin-form-fields-appointment">
-                                    <div class="appt_date">
+                                    <div class="appt_date" *ngIf="!sel_ser_det.noDateTime">
                                         <div>
                                             <div class="appt_date2">
                                                 <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
@@ -1035,7 +1045,7 @@
                     <div>
                         <ng-container *ngIf="queuejson.length > 0">
                             <div class="col-md-12 form-group queue-outer mgn-bt-20 no-padding"
-                                *ngIf="freeSlots.length>0">
+                                *ngIf="freeSlots.length>0 && !sel_ser_det.date && !sel_ser_det.noDateTime">
                                 <span class="date-head">Appointment Slot</span>
                                 <mat-chip-list class="appt-in-chip freeslots">
                                     <mat-chip *ngFor="let slot of freeSlots" [selected]="slot.time === apptTime"
@@ -1214,7 +1224,7 @@
                                 <button type="button" class="btn btn-primary font-weight-bold" (click)="showQnr()"
                                     [disabled]="api_loading"
                                     *ngIf="questionnaireList.labels && questionnaireList.labels.length > 0">Next</button>
-                                <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
+                                <!-- <button type="button" class="btn btn-primary font-weight-bold" (click)="saveCheckin()"
                                     [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
                                     [class.spinner-center]="api_loading" [disabled]="api_loading"
                                     [class.disabled]="api_loading"
@@ -1224,7 +1234,17 @@
                                     [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
                                     [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
                                     *ngIf="sel_ser_det && (sel_ser_det.serviceBookingType === 'request')">Send
-                                    Request</button>
+                                    Request</button> -->
+                                    <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                                    (click)="saveCheckin()" [class.spinner]="api_loading"
+                                    [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
+                                    [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
+                                    *ngIf="!questionnaireList.labels && sel_ser_det && (sel_ser_det.serviceBookingType !== 'request' && (!sel_ser_det.date || !sel_ser_det.dateTime || !sel_ser_det.noDateTime))">{{showCheckinButtonCaption()}}</button>
+                                <button type="button" class="btn btn-primary font-weight-bold confirmBtn"
+                                    (click)="saveCheckin()" [class.spinner]="api_loading"
+                                    [class.spinner-darker-success]="api_loading" [class.disabled]="api_loading"
+                                    [class.spinner-center]="api_loading" [disabled]="api_loading || !showApptTime"
+                                    *ngIf="!questionnaireList.labels && sel_ser_det && (sel_ser_det.serviceBookingType === 'request' && (sel_ser_det.date || sel_ser_det.dateTime || sel_ser_det.noDateTime))">Send Request</button>
                             </div>
                         </ng-container>
                     </div>

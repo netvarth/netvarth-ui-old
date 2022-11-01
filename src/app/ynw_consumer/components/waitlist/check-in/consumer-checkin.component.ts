@@ -501,7 +501,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
     }
     getserviceOptionQuestionAnswers(event) {
         this.serviceOPtionInfo = event;
-        if (this.serviceOPtionInfo.answers.answerLine === []) {
+        if (this.serviceOPtionInfo.answers.answerLine === '') {
             console.log(this.showNext)
             this.showNext = false;
         }

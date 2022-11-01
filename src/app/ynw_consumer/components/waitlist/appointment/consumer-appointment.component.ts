@@ -644,6 +644,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         _this.subs.sink = _this.sharedServices.getServicesforAppontmntByLocationId(locationId)
             .subscribe(data => {
                 _this.services = data;
+                console.log("Service By Loc :",data);
                 _this.selectedService = [];
                 if (_this.selectedServiceId) {
                     _this.selectedServiceId = _this.selectedServiceId;
@@ -686,6 +687,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     setServiceDetails(serviceId) {
         let activeService = this.services.filter(service => service.id === serviceId)[0];
         if (activeService) {
+            console.log("Set Service :",activeService);
             this.selectedService = {
                 name: activeService.name,
                 duration: activeService.serviceDuration,
@@ -709,9 +711,18 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 consumerNoteTitle: activeService.consumerNoteTitle,
                 maxBookingsAllowed: activeService.maxBookingsAllowed,
                 showOnlyAvailableSlots: activeService.showOnlyAvailableSlots,
-                showPrice: activeService.showPrice
+                showPrice: activeService.showPrice,
+                serviceBookingType: activeService.serviceBookingType,
+                date: activeService.date,
+                dateTime: activeService.dateTime,
+                noDateTime: activeService.noDateTime
             };
             console.log("Active Service :", this.selectedService)
+            if(this.selectedService.noDateTime){
+                this.bookStep = 5;
+                this.confirmAppointment('next');
+                this.initAppointment();
+            }
             if (activeService.provider) {
                 this.selectedUserId = activeService.provider.id;
                 this.setUserDetails(this.selectedUserId);
@@ -815,8 +826,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     appointmentDateChanged(appmtDate) {
-        console.log("In Appointment Date Changed Method:", appmtDate);
-        this.selectedSlots = [];
+       this.selectedSlots = [];
+         console.log("In Appointment Date Changed Method:", appmtDate);
         this.appmtDate = appmtDate;
         this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
         this.slotLoaded = false;
@@ -1455,7 +1466,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     console.log('Appointment:', _this.scheduledAppointment);
 
                     if (_this.appointmentType === 'reschedule') {
-                        _this.appmtFor.push({ id: _this.scheduledAppointment.appmtFor[0].id, firstName: _this.scheduledAppointment.appmtFor[0].firstName, lastName: _this.scheduledAppointment.appmtFor[0].lastName, phoneNo: _this.scheduledAppointment.phoneNumber });
+                        _this.appmtFor.push({ id: _this.scheduledAppointment.appmtFor[0].id, firstName: _this.scheduledAppointment.appmtFor[0].firstName, lastName: _this.scheduledAppointment.appmtFor[0].lastName, phoneNo: _this.scheduledAppointment.phoneNumber,apptTime:_this.scheduledAppointment.appmtFor[0].apptTime });
                         _this.commObj['communicationPhNo'] = _this.scheduledAppointment.phoneNumber;
                         _this.commObj['communicationPhCountryCode'] = _this.scheduledAppointment.countryCode;
                         _this.commObj['communicationEmail'] = _this.scheduledAppointment.appmtFor[0]['email'];
@@ -1832,6 +1843,12 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 return false;
             }
             if (type === 'appt') {
+                // if(this.selectedService && this.selectedService.serviceBookingType === 'request'){
+                //     // this.sharedServices.postAppointmentRequest(this.selectedService).subscribe((data: any)=>{
+                //     //     console.log("Appointment Request :",data);
+                //     // })
+                //     this.performAppointment();
+                // }
                 if (this.jcashamount > 0 && this.checkJcash) {
                     this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                         .subscribe(data => {
@@ -1937,6 +1954,59 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     generateInputForAppointment() {
         console.log(this.appmtFor);
+        if(this.selectedService.serviceBookingType === 'request' && (this.selectedService.date || this.selectedService.dateTime || this.selectedService.noDateTime)){
+            let post_Data = {
+                // 'schedule': {
+                //     'id': this.selectedApptTime['scheduleId']
+                // },
+                // 'appmtDate': this.appmtDate,
+                'service': {
+                    'id': this.selectedServiceId,
+                    'serviceType': this.selectedService.serviceType
+                },
+            //        "appmtFor":[{
+            //           'id':this.scheduledAppointment.appmtFor[0].id,
+            //           'firstName':this.scheduledAppointment.appmtFor[0].firstName,
+            //           'lastName':this.scheduledAppointment.appmtFor[0].lastName,
+            //   }],
+              //this.appmtFor[0].id
+              //'firstName':this.appmtFor[0].firstName
+              //'lastName':this.appmtFor[0].lastName,
+                'consumerNote': this.consumerNote,
+                'countryCode': this.parentCustomer.userProfile.countryCode,
+                'phoneNumber': this.commObj['communicationPhNo'],
+                'coupons': this.selectedCoupons,
+            };
+            // if(!this.selectedService.date || !this.selectedService.noDateTime){
+            //    post_Data['appmtFor'][0]['apptTime'] = this.appmtFor[0].apptTime;
+            // }
+            if(!this.selectedService.noDateTime){
+                post_Data['appmtDate'] = this.appmtDate
+              }
+              if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+                post_Data['provider'] = { 'id': this.selectedUser.id };
+            } else if (this.selectedService.provider) {
+                post_Data['provider'] = { 'id': this.selectedService.provider.id };
+            }
+            // if (this.scheduledAppointment) {
+            //     post_Data['appmtFor'] = this.scheduledAppointment['appmtFor'];
+            // } else {
+                if (this.appmtFor.length !== 0) {
+                    for (const list of this.appmtFor) {
+                        if (list.id === this.parentCustomer.id) {
+                            list['id'] = 0;
+                        }
+                    }
+                }
+                if (this.commObj['communicationEmail'] !== '') {
+                    this.appmtFor[0]['email'] = this.commObj['communicationEmail'];
+                }
+                post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.appmtFor));
+           // }
+            console.log("Posting Data request:",post_Data);
+            return post_Data;
+        }
+        else{
         let post_Data = {
             // 'schedule': {
             //     'id': this.selectedApptTime['scheduleId']
@@ -1949,8 +2019,31 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             'consumerNote': this.consumerNote,
             'countryCode': this.parentCustomer.userProfile.countryCode,
             'phoneNumber': this.commObj['communicationPhNo'],
-            'coupons': this.selectedCoupons
+            'coupons': this.selectedCoupons,
         };
+     //   if(this.selectedService && this.selectedService.serviceBookingType){
+            // post_Data['serviceBookingType'] = this.selectedService.serviceBookingType;
+            // post_Data['date'] = this.selectedService.date;
+            // post_Data['dateTime'] = this.selectedService.dateTime;
+            // post_Data['noDateTime'] = this.selectedService.noDateTime;
+            // post_Data['appmtDate'] = this.appmtDate;
+        //     post_Data['service'] = { 'id': this.selectedServiceId,
+        //     'serviceType': this.selectedService.serviceType
+            
+        //  };
+        //  post_Data['consumerNote'] = this.consumerNote;
+        //     post_Data['countryCode'] = this.parentCustomer.userProfile.countryCode;
+        //     post_Data['phoneNumber'] = this.commObj['communicationPhNo'];
+        //     post_Data['coupons'] = this.selectedCoupons;
+
+      //  }
+    //   "appmtFor":[{
+    //     'id':this.appt.appmtFor[0].id,
+    //     'firstName':this.appt.appmtFor[0].firstName,
+    //     'lastName':this.appt.appmtFor[0].lastName,
+    //     'apptTime': this.selectedTime
+    //   }]
+    
         if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
             post_Data['provider'] = { 'id': this.selectedUser.id };
         } else if (this.selectedService.provider) {
@@ -1982,7 +2075,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 return false;
             }
         }
+        console.log("Posting Data Normal:",post_Data);
         return post_Data;
+    }
     }
     async performAppointment() {
         const _this = this;
@@ -2020,8 +2115,73 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             } else {
                 let post_Data = _this.generateInputForAppointment();
                 // post_Data['appmtSlot'] = appmtSlot;
-                post_Data['appmtFor'][0]['apptTime'] = appmtSlot['time'];
+                if(!_this.selectedService.date && !_this.selectedService.noDateTime){
+                    post_Data['appmtFor'][0]['apptTime'] = appmtSlot['time'];
+                }
                 post_Data['schedule'] = { 'id': appmtSlot['scheduleId'] };
+                console.log("Post data:",post_Data);
+                if(_this.selectedService.serviceBookingType === 'request' && (_this.selectedService.date || _this.selectedService.dateTime || _this.selectedService.noDateTime)){
+                    _this.subs.sink = _this.sharedServices.postAppointmentRequest(_this.accountId,post_Data)
+                    .subscribe(data => {
+                        const retData = data;
+                        console.log("Request Data :",data);
+                        _this.appointmentIdsList = [];
+                        let parentUid;
+                        Object.keys(retData).forEach(key => {
+                            if (key === '_prepaymentAmount') {
+                                _this.prepayAmount = retData['_prepaymentAmount'];
+                            } else {
+                                _this.trackUuid = retData[key];
+                                if (key !== 'parent_uuid') {
+                                    _this.appointmentIdsList.push(retData[key]);
+                                }
+                            }
+                            parentUid = retData['parent_uuid'];
+                        });
+                        if (_this.selectedMessage.files.length > 0) {
+                            _this.consumerNoteAndFileSave(_this.appointmentIdsList).then(
+                                () => {
+                                    resolve(true);
+                                }
+                            );
+                        } else {
+                            _this.submitQuestionnaire(parentUid).then(
+                                () => {
+                                    resolve(true);
+                                }
+                            );
+                            _this.submitserviceOptionQuestionnaire(parentUid).then(
+                                () => {
+                                    resolve(true);
+                                }
+                            );
+                        }
+                       // _this.router.navigate(['consumer', 'appointment', 'confirm']);
+
+                    }, error => {
+                        _this.isClickedOnce = false;
+                    //       let queryParams = {
+                    //         account_id: this.accountId,
+                    //         uuid: this.trackUuid,
+                    //         theme: this.theme
+                    //     }
+                    //     if (this.selectedSlots.length > 1) {
+                    //         queryParams['selectedApptsTime'] = this.selectedApptsTime;
+                    //         queryParams['selectedSlots'] = JSON.stringify(this.selectedSlots);
+                    //     }
+                    //     if (this.customId) {
+                    //         queryParams['customId'] = this.customId;
+                    //     }
+                    //     let navigationExtras: NavigationExtras = {
+                    //         queryParams: queryParams
+                    //     };
+                    //    // this.setAnalytics();
+                    //     this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
+                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      
+                    });
+                }
+                else{
                 _this.subs.sink = _this.sharedServices.addCustomerAppointment(_this.accountId, post_Data)
                     .subscribe(data => {
                         const retData = data;
@@ -2060,6 +2220,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         _this.isClickedOnce = false;
                         _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                     });
+                }
             }
         })
     }
@@ -2078,7 +2239,44 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             }
             const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
             dataToSend.append('captions', blobPropdata);
-            _this.subs.sink = _this.sharedServices.addConsumerAppointmentAttachment(_this.accountId, uuid, dataToSend)
+            // if(_this.selectedService.serviceBookingType === 'request'){
+            //     _this.subs.sink = _this.sharedServices.addConsumerAppointmentAttachment(_this.accountId, uuid, dataToSend)
+            //     .subscribe(
+            //         () => {
+            //             if (_this.appointmentType !== 'reschedule') {
+            //                 _this.submitQuestionnaire(uuid).then(
+            //                     () => {
+            //                         resolve(true);
+            //                     }
+            //                 );
+            //             } else {
+            //                 let queryParams = {
+            //                     account_id: _this.accountId,
+            //                     uuid: _this.scheduledAppointment.uid,
+            //                     type: 'reschedule',
+            //                     theme: _this.theme
+            //                 }
+            //                 if (_this.customId) {
+            //                     queryParams['customId'] = _this.customId;
+            //                 }
+            //                 if (_this.selectedSlots.length > 1) {
+            //                     queryParams['selectedApptsTime'] = _this.selectedApptsTime;
+            //                     queryParams['selectedSlots'] = JSON.stringify(_this.selectedSlots);
+            //                 }
+            //                 let navigationExtras: NavigationExtras = {
+            //                     queryParams: queryParams
+            //                 };
+            //                 _this.setAnalytics();
+            //                 _this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
+            //             }
+            //         }, error => {
+            //             _this.isClickedOnce = false;
+            //             _this.wordProcessor.apiErrorAutoHide(_this, error);
+            //         }
+            //     );
+            // }
+            // else{
+                _this.subs.sink = _this.sharedServices.addConsumerAppointmentAttachment(_this.accountId, uuid, dataToSend)
                 .subscribe(
                     () => {
                         if (_this.appointmentType !== 'reschedule') {
@@ -2112,6 +2310,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         _this.wordProcessor.apiErrorAutoHide(_this, error);
                     }
                 );
+          // }
+           
         })
     }
     setAnalytics(source?) {
@@ -2653,7 +2853,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     getserviceOptionQuestionAnswers(event) {
         this.serviceOPtionInfo = event;
         console.log(JSON.stringify(this.serviceOPtionInfo))
-        if (this.serviceOPtionInfo.answers.answerLine === []) {
+        if (this.serviceOPtionInfo.answers.answerLine === '') {
             console.log(this.showNext)
             this.showNext = false;
         }

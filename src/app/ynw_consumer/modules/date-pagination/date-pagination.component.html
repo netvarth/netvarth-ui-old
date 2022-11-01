@@ -3,7 +3,7 @@
     <h6 class="custom text-dark">
       <b>Choose Date
         <!-- <div class="d-flex align-items-center my-auto"> -->
-        <mat-datepicker-toggle matSuffix [for]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker" *ngIf="selectedService && selectedService.serviceBookingType !== 'request'">
         </mat-datepicker-toggle>
         <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
         </mat-datepicker>
@@ -13,8 +13,15 @@
       </b>
     </h6>
   </div>
-
-  <div class="date-carousel container-fluid col-lg-12 col-md-12 mb-5 mt-3 p-0 text-center align-items-center justify-content-between">
+  <!--  && selectedService.date -->
+<div class="calenderDiv" *ngIf="selectedService && selectedService.serviceBookingType === 'request' && selectedService.date">
+  <mat-card class="demo-inline-calendar-card matCard">
+    <mat-calendar [dateClass]="dateClass.bind(this)" [(selected)]="selected_date"  (selectedChange)="date_value_changed()" [(ngModel)]="selected_date"></mat-calendar>
+    <!--  [(selected)]="selected" -->
+  </mat-card>
+</div>
+<!--  *ngIf="selectedService && ((selectedService.serviceBookingType !== 'request') || (selectedService.serviceBookingType === 'request' && selectedService.dateTime))" -->
+  <div class="date-carousel container-fluid col-lg-12 col-md-12 mb-5 mt-3 p-0 text-center align-items-center justify-content-between" *ngIf="selectedService && (!selectedService.date || selectedService.date ===undefined)">
     <div class="my-auto mr-1">
       <button (click)="previous_date_handling_btn ? prev_date(1):false;date_handling_btn()"
         class="date-carousel-prev my-auto" [class.not-allowed]="!previous_date_handling_btn">&lt;</button>

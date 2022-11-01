@@ -1284,6 +1284,21 @@ export class ProviderServices {
     const url = 'provider/statusBoard/dimension/logo/' + id;
     return this.servicemeta.httpPut(url, data);
   }
+  //Appointment request
+  getAppointmentRequests(filter){
+    //location-eq=4&schedule-eq=2
+    const url = 'provider/appointment/service/request' ;
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getAppointmentRequestsCount(filter = {}) {
+    const url = 'provider/appointment/service/request/count';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  postAppointmentRequest(postDate){
+    const url = 'provider/appointment/service/request/changestatus/confirmed';
+    return this.servicemeta.httpPut(url, postDate);
+  }
   // Appointments
   getTodayAppointments(filter = {}) {
     const url = 'provider/appointment/today';

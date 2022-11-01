@@ -12,6 +12,8 @@ export class DatePaginationComponent implements OnInit {
   @Output() date_change_event = new EventEmitter<any>();
   @Input() selected_date;
   @Input() availableDates;
+  @Input() selectedService;
+  selected: Date | null;
   minDate: any;
   maxDate: any;
   // selected_date: any;
@@ -107,6 +109,7 @@ export class DatePaginationComponent implements OnInit {
 
   date_value_changed() {
     this.next_date(0);
+    
     // console.log("Date changed:", this.selected_date);
     // this.date_change_event.emit(this.selected_date);
     // // this.selectedDate = this.sel_checkindate;
@@ -130,6 +133,7 @@ export class DatePaginationComponent implements OnInit {
 
   chekingDates() {
     if (this.minDate == this.selected_date || this.minDate > this.selected_date) {
+      console.log("Checkins :",this.selected_date);
       this.previous_date_handling_btn = false;
       if (this.minDate > this.selected_date) {
         var min_date = moment(this.minDate, 'YYYY-MM-DD');

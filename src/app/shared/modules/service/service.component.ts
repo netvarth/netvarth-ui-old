@@ -132,6 +132,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     departId: any;
     include_audio = false;
     selectedUser;
+    selectedRequestMode;
     defaultOption = {
         'id': '0',
         'firstName': 'Global',
@@ -258,6 +259,15 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     'dateTime': this.serviceForm.get('dateTime').value,
                                     'noDateTime':  this.serviceForm.get('noDateTime').value,
                                 })
+                                if(this.service_data.date){
+                                    this.selectedRequestMode = 'date'
+                                }
+                                if(this.service_data.dateTime){
+                                    this.selectedRequestMode = 'dateTime'
+                                }
+                                if(this.service_data.noDateTime){
+                                    this.selectedRequestMode = 'noDateTime'
+                                }
                                 }
                                 if(this.service_data.serviceBookingType === 'booking'){
                                     this.is_checked_booking = true;
@@ -310,9 +320,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
-                                            'date': this.serviceForm.get('date').value,
-                                            'dateTime': this.serviceForm.get('dateTime').value,
-                                            'noDateTime': this.serviceForm.get('noDateTime').value,
+                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
+                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
                         
                                         });
                                     } else {
@@ -327,9 +337,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
-                                            'date': this.serviceForm.get('date').value,
-                                            'dateTime': this.serviceForm.get('dateTime').value,
-                                            'noDateTime': this.serviceForm.get('noDateTime').value,
+                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
+                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
 
                                         });
                                     }
@@ -367,9 +377,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'notification': this.service_data['notification'] || this.serviceForm.get('notification').value,
                                             'livetrack': this.service_data['livetrack'] || this.serviceForm.get('livetrack').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
-                                            'date': this.serviceForm.get('date').value,
-                                            'dateTime': this.serviceForm.get('dateTime').value,
-                                            'noDateTime': this.serviceForm.get('noDateTime').value,
+                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
+                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
 
                                         });
                                     } else {
@@ -393,9 +403,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'priceDynamic': this.service_data['priceDynamic'] ? true : false,
                                             'paymentDescription': this.service_data['paymentDescription'] || this.serviceForm.get('paymentDescription').value,
                                             'serviceBookingType': this.service_data['serviceBookingType'] || this.serviceForm.get('serviceBookingType').value,
-                                            'date':  this.serviceForm.get('date').value,
-                                            'dateTime':  this.serviceForm.get('dateTime').value,
-                                            'noDateTime': this.serviceForm.get('noDateTime').value,
+                                            'date': this.service_data['date'] || this.serviceForm.get('date').value,
+                                            'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
+                                            'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
 
                                         });
                                         if (this.service_data.serviceType === 'virtualService') {
@@ -538,26 +548,21 @@ export class ServiceComponent implements OnInit, OnDestroy {
             // this.serviceForm['dateTime'].setValue('true');
             // this.serviceForm['date'].setValue('false');
             this.serviceForm.controls['dateTime'].setValue(true);
-            // this.serviceForm.controls['date'].setValue(false);
-            // this.serviceForm.controls['noDateTime'].setValue(false);
+            this.serviceForm.controls['date'].setValue(false);
+            this.serviceForm.controls['noDateTime'].setValue(false);
 
         }
-        else if(event === 'date'){
+         if(event === 'date'){
             // this.serviceForm.addControl('date',
             // new FormControl(event));
-            // this.serviceForm.controls['dateTime'].setValue(false);
             this.serviceForm.controls['date'].setValue(true);
-            // this.serviceForm.controls['noDateTime'].setValue(false);
-
-
+            this.serviceForm.controls['dateTime'].setValue(false);
+            this.serviceForm.controls['noDateTime'].setValue(false);
         }
-        else{
+        if(event === 'noDateTime'){
             this.serviceForm.controls['noDateTime'].setValue(true);
-            // this.serviceForm.controls['date'].setValue(false);
-            // this.serviceForm.controls['dateTime'].setValue(false);
-
-
-             
+            this.serviceForm.controls['date'].setValue(false);
+            this.serviceForm.controls['dateTime'].setValue(false);
         }
     }
     selectToolTypeHandler(event) {
@@ -588,7 +593,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             // this.serviceForm.get('serviceBookingType').setValue('');
             this.serviceForm.controls['serviceBookingType'].setValue(event);
             this.is_service_request = true;
-            this.is_checked_request = true;
+            // this.is_checked_request = true;
             this.is_checked_booking = false;
            // this.is_physical = 1;
         }

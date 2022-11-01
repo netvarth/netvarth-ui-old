@@ -56,6 +56,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
           this.subs.sink = this.shared_services.getAppointmentByConsumerUUID(params.uuid, params.account_id).subscribe(
             (appt: any) => {
               this.appointment = appt;
+              console.log("Confrim Data :",appt);
               this.addToCalendar();
               this.apiloading = false;
               this.lStorageService.removeitemfromLocalStorage('itemArray');  

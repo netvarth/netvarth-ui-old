@@ -1,12 +1,13 @@
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === '' || action === 'status'">
-    <ng-container *ngIf="action === '' && data.status !== 'request'">Select an action to perform</ng-container>
+    <ng-container *ngIf="action === ''  && (appt.apptStatus !== 'Requested' && appt.apptStatus !== 'RequestRejected')">Select an action to perform</ng-container>
     <ng-container *ngIf="action === 'status'">Change status to</ng-container>
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
 </h1>
-<div *ngIf="apiloading && data.status !== 'request'">
+<div *ngIf="apiloading">
     <app-common-innerloading-spinner></app-common-innerloading-spinner>
 </div>
+<ng-container *ngIf="(appt.apptStatus !== 'Requested' && appt.apptStatus !== 'RequestRejected')">
 <div class="action-section col-md-12 no-padding" *ngIf="(action === '' || action === 'status') && !apiloading">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-lt-20 no-padding" *ngIf="!data.multiSelection">
         <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''">
@@ -474,16 +475,16 @@
         </ng-container>
     </div>
 </div>
-
-<div *ngIf="data.status === 'request'" class="col-md-12">
+</ng-container>
+<div *ngIf="data.status === 'request' && (appt.apptStatus === 'Requested' || appt.apptStatus === 'RequestRejected')" class="col-md-12">
     <div class="row">
         <div class="col-md-6 col-xs-12 col-sm-12 smallCalender">
             <h4>Select Date & Time</h4>
             <div class="colxs-12">
                  <mat-card class="demo-inline-calendar-card matCard">
-                    <mat-calendar [dateClass]="dateClass.bind(this)" [(selected)]="selected" (selectedChange)="appointmentDateChanged($event)" [(ngModel)]="selected"></mat-calendar>
+                    <mat-calendar [dateClass]="dateClass.bind(this)" [minDate]="minDate" [maxDate]="maxDate" [(selected)]="selectedDate" (selectedChange)="appointmentDateChanged($event)"></mat-calendar>
                   </mat-card> 
-                  <!-- <app-date-pagination (date_change_event)="appointmentDateChanged($event)" [selected_date]="appt.appmtDate"
+                  <!-- <app-date-pagination (date_change_event)="appointmentDateChanged($event)" [selected_date]="appt.appmtDate" (dateChange)="handleFutureDateChange($event)" [(ngModel)]="selected"
               [availableDates]="availableDates" >
             </app-date-pagination> -->
                   <!-- <p>Selected date: {{selected}}</p> -->
@@ -494,25 +495,37 @@
             <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                 <h5>Available Slots</h5>
             <mat-chip-list class="matChip">
-                <mat-chip *ngFor="let slot of allSlots | slice:0:14" class="text-center"
+                <!-- <mat-chip *ngFor="let slot of allSlots | slice:0:14" (click)="timeSelected(slot)" class="text-center"
                     >
                     {{slot}}
-                </mat-chip>
+                </mat-chip> -->
+                <mat-chip *ngFor="let slot of freeSlots | slice:0:14" (click)="timeSelected(slot)"
+                        [selected]="slot.time==selectedTime">
+                        {{slot.displayTime}}
+                    </mat-chip>
                
             </mat-chip-list>
+            <div *ngIf="freeSlots.length === 0" class="text-center fw-500"><span>No Slots Available </span></div>
+
           </div>
           <div *ngIf="showMoreAvailableSlots" [class.internal-scroll] = "showMoreAvailableSlots" class="slotDivSize">
             <h5>Available Slots</h5>
             <mat-chip-list class="matChip">
-                <mat-chip *ngFor="let slot of allSlots" 
+                <!-- <mat-chip *ngFor="let slot of allSlots" (click)="timeSelected(slot)"
                     >
                     {{slot}}
-                </mat-chip>
+                </mat-chip> -->
+                <mat-chip *ngFor="let slot of freeSlots" (click)="timeSelected(slot)"
+                [selected]="slot.time==selectedTime">
+                {{slot.displayTime}}
+            </mat-chip>
                
             </mat-chip-list>
+              
+               <div *ngIf="freeSlots.length === 0" class="text-center  fw-500"><span>No Slots Available </span></div>
           </div>
            
-          <div class="text-center mx-auto mb-2" *ngIf="allSlots && allSlots.length > 14">
+          <div class="text-center mx-auto mb-2" *ngIf="freeSlots && freeSlots.length > 14">
             <button type="button" class="text-capitalize px-2 py-1 btnSize"
                 (click)="showMoreTimeSlots()">
                 Show <span *ngIf="!showMoreAvailableSlots">More</span>
@@ -526,7 +539,21 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default modal_close closeBtn" data-dismiss="modal" mat-dialog-close >Close</button>
-        <button type="button" class="btn btn-primary nextBtn">Next</button>
+        <button type="button" [class.disabled]="disableButn() || freeSlots.length === 0" class="btn btn-primary nextBtn" (click)="sendAcceptRequest()">Next</button>
     </div>
     
+</div>
+<div *ngIf="data.status === 'reject' && (appt.apptStatus === 'Requested' || appt.apptStatus === 'RequestRejected')" class="col-md-12">
+    <div class="row">
+        <div class="col-md-12 col-xs-12 col-sm-12 smallCalender">
+           <div class="mt-4 mb-5 text-center card">
+                Are you sure? want to delete request!
+           </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default modal_close closeBtn" data-dismiss="modal" mat-dialog-close >No</button>
+        <button type="button" class="btn btn-primary nextBtn" (click)="removeApptRequest(appt)">Yes</button>
+    </div>
+    
+</div>
 </div>

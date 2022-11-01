@@ -1,4 +1,39 @@
 
+   .trRow{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+
+}
+.imgRow{
+    display: flex;
+    justify-content: space-evenly;
+    justify-items: center;
+}
+.imgSize{
+    width: 40px;
+    margin-top: 10px;
+}
+.smallDiv{
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    margin: 10px;
+}
+.profileDiv{
+    display: flex;
+    justify-content: flex-start;
+    justify-items: center;
+    margin: 10px;
+}
+.clm{
+    height: 100px;
+    border: 1px solid;
+}
+.btnSize{
+    width: 150px !important;
+}
+
 .selecttype{
     display:inline-block;
 }

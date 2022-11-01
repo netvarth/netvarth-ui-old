@@ -358,7 +358,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+          //this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.waitlistStatus !== 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           }
@@ -597,10 +597,11 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     this.notedialogRef.afterClosed().subscribe(result => {
       console.log("result ..", result)
       if (result === 'reloadlist') {
-       // this.getWaitlistNotes();
+      // this.getWaitlistNotes();
+       // this.getProviderSettings();
         console.log("dialog box losed")
-       // this.getWaitlistNotes(checkin.ynwUuid);
-       // this.getWaitlistDetail();
+     //  this.getWaitlistDetail();
+       this.getWaitlistNotes(this.waitlist_data.ynwUuid);
       }
     });
   }

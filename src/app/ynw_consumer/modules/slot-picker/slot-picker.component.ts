@@ -14,6 +14,7 @@ export class SlotPickerComponent implements OnInit {
   @Input() multiple; // To enable multiple selection
   showMoreAvailableSlots = false; // Toggle number of slots to be displayed
   multipleSelection = false;
+  @Input() selectedService;
   ngOnInit(): void {
     console.log("Slots:", this.slots);
     console.log("Selected Slot:", this.selectedSlot);

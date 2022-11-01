@@ -115,6 +115,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   tracksubscription: Subscription;
   cronHandleTrack: Subscription;
   cronHandleApptTrack: Subscription;
+  panelOpenState = false;
   cronStarted;
   refreshTime = projectConstants.CONSUMER_DASHBOARD_REFRESH_TIME;
   refreshTimeForTracking = 600000;
@@ -181,12 +182,16 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   tDate: any;
   path = projectConstantsLocal.PATH;
   locationholder: any;
+  total_requests:any = [];
+  apptRequests: any = [];
+  moreApptRequest : any = [];
   today_totalbookings: any = [];
   future_totalbookings: any = [];
   todayBookings: any = [];
   todayBookings_more: any = [];
   more_tdybookingsShow = false;
   more_tdyOrdersShow = false;
+  more_requestShow = false;
   futureBookings: any = [];
   futureBookings_more: any = [];
   more_futrbookingsShow = false;
@@ -252,6 +257,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   fromApp = false;
   homeView: any;
   customLink: boolean = false;
+  isRequest: boolean = false;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public translate: TranslateService,
@@ -458,6 +464,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     } else {
       _this.initConsumer();
     }
+    _this.getApptRequests();
 
   }
   getOrderPaidBill(orderBill) {
@@ -658,6 +665,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.today_totalbookings = this.appointments.concat(this.waitlists);
           this.loading = false;
           this.getAppointmentFuture();
+         // this.getApptRequests();
           // more case
           this.todayBookings = [];
           console.log(this.todayBookings);
@@ -848,7 +856,34 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
+ getApptRequests(){
+  this.loading = true;
+  this.consumer_services.getApptRequestList().
+  subscribe((res: any)=>{
+    console.log("Requestsss :",res);
+    this.waitlists = res;
+    this.total_requests = this.appointments.concat(this.waitlists);
+    this.isRequest = true;
+    //this.appointments.concat(this.waitlists)
+    this.loading = false;
+   //  this.getAppointmentFuture();
+    // more case
+    this.apptRequests = [];
+   this.moreApptRequest = [];
+   //tslint:disable-next-line:no-shadowed-variable
+    for (let i = 0; i < this.total_requests.length; i++) {
+      if (i <= 2) {
+        this.apptRequests.push(this.total_requests[i]);
+        console.log("For 3 only",this.apptRequests);
+      } else {
+        this.moreApptRequest.push(this.total_requests[i]);
+        console.log("more than 3",this.moreApptRequest);
 
+      }
+    }
+
+  })
+ }
   getApptAppxTime(appointment) {
     const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'timeslot': '', 'autoreq': false, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
     if (appointment.apptStatus !== 'Cancelled' && appointment.apptStatus !== 'Rejected') {
@@ -1156,9 +1191,13 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
             this.futureBookings = [];
             this.futureBookings_more = [];
             this.appointmentslist = [];
+            this.total_requests = [];
+            this.apptRequests = [];
+            this.moreApptRequest = [];
             // this.getDonations();
             this.getAppointmentToday();
             this.getAppointmentFuture();
+            this.getApptRequests();
             //  this.getWaitlist();
             // this.getWaitlistFuture();
           } else if (data === 'reloadlist' && type === 'order') {
@@ -1397,6 +1436,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoDonations() {
     this.router.navigate(['consumer', 'donations']);
   }
+  
   getDonations() {
     const filter = {};
     if (this.server_date) {
@@ -1418,6 +1458,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   reloadAPIs() {
     this.getAppointmentToday();
     this.getAppointmentFuture();
+    this.getApptRequests();
     this.reload_history_api = { status: true };
   }
 
@@ -1953,6 +1994,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.appointments = [];
           this.appointments = this.appointmentslist;
           this.getWaitlist();
+          this.getApptRequests();
         },
         error => {
         }
@@ -1968,6 +2010,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.future_appointments = data;
           this.getWaitlistFuture();
+         // this.getApptRequests();
         },
         error => {
         }
@@ -2033,8 +2076,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   }
   getSingleTime(slot) {
+    if(slot){
     const slots = slot.split('-');
     return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+    }
   }
   getMeetingDetails(details, source) {
     const passData = {
@@ -2080,6 +2125,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
   showlessFutrBookings() {
     this.more_futrbookingsShow = false;
+  }
+  showMoreRequest(){
+    this.more_requestShow = true;
+  }
+  showLessRequest(){
+    this.more_requestShow = false;
   }
   stopprop(event) {
     event.stopPropagation();

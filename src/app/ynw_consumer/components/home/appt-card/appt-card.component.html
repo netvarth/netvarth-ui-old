@@ -51,8 +51,11 @@
         <div class="ordr_no font-size-9" *ngIf="type==='future'">{{booking.appmtDate | date:
             monthFormat}},
             {{getSingleTime(booking.appmtTime)}}</div>
-        <div class="ordr_no font-size-9" *ngIf="type!=='future'">{{ 'Today' | translate }},
+        <div class="ordr_no font-size-9" *ngIf="type==='today'">{{ 'Today' | translate }},
             {{getSingleTime(booking.appmtTime)}}</div>
+            <div class="ordr_no font-size-9" *ngIf="type === 'request' && booking.appmtDate">{{booking.appmtDate | date:
+                monthFormat}}
+                {{getApptTime(booking.appmtTime)}}</div>
         <div class="sp_name wrap_txt" (click)="cardActionPerformed('appt', 'providerDetails', booking, $event)">
             {{booking.providerAccount.businessName || '' |
             capitalizeFirst}}</div>

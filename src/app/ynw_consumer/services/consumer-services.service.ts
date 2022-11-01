@@ -26,6 +26,10 @@ export class ConsumerServices {
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
 
+  getApptRequestList(){
+    return this.servicemeta.httpGet('consumer/appointment/service/request');
+  }
+
 
   deleteFavProvider(id) {
     return this.servicemeta.httpDelete('consumer/providers/' + id);
