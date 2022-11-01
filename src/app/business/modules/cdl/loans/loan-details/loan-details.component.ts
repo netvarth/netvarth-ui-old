@@ -66,6 +66,7 @@ export class LoanDetailsComponent implements OnInit {
           this.loanId = params.id;
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
+            console.log("LoanData", this.loanData)
             this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
               this.bankData = data;
               console.log("BankData", this.bankData)
