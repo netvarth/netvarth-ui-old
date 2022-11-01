@@ -111,12 +111,17 @@ export class LoansComponent implements OnInit {
 
 
   statusChange(event) {
-    let api_filter = {}
-    api_filter['spInternalStatus-eq'] = event.value;
     if (event.value == 'All') {
       this.getLoans();
     }
     else {
+      let api_filter = {}
+      if (event.value == 'Rejected') {
+        api_filter['applicationStatus-eq'] = event.value;
+      }
+      else {
+        api_filter['spInternalStatus-eq'] = event.value;
+      }
       this.getLoansByFilter(api_filter);
     }
   }

@@ -40,6 +40,7 @@ export class OtpVerifyComponent implements OnInit {
   customerId: any = 0;
   from: any;
   name: any;
+  dealerId: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -68,6 +69,9 @@ export class OtpVerifyComponent implements OnInit {
     }
     if (this.data && this.data.name) {
       this.name = this.data.name;
+    }
+    if (this.data && this.data.dealerId) {
+      this.dealerId = this.data.dealerId;
     }
     if (this.data && this.data.phoneNumber) {
       this.phoneNumber = this.data.phoneNumber;
@@ -129,6 +133,7 @@ export class OtpVerifyComponent implements OnInit {
     let credentials = {
       email: loginId,
     }
+
     this.subs.sink = this.cdlservice.sendEmailOTP(credentials, this.from).subscribe(
       (response: any) => {
         this.snackbarService.openSnackBar("Otp Sent Successfully");
@@ -216,9 +221,16 @@ export class OtpVerifyComponent implements OnInit {
 
   verifyEmail() {
     console.log("Email")
-    let data = {
+    var data;
+    data = {
       "uid": this.loanId
     }
+    if (this.from == 'partner') {
+      data = {
+        "id": this.dealerId
+      }
+    }
+
     this.subs.sink = this.cdlservice.verifyEmailOTP(this.otpEntered, this.from, data)
       .subscribe(
         (response: any) => {

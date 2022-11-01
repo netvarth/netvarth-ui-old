@@ -48,6 +48,12 @@
 }
 
 
+.disabled {
+  pointer-events: none !important;
+  /* cursor: not-allowed !important; */
+}
+
+
 
 
 /* File Input Styles  */

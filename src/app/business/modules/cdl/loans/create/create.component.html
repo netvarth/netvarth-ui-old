@@ -498,7 +498,7 @@
             </mat-expansion-panel-header>
             <div>
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="user.userType!=5">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Select Dealer</div>
@@ -533,11 +533,11 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Select Scheme</div>
+                      <div class="form-title">Preferred Scheme</div>
                     </div>
                     <div class="fieldPadding">
                       <input (click)="openSchemes()" (keyup)="resetErrors()" #scheme type="text"
-                        placeholder="Select Scheme" class="form-control" autocomplete="off" formControlName="scheme"
+                        placeholder="Preferred Scheme" class="form-control" autocomplete="off" formControlName="scheme"
                         readonly />
                     </div>
                   </div>

@@ -152,6 +152,22 @@ export class CreateDealerComponent implements OnInit {
             this.selectedFiles['store'].files = this.dealerData.storeAttachments;
             this.selectedFiles['cheque'].files = this.dealerData.bankAttachments;
 
+            if (this.dealerData && this.dealerData.partnerMobileVerified) {
+              this.verification = true;
+            }
+
+            if (this.dealerData && this.dealerData.partnerEmailVerified) {
+              this.emailverification = true;
+            }
+
+            if (this.dealerData && this.dealerData.isPanVerified) {
+              this.panverification = true;
+            }
+
+            if (this.dealerData && this.dealerData.isAadhaarVerified) {
+              this.aadharverification = true;
+            }
+
 
 
             this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
@@ -286,6 +302,7 @@ export class CreateDealerComponent implements OnInit {
       data: {
         type: 'Email',
         email: this.createDealer.controls.email.value,
+        dealerId: this.dealerData.id,
         from: 'partner'
       }
     });

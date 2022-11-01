@@ -98,9 +98,17 @@ export class ApprovedComponent implements OnInit {
 
 
   refreshCustomerAcceptance() {
-    this.cdlservice.changeInternalStatus(this.loanId, 'ConsumerAccepted').subscribe((data) => {
-      if (data) {
-        this.router.navigate(['provider', 'cdl', 'loans']);
+    // this.cdlservice.changeInternalStatus(this.loanId, 'ConsumerAccepted').subscribe((data) => {
+    //   if (data) {
+    //     this.router.navigate(['provider', 'cdl', 'loans']);
+    //   };
+    // })
+
+    this.cdlservice.getLoanById(this.loanId).subscribe((data: any) => {
+      if (data && data.spInternalStatus) {
+        if (data.spInternalStatus == 'ConsumerAccepted') {
+          this.router.navigate(['provider', 'cdl', 'loans']);
+        }
       };
     })
   }

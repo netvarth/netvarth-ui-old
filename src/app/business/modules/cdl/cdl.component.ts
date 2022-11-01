@@ -216,7 +216,7 @@ export class CdlComponent implements OnInit {
 
   getRejectedloansCount() {
     const api_filter = {};
-    api_filter['spInternalStatus-eq'] = 'Rejected';
+    api_filter['applicationStatus-eq'] = 'Rejected';
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       if (data) {
         this.rejectedLoansCount = data.length
