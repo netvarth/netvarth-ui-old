@@ -104,10 +104,16 @@ export class CardComponent implements OnInit, OnChanges, AfterViewChecked {
                 this.timingCaption = 'Next Available Time';
                 this.timings = this.getAvailabilityforAppt(this.service.serviceAvailability.nextAvailableDate, this.service.serviceAvailability.nextAvailable);                                
                 // if (this.config) {                   
-                // }                
-                let buttonTitle = this.getTerminologyFromConfig('get_appointment');
-                console.log("Button Caption:", buttonTitle);
-                this.buttonCaption = ((buttonTitle!==null) ? buttonTitle: 'Get Appointment');
+                // }               
+                if(this.service.serviceBookingType === 'request'){
+                    return this.buttonCaption = 'Request';
+                } 
+                else{
+                    let buttonTitle = this.getTerminologyFromConfig('get_appointment');
+                    console.log("Button Caption:", buttonTitle);
+                    this.buttonCaption = ((buttonTitle!==null) ? buttonTitle: 'Get Appointment');
+                }
+                
                                
                 break;
             case 'donation':

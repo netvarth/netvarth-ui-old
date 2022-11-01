@@ -1513,15 +1513,15 @@ export class AppointmentActionsComponent implements OnInit {
       this.servId,
       this.accountid
     );
-    this.provider_services
-    .getSlotsByLocationServiceandDate(
-      this.locId,
-      this.servId,
-      this.sel_checkindate,
-      this.accountid
-    ).subscribe((res:any)=>{
-      console.log("get slotss by :",res);
-    })
+    // this.provider_services
+    // .getSlotsByLocationServiceandDate(
+    //   this.locId,
+    //   this.servId,
+    //   this.sel_checkindate,
+    //   this.accountid
+    // ).subscribe((res:any)=>{
+    //   console.log("get slotss by :",res);
+    // })
     this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
     //this.getAppointmentSlots();
    // this.getSlots();
