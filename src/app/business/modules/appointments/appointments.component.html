@@ -1893,7 +1893,7 @@
                 </td> -->
                 <td>
                   <div>
-                    <span *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}}</span> <br>
+                    <span *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
                      <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
                     </div>
                 </td>
@@ -1926,7 +1926,7 @@
                   <img src="../../../assets/images/mr_male.svg"
                style="width: 40px !important; margin-right: 5px;"></div> -->
                <div>
-                <span *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}}</span> <br>
+                <span *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
                     <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
                     </div> 
                 </td>
