@@ -158,6 +158,7 @@ export class AppointmentActionsComponent implements OnInit {
   ngOnInit() {
    
     this.getAppointmentSlots();
+   // this.getSlots();
    // console.log("Slots :",this.getAppointmentSlots());
    
   //  this.shared_services.getTodaysAvailableTimeSlots(this.sel_schedule_id,
@@ -186,17 +187,11 @@ export class AppointmentActionsComponent implements OnInit {
     this.sel_checkindate = this.lStorageService.getitemfromLocalStorage("selDate");
     this.sel_schedule_id = this.lStorageService.getitemfromLocalStorage("scheduleId");
     console.log("Schedule Id :", this.sel_schedule_id);
-    this.provider_services
-    .getAppointmentSlotsByScheduleid(
-      this.sel_schedule_id
-    ).subscribe((data:any)=>{
-      console.log("Slotssss data :",data);
-    })
-    this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
+   
+    this.getSlotsBySheduleandDate(this.appt.schedule.id,this.appt.appmtDate);
     this.multipleSelection = this.data.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
-
     if (
       !this.data.multiSelection &&
       this.appt.releasedQnr &&
@@ -1493,7 +1488,7 @@ export class AppointmentActionsComponent implements OnInit {
   // }
   appointmentDateChanged(e) {
     const tdate = e;
-    this.ngOnInit();
+   // this.ngOnInit();
    console.log("In Appointment Date Changed Method:", tdate);
     const newdate = tdate;
       // .split("/")
@@ -1518,11 +1513,28 @@ export class AppointmentActionsComponent implements OnInit {
       this.servId,
       this.accountid
     );
+    this.provider_services
+    .getSlotsByLocationServiceandDate(
+      this.locId,
+      this.servId,
+      this.sel_checkindate,
+      this.accountid
+    ).subscribe((res:any)=>{
+      console.log("get slotss by :",res);
+    })
     this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
     //this.getAppointmentSlots();
-    
+   // this.getSlots();
     
  }
+  // getSlots(){
+  //   this.provider_services
+  //   .getAppointmentSlotsByScheduleid(
+  //     this.sel_schedule_id
+  //   ).subscribe((data:any)=>{
+  //     console.log("Slotssss data :",data);
+  //   })
+  // }
 
 getSlotsBySheduleandDate(scheduleId,selDate){
   this.freeSlots = [];
