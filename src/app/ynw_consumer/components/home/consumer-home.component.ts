@@ -862,7 +862,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   subscribe((res: any)=>{
     console.log("Requestsss :",res);
     this.waitlists = res;
-    this.total_requests = this.appointments.concat(this.waitlists);
+    this.total_requests = this.waitlists;
     this.isRequest = true;
     //this.appointments.concat(this.waitlists)
     this.loading = false;
