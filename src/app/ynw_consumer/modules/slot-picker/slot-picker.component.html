@@ -1,10 +1,10 @@
-<div class="pb-0 px-auto mb-2 font-weight-bold text-left" *ngIf="!selectedService.date">
+<div class="pb-0 px-auto mb-2 font-weight-bold text-left" >
   <div class="col-md-12 col-xs-12 col-sm-12">
     <h6 class="custom text-dark"><b>Choose Time</b></h6>
   </div>
   <div class="clearfix"></div>
 </div>
-<ng-container *ngIf="!selectedService.date">
+<ng-container >
 <div *ngIf="slots && slots.length > 0 && !mode" class="freeslots token m-1">
   <mat-chip-list>
     <mat-chip *ngFor="let slot of slots, let i= index" class="text-center mx-auto"
@@ -16,7 +16,7 @@
   </mat-chip-list>
 </div>
 </ng-container>
-<ng-container *ngIf="!selectedService.date">
+<ng-container >
 <div *ngIf="slots && slots.length > 0 && mode" class="freeslots m-1 my-3" [ngClass]="mode?mode:''">
   <mat-chip-list selectable [multiple]="multipleSelection">
       <div *ngIf="!showMoreAvailableSlots" class="col-md-12 col-lg-12 col-sm-12 col-xs-12">

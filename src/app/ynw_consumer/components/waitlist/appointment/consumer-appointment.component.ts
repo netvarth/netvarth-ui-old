@@ -24,6 +24,8 @@ import { ProviderServices } from "../../../../business/services/provider-service
 import { FileService } from "../../../../shared/services/file-service";
 import { QnrDialogComponent } from "../../../../../../src/app/shared/components/qnr-dialog/qnr-dialog.component";
 import { DomainConfigGenerator } from "../../../../shared/services/domain-config-generator.service";
+import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import * as moment from 'moment';
 @Component({
     selector: 'app-consumer-appointment',
     templateUrl: './consumer-appointment.component.html',
@@ -107,7 +109,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     balanceAmount: any;
     paymentDetails: any = [];
-
+    selectedDate: Date = new Date();
     selectedCoupons: any = [];
     selectedCoupon: any;
     couponValid = true;
@@ -312,6 +314,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.serviceOPtionInfo = this.lStorageService.getitemfromLocalStorage('serviceOPtionInfo');
         this.getServiceOptions()
     }
+    dateClass(date: Date): MatCalendarCellCssClasses {
+        return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
+      }
     getServiceOptions() {
         this.subs.sink = this.sharedServices.getServiceoptionsAppt(this.selectedServiceId, this.accountId)
             .subscribe(
@@ -754,6 +759,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.subs.sink = _this.sharedServices.getSlotsByLocationServiceandDate(locid, servid, appmtDate, accountid)
             .subscribe((data: any) => {
                 _this.allSlots = [];
+                console.log("Date slots :",data);
 
                 _this.slotLoaded = true;
                 // console.log(_this.freeSlots);
@@ -829,6 +835,33 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
        this.selectedSlots = [];
          console.log("In Appointment Date Changed Method:", appmtDate);
         this.appmtDate = appmtDate;
+        this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
+        this.slotLoaded = false;
+        this.getAvailableSlotByLocationandService(this.locationId, this.selectedServiceId, this.appmtDate, this.accountId);
+    }
+
+    apptDateChanged(date){
+        const tdate = date;
+        this.ngOnInit();
+       console.log("In Appointment Date Changed Method:", tdate);
+        const newdate = tdate;
+          // .split("/")
+          // .reverse()
+          // .join("-");
+          //moment(newdate).format("YYYY-MM-DD")
+          console.log("New Date :",newdate);
+          // console.log("New Date :",newdate.split(" ").reverse().join("-"));
+        const futrDte = new Date(newdate);
+        console.log("Future Date :",futrDte);
+        const obtmonth = futrDte.getMonth() + 1;
+        let cmonth = "" + obtmonth;
+        if (obtmonth < 10) {
+          cmonth = "0" + obtmonth;
+        }
+        const seldate =
+          futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
+        this.appmtDate = seldate;
+        console.log("selected date :",this.appmtDate);
         this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
         this.slotLoaded = false;
         this.getAvailableSlotByLocationandService(this.locationId, this.selectedServiceId, this.appmtDate, this.accountId);

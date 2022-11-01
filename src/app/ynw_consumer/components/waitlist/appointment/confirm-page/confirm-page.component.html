@@ -205,12 +205,12 @@
                                             <td *ngFor="let member of appointment.appmtFor">{{member.firstName}}
                                                 {{member.lastName}}</td>
                                         </tr>
-                                        <tr *ngIf="appointment.date || appointment.dateTime">
-                                            <td *ngIf="appointment.date || appointment.dateTime" width="48%" align="right">Request Time </td>
-                                            <td *ngIf="appointment.date || appointment.dateTime" width="2%">&nbsp;:&nbsp;</td>
-                                            <td *ngIf="!appointment.noDateTime"> {{appointment.appmtDate | date: newDateFormat }},
-                                                <span *ngIf="selectedApptsTime && appointment.dateTime">{{selectedApptsTime}}</span>
-                                                <span *ngIf="!selectedApptsTime && appointment.appmtTime && appointment.dateTime">{{getSingleTime(appointment.appmtTime)}}</span>
+                                        <tr *ngIf="!appointment.noDateTime">
+                                            <td  width="48%" align="right">Request Time </td>
+                                            <td  width="2%">&nbsp;:&nbsp;</td>
+                                            <td > {{appointment.appmtDate | date: newDateFormat }}
+                                                <!-- <span *ngIf="selectedApptsTime && appointment.dateTime">{{selectedApptsTime}}</span> -->
+                                                <span *ngIf="appointment.dateTime">{{getApptTime(appointment.appmtTime)}}</span>
                                                </td>
                                         </tr>
                                         <tr>

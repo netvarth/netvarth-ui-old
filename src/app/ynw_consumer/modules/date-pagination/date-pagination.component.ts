@@ -12,7 +12,6 @@ export class DatePaginationComponent implements OnInit {
   @Output() date_change_event = new EventEmitter<any>();
   @Input() selected_date;
   @Input() availableDates;
-  @Input() selectedService;
   selected: Date | null;
   minDate: any;
   maxDate: any;
@@ -32,7 +31,6 @@ export class DatePaginationComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log("Selected Date:", this.selected_date);
     this.minDate = new Date();
     this.maxDate = new Date((this.minDate.getFullYear() + 4), 12, 31);
     this.minDate = moment(this.minDate).format("YYYY-MM-DD");

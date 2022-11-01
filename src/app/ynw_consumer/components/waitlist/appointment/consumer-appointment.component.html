@@ -88,17 +88,32 @@
         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" data-wizard-type="step-content"
           data-wizard-state="current" *ngIf="bookStep === 2 && showSlot">
           <!--  && (!selectedService.noDateTime || selectedService.noDateTime === undefined) -->
-          <div class="col-xs-12" *ngIf="selectedService">
+          <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="selectedService && selectedService.serviceBookingType === 'request' && selectedService.date">
+            <h6 class="custom text-dark">
+              <b>Choose Date
+              </b>
+            </h6>
+          <div class="calenderDiv" >
+            <mat-card class="demo-inline-calendar-card matCard">
+              <!-- selected_date [(ngModel)]="selected_date"-->
+              <mat-calendar [dateClass]="dateClass.bind(this)" [(selected)]="selectedDate"  (selectedChange)="apptDateChanged($event)"></mat-calendar>
+            </mat-card>
+          </div>
+          
+          </div>
+          <div class="col-xs-12" *ngIf="selectedService && !selectedService.date">
             <app-date-pagination (date_change_event)="appointmentDateChanged($event)" [selected_date]="appmtDate"
-              [availableDates]="availableDates" [selectedService]="selectedService">
+              [availableDates]="availableDates">
             </app-date-pagination>
           </div>
           <!-- *ngIf="freeSlots && freeSlots.length > 0" -->
+          <ng-container *ngIf="selectedService && !selectedService.date">
           <div class="col-xs-12" *ngIf="allSlots && allSlots.length > 0 && multipleSelection">
             <app-slot-picker (slotSelected)="slotSelected($event)" [selectedSlot]="selectedSlots" [slots]="allSlots"
-              [mode]="'appt'" [multiple]="multipleSelection" [criteria]="selectedService.showOnlyAvailableSlots" [selectedService]="selectedService">
+              [mode]="'appt'" [multiple]="multipleSelection" [criteria]="selectedService.showOnlyAvailableSlots">
             </app-slot-picker>
           </div>
+        </ng-container>
           <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mt-3 text-center"
             *ngIf="allSlots && allSlots.length <= 0 && slotLoaded">
             <b>No slots available on selected date. Please choose other date.</b>

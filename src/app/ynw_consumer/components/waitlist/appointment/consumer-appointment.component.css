@@ -3,7 +3,47 @@
   width: 70%;
   border: 1px solid #ccc;
 }
+@media (max-width:767px){
+  .calenderDiv{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    width: auto !important;
+  }
+  .matCard{
+    box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
+    border: none !important;
+    border-radius: 7.1468px;
+    top: -5px;
+    height: 100%;
+  }
+}
+@media (min-width:768px) and (max-width:1400px){
+  .calenderDiv{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+  }
+  .matCard{
+    box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
+    border: none !important;
+    border-radius: 7.1468px;
+    top: -5px;
+    height: 100%;
+    width: 50%;
+   
+  }
 
+}
+.matCard:hover{
+  background: #ffff;
+  box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
+  border: none !important;
+  border-radius: 7.1468px;
+  top: -5px;
+  height: 100%;
+}
 .virtual-fields .form-control {
   display: block !important;
   width: 100%;
