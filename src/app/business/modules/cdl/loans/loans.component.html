@@ -175,8 +175,13 @@
                   {{item.partner.partnerName}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && !item.partner ">
                   --</td>
-                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item  && item.spInternalStatus">
-                  {{item.spInternalStatus}}
+                <td data-title="Loan Details" class="td1 loanStatus"
+                  *ngIf="item && item.spInternalStatusDisplyName && item.applicationStatus && item.applicationStatus == 'Rejected'">
+                  {{item.applicationStatus}}
+                </td>
+                <td data-title="Loan Details" class="td1 loanStatus"
+                  *ngIf="item && item.spInternalStatusDisplyName && item.applicationStatus && item.applicationStatus != 'Rejected'">
+                  {{item.spInternalStatusDisplyName}}
                 </td>
                 <td *ngIf="item && item.uid  && item.isActionRequired">
                   <div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { CdlService } from '../cdl.service';
@@ -37,7 +37,7 @@ export class DealerComponent implements OnInit {
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
-    private location: Location,
+    // private location: Location,
     private activated_route: ActivatedRoute,
     private cdlservice: CdlService,
     private dateTimeProcessor: DateTimeProcessor
@@ -60,7 +60,8 @@ export class DealerComponent implements OnInit {
     this.getDealers();
   }
   goBack() {
-    this.location.back();
+    this.router.navigate(['provider', 'cdl']);
+    // this.location.back();
   }
 
 

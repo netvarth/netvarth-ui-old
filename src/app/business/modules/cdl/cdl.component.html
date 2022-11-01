@@ -87,7 +87,7 @@
           </div>
         </div>
 
-        <div class="col-md-3 mt-2" *ngIf="user.userType==1">
+        <!-- <div class="col-md-3 mt-2" *ngIf="user.userType==1">
           <div class="dashboard-card text-center border px-3">
             <div class="d-flex">
               <div>
@@ -99,7 +99,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- <div class="col-md-3 mt-2" *ngIf="user.userType==2">
           <div class="dashboard-card text-center border px-3 pointer-cursor">
             <div class="d-flex" (click)="reports()">
@@ -498,18 +498,35 @@
       <div class="mb-2">
         <span class="font-weight-bold">Customers</span>
       </div>
-      <div class="d-flex justify-conent-around mt-2 loan-data">
-        <table>
+      <div class="loan-data">
+        <table class="table table-responsive">
+          <thead>
+            <tr class="tble-filtr-tr heght">
+              <th class="head_color">Name</th>
+              <th class="head_color">Status</th>
+              <th class="head_color">Phone</th>
+            </tr>
+          </thead>
           <tbody class="small-font">
             <ng-container *ngFor="let customer of customers;let i=index">
               <tr style="cursor:pointer">
-                <td class="mr-2" *ngIf="customer.id">Id : {{customer.id}}</td>
                 <td class="loanStatus">
-                  <div class="approvedColor text-capitalize mx-3 my-1" *ngIf="customer.firstName">{{customer.firstName}}
-                    {{customer.lastName}}</div>
+                  <div class="d-flex">
+                    <div class="profile-pic">
+                      <span *ngIf="customer.firstName" class="text-uppercase">{{customer.firstName[0]}}</span>
+                    </div>
+                    <div class="approvedColor text-capitalize mx-3 my-1">
+                      <span *ngIf="customer.firstName">{{customer.firstName}}</span><span
+                        *ngIf="customer.lastName">&nbsp;{{customer.lastName}}</span><br>
+                      <span *ngIf="customer.id">Id : {{customer.id}}</span>
+                    </div>
+                  </div>
                 </td>
-                <td class="text-capitalize" *ngIf="customer.status">
-                  <span class="active">{{customer.status}}</span>
+                <td *ngIf="customer.status">
+                  <span class="active text-capitalize">{{customer.status}}</span>
+                </td>
+                <td *ngIf="customer.phoneNo">
+                  <span>{{customer.phoneNo}}</span>
                 </td>
               </tr>
             </ng-container>

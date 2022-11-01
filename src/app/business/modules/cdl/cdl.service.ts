@@ -124,6 +124,13 @@ export class CdlService {
   }
 
 
+  rejectLoan(id, data) {
+    const url = 'provider/loanapplication/' + id + '/reject';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+
+
   getDealerById(id) {
     const url = 'provider/partner/' + id;
     return this.servicemeta.httpGet(url, null);

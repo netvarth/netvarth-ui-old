@@ -39,6 +39,11 @@ export class ProviderServices {
   getMembers(id) {
     return this.servicemeta.httpGet('provider/familyMember/' + id);
   }
+
+  getDomainConfig(id) {
+    return this.servicemeta.httpGet('ynwConf/businessDomains/' + id);
+  }
+
   addMembers(data) {
     return this.servicemeta.httpPost('provider/familyMember', data);
   }
@@ -1285,9 +1290,9 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url, data);
   }
   //Appointment request
-  getAppointmentRequests(filter){
+  getAppointmentRequests(filter) {
     //location-eq=4&schedule-eq=2
-    const url = 'provider/appointment/service/request' ;
+    const url = 'provider/appointment/service/request';
     return this.servicemeta.httpGet(url, null, filter);
   }
   getAppointmentRequestsCount(filter = {}) {
@@ -1295,7 +1300,7 @@ export class ProviderServices {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
-  postAppointmentRequest(postDate){
+  postAppointmentRequest(postDate) {
     const url = 'provider/appointment/service/request/changestatus/confirmed';
     return this.servicemeta.httpPut(url, postDate);
   }
@@ -2494,6 +2499,12 @@ export class ProviderServices {
     const url = 'provider/account/settings/task/' + status;
     return this.servicemeta.httpPut(url);
   }
+
+  setProviderCdlStatus(status) {
+    const url = 'provider/account/settings/cdl/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
   setProviderLeadStatus(status) {
     const url = 'provider/account/settings/lead/' + status;
     return this.servicemeta.httpPut(url);
@@ -2680,9 +2691,9 @@ export class ProviderServices {
       }
     })
   }
-  getSearchCustomer(account: any, tempName:any, name: any) {
+  getSearchCustomer(account: any, tempName: any, name: any) {
     // const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/providerconsumer/search?name=' + name + '*';
-        const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/providerconsumer/search?' + tempName + '=' + name + '*';
+    const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/providerconsumer/search?' + tempName + '=' + name + '*';
 
 
     return this.servicemeta.httpGet(url);

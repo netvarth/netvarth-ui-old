@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { CdlService } from '../cdl.service';
 // import { projectConstants } from '../../../../app.component';
@@ -42,7 +42,7 @@ export class LoansComponent implements OnInit {
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
-    private location: Location,
+    // private location: Location,
     private activated_route: ActivatedRoute,
     private cdlservice: CdlService,
     private statusListFormBuilder: FormBuilder,
@@ -170,7 +170,12 @@ export class LoansComponent implements OnInit {
 
             if (params.type && params.type != 'all') {
               const api_filter = {};
-              api_filter['spInternalStatus-eq'] = params.type;
+              if (params.type == 'rejected') {
+                api_filter['applicationStatus-eq'] = 'Rejected';
+              }
+              else {
+                api_filter['spInternalStatus-eq'] = params.type;
+              }
               this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
                 this.loans = data;
                 console.log("Loans List : ", this.loans);
@@ -191,7 +196,8 @@ export class LoansComponent implements OnInit {
 
 
   goBack() {
-    this.location.back();
+    this.router.navigate(['provider', 'cdl']);
+    // this.location.back();
   }
 
   loanDetails(id) {

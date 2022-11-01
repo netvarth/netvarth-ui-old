@@ -35,6 +35,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   bprofile_btn_text: string;
   weightageValue: any;
   accountType;
+  domainId: any;
+  showCdl: any = false;
+  showLms: any = false;
+  cdlstatusDisplayName: any;
   homeservice_cap = Messages.HOME_SERVICE_HEADING;
   profile_cap = Messages.PROFILE_CAP;
   search_cap = Messages.SEARCH_CAP;
@@ -162,12 +166,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   profile: any = [];
   contactInfo: any = [];
   catalog_list: any = [];
-  orderstatus;
-  taskstatus;
-  leadstatus;
-  orderstatusstr;
-  taskstatusstr;
-  leadstatusstr:any;
+  orderstatus: any;
+  taskstatus: any;
+  leadstatus: any;
+  orderstatusstr: any;
+  taskstatusstr: any;
+  cdlStatus: any;
+  leadstatusstr: any;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -255,8 +260,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     if (user.sector) {
       this.domain = user.sector;
     }
-    if(projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain] && projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint){
-    this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
+    if (projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain] && projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint) {
+      this.services_hint = projectConstantsLocal.DOMAIN_SERVICES_HINT[this.domain].helphint;
     }
     if (this.domain === 'healthCare' || this.domain === 'veterinaryPetcare') {
       this.services_cap = projectConstantsLocal.HealthcareService.service_cap;
@@ -582,7 +587,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Live tracking ' + is_livetrack + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('account',null);
+          this.commonDataStorage.setSettings('account', null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -597,7 +602,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Same day online check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('waitlist',null);
+          this.commonDataStorage.setSettings('waitlist', null);
           this.getWaitlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
@@ -613,7 +618,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Future check-in ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('waitlist',null);
+          this.commonDataStorage.setSettings('waitlist', null);
           this.getWaitlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
@@ -628,7 +633,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Same day online appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('appointment',null);
+          this.commonDataStorage.setSettings('appointment', null);
           this.getApptlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
@@ -644,7 +649,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Future appointment ' + is_check + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('appointment',null);
+          this.commonDataStorage.setSettings('appointment', null);
           this.getApptlistMgr();
           this.shared_functions.sendMessage({ ttype: 'checkin-settings-changed' });
         },
@@ -704,7 +709,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     let status;
     (event.checked) ? status = 'enable' : status = 'disable';
     this.provider_services.changeJaldeePayStatus(status).subscribe(data => {
-      this.commonDataStorage.setSettings('account',null);
+      this.commonDataStorage.setSettings('account', null);
       this.getpaymentDetails();
       if (!event.checked) {
         this.snackbarService.openSnackBar('online payment is disabled', { 'panelClass': 'snackbarerror' });
@@ -741,10 +746,13 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
         this.taskstatus = data.enableTask;
         this.taskstatusstr = (this.taskstatus) ? 'On' : 'Off';
-         
+
+        this.cdlStatus = data.enableCdl;
+        this.cdlstatusDisplayName = (this.cdlStatus) ? 'On' : 'Off';
+
         this.leadstatus = data.enableLead;
         this.leadstatusstr = (this.leadstatus) ? 'On' : 'Off';
-         
+
       });
   }
   handle_posStatus(event) {
@@ -778,7 +786,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
     this.provider_services.updatePublicSearch(changeTostatus)
       .subscribe(() => {
         this.getSearchstatus();
-        this.commonDataStorage.setSettings('waitlist',null);
+        this.commonDataStorage.setSettings('waitlist', null);
         this.getWaitlistMgr();
       },
         error => {
@@ -986,11 +994,14 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'ordermanager':
         this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
         break;
-        case 'lms':
-          this.routerobj.navigate(['provider', 'settings', 'lms']);
-          break;
-        case 'leadmanager':
-          this.routerobj.navigate(['provider', 'settings', 'leadmanager']);
+      case 'lms':
+        this.routerobj.navigate(['provider', 'settings', 'lms']);
+        break;
+      case 'cdl':
+        this.routerobj.navigate(['provider', 'settings', 'cdl']);
+        break;
+      case 'leadmanager':
+        this.routerobj.navigate(['provider', 'settings', 'leadmanager']);
         break;
       case 'catalogs':
         this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
@@ -1136,6 +1147,19 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(data => {
         this.bProfile = data;
         this.bprofileLoaded = true;
+        this.domainId = this.bProfile['serviceSector']['id'];
+        if (this.domainId) {
+          this.provider_services.getDomainConfig(this.domainId).subscribe((data: any) => {
+            if (data) {
+              if (data.lms) {
+                this.showLms = true
+              }
+              if (data.cdl) {
+                this.showCdl = true
+              }
+            }
+          })
+        }
         this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain']).subscribe(
           domainfields => {
             this.provider_services.getVirtualFields(this.bProfile['serviceSector']['domain'], this.bProfile['serviceSubSector']['subDomain']).subscribe(
@@ -1201,7 +1225,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Appointment creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('account',null);
+          this.commonDataStorage.setSettings('account', null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -1216,7 +1240,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Check-in creation ' + is_check.charAt(0).toLowerCase() + is_check.slice(1) + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('account',null);
+          this.commonDataStorage.setSettings('account', null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -1231,7 +1255,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Accept Donations ' + is_Donation + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('account',null);
+          this.commonDataStorage.setSettings('account', null);
           this.getGlobalSettingsStatus();
         },
         error => {
@@ -1246,7 +1270,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       .subscribe(
         () => {
           this.snackbarService.openSnackBar('Teleservice ' + is_VirtualCallingMode + 'd successfully', { ' panelclass': 'snackbarerror' });
-          this.commonDataStorage.setSettings('account',null);
+          this.commonDataStorage.setSettings('account', null);
           this.getGlobalSettingsStatus();
         },
         error => {

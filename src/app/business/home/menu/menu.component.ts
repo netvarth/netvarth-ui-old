@@ -43,11 +43,11 @@ export class MenuComponent implements OnInit, OnDestroy {
   showMenu = false;
   enquiryCount;
   isadminPrivilege: any;
-  isShowCsmrDataBase:any;
+  isShowCsmrDataBase: any;
   apptstatus: any;
-  checkinStatus:any;
-  bCrm:boolean=false;
-  public LMSStatus:boolean=true;
+  checkinStatus: any;
+  bCrm: boolean = false;
+  public LMSStatus: boolean = true;
   showCDL: any;
   constructor(
     private shared_functions: SharedFunctions,
@@ -59,14 +59,14 @@ export class MenuComponent implements OnInit, OnDestroy {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
-    private lStorageService:LocalStorageService,
+    private lStorageService: LocalStorageService,
     private authService: AuthService
   ) {
     this.getEnquiryCount();
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
       switch (message.ttype) {
-      
+
         case 'messageCount':
           this.inboxUnreadCnt = message.unreadCount - this.enquiryCount;
           this.inboxCntFetched = message.messageFetched;
@@ -135,12 +135,15 @@ export class MenuComponent implements OnInit, OnDestroy {
         case 'orderStatus':
           this.orderstatus = message.orderStatus;
           break;
-          case 'taskstatus':
-            this.taskStatus = message.taskstatus;
-            break;
-            case 'leadstatus':
-            this.leadStatus = message.leadstatus;
-            break;
+        case 'taskstatus':
+          this.taskStatus = message.taskstatus;
+          break;
+        case 'cdlstatus':
+          this.showCDL = message.cdlstatus;
+          break;
+        case 'leadstatus':
+          this.leadStatus = message.leadstatus;
+          break;
         case 'showmenu':
           this.showMenu = message.value;
           break;
@@ -150,7 +153,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       }
       this.getBusinessdetFromLocalstorage();
     });
-    
+
   }
   getBusinessdetFromLocalstorage() {
     const bdetails = this.groupService.getitemFromGroupStorage('ynwbp');
@@ -219,7 +222,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.showCDL = this.lStorageService.getitemfromLocalStorage('cdl');
-    console.log("User is :",user);
+    console.log("User is :", user);
     this.accountType = user.accountType;
     this.isadminPrivilege = user.adminPrivilege
     this.isShowCsmrDataBase = user.showCsmrDataBase;
@@ -274,7 +277,8 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.donationstatus = settings.donationFundRaising;
       this.apptstatus = settings.appointment;
       this.checkinStatus = settings.waitlist;
-      this.taskStatus =settings.enableTask;
+      this.taskStatus = settings.enableTask;
+      this.showCDL = settings.enableCdl;
     } else {
       this.provider_services.getAccountSettings().then(
         (data: any) => {
@@ -282,6 +286,7 @@ export class MenuComponent implements OnInit, OnDestroy {
           this.apptstatus = data.appointment;
           this.checkinStatus = data.waitlist;
           this.taskStatus = data.enableTask;
+          this.showCDL = data.enableCdl;
           this.leadStatus = data.enableLead;
         });
     }
@@ -315,10 +320,10 @@ export class MenuComponent implements OnInit, OnDestroy {
   doLogout() {
     this.authService.logoutFromJaldee().then();
   }
-  crmOpen(){
+  crmOpen() {
     this.showMenu = false;
     // this.LMSStatus=false
-   this.router.navigate(['provider', 'crm'])
+    this.router.navigate(['provider', 'crm'])
     // window.navigator(['provider', 'crm'])
   }
 }

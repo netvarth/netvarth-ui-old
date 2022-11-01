@@ -18,11 +18,11 @@ const routes: Routes = [
       { path: 'appointmentmanager', loadChildren: () => import('../../../business/modules/settings/appointmentmanager/appointmentmanager.module').then(m => m.AppointmentmanagerModule) },
       { path: 'users', loadChildren: () => import('../../../business/modules/settings/general/users/users.module').then(m => m.UsersModule) },
       { path: 'q-manager', loadChildren: () => import('../../../business/modules/settings/waitlistmgr/waitlistmgr.module').then(m => m.WaitlistMgrModule) },
-      { path: 'selectservice', loadChildren: () => import('../../../business/modules/settings/service-selection/service-selection.module').then(m => m.ServiceSelectionModule)},
+      { path: 'selectservice', loadChildren: () => import('../../../business/modules/settings/service-selection/service-selection.module').then(m => m.ServiceSelectionModule) },
       { path: 'ordermanager', loadChildren: () => import('../../../business/modules/settings/ordermanager/ordermanager.module').then(m => m.OrdermanagerModule) },
       { path: 'lms', loadChildren: () => import('../../../business/modules/settings/taskmanager/taskmanager.module').then(m => m.TaskmanagerModule) },
+      { path: 'cdl', loadChildren: () => import('../../../business/modules/settings/cdl-manager/cdl-manager.module').then(m => m.CdlManagerModule) },
       { path: 'leadmanager', loadChildren: () => import('../../../business/modules/settings/leadmanager/leadmanager.module').then(m => m.LeadmanagerModule) }
-
     ]
   },
 ];

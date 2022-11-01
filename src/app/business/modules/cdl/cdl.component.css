@@ -240,3 +240,18 @@
 .small-font {
   font-size: 12px !important;
 }
+
+th {
+  font-weight: bold !important;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #1E4079;
+  font-size: 18px;
+  color: #fff !important;
+  text-align: center;
+  line-height: 40px;
+}

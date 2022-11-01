@@ -162,16 +162,23 @@ export class LoanDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(
       (data) => {
-        if (data) {
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: 'rejected'
-            }
-          };
-          this.snackbarService.openSnackBar("Loan Rejected Successfully");
-          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+        if (data && data.remarks && data.type == 'remarks') {
+          let notes = {
+            note: data.remarks
+          }
+          this.cdlservice.rejectLoan(this.loanId, notes).subscribe((data: any) => {
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                type: 'rejected'
+              }
+            };
+            this.snackbarService.openSnackBar("Loan Rejected Successfully");
+            this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+          });
         }
       });
+
+
   }
 
 
