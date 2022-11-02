@@ -37,7 +37,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   btnClicked = false;
   @Input() accountId;
   @Input() accountConfig;
-  @Input() partnerId;
+  @Input() partnerParentId;
   @Output() actionPerformed = new EventEmitter<any>();
   otpError: string;
   otpSuccess: string;
@@ -87,7 +87,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     console.log(this.accountConfig);
     this.lStorageService.setitemonLocalStorage('login', true);
-    if ((this.accountConfig && this.accountConfig['googleIntegration'] === false) || this.partnerId) {
+    if ((this.accountConfig && this.accountConfig['googleIntegration'] === false) || this.partnerParentId) {
       this.googleIntegration = false;
     } else {
       this.googleIntegration = true;
@@ -143,8 +143,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       loginId: loginId,
       accountId: this.accountId
     }
-    if (this.partnerId) {
-      credentials['partnerId'] = this.partnerId;
+    if (this.partnerParentId) {
       this.isPartner = true;
     }
     if (emailId) {
@@ -245,24 +244,24 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
             });
           }, (error) => {
             if (error.status === 401 && (error.error === 'Session Already Exist' || error.error === 'Session already exists.')) {
-            _this.authService.doLogout().then(() => {
-              _this.lStorageService.removeitemfromLocalStorage('logout');
-              _this.authService.consumerAppLogin(credentials).then(() => {
+              _this.authService.doLogout().then(() => {
+                _this.lStorageService.removeitemfromLocalStorage('logout');
+                _this.authService.consumerAppLogin(credentials).then(() => {
                   _this.ngZone.run(() => {
-                      const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-                      if (reqFrom === 'cuA') {
-                        const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
-                        _this.lStorageService.setitemonLocalStorage('refreshToken', token);
-                      }
-                      _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
-                      _this.actionPerformed.emit('success');
+                    const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+                    if (reqFrom === 'cuA') {
+                      const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                      _this.lStorageService.setitemonLocalStorage('refreshToken', token);
                     }
+                    _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+                    _this.actionPerformed.emit('success');
+                  }
                   )
                 });
-            })
-          } else {
-            _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }           
+              })
+            } else {
+              _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
           })
         }, (error) => {
           _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
@@ -311,11 +310,11 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       if (this.phoneNumber.dialCode === '+91' && phoneNumber.startsWith('55') && this.otpEntered.length < 5) {
         // this.otpError = 'Invalid OTP';
         this.snackbarService.openSnackBar('Invalid OTP', { 'panelClass': 'snackbarerror' });
-        this.api_loading=false;
+        this.api_loading = false;
         return false;
       } else if (this.otpEntered.length < 4) {
         this.snackbarService.openSnackBar('Invalid OTP', { 'panelClass': 'snackbarerror' });
-        this.api_loading=false;
+        this.api_loading = false;
         // this.otpError = 'Invalid OTP';
         return false;
       }
@@ -336,7 +335,7 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
               loginId = pN.split(this.dialCode)[1];
             }
             this.lStorageService.setitemonLocalStorage('authorizationToken', response.token);
-            if (!response.linkedToPrivateDatabase) {              
+            if (!response.linkedToPrivateDatabase) {
               this.step = 2;
               this.btnClicked = false;
             } else {
@@ -344,9 +343,6 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                 countryCode: this.dialCode,
                 loginId: loginId,
                 accountId: this.accountId
-              }
-              if (this.partnerId) {
-                credentials['partnerId'] = this.partnerId;
               }
               this.authService.consumerAppLogin(credentials, this.isPartner).then((response) => {
                 console.log("Login Response:", response);
@@ -364,17 +360,17 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
                   _this.authService.doLogout().then(() => {
                     _this.lStorageService.removeitemfromLocalStorage('logout');
                     _this.authService.consumerAppLogin(credentials).then(() => {
-                        _this.ngZone.run(() => {
-                            const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-                            if (reqFrom === 'cuA') {
-                              const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
-                              _this.lStorageService.setitemonLocalStorage('refreshToken', token);
-                            }
-                            _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
-                            _this.actionPerformed.emit('success');
-                          }
-                        )
-                      });
+                      _this.ngZone.run(() => {
+                        const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+                        if (reqFrom === 'cuA') {
+                          const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                          _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+                        }
+                        _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+                        _this.actionPerformed.emit('success');
+                      }
+                      )
+                    });
                   })
                 } else if (error.status === 401) {
                   _this.ngZone.run(
@@ -421,19 +417,19 @@ export class AuthenticationComponent implements OnInit, OnDestroy {
       if (error.status === 401 && (error.error === 'Session Already Exist' || error.error === 'Session already exists.')) {
         _this.authService.doLogout().then(() => {
           _this.authService.consumerLoginViaGmail(credentials).then(() => {
-              _this.ngZone.run(() => {
-                  const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
-                  if (reqFrom === 'cuA') {
-                    const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
-                    _this.lStorageService.setitemonLocalStorage('refreshToken', token);
-                  }
-                  _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
-                  _this.lStorageService.removeitemfromLocalStorage('googleToken');
-                  _this.actionPerformed.emit('success');
-                }
-              )
-            });
-          }
+            _this.ngZone.run(() => {
+              const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
+              if (reqFrom === 'cuA') {
+                const token = _this.lStorageService.getitemfromLocalStorage('authorizationToken');
+                _this.lStorageService.setitemonLocalStorage('refreshToken', token);
+              }
+              _this.lStorageService.removeitemfromLocalStorage('authorizationToken');
+              _this.lStorageService.removeitemfromLocalStorage('googleToken');
+              _this.actionPerformed.emit('success');
+            }
+            )
+          });
+        }
         )
       } else if (error.status === 401) {
         let names = payLoad['name'].split(' ');

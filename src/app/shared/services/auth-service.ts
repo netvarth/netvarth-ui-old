@@ -151,16 +151,16 @@ export class AuthService {
                 this.lStorageService.removeitemfromLocalStorage('source');
                 window.location.href = source;
               } else {
-                let partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
+                let partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
                 if (srcUrl) {
                   this.router.navigateByUrl(srcUrl).then();
-                } else if (partnerId) {
-                  this.router.navigate([customId, 'partner', partnerId, 'login']).then(
+                } else if (partnerParentId) {
+                  this.router.navigate([customId, 'partner', 'login']).then(
                     () => {
                       window.location.reload();
                     }
                   );
-                }{
+                } else {
                   this.router.navigate([customId]).then(
                     () => {
                       window.location.reload();
@@ -170,7 +170,17 @@ export class AuthService {
 
               }
             } else {
-              this.router.navigate(['/']);
+              let partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
+              if (partnerParentId) {
+                this.router.navigate([partnerParentId, 'partner', 'login']).then(
+                  () => {
+                    window.location.reload();
+                  }
+                );
+              }
+              else {
+                this.router.navigate(['/']);
+              }
             }
             this.lStorageService.removeitemfromLocalStorage('customId');
             resolve();
