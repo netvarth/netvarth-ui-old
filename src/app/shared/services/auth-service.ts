@@ -141,7 +141,11 @@ export class AuthService {
       } else {
         this.consumerLogout().then(
           () => {
+            console.log("customId", customId)
+
             if (customId) {
+              console.log("reqFrom", reqFrom)
+              console.log("customId", customId)
               if (reqFrom === 'cuA') {
                 this.lStorageService.removeitemfromLocalStorage('refreshToken');
                 this.router.navigate(['customapp', customId]);
@@ -152,6 +156,7 @@ export class AuthService {
                 window.location.href = source;
               } else {
                 let partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
+                console.log("partnerParentId", partnerParentId)
                 if (srcUrl) {
                   this.router.navigateByUrl(srcUrl).then();
                 } else if (partnerParentId) {
@@ -171,6 +176,7 @@ export class AuthService {
               }
             } else {
               let partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
+              console.log("else Part partnerParentId", partnerParentId)
               if (partnerParentId) {
                 this.router.navigate([partnerParentId, 'partner', 'login']).then(
                   () => {
