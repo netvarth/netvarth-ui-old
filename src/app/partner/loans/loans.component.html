@@ -49,7 +49,7 @@
                     <div class="filterTextinput filter-text-input">
                       <li class="filterli filter-li">
                         <input type="text" [(ngModel)]="filter.id" #id (keyup)="keyPress()"
-                          class="filterTextbox filter-textbox" placeholder="Enter Customer Id">
+                          class="filterTextbox filter-textbox" placeholder="Enter Loan Id">
                       </li>
                     </div>
                   </div>
@@ -131,14 +131,16 @@
       </div>
 
       <div class="row text-right">
-        <div class="form-group col-md-4 my-3">
-          <select class="form-control">
-            <option value="all"><span class="text-capitalize">Thrissur</span></option>
-            <option value="approved"><span class="text-capitalize">Kochi</span></option>
-            <option value="in progress"><span class="text-capitalize">Kottayam</span></option>
-            <option value="redirected"><span class="text-capitalize">Kannur</span></option>
-          </select>
-        </div>
+        <form [formGroup]="statusList">
+          <div class="form-group text-left col-md-4 my-3">
+            <mat-select class="form-control widthWebKit" #status (selectionChange)="statusChange($event)"
+              placeholder="All Loans">
+              <mat-option [value]="status.name" *ngFor="let status of loanStatus">
+                <div *ngIf="status && status.displayName">{{status.displayName}}</div>
+              </mat-option>
+            </mat-select>
+          </div>
+        </form>
         <div>
           <div class="p-3">
             <h3 class="align-items-start flex-column">
@@ -163,33 +165,32 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngIf="loans && loans.length > 0">
-              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="loanDetails(item.uid)">
+              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index"
+                (click)="updateLoan(item.uid,'update',item.spInternalStatus)">
+
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.id">{{item.id}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
                   {{item.customer.firstName}} {{item.customer.lastName}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.assignee && item.assignee.name">
-                  {{item.assignee.name}}</td>
-                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.status && item.status.name">
-                  <div class="approvedColor text-capitalize"
-                    *ngIf="item && item.status && item.status.name && item.status.name==='New'"><i
-                      class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
-                  </div>
-                  <div class="approvedColor text-capitalize"
-                    *ngIf="item && item.status && item.status.name && item.status.name==='approved'"><i
-                      class="fa fa-check-circle"></i>&nbsp;{{item.status.name}}
-                  </div>
-                  <div class="pendingColor text-capitalize"
-                    *ngIf="item && item.status && item.status.name && (item.status.name==='pending' || item.status.name==='redirected')">
-                    <i class="fa fa-spinner"></i>&nbsp;{{item.status.name}}
-                  </div>
-                  <div class="rejectedColor text-capitalize"
-                    *ngIf="item && item.status && item.status.name && item.status.name==='rejected'"><i
-                      class="fa fa-times-circle"></i>&nbsp;{{item.status.name}}
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.partner && item.partner.partnerName">
+                  {{item.partner.partnerName}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && !item.partner ">
+                  --</td>
+                <td data-title="Loan Details" class="td1 loanStatus"
+                  *ngIf="item && item.spInternalStatusDisplyName && item.applicationStatus && item.applicationStatus == 'Rejected'">
+                  {{item.applicationStatus}}
+                </td>
+                <td data-title="Loan Details" class="td1 loanStatus"
+                  *ngIf="item && item.spInternalStatusDisplyName && item.applicationStatus && item.applicationStatus != 'Rejected'">
+                  {{item.spInternalStatusDisplyName}}
+                </td>
+                <td *ngIf="item && item.uid  && item.isActionRequired">
+                  <div>
+                    <a class="btn btn-primary" (click)="updateLoan(item.uid,'update',item.spInternalStatus)">Update</a>
                   </div>
                 </td>
-                <td>
-                  <div *ngIf="item && item.uid">
-                    <a class="btn btn-primary" (click)="updateLoan(item.uid,'update')">Update</a>
+                <td *ngIf="item && item.uid  && !item.isActionRequired">
+                  <div>
+                    <a class="btn btn-primary" (click)="loanDetails(item.uid)">View</a>
                   </div>
                 </td>
               </tr>

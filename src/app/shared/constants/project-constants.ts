@@ -560,7 +560,7 @@ export const projectConstantsLocal = {
     Rescheduled: 'Rescheduled',
     PrepaymentPending: 'Prepayment Pending',
     Requested: 'Requested',
-    RequestRejected:'RequestRejected'
+    RequestRejected: 'RequestRejected'
   },
   INVOICE_STATUS_FILTER: [
     { displayName: 'Paid', value: 'Paid' },

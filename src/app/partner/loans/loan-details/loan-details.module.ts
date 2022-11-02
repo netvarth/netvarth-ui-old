@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { LoanDetailsComponent } from './loan-details.component'
 import { CapitalizeFirstPipeModule } from "../../../shared/pipes/capitalize.module";
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
+import { ConfirmBoxModule } from '../confirm-box/confirm-box.module';
 
 const routes: Routes = [
   { path: '', component: LoanDetailsComponent }
@@ -29,6 +30,7 @@ const routes: Routes = [
     MatSelectModule,
     MatOptionModule,
     MatButtonModule,
+    ConfirmBoxModule,
     CapitalizeFirstPipeModule,
     [RouterModule.forChild(routes)]
   ],

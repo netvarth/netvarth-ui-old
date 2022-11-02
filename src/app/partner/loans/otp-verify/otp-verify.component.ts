@@ -1,11 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { GroupStorageService } from '../../../shared/services/group-storage.service';
-import { SnackbarService } from '../../../shared/services/snackbar.service';
 // import { AuthService } from '../../../../../shared/services/auth-service';
 // import { LocalStorageService } from '../../../../../shared/services/local-storage.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
 import { PartnerService } from '../../partner.service';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 
 @Component({
   selector: 'app-otp-verify',
@@ -30,6 +30,7 @@ export class OtpVerifyComponent implements OnInit {
   customerDetails: any;
   customerData: any;
   phoneError: any;
+  loanId: any;
   dialCode: any;
   firstName: any;
   lastName: any;
@@ -39,12 +40,12 @@ export class OtpVerifyComponent implements OnInit {
   customerId: any = 0;
   from: any;
   name: any;
-  loanId: any;
+  dealerId: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService,
-    private partnerservice: PartnerService,
+    private partnerService: PartnerService,
     private groupService: GroupStorageService
     // private lStorageService: LocalStorageService,
     // private authService: AuthService,
@@ -55,7 +56,6 @@ export class OtpVerifyComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-    console.log("this.user", this.user)
     this.type = this.data.type
     this.from = this.data.from
     if (this.data && this.data.data && this.data.data.firstName) {
@@ -64,18 +64,23 @@ export class OtpVerifyComponent implements OnInit {
     if (this.data && this.data.data && this.data.data.lastName) {
       this.lastName = this.data.data.lastName;
     }
+    if (this.data && this.data.id) {
+      this.loanId = this.data.id;
+    }
     if (this.data && this.data.name) {
       this.name = this.data.name;
     }
-    if (this.data && this.data.uid) {
-      this.loanId = this.data.uid;
+    if (this.data && this.data.dealerId) {
+      this.dealerId = this.data.dealerId;
     }
     if (this.data && this.data.phoneNumber) {
       this.phoneNumber = this.data.phoneNumber;
       if (this.phoneNumber.startsWith('555')) {
         this.config.length = 5;
       }
-
+      this.partnerService.getBusinessProfile().subscribe((data) => {
+        this.businessDetails = data;
+      });
       this.sendOTP();
     }
     else if (this.data && this.data.email) {
@@ -104,7 +109,7 @@ export class OtpVerifyComponent implements OnInit {
     }
     console.log("coming here", credentials)
     // if (!loginId.startsWith('555')) {
-    this.subs.sink = this.partnerservice.sendPhoneOTP(credentials, this.from).subscribe(
+    this.subs.sink = this.partnerService.sendPhoneOTP(credentials).subscribe(
       (response: any) => {
         if (mode == 'resent') {
           this.snackbarService.openSnackBar("Otp Resend Successfully");
@@ -128,7 +133,8 @@ export class OtpVerifyComponent implements OnInit {
     let credentials = {
       email: loginId,
     }
-    this.subs.sink = this.partnerservice.sendEmailOTP(credentials, this.from).subscribe(
+
+    this.subs.sink = this.partnerService.sendEmailOTP(credentials, this.from).subscribe(
       (response: any) => {
         this.snackbarService.openSnackBar("Otp Sent Successfully");
       }, (error) => {
@@ -215,11 +221,17 @@ export class OtpVerifyComponent implements OnInit {
 
   verifyEmail() {
     console.log("Email")
-    let data =
-    {
+    var data;
+    data = {
       "uid": this.loanId
     }
-    this.subs.sink = this.partnerservice.verifyEmailOTP(this.otpEntered, this.from, data)
+    if (this.from == 'partner') {
+      data = {
+        "id": this.dealerId
+      }
+    }
+
+    this.subs.sink = this.partnerService.verifyEmailOTP(this.otpEntered, this.from, data)
       .subscribe(
         (response: any) => {
           if (response) {
@@ -240,9 +252,9 @@ export class OtpVerifyComponent implements OnInit {
 
 
   getCustomerDetails(filter) {
-    this.partnerservice.getCustomerDetails(filter).subscribe((data) => {
+    this.partnerService.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
-      if (this.customerDetails && this.customerDetails[0]) {
+      if (this.customerDetails && this.customerDetails.length != 0) {
         this.customerId = this.customerDetails[0].id;
         this.customerData = {
           "customer": {
@@ -252,9 +264,7 @@ export class OtpVerifyComponent implements OnInit {
             "phoneNo": this.phoneNumber,
             "countryCode": "+91"
           },
-          // "location": {
-          //   "id": this.user.bussLocs[0]
-          // },
+
           "loanApplicationKycList": [
             {
               "isCoApplicant": false
@@ -271,9 +281,7 @@ export class OtpVerifyComponent implements OnInit {
             "phoneNo": this.phoneNumber,
             "countryCode": "+91"
           },
-          // "location": {
-          //   "id": this.user.bussLocs[0]
-          // },
+
           "loanApplicationKycList": [
             {
               "isCoApplicant": false
@@ -282,7 +290,7 @@ export class OtpVerifyComponent implements OnInit {
         }
       }
       if (this.customerData) {
-        this.subs.sink = this.partnerservice.verifyPhoneOTP(this.otpEntered, this.customerData)
+        this.subs.sink = this.partnerService.verifyPhoneOTP(this.otpEntered, this.customerData)
           .subscribe(
             (response: any) => {
               if (response) {
@@ -311,14 +319,15 @@ export class OtpVerifyComponent implements OnInit {
       "partnerMobile": this.phoneNumber
     }
     if (this.partnerData) {
-      this.subs.sink = this.partnerservice.partnerOtpVerify(this.otpEntered, this.partnerData)
+      this.subs.sink = this.partnerService.partnerOtpVerify(this.otpEntered, this.partnerData)
         .subscribe(
           (response: any) => {
             if (response) {
               this.snackbarService.openSnackBar("Mobile Number Verification Successful");
               const data = {
                 type: this.type,
-                msg: "success"
+                msg: "success",
+                uid: response.uid
               }
               this.dialogRef.close(data);
             }

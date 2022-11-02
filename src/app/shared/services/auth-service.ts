@@ -160,11 +160,7 @@ export class AuthService {
                 if (srcUrl) {
                   this.router.navigateByUrl(srcUrl).then();
                 } else if (partnerParentId) {
-                  this.router.navigate([customId, 'partner', 'login']).then(
-                    () => {
-                      window.location.reload();
-                    }
-                  );
+                  this.router.navigate([partnerParentId, 'partner', 'login'])
                 } else {
                   this.router.navigate([customId]).then(
                     () => {

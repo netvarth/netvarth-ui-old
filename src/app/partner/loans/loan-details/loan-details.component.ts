@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-// import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-// import { SnackbarService } from '../../../shared/services/snackbar.service';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 import { ViewFileComponent } from './view-file/view-file.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { PartnerService } from '../../partner.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-loan-details',
@@ -16,6 +18,7 @@ import { PartnerService } from '../../partner.service';
 export class LoanDetailsComponent implements OnInit {
   status: any;
   user: any;
+  partnerParentId: any;
   headerName: string = ''
   customerName: string = ''
   customerphNo: string = ''
@@ -43,72 +46,167 @@ export class LoanDetailsComponent implements OnInit {
   address1: string;
   address2: string;
   city: string;
+  bankData: any;
+  loanId: any;
   state: string;
   pincode: string;
   loanData: any;
   constructor(
-    // private snackbarService: SnackbarService,
-    // private router: Router,
+    private snackbarService: SnackbarService,
+    private router: Router,
     private location: Location,
     private activated_route: ActivatedRoute,
     private groupService: GroupStorageService,
     private dialog: MatDialog,
-    private partnerservice: PartnerService
+    private partnerService: PartnerService,
+    private lStorageService: LocalStorageService
   ) { }
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
     this.activated_route.params.subscribe((params) => {
       if (params) {
         if (params && params.id) {
-          this.partnerservice.getLoanById(params.id).subscribe((data) => {
+          this.loanId = params.id;
+          this.partnerService.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
+            console.log("LoanData", this.loanData)
+            this.partnerService.getBankDetailsById(params.id).subscribe((data) => {
+              this.bankData = data;
+              console.log("BankData", this.bankData)
+            });
           });
-          this.personalDetails()
 
         }
       }
     })
   }
-  personalDetails() {
 
-    this.accountNumber = '5454545545454544';
-    this.IFSCCode = 'KOTAKSDA12F';
-    this.bankName = 'KODAK';
-    this.emiPaidNo = 2;
-    this.cibilScore = 250;
-    this.mafilScore = 200;
-    this.totalScore = 440;
-    this.perfiosScore = 120;
-    if (this.paramsValue && this.paramsValue.status) {
-      this.loanStatus = this.paramsValue.status;
-    }
-
-
-  }
   goBack() {
     this.location.back();
   }
+  sanctionLoan() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        loanId: this.loanId,
+        type: "sanction",
+        from: "creditofficer"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data) {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'sanctioned'
+            }
+          };
+          this.snackbarService.openSnackBar("Loan Sanctioned Successfully");
+          this.router.navigate([this.partnerParentId, 'partner', 'loans'], navigationExtras);
+        }
+      });
+  }
 
 
-  viewFile(file) {
+  analyze() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: 'analyzebank'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result = "eligible") {
+
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
+  }
+
+  redirectLoan() {
+
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "remarks"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data) {
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              type: 'redirected'
+            }
+          };
+          this.snackbarService.openSnackBar("Loan Redirected Successfully");
+          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+        }
+      });
+  }
+  rejectLoan() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "remarks"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data && data.remarks && data.type == 'remarks') {
+          let notes = {
+            note: data.remarks
+          }
+          this.partnerService.rejectLoan(this.loanId, notes).subscribe((data: any) => {
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                type: 'rejected'
+              }
+            };
+            this.snackbarService.openSnackBar("Loan Rejected Successfully");
+            this.router.navigate([this.partnerParentId, 'partner', 'loans'], navigationExtras);
+          });
+        }
+      });
+
+
+  }
+
+
+
+  viewFile(file, s3path?) {
     const dialogRef = this.dialog.open(ViewFileComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        type: file
+        type: file,
+        url: s3path
       }
     });
     dialogRef.afterClosed();
   }
 
-  // takeAction() {
-  //   const navigationExtras: NavigationExtras = {
-  //     queryParams: {
-  //       type: 'action'
-  //     }
-  //   };
-  //   this.router.navigate(['provider', 'cdl', 'loans', 'create'], navigationExtras);
-  // }
+  takeAction() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'action'
+      }
+    };
+    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'create'], navigationExtras);
+  }
 
 }

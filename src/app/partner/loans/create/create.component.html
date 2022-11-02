@@ -76,7 +76,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
                           autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
-                          [class.disabled]="action == 'update' || verification" />
+                          [class.disabled]="verification" />
                         <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
                           (click)="verifyotp()"><span>Verify</span></a>
 
@@ -99,7 +99,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #email [value]="email" type="email"
                           placeholder="Enter Customer Email" class="form-control" autocomplete="off"
-                          formControlName="email" [class.disabled]="action == 'update' || emailverification" />
+                          formControlName="email" [class.disabled]="emailverification" />
 
                         <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
                           (click)="verifyEmail()"><span>Verify</span></a>
@@ -120,7 +120,8 @@
                       <div class="form-title">Customer Photo</div>
                     </div>
                     <div class="fieldPadding photo-border">
-                      <div class="file">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0)">
                         <label for='photoAttach' (click)="photoAttach.click()">
                           <!-- <i class="material-icons">cloud_upload</i> -->
                           Upload File
@@ -154,7 +155,8 @@
               </div>
             </div>
             <div>
-              <button class="btn btn-primary open-all-btn" (click)="saveCustomerDetails()">Save</button>
+              <button [disabled]="!verification || !emailverification" class="btn btn-primary open-all-btn"
+                (click)="saveCustomerDetails()">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -178,9 +180,9 @@
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
-                        <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
+                        <input (keyup)="resetErrors()" #aadharnumber type="number" placeholder="Enter Aadhar Number"
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
-                          [class.disabled]="action == 'update' && aadharverification" />
+                          [class.disabled]="action == 'update' && aadharverification && !verifyingUID" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                           *ngIf="!aadharverification && !verifyingUID"
@@ -201,7 +203,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="fieldPadding">
-                      <div class="file">
+                      <div class="file" *ngIf="!aadharverification || verifyingUID">
                         <label for='input-file' (click)="aadharAttach.click()">
                           Upload File
                         </label>
@@ -242,7 +244,8 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #pannumber [value]="pannumber" type="text"
                           placeholder="Enter PAN Number" class="form-control" autocomplete="off"
-                          formControlName="pannumber" [class.disabled]="action == 'update' && panverification" />
+                          formControlName="pannumber" [class.disabled]="action == 'update' && panverification"
+                          maxlength="10" />
 
                         <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
                           (click)="idVerification('Pan')"><span>Verify</span></a>
@@ -472,7 +475,8 @@
               </div>
             </div>
             <div>
-              <button class="btn btn-primary open-all-btn" (click)="saveAddress()">Save</button>
+              <button class="btn btn-primary open-all-btn" (click)="saveAddress()"
+                [disabled]="!aadharverification || !panverification">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -494,6 +498,21 @@
             </mat-expansion-panel-header>
             <div>
 
+              <!-- <div class="bggrey my-2" *ngIf="user.userType!=5">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Select Dealer</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #dealer formControlName="dealer">
+                      <mat-option [value]="dealer.id" *ngFor="let dealer of dealers">
+                        <div *ngIf="dealer && dealer.partnerName">{{dealer.partnerName}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div> -->
+
               <div class="bggrey my-2">
                 <div>
                   <div class="d-flex">
@@ -514,11 +533,11 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Select Scheme</div>
+                      <div class="form-title">Preferred Scheme</div>
                     </div>
                     <div class="fieldPadding">
                       <input (click)="openSchemes()" (keyup)="resetErrors()" #scheme type="text"
-                        placeholder="Select Scheme" class="form-control" autocomplete="off" formControlName="scheme"
+                        placeholder="Preferred Scheme" class="form-control" autocomplete="off" formControlName="scheme"
                         readonly />
                     </div>
                   </div>
@@ -619,9 +638,9 @@
                       <div class="form-title">Total Bill Amount</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Total Bill Amount"
-                        class="form-control" autocomplete="off" [value]="totalpayment" (keyup)="payment($event)"
-                        [value]="totalpayment" formControlName="totalpayment" />
+                      <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Bill Amount"
+                        class="form-control" autocomplete="off" [value]="totalpayment" [value]="totalpayment"
+                        formControlName="totalpayment" />
                     </div>
                   </div>
                 </div>
@@ -635,7 +654,8 @@
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
-                        class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment" />
+                        class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment"
+                        (keyup)="payment($event)" />
                     </div>
                   </div>
                 </div>
@@ -765,7 +785,8 @@
                       <div class="form-title">Bank Statements</div>
                     </div>
                     <div class="fieldPadding photo-border">
-                      <div class="file">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0)">
                         <label for='bankAttach' (click)="bankAttach.click()">
                           <!-- <i class="material-icons">cloud_upload</i> -->
                           Upload File

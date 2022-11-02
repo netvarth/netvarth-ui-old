@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NavigationExtras, Router } from '@angular/router';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { SharedFunctions } from '../shared/functions/shared-functions';
 import { AuthService } from '../shared/services/auth-service';
 import { GroupStorageService } from '../shared/services/group-storage.service';
@@ -27,60 +28,15 @@ export class PartnerComponent implements OnInit {
   viewmoreleads: any;
   partnerParentId: any;
   partnerId: any;
+  desktopView: any;
+  mobileView: any;
+  deviceInfo: any;
   statusLoansList: any;
+  approvedLoansCount: any = 0;
+  pendingLoansCount: any = 0;
+  rejectedLoansCount: any = 0;
+  allLoansCount: any = 0;
   customId: any;
-  statusLeadsList: any = [
-    {
-      'loanId': 48235,
-      'CustomerName': 'David',
-      'phone': '5784589456',
-      'email': 'david@gmail.com'
-    },
-    {
-      'loanId': 48236,
-      'CustomerName': 'Aswin',
-      'phone': '6987453214',
-      'email': 'aswin@gmail.com'
-    },
-    {
-      'loanId': 48237,
-      'CustomerName': 'Atul',
-      'phone': '8645784586',
-      'email': 'atul@gmail.com'
-    },
-    {
-      'loanId': 48238,
-      'CustomerName': 'Davika',
-      'phone': '9854762587',
-      'email': 'davika@gmail.com'
-    }
-  ];
-  dealersList = [
-    {
-      'dealerId': 101,
-      'dealer': 'david',
-      'status': 'active',
-      'issuedDate': '19/08/2022'
-    },
-    {
-      'dealerId': 102,
-      'dealer': 'aswin',
-      'status': 'inactive',
-      'issuedDate': '19/08/2022'
-    },
-    {
-      'dealerId': 103,
-      'dealer': 'mani',
-      'status': 'active',
-      'issuedDate': '19/08/2022'
-    },
-    {
-      'dealerId': 104,
-      'dealer': 'krishna',
-      'status': 'requested',
-      'issuedDate': '19/08/2022'
-    },
-  ];
   customOptions = {
     loop: true,
     margin: 10,
@@ -113,30 +69,69 @@ export class PartnerComponent implements OnInit {
     public sharedFunctionobj: SharedFunctions,
     private authService: AuthService,
     private lStorageService: LocalStorageService,
-    private partnerservice: PartnerService
+    private partnerservice: PartnerService,
+    private deviceService: DeviceDetectorService
+
 
   ) { }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
+    this.customId = this.partnerParentId;
     this.partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
 
     console.log("User is", this.user);
     this.partnerservice.getLoans().subscribe(data => {
       this.statusLoansList = data
-      this.loans = this.statusLoansList.slice(0, 4);
+      this.allLoansCount = this.loanDetails.length
+      this.loans = this.statusLoansList.slice(0, 10);
     });
 
-    this.partnerservice.getDealers().subscribe(data => {
-      this.statusLeadsList = data
-      this.leads = this.statusLeadsList.slice(0, 4);
+    this.deviceInfo = this.deviceService.getDeviceInfo();
+    this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
+    this.desktopView = this.deviceService.isDesktop();
+
+
+    this.getApprovedloansCount();
+    this.getPendingloansCount();
+    this.getRejectedloansCount();
+
+  }
+
+
+  getApprovedloansCount() {
+    const api_filter = {};
+    api_filter['spInternalStatus-eq'] = 'Approved';
+    this.partnerservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+      if (data) {
+        this.approvedLoansCount = data.length
+      }
+    });
+  }
+
+  getPendingloansCount() {
+    const api_filter = {};
+    api_filter['spInternalStatus-eq'] = 'ApprovalPending';
+    this.partnerservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+      if (data) {
+        this.pendingLoansCount = data.length
+      }
+    });
+  }
+
+  getRejectedloansCount() {
+    const api_filter = {};
+    api_filter['applicationStatus-eq'] = 'Rejected';
+    this.partnerservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+      if (data) {
+        this.rejectedLoansCount = data.length
+      }
     });
   }
 
   viewMore() {
-    this.loans = this.statusLoansList;
-    this.viewmore = true;
+    this.router.navigate([this.partnerParentId, 'partner', 'loans']);
   }
 
   getProfile() {
@@ -152,23 +147,10 @@ export class PartnerComponent implements OnInit {
     this.authService.logoutFromJaldee().then();
   }
 
-  viewLess() {
-    this.loans = this.statusLoansList.slice(0, 4);
-    this.viewmore = false;
-  }
   showMenu() {
 
   }
 
-  viewMoreLeads() {
-    this.leads = this.statusLeadsList;
-    this.viewmoreleads = true;
-  }
-
-  viewLessLeads() {
-    this.leads = this.statusLeadsList.slice(0, 4);
-    this.viewmoreleads = false;
-  }
 
   loanDetails(data) {
     const navigationExtras: NavigationExtras = {
@@ -178,16 +160,16 @@ export class PartnerComponent implements OnInit {
         customerName: data.customerName
       }
     };
-    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'loanDetails'], navigationExtras);
+    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'loanDetails'], navigationExtras);
   }
 
 
   CreateLoan() {
-    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'create']);
+    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'create']);
   }
 
   allLoans() {
-    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans']);
+    this.router.navigate([this.partnerParentId, 'partner', 'loans']);
   }
 
   // approvedLoans() {
@@ -248,7 +230,7 @@ export class PartnerComponent implements OnInit {
   }
 
   allSchemes() {
-    this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'schemes']);
+    this.router.navigate([this.partnerParentId, 'partner', 'schemes']);
   }
 
 
