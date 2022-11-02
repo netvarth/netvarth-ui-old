@@ -517,22 +517,25 @@
             </div><br>
             <div>
               <span class="font-weight-light">Account Status</span><br>
-              <div class="text-capitalize inactivestatus" [class.activestatus]="active == 'active'">
-                <mat-slide-toggle (change)="changeActive($event)">
+              <div class="text-capitalize inactivestatus" [class.activestatus]="active == 'Active'">
+                <mat-slide-toggle (change)="changeActive($event)" [(ngModel)]="status">
                   {{active}}
                 </mat-slide-toggle>
               </div>
             </div>
-            <br>
+            <div class="my-2">
+              <span class="font-weight-bold">Assignee</span><br>
+              <span class="font-weight-light" *ngIf="dealerData && dealerData.assignee">Assignee</span>
+            </div><br>
             <div>
+              <br>
+              <!-- <div>
               <span class="font-weight-light">Password</span><br>
               <div>
                 <div>
                   <div>
                     <div class="fieldPadding">
                       <div class="d-flex">
-                        <input type="password" placeholder="Enter Recent Password" class="form-control mr-2"
-                          autocomplete="off" />
                         <a class="btn btn-verify">
                           <span>Reset Password</span></a>
                       </div>
@@ -540,12 +543,12 @@
                   </div>
                 </div>
               </div>
+            </div> -->
             </div>
           </div>
+
         </div>
+      </div><br>
 
-      </div>
-    </div><br>
-
-  </div>
-</div><br><br>
+    </div>
+  </div><br><br>

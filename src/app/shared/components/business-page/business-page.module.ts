@@ -12,10 +12,10 @@ import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { MatDialogModule } from "@angular/material/dialog";
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 export function homeHttpLoaderFactory(http: HttpClient) {
-    return new TranslateHttpLoader(http,projectConstantsLocal.PATH+ 'assets/i18n/home/', '.json');
-  }
+  return new TranslateHttpLoader(http, projectConstantsLocal.PATH + 'assets/i18n/home/', '.json');
+}
 import { AddInboxMessagesModule } from "../add-inbox-messages/add-inbox-messages.module";
 import { JDNDetailModule } from "../jdn-detail/jdn-detail.module";
 import { CouponsModule } from "../coupons/coupons.module";
@@ -28,63 +28,63 @@ import { projectConstantsLocal } from "../../constants/project-constants";
 import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
 import { AccountService } from "../../services/account.service";
 
-const routes: Routes = [   
-    { path: '', component: BusinessPageComponent},
-    { path: 'partner/:partnerId', loadChildren: () => import('../../../partner/partner.module').then(m => m.PartnerModule)},
-    { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
-    {path:'dashboard',loadChildren:() => import('./homedashboard/homedashboard.module').then(m => m.HomedashboardModule)},
-    { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
-    { path: 'submitpaper', loadChildren: () => import('../../../ynw_consumer/components/home/submit-paper/submit-paper.module').then(m => m.SubmitPaperModule) },
-    { path: 'service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) },
-    { path: 'service/:serid/pay/:id', loadChildren: () => import('./service-view/donation-link/donation-link.module').then(m => m.DonationLinkModule) },
-    { path: 'catalog/:catalogId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule)},
-    { path: 'catalog/:catalogId/item/:itemId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule) },
-    { path: ':userEncId', component: BusinessPageComponent},
-    { path: ':userEncId/service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) }
+const routes: Routes = [
+  { path: '', component: BusinessPageComponent },
+  { path: 'partner', loadChildren: () => import('../../../partner/partner.module').then(m => m.PartnerModule) },
+  { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
+  { path: 'dashboard', loadChildren: () => import('./homedashboard/homedashboard.module').then(m => m.HomedashboardModule) },
+  { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },
+  { path: 'submitpaper', loadChildren: () => import('../../../ynw_consumer/components/home/submit-paper/submit-paper.module').then(m => m.SubmitPaperModule) },
+  { path: 'service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) },
+  { path: 'service/:serid/pay/:id', loadChildren: () => import('./service-view/donation-link/donation-link.module').then(m => m.DonationLinkModule) },
+  { path: 'catalog/:catalogId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule) },
+  { path: 'catalog/:catalogId/item/:itemId', loadChildren: () => import('./catalog-item/catalog-item.module').then(m => m.CatalogItemModule) },
+  { path: ':userEncId', component: BusinessPageComponent },
+  { path: ':userEncId/service/:serid', loadChildren: () => import('./service-view/service-view.module').then(m => m.ServiceViewModule) }
 ];
 @NgModule({
-    imports: [
-        CommonModule,
-        Nl2BrPipeModule,
-        CapitalizeFirstPipeModule,
-        MatTooltipModule,
-        GalleryModule,
-        LoadingSpinnerModule,
-        CardModule,
-        HeaderModule,
-        MatDialogModule,
-        AddInboxMessagesModule,
-        JDNDetailModule,
-        CouponsModule,
-        ServiceDetailModule,
-        ConfirmBoxModule,
-        QRCodeGeneratordetailModule,
-        HttpClientModule,
-        MatDatepickerModule,
-        CheckavailabilityModule,
-        TranslateModule.forChild({
-            loader: {
-                provide: TranslateLoader,
-                useFactory: homeHttpLoaderFactory,
-                deps: [HttpClient]
-            },
-            isolate: false,
-            // extend: true
-        }),
-        [RouterModule.forChild(routes)]
-    ],
-    declarations: [
-        BusinessPageComponent
-    ],
-    providers: [
-        DomainConfigGenerator,
-        AccountService
-    ],
-    schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-        NO_ERRORS_SCHEMA
-    ],
-    exports: [BusinessPageComponent]
+  imports: [
+    CommonModule,
+    Nl2BrPipeModule,
+    CapitalizeFirstPipeModule,
+    MatTooltipModule,
+    GalleryModule,
+    LoadingSpinnerModule,
+    CardModule,
+    HeaderModule,
+    MatDialogModule,
+    AddInboxMessagesModule,
+    JDNDetailModule,
+    CouponsModule,
+    ServiceDetailModule,
+    ConfirmBoxModule,
+    QRCodeGeneratordetailModule,
+    HttpClientModule,
+    MatDatepickerModule,
+    CheckavailabilityModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: homeHttpLoaderFactory,
+        deps: [HttpClient]
+      },
+      isolate: false,
+      // extend: true
+    }),
+    [RouterModule.forChild(routes)]
+  ],
+  declarations: [
+    BusinessPageComponent
+  ],
+  providers: [
+    DomainConfigGenerator,
+    AccountService
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA,
+    NO_ERRORS_SCHEMA
+  ],
+  exports: [BusinessPageComponent]
 })
 export class BusinessPageModule {
 

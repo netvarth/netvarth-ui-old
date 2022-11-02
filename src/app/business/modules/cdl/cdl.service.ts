@@ -68,6 +68,11 @@ export class CdlService {
     return this.servicemeta.httpPost(url, data);
   }
 
+  partnerAccountStatus(id, status) {
+    const url = 'provider/partner/' + id + '/active/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
   savePartner(data) {
     const url = 'provider/partner/draft';
     return this.servicemeta.httpPost(url, data);

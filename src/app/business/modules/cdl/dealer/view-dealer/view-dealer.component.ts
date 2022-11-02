@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { CdlService } from '../../cdl.service';
+import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 @Component({
   selector: 'app-view-dealer',
   templateUrl: './view-dealer.component.html',
@@ -9,7 +10,7 @@ import { CdlService } from '../../cdl.service';
 })
 export class ViewDealerComponent implements OnInit {
   dealerId: any;
-  status: any;
+  status: any = false;
   dealerData: any;
   active: any = "inactive";
   users: any;
@@ -21,7 +22,8 @@ export class ViewDealerComponent implements OnInit {
     private location: Location,
     private router: Router,
     private activatedroute: ActivatedRoute,
-    private cdlservice: CdlService
+    private cdlservice: CdlService,
+    private snackbarService: SnackbarService
   ) {
     this.activatedroute.params.subscribe(qparams => {
       if (qparams && qparams.id) {
@@ -75,7 +77,18 @@ export class ViewDealerComponent implements OnInit {
   }
 
   changeActive(event) {
-    this.active = (event.checked) ? 'active' : 'inactive';
+    let statusChange = (event.checked) ? true : false;
+    this.cdlservice.partnerAccountStatus(this.dealerId, statusChange).subscribe((data: any) => {
+      if (data == true) {
+        this.status = (event.checked) ? true : false;
+        this.active = (event.checked) ? 'Active' : 'Inactive';
+        this.snackbarService.openSnackBar("Dealer is " + this.active)
+      }
+    }, (error) => {
+      this.status = false;
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    })
+
   }
 
   loanDetails(data) {

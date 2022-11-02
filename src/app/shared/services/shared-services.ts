@@ -40,11 +40,11 @@ export class SharedServices {
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
   ProviderLogin(body) {
-      return this.servicemeta.httpPost('provider/login', body);
+    return this.servicemeta.httpPost('provider/login', body);
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
   ConsumerLogout() {
-    let partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
+    let partnerId = this.lStorageService.getitemfromLocalStorage('ParentPartnerId');
     if (partnerId) {
       return this.servicemeta.httpDelete('partner/login');
     }
@@ -786,17 +786,17 @@ export class SharedServices {
   addCustomerAppointment(accountid, postData) {
     return this.servicemeta.httpPost('consumer/appointment?account=' + accountid, postData);
   }
-  postProviderAppointmentRequest(postData){
+  postProviderAppointmentRequest(postData) {
     // const url = 'provider/appointment/service/request?account=' + accountid;
-    return this.servicemeta.httpPost('provider/appointment/service/request',postData);
+    return this.servicemeta.httpPost('provider/appointment/service/request', postData);
   }
-  postAppointmentRequest(accountid,postData){
+  postAppointmentRequest(accountid, postData) {
     // const url = 'consumer/appointment/service/request?account=' + accountid;
-    return this.servicemeta.httpPost('consumer/appointment/service/request?account=' + accountid,postData);
+    return this.servicemeta.httpPost('consumer/appointment/service/request?account=' + accountid, postData);
   }
-  
-  deleteApptRequest(uuid){
-    const url = 'provider/appointment/service/request/reject/'+uuid;
+
+  deleteApptRequest(uuid) {
+    const url = 'provider/appointment/service/request/reject/' + uuid;
     return this.servicemeta.httpPut(url);
   }
   getSchedulesbyLocationandServiceId(locid, servid, pdate?, accountid?) {
@@ -932,14 +932,14 @@ export class SharedServices {
     let url = 'consumer/oauth/identify';
     if (isPartner) {
       url = 'partner/oauth/identify';
-    } 
+    }
     return this.servicemeta.httpPost(url, body);
   }
   verifyConsumerOTP(otp, isPartner?) {
     let url = 'consumer/oauth/otp/' + otp + '/verify';
     if (isPartner) {
       url = 'partner/oauth/otp/' + otp + '/verify';
-    } 
+    }
     return this.servicemeta.httpPost(url);
   }
 
@@ -1370,8 +1370,8 @@ export class SharedServices {
     const url = projectConstantsLocal.SAPATH + 'searchdetails/' + account + '/Item/search?' + tempName + '=' + name + '*';
     return this.servicemeta.httpGet(url);
   }
-  deactiveAccount(user:any){ 
-    const url =  user +'/login/deActivate';
+  deactiveAccount(user: any) {
+    const url = user + '/login/deActivate';
     // return this.servicemeta.httpDelete(url);
     return this.servicemeta.httpDelete(url);
   }

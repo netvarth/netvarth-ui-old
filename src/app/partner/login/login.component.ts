@@ -33,10 +33,7 @@ export class LoginComponent implements OnInit {
     this.activatedRoute.params.subscribe(
       (params: any) => {
         this.partnerParentId = params.id;
-        this.partnerId = params.partnerId;
-        this.lStorageService.setitemonLocalStorage("partnerId", this.partnerId);
         this.lStorageService.setitemonLocalStorage("partnerParentId", this.partnerParentId);
-
       }
     )
     this.activatedRoute.queryParams.subscribe(
@@ -97,7 +94,7 @@ export class LoginComponent implements OnInit {
       });
   }
   goToPartnerHome() {
-    this.router.navigate([this.partnerParentId, 'partner', this.partnerId]);
+    this.router.navigate([this.partnerParentId, 'partner']);
   }
   actionPerformed(response) {
     const _this = this;
