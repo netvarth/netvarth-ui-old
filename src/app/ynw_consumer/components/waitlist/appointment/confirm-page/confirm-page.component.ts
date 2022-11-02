@@ -230,12 +230,12 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
       return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
   }
-  getApptTime(slot){
-    if (slot) {
-      const slots = slot.split('-');
-      return ',' + this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
-    }
-  }
+  // getApptTime(slot){
+  //   if (slot) {
+  //     const slots = slot.split('-');
+  //     return ',' + this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+  //   }
+  // }
   updateEmail() {
   }
 }
