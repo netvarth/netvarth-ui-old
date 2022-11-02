@@ -511,6 +511,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     goBack(type?) {
         if (type) {
             console.log(this.bookStep);
+            if(this.bookStep === 5 && this.selectedService.noDateTime){
+            this.goToStep('prev');
+            }
             if (this.bookStep === 1) {
                 let source = this.lStorageService.getitemfromLocalStorage('source');
                 if (source) {
@@ -2007,7 +2010,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
               //'lastName':this.appmtFor[0].lastName,
                 'consumerNote': this.consumerNote,
                 'countryCode': this.parentCustomer.userProfile.countryCode,
-                'phoneNumber': this.commObj['communicationPhNo'],
+                // 'phoneNumber': this.commObj['communicationPhNo'],
                 'coupons': this.selectedCoupons,
             };
             // if(!this.selectedService.date || !this.selectedService.noDateTime){
@@ -2034,8 +2037,20 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (this.commObj['communicationEmail'] !== '') {
                     this.appmtFor[0]['email'] = this.commObj['communicationEmail'];
                 }
+                // if(this.commObj['communicationPhNo'] !== ''){
+                //     post_Data['phoneNumber'] = this.commObj['communicationPhNo'];
+                // }
                 post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.appmtFor));
            // }
+            //  post_Data['virtualService'] = this.getVirtualServiceInput();
+
+           if (this.selectedService.serviceType === 'virtualService') {
+            if (this.validateVirtualCallInfo(this.callingModes)) {
+                post_Data['virtualService'] = this.getVirtualServiceInput();
+            } else {
+                return false;
+            }
+        }
             console.log("Posting Data request:",post_Data);
             return post_Data;
         }
@@ -2193,23 +2208,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
                     }, error => {
                         _this.isClickedOnce = false;
-                    //       let queryParams = {
-                    //         account_id: this.accountId,
-                    //         uuid: this.trackUuid,
-                    //         theme: this.theme
-                    //     }
-                    //     if (this.selectedSlots.length > 1) {
-                    //         queryParams['selectedApptsTime'] = this.selectedApptsTime;
-                    //         queryParams['selectedSlots'] = JSON.stringify(this.selectedSlots);
-                    //     }
-                    //     if (this.customId) {
-                    //         queryParams['customId'] = this.customId;
-                    //     }
-                    //     let navigationExtras: NavigationExtras = {
-                    //         queryParams: queryParams
-                    //     };
-                    //    // this.setAnalytics();
-                    //     this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras);
+                   
                         _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
                       
                     });

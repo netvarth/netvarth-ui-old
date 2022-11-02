@@ -1,5 +1,6 @@
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === '' || action === 'status'">
     <ng-container *ngIf="action === ''  && (appt.apptStatus !== 'Requested' && appt.apptStatus !== 'RequestRejected')">Select an action to perform</ng-container>
+    <ng-container *ngIf="data.status === 'reject'">Delete Confirmation</ng-container>
     <ng-container *ngIf="action === 'status'">Change status to</ng-container>
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
@@ -546,8 +547,18 @@
 <div *ngIf="data.status === 'reject' && (appt.apptStatus === 'Requested' || appt.apptStatus === 'RequestRejected')" class="col-md-12">
     <div class="row">
         <div class="col-md-12 col-xs-12 col-sm-12 smallCalender">
-           <div class="mt-4 mb-5 text-center card">
-                Are you sure? want to delete request!
+           <div class="mt-4 mb-5 text-center">
+              <div>
+                <!--  <span><i class="fa fa-info-circle faInfoCircle" aria-hidden="true"></i></span>  -->
+                <span> Do you want to delete this request! </span></div>  
+              <div class="divDimen">
+                <div *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''">
+                  <span>Request By : </span> <span class="bold" >{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span>
+                </div>
+                <div *ngIf="appt.appmtDate">
+                    <span>Request Date : </span> <span class="bold" >{{appt.appmtDate | date: newDateFormat}}</span>
+                </div>
+            </div>
            </div>
       </div>
       <div class="modal-footer">

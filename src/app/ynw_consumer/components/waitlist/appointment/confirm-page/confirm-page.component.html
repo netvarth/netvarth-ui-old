@@ -145,7 +145,7 @@
                             </div>
                             <div class="details" >
                                 <div class="book-head" *ngIf="type !== 'reschedule'"> Request Sent Successfully </div>
-                                <!-- <div class="book-head" *ngIf="type === 'reschedule'"> Appointment rescheduled </div> -->
+                                <div class="book-head" *ngIf="type === 'reschedule'"> Request rescheduled </div>
                                 <div class="book-details"> Request details </div>
                                 <table class="book-details-sub chkntoknappt-details">
                                     <tbody>
@@ -205,14 +205,27 @@
                                             <td *ngFor="let member of appointment.appmtFor">{{member.firstName}}
                                                 {{member.lastName}}</td>
                                         </tr>
-                                        <tr *ngIf="!appointment.noDateTime">
-                                            <td  width="48%" align="right">Request Time </td>
+                                        <tr *ngIf="appointment.appmtDate && appointment.appmtTime">
+                                            <!-- *ngIf="appointment.dateTime" -->
+                                            <td   width="48%" align="right">Request Time </td>
                                             <td  width="2%">&nbsp;:&nbsp;</td>
-                                            <td > {{appointment.appmtDate | date: newDateFormat }}
-                                                <!-- <span *ngIf="selectedApptsTime && appointment.dateTime">{{selectedApptsTime}}</span> -->
-                                                <span *ngIf="appointment.dateTime">{{getApptTime(appointment.appmtTime)}}</span>
+                                            <td> {{appointment.appmtDate | date: newDateFormat }},
+                                                <span *ngIf="selectedApptsTime">{{selectedApptsTime}}</span>
+                                                <span *ngIf="!selectedApptsTime && appointment.appmtTime">{{getSingleTime(appointment.appmtTime)}}</span>
+                                               </td>
+                                            <!-- <td> {{appointment.appmtDate | date: newDateFormat }}
+                                                <span *ngIf="selectedApptsTime && appointment.dateTime">{{selectedApptsTime}}</span>
+                                                <span *ngIf="appointment.dateTime">{{getSingleTime(appointment.appmtTime)}}</span>
+                                               </td> -->
+                                        </tr>
+                                        <tr *ngIf="appointment.appmtDate && (appointment.appmtTime === undefined || appointment.appmtTime === '')">
+                                            <!-- *ngIf="appointment.date" -->
+                                            <td   width="48%" align="right">Request Date </td>
+                                            <td  width="2%">&nbsp;:&nbsp;</td>
+                                            <td> {{appointment.appmtDate | date: newDateFormat }}
                                                </td>
                                         </tr>
+
                                         <tr>
                                             <td width="48%" align="right">Request Id</td>
                                             <td width="2%">&nbsp;:&nbsp;</td>

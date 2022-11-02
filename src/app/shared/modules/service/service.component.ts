@@ -178,6 +178,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     paymentProfiles: any = [];
     selected = false;
     selectedPaymentProfile: any;
+    selectedReqMode: boolean = false;
     // show_internationalmode = false;
 
     constructor(private fb: FormBuilder,
@@ -260,13 +261,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     'noDateTime':  this.serviceForm.get('noDateTime').value,
                                 })
                                 if(this.service_data.date){
-                                    this.selectedRequestMode = 'date'
+                                    this.selectedRequestMode = 'date';
+                                    this.selectedReqMode = true;
                                 }
                                 if(this.service_data.dateTime){
-                                    this.selectedRequestMode = 'dateTime'
+                                    this.selectedRequestMode = 'dateTime';
+                                    this.selectedReqMode = true;
                                 }
                                 if(this.service_data.noDateTime){
-                                    this.selectedRequestMode = 'noDateTime'
+                                    this.selectedRequestMode = 'noDateTime';
+                                    this.selectedReqMode = true;
                                 }
                                 }
                                 if(this.service_data.serviceBookingType === 'booking'){
@@ -542,28 +546,34 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     selectServiceRequestModeHandler(event){
         console.log("Selected Mode :",event);
-        if(event === 'dateTime'){
-            // this.serviceForm.addControl('dateTime',
-            // new FormControl(event));
-            // this.serviceForm['dateTime'].setValue('true');
-            // this.serviceForm['date'].setValue('false');
-            this.serviceForm.controls['dateTime'].setValue(true);
-            this.serviceForm.controls['date'].setValue(false);
-            this.serviceForm.controls['noDateTime'].setValue(false);
-
+        if(event === '' || event === undefined){
+            this.snackbarService.openSnackBar('Please select one request mode', { 'panelClass': 'snackbarerror' });
         }
-         if(event === 'date'){
-            // this.serviceForm.addControl('date',
-            // new FormControl(event));
-            this.serviceForm.controls['date'].setValue(true);
-            this.serviceForm.controls['dateTime'].setValue(false);
-            this.serviceForm.controls['noDateTime'].setValue(false);
+        else{
+            if(event === 'dateTime'){
+                // this.serviceForm.addControl('dateTime',
+                // new FormControl(event));
+                // this.serviceForm['dateTime'].setValue('true');
+                // this.serviceForm['date'].setValue('false');
+                this.serviceForm.controls['dateTime'].setValue(true);
+                this.serviceForm.controls['date'].setValue(false);
+                this.serviceForm.controls['noDateTime'].setValue(false);
+    
+            }
+             if(event === 'date'){
+                // this.serviceForm.addControl('date',
+                // new FormControl(event));
+                this.serviceForm.controls['date'].setValue(true);
+                this.serviceForm.controls['dateTime'].setValue(false);
+                this.serviceForm.controls['noDateTime'].setValue(false);
+            }
+            if(event === 'noDateTime'){
+                this.serviceForm.controls['noDateTime'].setValue(true);
+                this.serviceForm.controls['date'].setValue(false);
+                this.serviceForm.controls['dateTime'].setValue(false);
+            }
         }
-        if(event === 'noDateTime'){
-            this.serviceForm.controls['noDateTime'].setValue(true);
-            this.serviceForm.controls['date'].setValue(false);
-            this.serviceForm.controls['dateTime'].setValue(false);
-        }
+      
     }
     selectToolTypeHandler(event) {
         console.log("selectToolTypeHandler :",event)
@@ -713,6 +723,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         //     }
         // }
         // this.savedisabled = true;
+      
         if (form_data.serviceType === 'virtualService') {
             //  this.tool_id = this.tool_id.trim();
             this.teleCallingModes = {
@@ -730,6 +741,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
         form_data['postInfoTitle'] = this.postInfoEnabled ? this.postInfoTitle.trim() : '';
         form_data['postInfoText'] = this.postInfoEnabled ? this.postInfoText : '';
         form_data['consumerNoteTitle'] = form_data['consumerNoteMandatory'] ? this.consumerNote : '';
+        form_data['serviceBookingType'] = form_data['serviceBookingType'];
+        // form_data['date'] = form_data['date'] ? this.selectedReqMode : false;
+        // form_data['dateTime'] = form_data['dateTime'] ? this.selectedReqMode : false;
+        // form_data['noDateTime'] = form_data['noDateTime'] ? this.selectedReqMode : false;
         if (form_data['paymentProfileId'] === 'spDefaultBillProfile') {
             delete form_data['paymentProfileId'];
         }
@@ -805,6 +820,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
             const serviceActionModel = {};
             serviceActionModel['action'] = this.action;
             serviceActionModel['service'] = form_data;
+            // if(form_data["serviceBookingType"] === 'request'){
+            //     if(form_data['date'] === '' && form_data['dateTime'] === '' && form_data['noDateTime'] === ''){
+            //         this.snackbarService.openSnackBar('Please provide paymentDescription', { 'panelClass': 'snackbarerror' });
+            //     }
+            // }
+          
             if (form_data.serviceType === 'virtualService') {
                 if ((form_data.virtualCallingModes[0].callingMode === 'WhatsApp' || form_data.virtualCallingModes[0].callingMode === 'Phone') && (form_data.virtualCallingModes[0].value.toString().charAt(0) === '0')) {
                     this.snackbarService.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
@@ -822,6 +843,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.servicesService.actionPerformed(serviceActionModel);
                     }
                 }
+            }
+           else if(form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime'){
+                this.snackbarService.openSnackBar('Please select request mode', { 'panelClass': 'snackbarerror' });
             }
             else {
                     if(form_data.priceDynamic === true && form_data.paymentDescription === ''){

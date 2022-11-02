@@ -101,13 +101,13 @@
           </div>
           
           </div>
-          <div class="col-xs-12" *ngIf="selectedService && !selectedService.date">
+          <div class="col-xs-12" *ngIf="selectedService && !selectedService.date && !selectedService.noDateTime">
             <app-date-pagination (date_change_event)="appointmentDateChanged($event)" [selected_date]="appmtDate"
               [availableDates]="availableDates">
             </app-date-pagination>
           </div>
           <!-- *ngIf="freeSlots && freeSlots.length > 0" -->
-          <ng-container *ngIf="selectedService && !selectedService.date">
+          <ng-container *ngIf="selectedService && !selectedService.date && !selectedService.noDateTime">
           <div class="col-xs-12" *ngIf="allSlots && allSlots.length > 0 && multipleSelection">
             <app-slot-picker (slotSelected)="slotSelected($event)" [selectedSlot]="selectedSlots" [slots]="allSlots"
               [mode]="'appt'" [multiple]="multipleSelection" [criteria]="selectedService.showOnlyAvailableSlots">
@@ -616,14 +616,14 @@
             </button>
             <!--&& (!selectedService.date || !selectedService.dateTime || !selectedService.noDateTime)  appointmentType!=='reschedule' &&  selectedService.isPrePayment==false" && paymentLength==0 || (paymentDetails && paymentDetails.amountRequiredNow == 0) -->
             <button type="button"
-              *ngIf="selectedService && selectedService.serviceBookingType === 'request' && (selectedService.date || selectedService.dateTime || selectedService.noDateTime)"
+              *ngIf="appointmentType!=='reschedule' && selectedService && selectedService.serviceBookingType === 'request' && (selectedService.date || selectedService.dateTime || selectedService.noDateTime)"
               [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirmAppointment('appt')"
               id="stepThreeConfirmButton" class="next-button btn btn-primary font-weight-bold px-12 "
               [disabled]="!checkPolicy && heartfulnessAccount">
               Send Request
             </button>
             <button type="button" class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
-              *ngIf="appointmentType === 'reschedule'" [class.disableActn]="btnClicked || !isSlotAvailable"
+              *ngIf="appointmentType === 'reschedule' && !selectedService.noDateTime" [class.disableActn]="btnClicked || !isSlotAvailable"
               (click)="rescheduleAppointment()">
               Reschedule
               <i class="fa fa-long-arrow-right mgn-lt-5"></i>

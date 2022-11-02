@@ -286,6 +286,23 @@
   cursor: pointer;   
   border: 1px solid #cccccc60;
 }
+.faInfoCircle{
+  width: 40px;
+}
+.divDimen{
+  display: flex;
+  justify-items: center;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}
+@media (max-width:400px) {
+  .divDimen{
+    display: block;
+    justify-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+}
 .status-box-disabled{
   box-shadow: 5px 5px 5px 0px #cccccc60 !important;
   border-radius: 10px;
