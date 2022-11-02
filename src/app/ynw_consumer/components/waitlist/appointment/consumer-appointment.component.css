@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     justify-items: center;
-    width: auto !important;
+    width: 100%;
   }
   .matCard{
     box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
@@ -16,9 +16,11 @@
     border-radius: 7.1468px;
     top: -5px;
     height: 100%;
+    /* width: 50%; */
   }
 }
-@media (min-width:768px) and (max-width:1400px){
+/* and (max-width:1400px) */
+@media (min-width:768px){
   .calenderDiv{
     display: flex;
     justify-content: center;
