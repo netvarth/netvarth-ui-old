@@ -158,6 +158,7 @@ export class AppointmentActionsComponent implements OnInit {
   ngOnInit() {
    
     this.getAppointmentSlots();
+   
    // this.getSlots();
    // console.log("Slots :",this.getAppointmentSlots());
    
@@ -188,7 +189,14 @@ export class AppointmentActionsComponent implements OnInit {
     this.sel_schedule_id = this.lStorageService.getitemfromLocalStorage("scheduleId");
     console.log("Schedule Id :", this.sel_schedule_id);
    
-    this.getSlotsBySheduleandDate(this.appt.schedule.id,this.appt.appmtDate);
+    //this.getSlotsBySheduleandDate(this.appt.schedule.id,this.appt.appmtDate);
+    // this.provider_services
+    // .getAppointmentSlotsByScheduleid(
+    //   this.appt.schedule.id
+    // ).subscribe((data:any)=>{
+    //   console.log("Slotssss data :",data);
+    // })
+    this.getSlots(this.appt.schedule.id);
     this.multipleSelection = this.data.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
@@ -1522,19 +1530,44 @@ export class AppointmentActionsComponent implements OnInit {
     // ).subscribe((res:any)=>{
     //   console.log("get slotss by :",res);
     // })
-    this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
+   //this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
     //this.getAppointmentSlots();
-   // this.getSlots();
+   this.getSlots(this.sel_schedule_id);
     
  }
-  // getSlots(){
-  //   this.provider_services
-  //   .getAppointmentSlotsByScheduleid(
-  //     this.sel_schedule_id
-  //   ).subscribe((data:any)=>{
-  //     console.log("Slotssss data :",data);
-  //   })
-  // }
+  getSlots(selectedScheduleId){
+    this.freeSlots = [];
+    this.loading = true;
+    this.provider_services
+    .getAppointmentSlotsByScheduleid(
+      selectedScheduleId
+    ).subscribe((data:any)=>{
+     // console.log("Slotssss data :",data);
+      this.availableSlots = data.availableSlots;
+      // freslot["scheduleId"] = scheduleSlots["scheduleId"];
+
+      this.loading = false;
+      // for (const scheduleSlots of this.schedules) {
+      //   this.availableSlots = scheduleSlots.availableSlots;
+      //   console.log("availableSlots",this.availableSlots)
+      //   console.log("sel_checkindate",this.sel_checkindate)
+      //   console.log("scheduleSlots.date",scheduleSlots.date)
+      console.log("freslot ",this.availableSlots)
+
+        for (const freslot of this.availableSlots) {
+        
+          if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
+  
+            freslot["displayTime"] = this.getSingleTime(freslot.time);
+            this.freeSlots.push(freslot);
+          }
+         
+        }
+      
+      this.apptTime = this.freeSlots[0];
+   // }
+    })
+  }
 
 getSlotsBySheduleandDate(scheduleId,selDate){
   this.freeSlots = [];
@@ -1542,6 +1575,7 @@ getSlotsBySheduleandDate(scheduleId,selDate){
   this.provider_services.getSlotsByScheduleandDate(scheduleId,selDate).
   subscribe((res:any)=>{
     this.schedules = res;
+    console.log("schedules data :",res);
     this.loading = false;
     for (const scheduleSlots of this.schedules) {
       this.availableSlots = scheduleSlots.availableSlots;
