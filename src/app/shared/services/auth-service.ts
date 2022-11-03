@@ -144,8 +144,6 @@ export class AuthService {
             console.log("customId", customId)
 
             if (customId) {
-              console.log("reqFrom", reqFrom)
-              console.log("customId", customId)
               if (reqFrom === 'cuA') {
                 this.lStorageService.removeitemfromLocalStorage('refreshToken');
                 this.router.navigate(['customapp', customId]);
