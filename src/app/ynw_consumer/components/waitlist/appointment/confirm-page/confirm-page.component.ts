@@ -46,6 +46,7 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
     this.subs.sink = this.route.queryParams.subscribe(
       params => {
         this.infoParams = params;
+        console.log("Params :",params);
         if (params.selectedApptsTime) {
           this.selectedApptsTime = params.selectedApptsTime;
         }
@@ -225,10 +226,10 @@ export class ConfirmPageComponent implements OnInit, OnDestroy {
     }
   }
   getSingleTime(slot) {
-    if (slot) {
+   // if (slot) {
       const slots = slot.split('-');
       return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
-    }
+   // }
   }
   // getApptTime(slot){
   //   if (slot) {

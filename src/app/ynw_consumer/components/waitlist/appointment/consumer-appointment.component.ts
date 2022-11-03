@@ -727,9 +727,43 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             };
             console.log("Active Service :", this.selectedService)
             if(this.selectedService.noDateTime){
-                this.bookStep = 5;
-                this.confirmAppointment('next');
-                this.initAppointment();
+                if((this.apptDetails_firstName === undefined && this.apptDetails_lastName === undefined) || this.commObj['communicationPhNo'] === undefined ){
+                    console.log("If block :")
+                    this.authService.goThroughLogin().then((status) => {
+                        console.log("Status:", status);
+                        if (status) {
+                            const _this = this;
+                            const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+                            _this.initAppointment().then(
+                                (status) => {
+                                    _this.getOneTimeInfo(activeUser, _this.accountId).then(
+                                        (questions) => {
+                                            console.log("Questions:", questions);
+        
+                                                    _this.bookStep = 5;
+                                                    _this.confirmAppointment('next');
+                                            
+                                            _this.loggedIn = true;
+                                            // _this.loading = false;
+                                        }
+                                    )
+                                }
+                            );
+                        } else {
+                            this.loggedIn = false;
+                            // this.bookStep = 5;
+                            // this.confirmAppointment('next');
+                            // this.initAppointment();
+                        }
+                    });
+                }
+                else{
+                    console.log("Else block :")
+                    this.bookStep = 5;
+                    this.confirmAppointment('next');
+                    this.initAppointment();
+                }
+               
             }
             if (activeService.provider) {
                 this.selectedUserId = activeService.provider.id;
@@ -1977,7 +2011,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         if (callingModes === '' || callingModes.length < 10) {
             for (const i in this.selectedService.virtualCallingModes) {
                 if (this.selectedService.virtualCallingModes[i].callingMode === 'WhatsApp' || this.selectedService.virtualCallingModes[i].callingMode === 'Phone') {
-                    if (!this.commObj['comWhatsappNo']) {
+                    if (!this.commObj['comWhatsappNo'] && this.selectedService.serviceBookingType !== 'request') {
                         this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
                         valid = false;
                         break;
@@ -2037,9 +2071,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 if (this.commObj['communicationEmail'] !== '') {
                     this.appmtFor[0]['email'] = this.commObj['communicationEmail'];
                 }
-                // if(this.commObj['communicationPhNo'] !== ''){
-                //     post_Data['phoneNumber'] = this.commObj['communicationPhNo'];
-                // }
+                if(this.commObj['communicationPhNo'] !== ''){
+                    post_Data['phoneNumber'] = this.commObj['communicationPhNo'];
+                }
                 post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.appmtFor));
            // }
             //  post_Data['virtualService'] = this.getVirtualServiceInput();
