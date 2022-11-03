@@ -1532,9 +1532,9 @@ export class AppointmentActionsComponent implements OnInit {
     // })
    //this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
     //this.getAppointmentSlots();
-   this.getSlots(this.sel_schedule_id);
-    
+   this.getSlots(this.sel_schedule_id); 
  }
+ 
   getSlots(selectedScheduleId){
     this.freeSlots = [];
     this.loading = true;
