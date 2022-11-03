@@ -172,13 +172,8 @@ export class AuthService {
               }
             } else {
               let partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
-              console.log("else Part partnerParentId", partnerParentId)
               if (partnerParentId) {
-                this.router.navigate([partnerParentId, 'partner', 'login']).then(
-                  () => {
-                    window.location.reload();
-                  }
-                );
+                this.router.navigate([partnerParentId, 'partner', 'login'])
               }
               else {
                 this.router.navigate(['/']);

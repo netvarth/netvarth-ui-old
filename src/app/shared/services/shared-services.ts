@@ -44,7 +44,7 @@ export class SharedServices {
     // set no_redirect_path in interceptor to avoid redirect on 401
   }
   ConsumerLogout() {
-    let partnerId = this.lStorageService.getitemfromLocalStorage('ParentPartnerId');
+    let partnerId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
     if (partnerId) {
       return this.servicemeta.httpDelete('partner/login');
     }
