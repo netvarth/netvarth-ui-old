@@ -11,26 +11,23 @@
 
     <div class="card remarks-card marginClass px-5">
       <div class="my-2">
-        <div class="font-weight-bold" *ngIf="loanData && loanData.status">
-          <span class="text-capitalize">{{loanData.status.name}} Loan</span>
+        <div class="font-weight-bold" *ngIf="loanData && loanData.spInternalStatus">
+          <span class="text-capitalize">Status : {{loanData.spInternalStatus}} Loan</span>
         </div>
         <div *ngIf="status=='rejected'" class="text-red mt-2">
           <span>Sorry your loan was rejected because of your credit score</span>
         </div>
       </div>
-      <div *ngIf="status!='pending'">
-        <div>Remarks</div>
-        <span class="details-title" *ngIf="loanData && loanData.remarks">{{loanData.remarks}}</span>
-      </div>
+
     </div>
   </div>
   <div class="row mt-2">
     <div class="col-md-5">
       <div class="card">
 
-        <!-- <div *ngIf="status=='redirected' && user.userType!=2" class="text-warning mt-2 text-right">
+        <div *ngIf="status=='redirected' && user.userType!=2" class="text-warning mt-2 text-right">
           <div class="btn btn-action" (click)="takeAction()">Take Actions</div>
-        </div> -->
+        </div>
         <div class="text-center mt-2"
           *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto[0] && loanData.consumerPhoto[0].s3path">
           <img [src]="loanData.consumerPhoto[0].s3path" width="100" height="100">
@@ -74,13 +71,13 @@
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}}</span>
                     </div>
                   </div>
-                  <div class="row text-left my-2">
+                  <!-- <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Permanent Address 2</div>
                     <div class="col-md-1 details-title no-padding">:</div>
                     <div><span class="col-md-6 details-sub-title no-padding"
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].permanentAddress2">{{loanData.loanApplicationKycList[0].permanentAddress2}}</span>
                     </div>
-                  </div>
+                  </div> -->
                   <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Permanent Address City</div>
                     <div class="col-md-1 details-title no-padding">:</div>
@@ -200,13 +197,20 @@
             <div
               *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaar">
               <div>
-                <div class="text-left details-title">Aadhar Number</div>
+                <div class="text-left details-title">Aadhar Number&nbsp;<img
+                    src="../../../../assets/images/cdl/check.png" width="20"
+                    *ngIf="loanData.loanApplicationKycList[0].isAadhaarVerified">
+                  <img src="../../../../assets/images/cdl/cancel.png" width="20"
+                    *ngIf="!loanData.loanApplicationKycList[0].isAadhaarVerified">
+                </div>
                 <div class="text-left details-sub-title">{{loanData.loanApplicationKycList[0].aadhaar}}</div>
               </div>
-              <div class="mt-2">
-                <button (click)="viewFile('aadhar')" class="btn confirmBtn" type="button">
+              <div class="mt-2"
+                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments&& loanData.loanApplicationKycList[0].aadhaarAttachments[0]">
+                <a [href]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path" target="_blank"
+                  class="btn btn-primary">
                   <span>View Aadharcard</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -215,13 +219,18 @@
             <div
               *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].pan">
               <div>
-                <div class="text-left details-title">Pan Number</div>
+                <div class="text-left details-title">Pan Number&nbsp;<img src="../../../../assets/images/cdl/check.png"
+                    width="20" *ngIf="loanData.loanApplicationKycList[0].isPanVerified"><img
+                    src="../../../../assets/images/cdl/cancel.png" width="20"
+                    *ngIf="!loanData.loanApplicationKycList[0].isPanVerified"></div>
                 <div class="text-left details-sub-title">{{loanData.loanApplicationKycList[0].pan}}</div>
               </div>
-              <div class="mt-2">
-                <button (click)="viewFile('pan')" class="btn confirmBtn" type="button">
+              <div class="mt-2"
+                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
+                <a [href]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" target="_blank"
+                  class="btn btn-primary">
                   <span>View Pancard</span>
-                </button>
+                </a>
               </div>
             </div>
           </div>
@@ -231,19 +240,45 @@
 
       </div>
       <div class="card marginClass">
-        <div class="font-weight-bold">Bank Details</div>
+        <div class="font-weight-bold">Bank Details&nbsp;<img src="../../../../assets/images/cdl/check.png" width="20"
+            *ngIf="bankData && bankData.bankAccountVerified"><img src="../../../../assets/images/cdl/cancel.png"
+            width="20" *ngIf="bankData && !bankData.bankAccountVerified"></div>
         <div class="row mt-2">
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="bankData && bankData.bankAccountNo">
             <div class="details-title">Account Number</div>
-            <div class="details-sub-title">35897456287</div>
+            <div class="details-sub-title">{{bankData.bankAccountNo}}</div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="bankData && bankData.bankName">
             <div class="details-title">Bank</div>
-            <div class="details-sub-title">Kotak Bank</div>
+            <div class="details-sub-title">{{bankData.bankName}} Bank</div>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4" *ngIf="bankData && bankData.bankIfsc">
             <div class="details-title">IFSC Code</div>
-            <div class="details-sub-title">KKBK0009876</div>
+            <div class="details-sub-title">{{bankData.bankIfsc}}</div>
+          </div>
+        </div>
+        <div class="row mt-2"
+          *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
+          <div class="col-md-4">
+            <div class="details-title">Bank Statements</div>
+          </div>
+        </div>
+        <div class="row mt-2"
+          *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
+          <div class="col-md-4">
+            <a [href]="bankData.bankStatementAttachments[0].s3path" target="_blank"
+              class="btn btn-primary btn-primary-full">
+              <span>View Statements</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="row mt-2"
+          *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
+          <div class="col-md-4">
+            <a (click)="analyze()" class="btn btn-primary btn-primary-full">
+              <span>Analyze Statements</span>
+            </a>
           </div>
         </div>
         <br>
@@ -282,12 +317,23 @@
         </div>
         <br *ngIf="user.userType!='2'">
       </div>
+
+
+
+      <div class="card marginClass min-height">
+        <div *ngIf="status!='pending'">
+          <div class="font-weight-bold">Remarks</div>
+          <span class="details-title" *ngIf="loanData && loanData.remarks">{{loanData.remarks}}</span>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </section>
 <br>
 <section class="card row" *ngIf="user.userType==2">
-  <div class="col-md-3" *ngIf="cibilScore">
+  <div class="col-md-3">
     <div class="customcard">
       <div class="d-flex">
         <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
@@ -297,11 +343,11 @@
         </div>
       </div>
       <div class="text-right">
-        <div class="btn btn-primary py-1" (click)="viewFile('cibil')">View Report</div>
+        <div class="btn btn-primary py-1">View Report</div>
       </div>
     </div>
   </div>
-  <div class="col-md-3" *ngIf="perfiosScore">
+  <div class="col-md-3">
     <div class="customcard">
       <div class="d-flex">
         <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
@@ -315,7 +361,23 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3" *ngIf="totalScore">
+
+  <div class="col-md-3">
+    <div class="customcard">
+      <div class="d-flex">
+        <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
+        <div>
+          <div class="customerScoreLabel">MAFIL Score</div>
+          <div class="customerScoreInfoLabel">{{mafilScore}}</div>
+        </div>
+      </div>
+      <div class="text-right">
+        <div class="btn btn-primary py-1">View Report</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-3">
     <div class="customcard">
       <div class="d-flex">
         <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
@@ -329,18 +391,21 @@
       </div>
     </div>
   </div>
-  <div class="col-md-3" *ngIf="mafilScore">
-    <div class="customcard">
-      <div class="d-flex">
-        <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
-        <div>
-          <div class="customerScoreLabel">MAFIL Score</div>
-          <div class="customerScoreInfoLabel">{{mafilScore}}</div>
-        </div>
-      </div>
-      <div class="text-right">
-        <div class="btn btn-primary py-1">View Report</div>
-      </div>
-    </div>
+
+
+</section>
+
+<section class="d-flex justify-content-center m-2 my-4"
+  *ngIf="user.userType==2 && loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending')">
+  <div class="btn-sanctioned mr-2 pointer-cursor" (click)="sanctionLoan()">
+    Sanction Loan
+  </div>
+
+  <div class="btn-redirect mr-2 pointer-cursor" (click)="redirectLoan()">
+    Redirect Loan
+  </div>
+
+  <div class="btn-reject pointer-cursor" (click)="rejectLoan()">
+    Reject
   </div>
 </section>

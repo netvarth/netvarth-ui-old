@@ -36,8 +36,8 @@ const routes: Routes = [
     MatButtonModule,
     FormsModule,
     MatExpansionModule,
-    SelectSchemeModule,
     OtpVerifyModule,
+    SelectSchemeModule,
     [RouterModule.forChild(routes)]
   ]
 })

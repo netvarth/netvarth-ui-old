@@ -180,6 +180,14 @@
   width: 50% !important;
 }
 
+.min-height {
+  min-height: 100px !important;
+}
+
+.btn-primary-full {
+  width: 100% !important;
+}
+
 .fa-tachometer {
   font-size: 40px !important;
 }

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
+import { PartnerService } from '../../partner.service';
+import { LocalStorageService } from '../../../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-approved',
@@ -15,15 +17,21 @@ export class ApprovedComponent implements OnInit {
   from: any;
   type: any;
   scheme: any;
+  loanId: any;
   verification = false;
   accountverification = false;
   user: any;
+  loanSchemes: any;
+  schemeSelected: any;
+  partnerParentId: any;
   constructor(
     private location: Location,
     private dialog: MatDialog,
     private router: Router,
     private activated_route: ActivatedRoute,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private partnerService: PartnerService,
+    private lStorageService: LocalStorageService
 
 
   ) { }
@@ -38,6 +46,8 @@ export class ApprovedComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
+
     this.activated_route.queryParams.subscribe((params) => {
       if (params && params.timetype) {
         this.timetype = params.timetype;
@@ -48,7 +58,13 @@ export class ApprovedComponent implements OnInit {
       if (params && params.type) {
         this.type = params.type;
       }
+      if (params && params.uid) {
+        this.loanId = params.uid;
+      }
     });
+
+    this.getLoanSchemes();
+
   }
 
   resetErrors() {
@@ -56,7 +72,10 @@ export class ApprovedComponent implements OnInit {
   }
 
   selectedScheme(scheme) {
-    this.selectedScheme = scheme;
+    this.schemeSelected = scheme;
+    if (this.schemeSelected) {
+      this.gotoNext();
+    }
   }
 
   goNext() {
@@ -79,9 +98,44 @@ export class ApprovedComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['provider', 'cdl'])
+    this.router.navigate([this.partnerParentId, 'partner']);
   }
 
+
+  refreshCustomerAcceptance() {
+    // this.partnerService.changeInternalStatus(this.loanId, 'ConsumerAccepted').subscribe((data) => {
+    //   if (data) {
+    // this.router.navigate([this.partnerParentId, 'partner', 'loans']);
+    //   };
+    // })
+
+    this.partnerService.getLoanById(this.loanId).subscribe((data: any) => {
+      if (data && data.spInternalStatus) {
+        if (data.spInternalStatus == 'ConsumerAccepted') {
+          this.router.navigate([this.partnerParentId, 'partner', 'loans']);
+        }
+      };
+    })
+  }
+
+
+  getLoanSchemes() {
+    this.partnerService.getLoanSchemes().subscribe((data) => {
+      this.loanSchemes = data;
+      console.log("this.loanSchemes", this.loanSchemes)
+    })
+  }
+
+
+  gotoNext() {
+    this.partnerService.changeScheme(this.loanId, this.schemeSelected.id).subscribe((data: any) => {
+      if (data) {
+        if (this.timetype == 1) {
+          this.timetype = 2
+        }
+      }
+    })
+  }
 
   verifyAccount() {
     let can_remove = false;

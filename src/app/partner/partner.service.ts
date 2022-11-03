@@ -157,11 +157,8 @@ export class PartnerService {
   }
 
 
-  sendPhoneOTP(data, from) {
+  sendPhoneOTP(data) {
     var url = 'partner/loanapplication/generate/phone';
-    if (from == 'partner') {
-      var url = 'partner/partner/generate/phone';
-    }
     return this.servicemeta.httpPost(url, data);
   }
 
@@ -190,9 +187,30 @@ export class PartnerService {
     return this.servicemeta.httpPost(url, data);
   }
 
+
+  manualLoanApproval(id, data) {
+    const url = 'partner/loanapplication/' + id + '/manualapproval';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  changeScheme(loanId, schemeId) {
+    const url = 'partner/loanapplication/' + loanId + '/scheme/' + schemeId;
+    return this.servicemeta.httpPut(url, null);
+  }
+
+  rejectLoan(id, data) {
+    const url = 'partner/loanapplication/' + id + '/reject';
+    return this.servicemeta.httpPut(url, data);
+  }
+
   verifyagreementOTP(id, otp) {
     const url = 'provider/loanapplication/verify/' + id + '/acceptance/' + otp + '/phone';
     return this.servicemeta.httpPost(url, null);
+  }
+
+  saveRemarks(data) {
+    const url = 'partner/loanapplication/remark';
+    return this.servicemeta.httpPut(url, data);
   }
 
   partnerOtpVerify(otp, data) {

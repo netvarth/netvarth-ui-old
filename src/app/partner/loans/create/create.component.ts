@@ -12,9 +12,9 @@ import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../shared/services/word-processor.service';
 import { SelectSchemeComponent } from '../select-scheme/select-scheme.component';
-import { PartnerService } from '../../partner.service';
+import { PartnerService } from '../../../partner/partner.service';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
-// import { SharedServices } from '../../../../../shared/services/shared-services';
+// import { SharedServices } from '../../../../../../../shared/services/shared-services';
 // import { SubSink } from 'subsink';
 
 @Component({
@@ -98,18 +98,19 @@ export class CreateComponent implements OnInit {
     }
   };
   phoneError: any;
+  partnerParentId: any;
   dialCode: any;
-  businessId: any;
   firstName: any;
   lastName: any;
+  downPayment: any;
   loanStatuses: any;
   loanSchemes: any;
+  from: any;
   bankData: any;
+  partnerId: any;
   relations = projectConstantsLocal.RELATIONSHIPS;
   employmentTypes = projectConstantsLocal.EMPLOYMENT_TYPES;
   filesToUpload: any = [];
-  partnerId: any;
-  partnerParentId: any;
   dealers: any;
   constructor(
     private location: Location,
@@ -120,14 +121,17 @@ export class CreateComponent implements OnInit {
     private createLoanFormBuilder: FormBuilder,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
-    private partnerservice: PartnerService,
+    private partnerService: PartnerService,
     private fileService: FileService,
     private lStorageService: LocalStorageService
   ) {
 
     this.activated_route.queryParams.subscribe((params) => {
+      if (params && params.from) {
+        this.from = params.from;
+      }
       if (params && params.id) {
-        this.partnerservice.getLoanById(params.id).subscribe((data) => {
+        this.partnerService.getLoanById(params.id).subscribe((data) => {
           this.loanData = data;
           this.action = params.action;
           this.loanId = params.id;
@@ -179,6 +183,9 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.emiPaidAmountMonthly) {
               this.createLoan.controls.emicount.setValue(this.loanData.emiPaidAmountMonthly);
             }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
+              this.loanApplicationKycId = this.loanData.loanApplicationKycList[0].id;
+            }
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineeName) {
               this.createLoan.controls.nomineename.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
             }
@@ -194,8 +201,22 @@ export class CreateComponent implements OnInit {
               this.panverification = true;
             }
 
-            this.verification = true;
-            this.emailverification = true;
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].isAadhaarVerified) {
+              this.aadharverification = true;
+            }
+
+            if (this.loanData && this.loanData.partner && this.loanData.partner.id) {
+              this.createLoan.controls.dealer.setValue(this.loanData.partner.id);
+            }
+
+            if (this.loanData && this.loanData.customerMobileVerified) {
+              this.verification = true;
+            }
+
+            if (this.loanData && this.loanData.customerEmailVerified) {
+              this.emailverification = true;
+            }
+
 
             this.selectedFiles['photo'].files = this.loanData.consumerPhoto;
             this.selectedFiles['aadhar'].files = this.loanData.loanApplicationKycList[0].aadhaarAttachments;
@@ -205,7 +226,7 @@ export class CreateComponent implements OnInit {
           }
         })
         console.log(params.id);
-        this.partnerservice.getBankDetailsById(params.id).subscribe((data) => {
+        this.partnerService.getBankDetailsById(params.id).subscribe((data) => {
           this.bankData = data;
           console.log("this.bankData", this.bankData)
           if (this.bankData) {
@@ -258,40 +279,43 @@ export class CreateComponent implements OnInit {
       ifsc: [null],
       account: [null],
       bankstatements: [null],
-      scheme: [null]
-
-
+      scheme: [null],
+      dealer: [null]
     });
   }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
-    this.partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
+
+
+    if (this.user && this.user.partnerId) {
+      this.partnerId = this.user.partnerId;
+    }
+
+
     console.log("user", this.user);
     this.getLoanCategories();
     this.getLoanTypes();
     this.getLoanProducts();
     this.getLoanStatuses();
     this.getLoanSchemes();
-    this.getPartners();
-    this.partnerservice.getBusinessProfile().subscribe((data) => {
-      this.businessDetails = data;
-      if (this.businessDetails && this.businessDetails.id) {
-        this.businessId = this.businessDetails.id;
-      }
-    })
+
+    if (this.from && this.from == 'create') {
+      this.customerDetailsPanel = false;
+      this.kycDetailsPanel = true;
+    }
   }
 
 
   getLoanCategories() {
-    this.partnerservice.getLoanCategoryList().subscribe((data) => {
+    this.partnerService.getLoanCategoryList().subscribe((data) => {
       this.loanCategories = data;
     })
   }
 
   getLoanSchemes() {
-    this.partnerservice.getLoanSchemes().subscribe((data) => {
+    this.partnerService.getLoanSchemes().subscribe((data) => {
       this.loanSchemes = data;
       console.log("this.loanSchemes", this.loanSchemes)
     })
@@ -299,7 +323,7 @@ export class CreateComponent implements OnInit {
 
 
   getBusinessProfile() {
-    this.partnerservice.getBusinessProfile().subscribe((data) => {
+    this.partnerService.getBusinessProfile().subscribe((data) => {
       this.businessDetails = data;
       console.log("this.businessDetails", this.businessDetails)
     })
@@ -307,14 +331,14 @@ export class CreateComponent implements OnInit {
 
 
   getLoanTypes() {
-    this.partnerservice.getLoanTypeList().subscribe((data) => {
+    this.partnerService.getLoanTypeList().subscribe((data) => {
       this.loanTypes = data;
       console.log("this.loanTypes", this.loanTypes)
     })
   }
 
   getLoanStatuses() {
-    this.partnerservice.getLoanStatuses().subscribe((data) => {
+    this.partnerService.getLoanStatuses().subscribe((data) => {
       this.loanStatuses = data;
       console.log("this.loanStatuses", this.loanStatuses)
     })
@@ -322,22 +346,14 @@ export class CreateComponent implements OnInit {
 
 
   getLoanProducts() {
-    this.partnerservice.getLoanProducts().subscribe((data) => {
+    this.partnerService.getLoanProducts().subscribe((data) => {
       this.loanProducts = data;
       console.log("this.loanProducts", this.loanProducts)
     })
   }
 
-
-  getPartners() {
-    this.partnerservice.getDealers().subscribe((data) => {
-      this.dealers = data;
-      console.log("this.dealers", this.dealers)
-    })
-  }
-
   getCustomerDetails(filter) {
-    this.partnerservice.getCustomerDetails(filter).subscribe((data) => {
+    this.partnerService.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
       if (this.customerDetails && this.customerDetails.length != 0) {
         console.log("this.customerDetails", this.customerDetails)
@@ -345,7 +361,7 @@ export class CreateComponent implements OnInit {
           this.createLoan.controls.firstname.setValue(this.customerDetails[0].firstName);
         }
         if (this.customerDetails[0].lastName) {
-          this.createLoan.controls.lastname.setValue(this.customerDetails[0].firstName);
+          this.createLoan.controls.lastname.setValue(this.customerDetails[0].lastName);
         }
         if (this.customerDetails[0] && this.customerDetails[0].email) {
           this.createLoan.controls.email.setValue(this.customerDetails[0].email)
@@ -528,9 +544,10 @@ export class CreateComponent implements OnInit {
   //       if (this.loanData && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
   //         this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
   //       }
-  //       this.partnerservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
+  //       this.partnerService.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
   //         this.snackbarService.openSnackBar("Loan Application Updated Successfully")
-  //         this.router.navigate(['provider', 'cdl', 'loans'])
+  // this.router.navigate([this.partnerParentId, 'partner', 'loans']);
+
   //       },
   //         (error) => {
   //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -559,7 +576,7 @@ export class CreateComponent implements OnInit {
   //       console.log("Loan Application Data : ", this.loanApplication)
 
 
-  //       this.partnerservice.createLoan(this.loanApplication).subscribe((s3urls: any) => {
+  //       this.partnerService.createLoan(this.loanApplication).subscribe((s3urls: any) => {
   //         console.log("response", s3urls);
 
 
@@ -577,10 +594,10 @@ export class CreateComponent implements OnInit {
   //           "bankIfsc": this.createLoan.controls.ifsc.value,
   //           "bankAccountVerified": true
   //         }
-  //         this.partnerservice.saveBankDetails(this.bankDetails).subscribe((data) => {
+  //         this.partnerService.saveBankDetails(this.bankDetails).subscribe((data) => {
   //           console.log("this.loanProducts", this.loanProducts);
   //           this.snackbarService.openSnackBar("Loan Application Created Successfully")
-  //           this.router.navigate(['provider', 'cdl', 'loans']);
+  // this.router.navigate([this.partnerParentId, 'partner', 'loans']);
   //         }), (error) => {
   //           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
   //         }
@@ -626,7 +643,7 @@ export class CreateComponent implements OnInit {
   uploadFiles(file, url) {
     const _this = this;
     return new Promise(function (resolve, reject) {
-      _this.partnerservice.videoaudioS3Upload(file, url)
+      _this.partnerService.videoaudioS3Upload(file, url)
         .subscribe(() => {
           resolve(true);
         }, error => {
@@ -643,9 +660,9 @@ export class CreateComponent implements OnInit {
     this.location.back();
   }
 
-  // goNext() {
-  //   this.router.navigate(['provider', 'cdl', 'loans', 'approved'])
-  // }
+  goNext() {
+    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved']);
+  }
 
 
 
@@ -658,7 +675,7 @@ export class CreateComponent implements OnInit {
         for (const pic of input) {
           const size = pic["size"] / 1024;
           let fileObj = {
-            owner: this.businessId,
+            owner: this.partnerId,
             fileName: pic["name"],
             fileSize: size / 1024,
             caption: "",
@@ -690,60 +707,81 @@ export class CreateComponent implements OnInit {
       this.snackbarService.openSnackBar("Please Fill All Fields", { 'panelClass': 'snackbarerror' });
     }
     else {
-      const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          from: 'loancreate'
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          if (result = "eligible") {
-            this.partnerservice.ApprovalRequest(this.loanId).subscribe((data: any) => {
-              if (data.isAutoApproval && data.isApproved) {
-                this.snackbarService.openSnackBar("Loan Auto Approved");
-                this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'approved']);
-              }
-              else if (!data.isAutoApproval && data.isApproved) {
-                const navigationExtras: NavigationExtras = {
-                  queryParams: {
-                    type: 'autoapproved'
+      let data = {
+        "id": this.loanData.id,
+        "uid": this.loanId,
+        "remarks": this.createLoan.controls.currentstate.value
+      }
+      this.partnerService.saveRemarks(data).subscribe((data: any) => {
+        if (data) {
+          const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              from: 'loancreate'
+            }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              if (result = "eligible") {
+                this.partnerService.ApprovalRequest(this.loanId).subscribe((data: any) => {
+                  if (data.isAutoApproval && data.isApproved) {
+                    const navigationExtras: NavigationExtras = {
+                      queryParams: {
+                        type: 'autoapproved',
+                        uid: this.loanId
+                      }
+                    }
+                    this.snackbarService.openSnackBar("Loan Auto Approved");
+                    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
                   }
-                }
-                this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
-                this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'approved'], navigationExtras);
-              }
-              else if (!data.isAutoApproval && data.isApproved) {
-                const navigationExtras: NavigationExtras = {
-                  queryParams: {
-                    type: 'approved'
+                  else if (!data.isAutoApproval && data.isApproved) {
+                    const navigationExtras: NavigationExtras = {
+                      queryParams: {
+                        type: 'approved',
+                        uid: this.loanId
+                      }
+                    }
+                    this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
+                    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
                   }
-                }
-                this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
-                this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'approved'], navigationExtras);
-              }
-              else if (!data.isAutoApproval && !data.isApproved) {
-                const navigationExtras: NavigationExtras = {
-                  queryParams: {
-                    type: 'rejected'
+                  else if (!data.isAutoApproval && data.isApproved) {
+                    const navigationExtras: NavigationExtras = {
+                      queryParams: {
+                        type: 'approved',
+                        uid: this.loanId
+                      }
+                    }
+                    this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
+                    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
                   }
-                }
-                this.snackbarService.openSnackBar("Sorry This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
-                this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'approved'], navigationExtras);
+                  else if (!data.isAutoApproval && !data.isApproved) {
+                    const navigationExtras: NavigationExtras = {
+                      queryParams: {
+                        type: 'rejected',
+                        uid: this.loanId
+                      }
+                    }
+                    this.snackbarService.openSnackBar("Sorry This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
+                    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
+                  }
+                  console.log("Response", data);
+                },
+                  (error) => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+                  })
               }
-              console.log("Response", data);
-            },
-              (error) => {
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-              })
-          }
+            }
+            else {
+              console.log("Data Not Saved")
+            }
+          });
         }
         else {
-          console.log("Data Not Saved")
+          this.snackbarService.openSnackBar("Failed to Check Eligibility", { 'panelClass': 'snackbarerror' })
         }
-      });
+      })
     }
   }
 
@@ -774,6 +812,14 @@ export class CreateComponent implements OnInit {
             this.loanId = result.uid;
             const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
             this.getCustomerDetails(filter);
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                id: this.loanId,
+                action: 'update'
+              }
+            };
+            console.log("Navigation", navigationExtras)
+            this.router.navigate([this.partnerParentId, 'partner', 'loans', 'update'], navigationExtras);
           }
         }
       });
@@ -781,9 +827,7 @@ export class CreateComponent implements OnInit {
     }
     else {
       this.snackbarService.openSnackBar("Please Enter a Valid Mobile Number", { 'panelClass': 'snackbarerror' });
-
     }
-
   }
 
 
@@ -791,7 +835,7 @@ export class CreateComponent implements OnInit {
 
   saveCustomerDetails() {
     const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
-    this.partnerservice.getCustomerDetails(filter).subscribe((data) => {
+    this.partnerService.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
       if (this.customerDetails[0] && this.customerDetails[0].id) {
         this.customerId = this.customerDetails[0].id;
@@ -805,10 +849,11 @@ export class CreateComponent implements OnInit {
         },
         "customerMobileVerified": this.verification,
         "customerEmailVerified": this.emailverification,
-        "location": { "id": this.user.bussLocs[0] },
-        "assignee": { "id": this.user.id },
+        // "assignee": { "id": 139799 },
+        "location": { "id": 126700 },
         "loanApplicationKycList": [
           {
+            "id": 0,
             "isCoApplicant": false
           }
         ]
@@ -827,31 +872,26 @@ export class CreateComponent implements OnInit {
 
     console.log(this.loanApplication, this.customerId)
 
-    this.partnerservice.getLoanById(this.loanId).subscribe((data: any) => {
+    this.partnerService.getLoanById(this.loanId).subscribe((data: any) => {
       console.log('Loan Data', data)
       if (this.loanApplication && data && data.status && data.status.id) {
         this.loanApplication['status'] = { "id": data.status.id };
       }
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
-        // this.loanApplication.loanApplicationKycList[0]["id"] = data.loanApplicationKycList[0].id
+        this.loanApplication.loanApplicationKycList[0].id = data.loanApplicationKycList[0].id
+        // this.loanApplication.loanApplicationKycList[0]["isCoApplicant"] = false
         this.loanApplicationKycId = data.loanApplicationKycList[0].id
-        this.loanApplication.loanApplicationKycList[0]["id"] = this.loanApplicationKycId
       }
-      this.partnerservice.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
+      this.partnerService.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
               console.log(dataS3Url);
             });
         }
-        const navigationExtras: NavigationExtras = {
-          queryParams: {
-            id: this.loanId,
-            action: 'update'
-          }
-        };
-        console.log("Navigation", navigationExtras)
-        this.router.navigate([this.partnerParentId, 'partner', this.partnerId, 'loans', 'update'], navigationExtras);
+
+        this.customerDetailsPanel = false;
+        this.kycDetailsPanel = true;
         this.snackbarService.openSnackBar("Customer Details Saved Successfully")
       },
         (error) => {
@@ -869,10 +909,19 @@ export class CreateComponent implements OnInit {
 
 
   refreshAadharVerify() {
-    this.partnerservice.refreshAadharVerify(this.loanApplicationKycId).subscribe((data: any) => {
+    this.partnerService.refreshAadharVerify(this.loanApplicationKycId).subscribe((data: any) => {
       if (data) {
         this.aadharverification = true;
-        this.verifyingUID = false;
+        this.partnerService.getLoanById(this.loanId).subscribe((data: any) => {
+          if (data) {
+            this.createLoan.controls.permanentaddress1.setValue(data.loanApplicationKycList[0].permanentAddress1);
+            this.createLoan.controls.permanentaddress2.setValue(data.loanApplicationKycList[0].permanentAddress2);
+            this.createLoan.controls.permanentcity.setValue(data.loanApplicationKycList[0].permanentCity);
+            this.createLoan.controls.permanentstate.setValue(data.loanApplicationKycList[0].permanentState);
+            this.createLoan.controls.permanentpincode.setValue(data.loanApplicationKycList[0].permanentPin);
+          }
+          this.verifyingUID = false;
+        })
       }
     });
   }
@@ -896,24 +945,24 @@ export class CreateComponent implements OnInit {
       this.loanApplication["aadhaar"] = this.createLoan.controls.aadharnumber.value;
     }
 
-    this.partnerservice.getLoanById(this.loanId).subscribe((data: any) => {
+    this.partnerService.getLoanById(this.loanId).subscribe((data: any) => {
 
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
         this.loanApplication["id"] = data.loanApplicationKycList[0].id
       }
       for (let i = 0; i < this.filesToUpload.length; i++) {
         this.filesToUpload[i]['order'] = i;
-        if (this.filesToUpload[i]["type"] == 'pan') {
+        if (this.filesToUpload[i]["type"] == 'pan' && type == 'Pan') {
           this.loanApplication['panAttachments'] = [];
           this.loanApplication['panAttachments'].push(this.filesToUpload[i]);
         }
-        if (this.filesToUpload[i]["type"] == 'aadhar') {
+        if (this.filesToUpload[i]["type"] == 'aadhar' && type == 'UID') {
           this.loanApplication['aadhaarAttachments'] = [];
           this.loanApplication['aadhaarAttachments'].push(this.filesToUpload[i]);
         }
       }
 
-      this.partnerservice.verifyIds(type, this.loanApplication).subscribe((s3urls: any) => {
+      this.partnerService.verifyIds(type, this.loanApplication).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
@@ -960,13 +1009,14 @@ export class CreateComponent implements OnInit {
       "currentState": this.createLoan.controls.currentstate.value
     }
 
-    this.partnerservice.getLoanById(this.loanId).subscribe((data: any) => {
+    this.partnerService.getLoanById(this.loanId).subscribe((data: any) => {
 
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
         this.loanApplication["id"] = data.loanApplicationKycList[0].id
       }
 
-      this.partnerservice.addressUpdate(this.loanApplication).subscribe((s3urls: any) => {
+      this.partnerService.addressUpdate(this.loanApplication).subscribe((s3urls: any) => {
+        this.panelsManage(false, false, true, false);
         this.snackbarService.openSnackBar("Address Details Updated Successfully")
       },
         (error) => {
@@ -980,6 +1030,13 @@ export class CreateComponent implements OnInit {
 
   }
 
+
+  panelsManage(customer, kyc, loan, bank) {
+    this.customerDetailsPanel = customer;
+    this.kycDetailsPanel = kyc;
+    this.loanDetailsPanel = loan;
+    this.bankDetailsPanel = bank;
+  }
 
   saveLoanDetails() {
     this.loanApplication = {
@@ -1011,7 +1068,7 @@ export class CreateComponent implements OnInit {
       ]
     }
 
-    this.partnerservice.getLoanById(this.loanId).subscribe((data: any) => {
+    this.partnerService.getLoanById(this.loanId).subscribe((data: any) => {
 
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
         this.loanApplication.loanApplicationKycList[0]["id"] = data.loanApplicationKycList[0].id
@@ -1019,8 +1076,16 @@ export class CreateComponent implements OnInit {
       if (data && data.id) {
         this.loanApplication["id"] = data.id
       }
+      if (data && data.id) {
+        this.loanApplication["id"] = data.id
+      }
 
-      this.partnerservice.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
+      if (this.user && this.user.partnerId) {
+        this.loanApplication["partner"] = { 'id': this.user.partnerId }
+      }
+
+      this.partnerService.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
+        this.panelsManage(false, false, false, true);
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
       },
         (error) => {
@@ -1058,18 +1123,22 @@ export class CreateComponent implements OnInit {
       "loanApplicationUid": this.loanId,
     }
 
-    if (!this.bankData) {
-      this.partnerservice.saveBankDetails(this.bankDetails).subscribe((s3urls: any) => {
+    if (this.bankData == null) {
+      this.partnerService.saveBankDetails(this.bankDetails).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
               console.log(dataS3Url);
             });
         }
-        this.partnerservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
+        this.partnerService.verifyBankDetails(verifyBank).subscribe((data: any) => {
           if (data) {
-            this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
+            this.partnerService.getBankDetailsById(this.loanId).subscribe((bankInfo) => {
+              this.bankData = bankInfo;
+            });
           }
+          this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
+
         }),
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -1079,17 +1148,19 @@ export class CreateComponent implements OnInit {
       }
     }
     else {
-      this.partnerservice.updateBankDetails(this.bankDetails).subscribe((s3urls: any) => {
+
+      this.partnerService.updateBankDetails(this.bankDetails).subscribe((s3urls: any) => {
+        console.log("Coming Here")
+
         if (s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
               console.log(dataS3Url);
             });
         }
-        this.partnerservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
-          if (data) {
-            this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
-          }
+        this.partnerService.verifyBankDetails(verifyBank).subscribe((data: any) => {
+          this.snackbarService.openSnackBar("Bank Details Updated Successfully")
+
         }),
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -1111,8 +1182,8 @@ export class CreateComponent implements OnInit {
         disableClose: true,
         data: {
           type: 'Email',
-          email: this.createLoan.controls.email.value,
-          uid: this.loanId
+          id: this.loanId,
+          email: this.createLoan.controls.email.value
         }
       });
       dialogRef.afterClosed().subscribe(result => {
@@ -1204,9 +1275,8 @@ export class CreateComponent implements OnInit {
 
 
   payment(event) {
-    // this.totalpayment = event.target.value;
-    // this.downpayment = Math.round(this.totalpayment * 0.2);
-    // this.loanamount = Math.round(this.totalpayment - this.downpayment);
+    this.downPayment = Number(event.target.value);
+    this.createLoan.controls.loanamount.setValue(this.createLoan.controls.totalpayment.value - this.downPayment)
   }
 
   verifypan() {

@@ -11,6 +11,19 @@
 </div>
 
 
+<div class="text-center" *ngIf="from && from == 'analyzebank'">
+  <div class="p-5 pt-0">
+    <div>
+      <img width="250px" src="../../../../assets/images/cdl/eligibility.png">
+    </div>
+    <div class="otp mgn-bt-20 mt-3">
+      <span class="font-weight-bold title">Analyzing Bank Statement</span>
+      <label for="phone" class="mgn-up-10 mgn-bt-20 subtitle">Please wait while we analyze bank Statements</label>
+    </div>
+  </div>
+</div>
+
+
 <div class="text-center" *ngIf="from && from == 'remarks'">
   <div class="p-5 pt-0">
     <div>
@@ -64,6 +77,100 @@
     </div>
     <div class="mt-3">
       <div class="btn btn-primary" (click)="goHome()"><i class="fa fa-home"></i>&nbsp;Go Home</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="text-center" *ngIf="from && from == 'creditofficer' && this.sanctionAmount">
+  <div class=" p-5 pt-0">
+    <div class="otp mgn-bt-20 mt-3" *ngIf="loanData">
+
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Selected Scheme</div>
+            </div>
+            <div class="fieldPadding">
+              <input (click)="openSchemes()" (keyup)="resetErrors()" #scheme type="text" placeholder="Select Scheme"
+                class="form-control" autocomplete="off" formControlName="scheme" readonly
+                [value]="schemeSelected.schemeName" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Total Bill Amount</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Total Bill Amount"
+                class="form-control" autocomplete="off" [value]="totalPayment" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Down Payment</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
+                class="form-control" autocomplete="off" [value]="downPayment" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Requested Amount</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
+                class="form-control" autocomplete="off" [value]="loanAmount" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Sanction Amount</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
+                class="form-control" autocomplete="off" [value]="sanctionedAmount" (keyup)="payment($event)" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-2">
+        <div class="mr-3">
+          <div class="btn btn-primary" (click)="sanctionLoan()">Sanction</div>
+        </div>
+        <div>
+          <div class="btn btn-primary" (click)="close()">Close</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

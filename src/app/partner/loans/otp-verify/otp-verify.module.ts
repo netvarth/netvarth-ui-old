@@ -1,9 +1,9 @@
-
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OtpVerifyComponent } from './otp-verify.component';
-import { MatButtonModule } from '@angular/material/button';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { MatButtonModule } from '@angular/material/button';
+
 
 
 @NgModule({
@@ -17,9 +17,6 @@ import { NgOtpInputModule } from 'ng-otp-input';
   ],
   exports: [
     OtpVerifyComponent
-  ],
-  schemas: [
-    NO_ERRORS_SCHEMA
   ]
 })
 export class OtpVerifyModule { }
