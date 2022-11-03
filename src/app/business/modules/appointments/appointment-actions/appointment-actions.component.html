@@ -540,7 +540,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default modal_close closeBtn" data-dismiss="modal" mat-dialog-close >Close</button>
-        <button type="button" [class.disabled]="disableButn() || freeSlots.length === 0" class="btn btn-primary nextBtn" (click)="sendAcceptRequest()">Next</button>
+        <button type="button" [class.disabled]="disableNxtBtn() || freeSlots.length === 0" class="btn btn-primary nextBtn" (click)="sendAcceptRequest()">Next</button>
     </div>
     
 </div>

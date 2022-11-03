@@ -1311,6 +1311,14 @@ export class AppointmentActionsComponent implements OnInit {
       return false;
     }
   }
+  disableNxtBtn(){
+    if(this.selectedTime === '' || this.selectedTime === undefined){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
   close() {
     this.dialogRef.close();
   }
@@ -1534,7 +1542,7 @@ export class AppointmentActionsComponent implements OnInit {
     //this.getAppointmentSlots();
    this.getSlots(this.sel_schedule_id); 
  }
- 
+
   getSlots(selectedScheduleId){
     this.freeSlots = [];
     this.loading = true;
@@ -1668,7 +1676,11 @@ getSlotsBySheduleandDate(scheduleId,selDate){
     //  post_data['appmtFor'][0]['lastName'] = this.appt.appmtFor[0].lastName;
     // post_data['appmtFor'][0]['apptTime'] = this.selectedTime;
      // post_data['date'] = appt.appmtDate;
-
+//  if(this.selectedTime === '' || this.selectedTime === undefined){
+//   this.snackbarService.openSnackBar('Please select time slot', {
+//     panelClass: "snackbarerror"
+//   });
+//  }
     console.log("send data:",post_data);
     this.provider_services.postAppointmentRequest(post_data).
     subscribe((res:any)=>{
