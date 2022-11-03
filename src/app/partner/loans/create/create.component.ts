@@ -710,7 +710,7 @@ export class CreateComponent implements OnInit {
       let data = {
         "id": this.loanData.id,
         "uid": this.loanId,
-        "remarks": this.createLoan.controls.currentstate.value
+        "remarks": this.createLoan.controls.remarks.value
       }
       this.partnerService.saveRemarks(data).subscribe((data: any) => {
         if (data) {

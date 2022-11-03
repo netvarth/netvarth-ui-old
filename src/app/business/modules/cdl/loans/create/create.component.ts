@@ -1120,6 +1120,7 @@ export class CreateComponent implements OnInit {
               this.bankData = bankInfo;
             });
           }
+          this.bankDetailsPanel = false;
           this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
 
         }),

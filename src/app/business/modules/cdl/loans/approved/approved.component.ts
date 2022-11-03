@@ -123,7 +123,10 @@ export class ApprovedComponent implements OnInit {
 
 
   gotoNext() {
-    this.cdlservice.changeScheme(this.loanId, this.schemeSelected.id).subscribe((data: any) => {
+    let schemeData = {
+      "loanScheme": { "id": this.schemeSelected.id }
+    }
+    this.cdlservice.changeScheme(this.loanId, schemeData).subscribe((data: any) => {
       if (data) {
         if (this.timetype == 1) {
           this.timetype = 2

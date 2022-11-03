@@ -220,9 +220,9 @@ export class CdlService {
   }
 
 
-  changeScheme(loanId, schemeId) {
-    const url = 'provider/loanapplication/' + loanId + '/scheme/' + schemeId;
-    return this.servicemeta.httpPut(url, null);
+  changeScheme(loanId, data) {
+    const url = 'provider/loanapplication/' + loanId + '/approval';
+    return this.servicemeta.httpPut(url, data);
   }
 
   suspendDealer(id, data) {
