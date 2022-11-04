@@ -9,9 +9,9 @@ const routes: Routes = [
   { path: '', component: PartnerComponent },
   { path: 'login', loadChildren: () => import('../partner/login/login.module').then(m => m.LoginModule) },
   { path: 'loans', loadChildren: () => import('./loans/loans.module').then(m => m.LoansModule) },
+  { path: 'customers', loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule) },
   { path: 'schemes', loadChildren: () => import('./schemes/schemes.module').then(m => m.SchemesModule) },
   { path: 'loans/:id', loadChildren: () => import('./loans/loan-details/loan-details.module').then(m => m.LoanDetailsModule) }
-
 ]
 
 @NgModule({

@@ -67,15 +67,15 @@
           <div>
             <span *ngIf="waitlist_data.service.serviceType === 'virtualService'">
               <a *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
-              (click)="showCallingModes(waitlist_data.uid,'Started')"
-              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12"><i class="fa fa-play"
-                aria-hidden="true"></i> Start</a>
+                (click)="showCallingModes(waitlist_data.uid,'Started')"
+                class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12"><i class="fa fa-play"
+                  aria-hidden="true"></i> Start</a>
             </span>
-             <span *ngIf="waitlist_data.service.serviceType !== 'virtualService'">
+            <span *ngIf="waitlist_data.service.serviceType !== 'virtualService'">
               <a *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
-              (click)="changeWaitlistStatus('Started')"
-              class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12"><i class="fa fa-play"
-                aria-hidden="true"></i> Start</a>
+                (click)="changeWaitlistStatus('Started')"
+                class="btn btn-success col-md-12 col-lg-12 col-xs-12 col-sm-12"><i class="fa fa-play"
+                  aria-hidden="true"></i> Start</a>
             </span>
             <a (click)="changeStatus(waitlist_data)"
               *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
@@ -93,21 +93,26 @@
           <div class="text-center mx-auto">
             <a class="status-btn btn btn-outline-dark my" (click)="addConsumerInboxMessage()"><i
                 class="fa fa-commenting-o" aria-hidden="true"></i> Message</a>
-                <a class="status-btn btn btn-outline-dark my mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] === 'Started'" (click)="showCallingModes(waitlist_data.uid, 'STARTED')"> <span class="fa-icons"><i *ngIf="waitlist_data.service.serviceType === 'virtualService'"
-                  [class]="iconClass"></i></span> Resume</a>
-            <a class="status-btn btn btn-outline-dark my mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
+            <a class="status-btn btn btn-outline-dark my mx-1"
+              *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] === 'Started'"
+              (click)="showCallingModes(waitlist_data.uid, 'STARTED')"> <span class="fa-icons"><i
+                  *ngIf="waitlist_data.service.serviceType === 'virtualService'" [class]="iconClass"></i></span>
+              Resume</a>
+            <a class="status-btn btn btn-outline-dark my mx-1" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed'
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Cancelled')"><i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 
-            <a class="status-btn btn btn-disabled my mx-1" style="cursor: no-drop!important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' 
+            <a class="status-btn btn btn-disabled my mx-1" style="cursor: no-drop!important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed'
             || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'">
               <i class="fa fa-times" aria-hidden="true"></i> Cancel</a>
 
-            <a class="status-btn btn btn-disabled my mx-1" style="cursor: no-drop!important;margin-top: 0.1rem !important;margin-bottom: 0.1rem !important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed' 
+            <a class="status-btn btn btn-disabled my mx-1"
+              style="cursor: no-drop!important;margin-top: 0.1rem !important;margin-bottom: 0.1rem !important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Started' || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Completed'
              || check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Cancelled'">
               <i class="fa fa-check" aria-hidden="true"></i> Complete</a>
 
-            <a class="status-btn btn btn-outline-dark my" style="margin-top: 0.1rem !important;margin-bottom: 0.1rem !important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed' 
+            <a class="status-btn btn btn-outline-dark my"
+              style="margin-top: 0.1rem !important;margin-bottom: 0.1rem !important" *ngIf="check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] == 'Started' && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Completed'
               && check_in_statuses[waitlist_data.apptStatus | capitalizeFirst] != 'Cancelled'"
               (click)="changeWaitlistStatus('Completed')"><i class="fa fa-check" aria-hidden="true"></i> Complete</a>
           </div>
@@ -137,13 +142,16 @@
                   class="edit-btn pointer-cursor"><b>Edit Details</b></a>
               </div>
             </div>
-            <span (click)="gotoCustomerDetails()" class="ml-0 pl-0 pointer-cursor" *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
+            <span (click)="gotoCustomerDetails()" class="ml-0 pl-0 pointer-cursor"
+              *ngIf="waitlist_data.appmtFor[0].firstName || waitlist_data.appmtFor[0].lastName">
               &nbsp;<b>{{waitlist_data.appmtFor[0].firstName | capitalizeFirst}} </b>
               <b class="">{{waitlist_data.appmtFor[0].lastName}}</b></span>
             <div class="booking-details-body">
               <div class="jaldee-id" *ngIf="waitlist_data.appointmentEncId">
-                <i class="fa fa-id-card-o icon" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id"></i>&nbsp;
-                <span class="itemHead" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id">{{customer_label | capitalizeFirst}} id : </span>
+                <i class="fa fa-id-card-o icon"
+                  *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id"></i>&nbsp;
+                <span class="itemHead" *ngIf="waitlist_data.appmtFor && waitlist_data.appmtFor[0].id">{{customer_label |
+                  capitalizeFirst}} id : </span>
                 <span class="itemVal">{{waitlist_data.appmtFor[0].memberJaldeeId}}</span>
               </div>
               <div class="contact-no" *ngIf="waitlist_data.phoneNumber && checkDataNull(waitlist_data.phoneNumber)">
@@ -190,7 +198,7 @@
 
       <div class="col-xl-12 col-lg-4 col-md-4 col-sm-12 col-xs-12 no-padding-small px-1">
         <div class="card-custom data-card p-0 m-0">
-          <app-history-section [source]="'appt'" [widget]="true" [waitlistdata]="waitlist_data"
+          <app-history-section [source]="'appt'" [widget]="true" [waitlistdata]="waitlist_data" [spName]="spName"
             [waitlist_history]="waitlist_history" [internalStatuslog]="internalStatuslog"></app-history-section>
         </div>
         <div class="clearfix history-notes"></div>
@@ -200,7 +208,8 @@
           </app-notes-section>
         </div>
         <div class="card-custom data-card p-0 m-0" *ngIf="small_device_display">
-          <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data" [waitlist_notes]="waitlist_notes">
+          <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data"
+            [waitlist_notes]="waitlist_notes">
           </app-notes-section>
         </div>
       </div>
@@ -208,28 +217,29 @@
   </div>
 </div>
 <div class="clearfix"></div>
-  <section class="prov-apptDetail" *ngIf="waitlist_data">
-    <div class="content comn-cls checkin-details no-padding" *ngIf="!small_device_display">
-      <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small mt-3">
-        <div class="card" *ngIf="api_loading">
-          <app-common-innerloading-spinner></app-common-innerloading-spinner>
-        </div>
-        <div class="card inboxList" *ngIf="!api_loading">
-          <label>Messages</label>
-          <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
-            (reloadApi)="getCommunicationHistory(waitlist_data.uid)">
-          </app-inbox-list>
-        </div>
+<section class="prov-apptDetail" *ngIf="waitlist_data">
+  <div class="content comn-cls checkin-details no-padding" *ngIf="!small_device_display">
+    <div class="lbl col-sm-12 col-md-8 col-lg-8 col-xl-8 no-padding-small mt-3">
+      <div class="card" *ngIf="api_loading">
+        <app-common-innerloading-spinner></app-common-innerloading-spinner>
       </div>
-      <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small mt-3" *ngIf="!small_device_display">
-        <div class="card-custom data-card p-0 m-0">
-          <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data" [waitlist_notes]="waitlist_notes">
-          </app-notes-section>
-        </div>
+      <div class="card inboxList" *ngIf="!api_loading">
+        <label>Messages</label>
+        <app-inbox-list [messages]="communication_history" [fromsource]="'provider_checkin_detail'"
+          (reloadApi)="getCommunicationHistory(waitlist_data.uid)">
+        </app-inbox-list>
       </div>
     </div>
-  </section>
-  
+    <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small mt-3" *ngIf="!small_device_display">
+      <div class="card-custom data-card p-0 m-0">
+        <app-notes-section [source]="'customerNote'" [widget]="true" [waitlistdata]="waitlist_data"
+          [waitlist_notes]="waitlist_notes">
+        </app-notes-section>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div>
   <div class="content checkin-details" *ngIf="waitlist_data">
     <div class="lbl col-sm-12 col-md-4 col-lg-4 col-xl-4 no-padding-small px-1"

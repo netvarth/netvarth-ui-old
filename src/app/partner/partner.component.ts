@@ -82,9 +82,9 @@ export class PartnerComponent implements OnInit {
     this.partnerId = this.lStorageService.getitemfromLocalStorage('partnerId');
 
     console.log("User is", this.user);
-    this.partnerservice.getLoans().subscribe(data => {
+    this.partnerservice.getLoans().subscribe((data: any) => {
       this.statusLoansList = data
-      this.allLoansCount = this.loanDetails.length
+      this.allLoansCount = data.length
       this.loans = this.statusLoansList.slice(0, 10);
     });
 
@@ -120,6 +120,9 @@ export class PartnerComponent implements OnInit {
     });
   }
 
+  customers() {
+    this.router.navigate([this.partnerParentId, 'partner', 'customers']);
+  }
   getRejectedloansCount() {
     const api_filter = {};
     api_filter['applicationStatus-eq'] = 'Rejected';

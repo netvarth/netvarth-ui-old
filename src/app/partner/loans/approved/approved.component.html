@@ -85,7 +85,7 @@
 
 
 
-<div class="card m-2" *ngIf="type=='partnerAccepted'">
+<div class="card m-2" *ngIf="type=='consumerAccepted'">
   <span class="font-weight-bold">&nbsp;Loan Sanctioned</span><br><br>
   <div class="row">
     <div class="col-md-10 card-border">
@@ -97,20 +97,43 @@
         </div>
         <div>
           <span class="font-weight-bold card-title">Date : </span>
-          <span class="font-weight-bold card-small-font">22/10/2022</span><br>
+          <span class="font-weight-bold card-small-font"
+            *ngIf="loanData && loanData.createdDate">{{loanData.createdDate}}</span><br>
           <span class="font-weight-bold card-title">Purpose of Loan: </span>
-          <span class="font-weight-bold card-small-font">Mobile Purchase</span>
+          <span class="font-weight-bold card-small-font"
+            *ngIf="loanData && loanData.loanProduct && loanData.loanProduct.productName">{{loanData.loanProduct.productName}}
+            Purchase</span>
         </div><br>
         <div class="pointer-cursor" *ngIf="user.userType != 2">
           <div>
             <div class="bggrey my-2">
               <div>
                 <div class="fieldPadding">
-                  <div class='file file--upload'>
-                    <label for='input-file'>
-                      Upload Invoice
+                  <div class="file">
+                    <label (click)="invoiceAttach.click()">
+                      Upload File
                     </label>
-                    <input id='input-file' type='file' />
+                    <input #invoiceAttach type='file' (change)="filesSelected($event, 'invoice')" />
+                  </div>
+                  <div class="img-section clearfix"
+                    *ngIf="selectedFiles['invoice'] && selectedFiles['invoice'].files && selectedFiles['invoice'].files.length > 0">
+                    <ul class="galul">
+                      <li *ngFor="let file of selectedFiles['invoice'].files;let i = index ">
+                        <div class="galimg_outer">
+                          <div class="gal_img pointer-cursor">
+                            <img [src]="getImage(selectedFiles['invoice'].base64[i], file)"
+                              *ngIf="selectedFiles['invoice'].base64[i]" width="100px" height="100px">
+                            <a [href]="file.s3path" target="_blank">
+                              <img [src]="file.s3path" *ngIf="!selectedFiles['invoice'].base64[i] && file.s3path"
+                                width="100px" height="100px">
+                            </a>
+                          </div>
+                          <div class="gal_action" (click)="deleteTempImage(i, 'invoice',file)">
+                            <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
@@ -122,19 +145,28 @@
       <div class="col-md-6 d-flex">
         <div class="card">
           <span class="font-weight-bold card-title">Loan Amount</span><br>
-          <span class="font-weight-bold"><i class="fa fa-inr"></i>&nbsp;44000</span>
+          <span class="font-weight-bold" *ngIf="loanData && loanData.sanctionedAmount"><i
+              class="fa fa-inr"></i>&nbsp;{{loanData.sanctionedAmount}}</span>
         </div>
         <div class="card">
           <span class="font-weight-bold card-title">Duration</span><br>
-          <span class="font-weight-bold"><i class="fa fa-clock-o" aria-hidden="true"></i>&nbsp;6 Months</span>
+          <span class="font-weight-bold" *ngIf="loanData && loanData.loanScheme"><i class="fa fa-clock-o"
+              aria-hidden="true"></i>&nbsp;{{loanData.loanScheme.noOfRepayment}} Months</span>
         </div>
       </div>
 
     </div>
 
   </div>
-  <div class="btn btn-primary mt-3" (click)="goHome()">
-    Go to Home
+  <div class="clearfix"></div>
+  <div class="row text-center">
+    <div class="col-md-10">
+      <button
+        [disabled]="selectedFiles['invoice'] && selectedFiles['invoice'].files && selectedFiles['invoice'].files.length == 0"
+        class="btn btn-primary mt-3" (click)="approveLoan()">
+        Approve Loan
+      </button>
+    </div>
   </div>
 </div>
 
