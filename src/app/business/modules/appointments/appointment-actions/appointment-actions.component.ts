@@ -78,20 +78,15 @@ export class AppointmentActionsComponent implements OnInit {
   schedules: any = [];
   availableSlots: any = [];
   freeSlots: any = [];
-  allSlots:any =[
-    '09:00','09:15','09:30','09:45','10:00',
-    '09:00','09:15','09:30','09:45','10:00',
-    '09:00','09:15','09:30','09:45','10:00',
-    '09:00','09:15','09:30','09:45','10:00',
-    '09:00','09:15','09:30','09:45','10:00',
-    '09:00','09:15','09:30','09:45','10:00'
-  ]
+  allSlots:any = [];
   hold_sel_checkindate;
   apptTime;
   today;
   minDate;
   maxDate;
   server_date;
+  callingModes: any = [];
+  commObj: any = {}; // communication object
   dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
@@ -196,10 +191,17 @@ export class AppointmentActionsComponent implements OnInit {
     // ).subscribe((data:any)=>{
     //   console.log("Slotssss data :",data);
     // })
-    this.getSlots(this.appt.schedule.id);
+   this.getSlots(this.sel_schedule_id);
     this.multipleSelection = this.data.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
+    if (this.appt.appmtFor[0].whatsAppNum) {
+      this.commObj['comWhatsappNo'] = this.appt.appmtFor[0].whatsAppNum.number;
+      this.commObj['comWhatsappCountryCode'] = this.appt.appmtFor[0].whatsAppNum.countryCode;
+  } else {
+    this.commObj['comWhatsappNo'] = this.appt.userProfile.primaryMobileNo;
+    this.commObj['comWhatsappCountryCode'] = this.appt.userProfile.countryCode;
+  }
     if (
       !this.data.multiSelection &&
       this.appt.releasedQnr &&
@@ -1173,7 +1175,7 @@ export class AppointmentActionsComponent implements OnInit {
           
             if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
               freslot["scheduleId"] = scheduleSlots["scheduleId"];
-              console.log("freslot ",freslot)
+             // console.log("freslot ",freslot)
 
               freslot["displayTime"] = this.getSingleTime(freslot.time);
               this.freeSlots.push(freslot);
@@ -1253,8 +1255,6 @@ export class AppointmentActionsComponent implements OnInit {
         this.getAppointmentSlots();
       }
     }
-    this.getAppointmentSlots();
-
   }
   setMinMaxDate() {
     this.today = new Date(this.server_date.split(" ")[0]).toLocaleString(
@@ -1544,7 +1544,7 @@ export class AppointmentActionsComponent implements OnInit {
  }
 
   getSlots(selectedScheduleId){
-    this.freeSlots = [];
+    this.allSlots = [];
     this.loading = true;
     this.provider_services
     .getAppointmentSlotsByScheduleid(
@@ -1552,58 +1552,53 @@ export class AppointmentActionsComponent implements OnInit {
     ).subscribe((data:any)=>{
      // console.log("Slotssss data :",data);
       this.availableSlots = data.availableSlots;
+     // this.sel_schedule_id = data["scheduleId"];
+      console.log("ACtive Sechdule :",data["scheduleId"]);
       // freslot["scheduleId"] = scheduleSlots["scheduleId"];
-
       this.loading = false;
-      // for (const scheduleSlots of this.schedules) {
-      //   this.availableSlots = scheduleSlots.availableSlots;
-      //   console.log("availableSlots",this.availableSlots)
-      //   console.log("sel_checkindate",this.sel_checkindate)
-      //   console.log("scheduleSlots.date",scheduleSlots.date)
+   
       console.log("freslot ",this.availableSlots)
-
         for (const freslot of this.availableSlots) {
-        
-          if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
-  
+        // && freslot.active
+          if (freslot.noOfAvailbleSlots !== "0") {
             freslot["displayTime"] = this.getSingleTime(freslot.time);
-            this.freeSlots.push(freslot);
+            this.allSlots.push(freslot);
           }
          
         }
       
-      this.apptTime = this.freeSlots[0];
+      this.apptTime = this.allSlots[0];
    // }
     })
   }
 
 getSlotsBySheduleandDate(scheduleId,selDate){
-  this.freeSlots = [];
+  this.allSlots = [];
   this.loading = true;
   this.provider_services.getSlotsByScheduleandDate(scheduleId,selDate).
   subscribe((res:any)=>{
     this.schedules = res;
-    console.log("schedules data :",res);
+   // console.log("schedules data :",res);
     this.loading = false;
     for (const scheduleSlots of this.schedules) {
       this.availableSlots = scheduleSlots.availableSlots;
       console.log("availableSlots",this.availableSlots)
-      console.log("sel_checkindate",this.sel_checkindate)
-      console.log("scheduleSlots.date",scheduleSlots.date)
+      // console.log("sel_checkindate",this.sel_checkindate)
+      // console.log("scheduleSlots.date",scheduleSlots.date)
 
       for (const freslot of this.availableSlots) {
       
         if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
           freslot["scheduleId"] = scheduleSlots["scheduleId"];
-          console.log("freslot ",freslot)
+        //  console.log("freslot ",freslot)
 
           freslot["displayTime"] = this.getSingleTime(freslot.time);
-          this.freeSlots.push(freslot);
+          this.allSlots.push(freslot);
         }
        
       }
     
-    this.apptTime = this.freeSlots[0];
+    this.apptTime = this.allSlots[0];
   }
   })
 }
@@ -1668,6 +1663,13 @@ getSlotsBySheduleandDate(scheduleId,selDate){
     if(this.appt.providerConsumer){
       post_data['consumer'] = {'id':this.appt.providerConsumer.id}
     }
+    if (this.appt.service.serviceType === 'virtualService') {
+     // if (this.validateVirtualCallInfo(this.callingModes)) {
+        post_data['virtualService'] = this.getVirtualServiceInput();
+      // } else {
+      //     return false;
+      // }
+  }
    // const customerDetails = this.appt.appmtFor[0];
 
     //  post_data['appmtFor'] = JSON.parse(JSON.stringify(this.appt.appmtFor));
@@ -1698,6 +1700,89 @@ getSlotsBySheduleandDate(scheduleId,selDate){
     
 
   }
+  validateVirtualCallInfo(callingModes) {
+    let valid = true;
+    if (callingModes === '' || callingModes.length < 10) {
+        for (const i in this.appt.virtualCallingModes) {
+            if (this.appt.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.virtualCallingModes[i].callingMode === 'Phone') {
+                if (!this.commObj['comWhatsappNo'] && this.appt.serviceBookingType !== 'request') {
+                    this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                    valid = false;
+                    break;
+                }
+            }
+        }
+    }
+    return valid;
+}
+getVirtualServiceInput() {
+    let virtualServiceArray = {};
+    if (this.callingModes !== '') {
+        if (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom' ) {
+          //|| this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'
+            virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
+        } else {
+            virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];
+        }
+    }
+    if(this.appt.virtualService.WhatsApp){
+      virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.virtualService.WhatsApp;
+    }
+
+    for (const i in virtualServiceArray) {
+        if (i === 'WhatsApp') {
+            return virtualServiceArray;
+        } else if (i === 'GoogleMeet') {
+            return virtualServiceArray;
+        } else if (i === 'Zoom') {
+            return virtualServiceArray;
+        } else if (i === 'Phone') {
+            return virtualServiceArray;
+        } else if (i === 'VideoCall') {
+            return { 'VideoCall': '' };
+        }
+    }
+}
+// initAppointment() {
+//   const _this = this;
+//   _this.appmtFor = [];
+//   const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
+//   console.log("InitAppointment:");
+//   return new Promise(function (resolve, reject) {
+//       _this.customerService.getCustomerInfo(activeUser.id).then(data => {
+//           _this.parentCustomer = data;
+//           if (_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.firstName) {
+//               _this.apptDetails_firstName = _this.parentCustomer.userProfile.firstName;
+//           }
+//           if (_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.lastName) {
+//               _this.apptDetails_lastName = _this.parentCustomer.userProfile.lastName;
+//           }
+//           if (_this.appointmentType != 'reschedule') {
+//               _this.appmtFor.push({ id: _this.parentCustomer.id, firstName: _this.parentCustomer.userProfile.firstName, lastName: _this.parentCustomer.userProfile.lastName });
+//               _this.prepaymentAmount = _this.appmtFor.length * _this.selectedService.minPrePaymentAmount || 0;
+//               _this.serviceCost = _this.selectedService.price;
+//               _this.setConsumerFamilyMembers(_this.parentCustomer.id).then(); // Load Family Members
+//               _this.setProviderConsumerList(_this.parentCustomer.id, _this.accountId).then(
+//                   (status) => {
+//                       if (!_this.questionnaireLoaded) {
+//                           _this.getConsumerQuestionnaire().then(
+//                               () => {
+//                                   console.log("Heree");
+//                                   resolve(true);
+//                               }
+//                           );
+//                       } else {
+//                           resolve(true);
+//                       }
+//                   }
+//               );
+//           } else {
+//               resolve(true);
+//           }
+//           _this.initCommunications(_this.parentCustomer);
+//       });
+//   });
+// }
   dateClass(date: Date): MatCalendarCellCssClasses {
     return this.availableDates.indexOf(moment(date).format("YYYY-MM-DD")) !== -1
       ? "example-custom-date-class"
