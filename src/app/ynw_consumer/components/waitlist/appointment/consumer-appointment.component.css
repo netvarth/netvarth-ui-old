@@ -3,7 +3,7 @@
   width: 70%;
   border: 1px solid #ccc;
 }
-@media (max-width:767px){
+@media (max-width:500px){
   .calenderDiv{
     display: flex;
     justify-content: center;
@@ -16,7 +16,23 @@
     border-radius: 7.1468px;
     top: -5px;
     height: 100%;
-    /* width: 50%; */
+    width: 100%;
+  }
+}
+@media (min-width:500px) and (max-width:767px){
+  .calenderDiv{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+  }
+  .matCard{
+    box-shadow: 1.32102px 1.32102px 5.28407px rgba(0, 0, 0, 0.25) !important;
+    border: none !important;
+    border-radius: 7.1468px;
+    top: -5px;
+    height: 100%;
+    width: 60%;
   }
 }
 /* and (max-width:1400px) */
