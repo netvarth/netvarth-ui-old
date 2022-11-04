@@ -1586,9 +1586,11 @@ getSlotsBySheduleandDate(scheduleId,selDate){
       // console.log("sel_checkindate",this.sel_checkindate)
       // console.log("scheduleSlots.date",scheduleSlots.date)
       for (const freslot of this.availableSlots) {
+
         if (freslot.noOfAvailbleSlots !== "0") {
           freslot["scheduleId"] = scheduleSlots["scheduleId"];
         //  console.log("freslot ",freslot)
+
           freslot["displayTime"] = this.getSingleTime(freslot.time);
           this.allSlots.push(freslot);
         }
