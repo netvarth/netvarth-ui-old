@@ -1,6 +1,6 @@
 <h1 class="mat-dialog-title" style="font-size: 1.2rem !important;" *ngIf="action === '' || action === 'status'">
     <ng-container *ngIf="action === ''  && (appt.apptStatus !== 'Requested' && appt.apptStatus !== 'RequestRejected')">Select an action to perform</ng-container>
-    <ng-container *ngIf="data.status === 'reject'">Request Reject Confirmation</ng-container>
+    <ng-container *ngIf="data.status === 'reject'">Reject Confirmation</ng-container>
     <ng-container *ngIf="action === 'status'">Change status to</ng-container>
     <button mat-dialog-close class="modal_close" tabindex="-1"><i class="fa fa-window-close"
             aria-hidden="true"></i></button>
