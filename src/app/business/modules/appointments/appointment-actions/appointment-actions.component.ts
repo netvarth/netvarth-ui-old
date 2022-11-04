@@ -183,15 +183,30 @@ export class AppointmentActionsComponent implements OnInit {
     this.sel_checkindate = this.lStorageService.getitemfromLocalStorage("selDate");
     this.sel_schedule_id = this.lStorageService.getitemfromLocalStorage("scheduleId");
     console.log("Schedule Id :", this.sel_schedule_id);
-   
-    //this.getSlotsBySheduleandDate(this.appt.schedule.id,this.appt.appmtDate);
+    const newdate = this.selectedDate;
+      // .split("/")
+      // .reverse()
+      // .join("-");
+      //moment(newdate).format("YYYY-MM-DD")
+      console.log("New Date :",newdate);
+      // console.log("New Date :",newdate.split(" ").reverse().join("-"));
+    const futrDte = new Date(newdate);
+    console.log("Future Date :",futrDte);
+    const obtmonth = futrDte.getMonth() + 1;
+    let cmonth = "" + obtmonth;
+    if (obtmonth < 10) {
+      cmonth = "0" + obtmonth;
+    }
+    const seldate = futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
+   // this.sel_checkindate = seldate;
+    this.getSlotsBySheduleandDate(this.appt.schedule.id,seldate);
     // this.provider_services
     // .getAppointmentSlotsByScheduleid(
     //   this.appt.schedule.id
     // ).subscribe((data:any)=>{
     //   console.log("Slotssss data :",data);
     // })
-   this.getSlots(this.sel_schedule_id);
+   //this.getSlots(this.sel_schedule_id);
     this.multipleSelection = this.data.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
@@ -1478,30 +1493,7 @@ export class AppointmentActionsComponent implements OnInit {
       }
     );
   }
-  // next_date(n) {
-  //   console.log("Selected Date:", this.selected_date);
-  //   let tommorow = new Date(this.selected_date);
-  //   console.log("Tommorow Date:", this.selected_date);
-  //   tommorow.setDate(tommorow.getDate() + n);
-  //   this.default_value = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
-  //   this.selected_date = this.dateTimeProcessor.getStringFromDate_YYYYMMDD(new Date(tommorow));
-  //   // this.selectedDate = this.sel_checkindate;
-  //   tommorow.setDate(tommorow.getDate() + 1);
-  //   this.next_date_value = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
-  //   tommorow.setDate(tommorow.getDate() + 1);
-  //   this.next_date_value_1 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
-  //   tommorow.setDate(tommorow.getDate() + 1);
-  //   this.next_date_value_2 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
-  //   tommorow.setDate(tommorow.getDate() - 4);
-  //   this.prev_date_value = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
-  //   tommorow.setDate(tommorow.getDate() - 1);
-  //   this.prev_date_value_1 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
-  //   tommorow.setDate(tommorow.getDate() - 1);
-  //   this.prev_date_value_2 = this.week[tommorow.getDay()] + this.month[tommorow.getMonth()] + tommorow.getDate();
-  //   console.log("Result Date:", this.selected_date);
-  //   this.date_change_event.emit(this.selected_date);
-  //   this.date_handling_btn()
-  // }
+  
   appointmentDateChanged(e) {
     const tdate = e;
    // this.ngOnInit();
@@ -1538,11 +1530,13 @@ export class AppointmentActionsComponent implements OnInit {
     // ).subscribe((res:any)=>{
     //   console.log("get slotss by :",res);
     // })
-   //this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
+   this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
     //this.getAppointmentSlots();
-   this.getSlots(this.sel_schedule_id); 
+   //this.getSlots(this.sel_schedule_id); 
  }
-
+ getSlotsByIds(){
+  
+ }
   getSlots(selectedScheduleId){
     this.allSlots = [];
     this.loading = true;
@@ -1663,11 +1657,11 @@ getSlotsBySheduleandDate(scheduleId,selDate){
       post_data['consumer'] = {'id':this.appt.providerConsumer.id}
     }
     if (this.appt.service.serviceType === 'virtualService') {
-     // if (this.validateVirtualCallInfo(this.callingModes)) {
+     if (this.validateVirtualCallInfo()) {
         post_data['virtualService'] = this.getVirtualServiceInput();
-      // } else {
-      //     return false;
-      // }
+      } else {
+          return false;
+      }
   }
    // const customerDetails = this.appt.appmtFor[0];
 
@@ -1699,19 +1693,20 @@ getSlotsBySheduleandDate(scheduleId,selDate){
     
 
   }
-  validateVirtualCallInfo(callingModes) {
+  validateVirtualCallInfo(callingModes?) {
     let valid = true;
-    if (callingModes === '' || callingModes.length < 10) {
+   // if (callingModes === '' || callingModes.length < 10) {
         for (const i in this.appt.virtualCallingModes) {
             if (this.appt.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.virtualCallingModes[i].callingMode === 'Phone') {
-                if (!this.commObj['comWhatsappNo'] && this.appt.serviceBookingType !== 'request') {
+                if (!this.commObj['comWhatsappNo'] ) {
+                  // && this.appt.serviceBookingType !== 'request'
                     this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
                     valid = false;
                     break;
                 }
             }
         }
-    }
+   // }
     return valid;
 }
 getVirtualServiceInput() {
