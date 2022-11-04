@@ -32,7 +32,7 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="d-flex justify-content-center">
-                  <div>
+                  <div *ngIf="customerDetailsVerified">
                     <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
                   </div>
                   <div class="d-flex align-items-center">
@@ -174,7 +174,14 @@
             (closed)="kycDetailsPanel = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                KYC Details
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="loanData && loanData.isKycVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    KYC Details
+                  </div>
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
@@ -499,7 +506,14 @@
             (closed)="loanDetailsPanel = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Loan Details
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="loanData && loanData.isRequestSubmitted">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Loan Details
+                  </div>
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
@@ -826,7 +840,10 @@
               </div>
 
             </div>
-            <div>
+            <div *ngIf="!bankDetailsVerified">
+              <button class="btn btn-primary open-all-btn" (click)="verifyBankDetails()">Verify</button>
+            </div>
+            <div *ngIf="bankDetailsVerified">
               <button class="btn btn-primary open-all-btn" (click)="saveBankDetails()">Save</button>
             </div>
           </mat-expansion-panel>

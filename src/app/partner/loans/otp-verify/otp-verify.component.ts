@@ -41,6 +41,7 @@ export class OtpVerifyComponent implements OnInit {
   from: any;
   name: any;
   dealerId: any;
+  email: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -72,6 +73,9 @@ export class OtpVerifyComponent implements OnInit {
     }
     if (this.data && this.data.dealerId) {
       this.dealerId = this.data.dealerId;
+    }
+    if (this.data && this.data.email) {
+      this.email = this.data.email;
     }
     if (this.data && this.data.phoneNumber) {
       this.phoneNumber = this.data.phoneNumber;

@@ -34,6 +34,7 @@ export class CreateComponent implements OnInit {
     base64: [],
     caption: []
   };
+  bankDetailsVerified: any = false;
   loanApplicationKycId: any;
   selectedFiles = {
     "aadhar": { files: [], base64: [], caption: [] },
@@ -87,6 +88,7 @@ export class CreateComponent implements OnInit {
   action: any;
   loanId: any;
   loanAmount: any;
+  customerDetailsVerified: any;
   headerText: any = "Create Loan";
   btnText: any = "Save as Lead";
   // private subs = new SubSink();
@@ -218,12 +220,20 @@ export class CreateComponent implements OnInit {
               this.emailverification = true;
             }
 
+            if (this.loanData && this.loanData.customerEmailVerified && this.loanData.customerMobileVerified && this.loanData.customer && this.loanData.consumerPhoto && this.loanData.consumerPhoto.length > 0) {
+              this.customerDetailsVerified = true;
+            }
+
             if (this.loanData && this.loanData.customer && this.loanData.customer[0] && this.loanData.customerMobileVerified && this.loanData.customerMobileVerified) {
 
             }
 
             if (this.loanData && this.loanData.isRequestSubmitted) {
               this.loanDetailsSaved = true;
+            }
+
+            if (this.loanData && this.loanData.isBankVerified) {
+              this.bankDetailsVerified = true;
             }
 
 
@@ -852,10 +862,8 @@ export class CreateComponent implements OnInit {
           "lastName": this.createLoan.controls.lastname.value,
           "email": this.createLoan.controls.email.value
         },
-        "customerMobileVerified": this.verification,
-        "customerEmailVerified": this.emailverification,
         // "assignee": { "id": 139799 },
-        "location": { "id": 126700 },
+        // "location": { "id": 126700 },
         "loanApplicationKycList": [
           {
             "id": 0,
@@ -897,6 +905,7 @@ export class CreateComponent implements OnInit {
 
         this.customerDetailsPanel = false;
         this.kycDetailsPanel = true;
+        this.customerDetailsVerified = true;
         this.snackbarService.openSnackBar("Customer Details Saved Successfully")
       },
         (error) => {
@@ -999,6 +1008,13 @@ export class CreateComponent implements OnInit {
 
 
   saveAddress() {
+    if (this.addresscheck) {
+      this.createLoan.controls.currentaddress1.setValue(this.createLoan.controls.permanentaddress1.value);
+      this.createLoan.controls.currentaddress2.setValue(this.createLoan.controls.permanentaddress2.value);
+      this.createLoan.controls.currentcity.setValue(this.createLoan.controls.permanentcity.value);
+      this.createLoan.controls.currentstate.setValue(this.createLoan.controls.permanentstate.value);
+      this.createLoan.controls.currentpincode.setValue(this.createLoan.controls.permanentpincode.value);
+    }
     this.loanApplication = {
       "loanApplicationUid": this.loanId,
       "customerPhone": this.createLoan.controls.phone.value,
@@ -1103,6 +1119,28 @@ export class CreateComponent implements OnInit {
 
   }
 
+  verifyBankDetails() {
+    const verifyBank = {
+      "loanApplicationUid": this.loanId,
+      "bankAccountNo": this.createLoan.controls.account.value,
+      "bankIfsc": this.createLoan.controls.ifsc.value
+    }
+
+    this.partnerService.verifyBankDetails(verifyBank).subscribe((data: any) => {
+      if (data) {
+        this.partnerService.getBankDetailsById(this.loanId).subscribe((bankInfo) => {
+          this.bankData = bankInfo;
+        });
+        this.bankDetailsVerified = true;
+      }
+      this.snackbarService.openSnackBar("Bank Details Verified Successfully")
+
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
+
 
 
 
@@ -1112,8 +1150,7 @@ export class CreateComponent implements OnInit {
       "loanApplicationUid": this.loanId,
       "bankName": this.createLoan.controls.bank.value,
       "bankAccountNo": this.createLoan.controls.account.value,
-      "bankIfsc": this.createLoan.controls.ifsc.value,
-      "bankAccountVerified": true
+      "bankIfsc": this.createLoan.controls.ifsc.value
     }
 
     for (let i = 0; i < this.filesToUpload.length; i++) {
@@ -1124,10 +1161,6 @@ export class CreateComponent implements OnInit {
       }
     }
 
-    const verifyBank = {
-      "loanApplicationUid": this.loanId,
-    }
-
     if (this.bankData == null) {
       this.partnerService.saveBankDetails(this.bankDetails).subscribe((s3urls: any) => {
         if (s3urls.length > 0) {
@@ -1136,18 +1169,11 @@ export class CreateComponent implements OnInit {
               console.log(dataS3Url);
             });
         }
-        this.partnerService.verifyBankDetails(verifyBank).subscribe((data: any) => {
-          if (data) {
-            this.partnerService.getBankDetailsById(this.loanId).subscribe((bankInfo) => {
-              this.bankData = bankInfo;
-            });
-          }
-          this.snackbarService.openSnackBar("Bank Details Verified and Saved Successfully")
+        this.partnerService.getBankDetailsById(this.loanId).subscribe((bankInfo) => {
+          this.bankData = bankInfo;
+        });
+        this.snackbarService.openSnackBar("Bank Details Saved Successfully")
 
-        }),
-          (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          }
       }), (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       }
@@ -1163,13 +1189,8 @@ export class CreateComponent implements OnInit {
               console.log(dataS3Url);
             });
         }
-        this.partnerService.verifyBankDetails(verifyBank).subscribe((data: any) => {
-          this.snackbarService.openSnackBar("Bank Details Updated Successfully")
+        this.snackbarService.openSnackBar("Bank Details Saved Successfully")
 
-        }),
-          (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          }
       }), (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       }
