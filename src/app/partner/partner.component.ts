@@ -123,6 +123,16 @@ export class PartnerComponent implements OnInit {
   customers() {
     this.router.navigate([this.partnerParentId, 'partner', 'customers']);
   }
+
+  showLeads() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        spInternalStatus: 'Draft'
+      }
+    };
+    this.router.navigate([this.partnerParentId, 'partner', 'loans'], navigationExtras);
+  }
+
   getRejectedloansCount() {
     const api_filter = {};
     api_filter['applicationStatus-eq'] = 'Rejected';

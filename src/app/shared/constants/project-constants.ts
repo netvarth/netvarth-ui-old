@@ -1202,15 +1202,12 @@ export const projectConstantsLocal = {
   LOAN_STATUS: [
     { name: 'All', displayName: 'All Loans' },
     { name: 'Draft', displayName: 'Leads' },
-    { name: 'New', displayName: 'New' },
     { name: 'Approved', displayName: 'Approved' },
     { name: 'ApprovalPending', displayName: 'Approval Pending' },
-    { name: 'Pending', displayName: 'Pending' },
-    // { name: 'Cancelled', displayName: 'Cancelled' },
     { name: 'Rejected', displayName: 'Rejected' },
     { name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
     { name: 'PartnerAccepted', displayName: 'Partner Accepted' },
-    { name: 'Success', displayName: 'Success' }
+    { name: 'Sanctioned', displayName: 'Sanctioned' }
   ],
   DEALER_STATUS: [
     { name: 'All', displayName: 'All Dealers' },

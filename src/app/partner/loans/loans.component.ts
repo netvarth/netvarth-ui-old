@@ -81,7 +81,7 @@ export class LoansComponent implements OnInit {
   }
 
   updateLoan(id, action, status) {
-    if (status == 'New') {
+    if (status == 'Draft') {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           id: id,
@@ -100,7 +100,7 @@ export class LoansComponent implements OnInit {
       this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
 
     }
-    else if (status == 'ApprovalRequired' || status == 'partnerAccepted' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
+    else if (status == 'Sanctioned' || status == 'ApprovalRequired' || status == 'partnerAccepted' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
       this.loanDetails(id)
     }
     else if (status == 'ConsumerAccepted') {
