@@ -1074,7 +1074,11 @@ export const projectConstantsLocal = {
     { value: 'Cancelled', class: 'red' },
     { value: 'Completed', class: 'dark-green' },
     { value: 'Rejected', class: 'red' },
-    { value: 'Confirmed', class: 'greenc' }
+    { value: 'Confirmed', class: 'greenc' },
+    { value: 'RequestRejected', class: 'red' },
+    { value: 'Requested', class: 'dark-green' },
+    //voilet
+    //#673ab7f2
   ],
   ADDON_ICON_CLASS: [
     { value: 'Cloud Storage', class: 'fa ico_cloud' },

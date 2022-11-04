@@ -1893,16 +1893,16 @@
                 </td> -->
                 <td>
                   <div>
-                    <span *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
+                    <span class="nameDiv" *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
                      <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
                     </div>
                 </td>
                 <td>
-                   <span *ngIf="appt.appmtDate">{{appt.appmtDate | date: newTimeDateFormat}}</span>
+                   <span class="bold" *ngIf="appt.appmtDate">{{appt.appmtDate | date: newTimeDateFormat}}</span>
                     <div *ngIf="appt.appmtFor[0].apptTime">{{getSingleTime(appt.appmtFor[0].apptTime)}}</div>
                 </td>
                 <td>
-                   <span>Location</span> 
+                   <span class="bold">Location</span> 
                     <div *ngIf="appt.location.place">{{appt.location.place}}</div>
                 </td>
                 <!-- [class.disabled]="appt.apptStatus === 'RequestRejected'" -->
@@ -1919,26 +1919,26 @@
               </tr>
               </ng-container>
               <ng-container *ngIf="small_device_display" >
-              <tr  [class.disabled]="appt.apptStatus === 'RequestRejected'"  *ngFor="let appt of appt_request_list, let i=index">
+              <tr  class="card mb-2" [class.disabled]="appt.apptStatus === 'RequestRejected'"  *ngFor="let appt of appt_request_list, let i=index">
                 <ng-container >
                 <td class="profileDiv">
                   <!-- <div>
                   <img src="../../../assets/images/mr_male.svg"
                style="width: 40px !important; margin-right: 5px;"></div> -->
                <div>
-                <span *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
+                <span class="nameDiv" *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
                     <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
                     </div> 
                 </td>
                 <td class="smallDiv">
                   <div>
-                    <span *ngIf="appt.appmtDate">{{appt.appmtDate | date: newTimeDateFormat}}</span>
+                    <span class="bold" *ngIf="appt.appmtDate">{{appt.appmtDate | date: newTimeDateFormat}}</span>
                     <div *ngIf="appt.appmtFor[0].apptTime">{{getSingleTime(appt.appmtFor[0].apptTime)}}</div>
                   </div>
                 <!-- </td>
                 <td> -->
                   <div>
-                    <span>Location</span> 
+                    <span class="bold">Location</span> 
                     <div *ngIf="appt.location.place">{{appt.location.place}}</div>
                   </div>
                 </td>
@@ -1951,7 +1951,7 @@
                 <td> -->
                  <div class=""> <button class="btn btn-danger btnSize"  (click)="showAppointmentRequest('reject',appt)">Reject</button></div>
                 </td>
-                <td colspan="2" class="smallDiv" *ngIf="appt.apptStatus === 'RequestRejected'"><span class="text-danger bold">Rejected</span></td>
+                <td colspan="2" class="rejectedDiv" *ngIf="appt.apptStatus === 'RequestRejected'"><span class="text-danger bold">Rejected</span></td>
               </ng-container>
               </tr>
             </ng-container>

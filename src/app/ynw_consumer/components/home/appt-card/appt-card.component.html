@@ -10,7 +10,8 @@
             <mat-icon>more_horiz</mat-icon>
         </button>
         <mat-menu #appMenu="matMenu">
-            <button mat-menu-item *ngIf="showRescheduleBtn" (click)="cardActionPerformed('appt', 'reschedule' , booking,
+            
+            <button mat-menu-item  *ngIf="showRescheduleBtn"  (click)="cardActionPerformed('appt', 'reschedule' , booking,
                 $event)">
                 <i class="consumer-reschedule-icon"></i>{{ 'Reschedule' | translate }}</button>
             <button mat-menu-item *ngIf="showCancelBtn"
@@ -106,11 +107,14 @@
                 [class.col-xs-6]="booking.provider" [class.pull-left]="booking.provider"
                 [class.col-xs-12]="!booking.provider" [class.no-padding]="!booking.provider">
                 <div class="prov_lbl">{{ 'Status' | translate }}</div>
-                <div class="prov_nme line-clamp">
-                    <span [class.red]="booking.videoCallButton==='DISABLED'"
+                <div class="prov_nme line-clamp book_stats">
+                    <span *ngIf="(booking.apptStatus !== 'Requested' && booking.apptStatus !== 'RequestRejected')"  [class.red]="booking.videoCallButton==='DISABLED'"
                         [class.green]="booking.videoCallButton==='ENABLED'">{{booking.videoCallMessage | translate}}</span>
+                        <span *ngIf="(booking.apptStatus==='Requested' || booking.apptStatus==='RequestRejected')" 
+                        [class]="getBookingStatusClass(booking.apptStatus)">{{booking.apptStatus === 'RequestRejected' ? 'Request Rejected' : booking.apptStatus}}</span>
                 </div>
             </div>
+
             <div *ngIf="booking.service.serviceType !== 'virtualService' || booking.apptStatus==='Cancelled' || booking.apptStatus==='Completed'"
                 [class.col-xs-6]="booking.provider" [class.pull-left]="booking.provider"
                 [class.col-xs-12]="!booking.provider" [class.no-padding]="!booking.provider">
@@ -120,7 +124,7 @@
                         <span [class]="getBookingStatusClass(booking.apptStatus)"
                             *ngIf="(booking.service.serviceType === 'virtualService' && booking.apptStatus !== 'Arrived')">{{booking.apptStatus}}</span>
                         <span [class]="getBookingStatusClass(booking.apptStatus)"
-                            *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus | translate}}</span>
+                            *ngIf="(booking.service.serviceType !== 'virtualService')">{{booking.apptStatus === 'RequestRejected' ? 'Request Rejected' : booking.apptStatus}}</span>
                     </div>
                 </div>
             </div>

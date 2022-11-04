@@ -19,6 +19,18 @@
     justify-content: space-between;
     justify-items: center;
     margin: 10px;
+    border: none;
+}
+.nameDiv{
+    font-size: 1rem;
+    font-weight: 750;
+}
+.rejectedDiv{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    vertical-align: middle !important;
+   
 }
 .profileDiv{
     display: flex;

@@ -56,7 +56,7 @@ export class ApptCardComponent implements OnInit, OnChanges {
     ) { }
 
   ngOnInit(): void {
-
+ console.log("booking :",this.booking.videoCallMessage);
     
   }
   ngOnChanges() {
