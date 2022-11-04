@@ -17,6 +17,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SelectSchemeModule } from './select-scheme/select-scheme.module';
+import { PagerModule } from '../../shared/modules/pager/pager.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 const routes: Routes = [
@@ -41,6 +43,8 @@ const routes: Routes = [
     MatSelectModule,
     MatOptionModule,
     CommonModule,
+    PagerModule,
+    NgxPaginationModule,
     MatDialogModule,
     MatAutocompleteModule,
     ReactiveFormsModule,

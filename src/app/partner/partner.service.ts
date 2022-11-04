@@ -36,6 +36,12 @@ export class PartnerService {
   }
 
 
+  getPartnerCustomers(id) {
+    const url = 'partner/' + id + '/customers';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+
   getLoansByFilter(filter = {}) {
     const url = 'partner/loanapplication';
     return this.servicemeta.httpGet(url, null, filter);
@@ -107,6 +113,11 @@ export class PartnerService {
   ApprovalRequest(id) {
     const url = 'partner/loanapplication/' + id + '/approvalrequest';
     return this.servicemeta.httpPut(url, null);
+  }
+
+  partnerAcceptance(data) {
+    const url = 'partner/loanapplication/partner/acceptance';
+    return this.servicemeta.httpPut(url, data);
   }
 
   refreshAadharVerify(id) {
@@ -193,9 +204,9 @@ export class PartnerService {
     return this.servicemeta.httpPut(url, data);
   }
 
-  changeScheme(loanId, schemeId) {
-    const url = 'partner/loanapplication/' + loanId + '/scheme/' + schemeId;
-    return this.servicemeta.httpPut(url, null);
+  changeScheme(loanId, data) {
+    const url = 'partner/loanapplication/' + loanId + '/approval';
+    return this.servicemeta.httpPut(url, data);
   }
 
   rejectLoan(id, data) {

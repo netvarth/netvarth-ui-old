@@ -30,11 +30,17 @@ export class LoansComponent implements OnInit {
   tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   loanStatus = projectConstantsLocal.LOAN_STATUS;
   labelFilterData: any;
+  config: any;
   filter = {
     firstName: '',
     id: '',
     lastName: '',
     date: ''
+  };
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: 0,
+    perPage: 10
   };
   filters: any;
   minday = new Date(1900, 0, 1);
@@ -60,6 +66,12 @@ export class LoansComponent implements OnInit {
         this.spInternalStatus = qparams.spInternalStatus;
       }
     });
+
+    this.config = {
+      itemsPerPage: 10,
+      currentPage: 1,
+      totalItems: 0
+    };
   }
 
   ngOnInit(): void {
@@ -88,8 +100,17 @@ export class LoansComponent implements OnInit {
       this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
 
     }
-    else if (status == 'ConsumerAccepted' || status == 'ApprovalRequired' || status == 'partnerAccepted' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
+    else if (status == 'ApprovalRequired' || status == 'partnerAccepted' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
       this.loanDetails(id)
+    }
+    else if (status == 'ConsumerAccepted') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'consumerAccepted',
+          uid: id
+        }
+      };
+      this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
     }
     else if (status == 'ApprovalPending' && this.user.userType != 2) {
       const navigationExtras: NavigationExtras = {
@@ -135,9 +156,10 @@ export class LoansComponent implements OnInit {
       this.loading = true;
       const api_filter = {};
       api_filter['spInternalStatus-eq'] = this.spInternalStatus;
-      this.partnerService.getLoansByFilter(api_filter).subscribe((data) => {
+      this.partnerService.getLoansByFilter(api_filter).subscribe((data: any) => {
         this.loansList = data;
         this.loans = this.loansList;
+        this.pagination.totalCnt = data.length;
         this.loading = false;
       });
     }
@@ -182,12 +204,14 @@ export class LoansComponent implements OnInit {
               }
               this.partnerService.getLoansByFilter(api_filter).subscribe((data: any) => {
                 this.loans = data;
+                this.pagination.totalCnt = data.length;
                 console.log("Loans List : ", this.loans);
                 this.loading = false;
               })
             }
             else {
               this.loans = this.loansList;
+              this.pagination.totalCnt = this.loansList.length;
               this.loading = false;
             }
           });

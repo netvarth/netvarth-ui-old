@@ -28,6 +28,7 @@ export class CreateComponent implements OnInit {
   loanDetailsPanel = false;
   otherDetailsPanel = false;
   bankDetailsPanel = false;
+  loanDetailsSaved = false;
   selectedMessage = {
     files: [],
     base64: [],
@@ -216,6 +217,15 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.customerEmailVerified) {
               this.emailverification = true;
             }
+
+            if (this.loanData && this.loanData.customer && this.loanData.customer[0] && this.loanData.customerMobileVerified && this.loanData.customerMobileVerified) {
+
+            }
+
+            if (this.loanData && this.loanData.isRequestSubmitted) {
+              this.loanDetailsSaved = true;
+            }
+
 
 
             this.selectedFiles['photo'].files = this.loanData.consumerPhoto;
@@ -692,7 +702,6 @@ export class CreateComponent implements OnInit {
 
 
   }
-
 
 
 

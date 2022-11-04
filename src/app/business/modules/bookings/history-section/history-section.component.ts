@@ -11,6 +11,7 @@ import { SharedServices } from '../../../../shared/services/shared-services';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { PlainGalleryConfig, PlainGalleryStrategy, AdvancedLayout, ButtonsConfig, ButtonsStrategy, ButtonType, Image } from '@ks89/angular-modal-gallery';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
+import { BookingHistoryComponent } from '../../appointments/booking-history/booking-history.component';
 
 @Component({
   selector: 'app-history-section',
@@ -25,7 +26,19 @@ export class HistorySectionComponent implements OnInit {
   @Input() uuid;
   @Input() waitlistdata;
   @Input() waitlist_history;
+  @Input() spName;
   @Input() internalStatuslog;
+  bookinghistorydialogref: any;
+  waitlistModes = [
+    { mode: 'WALK_IN_CHECKIN', value: 'Walk in ' },
+    { mode: 'PHONE_CHECKIN', value: 'Phone in ' },
+    { mode: 'ONLINE_CHECKIN', value: 'Online ' },
+  ];
+  appointmentModes = [
+    { mode: "WALK_IN_APPOINTMENT", value: "Walk in " },
+    { mode: "PHONE_IN_APPOINTMENT", value: "Phone in " },
+    { mode: "ONLINE_APPOINTMENT", value: "Online " }
+  ];
   subscription: Subscription;
   documents: any = [];
   customPlainGalleryRowConfig: PlainGalleryConfig = {
@@ -107,7 +120,7 @@ export class HistorySectionComponent implements OnInit {
   }
   ngOnInit(): void {
     this.onResize();
-    console.log("Notes Waitlist data",this.waitlistdata)
+    console.log("Notes Waitlist data", this.waitlistdata)
     if (this.waitlist_data) {
       this.hasAttachment = this.waitlist_data.hasAttachment;
     }
@@ -223,5 +236,59 @@ export class HistorySectionComponent implements OnInit {
     timeDate = time.replace(/\s/, 'T');
     return timeDate;
   }
+
+  openbookinghistory() {
+    if (this.source == 'appt') {
+      this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
+        width: "100%",
+        height: "auto",
+        data: {
+          type: "Appointment History",
+          providername: this.spName,
+          appointmentby: this.waitlistdata.apptBy,
+          bookingmode: this.getAppointmentMode(
+            this.waitlistdata.appointmentMode
+          ),
+          consumername:
+            this.waitlistdata.appmtFor[0].firstName +
+            " " +
+            this.waitlistdata.appmtFor[0].lastName,
+          details: this.waitlist_history
+        }
+      });
+    }
+    else {
+      this.bookinghistorydialogref = this.dialog.open(BookingHistoryComponent, {
+        width: '60%',
+        height: 'auto',
+        data: {
+          type: 'Token History',
+          providername: this.spName,
+          appointmentby: this.waitlistdata.waitlistedBy,
+          bookingmode: this.getWaitListMode(this.waitlistdata.waitlistMode),
+          consumername: this.waitlistdata.consumer.firstName + " " + this.waitlistdata.consumer.lastName,
+          details: this.waitlist_history
+        }
+      })
+    }
+
+  }
+
+  getWaitListMode(mode) {
+    let currentmode = [];
+    currentmode = this.waitlistModes.filter(obj => obj.mode === mode);
+    return currentmode[0].value;
+
+  }
+
+  getAppointmentMode(mode) {
+    let currentmode = [];
+    currentmode = this.appointmentModes.filter(obj => obj.mode === mode);
+    return currentmode[0].value;
+  }
+
+
+
+
 
 }
