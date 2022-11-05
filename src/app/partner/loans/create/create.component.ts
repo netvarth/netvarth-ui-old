@@ -29,6 +29,9 @@ export class CreateComponent implements OnInit {
   otherDetailsPanel = false;
   bankDetailsPanel = false;
   loanDetailsSaved = false;
+  bankDetailsSaved = false;
+  kycDetailsSaved = false;
+  customerDetailsSaved = false;
   selectedMessage = {
     files: [],
     base64: [],
@@ -224,9 +227,6 @@ export class CreateComponent implements OnInit {
               this.customerDetailsVerified = true;
             }
 
-            if (this.loanData && this.loanData.customer && this.loanData.customer[0] && this.loanData.customerMobileVerified && this.loanData.customerMobileVerified) {
-
-            }
 
             if (this.loanData && this.loanData.isRequestSubmitted) {
               this.loanDetailsSaved = true;
@@ -234,6 +234,10 @@ export class CreateComponent implements OnInit {
 
             if (this.loanData && this.loanData.isBankVerified) {
               this.bankDetailsVerified = true;
+            }
+
+            if (this.loanData && this.loanData.isKycVerified) {
+              this.kycDetailsSaved = true;
             }
 
 
@@ -1038,6 +1042,7 @@ export class CreateComponent implements OnInit {
 
       this.partnerService.addressUpdate(this.loanApplication).subscribe((s3urls: any) => {
         this.panelsManage(false, false, true, false);
+        this.kycDetailsSaved = true;
         this.snackbarService.openSnackBar("Address Details Updated Successfully")
       },
         (error) => {
@@ -1107,6 +1112,7 @@ export class CreateComponent implements OnInit {
 
       this.partnerService.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
         this.panelsManage(false, false, false, true);
+        this.loanDetailsSaved = true;
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
       },
         (error) => {
@@ -1122,6 +1128,7 @@ export class CreateComponent implements OnInit {
   verifyBankDetails() {
     const verifyBank = {
       "loanApplicationUid": this.loanId,
+      "bankName": this.createLoan.controls.bank.value,
       "bankAccountNo": this.createLoan.controls.account.value,
       "bankIfsc": this.createLoan.controls.ifsc.value
     }
@@ -1172,6 +1179,7 @@ export class CreateComponent implements OnInit {
         this.partnerService.getBankDetailsById(this.loanId).subscribe((bankInfo) => {
           this.bankData = bankInfo;
         });
+        this.bankDetailsSaved = true;
         this.snackbarService.openSnackBar("Bank Details Saved Successfully")
 
       }), (error) => {

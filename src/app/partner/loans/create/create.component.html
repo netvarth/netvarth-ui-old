@@ -175,7 +175,7 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="d-flex justify-content-center">
-                  <div *ngIf="loanData && loanData.isKycVerified">
+                  <div *ngIf="kycDetailsSaved">
                     <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
                   </div>
                   <div class="d-flex align-items-center">
@@ -507,7 +507,7 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="d-flex justify-content-center">
-                  <div *ngIf="loanData && loanData.isRequestSubmitted">
+                  <div *ngIf="loanDetailsSaved">
                     <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
                   </div>
                   <div class="d-flex align-items-center">
@@ -740,7 +740,14 @@
             (closed)="bankDetailsPanel = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Bank Details
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="bankDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Bank Details
+                  </div>
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
