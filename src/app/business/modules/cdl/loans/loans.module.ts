@@ -17,6 +17,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SelectSchemeModule } from './select-scheme/select-scheme.module';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { PagerModule } from '../../../../shared/modules/pager/pager.module';
 
 
 const routes: Routes = [
@@ -52,6 +54,8 @@ const routes: Routes = [
     FormsModule,
     MatExpansionModule,
     SelectSchemeModule,
+    NgxPaginationModule,
+    PagerModule,
     [RouterModule.forChild(routes)]
   ],
   schemas: [

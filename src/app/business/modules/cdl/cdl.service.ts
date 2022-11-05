@@ -225,6 +225,17 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  saveRemarks(data) {
+    const url = 'provider/loanapplication/remark';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  partnerAcceptance(data) {
+    const url = 'provider/loanapplication/partner/acceptance';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+
   suspendDealer(id, data) {
     const url = 'provider/partner/' + id + '/suspended';
     return this.servicemeta.httpPut(url, data);

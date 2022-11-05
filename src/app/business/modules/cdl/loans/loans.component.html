@@ -157,7 +157,7 @@
         <table class="table">
           <thead>
             <tr class="tble-filtr-tr heght">
-              <th class="head_color">Loan Id</th>
+              <th class="head_color">Reference No</th>
               <th class="head_color">Customer Name</th>
               <th class="head_color">Dealer</th>
               <th class="head_color">Status</th>
@@ -165,14 +165,17 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngIf="loans && loans.length > 0">
-              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index"
+              <tr style="cursor:pointer" *ngFor="let item of loans  | paginate: config;"
                 (click)="updateLoan(item.uid,'update',item.spInternalStatus)">
 
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.id">{{item.id}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.referenceNo">{{item.referenceNo}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
                   {{item.customer.firstName}} {{item.customer.lastName}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && !item.customer.firstName">
+                  --</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.partner && item.partner.partnerName">
                   {{item.partner.partnerName}}</td>
+
                 <td data-title="Loan Details" class="td1" *ngIf="item && !item.partner ">
                   --</td>
                 <td data-title="Loan Details" class="td1 loanStatus"
@@ -183,16 +186,17 @@
                   *ngIf="item && item.spInternalStatusDisplyName && item.applicationStatus && item.applicationStatus != 'Rejected'">
                   {{item.spInternalStatusDisplyName}}
                 </td>
-                <td *ngIf="item && item.uid  && item.isActionRequired">
+                <td *ngIf="item && item.uid">
                   <div>
-                    <a class="btn btn-primary" (click)="updateLoan(item.uid,'update',item.spInternalStatus)">Update</a>
+                    <a class=" btn btn-primary" (click)="updateLoan(item.uid,'update',item.spInternalStatus)">
+                      View</a>
                   </div>
                 </td>
-                <td *ngIf="item && item.uid  && !item.isActionRequired">
+                <!-- <td *ngIf="item && item.uid  && !item.isActionRequired">
                   <div>
                     <a class="btn btn-primary" (click)="loanDetails(item.uid)">View</a>
                   </div>
-                </td>
+                </td> -->
               </tr>
             </ng-container>
             <ng-container *ngIf="loans && loans.length == 0">
@@ -202,7 +206,33 @@
             </ng-container>
           </tbody>
         </table>
+        <div class="clearfix"></div>
+        <div class="search_paging m-2" *ngIf="pagination && pagination.totalCnt>10 ">
+          <pagination-template *ngIf="pagination && pagination.totalCnt>10" #p="paginationApi" [id]="config.id"
+            (pageChange)="config.currentPage = $event">
+            <div class="custom-pagination d-flex justify-content-between align-items-center flex-wrap pull-right mb-0">
+              <div class="pagination-previous mx-2" [class.disabled]="p.isFirstPage()" data-bs-toggle="tooltip"
+                data-bs-placement="bottom" title="previous">
+                <a *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                  < </a>
+              </div>
+              <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                  <span class="mx-2">{{ page.label }}</span>
+                </a>
+                <div *ngIf="p.getCurrent() === page.value">
+                  <span>{{ page.label }}</span>
+                </div>
+              </div>
+              <div class="pagination-next mx-2" [class.disabled]="p.isLastPage()" data-bs-toggle="tooltip"
+                data-bs-placement="top" title="next">
+                <a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
+              </div>
+            </div>
+          </pagination-template>
+        </div>
       </div>
+
     </div>
   </div>
 </div>

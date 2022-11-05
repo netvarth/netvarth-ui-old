@@ -1,12 +1,10 @@
 <div class="card pointer-cursor">
   <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
 </div>
-
-
 <div class="card m-2">
   <div class="col-md-7 d-flex justify-content-between pl-0">
-    <div>
-      <span class="font-weight-bold">&nbsp;{{headerText}} Application</span>
+    <div class="d-flex align-items-center">
+      <span class="font-weight-bold">&nbsp;{{headerText}}</span>
     </div>
     <div class="d-flex">
       <div class="mr-2 my-auto" (click)="closeAll()">
@@ -32,7 +30,14 @@
             (closed)="customerDetailsPanel = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Customer Details
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="customerDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Customer Details
+                  </div>
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
@@ -76,7 +81,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
                           autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
-                          [class.disabled]="action == 'update' || verification" />
+                          [class.disabled]="verification" />
                         <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
                           (click)="verifyotp()"><span>Verify</span></a>
 
@@ -99,7 +104,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #email [value]="email" type="email"
                           placeholder="Enter Customer Email" class="form-control" autocomplete="off"
-                          formControlName="email" [class.disabled]="action == 'update' || emailverification" />
+                          formControlName="email" [class.disabled]="emailverification" />
 
                         <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
                           (click)="verifyEmail()"><span>Verify</span></a>
@@ -155,7 +160,7 @@
               </div>
             </div>
             <div>
-              <button [disabled]="!verification || !emailverification" class="btn btn-primary open-all-btn"
+              <button [disabled]="!verification" class="btn btn-primary open-all-btn"
                 (click)="saveCustomerDetails()">Save</button>
             </div>
           </mat-expansion-panel>
@@ -168,7 +173,14 @@
             (closed)="kycDetailsPanel = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                KYC Details
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="kycDetailsSaved">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    KYC Details
+                  </div>
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
@@ -182,7 +194,7 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #aadharnumber type="number" placeholder="Enter Aadhar Number"
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
-                          [class.disabled]="action == 'update' && aadharverification && !verifyingUID" />
+                          [class.disabled]="action == 'update' && aadharverification && !verifyingUID" maxlength="12" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                           *ngIf="!aadharverification && !verifyingUID"
@@ -493,7 +505,14 @@
             (closed)="loanDetailsPanel = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Loan Details
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="loanDetailsSaved">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Loan Details
+                  </div>
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
@@ -720,7 +739,14 @@
             (closed)="bankDetailsPanel = false">
             <mat-expansion-panel-header>
               <mat-panel-title>
-                Bank Details
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="bankDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Bank Details
+                  </div>
+                </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
@@ -820,7 +846,10 @@
               </div>
 
             </div>
-            <div>
+            <div *ngIf="!bankDetailsVerified">
+              <button class="btn btn-primary open-all-btn" (click)="verifyBankDetails()">Verify</button>
+            </div>
+            <div *ngIf="bankDetailsVerified">
               <button class="btn btn-primary open-all-btn" (click)="saveBankDetails()">Save</button>
             </div>
           </mat-expansion-panel>
@@ -845,9 +874,16 @@
       </div>
 
     </div>
-    <div class="d-flex">
-      <div class="btn btn-primary" (click)="checkELigibility()">
-        Check Eligibility
+    <div class="d-flex justify-content-center">
+      <div>
+        <div class="mr-2 btn btn-draft" (click)="saveAsLead()">
+          Save as Lead
+        </div>
+      </div>
+      <div>
+        <div class="btn btn-primary" (click)="checkELigibility()">
+          Check Eligibility
+        </div>
       </div>
     </div>
   </form>
