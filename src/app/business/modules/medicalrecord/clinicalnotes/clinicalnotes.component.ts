@@ -51,17 +51,15 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   Cdata;
   isLoaded = false;
   clinical_constant = projectConstantsLocal.CLINICAL_NOTES;
-  clinicalNotesValue:any;
-  // clinicalNotesTypeSymptoms:any;
+  clinicalNotesValue: any;
   // clinicalNotesTypeObservations:any;
-  clinicalNotesTypeDiagnosis:any;
-  clinicalNotesNotes:any;
-  clinicalNotesAllergies:any;
-  clinicalNotesComplaints:any;
-  clinicalNotesVaccinationNotes:any;
-  clinicalNotesAddList:any=[];
-  customerId:any;
-  medicalRecordInfo:any;
+  // clinicalNotesNotes: any;
+  // clinicalNotesAllergies: any;
+  // clinicalNotesComplaints: any;
+  // clinicalNotesVaccinationNotes: any;
+  clinicalNotesAddList: any = [];
+  customerId: any;
+  medicalRecordInfo: any;
   @Input() medicalInfo;
   private subscriptions = new SubSink();
   customerphoneno: any;
@@ -69,10 +67,10 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   patientId: any;
   bookingId: any;
   bookingType: any;
-  api_loading:boolean;
+  api_loading: boolean;
   @Input() tempClinicalNOtes;
   sign = true;
-  btnName:string='Save';
+  btnName: string = 'Save';
   filteredOptions: Observable<string[]>;
   myControl = new FormControl('');
 
@@ -81,19 +79,45 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   separatorKeysCodesO: number[] = [ENTER, COMMA];
   symptomsCtrl = new FormControl('');
   observationsCtrl = new FormControl('');
-  filteredSymptoms:  Observable<string[]>;
-  filteredObservations:  Observable<string[]>;
+  diagnosisCtrl = new FormControl('');
+  notesCtrl = new FormControl('');
+  allergiesCtrl = new FormControl('');
+  vaccinationNotesCtrl = new FormControl('');
+  complaintsCtrl = new FormControl('');
+
+  filteredSymptoms: Observable<string[]>;
+  filteredObservations: Observable<string[]>;
+  filteredDiagnosis: Observable<string[]>;
+  filteredNotes: Observable<string[]>;
+  filteredAllergies: Observable<string[]>;
+  filteredVaccinationNotes: Observable<string[]>;
+  filteredComplaints: Observable<string[]>;
+
+
   clinicalNotesTypeSymptoms: string[] = [];
   clinicalNotesTypeObservations: string[] = [];
+  clinicalNotesNotes: string[] = [];
+  clinicalNotesAllergies: string[] = [];
+  clinicalNotesVaccinationNotes: string[] = [];
+  clinicalNotesComplaints: string[] = [];
+  clinicalNotesTypeDiagnosis: string[] = [];
+
+
   @ViewChild('symptomsInput') symptomsInput: ElementRef<HTMLInputElement>;
   @ViewChild('observationsInput') observationsInput: ElementRef<HTMLInputElement>;
+  @ViewChild('diagnosisInput') diagnosisInput: ElementRef<HTMLInputElement>;
+  @ViewChild('notesInput') notesInput: ElementRef<HTMLInputElement>;
+  @ViewChild('allergiesInput') allergiesInput: ElementRef<HTMLInputElement>;
+  @ViewChild('vaccinationNotesInput') vaccinationNotesInput: ElementRef<HTMLInputElement>;
+  @ViewChild('complaintsInput') complaintsInput: ElementRef<HTMLInputElement>;
+
 
   addSymptoms(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
     // Add our fruit
     if (value) {
       this.clinicalNotesTypeSymptoms.push(value);
-      this.sign =false;
+      this.sign = false;
       console.log(this.clinicalNotesTypeSymptoms);
     }
     // Clear the input value
@@ -106,12 +130,83 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     if (value) {
       this.clinicalNotesTypeObservations.push(value);
       console.log(this.clinicalNotesTypeObservations);
-      this.sign =false;
+      this.sign = false;
     }
     // Clear the input value
     event.chipInput!.clear();
     this.observationsCtrl.setValue(null);
   }
+
+
+  addDiagnosis(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.clinicalNotesTypeDiagnosis.push(value);
+      this.sign = false;
+      console.log(this.clinicalNotesTypeDiagnosis);
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+    this.diagnosisCtrl.setValue(null);
+  }
+
+  addAllergies(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.clinicalNotesAllergies.push(value);
+      console.log(this.clinicalNotesAllergies);
+      this.sign = false;
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+    this.allergiesCtrl.setValue(null);
+  }
+
+  addNotes(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.clinicalNotesNotes.push(value);
+      console.log(this.clinicalNotesNotes);
+      this.sign = false;
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+    this.notesCtrl.setValue(null);
+  }
+
+
+  addVaccinationNotes(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.clinicalNotesVaccinationNotes.push(value);
+      this.sign = false;
+      console.log(this.clinicalNotesVaccinationNotes);
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+    this.vaccinationNotesCtrl.setValue(null);
+  }
+
+  addComplaints(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    // Add our fruit
+    if (value) {
+      this.clinicalNotesComplaints.push(value);
+      console.log(this.clinicalNotesComplaints);
+      this.sign = false;
+    }
+    // Clear the input value
+    event.chipInput!.clear();
+    this.complaintsCtrl.setValue(null);
+  }
+
+
+
+
 
   removeSymptoms(symptom: string): void {
     const index = this.clinicalNotesTypeSymptoms.indexOf(symptom);
@@ -125,23 +220,95 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       this.clinicalNotesTypeObservations.splice(index, 1);
     }
   }
+
+  removeDiagnosis(diagnosis: string): void {
+    const index = this.clinicalNotesTypeDiagnosis.indexOf(diagnosis);
+    if (index >= 0) {
+      this.clinicalNotesTypeDiagnosis.splice(index, 1);
+    }
+  }
+
+  removeAllergies(allergy: string): void {
+    const index = this.clinicalNotesAllergies.indexOf(allergy);
+    if (index >= 0) {
+      this.clinicalNotesAllergies.splice(index, 1);
+    }
+  }
+  removeNotes(note: string): void {
+    const index = this.clinicalNotesNotes.indexOf(note);
+    if (index >= 0) {
+      this.clinicalNotesNotes.splice(index, 1);
+    }
+  }
+
+  removeVaccinationNotes(vaccinationNote: string): void {
+    const index = this.clinicalNotesVaccinationNotes.indexOf(vaccinationNote);
+    if (index >= 0) {
+      this.clinicalNotesVaccinationNotes.splice(index, 1);
+    }
+  }
+
+  removeComplaints(complaint: string): void {
+    const index = this.clinicalNotesComplaints.indexOf(complaint);
+    if (index >= 0) {
+      this.clinicalNotesComplaints.splice(index, 1);
+    }
+  }
+
+
   selected(event: MatAutocompleteSelectedEvent): void {
     this.clinicalNotesTypeSymptoms.push(event.option.viewValue);
     this.symptomsInput.nativeElement.value = '';
     this.symptomsCtrl.setValue(null);
-    this.sign =false;
+    this.sign = false;
   }
   selectedObservation(event: MatAutocompleteSelectedEvent): void {
     this.clinicalNotesTypeObservations.push(event.option.viewValue);
     this.observationsInput.nativeElement.value = '';
     this.observationsCtrl.setValue(null);
-    this.sign =false;
+    this.sign = false;
   }
+
+  selectedDiagnosis(event: MatAutocompleteSelectedEvent): void {
+    this.clinicalNotesTypeDiagnosis.push(event.option.viewValue);
+    this.diagnosisInput.nativeElement.value = '';
+    this.diagnosisCtrl.setValue(null);
+    this.sign = false;
+  }
+  selectedAllergy(event: MatAutocompleteSelectedEvent): void {
+    this.clinicalNotesAllergies.push(event.option.viewValue);
+    this.allergiesInput.nativeElement.value = '';
+    this.allergiesCtrl.setValue(null);
+    this.sign = false;
+  }
+
+  selectedNotes(event: MatAutocompleteSelectedEvent): void {
+    this.clinicalNotesNotes.push(event.option.viewValue);
+    this.notesInput.nativeElement.value = '';
+    this.diagnosisCtrl.setValue(null);
+    this.sign = false;
+  }
+  selectedVaccinationNotes(event: MatAutocompleteSelectedEvent): void {
+    this.clinicalNotesVaccinationNotes.push(event.option.viewValue);
+    this.vaccinationNotesInput.nativeElement.value = '';
+    this.vaccinationNotesCtrl.setValue(null);
+    this.sign = false;
+  }
+
+  selectedComplaints(event: MatAutocompleteSelectedEvent): void {
+    this.clinicalNotesComplaints.push(event.option.viewValue);
+    this.complaintsInput.nativeElement.value = '';
+    this.complaintsCtrl.setValue(null);
+    this.sign = false;
+  }
+
+
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.suggestions.filter(symptom => symptom.toLowerCase().includes(filterValue));
+    return this.suggestions.symptoms.filter(symptom => symptom.toLowerCase().includes(filterValue));
   }
+
 
   constructor(
 
@@ -157,35 +324,66 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   ) {
     if (!this.showClinicalNotesDetails) {
       this.filteredSymptoms = this.symptomsCtrl.valueChanges.pipe(
-        startWith(null),
-        map((symptom: string | null) => (symptom ? this._filter(symptom) : this.suggestions.slice())),
+        startWith(<string>null),
+        map((symptom: string | null) => (symptom ? this._filter(symptom) : this.suggestions.symptoms.slice())),
       );
       this.filteredObservations = this.observationsCtrl.valueChanges.pipe(
-        startWith(null),
+        startWith(<string>null),
         map((observation: string | null) => (observation ? this._filter(observation) : this.suggestions.slice())),
       );
+
+      this.filteredDiagnosis = this.diagnosisCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((diagnosis: string | null) => (diagnosis ? this._filter(diagnosis) : this.suggestions.diagnosis.slice())),
+      );
+
+      this.filteredAllergies = this.allergiesCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((allergy: string | null) => (allergy ? this._filter(allergy) : this.suggestions.allergies.slice())),
+      );
+
+      this.filteredComplaints = this.complaintsCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((complaint: string | null) => (complaint ? this._filter(complaint) : this.suggestions.complaints.slice())),
+      );
+
+      this.filteredNotes = this.notesCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((notes: string | null) => (notes ? this._filter(notes) : this.suggestions.notes.slice())),
+      );
+
+      this.filteredVaccinationNotes = this.vaccinationNotesCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((vaccinationNotes: string | null) => (vaccinationNotes ? this._filter(vaccinationNotes) : this.suggestions.VaccinationNotes.slice())),
+      );
     }
-    
   }
   ngOnInit() {
     console.log(this.suggestions);
     // .asObservable();
-    this.filteredSymptoms = new BehaviorSubject(this.suggestions);    
-    this.filteredObservations = new BehaviorSubject(this.suggestions); 
-    this.api_loading=false;
-    console.log('showClinicalNotesDetails::',this.showClinicalNotesDetails);
-    console.log('medicalInfo',this.medicalInfo)
-    console.log('this.activatedRoute.parent.snapshot.params',this.activatedRoute.parent.snapshot.params)
+    this.filteredSymptoms = new BehaviorSubject(this.suggestions.symptoms);
+    this.filteredObservations = new BehaviorSubject(this.suggestions.observations);
+    this.filteredAllergies = new BehaviorSubject(this.suggestions.allergies);
+    this.filteredDiagnosis = new BehaviorSubject(this.suggestions.diagnosis);
+    this.filteredNotes = new BehaviorSubject(this.suggestions.notes);
+    this.filteredVaccinationNotes = new BehaviorSubject(this.suggestions.vaccinationNotes);
+    this.filteredComplaints = new BehaviorSubject(this.suggestions.complaints);
+
+
+    this.api_loading = false;
+    console.log('showClinicalNotesDetails::', this.showClinicalNotesDetails);
+    console.log('medicalInfo', this.medicalInfo)
+    console.log('this.activatedRoute.parent.snapshot.params', this.activatedRoute.parent.snapshot.params)
     this.patientId = this.activatedRoute.parent.snapshot.params['id'];
-      this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
-      this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
+    this.bookingType = this.activatedRoute.parent.snapshot.params['type'];
+    this.bookingId = this.activatedRoute.parent.snapshot.params['uid'];
     const medicalrecordId = this.activatedRoute.parent.snapshot.params['mrId'];
     const medicalRecordCustId = this.activatedRoute.parent.snapshot.params['id'];
-    this.customerId= medicalRecordCustId;
-    console.log('medicalRecordCustId',medicalRecordCustId)
+    this.customerId = medicalRecordCustId;
+    console.log('medicalRecordCustId', medicalRecordCustId)
     this.mrId = parseInt(medicalrecordId, 0);
-    console.log('this.mrId',this.mrId)
-    this.getClinicalNotes( this.mrId)
+    console.log('this.mrId', this.mrId)
+    this.getClinicalNotes(this.mrId)
 
     if (this.mrId === 0 || this.mrId === undefined) {
       this.isLoaded = true;
@@ -202,31 +400,31 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
       }
       this.clinicalNotes = this.clinical_constant;
       // if(this.mrId !==0){
-        this.getMRClinicalNotes(this.mrId).then((res: any) => {
-          this.clinicalNotes = res;
-          console.log('clinicalNotes:::',this.clinicalNotes)
-          this.isLoaded = true;
-          this.sign=false;
-  
-        });
+      this.getMRClinicalNotes(this.mrId).then((res: any) => {
+        this.clinicalNotes = res;
+        console.log('clinicalNotes:::', this.clinicalNotes)
+        this.isLoaded = true;
+        this.sign = false;
+
+      });
       // }
-      
+
     }
     // console.log('mRListUsingId:::',this.mRListUsingId)
   }
-  getClinicalNotes(medicalrecordId){
-    this.subscriptions.sink= this.provider_services.GetMedicalRecord(medicalrecordId).subscribe((res)=>{
-      console.log('resmedicalrecordId',res);
-      this.medicalRecordInfo= res;
-      this.sign=false;
-    },((error)=>{
+  getClinicalNotes(medicalrecordId) {
+    this.subscriptions.sink = this.provider_services.GetMedicalRecord(medicalrecordId).subscribe((res) => {
+      console.log('resmedicalrecordId', res);
+      this.medicalRecordInfo = res;
+      this.sign = false;
+    }, ((error) => {
       // alert('jjjj')
       // if(this.showClinicalNotesDetails=true){
       //   this.reloadComponent()
       // }
       // this.reloadComponent()
     }))
-    
+
   }
 
   ngOnChanges() {
@@ -252,7 +450,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
         this.clinicalNotes = res;
         console.log('clinicalNotes2::', this.clinicalNotes)
         this.isLoaded = true;
-        this.sign=false;
+        this.sign = false;
 
       });
     }
@@ -271,7 +469,7 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     return new Promise((resolve) => {
       _this.provider_services.getClinicalRecordOfMRById(mrId)
         .subscribe((res: any) => {
-          console.log('res',res)
+          console.log('res', res)
           this.clinicalNotes = res;
           // if(res.length>0){
           //   this.clinicalNotes = res;
@@ -345,11 +543,11 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     }
 
   }
-  handleClinicalNotes(data,type){
+  handleClinicalNotes(data, type) {
   }
-  saveClinicalNotes(symtopData,observationData,DiagnosisData,NotesData,AllergiesData,ComplaintsData,VaccinationData){
+  saveClinicalNotes(symtopData, observationData, DiagnosisData, NotesData, AllergiesData, ComplaintsData, VaccinationData) {
     if (symtopData || observationData || DiagnosisData || NotesData || AllergiesData || ComplaintsData || VaccinationData) {
-      this.api_loading=true;
+      this.api_loading = true;
       const bookingId = 0;
       const bookingType = 'FOLLOWUP';
       const patientId = this.customerId;
@@ -401,7 +599,6 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
         })
       }
       else if (this.medicalInfo === 'MedicalInfoClinicalNotesUpdate') {
-        console.log('this.clinicalNotesTypeSymptoms', this.clinicalNotesTypeSymptoms);
         // alert('jjjj')
         this.UpdateClinicalNotesList(this.clinicalNotesTypeSymptoms, this.clinicalNotesTypeObservations, this.clinicalNotesTypeDiagnosis,
           this.clinicalNotesNotes, this.clinicalNotesAllergies, this.clinicalNotesComplaints, this.clinicalNotesVaccinationNotes)
@@ -420,63 +617,63 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
           });
       }
     }
-    else{
-      const error='Please add Clinical Notes';
-      this.snackbarService.openSnackBar(error,{ 'panelClass': 'snackbarerror' });
-      this.api_loading=false;
+    else {
+      const error = 'Please add Clinical Notes';
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      this.api_loading = false;
     }
-      
+
   }
-  UpdateClinicalNotesList(symtopData,observationData,DiagnosisData,NotesData,AllergiesData,ComplaintsData,VaccinationData){
-    let payload:any=[]
-    payload =[
+  UpdateClinicalNotesList(symtopData, observationData, DiagnosisData, NotesData, AllergiesData, ComplaintsData, VaccinationData) {
+    let payload: any = []
+    payload = [
       {
-        'type':'Symptoms',
-          'clinicalNotes': symtopData
+        'type': 'Symptoms',
+        'clinicalNotes': symtopData
       },
       {
-        'type':'Observations',
-        'clinicalNotes':observationData
+        'type': 'Observations',
+        'clinicalNotes': observationData
       },
       {
-        'type':'Diagnosis',
-        'clinicalNotes':DiagnosisData
+        'type': 'Diagnosis',
+        'clinicalNotes': DiagnosisData
       },
       {
-        'type':'Notes',
+        'type': 'Notes',
         'clinicalNotes': NotesData
       },
       {
-        'type':'Allergies',
-        'clinicalNotes':AllergiesData
+        'type': 'Allergies',
+        'clinicalNotes': AllergiesData
       },
       {
-        'type':'Complaints',
+        'type': 'Complaints',
         'clinicalNotes': ComplaintsData
       },
       {
-        'type':'Vaccination Notes',
+        'type': 'Vaccination Notes',
         'clinicalNotes': VaccinationData
       }
     ]
     console.log(payload);
     this.clinicalNotesAddList.push(payload)
-    console.log('clinicalNotesAddList',payload);
-  console.log('this.medicalInfo.id',this.medicalInfo)
-    this.updateMrwithClinicalNotes(payload,this.mrId)
+    console.log('clinicalNotesAddList', payload);
+    console.log('this.medicalInfo.id', this.medicalInfo)
+    this.updateMrwithClinicalNotes(payload, this.mrId)
   }
 
   updateMrwithClinicalNotes(payload, mrId) {
     this.provider_services.updateMrClinicalNOtes(payload, mrId)
       .subscribe((data) => {
-        this.snackbarService.openSnackBar( 'Clinical Notes Updated Successfully');
+        this.snackbarService.openSnackBar('Clinical Notes Updated Successfully');
         // console.log('updated successfully');
-      //   const bookingId = 0;
-      // const bookingType = 'FOLLOWUP';
-      // const patientId=this.customerId;
-      this.reloadComponent()
-        this.showClinicalNotesDetails=true;
-      // this.router.navigate(['provider', 'customers', patientId, bookingType, bookingId, 'medicalrecord', this.mrId,'prescription'])
+        //   const bookingId = 0;
+        // const bookingType = 'FOLLOWUP';
+        // const patientId=this.customerId;
+        this.reloadComponent()
+        this.showClinicalNotesDetails = true;
+        // this.router.navigate(['provider', 'customers', patientId, bookingType, bookingId, 'medicalrecord', this.mrId,'prescription'])
 
       },
         error => {
@@ -486,20 +683,20 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   getCustomerbyId(id) {
     const filter = { 'id-eq': id };
     this.provider_services.getCustomer(filter)
-        .subscribe(
-            (data: any) => {
-                this.customerphoneno =data[0].phoneNo;
-            });
+      .subscribe(
+        (data: any) => {
+          this.customerphoneno = data[0].phoneNo;
+        });
     return this.customerphoneno;
-}
-  goback(type_from){
+  }
+  goback(type_from) {
     // this.location.back()
-    if(this.customerDetails && this.customerDetails.id){
+    if (this.customerDetails && this.customerDetails.id) {
       this.getCustomerbyId(this.customerDetails.id)
     }
-    
+
     const back_type = this.medicalrecordService.getReturnTo();
-    console.log('type_from',type_from)
+    console.log('type_from', type_from)
     if (type_from === 'medical') {
       this.medicalrecordService.viewVisitDetails = false;
       this.viewVisitDetails = false;
@@ -524,115 +721,115 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
         // this.router.navigate(['provider', 'customers']);
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'prescription']);
 
-      } 
+      }
       else if (back_type === 'list') {
         this.router.navigate(['provider', 'customers', this.patientId, this.bookingType, this.bookingId, 'medicalrecord', this.mrId, 'list']);
       }
-       else {
+      else {
         this.location.back();
       }
     }
   }
-  getColor(item){
-    if(item.type==='Symptoms'){
+  getColor(item) {
+    if (item.type === 'Symptoms') {
       return 'rgba(0, 222, 213, 0.05)'
     }
-    else if(item.type==='Observations'){
+    else if (item.type === 'Observations') {
       return 'rgba(222, 173, 0, 0.05)'
     }
-    else if(item.type==='Diagnosis'){
+    else if (item.type === 'Diagnosis') {
       return 'rgba(0, 115, 222, 0.05)'
     }
-    else if(item.type==='Notes'){
+    else if (item.type === 'Notes') {
       return 'rgba(0, 222, 75, 0.05)'
     }
-    else if(item.type==='Allergies'){
+    else if (item.type === 'Allergies') {
       return 'rgba(222, 107, 0, 0.05)'
     }
-    else if(item.type==='Complaints'){
+    else if (item.type === 'Complaints') {
       return 'rgba(251, 125, 125, 0.05)'
     }
-    else if(item.type==='Vaccination Notes'){
+    else if (item.type === 'Vaccination Notes') {
       return 'rgba(0, 169, 222, 0.05)'
     }
 
   }
-  getColorType(item){
-    if(item.type==='Symptoms'){
+  getColorType(item) {
+    if (item.type === 'Symptoms') {
       return '#00DED5'
     }
-    else if(item.type==='Observations'){
+    else if (item.type === 'Observations') {
       return '#DEBA00'
     }
-    else if(item.type==='Diagnosis'){
+    else if (item.type === 'Diagnosis') {
       return '#0066DE'
     }
-    else if(item.type==='Notes'){
+    else if (item.type === 'Notes') {
       return '#00DE66'
     }
-    else if(item.type==='Allergies'){
+    else if (item.type === 'Allergies') {
       return '#DE5000'
     }
-    else if(item.type==='Complaints'){
+    else if (item.type === 'Complaints') {
       return '#E75050'
     }
-    else if(item.type==='Vaccination Notes'){
+    else if (item.type === 'Vaccination Notes') {
       return '#008EDE'
     }
   }
-  getBorderColor(item){
-    if(item.type==='Symptoms'){
+  getBorderColor(item) {
+    if (item.type === 'Symptoms') {
       return '2px solid #00DED5'
     }
-    else if(item.type==='Observations'){
+    else if (item.type === 'Observations') {
       return '2px solid #DEBA00'
     }
-    else if(item.type==='Diagnosis'){
+    else if (item.type === 'Diagnosis') {
       return '2px solid #0066DE'
     }
-    else if(item.type==='Notes'){
+    else if (item.type === 'Notes') {
       return '2px solid #00DE66'
     }
-    else if(item.type==='Allergies'){
+    else if (item.type === 'Allergies') {
       return '2px solid #DE5000'
     }
-    else if(item.type==='Complaints'){
+    else if (item.type === 'Complaints') {
       return '2px solid #E75050'
     }
-    else if(item.type==='Vaccination Notes'){
+    else if (item.type === 'Vaccination Notes') {
       return '2px solid #008EDE'
     }
   }
-  updateClinicalNotes(data){
+  updateClinicalNotes(data) {
     console.log(data);
-    this.btnName= 'Save'
-    console.log('this.medicalInfo',this.medicalInfo);
-    this.medicalInfo= 'MedicalInfoClinicalNotesUpdate'
-    this.showClinicalNotesDetails= false;
-    this.clinicalNotes.forEach((item)=>{
-      if(item.type==='Symptoms'){
-        this.clinicalNotesTypeSymptoms= item.clinicalNotes
+    this.btnName = 'Save'
+    console.log('this.medicalInfo', this.medicalInfo);
+    this.medicalInfo = 'MedicalInfoClinicalNotesUpdate'
+    this.showClinicalNotesDetails = false;
+    this.clinicalNotes.forEach((item) => {
+      if (item.type === 'Symptoms') {
+        this.clinicalNotesTypeSymptoms = item.clinicalNotes
       }
-      if(item.type==='Observations'){
-        this.clinicalNotesTypeObservations= item.clinicalNotes
+      if (item.type === 'Observations') {
+        this.clinicalNotesTypeObservations = item.clinicalNotes
       }
-      if(item.type==='Diagnosis'){
-        this.clinicalNotesTypeDiagnosis= item.clinicalNotes
+      if (item.type === 'Diagnosis') {
+        this.clinicalNotesTypeDiagnosis = item.clinicalNotes
       }
-      if(item.type==='Notes'){
-        this.clinicalNotesNotes= item.clinicalNotes
+      if (item.type === 'Notes') {
+        this.clinicalNotesNotes = item.clinicalNotes
       }
-      if(item.type==='Allergies'){
-        this.clinicalNotesAllergies= item.clinicalNotes
+      if (item.type === 'Allergies') {
+        this.clinicalNotesAllergies = item.clinicalNotes
       }
-      if(item.type==='Complaints'){
-        this.clinicalNotesComplaints= item.clinicalNotes
+      if (item.type === 'Complaints') {
+        this.clinicalNotesComplaints = item.clinicalNotes
       }
-      if(item.type==='Vaccination Notes'){
-        this.clinicalNotesVaccinationNotes= item.clinicalNotes
+      if (item.type === 'Vaccination Notes') {
+        this.clinicalNotesVaccinationNotes = item.clinicalNotes
       }
     })
-    
+
   }
   // autoGrowTextZone() {
   //   this.sign = false;

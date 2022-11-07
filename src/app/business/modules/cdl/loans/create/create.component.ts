@@ -514,6 +514,7 @@ export class CreateComponent implements OnInit {
       "type": { "id": this.createLoan.controls.loantype.value },
       "loanProduct": { "id": this.createLoan.controls.loanproduct.value },
       "category": { "id": this.createLoan.controls.category.value },
+      "location": { "id": this.user.bussLocs[0] },
       "locationArea": this.createLoan.controls.permanentcity.value,
       "invoiceAmount": this.createLoan.controls.totalpayment.value,
       "downpaymentAmount": this.createLoan.controls.downpayment.value,
@@ -595,8 +596,6 @@ export class CreateComponent implements OnInit {
 
         this.cdlService.createLoan(this.loanApplication).subscribe((s3urls: any) => {
           console.log("response", s3urls);
-
-
           if (s3urls.attachmentsUrls.length > 0) {
             this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
               (dataS3Url) => {

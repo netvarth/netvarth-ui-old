@@ -145,13 +145,7 @@
                     </div>
                   </div>
 
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Martial Status</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].maritalStatus">{{loanData.loanApplicationKycList[0].maritalStatus}}</span>
-                    </div>
-                  </div>
+
 
                   <div class="row text-left my-2">
                     <div class="col-md-5 details-title">Employee Type</div>
@@ -241,8 +235,8 @@
       </div>
       <div class="card marginClass">
         <div class="font-weight-bold">Bank Details&nbsp;<img src="../../../../assets/images/cdl/check.png" width="20"
-            *ngIf="bankData && bankData.bankAccountVerified"><img src="../../../../assets/images/cdl/cancel.png"
-            width="20" *ngIf="bankData && !bankData.bankAccountVerified"></div>
+            *ngIf="loanData && loanData.isBankVerified"><img src="../../../../assets/images/cdl/cancel.png" width="20"
+            *ngIf="loanData && !loanData.isBankVerified"></div>
         <div class="row mt-2">
           <div class="col-md-4" *ngIf="bankData && bankData.bankAccountNo">
             <div class="details-title">Account Number</div>
