@@ -109,6 +109,7 @@ export class ViewLeadQnrComponent implements OnInit {
   type: string;
   tempType: any;
   tempInquiryId: any;
+  tempCrifDetails: any=[];
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -994,11 +995,12 @@ export class ViewLeadQnrComponent implements OnInit {
     const _this=this;
     return new Promise((resolve,reject)=>{
       _this.crmService.getCrifInquiryVerification(kycInfoList.originUid, kycInfoList.id).subscribe(
-        (element)=>{
+        (element:any)=>{
           resolve(element);
-          // console.log('elemnt',element)
+          console.log('elemnt',element)
           if(element){
             _this.crifDetails = element;
+            _this.tempCrifDetails.push(element)
             if(_this.crifDetails &&  _this.crifDetails.crifHTML){
               _this.crifHTML = _this.crifDetails.crifHTML;
             }
@@ -1028,14 +1030,14 @@ export class ViewLeadQnrComponent implements OnInit {
     })
     
   }
-  printCRIF() {
+  printCRIF(crifHTML) {
     const params = [
       'height=' + screen.height,
       'width=' + screen.width,
       'fullscreen=yes'
     ].join(',');
     const printWindow = window.open('', '', params);
-    printWindow.document.write(this.crifHTML);
+    printWindow.document.write(crifHTML);
     printWindow.moveTo(0, 0);
     printWindow.print();
     printWindow.document.close();

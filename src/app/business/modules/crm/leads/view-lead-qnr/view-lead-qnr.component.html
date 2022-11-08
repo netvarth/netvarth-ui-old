@@ -105,7 +105,7 @@
       </div>
       <hr />
       <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Credit Score Generated')">
-        <div *ngFor="let item of kycInfo;let i=index">
+        <div *ngFor="let item of tempCrifDetails;let i=index">
           <!---crif btn start-->
           <div class=" my-2">
             <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
@@ -131,8 +131,8 @@
                   <div class="leadTitle">
                   </div>
                   <div class="fieldPadding">
-                    <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore"> CRIF SCORE :
-                      {{crifScore}} </a>
+                    <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="item && item.crifScoreString"> CRIF SCORE :
+                      {{item.crifScoreString}} </a>
                     <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
                       style="margin-left: 25px !important;width: -webkit-fill-available;"
                       class="btn btn mb-2 action-button action-button-add confirmBtn">
@@ -140,7 +140,7 @@
                   </div>
                   <app-common-innerloading-spinner *ngIf="api_loadingprintCrif"></app-common-innerloading-spinner>
                   <div *ngIf="showPdfIcon">
-                    <a (click)="printCRIF()">
+                    <a (click)="printCRIF(item.crifHTML)">
                       <img class="img" style="height: 50px; width: 50px;" src="/assets/images/ImgeFileIcon/pdf.png" />
                     </a>
                   </div>
