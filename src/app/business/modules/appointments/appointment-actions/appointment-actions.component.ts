@@ -129,6 +129,7 @@ export class AppointmentActionsComponent implements OnInit {
   multipleSelection;
   callingNumber: any;
   showMoreAvailableSlots = false;
+  selectedDay: string;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
@@ -152,16 +153,6 @@ export class AppointmentActionsComponent implements OnInit {
   }
   ngOnInit() {
    
-    this.getAppointmentSlots();
-   
-   // this.getSlots();
-   // console.log("Slots :",this.getAppointmentSlots());
-   
-  //  this.shared_services.getTodaysAvailableTimeSlots(this.sel_schedule_id,
-  //   this.sel_checkindate,
-  //   this.accountid).subscribe((res:any)=>{
-  //     console.log("ressss :",res);
-  //   })
     // this.provider_services.getApptlistMgr()
     // .then(
     //     data => {
@@ -184,12 +175,7 @@ export class AppointmentActionsComponent implements OnInit {
     this.sel_schedule_id = this.lStorageService.getitemfromLocalStorage("scheduleId");
     console.log("Schedule Id :", this.sel_schedule_id);
     const newdate = this.selectedDate;
-      // .split("/")
-      // .reverse()
-      // .join("-");
-      //moment(newdate).format("YYYY-MM-DD")
-      console.log("New Date :",newdate);
-      // console.log("New Date :",newdate.split(" ").reverse().join("-"));
+    console.log("New Date :",newdate);
     const futrDte = new Date(newdate);
     console.log("Future Date :",futrDte);
     const obtmonth = futrDte.getMonth() + 1;
@@ -197,15 +183,11 @@ export class AppointmentActionsComponent implements OnInit {
     if (obtmonth < 10) {
       cmonth = "0" + obtmonth;
     }
-    const seldate = futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
-   // this.sel_checkindate = seldate;
-    this.getSlotsBySheduleandDate(this.appt.schedule.id,seldate);
-    // this.provider_services
-    // .getAppointmentSlotsByScheduleid(
-    //   this.appt.schedule.id
-    // ).subscribe((data:any)=>{
-    //   console.log("Slotssss data :",data);
-    // })
+    const seldate =
+      futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
+    this.selectedDay = seldate;
+    console.log("Selected Date :",seldate,this.sel_checkindate);
+    this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
    //this.getSlots(this.sel_schedule_id);
     this.multipleSelection = this.data.multiSelection;
     console.log("Appointment Actions :", this.appt);
@@ -1496,15 +1478,9 @@ export class AppointmentActionsComponent implements OnInit {
   
   appointmentDateChanged(e) {
     const tdate = e;
-   // this.ngOnInit();
    console.log("In Appointment Date Changed Method:", tdate);
     const newdate = tdate;
-      // .split("/")
-      // .reverse()
-      // .join("-");
-      //moment(newdate).format("YYYY-MM-DD")
-      console.log("New Date :",newdate);
-      // console.log("New Date :",newdate.split(" ").reverse().join("-"));
+    console.log("New Date :",newdate);
     const futrDte = new Date(newdate);
     console.log("Future Date :",futrDte);
     const obtmonth = futrDte.getMonth() + 1;
@@ -1521,22 +1497,11 @@ export class AppointmentActionsComponent implements OnInit {
       this.servId,
       this.accountid
     );
-    // this.provider_services
-    // .getSlotsByLocationServiceandDate(
-    //   this.locId,
-    //   this.servId,
-    //   this.sel_checkindate,
-    //   this.accountid
-    // ).subscribe((res:any)=>{
-    //   console.log("get slotss by :",res);
-    // })
    this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
     //this.getAppointmentSlots();
    //this.getSlots(this.sel_schedule_id); 
  }
- getSlotsByIds(){
-  
- }
+
   getSlots(selectedScheduleId){
     this.allSlots = [];
     this.loading = true;
@@ -1544,13 +1509,9 @@ export class AppointmentActionsComponent implements OnInit {
     .getAppointmentSlotsByScheduleid(
       selectedScheduleId
     ).subscribe((data:any)=>{
-     // console.log("Slotssss data :",data);
       this.availableSlots = data.availableSlots;
-     // this.sel_schedule_id = data["scheduleId"];
       console.log("ACtive Sechdule :",data["scheduleId"]);
-      // freslot["scheduleId"] = scheduleSlots["scheduleId"];
       this.loading = false;
-   
       console.log("freslot ",this.availableSlots)
         for (const freslot of this.availableSlots) {
         // && freslot.active
@@ -1558,11 +1519,8 @@ export class AppointmentActionsComponent implements OnInit {
             freslot["displayTime"] = this.getSingleTime(freslot.time);
             this.allSlots.push(freslot);
           }
-         
         }
-      
       this.apptTime = this.allSlots[0];
-   // }
     })
   }
 
@@ -1572,19 +1530,13 @@ getSlotsBySheduleandDate(scheduleId,selDate){
   this.provider_services.getSlotsByScheduleandDate(scheduleId,selDate).
   subscribe((res:any)=>{
     this.schedules = res;
-   // console.log("schedules data :",res);
     this.loading = false;
     for (const scheduleSlots of this.schedules) {
       this.availableSlots = scheduleSlots.availableSlots;
       console.log("availableSlots",this.availableSlots)
-      // console.log("sel_checkindate",this.sel_checkindate)
-      // console.log("scheduleSlots.date",scheduleSlots.date)
       for (const freslot of this.availableSlots) {
-
         if (freslot.noOfAvailbleSlots !== "0") {
           freslot["scheduleId"] = scheduleSlots["scheduleId"];
-        //  console.log("freslot ",freslot)
-
           freslot["displayTime"] = this.getSingleTime(freslot.time);
           this.allSlots.push(freslot);
         }
@@ -1617,7 +1569,6 @@ getSlotsBySheduleandDate(scheduleId,selDate){
   sendAcceptRequest(){
     let post_data = {
      // date: this.appt.appmtDate
-        "appmtDate":this.sel_checkindate,
         "consumerNote":this.appt.consumerNote,
         "countryCode": this.appt.countryCode,
         // "appointmentMode": this.appt.appointmentMode,
@@ -1628,11 +1579,13 @@ getSlotsBySheduleandDate(scheduleId,selDate){
           'lastName':this.appt.appmtFor[0].lastName,
           'apptTime': this.selectedTime
         }]
-
     };
-    // if(this.sel_checkindate){
-    //   post_data['appmtDate'] = this.sel_checkindate
-    // }
+    if(this.sel_checkindate !== undefined || this.sel_checkindate !== ''){
+      post_data['appmtDate'] = this.sel_checkindate
+    }
+    if(this.sel_checkindate === undefined || this.sel_checkindate === ''){
+      post_data['appmtDate'] = this.selectedDay;
+    }
     // if(this.selectedTime){
     //   post_data['apptTime'] = this.sel_checkindate
     // }
@@ -1648,7 +1601,6 @@ getSlotsBySheduleandDate(scheduleId,selDate){
         "id": this.appt.service.id,
         "serviceType": this.appt.service.serviceType
       }
-      
      }
      if(this.appt.provider){
       post_data['provider'] = {'id':this.appt.provider.id}
@@ -1663,19 +1615,12 @@ getSlotsBySheduleandDate(scheduleId,selDate){
           return false;
       }
   }
-   // const customerDetails = this.appt.appmtFor[0];
-
     //  post_data['appmtFor'] = JSON.parse(JSON.stringify(this.appt.appmtFor));
     //  post_data['appmtFor'][0]['id'] = this.appt.appmtFor[0].id;
     //  post_data['appmtFor'][0]['firstName'] = this.appt.appmtFor[0].firstName;
     //  post_data['appmtFor'][0]['lastName'] = this.appt.appmtFor[0].lastName;
     // post_data['appmtFor'][0]['apptTime'] = this.selectedTime;
      // post_data['date'] = appt.appmtDate;
-//  if(this.selectedTime === '' || this.selectedTime === undefined){
-//   this.snackbarService.openSnackBar('Please select time slot', {
-//     panelClass: "snackbarerror"
-//   });
-//  }
     console.log("send data:",post_data);
     this.provider_services.postAppointmentRequest(post_data).
     subscribe((res:any)=>{
@@ -1737,46 +1682,6 @@ getVirtualServiceInput() {
         }
     }
 }
-// initAppointment() {
-//   const _this = this;
-//   _this.appmtFor = [];
-//   const activeUser = this.groupService.getitemFromGroupStorage('ynw-user');
-//   console.log("InitAppointment:");
-//   return new Promise(function (resolve, reject) {
-//       _this.customerService.getCustomerInfo(activeUser.id).then(data => {
-//           _this.parentCustomer = data;
-//           if (_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.firstName) {
-//               _this.apptDetails_firstName = _this.parentCustomer.userProfile.firstName;
-//           }
-//           if (_this.parentCustomer && _this.parentCustomer.userProfile && _this.parentCustomer.userProfile.lastName) {
-//               _this.apptDetails_lastName = _this.parentCustomer.userProfile.lastName;
-//           }
-//           if (_this.appointmentType != 'reschedule') {
-//               _this.appmtFor.push({ id: _this.parentCustomer.id, firstName: _this.parentCustomer.userProfile.firstName, lastName: _this.parentCustomer.userProfile.lastName });
-//               _this.prepaymentAmount = _this.appmtFor.length * _this.selectedService.minPrePaymentAmount || 0;
-//               _this.serviceCost = _this.selectedService.price;
-//               _this.setConsumerFamilyMembers(_this.parentCustomer.id).then(); // Load Family Members
-//               _this.setProviderConsumerList(_this.parentCustomer.id, _this.accountId).then(
-//                   (status) => {
-//                       if (!_this.questionnaireLoaded) {
-//                           _this.getConsumerQuestionnaire().then(
-//                               () => {
-//                                   console.log("Heree");
-//                                   resolve(true);
-//                               }
-//                           );
-//                       } else {
-//                           resolve(true);
-//                       }
-//                   }
-//               );
-//           } else {
-//               resolve(true);
-//           }
-//           _this.initCommunications(_this.parentCustomer);
-//       });
-//   });
-// }
   dateClass(date: Date): MatCalendarCellCssClasses {
     return this.availableDates.indexOf(moment(date).format("YYYY-MM-DD")) !== -1
       ? "example-custom-date-class"

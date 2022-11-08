@@ -484,7 +484,7 @@
             <h4>Select Date & Time</h4>
             <div class="colxs-12">
                  <mat-card class="demo-inline-calendar-card matCard">
-                    <mat-calendar [dateClass]="dateClass.bind(this)" [minDate]="minDate" [maxDate]="maxDate" [(selected)]="selectedDate" (selectedChange)="appointmentDateChanged($event)"></mat-calendar>
+                    <mat-calendar [dateClass]="dateClass.bind(this)" [minDate]="minDate" [maxDate]="maxDate" [(selected)]="selectedDate" [(ngModel)]="selectedDate" (selectedChange)="appointmentDateChanged($event)" ></mat-calendar>
                   </mat-card> 
                   <!-- <app-date-pagination (date_change_event)="appointmentDateChanged($event)" [selected_date]="appt.appmtDate" (dateChange)="handleFutureDateChange($event)" [(ngModel)]="selected"
               [availableDates]="availableDates" >
