@@ -9,7 +9,17 @@
         <app-common-innerloading-spinner>
         </app-common-innerloading-spinner>
       </div>
-      <div class="content consumer-dash" *ngIf="!api_loading">
+      <div class="loading-hgt my-1 login-form_custom" *ngIf="!api_loading && !loggedIn">
+        <div class="card card-custom no-margin hgt-adjust">
+          <div class="card-body p-0">
+            <app-consumer-join *ngIf="!loggedIn && !customId" (actionPerformed)="actionPerformed($event)">
+            </app-consumer-join>
+            <app-authentication *ngIf="!loggedIn && customId" (actionPerformed)="actionPerformed($event)"
+              [accountId]="accountId" [accountConfig]="accountConfig"></app-authentication>
+          </div>
+        </div>
+      </div>
+      <div class="content consumer-dash" *ngIf="!api_loading && loggedIn">
         <div class="c_card card c-checkins" *ngIf="homeView!=='paper_submission'">
           <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
             <div class=""

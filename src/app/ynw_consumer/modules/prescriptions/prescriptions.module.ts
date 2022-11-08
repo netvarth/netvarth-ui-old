@@ -7,6 +7,8 @@ import { LoadingSpinnerModule } from "../../../shared/modules/loading-spinner/lo
 import { PrescriptionsComponent } from "./prescriptions.component";
 import { MatDialogModule } from "@angular/material/dialog";
 import { PreviewuploadedfilesModule } from "../../../business/modules/jaldee-drive/previewuploadedfiles/previewuploadedfiles.module";
+import { AuthenticationModule } from "../../../shared/modules/authentication/authentication.module";
+import { ConsumerJoinModule } from "../../components/consumer-join/join.component.module";
 const routes: Routes = [
     { path: '', component: PrescriptionsComponent }
 ];
@@ -20,6 +22,8 @@ const routes: Routes = [
         MatDialogModule,
         HeaderModule,
         PreviewuploadedfilesModule,
+        AuthenticationModule,
+        ConsumerJoinModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [

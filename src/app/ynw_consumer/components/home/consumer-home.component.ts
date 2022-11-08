@@ -33,6 +33,7 @@ import { AttachmentPopupComponent } from '../../../shared/components/attachment-
 import { TranslateService } from '@ngx-translate/core';
 import { AccountService } from '../../../shared/services/account.service';
 import { DomainConfigGenerator } from '../../../shared/services/domain-config-generator.service';
+import { AuthService } from '../../../shared/services/auth-service';
 @Component({
   selector: 'app-consumer-home',
   templateUrl: './consumer-home.component.html',
@@ -182,9 +183,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   tDate: any;
   path = projectConstantsLocal.PATH;
   locationholder: any;
-  total_requests:any = [];
+  total_requests: any = [];
   apptRequests: any = [];
-  moreApptRequest : any = [];
+  moreApptRequest: any = [];
   today_totalbookings: any = [];
   future_totalbookings: any = [];
   todayBookings: any = [];
@@ -258,6 +259,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   homeView: any;
   customLink: boolean = false;
   isRequest: boolean = false;
+  loggedIn = true;  // To check whether user logged in or not
+  accountConfig: any;
   constructor(private consumer_services: ConsumerServices,
     private shared_services: SharedServices,
     public translate: TranslateService,
@@ -273,6 +276,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     private dateTimeProcessor: DateTimeProcessor,
     private accountService: AccountService,
     private domainConfigService: DomainConfigGenerator,
+    private authService: AuthService,
     public _sanitizer: DomSanitizer) {
     this.onResize();
     this.subs.sink = this.activated_route.queryParams.subscribe(qparams => {
@@ -327,96 +331,106 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
 
   initConsumer() {
-    console.log("In Consumer");
-    this.api_loading = false;
-    if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
-      this.fromApp = true;
-    }
-    this.translate.use(JSON.parse(localStorage.getItem('translatevariable')));
-    // console.log(this.bookingStatusClasses);
-    this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.login_details = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
-    this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
-    let login = this.login_details;
 
-    if (login && login.countryCode && login.countryCode.startsWith('+')) {
-      this.countryCode = login.countryCode.substring(1);
-      this.shared_services.consumertelegramChat(this.countryCode, login.loginId).subscribe(
-        data => {
-          this.chatId = data;
-          if (this.chatId === null) {
-            this.showTeleBt = true;
-            if (this.tele_popUp) {
-              this.popUp.nativeElement.style.display = 'block';
-              this.lStorageService.removeitemfromLocalStorage('showTelePop');
-            }
-          }
-        },
-        (error) => {
+    this.authService.goThroughLogin().then((status) => {
+      console.log("Status:", status);
+      if (status) {
+        this.loggedIn = true;
+        this.api_loading = false;
+        if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
+          this.fromApp = true;
         }
-      );
-    }
-    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
-    this.locationholder = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
-    let stat;
-    stat = this.lStorageService.getitemfromLocalStorage('orderStat');
-    if (stat === true) {
-      this.showOrder = true;
-    }
-    this.setSystemDate();
-    this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
-    this.currentcheckinsTooltip = this.wordProcessor.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
-    this.favTooltip = this.wordProcessor.getProjectMesssages('FAVORITE_TOOLTIP');
-    this.historyTooltip = this.wordProcessor.getProjectMesssages('HISTORY_TOOLTIP');
-    this.getFavouriteProvider();
-    this.getAppointmentToday();
-    this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
-      this.reloadAPIs();
-    });
-    this.subs.sink = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
-      this.recheckwaitlistCounters();
-    });
-    this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
-      this.liveTrackPolling();
-    });
-    this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
-      this.liveTrackApptPolling();
-    });
-    this.subs.sink = this.shared_functions.getSwitchMessage().subscribe(message => {
-      switch (message.ttype) {
-        case 'fromconsumer': {
-          this.closeCounters();
-        }
-      }
-    });
-    this.subs.sink = this.galleryService.getMessage().subscribe(input => {
-      console.log("Reached Here:");
-      if (input && input.accountId && input.uuid && input.type === 'appt') {
-        this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)
-          .subscribe(
-            () => {
-              this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
-              this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+        this.translate.use(JSON.parse(localStorage.getItem('translatevariable')));
+        // console.log(this.bookingStatusClasses);
+        this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
+        this.login_details = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+        this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
+        let login = this.login_details;
+
+        if (login && login.countryCode && login.countryCode.startsWith('+')) {
+          this.countryCode = login.countryCode.substring(1);
+          this.shared_services.consumertelegramChat(this.countryCode, login.loginId).subscribe(
+            data => {
+              this.chatId = data;
+              if (this.chatId === null) {
+                this.showTeleBt = true;
+                if (this.tele_popUp) {
+                  this.popUp.nativeElement.style.display = 'block';
+                  this.lStorageService.removeitemfromLocalStorage('showTelePop');
+                }
+              }
             },
-            error => {
-              this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-              this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+            (error) => {
             }
           );
-      } else {
-        if (input && input.accountId && input.uuid && input.type === 'checkin') {
-          this.shared_services.addConsumerWaitlistAttachment(input.accountId, input.uuid, input.value)
-            .subscribe(
-              () => {
-                this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
-                this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
-              },
-              error => {
-                this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
-                this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
-              }
-            );
         }
+        this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
+        this.locationholder = this.lStorageService.getitemfromLocalStorage('ynw-locdet');
+        let stat;
+        stat = this.lStorageService.getitemfromLocalStorage('orderStat');
+        if (stat === true) {
+          this.showOrder = true;
+        }
+        this.setSystemDate();
+        this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
+        this.currentcheckinsTooltip = this.wordProcessor.getProjectMesssages('CURRENTCHECKINS_TOOLTIP');
+        this.favTooltip = this.wordProcessor.getProjectMesssages('FAVORITE_TOOLTIP');
+        this.historyTooltip = this.wordProcessor.getProjectMesssages('HISTORY_TOOLTIP');
+        this.getFavouriteProvider();
+        this.getAppointmentToday();
+        this.getApptRequests();
+        this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
+          this.reloadAPIs();
+        });
+        this.subs.sink = observableInterval(this.counterrefreshTime * 1000).subscribe(x => {
+          this.recheckwaitlistCounters();
+        });
+        this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
+          this.liveTrackPolling();
+        });
+        this.subs.sink = observableInterval(this.refreshTime * 1000).subscribe(x => {
+          this.liveTrackApptPolling();
+        });
+        this.subs.sink = this.shared_functions.getSwitchMessage().subscribe(message => {
+          switch (message.ttype) {
+            case 'fromconsumer': {
+              this.closeCounters();
+            }
+          }
+        });
+        this.subs.sink = this.galleryService.getMessage().subscribe(input => {
+          console.log("Reached Here:");
+          if (input && input.accountId && input.uuid && input.type === 'appt') {
+            this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)
+              .subscribe(
+                () => {
+                  this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                  this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                },
+                error => {
+                  this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                  this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                }
+              );
+          } else {
+            if (input && input.accountId && input.uuid && input.type === 'checkin') {
+              this.shared_services.addConsumerWaitlistAttachment(input.accountId, input.uuid, input.value)
+                .subscribe(
+                  () => {
+                    this.snackbarService.openSnackBar(Messages.ATTACHMENT_SEND, { 'panelClass': 'snackbarnormal' });
+                    this.galleryService.sendMessage({ ttype: 'upload', status: 'success' });
+                  },
+                  error => {
+                    this.snackbarService.openSnackBar(error.error, { 'panelClass': 'snackbarerror' });
+                    this.galleryService.sendMessage({ ttype: 'upload', status: 'failure' });
+                  }
+                );
+            }
+          }
+        });
+      } else {
+        this.loggedIn = false;
+        this.api_loading = false;
       }
     });
   }
@@ -447,11 +461,14 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     const _this = this;
     this.api_loading = true;
-    if (this.customId && this.accountId) {
-      _this.getAccountIdFromEncId(this.customId).then(
+
+
+    if (_this.customId && _this.accountId) {
+      _this.getAccountIdFromEncId(_this.customId).then(
         (uniqueId: any) => {
           _this.domainConfigService.getUIAccountConfig(uniqueId).subscribe(
             (uiconfig: any) => {
+              this.accountConfig = uiconfig;
               if (uiconfig['mode']) {
                 _this.homeView = uiconfig['mode'];
               }
@@ -464,7 +481,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     } else {
       _this.initConsumer();
     }
-    _this.getApptRequests();
+    // } else {
+    //   this.loggedIn = false;  // To check whether user logged in or not
+    // }
+    // });
+
 
   }
   getOrderPaidBill(orderBill) {
@@ -665,7 +686,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.today_totalbookings = this.appointments.concat(this.waitlists);
           this.loading = false;
           this.getAppointmentFuture();
-         // this.getApptRequests();
+          // this.getApptRequests();
           // more case
           this.todayBookings = [];
           console.log(this.todayBookings);
@@ -856,34 +877,34 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         }
       );
   }
- getApptRequests(){
-  this.loading = true;
-  this.consumer_services.getApptRequestList().
-  subscribe((res: any)=>{
-    console.log("Requestsss :",res);
-    this.waitlists = res;
-    this.total_requests = this.waitlists;
-    this.isRequest = true;
-    //this.appointments.concat(this.waitlists)
-    this.loading = false;
-   //  this.getAppointmentFuture();
-    // more case
-    this.apptRequests = [];
-   this.moreApptRequest = [];
-   //tslint:disable-next-line:no-shadowed-variable
-    for (let i = 0; i < this.total_requests.length; i++) {
-      if (i <= 2) {
-        this.apptRequests.push(this.total_requests[i]);
-        console.log("For 3 only",this.apptRequests);
-      } else {
-        this.moreApptRequest.push(this.total_requests[i]);
-        console.log("more than 3",this.moreApptRequest);
+  getApptRequests() {
+    this.loading = true;
+    this.consumer_services.getApptRequestList().
+      subscribe((res: any) => {
+        console.log("Requestsss :", res);
+        this.waitlists = res;
+        this.total_requests = this.waitlists;
+        this.isRequest = true;
+        //this.appointments.concat(this.waitlists)
+        this.loading = false;
+        //  this.getAppointmentFuture();
+        // more case
+        this.apptRequests = [];
+        this.moreApptRequest = [];
+        //tslint:disable-next-line:no-shadowed-variable
+        for (let i = 0; i < this.total_requests.length; i++) {
+          if (i <= 2) {
+            this.apptRequests.push(this.total_requests[i]);
+            console.log("For 3 only", this.apptRequests);
+          } else {
+            this.moreApptRequest.push(this.total_requests[i]);
+            console.log("more than 3", this.moreApptRequest);
 
-      }
-    }
+          }
+        }
 
-  })
- }
+      })
+  }
   getApptAppxTime(appointment) {
     const appx_ret = { 'caption': '', 'date': '', 'date_type': 'string', 'time': '', 'timeslot': '', 'autoreq': false, 'cancelled_time': '', 'cancelled_date': '', 'cancelled_caption': '' };
     if (appointment.apptStatus !== 'Cancelled' && appointment.apptStatus !== 'Rejected') {
@@ -1332,7 +1353,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     } else {
       pass_ob['uuid'] = waitlist.ynwUuid;
     }
-    pass_ob['theme']=this.theme;
+    pass_ob['theme'] = this.theme;
     this.addNote(pass_ob);
   }
 
@@ -1436,7 +1457,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoDonations() {
     this.router.navigate(['consumer', 'donations']);
   }
-  
+
   getDonations() {
     const filter = {};
     if (this.server_date) {
@@ -2010,7 +2031,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         data => {
           this.future_appointments = data;
           this.getWaitlistFuture();
-         // this.getApptRequests();
+          // this.getApptRequests();
         },
         error => {
         }
@@ -2076,9 +2097,9 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   }
   getSingleTime(slot) {
-    if(slot){
-    const slots = slot.split('-');
-    return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
+    if (slot) {
+      const slots = slot.split('-');
+      return this.dateTimeProcessor.convert24HourtoAmPm(slots[0]);
     }
   }
   getMeetingDetails(details, source) {
@@ -2126,10 +2147,10 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   showlessFutrBookings() {
     this.more_futrbookingsShow = false;
   }
-  showMoreRequest(){
+  showMoreRequest() {
     this.more_requestShow = true;
   }
-  showLessRequest(){
+  showLessRequest() {
     this.more_requestShow = false;
   }
   stopprop(event) {
@@ -2511,5 +2532,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   closeModal() {
     this.popUp.nativeElement.style.display = 'none';
   }
-
+  actionPerformed (event) {
+    this.shared_functions.sendMessage({ttype: 'updateuserdetails'})
+    this.initConsumer();
+  }
 }

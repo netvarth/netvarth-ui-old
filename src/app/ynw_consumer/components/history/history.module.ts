@@ -21,6 +21,8 @@ import {  TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstantsLocal } from "../../../shared/constants/project-constants";
+import { AuthenticationModule } from "../../../shared/modules/authentication/authentication.module";
+import { ConsumerJoinModule } from "../consumer-join/join.component.module";
 export function homeHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
 }
@@ -39,6 +41,8 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         AddInboxMessagesModule,
         RateServiceModule,
         ViewRxModule,
+        AuthenticationModule,
+        ConsumerJoinModule,
         [RouterModule.forChild(routes)],
         HttpClientModule,
         TranslateModule.forChild({

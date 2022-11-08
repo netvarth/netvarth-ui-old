@@ -31,6 +31,8 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { projectConstantsLocal } from "../../../shared/constants/project-constants";
 import { SubmissionsModule } from "./submissions/submissions.module";
+import { AuthenticationModule } from "../../../shared/modules/authentication/authentication.module";
+import { ConsumerJoinModule } from "../consumer-join/join.component.module";
 export function homeHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, projectConstantsLocal.PATH+'assets/i18n/home/', '.json');
 }
@@ -57,6 +59,8 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         NotificationListBoxModule,
         AttachmentPopupModule,
         CouponsModule,
+        AuthenticationModule,
+        ConsumerJoinModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),
         [RouterModule.forChild(routes)],
         HttpClientModule,

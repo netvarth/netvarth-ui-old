@@ -177,3 +177,9 @@ app-appt-card, app-wl-card {
       display: none !important;
   }
 }
+.loading-hgt {
+  height: 85vh;
+}
+.hgt-adjust {
+  min-height: 99vh;
+}

@@ -17,10 +17,12 @@ import { ConsumerWaitlistCheckInPaymentComponent } from '../../../shared/modules
 import { ConsumerRateServicePopupComponent } from '../../../shared/components/consumer-rate-service-popup/consumer-rate-service-popup';
 import { CheckInHistoryServices } from '../../../shared/modules/consumer-checkin-history-list/components/checkin-history-list/checkin-history-list.service';
 import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../../../shared/services/auth-service';
 
 @Component({
   selector: 'app-consumer-history',
-  templateUrl: './history.component.html'
+  templateUrl: './history.component.html',
+  styleUrls: ['./history.component.css']
 })
 
 export class ConsumerHistoryComponent implements OnInit, OnDestroy {
@@ -63,6 +65,9 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
   private subs = new SubSink();
   customId: any;
   theme: any;
+  loggedIn = true;  // To check whether user logged in or not
+  accountConfig: any;
+  isOrder;
   constructor(public consumer_checkin_history_service: CheckInHistoryServices,
     public router: Router, public location: Location,
     public route: ActivatedRoute,
@@ -71,25 +76,9 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     public shared_services: SharedServices, public translate: TranslateService,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,
+    private authService: AuthService,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.subs.sink = this.activateroute.queryParams.subscribe(params => {
-      if (params.accountId) {
-        this.accountId = params.accountId;
-      }
-      if (params.customId) {
-        this.customId = params.customId;
-      }
-      if(params.theme) {
-        this.theme = params.theme;
-      }
-      if (params.is_orderShow === 'false') {
-        this.getHistroy();
-      } else {
-        this.getOrderHistory();
-        this.showOrderHist = true;
-      }
 
-    });
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -102,14 +91,54 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
   }
   ngOnInit() {
     this.translate.use(JSON.parse(localStorage.getItem('translatevariable')))
-    this.translate.stream('SERV_PROVIDER_CAP').subscribe(v=>{this.service_provider_cap=v});
-    this.translate.stream('PRO_SERVICE_CAP').subscribe(v=>{this.service_cap=v});
-    this.translate.stream('LOCATION_CAP').subscribe(v=>this.location_cap=v);
-    this.translate.stream('DATE_COL_CAP').subscribe(v=>this.date_cap=v);
-    this.translate.stream('PRO_STATUS_CAP').subscribe(v=>this.status_cap=v);
-    this.translate.stream('SEND_MSG_CAP').subscribe(v=>this.send_message_cap=v);
-    this.translate.stream('RATE_YOU_VISIT').subscribe(v=>this.rate_your_visit=v);
-    this.translate.stream('BILL_CAPTION').subscribe(v=>this.bill_cap=v);
+    this.translate.stream('SERV_PROVIDER_CAP').subscribe(v => { this.service_provider_cap = v });
+    this.translate.stream('PRO_SERVICE_CAP').subscribe(v => { this.service_cap = v });
+    this.translate.stream('LOCATION_CAP').subscribe(v => this.location_cap = v);
+    this.translate.stream('DATE_COL_CAP').subscribe(v => this.date_cap = v);
+    this.translate.stream('PRO_STATUS_CAP').subscribe(v => this.status_cap = v);
+    this.translate.stream('SEND_MSG_CAP').subscribe(v => this.send_message_cap = v);
+    this.translate.stream('RATE_YOU_VISIT').subscribe(v => this.rate_your_visit = v);
+    this.translate.stream('BILL_CAPTION').subscribe(v => this.bill_cap = v);
+
+    this.subs.sink = this.activateroute.queryParams.subscribe(params => {
+      if (params.accountId) {
+        this.accountId = params.accountId;
+      }
+      if (params.customId) {
+        this.customId = params.customId;
+      }
+      if (params.theme) {
+        this.theme = params.theme;
+      }
+      if (params.is_orderShow === 'false') {
+        this.isOrder = false;
+      } else {
+        this.isOrder = true;
+        this.showOrderHist = true;
+      }
+      this.initHistory();
+    });
+
+  }
+  initHistory() {
+    this.authService.goThroughLogin().then((status) => {
+      console.log("Status:", status);
+      if (status) {
+        this.loggedIn = true;
+        if (this.isOrder) {
+          this.getOrderHistory();
+        } else {
+          this.getHistroy();
+        }
+      } else {
+        this.loggedIn = false;
+      }
+    });
+  }
+
+  actionPerformed(event) {
+    this.shared_functions.sendMessage({ ttype: 'updateuserdetails' })
+    this.initHistory();
   }
   ngOnDestroy(): void {
     this.subs.unsubscribe();
@@ -202,7 +231,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['typeOfMsg'] = 'single';
-    pass_ob['theme']=this.theme;
+    pass_ob['theme'] = this.theme;
     pass_ob['name'] = waitlist.providerAccount.businessName;
     this.addNote(pass_ob);
   }
@@ -264,7 +293,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
       queryParams['customId'] = this.customId;
     }
     const navigationExtras: NavigationExtras = {
-      queryParams: queryParams      
+      queryParams: queryParams
     };
     this.router.navigate(['consumer', 'order', 'order-bill'], navigationExtras);
   }
@@ -343,7 +372,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
-    pass_ob['theme']=this.theme;
+    pass_ob['theme'] = this.theme;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['appt'] = 'appt';
     this.addNote(pass_ob);
@@ -401,7 +430,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
       accountId: checkin.providerAccount.id,
       source: 'history'
     }
-    
+
     if (this.customId) {
       // queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
@@ -450,7 +479,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     if (this.customId) {
       queryParams['accountId'] = this.accountId;
       queryParams['customId'] = this.customId;
-      queryParams['theme']=this.theme;
+      queryParams['theme'] = this.theme;
     }
     if (booking.apptStatus) {
       queryParams['uuid'] = booking.uid;
@@ -486,7 +515,7 @@ export class ConsumerHistoryComponent implements OnInit, OnDestroy {
     pass_ob['user_id'] = waitlist.providerAccount.id;
     pass_ob['userId'] = waitlist.providerAccount.uniqueId;
     pass_ob['name'] = waitlist.providerAccount.businessName;
-    pass_ob['theme']=this.theme;
+    pass_ob['theme'] = this.theme;
     pass_ob['typeOfMsg'] = 'single';
     pass_ob['orders'] = 'orders';
     this.addNote(pass_ob);

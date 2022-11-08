@@ -8,7 +8,17 @@
                 </div>
             </div>
             <div class="panel-body no-padding">
-                <div class="c-outer">
+                <div class="loading-hgt my-1 login-form_custom" *ngIf="!loggedIn">
+                    <div class="card card-custom no-margin hgt-adjust">
+                      <div class="card-body p-0">
+                        <app-consumer-join *ngIf="!loggedIn && !customId" (actionPerformed)="actionPerformed($event)">
+                        </app-consumer-join>
+                        <app-authentication *ngIf="!loggedIn && customId" (actionPerformed)="actionPerformed($event)"
+                          [accountId]="accountId" [accountConfig]="accountConfig"></app-authentication>
+                      </div>
+                    </div>
+                  </div>
+                <div class="c-outer" *ngIf="loggedIn">
                     <div class="c-body">
                         <div class="card title-gb clearfix">
                             <h5 class="col-xs-12 col-md-12 col-sm-12 col-lg-12 mgn-up-10 no-padding clearfix">
