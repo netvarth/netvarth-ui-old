@@ -95,10 +95,10 @@
             </button>
           </mat-chip>
           <input class="form-control" placeholder="Enter diagnosis instructions" #diagnosisInput
-            [formControl]="diagnosisCtrl" [matAutocomplete]="auto2" [matChipInputFor]="chipDiagnosisList"
+            [formControl]="diagnosisCtrl" [matAutocomplete]="auto3" [matChipInputFor]="chipDiagnosisList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodesO" (matChipInputTokenEnd)="addDiagnosis($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedDiagnosis($event)">
+        <mat-autocomplete #auto3="matAutocomplete" (optionSelected)="selectedDiagnosis($event)">
           <mat-option *ngFor="let diagnosis of filteredDiagnosis | async" [value]="diagnosis">
             {{diagnosis}}
           </mat-option>
@@ -127,10 +127,10 @@
             </button>
           </mat-chip>
           <input class="form-control" placeholder="Enter notes instructions" #notesInput [formControl]="notesCtrl"
-            [matAutocomplete]="auto2" [matChipInputFor]="chipNotesList"
+            [matAutocomplete]="auto4" [matChipInputFor]="chipNotesList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodesO" (matChipInputTokenEnd)="addNotes($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedNotes($event)">
+        <mat-autocomplete #auto4="matAutocomplete" (optionSelected)="selectedNotes($event)">
           <mat-option *ngFor="let notes of filteredNotes | async" [value]="notes">
             {{notes}}
           </mat-option>
@@ -162,20 +162,16 @@
             </button>
           </mat-chip>
           <input class="form-control" placeholder="Enter allergy instructions" #allergiesInput
-            [formControl]="allergiesCtrl" [matAutocomplete]="auto2" [matChipInputFor]="chipAllergiesList"
+            [formControl]="allergiesCtrl" [matAutocomplete]="auto5" [matChipInputFor]="chipAllergiesList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodesO" (matChipInputTokenEnd)="addAllergies($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedAllergy($event)">
+        <mat-autocomplete #auto5="matAutocomplete" (optionSelected)="selectedAllergy($event)">
           <mat-option *ngFor="let allergy of filteredAllergies | async" [value]="allergy">
             {{allergy}}
           </mat-option>
         </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
-
-
-
-
       <div class="form-group" *ngIf="!suggestions || !suggestions.allergies || suggestions.allergies.length == 0">
         <label>Complaints</label>
         <div class="input-group">
@@ -197,20 +193,16 @@
             </button>
           </mat-chip>
           <input class="form-control" placeholder="Enter complaints instructions" #complaintsInput
-            [formControl]="complaintsCtrl" [matAutocomplete]="auto2" [matChipInputFor]="chipComplaintsList"
+            [formControl]="complaintsCtrl" [matAutocomplete]="auto6" [matChipInputFor]="chipComplaintsList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodesO" (matChipInputTokenEnd)="addComplaints($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedComplaints($event)">
+        <mat-autocomplete #auto6="matAutocomplete" (optionSelected)="selectedComplaints($event)">
           <mat-option *ngFor="let complaint of filteredComplaints | async" [value]="complaint">
             {{complaint}}
           </mat-option>
         </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
-
-
-
-
       <div class="form-group"
         *ngIf="!suggestions || !suggestions.vaccinationNotes || suggestions.vaccinationNotes.length == 0">
         <label>Vaccination Notes</label>
@@ -233,19 +225,16 @@
             </button>
           </mat-chip>
           <input class="form-control" placeholder="Enter vaccination notes instructions" #vaccinationNotesInput
-            [formControl]="vaccinationNotesCtrl" [matAutocomplete]="auto2" [matChipInputFor]="chipVaccinationNotesList"
+            [formControl]="vaccinationNotesCtrl" [matAutocomplete]="auto7" [matChipInputFor]="chipVaccinationNotesList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodesO" (matChipInputTokenEnd)="addVaccinationNotes($event)">
         </mat-chip-list>
-        <mat-autocomplete #auto2="matAutocomplete" (optionSelected)="selectedVaccinationNotes($event)">
+        <mat-autocomplete #auto7="matAutocomplete" (optionSelected)="selectedVaccinationNotes($event)">
           <mat-option *ngFor="let notes of filteredVaccinationNotes | async" [value]="notes">
             {{notes}}
           </mat-option>
         </mat-autocomplete>
         <!-- </mat-form-field> -->
       </div>
-
-
-
       <div>
         <!-- <button type="button" class="btn btn-primary font-weight-bold cancelBtn" (click)="goback('medical')">Cancel</button> -->
         <button type="button" class="btn btn-primary font-weight-bold confirmBtn btnWidth" (click)="saveClinicalNotes(clinicalNotesTypeSymptoms,clinicalNotesTypeObservations,clinicalNotesTypeDiagnosis,clinicalNotesNotes
@@ -258,8 +247,6 @@
     </div>
   </div>
 </div>
-
-
 <div *ngIf="isLoaded && showClinicalNotesDetails==='true'">
   <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding shadow mgn-bt-10" *ngIf="clinicalNotes.length>0">
     <div class="p-1 pl0 pt-0 col-md-8 col-xs-12 col-sm-12 col-lg-8 prescriptionCreate">

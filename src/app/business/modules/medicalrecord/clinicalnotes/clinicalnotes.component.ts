@@ -255,7 +255,6 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     }
   }
 
-
   selected(event: MatAutocompleteSelectedEvent): void {
     this.clinicalNotesTypeSymptoms.push(event.option.viewValue);
     this.symptomsInput.nativeElement.value = '';
@@ -304,9 +303,9 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
 
 
 
-  private _filter(value: string): string[] {
+  private _filter(value: string, type): string[] {
     const filterValue = value.toLowerCase();
-    return this.suggestions.symptoms.filter(symptom => symptom.toLowerCase().includes(filterValue));
+    return this.suggestions[type].filter(symptom => symptom.toLowerCase().includes(filterValue));
   }
 
 
@@ -322,45 +321,12 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     private location: Location,
     private medicalrecordService: MedicalrecordService
   ) {
-    if (!this.showClinicalNotesDetails) {
-      this.filteredSymptoms = this.symptomsCtrl.valueChanges.pipe(
-        startWith(<string>null),
-        map((symptom: string | null) => (symptom ? this._filter(symptom) : this.suggestions.symptoms.slice())),
-      );
-      this.filteredObservations = this.observationsCtrl.valueChanges.pipe(
-        startWith(<string>null),
-        map((observation: string | null) => (observation ? this._filter(observation) : this.suggestions.slice())),
-      );
-
-      this.filteredDiagnosis = this.diagnosisCtrl.valueChanges.pipe(
-        startWith(<string>null),
-        map((diagnosis: string | null) => (diagnosis ? this._filter(diagnosis) : this.suggestions.diagnosis.slice())),
-      );
-
-      this.filteredAllergies = this.allergiesCtrl.valueChanges.pipe(
-        startWith(<string>null),
-        map((allergy: string | null) => (allergy ? this._filter(allergy) : this.suggestions.allergies.slice())),
-      );
-
-      this.filteredComplaints = this.complaintsCtrl.valueChanges.pipe(
-        startWith(<string>null),
-        map((complaint: string | null) => (complaint ? this._filter(complaint) : this.suggestions.complaints.slice())),
-      );
-
-      this.filteredNotes = this.notesCtrl.valueChanges.pipe(
-        startWith(<string>null),
-        map((notes: string | null) => (notes ? this._filter(notes) : this.suggestions.notes.slice())),
-      );
-
-      this.filteredVaccinationNotes = this.vaccinationNotesCtrl.valueChanges.pipe(
-        startWith(<string>null),
-        map((vaccinationNotes: string | null) => (vaccinationNotes ? this._filter(vaccinationNotes) : this.suggestions.VaccinationNotes.slice())),
-      );
-    }
   }
   ngOnInit() {
     console.log(this.suggestions);
     // .asObservable();
+    console.log("Suggestions:111", this.suggestions);
+    
     this.filteredSymptoms = new BehaviorSubject(this.suggestions.symptoms);
     this.filteredObservations = new BehaviorSubject(this.suggestions.observations);
     this.filteredAllergies = new BehaviorSubject(this.suggestions.allergies);
@@ -369,7 +335,42 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
     this.filteredVaccinationNotes = new BehaviorSubject(this.suggestions.vaccinationNotes);
     this.filteredComplaints = new BehaviorSubject(this.suggestions.complaints);
 
+    if (!this.showClinicalNotesDetails) {
+      this.filteredSymptoms = this.symptomsCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((symptom: string | null) => (symptom ? this._filter(symptom, 'symptoms') : this.suggestions.symptoms.slice())),
+      );
+      console.log("FilteredSymtoms",this.filteredSymptoms);
+      this.filteredObservations = this.observationsCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((observation: string | null) => (observation ? this._filter(observation, 'observations') : this.suggestions.slice())),
+      );
 
+      this.filteredDiagnosis = this.diagnosisCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((diagnosis: string | null) => (diagnosis ? this._filter(diagnosis, 'diagnosis') : this.suggestions.diagnosis.slice())),
+      );
+
+      this.filteredAllergies = this.allergiesCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((allergy: string | null) => (allergy ? this._filter(allergy, 'allergies') : this.suggestions.allergies.slice())),
+      );
+
+      this.filteredComplaints = this.complaintsCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((complaint: string | null) => (complaint ? this._filter(complaint, 'complaints') : this.suggestions.complaints.slice())),
+      );
+
+      this.filteredNotes = this.notesCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((notes: string | null) => (notes ? this._filter(notes, 'notes') : this.suggestions.notes.slice())),
+      );
+
+      this.filteredVaccinationNotes = this.vaccinationNotesCtrl.valueChanges.pipe(
+        startWith(<string>null),
+        map((vaccinationNotes: string | null) => (vaccinationNotes ? this._filter(vaccinationNotes, 'vaccinationNotes') : this.suggestions.VaccinationNotes.slice())),
+      );
+    }
     this.api_loading = false;
     console.log('showClinicalNotesDetails::', this.showClinicalNotesDetails);
     console.log('medicalInfo', this.medicalInfo)
