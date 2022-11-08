@@ -123,11 +123,13 @@
                                                     (click)="selectedCustomerViaEmail_Name_ID(customer,searchForm.value)"
                                                     [value]="customer.firstName">
                                                     <div class="flexClass" style="justify-content:space-between">
+                                                        <div>{{customer.firstName | capitalizeFirst}}</div>
+                                                        <div *ngIf="customer.lastName !=='null'">
+                                                            {{customer.lastName | capitalizeFirst}}
+                                                        </div>
                                                         <div class="flexClass">
-                                                            <div>{{customer.firstName | capitalizeFirst}}</div>
-                                                            <div *ngIf="customer.lastName !=='null'">
-                                                                {{customer.lastName | capitalizeFirst}}</div>
-                                                        </div>                                                        
+                                                            <div>{{customer.phoneNo}}</div>
+                                                        </div>
                                                     </div>
                                                 </mat-option>
                                             </mat-autocomplete>
