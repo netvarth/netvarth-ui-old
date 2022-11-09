@@ -378,9 +378,9 @@
                     <span class="lnk setings">LMS
                       <span class="pull-right">
                         {{taskstatusstr}} </span></span>
-                        <p class="settings_info">
-                          Loan management system 
-                        </p>
+                    <p class="settings_info">
+                      Loan management system
+                    </p>
                   </a>
                 </li>
 
@@ -411,10 +411,10 @@
               <h4 (click)="redirecTo('branch')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
                 [matTooltip]="branchtooltip">
                 <div class="disp-flex">
-                  Branch Master
+                  Branch Manager
                   <i class="fa fa-gears mgn-lt-auto"></i>
                 </div>
-                <div class="head-hint">Consumer Durable Loan</div>
+                <div class="head-hint">Branch Manager</div>
               </h4>
             </div>
             <div class="box-footer no-padding">
@@ -429,20 +429,20 @@
                   </a>
                 </li>
 
-                <li (click)="createBranch()">
+                <li (click)="createBranch()" *ngIf="branchStatus">
                   <a class="pointer-cursor">
                     <span class="lnk setings">Create Branch
                     </span>
                   </a>
                 </li>
 
-                <li (click)="allBranches()">
+                <li (click)="allBranches()" *ngIf="branchStatus">
                   <a class="pointer-cursor">
                     <span class="lnk setings">All Branches
                     </span>
                   </a>
                 </li>
-                
+
               </ul>
             </div>
           </div>

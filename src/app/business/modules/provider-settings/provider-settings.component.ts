@@ -763,7 +763,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.cdlStatus = data.enableCdl;
         this.cdlstatusDisplayName = (this.cdlStatus) ? 'On' : 'Off';
 
-        this.branchStatus = data.enableCdl;
+        this.branchStatus = data.enableBranchMaster;
         this.branchStatusDisplayName = (this.branchStatus) ? 'On' : 'Off';
 
         this.leadstatus = data.enableLead;
@@ -1015,6 +1015,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'cdl':
         this.routerobj.navigate(['provider', 'settings', 'cdl']);
+        break;
+      case 'branch':
+        this.routerobj.navigate(['provider', 'settings', 'branch']);
         break;
       case 'leadmanager':
         this.routerobj.navigate(['provider', 'settings', 'leadmanager']);

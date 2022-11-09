@@ -2505,6 +2505,11 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
 
+   setProviderBranchStatus(status) {
+    const url = 'provider/account/settings/branchMaster/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
   setProviderLeadStatus(status) {
     const url = 'provider/account/settings/lead/' + status;
     return this.servicemeta.httpPut(url);
@@ -2747,6 +2752,18 @@ export class ProviderServices {
   {
     const url = 'provider/branchmaster/' + id;
     return this.servicemeta.httpPost(url, data);
+  }
+
+  changeBranchStatus(id,status)
+  {
+    const url = 'provider/branchmaster/' + id + '/status/' + status;
+    return this.servicemeta.httpPut(url, null);
+  }
+
+  getBranchById(id)
+  {
+    const url = 'provider/branchmaster/'+id;
+    return this.servicemeta.httpGet(url, null);
   }
   
 }

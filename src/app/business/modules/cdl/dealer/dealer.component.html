@@ -147,7 +147,7 @@
         <table class="table">
           <thead>
             <tr class="tble-filtr-tr heght">
-              <th class="head_color">Dealer Id</th>
+              <th class="head_color">Dealer Reference No</th>
               <th class="head_color">Status</th>
               <th class="head_color">Dealer</th>
               <th class="head_color">Phone</th>
@@ -156,16 +156,15 @@
           </thead>
           <tbody class="table_data">
             <ng-container *ngFor="let dealer of dealers;let i=index">
-              <tr style="cursor:pointer" (click)="updateDealer(dealer.uid,'update')">
-                <td data-title="Loan Details" class="td1">{{dealer.id}}</td>
+              <tr style="cursor:pointer" (click)="updateDealer(dealer.uid,'update',dealer.spInternalStatus)">
+                <td data-title="Loan Details" class="td1">{{dealer.referenceNo}}</td>
                 <td data-title="Loan Details" class="td1 loanStatus">
                   <img class="imageApprove" src="/assets/images/cdl/approved.png" />
                   <div class="approvedColor text-capitalize">{{dealer.spInternalStatus}}</div>
                 </td>
                 <td data-title="Loan Details" class="td1 text-capitalize">{{dealer.partnerName}}</td>
                 <td data-title="Loan Details" class="td1">{{dealer.partnerMobile}}</td>
-                <td data-title="Loan Details" class="td1"
-                  (click)="showDealer(dealer.uid,dealer.partnerStatus,dealer.spInternalStatus)">
+                <td data-title="Loan Details" class="td1" (click)="showDealer(dealer.uid,dealer.spInternalStatus)">
                   <a class="btn btn-primary">View</a>
                 </td>
               </tr>

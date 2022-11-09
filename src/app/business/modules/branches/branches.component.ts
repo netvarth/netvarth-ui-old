@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -19,6 +19,7 @@ export class BranchesComponent implements OnInit {
   selectedLabels: any;
   filterapplied = false;
   labelFilterData: any;
+  branchStatus: any;
   branches: any
   filter = {
     firstName: '',
@@ -87,14 +88,49 @@ export class BranchesComponent implements OnInit {
     }
   }
 
-
-  goBack() {
-    this.router.navigate(['provider', 'cdl']);
-    // this.location.back();
+  branchStatusChange(id,event)
+  {
+    let status = event ? true : false;
+    this.providerServices.changeBranchStatus(id,status).subscribe((data: any) => {
+      this.branchStatus = status;
+      if (data)
+      {
+        this.getBranches();
+      }
+    })
   }
 
-  loanDetails(id) {
-    this.router.navigate(['provider', 'cdl', 'loans', id]);
+  getbranchStatusById(id)
+  {
+    this.providerServices.getBranchesByFilter(id).subscribe((data: any) => {
+      if (data && data.status == 'ACTIVE')
+      {
+        this.getBranches();
+        return true
+      }
+      else if(data && data.status == 'INACTIVE')
+      {
+        return false;
+      }
+    })
+    return false;
+  }
+
+  updateBranch(id,action)
+  {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: id,
+        action:action
+      }
+    };
+    this.router.navigate(['provider', 'branches','update'],navigationExtras);
+  }
+
+
+  goBack() {
+    this.router.navigate(['provider','branches']);
+    // this.location.back();
   }
 
   setFilterForApi() {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
-import { NavigationExtras, Router } from "@angular/router";
+import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
+import { LocalStorageService } from "../../../../shared/services/local-storage.service";
 import { SnackbarService } from "../../../../shared/services/snackbar.service";
 import { ProviderServices } from "../../../services/provider-services.service";
 
@@ -12,27 +13,74 @@ import { ProviderServices } from "../../../services/provider-services.service";
 export class CreateBranchComponent implements OnInit {
   createBranch: any;
   locations: any;
+  action: any;
   constructor(
     private createBranchFormBuilder: FormBuilder,
     private providerServices: ProviderServices,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private lStorageService: LocalStorageService,
+    private activatedRoute:ActivatedRoute
   ) {
     this.createBranch = this.createBranchFormBuilder.group({
       location: [null],
       branchname: [null],
       branchcode: [null]
     });
+
+    this.activatedRoute.queryParams.subscribe((params) => { 
+      if (params && params.id)
+      {
+        this.providerServices.getBranchById(params.id).subscribe((data: any) => {
+          if (data && data.branchCode)
+          {
+            this.createBranch.controls.branchcode.setValue(data.branchCode)
+          }
+          if(data && data.branchName)
+          {
+            this.createBranch.controls.branchname.setValue(data.branchName)
+          }
+          if(data && data.location && data.location.id)
+          {
+            this.createBranch.controls.location.setValue(data.location.id)
+          }
+        })
+      }
+      if (params && params.action)
+      {
+        this.action = "update";
+      }
+    });
   }
 
   ngOnInit(): void {
+    if (this.lStorageService.getitemfromLocalStorage('branchData'))
+    {
+      let storedBranchData = this.lStorageService.getitemfromLocalStorage('branchData');
+      if (storedBranchData && storedBranchData.branchCode)
+      {
+        this.createBranch.controls.branchcode.setValue(storedBranchData.branchCode)
+      }
+      if(storedBranchData && storedBranchData.branchName)
+      {
+        this.createBranch.controls.branchname.setValue(storedBranchData.branchName)
+      }
+      this.lStorageService.removeitemfromLocalStorage('branchData')
+    }
     this.getLocations();
   }
 
   resetErrors() {}
 
   goBack() {
-    this.router.navigate(["provider", "settings"]);
+    if (this.action && this.action == 'update')
+    {
+      this.router.navigate(["provider", "branches"]);
+    }
+    else
+    {
+      this.router.navigate(["provider", "settings"]);    
+    }
   }
 
   getLocations() {
@@ -43,6 +91,11 @@ export class CreateBranchComponent implements OnInit {
   }
 
   addLocation() {
+    let branchData = {
+      branchCode: this.createBranch.controls.branchcode.value,
+      branchName: this.createBranch.controls.branchname.value,
+    };
+    this.lStorageService.setitemonLocalStorage('branchData', branchData);
     const navigationExtras: NavigationExtras = {
       queryParams: {
         type: 'branch'

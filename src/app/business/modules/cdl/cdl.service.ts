@@ -84,6 +84,12 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  dealerApprovalRequest(id)
+  {
+    const url = 'provider/partner/' + id + '/approvalrequest';
+    return this.servicemeta.httpPut(url, null);
+  }
+
 
   createCustomer(data) {
     const url = 'provider/customers';

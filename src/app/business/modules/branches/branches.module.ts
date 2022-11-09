@@ -18,10 +18,12 @@ import { PagerModule } from '../../../shared/modules/pager/pager.module';
 import { SkeletonLoadingModule } from '../../../shared/modules/skeleton-loading/skeleton-loading.module';
 import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.module';
 import { SelectSchemeModule } from '../cdl/loans/select-scheme/select-scheme.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const routes: Routes = [
   { path: '', component: BranchesComponent },
   { path: 'create', loadChildren: () => import('./create-branch/create-branch.module').then(m => m.CreateBranchModule) },
+  { path: 'update', loadChildren: () => import('./create-branch/create-branch.module').then(m => m.CreateBranchModule) },
 ];
 
 
@@ -52,6 +54,7 @@ const routes: Routes = [
     SelectSchemeModule,
     NgxPaginationModule,
     PagerModule,
+    MatSlideToggleModule,
     [RouterModule.forChild(routes)]
   ]
 })

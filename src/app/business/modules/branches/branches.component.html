@@ -1,25 +1,25 @@
 <section class="card">
-    <div class="title-gb no-padding">
-      <div class="dash-head">
-        <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i></div>
-        <div class="colorHeaderIcon">Branches</div>
-      </div>
+  <div class="title-gb no-padding">
+    <div class="dash-head">
+      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="colorHeaderIcon">Branches</div>
     </div>
-  </section>
-  
-  
-  <section class="card" *ngIf="loading">
-    <div>
-      <app-skeleton-loading></app-skeleton-loading>
-    </div>
-  </section>
-  
-  
-  <div *ngIf="!loading">
-    <div class="col-md-12 marginClass">
-      <div class="card">
-  
-        <!-- <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="filter_sidebar">
+  </div>
+</section>
+
+
+<section class="card" *ngIf="loading">
+  <div>
+    <app-skeleton-loading></app-skeleton-loading>
+  </div>
+</section>
+
+
+<div *ngIf="!loading">
+  <div class="col-md-12 marginClass">
+    <div class="card">
+
+      <!-- <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="filter_sidebar">
           <aside class="filterSidebar filter-sidebar">
             <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
               <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
@@ -129,8 +129,8 @@
             </div>
           </aside>
         </div> -->
-  
-        <!-- <div class="row text-right">
+
+      <!-- <div class="row text-right">
           <form [formGroup]="statusList">
             <div class="form-group text-left col-md-4 my-3">
               <mat-select class="form-control widthWebKit" #status (selectionChange)="statusChange($event)"
@@ -153,65 +153,71 @@
             </div>
           </div>
         </div> -->
-        <div class="table-responsive dash-list">
-          <table class="table">
-            <thead>
-              <tr class="tble-filtr-tr heght">
-                <th class="head_color">Branch Code</th>
-                <th class="head_color">Branch Name</th>
-                <th class="head_color">Branch Location</th>
-                <th class="head_color">Status</th>
+      <div class="table-responsive dash-list">
+        <table class="table">
+          <thead>
+            <tr class="tble-filtr-tr heght">
+              <th class="head_color">Branch Code</th>
+              <th class="head_color">Branch Name</th>
+              <th class="head_color">Branch Location</th>
+              <th class="head_color">Status</th>
+              <th class="head_color">Update</th>
+            </tr>
+          </thead>
+          <tbody class="table_data">
+            <ng-container *ngIf="branches && branches.length > 0">
+              <tr style="cursor:pointer" *ngFor="let branch of branches  | paginate: config;">
+
+                <td data-title="Loan Details" class="td1" *ngIf="branch && branch.branchCode">{{branch.branchCode}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="branch && branch.branchName">
+                  {{branch.branchName}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="branch && branch.location && branch.location.place">
+                  {{branch.location.place}}</td>
+                <td *ngIf="branch  && branch.status">
+                  <mat-slide-toggle (change)="branchStatusChange(branch.id,$event.checked)"
+                    [checked]="branch.status=='ACTIVE' ? 'true':'false'">
+                    {{branch.status}}
+                  </mat-slide-toggle>
+                </td>
+                <td *ngIf="branch && branch.status">
+                  <button class="btn btn-primary" (click)="updateBranch(branch.id,'update')">Update</button>
+                </td>
               </tr>
-            </thead>
-            <tbody class="table_data">
-              <ng-container *ngIf="branches && branches.length > 0">
-                <tr style="cursor:pointer" *ngFor="let branch of branches  | paginate: config;">
-  
-                  <td data-title="Loan Details" class="td1" *ngIf="branch && branch.branchCode">{{branch.branchCode}}</td>
-                  <td data-title="Loan Details" class="td1" *ngIf="branch && branch.branchName">
-                    {{branch.branchName}}</td>
-                  <td data-title="Loan Details" class="td1" *ngIf="branch && branch.location && branch.location.place">
-                    {{branch.location.place}}</td>
-                 
-                    <td data-title="Loan Details" class="td1" *ngIf="branch && branch.location && branch.location.status">
-                        {{branch.location.status}}</td>
-                </tr>
-              </ng-container>
-              <ng-container *ngIf="branches && branches.length == 0">
-                <tr class="my-2">
-                  <td class="text-primary">No Loan Applications Found</td>
-                </tr>
-              </ng-container>
-            </tbody>
-          </table>
-          <div class="clearfix"></div>
-          <div class="search_paging m-2" *ngIf="pagination && pagination.totalCnt>10 ">
-            <pagination-template *ngIf="pagination && pagination.totalCnt>10" #p="paginationApi" [id]="config.id"
-              (pageChange)="config.currentPage = $event">
-              <div class="custom-pagination d-flex justify-content-between align-items-center flex-wrap pull-right mb-0">
-                <div class="pagination-previous mx-2" [class.disabled]="p.isFirstPage()" data-bs-toggle="tooltip"
-                  data-bs-placement="bottom" title="previous">
-                  <a *ngIf="!p.isFirstPage()" (click)="p.previous()">
-                    < </a>
-                </div>
-                <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-                  <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
-                    <span class="mx-2">{{ page.label }}</span>
-                  </a>
-                  <div *ngIf="p.getCurrent() === page.value">
-                    <span>{{ page.label }}</span>
-                  </div>
-                </div>
-                <div class="pagination-next mx-2" [class.disabled]="p.isLastPage()" data-bs-toggle="tooltip"
-                  data-bs-placement="top" title="next">
-                  <a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
+            </ng-container>
+            <ng-container *ngIf="branches && branches.length == 0">
+              <tr class="my-2">
+                <td class="text-primary">No Branches Found</td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+        <div class="clearfix"></div>
+        <div class="search_paging m-2" *ngIf="pagination && pagination.totalCnt>10 ">
+          <pagination-template *ngIf="pagination && pagination.totalCnt>10" #p="paginationApi" [id]="config.id"
+            (pageChange)="config.currentPage = $event">
+            <div class="custom-pagination d-flex justify-content-between align-items-center flex-wrap pull-right mb-0">
+              <div class="pagination-previous mx-2" [class.disabled]="p.isFirstPage()" data-bs-toggle="tooltip"
+                data-bs-placement="bottom" title="previous">
+                <a *ngIf="!p.isFirstPage()" (click)="p.previous()">
+                  < </a>
+              </div>
+              <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
+                <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
+                  <span class="mx-2">{{ page.label }}</span>
+                </a>
+                <div *ngIf="p.getCurrent() === page.value">
+                  <span>{{ page.label }}</span>
                 </div>
               </div>
-            </pagination-template>
-          </div>
+              <div class="pagination-next mx-2" [class.disabled]="p.isLastPage()" data-bs-toggle="tooltip"
+                data-bs-placement="top" title="next">
+                <a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
+              </div>
+            </div>
+          </pagination-template>
         </div>
-  
       </div>
+
     </div>
   </div>
-  
+</div>

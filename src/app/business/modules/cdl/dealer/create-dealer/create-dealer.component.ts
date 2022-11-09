@@ -677,8 +677,10 @@ export class CreateDealerComponent implements OnInit {
                 console.log(dataS3Url);
               });
           }
-          this.snackbarService.openSnackBar("Dealer Updated Successfully")
-          this.router.navigate(['provider', 'cdl', 'dealers'])
+          this.cdlservice.dealerApprovalRequest(this.dealerId).subscribe((s3urls: any) => {
+            this.snackbarService.openSnackBar("Dealer Updated Successfully")
+            this.router.navigate(['provider', 'cdl', 'dealers'])
+          })
         },
           (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -756,6 +758,7 @@ export class CreateDealerComponent implements OnInit {
 
   saveAsLead() {
     this.dealerData = {
+      "uid": this.dealerId,
       "partnerName": this.createDealer.controls.name.value,
       "partnerMobile": this.createDealer.controls.phone.value,
       "partnerEmail": this.createDealer.controls.email.value,
@@ -801,7 +804,7 @@ export class CreateDealerComponent implements OnInit {
 
     if (this.dealerData) {
       console.log("Loan Application Data : ", this.dealerData)
-      this.cdlservice.savePartner(this.dealerData).subscribe((s3urls: any) => {
+      this.cdlservice.updateDealer(this.dealerId,this.dealerData).subscribe((s3urls: any) => {
         if (s3urls && s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {

@@ -462,7 +462,7 @@
         <table class="table">
           <thead>
             <tr class="tble-filtr-tr heght">
-              <th class="head_color">Dealer Id</th>
+              <th class="head_color">Dealer Reference No</th>
               <th class="head_color">Status</th>
               <th class="head_color">Dealer</th>
               <th class="head_color">Phone</th>
@@ -472,7 +472,7 @@
           <tbody class="table_data">
             <ng-container *ngFor="let dealer of dealers;let i=index">
               <tr style="cursor:pointer" (click)="showDealer(dealer.uid)">
-                <td data-title="Loan Details" class="td1">{{dealer.id}}</td>
+                <td data-title="Loan Details" class="td1">{{dealer.referenceNo}}</td>
                 <td data-title="Loan Details" class="td1 loanStatus">
                   <div class="approvedColor text-capitalize">{{dealer.partnerStatus}}</div>
                 </td>
