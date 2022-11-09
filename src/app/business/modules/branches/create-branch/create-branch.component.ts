@@ -14,7 +14,8 @@ export class CreateBranchComponent implements OnInit {
   createBranch: any;
   locations: any;
   action: any;
-  branchId:any;
+  branchId: any;
+  branchStatus: any;
   constructor(
     private createBranchFormBuilder: FormBuilder,
     private providerServices: ProviderServices,
@@ -41,6 +42,10 @@ export class CreateBranchComponent implements OnInit {
           if(data && data.branchName)
           {
             this.createBranch.controls.branchname.setValue(data.branchName)
+          }
+          if(data && data.status)
+          {
+            this.branchStatus = data.status;
           }
           if(data && data.location && data.location.id)
           {
@@ -115,6 +120,10 @@ export class CreateBranchComponent implements OnInit {
     console.log("branchData", branchData);
     if (this.action && this.action == 'update')
     {
+      if (this.branchStatus)
+      {
+        branchData['status'] = this.branchStatus;
+      }
       this.providerServices.updateBranch(this.branchId,branchData).subscribe(
       (data: any) => {
         if (data) {
