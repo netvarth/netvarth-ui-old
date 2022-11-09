@@ -143,7 +143,7 @@ export class CdlComponent implements OnInit {
   requestedDealers() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        spInternalStatus: 'Draft'
+        spInternalStatus: 'ApprovalPending'
       }
     };
     this.router.navigate(['provider', 'cdl', 'dealers'], navigationExtras);

@@ -20,6 +20,7 @@ export class CreateDealerComponent implements OnInit {
   partnerCategories: any;
   dealerData: any;
   dealerApplication: any;
+  bankverification: any = false;
   verifyingUID: any;
   selectedMessage = {
     files: [],
@@ -154,6 +155,23 @@ export class CreateDealerComponent implements OnInit {
 
             if (this.dealerData && this.dealerData.partnerMobileVerified) {
               this.verification = true;
+            }
+
+            if (this.dealerData && this.dealerData.gstinVerified) {
+              this.gstverification = true;
+            }
+
+
+            if (this.dealerData && this.dealerData.bankName) {
+              this.createDealer.controls.bank.setValue(this.dealerData.bankName);
+            }
+
+            if (this.dealerData && this.dealerData.bankAccountNo) {
+              this.createDealer.controls.account.setValue(this.dealerData.bankAccountNo);
+            }
+
+            if (this.dealerData && this.dealerData.bankIfsc) {
+              this.createDealer.controls.ifsc.setValue(this.dealerData.bankIfsc);
             }
 
             if (this.dealerData && this.dealerData.partnerEmailVerified) {
@@ -354,6 +372,9 @@ export class CreateDealerComponent implements OnInit {
         this.gstverification = true;
         this.snackbarService.openSnackBar("Gst Verified Successfully")
       }
+      else {
+        this.snackbarService.openSnackBar("Enter Valid GST Number", { 'panelClass': 'snackbarerror' })
+      }
     },
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -524,6 +545,10 @@ export class CreateDealerComponent implements OnInit {
 
     const verifyBank = {
       "id": this.dealerData.id,
+      "uid": this.dealerData.uid,
+      "bankName": this.createDealer.controls.bank.value,
+      "bankAccountNo": this.createDealer.controls.account.value,
+      "bankIfsc": this.createDealer.controls.ifsc.value
     }
 
 
@@ -554,26 +579,27 @@ export class CreateDealerComponent implements OnInit {
     // }
     // else {
 
-
-    this.cdlservice.updatePartnerBankDetails(bankInfo).subscribe((s3urls: any) => {
-      console.log("Coming Here")
-
-      if (s3urls.length > 0) {
-        this.uploadAudioVideo(s3urls).then(
-          (dataS3Url) => {
-            console.log(dataS3Url);
-          });
-      }
-      this.cdlservice.verifyBankDetails(verifyBank).subscribe((data: any) => {
-        this.snackbarService.openSnackBar("Bank Details Updated Successfully")
-
-      }),
-        (error) => {
+    this.cdlservice.verifyPartnerBankDetails(verifyBank).subscribe((data: any) => {
+      if (data) {
+        this.cdlservice.updatePartnerBankDetails(bankInfo).subscribe((s3urls: any) => {
+          if (s3urls.length > 0) {
+            this.uploadAudioVideo(s3urls).then(
+              (dataS3Url) => {
+                console.log(dataS3Url);
+              });
+          }
+          this.bankverification = true;
+          this.snackbarService.openSnackBar("Bank Details Verified Successfully")
+        }), (error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         }
-    }), (error) => {
-      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-    }
+      }
+    }),
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      }
+
+
     // }
   }
 
@@ -670,7 +696,6 @@ export class CreateDealerComponent implements OnInit {
         console.log("filesToUpload", this.filesToUpload)
         this.dealerData['uid'] = this.dealerId;
         this.cdlservice.updateDealer(this.dealerId, this.dealerData).subscribe((s3urls: any) => {
-          this.saveBankDetails();
           if (s3urls && s3urls.length > 0) {
             this.uploadAudioVideo(s3urls).then(
               (dataS3Url) => {
@@ -804,7 +829,7 @@ export class CreateDealerComponent implements OnInit {
 
     if (this.dealerData) {
       console.log("Loan Application Data : ", this.dealerData)
-      this.cdlservice.updateDealer(this.dealerId,this.dealerData).subscribe((s3urls: any) => {
+      this.cdlservice.updateDealer(this.dealerId, this.dealerData).subscribe((s3urls: any) => {
         if (s3urls && s3urls.length > 0) {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {

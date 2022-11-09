@@ -202,7 +202,8 @@
                   <input (keyup)="resetErrors()" formControlName="pan" type="text" placeholder="Enter PAN Number"
                     class="form-control" autocomplete="off" maxlength="10" />
                   <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="idVerification('Pan')">
-                    <span *ngIf="!panverification">Verify</span><span *ngIf="panverification">Verified</span></a>
+                    <span *ngIf="!panverification">Verify</span><span *ngIf="panverification"><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
               </div>
             </div>
@@ -478,9 +479,10 @@
               <div class="fieldPadding">
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" type="text" placeholder="Enter GST Number" class="form-control"
-                    autocomplete="off" formControlName="gst" />
+                    autocomplete="off" formControlName="gst" [class.disabled]="gstverification" />
                   <a class="btn btn-verify" [class.btn-verified]="gstverification" (click)="verifygst()">
-                    <span *ngIf="!gstverification">Verify</span><span *ngIf="gstverification">Verified</span></a>
+                    <span *ngIf="!gstverification">Verify</span><span *ngIf="gstverification"><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
               </div>
             </div>
@@ -540,16 +542,18 @@
             </div>
           </div>
         </div>
-
+        <button class="btn btn-primary" (click)="saveBankDetails()">
+          Verify Bank
+        </button>
 
       </div>
 
     </div>
-    <div class="d-flex">
+    <div class="d-flex mt-2">
       <div class="btn btn-draft mr-2" (click)="saveAsLead()">
         Save as Lead
       </div>
-      <button class="btn btn-primary" (click)="createPartner()">
+      <button class="btn btn-primary" [disabled]="!bankverification" (click)="createPartner()">
         {{btnText}}
       </button>
     </div>
