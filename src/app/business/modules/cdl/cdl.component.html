@@ -118,7 +118,7 @@
   </div>
 </div>
 
-<div class="card m-2">
+<div class="card mt-2">
   <div class="mb-2">
     <span class="font-weight-bold">Quick Actions</span>
   </div>
@@ -295,7 +295,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-8">
+  <div class="col-md-8 mt-2 no-padding-small">
     <div class="card">
       <div class="d-flex justify-content-between">
         <div class="form-group col-md-4 no-padding">
@@ -322,7 +322,7 @@
         <table class="table">
           <thead>
             <tr class="tble-filtr-tr heght">
-              <th class="head_color">Loan Id</th>
+              <th class="head_color">Loan referenceNo</th>
               <th class="head_color">Customer Name</th>
               <th class="head_color">Dealer</th>
               <th class="head_color">Status</th>
@@ -331,7 +331,7 @@
           <tbody class="table_data">
             <ng-container *ngIf="loans && loans.length > 0">
               <tr style="cursor:pointer" *ngFor="let item of loans;let i=index">
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.id">{{item.id}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.referenceNo">{{item.referenceNo}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
                   {{item.customer.firstName}} {{item.customer.lastName}}</td>
                 <td data-title="Loan Details" class="td1" *ngIf="item && item.partner && item.partner.partnerName">
@@ -431,13 +431,11 @@
           </span>
         </div>
       </div>
-
-
     </div>
   </div>
 
 
-  <div class="col-md-4" *ngIf="user.userType==1 || user.userType==2">
+  <div class="col-md-4 mt-2 no-padding-small" *ngIf="user.userType==1 || user.userType==2">
     <div class="card min-height">
       <div class="mb-2">
         <span class="font-weight-bold">Alerts</span>
@@ -450,14 +448,12 @@
           <span class="alerts-title">{{loan.alertMessage}}</span>
         </div>
       </div>
-
     </div>
   </div>
 </div>
-<br>
 
-<div class="row mt-1" *ngIf="user.userType==1 || user.userType==2">
-  <div class="col-md-8">
+<div class="row" *ngIf="user.userType==1 || user.userType==2">
+  <div class="col-md-8 mt-2 no-padding-small">
     <div class="card">
       <div>
         <span class="font-weight-bold text-primary">Dealers</span>
@@ -493,7 +489,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-4" *ngIf="user.userType==1 || user.userType==2">
+  <div class="col-md-4 mt-2 no-padding-small" *ngIf="user.userType==1 || user.userType==2">
     <div class="card" *ngIf="customers">
       <div class="mb-2">
         <span class="font-weight-bold">Customers</span>

@@ -27,6 +27,11 @@
   height: 250px !important;
 }
 
+.recentcards img {
+  height: 250px !important;
+}
+
+
 .min-height {
   min-height: 400px !important;
 }
@@ -254,4 +259,16 @@ th {
   color: #fff !important;
   text-align: center;
   line-height: 40px;
+}
+
+
+@media (max-width: 767px) {
+  .recentcards img {
+    height: 150px !important;
+  }
+
+  .slider-height,
+  .recentcards {
+    height: 150px !important;
+  }
 }

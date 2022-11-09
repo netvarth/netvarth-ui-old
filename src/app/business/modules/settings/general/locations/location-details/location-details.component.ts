@@ -79,6 +79,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   checked_sel_badges = false;
   params;
   src: any;
+  type: any;
   locationFind = 'GOOGLEMAP';
   api_error = '';
   lat_lng = {
@@ -115,6 +116,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
       this.params = qparams;
       if (this.params && this.params.src) {
         this.src = this.params.src;
+      }
+      if (this.params && this.params.type) {
+        this.type = this.params.type;
       }
       if (this.params.action === 'editbase') {
         this.action = 'edit';
@@ -299,6 +303,8 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   goBack() {
     if (this.src === 'h') {
     this.backPage();
+    }else if (this.type === 'branch') {
+    this.router.navigate(['provider', 'branches', 'create']);
     } else {
       this.router.navigate(['provider', 'settings', 'general',
       'locations']);

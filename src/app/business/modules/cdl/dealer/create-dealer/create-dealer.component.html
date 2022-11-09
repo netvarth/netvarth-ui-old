@@ -34,7 +34,7 @@
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" type="text" formControlName="phone" placeholder="Enter Phone Number"
                     class="form-control" autocomplete="off" maxlength="10"
-                    [class.disabled]="action == 'update' || verification" />
+                    [class.disabled]="action == 'update' && verification" />
                   <a class="btn btn-verify" *ngIf="!verification" [class.btn-verified]="verification"
                     (click)="verifyotp()">
                     <span>Verify</span></a>
@@ -60,7 +60,7 @@
                 <div class="d-flex">
                   <input (keyup)="resetErrors()" formControlName="email" type="email" placeholder="Enter Dealer Email"
                     class="form-control" autocomplete="off"
-                    [class.disabled]="action == 'update' || emailverification" />
+                    [class.disabled]="action == 'update' && emailverification" />
 
                   <a class="btn btn-verify" *ngIf="!emailverification" [class.btn-verified]="emailverification"
                     (click)="verifyemail()">
