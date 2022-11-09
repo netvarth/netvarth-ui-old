@@ -95,16 +95,14 @@ export class DealerApproveComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        from: "approveDealer"
+        from: "approveDealer",
+        dealerId: id
       }
     });
     dialogRef.afterClosed().subscribe(
-      (data) => {
-        if (data && data.type == 'remarks') {
-          let dealerNote = {
-            "note": data.remarks
-          };
-          this.cdlservice.approveDealer(id, dealerNote).subscribe(() => {
+    (data) => {
+        if (data) {
+          this.cdlservice.approveDealer(id, data).subscribe(() => {
             this.snackbarService.openSnackBar("Dealer Approved Successfully");
             this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
           },

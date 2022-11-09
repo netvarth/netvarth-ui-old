@@ -18,11 +18,14 @@ export class ConfirmBoxComponent implements OnInit {
   loanSchemes: any;
   sanctionAmount: any = false;
   type: any;
+  dealerData: any;
   loanId: any;
   downloadsrc = "https://scale.jaldee.com/shortUrl/Njg5My0xLTI3MTM3";
   loanData: any;
   sanctionedAmount: any = 0;
-  dealerAutoApprove: any;
+  dealerAutoApprove: any = false;
+  districtWiseRestriction: any = false;
+  autoApprovalUptoAmount: any;
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -75,6 +78,10 @@ export class ConfirmBoxComponent implements OnInit {
       }, 3500);
     }
 
+    if (this.data && this.data.dealerId) {
+      this.getDealer(this.data.dealerId);
+    }
+
     this.getLoanSchemes();
   }
 
@@ -89,7 +96,11 @@ export class ConfirmBoxComponent implements OnInit {
 
 
   approveStatusChange(value) {
+    this.dealerAutoApprove = value;
+  }
 
+  districtStatusChange(value) {
+    this.districtWiseRestriction = value;
   }
 
 
@@ -119,6 +130,17 @@ export class ConfirmBoxComponent implements OnInit {
   }
 
 
+  getDealer(id) {
+    this.cdlservice.getDealerById(id).subscribe((data: any) => {
+      this.dealerData = data;
+      this.dealerAutoApprove = data.autoApproval;
+      this.autoApprovalUptoAmount = data.autoApprovalUptoAmount;
+      this.districtWiseRestriction = data.districtWiseRestriction;
+      console.log("this.dealerData", this.dealerData)
+    })
+  }
+
+
   openSchemes() {
     const dialogRef = this.dialog.open(SelectSchemeComponent, {
       width: '50%',
@@ -141,6 +163,17 @@ export class ConfirmBoxComponent implements OnInit {
       remarks: this.remarks,
       type: "remarks"
     }
+    this.dialogRef.close(data);
+  }
+
+  approveDealer() {
+    let data = {
+      "autoApproval": this.dealerAutoApprove,
+      "autoApprovalUptoAmount": this.autoApprovalUptoAmount,
+      "districtWiseRestriction": this.districtWiseRestriction,
+      "approvedNote": this.remarks
+    }
+    console.log("Approve Dealer Data", data)
     this.dialogRef.close(data);
   }
 
