@@ -58,7 +58,8 @@ export class SchemesComponent implements OnInit {
     this.loading = true;
     this.partnerservice.getSchemes().subscribe((data) => {
       this.schemeList = data;
-      console.log("this.schemelist", this.schemeList)
+      console.log("this.schemelist", this.schemeList);
+      this.loading = false;
     })
   }
 
