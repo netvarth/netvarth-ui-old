@@ -25,7 +25,7 @@
               <span class="dealer-icon"><i class="fa fa-check"></i></span>
             </div>
             <div class="text-left py-0 my-0">
-              <span class="dealer-icon-info">100</span><br class="my-0 py-0">
+              <span class="dealer-icon-info">{{totalLoansCount}}</span><br class="my-0 py-0">
               <span class="dealer-icon-sub-info">Loans</span>
             </div>
           </div>
@@ -105,7 +105,7 @@
             <a class="nav-link" data-toggle="tab" href="#tab4"><i class="fa fa-bell"
                 aria-hidden="true"></i>&nbsp;Customers</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="user.userType==2">
             <a class="nav-link" data-toggle="tab" href="#tab5"><i class="fa fa-link"
                 aria-hidden="true"></i>&nbsp;Account</a>
           </li>
@@ -183,7 +183,7 @@
                         </div>&nbsp;&nbsp;
                         <div class="text-left">
                           <span class="head-card-title">Approved Loans</span><br>
-                          <span class="font-weight-bold">10</span>
+                          <span class="font-weight-bold">{{totalApprovedCount}}</span>
                         </div>
                       </div>
                     </div>
@@ -211,7 +211,7 @@
                         </div>&nbsp;&nbsp;
                         <div class="text-left">
                           <span class="head-card-title">Rejected Loans</span><br>
-                          <span class="font-weight-bold">1</span>
+                          <span class="font-weight-bold">{{RejectedLoansCount}}</span>
                         </div>
                       </div>
                     </div>
@@ -225,7 +225,7 @@
                         </div>&nbsp;&nbsp;
                         <div class="text-left">
                           <span class="head-card-title">Leads</span><br>
-                          <span class="font-weight-bold">80</span>
+                          <span class="font-weight-bold">{{partnerLeadsCount}}</span>
                         </div>
                       </div>
                     </div>
@@ -519,13 +519,13 @@
               <span class="font-weight-light">Account Status</span><br>
               <div class="text-capitalize inactivestatus" [class.activestatus]="active == 'Active'">
                 <mat-slide-toggle (change)="changeActive($event)" [(ngModel)]="status">
-                  {{active}}
+                  {{status?'Active':'Inactive'}}
                 </mat-slide-toggle>
               </div>
             </div>
-            <div class="my-2">
+            <div class="my-2" *ngIf="dealerData && dealerData.assignee && dealerData.assignee.name">
               <span class="font-weight-bold">Assignee</span><br>
-              <span class="font-weight-light" *ngIf="dealerData && dealerData.assignee">Assignee</span>
+              <span class="font-weight-light">{{dealerData.assignee.name}}</span>
             </div><br>
             <div>
               <br>

@@ -1325,6 +1325,9 @@ export class CreateComponent implements OnInit {
     if (this.createLoan.controls.loanamount.value > 50000) {
       this.showBankAttachments = true;
     }
+    else {
+      this.showBankAttachments = false;
+    }
   }
 
   verifypan() {

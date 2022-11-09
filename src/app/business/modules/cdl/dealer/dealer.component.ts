@@ -66,20 +66,27 @@ export class DealerComponent implements OnInit {
 
 
   updateDealer(id, action, status) {
-    if (status == 'ApprovalPending')
-    {
-        this.showDealer(id, status)
+    if (status == 'ApprovalPending') {
+      this.showDealer(id, status)
+    }
+    else if (status == 'Approved') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          id: id
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
     }
     else {
       const navigationExtras: NavigationExtras = {
-      queryParams: {
-        id: id,
-        action: action
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
+        queryParams: {
+          id: id,
+          action: action
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
     }
-    
+
   }
 
   showDealer(dealerId, spInternalStatus) {
