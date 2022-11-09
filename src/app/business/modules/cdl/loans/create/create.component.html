@@ -79,9 +79,9 @@
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
-                        <input (keyup)="resetErrors()" type="number" placeholder="Enter Phone Number"
-                          class="form-control" autocomplete="off" #phone [value]="phone" formControlName="phone"
-                          maxlength="10" [class.disabled]="verification" />
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
+                          autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
+                          [class.disabled]="verification" />
                         <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
                           (click)="verifyotp()"><span>Verify</span></a>
 
