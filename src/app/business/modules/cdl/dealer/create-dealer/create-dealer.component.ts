@@ -178,6 +178,10 @@ export class CreateDealerComponent implements OnInit {
               this.emailverification = true;
             }
 
+            if (this.dealerData && this.dealerData.bankAccountVerified) {
+              this.bankverification = true;
+            }
+
             if (this.dealerData && this.dealerData.isPanVerified) {
               this.panverification = true;
             }
