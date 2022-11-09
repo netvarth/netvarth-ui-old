@@ -36,6 +36,7 @@ export class CreateComponent implements OnInit {
     base64: [],
     caption: []
   };
+  showBankAttachments: any = false;
   bankDetailsVerified: any = false;
   loanApplicationKycId: any;
   selectedFiles = {
@@ -1321,6 +1322,9 @@ export class CreateComponent implements OnInit {
   payment(event) {
     this.downPayment = Number(event.target.value);
     this.createLoan.controls.loanamount.setValue(this.createLoan.controls.totalpayment.value - this.downPayment)
+    if (this.createLoan.controls.loanamount.value > 50000) {
+      this.showBankAttachments = true;
+    }
   }
 
   verifypan() {

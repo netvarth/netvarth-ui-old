@@ -22,6 +22,7 @@ export class ConfirmBoxComponent implements OnInit {
   downloadsrc = "https://scale.jaldee.com/shortUrl/Njg5My0xLTI3MTM3";
   loanData: any;
   sanctionedAmount: any = 0;
+  dealerAutoApprove: any;
   config = {
     allowNumbersOnly: true,
     length: 4,
@@ -86,6 +87,10 @@ export class ConfirmBoxComponent implements OnInit {
 
   }
 
+
+  approveStatusChange(value) {
+
+  }
 
 
   downloadExcel() {

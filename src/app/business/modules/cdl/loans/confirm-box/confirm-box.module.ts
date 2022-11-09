@@ -11,6 +11,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { SelectSchemeModule } from '../select-scheme/select-scheme.module';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 
 
@@ -30,6 +31,7 @@ import { SelectSchemeModule } from '../select-scheme/select-scheme.module';
     MatButtonModule,
     FormsModule,
     MatExpansionModule,
+    MatSlideToggleModule,
     SelectSchemeModule
   ]
 })

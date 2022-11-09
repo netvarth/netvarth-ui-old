@@ -51,6 +51,49 @@
 </div>
 
 
+<div class="text-center" *ngIf="from && from == 'approveDealer'">
+  <div class="p-5 pt-0">
+    <div>
+      <div class="bggrey my-2">
+        <div>
+          <div class="d-flex">
+            <div class="form-title"></div>
+            <mat-slide-toggle (change)="approveStatusChange($event.checked)" [checked]="dealerAutoApprove">
+              Auto Approve
+            </mat-slide-toggle>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" placeholder="Enter Remarks" class="form-control" autocomplete="off"
+              [(ngModel)]="remarks"></textarea>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="bggrey my-2">
+        <div>
+          <div class="d-flex">
+            <div class="form-title">Remarks</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" placeholder="Enter Remarks" class="form-control" autocomplete="off"
+              [(ngModel)]="remarks"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+      <div class="mr-3">
+        <div class="btn btn-primary" (click)="checked()">Add Remarks</div>
+      </div>
+      <div>
+        <div class="btn btn-primary" (click)="close()">Close</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 <div class="text-center" *ngIf="from && from == 'additionalqa'">
   <div class="px-5 pb-0 pt-2">
     <div>

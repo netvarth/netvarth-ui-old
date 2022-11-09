@@ -65,6 +65,12 @@ export class OtpVerifyComponent implements OnInit {
       this.uid = this.data.uid;
     }
     if (this.data && this.phoneNumber && this.email) {
+      if (this.phoneNumber.startsWith('555')) {
+        this.config.length = 5;
+      }
+      this.performSendOTP();
+    }
+    else {
       this.performSendOTP();
     }
   }

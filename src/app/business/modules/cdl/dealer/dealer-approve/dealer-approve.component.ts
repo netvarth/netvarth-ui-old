@@ -95,7 +95,7 @@ export class DealerApproveComponent implements OnInit {
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {
-        from: "remarks"
+        from: "approveDealer"
       }
     });
     dialogRef.afterClosed().subscribe(
