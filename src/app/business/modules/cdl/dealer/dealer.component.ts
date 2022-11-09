@@ -70,12 +70,7 @@ export class DealerComponent implements OnInit {
       this.showDealer(id, status)
     }
     else if (status == 'Approved') {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          id: id
-        }
-      };
-      this.router.navigate(['provider', 'cdl', 'dealers', 'view'], navigationExtras);
+      this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
     }
     else {
       const navigationExtras: NavigationExtras = {

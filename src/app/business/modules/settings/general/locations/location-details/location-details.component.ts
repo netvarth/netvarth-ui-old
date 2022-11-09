@@ -23,7 +23,7 @@ import { GoogleMapComponent } from '../../../../../../business/modules/googlemap
 @Component({
   selector: 'app-location-details',
   templateUrl: './location-details.component.html',
-  styleUrls: ['./location-details.component.css','../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
+  styleUrls: ['./location-details.component.css', '../../../../../../../assets/plugins/global/plugins.bundle.css', '../../../../../../../assets/plugins/custom/prismjs/prismjs.bundle.css', '../../../../../../../assets/css/pages/wizard/wizard-1.css']
 
 })
 
@@ -89,9 +89,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   locationType = 'googleMap';
   mapaddress;
   locationName;
-  @ViewChild('googleradio',{static:false}) googleradio:ElementRef;
-  @ViewChild('autolocateradio',{static:false}) autolocateradio:ElementRef;
-  @ViewChild('manualradio',{static:false}) manualradio:ElementRef;
+  @ViewChild('googleradio', { static: false }) googleradio: ElementRef;
+  @ViewChild('autolocateradio', { static: false }) autolocateradio: ElementRef;
+  @ViewChild('manualradio', { static: false }) manualradio: ElementRef;
 
   constructor(
     private provider_services: ProviderServices,
@@ -132,7 +132,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     this.getLocationBadges();
     if (this.location_id !== 'add') {
       this.getLocationDetail();
-    } else {      
+    } else {
       this.action = this.location_id;
       this.createForm();
     }
@@ -180,9 +180,9 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
             this.sel_badges.push(curbadge);
           }
         }
-     }
+      }
 
-    this.checked_sel_badges = true;
+      this.checked_sel_badges = true;
     }
     this.locationType = this.location_data.locationType;
     this.schedule_arr = [];
@@ -208,13 +208,13 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
         data => {
           this.location_data = data;
           this.locationType = this.location_data.locationType;
-          if(this.location_data.locationType === 'googleMap') {
+          if (this.location_data.locationType === 'googleMap') {
             this.locationFind = 'GOOGLEMAP';
           }
-          if(this.location_data.locationType === 'manual') {
+          if (this.location_data.locationType === 'manual') {
             this.locationFind = 'MANUAL';
           }
-          if(this.location_data.locationType === 'automatic') {
+          if (this.location_data.locationType === 'automatic') {
             this.locationFind = 'AUTODETECT';
           }
           this.api_loading = false;
@@ -236,7 +236,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
           for (let i = 0; i < this.schedule_ar.length; i++) {
             this.display_schedule[i] = this.schedule_ar[i][0];
           }
-          this.getQueueList();          
+          this.getQueueList();
           if (this.location_data.lattitude !== '' && this.location_data.longitude !== '') {
             this.mapurl = this.sanitizer.bypassSecurityTrustResourceUrl('https://www.google.com/maps/embed/v1/view?zoom=11&center=' + this.location_data.lattitude + ',' + this.location_data.longitude + '&key=' + projectConstants.GOOGLEAPIKEY);
           }
@@ -302,12 +302,17 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   }
   goBack() {
     if (this.src === 'h') {
-    this.backPage();
-    }else if (this.type === 'branch') {
-    this.router.navigate(['provider', 'branches', 'create']);
+      this.backPage();
+    } else if (this.type === 'branch') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          loc_id: this.location_id
+        }
+      };
+      this.router.navigate(['provider', 'branches', 'create'], navigationExtras);
     } else {
       this.router.navigate(['provider', 'settings', 'general',
-      'locations']);
+        'locations']);
     }
   }
   editLocation(badge?) {
@@ -595,119 +600,120 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     console.log(type);
     this.locationFind = '';
     if (val === 'googleMap') {
-        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            'message': 'Do you want to detect location using google map?'
-          }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-          if (result==0) {
-            this.locationFind = type;
-          }
-          else {
-            this.locationFind = 'GOOGLEMAP';
-            setTimeout(() => {
-              this.googleradio.nativeElement.focus();
-            }, 100);
-            this.createForm('change');
-          }
-         });
+      const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Do you want to detect location using google map?'
+        }
+      });
+      dialogrefd.afterClosed().subscribe(result => {
+        if (result == 0) {
+          this.locationFind = type;
+        }
+        else {
+          this.locationFind = 'GOOGLEMAP';
+          setTimeout(() => {
+            this.googleradio.nativeElement.focus();
+          }, 100);
+          this.createForm('change');
+        }
+      });
 
     } else if (val === 'automatic') {
-        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            'message': 'Do you want to detect location automatically?'
-          }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-          if (result==0) {
-            this.locationFind = type;
-          }
-          else {
-            this.locationFind = 'AUTODETECT';
-            setTimeout(() => {
-              this.autolocateradio.nativeElement.focus();
-            }, 100);
-            this.createForm('change');
-          }         });
-    } else if(val === 'manual'){
-        const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            'message': 'Do you want to add location manually?'
-          }
-        });
-        dialogrefd.afterClosed().subscribe(result => {
-          if (result==0) {
-            this.locationFind = type;
-          }
-          else {
-            this.locationFind = 'MANUAL';
-            setTimeout(() => {
-              this.manualradio.nativeElement.focus();
-            }, 100);
-            this.createForm('change');
-          }
-         });
+      const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Do you want to detect location automatically?'
+        }
+      });
+      dialogrefd.afterClosed().subscribe(result => {
+        if (result == 0) {
+          this.locationFind = type;
+        }
+        else {
+          this.locationFind = 'AUTODETECT';
+          setTimeout(() => {
+            this.autolocateradio.nativeElement.focus();
+          }, 100);
+          this.createForm('change');
+        }
+      });
+    } else if (val === 'manual') {
+      const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          'message': 'Do you want to add location manually?'
+        }
+      });
+      dialogrefd.afterClosed().subscribe(result => {
+        if (result == 0) {
+          this.locationFind = type;
+        }
+        else {
+          this.locationFind = 'MANUAL';
+          setTimeout(() => {
+            this.manualradio.nativeElement.focus();
+          }, 100);
+          this.createForm('change');
+        }
+      });
 
     }
-}
-clearFormFields(){
-  this.amForm.setValue({
-    locname: '',
-    locaddress: '',
-    loclattitude: '',
-    loclongitude: '',
-    locmapurl: ''
-  });
-  // this.locamForm.setValue({
-  //   open24hours: '',
-  //   parkingType: ''
-  // });
-}
-getCurrentLocation() {
-  if (navigator) {
-    navigator.geolocation.getCurrentPosition(pos => {
-     console.log(pos)
-     this.amForm.controls.loclattitude.setValue(pos.coords.latitude);
-     this.amForm.controls.loclongitude.setValue(pos.coords.longitude);
-     this.lat_lng.longitude = +pos.coords.longitude;
-     this.lat_lng.latitude = +pos.coords.latitude;
-     this.getAddressfromLatLong();
-    },
-      error => {
+  }
+  clearFormFields() {
+    this.amForm.setValue({
+      locname: '',
+      locaddress: '',
+      loclattitude: '',
+      loclongitude: '',
+      locmapurl: ''
+    });
+    // this.locamForm.setValue({
+    //   open24hours: '',
+    //   parkingType: ''
+    // });
+  }
+  getCurrentLocation() {
+    if (navigator) {
+      navigator.geolocation.getCurrentPosition(pos => {
+        console.log(pos)
+        this.amForm.controls.loclattitude.setValue(pos.coords.latitude);
+        this.amForm.controls.loclongitude.setValue(pos.coords.longitude);
+        this.lat_lng.longitude = +pos.coords.longitude;
+        this.lat_lng.latitude = +pos.coords.latitude;
+        this.getAddressfromLatLong();
+      },
+        error => {
           this.api_error = 'You have blocked Jaldee from tracking your location. To use this, change your location settings in browser.';
           this.snackbarService.openSnackBar(this.api_error, { 'panelClass': 'snackbarerror' });
 
-      });
-  }
-  
-}
-getAddressfromLatLong() {
-  console.log(this.lat_lng)
-  this.shared_service.getAddressfromLatLong(this.lat_lng).subscribe(data => {
-    const currentAddress = this.shared_service.getFormattedAddress(data);
-    console.log(data)
-    this.mapaddress = [];
-    this.mapaddress.push({ 'address': currentAddress, 'pin': data['pinCode'] });
-    this.amForm.controls.locaddress.setValue(this.mapaddress[0].address, this.mapaddress[0].pin);
-    if(data['area'] == undefined){
-      this.locationName = data['district'];
-      console.log(data['district'])
-    } else {
-      this.locationName = data['area'];
-      console.log(data['area'])
-
+        });
     }
-    this.amForm.controls.locname.setValue(this.locationName);
-  });
-}
+
+  }
+  getAddressfromLatLong() {
+    console.log(this.lat_lng)
+    this.shared_service.getAddressfromLatLong(this.lat_lng).subscribe(data => {
+      const currentAddress = this.shared_service.getFormattedAddress(data);
+      console.log(data)
+      this.mapaddress = [];
+      this.mapaddress.push({ 'address': currentAddress, 'pin': data['pinCode'] });
+      this.amForm.controls.locaddress.setValue(this.mapaddress[0].address, this.mapaddress[0].pin);
+      if (data['area'] == undefined) {
+        this.locationName = data['district'];
+        console.log(data['district'])
+      } else {
+        this.locationName = data['area'];
+        console.log(data['area'])
+
+      }
+      this.amForm.controls.locname.setValue(this.locationName);
+    });
+  }
 }

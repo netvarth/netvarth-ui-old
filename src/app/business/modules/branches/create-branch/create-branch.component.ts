@@ -16,13 +16,14 @@ export class CreateBranchComponent implements OnInit {
   action: any;
   branchId: any;
   branchStatus: any;
+  locationId: any;
   constructor(
     private createBranchFormBuilder: FormBuilder,
     private providerServices: ProviderServices,
     private snackbarService: SnackbarService,
     private router: Router,
     private lStorageService: LocalStorageService,
-    private activatedRoute:ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {
     this.createBranch = this.createBranchFormBuilder.group({
       location: [null],
@@ -30,46 +31,40 @@ export class CreateBranchComponent implements OnInit {
       branchcode: [null]
     });
 
-    this.activatedRoute.queryParams.subscribe((params) => { 
-      if (params && params.id)
-      {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      if (params && params.id && params.action && params.action == 'update') {
         this.branchId = params.id;
         this.providerServices.getBranchById(params.id).subscribe((data: any) => {
-          if (data && data.branchCode)
-          {
+          if (data && data.branchCode) {
             this.createBranch.controls.branchcode.setValue(data.branchCode)
           }
-          if(data && data.branchName)
-          {
+          if (data && data.branchName) {
             this.createBranch.controls.branchname.setValue(data.branchName)
           }
-          if(data && data.status)
-          {
+          if (data && data.status) {
             this.branchStatus = data.status;
           }
-          if(data && data.location && data.location.id)
-          {
+          if (data && data.location && data.location.id) {
             this.createBranch.controls.location.setValue(data.location.id)
           }
         })
       }
-      if (params && params.action)
-      {
-        this.action = "update";
+      if (params && params.action) {
+        this.action = params.action;
+      }
+      if (params && params.loc_id) {
+        this.createBranch.controls.location.setValue(Number(params.loc_id))
       }
     });
   }
 
   ngOnInit(): void {
-    if (this.lStorageService.getitemfromLocalStorage('branchData'))
-    {
+    if (this.lStorageService.getitemfromLocalStorage('branchData')) {
       let storedBranchData = this.lStorageService.getitemfromLocalStorage('branchData');
-      if (storedBranchData && storedBranchData.branchCode)
-      {
+      if (storedBranchData && storedBranchData.branchCode) {
         this.createBranch.controls.branchcode.setValue(storedBranchData.branchCode)
       }
-      if(storedBranchData && storedBranchData.branchName)
-      {
+      if (storedBranchData && storedBranchData.branchName) {
         this.createBranch.controls.branchname.setValue(storedBranchData.branchName)
       }
       this.lStorageService.removeitemfromLocalStorage('branchData')
@@ -77,16 +72,14 @@ export class CreateBranchComponent implements OnInit {
     this.getLocations();
   }
 
-  resetErrors() {}
+  resetErrors() { }
 
   goBack() {
-    if (this.action && this.action == 'update')
-    {
+    if (this.action && this.action == 'update') {
       this.router.navigate(["provider", "branches"]);
     }
-    else
-    {
-      this.router.navigate(["provider", "settings"]);    
+    else {
+      this.router.navigate(["provider", "settings"]);
     }
   }
 
@@ -108,7 +101,7 @@ export class CreateBranchComponent implements OnInit {
         type: 'branch'
       }
     };
-    this.router.navigate(["provider","settings","general","locations","add"],navigationExtras);
+    this.router.navigate(["provider", "settings", "general", "locations", "add"], navigationExtras);
   }
 
   saveBranch() {
@@ -118,42 +111,39 @@ export class CreateBranchComponent implements OnInit {
       location: { id: this.createBranch.controls.location.value }
     };
     console.log("branchData", branchData);
-    if (this.action && this.action == 'update')
-    {
-      if (this.branchStatus)
-      {
+    if (this.action && this.action == 'update') {
+      if (this.branchStatus) {
         branchData['status'] = this.branchStatus;
       }
-      this.providerServices.updateBranch(this.branchId,branchData).subscribe(
-      (data: any) => {
-        if (data) {
-          this.snackbarService.openSnackBar("Branch Data Updated Successfully");
-          this.router.navigate(["provider", "branches"]);
+      this.providerServices.updateBranch(this.branchId, branchData).subscribe(
+        (data: any) => {
+          if (data) {
+            this.snackbarService.openSnackBar("Branch Data Updated Successfully");
+            this.router.navigate(["provider", "branches"]);
+          }
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, {
+            panelClass: "snackbarerror"
+          });
         }
-      },
-      error => {
-        this.snackbarService.openSnackBar(error, {
-          panelClass: "snackbarerror"
-        });
-      }
-    );
+      );
     }
-    else
-    {
+    else {
       this.providerServices.saveBranch(branchData).subscribe(
-      (data: any) => {
-        if (data) {
-          this.snackbarService.openSnackBar("Branch Data Saved Successfully");
-          this.router.navigate(["provider", "branches"]);
+        (data: any) => {
+          if (data) {
+            this.snackbarService.openSnackBar("Branch Data Saved Successfully");
+            this.router.navigate(["provider", "branches"]);
+          }
+        },
+        error => {
+          this.snackbarService.openSnackBar(error, {
+            panelClass: "snackbarerror"
+          });
         }
-      },
-      error => {
-        this.snackbarService.openSnackBar(error, {
-          panelClass: "snackbarerror"
-        });
-      }
-    );
-      }
-    
+      );
+    }
+
   }
 }
