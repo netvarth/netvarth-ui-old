@@ -39,6 +39,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   showCdl: any = false;
   showLms: any = false;
   cdlstatusDisplayName: any;
+  branchStatusDisplayName: any;
   homeservice_cap = Messages.HOME_SERVICE_HEADING;
   profile_cap = Messages.PROFILE_CAP;
   search_cap = Messages.SEARCH_CAP;
@@ -172,6 +173,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   orderstatusstr: any;
   taskstatusstr: any;
   cdlStatus: any;
+  branchStatus:any;
   leadstatusstr: any;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
@@ -254,6 +256,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   donationtooltip = 'Donation manager';
   notificationtooltip = 'Notification settings';
   miscellaneuostooltip = 'Miscellaneous';
+  branchtooltip = "Branch";
   customerstooltip = '';
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -382,6 +385,16 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         }
       }
     );
+  }
+
+  allBranches()
+  {
+    this.routerobj.navigate(['provider','branches'])
+  }
+
+  createBranch()
+  {
+    this.routerobj.navigate(['provider','branches','create'])
   }
 
   letsGetStarted() {
@@ -749,6 +762,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
 
         this.cdlStatus = data.enableCdl;
         this.cdlstatusDisplayName = (this.cdlStatus) ? 'On' : 'Off';
+
+        this.branchStatus = data.enableCdl;
+        this.branchStatusDisplayName = (this.branchStatus) ? 'On' : 'Off';
 
         this.leadstatus = data.enableLead;
         this.leadstatusstr = (this.leadstatus) ? 'On' : 'Off';

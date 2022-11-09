@@ -515,6 +515,7 @@ export class CreateComponent implements OnInit {
       "loanProduct": { "id": this.createLoan.controls.loanproduct.value },
       "category": { "id": this.createLoan.controls.category.value },
       "location": { "id": this.user.bussLocs[0] },
+      "partner": { "id": this.createLoan.controls.dealer.value },
       "locationArea": this.createLoan.controls.permanentcity.value,
       "invoiceAmount": this.createLoan.controls.totalpayment.value,
       "downpaymentAmount": this.createLoan.controls.downpayment.value,

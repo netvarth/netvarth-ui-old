@@ -1,0 +1,79 @@
+<div class="card pointer-cursor">
+	<span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+</div>
+
+<div class="card m-2">
+	<div class="font-weight-bold">
+		<span>Create Branch</span>
+	</div>
+	<form [formGroup]="createBranch" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-md-7 no-padding-small">
+				<div>
+					<div class="bggrey my-2">
+						<div>
+							<div class="d-flex">
+								<div class="form-title">Branch Code</div>
+							</div>
+							<div class="fieldPadding">
+								<input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Branch Code"
+									class="form-control" autocomplete="off" formControlName="branchcode" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div>
+					<div class="bggrey my-2">
+						<div>
+							<div class="d-flex">
+								<div class="form-title">Branch Name</div>
+							</div>
+							<div class="fieldPadding">
+								<input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Branch Name"
+									class="form-control" autocomplete="off" formControlName="branchname" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="bggrey my-2">
+					<div>
+						<div class="d-flex">
+							<div class="form-title">Branch Location</div>
+						</div>
+						<div>
+							<div class="fieldPadding">
+								<div class="row">
+									<div class="col-md-9 col-sm-8 col-xs-8 pr-0 no-padding-small">
+										<mat-select class="form-control widthWebKit" #location
+											formControlName="location">
+											<mat-option [value]="location.id" *ngFor="let location of locations">
+												<div *ngIf="location && location.place">{{location.place}}</div>
+											</mat-option>
+										</mat-select>
+									</div>
+									<div class="col-md-3 col-sm-3 col-xs-3 pl-0 no-padding-small">
+										<a class="btn btn-primary" (click)="addLocation()">Add Location</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+
+			</div>
+		</div>
+		<div class="d-flex justify-content-left">
+			<div>
+				<div class="mr-2 btn btn-primary" (click)="saveBranch()">
+					Save Branch
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

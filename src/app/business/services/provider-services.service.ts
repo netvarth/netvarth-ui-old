@@ -2723,4 +2723,30 @@ export class ProviderServices {
     const url = projectConstantsLocal.UIS3PATH + uniqueId + '/clinicalnotes.json?dt=' + new Date();
     return this.servicemeta.httpGet(url);
   }
+
+  // Branches APIs
+
+  getBranches()
+  {
+    const url = 'provider/branchmaster';
+    return this.servicemeta.httpGet(url);
+  }
+
+  getBranchesByFilter(filter)
+  {
+    const url = 'provider/branchmaster';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  saveBranch(data)
+  {
+    const url = 'provider/branchmaster';
+    return this.servicemeta.httpPost(url, data);
+  }
+  updateBranch(id,data)
+  {
+    const url = 'provider/branchmaster/' + id;
+    return this.servicemeta.httpPost(url, data);
+  }
+  
 }
