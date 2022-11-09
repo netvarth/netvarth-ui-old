@@ -130,20 +130,25 @@
           </aside>
         </div> -->
 
-      <div class="row text-right">
-        <form [formGroup]="statusList">
-          <div class="form-group text-left col-md-4 my-3">
-            <mat-select class="form-control widthWebKit" #location (selectionChange)="locationChange($event)"
-              placeholder="All Locations">
-              <mat-option value="All">
-                <div>All Locations</div>
-              </mat-option>
-              <mat-option [value]="location.id" *ngFor="let location of locations">
-                <div *ngIf="location && location.place">{{location.place}}</div>
-              </mat-option>
-            </mat-select>
-          </div>
-        </form>
+      <div class="row text-right mr-0">
+        <div>
+          <form [formGroup]="statusList">
+            <div class="form-group text-left col-md-4">
+              <mat-select class="form-control widthWebKit" #location (selectionChange)="locationChange($event)"
+                placeholder="All Locations">
+                <mat-option value="All">
+                  <div>All Locations</div>
+                </mat-option>
+                <mat-option [value]="location.id" *ngFor="let location of locations">
+                  <div *ngIf="location && location.place">{{location.place}}</div>
+                </mat-option>
+              </mat-select>
+            </div>
+          </form>
+        </div>
+        <div>
+          <a class="btn btn-primary" (click)="createBranch()"><i class="fa fa-plus"></i>&nbsp;Create Branch</a>
+        </div>
         <!-- <div>
           <div class="p-3">
             <h3 class="align-items-start flex-column">

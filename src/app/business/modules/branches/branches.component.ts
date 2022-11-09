@@ -4,6 +4,9 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ProviderServices } from '../../services/provider-services.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
+import { SnackbarService } from '../../../shared/services/snackbar.service';
 
 
 @Component({
@@ -44,7 +47,9 @@ export class BranchesComponent implements OnInit {
     // private location: Location,
     private providerServices: ProviderServices,
     private statusListFormBuilder: FormBuilder,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService
   ) {
     this.statusList = this.statusListFormBuilder.group({
       status: [null]
@@ -76,8 +81,12 @@ export class BranchesComponent implements OnInit {
   getBranches() {
     this.providerServices.getBranches().subscribe((data: any) => {
       this.branches = data;
-      console.log("Branches",this.branches);
+      console.log("Branches", this.branches);
     });
+  }
+
+  createBranch() {
+    this.router.navigate(['provider', 'branches', 'create']);
   }
 
 
@@ -92,48 +101,60 @@ export class BranchesComponent implements OnInit {
     }
   }
 
-  branchStatusChange(id,event)
-  {
-    let status = event ? true : false;
-    this.providerServices.changeBranchStatus(id,status).subscribe((data: any) => {
-      this.branchStatus = status;
-      if (data)
-      {
+  branchStatusChange(id, event) {
+    const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        'message': 'Are you sure want to change the status of branch',
+        'type': 'yes/no'
+      }
+    });
+    removeitemdialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        let status = event ? true : false;
+        this.providerServices.changeBranchStatus(id, status).subscribe((data: any) => {
+          this.branchStatus = status;
+          this.getBranches();
+          this.snackbarService.openSnackBar("Branch Status Updated Successfully");
+        }, error => {
+          this.snackbarService.openSnackBar(error, { panelClass: "snackbarerror" });
+        })
+      }
+      else {
         this.getBranches();
       }
-    })
+    });
+
   }
 
-  getbranchStatusById(id)
-  {
+  getbranchStatusById(id) {
     this.providerServices.getBranchesByFilter(id).subscribe((data: any) => {
-      if (data && data.status == 'ACTIVE')
-      {
+      if (data && data.status == 'ACTIVE') {
         this.getBranches();
         return true
       }
-      else if(data && data.status == 'INACTIVE')
-      {
+      else if (data && data.status == 'INACTIVE') {
         return false;
       }
     })
     return false;
   }
 
-  updateBranch(id,action)
-  {
+  updateBranch(id, action) {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         id: id,
-        action:action
+        action: action
       }
     };
-    this.router.navigate(['provider', 'branches','update'],navigationExtras);
+    this.router.navigate(['provider', 'branches', 'update'], navigationExtras);
   }
 
 
   goBack() {
-    this.router.navigate(['provider','settings']);
+    this.router.navigate(['provider', 'settings']);
     // this.location.back();
   }
 

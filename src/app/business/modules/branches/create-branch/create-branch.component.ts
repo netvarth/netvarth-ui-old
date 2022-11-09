@@ -1,3 +1,4 @@
+import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder } from "@angular/forms";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
@@ -23,7 +24,8 @@ export class CreateBranchComponent implements OnInit {
     private snackbarService: SnackbarService,
     private router: Router,
     private lStorageService: LocalStorageService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private location: Location
   ) {
     this.createBranch = this.createBranchFormBuilder.group({
       location: [null],
@@ -79,7 +81,7 @@ export class CreateBranchComponent implements OnInit {
       this.router.navigate(["provider", "branches"]);
     }
     else {
-      this.router.navigate(["provider", "settings"]);
+      this.location.back()
     }
   }
 
