@@ -1,7 +1,7 @@
 <section class="card">
   <div class="title-gb no-padding">
-    <div class="dash-head">
-      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i></div>
+    <div class="dash-head" (click)="goBack()">
+      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true"></i></div>
       <div class="colorHeaderIcon">Branches</div>
     </div>
   </div>
@@ -130,29 +130,32 @@
           </aside>
         </div> -->
 
-      <!-- <div class="row text-right">
-          <form [formGroup]="statusList">
-            <div class="form-group text-left col-md-4 my-3">
-              <mat-select class="form-control widthWebKit" #status (selectionChange)="statusChange($event)"
-                placeholder="All Loans">
-                <mat-option [value]="status.name" *ngFor="let status of loanStatus">
-                  <div *ngIf="status && status.displayName">{{status.displayName}}</div>
-                </mat-option>
-              </mat-select>
-            </div>
-          </form>
-          <div>
-            <div class="p-3">
-              <h3 class="align-items-start flex-column">
-                <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
-                  <img src="assets/images/provider-filter-icon.png"
-                    style="width: 22px !important; margin-top: -4px !important;">
-                  Filter
-                </a>
-              </h3>
-            </div>
+      <div class="row text-right">
+        <form [formGroup]="statusList">
+          <div class="form-group text-left col-md-4 my-3">
+            <mat-select class="form-control widthWebKit" #location (selectionChange)="locationChange($event)"
+              placeholder="All Locations">
+              <mat-option value="All">
+                <div>All Locations</div>
+              </mat-option>
+              <mat-option [value]="location.id" *ngFor="let location of locations">
+                <div *ngIf="location && location.place">{{location.place}}</div>
+              </mat-option>
+            </mat-select>
+          </div>
+        </form>
+        <!-- <div>
+          <div class="p-3">
+            <h3 class="align-items-start flex-column">
+              <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
+                <img src="assets/images/provider-filter-icon.png"
+                  style="width: 22px !important; margin-top: -4px !important;">
+                Filter
+              </a>
+            </h3>
           </div>
         </div> -->
+      </div>
       <div class="table-responsive dash-list">
         <table class="table">
           <thead>

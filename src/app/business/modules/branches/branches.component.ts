@@ -20,7 +20,8 @@ export class BranchesComponent implements OnInit {
   filterapplied = false;
   labelFilterData: any;
   branchStatus: any;
-  branches: any
+  branches: any;
+  locations: any;
   filter = {
     firstName: '',
     id: '',
@@ -60,8 +61,16 @@ export class BranchesComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-    this.getBranches()
+    this.getBranches();
+    this.getLocations();
 
+  }
+
+  getLocations() {
+    this.providerServices.getProviderLocations().subscribe((data: any) => {
+      this.locations = data;
+      console.log("this.locations", this.locations);
+    });
   }
 
   getBranches() {
@@ -72,18 +81,13 @@ export class BranchesComponent implements OnInit {
   }
 
 
-  statusChange(event) {
+  locationChange(event) {
     if (event.value == 'All') {
       this.getBranches();
     }
     else {
       let api_filter = {}
-      if (event.value == 'Rejected') {
-        api_filter['applicationStatus-eq'] = event.value;
-      }
-      else {
-        api_filter['spInternalStatus-eq'] = event.value;
-      }
+      api_filter['location-eq'] = event.value;
       this.getBranchesByFilter(api_filter);
     }
   }
@@ -129,7 +133,7 @@ export class BranchesComponent implements OnInit {
 
 
   goBack() {
-    this.router.navigate(['provider','branches']);
+    this.router.navigate(['provider','settings']);
     // this.location.back();
   }
 

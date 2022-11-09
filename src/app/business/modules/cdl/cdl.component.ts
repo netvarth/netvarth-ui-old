@@ -187,7 +187,7 @@ export class CdlComponent implements OnInit {
   allLeads() {
     const navigationExtras: NavigationExtras = {
       queryParams: {
-        spInternalStatus: 'New'
+        spInternalStatus: 'Draft'
       }
     };
     this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
@@ -198,7 +198,7 @@ export class CdlComponent implements OnInit {
     const api_filter = {};
     api_filter['spInternalStatus-eq'] = 'Approved';
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
-      if (data) {
+      if (data && data.length>0) {
         this.approvedLoansCount = data.length
       }
     });
@@ -208,7 +208,7 @@ export class CdlComponent implements OnInit {
     const api_filter = {};
     api_filter['spInternalStatus-eq'] = 'ApprovalPending';
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
-      if (data) {
+      if (data && data.length>0) {
         this.pendingLoansCount = data.length
       }
     });
@@ -218,7 +218,7 @@ export class CdlComponent implements OnInit {
     const api_filter = {};
     api_filter['applicationStatus-eq'] = 'Rejected';
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
-      if (data) {
+      if (data && data.length>0) {
         this.rejectedLoansCount = data.length
       }
     });
