@@ -203,7 +203,7 @@ export class ConfirmBoxComponent implements OnInit {
 
     this.cdlservice.manualLoanApproval(this.loanId, this.loanApplication).subscribe((data: any) => {
       if (data) {
-        this.dialogRef.close();
+        this.dialogRef.close(this.loanId);
         this.snackbarService.openSnackBar("Loan Approved Successfully")
         this.router.navigate(['provider', 'cdl']);
       }

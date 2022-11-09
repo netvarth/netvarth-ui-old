@@ -93,15 +93,10 @@ export class LoanDetailsComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(
-      (data) => {
-        if (data) {
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: 'sanctioned'
-            }
-          };
+      (id) => {
+        if (id) {
           this.snackbarService.openSnackBar("Loan Sanctioned Successfully");
-          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+          this.router.navigate(['provider', 'cdl', 'loans', id]);
         }
       });
   }
