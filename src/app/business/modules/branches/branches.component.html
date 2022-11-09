@@ -179,7 +179,10 @@
                     {{branch.status}}
                   </mat-slide-toggle>
                 </td>
-                <td *ngIf="branch && branch.status">
+                <td *ngIf="branch  && !branch.status">
+                  --
+                </td>
+                <td *ngIf="branch && branch.id">
                   <button class="btn btn-primary" (click)="updateBranch(branch.id,'update')">Update</button>
                 </td>
               </tr>

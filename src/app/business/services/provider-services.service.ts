@@ -2751,7 +2751,7 @@ export class ProviderServices {
   updateBranch(id,data)
   {
     const url = 'provider/branchmaster/' + id;
-    return this.servicemeta.httpPost(url, data);
+    return this.servicemeta.httpPut(url, data);
   }
 
   changeBranchStatus(id,status)

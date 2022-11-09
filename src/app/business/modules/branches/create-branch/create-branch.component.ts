@@ -14,6 +14,7 @@ export class CreateBranchComponent implements OnInit {
   createBranch: any;
   locations: any;
   action: any;
+  branchId:any;
   constructor(
     private createBranchFormBuilder: FormBuilder,
     private providerServices: ProviderServices,
@@ -31,6 +32,7 @@ export class CreateBranchComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe((params) => { 
       if (params && params.id)
       {
+        this.branchId = params.id;
         this.providerServices.getBranchById(params.id).subscribe((data: any) => {
           if (data && data.branchCode)
           {
@@ -111,7 +113,25 @@ export class CreateBranchComponent implements OnInit {
       location: { id: this.createBranch.controls.location.value }
     };
     console.log("branchData", branchData);
-    this.providerServices.saveBranch(branchData).subscribe(
+    if (this.action && this.action == 'update')
+    {
+      this.providerServices.updateBranch(this.branchId,branchData).subscribe(
+      (data: any) => {
+        if (data) {
+          this.snackbarService.openSnackBar("Branch Data Updated Successfully");
+          this.router.navigate(["provider", "branches"]);
+        }
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, {
+          panelClass: "snackbarerror"
+        });
+      }
+    );
+    }
+    else
+    {
+      this.providerServices.saveBranch(branchData).subscribe(
       (data: any) => {
         if (data) {
           this.snackbarService.openSnackBar("Branch Data Saved Successfully");
@@ -124,5 +144,7 @@ export class CreateBranchComponent implements OnInit {
         });
       }
     );
+      }
+    
   }
 }
