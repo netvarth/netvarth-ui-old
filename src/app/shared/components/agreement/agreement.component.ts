@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PartnerService } from '../../../partner/partner.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { OtpVerifyComponent } from './otp-verify/otp-verify.component';
@@ -22,7 +22,8 @@ export class AgreementComponent implements OnInit {
     private activatedroute: ActivatedRoute,
     private partnerservice: PartnerService,
     private dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -38,6 +39,10 @@ export class AgreementComponent implements OnInit {
     this.partnerservice.getLoanFromOutside(this.loanId, this.accountId).subscribe((data: any) => {
       console.log("LoanData", data);
       this.loanData = data;
+      if (this.loanData.spInternalStatus != 'Approved') {
+        this.snackbarService.openSnackBar("Link Expired or Invalid")
+        this.router.navigate(['/']);
+      }
       if (data && data.customer && data.customer.phoneNo && data.customer.email) {
         this.phoneNumber = data.customer.phoneNo
         this.email = data.customer.email

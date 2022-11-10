@@ -1138,10 +1138,14 @@ export class CreateComponent implements OnInit {
 
   verifyBankDetails() {
     const verifyBank = {
-      "loanApplicationUid": this.loanId,
       "bankName": this.createLoan.controls.bank.value,
       "bankAccountNo": this.createLoan.controls.account.value,
       "bankIfsc": this.createLoan.controls.ifsc.value
+    }
+
+    if (this.loanId) {
+      verifyBank['originUid'] = this.loanId
+      verifyBank['loanApplicationUid'] = this.loanId
     }
 
     this.cdlService.verifyBankDetails(verifyBank).subscribe((data: any) => {

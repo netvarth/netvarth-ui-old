@@ -1127,6 +1127,7 @@ export class CreateComponent implements OnInit {
 
   verifyBankDetails() {
     const verifyBank = {
+      "originUid": this.loanId,
       "loanApplicationUid": this.loanId,
       "bankName": this.createLoan.controls.bank.value,
       "bankAccountNo": this.createLoan.controls.account.value,
