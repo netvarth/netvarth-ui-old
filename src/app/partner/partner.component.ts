@@ -219,15 +219,8 @@ export class PartnerComponent implements OnInit {
   }
 
 
-  loanDetails(data) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'loanDetails',
-        status: data.status,
-        customerName: data.customerName
-      }
-    };
-    this.router.navigate([this.partnerParentId, 'partner', 'loans', 'loanDetails'], navigationExtras);
+  loanDetails(id) {
+    this.router.navigate([this.partnerParentId, 'partner', 'loans', id]);
   }
 
 
