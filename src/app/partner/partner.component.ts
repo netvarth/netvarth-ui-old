@@ -110,6 +110,60 @@ export class PartnerComponent implements OnInit {
     });
   }
 
+
+  updateLoan(id, action, status) {
+    if (status == 'Draft') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          id: id,
+          action: action
+        }
+      };
+      this.router.navigate([this.partnerParentId, 'partner', 'loans', 'update'], navigationExtras);
+    }
+    else if (status == 'PartnerAccepted') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'partnerAccepted',
+          uid: id
+        }
+      };
+      this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
+
+    }
+    else if (status == 'Sanctioned' || status == 'ApprovalRequired' || status == 'partnerAccepted' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
+      this.loanDetails(id)
+    }
+    else if (status == 'ConsumerAccepted') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'consumerAccepted',
+          uid: id
+        }
+      };
+      this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
+    }
+    else if (status == 'ApprovalPending' && this.user.userType != 2) {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'approved',
+          uid: id
+        }
+      };
+      this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
+    }
+    else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'autoapproved',
+          uid: id,
+          timetype: 2
+        }
+      };
+      this.router.navigate([this.partnerParentId, 'partner', 'loans', 'approved'], navigationExtras);
+    }
+
+  }
   getPendingloansCount() {
     const api_filter = {};
     api_filter['spInternalStatus-eq'] = 'ApprovalPending';
