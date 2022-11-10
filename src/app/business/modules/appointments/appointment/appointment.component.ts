@@ -1073,10 +1073,32 @@ export class AppointmentComponent implements OnInit {
             }
 
         }
-        else {
-            this.is_wtsap_empty = false;
-            if(this.sel_ser_det.serviceBookingType === 'request' && (this.sel_ser_det.date || this.sel_ser_det.dateTime || this.sel_ser_det.noDateTime)){
-                const post_Data = {
+        else if(this.sel_ser_det.serviceBookingType === 'request' && (this.sel_ser_det.date || this.sel_ser_det.dateTime || this.sel_ser_det.noDateTime)){
+                this.virtualServiceArray = {};
+            if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
+                if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.sel_ser_det.virtualCallingModes[0].value;
+                } else if (!this.thirdParty) {
+                    if (this.cuntryCode) {
+                        if (this.cuntryCode.includes('+')) {
+                            this.cuntryCode = this.cuntryCode.slice(1);
+                        }
+                    }
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = this.cuntryCode + '' + this.callingModes;
+                } else {
+                    const thirdparty_countrycode = '91';
+                    this.virtualServiceArray[this.sel_ser_det.virtualCallingModes[0].callingMode] = thirdparty_countrycode + '' + this.callingModes;
+                }
+            }
+            this.showEditView = false;
+            if (this.thirdParty !== '' && this.waitlist_for.length === 0) {
+                this.waitlist_for.push({ firstName: this.thirdParty, lastName: 'user', apptTime: this.apptTime });
+            }
+
+            // if(this.sel_ser_det.dateTime){
+                
+            // }
+               const  post_Data = {
                     'schedule': {
                         'id': this.selectedSchedule.id
                     },
@@ -1097,7 +1119,6 @@ export class AppointmentComponent implements OnInit {
                     
                     'appointmentMode': this.apptType
                 }
-                console.log("waitlist_for :",this.waitlist_for)
 
                 if(this.sel_ser_det.dateTime){
                     //this.waitlist_for.push({apptTime:this.apptTime})
@@ -1131,6 +1152,29 @@ export class AppointmentComponent implements OnInit {
                 // if(this.sel_ser_det.dateTime){
                 //     post_Data['apptTime'] = this.waitlist_for.appmtFor[0].apptTime
                 // }
+                if (this.sel_ser_det.serviceType === 'virtualService') {
+                    if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'WhatsApp' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Phone') {
+                        if (!this.callingModes || !this.cuntryCode) {
+                            this.snackbarService.openSnackBar('Please enter a valid number to contact you', { 'panelClass': 'snackbarerror' });
+                            this.is_wtsap_empty = true;
+                        }
+                    }
+                    for (const i in this.virtualServiceArray) {
+                        if (i === 'WhatsApp') {
+                            post_Data['virtualService'] = this.virtualServiceArray;
+                        } else if (i === 'GoogleMeet') {
+                            post_Data['virtualService'] = this.virtualServiceArray;
+                        } else if (i === 'Zoom') {
+                            post_Data['virtualService'] = this.virtualServiceArray;
+                        } else if (i === 'Phone') {
+                            post_Data['virtualService'] = this.virtualServiceArray;
+                        } else {
+                            post_Data['virtualService'] = { 'VideoCall': '' };
+                        }
+                    }
+                }
+                console.log("posting data :",post_Data);
+
                 if (this.api_error === null) {
                     post_Data['consumer'] = { id: this.customer_data.id };
                     //   post_Data['ignorePrePayment'] = true;
@@ -1146,7 +1190,12 @@ export class AppointmentComponent implements OnInit {
                         }
                     }
                 }
-            }
+            
+        }
+
+
+        else {
+            this.is_wtsap_empty = false;
             this.virtualServiceArray = {};
             if (this.callingModes !== '' && this.sel_ser_det.virtualCallingModes && this.sel_ser_det.virtualCallingModes.length > 0) {
                 if (this.sel_ser_det.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.sel_ser_det.virtualCallingModes[0].callingMode === 'Zoom') {
@@ -1337,15 +1386,15 @@ export class AppointmentComponent implements OnInit {
                     this.searchForm.reset();
                 },
                     error => {
-                        if(this.sel_ser_det.dateTime){
-                            post_Data['appmtFor'][0]['apptTime'] = this.apptTime;
-                        }
-                       else if(!this.sel_ser_det.noDateTime){
-                            post_Data['appmtDate'] = this.sel_checkindate;
-                        }
-                       else {
+                    //     if(this.sel_ser_det.dateTime){
+                    //         post_Data['appmtFor'][0]['apptTime'] = this.apptTime;
+                    //     }
+                    //    else if(!this.sel_ser_det.noDateTime){
+                    //         post_Data['appmtDate'] = this.sel_checkindate;
+                    //     }
+                    //    else {
                         this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                        }
+                     //   }
                         this.api_loading = false;
                     });  
         }
