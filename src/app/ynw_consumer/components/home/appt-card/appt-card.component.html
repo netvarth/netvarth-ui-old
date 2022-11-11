@@ -90,7 +90,8 @@
                 </div>
             </div>
             <div class="pull-left  col-xs-6 con-width">
-                <div class="prov_lbl">{{ 'Appointment for' | translate }} </div>
+                <div class="prov_lbl" *ngIf="booking.apptStatus !== 'Requested' && booking.apptStatus !== 'RequestRejected'">{{ 'Appointment for' | translate }} </div>
+                <div class="prov_lbl" *ngIf="(booking.apptStatus === 'Requested' || booking.apptStatus === 'RequestRejected')">{{ 'Request for' | translate }} </div>
                 <div class="prov_nme"> {{booking.appmtFor[0].firstName}}
                     {{booking.appmtFor[0].lastName}}</div>
             </div>
