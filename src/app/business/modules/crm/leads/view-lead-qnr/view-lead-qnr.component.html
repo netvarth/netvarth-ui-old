@@ -59,7 +59,7 @@
     </div>
   </div>
 </section>
-<section *ngIf="leadInfo" class="container card mt-4 mx-auto">
+<section *ngIf="leadInfo" class="container card mt-4 mx-auto" [ngClass]="{'opacity': api_loading_UpdateKyc || api_loading_UpdateKycProceed}">
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
   <ng-container *ngIf="leadInfo.status && (leadInfo.status.name==='New' || leadInfo.status.name==='KYC Updated' || leadInfo.status.name==='KYC')">
     <ng-container *ngFor="let applicant of applicants; let i=index">

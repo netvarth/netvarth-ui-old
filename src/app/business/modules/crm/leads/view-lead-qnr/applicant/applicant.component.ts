@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 // import { TeleBookingService } from '../../../../../../shared/services/tele-bookings-service';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewpdfComponent } from '../previewpdf/previewpdf.component';
+import { projectConstants } from "../../../../../../app.component";
 @Component({
   selector: 'app-applicant',
   templateUrl: './applicant.component.html',
@@ -304,6 +305,10 @@ export class ApplicantComponent implements OnInit {
             console.log('this.filesToUpload', this.filesToUpload);
             this.actionText ='InputFileUpload';
             this.sendApplicantInfo();
+            this.diasbleFormControl();
+            setTimeout(() => {
+              this.enableFormCiontrol()
+            }, projectConstants.TIMEOUT_DELAY);
           }
           }
           else
@@ -339,6 +344,10 @@ export class ApplicantComponent implements OnInit {
             console.log('this.filesToUpload', this.filesToUpload);
             this.actionText ='InputFileUpload';
             this.sendApplicantInfo();
+            this.diasbleFormControl();
+            setTimeout(() => {
+              this.enableFormCiontrol()
+            }, projectConstants.TIMEOUT_DELAY);
           }
           }
          
@@ -570,6 +579,10 @@ export class ApplicantComponent implements OnInit {
     //   this.applicant.panAttachments = [];
     // }
     this.sendApplicantInfo();
+    this.diasbleFormControl();
+            setTimeout(() => {
+              this.enableFormCiontrol()
+            }, projectConstants.TIMEOUT_DELAY);
   }
   getImage(url, file) {
     return this.fileService.getImage(url, file);
@@ -726,16 +739,59 @@ export class ApplicantComponent implements OnInit {
     }
   }   
   diasbleFormControl(){
+    this.applicantForm.get('customerName').disable();
+    this.applicantForm.get('permanentPhoneNumber').disable();
     this.applicantForm.get('idTypes').disable();
+    this.applicantForm.get('idTypes1').disable();
+    this.applicantForm.get('idValue').disable();
+    this.applicantForm.get('idValue1').disable();
+    this.applicantForm.get('idTypes2').disable();
+    this.applicantForm.get('idValue2').disable();
+    this.applicantForm.get('panNumber').disable();
+    this.applicantForm.get('telephoneType').disable();
+    this.applicantForm.get('telephoneNumber').disable();
+    this.applicantForm.get('address').disable();
+    this.applicantForm.get('addressType').disable();
+    this.applicantForm.get('city').disable();
+    this.applicantForm.get('state').disable();
+    this.applicantForm.get('pin').disable();
+    this.applicantForm.get('dob').disable();
+    this.applicantForm.get('relationName').disable();
+    this.applicantForm.get('relationType').disable();
+    this.applicantForm.get('nomineeName').disable();
+    this.applicantForm.get('nomineeType').disable();
+    this.applicantForm.get('permanentAddress').disable();
+    this.applicantForm.get('permanentCity').disable();
+    this.applicantForm.get('permanentState').disable();
+    this.applicantForm.get('permanentPinCode').disable();
   }
   enableFormCiontrol(){
+    this.applicantForm.get('customerName').enable();
+    this.applicantForm.get('permanentPhoneNumber').enable();
     this.applicantForm.get('idTypes').enable();
     this.applicantForm.get('idTypes1').enable();
+    this.applicantForm.get('idValue').enable();
+    this.applicantForm.get('idValue1').enable();
+    this.applicantForm.get('idTypes2').enable();
+    this.applicantForm.get('idValue2').enable();
+    this.applicantForm.get('panNumber').enable();
+    this.applicantForm.get('telephoneType').enable();
+    this.applicantForm.get('telephoneNumber').enable();
+    this.applicantForm.get('address').enable();
+    this.applicantForm.get('addressType').enable();
+    this.applicantForm.get('city').enable();
+    this.applicantForm.get('state').enable();
+    this.applicantForm.get('pin').enable();
+    this.applicantForm.get('dob').enable();
+    this.applicantForm.get('relationName').enable();
+    this.applicantForm.get('relationType').enable();
+    this.applicantForm.get('nomineeName').enable();
+    this.applicantForm.get('nomineeType').enable();
+    this.applicantForm.get('permanentAddress').enable();
+    this.applicantForm.get('permanentCity').enable();
+    this.applicantForm.get('permanentState').enable();
+    this.applicantForm.get('permanentPinCode').enable();
   }
- 
-  
-
-
 }
 
 
