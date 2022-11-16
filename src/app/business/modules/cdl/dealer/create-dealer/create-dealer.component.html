@@ -489,6 +489,44 @@
           </div>
         </div>
 
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">GST Attachment</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='gstAttach' (click)="gstAttach.click()">
+                    Upload File
+                  </label>
+                  <input #gstAttach type='file' formControlName="gstphoto" (change)="filesSelected($event,'gst')" />
+                </div>
+              </div>
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['gst'] && selectedFiles['gst'].files && selectedFiles['gst'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['gst'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['gst'].base64[i], file)"
+                          *ngIf="selectedFiles['gst'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="file.s3path" *ngIf="!selectedFiles['gst'].base64[i] && file.s3path" width="100px"
+                            height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'gst',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div>
           <div class="bggrey my-2">

@@ -32,7 +32,8 @@ export class CreateDealerComponent implements OnInit {
     "store": { files: [], base64: [], caption: [] },
     "aadhar": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] },
-    "cheque": { files: [], base64: [], caption: [] }
+    "cheque": { files: [], base64: [], caption: [] },
+    "gst": { files: [], base64: [], caption: [] }
   }
   filesToUpload: any = [];
   actionText: any;
@@ -99,6 +100,7 @@ export class CreateDealerComponent implements OnInit {
       category: [null],
       description: [null],
       gst: [null],
+      gstphoto: [null],
       size: [null],
       trade: [null],
       cheque: [null],
@@ -656,6 +658,10 @@ export class CreateDealerComponent implements OnInit {
             this.dealerData['bankAttachments'] = [];
             this.dealerData['bankAttachments'].push(this.filesToUpload[i]);
           }
+          if (this.filesToUpload[i]["type"] == 'gst') {
+            this.dealerData['gstAttachments'] = [];
+            this.dealerData['gstAttachments'].push(this.filesToUpload[i]);
+          }
         }
 
         this.cdlservice.createPartner(this.dealerData).subscribe((s3urls: any) => {
@@ -695,6 +701,10 @@ export class CreateDealerComponent implements OnInit {
           if (this.filesToUpload[i]["type"] == 'cheque') {
             this.dealerData['bankAttachments'] = [];
             this.dealerData['bankAttachments'].push(this.filesToUpload[i]);
+          }
+          if (this.filesToUpload[i]["type"] == 'gst') {
+            this.dealerData['gstAttachments'] = [];
+            this.dealerData['gstAttachments'].push(this.filesToUpload[i]);
           }
         }
         console.log("filesToUpload", this.filesToUpload)

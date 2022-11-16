@@ -118,7 +118,7 @@
   <div class="tab-content mt-3">
     <div class="tab-pane active" id="tab1" role="tabpanel">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 no-padding-small">
           <div class="card">
             <div class="d-flex justify-content-center mt-4">
               <div class="text-center mr-4">
@@ -202,19 +202,19 @@
           </div>
         </div>
 
-        <div class="col-md-8">
+        <div class="col-md-8 no-padding-small">
           <div class="card">
             <p-chart type="line" height="350" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
           </div>
           <br>
           <div>
-            <div class="col-lg-6 pl-0">
+            <div class="col-lg-6 col-md-6 pl-lg-0 no-padding-small">
               <div class="card  alerts-min-height">
                 <p-chart type="pie" height="350" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
               </div>
             </div>
 
-            <div class="col-lg-6 pr-0">
+            <div class="col-lg-6 col-md-6 pr-lg-0 no-padding-small">
               <div class="card alerts-min-height">
                 <div class="mb-2">
                   <span class="font-weight-bold">Alerts</span>
@@ -236,7 +236,7 @@
       </div>
     </div>
 
-    <div class="tab-pane " id="tab2" role="tabpanel">
+    <div class="tab-pane" id="tab2" role="tabpanel">
       <div class="card">
         <p-table [responsive]="true" responsiveLayout="scroll" #dt1 [value]="loans" dataKey="id" [rows]="10"
           [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
@@ -245,7 +245,7 @@
           [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
           <ng-template pTemplate="caption">
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-4 no-padding-small">
                 <span>
                   <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
                     (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
@@ -516,21 +516,6 @@
       </div><br>
       <div>
         <br>
-        <!-- <div>
-                  <span class="font-weight-light">Password</span><br>
-                  <div>
-                    <div>
-                      <div>
-                        <div class="fieldPadding">
-                          <div class="d-flex">
-                            <a class="btn btn-verify">
-                              <span>Reset Password</span></a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
       </div>
     </div>
 
