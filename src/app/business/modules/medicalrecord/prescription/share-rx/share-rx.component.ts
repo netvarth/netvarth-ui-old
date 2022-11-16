@@ -395,14 +395,29 @@ export class ShareRxComponent implements OnInit {
     } 
     else {
       if (this.sharewith !== 0) {
-        const passData = {
-          'message': this.amForm.controls.message.value,
-          'html': vwofrx.innerHTML,
-          'shareThirdParty': {
-            'phone': this.thirdpartyphone,
-            'email': this.thirdpartyemail
-          }
-        };
+        alert(this.data.file.type);
+        let passData;
+        if (this.data && this.data.file && (this.data.file.type === '.jpeg' || this.data.file.type === '.bmp' ||
+          this.data.file.type === '.png' || this.data.file.type === '.jpg')) {
+             passData = {
+              'message': this.amForm.controls.message.value,
+              // 'html': vwofrx.innerHTML,
+              'shareThirdParty': {
+                'phone': this.thirdpartyphone,
+                'email': this.thirdpartyemail
+              }
+            };
+        }
+        else{
+          passData = {
+            'message': this.amForm.controls.message.value,
+            'html': vwofrx.innerHTML,
+            'shareThirdParty': {
+              'phone': this.thirdpartyphone,
+              'email': this.thirdpartyemail
+            }
+          };
+        }
         if (this.thirdpartyphone !== '') {
           passData['shareThirdParty']['countryCode'] = '+91';
         }
