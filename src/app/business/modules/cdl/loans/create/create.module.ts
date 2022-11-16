@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SelectSchemeModule } from '../select-scheme/select-scheme.module';
 import { OtpVerifyModule } from '../otp-verify/otp-verify.module';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 
 const routes: Routes = [
@@ -38,6 +39,7 @@ const routes: Routes = [
     MatExpansionModule,
     OtpVerifyModule,
     SelectSchemeModule,
+    MultiSelectModule,
     [RouterModule.forChild(routes)]
   ]
 })

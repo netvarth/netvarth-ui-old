@@ -39,6 +39,7 @@ export class CreateComponent implements OnInit {
   showBankAttachments: any = false;
   bankDetailsVerified: any = false;
   loanApplicationKycId: any;
+  loanProductsSelected: any;
   selectedFiles = {
     "aadhar": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] },
@@ -513,7 +514,7 @@ export class CreateComponent implements OnInit {
         "countryCode": "+91"
       },
       "type": { "id": this.createLoan.controls.loantype.value },
-      "loanProduct": { "id": this.createLoan.controls.loanproduct.value },
+      "loanProducts": this.loanProductsSelected,
       "category": { "id": this.createLoan.controls.category.value },
       "location": { "id": this.user.bussLocs[0] },
       "partner": { "id": this.createLoan.controls.dealer.value },
@@ -1075,9 +1076,7 @@ export class CreateComponent implements OnInit {
   saveLoanDetails() {
     this.loanApplication = {
       "uid": this.loanId,
-      "loanProduct": {
-        "id": this.createLoan.controls.loanproduct.value
-      },
+      "loanProducts": this.loanProductsSelected,
       "category": {
         "id": this.createLoan.controls.category.value
       },
@@ -1134,6 +1133,15 @@ export class CreateComponent implements OnInit {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       })
 
+  }
+
+
+  productSelect(values) {
+    this.loanProductsSelected = values.map((data) => {
+      return { "id": data.id, "categoryId": data.category.id, "typeId": data.type.id }
+    })
+
+    console.log(this.loanProductsSelected)
   }
 
   verifyBankDetails() {

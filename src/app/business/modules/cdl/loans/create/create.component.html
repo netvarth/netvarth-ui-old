@@ -639,11 +639,11 @@
                       <div class="form-title">Select Product</div>
                     </div>
                     <div class="fieldPadding">
-                      <mat-select class="form-control widthWebKit" #loanproduct formControlName="loanproduct">
-                        <mat-option [value]="loanproduct.id" *ngFor="let loanproduct of loanProducts">
-                          <div *ngIf="loanproduct && loanproduct.productName">{{loanproduct.productName}}</div>
-                        </mat-option>
-                      </mat-select>
+                      <p-multiSelect [options]="loanProducts" formControlName="loanproduct" [showToggleAll]="false"
+                        [virtualScroll]="true" [filter]="true" [itemSize]="34" defaultLabel="Select loan product"
+                        optionLabel="productName" class="multiselect-custom-virtual-scroll"
+                        (onChange)="productSelect($event.value)">
+                      </p-multiSelect>
                     </div>
                   </div>
                 </div>

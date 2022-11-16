@@ -225,6 +225,8 @@ input::placeholder {
   color: #555 !important;
 }
 
+
+
 ::ng-deep .mat-datepicker-toggle {
   position: relative;
 }
@@ -250,4 +252,13 @@ input::placeholder {
 
 input::placeholder {
   font: 20px/3 sans-serif;
+}
+
+
+::ng-deep .p-multiselect {
+  width: 100% !important;
+}
+
+::ng-deep .p-multiselect-label {
+  padding: 5px !important;
 }
