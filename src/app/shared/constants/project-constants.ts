@@ -1204,6 +1204,7 @@ export const projectConstantsLocal = {
     { name: 'Draft', displayName: 'Leads' },
     { name: 'Approved', displayName: 'Approved' },
     { name: 'ApprovalPending', displayName: 'Approval Pending' },
+    { name: 'ApprovalRequired', displayName: 'Approval Required' },
     { name: 'Rejected', displayName: 'Rejected' },
     { name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
     // { name: 'PartnerAccepted', displayName: 'Partner Accepted' },

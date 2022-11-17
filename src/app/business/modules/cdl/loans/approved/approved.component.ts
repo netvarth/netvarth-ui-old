@@ -279,6 +279,9 @@ export class ApprovedComponent implements OnInit {
     })
   }
 
+  viewLoan() {
+    this.router.navigate(['provider', 'cdl', 'loans', this.loanId]);
+  }
 
   gotoNext() {
     let schemeData = {

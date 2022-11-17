@@ -76,8 +76,13 @@
       <div class="card-sub-title">
         <span>We Sent a Verification Message to the Customer.</span>
       </div>
-      <div class="btn btn-primary mt-3" (click)="refreshCustomerAcceptance()">
-        Refresh
+      <div class="d-flex mt-3">
+        <div class="btn btn-primary mr-3" (click)="refreshCustomerAcceptance()">
+          Refresh
+        </div>
+        <div class="btn btn-primary" (click)="viewLoan()">
+          View Loan Details
+        </div>
       </div>
     </div>
   </div>

@@ -104,7 +104,9 @@ export class CdlComponent implements OnInit {
   }
 
   getDealers() {
-    this.cdlservice.getDealers().subscribe((data: any) => {
+    let api_filter = {};
+    api_filter['spInternalStatus-neq'] = 'Draft';
+    this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
       this.dealers = data;
       this.allDealersCount = data.length;
     });
@@ -277,7 +279,9 @@ export class CdlComponent implements OnInit {
   }
 
   getLoans() {
-    this.cdlservice.getLoans().subscribe((data: any) => {
+    let api_filter = {};
+    api_filter['spInternalStatus-neq'] = 'Draft';
+    this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       this.statusLoansList = data
       this.allLoansCount = data.length
       this.loans = data;
@@ -447,14 +451,21 @@ export class CdlComponent implements OnInit {
   }
 
 
-  showDealer(dealer) {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        id: dealer
-      }
+  showDealer(dealerId, status) {
+    if (status == 'Approved') {
+      this.router.navigate(['provider', 'cdl', 'dealers', 'view', dealerId]);
     }
-    this.router.navigate(['provider', 'cdl', 'dealers', 'approve'], navigationExtras);
+    else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          id: dealerId
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'dealers', 'approve'], navigationExtras);
+    }
   }
+
+
 
 
 }
