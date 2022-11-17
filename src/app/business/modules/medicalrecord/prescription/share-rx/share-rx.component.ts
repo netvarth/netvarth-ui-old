@@ -395,7 +395,7 @@ export class ShareRxComponent implements OnInit {
     } 
     else {
       if (this.sharewith !== 0) {
-        alert(this.data.file.type);
+        // alert(this.data.file.type);
         let passData;
         if (this.data && this.data.file && (this.data.file.type === '.jpeg' || this.data.file.type === '.bmp' ||
           this.data.file.type === '.png' || this.data.file.type === '.jpg')) {
