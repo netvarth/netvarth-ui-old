@@ -25,6 +25,7 @@ export class LoansComponent implements OnInit {
   statusList: FormGroup;
   selectedLabels: any;
   filterapplied = false;
+  statusDisplayName: any;
   tooltipcls = projectConstantsLocal.TOOLTIP_CLS;
   loanStatus = projectConstantsLocal.LOAN_STATUS;
   labelFilterData: any;
@@ -133,16 +134,16 @@ export class LoansComponent implements OnInit {
 
 
   statusChange(event) {
-    if (event.value == 'All') {
+    if (event.value.name == 'All') {
       this.getLoans();
     }
     else {
       let api_filter = {}
-      if (event.value == 'Rejected') {
-        api_filter['applicationStatus-eq'] = event.value;
+      if (event.value.name == 'Rejected') {
+        api_filter['applicationStatus-eq'] = event.value.name;
       }
       else {
-        api_filter['spInternalStatus-eq'] = event.value;
+        api_filter['spInternalStatus-eq'] = event.value.name;
       }
       this.getLoansByFilter(api_filter);
     }
@@ -295,8 +296,10 @@ export class LoansComponent implements OnInit {
 
 
   getLoansByFilter(filter) {
+    this.loading = true;
     this.cdlservice.getLoansByFilter(filter).subscribe((data) => {
       this.loans = data;
+      this.loading = false;
       console.log("this.loans", this.loans)
     })
   }

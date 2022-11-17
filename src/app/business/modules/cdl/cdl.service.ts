@@ -84,8 +84,7 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
-  dealerApprovalRequest(id)
-  {
+  dealerApprovalRequest(id) {
     const url = 'provider/partner/' + id + '/approvalrequest';
     return this.servicemeta.httpPut(url, null);
   }
@@ -139,6 +138,12 @@ export class CdlService {
     const url = 'provider/loanapplication/' + id + '/reject';
     return this.servicemeta.httpPut(url, data);
   }
+
+  getSchemes() {
+    const url = 'provider/loanapplication/schemes';
+    return this.servicemeta.httpGet(url, null);
+  }
+
 
 
 

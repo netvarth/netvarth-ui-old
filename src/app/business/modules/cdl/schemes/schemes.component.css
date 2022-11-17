@@ -50,6 +50,14 @@ th {
   color: #1E4079 !important;
 }
 
+.status-ACTIVE {
+  color: green;
+}
+
+.status-INACTIVE {
+  color: red;
+}
+
 @media (max-width: 767px) {
 
   .table-column-data {

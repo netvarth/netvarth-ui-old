@@ -1,0 +1,103 @@
+<section class="card">
+  <div class="pointer-cursor">
+    <div class="d-flex">
+      <div> <i class="fa fa-arrow-left mr-2" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="text-primary heading" class="back-btn">Schemes</div>
+    </div>
+  </div>
+</section>
+
+
+<section *ngIf="loading">
+  <div>
+    <app-skeleton-loading></app-skeleton-loading>
+  </div>
+</section>
+
+
+<div *ngIf="!loading">
+  <div class="card">
+    <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dt1 [value]="schemeList" dataKey="id"
+      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+      styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="['id','schemeName','schemeType','schemeRate','noOfRepayment']">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-4">
+            <span>
+              <input pInputText type="text" [style]="{'width':'100%'}"
+                class="search-field" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search keyword" style="width:100%" />
+            </span>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Scheme Id
+              <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Scheme Name
+              <p-columnFilter type="text" field="schemeName" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Scheme Type
+              <p-columnFilter type="text" field="schemeType" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Scheme Rate
+              <p-columnFilter type="text" field="schemeRate" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              No of Repayments
+              <p-columnFilter type="text" field="noOfRepayment" display="menu"></p-columnFilter>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-scheme>
+        <tr class="mobile-card">
+          <td>
+            <span class="d-lg-none d-md-none">Scheme Id : </span><span class="table-column-data">{{scheme.id}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Scheme Name : </span><span
+              class="table-column-data">{{scheme.schemeName}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Scheme Type : </span><span
+              class="table-column-data">{{scheme.schemeType}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Scheme Rate : </span>
+            <span class="table-column-data">
+              {{scheme.schemeRate}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">No of Repayments : </span>
+            <span [class]="'scheme-badge status-' + scheme.status" class="table-column-data">
+              {{scheme.noOfRepayment}}</span>
+          </td>
+        </tr>
+        <br class="d-lg-none d-md-none">
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No schemes found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

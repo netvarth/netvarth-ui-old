@@ -15,25 +15,15 @@
   box-shadow: 0 0 10px 0 rgba(98, 99, 100, 0.2) !important;
 }
 
+.loans-card {
+  min-height: 680px !important;
+}
+
 .add-loan-icon {
   color: #fff !important;
   background-color: #00D1FF !important;
   padding: 3px 5px !important;
   border-radius: 50% !important;
-}
-
-.slider-height,
-.recentcards {
-  height: 250px !important;
-}
-
-.recentcards img {
-  height: 250px !important;
-}
-
-
-.min-height {
-  min-height: 400px !important;
 }
 
 .add-lead-icon {
@@ -112,7 +102,13 @@
 }
 
 .dashboard-card {
-  padding: 25px 5px !important;
+  padding: 15px 5px !important;
+}
+
+.clearfix::after {
+  display: block;
+  clear: both;
+  content: "";
 }
 
 .btn-primary {
@@ -120,7 +116,15 @@
   border-color: #1e4070 !important;
   color: #fff !important;
   font-weight: 100 !important;
-  border-radius: 10px !important;
+  border-radius: 3px !important;
+}
+
+.btn-logout {
+  background-color: #dde2eb !important;
+  border-color: #1e4070 !important;
+  color: #1e4070 !important;
+  font-weight: 100 !important;
+  border-radius: 2px !important;
 }
 
 .approved-loan-head-icon {
@@ -157,7 +161,19 @@
 }
 
 .head-card-title {
-  font-size: 12px !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+}
+
+.head-card-title-mobile {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+}
+
+.head-card-sub-title {
+  font-size: 15px !important;
+  font-weight: 700 !important;
+  margin-top: 10px !important;
 }
 
 .alerts-icon {
@@ -242,12 +258,86 @@
 }
 
 
-.small-font {
-  font-size: 12px !important;
+@media (max-width: 767px) {
+  .recentcards img {
+    height: 150px !important;
+  }
 }
 
-th {
+
+
+
+/* Mobile Styles  */
+
+
+.mobile-approved-loans-icon {
+  color: #4DE894 !important;
+  background-color: #EDFDF4 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 23px !important;
+}
+
+
+
+.mobile-pending-loans-icon {
+  color: #E8A04D !important;
+  background-color: #FFF4E5 !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 23px !important;
+}
+
+.mobile-all-loans-icon {
+  color: #4D8BE8 !important;
+  background-color: #EDF3FD !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 23px !important;
+}
+
+.mobile-rejected-loans-icon {
+  color: #E84D4D !important;
+  background-color: #FDEDED !important;
+  padding: 10px !important;
+  border-radius: 10px !important;
+  font-size: 23px !important;
+}
+
+
+
+.btn-danger {
+  background-color: #fff !important;
+  border-color: #FF4C51 !important;
+  color: #FF4C51 !important;
+  font-weight: 100 !important;
+  font-size: 14px !important;
+  border-radius: 5px !important;
+}
+
+.btn-danger:hover {
+  background-color: #FF4C51 !important;
+  border-color: #FF4C51 !important;
+  color: #fff !important;
+  border-radius: 5px !important;
+  transition-duration: 2s;
+  transition-delay: 1s;
+}
+
+
+
+
+.text-red {
+  color: #D32F2F !important;
+}
+
+.welcome-text {
+  font-size: 20px !important;
   font-weight: bold !important;
+}
+
+.carousal-image {
+  height: 265px !important;
 }
 
 .profile-pic {
@@ -261,14 +351,80 @@ th {
   line-height: 40px;
 }
 
+.card-title {
+  font-size: 18px !important;
+  font-weight: bold !important;
+  color: #1E4079 !important;
+}
+
+.overflow-x-none {
+  overflow-x: hidden !important;
+}
+
+::ng-deep .partner-carousal .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+  background-color: #1E4079 !important;
+}
+
+
 
 @media (max-width: 767px) {
-  .recentcards img {
+
+  .carousal-image {
     height: 150px !important;
   }
 
-  .slider-height,
-  .recentcards {
-    height: 150px !important;
+  .company-logo {
+    width: 150px !important;
   }
+
+  .welcome-text {
+    font-size: 17px !important;
+    font-weight: bold !important;
+  }
+
+  .logout-btn {
+    display: flex !important;
+    align-items: flex-start !important;
+  }
+
+  .head-card-sub-title {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin-top: 10px !important;
+  }
+}
+
+
+
+
+@media screen and (max-width: 576px) and (min-width: 0px) {
+  .desktop-only {
+    display: none;
+  }
+
+  .company-logo {
+    display: none !important;
+  }
+
+  .head-card-title {
+    font-size: 13px !important;
+  }
+
+}
+
+@media (min-width: 1025px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .mobile-only {
+    display: none;
+  }
+
+  .desktop-only {
+    display: none;
+  }
+
 }

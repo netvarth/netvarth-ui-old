@@ -1,14 +1,14 @@
 <section class="card">
-  <div class="title-gb no-padding">
-    <div class="dash-head">
-      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i></div>
-      <div class="colorHeaderIcon" *ngIf="headerName">{{headerName |capitalizeFirst}}</div>
+  <div class="pointer-cursor">
+    <div class="d-flex">
+      <div> <i class="fa fa-arrow-left mr-2" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="text-primary heading" class="back-btn" *ngIf="headerName">{{headerName |capitalizeFirst}}</div>
     </div>
   </div>
 </section>
 
 
-<section class="card" *ngIf="loading">
+<section *ngIf="loading">
   <div>
     <app-skeleton-loading></app-skeleton-loading>
   </div>
@@ -16,223 +16,97 @@
 
 
 <div *ngIf="!loading">
-  <div class="col-md-12 marginClass">
-    <div class="card">
-
-      <div class="col-sm-6 col-lg-4 col-xs-12 col-md-6 filter" *ngIf="filter_sidebar">
-        <aside class="filterSidebar filter-sidebar">
-          <section id="filterContainer" class="sidebar sidebar-bottom checkfilter filter-container">
-            <div class="filterClosebtn filter-head" [class.pd-btm-30]="!filterapplied">
-              <span class="filter-head-title">Filters</span>
-              <i class="icon-filter-one-op ng-star-inserted pointer-cursor pull-right" (click)="hideFilterSidebar()"
-                [matTooltipClass]="tooltipcls" [matTooltip]="'Close filter window'"></i>
-            </div>
-            <div [ngStyle]="{'height.px': filterapplied === true ? 95 : 44 }">&nbsp;</div>
-            <ul class="sidebar-menu accordion" id="accordion1">
-              <div class="card">
-                <div class="card-header">
-                  <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseId"
-                      aria-expanded="false">
-                      <div>
-                        <div style="display: inline-block !important;">
-                          <i class="fa fa-id-badge"></i>
-                        </div>
-                        Loan Id
-                      </div>
-                      <i class="fa fa-angle-down"></i>
-                    </button>
-                  </h2>
-                </div>
-                <div id="collapseId" class="collapse in" data-parent="#accordion1">
-                  <div class="card-body" style="padding: 0px !important;">
-                    <div class="filterTextinput filter-text-input">
-                      <li class="filterli filter-li">
-                        <input type="text" [(ngModel)]="filter.id" #id (keyup)="keyPress()"
-                          class="filterTextbox filter-textbox" placeholder="Enter Loan Id">
-                      </li>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName"
-                      aria-expanded="false">
-                      <div>
-                        <div style="display: inline-block !important;">
-                          <i class="fa fa-user"></i>
-                        </div>
-                        <span>&nbsp; Name </span>
-                      </div>
-                      <i class="fa fa-angle-down"></i>
-                    </button>
-                  </h2>
-                </div>
-                <div id="collapseName" class="collapse in" data-parent="#accordion1">
-                  <div class="card-body" style="padding: 0px !important;">
-                    <div class="filterTextinput filter-text-input">
-                      <li class="filterli filter-li">
-                        <input type="text" [(ngModel)]="filter.firstName" #firstName (keyup)="keyPress()" maxlength="20"
-                          class="filterTextbox filter-textbox" placeholder="Enter First Name">
-                      </li>
-                    </div>
-                    <div class="filterTextinput filter-text-input">
-                      <li class="filterli filter-li">
-                        <input type="text" [(ngModel)]="filter.lastName" #lastName (keyup)="keyPress()" maxlength="10"
-                          class="filterTextbox filter-textbox" placeholder="Enter Last Name">
-                      </li>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header">
-                  <h2 class="mb-0">
-                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseDOB"
-                      aria-expanded="false">
-                      <div>
-                        <div style="display: inline-block !important;">
-                          <i class="fa fa-calendar-o"></i>
-                        </div>
-                        <span>&nbsp; Created Date </span>
-                      </div>
-                      <i class="fa fa-angle-down"></i>
-                    </button>
-                  </h2>
-                </div>
-                <div id="collapseDOB" class="collapse in" data-parent="#accordion1">
-                  <div class="card-body" style="padding: 0px !important;">
-                    <div class="filterTextinput filter-text-input">
-                      <li class="filterli filterDatepicker filter-li">
-                        <input type="text" [(ngModel)]="filter.date" [min]="minday" [max]="maxday"
-                          [matDatepicker]="picker" #Fdate (dateChange)="keyPress()" class="filterTextbox"
-                          placeholder="Date of birth" readonly (click)="picker.open()">
-                        <mat-datepicker-toggle matSuffix [for]="picker">
-                        </mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </li>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ul>
-          </section>
-          <div class="filter-footer" *ngIf="filterapplied">
-            <button class="btn reset-btn" (click)="clearFilter()">
-              <i class="fa fa-undo"></i>&nbsp;Reset
-            </button>
-            <button class="btn apply-btn" (click)="doSearch()">
-              <i class="fa fa-check"></i>&nbsp;Apply
-            </button>
+  <div class="card">
+    <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dt1 [value]="loans" dataKey="id"
+      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+      styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-4">
+            <span>
+              <input pInputText type="text" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                class="search-field" (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                placeholder="Search keyword" style="width:100%" />
+            </span>
           </div>
-        </aside>
-      </div>
-
-      <div class="row text-right">
-        <form [formGroup]="statusList">
-          <div class="form-group text-left col-md-4 my-3">
-            <mat-select class="form-control widthWebKit" #status (selectionChange)="statusChange($event)"
-              placeholder="All Loans">
-              <mat-option [value]="status.name" *ngFor="let status of loanStatus">
-                <div *ngIf="status && status.displayName">{{status.displayName}}</div>
-              </mat-option>
-            </mat-select>
-          </div>
-        </form>
-        <div>
-          <div class="p-3">
-            <h3 class="align-items-start flex-column">
-              <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right">
-                <img src="assets/images/provider-filter-icon.png"
-                  style="width: 22px !important; margin-top: -4px !important;">
-                Filter
-              </a>
-            </h3>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 text-right">
+            <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
+              (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
+              dataKey="name">
+            </p-dropdown>
           </div>
         </div>
-      </div>
-      <div class="table-responsive dash-list">
-        <table class="table">
-          <thead>
-            <tr class="tble-filtr-tr heght">
-              <th class="head_color">Reference No</th>
-              <th class="head_color">Customer Name</th>
-              <th class="head_color">Dealer</th>
-              <th class="head_color">Status</th>
-            </tr>
-          </thead>
-          <tbody class="table_data">
-            <ng-container *ngIf="loans && loans.length > 0">
-              <tr style="cursor:pointer" *ngFor="let item of loans  | paginate: config;"
-                (click)="updateLoan(item.uid,'update',item.spInternalStatus)">
-
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.referenceNo">{{item.referenceNo}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && item.customer.firstName">
-                  {{item.customer.firstName}} {{item.customer.lastName}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.customer && !item.customer.firstName">
-                  --</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.partner && item.partner.partnerName">
-                  {{item.partner.partnerName}}</td>
-
-                <td data-title="Loan Details" class="td1" *ngIf="item && !item.partner ">
-                  --</td>
-                <td data-title="Loan Details" class="td1 loanStatus"
-                  *ngIf="item && item.spInternalStatusDisplyName && item.applicationStatus && item.applicationStatus == 'Rejected'">
-                  {{item.applicationStatus}}
-                </td>
-                <td data-title="Loan Details" class="td1 loanStatus"
-                  *ngIf="item && item.spInternalStatusDisplyName && item.applicationStatus && item.applicationStatus != 'Rejected'">
-                  {{item.spInternalStatusDisplyName}}
-                </td>
-                <td *ngIf="item && item.uid">
-                  <div>
-                    <a class=" btn btn-primary" (click)="updateLoan(item.uid,'update',item.spInternalStatus)">
-                      View</a>
-                  </div>
-                </td>
-                <!-- <td *ngIf="item && item.uid  && !item.isActionRequired">
-                  <div>
-                    <a class="btn btn-primary" (click)="loanDetails(item.uid)">View</a>
-                  </div>
-                </td> -->
-              </tr>
-            </ng-container>
-            <ng-container *ngIf="loans && loans.length == 0">
-              <tr class="my-2">
-                <td class="text-primary">No Loan Applications Found</td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
-        <div class="clearfix"></div>
-        <div class="search_paging m-2" *ngIf="pagination && pagination.totalCnt>10 ">
-          <pagination-template *ngIf="pagination && pagination.totalCnt>10" #p="paginationApi" [id]="config.id"
-            (pageChange)="config.currentPage = $event">
-            <div class="custom-pagination d-flex justify-content-between align-items-center flex-wrap pull-right mb-0">
-              <div class="pagination-previous mx-2" [class.disabled]="p.isFirstPage()" data-bs-toggle="tooltip"
-                data-bs-placement="bottom" title="previous">
-                <a *ngIf="!p.isFirstPage()" (click)="p.previous()">
-                  < </a>
-              </div>
-              <div *ngFor="let page of p.pages" [class.current]="p.getCurrent() === page.value">
-                <a (click)="p.setCurrent(page.value)" *ngIf="p.getCurrent() !== page.value">
-                  <span class="mx-2">{{ page.label }}</span>
-                </a>
-                <div *ngIf="p.getCurrent() === page.value">
-                  <span>{{ page.label }}</span>
-                </div>
-              </div>
-              <div class="pagination-next mx-2" [class.disabled]="p.isLastPage()" data-bs-toggle="tooltip"
-                data-bs-placement="top" title="next">
-                <a *ngIf="!p.isLastPage()" (click)="p.next()"> > </a>
-              </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Reference No
+              <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter>
             </div>
-          </pagination-template>
-        </div>
-      </div>
-
-    </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Customer Name
+              <p-columnFilter type="text" field="customer.firstName" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Dealer
+              <p-columnFilter type="text" field="partner.partnerName" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Status
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              More Actions
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-loan>
+        <tr class="mobile-card">
+          <td>
+            <span class="d-lg-none d-md-none">Loan Application No : </span><span
+              class="table-column-data">{{loan.referenceNo}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Customer Name : </span><span
+              class="table-column-data">{{loan.customer.firstName}}
+              {{loan.customer.lastName}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none d-sm-block">Dealer : </span><span class="table-column-data"
+              *ngIf="loan && loan.partner && loan.partner.partnerName">{{loan.partner.partnerName}}</span>
+            <span class="table-column-data" *ngIf="loan && !loan.partner || !loan.partner.partnerName">-</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Status : </span>
+            <span [class]="'customer-badge status-' + loan.spInternalStatusDisplyName" class="table-column-data">
+              {{loan.spInternalStatusDisplyName}}</span>
+          </td>
+          <td>
+            <div class="text-center">
+              <button pButton pRipple type="button" class="p-button-primary" (click)="loanDetails(loan.uid)"><i
+                  class="pi pi-eye text-white"></i>&nbsp;View</button>
+            </div>
+          </td>
+        </tr>
+        <br class="d-lg-none d-md-none">
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No Loans found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>

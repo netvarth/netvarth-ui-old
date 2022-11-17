@@ -19,7 +19,12 @@ import { MatInputModule } from '@angular/material/input';
 import { SelectSchemeModule } from './select-scheme/select-scheme.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PagerModule } from '../../../../shared/modules/pager/pager.module';
-
+import { TableModule } from 'primeng/table';
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
 
 const routes: Routes = [
   { path: '', component: LoansComponent },
@@ -56,6 +61,12 @@ const routes: Routes = [
     SelectSchemeModule,
     NgxPaginationModule,
     PagerModule,
+    TableModule,
+    CalendarModule,
+    MultiSelectModule,
+    DropdownModule,
+    ButtonModule,
+    InputTextModule,
     [RouterModule.forChild(routes)]
   ],
   schemas: [

@@ -1206,8 +1206,17 @@ export const projectConstantsLocal = {
     { name: 'ApprovalPending', displayName: 'Approval Pending' },
     { name: 'Rejected', displayName: 'Rejected' },
     { name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
-    { name: 'PartnerAccepted', displayName: 'Partner Accepted' },
-    { name: 'Sanctioned', displayName: 'Sanctioned' }
+    // { name: 'PartnerAccepted', displayName: 'Partner Accepted' },
+    // { name: 'Sanctioned', displayName: 'Sanctioned' }
+  ],
+  TIMELINE_STATUS: [
+    { index: 1, name: 'Draft', displayName: 'Lead' },
+    { index: 2, name: 'Approved', displayName: 'Approved' },
+    // { index: 3, name: 'ApprovalPending', displayName: 'Approval Pending' },
+    { index: 3, name: 'ApprovalRequired', displayName: 'Approval Required' },
+    { index: 4, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
+    { index: 5, name: 'Sanctioned', displayName: 'Sanctioned' },
+    { index: 6, name: 'Rejected', displayName: 'Rejected' }
   ],
   DEALER_STATUS: [
     { name: 'All', displayName: 'All Dealers' },
