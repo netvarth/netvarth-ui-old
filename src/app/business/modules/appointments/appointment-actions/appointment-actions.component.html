@@ -13,10 +13,10 @@
 <ng-container *ngIf="(appt.apptStatus !== 'Requested' && appt.apptStatus !== 'RequestRejected')">
     <div class="action-section col-md-12 no-padding" *ngIf="(action === '' || action === 'status') && !apiloading">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mgn-lt-20 no-padding" *ngIf="!data.multiSelection">
-            <p *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''">
+            <p *ngIf="appt && appt.appmtFor && appt.appmtFor[0] && appt.appmtFor[0].firstName != '' ||appt && appt.appmtFor && appt.appmtFor[0] &&  appt.appmtFor[0].lastName != ''">
                 {{customer_label | capitalizeFirst}} Name : {{appt.appmtFor[0].firstName}} {{appt.appmtFor[0].lastName}}
             </p>
-            <p *ngIf="appt.appmtFor[0].firstName == '' && appt.appmtFor[0].lastName == ''">
+            <p *ngIf="appt && appt.appmtFor && appt.appmtFor[0] && appt.appmtFor[0].firstName == '' && appt && appt.appmtFor && appt.appmtFor[0] &&  appt.appmtFor[0].lastName == ''">
                 {{customer_label | capitalizeFirst}} id : {{appt.providerConsumer.jaldeeId}} </p>
             <p>Appointment Time : {{getSingleTime(appt.appmtTime)}}
             </p>
@@ -137,27 +137,27 @@
                 [matTooltipClass]="tooltipcls" [matTooltip]="'Teleservice'" (click)="showCallingModes(appt)">
                 <div class="action-box-sub">
                     <span class="meet-icon"
-                        *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
+                        *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] &&appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"></span>
                     <span class="zoom-icon"
-                        *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
+                        *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] &&appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"></span>
                     <span class="fa jvideo-icon jvideo-icon-sm"
-                        *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></span>
+                        *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] &&appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></span>
                     <span class="phon-icon"
-                        *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
+                        *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] &&appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'Phone'"></span>
                     <span class="wtsapaud-icon"
-                        *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"></span>
+                        *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] &&appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt && appt.service && appt.service.virtualServiceType && appt.service.virtualServiceType === 'audioService'"></span>
                     <span class="wtsapvid-icon"
-                        *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"></span>
-                    <span class="start-icon" *ngIf="appt.service.serviceType !== 'virtualService'"></span>
-                    <div class="icon-text" *ngIf="appt.service.serviceType !== 'virtualService'">
+                        *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] &&appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt && appt.service && appt.service.virtualServiceType && appt.service.virtualServiceType === 'videoService'"></span>
+                    <span class="start-icon" *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType !== 'virtualService'"></span>
+                    <div class="icon-text" *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType !== 'virtualService'">
                         {{appt.apptStatus == 'Started' ? 'Resume' : 'Start'}} Service
                     </div>
                     <div class="icon-text"
-                        *ngIf="appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp'">
+                        *ngIf="appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode && (appt.service.virtualCallingModes[0].callingMode !== 'Phone' && appt.service.virtualCallingModes[0].callingMode !== 'WhatsApp')">
                         {{appt.apptStatus == 'Started' ? 'Resume' : 'Call'}} Service
                     </div>
                     <div class="icon-text"
-                        *ngIf="appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'">
+                        *ngIf="appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode &&(appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp')">
                         {{appt.apptStatus == 'Started' ? 'Resume Service' : 'Call ' + callingNumber }}
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                     <div class="icon-text">Delay</div>
                 </div>
             </div>
-            <div class="action-box pointer-cursor" (click)="showQuestionnaires()">
+            <div class="action-box pointer-cursor" (click)="showQuestionnaires()" *ngIf="!(data && data.multiSelection)">
                 <div class="action-box-sub">
                     <span class="qnr-icon"></span>
                     <div class="icon-text">Get More Info</div>
@@ -340,10 +340,10 @@
             style="background-color: rgb(207, 198, 198);padding: 10px;font-weight: bold;display: flex;align-items: baseline;justify-content: space-between;">
             <div>
                 <div style="font-size: 17px !important;padding-left: 20px;font-weight: 700;">Reschedule Appointment for
-                    <span *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName
+                    <span *ngIf="appt && appt.appmtFor && appt.appmtFor[0]  && (appt.appmtFor[0].firstName || appt.appmtFor[0].lastName)">{{appt.appmtFor[0].firstName
                         |capitalizeFirst}} {{appt.appmtFor[0].lastName |capitalizeFirst}}</span>
                     <span
-                        *ngIf="(appt.appmtFor[0].firstName === undefined || appt.appmtFor[0].firstName === '') && (appt.appmtFor[0].lastName === undefined || appt.appmtFor[0].lastName === '')">{{appt.appmtFor[0].memberJaldeeId
+                        *ngIf="appt && appt.appmtFor && appt.appmtFor[0] && ((appt.appmtFor[0].firstName === undefined || appt.appmtFor[0].firstName === '') && (appt.appmtFor[0].lastName === undefined || appt.appmtFor[0].lastName === ''))">{{appt.appmtFor[0].memberJaldeeId
                         | capitalizeFirst}}</span>
                 </div>
             </div>
@@ -363,17 +363,17 @@
                     + ' ' + appt.provider.lastName}}</p>
                 <p *ngIf="appt.location.place">Location: {{appt.location.place}}</p>
                 <p>Service :
-                    <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
+                    <i *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                         class="fa meet-icon"></i>
-                    <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"
+                    <i *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'Zoom'"
                         class="fa zoom-icon"></i>
                     <i class="fa jvideo-icon jvideo-icon-s jvideo-icon-mgm5"
-                        *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
-                    <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'Phone'"
+                        *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'VideoCall'"></i>
+                    <i *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'Phone'"
                         class="fa phon-icon"></i>
-                    <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'audioService'"
+                    <i *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt && appt.service && appt.service.virtualServiceType && appt.service.virtualServiceType === 'audioService'"
                         class="fa wtsapaud-icon"></i>
-                    <i *ngIf="appt.service.serviceType === 'virtualService' && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt.service.virtualServiceType === 'videoService'"
+                    <i *ngIf="appt && appt.service && appt.service.serviceType && appt.service.serviceType === 'virtualService' && appt && appt.service && appt.service.virtualCallingModes && appt.service.virtualCallingModes[0] && appt.service.virtualCallingModes[0].callingMode && appt.service.virtualCallingModes[0].callingMode === 'WhatsApp' && appt && appt.service && appt.service.virtualServiceType && appt.service.virtualServiceType === 'videoService'"
                         class="fa wtsapvid-icon"></i>
                     {{appt.service.name}}
                 </p>
@@ -565,7 +565,7 @@
                     <span> Do you want to delete this request! </span>
                 </div>
                 <div class="divDimen">
-                    <div *ngIf="appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != ''">
+                    <div *ngIf="appt && appt.appmtFor && appt.appmtFor[0] && (appt.appmtFor[0].firstName != '' || appt.appmtFor[0].lastName != '')">
                         <span>Request By : </span> <span class="bold">{{appt.appmtFor[0].firstName | capitalizeFirst}}
                             {{appt.appmtFor[0].lastName | capitalizeFirst}}</span>
                     </div>

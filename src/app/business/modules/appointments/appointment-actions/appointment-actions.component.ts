@@ -169,13 +169,21 @@ export class AppointmentActionsComponent implements OnInit {
     this.apiloading = true;
     this.appt = this.data.checkinData;
     console.log("Request Data :",this.appt);
-    if (this.appt.service.virtualCallingModes) {
+    if (this.appt && this.appt.service && this.appt.service.virtualCallingModes) {
       this.setVirtualInfoServiceInfo(this.appt.service);
   }
-    this.lStorageService.setitemonLocalStorage("scheduleId",this.appt.schedule.id);
-    this.lStorageService.setitemonLocalStorage("selDate",this.sel_checkindate);
-    this.sel_checkindate = this.lStorageService.getitemfromLocalStorage("selDate");
-    this.sel_schedule_id = this.lStorageService.getitemfromLocalStorage("scheduleId");
+  if(this.appt && this.appt.schedule && this.appt.schedule.id){
+    this.sel_schedule_id = this.appt.schedule.id;
+  }
+  if(this.appt && this.appt.service && this.appt.service.id){
+    this.servId = this.appt.service.id;
+  }
+  if(this.appt && this.appt.location && this.appt.location.id){
+    this.locId = this.appt.location.id;
+  }
+  if(this.appt && this.appt.providerAccount && this.appt.providerAccount.id){
+    this.accountid = this.appt.providerAccount.id;
+  }
     console.log("Schedule Id :", this.sel_schedule_id);
     const newdate = this.selectedDate;
     console.log("New Date :",newdate);
@@ -191,17 +199,24 @@ export class AppointmentActionsComponent implements OnInit {
     this.selectedDay = seldate;
    //this.sel_checkindate = seldate
     console.log("Selected Date :",seldate,this.sel_checkindate);
-    this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
-   //this.getSlots(this.sel_schedule_id);
+    if(this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay){
+      this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
+    }   //this.getSlots(this.sel_schedule_id);
     this.multipleSelection = this.data.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
-    if (this.appt.appmtFor[0].whatsAppNum) {
+    if (this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].whatsAppNum) {
       this.commObj['comWhatsappNo'] = this.appt.appmtFor[0].whatsAppNum.number;
-      this.commObj['comWhatsappCountryCode'] = this.appt.appmtFor[0].whatsAppNum.countryCode;
+      if(this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].whatsAppNum && this.appt.appmtFor[0].whatsAppNum.countryCode){
+        this.commObj['comWhatsappCountryCode'] = this.appt.appmtFor[0].whatsAppNum.countryCode;
+      }
   } else {
-    this.commObj['comWhatsappNo'] = this.appt.userProfile.primaryMobileNo;
-    this.commObj['comWhatsappCountryCode'] = this.appt.userProfile.countryCode;
+    if(this.appt && this.appt.userProfile && this.appt.userProfile.primaryMobileNo){
+      this.commObj['comWhatsappNo'] = this.appt.userProfile.primaryMobileNo;
+    }
+    if(this.appt && this.appt.userProfile &&  this.appt.userProfile.countryCode){
+      this.commObj['comWhatsappCountryCode'] = this.appt.userProfile.countryCode;
+    }
   }
     if (
       !this.data.multiSelection &&
@@ -214,7 +229,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     this.status_booking = this.data.status;
     if (!this.data.multiSelection) {
-      if (this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0].callingMode && this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]) {
+      if (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]) {
         this.callingNumber = this.teleService.getTeleNumber(this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]);
     }
       this.getPos();
@@ -232,7 +247,9 @@ export class AppointmentActionsComponent implements OnInit {
     this.subdomain = user.subSector;
     this.customer_label = this.wordProcessor.getTerminologyTerm("customer");
     this.active_user = user.userType;
-    this.userid = user.id;
+    if(user && user.id){
+      this.userid = user.id;
+    }
     this.subscription = this.galleryService.getMessage().subscribe(input => {
       if (input && input.uuid) {
         this.shared_services
@@ -275,7 +292,7 @@ export class AppointmentActionsComponent implements OnInit {
       this.provider_services.getUsers().subscribe(
         (data: any) => {
           this.users = data;
-          this.user_arr = this.users.filter(user => user.id === this.userid);
+          this.user_arr = this.users.filter(user => user&& (user.id === this.userid));
           if (this.user_arr[0].status === "ACTIVE") {
             this.isUserdisable = true;
           } else {
@@ -310,10 +327,18 @@ export class AppointmentActionsComponent implements OnInit {
     } else {
       this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
     }
-    this.sel_schedule_id = this.appt.schedule.id;
-    this.servId = this.appt.service.id;
-    this.locId = this.appt.location.id;
-    this.accountid = this.appt.providerAccount.id;
+    if(this.appt && this.appt.schedule && this.appt.schedule.id){
+      this.sel_schedule_id = this.appt.schedule.id;
+    }
+    if(this.appt && this.appt.service && this.appt.service.id){
+      this.servId = this.appt.service.id;
+    }
+    if(this.appt && this.appt.location && this.appt.location.id){
+      this.locId = this.appt.location.id;
+    }
+    if(this.appt && this.appt.providerAccount && this.appt.providerAccount.id){
+      this.accountid = this.appt.providerAccount.id;
+    }
   }
   printAppt() {
     this.dialogRef.close();
@@ -969,7 +994,10 @@ export class AppointmentActionsComponent implements OnInit {
   gotoSecureVideo() {
     this.dialogRef.close();
     const customerDetails = this.appt.appmtFor[0];
-    const customerId = customerDetails.id;
+    let customerId;
+    if(customerDetails && customerDetails.id){
+       customerId = customerDetails.id;
+    }
     let whtasappNum;
     if (
       this.appt &&
@@ -1000,7 +1028,10 @@ export class AppointmentActionsComponent implements OnInit {
   }
   voiceCallConfirmed() {
     // const customerDetails = this.appt;
-    const customerId = this.appt.appmtFor[0].id;
+    let customerId;
+    if(this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].id){
+      customerId = this.appt.appmtFor[0].id;
+    }
     const num = this.appt.countryCode + " " + this.appt.phoneNumber;
     // const firstName = this.appt.appmtFor[0].firstName
     // const lastName=this.appt.appmtFor[0].lastName
@@ -1398,8 +1429,10 @@ export class AppointmentActionsComponent implements OnInit {
     }
 
     const customerDetails = this.appt.appmtFor[0];
-    const customerId = customerDetails.id;
-    const bookingId = this.appt.uid;
+    let customerId;
+    if(customerDetails && customerDetails.id){
+      customerId = customerDetails.id;
+    }    const bookingId = this.appt.uid;
     const bookingType = "APPT";
     this.router.navigate(
       [
@@ -1424,8 +1457,10 @@ export class AppointmentActionsComponent implements OnInit {
     }
 
     const customerDetails = this.appt.appmtFor[0];
-    const customerId = customerDetails.id;
-    const bookingId = this.appt.uid;
+    let customerId;
+    if(customerDetails && customerDetails.id){
+      customerId = customerDetails.id;
+    }    const bookingId = this.appt.uid;
     const bookingType = "APPT";
     this.router.navigate(
       [
@@ -1501,8 +1536,9 @@ export class AppointmentActionsComponent implements OnInit {
       this.servId,
       this.accountid
     );
-   this.getSlotsBySheduleandDate(this.sel_schedule_id,this.sel_checkindate);
-    //this.getAppointmentSlots();
+    if(this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay){
+      this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
+    }    //this.getAppointmentSlots();
    //this.getSlots(this.sel_schedule_id); 
  }
 
@@ -1597,7 +1633,7 @@ getSlotsBySheduleandDate(scheduleId,selDate){
     //   post_data['appointmentMode'] = {'id':this.appt.appointmentMode}
 
     // }
-     if(this.appt.schedule.id){
+     if(this.appt && this.appt.schedule && this.appt.schedule.id){
       post_data['schedule'] = {'id':this.appt.schedule.id}
      }
      if(this.appt.service){
@@ -1643,7 +1679,7 @@ getSlotsBySheduleandDate(scheduleId,selDate){
 
   }
   setVirtualInfoServiceInfo(activeService) {
-    if (activeService.virtualCallingModes[0].callingMode === 'WhatsApp' || activeService.virtualCallingModes[0].callingMode === 'Phone') {
+    if (activeService && activeService.virtualCallingModes && activeService.virtualCallingModes[0] && activeService.virtualCallingModes[0].callingMode && (activeService.virtualCallingModes[0].callingMode === 'WhatsApp' || activeService.virtualCallingModes[0].callingMode === 'Phone')) {
         // if (appointmentType === 'reschedule') {
             if (activeService.virtualCallingModes[0].callingMode === 'WhatsApp') {
                 this.callingModes = this.appt.virtualService['WhatsApp'];
@@ -1665,7 +1701,7 @@ getSlotsBySheduleandDate(scheduleId,selDate){
     let valid = true;
     if (callingModes === '') {
         for (const i in this.appt.virtualCallingModes) {
-            if (this.appt.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.virtualCallingModes[i].callingMode === 'Phone' || this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet') {
+            if (this.appt && this.appt.virtualCallingModes && this.appt.virtualCallingModes && this.appt.virtualCallingModes[i] && this.appt.virtualCallingModes[i].callingMode && (this.appt.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.virtualCallingModes[i].callingMode === 'Phone') || (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet')) {
                 if (!this.commObj['comWhatsappNo'] ) {
                   // && this.appt.serviceBookingType !== 'request'
                     this.snackbarService.openSnackBar('Please provide valid mobile number', { 'panelClass': 'snackbarerror' });
@@ -1724,7 +1760,7 @@ getSlotsBySheduleandDate(scheduleId,selDate){
 getVirtualServiceInput() {
   let virtualServiceArray = {};
   if (this.callingModes !== '') {
-      if (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom' || this.appt.service.virtualCallingModes[0].callingMode === 'Phone') {
+      if (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom') || (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'Phone')) {
           virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
       } else {
           virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
