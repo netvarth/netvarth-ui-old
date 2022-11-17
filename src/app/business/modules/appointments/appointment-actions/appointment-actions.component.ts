@@ -44,7 +44,7 @@ export class AppointmentActionsComponent implements OnInit {
   appt;
   // selected: Date | null;
   selectedDate: Date = new Date();
-
+  changePhone;     // Change phone number or not
   provider_label = "";
   qr_value;
   path = projectConstantsLocal.PATH;
@@ -169,6 +169,9 @@ export class AppointmentActionsComponent implements OnInit {
     this.apiloading = true;
     this.appt = this.data.checkinData;
     console.log("Request Data :",this.appt);
+    if (this.appt.service.virtualCallingModes) {
+      this.setVirtualInfoServiceInfo(this.appt.service);
+  }
     this.lStorageService.setitemonLocalStorage("scheduleId",this.appt.schedule.id);
     this.lStorageService.setitemonLocalStorage("selDate",this.sel_checkindate);
     this.sel_checkindate = this.lStorageService.getitemfromLocalStorage("selDate");
@@ -186,6 +189,7 @@ export class AppointmentActionsComponent implements OnInit {
     const seldate =
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.selectedDay = seldate;
+   //this.sel_checkindate = seldate
     console.log("Selected Date :",seldate,this.sel_checkindate);
     this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
    //this.getSlots(this.sel_schedule_id);
@@ -1609,7 +1613,7 @@ getSlotsBySheduleandDate(scheduleId,selDate){
       post_data['consumer'] = {'id':this.appt.providerConsumer.id}
     }
     if (this.appt.service.serviceType === 'virtualService') {
-     if (this.validateVirtualCallInfo()) {
+     if (this.validateVirtualCallInfo(this.callingModes)) {
         post_data['virtualService'] = this.getVirtualServiceInput();
       } else {
           return false;
@@ -1638,49 +1642,112 @@ getSlotsBySheduleandDate(scheduleId,selDate){
     
 
   }
+  setVirtualInfoServiceInfo(activeService) {
+    if (activeService.virtualCallingModes[0].callingMode === 'WhatsApp' || activeService.virtualCallingModes[0].callingMode === 'Phone') {
+        // if (appointmentType === 'reschedule') {
+            if (activeService.virtualCallingModes[0].callingMode === 'WhatsApp') {
+                this.callingModes = this.appt.virtualService['WhatsApp'];
+            } else {
+                this.callingModes = this.appt.virtualService['Phone'];
+            }
+            const phNumber = this.appt.countryCode + this.appt.phoneNumber;
+            const callMode = '+' + activeService.virtualCallingModes[0].value;
+            if (callMode === phNumber) {
+                this.changePhone = false;
+            } else {
+                this.changePhone = true;
+            }
+       // }
+    }
+}
+
   validateVirtualCallInfo(callingModes?) {
     let valid = true;
-   // if (callingModes === '' || callingModes.length < 10) {
+    if (callingModes === '') {
         for (const i in this.appt.virtualCallingModes) {
-            if (this.appt.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.virtualCallingModes[i].callingMode === 'Phone') {
+            if (this.appt.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.virtualCallingModes[i].callingMode === 'Phone' || this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet') {
                 if (!this.commObj['comWhatsappNo'] ) {
                   // && this.appt.serviceBookingType !== 'request'
-                    this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+                    this.snackbarService.openSnackBar('Please provide valid mobile number', { 'panelClass': 'snackbarerror' });
                     valid = false;
                     break;
                 }
             }
         }
-   // }
+    }
     return valid;
 }
-getVirtualServiceInput() {
-    let virtualServiceArray = {};
-    if (this.callingModes !== '') {
-        if (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom' ) {
-          //|| this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'
-            virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
-        } else {
-            virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];
-        }
-    }
-    if(this.appt.virtualService.WhatsApp){
-      virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.virtualService.WhatsApp;
-    }
+// validateVirtualCallInfo(callingModes) {
+//   let valid = true;
+//   if (callingModes === '' || callingModes.length < 10) {
+//       for (const i in this.appt.service.virtualCallingModes) {
+//           if (this.appt.service.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.service.virtualCallingModes[i].callingMode === 'Phone') {
+//               if (!this.commObj['comWhatsappNo']) {
+//                   this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+//                   valid = false;
+//                   break;
+//               }
+//           }
+//       }
+//   }
+//   return valid;
+// }
+// getVirtualServiceInput() {
+//     let virtualServiceArray = {};
+//     //this.virtualServiceArray = {};
+//     if (this.callingModes !== '' && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes.length > 0) {
+//         if (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom' ) {
+//           //|| this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'
+//             virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
+//         } else {
+//             virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];
+//         }
+//     }
+//     if(this.appt.virtualService.WhatsApp){
+//       virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.virtualService.WhatsApp;
+//     }
 
-    for (const i in virtualServiceArray) {
-        if (i === 'WhatsApp') {
-            return virtualServiceArray;
-        } else if (i === 'GoogleMeet') {
-            return virtualServiceArray;
-        } else if (i === 'Zoom') {
-            return virtualServiceArray;
-        } else if (i === 'Phone') {
-            return virtualServiceArray;
-        } else if (i === 'VideoCall') {
-            return { 'VideoCall': '' };
-        }
-    }
+//     for (const i in virtualServiceArray) {
+//         if (i === 'WhatsApp') {
+//             return virtualServiceArray;
+//         } else if (i === 'GoogleMeet') {
+//             return virtualServiceArray;
+//         } else if (i === 'Zoom') {
+//             return virtualServiceArray;
+//         } else if (i === 'Phone') {
+//             return virtualServiceArray;
+//         } else if (i === 'VideoCall') {
+//             return { 'VideoCall': '' };
+//         }
+//     }
+// }
+getVirtualServiceInput() {
+  let virtualServiceArray = {};
+  if (this.callingModes !== '') {
+      if (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom' || this.appt.service.virtualCallingModes[0].callingMode === 'Phone') {
+          virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
+      } else {
+          virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
+      }
+  }
+  for (const i in virtualServiceArray) {
+      if (i === 'WhatsApp') {
+          return virtualServiceArray;
+      } else if (i === 'GoogleMeet') {
+          return virtualServiceArray;
+      } else if (i === 'Zoom') {
+          return virtualServiceArray;
+      } else if (i === 'Phone') {
+       // if(virtualServiceArray){
+          return virtualServiceArray;
+        // }
+        // else{
+        //   return { 'Phone': '' };
+        // }
+      } else if (i === 'VideoCall') {
+          return { 'VideoCall': '' };
+      }
+  }
 }
   dateClass(date: Date): MatCalendarCellCssClasses {
     return this.availableDates.indexOf(moment(date).format("YYYY-MM-DD")) !== -1
