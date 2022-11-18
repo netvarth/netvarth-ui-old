@@ -351,7 +351,7 @@
                         <h6 class="text-primary service custom">
                           <span *ngIf="apptDetails_firstName">{{apptDetails_firstName | capitalizeFirst}}</span>&nbsp;
                           <span *ngIf="apptDetails_lastName">{{apptDetails_lastName | capitalizeFirst}}</span>
-
+              
 
                           <a *ngIf="appointmentType !== 'reschedule' && !paymentRequestId"
                             class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
@@ -408,7 +408,7 @@
               <div class="coupon-section col-md-12 col-xs-12 col-sm-12 no-padding"
                 *ngIf="(s3CouponsList.JC.length > 0) && appointmentType != 'reschedule' || (s3CouponsList.OWN.length > 0) && appointmentType != 'reschedule'">
 
-                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding">
+                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding" *ngIf="selectedService.serviceBookingType !== 'request'">
                   <a class="lnk pointer-cursor action" *ngIf="selectedCoupons.length === 0" (click)="applyPromocode()"
                     data-toggle="modal" data-target="#exampleModalCenter">Apply
                     Coupon Code</a>
@@ -536,17 +536,7 @@
                     </button>
                    
                   </div>
-                  <!-- <div class="prepayment">
-                    <button type="button" [class.disabled]="isClickedOnce"
-                      (click)="!isClickedOnce && confirmAppointment('appt')" id="stepThreeConfirmButton"
-                      class="next-button btn btn-primary font-weight-bold px-12 py-4"
-                      [disabled]="!checkPolicy && heartfulnessAccount">
-                      <ng-container>
-                        Send Request
-                      </ng-container>
-                    </button>
-                   
-                  </div> -->
+
 
                   <hr *ngIf="paymentDetails" />
                   <div class="resPaymrntDetails"
@@ -608,22 +598,22 @@
           <div class="clearfix"></div>
           <div class="text-center">
             <button type="button"
-              *ngIf="appointmentType!=='reschedule' && selectedService && (selectedService.serviceBookingType !== 'request' && (!selectedService.date || !selectedService.dateTime || !selectedService.noDateTime)) && selectedService.isPrePayment==false && paymentLength==0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)"
+              *ngIf="appointmentType!=='reschedule' && selectedService && (selectedService.serviceBookingType !== 'request') && selectedService.isPrePayment==false && paymentLength==0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)"
               [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirmAppointment('appt')"
               id="stepThreeConfirmButton" class="next-button btn btn-primary font-weight-bold px-12 "
               [disabled]="!checkPolicy && heartfulnessAccount">
               Confirm
             </button>
-            <!--&& (!selectedService.date || !selectedService.dateTime || !selectedService.noDateTime)  appointmentType!=='reschedule' &&  selectedService.isPrePayment==false" && paymentLength==0 || (paymentDetails && paymentDetails.amountRequiredNow == 0) -->
             <button type="button"
-              *ngIf="appointmentType!=='reschedule' && selectedService && selectedService.serviceBookingType === 'request' && (selectedService.date || selectedService.dateTime || selectedService.noDateTime)"
+              *ngIf="appointmentType!=='reschedule' && selectedService && selectedService.serviceBookingType === 'request' && (selectedService.date || selectedService.dateTime || selectedService.noDateTime)  && selectedService.isPrePayment==false && paymentLength==0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)"
               [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirmAppointment('appt')"
               id="stepThreeConfirmButton" class="next-button btn btn-primary font-weight-bold px-12 "
               [disabled]="!checkPolicy && heartfulnessAccount">
               Send Request
             </button>
+            <!--  && !selectedService.noDateTime -->
             <button type="button" class="next-button btn btn-primary font-weight-bold text-capitalize px-9 py-4"
-              *ngIf="appointmentType === 'reschedule' && !selectedService.noDateTime" [class.disableActn]="btnClicked || !isSlotAvailable"
+              *ngIf="appointmentType === 'reschedule'" [class.disableActn]="btnClicked || !isSlotAvailable"
               (click)="rescheduleAppointment()">
               Reschedule
               <i class="fa fa-long-arrow-right mgn-lt-5"></i>
