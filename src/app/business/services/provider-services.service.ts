@@ -2705,9 +2705,33 @@ export class ProviderServices {
   }
 
 
+getRemindersCount(){
+    const url = 'provider/mr/reminder/count';
+    return this.servicemeta.httpGet(url);
+}
+getReminders(){
+  const url = 'provider/mr/reminder';
+  return this.servicemeta.httpGet(url);
+}
 
+postReminder(post_data){
+  const url = 'provider/mr/reminder';
+  return this.servicemeta.httpPost(url,post_data);
 
+}
+getReminderById(reminderId){
+  const url = `provider/mr/reminder/${reminderId}`;
+  return this.servicemeta.httpGet(url);
+}
+updateReminder(post_data,reminderId){
+  const url = `provider/mr/reminder/${reminderId}`;
+  return this.servicemeta.httpPut(url,post_data);
+}
 
+deleteReminder(id){
+  const url = `provider/mr/reminder/${id}`;
+  return this.servicemeta.httpDelete(url);
+}
   getTemplate() {
     const url = 'provider/mr/prescription/template';
     return this.servicemeta.httpGet(url);

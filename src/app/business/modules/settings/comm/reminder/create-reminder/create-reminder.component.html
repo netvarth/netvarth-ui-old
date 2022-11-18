@@ -1,0 +1,26 @@
+<h1 class="timeSiz mat-dialog-title">
+  <span class="mgn-lt-10">Set Time *</span>
+  <button mat-dialog-close class="modal_close" tabindex="-1" (click)="cancelTime()">
+    <i class="fa fa-window-close" aria-hidden="true"></i>
+  </button>
+</h1>
+<mat-dialog-content class="timeSiz">
+  <section *ngIf="mode === 'time'">
+    <div class="form-group">
+      <ng-container class="example-full-width">
+        <!-- <label class="col-form-label">Time (Hours : Minutes) *</label> -->
+        <!-- (ngModelChange)="resetApiErrors()" [(ngModel)]="duration"-->
+        <!-- [(ngModel)]="time" [hourStep]="hourStep" [minuteStep]="minuteStep" [meridian]="false" -->
+        <ngb-timepicker [(ngModel)]="time" meridian="true">
+        </ngb-timepicker>
+        <!-- <span>
+            <div>AM</div>
+            <div>PM</div>
+          </span> -->
+      </ng-container>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-primary" (click)="onSubmitTime(time)">Save</button>
+    </div>
+  </section>
+</mat-dialog-content>

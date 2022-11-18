@@ -50,6 +50,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
     console.log("CheckinID :",this.checkin_id);
     this.message = this.data.message;
     this.source = this.data.source;
+    console.log("Source :",this.source);
     if (!this.checkin_id) {
       setTimeout(() => {
         this.dialogRef.close('error');
@@ -115,27 +116,35 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
             this.disableButton = false;
           }
         );
-    } else {
+    }
+    //if(this.source === 'token')
+   else  {
       this.provider_services.addProviderWaitlistNote(this.checkin_id,
         dataToSend)
         .subscribe(
           () => {
             this.api_success = this.wordProcessor.getProjectMesssages('PROVIDER_NOTE_ADD');
            // this.provider_services.getAppointmentById(this.checkin_id)
-           this.provider_services.getProviderWaitlistDetailById(this.checkin_id).subscribe((res)=>{
+           this.provider_services.getProviderWaitlistDetailById(this.checkin_id)
+           .subscribe((res)=>{
             console.log("rrrrespone :",res)
+             this.dialogRef.close('reloadlist');
+
 
            })
 
             setTimeout(() => {
               // console.log("enter123")
             
-              this.dialogRef.close('reloadlist');
               
               this.provider_services.getProviderWaitlistDetailById(this.checkin_id).subscribe((res)=>{
                 console.log("Respone :",res)
+                this.dialogRef.close('reloadlist');
+
               })
-              console.log("Service Called :",this.provider_services.getProviderWaitlistNotes(this.checkin_id))
+              this.dialogRef.close('reloadlist');
+
+             // console.log("Service Called :",this.provider_services.getProviderWaitlistNotes(this.checkin_id))
             }, projectConstants.TIMEOUT_DELAY);
           },
           error => {

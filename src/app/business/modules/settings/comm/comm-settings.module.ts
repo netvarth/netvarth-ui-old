@@ -10,7 +10,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 const routes: Routes = [
     { path: '', component: CommSettingsComponent },
     { path: 'jaldeevideo', loadChildren: ()=> import('../jaldee-video/jaldee-video-settings.module').then(m=>m.JaldeeVideoSettingsModule) },
-    { path: 'notifications', loadChildren: () => import('../comm/notifications/notifications.module').then(m => m.NotificationsModule) }
+    { path: 'notifications', loadChildren: () => import('../comm/notifications/notifications.module').then(m => m.NotificationsModule) },
+    { path: 'reminder', loadChildren: () => import('../comm/reminder/reminder.module').then(m => m.ReminderModule) }
+
 ];
 @NgModule({
     imports: [

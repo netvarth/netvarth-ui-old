@@ -1,0 +1,325 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="goBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Reminder
+        </h5>
+    </div>
+</section>
+<section class="sectDiv" *ngIf="!isCreate">
+    <div class="container">
+        <div class="row m-4">
+            <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12 no-padding">
+                <h4 class="bold">Create and View</h4>
+                <span class="text-secondary" style="font-size: 12px;">Easy and Quick to create reminder for your
+                    consumers.</span>
+
+                <div class="cardDiv">
+                    <div class="card pad col-md-6 col-sm-12 col-xs-12 mr-2">
+                        <div class="cardSize">
+                            <span>
+                                <!-- <i class="fa fa-file-text" aria-hidden="true"></i> -->
+                                <img class="image" src="./assets/images/totalReminder.png" alt="Basic Plus">
+
+                            </span>
+                            <span>
+                                <div class="bold">{{reminderCounts}}</div>
+                                <div class="text-secondary textFont">Total Reminders</div>
+                            </span>
+                        </div>
+
+                    </div>
+                    <div class="card pad col-md-6  col-sm-12 col-xs-12">
+                        <div class="cardSize">
+                            <span>
+                                <img class="image" src="./assets/images/ongoingReminder.png" alt="Basic Plus">
+                                <!-- <i class="fa fa-flag" aria-hidden="true"></i> -->
+                            </span>
+                            <span>
+                                <div class="bold">0</div>
+                                <div class="text-secondary textFont">Ongoing Reminder</div>
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div>
+                    <div class="card pad col-md-3  col-sm-12 col-xs-12">
+                        <div class="cardSize">
+                            <span>
+                                <img class="image" src="./assets/images/completedReminder.png" alt="Basic Plus">
+                                <!-- <i class="fa fa-calculator" aria-hidden="true"></i> -->
+                            </span>
+                            <span>
+                                <div class="bold">1</div>
+                                <div class="text-secondary textFont">Completed Reminders</div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-12 col-xs-12 mt-2">
+                    <button class="btn btn-primary btnSize" (click)="createAddRemainder()"><i class="fa fa-plus"></i>
+                        Create New Reminder</button>
+                </div>
+
+            </div>
+            <div class="cardSmall col-md-7 col-lg-7 col-sm-12 col-xs-12">
+                <div class="card custom_card">
+                    <span class="bold" style="color: #555A78;">Reminder</span>
+
+                    <div class="card boxShadow mt-2" *ngFor="let reminder of reminders">
+                        <!-- <span>Reminders for patient medicine</span> -->
+                        <div class="bold actionDiv">{{reminder.message}} <span class="">
+                                <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
+                                    (click)="stopprop($event);">
+                                    <mat-icon>more_vert</mat-icon>
+                                </button>
+                            </span></div>
+                        <div> <span><img class="imageSize" src="./assets/images/dateReminder.png"
+                                    alt="Basic Plus"></span>
+                            <span class="text-secondary" style="font-size: 12px;"> {{reminder.schedule.startDate}} to
+                                {{reminder.schedule.terminator.endDate}}</span>
+                        </div>
+                        <div class="copy">
+
+                            <mat-menu #appMenu="matMenu">
+                                <button mat-menu-item (click)="editReminder(reminder)">
+                                    <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                                </button>
+                                <!-- <button mat-menu-item (click)="openDialogStatusChange(file)">
+                                <i class="fa fa-share-alt" aria-hidden="true"></i> Share file  (click)="deleteFile(file.id,file.fileName)"
+                               </button> -->
+                                <button mat-menu-item (click)="deleteReminder(reminder.id,reminder.message)">
+                                    <i class="fa fa-trash" aria-hidden="true"></i> Remove
+                                </button>
+                            </mat-menu>
+                        </div>
+
+                    </div>
+                    <!-- <div class="card ">
+                        <span>Booking Reminder</span>
+                    </div>
+                    <div class="card ">
+                        <span>Remind patient for next booking consultation</span>
+                    </div> -->
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="sectDiv" *ngIf="isCreate">
+    <form class="form" id="customer_creation" style="border: 1px solid #e2dddd;border-radius: 5px;" #f="ngForm"
+        (ngSubmit)="onSubmit(f.value)">
+        <!-- [formGroup]="ngForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" -->
+        <div class="card-body">
+            <div class="form-group row">
+                <div class="col-md-6 col-lg-6">
+                    <label class="p-0 m-0 pt-1 form-text-light">Reminder Name</label>
+                    <input type="email" name="name" [(ngModel)]="reminder.name" class="form-control" id="first_name"
+                        placeholder="Enter Your Reminder Name"  autocomplete="off"
+                         />
+                   
+                </div>
+                
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6 col-lg-6">
+                    <label class="p-0 m-0 pt-1 form-text-light">Reminder Description</label>
+                    <input type="text" class="form-control" name="message" [(ngModel)]="reminder.message" id="last_name"
+                        placeholder="Enter your reminder message" autocomplete="off" />
+                    <!-- (blur)="onFieldBlur('message')" -->
+                    <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
+                        [errorMsgs]="fed_service.getErrorMessage(amForm,'message',
+                            {
+                            'required' : 'Please enter last name',
+                            'pattern' : 'Only letters are allowed'
+                            })">
+                    </app-field-error-display> -->
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="fromTo col-md-6 col-lg-6">
+                    <div>
+                        <label class="p-0 m-0 pt-1 form-text-light">From</label>
+                        <input type="date" class="form-control" id="last_name" name="fromDate"
+                            [(ngModel)]="reminder.fromDate" autocomplete="off" />
+                        <!-- <mat-form-field appearance="fill">
+                                <input matInput [matDatepicker]="picker" class="form-control"
+                                   placeholder="From Date"
+                                    formControlName="fromDate" readonly>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field> -->
+                        <!--   (dateChange)="compareDate($event.value,0)" -->
+
+                        <!-- <mat-form-field appearance="fill"> placeholder="Enter Your Reminder Description"
+  <mat-label>Angular forms</mat-label>
+  <input matInput [matDatepicker]="picker1" [formControl]="date">
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+  <mat-datepicker #picker1></mat-datepicker>
+</mat-form-field> -->
+                        <!-- (blur)="onFieldBlur('last_name')" -->
+                        <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
+                        [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+                            {
+                            'required' : 'Please enter last name',
+                            'pattern' : 'Only letters are allowed'
+                            })">
+                    </app-field-error-display> placeholder="Enter Your Reminder Description"-->
+                    </div>
+                    <div>
+                        <label class="p-0 m-0 pt-1 form-text-light">To</label>
+                        <input type="date" class="form-control" id="last_name" name="toDate"
+                            [(ngModel)]="reminder.toDate" autocomplete="off" />
+                        <!-- (dateChange)="compareDate($event.value,1)" [value]="serializedDate"-->
+                        <!-- <mat-form-field appearance="fill" >
+                            <input matInput [matDatepicker]="picker1" class="form-control"
+                                 placeholder="To Date"
+                                formControlName="toDate" readonly>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field> -->
+                        <!-- <mat-form-field appearance="fill">
+  <mat-label>Angular forms (w/ deserialization)</mat-label>
+  <input matInput [matDatepicker]="picker2"
+         [formControl]="serializedDate">
+  <mat-hint>MM/DD/YYYY</mat-hint>
+  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+  <mat-datepicker #picker2></mat-datepicker>
+</mat-form-field> -->
+                        <!-- (blur)="onFieldBlur('last_name')" -->
+                        <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'last_name')"
+                        [errorMsgs]="fed_service.getErrorMessage(amForm,'last_name',
+                            {
+                            'required' : 'Please enter last name',
+                            'pattern' : 'Only letters are allowed'
+                            })">
+                    </app-field-error-display> -->
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group row mt-2">
+                <div class="col-md-6 col-lg-6">
+                    <label class="p-0 m-0 pt-1 form-text-light">Time (Hours:Minutes)</label>
+                    <mat-chip-list #chipList aria-label="Time selection" name="time" [(ngModel)]="reminder.time"
+                        *ngIf="selectedTimes.length>0">
+                        <mat-chip class="matTimeChip" *ngFor="let time of selectedTimes" (removed)="removeTime(time)">
+                            <span *ngIf="time && time !== undefined"> {{time.hour}} : {{time.minute}} {{time.hour >12 ?
+                                'PM' :'AM'}}</span>
+                            <button matChipRemove>
+                                <mat-icon>cancel</mat-icon>
+                            </button>
+                        </mat-chip>
+                    </mat-chip-list>
+                    <div>
+                        <button class="btn btn-primary timeBtn" (click)="showTimePopup()"><i class="fa fa-plus"></i> Add
+                            New Time</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6">
+                    <label class="p-0 m-0 pt-1 form-text-light">Select Consumer</label>
+                    <!-- <input type="text" class="form-control" id="last_name" 
+                        autocomplete="off"  /> [(ngModel)]="phone" class="inputstyling" -->
+                    <!-- class="formSize form-control"  -->
+                    <mat-form-field class="formSize" appearance="fill">
+                        <!-- <mat-label>Select Consumer</mat-label> -->
+                        <mat-chip-list #chipList aria-label="Consumer selection">
+
+                            <mat-chip class="matChip" *ngFor="let consumer of selectedConsumers"
+                                (removed)="remove(consumer)">
+                                <span class="imageClass">{{consumer.firstName[0] | capitalizeFirst}}</span>&nbsp;
+                                {{consumer.firstName | capitalizeFirst}}
+                                <button matChipRemove>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </mat-chip>
+                            <input #fruitInput class="formSize form-control" placeholder="Search consumer"
+                                id="first_name" [(ngModel)]="phone"
+                                (ngModelChange)="searchCustomerByPhone(phone,$event)" [matChipInputFor]="chipList"
+                                [matAutocomplete]="autoprov" [ngModelOptions]="{standalone: true}">
+
+                        </mat-chip-list>
+                        <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                            <mat-option *ngFor="let customer of filteredCustomers"
+                                (click)="selectedCustomerViaPhoneSearch(customer)" [value]="customer.phoneNo">
+                                <div class="flexClass" style="justify-content:space-between">
+                                    <div>{{customer.firstName | capitalizeFirst}}</div>
+                                    <div *ngIf="customer.lastName !=='null'">
+                                        {{customer.lastName | capitalizeFirst}}
+                                    </div>
+                                    <div class="flexClass">
+                                        <div>{{customer.phoneNo}}</div>
+                                    </div>
+                                </div>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                    <!-- <div class="form-group mt-4">
+                    <input autocomplete="off" class="inputSize form-control"  placeholder="Search consumer" type="number"
+                    [(ngModel)]="phone" 
+                   (ngModelChange)="searchCustomerByPhone(phone,$event)"
+                   [matChipInputFor]="chipList" [matAutocomplete]="autoprov" [ngModelOptions]="{standalone: true}">
+                </div> -->
+                    <!-- <mat-form-field>
+                            <mat-chip-list aria-label="Fish selection">
+                            <mat-chip color="primary" selected>
+                           </mat-chip>
+                        </mat-chip-list>
+                    </mat-form-field> -->
+                </div>
+            </div>
+            <div class="form-group row">
+
+
+                <div class="col-md-6 col-lg-6">
+                    <label class="p-0 m-0 pt-1 form-text-light">Reminder Via</label>
+                    <div class="fromTo">
+                        <div class="form-check">
+                            <input class="form-check-input" name="sms" [(ngModel)]="reminder.sms" type="checkbox"
+                                value="" id="flexCheckDefault">
+                            <label class="form-check-label ml-1" for="flexCheckDefault">
+                                SMS
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" name="email" [(ngModel)]="reminder.email" type="checkbox"
+                                value="" id="flexCheckDefault">
+                            <label class="form-check-label ml-1" for="flexCheckDefault">
+                                Email
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" name="phoneNumber" [(ngModel)]="reminder.phoneNumber"
+                                type="checkbox" value="" id="flexCheckDefault">
+                            <label class="form-check-label ml-1" for="flexCheckDefault">
+                                Phone Number
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="">
+            <div class="row">
+                <div class="col-lg-8 rowMargin">
+                    <!-- (click)="onCancel()" [disabled]="disableButton"-->
+                    <button type="reset" class="btn btn-secondary  text-center"
+                        style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;"
+                        (click)="onCancel()">Cancel</button>&nbsp;
+                    <button type="submit" [disabled]="!f.valid" class="btn btn-primary mr-2 text-center saveBtn"
+                        style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</section>
