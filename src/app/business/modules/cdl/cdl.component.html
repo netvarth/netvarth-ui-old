@@ -26,27 +26,27 @@
       <div class="col-lg-6 col-md-7 col-sm-12 col-xs-12">
         <div class="card no-padding-small">
           <div class="row">
-            <div class="col-xs-3 no-padding-small">
+            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canCreateLoan">
               <div class="dashboard-card text-center pointer-cursor" (click)="CreateLoan()">
                 <div>
                   <div>
                     <img width="60" height="60" src="./assets/images/cdl/partner/create_loan.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">Create Loan</span><br>
+                    <span class="head-card-sub-title">Create Loan</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-xs-3 no-padding-small">
+            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canCreatePartner">
               <div class="dashboard-card text-center pointer-cursor" (click)="createDealer()">
                 <div>
                   <div>
                     <img width="60" height="60" src="./assets/images/cdl/partner/create_loan.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">Create Dealer</span><br>
+                    <span class="head-card-sub-title">Create Dealer</span>
                   </div>
                 </div>
               </div>
@@ -54,82 +54,94 @@
 
 
 
-            <div class="col-xs-3 no-padding-small">
+            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canViewLoan">
               <div class="dashboard-card text-center pointer-cursor" (click)="allLoans()">
                 <div>
                   <div>
                     <img width="60" height="60" src="./assets/images/cdl/partner/loans.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">Loans</span><br>
+                    <span class="head-card-sub-title">Loans</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canViewPartner">
+              <div class="dashboard-card text-center pointer-cursor" (click)="allDealers()">
+                <div>
+                  <div>
+                    <img width="60" height="60" src="./assets/images/cdl/partner/loans.png">
+                  </div>
+                  <div class="text-center">
+                    <span class="head-card-sub-title">Dealers</span>
                   </div>
                 </div>
               </div>
             </div>
 
 
-            <div class="col-xs-3 no-padding-small">
+            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canViewSchemes">
               <div class="dashboard-card text-center pointer-cursor" (click)="allSchemes()">
                 <div>
                   <div>
                     <img width="60" height="60" src="./assets/images/cdl/partner/schemes.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">Schemes</span><br>
+                    <span class="head-card-sub-title">Schemes</span>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-xs-3 no-padding-small" (click)="allLeads()">
+            <div class="col-xs-3 no-padding-small no-padding" (click)="allLeads()"
+              *ngIf="capabilities && capabilities.canViewLoan">
               <div class="dashboard-card text-center pointer-cursor">
                 <div>
                   <div>
                     <img width="60" height="60" src="./assets/images/cdl/partner/leads.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">Leads</span><br>
+                    <span class="head-card-sub-title">Leads</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-xs-3 no-padding-small" (click)="viewAllCustomers()">
+            <div class="col-xs-3 no-padding-small no-padding" (click)="viewAllCustomers()">
               <div class="dashboard-card text-center pointer-cursor">
                 <div>
                   <div>
                     <img width="60" height="60" src="./assets/images/cdl/partner/customers.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">Customers</span><br>
+                    <span class="head-card-sub-title">Customers</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-xs-3 no-padding-small">
+            <div class="col-xs-3 no-padding-small no-padding">
               <div class="dashboard-card text-center pointer-cursor" (click)="openEmiCalci()">
                 <div>
                   <div>
                     <img width="60" height="60" src="./assets/images/cdl/partner/emi_calci.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">EMI Calci</span><br>
+                    <span class="head-card-sub-title">EMI Calci</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="col-xs-3 no-padding-small">
+            <div class="col-xs-3 no-padding-small no-padding">
               <div class="dashboard-card text-center pointer-cursor" (click)="reports()">
                 <div>
                   <div>
                     <img width="60" height="60" src="./assets/images/cdl/partner/emi_calci.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">Reports</span><br>
+                    <span class="head-card-sub-title">Reports</span>
                   </div>
                 </div>
               </div>
@@ -160,13 +172,13 @@
   </div>
   <div class="container-fluid">
     <div class="row no-padding-small">
-      <div class="mt-2 col-lg-6 col-md-12 no-padding-small">
+      <div class="mt-2 col-lg-6 col-md-12 no-padding-small" *ngIf="capabilities && capabilities.canViewLoan">
         <div class="card">
           <p-chart type="line" height="300" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
         </div>
       </div>
 
-      <div class="mt-2 col-lg-3 col-md-6 no-padding-small">
+      <div class="mt-2 col-lg-3 col-md-6 no-padding-small" *ngIf="capabilities && capabilities.canViewLoan">
         <div class="card">
           <p-chart type="pie" height="300" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
         </div>
@@ -192,7 +204,7 @@
     </div>
   </div>
 
-  <div class="row container-fluid no-padding-small">
+  <div class="row container-fluid no-padding-small" *ngIf="capabilities && capabilities.canViewLoan">
     <div class="mt-2 col-lg-8 col-md-12">
       <div class="card loans-card">
         <div>
@@ -392,7 +404,7 @@
       </div>
     </div>
   </div>
-  <div class="row container-fluid no-padding-small">
+  <div class="row container-fluid no-padding-small" *ngIf="capabilities && capabilities.canViewPartner">
     <div class="mt-2 col-lg-8 col-md-12">
       <div class="card loans-card">
         <div>
@@ -516,8 +528,12 @@
               </td>
               <td>
                 <div class="text-center">
-                  <button pButton pRipple type="button" class="p-button-primary  btn-primary"
-                    (click)="showDealer(partner.uid,partner.spInternalStatus)"><i class=" pi pi-eye text-white"></i>&nbsp;View</button>
+                  <button pButton pRipple type="button" class="p-button-primary"
+                    (click)="updateDealer(partner.uid,'update')"><i class="pi pi-upload text-white"
+                      *ngIf="capabilities && capabilities.canUpdatePartner"></i>&nbsp;Update</button>&nbsp;&nbsp;
+                  <button pButton pRipple type="button" class="p-button-primary"
+                    (click)="updateDealer(partner.uid,'update',partner.spInternalStatus)"><i
+                      class="pi pi-eye text-white"></i>&nbsp;View</button>
                 </div>
               </td>
             </tr>

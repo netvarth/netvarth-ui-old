@@ -168,9 +168,9 @@ export class ConfirmBoxComponent implements OnInit {
 
   approveDealer() {
     let data = {
-      "autoApproval": this.dealerAutoApprove,
-      "autoApprovalUptoAmount": this.autoApprovalUptoAmount,
-      "districtWiseRestriction": this.districtWiseRestriction,
+      // "autoApproval": this.dealerAutoApprove,
+      // "autoApprovalUptoAmount": this.autoApprovalUptoAmount,
+      // "districtWiseRestriction": this.districtWiseRestriction,
       "approvedNote": this.remarks
     }
     console.log("Approve Dealer Data", data)

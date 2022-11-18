@@ -77,6 +77,8 @@ export class CdlComponent implements OnInit {
   ]
   approvedDealers: any;
   dealersRequested: any;
+  roleId: any;
+  capabilities: any;
 
 
   constructor(
@@ -90,6 +92,8 @@ export class CdlComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("User is", this.user);
+    this.capabilities = this.cdlservice.getCapabilitiesConfig();
+    console.log("Capabilities", this.capabilities);
 
     this.getApprovedloansCount();
     this.getPendingloansCount();
@@ -102,6 +106,7 @@ export class CdlComponent implements OnInit {
     this.getApprovedDealers();
     this.getRequestedDealers();
   }
+
 
   getDealers() {
     let api_filter = {};
@@ -451,8 +456,28 @@ export class CdlComponent implements OnInit {
   }
 
 
-  showDealer(dealerId, status) {
-    if (status == 'Approved') {
+  updateDealer(id, action, status?) {
+    if (status == 'ApprovalPending') {
+      this.showDealer(id, status)
+    }
+    else if (status == 'Approved') {
+      this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
+    }
+    else {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          id: id,
+          action: action
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
+    }
+
+  }
+
+  showDealer(dealerId, spInternalStatus) {
+
+    if (spInternalStatus == 'Approved') {
       this.router.navigate(['provider', 'cdl', 'dealers', 'view', dealerId]);
     }
     else {
@@ -463,7 +488,9 @@ export class CdlComponent implements OnInit {
       };
       this.router.navigate(['provider', 'cdl', 'dealers', 'approve'], navigationExtras);
     }
+
   }
+
 
 
 

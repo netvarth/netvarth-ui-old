@@ -468,20 +468,22 @@
                 <ng-template pTemplate="body" let-customer>
                   <tr class="mobile-card">
                     <td>
-                      <span class="table-column-data">{{customer.id}}</span>
+                      <span class="table-column-data" *ngIf="customer && customer.id">{{customer.id}}</span>
                     </td>
                     <td>
-                      <span class="table-column-data">{{customer.firstName}}
+                      <span class="table-column-data"
+                        *ngIf="customer && customer.firstName || customer.lastName">{{customer.firstName}}
                         {{customer.lastName}}</span>
                     </td>
                     <td>
-                      <span class="table-column-data">{{customer.phoneNo}}</span>
+                      <span class="table-column-data" *ngIf="customer && customer.phoneNo">{{customer.phoneNo}}</span>
                     </td>
                     <td>
-                      <span class="table-column-data">{{customer.email}}</span>
+                      <span class="table-column-data" *ngIf="customer && customer.email">{{customer.email}}</span>
                     </td>
                     <td>
-                      <span [class]="'customer-badge status-' + customer.status" class="table-column-data">
+                      <span [class]="'customer-badge status-' + customer.status" class="table-column-data"
+                        *ngIf="customer && customer.status">
                         {{customer.status}}</span>
                     </td>
                   </tr>

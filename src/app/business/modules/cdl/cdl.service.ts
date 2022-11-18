@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GroupStorageService } from '../../../shared/services/group-storage.service';
 // import { HttpClient } from '@angular/common/http';
 import { ServiceMeta } from '../../../shared/services/service-meta';
 
@@ -6,11 +7,16 @@ import { ServiceMeta } from '../../../shared/services/service-meta';
   providedIn: 'root'
 })
 export class CdlService {
+  user: any;
+  capabilities: any;
 
   constructor(
     // private http: HttpClient,
     private servicemeta: ServiceMeta,
-  ) { }
+    private groupService: GroupStorageService
+  ) {
+    this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+  }
 
   getLoanCategoryList() {
     const url = 'provider/loanapplication/category';
@@ -327,5 +333,53 @@ export class CdlService {
       return this.servicemeta.httpPost(url, data);
     }
     return this.servicemeta.httpPost(url, data);
+  }
+
+
+  getCapabilitiesConfig() {
+    if (this.user && this.user.roles && this.user.roles[0] && this.user.roles[0].capabilities) {
+      let roleCapabilities = this.user.roles[0].capabilities;
+      let capabilities = {
+        'canCreateLoan': roleCapabilities.includes('createLoan'),
+        'canUpdateLoan': roleCapabilities.includes('updateLoan'),
+        'canViewLoan': roleCapabilities.includes('viewLoan'),
+        'canCreatePartner': roleCapabilities.includes('createPartner'),
+        'canUpdatePartner': roleCapabilities.includes('updatePartner'),
+        'canViewPartner': roleCapabilities.includes('viewPartner'),
+        'canViewSchemes': roleCapabilities.includes('viewScheme'),
+        'canApprovePartnerLoan': roleCapabilities.includes('approvePartnerLoan'),
+        'canRejectLoan': roleCapabilities.includes('rejectLoan'),
+        'canApprovePartner': roleCapabilities.includes('approvePartner'),
+        'canContactPartner': roleCapabilities.includes('contactPartner'),
+        'canActionRequired': roleCapabilities.includes('actionRequired'),
+        'canCreditScoreCheck': roleCapabilities.includes('creditScoreCheck'),
+        'canAnalyseBankStatement': roleCapabilities.includes('analyseBankStatement'),
+        'canGenerateMafilScore': roleCapabilities.includes('generateMafilScore'),
+        'canLoanDisbursement': roleCapabilities.includes('loanDisbursement'),
+        'canUpdateCreditOfficer': roleCapabilities.includes('updateCreditOfficer'),
+        'canUpdateSalesOfficer': roleCapabilities.includes('updateSalesOfficer'),
+        'canUpdatePartnerSettings': roleCapabilities.includes('updatePartnerSettings'),
+        'canMakePartnerInactive': roleCapabilities.includes('makePartnerInactive'),
+        'canCreateLocation': roleCapabilities.includes('createLocation'),
+        'canUpdateLocation': roleCapabilities.includes('updateLocation'),
+        'canCreateBranch': roleCapabilities.includes('createBranch'),
+        'canUpdateBranch': roleCapabilities.includes('updateBranch'),
+        'canCreateUser': roleCapabilities.includes('createUser'),
+        'canUpdateUser': roleCapabilities.includes('updateUser'),
+        'canSuspendPartner': roleCapabilities.includes('suspendPartner'),
+        'canDisableUser': roleCapabilities.includes('disableUser'),
+        'canDisablePartner': roleCapabilities.includes('disablePartner'),
+        'canVerification': roleCapabilities.includes('verification'),
+        'canCreditVerification': roleCapabilities.includes('creditVerification'),
+        'canDocumentVerification': roleCapabilities.includes('documentVerification'),
+        'canInvoiceUpdation': roleCapabilities.includes('invoiceUpdation'),
+        'canCreateLead': roleCapabilities.includes('createLead'),
+        'canUpdateLead': roleCapabilities.includes('updateLead'),
+        'canViewLead': roleCapabilities.includes('viewLead'),
+        'canTransformLeadtoLoan': roleCapabilities.includes('transformLeadtoLoan')
+      }
+      return capabilities;
+    }
+    return null;
   }
 }

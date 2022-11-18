@@ -16,7 +16,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { SkeletonLoadingModule } from '../../../../shared/modules/skeleton-loading/skeleton-loading.module';
 import { SelectSchemeModule } from '../loans/select-scheme/select-scheme.module';
-
+import { CalendarModule } from 'primeng/calendar';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
 
 const routes: Routes = [
   { path: '', component: DealerComponent },
@@ -49,6 +54,12 @@ const routes: Routes = [
     MatButtonModule,
     MatExpansionModule,
     SelectSchemeModule,
+    TableModule,
+    CalendarModule,
+    MultiSelectModule,
+    DropdownModule,
+    ButtonModule,
+    InputTextModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

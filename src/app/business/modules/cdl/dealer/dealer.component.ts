@@ -28,12 +28,15 @@ export class DealerComponent implements OnInit {
     id: '',
     date: ''
   };
+  statusDisplayName: any;
   filters: any;
   dealerStatus = projectConstantsLocal.DEALER_STATUS;
   statusList: FormGroup;
   spInternalStatus: any;
   minday = new Date(1900, 0, 1);
   maxday = new Date();
+  loading: any = false;
+  capabilities: any;
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
@@ -56,7 +59,7 @@ export class DealerComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("User is", this.user);
-    console.log(this.router);
+    this.capabilities = this.cdlservice.getCapabilitiesConfig();
     this.getDealers();
   }
   goBack() {
@@ -65,7 +68,7 @@ export class DealerComponent implements OnInit {
   }
 
 
-  updateDealer(id, action, status) {
+  updateDealer(id, action, status?) {
     if (status == 'ApprovalPending') {
       this.showDealer(id, status)
     }
@@ -104,6 +107,7 @@ export class DealerComponent implements OnInit {
 
 
   getDealers() {
+    this.loading = true;
     if (this.spInternalStatus) {
       console.log("this.spInternalStatus")
       const api_filter = {};
@@ -111,12 +115,14 @@ export class DealerComponent implements OnInit {
       this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
         this.dealerList = data;
         this.dealers = this.dealerList;
+        this.loading = false;
         console.log("this.dealerList", this.dealerList)
       });
     }
     else {
       this.cdlservice.getDealers().subscribe((data) => {
         this.dealerList = data;
+        this.loading = false;
         if (this.dealerList) {
           this.activated_route.queryParams.subscribe((params) => {
             if (params) {
@@ -185,13 +191,14 @@ export class DealerComponent implements OnInit {
 
 
 
+
   statusChange(event) {
-    let api_filter = {}
-    api_filter['spInternalStatus-eq'] = event.value;
-    if (event.value == 'All') {
+    if (event.value.name == 'All') {
       this.getDealers();
     }
     else {
+      let api_filter = {}
+      api_filter['spInternalStatus-eq'] = event.value.name;
       this.getDealersByFilter(api_filter);
     }
   }
@@ -245,8 +252,10 @@ export class DealerComponent implements OnInit {
 
 
   getDealersByFilter(filter) {
+    this.loading = true;
     this.cdlservice.getDealersByFilter(filter).subscribe((data) => {
       this.dealers = data;
+      this.loading = false;
       console.log("this.dealers", this.dealers)
     })
   }
