@@ -1760,9 +1760,15 @@ getSlotsBySheduleandDate(scheduleId,selDate){
 getVirtualServiceInput() {
   let virtualServiceArray = {};
   if (this.callingModes !== '') {
-      if (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom') || (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'Phone')) {
+      if (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom') || (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'Phone') ) {
           virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
-      } else {
+          //|| (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp')
+      } 
+      else if((this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp')){
+        virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = '+91'+this.appt.service.virtualCallingModes[0].value;
+
+      }
+      else {
           virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
       }
   }
