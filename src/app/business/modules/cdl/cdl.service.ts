@@ -313,6 +313,11 @@ export class CdlService {
     return this.servicemeta.httpPost(url, data);
   }
 
+  getGraphAnalyticsData(data) {
+    const url = 'provider/dashboard';
+    return this.servicemeta.httpPut(url, data);
+  }
+
   partnerOtpVerify(otp, data) {
     const url = 'provider/partner/verify/' + otp + '/phone';
     return this.servicemeta.httpPost(url, data);
@@ -338,6 +343,7 @@ export class CdlService {
 
   getCapabilitiesConfig() {
     if (this.user && this.user.roles && this.user.roles[0] && this.user.roles[0].capabilities) {
+      console.log("Role Capabilities in Sevice File", this.user)
       let roleCapabilities = this.user.roles[0].capabilities;
       let capabilities = {
         'canCreateLoan': roleCapabilities.includes('createLoan'),

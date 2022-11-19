@@ -19,6 +19,10 @@
   min-height: 680px !important;
 }
 
+.min-height {
+  min-height: 350px !important;
+}
+
 .add-loan-icon {
   color: #fff !important;
   background-color: #00D1FF !important;

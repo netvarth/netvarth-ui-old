@@ -61,6 +61,7 @@ export class ViewDealerComponent implements OnInit {
         this.getPartnerRejectedLoans();
         this.getPartnerRejectedLoans();
         this.getPartnerLeads();
+        this.getBarChartData();
       }
       if (data && this.dealerData.active) {
         this.status = this.dealerData.active;
@@ -77,8 +78,68 @@ export class ViewDealerComponent implements OnInit {
       this.customersList = data
       this.customers = this.customersList.slice(0, 10);
     });
+  }
 
-    this.getLinearChartData();
+
+  getBarChartData() {
+    let data = {
+      "category": "WEEKLY",
+      "type": "BARCHART",
+      "filter": {
+        "generatedBy-eq": this.user.id,
+        "partner-eq": this.dealerData.id,
+      }
+    }
+
+    this.cdlservice.getGraphAnalyticsData(data).subscribe((data: any) => {
+      if (data) {
+        if (data.labels) {
+          this.lineChartData = {
+            labels: data.labels,
+            datasets: [
+              {
+                label: 'Loans Analytics',
+                data: data.datasets[0].data,
+                fill: true,
+                borderColor: 'rgba(202, 30, 30, 1)',
+                tension: .4,
+                backgroundColor: 'rgba(238, 108, 77, 0.2)'
+              }
+            ]
+          }
+
+          this.lineChartOptions = {
+            plugins: {
+              legend: {
+                labels: {
+                  color: '#1E4079'
+                }
+              }
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: '#1E4079'
+                },
+                grid: {
+                  color: '#ebedef'
+                }
+              },
+              y: {
+                ticks: {
+                  precision: 0,
+                  color: '#1E4079'
+                },
+                grid: {
+                  color: '#ebedef'
+                }
+              }
+            },
+          };
+
+        }
+      }
+    });
   }
 
 

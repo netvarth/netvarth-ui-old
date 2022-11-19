@@ -174,30 +174,43 @@
     <div class="row no-padding-small">
       <div class="mt-2 col-lg-6 col-md-12 no-padding-small" *ngIf="capabilities && capabilities.canViewLoan">
         <div class="card">
-          <p-chart type="line" height="300" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
+          <p-chart type="line" height="310" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
         </div>
       </div>
 
       <div class="mt-2 col-lg-3 col-md-6 no-padding-small" *ngIf="capabilities && capabilities.canViewLoan">
-        <div class="card">
+        <div class="card" *ngIf="leadsCount>0 || approvedLoansCount>0 || pendingLoansCount>0 || rejectedLoansCount>0">
           <p-chart type="pie" height="300" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
+        </div>
+        <div class="card min-height"
+          *ngIf="leadsCount==0 && approvedLoansCount==0 && pendingLoansCount==0 && rejectedLoansCount==0">
+          <h4 class="font-weight-bold text-primary">Loans Pie Chart</h4>
+          <div class="text-center">
+            <img class="img-fluid pb-0" width="70%" src="./assets/images/cdl/no_data.gif">
+          </div>
         </div>
       </div>
 
       <div class="mt-2 col-lg-3 col-md-6 no-padding-small">
         <div class="card min-height">
           <div class="mb-2">
-            <span class="font-weight-bold">Alerts</span>
+            <span class="font-weight-bold text-primary">Alerts</span>
           </div>
-          <div class="mt-2" *ngFor="let loan of loans;let i=index ">
-            <div class="d-flex" *ngIf="loan && loan.alertMessage && i<=4">
-              <div>
-                <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
-              </div>&nbsp;&nbsp;
-              <div>
-                <span class="alerts-title">{{loan.alertMessage}}</span>
+          <div *ngIf="loans && loans.length>0">
+            <div class="mt-2" *ngFor="let loan of loans;let i=index ">
+              <div class="d-flex" *ngIf="loan && loan.alertMessage && i<=4">
+                <div>
+                  <i class="fa fa-bell alerts-icon" aria-hidden="true"></i>
+                </div>&nbsp;&nbsp;
+                <div>
+                  <span class="alerts-title">{{loan.alertMessage}}</span>
+                </div>
               </div>
             </div>
+          </div>
+          <div *ngIf="loans && loans.length==0" class="mt-2 text-center">
+            <img class="img-fluid pb-0" width="80%" src="./assets/images/cdl/no_alerts.gif">
+            <h4 class="font-weight-bold text-primary mt-3">No Alerts Found</h4>
           </div>
         </div>
       </div>

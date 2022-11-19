@@ -92,21 +92,81 @@ export class CdlComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("User is", this.user);
-    this.capabilities = this.cdlservice.getCapabilitiesConfig();
-    console.log("Capabilities", this.capabilities);
-
+    if (this.user) {
+      this.capabilities = this.cdlservice.getCapabilitiesConfig();
+      console.log("Capabilities", this.capabilities);
+    }
     this.getApprovedloansCount();
     this.getPendingloansCount();
     this.getRejectedloansCount();
-    this.getLinearChartData();
     this.getLeadsCount();
     this.getLoans();
     this.getDealers();
     this.getCustomers();
     this.getApprovedDealers();
     this.getRequestedDealers();
+    this.getBarChartData();
   }
 
+  getBarChartData() {
+    let data = {
+      "category": "WEEKLY",
+      "type": "BARCHART",
+      "filter": {
+        "generatedBy-eq": this.user.id
+      }
+    }
+
+    this.cdlservice.getGraphAnalyticsData(data).subscribe((data: any) => {
+      if (data) {
+        if (data.labels) {
+          this.lineChartData = {
+            labels: data.labels,
+            datasets: [
+              {
+                label: 'Loans Analytics',
+                data: data.datasets[0].data,
+                fill: true,
+                borderColor: 'rgba(202, 30, 30, 1)',
+                tension: .4,
+                backgroundColor: 'rgba(238, 108, 77, 0.2)'
+              }
+            ]
+          }
+
+          this.lineChartOptions = {
+            plugins: {
+              legend: {
+                labels: {
+                  color: '#1E4079'
+                }
+              }
+            },
+            scales: {
+              x: {
+                ticks: {
+                  color: '#1E4079'
+                },
+                grid: {
+                  color: '#ebedef'
+                }
+              },
+              y: {
+                ticks: {
+                  precision: 0,
+                  color: '#1E4079'
+                },
+                grid: {
+                  color: '#ebedef'
+                }
+              }
+            },
+          };
+
+        }
+      }
+    });
+  }
 
   getDealers() {
     let api_filter = {};
@@ -184,50 +244,6 @@ export class CdlComponent implements OnInit {
     };
   }
 
-
-  getLinearChartData() {
-    this.lineChartData = {
-      labels: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      datasets: [
-        {
-          label: 'Loans Analytics',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: true,
-          borderColor: 'rgba(202, 30, 30, 1)',
-          tension: .4,
-          backgroundColor: 'rgba(238, 108, 77, 0.2)'
-        }
-      ]
-    }
-
-    this.lineChartOptions = {
-      plugins: {
-        legend: {
-          labels: {
-            color: '#1E4079'
-          }
-        }
-      },
-      scales: {
-        x: {
-          ticks: {
-            color: '#1E4079'
-          },
-          grid: {
-            color: '#ebedef'
-          }
-        },
-        y: {
-          ticks: {
-            color: '#1E4079'
-          },
-          grid: {
-            color: '#ebedef'
-          }
-        }
-      },
-    };
-  }
 
   reports() {
     this.router.navigate(['provider', 'cdl', 'reports']);
