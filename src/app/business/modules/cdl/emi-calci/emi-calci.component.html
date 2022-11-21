@@ -7,10 +7,84 @@
     </div>
 </section>
 
-<section class="p-5">
-    <div class="pointer-cursor">
+<section class="card p-5">
+    <div class="container">
         <div class="d-flex">
-            <div class="text-primary page-heading" class="back-btn">EMI Calculator</div>
+            <div class="text-primary page-heading">EMI Calculator</div>
+        </div>
+    </div>
+    <br>
+    <div class="container">
+        <div class="d-flex justify-content-center">
+            <div class="d-flex align-items-center mr-5">
+                <span class="heading">Loan Amount : </span>
+            </div>
+            <div>
+                <p-inputNumber (keyup)="calculateEmi()" [(ngModel)]="loanAmount" prefix="₹ " [min]="5000"
+                    [max]="200000">
+                </p-inputNumber>
+            </div>
+        </div>
+        <br>
+        <div>
+            <p-slider (onChange)="calculateEmi()" [(ngModel)]="loanAmount" [animate]="true" [min]="5000" [max]="200000"
+                [step]="1000">
+            </p-slider>
+        </div>
+        <br><br>
+        <div class="d-flex justify-content-center">
+            <div class="d-flex align-items-center mr-5">
+                <span class="heading">Interest Rate : </span>
+            </div>
+            <div>
+                <p-inputNumber (keyup)="calculateEmi()" [(ngModel)]="interestRate" suffix=" %" [min]="8" [max]="20">
+                </p-inputNumber>
+            </div>
+        </div>
+        <br>
+        <div>
+            <p-slider (onChange)="calculateEmi()" [(ngModel)]="interestRate" [animate]="true" [min]="8" [max]="20"
+                [step]="1">
+            </p-slider>
+        </div>
+        <br><br>
+        <div class="d-flex justify-content-center">
+            <div class="d-flex align-items-center mr-5">
+                <span class="heading">Loan Tenure : </span>
+            </div>
+            <div>
+                <p-inputNumber (keyup)="calculateEmi()" [(ngModel)]="loanTenure" suffix=" Months" [min]="3" [max]="36">
+                </p-inputNumber>
+            </div>
+        </div>
+        <br>
+        <div>
+            <p-slider (onChange)="calculateEmi()" [(ngModel)]="loanTenure" [animate]="true" [min]="6" [max]="36"
+                [step]="3">
+            </p-slider>
+        </div>
+        <br><br>
+        <hr>
+        <div class="col-md-12 no-padding">
+            <div class="col-lg-6 col-md-6">
+                <div>
+                    <div class="sub-heading">Loan EMI</div>
+                    <div class="heading">₹ {{EmiPayment}}</div>
+                </div>
+                <hr>
+                <div>
+                    <div class="sub-heading">Total Interest</div>
+                    <div class="heading">₹ {{monthlyInterest * loanTenure}}</div>
+                </div>
+                <hr>
+                <div>
+                    <div class="sub-heading">Total Payment</div>
+                    <div class="heading">₹ {{loanAmount + (monthlyInterest * loanTenure)}}</div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <p-chart type="pie" height="300" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
+            </div>
         </div>
     </div>
 </section>
