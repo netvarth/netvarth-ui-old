@@ -540,12 +540,12 @@
 
                   <hr *ngIf="paymentDetails" />
                   <div class="resPaymrntDetails"
-                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
+                    *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && selectedService.serviceBookingType !== 'request'">
                     <label class="custom resPaymrntDetails">Select Payment Mode</label>
                   </div>
                   <div class="clearfix"></div>
                   <div class="text-center mx-auto no-padding"
-                    *ngIf=" isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
+                    *ngIf="selectedService.serviceBookingType !== 'request' && isPayment&& paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                     <ng-container *ngIf="!shownonIndianModes" class="text-center mx-auto">
                       <app-payment-modes [paymentModes]="indian_payment_modes"
                         (modeSelected)="indian_payment_mode_onchange($event)">
