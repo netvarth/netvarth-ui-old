@@ -59,7 +59,9 @@ export class DealerComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("User is", this.user);
-    this.capabilities = this.cdlservice.getCapabilitiesConfig();
+    if (this.user) {
+      this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
+    }
     this.getDealers();
   }
   goBack() {

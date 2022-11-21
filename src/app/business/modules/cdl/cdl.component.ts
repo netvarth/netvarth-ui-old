@@ -93,7 +93,7 @@ export class CdlComponent implements OnInit {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     console.log("User is", this.user);
     if (this.user) {
-      this.capabilities = this.cdlservice.getCapabilitiesConfig();
+      this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
       console.log("Capabilities", this.capabilities);
     }
     this.getApprovedloansCount();

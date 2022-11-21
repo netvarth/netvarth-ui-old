@@ -80,6 +80,20 @@
               </div>
             </div>
 
+            <div class="col-xs-3 no-padding-small no-padding"
+              *ngIf="capabilities && capabilities.canCreditVerification">
+              <div class="dashboard-card text-center pointer-cursor" (click)="requestedDealers()">
+                <div>
+                  <div>
+                    <img width="60" height="60" src="./assets/images/cdl/partner/req_dealers.png">
+                  </div>
+                  <div class="text-center">
+                    <span class="head-card-sub-title">Req Dealers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
             <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canViewSchemes">
               <div class="dashboard-card text-center pointer-cursor" (click)="allSchemes()">

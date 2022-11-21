@@ -341,10 +341,10 @@ export class CdlService {
   }
 
 
-  getCapabilitiesConfig() {
-    if (this.user && this.user.roles && this.user.roles[0] && this.user.roles[0].capabilities) {
-      console.log("Role Capabilities in Sevice File", this.user)
-      let roleCapabilities = this.user.roles[0].capabilities;
+  getCapabilitiesConfig(user) {
+    if (user && user.roles && user.roles[0] && user.roles[0].capabilities) {
+      console.log("Role Capabilities in Sevice File", user)
+      let roleCapabilities = user.roles[0].capabilities;
       let capabilities = {
         'canCreateLoan': roleCapabilities.includes('createLoan'),
         'canUpdateLoan': roleCapabilities.includes('updateLoan'),
