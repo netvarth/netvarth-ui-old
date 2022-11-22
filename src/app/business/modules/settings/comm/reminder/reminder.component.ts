@@ -329,7 +329,7 @@ export class ReminderComponent implements OnInit {
             (data: any) => {
               console.log("Respooooos :",data);
               //this.selectedConsumers = data;
-              this.selectedCustomerViaPhoneSearch(data[0]);
+              this.selectedCustomerViaPhoneSearch(data[0],'edit');
               
             });
       }
@@ -717,7 +717,6 @@ export class ReminderComponent implements OnInit {
     const existConsumerData = this.selectedConsumers.find(x => x.id === customer.id);
     if(existConsumerData){
       if(mode === 'edit'){
-        this.selectedConsumers = customer;
         return false;
       }
       else{
