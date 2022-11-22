@@ -324,6 +324,9 @@ h5
  .example-chip-list {
     width: 100%;
   }
+  .fontWeight{
+    font-weight: 700;
+  }
   .matChip{
     margin-top: 0px !important;
     margin-bottom: 5px !important;
@@ -355,6 +358,8 @@ h5
     background-color: #1E4079;
     color: #FFFFFF;
     margin-bottom: 15px;
+    height: 61.83px;
+
   }
   .timeBtn{
     background-color: #1E4079;
@@ -368,7 +373,7 @@ h5
     font-size: 17px !important;
   }
   .formSize{
-    height: 65px !important;
+    height: 35px !important;
     overflow-y: auto;
     overflow-x: hidden;
     width: 100% !important;
@@ -388,6 +393,7 @@ h5
 .image{
     height: 30px;
     width: 30px;
+    margin-right: 25px;
 }
 .imageSize{
     height: 20px;
@@ -447,6 +453,24 @@ h5
  height: 480px;
  overflow: auto;
  margin:5px 0px 5px 0px !important;
+}
+.completeCard{
+    width: 50%;
+    margin-left: 5px;
+}
+.createReminder{
+    margin-left: 5px;
+}
+@media (min-width:1115px) {
+    .completeCard{
+        width: 50%;
+        margin-left: 5px;
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        padding: auto;
+    } 
+   
 }
 
 @media (max-width:992px) {

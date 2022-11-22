@@ -11,59 +11,65 @@
         <div class="row m-4">
             <div class="col-md-5 col-lg-5 col-xl-5 col-sm-12 col-xs-12 no-padding">
                 <h4 class="bold">Create and View</h4>
-                <span class="text-secondary" style="font-size: 12px;">Easy and Quick to create reminder for your
+                <span class="text-secondary mt-0" style="font-size: 12px;">Easy and Quick to create reminder for your
                     consumers.</span>
 
                 <div class="cardDiv">
                     <div class="card pad col-md-6 col-sm-12 col-xs-12 mr-2">
                         <div class="cardSize">
-                            <span>
+                            <div>
                                 <!-- <i class="fa fa-file-text" aria-hidden="true"></i> -->
                                 <img class="image" src="./assets/images/totalReminder.png" alt="Basic Plus">
 
-                            </span>
-                            <span>
-                                <div class="bold">{{reminderCounts}}</div>
+                            </div>
+                            <div>
+                                <div class="fontWeight">{{reminderCounts}}</div>
                                 <div class="text-secondary textFont">Total Reminders</div>
-                            </span>
+                            </div>
                         </div>
 
                     </div>
                     <div class="card pad col-md-6  col-sm-12 col-xs-12">
                         <div class="cardSize">
-                            <span>
+                            <div>
                                 <img class="image" src="./assets/images/ongoingReminder.png" alt="Basic Plus">
                                 <!-- <i class="fa fa-flag" aria-hidden="true"></i> -->
-                            </span>
-                            <span>
-                                <div class="bold">0</div>
+                            </div>
+                            <div>
+                                <div class="fontWeight">0</div>
                                 <div class="text-secondary textFont">Ongoing Reminder</div>
-                            </span>
+                            </div>
                         </div>
                     </div>
 
 
                 </div>
-                <div>
-                    <div class="card pad col-md-3  col-sm-12 col-xs-12">
-                        <div class="cardSize">
-                            <span>
-                                <img class="image" src="./assets/images/completedReminder.png" alt="Basic Plus">
-                                <!-- <i class="fa fa-calculator" aria-hidden="true"></i> -->
-                            </span>
-                            <span>
-                                <div class="bold">1</div>
-                                <div class="text-secondary textFont">Completed Reminders</div>
-                            </span>
+                <div class="card completeCard pad col-sm-12 col-xs-12">
+
+                    <div class="cardSize">
+                        <div>
+                            <img class="image" src="./assets/images/completedReminder.png" alt="Basic Plus">
+                            <!-- <i class="fa fa-calculator" aria-hidden="true"></i> -->
+                        </div>
+                        <div>
+                            <div class="fontWeight">1</div>
+                            <div class="text-secondary textFont">Completed Reminders</div>
                         </div>
                     </div>
+
+
                 </div>
-                <div class="col-md-3 col-sm-12 col-xs-12 mt-2">
+
+                <div class="createReminder col-sm-12 col-xs-12 mt-2">
                     <button class="btn btn-primary btnSize" (click)="createAddRemainder()"><i class="fa fa-plus"></i>
                         Create New Reminder</button>
                 </div>
 
+
+
+
             </div>
+
             <div class="cardSmall col-md-7 col-lg-7 col-xl-7 col-sm-12 col-xs-12">
                 <div class="card custom_card">
                     <span class="bold" style="color: #555A78;">Reminder</span>
@@ -84,7 +90,7 @@
                         <div class="copy">
 
                             <mat-menu #appMenu="matMenu">
-                                <button mat-menu-item (click)="editReminder(reminder)">
+                                <button mat-menu-item (click)="editReminder(reminder.id)">
                                     <i class="fa fa-edit" aria-hidden="true"></i> Edit
                                 </button>
                                 <!-- <button mat-menu-item (click)="openDialogStatusChange(file)">
@@ -99,9 +105,9 @@
                     </div>
                     <div class="card boxShadow mt-2" *ngIf="reminders.length === 0">
                         <div class="text-center">
-                       <span>No Reminders Available</span> 
+                            <span>No Reminders Available</span>
+                        </div>
                     </div>
-           </div>
                     <!-- <div class="card ">
                         <span>Booking Reminder</span>
                     </div>
@@ -112,24 +118,24 @@
                 </div>
 
             </div>
+
         </div>
     </div>
 </section>
 
 <section class="sectDiv" *ngIf="isCreate">
-    <form class="form" id="customer_creation" style="border: 1px solid #e2dddd;border-radius: 5px;" #f="ngForm"
-        (ngSubmit)="onSubmit(f.value)">
+    <form class="form" id="customer_creation" style="border: 1px solid #e2dddd;border-radius: 5px;" #f="ngForm">
+       <!--#f="ngForm"  (ngSubmit)="onSubmit(f.value)" -->
         <!-- [formGroup]="ngForm" novalidate (ngSubmit)="amForm.valid && onSubmit(amForm.value)" -->
         <div class="card-body">
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6">
                     <label class="p-0 m-0 pt-1 form-text-light">Reminder Name</label>
                     <input type="email" name="name" [(ngModel)]="reminder.name" class="form-control" id="first_name"
-                        placeholder="Enter Your Reminder Name"  autocomplete="off"
-                         />
-                   
+                        placeholder="Enter Your Reminder Name" autocomplete="off" />
+
                 </div>
-                
+
             </div>
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6">
@@ -235,8 +241,37 @@
                     <!-- <input type="text" class="form-control" id="last_name" 
                         autocomplete="off"  /> [(ngModel)]="phone" class="inputstyling" -->
                     <!-- class="formSize form-control"  -->
-                    <mat-form-field class="formSize" appearance="fill">
+
+
+                    <div class="form-group">
+                        <input autocomplete="off" class="inputSize form-control" id="first_name"
+                            placeholder="Search consumer" type="number" [(ngModel)]="phone"
+                            (ngModelChange)="searchCustomerByPhone(phone,$event)" [matChipInputFor]="chipList"
+                            [matAutocomplete]="autoprov" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <!-- <mat-form-field>
+                            <mat-chip-list aria-label="Fish selection">
+                            <mat-chip color="primary" selected>
+                           </mat-chip>
+                        </mat-chip-list>
+                    </mat-form-field> -->
+                    <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                        <mat-option *ngFor="let customer of filteredCustomers"
+                            (click)="selectedCustomerViaPhoneSearch(customer)" [value]="customer.phoneNo">
+                            <div class="flexClass" style="justify-content:space-between">
+                                <div>{{customer.firstName | capitalizeFirst}}</div>
+                                <div *ngIf="customer.lastName !=='null'">
+                                    {{customer.lastName | capitalizeFirst}}
+                                </div>
+                                <div class="flexClass">
+                                    <div>{{customer.phoneNo}}</div>
+                                </div>
+                            </div>
+                        </mat-option>
+                    </mat-autocomplete>
+                    <!-- <mat-form-field class="formSize" appearance="fill"> -->
                         <!-- <mat-label>Select Consumer</mat-label> -->
+                        <div class="formSize" id="first_name" [hidden]="selectedConsumers.length === 0">
                         <mat-chip-list #chipList aria-label="Consumer selection">
 
                             <mat-chip class="matChip" *ngFor="let consumer of selectedConsumers"
@@ -247,39 +282,16 @@
                                     <mat-icon>cancel</mat-icon>
                                 </button>
                             </mat-chip>
-                            <input #fruitInput class="formSize form-control" placeholder="Search consumer"
-                                id="first_name" [(ngModel)]="phone"
-                                (ngModelChange)="searchCustomerByPhone(phone,$event)" [matChipInputFor]="chipList"
-                                [matAutocomplete]="autoprov" [ngModelOptions]="{standalone: true}">
 
                         </mat-chip-list>
-                        <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-                            <mat-option *ngFor="let customer of filteredCustomers"
-                                (click)="selectedCustomerViaPhoneSearch(customer)" [value]="customer.phoneNo">
-                                <div class="flexClass" style="justify-content:space-between">
-                                    <div>{{customer.firstName | capitalizeFirst}}</div>
-                                    <div *ngIf="customer.lastName !=='null'">
-                                        {{customer.lastName | capitalizeFirst}}
-                                    </div>
-                                    <div class="flexClass">
-                                        <div>{{customer.phoneNo}}</div>
-                                    </div>
-                                </div>
-                            </mat-option>
-                        </mat-autocomplete>
-                    </mat-form-field>
-                    <!-- <div class="form-group mt-4">
-                    <input autocomplete="off" class="inputSize form-control"  placeholder="Search consumer" type="number"
-                    [(ngModel)]="phone" 
-                   (ngModelChange)="searchCustomerByPhone(phone,$event)"
-                   [matChipInputFor]="chipList" [matAutocomplete]="autoprov" [ngModelOptions]="{standalone: true}">
-                </div> -->
-                    <!-- <mat-form-field>
-                            <mat-chip-list aria-label="Fish selection">
-                            <mat-chip color="primary" selected>
-                           </mat-chip>
-                        </mat-chip-list>
-                    </mat-form-field> -->
+                    </div>
+                        <!-- <input #fruitInput class="formSize form-control" placeholder="Search consumer"
+                        id="first_name" [(ngModel)]="phone"
+                        (ngModelChange)="searchCustomerByPhone(phone,$event)" [matChipInputFor]="chipList"
+                        [matAutocomplete]="autoprov" [ngModelOptions]="{standalone: true}"> -->
+
+
+                    <!-- </mat-form-field> -->
                 </div>
             </div>
             <div class="form-group row">
@@ -322,7 +334,8 @@
                         style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;"
                         (click)="onCancel()">Cancel</button>&nbsp;
                     <button type="submit" [disabled]="!f.valid" class="btn btn-primary mr-2 text-center saveBtn"
-                        style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;">Save</button>
+                        style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19) !important;" 
+                        (click)="onSubmit(f.value)">Save</button>
                 </div>
             </div>
         </div>

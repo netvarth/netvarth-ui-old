@@ -100,6 +100,17 @@ export class CustomerActionsComponent implements OnInit {
     this.domain = user.sector;
     this.subdomain = user.subSector;
   }
+  reminderAction(){
+    this.closeDialog();
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: this.customerId,
+        // phoneNum : phoneNum,
+        // type: "secure_video"
+      }
+    };
+    this.router.navigate(["provider", "settings", "comm", "reminder"],navigationExtras);
+    }
   prescription() {
     this.closeDialog();
     const customerDetails = this.customerDetails;

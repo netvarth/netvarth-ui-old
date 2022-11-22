@@ -9,7 +9,7 @@ import { SnackbarService } from "../../../../../../shared/services/snackbar.serv
 })
 export class CreateReminderComponent implements OnInit {
   mode;
-  time = { hour: 0, minute: 0 };
+  time = { hour: 9, minute: 0 };
   constructor(
     public dialogRef: MatDialogRef<CreateReminderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,

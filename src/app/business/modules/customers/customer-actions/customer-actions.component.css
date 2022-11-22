@@ -27,7 +27,7 @@
       width: 100px;
       margin: 10px;
     }
-    .message-icon, .medical-list-icon, .edit-customer-icon, .last-visit-icon, 
+    .reminder-icon, .message-icon, .medical-list-icon, .edit-customer-icon, .last-visit-icon, 
     .medicalrecord-icon, .mr-rx-icon {
       width: 25px !important;
     }

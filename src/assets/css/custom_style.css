@@ -12517,7 +12517,10 @@ img.busN-logo {
   content: url(../images/dashboard-icons/medicalrecord-02.svg);
   width: 20px;
 }
-
+.reminder-icon {
+  content: url(../images/Reminder.png);
+  width: 40px;
+}
 .medicalrecord-green-icon-customer {
   content: url(../images/dashboard-icons/medicalrecord_green.svg);
   width: 20px;

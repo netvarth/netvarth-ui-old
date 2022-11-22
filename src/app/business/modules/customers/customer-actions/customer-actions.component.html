@@ -35,6 +35,14 @@
                 </div>
             </div>
         </div> -->
+        <div class="action-box pointer-cursor" (click)="reminderAction()">
+        <div class="action-box-sub">
+            <!-- <img src="./assets/images/Reminder.png" alt="Basic Plus"> -->
+            <span class="reminder-icon"></span>
+            <div class="icon-text"> Reminder
+            </div>
+        </div>
+    </div>
         <div class="action-box pointer-cursor" (click)="medicalRecord()"
             *ngIf="(domain === 'healthCare' || domain === 'veterinaryPetcare') && subdomain !=='laboratory' && subdomain !=='pharmacy'">
             <div class="action-box-sub">

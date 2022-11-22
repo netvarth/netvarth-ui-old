@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Router,ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 import { MatDialog } from "@angular/material/dialog";
 import { ProviderServices } from "../../../../services/provider-services.service";
@@ -54,6 +54,7 @@ export class ReminderComponent implements OnInit {
   selectedDay: string;
   selectedPhone: any;
   isTimeClicked: boolean = false;
+  selectedId:any;
 
   constructor(
     private router: Router,
@@ -63,11 +64,27 @@ export class ReminderComponent implements OnInit {
     public dialog: MatDialog,
     private providerService: ProviderServices,
     private snackbarService: SnackbarService,
-    private groupService: GroupStorageService
-  ) {}
+    private groupService: GroupStorageService,
+    private activated_route: ActivatedRoute,
+
+  ) {
+    this.activated_route.queryParams.subscribe(qparams => {
+        if(qparams.id){
+          this.selectedId = qparams.id;
+          // console.log("from patientsss :",this.selectedId);
+          // this.editReminder(this.selectedId)
+        }
+    });
+  }
 
   ngOnInit(): void {
+    
     this.bisinessProfile();
+    if(this.selectedId ){
+      console.log("from patientsss :",this.selectedId);
+      this.getCustomerbyId(this.selectedId);
+      this.editReminder();
+    }
     this.getReminders();
     this.getReminderCounts();
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
@@ -86,7 +103,70 @@ export class ReminderComponent implements OnInit {
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.selectedDay = seldate;
   }
-
+  getCustomerbyId(id) {
+    const filter = { 'id-eq': id };
+    this.providerService.getCustomer(filter)
+        .subscribe(
+            (data: any) => {
+              console.log("Respooooos :",data);
+              //this.selectedConsumers = data;
+              this.reminderId = 0;
+              (this.reminder.fromDate = this.selectedDay);
+              (this.reminder.toDate = this.selectedDay);
+              this.selectedCustomerViaPhoneSearch(data[0],'edit');
+              // this.selectedConsumer = data[0];
+              // this.selectedConsumers.push(data[0]);
+             // this.selectedConsumers.push(data);
+                // if (data.length > 1) {
+                //     const customer = data.filter(member => !member.parent);
+                //     this.customer_data = customer[0];
+                //     this.foundMultiConsumers = true;
+                // } else {
+                //     this.customer_data = data[0];
+                //     this.foundMultiConsumers = false;
+                // }
+                // this.jaldeeId = this.customer_data.jaldeeId;
+                // if (this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
+                //     this.countryCode = this.customer_data.countryCode;
+                // } else {
+                //     this.countryCode = '+91';
+                // }
+                // this.waitlist_for.push({ id: data[0].id, firstName: data[0].firstName, lastName: data[0].lastName, apptTime: this.apptTime });
+                // this.saveCheckin();
+            });
+}
+  showTimePopup() {
+    //this.selectedTimes = [];
+   // this.isTimeClicked = true;
+  
+    const dialogref = this.dialog.open(CreateReminderComponent, {
+      width: "40%",
+      panelClass: [
+        "popup-class",
+        "commonpopupmainclass",
+        "updatenotificationclass"
+      ],
+      disableClose: true,
+      data: {
+        mode: "time"
+      }
+    });
+  
+    dialogref.afterClosed().subscribe(result => {
+      this.selectedTime =
+        result.hour +
+        ":" +
+        result.minute +
+        " " +
+        (result.hour > 12 ? "PM" : "AM");
+      console.log("selected time :", this.selectedTime);
+      if (result !== undefined) {
+        this.selectedTimes.push(result);
+        console.log("slot:", this.selectedTimes);
+      }
+    });
+  
+  }
   getReminders() {
     this.providerService.getReminders().subscribe((res: any) => {
       console.log("Reminders :", res);
@@ -145,10 +225,10 @@ export class ReminderComponent implements OnInit {
       }
     });
   }
-  editReminder(reminder) {
+  editReminder(reminderId?) {
     this.isCreate = true;
-    this.reminderId = reminder.id;
-    this.providerService.getReminderById(reminder.id).subscribe((data: any) => {
+    this.reminderId = reminderId;
+    this.providerService.getReminderById(reminderId).subscribe((data: any) => {
       console.log("Reminder Details Id :", data);
       this.reminderDetails = data;
       this.isEdit = true;
@@ -167,20 +247,20 @@ export class ReminderComponent implements OnInit {
           10
         )
       };
-      const edtime = {
-        hour: parseInt(
-          moment(this.reminderDetails.schedule.timeSlots[0].eTime, [
-            "h:mm A"
-          ]).format("HH"),
-          10
-        ),
-        minute: parseInt(
-          moment(this.reminderDetails.schedule.timeSlots[0].eTime, [
-            "h:mm A"
-          ]).format("mm"),
-          10
-        )
-      };
+      // const edtime = {
+      //   hour: parseInt(
+      //     moment(this.reminderDetails.schedule.timeSlots[0].eTime, [
+      //       "h:mm A"
+      //     ]).format("HH"),
+      //     10
+      //   ),
+      //   minute: parseInt(
+      //     moment(this.reminderDetails.schedule.timeSlots[0].eTime, [
+      //       "h:mm A"
+      //     ]).format("mm"),
+      //     10
+      //   )
+      // };
       // this.reminder = {
       (this.reminder.name = this.reminderDetails.name),
         (this.reminder.message = this.reminderDetails.message),
@@ -221,7 +301,7 @@ export class ReminderComponent implements OnInit {
       //   'email':this.amForm.get('email').value || this.reminderDetails.reminderSource.Email,
       //   'phoneNumber':this.amForm.get('phoneNumber').value || this.reminderDetails.reminderSource.PushNotification
       // });
-      if (sttime || edtime) {
+      if (sttime) {
         // this.selectedTime = sttime;
         this.selectedTime =
           sttime.hour +
@@ -230,7 +310,28 @@ export class ReminderComponent implements OnInit {
           " " +
           (sttime.hour > 12 ? "PM" : "AM");
         console.log("selected time :", this.selectedTime);
+        // const existConsumerData = this.selectedTimes.find(x => x.hour === sttime.hour);
+        // if(existConsumerData){
+        //   // this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
+        //   return false;
+        // }
+        // else{
+        //  return this.selectedTimes.push(sttime);
+        // }
+       
         this.selectedTimes.push(sttime);
+      }
+      if(this.reminderDetails.providerConsumer.id){
+        // this.getCustomerbyId(this.reminderDetails.providerConsumer.id);
+        const filter = { 'id-eq': this.reminderDetails.providerConsumer.id };
+        this.providerService.getCustomer(filter)
+        .subscribe(
+            (data: any) => {
+              console.log("Respooooos :",data);
+              //this.selectedConsumers = data;
+              this.selectedCustomerViaPhoneSearch(data[0]);
+              
+            });
       }
       //=== this.selectedConsumer.providerConsumer.id
       // if(this.reminderDetails.providerConsumer){
@@ -433,7 +534,7 @@ export class ReminderComponent implements OnInit {
         this.snackbarService.openSnackBar("Please select time slot", {
           panelClass: "snackbarerror"
         });
-      } else if (this.selectedConsumer === undefined ||this.selectedConsumer === "") {
+      } else if ((this.selectedConsumer === undefined ||this.selectedConsumer === "")) {
         this.snackbarService.openSnackBar("Please search consumer", {
           panelClass: "snackbarerror"
         });
@@ -577,38 +678,7 @@ export class ReminderComponent implements OnInit {
     // }
   }
 
-  showTimePopup() {
-    this.selectedTimes = [];
-    this.isTimeClicked = true;
-  
-    const dialogref = this.dialog.open(CreateReminderComponent, {
-      width: "40%",
-      panelClass: [
-        "popup-class",
-        "commonpopupmainclass",
-        "updatenotificationclass"
-      ],
-      disableClose: true,
-      data: {
-        mode: "time"
-      }
-    });
-  
-    dialogref.afterClosed().subscribe(result => {
-      this.selectedTime =
-        result.hour +
-        ":" +
-        result.minute +
-        " " +
-        (result.hour > 12 ? "PM" : "AM");
-      console.log("selected time :", this.selectedTime);
-      if (result !== undefined) {
-        this.selectedTimes.push(result);
-        console.log("DSGFSG:", this.selectedTimes);
-      }
-    });
-  
-  }
+ 
   remove(consumer: string): void {
     const index = this.selectedConsumers.indexOf(consumer);
 
@@ -623,7 +693,7 @@ export class ReminderComponent implements OnInit {
       this.selectedTimes.splice(index, 1);
     }
   }
-  searchCustomerByPhone(phoneNumber, event) {
+  searchCustomerByPhone(phoneNumber, event?) {
     // Check min length
     this.providerService
       .getSearchCustomer(this.tempAcId, "phoneNumber", phoneNumber)
@@ -635,34 +705,30 @@ export class ReminderComponent implements OnInit {
         // }
         // else{
         this.filteredCustomers = res;
+        
         // console.log("Filtered Res :",this.filteredCustomers);
         //  }
       });
   }
-  selectedCustomerViaPhoneSearch(customer) {
+  selectedCustomerViaPhoneSearch(customer,mode?) {
     this.selectedPhone = customer.phoneNo;
-    console.log("Selected consumer :", this.selectedPhone);
-
-    // this.selectedConsumers.map((res:any)=>{
-    //   if(res.id === customer.id){
-    //    return this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
-    //   }
-    //   else{
-    //     return res;
-
-    //   }
-    //  })
+    console.log("Selected consumer :", customer);
     this.selectedConsumer = customer;
-    this.selectedConsumers.push(customer);
-    // if(customer.id === this.selectedConsumers){
-    //   this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
-    // }
-    // else{
-    //   this.selectedConsumers.push(customer);
-
-    // }
-    console.log("Selected consumersss :", this.selectedConsumers);
-
+    const existConsumerData = this.selectedConsumers.find(x => x.id === customer.id);
+    if(existConsumerData){
+      if(mode === 'edit'){
+        this.selectedConsumers = customer;
+        return false;
+      }
+      else{
+      this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
+      }
+    }
+    else{
+     return this.selectedConsumers.push(customer);
+    }
+   
+    //console.log("Selected consumersss :", this.selectedConsumers);
     //this.customer_data = customer;
     // this.foundMultipleCustomers = false;
     // this.initConsumerAppointment(this.customer_data);
