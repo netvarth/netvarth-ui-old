@@ -165,17 +165,19 @@
             </div>
             <div class="form-group row">
                 <div class="fromTo col-md-6 col-lg-6">
-                    <div>
+                    <div style="width: 150px !important; border: none;">
                         <label class="p-0 m-0 pt-1 form-text-light">From</label>
-                        <input type="date" class="form-control" id="last_name" name="fromDate"
+                        <!-- <input type="date" class="form-control" id="last_name" name="fromDate" 
                             [(ngModel)]="reminder.fromDate" autocomplete="off" />
-                        <!-- <mat-form-field appearance="fill">
-                                <input matInput [matDatepicker]="picker" class="form-control"
-                                   placeholder="From Date"
-                                    formControlName="fromDate" readonly>
+                           -->
+                             <!--   placeholder="From Date" [formControl]="reminder.fromDate" -->
+                        <mat-form-field appearance="fill" style="width: 150px !important; height: 40px !important; border-bottom: none !important;">
+                                <input matInput [matDatepicker]="picker" 
+                                    id="last_name" name="fromDate"
+                                   [(ngModel)]="reminder.fromDate">
                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                 <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field> -->
+                            </mat-form-field>
                         <!--   (dateChange)="compareDate($event.value,0)" -->
 
                         <!-- <mat-form-field appearance="fill"> placeholder="Enter Your Reminder Description"
@@ -194,18 +196,18 @@
                             })">
                     </app-field-error-display> placeholder="Enter Your Reminder Description"-->
                     </div>
-                    <div>
+                    <div style="width: 150px !important; border: none;">
                         <label class="p-0 m-0 pt-1 form-text-light">To</label>
-                        <input type="date" class="form-control" id="last_name" name="toDate"
-                            [(ngModel)]="reminder.toDate" autocomplete="off" />
-                        <!-- (dateChange)="compareDate($event.value,1)" [value]="serializedDate"-->
-                        <!-- <mat-form-field appearance="fill" >
-                            <input matInput [matDatepicker]="picker1" class="form-control"
-                                 placeholder="To Date"
-                                formControlName="toDate" readonly>
+                        <!-- <input type="date" class="form-control" id="last_name" name="toDate"
+                            [(ngModel)]="reminder.toDate" autocomplete="off" /> -->
+                        <!-- (dateChange)="compareDate($event.value,1)" [formControl]="reminder.toDate" [value]="serializedDate" placeholder="To Date"-->
+                        <mat-form-field appearance="fill" style="width: 150px !important; height: 40px !important; border-bottom: none !important;">
+                            <input matInput [matDatepicker]="picker1" 
+                                  id="last_name" name="toDate"
+                                 [(ngModel)]="reminder.toDate" >
                             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                             <mat-datepicker #picker1></mat-datepicker>
-                        </mat-form-field> -->
+                        </mat-form-field>
                         <!-- <mat-form-field appearance="fill">
   <mat-label>Angular forms (w/ deserialization)</mat-label>
   <input matInput [matDatepicker]="picker2"
@@ -227,7 +229,7 @@
             </div>
 
 
-            <div class="form-group row mt-2">
+            <div class="form-group row mt-3">
                 <div class="col-md-6 col-lg-6">
                     <label class="p-0 m-0 pt-1 form-text-light">Time (Hours:Minutes)</label>
                     <mat-chip-list #chipList aria-label="Time selection" name="time" [(ngModel)]="reminder.time"

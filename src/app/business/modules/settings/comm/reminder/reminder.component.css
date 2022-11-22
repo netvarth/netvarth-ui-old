@@ -13,6 +13,9 @@
     justify-items: center;
     
 }
+.matDate{
+    width: 150px !important;
+}
 .actionDiv{
     display: flex;
     justify-content: space-between;

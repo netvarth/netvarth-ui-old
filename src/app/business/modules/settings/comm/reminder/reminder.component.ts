@@ -16,6 +16,7 @@ import { CreateReminderComponent } from "./create-reminder/create-reminder.compo
 import { GroupStorageService } from "../../../../../shared/services/group-storage.service";
 import { ConfirmBoxComponent } from "../../../../../business/shared/confirm-box/confirm-box.component";
 import * as moment from "moment";
+import { DateTimeProcessor } from "../../../../../shared/services/datetime-processor.service";
 
 @Component({
   selector: "app-reminder",
@@ -68,6 +69,7 @@ export class ReminderComponent implements OnInit {
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private activated_route: ActivatedRoute,
+    private dateTimeProcessor: DateTimeProcessor
 
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
@@ -529,6 +531,14 @@ export class ReminderComponent implements OnInit {
   }
   onSubmit(form_data) {
     console.log("Data :", form_data);
+    let fromDate;
+    let toDate;
+    if (form_data.fromDate) {
+      fromDate = this.dateTimeProcessor.transformToYMDFormat(form_data.fromDate);
+    }
+    if (form_data.toDate) {
+      toDate = this.dateTimeProcessor.transformToYMDFormat(form_data.toDate);
+    }
     if (this.reminderId !== 0) {
       if(form_data.name === ""){
         this.snackbarService.openSnackBar("Please enter reminder name", {
@@ -557,9 +567,9 @@ export class ReminderComponent implements OnInit {
           schedule: {
             recurringType: "Once",
             repeatIntervals: [1, 2, 3, 4, 5, 6],
-            startDate: form_data.fromDate,
+            startDate: fromDate,
             terminator: {
-              endDate: form_data.toDate,
+              endDate: toDate,
               noOfOccurance: "1"
             },
             timeSlots: [
@@ -650,9 +660,9 @@ export class ReminderComponent implements OnInit {
           schedule: {
             recurringType: "Once",
             repeatIntervals: [1, 2, 3, 4, 5, 6],
-            startDate: form_data.fromDate,
+            startDate: fromDate,
             terminator: {
-              endDate: form_data.toDate,
+              endDate: toDate,
               noOfOccurance: "1"
             },
             timeSlots: [
