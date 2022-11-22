@@ -604,8 +604,9 @@
               [disabled]="!checkPolicy && heartfulnessAccount">
               Confirm
             </button>
+            <!-- selectedCoupon   && selectedService.isPrePayment==false && paymentLength==0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)-->
             <button type="button"
-              *ngIf="appointmentType!=='reschedule' && selectedService && selectedService.serviceBookingType === 'request' && (selectedService.date || selectedService.dateTime || selectedService.noDateTime)  && selectedService.isPrePayment==false && paymentLength==0 || (paymentDetails && paymentDetails.amountRequiredNow == 0)"
+              *ngIf="appointmentType!=='reschedule' && selectedService && selectedService.serviceBookingType === 'request' && (selectedService.date || selectedService.dateTime || selectedService.noDateTime)"
               [class.disabled]="isClickedOnce" (click)="!isClickedOnce && confirmAppointment('appt')"
               id="stepThreeConfirmButton" class="next-button btn btn-primary font-weight-bold px-12 "
               [disabled]="!checkPolicy && heartfulnessAccount">
