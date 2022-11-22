@@ -34,6 +34,9 @@ export class ViewDealerComponent implements OnInit {
   lineChartData: any;
   pieChartOptions: any;
   pieChartData: any;
+  creditLimit: any = 5000;
+  salesOfficersList: any;
+  creditOfficersList: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -78,6 +81,9 @@ export class ViewDealerComponent implements OnInit {
       this.customersList = data
       this.customers = this.customersList.slice(0, 10);
     });
+
+    this.getStaffList('Sales Officer');
+    this.getStaffList('Branch Credit Head');
   }
 
 
@@ -142,6 +148,21 @@ export class ViewDealerComponent implements OnInit {
     });
   }
 
+  getStaffList(role) {
+    const api_filter = {};
+    api_filter['userRoles-eq'] = "roleName::" + role;
+    this.cdlservice.getStaffList(api_filter).subscribe((data: any) => {
+      if (role == 'Sales Officer') {
+        this.salesOfficersList = data;
+        console.log("this.salesOfficersList", this.salesOfficersList)
+      }
+      else {
+        this.creditOfficersList = data;
+        console.log("this.creditOfficersList", this.creditOfficersList)
+      }
+    })
+    return null;
+  }
 
   getPieChartData() {
     this.pieChartOptions = {

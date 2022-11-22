@@ -134,6 +134,11 @@ export class CdlService {
   }
 
 
+  getStaffList(filter) {
+    const url = 'provider/user';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
   manualLoanApproval(id, data) {
     const url = 'provider/loanapplication/' + id + '/manualapproval';
     return this.servicemeta.httpPut(url, data);

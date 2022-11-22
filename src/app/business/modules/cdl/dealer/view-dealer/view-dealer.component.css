@@ -220,3 +220,21 @@ td {
 .tabview-custom {
   overflow-x: scroll !important;
 }
+
+.officer-active
+{
+    font-size: 14px !important;
+    font-weight: bold!important;
+    color: rgb(1, 163, 1)!important;
+}
+.officer-name {
+  font-size: 15px !important;
+}
+
+.officer-phone {
+  font-size: 13px !important;
+}
+
+.btn-primary {
+  font-size: 14px !important;
+}

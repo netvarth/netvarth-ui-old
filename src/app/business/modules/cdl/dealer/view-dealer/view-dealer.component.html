@@ -98,10 +98,10 @@
               <a class="nav-link" data-toggle="tab" href="#tab4"><i class="fa fa-bell"
                   aria-hidden="true"></i>&nbsp;Customers</a>
             </li>
-            <li class="nav-item" *ngIf="user.userType==2">
+            <!-- <li class="nav-item" *ngIf="user.userType==2">
               <a class="nav-link" data-toggle="tab" href="#tab5"><i class="fa fa-link"
                   aria-hidden="true"></i>&nbsp;Account</a>
-            </li>
+            </li> -->
 
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#tab6"><i class="fa fa-cog"
@@ -244,7 +244,6 @@
                   <h4 class="font-weight-bold text-primary mt-3">No Alerts Found</h4>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -308,7 +307,8 @@
                 <span class="table-column-data">{{loan.referenceNo}}</span>
               </td>
               <td>
-                <span class="table-column-data">{{loan.customer.firstName}}
+                <span class="table-column-data"
+                  *ngIf="loan && loan.customer && loan.customer.firstName">{{loan.customer.firstName}}
                   {{loan.customer.lastName}}</span>
               </td>
               <td>
@@ -397,7 +397,8 @@
                   <span class="table-column-data">{{loan.referenceNo}}</span>
                 </td>
                 <td>
-                  <span class="table-column-data">{{loan.customer.firstName}}
+                  <span class="table-column-data"
+                    *ngIf="loan && loan.customer && loan.customer.firstName">{{loan.customer.firstName}}
                     {{loan.customer.lastName}}</span>
                 </td>
                 <td>
@@ -514,9 +515,9 @@
         </div>
       </div>
     </div>
-    <div class="tab-pane " id="tab5" role="tabpanel">
+    <!-- <div class="tab-pane " id="tab5" role="tabpanel">
       <div class="my-2">
-        <span class="font-weight-light">View Dealer Dashboard</span><br>
+        <span class="font-weight-light">Credit Limit</span><br>
         <div class="btn btn-primary view-dashboard-btn">View</div>
       </div><br>
       <div>
@@ -528,33 +529,81 @@
         </div>
       </div>
       <div class="my-2" *ngIf="dealerData && dealerData.assignee && dealerData.assignee.name">
-        <span class="font-weight-bold">Assignee</span><br>
+        <span class="font-weight-bold">Assignee</span>&nbsp;<i class="fa fa-pencil-square-o"></i><br>
         <span class="font-weight-light">{{dealerData.assignee.name}}</span>
       </div><br>
       <div>
         <br>
       </div>
-    </div>
+    </div> -->
 
     <div class="tab-pane" id="tab6" role="tabpanel">
-      <div class="card">
-        <div class="my-2">
-          <span class="font-weight-light">View Dealer Dashboard</span><br>
-          <div class="btn btn-primary view-dashboard-btn">View</div>
-        </div><br>
-        <div>
-          <span class="font-weight-light">Account Status</span><br>
-          <div class="text-capitalize inactivestatus" [class.activestatus]="active == 'Active'">
-            <mat-slide-toggle (change)="changeActive($event)" [(ngModel)]="status">
-              {{status?'Active':'Inactive'}}
-            </mat-slide-toggle>
+      <div class="col-md-12 row">
+        <div class="col-md-6 col-lg-6">
+          <div class="card">
+            <div class="my-2">
+              <span class="font-weight-bold">Credit Limit</span><br>
+              <div class="card p-1">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    {{creditLimit}}
+                  </div>
+                  <div>
+                    <button pButton type="button" class="btn-primary">Change</button>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <span class="font-weight-bold">Sales Officers</span><br>
+              <div *ngFor="let item of salesOfficersList">
+                <div class="card p-1 mt-2">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <span class="officer-name font-weight-bold">
+                        <span *ngIf="item && item.firstName">{{item.firstName}}</span>&nbsp;
+                        <span *ngIf="item && item.lastName">{{item.lastName}}</span>
+                      </span><br>
+                      <span class="officer-phone" *ngIf="item && item.mobileNo">{{item.mobileNo}}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <span [class.officer-active]="item.status == 'ACTIVE'"
+                        *ngIf="item && item.status">{{item.status}}</span>
+                    </div>
+                    <div>
+                      <button pButton type="button" class="btn-primary p-1 px-2">Assign</button>
+                    </div>
+                  </div>
+                </div>
+              </div><br>
+              <span class="font-weight-bold">Credit Officers</span><br>
+              <div *ngFor="let item of creditOfficersList">
+                <div class="card p-1 mt-2">
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <span class="officer-name font-weight-bold">
+                        <span *ngIf="item && item.firstName">{{item.firstName}}</span>&nbsp;
+                        <span *ngIf="item && item.lastName">{{item.lastName}}</span>
+                      </span><br>
+                      <span class="officer-phone" *ngIf="item && item.mobileNo">{{item.mobileNo}}</span>
+                    </div>
+                    <div class="d-flex align-items-center">
+                      <span [class.officer-active]="item.status == 'ACTIVE'"
+                        *ngIf="item && item.status">{{item.status}}</span>
+                    </div>
+                    <div>
+                      <button pButton type="button" class="btn-primary p-1 px-2">Assign</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="my-2" *ngIf="dealerData && dealerData.assignee && dealerData.assignee.name">
-          <span class="font-weight-bold">Assignee</span><br>
-          <span class="font-weight-light">{{dealerData.assignee.name}}</span>
+        <div class="col-md-6 col-lg-6">
+          <div class="card">
+
+          </div>
         </div>
       </div>
     </div>
-
   </div>
