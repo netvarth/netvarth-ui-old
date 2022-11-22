@@ -76,7 +76,7 @@
 
                     <div class="card boxShadow mt-2" *ngFor="let reminder of reminders">
                         <!-- <span>Reminders for patient medicine</span> -->
-                        <div class="bold actionDiv">{{reminder.reminderName}} <span class="">
+                        <div class="bold actionDiv">{{reminder.reminderName ? reminder.reminderName : reminder.message}} <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
                                     (click)="stopprop($event);">
                                     <mat-icon>more_vert</mat-icon>
