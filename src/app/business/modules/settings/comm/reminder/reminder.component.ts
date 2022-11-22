@@ -55,6 +55,8 @@ export class ReminderComponent implements OnInit {
   selectedPhone: any;
   isTimeClicked: boolean = false;
   selectedId:any;
+  providerFirstName: any;
+  providerLastName: any;
 
   constructor(
     private router: Router,
@@ -89,6 +91,8 @@ export class ReminderComponent implements OnInit {
     this.getReminderCounts();
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.providerId = user.id;
+    this.providerFirstName = user.firstName;
+    this.providerLastName = user.lastName;
     console.log("user :", user);
     const newdate = this.date;
     console.log("New Date :", newdate);
@@ -560,8 +564,18 @@ export class ReminderComponent implements OnInit {
               }
             ]
           },
-          provider: this.providerId,
-          providerConsumer: this.selectedConsumer.id,
+          provider:{
+              id:this.providerId,
+              firstName:this.providerFirstName,
+              lastName:this.providerLastName,
+          } ,
+          providerConsumer:{
+                id:this.selectedConsumer.id,
+                firstName:this.selectedConsumer.firstName,
+                lastName:this.selectedConsumer.lastName,
+                email:this.selectedConsumer.email,
+                phoneNo:this.selectedConsumer.phoneNo
+          } ,
           message: form_data.message,
           name: form_data.name,
           reminderSource: {
@@ -638,8 +652,20 @@ export class ReminderComponent implements OnInit {
               }
             ]
           },
-          provider: this.providerId,
-          providerConsumer: this.selectedConsumer.id,
+          // provider: this.providerId,
+          // providerConsumer: this.selectedConsumer.id,
+          provider:{
+            id:this.providerId,
+            firstName:this.providerFirstName,
+            lastName:this.providerLastName,
+        } ,
+        providerConsumer:{
+              id:this.selectedConsumer.id,
+              firstName:this.selectedConsumer.firstName,
+              lastName:this.selectedConsumer.lastName,
+              email:this.selectedConsumer.email,
+              phoneNo:this.selectedConsumer.phoneNo
+        } ,
           message: form_data.message,
           name:form_data.name,
           reminderSource: {
@@ -717,6 +743,7 @@ export class ReminderComponent implements OnInit {
     const existConsumerData = this.selectedConsumers.find(x => x.id === customer.id);
     if(existConsumerData){
       if(mode === 'edit'){
+       // this.selectedConsumers.concat(customer)
         return false;
       }
       else{
