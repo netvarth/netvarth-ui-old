@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     justify-items: center;
-    padding: 0px !important;
+    
 }
 .actionDiv{
     display: flex;
@@ -343,6 +343,7 @@ h5
     background-clip: padding-box !important;
     border: none !important;
     width: 100% !important; */
+    margin: 10px;
   }
   .boxShadow{
     box-shadow: 0 0 10px rgb(0 0 0 / 15%) !important;
@@ -373,14 +374,20 @@ h5
     font-size: 17px !important;
   }
   .formSize{
-    height: 35px !important;
+    height: 60px !important;
     overflow-y: auto;
     overflow-x: hidden;
     width: 100% !important;
     /* padding-left: 5px; */
     padding: 0px;
     border: none !important;
+    /* margin-top: 0px !important;
+   margin-bottom: 0px !important; */
 
+}
+::ng-deep .mat-chip-list-wrapper {
+    margin-top: 0px !important;
+    margin-bottom: 0px !important;
 }
 ::ng-deep .input.mat-chip-input{
     width: auto !important;
@@ -455,22 +462,126 @@ h5
  margin:5px 0px 5px 0px !important;
 }
 .completeCard{
-    width: 50%;
-    margin-left: 5px;
+    width: 45%;
+    margin-left: 15px;
 }
 .createReminder{
-    margin-left: 5px;
+    margin-left: 15px;
+    /* margin-top: 15px !important; */
+}
+@media (width:360px) {
+    .completeCard{
+        width: 54%;
+        margin-left: -20px;
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        padding: auto;
+    } 
+    .createReminder{
+        margin-left: -20px;
+ 
+    }
+    .pad{
+        padding: 11px !important;
+    }
+   
+}
+@media (width:375px) {
+    .completeCard{
+        width: 54%;
+        margin-left: -20px;
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        padding: auto;
+    } 
+    .createReminder{
+        margin-left: -20px;
+ 
+    }
+    .pad{
+        padding: 14px !important;
+    }
+   
+   
+}
+@media (width:390px) {
+    .completeCard{
+        width: 54%;
+        margin-left: -20px;
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        padding: auto;
+    } 
+    .createReminder{
+        margin-left: -20px;
+ 
+    }
+    .pad{
+        padding: 18px !important;
+    }
+   
+   
+}
+@media(min-width:395px) and (max-width:414px) {
+    .completeCard{
+        width: 54%;
+        margin-left: -20px;
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        padding: auto;
+    } 
+    .createReminder{
+        margin-left: -20px;
+ 
+    }
+    .pad{
+        padding: 24px !important;
+    }
+   
+   
+}
+@media (width:393px) {
+    .completeCard{
+        width: 54%;
+        margin-left: -14px;
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        padding: auto;
+    } 
+    .createReminder{
+        margin-left: -14px;
+ 
+    }
+    .pad{
+        padding: 16px !important;
+    }
+   
+   
 }
 @media (min-width:1115px) {
     .completeCard{
-        width: 50%;
-        margin-left: 5px;
+        width: 45%;
+        margin-left: 15px;
         display: flex;
         justify-content: space-between;
         justify-items: center;
         padding: auto;
     } 
    
+}
+@media (min-width:1200px) {
+    .container{
+        width: 100%;
+    } 
+   
+}
+.title-card{
+    box-shadow: 0 0 10px rgb(0 0 0 / 15%) !important;   
 }
 
 @media (max-width:992px) {
