@@ -33,6 +33,7 @@ export class ReminderComponent implements OnInit {
   date = new Date();
   serializedDate = new Date().toISOString();
   selectedTimes: any[] = [];
+  selectedTimeslot:any;
   providerId: any;
   selectedConsumer: any;
   reminders: any[] = [];
@@ -167,8 +168,15 @@ export class ReminderComponent implements OnInit {
         (result.hour > 12 ? "PM" : "AM");
       console.log("selected time :", this.selectedTime);
       if (result !== undefined) {
-        this.selectedTimes.push(result);
-        console.log("slot:", this.selectedTimes);
+      this.selectedTimes.push(result);
+      this.selectedTimeslot =  this.selectedTimes.map((time)=>{
+       return  time.hour +
+        ":" +
+        time.minute +
+        " " +
+        (time.hour > 12 ? "PM" : "AM");;
+      })
+        console.log("slot:", this.selectedTimeslot);
       }
     });
   
@@ -326,6 +334,13 @@ export class ReminderComponent implements OnInit {
         // }
        
         this.selectedTimes.push(sttime);
+        this.selectedTimes.map((time)=>{
+          this.selectedTimeslot =  time.hour +
+          ":" +
+          time.minute +
+          " " +
+          (time.hour > 12 ? "PM" : "AM");;
+        })
       }
       if(this.reminderDetails.providerConsumer.id){
         // this.getCustomerbyId(this.reminderDetails.providerConsumer.id);

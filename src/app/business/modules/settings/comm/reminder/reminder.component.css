@@ -472,6 +472,28 @@ h5
     margin-left: 15px;
     /* margin-top: 15px !important; */
 }
+/* @media (width:280px) {
+    .completeCard{
+        width: 54%;
+        margin-left: -20px;
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        padding: auto;
+    } 
+    .createReminder{
+        margin-left: -20px;
+ 
+    }
+    .smallSize{
+        width: 230px;
+    }
+    .pad{
+        padding: 7px !important;
+
+    }
+   
+} */
 @media (width:360px) {
     .completeCard{
         width: 54%;
@@ -486,7 +508,9 @@ h5
  
     }
     .pad{
-        padding: 11px !important;
+        /* padding: 11px !important; */
+        padding: 7px !important;
+
     }
    
 }
@@ -504,7 +528,9 @@ h5
  
     }
     .pad{
-        padding: 14px !important;
+        /* padding: 14px !important; */
+        padding: 10px !important;
+
     }
    
    
@@ -523,7 +549,9 @@ h5
  
     }
     .pad{
-        padding: 18px !important;
+        /* padding: 18px !important; */
+        padding: 15px !important;
+
     }
    
    
@@ -542,7 +570,9 @@ h5
  
     }
     .pad{
-        padding: 24px !important;
+        /* padding: 24px !important; */
+        padding: 20px !important;
+
     }
    
    
