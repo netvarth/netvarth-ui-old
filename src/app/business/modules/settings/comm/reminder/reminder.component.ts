@@ -530,7 +530,12 @@ export class ReminderComponent implements OnInit {
   onSubmit(form_data) {
     console.log("Data :", form_data);
     if (this.reminderId !== 0) {
-      if (form_data.message === "") {
+      if(form_data.name === ""){
+        this.snackbarService.openSnackBar("Please enter reminder name", {
+          panelClass: "snackbarerror"
+        });
+      }
+     else if (form_data.message === "") {
         this.snackbarService.openSnackBar("Please enter reminder message", {
           panelClass: "snackbarerror"
         });
@@ -577,7 +582,7 @@ export class ReminderComponent implements OnInit {
                 phoneNo:this.selectedConsumer.phoneNo
           } ,
           message: form_data.message,
-          name: form_data.name,
+          reminderName: form_data.name,
           reminderSource: {
             Sms: form_data.sms ? "1" : "0",
             Email: form_data.email ? "1" : "0",
@@ -612,7 +617,12 @@ export class ReminderComponent implements OnInit {
       // if(this.selectedConsumer.id){
       //   postData['providerConsumer'] = this.selectedConsumer.id;
       // }
-      if (form_data.message === "") {
+      if(form_data.name === ""){
+        this.snackbarService.openSnackBar("Please enter reminder name", {
+          panelClass: "snackbarerror"
+        });
+      }
+     else if (form_data.message === "") {
         this.snackbarService.openSnackBar("Please enter reminder message", {
           panelClass: "snackbarerror"
         });
@@ -667,7 +677,7 @@ export class ReminderComponent implements OnInit {
               phoneNo:this.selectedConsumer.phoneNo
         } ,
           message: form_data.message,
-          name:form_data.name,
+          reminderName:form_data.name,
           reminderSource: {
             Sms: form_data.sms ? "1" : "0",
             Email: form_data.email ? "1" : "0",

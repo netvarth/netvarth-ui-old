@@ -76,7 +76,7 @@
 
                     <div class="card boxShadow mt-2" *ngFor="let reminder of reminders">
                         <!-- <span>Reminders for patient medicine</span> -->
-                        <div class="bold actionDiv">{{reminder.message}} <span class="">
+                        <div class="bold actionDiv">{{reminder.reminderName}} <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
                                     (click)="stopprop($event);">
                                     <mat-icon>more_vert</mat-icon>
@@ -87,6 +87,9 @@
                             <span class="text-secondary" style="font-size: 12px;"> {{reminder.schedule.startDate}} to
                                 {{reminder.schedule.terminator.endDate}}</span>
                         </div>
+                        <div *ngIf="reminder.message">
+                            <span class="text-secondary" style="font-size: 12px;">{{reminder.message}}</span>
+                        </div>
                         <div class="copy">
 
                             <mat-menu #appMenu="matMenu">
@@ -96,7 +99,7 @@
                                 <!-- <button mat-menu-item (click)="openDialogStatusChange(file)">
                                 <i class="fa fa-share-alt" aria-hidden="true"></i> Share file  (click)="deleteFile(file.id,file.fileName)"
                                </button> -->
-                                <button mat-menu-item (click)="deleteReminder(reminder.id,reminder.message)">
+                                <button mat-menu-item (click)="deleteReminder(reminder.id,reminder.reminderName)">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Remove
                                 </button>
                             </mat-menu>
