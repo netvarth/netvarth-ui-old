@@ -37,7 +37,7 @@ export class ReminderComponent implements OnInit {
   providerId: any;
   selectedConsumer: any;
   reminders: any[] = [];
-  reminderCounts: any = 0;
+  allReminderCounts = 0;
   selectedTime: any;
   reminderdialogRef: any;
   reminderDetails: any;
@@ -59,7 +59,7 @@ export class ReminderComponent implements OnInit {
   selectedId:any;
   providerFirstName: any;
   providerLastName: any;
-  completedReminderCount: ArrayBuffer;
+  completedReminderCount = 0;
   hide: boolean = false;
 
   constructor(
@@ -88,14 +88,15 @@ export class ReminderComponent implements OnInit {
   ngOnInit(): void {
     
     this.bisinessProfile();
-    if(this.selectedId != 0){
+    if(this.selectedId){
       console.log("from patientsss :",this.selectedId);
       this.getCustomerbyId(this.selectedId);
       this.editReminder();
     }
-    this.getReminders();
-    this.getReminderCounts();
+     this.getReminders();
+    //this.getReminderCounts();
     this.getCompletedReminderCount();
+    this.getAllReminderCount();
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.providerId = user.id;
     this.providerFirstName = user.firstName;
@@ -114,14 +115,23 @@ export class ReminderComponent implements OnInit {
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.selectedDay = seldate;
   }
-  getCompletedReminderCount() {
+  getAllReminderCount() {
     const filter = { 'completed-eq': 'false'};
     this.providerService.getCompletedReminderCount(filter)
         .subscribe(
-            data => {
-                this.completedReminderCount = data;
-                console.log("Completed reminders :",data);
+            (data:any) => {
+                this.allReminderCounts = data;
+                console.log("All reminders :",data);
             });
+}
+getCompletedReminderCount() {
+  const filter = { 'completed-eq': 'true'};
+  this.providerService.getCompletedReminderCount(filter)
+      .subscribe(
+        (data:any) => {
+              this.completedReminderCount = data;
+              console.log("Completed reminders :",data);
+          });
 }
 // getSchedulesCount() {
 //     const filter = { 'state-eq': 'ENABLED' };
@@ -250,17 +260,18 @@ export class ReminderComponent implements OnInit {
   
   }
   getReminders() {
-    this.providerService.getReminders().subscribe((res: any) => {
+    const filter = { 'completed-eq': 'false'};
+    this.providerService.getReminders(filter).subscribe((res: any) => {
       console.log("Reminders :", res);
       this.reminders = res;
     });
   }
-  getReminderCounts() {
-    this.providerService.getRemindersCount().subscribe(res => {
-      console.log("Reminder count :", res);
-      this.reminderCounts = res;
-    });
-  }
+  // getReminderCounts() {
+  //   this.providerService.getRemindersCount().subscribe(res => {
+  //     console.log("Reminder count :", res);
+  //     this.reminderCounts = res;
+  //   });
+  // }
 
   bisinessProfile() {
     this.providerService.getBussinessProfile().subscribe((res: any) => {
@@ -307,7 +318,9 @@ export class ReminderComponent implements OnInit {
           this.providerService.deleteReminder(id).subscribe((data: any) => {
             this.snackbarService.openSnackBar("Deleted Reminder Successfully");
             this.getReminders();
-            this.getReminderCounts();
+           // this.getReminderCounts();
+           this.getCompletedReminderCount();
+           this.getAllReminderCount();
           });
         }
       }
@@ -709,7 +722,9 @@ export class ReminderComponent implements OnInit {
             (res: any) => {
               console.log("Reminder res :", res);
               this.getReminders();
-              this.getReminderCounts();
+              //this.getReminderCounts();
+              this.getCompletedReminderCount();
+              this.getAllReminderCount();
               this.isCreate = false;
               // this.isEdit = false;
               this.snackbarService.openSnackBar(
@@ -802,7 +817,9 @@ export class ReminderComponent implements OnInit {
           (res: any) => {
             console.log("Reminder res :", res);
             this.getReminders();
-            this.getReminderCounts();
+            //this.getReminderCounts();
+            this.getCompletedReminderCount();
+            this.getAllReminderCount();
             this.selectedId = 0;
             this.isCreate = false;
             this.snackbarService.openSnackBar("Reminder Created Successfully", {
