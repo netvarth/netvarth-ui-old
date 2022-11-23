@@ -242,8 +242,10 @@
                     <mat-chip-list #chipList aria-label="Time selection" name="time" [(ngModel)]="reminder.time"
                         *ngIf="selectedTimes.length>0">
                         <mat-chip class="matTimeChip" *ngFor="let time of selectedTimes" (removed)="removeTime(time)">
-                            <span *ngIf="time && time !== undefined"> {{time.hour}} : {{time.minute}} {{time.hour >12 ?
-                                'PM' :'AM'}}</span>
+                            <span *ngIf="time && time !== undefined"> {{time.hour}} : {{time.minute}} {{time.mode}}
+                                <!-- {{time.hour >12 ?
+                                'PM' :'AM'}} -->
+                            </span>
                             <button matChipRemove>
                                 <mat-icon>cancel</mat-icon>
                             </button>
@@ -338,7 +340,7 @@
                             <input class="form-check-input" name="phoneNumber" [(ngModel)]="reminder.phoneNumber"
                                 type="checkbox" value="" id="flexCheckDefault">
                             <label class="form-check-label ml-1" for="flexCheckDefault">
-                                Phone Number
+                                App Notification
                             </label>
                         </div>
                     </div>

@@ -88,7 +88,7 @@ export class ReminderComponent implements OnInit {
   ngOnInit(): void {
     
     this.bisinessProfile();
-    if(this.selectedId ){
+    if(this.selectedId != 0){
       console.log("from patientsss :",this.selectedId);
       this.getCustomerbyId(this.selectedId);
       this.editReminder();
@@ -182,15 +182,31 @@ export class ReminderComponent implements OnInit {
     });
   
     dialogref.afterClosed().subscribe(result => {
+      const timeSlot = {
+        hour: parseInt(
+          moment(result.hour, [
+            "h:mm A"
+          ]).format("hh"),
+          10
+        ),
+        minute: result.minute,
+        mode:result.mode
+        // parseInt(
+        //   moment(result.minute, [
+        //     "hh:mm A"
+        //   ]).format("mm"),10
+        // )
+      };
+      console.log("Time selllll :",timeSlot);
       this.selectedTime =
-        result.hour +
+      timeSlot.hour +
         ":" +
-        result.minute +
-        " " +
-        (result.hour > 12 ? "PM" : "AM");
+        timeSlot.minute +
+        " " + timeSlot.mode
+       // (timeSlot.hour > 12 ? "PM" : "AM");
       console.log("selected time :", this.selectedTime);
       if (result !== undefined) {
-      this.selectedTimes.push(result);
+      this.selectedTimes.push(timeSlot);
       this.selectedTimeslot = {
         // "sTime": result.hour +
         // ":" +
@@ -261,7 +277,8 @@ export class ReminderComponent implements OnInit {
   goBack() {
     if(this.selectedId){
       // provider/customers/33678
-      this.router.navigate(["provider", "customers", `${this.selectedId}`]);
+      //this.router.navigate(["provider", "customers", `${this.selectedId}`]);
+      this.location.back();
 
     }
    else if (!this.isCreate) {
@@ -303,12 +320,13 @@ export class ReminderComponent implements OnInit {
       console.log("Reminder Details Id :", data);
       this.reminderDetails = data;
       this.isEdit = true;
-      // this.updateForm();
-      const sttime = {
+      // this.updateForm(); 
+      let sttime ;
+       sttime = {
         hour: parseInt(
           moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
             "h:mm A"
-          ]).format("HH"),
+          ]).format("hh"),
           10
         ),
         minute: parseInt(
@@ -318,6 +336,14 @@ export class ReminderComponent implements OnInit {
           10
         )
       };
+      if(this.reminderDetails.schedule.timeSlots[0].sTime.includes('PM')){
+        sttime['mode'] = "PM"
+      }
+      else{
+        sttime['mode'] = "AM"
+
+      }
+      
       // const edtime = {
       //   hour: parseInt(
       //     moment(this.reminderDetails.schedule.timeSlots[0].eTime, [
@@ -378,8 +404,8 @@ export class ReminderComponent implements OnInit {
           sttime.hour +
           ":" +
           sttime.minute +
-          " " +
-          (sttime.hour > 12 ? "PM" : "AM");
+          " " + sttime.mode
+          //(sttime.hour > 12 ? "PM" : "AM");
         console.log("selected time :", this.selectedTime);
         // const existConsumerData = this.selectedTimes.find(x => x.hour === sttime.hour);
         // if(existConsumerData){
@@ -456,6 +482,9 @@ export class ReminderComponent implements OnInit {
       (this.reminder.phoneNumber = false);
     this.selectedTimes = [];
     this.reminderId = 0;
+    this.selectedId = 0;
+    this.selectedConsumers = [];
+    this.hide = false;
   }
 
   createForm() {
@@ -774,10 +803,12 @@ export class ReminderComponent implements OnInit {
             console.log("Reminder res :", res);
             this.getReminders();
             this.getReminderCounts();
+            this.selectedId = 0;
             this.isCreate = false;
             this.snackbarService.openSnackBar("Reminder Created Successfully", {
               panelClass: "snackbarnormal"
             });
+            this.router.navigate(["provider", "settings","comm","reminder"]);
           },
           error => {
             this.snackbarService.openSnackBar(error, {

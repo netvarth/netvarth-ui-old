@@ -9,7 +9,10 @@ import { SnackbarService } from "../../../../../../shared/services/snackbar.serv
 })
 export class CreateReminderComponent implements OnInit {
   mode;
-  time = { hour: 9, minute: 0 };
+  time = { hour: 9, minute: 10 ,mode:'AM'};
+  hourStep = 1;
+	minuteStep = 10;
+	// secondStep = 30;
   constructor(
     public dialogRef: MatDialogRef<CreateReminderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -20,7 +23,21 @@ export class CreateReminderComponent implements OnInit {
 
   ngOnInit(): void {}
   onSubmitTime(time) {
+    // let timeSlot = {};
+    // timeSlot = {
+    //   time:time,
+    //   // mode:mode
+    // }
+    if(time.hour > 12){
+      time['mode']='PM'
+    }
+    else{
+      time['mode']='AM'
+
+    }
+    
     console.log("time :", time);
+
     if (time) {
       this.dialogRef.close(time);
     } else {
