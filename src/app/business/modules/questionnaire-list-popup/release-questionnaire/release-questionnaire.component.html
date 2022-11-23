@@ -68,7 +68,7 @@
         </div>
         <div class="email" *ngIf="data.source == 'order'">
           <i class="fa fa-calendar-o icon"></i>
-          <span class="value">{{data.waitlist_data.orderDate | date: newDateFormat }},
+          <span class="value" *ngIf="data.waitlist_data && data.waitlist_data.timeSlot">{{data.waitlist_data.orderDate | date: newDateFormat }},
             {{getSingleOrderTime(data.waitlist_data.timeSlot.eTime + data.waitlist_data.timeSlot.sTime)}}</span>
         </div>
       </div>

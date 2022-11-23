@@ -5,7 +5,9 @@ import { ProviderServices } from '../../../business/services/provider-services.s
 // import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
 import { SharedFunctions } from '../../functions/shared-functions';
+import { AuthService } from '../../services/auth-service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
+import { DomainConfigGenerator } from '../../services/domain-config-generator.service';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { SharedServices } from '../../services/shared-services';
 import { SnackbarService } from '../../services/snackbar.service';
@@ -29,29 +31,93 @@ export class QuestionnaireLinkComponent implements OnInit {
   type = 'qnr-link';
   waitlistStatus;
   userType: string;
+  customId: any;
+  accountConfig: any;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
-    // private dialog: MatDialog,
+    private configService: DomainConfigGenerator,
     private snackbarService: SnackbarService,
     private router: Router,
     private providerServices: ProviderServices,
     private localStorage: LocalStorageService,
+    private authService: AuthService,
     private dateTimeProcessor: DateTimeProcessor) {
     this.activated_route.params.subscribe(
       (qParams) => {
         this.qParams = qParams;
-        if (!this.qParams.type) {
-          this.loggedIn = this.sharedFunctionobj.checkLogin();
-          if (this.loggedIn) {
-            this.getDetails();
-          }
-        } else {
-          this.loading = false;
-        }
+
       });
+      this.activated_route.queryParams.subscribe((data: any) => {
+        if (data['customId']) {
+          this.customId = data['customId'];
+        }
+      })
   }
+  
   ngOnInit(): void {
+    if (this.customId) {
+      this.initProviderConsumer();
+    } else {
+      if (!this.qParams.type) {
+        this.loggedIn = this.sharedFunctionobj.checkLogin();
+        if (this.loggedIn) {
+          this.getDetails();
+        }
+      } else {
+        this.loading = false;
+      }
+    }
+  }
+  /**
+   * 
+   * @param encId encId/customId which represents the Account
+   * @returns the unique provider id which will gives access to the s3
+   */
+   getAccountIdFromEncId(encId) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.sharedServices.getBusinessUniqueId(encId).subscribe(
+        (id) => {
+          resolve(id);
+        },
+        error => {
+          if (error.status === 404) {
+            _this.router.navigate(['/not-found']);
+          }
+          reject();
+        }
+      );
+    });
+  }
+
+  initProviderConsumer() {
+    const _this = this;
+    if (!this.localStorage.getitemfromLocalStorage('reqFrom')) {
+      this.localStorage.setitemonLocalStorage('reqFrom', 'WEB_LINK');
+    }
+    this.getAccountIdFromEncId(this.customId).then(
+      (uniqueId: any)=> {
+        _this.configService.getUIAccountConfig(uniqueId).subscribe(
+          (uiconfig: any) => {
+            _this.accountConfig = uiconfig;
+          });
+          _this.authService.goThroughLogin().then(
+            (status) => {
+              if (status) {
+                _this.loggedIn = true;
+                this.getDetails();
+                // const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+                // _this.loggedUser = activeUser;;
+              } else {
+                _this.loggedIn = false;
+                // _this.api_loading = false;
+              }
+        })
+      }
+    )
+    
+    
   }
   getDetails() {
     this.isBusinessOwner = this.localStorage.getitemfromLocalStorage('isBusinessOwner');

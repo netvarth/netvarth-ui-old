@@ -2,8 +2,9 @@
     <!-- [class.success-width]="!isBusinessOwner && (qParams.type || qnrStatus !== 'released' || waitlistStatus == 'cancelled')" -->
     <div class="comn-cls m0 p0">
         <div class="panel-default">
-            <app-consumer-join *ngIf="!loggedIn" [userType]="userType" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
-
+            <app-consumer-join *ngIf="!loggedIn && !customId" [userType]="userType" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
+            <app-authentication *ngIf="!loggedIn && customId" (actionPerformed)="actionPerformed($event)"
+            [accountId]="accountId" [accountConfig]="accountConfig"></app-authentication>            
             <app-common-innerloading-spinner *ngIf="loggedIn && loading"></app-common-innerloading-spinner>
             <div class="panel-body no-padding"
                 *ngIf="!loading && ((!qParams.type && qnrStatus === 'released' && waitlistStatus != 'cancelled') || isBusinessOwner)">

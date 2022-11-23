@@ -86,7 +86,7 @@ export class ReleaseQuestionnaireComponent implements OnInit {
       this.uid = this.data.waitlist_data.uid ;
     }
     // const uid = (this.data.source === 'appt') ? this.data.waitlist_data.uid : this.data.waitlist_data.ynwUuid;
-    this.qnrLink = projectConstantsLocal.PATH + 'questionnaire/' + this.uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id;
+    this.qnrLink = projectConstantsLocal.PATH + 'questionnaire/' + this.uid + '/' + this.data.qnrId + '/' + this.data.waitlist_data.providerAccount.id + '?customId=' + this.data.waitlist_data.providerAccount.accEncUid;
     this.createForm();
   }
   createForm() {
