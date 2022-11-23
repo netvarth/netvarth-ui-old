@@ -2709,6 +2709,10 @@ getRemindersCount(){
     const url = 'provider/mr/reminder/count';
     return this.servicemeta.httpGet(url);
 }
+getCompletedReminderCount(filter?) {
+  const url = 'provider/mr/reminders/count';
+  return this.servicemeta.httpGet(url, null, filter);
+}
 getReminders(){
   const url = 'provider/mr/reminder';
   return this.servicemeta.httpGet(url);

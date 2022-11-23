@@ -59,6 +59,8 @@ export class ReminderComponent implements OnInit {
   selectedId:any;
   providerFirstName: any;
   providerLastName: any;
+  completedReminderCount: ArrayBuffer;
+  hide: boolean = false;
 
   constructor(
     private router: Router,
@@ -76,6 +78,7 @@ export class ReminderComponent implements OnInit {
     this.activated_route.queryParams.subscribe(qparams => {
         if(qparams.id){
           this.selectedId = qparams.id;
+          this.hide = true;
           // console.log("from patientsss :",this.selectedId);
           // this.editReminder(this.selectedId)
         }
@@ -92,6 +95,7 @@ export class ReminderComponent implements OnInit {
     }
     this.getReminders();
     this.getReminderCounts();
+    this.getCompletedReminderCount();
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.providerId = user.id;
     this.providerFirstName = user.firstName;
@@ -110,6 +114,24 @@ export class ReminderComponent implements OnInit {
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.selectedDay = seldate;
   }
+  getCompletedReminderCount() {
+    const filter = { 'completed-eq': 'false'};
+    this.providerService.getCompletedReminderCount(filter)
+        .subscribe(
+            data => {
+                this.completedReminderCount = data;
+                console.log("Completed reminders :",data);
+            });
+}
+// getSchedulesCount() {
+//     const filter = { 'state-eq': 'ENABLED' };
+//     this.providerService.getSchedulesCount(filter)
+//         .subscribe(
+//             data => {
+//                 this.schedules_count = data;
+//                 console.log("app-appointmentmanager shedules :",this.schedules_count)
+//             });
+// }
   getCustomerbyId(id) {
     const filter = { 'id-eq': id };
     this.providerService.getCustomer(filter)
@@ -237,7 +259,12 @@ export class ReminderComponent implements OnInit {
   }
 
   goBack() {
-    if (!this.isCreate) {
+    if(this.selectedId){
+      // provider/customers/33678
+      this.router.navigate(["provider", "customers", `${this.selectedId}`]);
+
+    }
+   else if (!this.isCreate) {
       this.router.navigate(["provider", "settings"]);
     } else {
       this.isCreate = false;
@@ -363,7 +390,7 @@ export class ReminderComponent implements OnInit {
         //  return this.selectedTimes.push(sttime);
         // }
        
-        this.selectedTimes.push(sttime);
+         this.selectedTimes.push(sttime);
         // this.selectedTimes.map((time)=>{
         //   this.selectedTimeslot =  time.hour +
         //   ":" +
@@ -801,6 +828,20 @@ export class ReminderComponent implements OnInit {
         //  }
       });
   }
+  searchCustomerLucene(searchCriteria) {
+    let searchBy: any;
+    // if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+    //     searchBy = 'name';
+    // }
+    // else if (this.categoryvalue && this.categoryvalue === 'Search with Email ID') {
+    //     searchBy = 'emailId';
+    // }
+    this.providerService.getSearchCustomer(this.tempAcId, searchBy, searchCriteria.search_input).subscribe((res: any) => {
+        console.log('res', res);
+       // this.options = res;
+        this.filteredCustomers = res;
+    })
+}
   selectedCustomerViaPhoneSearch(customer,mode?) {
     this.selectedPhone = customer.phoneNo;
     console.log("Selected consumer :", customer);

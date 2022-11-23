@@ -362,7 +362,7 @@ h5
     background-color: #1E4079;
     color: #FFFFFF;
     margin-bottom: 15px;
-    height: 61.83px;
+    height: 45px;
 
   }
   .timeBtn{
@@ -394,6 +394,12 @@ h5
 }
 ::ng-deep .input.mat-chip-input{
     width: auto !important;
+}
+::ng-deep .mat-form-field-underline {
+    /* position: absolute; */
+    width: 0px !important;
+    /* pointer-events: none;
+    transform: scale3d(1, 1.0001, 1); */
 }
 .inputSize{
     width: 100% !important;
@@ -607,11 +613,15 @@ h5
     } 
    
 }
-@media (min-width:1200px) {
+@media (min-width:1201px) {
     .container{
         width: 100%;
     } 
-   
+    .image{
+        height: 48px;
+        width: 48px;
+        margin-right: 25px;
+    }
 }
 .title-card{
     box-shadow: 0 0 10px rgb(0 0 0 / 15%) !important;   
