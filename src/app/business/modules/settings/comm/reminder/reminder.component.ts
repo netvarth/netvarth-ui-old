@@ -169,13 +169,43 @@ export class ReminderComponent implements OnInit {
       console.log("selected time :", this.selectedTime);
       if (result !== undefined) {
       this.selectedTimes.push(result);
-      this.selectedTimeslot =  this.selectedTimes.map((time)=>{
-       return  time.hour +
-        ":" +
-        time.minute +
-        " " +
-        (time.hour > 12 ? "PM" : "AM");;
-      })
+      this.selectedTimeslot = {
+        // "sTime": result.hour +
+        // ":" +
+        // result.minute +
+        // " " +
+        // (result.hour > 12 ? "PM" : "AM"),
+        // "eTime": result.hour +
+        // ":" +
+        // result.minute +
+        // " " +
+        // (result.hour > 12 ? "PM" : "AM"),
+        // "sTime": this.selectedTimes.map((time)=>{
+        //   return time.hour +
+        //   ":" +
+        //   time.minute +
+        //   " " +
+        //   (time.hour > 12 ? "PM" : "AM")
+        // }),
+        // "eTime": this.selectedTimes.map((time)=>{
+        //   return time.hour +
+        //   ":" +
+        //   time.minute +
+        //   " " +
+        //   (time.hour > 12 ? "PM" : "AM")
+        // })
+      }
+      //  this.selectedTimes.map((time)=>{
+      //  return '"sTime"' +':'+ `"${time.hour +
+      //   ":" +
+      //   time.minute +
+      //   " " +
+      //   (time.hour > 12 ? "PM" : "AM")}"`+','+'"eTime"' +':'+ `"${time.hour +
+      //     ":" +
+      //     time.minute +
+      //     " " +
+      //     (time.hour > 12 ? "PM" : "AM")}"`;
+      // })
         console.log("slot:", this.selectedTimeslot);
       }
     });
@@ -276,7 +306,7 @@ export class ReminderComponent implements OnInit {
       //   )
       // };
       // this.reminder = {
-      (this.reminder.name = this.reminderDetails.name),
+      (this.reminder.name = this.reminderDetails.reminderName),
         (this.reminder.message = this.reminderDetails.message),
         (this.reminder.fromDate =
           this.reminderDetails.schedule.startDate || null),
@@ -334,13 +364,13 @@ export class ReminderComponent implements OnInit {
         // }
        
         this.selectedTimes.push(sttime);
-        this.selectedTimes.map((time)=>{
-          this.selectedTimeslot =  time.hour +
-          ":" +
-          time.minute +
-          " " +
-          (time.hour > 12 ? "PM" : "AM");;
-        })
+        // this.selectedTimes.map((time)=>{
+        //   this.selectedTimeslot =  time.hour +
+        //   ":" +
+        //   time.minute +
+        //   " " +
+        //   (time.hour > 12 ? "PM" : "AM");;
+        // })
       }
       if(this.reminderDetails.providerConsumer.id){
         // this.getCustomerbyId(this.reminderDetails.providerConsumer.id);

@@ -83,7 +83,7 @@
 
                     <div class="card boxShadow mt-2" *ngFor="let reminder of reminders">
                         <!-- <span>Reminders for patient medicine</span> -->
-                        <div class="bold actionDiv">{{reminder.reminderName ? reminder.reminderName : reminder.message}} <span class="">
+                        <div class="bold actionDiv"><span style="width: 120px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">{{reminder.reminderName ? reminder.reminderName : reminder.message}}</span> <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
                                     (click)="stopprop($event);">
                                     <mat-icon>more_vert</mat-icon>
@@ -94,7 +94,7 @@
                             <span class="text-secondary" style="font-size: 12px;"> {{reminder.schedule.startDate}} to
                                 {{reminder.schedule.terminator.endDate}}</span>
                         </div>
-                        <div *ngIf="reminder.message">
+                        <div *ngIf="reminder.message" style="width: 120px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
                             <span class="text-secondary" style="font-size: 12px;">{{reminder.message}}</span>
                         </div>
                         <div class="copy">
