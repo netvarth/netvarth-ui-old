@@ -33,6 +33,7 @@ export class QuestionnaireLinkComponent implements OnInit {
   userType: string;
   customId: any;
   accountConfig: any;
+  accountId: any;
   constructor(public sharedFunctionobj: SharedFunctions,
     private sharedServices: SharedServices,
     private activated_route: ActivatedRoute,
@@ -46,7 +47,7 @@ export class QuestionnaireLinkComponent implements OnInit {
     this.activated_route.params.subscribe(
       (qParams) => {
         this.qParams = qParams;
-
+        this.accountId = qParams['accountId'];
       });
       this.activated_route.queryParams.subscribe((data: any) => {
         if (data['customId']) {
