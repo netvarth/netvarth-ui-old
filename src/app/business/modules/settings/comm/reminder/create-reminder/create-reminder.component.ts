@@ -9,10 +9,12 @@ import { SnackbarService } from "../../../../../../shared/services/snackbar.serv
 })
 export class CreateReminderComponent implements OnInit {
   mode;
-  time = { hour: 9, minute: 10 ,mode:'AM'};
+  time = { hour: 9, minute: 10 };
+  //,mode:'AM'
   hourStep = 1;
 	minuteStep = 10;
 	// secondStep = 30;
+  meridian = true;
   constructor(
     public dialogRef: MatDialogRef<CreateReminderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -28,8 +30,12 @@ export class CreateReminderComponent implements OnInit {
     //   time:time,
     //   // mode:mode
     // }
-    if(time.hour > 12){
+    console.log("meridian :",this.meridian);
+    if(time.hour >= 12){
       time['mode']='PM'
+      // const isPm = time.hour > 12;
+      //       return `${time.hour > 12 ? time.hour - 12 : time.hour}:${time.minute} {isPm ? time['mode']='PM' : time['mode']='AM'}`
+       //return (time.hour > 12 ? time.hour - 12 : time.hour) {time.hour > 12 ? time['mode']='PM' : time['mode']='AM'}`
     }
     else{
       time['mode']='AM'
