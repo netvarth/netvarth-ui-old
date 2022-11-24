@@ -71,7 +71,13 @@ export class AddonsComponent implements OnInit, OnDestroy {
         this.provider_servicesobj.getUpgradableAddonPackages()
           .subscribe((data: any) => {
             console.log(data);
-            this.addon_metric = data;
+            this.addon_metric =  data.filter((res:any)=>{
+                if(res.metricDisplayName !== "Jaldee Voice Calling"){
+                    return res;
+                }
+            })
+            console.log("Metric Data :", this.addon_metric);
+           // this.addon_metric = data;
           });
       }
 
