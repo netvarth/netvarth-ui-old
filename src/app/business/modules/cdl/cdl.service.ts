@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-// import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ServiceMeta } from '../../../shared/services/service-meta';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class CdlService {
   capabilities: any;
 
   constructor(
-    // private http: HttpClient,
+    private http: HttpClient,
     private servicemeta: ServiceMeta,
     private groupService: GroupStorageService
   ) {
@@ -343,6 +343,11 @@ export class CdlService {
       return this.servicemeta.httpPost(url, data);
     }
     return this.servicemeta.httpPost(url, data);
+  }
+
+  mafilScoreFields() {
+    const url = 'scale.jaldee.com//csms/rest/creditscore/setting';
+    return this.http.get(url, null);
   }
 
 

@@ -532,7 +532,7 @@
                 </div>
               </div>
 
-              <div class="bggrey my-2">
+              <!-- <div class="bggrey my-2">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Employment Type</div>
@@ -545,7 +545,221 @@
                     </mat-select>
                   </div>
                 </div>
+              </div> -->
+
+
+
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Customer Education</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #customerEducation formControlName="customerEducation">
+                      <mat-option [value]="education.id" *ngFor="let education of mafilScoreFields.customerEducation">
+                        <div *ngIf="education && education.name">{{education.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
               </div>
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Customer Employement</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #customerEmployement
+                      formControlName="customerEmployement">
+                      <mat-option [value]="employment.id"
+                        *ngFor="let employment of mafilScoreFields.customerEmployement">
+                        <div *ngIf="employment && employment.name">{{employment.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Montly Income</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
+                        placeholder="Enter Customer Salary" class="form-control" autocomplete="off"
+                        formControlName="salary" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Montly Income</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #monthlyIncome formControlName="monthlyIncome">
+                      <mat-option [value]="income.id" *ngFor="let income of mafilScoreFields.monthlyIncome">
+                        <div *ngIf="income && income.name">{{income.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div> -->
+
+
+              <!-- <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Existing Customer</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #existingCustomer formControlName="existingCustomer">
+                      <mat-option [value]="customer.id" *ngFor="let customer of mafilScoreFields.existingCustomer">
+                        <div *ngIf="customer && customer.name">{{customer.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div> -->
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Salary Routing</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #salaryRouting formControlName="salaryRouting">
+                      <mat-option [value]="salary.id" *ngFor="let salary of mafilScoreFields.salaryRouting">
+                        <div *ngIf="salary && salary.name">{{salary.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Family Dependants</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #familyDependants formControlName="familyDependants">
+                      <mat-option [value]="dependant.id" *ngFor="let dependant of mafilScoreFields.familyDependants">
+                        <div *ngIf="dependant && dependant.name">{{dependant.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">No of Years at Present Address</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #noOfYearsAtPresentAddress
+                      formControlName="noOfYearsAtPresentAddress">
+                      <mat-option [value]="years.id" *ngFor="let years of mafilScoreFields.noOfYearsAtPresentAddress">
+                        <div *ngIf="years && years.name">{{years.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Current Residence Ownership Status</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #currentResidenceOwnershipStatus
+                      formControlName="currentResidenceOwnershipStatus">
+                      <mat-option [value]="ownership.id"
+                        *ngFor="let ownership of mafilScoreFields.currentResidenceOwnershipStatus">
+                        <div *ngIf="ownership && ownership.name">{{ownership.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Owned Movable Assets</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #ownedMovableAssets
+                      formControlName="ownedMovableAssets">
+                      <mat-option [value]="assets.id" *ngFor="let assets of mafilScoreFields.ownedMovableAssets">
+                        <div *ngIf="assets && assets.name">{{assets.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Vehicle No</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #vehicleNo type="text" placeholder="Enter Vehicle No"
+                        class="form-control" autocomplete="off" formControlName="vehicleNo" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Goods Financed</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #goodsFinanced formControlName="goodsFinanced">
+                      <mat-option [value]="goods.id" *ngFor="let goods of mafilScoreFields.goodsFinanced">
+                        <div *ngIf="goods && goods.name">{{goods.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Montly Income</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
+                        placeholder="Enter Customer Salary" class="form-control" autocomplete="off"
+                        formControlName="salary" />
+                    </div>
+                  </div>
+                </div>
+              </div> -->
 
 
               <div>
@@ -564,20 +778,7 @@
               </div>
 
 
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Montly Income</div>
-                    </div>
-                    <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
-                        placeholder="Enter Customer Salary" class="form-control" autocomplete="off"
-                        formControlName="salary" />
-                    </div>
-                  </div>
-                </div>
-              </div>
+
 
 
 
