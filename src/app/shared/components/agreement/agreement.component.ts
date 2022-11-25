@@ -18,6 +18,7 @@ export class AgreementComponent implements OnInit {
   email: any;
   loanData: any;
   type: any = 'agreement';
+  currentDate = new Date();
   constructor(
     private activatedroute: ActivatedRoute,
     private partnerservice: PartnerService,

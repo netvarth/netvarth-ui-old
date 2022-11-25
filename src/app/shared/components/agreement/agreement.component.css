@@ -1,10 +1,10 @@
 .policy {
-  width: 70%;
+  width: 80%;
   padding: 15px;
-  margin: 15%;
+  margin: 10%;
   margin-top: 5%;
   margin-bottom: 5%;
-  font-size: 22px
+  font-size: 18px
 }
 
 span {
@@ -45,4 +45,22 @@ span {
   font-size: 15px !important;
   color: #1E4079 !important;
   font-weight: bold !important;
+}
+
+.text-normal {
+  font-size: 15px !important;
+}
+
+table,
+tr,
+th,
+td {
+  border: 1px solid black !important;
+}
+
+@media(max-width: 768px) {
+  .policy {
+    width: 100%;
+    margin: 0%;
+  }
 }
