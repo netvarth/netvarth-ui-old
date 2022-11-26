@@ -93,16 +93,26 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.firstName">
+          <span *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]">
             <span
-              *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>&nbsp;
-            <span
-              *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span>
+              *ngIf="loanData.loanApplicationKycList[0].currentAddress1">{{loanData.loanApplicationKycList[0].currentAddress1}}</span>,
+            <span *ngIf="loanData.loanApplicationKycList[0].currentAddress2">
+              {{loanData.loanApplicationKycList[0].currentAddress2}}
+            </span>,
+            <span *ngIf="loanData.loanApplicationKycList[0].currentCity">
+              {{loanData.loanApplicationKycList[0].currentCity}}
+            </span>,
+            <span *ngIf="loanData.loanApplicationKycList[0].currentState">
+              {{loanData.loanApplicationKycList[0].currentState}}
+            </span>,
+            <span *ngIf="loanData.loanApplicationKycList[0].currentPin">
+              {{loanData.loanApplicationKycList[0].currentPin}}
+            </span>
           </span>
         </div>
       </td>
     </tr>
-    <tr class="text-left">
+    <tr class="text-left" style="width:100%">
       <td style="width:50%">
         <div class="text-normal mx-1">
           <b>Permanent Address</b>
@@ -110,11 +120,21 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.firstName">
+          <span *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]">
             <span
-              *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>&nbsp;
-            <span
-              *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span>
+              *ngIf="loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}}</span>,
+            <span *ngIf="loanData.loanApplicationKycList[0].permanentAddress2">
+              {{loanData.loanApplicationKycList[0].permanentAddress2}}
+            </span>,
+            <span *ngIf="loanData.loanApplicationKycList[0].permanentCity">
+              {{loanData.loanApplicationKycList[0].permanentCity}}
+            </span>,
+            <span *ngIf="loanData.loanApplicationKycList[0].permanentState">
+              {{loanData.loanApplicationKycList[0].permanentState}}
+            </span>,
+            <span *ngIf="loanData.loanApplicationKycList[0].permanentPin">
+              {{loanData.loanApplicationKycList[0].permanentPin}}
+            </span>
           </span>
         </div>
       </td>
@@ -168,8 +188,8 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            {{loanData.customer.email}}
+          <span *ngIf="loanData && loanData.type && loanData.type.name">
+            {{loanData.type.name}}
           </span>
         </div>
       </td>
@@ -182,8 +202,8 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            {{loanData.customer.email}}
+          <span *ngIf="loanData && loanData.loanProducts && loanData.loanProducts.length>0">
+            <span *ngFor="let item of loanData.loanProducts">{{item.productName}},</span>
           </span>
         </div>
       </td>
@@ -196,8 +216,8 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            {{loanData.customer.email}}
+          <span *ngIf="loanData && loanData.sanctionedAmount">
+            {{loanData.sanctionedAmount}}
           </span>
         </div>
       </td>
@@ -270,8 +290,8 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            Daily
+          <span *ngIf="loanData && loanData.emiPaidAmountMonthly">
+            {{loanData.emiPaidAmountMonthly}}
           </span>
         </div>
       </td>
