@@ -76,7 +76,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private authService: AuthService,
     private readonly joyrideService: JoyrideService) {
-      this.getEnquiryCount();
+    this.getEnquiryCount();
     this.refreshTime = projectConstants.INBOX_REFRESH_TIME;
     this.waitlist_label = this.wordProcessor.getTerminologyTerm('waitlist');
     this.subscription = this.shared_functions.getMessage().subscribe(message => {
@@ -111,9 +111,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         case 'showmenu':
           this.showMenuSection = message.value;
           break;
-          case 'updateuserdetails':
-            this.getBusinessdetFromLocalstorage();
-            break;
+        case 'updateuserdetails':
+          this.getBusinessdetFromLocalstorage();
+          break;
       }
       this.getBusinessdetFromLocalstorage();
       // this.connect();
@@ -164,6 +164,19 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         () => {
         });
   }
+
+  changeAvailability(status) {
+    this.provider_services.changeAvialabilityStatus(this.userDetails.id, status).subscribe(data => {
+      if (data) {
+        this.snackbarService.openSnackBar("Availability Set to " + status);
+        this.getUserDetails();
+      }
+    },
+      error => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+
   tourIconClicked() {
     const dialogRef = this.dialog.open(ProviderStartTourComponent, {
       width: '25%',
@@ -207,12 +220,12 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
   gotoProfile() {
     const loggedUser = this.groupService.getitemFromGroupStorage('ynw-user');
     const userid = loggedUser.id
-    if(this.account_type == 'BRANCH' && this.userData.userType == 1){
+    if (this.account_type == 'BRANCH' && this.userData.userType == 1) {
       this.routerobj.navigate(['provider', 'settings', 'general', 'users', userid, 'settings']);
-    }else{
+    } else {
       this.router.navigate(['provider', 'settings', 'bprofile']);
     }
-  
+
 
   }
   getBusinessdetFromLocalstorage() {
@@ -240,9 +253,9 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
     const providerId = 0;
     this.provider_services.getProviderUnreadCount('ENQUIRY', providerId).subscribe(data => {
       this.enquiryCount = data;
-      if(this.enquiryCount){
-      this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
-    }
+      if (this.enquiryCount) {
+        this.shared_functions.sendMessage({ ttype: 'enquiryCount' });
+      }
     });
   }
   getUserDetails() {
@@ -253,7 +266,7 @@ export class BusinessHeaderComponent implements OnInit, OnDestroy {
         });
   }
   ngOnInit() {
-   
+
     if (this.sessionStorageService.getitemfromSessionStorage('tabId')) {
       this.sessionStorage = true;
     }

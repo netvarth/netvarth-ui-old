@@ -2505,7 +2505,7 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
 
-   setProviderBranchStatus(status) {
+  setProviderBranchStatus(status) {
     const url = 'provider/account/settings/branchMaster/' + status;
     return this.servicemeta.httpPut(url);
   }
@@ -2705,37 +2705,37 @@ export class ProviderServices {
   }
 
 
-getRemindersCount(){
+  getRemindersCount() {
     const url = 'provider/mr/reminder/count';
     return this.servicemeta.httpGet(url);
-}
-getCompletedReminderCount(filter?) {
-  const url = 'provider/mr/reminders/count';
-  return this.servicemeta.httpGet(url, null, filter);
-}
-getReminders(filter?){
-  const url = 'provider/mr/reminders';
-  return this.servicemeta.httpGet(url,null, filter);
-}
+  }
+  getCompletedReminderCount(filter?) {
+    const url = 'provider/mr/reminders/count';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getReminders(filter?) {
+    const url = 'provider/mr/reminders';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
 
-postReminder(post_data){
-  const url = 'provider/mr/reminder';
-  return this.servicemeta.httpPost(url,post_data);
+  postReminder(post_data) {
+    const url = 'provider/mr/reminder';
+    return this.servicemeta.httpPost(url, post_data);
 
-}
-getReminderById(reminderId){
-  const url = `provider/mr/reminder/${reminderId}`;
-  return this.servicemeta.httpGet(url);
-}
-updateReminder(post_data,reminderId){
-  const url = `provider/mr/reminder/${reminderId}`;
-  return this.servicemeta.httpPut(url,post_data);
-}
+  }
+  getReminderById(reminderId) {
+    const url = `provider/mr/reminder/${reminderId}`;
+    return this.servicemeta.httpGet(url);
+  }
+  updateReminder(post_data, reminderId) {
+    const url = `provider/mr/reminder/${reminderId}`;
+    return this.servicemeta.httpPut(url, post_data);
+  }
 
-deleteReminder(id){
-  const url = `provider/mr/reminder/${id}`;
-  return this.servicemeta.httpDelete(url);
-}
+  deleteReminder(id) {
+    const url = `provider/mr/reminder/${id}`;
+    return this.servicemeta.httpDelete(url);
+  }
   getTemplate() {
     const url = 'provider/mr/prescription/template';
     return this.servicemeta.httpGet(url);
@@ -2759,39 +2759,38 @@ deleteReminder(id){
 
   // Branches APIs
 
-  getBranches()
-  {
+  getBranches() {
     const url = 'provider/branchmaster';
     return this.servicemeta.httpGet(url);
   }
 
-  getBranchesByFilter(filter)
-  {
+  getBranchesByFilter(filter) {
     const url = 'provider/branchmaster';
     return this.servicemeta.httpGet(url, null, filter);
   }
 
-  saveBranch(data)
-  {
+  saveBranch(data) {
     const url = 'provider/branchmaster';
     return this.servicemeta.httpPost(url, data);
   }
-  updateBranch(id,data)
-  {
+  updateBranch(id, data) {
     const url = 'provider/branchmaster/' + id;
     return this.servicemeta.httpPut(url, data);
   }
 
-  changeBranchStatus(id,status)
-  {
+  changeBranchStatus(id, status) {
     const url = 'provider/branchmaster/' + id + '/status/' + status;
     return this.servicemeta.httpPut(url, null);
   }
 
-  getBranchById(id)
-  {
-    const url = 'provider/branchmaster/'+id;
+  getBranchById(id) {
+    const url = 'provider/branchmaster/' + id;
     return this.servicemeta.httpGet(url, null);
   }
-  
+
+  changeAvialabilityStatus(id, status) {
+    const url = 'provider/user/' + id + '/available/' + status;
+    return this.servicemeta.httpPut(url, null);
+  }
+
 }

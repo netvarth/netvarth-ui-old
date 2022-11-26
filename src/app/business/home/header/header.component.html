@@ -9,9 +9,51 @@
     </button>
   </div>
 </div>
+
 <div *ngIf="!iswiz" class="container-fluid d-flex align-items-stretch justify-content-between">
   <div class="topbar topbar-mobile-on">
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()" [matTooltip]="'Jaldee Support'" *ngIf="userData && userData.adminPrivilege">
+    <div class="d-flex align-items-center">
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle btn-rounded" type="button" id="dropdownMenuButton"
+          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fa fa-circle availanility-icon" [class.online]="userDetails.userAvailable=='Online'"
+            [class.away]="userDetails.userAvailable=='Away'"></i>&nbsp;<b>{{userDetails.userAvailable}}</b>&nbsp;&nbsp;<i
+            class="fa fa-caret-down text-dark"></i>
+        </button>
+        <div class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
+          <div class="dropdown-item d-flex justify-content-between">
+            <div>
+              <a (click)="changeAvailability('Online')"><i
+                  class="fa fa-circle availanility-icon online"></i>&nbsp;Online</a>
+            </div>
+            <div *ngIf="userDetails.userAvailable=='Online'">
+              <i class="fa fa-check"></i>
+            </div>
+          </div>
+          <hr class="py-0 my-2">
+          <div class="dropdown-item d-flex justify-content-between">
+            <div>
+              <a (click)="changeAvailability('Away')"><i class="fa fa-circle availanility-icon away"></i>&nbsp;Away</a>
+            </div>
+            <div *ngIf="userDetails.userAvailable=='Away'">
+              <i class="fa fa-check"></i>
+            </div>
+          </div>
+          <hr class="py-0 my-2">
+          <div class="dropdown-item d-flex justify-content-between">
+            <div>
+              <a (click)="changeAvailability('NotAvailable')"><i
+                  class="fa fa-circle availanility-icon"></i>&nbsp;Not Available</a>
+            </div>
+            <div *ngIf="userDetails.userAvailable=='NotAvailable'">
+              <i class="fa fa-check"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="helpClicked()" [matTooltip]="'Jaldee Support'"
+      *ngIf="userData && userData.adminPrivilege">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
           <i class="fa contact-help-icon"></i>
@@ -27,14 +69,21 @@
         </div>
       </div>
     </div>
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoInbox()" [matTooltip]="'Messages'">
+
+
+
+
+    <div id="kt_quick_search_toggle" class="dropdown" [matTooltip]="'Messages'">
       <div data-toggle="dropdown" data-offset="10px,0px" class="topbar-item">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
           <i class="fa fa-envelope"></i>
-          <span class="label label-success" *ngIf="inboxCntFetched==true && inboxUnreadCnt > 0">{{inboxUnreadCnt}}</span>
+          <span class="label label-success"
+            *ngIf="inboxCntFetched==true && inboxUnreadCnt > 0">{{inboxUnreadCnt}}</span>
         </div>
       </div>
     </div>
+
+
     <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoAlerts()" [matTooltip]="'Alerts'">
       <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
         (click)="actionPerformed('alert')">
@@ -58,7 +107,10 @@
         </ul>
       </div>
     </div>
-    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()" [matTooltip]="'Subscription Plan'" *ngIf="userData && userData.adminPrivilege">
+
+
+    <div id="kt_quick_search_toggle" class="dropdown" (click)="gotoLicense()" [matTooltip]="'Subscription Plan'"
+      *ngIf="userData && userData.adminPrivilege">
       <div class="dropdown-toggle pointer-cursor" data-toggle="dropdown" data-offset="10px,0px" class="topbar-item"
         (click)="actionPerformed('license')">
         <div class="btn btn-icon btn-clean btn-lg btn-dropdown mr-1">
@@ -90,7 +142,8 @@
             </a>
           </li>
           <li class="footer">
-            <a class="pointer-cursor" href="provider/license" (click)="actionPerformed('license')">Go to subscription plan
+            <a class="pointer-cursor" href="provider/license" (click)="actionPerformed('license')">Go to subscription
+              plan
               section</a>
           </li>
         </ul>

@@ -1203,6 +1203,7 @@ export const projectConstantsLocal = {
     { name: 'All', displayName: 'All Loans' },
     { name: 'Draft', displayName: 'Leads' },
     { name: 'Approved', displayName: 'Approved' },
+    { name: 'LoanRequest', displayName: 'Loan Request' },
     { name: 'ApprovalPending', displayName: 'Approval Pending' },
     { name: 'ApprovalRequired', displayName: 'Approval Required' },
     { name: 'Rejected', displayName: 'Rejected' },
@@ -1214,10 +1215,11 @@ export const projectConstantsLocal = {
     { index: 1, name: 'Draft', displayName: 'Lead' },
     { index: 2, name: 'Approved', displayName: 'Approved' },
     // { index: 3, name: 'ApprovalPending', displayName: 'Approval Pending' },
-    { index: 3, name: 'ApprovalRequired', displayName: 'Approval Required' },
-    { index: 4, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
-    { index: 5, name: 'Sanctioned', displayName: 'Sanctioned' },
-    { index: 6, name: 'Rejected', displayName: 'Rejected' }
+    { index: 3, name: 'LoanRequest', displayName: 'Loan Request' },
+    { index: 4, name: 'ApprovalRequired', displayName: 'Approval Required' },
+    { index: 5, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
+    { index: 6, name: 'Sanctioned', displayName: 'Sanctioned' },
+    { index: 7, name: 'Rejected', displayName: 'Rejected' }
   ],
   DEALER_STATUS: [
     { name: 'All', displayName: 'All Dealers' },

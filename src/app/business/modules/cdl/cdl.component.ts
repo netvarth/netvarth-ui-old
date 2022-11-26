@@ -306,6 +306,7 @@ export class CdlComponent implements OnInit {
       this.statusLoansList = data
       this.allLoansCount = data.length
       this.loans = data;
+      this.getBarChartData();
     });
   }
 
@@ -314,6 +315,7 @@ export class CdlComponent implements OnInit {
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       if (data) {
         this.loans = data;
+        this.getBarChartData();
       }
     });
   }
@@ -412,6 +414,8 @@ export class CdlComponent implements OnInit {
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       if (data && data.length > 0) {
         this.approvedLoansCount = data.length
+        this.getBarChartData();
+        this.getPieChartData();
       }
     });
   }
@@ -422,6 +426,9 @@ export class CdlComponent implements OnInit {
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       if (data && data.length > 0) {
         this.pendingLoansCount = data.length
+        this.getBarChartData();
+        this.getPieChartData();
+
       }
     });
   }
@@ -432,6 +439,9 @@ export class CdlComponent implements OnInit {
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       if (data && data.length > 0) {
         this.rejectedLoansCount = data.length
+        this.getBarChartData();
+        this.getPieChartData();
+
       }
     });
   }
