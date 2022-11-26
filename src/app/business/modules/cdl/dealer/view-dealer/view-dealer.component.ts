@@ -121,6 +121,8 @@ export class ViewDealerComponent implements OnInit {
                 console.log("Sales Officers Assigned")
                 this.ngOnInit();
               }
+            }, (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
             })
           }
           else if (data.type && data.type == 'credit') {
@@ -130,6 +132,8 @@ export class ViewDealerComponent implements OnInit {
                 this.ngOnInit();
 
               }
+            }, (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
             })
           }
         }

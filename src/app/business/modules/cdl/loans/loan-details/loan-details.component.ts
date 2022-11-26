@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { GroupStorageService } from '../../../../../../../src/app/shared/services/group-storage.service';
+import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { ViewFileComponent } from './view-file/view-file.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { CdlService } from '../../cdl.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-loan-details',
@@ -39,7 +40,7 @@ export class LoanDetailsComponent implements OnInit {
   mafilScore: number;
   perfiosScore: number;
   totalScore: number;
-  loanStatus: string = '';
+  loanStatus = projectConstantsLocal.TIMELINE_STATUS;;
   paramsValue: any;
   address1: string;
   address2: string;
@@ -49,6 +50,8 @@ export class LoanDetailsComponent implements OnInit {
   state: string;
   pincode: string;
   loanData: any;
+  loanApplicationStatus: any;
+  statusIndex: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -67,15 +70,25 @@ export class LoanDetailsComponent implements OnInit {
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
             console.log("LoanData", this.loanData)
+            this.loanApplicationStatus = this.loanData.spInternalStatus;
             this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
               this.bankData = data;
               console.log("BankData", this.bankData)
             });
+            if (this.loanApplicationStatus) {
+              this.checkTimeline();
+            }
           });
 
         }
       }
     })
+  }
+
+
+  checkTimeline() {
+    this.statusIndex = this.loanStatus.filter((data) => data.name == this.loanApplicationStatus)[0].index
+    console.log("this.statusIndex", this.statusIndex)
   }
 
   goBack() {

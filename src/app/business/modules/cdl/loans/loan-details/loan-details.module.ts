@@ -12,6 +12,8 @@ import { LoanDetailsComponent } from './loan-details.component'
 import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitalize.module";
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ConfirmBoxModule } from '../confirm-box/confirm-box.module';
+import { TimelineModule } from 'primeng/timeline';
+
 
 const routes: Routes = [
   { path: '', component: LoanDetailsComponent }
@@ -32,6 +34,7 @@ const routes: Routes = [
     MatButtonModule,
     ConfirmBoxModule,
     CapitalizeFirstPipeModule,
+    TimelineModule,
     [RouterModule.forChild(routes)]
   ],
   schemas: [

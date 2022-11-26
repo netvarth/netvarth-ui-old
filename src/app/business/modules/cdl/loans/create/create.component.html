@@ -194,7 +194,9 @@
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" #aadharnumber type="number" placeholder="Enter Aadhar Number"
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
-                          [class.disabled]="action == 'update' && aadharverification && !verifyingUID" maxlength="12" />
+                          [class.disabled]="action == 'update' && aadharverification && !verifyingUID"
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          maxlength="12" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                           *ngIf="!aadharverification && !verifyingUID"

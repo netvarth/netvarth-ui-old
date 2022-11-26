@@ -10,15 +10,31 @@
   <div class="row mb-2" *ngIf="user.userType!=2">
 
     <div class="card remarks-card marginClass px-5">
-      <div class="my-2">
-        <div class="font-weight-bold" *ngIf="loanData && loanData.spInternalStatus">
-          <span class="text-capitalize">Status : {{loanData.spInternalStatus}} Loan</span>
+      <div class="container my-2">
+        <div *ngIf="statusIndex" class="desktop-only">
+          <p-timeline [value]="loanStatus" layout="horizontal" [responsive]="true" styleClass="customized-timeline">
+            <ng-template pTemplate="marker" let-event let-i="rowIndex">
+              <span class="custom-marker p-shadow-2" *ngIf="event.index > statusIndex"
+                [style.backgroundColor]="event.color">
+                <img width="30" height="30" src="./assets/images/cdl/stopwatch.png">
+              </span>
+              <span class="custom-marker p-shadow-2" *ngIf="event.index <= statusIndex"
+                [style.backgroundColor]="event.color">
+                <img width="30" height="30" src="./assets/images/cdl/check.png">
+              </span>
+            </ng-template>
+            <ng-template pTemplate="content" class="text-center" let-event>{{event.displayName}} </ng-template>
+          </p-timeline>
         </div>
+
+        <div class="container mobile-only" *ngIf="loanData && loanData.spInternalStatusDisplyName">
+          <span><b>Status : </b>{{loanData.spInternalStatusDisplyName}}</span>
+        </div>
+
         <div *ngIf="status=='rejected'" class="text-red mt-2">
-          <span>Sorry your loan was rejected because of your credit score</span>
+          <span>Sorry your loan was rejected</span>
         </div>
       </div>
-
     </div>
   </div>
   <div class="row mt-2">

@@ -41,7 +41,7 @@ export class LoanDetailsComponent implements OnInit {
   mafilScore: number;
   perfiosScore: number;
   totalScore: number;
-  loanStatus: string = '';
+  loanStatus: any;
   paramsValue: any;
   address1: string;
   address2: string;
@@ -51,6 +51,8 @@ export class LoanDetailsComponent implements OnInit {
   state: string;
   pincode: string;
   loanData: any;
+  statusIndex: any;
+  loanApplicationStatus: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -71,10 +73,14 @@ export class LoanDetailsComponent implements OnInit {
           this.partnerService.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
             console.log("LoanData", this.loanData)
+            this.loanApplicationStatus = this.loanData.spInternalStatus;
             this.partnerService.getBankDetailsById(params.id).subscribe((data) => {
               this.bankData = data;
               console.log("BankData", this.bankData)
             });
+            if (this.loanApplicationStatus) {
+              this.checkTimeline();
+            }
           });
 
         }
@@ -183,6 +189,11 @@ export class LoanDetailsComponent implements OnInit {
       });
 
 
+  }
+
+  checkTimeline() {
+    this.statusIndex = this.loanStatus.filter((data) => data.name == this.loanApplicationStatus)[0].index
+    console.log("this.statusIndex", this.statusIndex)
   }
 
 
