@@ -551,7 +551,7 @@
 
 
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.customerEducation">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Customer Education</div>
@@ -567,7 +567,7 @@
               </div>
 
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.customerEmployement">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Customer Employement</div>
@@ -632,7 +632,7 @@
               </div> -->
 
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.salaryRouting">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Salary Routing</div>
@@ -648,7 +648,7 @@
               </div>
 
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.familyDependants">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Family Dependants</div>
@@ -664,7 +664,7 @@
               </div>
 
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.noOfYearsAtPresentAddress">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">No of Years at Present Address</div>
@@ -681,7 +681,7 @@
               </div>
 
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.currentResidenceOwnershipStatus">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Current Residence Ownership Status</div>
@@ -699,7 +699,7 @@
               </div>
 
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.ownedMovableAssets">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Owned Movable Assets</div>
@@ -731,7 +731,7 @@
               </div>
 
 
-              <div class="bggrey my-2">
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.goodsFinanced">
                 <div>
                   <div class="d-flex">
                     <div class="form-title">Goods Financed</div>
@@ -842,8 +842,8 @@
                     <div class="fieldPadding">
                       <p-multiSelect [options]="loanProducts" formControlName="loanproduct" [showToggleAll]="false"
                         [virtualScroll]="true" [filter]="true" [itemSize]="34" defaultLabel="Select loan product"
-                        optionLabel="productName" class="multiselect-custom-virtual-scroll"
-                        (onChange)="productSelect($event.value)">
+                        optionLabel="productName" [(ngModel)]="SelectedloanProducts"
+                        class="multiselect-custom-virtual-scroll" (onChange)="productSelect($event.value)">
                       </p-multiSelect>
                     </div>
                   </div>

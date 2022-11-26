@@ -41,6 +41,25 @@
   font-size: 14px !important;
 }
 
+.font-medium {
+  font-size: 16px !important;
+}
+
+.nav-pills {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  display: -webkit-box !important;
+  display: -moz-box !important;
+}
+
+.nav-pills>li {
+  float: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 2px !important;
+}
+
 .btn-primary {
   background-color: #1e4079 !important;
   border-color: #1e4070 !important;
@@ -141,6 +160,14 @@ td {
   color: rgb(16, 179, 16);
 }
 
+.w-90 {
+  width: 90% !important;
+}
+
+.w-100 {
+  width: 100% !important;
+}
+
 .alerts-icon {
   color: #e11f1f !important;
   background-color: #e8c6c1 !important;
@@ -221,12 +248,12 @@ td {
   overflow-x: scroll !important;
 }
 
-.officer-active
-{
-    font-size: 14px !important;
-    font-weight: bold!important;
-    color: rgb(1, 163, 1)!important;
+.officer-active {
+  font-size: 14px !important;
+  font-weight: bold !important;
+  color: rgb(1, 163, 1) !important;
 }
+
 .officer-name {
   font-size: 15px !important;
 }
@@ -237,4 +264,8 @@ td {
 
 .btn-primary {
   font-size: 14px !important;
+}
+
+.bg-grey {
+  background-color: #F6F6F6 !important;
 }

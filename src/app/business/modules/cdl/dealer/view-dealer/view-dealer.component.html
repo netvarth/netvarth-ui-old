@@ -103,7 +103,7 @@
                   aria-hidden="true"></i>&nbsp;Account</a>
             </li> -->
 
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="user && user.adminPrivilege">
               <a class="nav-link" data-toggle="tab" href="#tab6"><i class="fa fa-cog"
                   aria-hidden="true"></i>&nbsp;Settings</a>
             </li>
@@ -346,7 +346,7 @@
             [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
             styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
+            [globalFilterFields]="['id','firstName','partner.partnerName','status']">
             <ng-template pTemplate="caption">
               <div class="row">
                 <div class="col-md-4">
@@ -364,18 +364,18 @@
                 <th>
                   <div class="p-d-flex p-jc-between p-ai-center">
                     Reference No
-                    <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter>
+                    <p-columnFilter type="text" field="id" display="menu"></p-columnFilter>
                   </div>
                 </th>
                 <th>
                   <div class="p-d-flex p-jc-between p-ai-center">
                     User Name
-                    <p-columnFilter type="text" field="customer.firstName" display="menu"></p-columnFilter>
+                    <p-columnFilter type="text" field="firstName" display="menu"></p-columnFilter>
                   </div>
                 </th>
                 <th>
                   <div class="p-d-flex p-jc-between p-ai-center">
-                    User Phone No
+                    Partner Name
                     <p-columnFilter type="text" field="partner.partnerName" display="menu"></p-columnFilter>
                   </div>
                 </th>
@@ -384,36 +384,35 @@
                     User Status
                   </div>
                 </th>
-                <th>
+                <!-- <th>
                   <div class="p-d-flex p-jc-between p-ai-center">
                     More Actions
                   </div>
-                </th>
+                </th> -->
               </tr>
             </ng-template>
-            <ng-template pTemplate="body" let-loan>
+            <ng-template pTemplate="body" let-user>
               <tr class="mobile-card">
                 <td>
-                  <span class="table-column-data">{{loan.referenceNo}}</span>
+                  <span class="table-column-data">{{user.id}}</span>
+                </td>
+                <td>
+                  <span class="table-column-data" *ngIf="user && user.firstName">{{user.firstName}}</span>
                 </td>
                 <td>
                   <span class="table-column-data"
-                    *ngIf="loan && loan.customer && loan.customer.firstName">{{loan.customer.firstName}}
-                    {{loan.customer.lastName}}</span>
+                    *ngIf="user && user.partner && user.partner.partnerName">{{user.partner.partnerName}}</span>
                 </td>
                 <td>
-                  <span class="table-column-data">{{loan.partner.partnerName}}</span>
+                  <span [class]="'customer-badge status-' + user.spInternalStatusDisplyName" class="table-column-data">
+                    {{user.status}}</span>
                 </td>
-                <td>
-                  <span [class]="'customer-badge status-' + loan.spInternalStatusDisplyName" class="table-column-data">
-                    {{loan.spInternalStatusDisplyName}}</span>
-                </td>
-                <td>
+                <!-- <td>
                   <div class="text-center">
-                    <button pButton pRipple type="button" class="p-button-primary" (click)="loanDetails(loan.uid)"><i
+                    <button pButton pRipple type="button" class="p-button-primary" (click)="loanDetails(user.uid)"><i
                         class="pi pi-eye text-white"></i>&nbsp;View</button>
                   </div>
-                </td>
+                </td> -->
               </tr>
               <br class="d-lg-none d-md-none">
             </ng-template>
@@ -538,11 +537,11 @@
     </div> -->
 
     <div class="tab-pane" id="tab6" role="tabpanel">
-      <div class="col-md-12 row">
-        <div class="col-md-6 col-lg-6">
+      <div class="col-md-12 row no-padding-small">
+        <div class="col-md-6 col-lg-6 no-padding-small">
           <div class="card">
             <div class="my-2">
-              <span class="font-weight-bold">Credit Limit</span><br>
+              <!-- <span class="font-weight-bold">Credit Limit</span><br>
               <div class="card p-1">
                 <div class="d-flex justify-content-between">
                   <div class="d-flex align-items-center">
@@ -552,56 +551,99 @@
                     <button pButton type="button" class="btn-primary">Change</button>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <br>
               <span class="font-weight-bold">Sales Officers</span><br>
-              <div *ngFor="let item of salesOfficersList">
-                <div class="card p-1 mt-2">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span class="officer-name font-weight-bold">
-                        <span *ngIf="item && item.firstName">{{item.firstName}}</span>&nbsp;
-                        <span *ngIf="item && item.lastName">{{item.lastName}}</span>
-                      </span><br>
-                      <span class="officer-phone" *ngIf="item && item.mobileNo">{{item.mobileNo}}</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <span [class.officer-active]="item.status == 'ACTIVE'"
-                        *ngIf="item && item.status">{{item.status}}</span>
-                    </div>
-                    <div>
-                      <button pButton type="button" class="btn-primary p-1 px-2">Assign</button>
+              <div *ngIf="assignedSalesOfficersList">
+                <div *ngFor="let item of assignedSalesOfficersList">
+                  <div class="card p-3 mt-2">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <span class="officer-name font-weight-bold">
+                          <span *ngIf="item && item.name">{{item.name}}</span>
+                        </span><br>
+                        <span class="officer-phone" *ngIf="item && item.mobileNo">{{item.mobileNo}}</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <span [class.officer-active]="item.status == 'ACTIVE'"
+                          *ngIf="item && item.code">{{item.code}}</span>
+                      </div>
+                      <!-- <div>
+                        <button pButton type="button" class="btn-primary p-1 px-2">Assign</button>
+                      </div> -->
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="bg-grey p-3" (click)="assignOfficer('sales')">
+                <i class="fa fa-user-plus"></i>&nbsp;Assign to New Sales Officer
               </div><br>
               <span class="font-weight-bold">Credit Officers</span><br>
-              <div *ngFor="let item of creditOfficersList">
-                <div class="card p-1 mt-2">
-                  <div class="d-flex justify-content-between">
-                    <div>
-                      <span class="officer-name font-weight-bold">
-                        <span *ngIf="item && item.firstName">{{item.firstName}}</span>&nbsp;
-                        <span *ngIf="item && item.lastName">{{item.lastName}}</span>
-                      </span><br>
-                      <span class="officer-phone" *ngIf="item && item.mobileNo">{{item.mobileNo}}</span>
-                    </div>
-                    <div class="d-flex align-items-center">
-                      <span [class.officer-active]="item.status == 'ACTIVE'"
-                        *ngIf="item && item.status">{{item.status}}</span>
-                    </div>
-                    <div>
-                      <button pButton type="button" class="btn-primary p-1 px-2">Assign</button>
+              <div *ngIf="assignedCreditOfficersList">
+                <div *ngFor="let item of assignedCreditOfficersList">
+                  <div class="card p-3 mt-2">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <span class="officer-name font-weight-bold">
+                          <span *ngIf="item && item.name">{{item.name}}</span>
+                        </span><br>
+                        <span class="officer-phone" *ngIf="item && item.mobileNo">{{item.mobileNo}}</span>
+                      </div>
+                      <div class="d-flex align-items-center">
+                        <span [class.officer-active]="item.status == 'ACTIVE'"
+                          *ngIf="item && item.code">{{item.code}}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
+              </div>
+              <div class="bg-grey p-3" (click)="assignOfficer('credit')">
+                <i class="fa fa-user-plus"></i>&nbsp;Assign to New Credit Officer
               </div>
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-lg-6">
+        <div class="col-md-6 col-lg-6 no-padding-small">
           <div class="card">
-
+            <div class="d-flex justify-content-between my-2">
+              <div>
+                <span class="font-weight-bold">Account Status</span>
+              </div>
+              <div class="text-capitalize inactivestatus" [class.activestatus]="status == true">
+                <mat-slide-toggle (change)="changeActive($event)" [(ngModel)]="status">
+                  {{status?'Active':'Inactive'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between my-2">
+              <div>
+                <span class="font-weight-bold">Auto Approval</span>
+              </div>
+              <div class="text-capitalize inactivestatus" [class.activestatus]="autoApprovalStatus == true">
+                <mat-slide-toggle (change)="changeAutoApprovalActive($event)" [(ngModel)]="autoApprovalStatus">
+                  {{autoApprovalStatus?'Active':'Inactive'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between my-2">
+              <div>
+                <span class="font-weight-bold">District Wise Selection</span>
+              </div>
+              <div class="text-capitalize inactivestatus" [class.activestatus]="districtWiseStatus == true">
+                <mat-slide-toggle (change)="changeDistrictActive($event)" [(ngModel)]="districtWiseStatus">
+                  {{districtWiseStatus?'Active':'Inactive'}}
+                </mat-slide-toggle>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="card">
+            <div>
+              <img src="../../../../../../assets/images/cdl/partner/dashboard.png" class="img-fluid pb-2">
+            </div><br>
+            <div class="my-2 text-center">
+              <button type="button" class="text-center btn-primary w-100 p-2 font-medium">View Dealer Dashboard</button>
+            </div>
           </div>
         </div>
       </div>

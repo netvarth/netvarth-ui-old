@@ -11,6 +11,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { ChartModule } from 'primeng/chart';
+import { AssignOfficerModule } from '../assign-officer/assign-officer.module';
 
 const routes: Routes = [
   { path: '', component: ViewDealerComponent }
@@ -32,6 +33,7 @@ const routes: Routes = [
     DropdownModule,
     InputTextModule,
     ChartModule,
+    AssignOfficerModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

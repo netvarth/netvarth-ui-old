@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { ServiceMeta } from '../../../shared/services/service-meta';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class CdlService {
   capabilities: any;
 
   constructor(
-    private http: HttpClient,
+    // private http: HttpClient,
     private servicemeta: ServiceMeta,
     private groupService: GroupStorageService
   ) {
@@ -76,6 +76,17 @@ export class CdlService {
 
   partnerAccountStatus(id, status) {
     const url = 'provider/partner/' + id + '/active/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
+  partnerDistrictWiseStatus(id, status) {
+    const url = 'provider/partner/' + id + '/districtwiseresstriction/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
+
+  partnerAutoApprovalStatus(id, status) {
+    const url = 'provider/partner/' + id + '/autoapproval/' + status;
     return this.servicemeta.httpPut(url);
   }
 
@@ -346,10 +357,19 @@ export class CdlService {
   }
 
   mafilScoreFields() {
-    const url = 'scale.jaldee.com//csms/rest/creditscore/setting';
-    return this.http.get(url, null);
+    const url = 'provider/loanapplication/csms/settings';
+    return this.servicemeta.httpGet(url, null);
   }
 
+  updateSalesOfficer(id, data) {
+    const url = 'provider/partner/' + id + '/updatesalesofficer';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  updateCreditOfficer(id, data) {
+    const url = 'provider/partner/' + id + '/updatecreditofficer';
+    return this.servicemeta.httpPut(url, data);
+  }
 
   getCapabilitiesConfig(user) {
     if (user && user.roles && user.roles[0] && user.roles[0].capabilities) {

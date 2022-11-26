@@ -553,6 +553,7 @@ export class CreateComponent implements OnInit {
       }
     ]
   };
+  SelectedloanProducts: any = [];
   constructor(
     private location: Location,
     private router: Router,
@@ -647,6 +648,13 @@ export class CreateComponent implements OnInit {
 
             if (this.loanData && this.loanData.partner && this.loanData.partner.id) {
               this.createLoan.controls.dealer.setValue(this.loanData.partner.id);
+            }
+
+            if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
+              this.loanData.loanProducts.map((data) => {
+                this.SelectedloanProducts.push(data)
+              });
+              console.log("this.SelectedloanProducts", this.SelectedloanProducts);
             }
 
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].customerEducation) {

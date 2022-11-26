@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CdlService } from '../../cdl.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AssignOfficerComponent } from '../assign-officer/assign-officer.component';
 @Component({
   selector: 'app-view-dealer',
   templateUrl: './view-dealer.component.html',
@@ -37,13 +39,18 @@ export class ViewDealerComponent implements OnInit {
   creditLimit: any = 5000;
   salesOfficersList: any;
   creditOfficersList: any;
+  assignedSalesOfficersList: any;
+  assignedCreditOfficersList: any;
+  districtWiseStatus: boolean;
+  autoApprovalStatus: boolean;
   constructor(
     private location: Location,
     private router: Router,
     private activatedroute: ActivatedRoute,
     private cdlservice: CdlService,
     private snackbarService: SnackbarService,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private dialog: MatDialog
   ) {
     this.activatedroute.params.subscribe(qparams => {
       if (qparams && qparams.id) {
@@ -59,6 +66,8 @@ export class ViewDealerComponent implements OnInit {
       this.dealerData = data
       if (this.dealerData && this.dealerData.id) {
         this.dealerId = this.dealerData.id;
+        this.assignedSalesOfficersList = this.dealerData.salesOfficers;
+        this.assignedCreditOfficersList = this.dealerData.creditOfficers;
         this.getPartnerLoans();
         this.getPartnerApprovedLoans();
         this.getPartnerRejectedLoans();
@@ -68,6 +77,12 @@ export class ViewDealerComponent implements OnInit {
       }
       if (data && this.dealerData.active) {
         this.status = this.dealerData.active;
+      }
+      if (data && this.dealerData.districtWiseRestriction) {
+        this.districtWiseStatus = this.dealerData.districtWiseRestriction;
+      }
+      if (data && this.dealerData.autoApproval) {
+        this.autoApprovalStatus = this.dealerData.autoApproval;
       }
       console.log("this.dealerData", this.dealerData)
     });
@@ -84,6 +99,45 @@ export class ViewDealerComponent implements OnInit {
 
     this.getStaffList('Sales Officer');
     this.getStaffList('Branch Credit Head');
+  }
+
+
+  assignOfficer(type) {
+    const dialogRef = this.dialog.open(AssignOfficerComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: type,
+        id: this.dealerUid
+      }
+    });
+    dialogRef.afterClosed().subscribe((data: any) => {
+      if (data) {
+        if (data.officerIds && data.officerIds.length > 0) {
+          if (data.type && data.type == 'sales') {
+            this.cdlservice.updateSalesOfficer(this.dealerUid, data.officerIds).subscribe((data: any) => {
+              if (data) {
+                console.log("Sales Officers Assigned")
+                this.ngOnInit();
+              }
+            })
+          }
+          else if (data.type && data.type == 'credit') {
+            this.cdlservice.updateCreditOfficer(this.dealerUid, data.officerIds).subscribe((data: any) => {
+              if (data) {
+                console.log("Credit Officers Assigned");
+                this.ngOnInit();
+
+              }
+            })
+          }
+        }
+      }
+      else {
+        console.log("Data Not Saved")
+      }
+    });
   }
 
 
@@ -333,7 +387,36 @@ export class ViewDealerComponent implements OnInit {
       this.status = false;
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
     })
+  }
 
+
+  changeDistrictActive(event) {
+    let DistrictStatusChange = (event.checked) ? true : false;
+    this.cdlservice.partnerDistrictWiseStatus(this.dealerUid, DistrictStatusChange).subscribe((data: any) => {
+      if (data) {
+        this.districtWiseStatus = (event.checked) ? true : false;
+        let statusDisplayName = this.districtWiseStatus ? 'Active' : 'Inactive';
+        this.snackbarService.openSnackBar("District Wise Restriction is " + statusDisplayName)
+      }
+    }, (error) => {
+      this.districtWiseStatus = false;
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    })
+  }
+
+
+  changeAutoApprovalActive(event) {
+    let autoApprovalChange = (event.checked) ? true : false;
+    this.cdlservice.partnerAutoApprovalStatus(this.dealerUid, autoApprovalChange).subscribe((data: any) => {
+      if (data) {
+        this.autoApprovalStatus = (event.checked) ? true : false;
+        let statusDisplayName = this.autoApprovalStatus ? 'Active' : 'Inactive';
+        this.snackbarService.openSnackBar("Auto Approval Status is " + statusDisplayName)
+      }
+    }, (error) => {
+      this.autoApprovalStatus = false;
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    })
   }
 
   loanDetails(data) {

@@ -10,7 +10,7 @@ export class SelectSchemeComponent implements OnInit {
   schemes
   constructor(
     public dialogRef: MatDialogRef<SelectSchemeComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
   ngOnInit(): void {
