@@ -21,29 +21,28 @@
             class="fa fa-caret-down text-dark"></i>
         </button>
         <div class="dropdown-menu p-2" aria-labelledby="dropdownMenuButton">
-          <div class="dropdown-item d-flex justify-content-between">
+          <div class="dropdown-item d-flex justify-content-between" (click)="changeAvailability('Online')">
             <div>
-              <a (click)="changeAvailability('Online')"><i
-                  class="fa fa-circle availanility-icon online"></i>&nbsp;Online</a>
+              <a><i class="fa fa-circle availanility-icon online"></i>&nbsp;Online</a>
             </div>
             <div *ngIf="userDetails.userAvailable=='Online'">
               <i class="fa fa-check"></i>
             </div>
           </div>
           <hr class="py-0 my-2">
-          <div class="dropdown-item d-flex justify-content-between">
+          <div class="dropdown-item d-flex justify-content-between" (click)="changeAvailability('Away')">
             <div>
-              <a (click)="changeAvailability('Away')"><i class="fa fa-circle availanility-icon away"></i>&nbsp;Away</a>
+              <a><i class="fa fa-circle availanility-icon away"></i>&nbsp;Away</a>
             </div>
             <div *ngIf="userDetails.userAvailable=='Away'">
               <i class="fa fa-check"></i>
             </div>
           </div>
           <hr class="py-0 my-2">
-          <div class="dropdown-item d-flex justify-content-between">
+          <div class="dropdown-item d-flex justify-content-between" (click)="changeAvailability('NotAvailable')">
             <div>
-              <a (click)="changeAvailability('NotAvailable')"><i
-                  class="fa fa-circle availanility-icon"></i>&nbsp;Not Available</a>
+              <a><i class="fa fa-circle availanility-icon"></i>&nbsp;Not
+                Available</a>
             </div>
             <div *ngIf="userDetails.userAvailable=='NotAvailable'">
               <i class="fa fa-check"></i>
