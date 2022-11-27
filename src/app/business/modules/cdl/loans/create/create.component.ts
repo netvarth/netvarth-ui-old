@@ -119,440 +119,7 @@ export class CreateComponent implements OnInit {
   employmentTypes = projectConstantsLocal.EMPLOYMENT_TYPES;
   filesToUpload: any = [];
   dealers: any;
-  mafilScoreFields: any = {
-    "customerEducation": [
-      {
-        "id": 1,
-        "code": "ER01",
-        "name": "Professionals like Doctors / Engineers / CAs / CS / Architects",
-        "score": 5
-      },
-      {
-        "id": 2,
-        "code": "ER02",
-        "name": "Post Graduates/Graduates",
-        "score": 4
-      },
-      {
-        "id": 3,
-        "code": "ER03",
-        "name": "Plus Two/Diploma Holders",
-        "score": 3
-      },
-      {
-        "id": 4,
-        "code": "ER04",
-        "name": "Matriculate / 10th",
-        "score": 2
-      },
-      {
-        "id": 5,
-        "code": "ER05",
-        "name": "Below Matriculate",
-        "score": 1
-      }
-    ],
-    "customerEmployement": [
-      {
-        "id": 1,
-        "code": "SEMP01",
-        "type": "Salary",
-        "name": "Govt. Servants - Junior Level",
-        "score": 2
-      },
-      {
-        "id": 2,
-        "code": "SEMP02",
-        "type": "Salary",
-        "name": "Govt. Servants - Clerikal Level",
-        "score": 4
-      },
-      {
-        "id": 3,
-        "code": "SEMP03",
-        "type": "Salary",
-        "name": "Govt. Servants - Officers Level",
-        "score": 4
-      },
-      {
-        "id": 4,
-        "code": "SEMP04",
-        "type": "Salary",
-        "name": "Govt. Servants - Senior Executives",
-        "score": 5
-      },
-      {
-        "id": 5,
-        "code": "SEMP05",
-        "type": "Salary",
-        "name": "Public sector Banks / PSUs",
-        "score": 4
-      },
-      {
-        "id": 6,
-        "code": "SEMP06",
-        "type": "Salary",
-        "name": "Private banks/reputed Pvt Cos/Pvt Colleges/ Pvt Schools",
-        "score": 4
-      },
-      {
-        "id": 7,
-        "code": "SEMP07",
-        "type": "Salary",
-        "name": "Private  Sector - Sole proprietory/Partnership",
-        "score": 1
-      },
-      {
-        "id": 8,
-        "code": "SEMP08",
-        "type": "Self Employed",
-        "name": "Self employed - Daily income Rs.<1000/-",
-        "score": 2
-      },
-      {
-        "id": 9,
-        "code": "SEMP09",
-        "type": "Self Employed",
-        "name": "Self employed - Daily income Rs.>1000/-",
-        "score": 3
-      },
-      {
-        "id": 10,
-        "code": "SEMP010",
-        "type": "Self Employed",
-        "name": "Others or below 500/-",
-        "score": 0
-      },
-      {
-        "id": 11,
-        "code": "BEMP011",
-        "type": "Business",
-        "name": "Business income < 10000",
-        "score": 0
-      },
-      {
-        "id": 12,
-        "code": "BEMP012",
-        "type": "Business",
-        "name": "Business income < 25000",
-        "score": 1
-      },
-      {
-        "id": 13,
-        "code": "BEMP013",
-        "type": "Business",
-        "name": "Business income < 50000",
-        "score": 3
-      },
-      {
-        "id": 14,
-        "code": "BEMP014",
-        "type": "Business",
-        "name": "Business income > 50001",
-        "score": 5
-      }
-    ],
-    "monthlyIncome": [
-      {
-        "id": 1,
-        "code": "MI01",
-        "name": "0 to 10000",
-        "score": 0
-      },
-      {
-        "id": 2,
-        "code": "MI02",
-        "name": "10000 to 15000",
-        "score": 1
-      },
-      {
-        "id": 3,
-        "code": "MI03",
-        "name": "15001 to 20000",
-        "score": 2
-      },
-      {
-        "id": 4,
-        "code": "MI04",
-        "name": "20001 to 30000",
-        "score": 3
-      },
-      {
-        "id": 5,
-        "code": "MI05",
-        "name": "30001 to 50000",
-        "score": 5
-      },
-      {
-        "id": 6,
-        "code": "MI06",
-        "name": "50001 to 75000",
-        "score": 7
-      },
-      {
-        "id": 7,
-        "code": "MI07",
-        "name": "75001 to 100000",
-        "score": 8
-      },
-      {
-        "id": 8,
-        "code": "MI08",
-        "name": "More than 100001",
-        "score": 10
-      }
-    ],
-    "existingCustomer": [
-      {
-        "id": 1,
-        "code": "EC01",
-        "name": "Customer having Nil Auction & Good Track (Monthly Repayment)",
-        "score": 3
-      },
-      {
-        "id": 2,
-        "code": "EC02",
-        "name": "Customer having Overdue",
-        "score": 1
-      },
-      {
-        "id": 3,
-        "code": "EC03",
-        "name": "Customer having Auctioned Loan account",
-        "score": -25
-      },
-      {
-        "id": 4,
-        "code": "EC04",
-        "name": "New Customer",
-        "score": 2
-      }
-    ],
-    "salaryRouting": [
-      {
-        "id": 1,
-        "code": "SR01",
-        "name": "Salary through Bank A/c",
-        "score": 5
-      },
-      {
-        "id": 2,
-        "code": "SR02",
-        "name": "Salary by Cash",
-        "score": 2
-      },
-      {
-        "id": 3,
-        "code": "SR03",
-        "name": "Income from Business",
-        "score": 4
-      }
-    ],
-    "familyDependants": [
-      {
-        "id": 1,
-        "code": "FD01",
-        "name": "Up to 1",
-        "score": 5
-      },
-      {
-        "id": 2,
-        "code": "FD02",
-        "name": "Up to 2",
-        "score": 4
-      },
-      {
-        "id": 3,
-        "code": "FD03",
-        "name": "Up to 3",
-        "score": 3
-      },
-      {
-        "id": 4,
-        "code": "FD04",
-        "name": "3 to 5",
-        "score": 2
-      },
-      {
-        "id": 5,
-        "code": "FD05",
-        "name": "More than 5",
-        "score": 1
-      }
-    ],
-    "noOfYearsAtPresentAddress": [
-      {
-        "id": 1,
-        "code": "NYPA01",
-        "name": "Owned house",
-        "score": 5
-      },
-      {
-        "id": 2,
-        "code": "NYPA02",
-        "name": "above 5 years",
-        "score": 4
-      },
-      {
-        "id": 3,
-        "code": "NYPA03",
-        "name": "3 to 5 years",
-        "score": 3
-      },
-      {
-        "id": 4,
-        "code": "NYPA04",
-        "name": "2 to 3 years",
-        "score": 2
-      },
-      {
-        "id": 5,
-        "code": "NYPA05",
-        "name": "less than two years",
-        "score": 1
-      }
-    ],
-    "currentResidenceOwnershipStatus": [
-      {
-        "id": 1,
-        "code": "CROS01",
-        "name": "Rented House with no owned house",
-        "score": 1
-      },
-      {
-        "id": 2,
-        "code": "CROS02",
-        "name": "Staying in rented house but having self owned house",
-        "score": 2
-      },
-      {
-        "id": 3,
-        "code": "CROS03",
-        "name": "Staying with family in parental owned house",
-        "score": 3
-      },
-      {
-        "id": 4,
-        "code": "CROS04",
-        "name": "Staying with family in parental owned house (sole child)",
-        "score": 4
-      },
-      {
-        "id": 5,
-        "code": "CROS05",
-        "name": "Staying with family in house owned by self/spouse",
-        "score": 5
-      }
-    ],
-    "ownedMovableAssets": [
-      {
-        "id": 1,
-        "code": "OMA01",
-        "name": "No movable assets",
-        "score": 1
-      },
-      {
-        "id": 2,
-        "code": "OMA02",
-        "name": "two wheeler",
-        "score": 2
-      },
-      {
-        "id": 3,
-        "code": "OMA03",
-        "name": "four wheeler - LMV",
-        "score": 3
-      },
-      {
-        "id": 4,
-        "code": "OMA04",
-        "name": "four wheeler - Heavy Vehicle",
-        "score": 5
-      },
-      {
-        "id": 5,
-        "code": "OMA05",
-        "name": "four wheeler - SUV",
-        "score": 5
-      }
-    ],
-    "earningMembers": [
-      {
-        "id": 1,
-        "code": "EM01",
-        "name": "1 Earning Member",
-        "score": 1
-      },
-      {
-        "id": 2,
-        "code": "EM02",
-        "name": "2 Earning Members",
-        "score": 2
-      },
-      {
-        "id": 3,
-        "code": "EM03",
-        "name": "3 Earning Members",
-        "score": 3
-      },
-      {
-        "id": 4,
-        "code": "EM04",
-        "name": "4 earning members as above and additional business income",
-        "score": 5
-      },
-      {
-        "id": 5,
-        "code": "EM05",
-        "name": "four wheeler - Suv",
-        "score": 5
-      }
-    ],
-    "goodsFinanced": [
-      {
-        "id": 1,
-        "code": "GF01",
-        "name": "Branded White goods",
-        "score": 4
-      },
-      {
-        "id": 2,
-        "code": "GF02",
-        "name": "Branded Brown Goods",
-        "score": 3
-      },
-      {
-        "id": 3,
-        "code": "GF03",
-        "name": "Branded Computers and similar products",
-        "score": 2
-      },
-      {
-        "id": 4,
-        "code": "GF04",
-        "name": "Non-branded brown goods/Mobile Phones",
-        "score": 1
-      },
-      {
-        "id": 5,
-        "code": "GF05",
-        "name": "Branded",
-        "score": 3
-      },
-      {
-        "id": 6,
-        "code": "GF06",
-        "name": "Non-Branded",
-        "score": 2
-      },
-      {
-        "id": 7,
-        "code": "GF07",
-        "name": "Others",
-        "score": 1
-      }
-    ]
-  };
+  mafilScoreFields: any;
   SelectedloanProducts: any = [];
   constructor(
     private location: Location,
@@ -584,6 +151,7 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.firstname.setValue(this.loanData.customer.firstName);
             this.createLoan.controls.lastname.setValue(this.loanData.customer.lastName);
             this.createLoan.controls.email.setValue(this.loanData.customer.email);
+            this.createLoan.controls.dob.setValue(this.loanData.customer.dob);
             this.createLoan.controls.aadharnumber.setValue(this.loanData.loanApplicationKycList[0].aadhaar);
             this.createLoan.controls.pannumber.setValue(this.loanData.loanApplicationKycList[0].pan);
             if (this.loanData && this.loanData.type && this.loanData.type.id) {
@@ -689,6 +257,10 @@ export class CreateComponent implements OnInit {
               this.createLoan.controls.vehicleNo.setValue(this.loanData.loanApplicationKycList[0].vehicleNo);
             }
 
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].earningMembers) {
+              this.createLoan.controls.earningMembers.setValue(this.loanData.loanApplicationKycList[0].earningMembers);
+            }
+
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].goodsFinanced) {
               this.createLoan.controls.goodsFinanced.setValue(this.loanData.loanApplicationKycList[0].goodsFinanced);
             }
@@ -790,7 +362,9 @@ export class CreateComponent implements OnInit {
       currentResidenceOwnershipStatus: [null],
       ownedMovableAssets: [null],
       vehicleNo: [null],
-      goodsFinanced: [null]
+      goodsFinanced: [null],
+      dob: [null],
+      earningMembers: [null]
     });
   }
 
@@ -887,6 +461,9 @@ export class CreateComponent implements OnInit {
         }
         if (this.customerDetails[0] && this.customerDetails[0].address) {
           this.createLoan.controls.permanentaddress1.setValue(this.customerDetails[0].address)
+        }
+        if (this.customerDetails[0] && this.customerDetails[0].dob) {
+          this.createLoan.controls.dob.setValue(this.customerDetails[0].dob)
         }
         if (this.customerDetails[0] && this.customerDetails[0].id) {
           this.customerId = this.customerDetails[0].id;
@@ -1007,6 +584,7 @@ export class CreateComponent implements OnInit {
         "lastName": this.createLoan.controls.lastname.value,
         "phoneNo": this.createLoan.controls.phone.value,
         "email": this.createLoan.controls.email.value,
+        "dob": this.createLoan.controls.dob.value,
         "countryCode": "+91"
       },
       "type": { "id": this.createLoan.controls.loantype.value },
@@ -1369,7 +947,8 @@ export class CreateComponent implements OnInit {
           "id": this.customerId,
           "firstName": this.createLoan.controls.firstname.value,
           "lastName": this.createLoan.controls.lastname.value,
-          "email": this.createLoan.controls.email.value
+          "email": this.createLoan.controls.email.value,
+          "dob": this.createLoan.controls.dob.value
         },
         // "assignee": { "id": 139799 },
         "location": { "id": this.user.bussLocs[0] },
@@ -1596,10 +1175,13 @@ export class CreateComponent implements OnInit {
           "monthlyIncome": this.createLoan.controls.salary.value,
           "nomineeType": this.createLoan.controls.nomineetype.value,
           "nomineeName": this.createLoan.controls.nomineename.value,
+          "nomineeDob": this.createLoan.controls.nomineeDob.value,
+          "nomineePhone": this.createLoan.controls.nomineePhone.value,
           "customerEducation": this.createLoan.controls.customerEducation.value,
           "customerEmployement": this.createLoan.controls.customerEmployement.value,
           "salaryRouting": this.createLoan.controls.salaryRouting.value,
           "familyDependants": this.createLoan.controls.familyDependants.value,
+          "earningMembers": this.createLoan.controls.earningMembers.value,
           "noOfYearsAtPresentAddress": this.createLoan.controls.noOfYearsAtPresentAddress.value,
           "currentResidenceOwnershipStatus": this.createLoan.controls.currentResidenceOwnershipStatus.value,
           "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,

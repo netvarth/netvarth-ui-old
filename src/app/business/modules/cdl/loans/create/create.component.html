@@ -122,6 +122,21 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
+                      <div class="form-title">Date of Birth</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off"
+                        formControlName="dob" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
                       <div class="form-title">Customer Photo</div>
                     </div>
                     <div class="fieldPadding photo-border">
@@ -665,6 +680,36 @@
                 </div>
               </div>
 
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.existingCustomer">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Existing Customer</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #existingCustomer formControlName="existingCustomer">
+                      <mat-option [value]="customer.id" *ngFor="let customer of mafilScoreFields.existingCustomer">
+                        <div *ngIf="customer && customer.name">{{customer.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.earningMembers">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Earning Members</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #earningMembers formControlName="earningMembers">
+                      <mat-option [value]="member.id" *ngFor="let member of mafilScoreFields.earningMembers">
+                        <div *ngIf="member && member.name">{{member.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
 
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.noOfYearsAtPresentAddress">
                 <div>
@@ -901,7 +946,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Relation</div>
+                      <div class="form-title">Nominee Relation</div>
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" placeholder="" #nomineetype
@@ -928,6 +973,37 @@
                   </div>
                 </div>
               </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Phone Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Nominee Phone Number"
+                        class="form-control" autocomplete="off" #nomineePhone formControlName="nomineePhone"
+                        maxlength="10" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Date of Birth</div>
+                    </div> 
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #nomineeDob type="date" class="form-control" autocomplete="off"
+                        formControlName="nomineeDob" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
             </div>
             <div>
               <button class="btn btn-primary open-all-btn" (click)="saveLoanDetails()">Save</button>
