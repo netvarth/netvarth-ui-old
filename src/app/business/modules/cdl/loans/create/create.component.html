@@ -137,6 +137,24 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
+                      <div class="form-title">Gender</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #gender formControlName="gender">
+                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                          <div *ngIf="gender && gender.name">{{gender.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
                       <div class="form-title">Customer Photo</div>
                     </div>
                     <div class="fieldPadding photo-border">
@@ -995,7 +1013,7 @@
                   <div>
                     <div class="d-flex">
                       <div class="form-title">Nominee Date of Birth</div>
-                    </div> 
+                    </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #nomineeDob type="date" class="form-control" autocomplete="off"
                         formControlName="nomineeDob" />
@@ -1125,10 +1143,13 @@
               </div>
 
             </div>
-            <div *ngIf="!bankDetailsVerified">
+            <div *ngIf="!bankDetailsVerified && !accountaggregating">
               <button class="btn btn-primary open-all-btn" (click)="verifyBankDetails()">Verify</button>
             </div>
-            <div *ngIf="bankDetailsVerified">
+            <div *ngIf="accountaggregating">
+              <button class="btn btn-primary open-all-btn" (click)="refreshBankDetails()">Refresh</button>
+            </div>
+            <div *ngIf="bankDetailsVerified && !accountaggregating">
               <button class="btn btn-primary open-all-btn" (click)="saveBankDetails()">Save</button>
             </div>
           </mat-expansion-panel>

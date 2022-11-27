@@ -46,6 +46,17 @@ export class CreateComponent implements OnInit {
     "photo": { files: [], base64: [], caption: [] },
     "bank": { files: [], base64: [], caption: [] }
   }
+  genders = [
+    {
+      name: 'Male'
+    },
+    {
+      name: 'Female'
+    },
+    {
+      name: 'Others'
+    },
+  ];
   lebalUplaodFile: string = 'Click & Upload your files here';
   actionText: any;
   schemeSelected: any;
@@ -121,6 +132,7 @@ export class CreateComponent implements OnInit {
   dealers: any;
   mafilScoreFields: any;
   SelectedloanProducts: any = [];
+  accountaggregating: boolean = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -152,6 +164,7 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.lastname.setValue(this.loanData.customer.lastName);
             this.createLoan.controls.email.setValue(this.loanData.customer.email);
             this.createLoan.controls.dob.setValue(this.loanData.customer.dob);
+            this.createLoan.controls.gender.setValue(this.loanData.customer.gender);
             this.createLoan.controls.aadharnumber.setValue(this.loanData.loanApplicationKycList[0].aadhaar);
             this.createLoan.controls.pannumber.setValue(this.loanData.loanApplicationKycList[0].pan);
             if (this.loanData && this.loanData.type && this.loanData.type.id) {
@@ -261,6 +274,10 @@ export class CreateComponent implements OnInit {
               this.createLoan.controls.earningMembers.setValue(this.loanData.loanApplicationKycList[0].earningMembers);
             }
 
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].existingCustomer) {
+              this.createLoan.controls.existingCustomer.setValue(this.loanData.loanApplicationKycList[0].existingCustomer);
+            }
+
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].goodsFinanced) {
               this.createLoan.controls.goodsFinanced.setValue(this.loanData.loanApplicationKycList[0].goodsFinanced);
             }
@@ -348,6 +365,8 @@ export class CreateComponent implements OnInit {
       loanproduct: [null],
       nomineetype: [null],
       nomineename: [null],
+      nomineePhone: [null],
+      nomineeDob: [null],
       bank: [null],
       ifsc: [null],
       account: [null],
@@ -364,7 +383,9 @@ export class CreateComponent implements OnInit {
       vehicleNo: [null],
       goodsFinanced: [null],
       dob: [null],
-      earningMembers: [null]
+      earningMembers: [null],
+      gender: [null],
+      existingCustomer: [null]
     });
   }
 
@@ -585,6 +606,7 @@ export class CreateComponent implements OnInit {
         "phoneNo": this.createLoan.controls.phone.value,
         "email": this.createLoan.controls.email.value,
         "dob": this.createLoan.controls.dob.value,
+        "gender": this.createLoan.controls.gender.value,
         "countryCode": "+91"
       },
       "type": { "id": this.createLoan.controls.loantype.value },
@@ -602,12 +624,7 @@ export class CreateComponent implements OnInit {
         {
           "isCoApplicant": false,
           "maritalStatus": this.createLoan.controls.martialstatus.value,
-          "employmentStatus": this.createLoan.controls.employmenttype.value,
-          "monthlyIncome": this.createLoan.controls.salary.value,
-          "aadhaar": this.createLoan.controls.aadharnumber.value,
           "pan": this.createLoan.controls.pannumber.value,
-          "nomineeType": this.createLoan.controls.nomineetype.value,
-          "nomineeName": this.createLoan.controls.nomineename.value,
           "permanentAddress1": this.createLoan.controls.permanentaddress1.value,
           "permanentAddress2": this.createLoan.controls.permanentaddress2.value,
           "permanentPin": this.createLoan.controls.permanentpincode.value,
@@ -618,6 +635,23 @@ export class CreateComponent implements OnInit {
           "currentPin": this.createLoan.controls.currentpincode.value,
           "currentCity": this.createLoan.controls.currentpincode.value,
           "currentState": this.createLoan.controls.currentstate.value,
+          "employmentStatus": this.createLoan.controls.employmenttype.value,
+          "monthlyIncome": this.createLoan.controls.salary.value,
+          "nomineeType": this.createLoan.controls.nomineetype.value,
+          "nomineeName": this.createLoan.controls.nomineename.value,
+          "nomineeDob": this.createLoan.controls.nomineeDob.value,
+          "nomineePhone": this.createLoan.controls.nomineePhone.value,
+          "customerEducation": this.createLoan.controls.customerEducation.value,
+          "customerEmployement": this.createLoan.controls.customerEmployement.value,
+          "salaryRouting": this.createLoan.controls.salaryRouting.value,
+          "familyDependants": this.createLoan.controls.familyDependants.value,
+          "earningMembers": this.createLoan.controls.earningMembers.value,
+          "existingCustomer": this.createLoan.controls.existingCustomer.value,
+          "noOfYearsAtPresentAddress": this.createLoan.controls.noOfYearsAtPresentAddress.value,
+          "currentResidenceOwnershipStatus": this.createLoan.controls.currentResidenceOwnershipStatus.value,
+          "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,
+          "vehicleNo": this.createLoan.controls.vehicleNo.value,
+          "goodsFinanced": this.createLoan.controls.goodsFinanced.value
         }
       ]
     }
@@ -948,7 +982,8 @@ export class CreateComponent implements OnInit {
           "firstName": this.createLoan.controls.firstname.value,
           "lastName": this.createLoan.controls.lastname.value,
           "email": this.createLoan.controls.email.value,
-          "dob": this.createLoan.controls.dob.value
+          "dob": this.createLoan.controls.dob.value,
+          "gender": this.createLoan.controls.gender.value
         },
         // "assignee": { "id": 139799 },
         "location": { "id": this.user.bussLocs[0] },
@@ -1182,11 +1217,12 @@ export class CreateComponent implements OnInit {
           "salaryRouting": this.createLoan.controls.salaryRouting.value,
           "familyDependants": this.createLoan.controls.familyDependants.value,
           "earningMembers": this.createLoan.controls.earningMembers.value,
+          "existingCustomer": this.createLoan.controls.existingCustomer.value,
           "noOfYearsAtPresentAddress": this.createLoan.controls.noOfYearsAtPresentAddress.value,
           "currentResidenceOwnershipStatus": this.createLoan.controls.currentResidenceOwnershipStatus.value,
           "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,
           "vehicleNo": this.createLoan.controls.vehicleNo.value,
-          "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
+          "goodsFinanced": this.createLoan.controls.goodsFinanced.value
         }
       ]
     }
@@ -1231,6 +1267,11 @@ export class CreateComponent implements OnInit {
     console.log(this.loanProductsSelected)
   }
 
+
+  refreshBankDetails() {
+
+  }
+
   verifyBankDetails() {
     const verifyBank = {
       "bankName": this.createLoan.controls.bank.value,
@@ -1249,9 +1290,14 @@ export class CreateComponent implements OnInit {
           this.bankData = bankInfo;
         });
         this.bankDetailsVerified = true;
+        this.accountaggregating = true;
+        this.cdlService.accountAggregate(this.loanId, 0).subscribe((data: any) => {
+          if (data) {
+            this.accountaggregating = false;
+            this.snackbarService.openSnackBar("We have sent you a link for Account Aggregation Please gohead and verify your details")
+          }
+        });
       }
-      this.snackbarService.openSnackBar("Bank Details Verified Successfully")
-
     },
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })

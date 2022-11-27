@@ -305,4 +305,8 @@
   .mobile-only {
     display: none;
   }
+
+  ::ng-deep .p-timeline-event-content {
+    font-size: 0.7rem !important;
+  }
 }

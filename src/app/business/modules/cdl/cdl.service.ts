@@ -324,6 +324,12 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  accountAggregate(id, kycid) {
+    const url = 'provider/loanapplication/accountaggregate/' + id + '/' + kycid;
+    return this.servicemeta.httpPost(url, null);
+  }
+
+
   verifyPhoneOTP(otp, data) {
     const url = 'provider/loanapplication/verify/' + otp + '/phone';
     return this.servicemeta.httpPost(url, data);
@@ -368,6 +374,12 @@ export class CdlService {
 
   updateCreditOfficer(id, data) {
     const url = 'provider/partner/' + id + '/updatecreditofficer';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+
+  getMafilScore(data) {
+    const url = 'provider/loanapplication/csms/generatescore';
     return this.servicemeta.httpPut(url, data);
   }
 

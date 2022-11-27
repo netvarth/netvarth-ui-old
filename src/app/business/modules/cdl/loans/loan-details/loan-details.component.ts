@@ -52,6 +52,7 @@ export class LoanDetailsComponent implements OnInit {
   loanData: any;
   loanApplicationStatus: any;
   statusIndex: any;
+  capabilities: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -63,12 +64,16 @@ export class LoanDetailsComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.user) {
+      this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
+    }
     this.activated_route.params.subscribe((params) => {
       if (params) {
         if (params && params.id) {
           this.loanId = params.id;
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
+            this.checkMafilScore();
             console.log("LoanData", this.loanData)
             this.loanApplicationStatus = this.loanData.spInternalStatus;
             this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
@@ -85,6 +90,19 @@ export class LoanDetailsComponent implements OnInit {
     })
   }
 
+  checkMafilScore() {
+    let data =
+    {
+      "loanApplicationUid": this.loanId,
+      "loanApplicationKycId": this.loanData.loanApplicationKycList[0].id
+    }
+    this.cdlservice.getMafilScore(data).subscribe((data: any) => {
+      console.log("Mafil Score Data : ", data);
+      if (data && data.creditScore) {
+        this.mafilScore = data.creditScore;
+      }
+    });
+  }
 
   checkTimeline() {
     this.statusIndex = this.loanStatus.filter((data) => data.name == this.loanApplicationStatus)[0].index

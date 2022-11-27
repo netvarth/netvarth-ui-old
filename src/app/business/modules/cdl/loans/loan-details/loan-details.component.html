@@ -7,7 +7,7 @@
   </div>
 </section>
 <section>
-  <div class="row mb-2" *ngIf="user.userType!=2">
+  <div class="row mb-2">
 
     <div class="card remarks-card marginClass px-5">
       <div class="container my-2">
@@ -23,7 +23,8 @@
                 <img width="30" height="30" src="./assets/images/cdl/check.png">
               </span>
             </ng-template>
-            <ng-template pTemplate="content" class="text-center" let-event>{{event.displayName}} </ng-template>
+            <ng-template pTemplate="content" class="text-center timelinetext" let-event>{{event.displayName}}
+            </ng-template>
           </p-timeline>
         </div>
 
@@ -41,7 +42,7 @@
     <div class="col-md-5">
       <div class="card">
 
-        <div *ngIf="status=='redirected' && user.userType!=2" class="text-warning mt-2 text-right">
+        <div *ngIf="status=='redirected'" class="text-warning mt-2 text-right">
           <div class="btn btn-action" (click)="takeAction()">Take Actions</div>
         </div>
         <div class="text-center mt-2"
@@ -59,6 +60,9 @@
         <br>
         <div class="text-left" *ngIf="loanData && loanData.referenceNo">
           <h6>Reference No : <span class="font-weight-bold">{{loanData.referenceNo}}</span></h6>
+        </div>
+        <div class="text-left" *ngIf="loanData && loanData.referenceNo">
+          <h6>Mafil Score : <span class="font-weight-bold">{{mafilScore}}</span></h6>
         </div>
         <br>
         <div class="text-left">
@@ -183,7 +187,7 @@
       </div>
     </div>
     <div class="col-md-7">
-      <div class="card mb-2" *ngIf="user.userType=='2'">
+      <div class="card mb-2">
         <div class="font-weight-bold">Actions</div>
         <div class="row mt-2">
           <div class="col-md-6">
@@ -330,7 +334,7 @@
             <div class="details-sub-title">{{loanData.invoiceAmount}}</div>
           </div>
         </div>
-        <br *ngIf="user.userType!='2'">
+        <br>
       </div>
 
 
@@ -347,7 +351,7 @@
   </div>
 </section>
 <br>
-<section class="card row" *ngIf="user.userType==2">
+<section class="card row">
   <div class="col-md-3">
     <div class="customcard">
       <div class="d-flex">
@@ -411,7 +415,7 @@
 </section>
 
 <section class="d-flex justify-content-center m-2 my-4"
-  *ngIf="loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending')">
+  *ngIf="loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending') && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
   <div class="btn-sanctioned mr-2 pointer-cursor" (click)="sanctionLoan()">
     Sanction Loan
   </div>
