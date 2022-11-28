@@ -161,6 +161,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  redirectLoan(id, data) {
+    const url = 'provider/loanapplication/' + id + '/redirect';
+    return this.servicemeta.httpPut(url, data);
+  }
+
   getSchemes() {
     const url = 'provider/loanapplication/schemes';
     return this.servicemeta.httpGet(url, null);

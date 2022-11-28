@@ -1219,7 +1219,7 @@ export const projectConstantsLocal = {
     { index: 4, name: 'ApprovalRequired', displayName: 'Approval Required' },
     { index: 5, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
     { index: 6, name: 'Sanctioned', displayName: 'Sanctioned' },
-    { index: 7, name: 'Rejected', displayName: 'Rejected' }
+    // { index: 7, name: 'Rejected', displayName: 'Rejected' }
   ],
   DEALER_STATUS: [
     { name: 'All', displayName: 'All Dealers' },

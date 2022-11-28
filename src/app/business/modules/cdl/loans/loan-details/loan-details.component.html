@@ -187,28 +187,6 @@
       </div>
     </div>
     <div class="col-md-7">
-      <div class="card mb-2">
-        <div class="font-weight-bold">Actions</div>
-        <div class="row mt-2">
-          <div class="col-md-6">
-            <div class="card border">
-              <div class="d-flex">
-                <span><i class="fa fa-comments-o actions-1" aria-hidden="true"></i></span>&nbsp;&nbsp;
-                <div class="text-left details-sub-title">Communicate With Dealer</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6">
-            <div class="card border">
-              <div class="d-flex">
-                <span><i class="fa fa-info actions-2" aria-hidden="true"></i></span>&nbsp;&nbsp;
-                <div class="text-left details-sub-title">Need More Information</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="card">
         <div class="font-weight-bold">KYC Details</div>
         <div class="row mt-2">
@@ -293,10 +271,10 @@
         </div>
 
         <div class="row mt-2"
-          *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
+          *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0] && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
           <div class="col-md-4">
-            <a (click)="analyze()" class="btn btn-primary btn-primary-full">
-              <span>Analyze Statements</span>
+            <a class="btn btn-primary btn-primary-full">
+              <span>View Statement Reports</span>
             </a>
           </div>
         </div>
@@ -311,9 +289,9 @@
             <div class="details-title">Category</div>
             <div class="details-sub-title">{{loanData.category.name}}</div>
           </div>
-          <div class="col-md-4" *ngIf="loanData && loanData.loanProduct">
-            <div class="details-title">Product</div>
-            <div class="details-sub-title">{{loanData.loanProduct.productName}}</div>
+          <div class="col-md-4" *ngIf="loanData && loanData.loanProducts">
+            <div class="details-title">Products</div>
+            <span class="details-sub-title" *ngFor="let item of loanData.loanProducts">{{item.productName}},</span>
           </div>
           <div class="col-md-4" *ngIf="loanData && loanData.requestedAmount">
             <div class="details-title">Loan Required</div>
@@ -351,14 +329,16 @@
   </div>
 </section>
 <br>
-<section class="card row">
+<section class="card row"
+  *ngIf="user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
+
   <div class="col-md-3">
     <div class="customcard">
       <div class="d-flex">
         <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
         <div>
-          <div class="customerScoreLabel">CIBIL Score</div>
-          <div class="customerScoreInfoLabel">{{cibilScore}}</div>
+          <div class="customerScoreLabel">Equifax Score</div>
+          <div class="customerScoreInfoLabel">{{perfiosScore}}</div>
         </div>
       </div>
       <div class="text-right">
@@ -426,5 +406,20 @@
 
   <div class="btn-reject pointer-cursor" (click)="rejectLoan()">
     Reject
+  </div>
+</section>
+
+<section class="d-flex justify-content-center m-2 my-4"
+  *ngIf="loanData && loanData.spInternalStatus == 'LoanRequest' && capabilities && capabilities.canApprovePartnerLoan">
+  <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveLoan()">
+    Approve Loan
+  </div>
+
+  <!-- <div class="btn-redirect mr-2 pointer-cursor" (click)="redirectLoan()">
+    Redirect Loan
+  </div> -->
+
+  <div class="btn-reject pointer-cursor" (click)="rejectLoan()">
+    Reject Loan
   </div>
 </section>

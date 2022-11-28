@@ -133,6 +133,15 @@ export class LoanDetailsComponent implements OnInit {
   }
 
 
+  approveLoan() {
+    this.cdlservice.ApprovalRequest(this.loanId).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Loan Approved Successfully");
+        this.router.navigate(['provider', 'cdl', 'loans']);
+      }
+    });
+  }
+
   analyze() {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
@@ -155,7 +164,6 @@ export class LoanDetailsComponent implements OnInit {
   }
 
   redirectLoan() {
-
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -166,17 +174,25 @@ export class LoanDetailsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(
       (data) => {
-        if (data) {
-          const navigationExtras: NavigationExtras = {
-            queryParams: {
-              type: 'redirected'
-            }
-          };
-          this.snackbarService.openSnackBar("Loan Redirected Successfully");
-          this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+        if (data && data.remarks && data.type == 'remarks') {
+          let notes = {
+            note: data.remarks
+          }
+          this.cdlservice.redirectLoan(this.loanId, notes).subscribe((data: any) => {
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                type: 'rejected'
+              }
+            };
+            this.snackbarService.openSnackBar("Loan Rejected Successfully");
+            this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+          });
         }
       });
+
+
   }
+
   rejectLoan() {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
