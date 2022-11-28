@@ -17,6 +17,8 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatInputModule } from "@angular/material/input";
 import { MatMenuModule } from "@angular/material/menu";
+import { MatOptionModule } from "@angular/material/core";
+import { MatSelectModule } from "@angular/material/select";
 
 const routes: Routes = [{ path: "", component: ReminderComponent }];
 @NgModule({
@@ -31,7 +33,9 @@ const routes: Routes = [{ path: "", component: ReminderComponent }];
     MatIconModule,
     MatAutocompleteModule,
     MatTooltipModule,
+    MatOptionModule,
     MatDatepickerModule,
+    MatSelectModule,
     MatChipsModule,
     MatDialogModule,
     FormsModule,

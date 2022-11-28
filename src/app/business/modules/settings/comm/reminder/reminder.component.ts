@@ -3,21 +3,19 @@ import { Router,ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 import { MatDialog } from "@angular/material/dialog";
 import { ProviderServices } from "../../../../services/provider-services.service";
-import { Observable } from "rxjs";
+import { Observable,of } from "rxjs";
 import { SnackbarService } from "../../../../../shared/services/snackbar.service";
-import {
-  FormGroup,
-  FormBuilder
-  // Validators,
-  //FormControl
-} from "@angular/forms";
+import { FormGroup,FormBuilder, Validators} from "@angular/forms";
 import { FormMessageDisplayService } from "../../../../../shared/modules/form-message-display/form-message-display.service";
 import { CreateReminderComponent } from "./create-reminder/create-reminder.component";
 import { GroupStorageService } from "../../../../../shared/services/group-storage.service";
 import { ConfirmBoxComponent } from "../../../../../business/shared/confirm-box/confirm-box.component";
 import * as moment from "moment";
 import { DateTimeProcessor } from "../../../../../shared/services/datetime-processor.service";
-
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { map, startWith } from 'rxjs/operators';
+declare var $: any;
 @Component({
   selector: "app-reminder",
   templateUrl: "./reminder.component.html",
@@ -42,6 +40,16 @@ export class ReminderComponent implements OnInit {
   reminderdialogRef: any;
   reminderDetails: any;
   reminderId: any;
+  qParams = {};
+  showBlockHint = false;
+  totalName: string = '';
+  customer_data: any;
+  emptyFielderror = false;
+    provider_label = '';
+    create_new = false;
+    form_data = null;
+    customer_label = '';
+    options: any[] = [];
   reminder = {
     name: "",
     message: "",
@@ -52,6 +60,11 @@ export class ReminderComponent implements OnInit {
     email: false,
     phoneNumber: false
   };
+  searchForm: FormGroup;
+  categoryForSearchingarray = ['Search with PhoneNumber','Search with Name or ID', 'Search with Email ID'];
+  categoryvalue = 'Search with PhoneNumber';
+  countryCodePhone = '+91';
+  placeholderTemp: any = '7410410123';
   isEdit: boolean = false;
   selectedDay: string;
   selectedPhone: any;
@@ -61,6 +74,9 @@ export class ReminderComponent implements OnInit {
   providerLastName: any;
   completedReminderCount = 0;
   hide: boolean = false;
+  hideTime:boolean = false;
+  isTimeNotSelected: boolean = false;
+  reminder_title: any;
 
   constructor(
     private router: Router,
@@ -72,9 +88,13 @@ export class ReminderComponent implements OnInit {
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private activated_route: ActivatedRoute,
-    private dateTimeProcessor: DateTimeProcessor
+    private dateTimeProcessor: DateTimeProcessor,
+    private wordProcessor: WordProcessor,
+
 
   ) {
+    this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
+    this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
     this.activated_route.queryParams.subscribe(qparams => {
         if(qparams.id){
           this.selectedId = qparams.id;
@@ -87,7 +107,7 @@ export class ReminderComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.bisinessProfile();
+    this.createForm();
     if(this.selectedId){
       console.log("from patientsss :",this.selectedId);
       this.getCustomerbyId(this.selectedId);
@@ -97,6 +117,7 @@ export class ReminderComponent implements OnInit {
     //this.getReminderCounts();
     this.getCompletedReminderCount();
     this.getAllReminderCount();
+    this.bisinessProfile();
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.providerId = user.id;
     this.providerFirstName = user.firstName;
@@ -133,6 +154,11 @@ getCompletedReminderCount() {
               console.log("Completed reminders :",data);
           });
 }
+resetApiErrors() {
+  // this.emailerror = null;
+  // this.email1error = null;
+  // this.phoneerror = null;
+}
 // getSchedulesCount() {
 //     const filter = { 'state-eq': 'ENABLED' };
 //     this.providerService.getSchedulesCount(filter)
@@ -142,6 +168,21 @@ getCompletedReminderCount() {
 //                 console.log("app-appointmentmanager shedules :",this.schedules_count)
 //             });
 // }
+handleCategoryselect(data) {
+  console.log(data);
+  this.searchForm.patchValue({
+    search_input: ''
+  });
+  this.filteredCustomers = of([]);
+}
+filterOption() {
+  this.filteredCustomers = this.searchForm.controls.search_input.valueChanges.pipe(startWith(''), map((value: any) => this._filter(value || '')),
+  );
+}
+_filter(value: string): string[] {
+  const filterValue = value.toLowerCase();
+  return this.options.filter(option => option.toLowerCase().includes(filterValue));
+}
   getCustomerbyId(id) {
     const filter = { 'id-eq': id };
     this.providerService.getCustomer(filter)
@@ -208,11 +249,24 @@ getCompletedReminderCount() {
         // )
       };
       console.log("Time selllll :",timeSlot);
-      this.selectedTime =
-      timeSlot.hour +
-        ":" +
-        timeSlot.minute +
-        " " + timeSlot.mode
+      this.selectedTime = [];
+       const time = {
+          'sTime':timeSlot.hour +
+          ":" +
+          timeSlot.minute +
+          " " + timeSlot.mode,
+          'eTime':timeSlot.hour +
+          ":" +
+          timeSlot.minute +
+          " " + timeSlot.mode
+         };
+         this.selectedTime.push(time);
+
+      // this.selectedTime =
+      // timeSlot.hour +
+      //   ":" +
+      //   timeSlot.minute +
+      //   " " + timeSlot.mode
        // (timeSlot.hour > 12 ? "PM" : "AM");
       console.log("selected time :", this.selectedTime);
       if (result !== undefined) {
@@ -274,6 +328,7 @@ getCompletedReminderCount() {
   // }
 
   bisinessProfile() {
+   this.searchForm.controls.search_input.setValue('');
     this.providerService.getBussinessProfile().subscribe((res: any) => {
       console.log("BProfileRes", res);
       if (res) {
@@ -328,6 +383,7 @@ getCompletedReminderCount() {
   }
   editReminder(reminderId?) {
     this.isCreate = true;
+    this.reminder_title = 'Update Reminder';
     this.reminderId = reminderId;
     this.providerService.getReminderById(reminderId).subscribe((data: any) => {
       console.log("Reminder Details Id :", data);
@@ -412,12 +468,23 @@ getCompletedReminderCount() {
       //   'phoneNumber':this.amForm.get('phoneNumber').value || this.reminderDetails.reminderSource.PushNotification
       // });
       if (sttime) {
-        // this.selectedTime = sttime;
-        this.selectedTime =
-          sttime.hour +
+         this.selectedTime = [];
+         this.selectedTime = [{
+          'sTime':sttime.hour +
+          ":" +
+          sttime.minute +
+          " " + sttime.mode,
+          'eTime':sttime.hour +
           ":" +
           sttime.minute +
           " " + sttime.mode
+         }];
+
+        // this.selectedTime =
+        //   sttime.hour +
+        //   ":" +
+        //   sttime.minute +
+        //   " " + sttime.mode
           //(sttime.hour > 12 ? "PM" : "AM");
         console.log("selected time :", this.selectedTime);
         // const existConsumerData = this.selectedTimes.find(x => x.hour === sttime.hour);
@@ -429,7 +496,12 @@ getCompletedReminderCount() {
         //  return this.selectedTimes.push(sttime);
         // }
        
-         this.selectedTimes.push(sttime);
+        // this.selectedTimes.join(sttime);
+        // this.selectedTimes[this.selectedTimes.length] = sttime;
+         //this.selectedTimes.splice(0, 0, sttime);
+         this.hideTime = true;
+         //this.selectedTimes[0] = sttime;
+
         // this.selectedTimes.map((time)=>{
         //   this.selectedTimeslot =  time.hour +
         //   ":" +
@@ -437,6 +509,7 @@ getCompletedReminderCount() {
         //   " " +
         //   (time.hour > 12 ? "PM" : "AM");;
         // })
+        this.selectedTimeslots(this.reminderId,sttime);
       }
       if(this.reminderDetails.providerConsumer.id){
         // this.getCustomerbyId(this.reminderDetails.providerConsumer.id);
@@ -447,6 +520,7 @@ getCompletedReminderCount() {
               console.log("Respooooos :",data);
               //this.selectedConsumers = data;
               this.selectedCustomerViaPhoneSearch(data[0],'edit');
+              this.selectedCustomerViaEmail_Name_ID(data[0],'edit');
               
             });
       }
@@ -475,6 +549,19 @@ getCompletedReminderCount() {
       // }
     });
   }
+
+
+  selectedTimeslots(reminderId,timeSlot){
+   
+    console.log("Selected Time :", reminderId,timeSlot);
+    const existConsumerData = this.reminders.find(x => x.id === reminderId);
+    if(existConsumerData){
+        return this.selectedTimes[0] = timeSlot;
+    }
+    else{
+        return false;
+    }
+  }
   //getReminderById
   onCancel() {
     // this.router.navigate(['provider', 'settings', 'comm', 'reminder']);
@@ -483,6 +570,7 @@ getCompletedReminderCount() {
   }
   createAddRemainder() {
     this.isCreate = true;
+    this.reminder_title = 'Create Reminder';
     // this.isEdit = false;
     // this.createForm();
     (this.reminder.name = ""),
@@ -499,8 +587,14 @@ getCompletedReminderCount() {
     this.selectedConsumers = [];
     this.hide = false;
   }
+  createForm(){
+    this.searchForm = this.fb.group({
+      search_input: ["", Validators.compose([Validators.required])]
+      //Validators.compose([Validators.required])
+  });
+  }
 
-  createForm() {
+  createnewForm() {
     // this.getCustomerQnr();
     // if (!this.haveMobile) {
     //   this.amForm = this.fb.group({
@@ -653,8 +747,8 @@ getCompletedReminderCount() {
     if (form_data.toDate) {
       toDate = this.dateTimeProcessor.transformToYMDFormat(form_data.toDate);
     }
-    if (this.reminderId !== 0) {
-      if(form_data.name === ""){
+    if (this.reminderId) {
+      if(form_data.name === "" || form_data.name === undefined){
         this.snackbarService.openSnackBar("Please enter reminder name", {
           panelClass: "snackbarerror"
         });
@@ -663,7 +757,7 @@ getCompletedReminderCount() {
         this.snackbarService.openSnackBar("Please enter reminder message", {
           panelClass: "snackbarerror"
         });
-      } else if ((this.selectedTime === undefined || this.selectedTime === "")) {
+      } else if (this.selectedTimes.length === 0 || (this.selectedTime === undefined || this.selectedTime === "")) {
         this.snackbarService.openSnackBar("Please select time slot", {
           panelClass: "snackbarerror"
         });
@@ -686,12 +780,14 @@ getCompletedReminderCount() {
               endDate: toDate,
               noOfOccurance: "1"
             },
-            timeSlots: [
-              {
-                sTime: this.selectedTime,
-                eTime: this.selectedTime
-              }
-            ]
+            timeSlots:this.selectedTime
+            // [
+              // {
+              //   sTime: this.selectedTime,
+              //   eTime: this.selectedTime
+              // }
+              
+            //]
           },
           provider:{
               id:this.providerId,
@@ -716,7 +812,13 @@ getCompletedReminderCount() {
         console.log("Posting Updated Data ;", postData);
 
         // this.amForm.reset();
-        this.providerService
+        if ((postData['timeSlots'] === 0)) {
+          this.snackbarService.openSnackBar("Please select time slot", {
+            panelClass: "snackbarerror"
+          });
+        }
+        else{
+          this.providerService
           .updateReminder(postData, this.reminderId)
           .subscribe(
             (res: any) => {
@@ -738,12 +840,14 @@ getCompletedReminderCount() {
               });
             }
           );
+        }
+      
       }
     } else {
       // if(this.selectedConsumer.id){
       //   postData['providerConsumer'] = this.selectedConsumer.id;
       // }
-      if(form_data.name === ""){
+      if(form_data.name === "" || form_data.name === undefined){
         this.snackbarService.openSnackBar("Please enter reminder name", {
           panelClass: "snackbarerror"
         });
@@ -781,12 +885,13 @@ getCompletedReminderCount() {
               endDate: toDate,
               noOfOccurance: "1"
             },
-            timeSlots: [
-              {
-                sTime: this.selectedTime,
-                eTime: this.selectedTime
-              }
-            ]
+            timeSlots:this.selectedTime
+            // [
+              // {
+              //   sTime: this.selectedTime,
+              //   eTime: this.selectedTime
+              // }
+            //]
           },
           // provider: this.providerId,
           // providerConsumer: this.selectedConsumer.id,
@@ -812,27 +917,35 @@ getCompletedReminderCount() {
         };
         // this.amForm.reset();
         console.log("Posting Data ;", postData);
+        if ((postData['timeSlots'] === 0)) {
+          this.snackbarService.openSnackBar("Please select time slot", {
+            panelClass: "snackbarerror"
+          });
+        }
+        else{
+          this.providerService.postReminder(postData).subscribe(
+            (res: any) => {
+              console.log("Reminder res :", res);
+              this.getReminders();
+              //this.getReminderCounts();
+              this.getCompletedReminderCount();
+              this.getAllReminderCount();
+              this.selectedId = 0;
+              this.isCreate = false;
+              this.snackbarService.openSnackBar("Reminder Created Successfully", {
+                panelClass: "snackbarnormal"
+              });
+              this.router.navigate(["provider", "settings","comm","reminder"]);
+            },
+            error => {
+              this.snackbarService.openSnackBar(error, {
+                panelClass: "snackbarerror"
+              });
+            }
+          );
+        }
 
-        this.providerService.postReminder(postData).subscribe(
-          (res: any) => {
-            console.log("Reminder res :", res);
-            this.getReminders();
-            //this.getReminderCounts();
-            this.getCompletedReminderCount();
-            this.getAllReminderCount();
-            this.selectedId = 0;
-            this.isCreate = false;
-            this.snackbarService.openSnackBar("Reminder Created Successfully", {
-              panelClass: "snackbarnormal"
-            });
-            this.router.navigate(["provider", "settings","comm","reminder"]);
-          },
-          error => {
-            this.snackbarService.openSnackBar(error, {
-              panelClass: "snackbarerror"
-            });
-          }
-        );
+      
       }
     }
 
@@ -854,10 +967,16 @@ getCompletedReminderCount() {
   }
   removeTime(time: any): void {
     const index = this.selectedTimes.indexOf(time);
-
+    if(this.isEdit && index === 0){
+      this.isTimeNotSelected = true;
+      this.snackbarService.openSnackBar("Select atleat one time slot", {
+        panelClass: "snackbarerror"
+      });
+    }
     if (index >= 0) {
       this.selectedTimes.splice(index, 1);
     }
+    
   }
   searchCustomerByPhone(phoneNumber, event?) {
     // Check min length
@@ -878,15 +997,15 @@ getCompletedReminderCount() {
   }
   searchCustomerLucene(searchCriteria) {
     let searchBy: any;
-    // if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
-    //     searchBy = 'name';
-    // }
-    // else if (this.categoryvalue && this.categoryvalue === 'Search with Email ID') {
-    //     searchBy = 'emailId';
-    // }
+    if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+        searchBy = 'name';
+    }
+    else if (this.categoryvalue && this.categoryvalue === 'Search with Email ID') {
+        searchBy = 'emailId';
+    }
     this.providerService.getSearchCustomer(this.tempAcId, searchBy, searchCriteria.search_input).subscribe((res: any) => {
         console.log('res', res);
-       // this.options = res;
+        this.options = res;
         this.filteredCustomers = res;
     })
 }
@@ -897,7 +1016,7 @@ getCompletedReminderCount() {
     const existConsumerData = this.selectedConsumers.find(x => x.id === customer.id);
     if(existConsumerData){
       if(mode === 'edit'){
-       // this.selectedConsumers.concat(customer)
+       // this.selectedConsumers[0] = customer;
         return false;
       }
       else{
@@ -905,7 +1024,13 @@ getCompletedReminderCount() {
       }
     }
     else{
-     return this.selectedConsumers.push(customer);
+      if(mode === 'edit' && this.reminderId){
+        return this.selectedConsumers[0] = customer;
+      }
+      else{
+        return this.selectedConsumers.push(customer);
+
+      }
     }
    
     //console.log("Selected consumersss :", this.selectedConsumers);
@@ -1000,4 +1125,147 @@ getCompletedReminderCount() {
     }
     return cdate.getFullYear() + "-" + mon + "-" + cdate.getDate();
   }
+
+
+      /**
+     * 
+     * @param data 
+     * @param form_data 
+     */
+       selectedCustomerViaEmail_Name_ID(data, form_data,mode?) {
+        console.log(data);
+        console.log(form_data)
+        if (data && data['firstName'] && data['lastName'] && data['lastName'] !== 'null') {
+            this.totalName = (data['firstName'][0].toUpperCase() + data['firstName'].slice(1)) + ' ' + (data['lastName'][0].toUpperCase() + data['lastName'].slice(1));
+            if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+                if (this.totalName) {
+                    this.searchForm.controls.search_input.setValue(this.totalName);
+                }
+            }
+        }
+        else if (data && data['firstName'] && data['lastName'] && data['lastName'] === 'null') {
+            this.totalName = (data['firstName'][0].toUpperCase() + data['firstName'].slice(1));
+            if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+                if (this.totalName) {
+                    this.searchForm.controls.search_input.setValue(this.totalName);
+                }
+            }
+        }
+        this.customer_data = data;
+        console.log("Selected consumer By email name id:", data);
+       this.selectedConsumer =  this.customer_data;
+       const existConsumerData = this.selectedConsumers.find(x => x.id === this.customer_data.id);
+    if(existConsumerData){
+     // if(mode === 'edit'){
+        return false;
+    //   }
+    //   else{
+    //   this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
+    //  }
+    }
+    else{
+      // mode === 'edit' && 
+      if(mode === 'edit' && this.reminderId){
+        return this.selectedConsumers[0] =  this.customer_data;
+      }
+      else{
+        return this.selectedConsumers.push(this.customer_data);
+
+      }
+    }
+        //this.initConsumerAppointment(data);
+        // this.tempDataCustomerInfo = data;
+        // this.searchCustomer(form_data);
+    }
+
+    /**
+     * 
+     * @param form_data 
+     * @param event 
+     */
+    findCustomer(form_data, event) {
+        this.showBlockHint = false;
+        if (event.key === 'Enter') {
+            this.searchCustomer(form_data);
+        }
+    }
+
+    /**
+     * 
+     * @param form_data 
+     */
+    searchCustomer(form_data) {
+        this.emptyFielderror = false;
+        if (form_data && form_data.search_input === '') {
+            this.emptyFielderror = true;
+        } else {
+            this.qParams = {};
+            let mode = 'id';
+            this.form_data = null;
+            this.create_new = false;
+            let post_data = {};
+            const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+            const isEmail = emailPattern.test(form_data.search_input);
+            if (isEmail) {
+                mode = 'email';
+            }
+            else {
+                mode = 'id';
+            }
+            this.qParams['source'] = 'appointment';
+            switch (mode) {
+                case 'phone':
+                    post_data = {
+                        'phoneNo-eq': form_data.search_input
+                    };
+                    this.qParams['phone'] = form_data.search_input;
+                    break;
+                case 'email':
+                    this.qParams['email'] = form_data.search_input;
+                    post_data = {
+                        'email-eq': form_data.search_input
+                    };
+                    break;
+                case 'id':
+                    post_data['or=jaldeeId-eq'] = form_data.search_input + ',firstName-eq=' + form_data.search_input;
+                    break;
+            }
+            this.initCustomerDetails(post_data);
+        }
+    }
+    /**
+     * 
+     * @param postData 
+     */
+    initCustomerDetails(postData) {
+        this.providerService.getCustomer(postData).subscribe(
+            (customers: any) => {
+                // if (customers.length === 0) {
+                //     this.createNew('create');
+                // } else {
+                //     if (customers.length === 1) {
+                //         this.customer_data = customers[0];
+                //         this.foundMultipleCustomers = false;
+                //     } else {
+                //         this.customer_data = customers.filter(member => !member.parent)[0];
+                //         this.foundMultipleCustomers = true; 
+                //     }
+                //     this.initConsumerAppointment(this.customer_data);
+                // }
+                
+            }, error => {
+               // this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+        );
+    }
+
+    serchCustomerByPhone(val) {
+        let post_data = {
+            'phoneNo-eq': val,
+            'countryCode-eq': this.countryCodePhone
+        };
+        // this.qParams['phone'] = val;
+        // this.qParams['countryCode'] = this.countryCodePhone;
+        this.initCustomerDetails(post_data);
+    }
 }

@@ -83,7 +83,8 @@
 
                     <div class="card boxShadow mt-2" *ngFor="let reminder of reminders">
                         <!-- <span>Reminders for patient medicine</span> -->
-                        <div class="bold actionDiv"><span style="width: 120px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">{{reminder.reminderName ? reminder.reminderName : reminder.message}}</span> <span class="">
+                        <!--  style="width: 120px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" -->
+                        <div class="bold actionDiv"><span>{{reminder.reminderName ? reminder.reminderName : reminder.message}}</span> <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
                                     (click)="stopprop($event);">
                                     <mat-icon>more_vert</mat-icon>
@@ -94,7 +95,8 @@
                             <span class="text-secondary" style="font-size: 12px;"> {{reminder.schedule.startDate}} to
                                 {{reminder.schedule.terminator.endDate}}</span>
                         </div>
-                        <div *ngIf="reminder.message" style="width: 120px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">
+                        <!-- style="width: 120px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" -->
+                        <div *ngIf="reminder.message" style="word-break: break-all;">
                             <span class="text-secondary" style="font-size: 12px;">{{reminder.message}}</span>
                         </div>
                         <div class="copy">
@@ -140,7 +142,7 @@
         <div class="card-body">
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6">
-            <h4 class="bold mb-0">Create Reminder</h4>
+            <h4 class="bold mb-0">{{reminder_title}}</h4>
                 <span class="text-secondary mt-0" style="font-size: 12px;">Easy and Quick to create reminder for your
                     consumers.</span>
                 </div>
@@ -149,7 +151,7 @@
             <div class="form-group row">
                 <div class="col-md-6 col-lg-6">
                     <label class="p-0 m-0 pt-1 form-text-light">Reminder Name</label>
-                    <input type="email" name="name" [(ngModel)]="reminder.name" class="form-control" id="first_name"
+                    <input type="email" name="name" [(ngModel)]="reminder.name" maxlength="20" class="form-control" id="first_name"
                         placeholder="Enter Your Reminder Name" autocomplete="off" />
 
                 </div>
@@ -159,7 +161,7 @@
                 <div class="col-md-6 col-lg-6">
                     <label class="p-0 m-0 pt-1 form-text-light">Reminder Description</label>
                     <input type="text" class="form-control" name="message" [(ngModel)]="reminder.message" id="last_name"
-                        placeholder="Enter your reminder message" autocomplete="off" />
+                        placeholder="Enter your reminder message" maxlength="50" autocomplete="off" />
                     <!-- (blur)="onFieldBlur('message')" -->
                     <!-- <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
                         [errorMsgs]="fed_service.getErrorMessage(amForm,'message',
@@ -246,6 +248,7 @@
                                 <!-- {{time.hour >12 ?
                                 'PM' :'AM'}} -->
                             </span>
+                            <!-- [hidden]="hide"  [disabled] = "hideTime"-->
                             <button matChipRemove>
                                 <mat-icon>cancel</mat-icon>
                             </button>
@@ -257,26 +260,47 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="form-group row">
                 <div class="col-md-6 col-lg-6">
-                    <label class="p-0 m-0 pt-1 form-text-light">Select Consumer</label>
+                    <!--  col-xs-12 col-sm-12 no-padding display-xs-small"
+                                style='width: 90%!important;border-radius: 5px!important;' -->
+                                <div>
+                    <label class="p-0 m-0 pt-1 form-text-light">Select Consumer</label></div>
                     <!-- <input type="text" class="form-control" id="last_name" 
                         autocomplete="off"  /> [(ngModel)]="phone" class="inputstyling" -->
                     <!-- class="formSize form-control"  -->
-
-
-                    <div class="form-group" [hidden]="hide">
-                        <input autocomplete="off" class="inputSize form-control" id="first_name"
-                            placeholder="Search consumer" type="number" [(ngModel)]="phone"
-                            (ngModelChange)="searchCustomerByPhone(phone,$event)" [matChipInputFor]="chipList"
-                            [matAutocomplete]="autoprov" [ngModelOptions]="{standalone: true}">
+                    <div class="col-lg-2 display-lg-show col-md-3 col-xs-1 no-padding searchbar">
+                        <mat-form-field>
+                            <mat-label class=" " *ngIf="!categoryvalue"
+                                style="color: black;background-color: #f6f6f6;padding-left: 30px;">
+                                Category&nbsp;&nbsp;&nbsp;<span class="fa fa-angle-down"></span></mat-label>
+                            <mat-select class="categoryfield" name="categoryvalue" [(ngModel)]="categoryvalue">
+                                <mat-option *ngFor="let category of categoryForSearchingarray"
+                                    (click)="handleCategoryselect(categoryvalue)" [value]="category">
+                                    <span>{{category.slice(12)}}</span>
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
-                    <!-- <mat-form-field>
-                            <mat-chip-list aria-label="Fish selection">
-                            <mat-chip color="primary" selected>
-                           </mat-chip>
-                        </mat-chip-list>
-                    </mat-form-field> -->
+                    <div class="col-sm-1 col-xs-1 no-padding display-sm-show searchbar">
+                        <mat-form-field>
+                            <img src="../../../../../assets/images/Group_1512.png" style="width:50px;height:35px;"
+                                >
+                            <mat-select class="displaysmall" name="categoryvalue" [(ngModel)]="categoryvalue">
+                                <mat-option *ngFor="let category of categoryForSearchingarray"
+                                    (click)="handleCategoryselect(categoryvalue)" [value]="category">
+                                    {{category.slice(12)}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div *ngIf="categoryvalue=='Search with PhoneNumber'"
+                    class="col-lg-10 col-md-9 col-xs-8 col-sm-8   mgn-bt-10 padding-0 d-flex">
+                    <input autocomplete="off" type="text" name="countryCodePhone" class="inputstyling customDialCode" 
+                    [(ngModel)]="countryCodePhone">
+                    <input autocomplete="off" placeholder="{{placeholderTemp}}" type="number"
+                        class="inputstyling" [(ngModel)]="phone" name="phone"
+                        (ngModelChange)="searchCustomerByPhone(phone,$event)"
+                        [matAutocomplete]="autoprov">
                     <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
                         <mat-option *ngFor="let customer of filteredCustomers"
                             (click)="selectedCustomerViaPhoneSearch(customer)" [value]="customer.phoneNo">
@@ -291,6 +315,100 @@
                             </div>
                         </mat-option>
                     </mat-autocomplete>
+                </div>
+                <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm"
+                                    novalidate (keyup)="resetApiErrors()"
+                                    class="col-lg-10 col-md-9 col-xs-8 col-sm-8  padding-0">
+                                    <div class="form-group">
+                                        <div class="input-group mob-container"
+                                            *ngIf="categoryvalue==='Search with Email ID'">
+                                            <input autocomplete="off" (keyup)="searchCustomerLucene(searchForm.value)"
+                                                placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}"
+                                                type="email" class="inputstyling" formControlName="search_input"
+                                                (keypress)="findCustomer(searchForm.value, $event)"
+                                                [matAutocomplete]="autoprov" >
+                                            <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                                                <mat-option *ngFor="let customer of filteredCustomers"
+                                                    (click)="selectedCustomerViaEmail_Name_ID(customer,searchForm.value)"
+                                                    [value]="customer.email">
+                                                    <div class="flexClass" style="justify-content: space-between;">
+                                                        <div class="flexClass">
+                                                            <div>{{customer.email}}</div>
+                                                        </div>
+                                                        <div class="flexClass">
+                                                            <div>({{customer.firstName | capitalizeFirst}}</div>
+                                                            <div *ngIf="customer.lastName !=='null'">
+                                                                {{customer.lastName | capitalizeFirst}})
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                        <div class="input-group mob-container"
+                                            *ngIf="categoryvalue==='Search with Name or ID'">
+                                            <input autocomplete="off" (keyup)="searchCustomerLucene(searchForm.value)"
+                                                placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}"
+                                                type="text" class="inputstyling" formControlName="search_input"
+                                                (keypress)="findCustomer(searchForm.value, $event)"
+                                                [matAutocomplete]="autoprov">
+                                            <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                                                <mat-option *ngFor="let customer of filteredCustomers"
+                                                    (click)="selectedCustomerViaEmail_Name_ID(customer,searchForm.value)"
+                                                    [value]="customer.firstName">
+                                                    <div class="flexClass" style="justify-content:space-between">
+                                                        <div>{{customer.firstName | capitalizeFirst}}</div>
+                                                        <div *ngIf="customer.lastName !=='null'">
+                                                            {{customer.lastName | capitalizeFirst}}
+                                                        </div>
+                                                        <div class="flexClass">
+                                                            <div>{{customer.phoneNo}}</div>
+                                                        </div>
+                                                    </div>
+                                                </mat-option>
+                                            </mat-autocomplete>
+                                        </div>
+                                        <div *ngIf="emptyFielderror"
+                                            class="col-lg-4 col-md-4 col-sm-6 col-xs-6 no-padding">
+                                            <span class="sts-msg error">Please enter the
+                                                {{customer_label | capitalizeFirst}} ID or Email</span>
+                                        </div>
+                                    </div>
+                                </form>
+                                  <!-- <app-field-error-display style="color: #f24949 !important;"
+                                                [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+                                                Please create {{customer_label}} to take appointment">
+                                            </app-field-error-display> -->
+                                <!-- <div class=" padding-0 no-padding">
+                                    <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor"
+                                        (click)="searchCustomer(searchForm.value)"><i class="fa fa-search padding-0"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                    <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor"
+                                        (click)="serchCustomerByPhone(phone)"><i class="fa fa-search padding-0"
+                                            aria-hidden="true"></i>
+                                    </button>
+                                </div> -->
+                    <!-- <div class="form-group" [hidden]="hide">
+                        <input autocomplete="off" class="inputSize form-control" id="first_name"
+                            placeholder="Search consumer" type="number" [(ngModel)]="phone"
+                            (ngModelChange)="searchCustomerByPhone(phone,$event)" [matChipInputFor]="chipList"
+                            [matAutocomplete]="autoprov" [ngModelOptions]="{standalone: true}">
+                    </div>
+                    <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+                        <mat-option *ngFor="let customer of filteredCustomers"
+                            (click)="selectedCustomerViaPhoneSearch(customer)" [value]="customer.phoneNo">
+                            <div class="flexClass" style="justify-content:space-between">
+                                <div>{{customer.firstName | capitalizeFirst}}</div>
+                                <div *ngIf="customer.lastName !=='null'">
+                                    {{customer.lastName | capitalizeFirst}}
+                                </div>
+                                <div class="flexClass">
+                                    <div>{{customer.phoneNo}}</div>
+                                </div>
+                            </div>
+                        </mat-option>
+                    </mat-autocomplete> -->
                     <!-- <mat-form-field class="formSize" appearance="fill"> -->
                         <!-- <mat-label>Select Consumer</mat-label> -->
                         <div class="formSize" id="first_name" [hidden]="selectedConsumers.length === 0">
