@@ -214,6 +214,12 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineeType) {
               this.createLoan.controls.nomineetype.setValue(this.loanData.loanApplicationKycList[0].nomineeType);
             }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineeDob) {
+              this.createLoan.controls.nomineeDob.setValue(this.loanData.loanApplicationKycList[0].nomineeDob);
+            }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineePhone) {
+              this.createLoan.controls.nomineePhone.setValue(this.loanData.loanApplicationKycList[0].nomineePhone);
+            }
             if (this.loanData && this.loanData.loanScheme && this.loanData.loanScheme.schemeName) {
               this.createLoan.controls.scheme.setValue(this.loanData.loanScheme.schemeName);
               this.schemeSelected = this.loanData.loanScheme;
