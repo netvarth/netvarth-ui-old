@@ -194,6 +194,7 @@ _filter(value: string): string[] {
               (this.reminder.fromDate = this.selectedDay);
               (this.reminder.toDate = this.selectedDay);
               this.selectedCustomerViaPhoneSearch(data[0],'edit');
+              this.selectedCustomerViaEmail_Name_ID(data[0],'form_data','edit');
               // this.selectedConsumer = data[0];
               // this.selectedConsumers.push(data[0]);
              // this.selectedConsumers.push(data);
@@ -520,7 +521,7 @@ _filter(value: string): string[] {
               console.log("Respooooos :",data);
               //this.selectedConsumers = data;
               this.selectedCustomerViaPhoneSearch(data[0],'edit');
-              this.selectedCustomerViaEmail_Name_ID(data[0],'edit');
+              this.selectedCustomerViaEmail_Name_ID(data[0],'form_data','edit');
               
             });
       }
@@ -1132,7 +1133,7 @@ _filter(value: string): string[] {
      * @param data 
      * @param form_data 
      */
-       selectedCustomerViaEmail_Name_ID(data, form_data,mode?) {
+       selectedCustomerViaEmail_Name_ID(data, form_data?,mode?) {
         console.log(data);
         console.log(form_data)
         if (data && data['firstName'] && data['lastName'] && data['lastName'] !== 'null') {
@@ -1156,12 +1157,12 @@ _filter(value: string): string[] {
        this.selectedConsumer =  this.customer_data;
        const existConsumerData = this.selectedConsumers.find(x => x.id === this.customer_data.id);
     if(existConsumerData){
-     // if(mode === 'edit'){
+      if(mode === 'edit'){
         return false;
-    //   }
-    //   else{
-    //   this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
-    //  }
+      }
+      else{
+      this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
+    }
     }
     else{
       // mode === 'edit' && 
