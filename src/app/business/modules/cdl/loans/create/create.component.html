@@ -70,6 +70,38 @@
                 </div>
               </div>
 
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Date of Birth</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off"
+                        formControlName="dob" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Gender</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #gender formControlName="gender">
+                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                          <div *ngIf="gender && gender.name">{{gender.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
 
               <div>
                 <div class="bggrey my-2">
@@ -118,37 +150,7 @@
               </div>
 
 
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Date of Birth</div>
-                    </div>
-                    <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off"
-                        formControlName="dob" />
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Gender</div>
-                    </div>
-                    <div class="fieldPadding">
-                      <mat-select class="form-control widthWebKit" #gender formControlName="gender">
-                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
-                          <div *ngIf="gender && gender.name">{{gender.name}}</div>
-                        </mat-option>
-                      </mat-select>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
 
               <div>
