@@ -90,13 +90,22 @@
           </td>
           <td>
             <span class="d-lg-none d-md-none">Status : </span>
-            <span [class]="'customer-badge status-' + loan.spInternalStatusDisplyName" class="table-column-data">
+            <span *ngIf="loan.applicationStatus !='Rejected'"
+              [class]="'customer-badge status-' + loan.spInternalStatusDisplyName" class="table-column-data">
               {{loan.spInternalStatusDisplyName}}</span>
+            <span *ngIf="loan.applicationStatus =='Rejected'"
+              [class]="'customer-badge status-' + loan.spInternalStatusDisplyName" class="table-column-data">
+              {{loan.applicationStatus}}</span>
           </td>
           <td>
             <div class="text-center">
-              <button pButton pRipple type="button" class="p-button-primary" (click)="loanDetails(loan.uid)"><i
-                  class="pi pi-eye text-white"></i>&nbsp;View</button>
+              <div class="d-flex">
+                <button *ngIf="loan.spInternalStatus=='Draft'" pButton pRipple type="button"
+                  class="p-button-primary mr-2" (click)="updateLoan(loan.uid, 'update', 'Draft')"><i
+                    class="pi pi-eye text-white"></i>&nbsp;Update</button>
+                <button pButton pRipple type="button" class="p-button-primary" (click)="loanDetails(loan.uid)"><i
+                    class="pi pi-eye text-white"></i>&nbsp;View</button>
+              </div>
             </div>
           </td>
         </tr>
