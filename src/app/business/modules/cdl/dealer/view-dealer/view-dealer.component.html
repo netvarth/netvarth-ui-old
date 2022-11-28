@@ -65,7 +65,7 @@
       </div>
       <div>
         <div class="d-flex justify-content-center align-items-center mt-3 text-center"
-          *ngIf="this.status != 'requested'">
+          *ngIf="capabilities && capabilities.canApproveLoan">
           <div class="mr-2">
             <div class="btn btn-primary">Edit</div>
           </div>

@@ -41,8 +41,9 @@ export class ViewDealerComponent implements OnInit {
   creditOfficersList: any;
   assignedSalesOfficersList: any;
   assignedCreditOfficersList: any;
-  districtWiseStatus: boolean;
-  autoApprovalStatus: boolean;
+  districtWiseStatus: any;
+  autoApprovalStatus: any;
+  capabilities: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -61,7 +62,9 @@ export class ViewDealerComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-
+    if (this.user) {
+      this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
+    }
     this.cdlservice.getDealerById(this.dealerUid).subscribe((data: any) => {
       this.dealerData = data
       if (this.dealerData && this.dealerData.id) {

@@ -1143,14 +1143,16 @@
               </div>
 
             </div>
-            <div *ngIf="!bankDetailsVerified && !accountaggregating">
-              <button class="btn btn-primary open-all-btn" (click)="verifyBankDetails()">Verify</button>
-            </div>
-            <div *ngIf="accountaggregating">
-              <button class="btn btn-primary open-all-btn" (click)="refreshBankDetails()">Refresh</button>
-            </div>
-            <div *ngIf="bankDetailsVerified && !accountaggregating">
-              <button class="btn btn-primary open-all-btn" (click)="saveBankDetails()">Save</button>
+            <div class="d-flex">
+              <div *ngIf="!bankDetailsVerified">
+                <button class="btn btn-primary open-all-btn mr-2" (click)="verifyBankDetails()">Verify</button>
+              </div>
+              <div *ngIf="bankDetailsVerified">
+                <button class="btn btn-primary open-all-btn mr-2" (click)="saveBankDetails()">Save</button>
+              </div>
+              <div>
+                <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate Statements</button>
+              </div>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

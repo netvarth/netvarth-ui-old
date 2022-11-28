@@ -1297,17 +1297,26 @@ export class CreateComponent implements OnInit {
         });
         this.bankDetailsVerified = true;
         this.accountaggregating = true;
-        this.cdlService.accountAggregate(this.loanId, 0).subscribe((data: any) => {
-          if (data) {
-            this.accountaggregating = false;
-            this.snackbarService.openSnackBar("We have sent you a link for Account Aggregation Please gohead and verify your details")
-          }
-        });
       }
+      this.snackbarService.openSnackBar("Bank Details Verified Successfully");
+
     },
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       })
+  }
+
+
+  aggregateAccount() {
+    this.cdlService.accountAggregate(this.loanId, 0).subscribe((data: any) => {
+      if (data) {
+        this.accountaggregating = false;
+        this.snackbarService.openSnackBar("We have sent you a link for Account Aggregation Please gohead and verify your details")
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
   }
 
 

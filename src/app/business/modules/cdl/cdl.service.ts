@@ -398,6 +398,7 @@ export class CdlService {
         'canApprovePartnerLoan': roleCapabilities.includes('approvePartnerLoan'),
         'canRejectLoan': roleCapabilities.includes('rejectLoan'),
         'canApprovePartner': roleCapabilities.includes('approvePartner'),
+        'canApproveLoan': roleCapabilities.includes('approveLoan'),
         'canContactPartner': roleCapabilities.includes('contactPartner'),
         'canActionRequired': roleCapabilities.includes('actionRequired'),
         'canCreditScoreCheck': roleCapabilities.includes('creditScoreCheck'),

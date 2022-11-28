@@ -78,15 +78,8 @@ export class DealerComponent implements OnInit {
       this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
     }
     else {
-      const navigationExtras: NavigationExtras = {
-        queryParams: {
-          id: id,
-          action: action
-        }
-      };
-      this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
+      this.showDealer(id, status)
     }
-
   }
 
   showDealer(dealerId, spInternalStatus) {
