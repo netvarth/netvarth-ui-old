@@ -21,8 +21,8 @@
 
 .searchButton{
     display: flex;
-    justify-content: space-around;
-    margin-right: 2.6rem;
+    /* justify-content: space-around; */
+    /* margin-right: 2.6rem; */
 }
 .findcolor{
     background-color: #1E4079;
@@ -462,10 +462,13 @@ h5
     width: 100%;
   }
   .fontWeight{
-    font-weight: 700;
+    font-weight: 500;
     -webkit-text-stroke: medium;
     font-size: 25px;
 
+  }
+  .padd{
+    padding-right: 0px !important;
   }
   .matChip{
     margin-top: 0px !important;
