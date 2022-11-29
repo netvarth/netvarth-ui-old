@@ -133,6 +133,7 @@ export class CreateComponent implements OnInit {
   mafilScoreFields: any;
   SelectedloanProducts: any = [];
   accountaggregating: boolean = false;
+  mafilEmployee: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -201,6 +202,12 @@ export class CreateComponent implements OnInit {
             }
             if (this.loanData && this.loanData.remarks) {
               this.createLoan.controls.remarks.setValue(this.loanData.remarks);
+            }
+            if (this.loanData && this.loanData.employee) {
+              this.createLoan.controls.employee.setValue(this.loanData.employee);
+            }
+            if (this.loanData && this.loanData.employeeCode) {
+              this.createLoan.controls.employeeCode.setValue(this.loanData.employeeCode);
             }
             if (this.loanData && this.loanData.emiPaidAmountMonthly) {
               this.createLoan.controls.emicount.setValue(this.loanData.emiPaidAmountMonthly);
@@ -391,7 +398,9 @@ export class CreateComponent implements OnInit {
       dob: [null],
       earningMembers: [null],
       gender: [null],
-      existingCustomer: [null]
+      existingCustomer: [null],
+      employee: [null],
+      employeeCode: [null]
     });
   }
 
@@ -520,6 +529,11 @@ export class CreateComponent implements OnInit {
 
   }
 
+  mafilEmployeeStatus() {
+    this.mafilEmployee = this.createLoan.controls.employee.value;
+    console.log(this.mafilEmployee)
+  }
+
   resetErrors() {
 
   }
@@ -626,6 +640,8 @@ export class CreateComponent implements OnInit {
       "requestedAmount": this.createLoan.controls.loanamount.value,
       "remarks": this.createLoan.controls.remarks.value,
       "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
+      "employee": this.mafilEmployee,
+      "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [
         {
           "isCoApplicant": false,
@@ -1210,6 +1226,8 @@ export class CreateComponent implements OnInit {
       "downpaymentAmount": this.createLoan.controls.downpayment.value,
       "requestedAmount": this.createLoan.controls.loanamount.value,
       "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
+      "employee": this.mafilEmployee,
+      "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [
         {
           "employmentStatus": this.createLoan.controls.employmenttype.value,

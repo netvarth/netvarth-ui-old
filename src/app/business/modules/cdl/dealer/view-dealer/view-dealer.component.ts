@@ -44,6 +44,8 @@ export class ViewDealerComponent implements OnInit {
   districtWiseStatus: any;
   autoApprovalStatus: any;
   capabilities: any;
+  subventionStatus: boolean;
+  salesOfficerVerificationstatus: boolean;
   constructor(
     private location: Location,
     private router: Router,
@@ -86,6 +88,12 @@ export class ViewDealerComponent implements OnInit {
       }
       if (data && this.dealerData.autoApproval) {
         this.autoApprovalStatus = this.dealerData.autoApproval;
+      }
+      if (data && this.dealerData.subventionSchemeEnabled) {
+        this.subventionStatus = this.dealerData.subventionSchemeEnabled;
+      }
+      if (data && this.dealerData.salesOfficerVerificationRequired) {
+        this.salesOfficerVerificationstatus = this.dealerData.salesOfficerVerificationRequired;
       }
       console.log("this.dealerData", this.dealerData)
     });
@@ -392,6 +400,34 @@ export class ViewDealerComponent implements OnInit {
       }
     }, (error) => {
       this.status = false;
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    })
+  }
+
+  changeSubvention(event) {
+    let statusChange = (event.checked) ? true : false;
+    this.cdlservice.partnerSubvention(this.dealerUid, statusChange).subscribe((data: any) => {
+      if (data) {
+        this.subventionStatus = (event.checked) ? true : false;
+        let statusDisplayName = this.subventionStatus ? 'Active' : 'Inactive';
+        this.snackbarService.openSnackBar("Dealer Subvention is " + statusDisplayName)
+      }
+    }, (error) => {
+      this.subventionStatus = false;
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    })
+  }
+
+  changeSalesOfficerVerification(event) {
+    let statusChange = (event.checked) ? true : false;
+    this.cdlservice.partnerSalesOfficerVerification(this.dealerUid, statusChange).subscribe((data: any) => {
+      if (data) {
+        this.salesOfficerVerificationstatus = (event.checked) ? true : false;
+        let statusDisplayName = this.salesOfficerVerificationstatus ? 'Active' : 'Inactive';
+        this.snackbarService.openSnackBar("Sales Officer Verification for Dealer is " + statusDisplayName)
+      }
+    }, (error) => {
+      this.salesOfficerVerificationstatus = false;
       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
     })
   }

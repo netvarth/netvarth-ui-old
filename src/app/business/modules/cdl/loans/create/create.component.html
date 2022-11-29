@@ -813,6 +813,39 @@
                 </div>
               </div>
 
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Mafil Employee</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" (selectionChange)="mafilEmployeeStatus()"
+                      formControlName="employee">
+                      <mat-option [value]="true">
+                        Yes
+                      </mat-option>
+                      <mat-option [value]="false">
+                        No
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="mafilEmployee">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Employee Code</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input #employeeCode type="text" placeholder="Employee Code" class="form-control"
+                        autocomplete="off" formControlName="employeeCode" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- <div>
                 <div class="bggrey my-2">
                   <div>

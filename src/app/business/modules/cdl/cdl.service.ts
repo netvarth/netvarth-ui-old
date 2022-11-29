@@ -79,6 +79,17 @@ export class CdlService {
     return this.servicemeta.httpPut(url);
   }
 
+
+  partnerSubvention(id, status) {
+    const url = 'provider/partner/' + id + '/subventionscheme/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
+  partnerSalesOfficerVerification(id, status) {
+    const url = 'provider/partner/' + id + '/salesofficerverification/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
   partnerDistrictWiseStatus(id, status) {
     const url = 'provider/partner/' + id + '/districtwiseresstriction/' + status;
     return this.servicemeta.httpPut(url);
