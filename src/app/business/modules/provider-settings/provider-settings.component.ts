@@ -39,6 +39,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   showCdl: any = false;
   showLms: any = false;
   cdlstatusDisplayName: any;
+  branchStatusDisplayName: any;
   homeservice_cap = Messages.HOME_SERVICE_HEADING;
   profile_cap = Messages.PROFILE_CAP;
   search_cap = Messages.SEARCH_CAP;
@@ -173,6 +174,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   taskstatusstr: any;
   cdlStatus: any;
   leadstatusstr: any;
+  branchStatus: any;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -254,6 +256,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   donationtooltip = 'Donation manager';
   notificationtooltip = 'Notification settings';
   miscellaneuostooltip = 'Miscellaneous';
+  branchtooltip = "Branch";
   customerstooltip = '';
   ngOnInit() {
     const user = this.groupService.getitemFromGroupStorage('ynw-user');
@@ -383,6 +386,15 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       }
     );
   }
+
+  allBranches() {
+    this.routerobj.navigate(['provider', 'branches'])
+  }
+
+  createBranch() {
+    this.routerobj.navigate(['provider', 'branches', 'create'])
+  }
+
 
   letsGetStarted() {
     const dialogRef = this.dialog.open(ProviderStartTourComponent, {
@@ -750,6 +762,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.cdlStatus = data.enableCdl;
         this.cdlstatusDisplayName = (this.cdlStatus) ? 'On' : 'Off';
 
+        this.branchStatus = data.enableBranchMaster;
+        this.branchStatusDisplayName = (this.branchStatus) ? 'On' : 'Off';
+
+
         this.leadstatus = data.enableLead;
         this.leadstatusstr = (this.leadstatus) ? 'On' : 'Off';
 
@@ -852,10 +868,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.routerobj.navigate(['provider', 'settings', 'comm', 'notifications']);
         // this.routerobj.navigate(['provider', 'settings', 'comm'], { queryParams: { type: 'notification' } });
         break;
-        case 'reminder':
-          this.routerobj.navigate(['provider', 'settings', 'comm', 'reminder']);
-          // this.routerobj.navigate(['provider', 'settings', 'comm'], { queryParams: { type: 'notification' } });
-          break;
+      case 'reminder':
+        this.routerobj.navigate(['provider', 'settings', 'comm', 'reminder']);
+        // this.routerobj.navigate(['provider', 'settings', 'comm'], { queryParams: { type: 'notification' } });
+        break;
       case 'saleschannel':
         this.routerobj.navigate(['provider', 'settings', 'miscellaneous', 'saleschannel']);
         break;
@@ -1000,6 +1016,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'lms':
         this.routerobj.navigate(['provider', 'settings', 'lms']);
+        break;
+      case 'branch':
+        this.routerobj.navigate(['provider', 'settings', 'branch']);
         break;
       case 'cdl':
         this.routerobj.navigate(['provider', 'settings', 'cdl']);

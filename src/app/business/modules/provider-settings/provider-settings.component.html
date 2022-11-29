@@ -357,8 +357,8 @@
             </div>
           </div>
         </div>
-        <!--Jaldee lms-->
-        <div class="col-md-6 col-lg-4 col-12 no-padding-small" *ngIf="showLms">
+        <!--Jaldee LMS and CDL-->
+        <div class="col-md-6 col-lg-4 col-12 no-padding-small" *ngIf="showLms || showCdl">
           <!-- Widget: user widget style 1 -->
           <div class="box box-widget widget-user-2">
             <div class="widget-user-header bg-blue">
@@ -373,64 +373,30 @@
             </div>
             <div class="box-footer no-padding">
               <ul class="nav nav-stacked set-block-3">
-                <li (click)="redirecTo('lms')">
+                <li (click)="redirecTo('lms')" *ngIf="showLms">
                   <a class="pointer-cursor">
                     <span class="lnk setings">LMS
                       <span class="pull-right">
                         {{taskstatusstr}} </span></span>
-
-
+                    <p class="settings_info">
+                      Loan management system
+                    </p>
                   </a>
                 </li>
-                <!-- <p class="settings_info" *ngIf="taskstatus">
-                                            {{custs_name|capitalizeFirst}}<strong> can</strong> place orders </p> -->
-                <!-- <li (click)="redirecTo('leadmanager')">
-                                    <a class="pointer-cursor">
-                                        <span class="lnk setings">Lead Manager
-                                            <span class="pull-right">
-                                                {{leadstatusstr}} </span></span>
 
-
-                                    </a>
-                                </li> -->
-                <!-- <p class="settings_info" *ngIf="taskstatus">
-                                            {{custs_name|capitalizeFirst}}<strong> can</strong> place orders </p> -->
-
-
-
-
-
-              </ul>
-            </div>
-          </div>
-        </div>
-
-
-
-        <!--Jaldee CDL-->
-        <div class="col-md-6 col-lg-4 col-12 no-padding-small" *ngIf="showCdl">
-          <div class="box box-widget widget-user-2">
-            <div class="widget-user-header bg-blue">
-              <h4 (click)="redirecTo('cdl')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
-                [matTooltip]="ordermanagertooltip">
-                <div class="disp-flex">
-                  CDL
-                  <i class="fa fa-gears mgn-lt-auto"></i>
-                </div>
-                <div class="head-hint">Consumer Durable Loan</div>
-              </h4>
-            </div>
-            <div class="box-footer no-padding">
-              <ul class="nav nav-stacked set-block-3">
-                <li (click)="redirecTo('cdl')">
+                <li (click)="redirecTo('cdl')" *ngIf="showCdl">
                   <a class="pointer-cursor">
                     <span class="lnk setings">CDL
                       <span class="pull-right">
                         {{cdlstatusDisplayName}}
                       </span>
+                      <p class="settings_info">
+                        Consumer Durable Loan
+                      </p>
                     </span>
                   </a>
                 </li>
+
               </ul>
             </div>
           </div>
@@ -438,8 +404,49 @@
 
 
 
+        <!--Jaldee Branch-->
+        <div class="col-md-6 col-lg-4 col-12 no-padding-small" *ngIf="showCdl">
+          <div class="box box-widget widget-user-2">
+            <div class="widget-user-header bg-blue">
+              <h4 (click)="redirecTo('branch')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
+                [matTooltip]="branchtooltip">
+                <div class="disp-flex">
+                  Branch Manager
+                  <i class="fa fa-gears mgn-lt-auto"></i>
+                </div>
+                <div class="head-hint">Branch Manager</div>
+              </h4>
+            </div>
+            <div class="box-footer no-padding">
+              <ul class="nav nav-stacked set-block-3">
+                <li (click)="redirecTo('branch')">
+                  <a class="pointer-cursor">
+                    <span class="lnk setings">Branch
+                      <span class="pull-right">
+                        {{branchStatusDisplayName}}
+                      </span>
+                    </span>
+                  </a>
+                </li>
 
+                <li (click)="createBranch()" *ngIf="branchStatus">
+                  <a class="pointer-cursor">
+                    <span class="lnk setings">Create Branch
+                    </span>
+                  </a>
+                </li>
 
+                <li (click)="allBranches()" *ngIf="branchStatus">
+                  <a class="pointer-cursor">
+                    <span class="lnk setings">All Branches
+                    </span>
+                  </a>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+        </div>
 
 
         <!-- General -->
