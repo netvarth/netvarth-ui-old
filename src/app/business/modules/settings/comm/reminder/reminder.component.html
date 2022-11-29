@@ -22,7 +22,7 @@
                                 <img class="image" src="./assets/images/totalReminder.png" alt="Basic Plus">
 
                             </div>
-                            <div>
+                            <div class="cardCount">
                                 <div class="fontWeight">{{allReminderCounts}}</div>
                                 <div class="text-secondary textFont">Total Reminders</div>
                             </div>
@@ -43,7 +43,7 @@
                             <div>
                                 <img class="image" src="./assets/images/completedReminder.png" alt="Basic Plus">
                             </div>
-                            <div>
+                            <div class="cardCount"> 
                                 <div class="fontWeight">{{completedReminderCount}}</div>
                                 <div class="text-secondary textFont">Completed Reminders</div>
                             </div>
@@ -84,7 +84,7 @@
                     <div class="card boxShadow mt-2" *ngFor="let reminder of reminders">
                         <!-- <span>Reminders for patient medicine</span> -->
                         <!--  style="width: 120px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" -->
-                        <div class="bold actionDiv"><span>{{reminder.reminderName ? reminder.reminderName : reminder.message}}</span> <span class="">
+                        <div class="bold actionDiv"><span>{{reminder.reminderName | capitalizeFirst}}</span> <span class="">
                                 <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
                                     (click)="stopprop($event);">
                                     <mat-icon>more_vert</mat-icon>
@@ -93,7 +93,7 @@
                         <div> <span><img class="imageSize" src="./assets/images/dateReminder.png"
                                     alt="Basic Plus"></span>
                             <span class="text-secondary" style="font-size: 12px;"> {{reminder.schedule.startDate}} to
-                                {{reminder.schedule.terminator.endDate}}</span>
+                                {{reminder.schedule.terminator.endDate}} at {{reminder.schedule.timeSlots[0].sTime}}</span>
                         </div>
                         <!-- style="width: 120px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;" -->
                         <div *ngIf="reminder.message" style="word-break: break-all;">
@@ -265,11 +265,11 @@
                     <!--  col-xs-12 col-sm-12 no-padding display-xs-small"
                                 style='width: 90%!important;border-radius: 5px!important;' -->
                                 <div>
-                    <label class="p-0 m-0 pt-1 form-text-light">Select Consumer</label></div>
+                    <label class="p-0 m-0 pt-1 form-text-light">{{ hide? 'Selected Consumer' : 'Select Consumer'}}</label></div>
                     <!-- <input type="text" class="form-control" id="last_name" 
                         autocomplete="off"  /> [(ngModel)]="phone" class="inputstyling" -->
                     <!-- class="formSize form-control"  -->
-                    <div class="col-lg-2 display-lg-show col-md-3 col-xs-1 no-padding searchbar">
+                    <div class="col-lg-2 display-lg-show col-md-3 col-xs-1 no-padding searchbar" [hidden]="hide">
                         <mat-form-field>
                             <mat-label class=" " *ngIf="!categoryvalue"
                                 style="color: black;background-color: #f6f6f6;padding-left: 30px;">
@@ -282,9 +282,9 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-sm-1 col-xs-1 no-padding display-sm-show searchbar">
+                    <div class="col-sm-1 col-xs-1 no-padding display-sm-show searchbar" [hidden]="hide">
                         <mat-form-field>
-                            <img src="../../../../../assets/images/Group_1512.png" style="width:50px;height:35px;"
+                            <img src="../../../../../assets/images/Group_1512.png" style="width:50px;height:40px;"
                                 >
                             <mat-select class="displaysmall" name="categoryvalue" [(ngModel)]="categoryvalue">
                                 <mat-option *ngFor="let category of categoryForSearchingarray"
@@ -293,14 +293,14 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div *ngIf="categoryvalue=='Search with PhoneNumber'"
-                    class="col-lg-10 col-md-9 col-xs-8 col-sm-8   mgn-bt-10 padding-0 d-flex">
+                    <div *ngIf="categoryvalue=='Search with PhoneNumber'" 
+                    class="col-lg-9 col-md-8 col-xs-9 col-sm-9 mgn-bt-10 padding-0 d-flex">
                     <input autocomplete="off" type="text" name="countryCodePhone" class="inputstyling customDialCode" 
-                    [(ngModel)]="countryCodePhone">
+                    [(ngModel)]="countryCodePhone" [hidden]="hide">
                     <input autocomplete="off" placeholder="{{placeholderTemp}}" type="number"
                         class="inputstyling" [(ngModel)]="phone" name="phone"
                         (ngModelChange)="searchCustomerByPhone(phone,$event)"
-                        [matAutocomplete]="autoprov">
+                        [matAutocomplete]="autoprov" [hidden]="hide">
                     <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
                         <mat-option *ngFor="let customer of filteredCustomers"
                             (click)="selectedCustomerViaPhoneSearch(customer)" [value]="customer.phoneNo">
@@ -316,11 +316,11 @@
                         </mat-option>
                     </mat-autocomplete>
                 </div>
-                <form *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm"
+                <form  [hidden]="hide" *ngIf="categoryvalue!='Search with PhoneNumber'" [formGroup]="searchForm"
                                     novalidate (keyup)="resetApiErrors()"
-                                    class="col-lg-10 col-md-9 col-xs-8 col-sm-8  padding-0">
+                                    class="col-lg-9 col-md-8 col-xs-9 col-sm-9  padding-0">
                                     <div class="form-group">
-                                        <div class="input-group mob-container"
+                                        <div class="inputdiv input-group mob-container"
                                             *ngIf="categoryvalue==='Search with Email ID'">
                                             <input autocomplete="off" (keyup)="searchCustomerLucene(searchForm.value)"
                                                 placeholder="{{customer_label | capitalizeFirst}} {{categoryvalue.slice(12)}}"
@@ -374,12 +374,9 @@
                                                 {{customer_label | capitalizeFirst}} ID or Email</span>
                                         </div>
                                     </div>
+                                    
                                 </form>
-                                  <!-- <app-field-error-display style="color: #f24949 !important;"
-                                                [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
-                                                Please create {{customer_label}} to take appointment">
-                                            </app-field-error-display> -->
-                                <!-- <div class=" padding-0 no-padding">
+                                <div class="searchButton padding-0 no-padding">
                                     <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor"
                                         (click)="searchCustomer(searchForm.value)"><i class="fa fa-search padding-0"
                                             aria-hidden="true"></i>
@@ -388,7 +385,12 @@
                                         (click)="serchCustomerByPhone(phone)"><i class="fa fa-search padding-0"
                                             aria-hidden="true"></i>
                                     </button>
-                                </div> -->
+                                </div>
+                                  <!-- <app-field-error-display style="color: #f24949 !important;"
+                                                [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+                                                Please create {{customer_label}} to take appointment">
+                                            </app-field-error-display> -->
+                                
                     <!-- <div class="form-group" [hidden]="hide">
                         <input autocomplete="off" class="inputSize form-control" id="first_name"
                             placeholder="Search consumer" type="number" [(ngModel)]="phone"

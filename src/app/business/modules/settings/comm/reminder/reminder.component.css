@@ -13,6 +13,29 @@
     justify-items: center;
     
 }
+.cardCount{
+    display: block;
+    justify-content: space-between;
+    justify-items: center;
+}
+
+.searchButton{
+    display: flex;
+    justify-content: space-around;
+    margin-right: 2.6rem;
+}
+.findcolor{
+    background-color: #1E4079;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 40px;
+    height: 40px;
+    padding-left: 10px !important;
+    /* padding-right: 30px !important; */
+    color: white;
+    align-items: center;
+    text-align: center;
+  }
 .matDate{
     width: 150px !important;
 }
@@ -60,11 +83,30 @@
     display: none;
   }
   @media(max-width: 768px) { 
+    .cardSize{
+        display:flex;
+        justify-content: flex-start;
+        justify-items: center;
+        gap: 25px;
+        
+    }
+    .cardCount{
+        display: contents;
+        justify-content: space-between;
+        justify-items: center;
+        
+    }
     .displaysmall { opacity: 0 !important;
     padding: 0px !important; }
     .orangebox {
       all:initial !important;
     
+    }
+    .cardDiv{
+        display: block;
+        justify-content: space-evenly;
+        justify-items: center;
+        margin: 5px;
     }
     .card1
     {
@@ -384,6 +426,7 @@ h5
     background-color: #f6f6f6 !important; 
     /* max-width: 320px !important; */
     width: 100% !important;
+    height: 40px;
     color: black;
     border-radius: 4px !important;
     line-height: 2.2rem;
@@ -420,6 +463,9 @@ h5
   }
   .fontWeight{
     font-weight: 700;
+    -webkit-text-stroke: medium;
+    font-size: 25px;
+
   }
   .matChip{
     margin-top: 0px !important;
@@ -431,13 +477,17 @@ h5
     /* display: flex;
     justify-content: space-between;
     justify-items: center !important; */
-    box-shadow: 0 0 10px rgb(0 0 0 / 15%) !important;
+    /* box-shadow: 0 0 10px rgb(0 0 0 / 15%) !important; */
     /* border-radius: 5px !important;
     background: #fff !important;
     background-clip: padding-box !important;
     border: none !important;
     width: 100% !important; */
-    margin: 10px;
+    /* margin: 10px; */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #8080801f  !important;
+    
   }
   .boxShadow{
     box-shadow: 0 0 10px rgb(0 0 0 / 15%) !important;
@@ -466,6 +516,8 @@ h5
   }
   .textFont{
     font-size: 17px !important;
+    margin-top: 5px;
+    opacity: 0.8;
   }
   .formSize{
     height: 60px !important;
@@ -498,9 +550,9 @@ h5
     
 }
 .image{
-    height: 30px;
-    width: 30px;
-    margin-right: 25px;
+    height: 40px;
+    width: 40px;
+    /* margin-right: 25px; */
 }
 .imageSize{
     height: 20px;
@@ -557,8 +609,9 @@ h5
 
 .custom_card{
  width: 88%;
- height: 480px;
- overflow: auto;
+ height: 100%;
+ /* height: 480px; */
+ /* overflow: auto; */
  margin:5px 0px 5px 0px !important;
 }
 .completeCard{
@@ -566,7 +619,7 @@ h5
     margin-left: 15px;
 }
 .createReminder{
-    margin-left: 15px;
+    margin-left: 5px;
     /* margin-top: 15px !important; */
 }
 /* @media (width:280px) {
@@ -591,7 +644,7 @@ h5
     }
    
 } */
-@media (width:360px) {
+/* @media (width:360px) {
     .completeCard{
         width: 54%;
         margin-left: -20px;
@@ -605,13 +658,12 @@ h5
  
     }
     .pad{
-        /* padding: 11px !important; */
         padding: 7px !important;
 
     }
    
-}
-@media (width:375px) {
+} */
+/* @media (width:375px) {
     .completeCard{
         width: 54%;
         margin-left: -20px;
@@ -625,14 +677,13 @@ h5
  
     }
     .pad{
-        /* padding: 14px !important; */
         padding: 10px !important;
 
     }
    
    
-}
-@media (width:390px) {
+} */
+/* @media (width:390px) {
     .completeCard{
         width: 54%;
         margin-left: -20px;
@@ -646,14 +697,13 @@ h5
  
     }
     .pad{
-        /* padding: 18px !important; */
         padding: 15px !important;
 
     }
    
    
-}
-@media(min-width:395px) and (max-width:414px) {
+} */
+/* @media(min-width:395px) and (max-width:414px) {
     .completeCard{
         width: 54%;
         margin-left: -20px;
@@ -667,14 +717,13 @@ h5
  
     }
     .pad{
-        /* padding: 24px !important; */
         padding: 20px !important;
 
     }
    
    
-}
-@media (width:393px) {
+} */
+/* @media (width:393px) {
     .completeCard{
         width: 54%;
         margin-left: -14px;
@@ -692,7 +741,7 @@ h5
     }
    
    
-}
+} */
 @media (min-width:1115px) {
     .completeCard{
         width: 45%;
@@ -708,11 +757,18 @@ h5
     .container{
         width: 100%;
     } 
+    /* .cardSize{
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+    } */
     .image{
         height: 48px;
         width: 48px;
-        margin-right: 25px;
+        margin-right: 35px;
+        /* gap: 25px; */
     }
+   
 }
 .title-card{
     box-shadow: 0 0 10px rgb(0 0 0 / 15%) !important;   
@@ -721,8 +777,9 @@ h5
 @media (max-width:992px) {
     .custom_card{
         width: 100%;
-        height: 300px;
-        overflow: auto;
+        height: 100%;
+        /* height: 300px; */
+        /* overflow: auto; */
         margin:5px 0px 5px 0px !important;
        }
        .cardSmall{
@@ -732,5 +789,7 @@ h5
 
 .customDialCode{
     width: 25% !important;
-      height: 2.5rem !important;
+      /* height: 2.5rem !important; */
+      height: 40px !important;
   }
+ 
