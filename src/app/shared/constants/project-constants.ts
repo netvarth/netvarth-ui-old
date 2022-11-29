@@ -1208,6 +1208,8 @@ export const projectConstantsLocal = {
     { name: 'ApprovalRequired', displayName: 'Approval Required' },
     { name: 'Rejected', displayName: 'Rejected' },
     { name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
+    { name: 'Sanctioned', displayName: 'Sanctioned' },
+    { name: 'OperationsVerified', displayName: 'Operations Verified' },
     // { name: 'PartnerAccepted', displayName: 'Partner Accepted' },
     // { name: 'Sanctioned', displayName: 'Sanctioned' }
   ],
@@ -1219,6 +1221,7 @@ export const projectConstantsLocal = {
     // { index: 3, name: 'ApprovalPending', displayName: 'Approval Pending' },
     { index: 5, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
     { index: 6, name: 'Sanctioned', displayName: 'Sanctioned' },
+    { index: 7, name: 'OperationsVerified', displayName: 'Ops Verify' },
     // { index: 7, name: 'Rejected', displayName: 'Rejected' }
   ],
   DEALER_STATUS: [

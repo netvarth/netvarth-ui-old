@@ -90,6 +90,11 @@ export class ApprovedComponent implements OnInit {
     }
   }
 
+
+  loanDetails(id) {
+    this.router.navigate(['provider', 'cdl', 'loans', id]);
+  }
+
   goNext() {
     if (this.timetype == 1 && this.user.userType == 2) {
       this.timetype = 3;

@@ -91,7 +91,15 @@
 
 
 <div class="card m-2" *ngIf="type=='consumerAccepted'">
-  <span class="font-weight-bold">&nbsp;Loan Sanctioned</span><br><br>
+  <div class="col-md-10 d-flex justify-content-between no-padding">
+    <div>
+      <span class="font-weight-bold">&nbsp;Loan Sanctioned</span>
+    </div>
+    <div *ngIf="loanId">
+      <button type="button" class="btn btn-primary" (click)="loanDetails(loanId)">View Details</button>
+    </div>
+  </div>
+  <br><br>
   <div class="row">
     <div class="col-md-10 card-border">
 
@@ -142,6 +150,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>

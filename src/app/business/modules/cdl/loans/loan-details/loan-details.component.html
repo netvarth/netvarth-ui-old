@@ -10,7 +10,7 @@
   <div class="row mb-2">
 
     <div class="card remarks-card marginClass px-5">
-      <div class="container my-2">
+      <div class="container-fluid my-2">
         <div *ngIf="statusIndex" class="desktop-only">
           <p-timeline [value]="loanStatus" layout="horizontal" [responsive]="true" styleClass="customized-timeline">
             <ng-template pTemplate="marker" let-event let-i="rowIndex">
@@ -421,5 +421,17 @@
 
   <div class="btn-reject pointer-cursor" (click)="rejectLoan()">
     Reject Loan
+  </div>
+</section>
+
+
+<section class="d-flex justify-content-center m-2 my-4"
+  *ngIf="loanData && loanData.spInternalStatus == 'Sanctioned'  && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==4)">
+  <div class="btn-sanctioned mr-2 pointer-cursor" (click)="verifyLoanByOps()">
+    Verify
+  </div>
+
+  <div class="btn-redirect mr-2 pointer-cursor" (click)="redirectLoanByOps()">
+    Redirect Loan
   </div>
 </section>

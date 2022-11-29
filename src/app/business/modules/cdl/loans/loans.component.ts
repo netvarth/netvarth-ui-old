@@ -99,7 +99,7 @@ export class LoansComponent implements OnInit {
       this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
     }
     else if (status == 'Sanctioned' || status == 'ApprovalRequired' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
-      this.loanDetails(id)
+      this.loanDetails(id, status)
     }
     else if (status == 'ConsumerAccepted') {
       const navigationExtras: NavigationExtras = {
@@ -226,8 +226,19 @@ export class LoansComponent implements OnInit {
     // this.location.back();
   }
 
-  loanDetails(id) {
-    this.router.navigate(['provider', 'cdl', 'loans', id]);
+  loanDetails(id, status) {
+    if (status == 'ConsumerAccepted') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'consumerAccepted',
+          uid: id
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+    }
+    else {
+      this.router.navigate(['provider', 'cdl', 'loans', id]);
+    }
   }
 
   setFilterForApi() {

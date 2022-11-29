@@ -224,6 +224,42 @@ export class LoanDetailsComponent implements OnInit {
   }
 
 
+  verifyLoanByOps() {
+
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "remarks"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data && data.remarks && data.type == 'remarks') {
+          let notes = {
+            note: data.remarks
+          }
+          this.cdlservice.verifyLoanByOps(this.loanId, notes).subscribe((data: any) => {
+            if (data) {
+              const navigationExtras: NavigationExtras = {
+                queryParams: {
+                  type: 'Sanctioned'
+                }
+              };
+              this.snackbarService.openSnackBar("Loan Verified Successfully");
+              this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+            }
+          });
+        }
+      });
+  }
+
+  redirectLoanByOps() {
+
+  }
+
+
 
   viewFile(file, s3path?) {
     const dialogRef = this.dialog.open(ViewFileComponent, {

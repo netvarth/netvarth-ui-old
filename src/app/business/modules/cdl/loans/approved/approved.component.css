@@ -118,7 +118,7 @@ input[type="file"] {
 }
 
 .file>label {
-  font-size: 14px !important;
+  font-size: 18px !important;
   font-weight: bold;
   cursor: pointer;
   outline: 0;

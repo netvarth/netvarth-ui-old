@@ -182,6 +182,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  verifyLoanByOps(id, data) {
+    const url = 'provider/loanapplication/' + id + '/operationalapproval';
+    return this.servicemeta.httpPut(url, data);
+  }
+
 
 
 
@@ -399,9 +404,9 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
-  getBranches() {
+  getBranches(filter) {
     const url = 'provider/branchmaster';
-    return this.servicemeta.httpGet(url, null);
+    return this.servicemeta.httpGet(url, null, filter);
   }
 
   getCapabilitiesConfig(user) {

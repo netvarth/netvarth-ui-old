@@ -246,7 +246,9 @@ export class CreateDealerComponent implements OnInit {
 
 
   getBranches() {
-    this.cdlservice.getBranches().subscribe((data) => {
+    let api_filter = {}
+    api_filter['status-eq'] = 'ACTIVE';
+    this.cdlservice.getBranches(api_filter).subscribe((data) => {
       if (data) {
         this.branches = data;
       }
