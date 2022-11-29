@@ -399,6 +399,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  getBranches() {
+    const url = 'provider/branchmaster';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getCapabilitiesConfig(user) {
     if (user && user.roles && user.roles[0] && user.roles[0].capabilities) {
       console.log("Role Capabilities in Sevice File", user)

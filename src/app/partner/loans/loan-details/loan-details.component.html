@@ -408,7 +408,7 @@
 </section>
 
 <section class="d-flex justify-content-center m-2 my-4"
-  *ngIf="user.userType==2 && loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending')">
+  *ngIf="loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending')">
   <div class="btn-sanctioned mr-2 pointer-cursor" (click)="sanctionLoan()">
     Sanction Loan
   </div>

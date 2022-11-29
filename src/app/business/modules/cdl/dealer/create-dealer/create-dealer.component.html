@@ -399,6 +399,23 @@
           </div>
         </div>
 
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Branch</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #branch formControlName="branch">
+                  <option *ngFor="let branch of branches" value="{{branch.id}}">
+                    {{branch.branchName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div>
           <div class="bggrey my-2">

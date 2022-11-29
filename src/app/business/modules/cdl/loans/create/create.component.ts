@@ -227,10 +227,10 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineePhone) {
               this.createLoan.controls.nomineePhone.setValue(this.loanData.loanApplicationKycList[0].nomineePhone);
             }
-            if (this.loanData && this.loanData.loanScheme && this.loanData.loanScheme.schemeName) {
-              this.createLoan.controls.scheme.setValue(this.loanData.loanScheme.schemeName);
-              this.schemeSelected = this.loanData.loanScheme;
-            }
+            // if (this.loanData && this.loanData.loanScheme && this.loanData.loanScheme.schemeName) {
+            //   this.createLoan.controls.scheme.setValue(this.loanData.loanScheme.schemeName);
+            //   this.schemeSelected = this.loanData.loanScheme;
+            // }
 
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].isPanVerified) {
               this.panverification = true;
@@ -384,7 +384,7 @@ export class CreateComponent implements OnInit {
       ifsc: [null],
       account: [null],
       bankstatements: [null],
-      scheme: [null],
+      // scheme: [null],
       dealer: [null],
       customerEducation: [null],
       customerEmployement: [null],
@@ -421,7 +421,7 @@ export class CreateComponent implements OnInit {
     this.getLoanTypes();
     this.getLoanProducts();
     this.getLoanStatuses();
-    this.getLoanSchemes();
+    // this.getLoanSchemes();
     this.getPartners();
     this.getMafilScoreFields();
     if (this.from && this.from == 'create') {
@@ -1215,9 +1215,9 @@ export class CreateComponent implements OnInit {
       "type": {
         "id": this.createLoan.controls.loantype.value
       },
-      "loanScheme": {
-        "id": this.schemeSelected.id
-      },
+      // "loanScheme": {
+      //   "id": this.schemeSelected.id
+      // },
       "partner": {
         "id": this.createLoan.controls.dealer.value
       },

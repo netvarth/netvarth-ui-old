@@ -59,7 +59,7 @@
         </div>
         <br>
         <div class="text-left" *ngIf="loanData && loanData.referenceNo">
-          <h6>Reference No : <span class="font-weight-bold">{{loanData.referenceNo}}</span></h6>
+          <h6>Loan Id : <span class="font-weight-bold">{{loanData.referenceNo}}</span></h6>
         </div>
         <div class="text-left" *ngIf="loanData && loanData.referenceNo">
           <h6>Mafil Score : <span class="font-weight-bold">{{mafilScore}}</span></h6>
@@ -395,7 +395,7 @@
 </section>
 
 <section class="d-flex justify-content-center m-2 my-4"
-  *ngIf="loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending' || loanData.spInternalStatus == 'ConsumerAccepted') && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
+  *ngIf="loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending') && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
   <div class="btn-sanctioned mr-2 pointer-cursor" (click)="sanctionLoan()">
     Sanction Loan
   </div>

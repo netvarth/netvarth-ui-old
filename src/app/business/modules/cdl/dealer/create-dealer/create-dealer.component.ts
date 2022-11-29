@@ -22,6 +22,7 @@ export class CreateDealerComponent implements OnInit {
   dealerApplication: any;
   bankverification: any = false;
   verifyingUID: any;
+  branches: any;
   selectedMessage = {
     files: [],
     base64: [],
@@ -106,7 +107,8 @@ export class CreateDealerComponent implements OnInit {
       cheque: [null],
       bank: [null],
       account: [null],
-      ifsc: [null]
+      ifsc: [null],
+      branch: [null]
     });
 
 
@@ -121,12 +123,15 @@ export class CreateDealerComponent implements OnInit {
           this.dealerId = params.id;
           this.from = params.from;
           console.log("this.dealerData", this.dealerData)
+
+          this.headerText = "Update Dealer";
+          this.btnText = "Update Dealer";
           if (params.action == 'update' && this.dealerData) {
             if (this.from && this.from == 'create') {
               this.verification = true;
+              this.headerText = "Create Dealer";
+              this.btnText = "Create Dealer";
             }
-            this.headerText = "Update Dealer";
-            this.btnText = "Update Dealer";
             this.createDealer.controls.name.setValue(this.dealerData.partnerName);
             this.createDealer.controls.phone.setValue(this.dealerData.partnerMobile);
             this.createDealer.controls.email.setValue(this.dealerData.partnerEmail);
@@ -144,6 +149,10 @@ export class CreateDealerComponent implements OnInit {
             }
             if (this.dealerData && this.dealerData.category && this.dealerData.category.id) {
               this.createDealer.controls.category.setValue(this.dealerData.category.id);
+            }
+
+            if (this.dealerData && this.dealerData.branch && this.dealerData.branch.id) {
+              this.createDealer.controls.branch.setValue(this.dealerData.branch.id);
             }
             this.createDealer.controls.size.setValue(this.dealerData.partnerSize);
             this.createDealer.controls.trade.setValue(this.dealerData.partnerTrade);
@@ -166,6 +175,10 @@ export class CreateDealerComponent implements OnInit {
 
             if (this.dealerData && this.dealerData.bankName) {
               this.createDealer.controls.bank.setValue(this.dealerData.bankName);
+            }
+
+            if (this.dealerData && this.dealerData.branch) {
+              this.createDealer.controls.branch.setValue(this.dealerData.branch);
             }
 
             if (this.dealerData && this.dealerData.bankAccountNo) {
@@ -218,6 +231,7 @@ export class CreateDealerComponent implements OnInit {
 
     this.getPartnerCategories();
     this.getPartnerTypes();
+    this.getBranches();
     this.cdlservice.getBusinessProfile().subscribe((data) => {
       this.businessDetails = data;
       if (this.businessDetails && this.businessDetails.id) {
@@ -228,6 +242,18 @@ export class CreateDealerComponent implements OnInit {
 
   resetErrors() {
 
+  }
+
+
+  getBranches() {
+    this.cdlservice.getBranches().subscribe((data) => {
+      if (data) {
+        this.branches = data;
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
   }
 
 
@@ -627,6 +653,7 @@ export class CreateDealerComponent implements OnInit {
       "gstin": this.createDealer.controls.gst.value,
       "partnerSize": this.createDealer.controls.size.value,
       "partnerTrade": this.createDealer.controls.trade.value,
+      "branch": { "id": this.createDealer.controls.branch.value }
     }
 
     console.log("This.dealerData", this.dealerData);
@@ -717,7 +744,12 @@ export class CreateDealerComponent implements OnInit {
               });
           }
           this.cdlservice.dealerApprovalRequest(this.dealerId).subscribe((s3urls: any) => {
-            this.snackbarService.openSnackBar("Dealer Updated Successfully")
+            if (this.from == 'create') {
+              this.snackbarService.openSnackBar("Dealer Created Successfully")
+            }
+            else {
+              this.snackbarService.openSnackBar("Dealer Updated Successfully")
+            }
             this.router.navigate(['provider', 'cdl', 'dealers'])
           })
         },
@@ -814,6 +846,7 @@ export class CreateDealerComponent implements OnInit {
       "gstin": this.createDealer.controls.gst.value,
       "partnerSize": this.createDealer.controls.size.value,
       "partnerTrade": this.createDealer.controls.trade.value,
+      "branch": { "id": this.createDealer.controls.trade.value }
     }
 
     console.log("This.dealerData", this.dealerData);
