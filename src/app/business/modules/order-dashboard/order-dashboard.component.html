@@ -1480,7 +1480,7 @@
         <app-common-innerloading-spinner *ngIf="loading && (totalOrders.length==0 || !totalOrdersCount)">
         </app-common-innerloading-spinner>
         <div class="allTabInPannel" *ngIf="!loading">
-          <app-paper-details [loading]="loading" [orders]="totalOrders"></app-paper-details>
+          <app-paper-details [loading]="loading" [orders]="totalOrders" (actionPerformed)="actionPerformed($event)"></app-paper-details>
         </div>
         <div class="clearfix"></div>
       </mat-tab>

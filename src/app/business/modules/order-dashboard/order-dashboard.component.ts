@@ -139,7 +139,6 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.getDefaultCatalogStatus();
     this.doSearch();
     this.getProviderSubmissionOrders();
-    // this.getProviderCompletedOrders();
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
@@ -232,9 +231,11 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
       }
     });
     actiondialogRef.afterClosed().subscribe(data => {
-      this.resetList();
-      this.getLabel();
-      this.doSearch();
+      if (data) {
+        this.resetList();
+        this.getLabel();
+        this.doSearch();
+      }
     });
   }
   stopprop(event) {
@@ -378,11 +379,14 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.doSearch();
   }
 
+  actionPerformed(data) {
+    this.showActionPopup(data.selectedOrder, data.timetype);
+  }
+
   doSearch() {
     if (this.catalogType === 'submission') {
       this.setTabSelection_papers(this.selectedTab);
-    }
-    else {
+    } else {
       this.setTabSelection(this.selectedTab);
     }
 

@@ -1,8 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
-import { SubSink } from 'subsink';
-import { OrderActionsComponent } from '../order-actions/order-actions.component';
 import { Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 
@@ -15,15 +12,14 @@ import { GroupStorageService } from '../../../../../../src/app/shared/services/g
 export class PaperDetailsComponent implements OnInit {
   @Input() orders;
   @Input() loading;
+  @Output() actionPerformed = new EventEmitter<any>();
   selectedOrders: any;
   orderSelected: any[];
   providerLabels: any[];
-  private subs = new SubSink();
   allLabels: any;
   users: any;
   selectedUser: any;
   constructor(
-    private dialog: MatDialog,
     private provider_services: ProviderServices,
     public router: Router,
     private groupService: GroupStorageService,
@@ -39,47 +35,12 @@ export class PaperDetailsComponent implements OnInit {
   }
 
 
-  showActionPopup(order?, timetype?) {
-    if (order) {
-      this.selectedOrders = order;
-    }
-    const actiondialogRef = this.dialog.open(OrderActionsComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-      disableClose: true,
-      data: {
-        selectedOrder: this.selectedOrders,
-        type: timetype
-      }
-    });
-    actiondialogRef.afterClosed().subscribe(data => {
-      this.resetList();
-      this.getLabel();
-      this.reloadComponent();
-    });
+  showActionPopup(order, timetype) {
+    this.actionPerformed.emit({
+      selectedOrder: order,
+      type: timetype
+    })
   }
-
-  reloadComponent() {
-    let currentUrl = this.router.url;
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this.router.onSameUrlNavigation = 'reload';
-    this.router.navigate([currentUrl]);
-  }
-  resetList() {
-    this.selectedOrders = [];
-    this.orderSelected = [];
-  }
-
-
-  getLabel() {
-    this.providerLabels = [];
-    this.subs.sink = this.provider_services.getLabelList().subscribe(data => {
-      this.allLabels = data;
-      this.providerLabels = this.allLabels.filter(label => label.status === 'ENABLED');
-    });
-  }
-
-
   getProviders() {
     const apiFilter = {};
     this.provider_services.getUsers(apiFilter).subscribe(data => {

@@ -531,6 +531,9 @@ export class ViewLeadQnrComponent implements OnInit {
             } else if (applicant.imageMode === 'kyc3') {
               _this.applicantsInfo[applicantIndex].validationIds[2].attachments.push(file[0]);
             } else {
+              if (!_this.applicantsInfo[applicantIndex].otherAttachments) {
+                _this.applicantsInfo[applicantIndex].otherAttachments = [];
+              }
               _this.applicantsInfo[applicantIndex].otherAttachments.push(file[0]);
             }            
           }
