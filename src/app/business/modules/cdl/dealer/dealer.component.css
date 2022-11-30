@@ -9,6 +9,63 @@
   font-weight: 700 !important;
 }
 
+.status-LoanRequest {
+  background-color: #bce1ff !important;
+  color: #237EC6 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-ApprovalPending {
+  background-color: #FEEDAF !important;
+  color: #935F49 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-OperationsVerified {
+  background-color: #ded3ff !important;
+  color: #0f006d !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+
+.status-ApprovalRequired {
+  background-color: #FEEDAF !important;
+  color: #935F49 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-Approved {
+  background-color: #C8E6C9 !important;
+  color: #256029 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-Rejected {
+  background-color: #FFCDD2 !important;
+  color: #C63737 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+/* .status-Draft {
+  background-color: #fbbdc3 !important;
+  color: rgb(186, 121, 0) !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+} */
+
 .btn-primary {
   background-color: #1e4079 !important;
   border-color: #1e4070 !important;

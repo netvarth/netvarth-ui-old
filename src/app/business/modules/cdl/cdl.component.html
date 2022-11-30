@@ -183,6 +183,109 @@
       </div>
     </div>
   </div>
+
+
+
+  <div class="container-fluid no-padding-small">
+    <div class="card">
+      <div class="row">
+        <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
+          <div class="dashboard-card text-center">
+            <div class="d-flex">
+              <!-- <div class="d-flex align-items-center">
+                <img width="100" height="100" src="./assets/images/cdl/partner/all_loans.png">
+              </div>&nbsp;&nbsp; -->
+              <div class="text-left my-auto">
+                <span class="head-card-title">Leads Generated</span><br>
+                <div class="d-flex justify-content-between mt-2">
+                  <div>
+                    <span class="font-weight-bold">{{allDealersCount}}</span><br>
+                    <span class="font-small">Count</span>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">5300000</span><br>
+                    <span class="font-small">Amount</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
+          <div class="dashboard-card text-center">
+            <div class="d-flex">
+              <!-- <div class="d-flex align-items-center">
+                <img width="100" height="100" src="./assets/images/cdl/partner/all_loans.png">
+              </div>&nbsp;&nbsp; -->
+              <div class="text-left my-auto">
+                <span class="head-card-title">Applications</span><br>
+                <div class="d-flex justify-content-between mt-2">
+                  <div>
+                    <span class="font-weight-bold">{{allDealersCount}}</span><br>
+                    <span class="font-small">Count</span>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">6800000</span><br>
+                    <span class="font-small">Amount</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
+          <div class="dashboard-card text-center">
+            <div class="d-flex">
+              <!-- <div class="d-flex align-items-center">
+                <img width="100" height="100" src="./assets/images/cdl/partner/all_loans.png">
+              </div>&nbsp;&nbsp; -->
+              <div class="text-left my-auto">
+                <span class="head-card-title">Loan Converted</span><br>
+                <div class="d-flex justify-content-between mt-2">
+                  <div>
+                    <span class="font-weight-bold">{{allDealersCount}}</span><br>
+                    <span class="font-small">Count</span>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">7500000</span><br>
+                    <span class="font-small">Amount</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
+          <div class="dashboard-card text-center">
+            <div class="d-flex">
+              <!-- <div class="d-flex align-items-center">
+                <img width="100" height="100" src="./assets/images/cdl/partner/all_loans.png">
+              </div>&nbsp;&nbsp; -->
+              <div class="text-left my-auto">
+                <span class="head-card-title">Rejected</span><br>
+                <div class="d-flex justify-content-between mt-2">
+                  <div>
+                    <span class="font-weight-bold">{{allDealersCount}}</span><br>
+                    <span class="font-small">Count</span>
+                  </div>
+                  <div>
+                    <span class="font-weight-bold">9500000</span><br>
+                    <span class="font-small">Amount</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
   <div class="container-fluid">
     <div class="row no-padding-small">
       <div class="mt-2 col-lg-6 col-md-12 no-padding-small" *ngIf="capabilities && capabilities.canViewLoan">
@@ -365,8 +468,12 @@
                   class="table-column-data">{{loan.partner.partnerName}}</span>
               </td>
               <td>
-                <span [class]="'customer-badge status-' + loan.spInternalStatusDisplyName" class="table-column-data">
+                <span *ngIf="loan.applicationStatus !='Rejected'"
+                  [class]="'customer-badge status-' + loan.spInternalStatus" class="table-column-data">
                   {{loan.spInternalStatusDisplyName}}</span>
+                <span *ngIf="loan.applicationStatus =='Rejected'"
+                  [class]="'customer-badge status-' + loan.applicationStatus" class="table-column-data">
+                  {{loan.applicationStatus}}</span>
               </td>
               <td>
                 <div class="text-center">
@@ -555,8 +662,9 @@
               <td>
                 <div class="text-center">
                   <button pButton pRipple type="button" class="p-button-primary btn-primary"
-                    (click)="updateDealer(partner.uid,'update')"><i class="pi pi-upload text-white"
-                      *ngIf="capabilities && capabilities.canUpdatePartner"></i>&nbsp;Update</button>&nbsp;&nbsp;
+                    *ngIf="capabilities && capabilities.canUpdatePartner || partner.spInternalStatus=='Draft'"
+                    (click)="updateDealer(partner.uid,'update')"><i
+                      class="pi pi-upload text-white"></i>&nbsp;Update</button>&nbsp;&nbsp;
                   <button pButton pRipple type="button" class="p-button-primary btn-primary"
                     (click)="updateDealer(partner.uid,'update',partner.spInternalStatus)"><i
                       class="pi pi-eye text-white"></i>&nbsp;View</button>

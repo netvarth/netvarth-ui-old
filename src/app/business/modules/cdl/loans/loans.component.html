@@ -90,11 +90,11 @@
           </td>
           <td>
             <span class="d-lg-none d-md-none">Status : </span>
-            <span *ngIf="loan.applicationStatus !='Rejected'"
-              [class]="'customer-badge status-' + loan.spInternalStatusDisplyName" class="table-column-data">
+            <span *ngIf="loan.applicationStatus !='Rejected'" [class]="'customer-badge status-' + loan.spInternalStatus"
+              class="table-column-data">
               {{loan.spInternalStatusDisplyName}}</span>
             <span *ngIf="loan.applicationStatus =='Rejected'"
-              [class]="'customer-badge status-' + loan.spInternalStatusDisplyName" class="table-column-data">
+              [class]="'customer-badge status-' + loan.applicationStatus" class="table-column-data">
               {{loan.applicationStatus}}</span>
           </td>
           <td>

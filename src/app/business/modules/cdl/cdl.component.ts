@@ -124,7 +124,7 @@ export class CdlComponent implements OnInit {
             labels: data.labels,
             datasets: [
               {
-                label: 'Loans Analytics',
+                label: 'Loans Count',
                 data: data.datasets[0].data,
                 fill: true,
                 borderColor: 'rgba(202, 30, 30, 1)',
@@ -422,7 +422,7 @@ export class CdlComponent implements OnInit {
 
   getPendingloansCount() {
     const api_filter = {};
-    api_filter['spInternalStatus-eq'] = 'ApprovalPending';
+    api_filter['spInternalStatus-eq'] = 'ApprovalRequired';
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       if (data && data.length > 0) {
         this.pendingLoansCount = data.length
