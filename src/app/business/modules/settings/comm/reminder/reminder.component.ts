@@ -356,6 +356,12 @@ _filter(value: string): string[] {
     this.selectedTime = [];
     this.selectedConsumers = [];
     this.selectedConsumer = '';
+    if(this.selectedId){
+      this.hide = true;
+    }
+    else{
+      this.hide = false;
+    }
     this.providerService.getReminderById(reminderId).subscribe((data: any) => {
       console.log("Reminder Details Id :", data);
       this.reminderDetails = data;
