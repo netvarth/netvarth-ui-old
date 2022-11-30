@@ -108,7 +108,7 @@
                                 <!-- <button mat-menu-item (click)="openDialogStatusChange(file)">
                                 <i class="fa fa-share-alt" aria-hidden="true"></i> Share file  (click)="deleteFile(file.id,file.fileName)"
                                </button> -->
-                                <button mat-menu-item (click)="deleteReminder(reminder.id,reminder.reminderName)">
+                                <button mat-menu-item (click)="deleteReminder(reminder.id,reminder)">
                                     <i class="fa fa-trash" aria-hidden="true"></i> Remove
                                 </button>
                             </mat-menu>
@@ -265,7 +265,9 @@
                     <!--  col-xs-12 col-sm-12 no-padding display-xs-small"
                                 style='width: 90%!important;border-radius: 5px!important;' -->
                                 <div>
-                    <label class="p-0 m-0 pt-1 form-text-light">{{ hide? 'Selected Consumer' : 'Select Consumer'}}</label></div>
+                                    <label *ngIf="hide" class="p-0 m-0 pt-1 form-text-light">Selected {{customer_label}}</label>
+                                    <label *ngIf="!hide" class="p-0 m-0 pt-1 form-text-light">Select {{customer_label}}</label>
+                                </div>
                     <!-- <input type="text" class="form-control" id="last_name" 
                         autocomplete="off"  /> [(ngModel)]="phone" class="inputstyling" -->
                     <!-- class="formSize form-control"  -->
@@ -376,12 +378,12 @@
                                     </div>
                                     
                                 </form>
-                                <div class="searchButton padding-0 no-padding">
-                                    <button *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor"
+                                <div  class="searchButton padding-0 no-padding">
+                                    <button [hidden]="hide" *ngIf="categoryvalue!='Search with PhoneNumber'" class="findcolor"
                                         (click)="searchCustomer(searchForm.value)"><i class="fa fa-search padding-0"
                                             aria-hidden="true"></i>
                                     </button>
-                                    <button *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor"
+                                    <button [hidden]="hide" *ngIf="categoryvalue=='Search with PhoneNumber'" class="findcolor"
                                         (click)="serchCustomerByPhone(phone)"><i class="fa fa-search padding-0"
                                             aria-hidden="true"></i>
                                     </button>

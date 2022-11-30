@@ -324,14 +324,14 @@ _filter(value: string): string[] {
   stopprop(event) {
     event.stopPropagation();
   }
-  deleteReminder(id, reminderName) {
+  deleteReminder(id, reminder) {
     console.log("ID : ", id);
     this.reminderdialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: "30%",
       panelClass: ["popup-class", "commonpopupmainclass"],
       disableClose: true,
       data: {
-        message: "Do you really want to delete " + reminderName + " ?"
+        message: "Do you really want to delete " + (reminder.reminderName ? reminder.reminderName : reminder.message) + " ?"
       }
     });
     this.reminderdialogRef.afterClosed().subscribe(result => {
@@ -383,7 +383,7 @@ _filter(value: string): string[] {
         const existConsumerData = this.reminders.find((x) => {
          if(x.id === reminderId){
         //  console.log("exit time slot :",x.schedule.timeSlots[1].sTime);
-          x.schedule.timeSlots.map((res:any)=>{
+     const data =  x.schedule.timeSlots.map((res:any)=>{
             console.log("new slot :",res)
             let sttime ;
             let newTimeArray = [];
@@ -409,9 +409,10 @@ _filter(value: string): string[] {
      
            }
            newTimeArray.push(sttime);
-           return this.selectedTimes = newTimeArray;
+          return this.selectedTimes = newTimeArray;
 
           })
+          console.log("Edit slots :",data);
          
          }
         });
