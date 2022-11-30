@@ -108,7 +108,8 @@ export class CreateDealerComponent implements OnInit {
       bank: [null],
       account: [null],
       ifsc: [null],
-      branch: [null]
+      branch: [null],
+      username: [null]
     });
 
 
@@ -149,6 +150,10 @@ export class CreateDealerComponent implements OnInit {
             }
             if (this.dealerData && this.dealerData.category && this.dealerData.category.id) {
               this.createDealer.controls.category.setValue(this.dealerData.category.id);
+            }
+
+            if (this.dealerData && this.dealerData.username) {
+              this.createDealer.controls.username.setValue(this.dealerData.username);
             }
 
             if (this.dealerData && this.dealerData.branch && this.dealerData.branch.id) {
@@ -655,7 +660,8 @@ export class CreateDealerComponent implements OnInit {
       "gstin": this.createDealer.controls.gst.value,
       "partnerSize": this.createDealer.controls.size.value,
       "partnerTrade": this.createDealer.controls.trade.value,
-      "branch": { "id": this.createDealer.controls.branch.value }
+      "branch": { "id": this.createDealer.controls.branch.value },
+      "partnerUserName": this.createDealer.controls.username.value
     }
 
     console.log("This.dealerData", this.dealerData);
@@ -848,7 +854,8 @@ export class CreateDealerComponent implements OnInit {
       "gstin": this.createDealer.controls.gst.value,
       "partnerSize": this.createDealer.controls.size.value,
       "partnerTrade": this.createDealer.controls.trade.value,
-      "branch": { "id": this.createDealer.controls.trade.value }
+      "branch": { "id": this.createDealer.controls.branch.value },
+      "partnerUserName": this.createDealer.controls.username.value
     }
 
     console.log("This.dealerData", this.dealerData);
