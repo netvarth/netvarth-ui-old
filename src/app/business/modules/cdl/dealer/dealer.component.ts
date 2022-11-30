@@ -71,7 +71,16 @@ export class DealerComponent implements OnInit {
 
 
   updateDealer(id, action, status?) {
-    if (status == 'ApprovalPending') {
+    if (action == 'update') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          id: id,
+          action: action
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
+    }
+    else if (status == 'ApprovalPending') {
       this.showDealer(id, status)
     }
     else if (status == 'Approved') {

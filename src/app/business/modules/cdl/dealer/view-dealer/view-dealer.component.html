@@ -103,7 +103,7 @@
                   aria-hidden="true"></i>&nbsp;Account</a>
             </li> -->
 
-            <li class="nav-item" *ngIf="user && user.adminPrivilege">
+            <li class="nav-item" *ngIf="capabilities && capabilities.canUpdatePartnerSettings">
               <a class="nav-link" data-toggle="tab" href="#tab6"><i class="fa fa-cog"
                   aria-hidden="true"></i>&nbsp;Settings</a>
             </li>

@@ -97,7 +97,7 @@
                 *ngIf="capabilities && capabilities.canUpdatePartner && dealer.spInternalStatus=='Draft'"
                 (click)="updateDealer(dealer.uid,'update')"><i class="pi pi-upload text-white"></i>&nbsp;Update</button>
               <button pButton pRipple type="button" class="p-button-primary"
-                (click)="updateDealer(dealer.uid,'update',dealer.spInternalStatus)"><i
+                (click)="updateDealer(dealer.uid,'view',dealer.spInternalStatus)"><i
                   class="pi pi-eye text-white"></i>&nbsp;View</button>
             </div>
           </td>

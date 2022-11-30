@@ -128,6 +128,7 @@ export class CreateComponent implements OnInit {
   partnerId: any;
   relations = projectConstantsLocal.RELATIONSHIPS;
   employmentTypes = projectConstantsLocal.EMPLOYMENT_TYPES;
+  stateList = projectConstantsLocal.INDIAN_STATES;
   filesToUpload: any = [];
   dealers: any;
   mafilScoreFields: any;
@@ -1076,8 +1077,13 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.permanentaddress1.setValue(data.loanApplicationKycList[0].permanentAddress1);
             this.createLoan.controls.permanentaddress2.setValue(data.loanApplicationKycList[0].permanentAddress2);
             this.createLoan.controls.permanentcity.setValue(data.loanApplicationKycList[0].permanentCity);
-            this.createLoan.controls.permanentstate.setValue(data.loanApplicationKycList[0].permanentState);
             this.createLoan.controls.permanentpincode.setValue(data.loanApplicationKycList[0].permanentPin);
+            this.cdlService.getStateByPin(data.loanApplicationKycList[0].permanentPin).subscribe((data: any) => {
+              if (data && data.length > 0) {
+                this.createLoan.controls.permanentstate.setValue(data[0].state);
+              }
+              this.verifyingUID = false;
+            })
           }
           this.verifyingUID = false;
         })

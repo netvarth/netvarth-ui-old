@@ -187,6 +187,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  getStateByPin(pin) {
+    const url = 'provider/account/settings/locations/' + pin;
+    return this.servicemeta.httpGet(url, null);
+  }
+
 
 
 
