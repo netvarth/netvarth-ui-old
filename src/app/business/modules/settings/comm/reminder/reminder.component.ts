@@ -352,6 +352,8 @@ _filter(value: string): string[] {
     this.isCreate = true;
     this.reminder_title = 'Update Reminder';
     this.reminderId = reminderId;
+    this.selectedTimes = [];
+    this.selectedTime = [];
     this.providerService.getReminderById(reminderId).subscribe((data: any) => {
       console.log("Reminder Details Id :", data);
       this.reminderDetails = data;
@@ -409,7 +411,7 @@ _filter(value: string): string[] {
      
            }
            newTimeArray.push(sttime);
-          return this.selectedTimes = newTimeArray;
+          return this.selectedTimes.push(sttime);
 
           })
           console.log("Edit slots :",data);
