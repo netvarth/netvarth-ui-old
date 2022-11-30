@@ -10,7 +10,6 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { MatDialogModule } from '@angular/material/dialog';
 
-
 @NgModule({
   declarations: [
     ApplicantComponent

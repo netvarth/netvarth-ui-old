@@ -15,6 +15,14 @@ export class LeadsService {
     return this.servicemeta.httpPost(url, body);
   }
 
-  
+  /**
+   * 
+   * @param body 
+   * @returns 
+   */
+   uploadKycFile(body) {
+    const url = '/provider/KYC/upload';
+    return this.servicemeta.httpPost(url, body);
+  }
 
 }
