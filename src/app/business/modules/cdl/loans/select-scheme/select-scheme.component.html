@@ -11,7 +11,7 @@
     <div *ngFor="let scheme of schemes">
       <div class="col-md-6 text-left mt-2">
         <div class="border p-2">
-          <span class="font-weight-bold title">{{scheme.schemeName}}</span><br>
+          <span class="font-weight-bold title" *ngIf="scheme && scheme.schemeName">{{scheme.schemeName}}</span><br>
           <span class="mgn-up-20 subtitle"><b>Type : </b>{{scheme.schemeType}}</span><br>
           <span class="mgn-up-20 subtitle"><b>Repayments : </b>{{scheme.noOfRepayment}}</span><br>
           <span class="mgn-up-20 subtitle"><b>Rate : </b>{{scheme.schemeRate}} %</span>

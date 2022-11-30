@@ -124,8 +124,6 @@ export class ConfirmBoxComponent implements OnInit {
       this.downPayment = this.loanData.downpaymentAmount;
       this.loanAmount = this.loanData.requestedAmount;
       this.sanctionedAmount = this.loanData.requestedAmount;
-      this.schemeSelected = this.loanData.loanScheme;
-      console.log(this.loanData)
     })
   }
 

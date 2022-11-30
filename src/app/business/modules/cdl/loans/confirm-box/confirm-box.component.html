@@ -152,8 +152,8 @@
             </div>
             <div class="fieldPadding">
               <input (click)="openSchemes()" (keyup)="resetErrors()" #scheme type="text" placeholder="Select Scheme"
-                class="form-control" autocomplete="off" formControlName="scheme" readonly
-                [value]="schemeSelected.schemeName" />
+                class="form-control" autocomplete="off" readonly
+                [value]="schemeSelected && schemeSelected.schemeName ? schemeSelected.schemeName:''" />
             </div>
           </div>
         </div>
