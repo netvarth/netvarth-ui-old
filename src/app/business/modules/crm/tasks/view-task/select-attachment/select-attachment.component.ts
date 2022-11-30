@@ -86,13 +86,14 @@ export class SelectAttachmentComponent implements OnInit {
 
   filesSelected(event, type?) {
     const input = event.target.files;
-    this.fileInput=input
+    this.fileInput=input;
+    console.log(' this.fileInput', this.fileInput)
     //let taskid = this.data.taskuid;
     console.log("input : ", input);
     // this.bUploadFileError=false;
     //   this.fileSelectErrorMsg=''
   
-    if (input) {
+    if (input.length===1) {
       for (const file of input) {
         if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar(
@@ -106,6 +107,8 @@ export class SelectAttachmentComponent implements OnInit {
           reader.onload = e => {
             this.selectedMessage.base64.push(e.target["result"]);
           };
+          console.log(' this.selectedMessage', this.selectedMessage.files)
+
           reader.readAsDataURL(file);
           this.action = "attachment";
 
@@ -117,13 +120,21 @@ export class SelectAttachmentComponent implements OnInit {
         }
       }
       // this.saveFile()
-      if (
-        type &&
-        this.selectedMessage.files &&
-        this.selectedMessage.files.length > 0 &&
-        input.length > 0
-      ) {
+    }
+    else {
+      if (event && event.target && event.target.files && event.target.files.length) {
+        for (let i = 0; i < event.target.files.length; i++) {
+          this.selectedMessage.files.push(event.target.files[i]);
+          const reader = new FileReader();
+          reader.onload = e => {
+            this.selectedMessage.base64.push(e.target["result"]);
+          };
+          reader.readAsDataURL(event.target.files[i]);
+          this.action = "attachment";
+        }
       }
+
+      console.log('this.selectedMessage', this.selectedMessage)
     }
     // if( this.fileInput.length>0){
     //   this.bUploadFileError=false;
@@ -180,6 +191,7 @@ export class SelectAttachmentComponent implements OnInit {
     
   }
   getImage(url, file) {
+    console.log('url,url',url)
     console.log("File :", file);
     this.bUploadFileError=false;
     this.fileSelectErrorMsg=''
