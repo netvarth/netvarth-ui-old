@@ -354,6 +354,8 @@ _filter(value: string): string[] {
     this.reminderId = reminderId;
     this.selectedTimes = [];
     this.selectedTime = [];
+    this.selectedConsumers = [];
+    this.selectedConsumer = '';
     this.providerService.getReminderById(reminderId).subscribe((data: any) => {
       console.log("Reminder Details Id :", data);
       this.reminderDetails = data;
@@ -599,6 +601,8 @@ _filter(value: string): string[] {
     this.reminderId = 0;
     this.selectedId = 0;
     this.selectedConsumers = [];
+    this.selectedConsumer = '';
+    this.selectedTime = []
     this.hide = false;
   }
   createForm(){
@@ -775,7 +779,7 @@ _filter(value: string): string[] {
         this.snackbarService.openSnackBar("Please select time slot", {
           panelClass: "snackbarerror"
         });
-      } else if ((this.selectedConsumer === undefined ||this.selectedConsumer === "")) {
+      } else if ((this.selectedConsumer === undefined || this.selectedConsumer === "")) {
         this.snackbarService.openSnackBar("Please search consumer", {
           panelClass: "snackbarerror"
         });
@@ -874,7 +878,7 @@ _filter(value: string): string[] {
         this.snackbarService.openSnackBar("Please select time slot", {
           panelClass: "snackbarerror"
         });
-      } else if ((this.selectedConsumer === undefined ||this.selectedConsumer === "")) {
+      } else if ((this.selectedConsumer === undefined || this.selectedConsumer === "")) {
         this.snackbarService.openSnackBar("Please search consumer", {
           panelClass: "snackbarerror"
         });
@@ -974,7 +978,12 @@ _filter(value: string): string[] {
  
   remove(consumer: string): void {
     const index = this.selectedConsumers.indexOf(consumer);
-
+    if(this.isEdit && index === 0){
+      this.selectedConsumer = '';
+      this.snackbarService.openSnackBar("Select atleat one consumer", {
+        panelClass: "snackbarerror"
+      });
+    }
     if (index >= 0) {
       this.selectedConsumers.splice(index, 1);
     }
@@ -983,6 +992,7 @@ _filter(value: string): string[] {
     const index = this.selectedTimes.indexOf(time);
     if(this.isEdit && index === 0){
       this.isTimeNotSelected = true;
+      this.selectedTime = [];
       this.snackbarService.openSnackBar("Select atleat one time slot", {
         panelClass: "snackbarerror"
       });
@@ -1038,13 +1048,13 @@ _filter(value: string): string[] {
       }
     }
     else{
-      if(mode === 'edit' && this.reminderId){
-        return this.selectedConsumers[0] = customer;
-      }
-      else{
+      // if(mode === 'edit' && this.reminderId){
+      //   return this.selectedConsumers[0] = customer;
+      // }
+      // else{
         return this.selectedConsumers.push(customer);
 
-      }
+     // }
     }
   
   }
