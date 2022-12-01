@@ -233,8 +233,13 @@
           </div>
         </div>
 
-        <br>
-
+        <div class="mt-3"
+          *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
+          <a (click)="showKycDoc()" target="_blank"
+            class="btn btn-primary">
+            <span>View KYC Doc</span>
+          </a>
+        </div>
       </div>
       <div class="card marginClass">
         <div class="font-weight-bold">Bank Details&nbsp;<img src="../../../../assets/images/cdl/check.png" width="20"

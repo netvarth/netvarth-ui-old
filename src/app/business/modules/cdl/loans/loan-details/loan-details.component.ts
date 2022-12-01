@@ -223,6 +223,10 @@ export class LoanDetailsComponent implements OnInit {
 
   }
 
+  showKycDoc() {
+    this.router.navigate(['provider', 'cdl', 'kycdoc', this.loanId]);
+  }
+
 
   verifyLoanByOps() {
 

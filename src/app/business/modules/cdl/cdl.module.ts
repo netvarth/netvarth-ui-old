@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: '', component: CdlComponent },
   { path: 'loans', loadChildren: () => import('./loans/loans.module').then(m => m.LoansModule) },
   { path: 'loans/:id', loadChildren: () => import('./loans/loan-details/loan-details.module').then(m => m.LoanDetailsModule) },
+  { path: 'kycdoc/:id', loadChildren: () => import('./loans/loan-details/kyc-doc/kyc-doc.module').then(m => m.KycDocModule) },
   { path: 'dealers', loadChildren: () => import('./dealer/dealer.module').then(m => m.DealerModule) },
   { path: 'leads', loadChildren: () => import('./leads/leads.module').then(m => m.LeadsModule) },
   { path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
