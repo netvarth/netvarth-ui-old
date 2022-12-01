@@ -455,7 +455,7 @@
 
 .font-small {
   font-size: 12px !important;
-  font-weight: bold !important;
+  /* font-weight: bold !important; */
 }
 
 @media (max-width: 767px) {
@@ -480,6 +480,14 @@
 
   .head-card-sub-title {
     font-size: 12px !important;
+    font-weight: 700 !important;
+    margin-top: 10px !important;
+  }
+}
+
+@media (max-width: 400px) {
+  .head-card-sub-title {
+    font-size: 10px !important;
     font-weight: 700 !important;
     margin-top: 10px !important;
   }

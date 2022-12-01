@@ -99,6 +99,14 @@ th {
   border-radius: 8px !important;
 }
 
+.status-ConsumerAccepted {
+  background-color: #d9e3ff !important;
+  color: #10359c !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
 /* .status-Draft {
   background-color: #fbbdc3 !important;
   color: rgb(186, 121, 0) !important;

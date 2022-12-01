@@ -135,6 +135,7 @@ export class CreateComponent implements OnInit {
   SelectedloanProducts: any = [];
   accountaggregating: boolean = false;
   mafilEmployee: any = false;
+  movableAssets: boolean = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -1065,6 +1066,15 @@ export class CreateComponent implements OnInit {
 
   }
 
+
+  changeMovableAssets(event) {
+    if (event.value == 1) {
+      this.movableAssets = false
+    }
+    else {
+      this.movableAssets = true
+    }
+  }
 
 
 

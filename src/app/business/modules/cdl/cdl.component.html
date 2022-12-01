@@ -21,7 +21,7 @@
 </div>
 <br>
 <div class="overflow-x-none">
-  <div class="container-fluid  no-padding-small">
+  <div class="container-fluid no-padding-small">
     <div class="row">
       <div class="col-lg-6 col-md-7 col-sm-12 col-xs-12">
         <div class="card no-padding-small">
@@ -184,10 +184,8 @@
     </div>
   </div>
 
-
-
-  <div class="container-fluid no-padding-small">
-    <div class="card">
+  <div class="container-fluid" *ngIf="dashboardStats">
+    <div class="card mt-2">
       <div class="row">
         <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
           <div class="dashboard-card text-center">
@@ -197,13 +195,13 @@
               </div>&nbsp;&nbsp; -->
               <div class="text-left my-auto">
                 <span class="head-card-title">Leads Generated</span><br>
-                <div class="d-flex justify-content-between mt-2">
-                  <div>
-                    <span class="font-weight-bold">{{allDealersCount}}</span><br>
+                <div class="d-flex justify-content-between mt-2" *ngIf="dashboardStats[0]">
+                  <div class="mr-2">
+                    <span class="font-weight-bold">{{dashboardStats[0].count}}</span><br>
                     <span class="font-small">Count</span>
                   </div>
                   <div>
-                    <span class="font-weight-bold">5300000</span><br>
+                    <span class="font-weight-bold">{{dashboardStats[0].amount}}</span><br>
                     <span class="font-small">Amount</span>
                   </div>
                 </div>
@@ -220,13 +218,13 @@
               </div>&nbsp;&nbsp; -->
               <div class="text-left my-auto">
                 <span class="head-card-title">Applications</span><br>
-                <div class="d-flex justify-content-between mt-2">
-                  <div>
-                    <span class="font-weight-bold">{{allDealersCount}}</span><br>
+                <div class="d-flex justify-content-between mt-2" *ngIf="dashboardStats[0]">
+                  <div class="mr-2">
+                    <span class="font-weight-bold">{{dashboardStats[1].count}}</span><br>
                     <span class="font-small">Count</span>
                   </div>
                   <div>
-                    <span class="font-weight-bold">6800000</span><br>
+                    <span class="font-weight-bold">{{dashboardStats[1].amount}}</span><br>
                     <span class="font-small">Amount</span>
                   </div>
                 </div>
@@ -243,13 +241,13 @@
               </div>&nbsp;&nbsp; -->
               <div class="text-left my-auto">
                 <span class="head-card-title">Loan Converted</span><br>
-                <div class="d-flex justify-content-between mt-2">
-                  <div>
-                    <span class="font-weight-bold">{{allDealersCount}}</span><br>
+                <div class="d-flex justify-content-between mt-2" *ngIf="dashboardStats[0]">
+                  <div class="mr-2">
+                    <span class="font-weight-bold">{{dashboardStats[2].count}}</span><br>
                     <span class="font-small">Count</span>
                   </div>
                   <div>
-                    <span class="font-weight-bold">7500000</span><br>
+                    <span class="font-weight-bold">{{dashboardStats[2].amount}}</span><br>
                     <span class="font-small">Amount</span>
                   </div>
                 </div>
@@ -266,13 +264,13 @@
               </div>&nbsp;&nbsp; -->
               <div class="text-left my-auto">
                 <span class="head-card-title">Rejected</span><br>
-                <div class="d-flex justify-content-between mt-2">
-                  <div>
-                    <span class="font-weight-bold">{{allDealersCount}}</span><br>
+                <div class="d-flex justify-content-between mt-2" *ngIf="dashboardStats[0]">
+                  <div class="mr-2">
+                    <span class="font-weight-bold">{{dashboardStats[3].count}}</span><br>
                     <span class="font-small">Count</span>
                   </div>
                   <div>
-                    <span class="font-weight-bold">9500000</span><br>
+                    <span class="font-weight-bold">{{dashboardStats[3].amount}}</span><br>
                     <span class="font-small">Amount</span>
                   </div>
                 </div>

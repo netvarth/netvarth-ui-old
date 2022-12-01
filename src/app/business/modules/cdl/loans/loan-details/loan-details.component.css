@@ -315,3 +315,8 @@
     font-size: 0.7rem !important;
   }
 }
+
+
+::ng-deep .p-timeline-horizontal .p-timeline-event:last-child {
+  flex: 1 !important;
+}

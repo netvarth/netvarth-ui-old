@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { CdlService } from '../../cdl.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
@@ -111,6 +111,18 @@ export class ViewDealerComponent implements OnInit {
     this.getStaffList('Sales Officer');
     this.getStaffList('Branch Credit Head');
   }
+
+
+  updateDealer() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: this.dealerUid,
+        action: 'update'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
+  }
+
 
 
   assignOfficer(type) {

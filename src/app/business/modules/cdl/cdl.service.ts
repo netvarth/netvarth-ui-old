@@ -414,6 +414,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
+  getDashboardStats() {
+    const url = 'provider/dashboard/stats';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getCapabilitiesConfig(user) {
     if (user && user.roles && user.roles[0] && user.roles[0].capabilities) {
       console.log("Role Capabilities in Sevice File", user)

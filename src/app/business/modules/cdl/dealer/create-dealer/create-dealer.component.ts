@@ -168,6 +168,7 @@ export class CreateDealerComponent implements OnInit {
             this.selectedFiles['pan'].files = this.dealerData.panAttachments;
             this.selectedFiles['store'].files = this.dealerData.storeAttachments;
             this.selectedFiles['cheque'].files = this.dealerData.bankAttachments;
+            this.selectedFiles['gst'].files = this.dealerData.gstAttachments;
 
             if (this.dealerData && this.dealerData.partnerMobileVerified) {
               this.verification = true;
@@ -182,8 +183,8 @@ export class CreateDealerComponent implements OnInit {
               this.createDealer.controls.bank.setValue(this.dealerData.bankName);
             }
 
-            if (this.dealerData && this.dealerData.branch) {
-              this.createDealer.controls.branch.setValue(this.dealerData.branch);
+            if (this.dealerData && this.dealerData.branch && this.dealerData.branch.id) {
+              this.createDealer.controls.branch.setValue(this.dealerData.branch.id);
             }
 
             if (this.dealerData && this.dealerData.bankAccountNo) {

@@ -644,7 +644,7 @@
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
-                        placeholder="Enter Customer Salary" class="form-control" autocomplete="off"
+                        placeholder="Enter Monthly Income" class="form-control" autocomplete="off"
                         formControlName="salary" />
                     </div>
                   </div>
@@ -788,7 +788,7 @@
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #ownedMovableAssets
-                      formControlName="ownedMovableAssets">
+                      formControlName="ownedMovableAssets" (selectionChange)="changeMovableAssets($event)">
                       <mat-option [value]="assets.id" *ngFor="let assets of mafilScoreFields.ownedMovableAssets">
                         <div *ngIf="assets && assets.name">{{assets.name}}</div>
                       </mat-option>
@@ -798,7 +798,7 @@
               </div>
 
 
-              <div>
+              <div *ngIf="movableAssets">
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
@@ -1014,15 +1014,11 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Nominee Relation</div>
+                      <div class="form-title">Nominee Name</div>
                     </div>
                     <div class="fieldPadding">
-                      <mat-select class="form-control widthWebKit" placeholder="" #nomineetype
-                        formControlName="nomineetype">
-                        <mat-option [value]="relation.name" *ngFor="let relation of relations">
-                          <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
-                        </mat-option>
-                      </mat-select>
+                      <input (keyup)="resetErrors()" type="text" #nomineename placeholder="Enter Nominee Name"
+                        class="form-control" autocomplete="off" [value]="nomineename" formControlName="nomineename" />
                     </div>
                   </div>
                 </div>
@@ -1032,11 +1028,15 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Nominee Name</div>
+                      <div class="form-title">Nominee Relation</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" #nomineename placeholder="Enter Nominee Name"
-                        class="form-control" autocomplete="off" [value]="nomineename" formControlName="nomineename" />
+                      <mat-select class="form-control widthWebKit" placeholder="" #nomineetype
+                        formControlName="nomineetype">
+                        <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                          <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
                     </div>
                   </div>
                 </div>
