@@ -23,6 +23,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getLoanProductCategoryList() {
+    const url = 'provider/loanproduct/category';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   gstVerify(id, data) {
     const url = 'provider/partner/validate/gst/' + id;
     return this.servicemeta.httpPut(url, data);

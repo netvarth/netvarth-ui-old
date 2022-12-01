@@ -611,7 +611,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #customerEducation formControlName="customerEducation">
                       <mat-option [value]="education.id" *ngFor="let education of mafilScoreFields.customerEducation">
-                        <div *ngIf="education && education.name">{{education.name}}</div>
+                        <div *ngIf="education && education.name">{{education.name}} - {{education.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -629,7 +629,7 @@
                       formControlName="customerEmployement">
                       <mat-option [value]="employment.id"
                         *ngFor="let employment of mafilScoreFields.customerEmployement">
-                        <div *ngIf="employment && employment.name">{{employment.name}}</div>
+                        <div *ngIf="employment && employment.name">{{employment.name}} - {{employment.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -692,7 +692,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #salaryRouting formControlName="salaryRouting">
                       <mat-option [value]="salary.id" *ngFor="let salary of mafilScoreFields.salaryRouting">
-                        <div *ngIf="salary && salary.name">{{salary.name}}</div>
+                        <div *ngIf="salary && salary.name">{{salary.name}} - {{salary.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -708,7 +708,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #familyDependants formControlName="familyDependants">
                       <mat-option [value]="dependant.id" *ngFor="let dependant of mafilScoreFields.familyDependants">
-                        <div *ngIf="dependant && dependant.name">{{dependant.name}}</div>
+                        <div *ngIf="dependant && dependant.name">{{dependant.name}} - {{dependant.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -723,7 +723,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #existingCustomer formControlName="existingCustomer">
                       <mat-option [value]="customer.id" *ngFor="let customer of mafilScoreFields.existingCustomer">
-                        <div *ngIf="customer && customer.name">{{customer.name}}</div>
+                        <div *ngIf="customer && customer.name">{{customer.name}} - {{customer.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -738,7 +738,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #earningMembers formControlName="earningMembers">
                       <mat-option [value]="member.id" *ngFor="let member of mafilScoreFields.earningMembers">
-                        <div *ngIf="member && member.name">{{member.name}}</div>
+                        <div *ngIf="member && member.name">{{member.name}} - {{member.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -755,7 +755,7 @@
                     <mat-select class="form-control widthWebKit" #noOfYearsAtPresentAddress
                       formControlName="noOfYearsAtPresentAddress">
                       <mat-option [value]="years.id" *ngFor="let years of mafilScoreFields.noOfYearsAtPresentAddress">
-                        <div *ngIf="years && years.name">{{years.name}}</div>
+                        <div *ngIf="years && years.name">{{years.name}} - {{years.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -773,7 +773,7 @@
                       formControlName="currentResidenceOwnershipStatus">
                       <mat-option [value]="ownership.id"
                         *ngFor="let ownership of mafilScoreFields.currentResidenceOwnershipStatus">
-                        <div *ngIf="ownership && ownership.name">{{ownership.name}}</div>
+                        <div *ngIf="ownership && ownership.name">{{ownership.name}} - {{ownership.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -790,7 +790,7 @@
                     <mat-select class="form-control widthWebKit" #ownedMovableAssets
                       formControlName="ownedMovableAssets" (selectionChange)="changeMovableAssets($event)">
                       <mat-option [value]="assets.id" *ngFor="let assets of mafilScoreFields.ownedMovableAssets">
-                        <div *ngIf="assets && assets.name">{{assets.name}}</div>
+                        <div *ngIf="assets && assets.name">{{assets.name}} - {{assets.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -821,7 +821,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #goodsFinanced formControlName="goodsFinanced">
                       <mat-option [value]="goods.id" *ngFor="let goods of mafilScoreFields.goodsFinanced">
-                        <div *ngIf="goods && goods.name">{{goods.name}}</div>
+                        <div *ngIf="goods && goods.name">{{goods.name}} - {{goods.score}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -947,6 +947,23 @@
                   </div>
                 </div>
               </div>
+
+              <!-- <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #category formControlName="category">
+                        <mat-option [value]="category.id" *ngFor="let category of loanCategories">
+                          <div *ngIf="category && category.name">{{category.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
 
               <div>
                 <div class="bggrey my-2">

@@ -136,6 +136,7 @@ export class CreateComponent implements OnInit {
   accountaggregating: boolean = false;
   mafilEmployee: any = false;
   movableAssets: boolean = false;
+  loanProductCategories: ArrayBuffer;
   constructor(
     private location: Location,
     private router: Router,
@@ -246,12 +247,12 @@ export class CreateComponent implements OnInit {
               this.createLoan.controls.dealer.setValue(this.loanData.partner.id);
             }
 
-            if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
-              this.loanData.loanProducts.map((data) => {
-                this.SelectedloanProducts.push(data)
-              });
-              console.log("this.SelectedloanProducts", this.SelectedloanProducts);
-            }
+            // if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
+            //   this.loanData.loanProducts.map((data) => {
+            //     this.SelectedloanProducts.push(data)
+            //   });
+            //   console.log("this.SelectedloanProducts", this.SelectedloanProducts);
+            // }
 
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].customerEducation) {
               this.createLoan.controls.customerEducation.setValue(this.loanData.loanApplicationKycList[0].customerEducation);
@@ -426,6 +427,7 @@ export class CreateComponent implements OnInit {
     // this.getLoanSchemes();
     this.getPartners();
     this.getMafilScoreFields();
+    this.getLoanProductCategories();
     if (this.from && this.from == 'create') {
       this.customerDetailsPanel = false;
       this.kycDetailsPanel = true;
@@ -442,6 +444,12 @@ export class CreateComponent implements OnInit {
   getLoanCategories() {
     this.cdlService.getLoanCategoryList().subscribe((data) => {
       this.loanCategories = data;
+    })
+  }
+
+  getLoanProductCategories() {
+    this.cdlService.getLoanProductCategoryList().subscribe((data) => {
+      this.loanProductCategories = data;
     })
   }
 
@@ -1222,6 +1230,7 @@ export class CreateComponent implements OnInit {
   }
 
   saveLoanDetails() {
+    console.log(this.loanProductsSelected)
     this.loanApplication = {
       "uid": this.loanId,
       "loanProducts": this.loanProductsSelected,
@@ -1300,6 +1309,7 @@ export class CreateComponent implements OnInit {
 
 
   productSelect(values) {
+    console.log(values)
     this.loanProductsSelected = values.map((data) => {
       return { "id": data.id, "categoryId": data.category.id, "typeId": data.type.id }
     })
