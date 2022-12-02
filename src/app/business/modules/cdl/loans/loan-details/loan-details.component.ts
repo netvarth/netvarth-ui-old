@@ -227,13 +227,13 @@ export class LoanDetailsComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'kycdoc', this.loanId]);
   }
 
+
   showLoanDetailsDoc() {
     this.router.navigate(['provider', 'cdl', 'loandetailsdoc', this.loanId]);
   }
 
 
   verifyLoanByOps() {
-
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
