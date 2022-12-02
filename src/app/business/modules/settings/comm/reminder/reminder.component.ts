@@ -44,6 +44,7 @@ export class ReminderComponent implements OnInit {
   showBlockHint = false;
   totalName: string = '';
   customer_data: any;
+  times:any[]=[];
   emptyFielderror = false;
     provider_label = '';
     create_new = false;
@@ -59,6 +60,16 @@ export class ReminderComponent implements OnInit {
     sms: true,
     email: false,
     phoneNumber: false
+  };
+  filter = {
+    //projectConstantsLocal.PERPAGING_LIMIT
+    page_count: projectConstantsLocal.PERPAGING_LIMIT,
+    page: 1
+  };
+  pagination: any = {
+    startpageval: 1,
+    totalCnt: 0,
+    perPage: this.filter.page_count
   };
   searchForm: FormGroup;
   categoryForSearchingarray = ['Search with PhoneNumber','Search with Name or ID', 'Search with Email ID'];
@@ -77,7 +88,8 @@ export class ReminderComponent implements OnInit {
   hideTime:boolean = false;
   isTimeNotSelected: boolean = false;
   reminder_title: any;
-
+  isSelectedActive = false;
+  isSelectedInActive = false;
   constructor(
     private router: Router,
     public fed_service: FormMessageDisplayService,
@@ -106,14 +118,15 @@ export class ReminderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
     this.createForm();
     if(this.selectedId){
       console.log("from patientsss :",this.selectedId);
       this.getCustomerbyId(this.selectedId);
       this.editReminder();
     }
-     this.getReminders();
+    this.pagination.startpageval = this.groupService.getitemFromGroupStorage('paginationStart') || 1;
+     //this.getReminders();
+     this.getActiveReminders();
     //this.getReminderCounts();
     this.getCompletedReminderCount();
     this.getAllReminderCount();
@@ -135,6 +148,114 @@ export class ReminderComponent implements OnInit {
     const seldate =
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.selectedDay = seldate;
+    console.log("Selected Date :",this.selectedDay);
+    
+  }
+
+
+
+
+
+
+  handle_pageclick(pg) {
+    this.pagination.startpageval = pg;
+    //this.groupService.setitemToGroupStorage('customerPage', pg);
+    this.filter.page = pg;
+    //'pageclick'
+    this.doSearch();
+  }
+
+  doSearch(type?) {
+    if(this.isSelectedActive){
+      this.getActiveReminders();
+    }
+    if(this.isSelectedInActive){
+      this.getInActiveReminders();
+    }
+
+  }
+  setPaginationFilter(api_filter) {
+    if(this.isSelectedActive){
+      if (this.allReminderCounts <= 10) {
+        this.pagination.startpageval = 1;
+      }
+    }
+    if(this.isSelectedInActive){
+      if (this.completedReminderCount <= 10) {
+        this.pagination.startpageval = 1;
+      }
+    }
+    
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  setFilterForApi() {
+    const api_filter = {};
+      if (this.isSelectedActive) {
+        api_filter['completed-eq'] = false;
+      }
+      if (this.isSelectedInActive) {
+        api_filter['completed-eq'] = true;
+      }
+    return api_filter;
+  }
+  getActiveReminders(){
+   // const filter = { 'completed-eq': 'false'};
+    this.isSelectedActive = true;
+    this.isSelectedInActive=false;
+    let filter = {};
+    filter = this.setFilterForApi();
+    filter = this.setPaginationFilter(filter);
+    this.providerService.getReminders(filter)
+        .subscribe(
+            (data:any) => {
+                this.reminders = data;
+               data.schedule.timeSlots.map((res:any)=>{
+                  console.log("new slot :",res)
+                  let sttime ;
+                  sttime = {
+                   hour: parseInt(
+                     moment(res.sTime, [
+                       "h:mm A"
+                     ]).format("hh"),
+                     10
+                   ),
+                   minute: parseInt(
+                     moment(res.sTime, [
+                       "h:mm A"
+                     ]).format("mm"),
+                     10
+                   )
+                 };
+                 if(res.sTime.includes('PM')){
+                   sttime['mode'] = "PM"
+                 }
+                 else{
+                   sttime['mode'] = "AM"
+           
+                 }
+        
+                return this.times.push(sttime);
+      
+                })
+                console.log("Active reminders :",data);
+            });
+  }
+
+  getInActiveReminders(){
+    this.isSelectedInActive = true;
+    this.isSelectedActive = false;
+    let filter = {};
+    filter = this.setFilterForApi();
+    filter = this.setPaginationFilter(filter);
+   // const filter = { 'completed-eq': 'true'};
+    this.providerService.getReminders(filter)
+        .subscribe(
+            (data:any) => {
+                this.reminders = data;
+                console.log("In Active reminders :",data);
+            });
   }
   getAllReminderCount() {
     const filter = { 'completed-eq': 'false'};
@@ -142,6 +263,7 @@ export class ReminderComponent implements OnInit {
         .subscribe(
             (data:any) => {
                 this.allReminderCounts = data;
+                this.pagination.totalCnt = data;
                 console.log("All reminders :",data);
             });
 }
@@ -151,6 +273,7 @@ getCompletedReminderCount() {
       .subscribe(
         (data:any) => {
               this.completedReminderCount = data;
+              this.pagination.totalCnt = data;
               console.log("Completed reminders :",data);
           });
 }
@@ -339,7 +462,8 @@ _filter(value: string): string[] {
         if (result === 1) {
           this.providerService.deleteReminder(id).subscribe((data: any) => {
             this.snackbarService.openSnackBar("Deleted Reminder Successfully");
-            this.getReminders();
+           // this.getReminders();
+            this.getActiveReminders();
            // this.getReminderCounts();
            this.getCompletedReminderCount();
            this.getAllReminderCount();
@@ -595,6 +719,7 @@ _filter(value: string): string[] {
     this.reminder_title = 'Create Reminder';
     // this.isEdit = false;
     // this.createForm();
+    
     (this.reminder.name = ""),
       (this.reminder.message = ""),
       (this.reminder.fromDate = this.selectedDay),
@@ -610,6 +735,7 @@ _filter(value: string): string[] {
     this.selectedConsumer = '';
     this.selectedTime = []
     this.hide = false;
+    this.phone = '';
   }
   createForm(){
     this.searchForm = this.fb.group({
@@ -781,7 +907,19 @@ _filter(value: string): string[] {
         this.snackbarService.openSnackBar("Please enter reminder message", {
           panelClass: "snackbarerror"
         });
-      } else if (this.selectedTimes.length === 0 || (this.selectedTime.length === undefined || this.selectedTime.length === 0)) {
+
+      } 
+      else if (form_data.fromDate === "" || form_data.fromDate === undefined) {
+        this.snackbarService.openSnackBar("Please select from date", {
+          panelClass: "snackbarerror"
+        });
+      }
+      else if (form_data.toDate === "" || form_data.toDate === undefined) {
+        this.snackbarService.openSnackBar("Please select to date", {
+          panelClass: "snackbarerror"
+        });
+      }
+      else if (this.selectedTimes.length === 0 || (this.selectedTime.length === undefined || this.selectedTime.length === 0)) {
         this.snackbarService.openSnackBar("Please select time slot", {
           panelClass: "snackbarerror"
         });
@@ -847,7 +985,8 @@ _filter(value: string): string[] {
           .subscribe(
             (res: any) => {
               console.log("Reminder res :", res);
-              this.getReminders();
+             // this.getReminders();
+             this.getActiveReminders();
               //this.getReminderCounts();
               this.getCompletedReminderCount();
               this.getAllReminderCount();
@@ -880,7 +1019,18 @@ _filter(value: string): string[] {
         this.snackbarService.openSnackBar("Please enter reminder message", {
           panelClass: "snackbarerror"
         });
-      } else if ((this.selectedTime === undefined || this.selectedTime.length === 0)) {
+      } 
+      else if (form_data.fromDate === "" || form_data.fromDate === undefined) {
+        this.snackbarService.openSnackBar("Please select from date", {
+          panelClass: "snackbarerror"
+        });
+      }
+      else if (form_data.toDate === "" || form_data.toDate === undefined) {
+        this.snackbarService.openSnackBar("Please select to date", {
+          panelClass: "snackbarerror"
+        });
+      }
+      else if ((this.selectedTime === undefined || this.selectedTime.length === 0)) {
         this.snackbarService.openSnackBar("Please select time slot", {
           panelClass: "snackbarerror"
         });
@@ -950,7 +1100,8 @@ _filter(value: string): string[] {
           this.providerService.postReminder(postData).subscribe(
             (res: any) => {
               console.log("Reminder res :", res);
-              this.getReminders();
+              //this.getReminders();
+              this.getActiveReminders();
               //this.getReminderCounts();
               this.getCompletedReminderCount();
               this.getAllReminderCount();
@@ -996,15 +1147,23 @@ _filter(value: string): string[] {
   }
   removeTime(time: any): void {
     const index = this.selectedTimes.indexOf(time);
-    if(this.isEdit && index === 0){
+    const index1 = this.selectedTime.indexOf(time);
+
+    console.log("Index :",this.selectedTimes.indexOf(time))
+    //this.selectedTimes.length === 0 && this.selectedTime.length === 0
+    if(this.isEdit && index === 0 && index1 === 0){
       this.isTimeNotSelected = true;
-      this.selectedTime = [];
+      // this.selectedTime = [];
+      // this.selectedTimes = [];
       this.snackbarService.openSnackBar("Select atleat one time slot", {
         panelClass: "snackbarerror"
       });
     }
     if (index >= 0) {
       this.selectedTimes.splice(index, 1);
+    }
+    if(index1 >=0){
+      this.selectedTime.splice(index,1);
     }
     
   }

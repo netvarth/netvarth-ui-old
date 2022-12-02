@@ -9,7 +9,9 @@ import { SnackbarService } from "../../../../../../shared/services/snackbar.serv
 })
 export class CreateReminderComponent implements OnInit {
   mode;
-  time = { hour: 9, minute: 10 };
+  time = { hour: new Date().getHours() , minute: new Date().getMinutes() };
+  newtime = new Date();
+  CurrentTime = new Date().getHours() + ':' + new Date().getMinutes() + ':'+  new Date().getSeconds();
   //,mode:'AM'
   hourStep = 1;
 	minuteStep = 10;
@@ -23,7 +25,13 @@ export class CreateReminderComponent implements OnInit {
     this.mode = this.data.mode;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console. log(
+    //   newtime. toLocaleString(‘en-US’, { hour: ‘numeric’, hour12: true })
+    //   );
+      console.log("Current time :",this.CurrentTime);
+
+  }
   onSubmitTime(time) {
     // let timeSlot = {};
     // timeSlot = {
