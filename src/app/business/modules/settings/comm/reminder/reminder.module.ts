@@ -19,6 +19,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
+import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
+
 
 const routes: Routes = [{ path: "", component: ReminderComponent }];
 @NgModule({
@@ -42,6 +44,7 @@ const routes: Routes = [{ path: "", component: ReminderComponent }];
     ReactiveFormsModule,
     CapitalizeFirstPipeModule,
     NgbTimepickerModule,
+    PagerModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [ReminderComponent]
