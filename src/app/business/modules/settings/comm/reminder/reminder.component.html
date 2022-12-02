@@ -94,9 +94,11 @@
                             <div *ngIf="reminder.message" style="word-break: break-all;margin-top: -5px;">
                                 <span class="text-secondary" style="font-size: 12px;">{{reminder.message}}</span>
                             </div>
-                        <div> <span><img class="imageSize" src="./assets/images/dateReminder.png"
+                            <!-- src="./assets/images/dateReminder.png" -->
+                        <div> <span><img class="imageSize" src="./assets/icons/dateIcon.png"
                                     alt="Basic Plus"></span>
-                            <span class="text-secondary" style="font-size: 12px;"> {{reminder.schedule.startDate | date:"dd/MM/yyyy"}} to
+                                    <span *ngIf="reminder.schedule.startDate === reminder.schedule.terminator.endDate" class="text-secondary" style="font-size: 12px;"> {{reminder.schedule.startDate | date:"dd/MM/yyyy"}}</span>
+                            <span *ngIf="reminder.schedule.startDate !== reminder.schedule.terminator.endDate" class="text-secondary" style="font-size: 12px;"> {{reminder.schedule.startDate | date:"dd/MM/yyyy"}} to
                                 {{reminder.schedule.terminator.endDate | date:"dd/MM/yyyy"}}</span>
                         </div>
                         <div> <span><img class="imageSize" src="./assets/icons/timeIcon.png"
