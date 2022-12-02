@@ -454,9 +454,19 @@
 
 
 .font-small {
-  font-size: 12px !important;
+  font-size: 14px !important;
   /* font-weight: bold !important; */
 }
+
+.stats-head-card-title {
+  font-size: 14px !important;
+}
+
+.stats-image {
+  width: 70px !important;
+  height: 70px !important;
+}
+
 
 @media (max-width: 767px) {
 
@@ -509,6 +519,8 @@
     font-size: 13px !important;
   }
 
+
+
 }
 
 @media (min-width: 1025px) {
@@ -526,4 +538,17 @@
     display: none;
   }
 
+}
+
+
+@media (min-width: 1170px) and (max-width: 1250px) {
+  .stats-image {
+    width: 50px !important;
+    height: 50px !important;
+  }
+
+  .stats-head-card-title,
+  .font-small {
+    font-size: 12px !important;
+  }
 }

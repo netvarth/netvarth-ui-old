@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
+import { PartnerService } from '../../../partner/partner.service';
 import { SnackbarService } from '../../services/snackbar.service';
-import { AgreementService } from './agreement.service';
 import { OtpVerifyComponent } from './otp-verify/otp-verify.component';
 
 @Component({
@@ -21,7 +21,7 @@ export class AgreementComponent implements OnInit {
   currentDate = new Date();
   constructor(
     private activatedroute: ActivatedRoute,
-    private agreementService: AgreementService,
+    private partnerservice: PartnerService,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private router: Router
@@ -37,7 +37,7 @@ export class AgreementComponent implements OnInit {
       }
     })
 
-    this.agreementService.getLoanFromOutside(this.loanId, this.accountId).subscribe((data: any) => {
+    this.partnerservice.getLoanFromOutside(this.loanId, this.accountId).subscribe((data: any) => {
       console.log("LoanData", data);
       this.loanData = data;
       if (this.loanData.spInternalStatus != 'Approved') {

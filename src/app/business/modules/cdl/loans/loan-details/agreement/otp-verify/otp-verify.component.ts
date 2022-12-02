@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { PartnerService } from '../../../../partner/partner.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { SubSink } from 'subsink';
-import { AgreementService } from '../agreement.service';
 
 @Component({
   selector: 'app-otp-verify',
@@ -44,7 +44,7 @@ export class OtpVerifyComponent implements OnInit {
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService,
-    private agreementService: AgreementService,
+    private partnerservice: PartnerService,
     private groupService: GroupStorageService
     // private lStorageService: LocalStorageService,
     // private authService: AuthService,
@@ -82,7 +82,7 @@ export class OtpVerifyComponent implements OnInit {
       "email": this.email,
       "countryCode": "+91"
     }
-    this.subs.sink = this.agreementService.sendAgreementOTP(credentials).subscribe(
+    this.subs.sink = this.partnerservice.sendAgreementOTP(credentials).subscribe(
       (response: any) => {
         this.snackbarService.openSnackBar("Otp Sent Successfully");
       }, (error) => {
@@ -147,7 +147,7 @@ export class OtpVerifyComponent implements OnInit {
 
 
   partnerOtpVerify() {
-    this.subs.sink = this.agreementService.verifyagreementOTP(this.uid, this.otpEntered)
+    this.subs.sink = this.partnerservice.verifyagreementOTP(this.uid, this.otpEntered)
       .subscribe(
         (response: any) => {
           this.snackbarService.openSnackBar("Mobile Number Verification Successful");

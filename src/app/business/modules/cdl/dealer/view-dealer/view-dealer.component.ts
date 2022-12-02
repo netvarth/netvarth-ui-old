@@ -5,7 +5,7 @@ import { CdlService } from '../../cdl.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AssignOfficerComponent } from '../assign-officer/assign-officer.component';
+import { AssignOfficerComponent } from '../assign-officer/assign-officer.component'; 
 @Component({
   selector: 'app-view-dealer',
   templateUrl: './view-dealer.component.html',
@@ -27,6 +27,8 @@ export class ViewDealerComponent implements OnInit {
   ApprovedPendingloans: any;
   totalApprovedPendingCount: any = 0;
   RejectedLoans: any;
+  fromDate: any;
+  toDate: any;
   RejectedLoansCount: any = 0;
   partnerLeadsCount: any = 0;
   partnerLeads: any;
@@ -46,6 +48,9 @@ export class ViewDealerComponent implements OnInit {
   capabilities: any;
   subventionStatus: boolean;
   salesOfficerVerificationstatus: boolean;
+  fromminDate = new Date();
+  minDate = new Date();
+  maxDate: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -110,6 +115,7 @@ export class ViewDealerComponent implements OnInit {
 
     this.getStaffList('Sales Officer');
     this.getStaffList('Branch Credit Head');
+    this.maxDate = new Date(this.minDate);
   }
 
 
@@ -479,5 +485,51 @@ export class ViewDealerComponent implements OnInit {
   }
   dealerApproved() {
     this.router.navigate(['provider', 'cdl', 'dealers']);
+  }
+
+
+  updatePartnervalidDate() {
+    let data = {
+      "id": this.dealerData.id,
+      "referenceNo": this.dealerData.referenceNo,
+      "uid": this.dealerData.uid,
+      // "headOffice": this.dealerData.headOffice,
+      // "parentId": this.dealerData.parentId,
+      // "category": { "id": this.dealerData.category.id },
+      // "type": { "id": this.dealerData.type.id },
+      // "partnerName": this.dealerData.partnerName,
+      // "partnerMobile": "String",
+      // "partnerEmail": "String",
+      // "description": "String",
+      // "aadhaar": "String",
+      // "pan": "String",
+      // "gstin": "String",
+      // "licenceNo": "String",
+      // "partnerAddress1": "String",
+      // "partnerAddress2": "String",
+      // "partnerPin": "String",
+      // "partnerCity": "String",
+      // "partnerState": "String",
+      // "googleMapUrl": "String",
+      // "longitude": "String",
+      // "latitude": "String",
+      // "bankName": "String",
+      // "bankAccountNo": "String",
+      // "bankIfsc": "String",
+      // "partnerSize": "Small/Medium/Large",
+      // "partnerTrade": "Wholesale/Retail",
+      "ecommerce": this.dealerData.ecommerce,
+      "multiUserRequired": this.dealerData.multiUserRequired,
+      "validFrom": this.dealerData.validFrom,
+      "validTo": this.dealerData.validTo
+    };
+
+    this.cdlservice.updateDealer(this.dealerUid, data).subscribe((data) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Valid Dates Updated Successfully")
+      }
+    }, (error) => {
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    })
   }
 }

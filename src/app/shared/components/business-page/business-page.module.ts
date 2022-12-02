@@ -30,7 +30,6 @@ import { AccountService } from "../../services/account.service";
 
 const routes: Routes = [
   { path: '', component: BusinessPageComponent },
-  { path: 'partner', loadChildren: () => import('../../../partner/partner.module').then(m => m.PartnerModule) },
   { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
   { path: 'dashboard', loadChildren: () => import('./homedashboard/homedashboard.module').then(m => m.HomedashboardModule) },
   { path: 'home', loadChildren: () => import('../business-page-home/business-page-home.module').then(m => m.BusinessPageHomeModule) },

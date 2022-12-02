@@ -227,6 +227,10 @@ export class LoanDetailsComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'kycdoc', this.loanId]);
   }
 
+  showLoanDetailsDoc() {
+    this.router.navigate(['provider', 'cdl', 'loandetailsdoc', this.loanId]);
+  }
+
 
   verifyLoanByOps() {
 

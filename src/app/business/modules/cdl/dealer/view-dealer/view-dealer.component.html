@@ -541,18 +541,6 @@
         <div class="col-md-6 col-lg-6 no-padding-small">
           <div class="card">
             <div class="my-2">
-              <!-- <span class="font-weight-bold">Credit Limit</span><br>
-              <div class="card p-1">
-                <div class="d-flex justify-content-between">
-                  <div class="d-flex align-items-center">
-                    {{creditLimit}}
-                  </div>
-                  <div>
-                    <button pButton type="button" class="btn-primary">Change</button>
-                  </div>
-                </div>
-              </div> -->
-              <br>
               <span class="font-weight-bold">Sales Officers</span><br>
               <div *ngIf="assignedSalesOfficersList">
                 <div *ngFor="let item of assignedSalesOfficersList">
@@ -657,6 +645,43 @@
                 <mat-slide-toggle (change)="changeDistrictActive($event)" [(ngModel)]="districtWiseStatus">
                   {{districtWiseStatus?'Active':'Inactive'}}
                 </mat-slide-toggle>
+              </div>
+            </div>
+            <div>
+              <div class="card p-1"><br>
+                <span class="font-weight-bold">Agreement Valid Date</span><br>
+                <div class="d-flex">
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="fieldPadding">
+                          <div>
+                            <label for="from" class="form-title">From</label><br>
+                            <p-calendar class="validDateCalendar" inputId="from" [(ngModel)]="fromDate"></p-calendar>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="fieldPadding">
+                          <div>
+                            <label for="to" class="form-title">To</label>
+                            <div class="d-flex">
+                              <p-calendar class="validDateCalendar" inputId="to" [(ngModel)]="toDate"
+                                [minDate]="fromDate"></p-calendar>
+                              <button pButton type="button" class="btn-primary px-2 py-0"
+                                (click)="updatePartnervalidDate()">Update</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

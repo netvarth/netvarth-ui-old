@@ -81,6 +81,22 @@ export class CdlComponent implements OnInit {
       "url": "./assets/images/cdl/Slide_5.jpg"
     }
   ]
+
+  statsImages = [
+    {
+      "url": "./assets/images/cdl/lead_generated.png"
+    },
+    {
+      "url": "./assets/images/cdl/application.png"
+    },
+    {
+      "url": "./assets/images/cdl/loan_converted.png"
+    },
+    {
+      "url": "./assets/images/cdl/rejected.png"
+    }
+  ]
+
   approvedDealers: any;
   dealersRequested: any;
   roleId: any;

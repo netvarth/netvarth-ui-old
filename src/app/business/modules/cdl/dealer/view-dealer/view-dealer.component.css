@@ -267,5 +267,24 @@ td {
 }
 
 .bg-grey {
-  background-color: #F6F6F6 !important;
+  background-color: #e9e9e9 !important;
+  cursor: pointer !important;
+}
+
+.form-title {
+  font-size: 14px !important;
+  color: #1E4079 !important;
+  font-weight: normal !important;
+}
+
+.width-70 {
+  width: 70% !important;
+}
+
+
+
+@media screen and (max-width: 576px) and (min-width: 0px) {
+  ::ng-deep .validDateCalendar .p-inputtext {
+    width: 100px !important;
+  }
 }
