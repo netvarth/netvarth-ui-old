@@ -4,11 +4,11 @@
             <td colspan="2">
                 <div class="my-3">
                     <img src="../../../../assets/images/cdl/company_logo.png"><br>
-                    <h4 class="font-weight-bold">CDL - Loan Sanction Letter</h4>
+                    <h4 class="font-weight-bold">CDL - Loan Details Document</h4>
                 </div>
             </td>
         </tr>
-        <tr class="text-center">
+        <!-- <tr class="text-center">
             <td colspan="2">
                 <div class="d-flex justify-content-between m-1">
                     <div class="text-normal">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
             </td>
-        </tr>
+        </tr> -->
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
@@ -52,7 +52,7 @@
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.referenceNo">{{loanData.referenceNo}}</span>
+                    <span *ngIf="loanData && loanData.createdDate">{{loanData.createdDate}}</span>
                 </div>
             </td>
         </tr>
@@ -168,20 +168,383 @@
             </td>
         </tr>
         <tr class="text-left">
-            <td colspan="2" style="width:50%">
+            <td style="width:50%">
                 <div class="text-normal mx-1">
-                    Subject: Sanction letter of Digital Consumer Durables Loan<br>
-                    Dear Sir/Madam,<br>
-                    We thank you for choosing Manappuram Finance Limited (MAFIL) as your financial partner and look
-                    forward to an
-                    enduring
-                    relationship with you. With reference to your loan application, we are pleased to offer you the loan
-                    as per
-                    the below
-                    mentioned terms and conditions
+                    <b>Gender</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData && loanData.customer && loanData.customer.gender">
+                        {{loanData.customer.gender}}
+                    </span>
                 </div>
             </td>
         </tr>
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Date of Birth</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData && loanData.customer && loanData.customer.dob">
+                        {{loanData.customer.dob}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Customer Photo</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData && loanData.consumerPhoto 
+                                        && loanData.consumerPhoto[0] && loanData.consumerPhoto[0].s3path">
+                        <img [src]="loanData.consumerPhoto[0].s3path" class="img-fluid pb-0" width="200px">
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Aadhar Number</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaar">
+                        {{loanData.loanApplicationKycList[0].aadhaar}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Aadhar Attachment</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments 
+                        && loanData.loanApplicationKycList[0].aadhaarAttachments[0] && loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path">
+                        <img [src]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path"
+                            class="img-fluid pb-0" width="100%">
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Pan Number</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].pan">
+                        {{loanData.loanApplicationKycList[0].pan}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Pan Attachment</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments 
+                                && loanData.loanApplicationKycList[0].panAttachments[0] && loanData.loanApplicationKycList[0].panAttachments[0].s3path">
+                        <img [src]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" class="img-fluid pb-0"
+                            width="100%">
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Dealer Id</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData && loanData.partner && loanData.partner.id">{{loanData.id}}</span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Dealer Name</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.partner && loanData.partner.partnerName">{{loanData.partner.partnerName}}</span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Customer Education</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerEducationName">
+                        {{loanData.loanApplicationKycList[0].customerEducationName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Customer Employment</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerEmployementName">
+                        {{loanData.loanApplicationKycList[0].customerEmployementName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Monthly Income</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome">
+                        {{loanData.loanApplicationKycList[0].monthlyIncome}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Salary Routing</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].salaryRoutingName">
+                        {{loanData.loanApplicationKycList[0].salaryRoutingName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Family Dependants</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].familyDependantsName">
+                        {{loanData.loanApplicationKycList[0].familyDependantsName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Existing Customer</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].existingCustomerName">
+                        {{loanData.loanApplicationKycList[0].existingCustomerName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Earning Members</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].earningMembersName">
+                        {{loanData.loanApplicationKycList[0].earningMembersName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>No.of Years at Present Address</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].noOfYearsAtPresentAddressName">
+                        {{loanData.loanApplicationKycList[0].noOfYearsAtPresentAddressName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Current Residence Ownership Status</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].currentResidenceOwnershipStatusName">
+                        {{loanData.loanApplicationKycList[0].currentResidenceOwnershipStatusName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Owned Movable Assets</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].ownedMovableAssetsName">
+                        {{loanData.loanApplicationKycList[0].ownedMovableAssetsName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Vehicle No</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].vehicleNo">
+                        {{loanData.loanApplicationKycList[0].vehicleNo}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Goods Financed</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].goodsFinancedName">
+                        {{loanData.loanApplicationKycList[0].goodsFinancedName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Mafil Employee</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData">
+                        {{loanData.employee?'Yes':'No'}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left" *ngIf="loanData && loanData.employee">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Mafil Employee</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData">
+                        {{loanData.employeeCode}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Number of EMI's Paid Monthly</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData && loanData.emiPaidAmountMonthly">
+                        {{loanData.emiPaidAmountMonthly}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
@@ -199,41 +562,13 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Purpose of Loan</b>
+                    <b>Category</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.loanProducts && loanData.loanProducts.length>0">
-                        <span *ngFor="let item of loanData.loanProducts">{{item.productName}},</span>
-                    </span>
-                </div>
-            </td>
-        </tr>
-        <tr class="text-left">
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <b>Amount sanctioned/limit</b>
-                </div>
-            </td>
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.sanctionedAmount">
-                        {{loanData.sanctionedAmount}}
-                    </span>
-                </div>
-            </td>
-        </tr>
-        <tr class="text-left">
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <b>Loan Tenure</b>
-                </div>
-            </td>
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        {{loanData.customer.email}}
+                    <span *ngIf="loanData && loanData.category && loanData.category.name">
+                        {{loanData.category.name}}
                     </span>
                 </div>
             </td>
@@ -242,13 +577,14 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Annualized Rate of Interest</b>
+                    <b>Loan Products</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        {{loanData.customer.email}}
+                    <span *ngIf="loanData && loanData.loanProducts && loanData.loanProducts[0]">
+                        <span class="details-sub-title"
+                            *ngFor="let item of loanData.loanProducts">{{item.productName}},</span>
                     </span>
                 </div>
             </td>
@@ -257,13 +593,13 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Periodicity of Interest Applications</b>
+                    <b>Total Amount</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        Daily
+                    <span *ngIf="loanData && loanData.invoiceAmount">
+                        {{loanData.invoiceAmount}}
                     </span>
                 </div>
             </td>
@@ -272,13 +608,13 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Security</b>
+                    <b>Down Payment</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        Daily
+                    <span *ngIf="loanData && loanData.downpaymentAmount">
+                        {{loanData.downpaymentAmount}}
                     </span>
                 </div>
             </td>
@@ -287,13 +623,13 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Installment Amount (Monthly)</b>
+                    <b>Loan Amount</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.emiPaidAmountMonthly">
-                        {{loanData.emiPaidAmountMonthly}}
+                    <span *ngIf="loanData && loanData.requestedAmount">
+                        {{loanData.requestedAmount}}
                     </span>
                 </div>
             </td>
@@ -302,13 +638,14 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Insurance Premium</b>
+                    <b>Nominee Name</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        Daily
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeName">
+                        {{loanData.loanApplicationKycList[0].nomineeName}}
                     </span>
                 </div>
             </td>
@@ -317,13 +654,14 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Advance EMI</b>
+                    <b>Nominee Relation</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        Daily
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeType">
+                        {{loanData.loanApplicationKycList[0].nomineeType}}
                     </span>
                 </div>
             </td>
@@ -332,13 +670,14 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Credit Insurance Amount</b>
+                    <b>Nominee Phone</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        Daily
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineePhone">
+                        {{loanData.loanApplicationKycList[0].nomineePhone}}
                     </span>
                 </div>
             </td>
@@ -347,137 +686,15 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Total Processing Fees (Inclusive of GST)</b>
+                    <b>Nominee Date of Birth</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        Daily
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeDob">
+                        {{loanData.loanApplicationKycList[0].nomineeDob}}
                     </span>
-                </div>
-            </td>
-        </tr>
-
-        <tr class="text-left">
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <b>Upfront Fees Paid (non-refundable)</b>
-                </div>
-            </td>
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        0
-                    </span>
-                </div>
-            </td>
-        </tr>
-
-        <tr class="text-left">
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <b>Balance fee payable at the time of disbursal</b>
-                </div>
-            </td>
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        0
-                    </span>
-                </div>
-            </td>
-        </tr>
-
-        <tr class="text-left">
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <b>Pre / Part Payment Charges</b>
-                </div>
-            </td>
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        The prepayment /part payment amount will be adjusted against future EMI’s or to be adjusted
-                        against last EMI
-                        instalments
-                    </span>
-                </div>
-            </td>
-        </tr>
-
-        <tr class="text-left">
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <b>Fore- closure settlement charges</b>
-                </div>
-            </td>
-            <td style="width:50%">
-                <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-                        3 % of Principle Outstanding + Applicable Taxes
-                        (Foreclosure is allowed only after payment of initial 3 EMIs)
-                    </span>
-                </div>
-            </td>
-        </tr>
-
-        <tr class="text-left">
-            <td colspan="2" style="width:50%">
-                <div class="text-normal mx-1 my-2">
-                    <u>The aforesaid sanction of the loan will be subject to:</u><br>
-                    <div class="mx-5 my-2">
-                        1.Submission of all documents as prescribed by the Company<br>
-                        2.MAFIL reserves right to amend any of the terms and conditions or cancel or recall or
-                        accelerate the loan
-                        facility as per the terms & conditions more particularly stated in Loan Agreement.<br>
-                        3.All the terms and conditions mentioned in this letter are subject to the execution of the Loan
-                        agreement
-                        and other documents and writings as MAFIL may specify in its prescribed format.<br>
-                        4.Pre-EMI as applicable will be chargeable from the applicant(s)<br>
-                        5.Bounce charges payable shall be Rs. 500/- for 1st instance, Rs.750/- for 2nd instance and
-                        Rs.1000/- from
-                        third instance onwards, in case of any instalment / other dues bounces.<br>
-                        6.The offer may be kept open at the sole discretion of MAFIL after 30days from the date hereof
-                        subject to
-                        such
-                        terms and conditions as MAFIL may specify in its sole discretion.<br>
-                        7.Broken Period Interest (Pre EMI), *Processing Fee +Applicable GST, and Insurance Premium shall
-                        be
-                        calculated by the system as per the above-mentioned rates and deducted accordingly from the
-                        sanctioned
-                        amount.<br>
-                        8.Penal charges will be charged additional 3% Per Month on overdue amount for actual days of
-                        due.<br>
-                        9.The rate of Interest shall be based on cost of borrowed funds, matching tenor, market
-                        liquidity, refinance
-                        avenues,offerings by competition, tenor of customer relationship, cost of disbursement (cost of
-                        funds). In
-                        addition to cost of fund, the rate of interest shall be further determined based on inherent
-                        credit and
-                        default risk n the qualification,
-                        stability in earning, repayment ability, overall customer yield, risk premium, nature and value
-                        of primary
-                        and collateral securities
-                        (if any), past repayment track records of the customers, external ratings of the customer,
-                        industry trends
-                        etc.
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <div class="mt-5 mx-lg-5 mx-md-5">
-                            <span class="font-weight-bold">Yours faithfully,</span><br>
-                            Manappuram Finance Limited
-                        </div>
-                        <div class="mt-5 mx-lg-5 mx-md-5">
-                            <span class="font-weight-bold">Name of the Applicant</span><br>
-                            <span *ngIf="loanData && loanData.customer && loanData.customer.firstName">
-                                <span
-                                    *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>&nbsp;
-                                <span
-                                    *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span>
-                            </span>
-                        </div>
-                    </div>
                 </div>
             </td>
         </tr>

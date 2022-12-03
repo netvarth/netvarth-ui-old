@@ -657,7 +657,8 @@
                         <div class="fieldPadding">
                           <div>
                             <label for="from" class="form-title">From</label><br>
-                            <p-calendar class="validDateCalendar" inputId="from" [(ngModel)]="fromDate"></p-calendar>
+                            <p-calendar class="validDateCalendar" dataType="date" inputId="from" [(ngModel)]="fromDate">
+                            </p-calendar>
                           </div>
                         </div>
                       </div>
@@ -671,7 +672,7 @@
                           <div>
                             <label for="to" class="form-title">To</label>
                             <div class="d-flex">
-                              <p-calendar class="validDateCalendar" inputId="to" [(ngModel)]="toDate"
+                              <p-calendar class="validDateCalendar" dataType="date" inputId="to" [(ngModel)]="toDate"
                                 [minDate]="fromDate"></p-calendar>
                               <button pButton type="button" class="btn-primary px-2 py-0"
                                 (click)="updatePartnervalidDate()">Update</button>

@@ -127,6 +127,7 @@ export class CreateComponent implements OnInit {
   bankData: any;
   partnerId: any;
   relations = projectConstantsLocal.RELATIONSHIPS;
+  addressRelations: any;
   employmentTypes = projectConstantsLocal.EMPLOYMENT_TYPES;
   stateList = projectConstantsLocal.INDIAN_STATES;
   filesToUpload: any = [];
@@ -403,7 +404,11 @@ export class CreateComponent implements OnInit {
       gender: [null],
       existingCustomer: [null],
       employee: [null],
-      employeeCode: [null]
+      employeeCode: [null],
+      permanentRelationType: [null],
+      permanentRelationName: [null],
+      currentRelationType: [null],
+      currentRelationName: [null]
     });
   }
 
@@ -428,6 +433,7 @@ export class CreateComponent implements OnInit {
     this.getPartners();
     this.getMafilScoreFields();
     this.getLoanProductCategories();
+    this.getAddressRelations();
     if (this.from && this.from == 'create') {
       this.customerDetailsPanel = false;
       this.kycDetailsPanel = true;
@@ -437,6 +443,12 @@ export class CreateComponent implements OnInit {
   getMafilScoreFields() {
     this.cdlService.mafilScoreFields().subscribe((data: any) => {
       this.mafilScoreFields = data;
+    })
+  }
+
+  getAddressRelations() {
+    this.cdlService.getAddressRelations().subscribe((data: any) => {
+      this.addressRelations = data;
     })
   }
 
@@ -683,7 +695,11 @@ export class CreateComponent implements OnInit {
           "currentResidenceOwnershipStatus": this.createLoan.controls.currentResidenceOwnershipStatus.value,
           "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,
           "vehicleNo": this.createLoan.controls.vehicleNo.value,
-          "goodsFinanced": this.createLoan.controls.goodsFinanced.value
+          "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
+          "permanentRelationType": this.createLoan.controls.permanentRelationType.value,
+          "permanentRelationName": this.createLoan.controls.permanentRelationName.value,
+          "currentRelationType": this.createLoan.controls.currentRelationType.value,
+          "currentRelationName": this.createLoan.controls.currentRelationName.value
         }
       ]
     }
@@ -1271,7 +1287,11 @@ export class CreateComponent implements OnInit {
           "currentResidenceOwnershipStatus": this.createLoan.controls.currentResidenceOwnershipStatus.value,
           "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,
           "vehicleNo": this.createLoan.controls.vehicleNo.value,
-          "goodsFinanced": this.createLoan.controls.goodsFinanced.value
+          "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
+          "permanentRelationType": this.createLoan.controls.permanentRelationType.value,
+          "permanentRelationName": this.createLoan.controls.permanentRelationName.value,
+          "currentRelationType": this.createLoan.controls.currentRelationType.value,
+          "currentRelationName": this.createLoan.controls.currentRelationName.value
         }
       ]
     }

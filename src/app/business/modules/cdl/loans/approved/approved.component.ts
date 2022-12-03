@@ -55,6 +55,8 @@ export class ApprovedComponent implements OnInit {
     return value;
   }
 
+
+
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.partnerParentId = this.lStorageService.getitemfromLocalStorage('partnerParentId');
@@ -77,6 +79,16 @@ export class ApprovedComponent implements OnInit {
 
     this.getLoanSchemes();
 
+  }
+
+
+  creditOfficerApprovalRefresh() {
+    this.getLoanData();
+    if (this.loanData) {
+      if (this.loanData.spInternalStatus == 'Approved') {
+        this.router.navigate(['provider', 'cdl', 'loans', this.loanId]);
+      }
+    }
   }
 
   resetErrors() {

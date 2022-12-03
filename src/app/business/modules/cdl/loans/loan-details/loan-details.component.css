@@ -21,6 +21,10 @@
   width: 100%;
 }
 
+.text-primary {
+  color: #1E4079 !important;
+}
+
 .details-title {
   font-size: 14px !important;
   color: rgba(58, 53, 65, 0.68) !important;
@@ -28,7 +32,7 @@
 
 .details-sub-title {
   font-size: 15px !important;
-  color: rgba(58, 53, 65, 0.87);
+  font-weight: bold !important;
 }
 
 .customerLabel {
@@ -97,7 +101,7 @@
 
 .customerScoreInfoLabel {
   color: #000000;
-  font-size: 18px !important;
+  font-size: 25px !important;
   font-weight: bold !important;
 }
 
@@ -177,7 +181,7 @@
   border-color: #1e4070 !important;
   color: #fff !important;
   font-weight: 100 !important;
-  border-radius: 20px !important;
+  border-radius: 5px !important;
   /* padding: 10px 20px !important; */
 }
 
@@ -285,9 +289,29 @@
   padding-top: 5px !important;
 } */
 
-::ng-deep .p-timeline-event-connector {
-  width: 50px !important;
+.table-responsive,
+tr,
+td,
+th {
+  border: 0 !important;
 }
+
+::-webkit-scrollbar {
+  height: 5px;
+}
+
+.table-responsive {
+  margin-bottom: 0 !important;
+}
+
+.rounded {
+  border-radius: 5px !important;
+}
+
+.font-medium {
+  font-size: 14px !important;
+}
+
 
 @media screen and (max-width: 576px) and (min-width: 0px) {
   .desktop-only {

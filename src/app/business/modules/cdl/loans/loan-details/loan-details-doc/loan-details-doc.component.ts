@@ -22,19 +22,21 @@ export class LoanDetailsDocComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedroute.queryParams.subscribe((params) => {
-      if (params && params.uid) {
-        this.loanId = params.uid;
-      }
-      if (params && params.account) {
-        this.accountId = params.account;
+    this.activatedroute.params.subscribe((params) => {
+      if (params && params.id) {
+        this.loanId = params.id;
+        if (this.loanId) {
+          this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
+            console.log("LoanData", data);
+            this.loanData = data;
+          }, (error) => {
+            console.log(error)
+          })
+        }
       }
     })
 
-    this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
-      console.log("LoanData", data);
-      this.loanData = data;
-    })
+
   }
 
 

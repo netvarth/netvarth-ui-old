@@ -518,9 +518,6 @@
   .head-card-title {
     font-size: 13px !important;
   }
-
-
-
 }
 
 @media (min-width: 1025px) {
@@ -538,6 +535,7 @@
     display: none;
   }
 
+
 }
 
 
@@ -550,5 +548,9 @@
   .stats-head-card-title,
   .font-small {
     font-size: 12px !important;
+  }
+
+  .stats-card {
+    height: 130px !important;
   }
 }

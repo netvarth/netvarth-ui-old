@@ -117,6 +117,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  updateDealerValidDates(id, data) {
+    const url = 'provider/partner/' + id + '/setting';
+    return this.servicemeta.httpPut(url, data);
+  }
+
   dealerApprovalRequest(id) {
     const url = 'provider/partner/' + id + '/approvalrequest';
     return this.servicemeta.httpPut(url, null);
@@ -395,6 +400,11 @@ export class CdlService {
 
   mafilScoreFields() {
     const url = 'provider/loanapplication/csms/settings';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+  getAddressRelations() {
+    const url = 'provider/loanapplication/addressrelationtype';
     return this.servicemeta.httpGet(url, null);
   }
 
