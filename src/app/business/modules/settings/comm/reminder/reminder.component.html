@@ -350,8 +350,8 @@
                         </mat-form-field>
                     </div>
                     <div *ngIf="categoryvalue=='Search with PhoneNumber'" 
-                    class="padd col-lg-9 col-md-8 col-xs-9 col-sm-9 mgn-bt-10 padding-0 d-flex">
-                    <input autocomplete="off" type="text" name="countryCodePhone" class="inputstyling customDialCode" 
+                    class="padd  col-lg-9 col-md-8 col-xs-9 col-sm-9 mgn-bt-10 padding-0 d-flex">
+                    <input autocomplete="off" type="text" name="countryCodePhone" class="inputstyling customDialCode phonePadd" 
                     [(ngModel)]="countryCodePhone" [hidden]="hide">
                     <input autocomplete="off" placeholder="{{placeholderTemp}}" type="number"
                         class="inputstyling" [(ngModel)]="phone" name="phone"
@@ -505,7 +505,7 @@
                                 SMS
                             </label>
                         </div>
-                        
+
                         <div class="form-check">
                             <input class="form-check-input" name="email" [(ngModel)]="reminder.email" type="checkbox"
                                 value="" id="flexCheckDefault">

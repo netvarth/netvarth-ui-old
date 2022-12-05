@@ -931,4 +931,10 @@ h5
     }
   } */
 
+  @media (min-width:1201px){
+    .phonePadd{
+        padding-left: 0px !important;
+    }
+  }
+
  
