@@ -131,12 +131,17 @@ export class BranchUsersComponent implements OnInit {
     loc_list: any = [];
     locationsjson: any = [];
     locIds: any = [];
+    branchIds: any = [];
     newlyCreatedGroupId;
     showteams = false;
     showusers = false;
     selecteTeamdUsers: any = [];
     addUser = false;
     users_activecount;
+    locationText: any;
+    branchesEnabled: any = false;
+    branchjson: any;
+    branch_list: any = [];
     // subdomain: any;
     constructor(
         private router: Router,
@@ -151,19 +156,35 @@ export class BranchUsersComponent implements OnInit {
     ngOnInit() {
         this.selectedTeam = 'all';
         this.accountSettings = this.groupService.getitemFromGroupStorage('settings');
+        console.log("Account Settings : ", this.accountSettings)
+        if (this.accountSettings && this.accountSettings.enableBranchMaster) {
+            this.branchesEnabled = true;
+            this.locationText = "Branches";
+        }
+        else {
+            this.branchesEnabled = false;
+            this.locationText = "Locations";
+        }
         this.user = this.groupService.getitemFromGroupStorage('ynw-user');
         this.domain = this.user.sector;
         this.api_loading = true;
         this.getProviderLocations().then(
-            ()=> {
+            () => {
                 this.getUsers(true);
             }
-        );        
+        );
+
+        this.getProviderBranches().then(
+            () => {
+                this.getUsers(true);
+            }
+        );
+
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.assistant_label = this.wordProcessor.getTerminologyTerm('assistant');
         this.getLicenseUsage();
         this.getSpokenLanguages();
-        this.getTeams();       
+        this.getTeams();
         // this.addCustomerToGroup();
         this.userTypesFormfill = [{ value: 'ASSISTANT', displayName: 'Assistant' }, { value: 'PROVIDER', displayName: this.provider_label }, { value: 'ADMIN', displayName: 'Admin' }];
     }
@@ -303,11 +324,12 @@ export class BranchUsersComponent implements OnInit {
                                 user.specialization = user.specialization ? user.specialization.map(spec => spec.displayName) : '';
                                 return user
                             })
-                            _this.users_list.map(function(user) {
-                                const businessLocations = _this.locationsjson.filter(loc => user.userType==='PROVIDER' && user.bussLocations?!(user.bussLocations.indexOf(loc.id)<0):"");
+                            _this.users_list.map(function (user) {
+                                const businessLocations = _this.locationsjson.filter(loc => user.userType === 'PROVIDER' && user.bussLocations ? !(user.bussLocations.indexOf(loc.id) < 0) : "");
                                 user.businessLocations = businessLocations.map(loc => loc.place);
                                 return user
-                              })
+                            })
+
                             // this.users_list = this.users_list.map(function(user) {
                             //     if (user.specialiation) {
                             //         user.specialiations = user.specialiation.map(special => special.displayName);
@@ -733,9 +755,9 @@ export class BranchUsersComponent implements OnInit {
             error => {
                 this.apiError = error.error;
                 setTimeout(() => {
-                    this.apiError ='';
-                  }, 1000);
-               
+                    this.apiError = '';
+                }, 1000);
+
             });
     }
     updateGroup(data) {
@@ -745,14 +767,14 @@ export class BranchUsersComponent implements OnInit {
             this.closeGroupDialog();
             this.snackbarService.openSnackBar('Team updated successfully', { ' panelclass': 'snackbarerror' });
         },
-            
-        error => {
-            this.apiError = error.error;
-            setTimeout(() => {
-                this.apiError ='';
-              }, 1000);
-           
-        });
+
+            error => {
+                this.apiError = error.error;
+                setTimeout(() => {
+                    this.apiError = '';
+                }, 1000);
+
+            });
     }
     resetGroupFields() {
         this.teamName = '';
@@ -874,9 +896,9 @@ export class BranchUsersComponent implements OnInit {
     getLocIdsUserIds(loc, id, values) {
         console.log("Loc:", loc);
         console.log("Id:", id);
-        console.log("Values:",values);
+        console.log("Values:", values);
 
-        if(values.checked) {
+        if (values.checked) {
             console.log("Checked");
             const index = this.locIds.indexOf(id);
             if (index === -1) {
@@ -885,7 +907,7 @@ export class BranchUsersComponent implements OnInit {
         } else {
             console.log("UnChecked");
             const index = this.locIds.indexOf(id);
-            this.locIds.splice(index,1);
+            this.locIds.splice(index, 1);
         }
         console.log(this.locIds);
         // if (loc.baseLocation || values.currentTarget.checked) {
@@ -895,6 +917,33 @@ export class BranchUsersComponent implements OnInit {
         //     this.locIds.pop(index);
         // }
     }
+
+    getBranchIdsUserIds(branch, id, values) {
+        console.log("Branch:", branch);
+        console.log("Id:", id);
+        console.log("Values:", values);
+
+        if (values.checked) {
+            console.log("Checked");
+            const index = this.branchIds.indexOf(id);
+            if (index === -1) {
+                this.branchIds.push({ 'id': id, "isDefault": false });
+            }
+        } else {
+            console.log("UnChecked");
+            const index = this.branchIds.indexOf(id);
+            this.branchIds.splice(index, 1);
+        }
+        console.log(this.branchIds);
+        // if (loc.baseLocation || values.currentTarget.checked) {
+        //     this.locIds.push(id);
+        // } else {
+        //     const index = this.locIds.filter(x => x === id);
+        //     this.locIds.pop(index);
+        // }
+    }
+
+
     addlocation() {
         this.userIds = [];
         this.showcheckbox = true;
@@ -904,25 +953,50 @@ export class BranchUsersComponent implements OnInit {
     }
     getProviderLocations() {
         const _this = this;
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             _this.api_loading = true;
             _this.provider_services.getProviderLocations()
-            .subscribe(data => {
-                _this.locationsjson = data;
-                console.log("Locationsss :",data);
-                for (const loc of _this.locationsjson) {
-                    if (loc.status === 'ACTIVE') {
-                        _this.loc_list.push(loc);
+                .subscribe(data => {
+                    _this.locationsjson = data;
+                    console.log("Locationsss :", data);
+                    for (const loc of _this.locationsjson) {
+                        if (loc.status === 'ACTIVE') {
+                            _this.loc_list.push(loc);
+                        }
                     }
-                }
-                resolve(true);
-                _this.api_loading = false;
-            }, ()=> {
-                resolve(false);
-                _this.api_loading = true;
-            });
+                    resolve(true);
+                    _this.api_loading = false;
+                }, () => {
+                    resolve(false);
+                    _this.api_loading = true;
+                });
         });
     }
+
+
+    getProviderBranches() {
+        const _this = this;
+        return new Promise(function (resolve, reject) {
+            _this.api_loading = true;
+            _this.provider_services.getBranches()
+                .subscribe(data => {
+                    _this.branchjson = data;
+                    console.log("branchs :", data);
+                    for (const branch of _this.branchjson) {
+                        if (branch.status === 'ACTIVE') {
+                            _this.branch_list.push(branch);
+                        }
+                    }
+                    resolve(true);
+                    _this.api_loading = false;
+                }, () => {
+                    resolve(false);
+                    _this.api_loading = true;
+                });
+        });
+    }
+
+
     locationclose() {
         this.showcheckbox = false;
         this.addlocationcheck = false
@@ -945,7 +1019,7 @@ export class BranchUsersComponent implements OnInit {
                     this.userIds = [];
                     this.addlocationcheck = false;
                     // this.locIds = [];
-                  
+
                     this.closelocDialog();
                     this.getUsers();
                 },
@@ -954,6 +1028,34 @@ export class BranchUsersComponent implements OnInit {
                 });
         }
     }
+
+
+    assignBranchesToUsers() {
+        if (this.branchIds.length === 0) {
+            this.apiError = 'Please select at least one branch';
+        }
+        else {
+            const postData = {
+                'userIds': this.userIds,
+                'branchIds': this.branchIds
+            };
+
+            this.provider_services.assignBranchToUsers(postData).subscribe(
+                (data: any) => {
+                    this.showcheckbox = false;
+                    this.userIds = [];
+                    this.addlocationcheck = false;
+                    // this.branchIds = [];
+                    this.closelocDialog();
+                    this.getUsers();
+                    this.snackbarService.openSnackBar("Branches Assigned to Users Successfully");
+                },
+                error => {
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+        }
+    }
+
     redirecToUsers() {
         // this.routerobj.navigate(['provider', 'settings', 'general', 'users']);
         this.showteams = true;
@@ -978,18 +1080,18 @@ export class BranchUsersComponent implements OnInit {
         // this.apiError = '';
         this.closelocDialog();
     }
-    openGoogleMap(){}
-    // getBussLoc(bussloc) {
-    //     for (let i = 0; i < bussloc.length; i++) {
-    //         const locations = this.locationsjson.filter(loc => loc.id === bussloc[i]);
-    //         if (locations[0]) {
-    //             bussloc[i] = locations[0].place;
-    //         }
-    //     }
-    //     if (bussloc.length > 1) {
-    //         bussloc = bussloc.toString();
-    //         return bussloc.replace(/,/g, ", ");
-    //     }
-    //     return bussloc;
-    // }
+    openGoogleMap() { }
+    getBussLoc(bussloc) {
+        for (let i = 0; i < bussloc.length; i++) {
+            const locations = this.locationsjson.filter(loc => loc.id === bussloc[i]);
+            if (locations[0]) {
+                bussloc[i] = locations[0].place;
+            }
+        }
+        if (bussloc.length > 1) {
+            bussloc = bussloc.toString();
+            return bussloc.replace(/,/g, ", ");
+        }
+        return bussloc;
+    }
 }

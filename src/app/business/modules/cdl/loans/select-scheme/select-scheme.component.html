@@ -1,7 +1,7 @@
 <div class="text-center">
   <div class="d-flex justify-content-between p-3">
     <div>
-      <span class="font-weight-bold title">Preferred Scheme</span>
+      <span class="font-weight-bold title">Select Your Preferred Scheme</span>
     </div>
     <div class="text-right pr-2 pointer-cursor" (click)="close()">
       <i class="fa fa-times"></i>
@@ -12,9 +12,20 @@
       <div class="col-md-6 text-left mt-2">
         <div class="border p-2">
           <span class="font-weight-bold title" *ngIf="scheme && scheme.schemeName">{{scheme.schemeName}}</span><br>
-          <span class="mgn-up-20 subtitle"><b>Type : </b>{{scheme.schemeType}}</span><br>
-          <span class="mgn-up-20 subtitle"><b>Repayments : </b>{{scheme.noOfRepayment}}</span><br>
-          <span class="mgn-up-20 subtitle"><b>Rate : </b>{{scheme.schemeRate}} %</span>
+          <span class="mgn-up-20 subtitle"><b>Scheme Type : </b>{{scheme.schemeType}}</span><br>
+          <span class="mgn-up-20 subtitle"><b>Duration : </b>{{scheme.minDuration}} - {{scheme.maxDuration}}
+            Months</span><br>
+          <span class="mgn-up-20 subtitle"><b>Age Limit : </b>{{scheme.minAge}} - {{scheme.maxAge}}
+            Years</span><br>
+          <span class="mgn-up-20 subtitle"><b>Loan Amount : </b>{{scheme.minAmount}} - {{scheme.maxAmount}}
+          </span><br>
+          <span class="mgn-up-20 subtitle"><b>Interest Rate : </b>{{scheme.schemeRate}}%
+          </span><br>
+          <span class="mgn-up-20 subtitle"><b>Processing Fee : </b>{{scheme.processingFeeRate}}% or
+            <i class="fa fa-inr"></i>&nbsp;{{scheme.processingFeeAmount}}
+          </span><br>
+          <span class="mgn-up-20 subtitle"><b>Overdue Charge : </b>{{scheme.overdueChargeRate}}%
+          </span><br>
           <div class="mgn-up-10 subtitle">
             <a (click)="schemeSelected(scheme)" class="btn btn-primary w-100">Select</a>
           </div>

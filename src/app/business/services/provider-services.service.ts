@@ -2084,6 +2084,12 @@ export class ProviderServices {
     const url = 'provider/user/updateBusinessLoc';
     return this.servicemeta.httpPut(url, data);
   }
+
+  assignBranchToUsers(data) {
+    const url = 'provider/user/updateBranchMaster';
+    return this.servicemeta.httpPut(url, data);
+  }
+
   // addCustomerToGroup(name, data) {
   //   const url = 'provider/customers/group/' + name;
   //   return this.servicemeta.httpPost(url, data);
