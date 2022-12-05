@@ -144,9 +144,9 @@ export class ReminderComponent implements OnInit {
     if (obtmonth < 10) {
       cmonth = "0" + obtmonth;
     }
-    const seldate =
+    this.selectedDay =
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
-    this.selectedDay = seldate;
+    // this.selectedDay = seldate;
     console.log("Selected Date :",this.selectedDay);
     
   }
