@@ -446,7 +446,12 @@ _filter(value: string): string[] {
   }
   editReminder(reminderId?) {
     this.isCreate = true;
-    this.reminder_title = 'Update Reminder';
+    if(this.selectedId){
+      this.reminder_title = 'Create Reminder';
+    }
+    else{
+      this.reminder_title = 'Update Reminder';
+    }
     this.reminderId = reminderId;
     this.selectedTimes = [];
     this.selectedTime = [];

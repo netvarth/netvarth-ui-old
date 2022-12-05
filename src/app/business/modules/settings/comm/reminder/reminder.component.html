@@ -338,11 +338,11 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-sm-1 col-xs-1 no-padding display-sm-show searchbar" [hidden]="hide">
-                        <mat-form-field>
+                    <div *ngIf="!hide" class="col-sm-1 col-xs-1 no-padding display-sm-show searchbar">
+                        <mat-form-field [hidden]="hide">
                             <img src="../../../../../assets/images/Group_1512.png" style="width:50px;height:40px;"
-                                >
-                            <mat-select class="displaysmall" name="categoryvalue" [(ngModel)]="categoryvalue">
+                             >
+                            <mat-select class="displaysmall"  name="categoryvalue" [(ngModel)]="categoryvalue">
                                 <mat-option *ngFor="let category of categoryForSearchingarray"
                                     (click)="handleCategoryselect(categoryvalue)" [value]="category">
                                     {{category.slice(12)}}</mat-option>
