@@ -18,6 +18,7 @@
     justify-items: center;
     margin: 5px;
 }
+
 .btnDiv{
     display: flex;
     justify-content: space-between;
@@ -124,6 +125,11 @@
         justify-content: flex-end;
         justify-items: center;
         
+    }
+    .createReminder{
+        margin-left: 5px;
+        padding-right:  0px !important;
+        /* margin-top: 15px !important; */
     }
     .largeScreen{
         display: none; 
@@ -706,6 +712,7 @@ h5
 }
 .createReminder{
     margin-left: 5px;
+    /* padding-right:  0px !important; */
     /* margin-top: 15px !important; */
 }
 /* @media (width:280px) {
