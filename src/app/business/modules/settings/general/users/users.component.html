@@ -454,13 +454,13 @@
                                                             <a class="user-contact-details" (click)="stopprop($event); viewContactDetails(user)">View</a>
                                                           </span>
                                                       </td> -->
+
                             <td class="display-min-none" *ngIf="domain !== 'finance'">
                               <span *ngIf="user.specialization   && domain !== 'finance'">
                                 {{user.specialization}}
                                 <!-- {{getSpecialization(user.specialization)}} -->
                               </span>
                             </td>
-
                             <td class="display-min-none">
                               <span *ngIf="user.businessLocations && !branchesEnabled">
                                 {{getBussLoc(user.bussLocations)}}
