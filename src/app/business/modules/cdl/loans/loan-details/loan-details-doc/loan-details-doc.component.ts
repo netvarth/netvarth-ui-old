@@ -62,7 +62,7 @@ export class LoanDetailsDocComponent implements OnInit {
     WindowPrt.document.close();
     WindowPrt.focus();
     WindowPrt.print();
-    WindowPrt.close();
+    // WindowPrt.close();
   }
 
   goBack() {
