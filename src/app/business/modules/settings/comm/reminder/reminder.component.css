@@ -3,7 +3,7 @@
 }
 .cardDiv{
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     justify-items: center;
     margin: 5px;
 }
@@ -79,13 +79,62 @@
     
     }
 }
+@media (min-width: 768px){
+    .largeScreen{
+       display: block; 
+    }
+    .smallScreen{
+        display: none;
+    }
+    /* .largeDivs{
+        display: block;
+    } */
+    .largeDivs{
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        margin: 5px;
+    }
+    .smallDivs{
+        display: none;
+    }
+}
+@media (max-width: 768px){
+    .smallScreen{
+       display: block; 
+    }
+    .smallScrn{
+        display: flex;
+        justify-content: flex-end;
+        justify-items: center;
+        
+    }
+    .largeScreen{
+        display: none; 
+     }
+     .largeDivs{
+        display: none;
+    }
+    .smallDivs{
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+    }
+}
 .display-sm-show {
     display: none;
   }
   @media(max-width: 768px) { 
-    .cardSize{
+    /* .cardSize{
         display:flex;
         justify-content: flex-start;
+        justify-items: center;
+        gap: 25px;
+        
+    } */
+    .cardSize{
+        display:flex;
+        justify-content: space-between;
         justify-items: center;
         gap: 25px;
         
@@ -108,6 +157,12 @@
         justify-items: center;
         margin: 5px;
     }
+    /* .smallDivs{
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+    } */
+   
     .card1
     {
       max-width: 160px!important;
@@ -462,7 +517,7 @@ h5
     width: 100%;
   }
   .fontWeight{
-    font-weight: 500;
+    font-weight: 300;
     -webkit-text-stroke: medium;
     font-size: 25px;
 
@@ -611,13 +666,14 @@ h5
     box-shadow: none;
 } */
 
-.custom_card{
+/* .custom_card{
  width: 88%;
  height: 100%;
+
+ margin:5px 0px 5px 0px !important;
+} */
  /* height: 480px; */
  /* overflow: auto; */
- margin:5px 0px 5px 0px !important;
-}
 .completeCard{
     width: 45%;
     margin-left: 15px;
@@ -746,6 +802,16 @@ h5
    
    
 } */
+@media (min-width:768px){
+    .pad{
+        margin: 10px !important;
+    }
+    .createReminder{
+        display: flex;
+        justify-content: flex-end;
+        justify-items: center;
+    }
+}
 @media (min-width:1115px) {
     .completeCard{
         width: 45%;
@@ -761,11 +827,11 @@ h5
     .container{
         width: 100%;
     } 
-    /* .cardSize{
+    .cardSize{
         display: flex;
         justify-content: space-between;
         justify-items: center;
-    } */
+    }
     .image{
         height: 48px;
         width: 48px;
@@ -797,14 +863,39 @@ h5
       height: 40px !important;
   }
   .select{
-    background-color: powderblue;
+    border: 3px solid #3B82F6 !important;
+    /* background-color: powderblue; */
+    border-color: #3B82F6 !important;
+    box-sizing: border-box !important;
+   
+  }
+  .textSelect{
+    color: #3B82F6;
+  }
+  .selected{
+    border: 3px solid #1EBE8B!important;
+    /* background-color: powderblue; */
+    border-color: #1EBE8B !important;
+    box-sizing: border-box !important;
+    
+  }
+  .textSelected{
+    color: #1EBE8B;
   }
 
   @media (min-width: 992px) {
-    .largeScreen{
+    /* .largeScreen{
         margin-right: 60px;
-    }
+    } */
     
   }
+  /* @media (min-width:1115px){
+    .cardSize{
+        display: flex;
+        justify-content: space-between;
+        justify-items: center;
+        
+    }
+  } */
 
  

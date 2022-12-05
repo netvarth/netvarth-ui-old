@@ -44,7 +44,6 @@ export class ReminderComponent implements OnInit {
   showBlockHint = false;
   totalName: string = '';
   customer_data: any;
-  times:any[]=[];
   emptyFielderror = false;
     provider_label = '';
     create_new = false;
@@ -211,34 +210,6 @@ export class ReminderComponent implements OnInit {
         .subscribe(
             (data:any) => {
                 this.reminders = data;
-               data.schedule.timeSlots.map((res:any)=>{
-                  console.log("new slot :",res)
-                  let sttime ;
-                  sttime = {
-                   hour: parseInt(
-                     moment(res.sTime, [
-                       "h:mm A"
-                     ]).format("hh"),
-                     10
-                   ),
-                   minute: parseInt(
-                     moment(res.sTime, [
-                       "h:mm A"
-                     ]).format("mm"),
-                     10
-                   )
-                 };
-                 if(res.sTime.includes('PM')){
-                   sttime['mode'] = "PM"
-                 }
-                 else{
-                   sttime['mode'] = "AM"
-           
-                 }
-        
-                return this.times.push(sttime);
-      
-                })
                 console.log("Active reminders :",data);
             });
   }
@@ -277,6 +248,7 @@ getCompletedReminderCount() {
               console.log("Completed reminders :",data);
           });
 }
+
 resetApiErrors() {
   // this.emailerror = null;
   // this.email1error = null;
