@@ -1,11 +1,27 @@
 .sectDiv{
     background-color: #fff;
 }
+.btn-info{
+    background-color: #189CE7 !important;
+    border-color: #189CE7 !important;
+}
+.btn-outline-info{
+    border-color: #189CE6 !important;
+    outline-color: #189CE6 !important;
+    /* outline: #189CE7 !important; */
+    background-color: transparent;
+    color: #18b6e6  !important;
+}
 .cardDiv{
     display: flex;
     justify-content: space-between;
     justify-items: center;
     margin: 5px;
+}
+.btnDiv{
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
 }
 .cardSize{
     display: flex;
@@ -152,10 +168,20 @@
     
     }
     .cardDiv{
-        display: block;
+        display: flex;
         justify-content: space-evenly;
         justify-items: center;
-        margin: 5px;
+        /* margin: 5px; */
+        width: 100%;
+        gap: 10px;
+    }
+    .btnDiv{
+        display: flex;
+        /* justify-content: space-evenly; */
+        justify-items: center;
+        /* margin: 5px; */
+        width: 100%;
+        /* gap: 10px; */
     }
     /* .smallDivs{
         display: flex;
