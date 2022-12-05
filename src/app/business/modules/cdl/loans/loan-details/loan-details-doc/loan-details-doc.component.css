@@ -77,3 +77,22 @@ td {
         margin: 0%;
     }
 }
+
+.text-primary,
+.fa-arrow-left {
+    color: #1e4070 !important;
+}
+
+
+
+@media print {
+    :not(.printMe) {
+        visibility: hidden;
+    }
+}
+
+@media print {
+    .printMe {
+        visibility: visible
+    }
+}

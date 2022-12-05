@@ -40,6 +40,8 @@ export class CreateComponent implements OnInit {
   bankDetailsVerified: any = false;
   loanApplicationKycId: any;
   loanProductsSelected: any;
+  todayDate = new Date()
+  minDob: any;
   selectedFiles = {
     "aadhar": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] },
@@ -175,12 +177,16 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.type && this.loanData.type.id) {
               this.createLoan.controls.loantype.setValue(this.loanData.type.id);
             }
+            this.createLoan.controls.permanentRelationType.setValue(this.loanData.loanApplicationKycList[0].permanentRelationType);
+            this.createLoan.controls.permanentRelationName.setValue(this.loanData.loanApplicationKycList[0].permanentRelationName);
             this.createLoan.controls.permanentaddress1.setValue(this.loanData.loanApplicationKycList[0].permanentAddress1);
             this.createLoan.controls.permanentaddress2.setValue(this.loanData.loanApplicationKycList[0].permanentAddress2);
             this.createLoan.controls.permanentcity.setValue(this.loanData.loanApplicationKycList[0].permanentCity);
             this.createLoan.controls.permanentstate.setValue(this.loanData.loanApplicationKycList[0].permanentState);
             this.createLoan.controls.permanentpincode.setValue(this.loanData.loanApplicationKycList[0].permanentPin);
 
+            this.createLoan.controls.currentRelationType.setValue(this.loanData.loanApplicationKycList[0].currentRelationType);
+            this.createLoan.controls.currentRelationName.setValue(this.loanData.loanApplicationKycList[0].currentRelationName);
             this.createLoan.controls.currentaddress1.setValue(this.loanData.loanApplicationKycList[0].currentAddress1);
             this.createLoan.controls.currentaddress2.setValue(this.loanData.loanApplicationKycList[0].currentAddress2);
             this.createLoan.controls.currentcity.setValue(this.loanData.loanApplicationKycList[0].currentCity);
@@ -423,7 +429,7 @@ export class CreateComponent implements OnInit {
 
 
 
-
+    this.minDob = this.subtractYears(this.todayDate, 18);
     console.log("user", this.user);
     this.getLoanCategories();
     this.getLoanTypes();
@@ -438,6 +444,12 @@ export class CreateComponent implements OnInit {
       this.customerDetailsPanel = false;
       this.kycDetailsPanel = true;
     }
+  }
+
+
+  subtractYears(date, years) {
+    date.setFullYear(date.getFullYear() - years);
+    return date;
   }
 
   getMafilScoreFields() {
@@ -1199,6 +1211,8 @@ export class CreateComponent implements OnInit {
       this.createLoan.controls.currentcity.setValue(this.createLoan.controls.permanentcity.value);
       this.createLoan.controls.currentstate.setValue(this.createLoan.controls.permanentstate.value);
       this.createLoan.controls.currentpincode.setValue(this.createLoan.controls.permanentpincode.value);
+      this.createLoan.controls.currentRelationType.setValue(this.createLoan.controls.permanentRelationType.value);
+      this.createLoan.controls.currentRelationName.setValue(this.createLoan.controls.permanentRelationName.value);
     }
     this.loanApplication = {
       "loanApplicationUid": this.loanId,
@@ -1211,8 +1225,12 @@ export class CreateComponent implements OnInit {
       "currentAddress1": this.createLoan.controls.currentaddress1.value,
       "currentAddress2": this.createLoan.controls.currentaddress2.value,
       "currentPin": this.createLoan.controls.currentpincode.value,
-      "currentCity": this.createLoan.controls.currentpincode.value,
-      "currentState": this.createLoan.controls.currentstate.value
+      "currentCity": this.createLoan.controls.currentcity.value,
+      "currentState": this.createLoan.controls.currentstate.value,
+      "permanentRelationType": this.createLoan.controls.permanentRelationType.value,
+      "permanentRelationName": this.createLoan.controls.permanentRelationName.value,
+      "currentRelationType": this.createLoan.controls.currentRelationType.value,
+      "currentRelationName": this.createLoan.controls.currentRelationName.value
     }
 
     this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
@@ -1288,10 +1306,7 @@ export class CreateComponent implements OnInit {
           "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,
           "vehicleNo": this.createLoan.controls.vehicleNo.value,
           "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
-          "permanentRelationType": this.createLoan.controls.permanentRelationType.value,
-          "permanentRelationName": this.createLoan.controls.permanentRelationName.value,
-          "currentRelationType": this.createLoan.controls.currentRelationType.value,
-          "currentRelationName": this.createLoan.controls.currentRelationName.value
+
         }
       ]
     }

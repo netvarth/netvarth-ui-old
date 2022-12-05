@@ -14,6 +14,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { SelectSchemeModule } from '../select-scheme/select-scheme.module';
 import { OtpVerifyModule } from '../otp-verify/otp-verify.module';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { CalendarModule } from 'primeng/calendar';
 
 
 const routes: Routes = [
@@ -40,6 +41,7 @@ const routes: Routes = [
     OtpVerifyModule,
     SelectSchemeModule,
     MultiSelectModule,
+    CalendarModule,
     [RouterModule.forChild(routes)]
   ]
 })

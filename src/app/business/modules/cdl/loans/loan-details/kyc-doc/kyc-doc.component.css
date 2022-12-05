@@ -71,9 +71,27 @@ td {
     word-wrap: break-word;
 }
 
+.text-primary,
+.fa-arrow-left {
+    color: #1e4070 !important;
+}
+
 @media(max-width: 768px) {
     .policy {
         width: 100%;
         margin: 0%;
+    }
+}
+
+
+@media print {
+    :not(.printMe) {
+        visibility: hidden;
+    }
+}
+
+@media print {
+    .printMe {
+        visibility: visible;
     }
 }

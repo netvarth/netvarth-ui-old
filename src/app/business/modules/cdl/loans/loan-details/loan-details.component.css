@@ -154,6 +154,10 @@
   gap: 5px;
 }
 
+.card {
+  box-shadow: 0px 109.322px 87.4576px rgb(41 72 152 / 5%), 0px 70.8569px 51.2194px rgb(41 72 152 / 4%), 0px 42.1092px 27.8569px rgb(41 72 152 / 3%), 0px 21.8644px 14.2119px rgb(41 72 152 / 3%), 0px 8.90772px 7.12618px rgb(41 72 152 / 2%), 0px 2.02448px 3.44162px rgb(41 72 152 / 1%) !important;
+}
+
 .customcard {
   border: 1px solid #E9E8E8 !important;
   box-shadow: 0px 109.322px 87.4576px rgb(41 72 152 / 5%), 0px 70.8569px 51.2194px rgb(41 72 152 / 4%), 0px 42.1092px 27.8569px rgb(41 72 152 / 3%), 0px 21.8644px 14.2119px rgb(41 72 152 / 3%), 0px 8.90772px 7.12618px rgb(41 72 152 / 2%), 0px 2.02448px 3.44162px rgb(41 72 152 / 1%) !important;
