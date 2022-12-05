@@ -134,6 +134,7 @@ export class CreateDealerComponent implements OnInit {
               this.btnText = "Create Dealer";
             }
             this.createDealer.controls.name.setValue(this.dealerData.partnerName);
+            this.createDealer.controls.username.setValue(this.dealerData.partnerUserName);
             this.createDealer.controls.phone.setValue(this.dealerData.partnerMobile);
             this.createDealer.controls.email.setValue(this.dealerData.partnerEmail);
             this.createDealer.controls.description.setValue(this.dealerData.description);

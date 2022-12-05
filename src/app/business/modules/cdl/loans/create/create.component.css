@@ -259,6 +259,10 @@ input::placeholder {
   width: 100% !important;
 }
 
+::ng-deep .p-calendar {
+  width: 100% !important;
+}
+
 ::ng-deep .p-multiselect-label {
   padding: 5px !important;
 }

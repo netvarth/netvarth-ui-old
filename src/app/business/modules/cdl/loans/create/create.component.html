@@ -354,6 +354,41 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
+                      <div class="form-title">Permanent Relation Type</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" placeholder="" #permanentRelationType
+                        formControlName="permanentRelationType">
+                        <mat-option [value]="relation.relationEnum" *ngFor="let relation of addressRelations">
+                          <div *ngIf="relation && relation.relationName">{{relation.relationName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Permanent Relation Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" #permanentRelationName
+                        placeholder="Enter Permanent Relation Name" class="form-control" autocomplete="off"
+                        formControlName="permanentRelationName" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
                       <div class="form-title">Address 1</div>
                     </div>
                     <div class="fieldPadding">
@@ -460,7 +495,44 @@
               </div>
 
 
+
+
               <div *ngIf="showaddressfields">
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Relation Type</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <mat-select class="form-control widthWebKit" placeholder="" #currentRelationType
+                          formControlName="currentRelationType">
+                          <mat-option [value]="relation.relationEnum" *ngFor="let relation of addressRelations">
+                            <div *ngIf="relation && relation.relationName">{{relation.relationName}}</div>
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Relation Name</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" type="text" #currentRelationName
+                          placeholder="Enter Current Relation Name" class="form-control" autocomplete="off"
+                          formControlName="currentRelationName" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
                 <div>
                   <div class="bggrey my-2">
                     <div>
@@ -1089,71 +1161,24 @@
                 </div>
               </div>
 
-              <div>
+              <!-- <div>
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Current Relation Type</div>
+                      <div class="form-title">Nominee Date of Birth</div>
                     </div>
                     <div class="fieldPadding">
-                      <mat-select class="form-control widthWebKit" placeholder="" #currentRelationType
-                        formControlName="currentRelationType">
-                        <mat-option [value]="relation.relationEnum" *ngFor="let relation of addressRelations">
-                          <div *ngIf="relation && relation.relationEnum">{{relation.relationEnum}}</div>
-                        </mat-option>
-                      </mat-select>
+                      <div>
+                        <p-calendar class="validDateCalendar" [defaultDate]="minDob" [maxDate]="minDob" #nomineeDob
+                          dataType="date" formControlName="nomineeDob">
+                        </p-calendar>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Current Relation Name</div>
-                    </div>
-                    <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" #currentRelationName
-                        placeholder="Enter Current Relation Name" class="form-control" autocomplete="off"
-                        formControlName="currentRelationName" />
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Permanent Relation Type</div>
-                    </div>
-                    <div class="fieldPadding">
-                      <mat-select class="form-control widthWebKit" placeholder="" #permanentRelationType
-                        formControlName="permanentRelationType">
-                        <mat-option [value]="relation.relationEnum" *ngFor="let relation of addressRelations">
-                          <div *ngIf="relation && relation.relationEnum">{{relation.relationEnum}}</div>
-                        </mat-option>
-                      </mat-select>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Permanent Relation Name</div>
-                    </div>
-                    <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" #permanentRelationName
-                        placeholder="Enter Permanent Relation Name" class="form-control" autocomplete="off"
-                        formControlName="permanentRelationName" />
-                    </div>
-                  </div>
-                </div>
-              </div>
 
             </div>
             <div>
@@ -1209,7 +1234,7 @@
                       <div class="form-title">Account Number</div>
                     </div>
                     <!-- <div class="d-flex"> -->
-                    <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
+                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Account Number" class="form-control"
                       formControlName="account" autocomplete="off" />
                     <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
                         <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i

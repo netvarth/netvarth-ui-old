@@ -1,61 +1,78 @@
-<div class="policy card p-0">
-    <table style="width:100%" class="table-responsive">
-        <tr class="text-center">
-            <td colspan="2">
-                <div class="my-3">
-                    <img src="../../../../assets/images/cdl/company_logo.png"><br>
-                </div>
-            </td>
-        </tr>
-        <tr class="text-left">
-            <td colspan="2">
-                <div class="d-flex justify-content-between m-1">
-                    <div class="text-normal">
-                        <b>Customer Id :</b> {{loanId}}<br>
-                        <b>Customer Name : </b>
-                        <span
-                            *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>&nbsp;
-                        <span
-                            *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.firstName}}</span><br>
-                        <b>Home Branch Name & Id :</b> Thrissur & M-2134
-                    </div>
-                </div>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <div class="row text-center">
-        <div class="col-md-6">
-            <span class="font-weight-bold">Aadhar Card</span>
-            <div class="mt-2"
-                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments && loanData.loanApplicationKycList[0].aadhaarAttachments[0]">
-                <img [src]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path" class="img-fluid pb-0">
-            </div>
-        </div>
-
-        <div class="col-md-6">
-            <span class="font-weight-bold">Pan Card</span>
-            <div class="mt-2"
-                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
-                <img [src]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" class="img-fluid pb-0">
-            </div>
+<section class="card">
+    <div class="title-gb no-padding pointer-cursor">
+        <div class="d-flex text-primary font-weight-bold" (click)="goBack()">
+            <div><i class="fa fa-arrow-left" aria-hidden="true"></i></div>&nbsp;
+            <div>Back</div>
         </div>
     </div>
+</section>
+
+<div class="policy card p-0">
     <br>
-    <div class="row text-center">
-        <div class="col-md-6">
-            <span class="font-weight-bold">Photo</span>
-            <div class="mt-2" *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto[0]">
-                <img [src]="loanData.consumerPhoto[0].s3path" class="img-fluid pb-0">
+    <div class="mb-3 mr-3 text-right">
+        <button (click)="onPrint()" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;
+            Print</button>
+    </div>
+    <div id="printMe">
+        <table style="width:100%" class="table-responsive">
+            <tr class="text-center">
+                <td colspan="2">
+                    <div class="my-3">
+                        <img src="../../../../assets/images/cdl/company_logo.png"><br>
+                        <h4 class="font-weight-bold">CDL - KYC Details Document</h4>
+                    </div>
+                </td>
+            </tr>
+            <tr class="text-left">
+                <td colspan="2">
+                    <div class="d-flex justify-content-between m-1">
+                        <div class="text-normal">
+                            <b>Customer Id :</b> {{loanId}}<br>
+                            <b>Customer Name : </b>
+                            <span
+                                *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>&nbsp;
+                            <span
+                                *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span><br>
+                            <b>Home Branch Name & Id :</b> Thrissur & M-2134
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <div class="row text-center">
+            <div class="col-md-6">
+                <span class="font-weight-bold">Aadhar Card</span>
+                <div class="mt-2"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments && loanData.loanApplicationKycList[0].aadhaarAttachments[0]">
+                    <img [src]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path" class="img-fluid pb-0">
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <span class="font-weight-bold">Pan Card</span>
+                <div class="mt-2"
+                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
+                    <img [src]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" class="img-fluid pb-0">
+                </div>
             </div>
         </div>
-
-        <!-- <div class="col-md-6">
-            <span class="font-weight-bold">Pan Card</span>
-            <div class="mt-2"
-                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
-                <img [src]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" class="img-fluid pb-0">
+        <br>
+        <div class="row text-center">
+            <div class="col-md-6">
+                <span class="font-weight-bold">Photo</span>
+                <div class="mt-2" *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto[0]">
+                    <img [src]="loanData.consumerPhoto[0].s3path" class="img-fluid pb-0">
+                </div>
             </div>
-        </div> -->
+
+            <!-- <div class="col-md-6">
+                    <span class="font-weight-bold">Pan Card</span>
+                    <div class="mt-2"
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
+                        <img [src]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" class="img-fluid pb-0">
+                    </div>
+                </div> -->
+        </div>
     </div>
 </div>

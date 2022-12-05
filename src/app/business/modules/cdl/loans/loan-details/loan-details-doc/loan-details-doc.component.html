@@ -1,5 +1,18 @@
-<div class="policy card p-0" *ngIf="type && type=='agreement'">
-    <table style="width:100%" class="table-responsive">
+<section class="card">
+    <div class="title-gb no-padding pointer-cursor">
+        <div class="d-flex text-primary font-weight-bold" (click)="goBack()">
+            <div><i class="fa fa-arrow-left" aria-hidden="true"></i></div>&nbsp;
+            <div>Back</div>
+        </div>
+    </div>
+</section>
+<div class="policy card p-0">
+    <br>
+    <div class="mb-3 mr-3 text-right">
+        <button (click)="onPrint()" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;
+            Print</button>
+    </div>
+    <table style="width:100%" class="table-responsive" id="printMe">
         <tr class="text-center">
             <td colspan="2">
                 <div class="my-3">
@@ -699,20 +712,4 @@
             </td>
         </tr>
     </table>
-</div>
-
-
-
-
-<div class="policy card" *ngIf="type && (type=='accepted' || type=='rejected')">
-    <div class="row">
-        <div class="text-center">
-            <div>
-                <img src="../../../../assets/images/cdl/thankyou.gif" class="img-fluid">
-            </div>
-            <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
-        Go to Home
-      </div> -->
-        </div>
-    </div>
 </div>
