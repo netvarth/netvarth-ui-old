@@ -2367,8 +2367,10 @@ export class NewReportComponent implements OnInit {
             this.snackbarService.openSnackBar('Start Date or End Date should not be empty', { 'panelClass': 'snackbarerror' });
 
           }
-          filter['dueDate-ge'] = this.dateformat.transformTofilterDate(this.daily_StartDate);
-          filter['dueDate-le'] = this.dateformat.transformTofilterDate(this.daily_EndDate);
+          // filter['dueDate-ge'] = this.dateformat.transformTofilterDate(this.daily_StartDate);
+          // filter['dueDate-le'] = this.dateformat.transformTofilterDate(this.daily_EndDate);
+          filter['date-ge'] = this.dateformat.transformTofilterDate(this.daily_StartDate);
+          filter['date-le'] = this.dateformat.transformTofilterDate(this.daily_EndDate);
         }
         const request_payload: any = {};
         request_payload.reportType = 'DAILY_ACTIVITY';
