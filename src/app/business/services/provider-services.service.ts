@@ -317,6 +317,11 @@ export class ProviderServices {
   getProviderLocations() {
     return this.servicemeta.httpGet('provider/locations');
   }
+
+  getRolesData(features) {
+    return this.servicemeta.httpGet('provider/user/defaultRolesCapabilities/' + features);
+  }
+
   getInternalStatus() {
     return this.servicemeta.httpGet('provider/waitlist/internalStatuses');
   }

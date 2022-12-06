@@ -13,7 +13,7 @@
 <div *ngIf="!iswiz" class="container-fluid d-flex align-items-stretch justify-content-between">
   <div class="topbar topbar-mobile-on">
     <div class="d-flex align-items-center">
-      <div class="dropdown">
+      <div class="dropdown" *ngIf="userDetails && userDetails.userAvailable">
         <button class="btn btn-secondary dropdown-toggle btn-rounded" type="button" id="dropdownMenuButton"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fa fa-circle availanility-icon" [class.online]="userDetails.userAvailable=='Online'"

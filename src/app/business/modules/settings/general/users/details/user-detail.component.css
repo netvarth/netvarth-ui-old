@@ -1,22 +1,42 @@
 .user-create-window .picker-form-group {
     width: 175px !important;
 }
-.user-create-window label, .user-create-window label.mat-radio-label-content span{
+
+.user-create-window label,
+.user-create-window label.mat-radio-label-content span {
     font-weight: normal !important;
 }
+
 label.gender {
     color: #3f51b5 !important;
 }
+
 .mgn-rt-10 {
     margin-right: 10px !important;
 }
-.user-create-window .ynw-common-form-nm .mob-prefix span{
+
+.user-create-window .ynw-common-form-nm .mob-prefix span {
     padding: 15px 10px 0px 5px !important;
 }
-.sidebar-bar .sidebar{
+
+.sidebar-bar .sidebar {
     height: 500px !important;
     overflow-y: visible !important;
     overflow-x: hidden;
-  
 }
 
+::ng-deep .p-dropdown,
+::ng-deep .p-calendar {
+    width: 100% !important;
+    font-weight: 500 !important;
+}
+
+::ng-deep .p-accordion-content {
+    padding: 0 !important;
+}
+
+::ng-deep .p-accordion-header-link {
+    background-color: #fff !important;
+    border-radius: 10px !important;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(235, 235, 235, 0.12) !important;
+}

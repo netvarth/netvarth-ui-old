@@ -15,8 +15,14 @@ import { UserConfirmBoxModule } from "../confirm-box/user-confirm-box.module";
 import { BranchUserDetailComponent } from "./user-detail.component";
 import { MatButtonModule } from "@angular/material/button";
 import { RouterModule, Routes } from "@angular/router";
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { AccordionModule } from 'primeng/accordion';
+import { CalendarModule } from 'primeng/calendar';
+import { TooltipModule } from 'primeng/tooltip';
+
 const routes: Routes = [
-    {path:'', component: BranchUserDetailComponent}
+    { path: '', component: BranchUserDetailComponent }
 ]
 @NgModule({
     imports: [
@@ -34,9 +40,14 @@ const routes: Routes = [
         LoadingSpinnerModule,
         FormMessageDisplayModule,
         CapitalizeFirstPipeModule,
+        InputTextModule,
+        DropdownModule,
+        AccordionModule,
+        CalendarModule,
+        TooltipModule,
         [RouterModule.forChild(routes)]
     ],
     exports: [BranchUserDetailComponent],
     declarations: [BranchUserDetailComponent]
 })
-export class BranchUserDetailModule {}
+export class BranchUserDetailModule { }

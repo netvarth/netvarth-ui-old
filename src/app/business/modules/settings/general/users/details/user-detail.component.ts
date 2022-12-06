@@ -22,6 +22,7 @@ import {
   SearchCountryField
 } from "ngx-intl-tel-input";
 import { CommonDataStorageService } from "../../../../../../shared/services/common-datastorage.service";
+
 @Component({
   selector: "app-branchuser-detail",
   templateUrl: "./user-detail.component.html",
@@ -43,6 +44,7 @@ export class BranchUserDetailComponent implements OnInit {
   userForm: FormGroup;
   char_count = 0;
   max_char_count = 250;
+  roles: any;
   isfocused = false;
   layout_id;
   cancel_btn = Messages.CANCEL_BTN;
@@ -121,6 +123,7 @@ export class BranchUserDetailComponent implements OnInit {
   loc_list: any = [];
   consumer_label = "";
   userList: any = [];
+  settings: any;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -147,8 +150,8 @@ export class BranchUserDetailComponent implements OnInit {
     if (this.actionparam.val) {
       this.userId = this.actionparam.val;
       this.getUserData();
-     // this.updateForm()
-     
+      // this.updateForm()
+
     }
 
     this.provider_services.getUsers().subscribe(res => {
@@ -244,7 +247,23 @@ export class BranchUserDetailComponent implements OnInit {
         }
       }
     }
+    this.settings = this.groupService.getitemFromGroupStorage('settings');
+    console.log("settings", this.settings)
+    if (this.settings && this.settings.enableCdl) {
+      this.getRolesData('cdl');
+    }
   }
+
+  getRolesData(features) {
+    this.api_loading = true;
+    this.provider_services.getRolesData(features).subscribe(data => {
+      this.roles = data;
+      this.api_loading = false;
+      console.log("roles : ", this.roles);
+    });
+  }
+
+
   getProviderLocations() {
     this.api_loading = true;
     this.provider_services.getProviderLocations().subscribe(data => {
@@ -332,15 +351,16 @@ export class BranchUserDetailComponent implements OnInit {
       selectedDepartment: [],
       privileges: [""],
       bProfilePermitted: [""],
-      showCsmrDataBase:[""],
-      selectedUserType: []
+      showCsmrDataBase: [""],
+      selectedUserType: [],
+      selectedrole: []
     });
     this.userForm.patchValue(
       {
-      countryCode: "+91" || '',
-      countryCode_whatsapp: "+91" || null,
-      countryCode_telegram: "+91" || null
-    });
+        countryCode: "+91" || '',
+        countryCode_whatsapp: "+91" || null,
+        countryCode_telegram: "+91" || null
+      });
     this.userForm
       .get("selectedUserType")
       .setValue(this.userTypesFormfill[0].value);
@@ -378,9 +398,9 @@ export class BranchUserDetailComponent implements OnInit {
     if (this.user_data.userType === "PROVIDER") {
       this.showPrvdrFields = true;
     }
-    console.log("form Data",this.user_data);
-    console.log("Data :",this.userForm);
-    
+    console.log("form Data", this.user_data);
+    console.log("Data :", this.userForm);
+
     this.userForm.patchValue({
       first_name: this.user_data.firstName || null,
       last_name: this.user_data.lastName || null,
@@ -394,7 +414,7 @@ export class BranchUserDetailComponent implements OnInit {
       selectedUserType: this.user_data.userType || null,
       privileges: this.user_data.admin || false,
       bProfilePermitted: this.user_data.bProfilePermitted || false,
-      showCsmrDataBase:this.user_data.showCsmrDataBase || false,
+      showCsmrDataBase: this.user_data.showCsmrDataBase || false,
       postalCode: this.user_data.pincode || null,
       countryCode_whatsapp:
         this.user_data.whatsAppNum && this.user_data.whatsAppNum.countryCode
@@ -413,17 +433,29 @@ export class BranchUserDetailComponent implements OnInit {
           ? this.user_data.telegramNum.number
           : ""
     });
-     if((this.user_data.countryCode === '91' || '' || undefined) || (this.user_data.whatsAppNum.countryCode === '91' || '' || undefined) || (this.user_data.telegramNum.countryCode === '91' || '' || undefined)){
-    this.userForm.patchValue({    
-      countryCode: "+91",  
-      countryCode_whatsapp: "+91" || null,
-      countryCode_telegram: "+91" || null
-      }); 
-    }  
-    console.log("After set the form",this.user_data);
+    if ((this.user_data.countryCode === '91' || '' || undefined) || (this.user_data.whatsAppNum.countryCode === '91' || '' || undefined) || (this.user_data.telegramNum.countryCode === '91' || '' || undefined)) {
+      this.userForm.patchValue({
+        countryCode: "+91",
+        countryCode_whatsapp: "+91" || null,
+        countryCode_telegram: "+91" || null
+      });
+    }
+
+    if (this.user_data && this.user_data.userRoles && this.user_data.userRoles[0] && this.user_data.userRoles[0].roleId) {
+      console.log("this.user_data.userRoles[0].roleId", this.user_data.userRoles[0].roleId)
+      this.userForm.controls.selectedrole.setValue(this.user_data.userRoles[0].roleId);
+      this.userForm.get("selectedrole").setValue(this.roles.find(role => role.roleId == this.user_data.userRoles[0].roleId));
+
+    }
+    this.userForm
+      .get("selectedrole")
+      .setValue(this.user_data.userRoles[0].roleId);
+
+    console.log("After set the form", this.user_data);
   }
   onUserSelect(event) {
     this.type = event.value;
+    console.log(this.userForm.controls.selectedUserType.value)
     if (event.value === "PROVIDER") {
       this.showPrvdrFields = true;
     } else {
@@ -435,7 +467,7 @@ export class BranchUserDetailComponent implements OnInit {
     this.type = event.value;
     if (event.value === "PROVIDER" || "ADMIN") {
       this.showPatientList = true;
-      
+
       //this.showPrvdrFields = true;
       this.provider_services.getProviderCustomers().subscribe(res => {
         this.userList = res;
@@ -443,7 +475,7 @@ export class BranchUserDetailComponent implements OnInit {
       });
     } else {
       this.showPatientList = false;
-     // this.showPrvdrFields = false;
+      // this.showPrvdrFields = false;
     }
   }
   hideUserSidebar() {
@@ -451,7 +483,7 @@ export class BranchUserDetailComponent implements OnInit {
   }
 
   onSubmit(input) {
-    console.log("Submit Data :",input)
+    console.log("Submit Data :", input)
     let date_format = null;
     if (input.dob !== null && input.dob !== "") {
       const date = new Date(input.dob);
@@ -514,8 +546,8 @@ export class BranchUserDetailComponent implements OnInit {
       } else {
         this.countrycode = "+" + input.countryCode;
       }
-      (post_data1["countryCode"] = this.countrycode?this.countrycode:'+91'),
-        (post_data1["mobileNo"] = input.phonenumber ?  input.phonenumber : '');
+      (post_data1["countryCode"] = this.countrycode ? this.countrycode : '+91'),
+        (post_data1["mobileNo"] = input.phonenumber ? input.phonenumber : '');
     }
     if (input.selectedUserType === "PROVIDER") {
       post_data1["deptId"] = input.selectedDepartment;
@@ -561,7 +593,7 @@ export class BranchUserDetailComponent implements OnInit {
               bussLocations: loc
             };
             this.provider_services.assignLocationToUsers(postData).subscribe(
-              (data: any) => {},
+              (data: any) => { },
               error => {
                 this.snackbarService.openSnackBar(error, {
                   panelClass: "snackbarerror"
@@ -617,7 +649,7 @@ export class BranchUserDetailComponent implements OnInit {
           }, 1000);
         }
       },
-      () => {}
+      () => { }
     );
   }
   enabledepartment() {
@@ -638,7 +670,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.provider_services.setDeptWaitlistMgr("Enable").subscribe(
           () => {
             this.api_loading = true;
-            this.commonDataStorage.setSettings('waitlist',null);
+            this.commonDataStorage.setSettings('waitlist', null);
             this.getWaitlistMgr();
           },
           error => {
@@ -663,7 +695,7 @@ export class BranchUserDetailComponent implements OnInit {
         this.deptLength = this.departments.length;
         this.api_loading = false;
       },
-      error => {}
+      error => { }
     );
   }
   redirecToUsersl() {
