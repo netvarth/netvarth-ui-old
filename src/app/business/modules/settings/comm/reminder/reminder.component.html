@@ -297,7 +297,7 @@
                     <label class="p-0 m-0 pt-1 form-text-light">Time (Hours:Minutes)</label>
                     <mat-chip-list #chipList aria-label="Time selection" name="time" [(ngModel)]="reminder.time"
                         *ngIf="selectedTimes.length>0">
-                        <mat-chip class="matTimeChip" *ngFor="let time of selectedTimes" (removed)="removeTime(time)">
+                        <mat-chip class="matTimeChip" *ngFor="let time of selectedTimes; let i= index" (removed)="removeTime(i)">
                             <span *ngIf="time && time !== undefined"> {{time.hour}} : {{time.minute}} {{time.mode}}
                                 <!-- {{time.hour >12 ?
                                 'PM' :'AM'}} -->

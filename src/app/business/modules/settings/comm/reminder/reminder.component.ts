@@ -330,8 +330,6 @@ _filter(value: string): string[] {
     });
   
     dialogref.afterClosed().subscribe(result => {
-    
-
       // this.selectedTime =
       // timeSlot.hour +
       //   ":" +
@@ -473,6 +471,7 @@ _filter(value: string): string[] {
     this.providerService.getReminderById(reminderId).subscribe((data: any) => {
       console.log("Reminder Details Id :", data);
       this.reminderDetails = data;
+      //this.removeTime(this.reminderDetails.schedule.timeSlots);
       this.isEdit = true;
       // this.updateForm(); 
 
@@ -494,6 +493,58 @@ _filter(value: string): string[] {
        hour:hour < 10 ? '0'+hour : hour,
        minute: minute < 10 ? '0'+minute : minute
      };
+     if(this.reminderDetails.schedule.timeSlots[0].sTime.includes('PM')){
+      sttime['mode'] = "PM"
+    }
+    else{
+      sttime['mode'] = "AM"
+
+    }
+     if (sttime) {
+      // const time = {
+      //  'sTime':sttime.hour +
+      //  ":" +
+      //  sttime.minute +
+      //  " " + sttime.mode,
+      //  'eTime':sttime.hour +
+      //  ":" +
+      //  sttime.minute +
+      //  " " + sttime.mode
+      // };
+    //  this.selectedTime.push(time)
+     // this.selectedTime =
+     //   sttime.hour +
+     //   ":" +
+     //   sttime.minute +
+     //   " " + sttime.mode
+       //(sttime.hour > 12 ? "PM" : "AM");
+    // console.log("selected time :", this.selectedTime);
+    
+     // const existConsumerData = this.selectedTimes.find(x => x.hour === sttime.hour);
+     // if(existConsumerData){
+     //   // this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
+     //   return false;
+     // }
+     // else{
+     //  return this.selectedTimes.push(sttime);
+     // }
+    
+     // this.selectedTimes.join(sttime);
+     // this.selectedTimes[this.selectedTimes.length] = sttime;
+      //this.selectedTimes.splice(0, 0, sttime);
+      this.hideTime = true;
+      //this.selectedTimes[0] = sttime;
+
+     // this.selectedTimes.map((time)=>{
+     //   this.selectedTimeslot =  time.hour +
+     //   ":" +
+     //   time.minute +
+     //   " " +
+     //   (time.hour > 12 ? "PM" : "AM");;
+     // })
+    
+    // this.selectedTimeslots(this.reminderId,sttime);
+   }
       //  sttime = {
       //   hour: parseInt(
       //     moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
@@ -508,17 +559,10 @@ _filter(value: string): string[] {
       //     10
       //   )
       // };
-      if(this.reminderDetails.schedule.timeSlots[0].sTime.includes('PM')){
-        sttime['mode'] = "PM"
-      }
-      else{
-        sttime['mode'] = "AM"
-
-      }
+    
       if(this.reminderDetails.schedule.timeSlots){
         const existConsumerData = this.reminders.find((x) => {
          if(x.id === reminderId){
-        //  console.log("exit time slot :",x.schedule.timeSlots[1].sTime);
      const data =  x.schedule.timeSlots.map((res:any)=>{
             console.log("new slot :",res)
             let sttime ;
@@ -547,6 +591,22 @@ _filter(value: string): string[] {
              sttime['mode'] = "AM"
      
            }
+           const time = {
+            'sTime':sttime.hour +
+            ":" +
+            sttime.minute +
+            " " + sttime.mode,
+            'eTime':sttime.hour +
+            ":" +
+            sttime.minute +
+            " " + sttime.mode
+           };
+           if(time){
+             this.selectedTime.push(time);
+             console.log("selected time :", this.selectedTime);
+
+           }
+          //this.selectedTime.push(time);
            newTimeArray.push(sttime);
           return this.selectedTimes.push(sttime);
 
@@ -614,51 +674,7 @@ _filter(value: string): string[] {
       //   'email':this.amForm.get('email').value || this.reminderDetails.reminderSource.Email,
       //   'phoneNumber':this.amForm.get('phoneNumber').value || this.reminderDetails.reminderSource.PushNotification
       // });
-      if (sttime) {
-         const time = {
-          'sTime':sttime.hour +
-          ":" +
-          sttime.minute +
-          " " + sttime.mode,
-          'eTime':sttime.hour +
-          ":" +
-          sttime.minute +
-          " " + sttime.mode
-         };
-         this.selectedTime.push(time)
-        // this.selectedTime =
-        //   sttime.hour +
-        //   ":" +
-        //   sttime.minute +
-        //   " " + sttime.mode
-          //(sttime.hour > 12 ? "PM" : "AM");
-        console.log("selected time :", this.selectedTime);
-       
-        // const existConsumerData = this.selectedTimes.find(x => x.hour === sttime.hour);
-        // if(existConsumerData){
-        //   // this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
-        //   return false;
-        // }
-        // else{
-        //  return this.selectedTimes.push(sttime);
-        // }
-       
-        // this.selectedTimes.join(sttime);
-        // this.selectedTimes[this.selectedTimes.length] = sttime;
-         //this.selectedTimes.splice(0, 0, sttime);
-         this.hideTime = true;
-         //this.selectedTimes[0] = sttime;
-
-        // this.selectedTimes.map((time)=>{
-        //   this.selectedTimeslot =  time.hour +
-        //   ":" +
-        //   time.minute +
-        //   " " +
-        //   (time.hour > 12 ? "PM" : "AM");;
-        // })
-       
-       // this.selectedTimeslots(this.reminderId,sttime);
-      }
+    
       if(this.reminderDetails.providerConsumer.id){
         // this.getCustomerbyId(this.reminderDetails.providerConsumer.id);
         const filter = { 'id-eq': this.reminderDetails.providerConsumer.id };
@@ -924,7 +940,8 @@ _filter(value: string): string[] {
           panelClass: "snackbarerror"
         });
       }
-      else if (this.selectedTimes.length === 0 || (this.selectedTime.length === undefined || this.selectedTime.length === 0)) {
+      //this.selectedTimes.length === 0 || (this.selectedTime.length === undefined || 
+      else if (this.selectedTime.length === 0) {
         this.snackbarService.openSnackBar("Please select time slot", {
           panelClass: "snackbarerror"
         });
@@ -949,12 +966,12 @@ _filter(value: string): string[] {
             },
             timeSlots:this.selectedTime
             // [
-              // {
-              //   sTime: this.selectedTime,
-              //   eTime: this.selectedTime
-              // }
+            //   {
+            //     sTime: this.selectedTime,
+            //     eTime: this.selectedTime
+            //   }
               
-            //]
+            // ]
           },
           provider:{
               id:this.providerId,
@@ -979,12 +996,12 @@ _filter(value: string): string[] {
         console.log("Posting Updated Data ;", postData);
 
         // this.amForm.reset();
-        if ((postData['timeSlots'] === 0)) {
-          this.snackbarService.openSnackBar("Please select time slot", {
-            panelClass: "snackbarerror"
-          });
-        }
-        else{
+        // if ((postData['timeSlots'] === 0)) {
+        //   this.snackbarService.openSnackBar("Please select time slot", {
+        //     panelClass: "snackbarerror"
+        //   });
+        // }
+        // else{
           this.providerService
           .updateReminder(postData, this.reminderId)
           .subscribe(
@@ -1008,7 +1025,7 @@ _filter(value: string): string[] {
               });
             }
           );
-        }
+      //  }
       
       }
     } else {
@@ -1035,7 +1052,8 @@ _filter(value: string): string[] {
           panelClass: "snackbarerror"
         });
       }
-      else if ((this.selectedTime === undefined || this.selectedTime.length === 0)) {
+      //this.selectedTime === undefined
+      else if ((this.selectedTime.length === 0)) {
         this.snackbarService.openSnackBar("Please select time slot", {
           panelClass: "snackbarerror"
         });
@@ -1071,6 +1089,14 @@ _filter(value: string): string[] {
               //   eTime: this.selectedTime
               // }
             //]
+            // timeSlots:
+            // [
+            //   {
+            //     sTime: this.selectedTime,
+            //     eTime: this.selectedTime
+            //   }
+              
+            // ]
           },
           // provider: this.providerId,
           // providerConsumer: this.selectedConsumer.id,
@@ -1096,12 +1122,12 @@ _filter(value: string): string[] {
         };
         // this.amForm.reset();
         console.log("Posting Data ;", postData);
-        if ((postData['timeSlots'] === 0)) {
-          this.snackbarService.openSnackBar("Please select time slot", {
-            panelClass: "snackbarerror"
-          });
-        }
-        else{
+        // if ((postData['timeSlots'] === 0)) {
+        //   this.snackbarService.openSnackBar("Please select time slot", {
+        //     panelClass: "snackbarerror"
+        //   });
+        // }
+        // else{
           this.providerService.postReminder(postData).subscribe(
             (res: any) => {
               console.log("Reminder res :", res);
@@ -1123,7 +1149,7 @@ _filter(value: string): string[] {
               });
             }
           );
-        }
+       // }
 
       
       }
@@ -1150,13 +1176,13 @@ _filter(value: string): string[] {
       this.selectedConsumers.splice(index, 1);
     }
   }
-  removeTime(time: any): void {
-    const index = this.selectedTimes.indexOf(time);
-    const index1 = this.selectedTime.indexOf(time);
+  removeTime(index: any): void {
+    // const index = this.selectedTimes.indexOf(time);
+    // const index1 = this.selectedTime.indexOf(this.reminderDetails.schedule.timeSlots);
+    console.log("Index :",index)
 
-    console.log("Index :",this.selectedTimes.indexOf(time))
     //this.selectedTimes.length === 0 && this.selectedTime.length === 0
-    if(this.isEdit && index === 0 && index1 === 0){
+    if(this.isEdit && (index === 0) ){
       this.isTimeNotSelected = true;
       // this.selectedTime = [];
       // this.selectedTimes = [];
@@ -1164,12 +1190,19 @@ _filter(value: string): string[] {
         panelClass: "snackbarerror"
       });
     }
-    if (index >= 0) {
-      this.selectedTimes.splice(index, 1);
-    }
-    if(index1 >=0){
-      this.selectedTime.splice(index,1);
-    }
+    this.selectedTimes.splice(index, 1);
+    this.selectedTime.splice(index,1);
+
+    // if (index >= 0) {
+    //   this.selectedTimes.splice(index, 1);
+    // }
+   
+    //   if(index1 >= 0){
+    //     this.selectedTime.splice(index1,1);
+
+    //   }
+      
+    
     
   }
   searchCustomerByPhone(phoneNumber, event?) {
