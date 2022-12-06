@@ -439,17 +439,17 @@ export class CdlService {
       console.log("Role Capabilities in Sevice File", user)
       let roleCapabilities = user.roles[0].capabilities;
       let capabilities = {
-        'canCreateLoan': roleCapabilities.includes('createLoan'),
-        'canUpdateLoan': roleCapabilities.includes('updateLoan'),
-        'canViewLoan': roleCapabilities.includes('viewLoan'),
+        'canCreateLoan': roleCapabilities.includes('createLoanApplication'),
+        'canUpdateLoan': roleCapabilities.includes('updateLoanApplication'),
+        'canViewLoan': roleCapabilities.includes('viewLoanApplication'),
         'canCreatePartner': roleCapabilities.includes('createPartner'),
         'canUpdatePartner': roleCapabilities.includes('updatePartner'),
         'canViewPartner': roleCapabilities.includes('viewPartner'),
         'canViewSchemes': roleCapabilities.includes('viewScheme'),
-        'canApprovePartnerLoan': roleCapabilities.includes('approvePartnerLoan'),
-        'canRejectLoan': roleCapabilities.includes('rejectLoan'),
+        'canApprovePartnerLoan': roleCapabilities.includes('verifyPartnerLoanApplication'),
+        'canRejectLoan': roleCapabilities.includes('rejectLoanApplication'),
         'canApprovePartner': roleCapabilities.includes('approvePartner'),
-        'canApproveLoan': roleCapabilities.includes('approveLoan'),
+        'canApproveLoan': roleCapabilities.includes('approveLoanApplication'),
         'canContactPartner': roleCapabilities.includes('contactPartner'),
         'canActionRequired': roleCapabilities.includes('actionRequired'),
         'canCreditScoreCheck': roleCapabilities.includes('creditScoreCheck'),
@@ -469,6 +469,7 @@ export class CdlService {
         'canSuspendPartner': roleCapabilities.includes('suspendPartner'),
         'canDisableUser': roleCapabilities.includes('disableUser'),
         'canDisablePartner': roleCapabilities.includes('disablePartner'),
+        'canEnablePartner': roleCapabilities.includes('enablePartner'),
         'canVerification': roleCapabilities.includes('verification'),
         'canCreditVerification': roleCapabilities.includes('creditVerification'),
         'canDocumentVerification': roleCapabilities.includes('documentVerification'),
@@ -476,7 +477,10 @@ export class CdlService {
         'canCreateLead': roleCapabilities.includes('createLead'),
         'canUpdateLead': roleCapabilities.includes('updateLead'),
         'canViewLead': roleCapabilities.includes('viewLead'),
-        'canTransformLeadtoLoan': roleCapabilities.includes('transformLeadtoLoan')
+        'canTransformLeadtoLoan': roleCapabilities.includes('transformLeadtoLoan'),
+        'canLoanApplicationOperationsVerification': roleCapabilities.includes('loanApplicationOperationsVerification'),
+        'canViewCustomerPhoneNumber': roleCapabilities.includes('viewCustomerPhoneNumber'),
+        'canViewKycReport': roleCapabilities.includes('viewKycReport')
       }
       return capabilities;
     }

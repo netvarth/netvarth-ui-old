@@ -405,7 +405,7 @@
           <br>
           <div class="d-lg-flex d-md-flex">
             <div class="mt-2 mr-2"
-              *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
+              *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0] && capabilities && capabilities.canViewKycReport">
               <a (click)="showKycDoc()" target="_blank" class="btn btn-primary">
                 <span>View KYC Doc</span>
               </a>
