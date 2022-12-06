@@ -340,14 +340,15 @@ _filter(value: string): string[] {
        // (timeSlot.hour > 12 ? "PM" : "AM");
       console.log("selected time :", this.selectedTime);
       if (result !== undefined) {
-      const timeSlot = {
-        hour: parseInt(
+        const hour = parseInt(
           moment(result.hour, [
-            "h:mm A"
+            "hh:mm A"
           ]).format("hh"),
           10
-        ),
-        minute: result.minute,
+        );
+      const timeSlot = {
+        hour:hour < 10 ? '0'+hour : hour,
+        minute: result.minute < 10 ? '0'+result.minute : result.minute,
         mode:result.mode
         // parseInt(
         //   moment(result.minute, [
@@ -355,7 +356,13 @@ _filter(value: string): string[] {
         //   ]).format("mm"),10
         // )
       };
+    // timeSlot['hour'] < 10 ? '0'+timeSlot['hour'] : timeSlot['hour'];
+    //  timeSlot['minute'] < 10 ? '0'+timeSlot['minute'] : timeSlot['minute']
+    //     timeSlot['minute'] = result.minute < 10 ? '0'+result.minute : result.minute
+
+      //timeSlot.hour < 10 ? '0'+timeSlot.hour : timeSlot.hour
       console.log("Time selllll :",timeSlot);
+      
        const time = {
           'sTime':timeSlot.hour +
           ":" +
@@ -446,7 +453,12 @@ _filter(value: string): string[] {
   }
   editReminder(reminderId?) {
     this.isCreate = true;
-    this.reminder_title = 'Update Reminder';
+    if(this.selectedId){
+      this.reminder_title = 'Create Reminder';
+    }
+    else{
+      this.reminder_title = 'Update Reminder';
+    }
     this.reminderId = reminderId;
     this.selectedTimes = [];
     this.selectedTime = [];
@@ -463,21 +475,39 @@ _filter(value: string): string[] {
       this.reminderDetails = data;
       this.isEdit = true;
       // this.updateForm(); 
+
        let sttime ;
-       sttime = {
-        hour: parseInt(
-          moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
-            "h:mm A"
-          ]).format("hh"),
-          10
-        ),
-        minute: parseInt(
-          moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
-            "h:mm A"
-          ]).format("mm"),
-          10
-        )
-      };
+       const hour = parseInt(
+        moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
+          "hh:mm A"
+        ]).format("hh"),
+        10
+      );
+      const minute =  parseInt(
+        moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
+          "h:mm A"
+        ]).format("mm"),
+        10
+      );
+
+      sttime = {
+       hour:hour < 10 ? '0'+hour : hour,
+       minute: minute < 10 ? '0'+minute : minute
+     };
+      //  sttime = {
+      //   hour: parseInt(
+      //     moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
+      //       "h:mm A"
+      //     ]).format("hh"),
+      //     10
+      //   ),
+      //   minute: parseInt(
+      //     moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
+      //       "h:mm A"
+      //     ]).format("mm"),
+      //     10
+      //   )
+      // };
       if(this.reminderDetails.schedule.timeSlots[0].sTime.includes('PM')){
         sttime['mode'] = "PM"
       }
@@ -493,19 +523,22 @@ _filter(value: string): string[] {
             console.log("new slot :",res)
             let sttime ;
             let newTimeArray = [];
+            const hour = parseInt(
+              moment(res.sTime, [
+                "hh:mm A"
+              ]).format("hh"),
+              10
+            );
+            const minute =  parseInt(
+              moment(res.sTime, [
+                "h:mm A"
+              ]).format("mm"),
+              10
+            );
+
             sttime = {
-             hour: parseInt(
-               moment(res.sTime, [
-                 "h:mm A"
-               ]).format("hh"),
-               10
-             ),
-             minute: parseInt(
-               moment(res.sTime, [
-                 "h:mm A"
-               ]).format("mm"),
-               10
-             )
+             hour:hour < 10 ? '0'+hour : hour,
+             minute: minute < 10 ? '0'+minute : minute
            };
            if(res.sTime.includes('PM')){
              sttime['mode'] = "PM"
