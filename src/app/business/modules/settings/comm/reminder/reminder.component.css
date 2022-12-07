@@ -5,6 +5,12 @@
     background-color: #189CE7 !important;
     border-color: #189CE7 !important;
 }
+.btnFlex{
+    display: flex;
+    height: 34px;
+    justify-items: center;
+    margin-right: -10px;
+}
 .btn-outline-info{
     border-color: #189CE6 !important;
     outline-color: #189CE6 !important;
