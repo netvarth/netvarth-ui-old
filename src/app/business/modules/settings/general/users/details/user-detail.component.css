@@ -25,6 +25,12 @@ label.gender {
     overflow-x: hidden;
 }
 
+.btn-primary {
+    color: #fff !important;
+    background-color: #1E4079 !important;
+    border: none !important;
+}
+
 ::ng-deep .p-dropdown,
 ::ng-deep .p-calendar {
     width: 100% !important;

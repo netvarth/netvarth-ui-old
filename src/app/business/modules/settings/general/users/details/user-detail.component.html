@@ -137,7 +137,7 @@
                                     </div>
                                     <div class="clearfix"></div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 mt-3 no-padding-small"
-                                        *ngIf="filterBydept && departments.length > 0 && showPrvdrFields">
+                                        *ngIf="filterBydept && departments.length > 0">
                                         <div class="form-group">
                                             <span class="p-float-label">
                                                 <p-dropdown #department [options]="departments"
@@ -312,8 +312,7 @@
                                                                 the user to
                                                                 create new user, modify existing user etc.</div>
                                                         </div>
-                                                        <div class="form-group p-2"
-                                                            *ngIf="showPrvdrFields && provider_label">
+                                                        <div class="form-group p-2" *ngIf="provider_label">
                                                             <mat-checkbox formControlName="showCsmrDataBase">
                                                                 Show {{consumer_label | capitalizeFirst}}s List
                                                             </mat-checkbox>
@@ -324,7 +323,7 @@
                                                     </div>
 
                                                     <div class="col-md-6 col-sm-6 col-xs-12 mt-3 no-padding-small"
-                                                        *ngIf="showPrvdrFields && provider_label">
+                                                        *ngIf="provider_label">
                                                         <div class="form-group p-2">
                                                             <mat-checkbox formControlName="bProfilePermitted">
                                                                 Business Profile Permitted
@@ -381,7 +380,7 @@
                                                 class="cs-btn bt2">{{cancel_btn}}</button>
                                             &nbsp;
                                             <button type="submit" mat-button [disabled]="!userForm.valid"
-                                                class="cs-btn bt2">{{button_title}}</button>
+                                                class="cs-btn bt2 btn btn-primary">{{button_title}}</button>
                                         </div>
                                     </div>
                                 </form>

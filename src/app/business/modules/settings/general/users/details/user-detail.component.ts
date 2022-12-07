@@ -444,9 +444,7 @@ export class BranchUserDetailComponent implements OnInit {
 
     if (this.user_data && this.user_data.userRoles && this.user_data.userRoles[0] && this.user_data.userRoles[0].roleId) {
       console.log("this.user_data.userRoles[0].roleId", this.user_data.userRoles[0].roleId)
-      this.userForm.controls.selectedrole.setValue(this.user_data.userRoles[0].roleId);
       this.userForm.get("selectedrole").setValue(this.roles.find(role => role.roleId == this.user_data.userRoles[0].roleId));
-
     }
     this.userForm
       .get("selectedrole")
