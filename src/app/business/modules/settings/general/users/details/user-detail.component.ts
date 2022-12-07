@@ -124,6 +124,7 @@ export class BranchUserDetailComponent implements OnInit {
   consumer_label = "";
   userList: any = [];
   settings: any;
+  userRolesSelected: any;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -462,6 +463,14 @@ export class BranchUserDetailComponent implements OnInit {
       this.showPrvdrFields = false;
     }
   }
+
+  onRoleSelect(event) {
+    this.userRolesSelected = [
+      {
+        "roleId": event,
+        "defaultRole": true
+      }]
+  }
   showPatients(event) {
     // this.showCsmrDataBase = !this.showCsmrDataBase;
     this.type = event.value;
@@ -561,6 +570,9 @@ export class BranchUserDetailComponent implements OnInit {
     if (input.selectedUserType !== "ADMIN") {
       post_data1["admin"] = input.privileges;
       console.log(input.privileges);
+    }
+    if (this.settings && this.settings.enableCdl) {
+      post_data1["userRoles"] = this.userRolesSelected;
     }
     if (this.actionparam.type === "edit") {
       console.log(post_data1);
