@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { CdlService } from '../../cdl.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ViewReportComponent } from './view-report/view-report.component';
 
 @Component({
   selector: 'app-loan-details',
@@ -40,7 +41,8 @@ export class LoanDetailsComponent implements OnInit {
   mafilScore: number;
   perfiosScore: number;
   totalScore: number;
-  loanStatus = projectConstantsLocal.TIMELINE_STATUS;;
+  loanStatus = projectConstantsLocal.TIMELINE_STATUS; perfiosData: any;
+  ;
   paramsValue: any;
   address1: string;
   address2: string;
@@ -74,6 +76,7 @@ export class LoanDetailsComponent implements OnInit {
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
             this.checkMafilScore();
+            this.checkPerfiosScore();
             console.log("LoanData", this.loanData)
             this.loanApplicationStatus = this.loanData.spInternalStatus;
             this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
@@ -100,6 +103,37 @@ export class LoanDetailsComponent implements OnInit {
       console.log("Mafil Score Data : ", data);
       if (data && data.creditScore) {
         this.mafilScore = data.creditScore;
+      }
+    });
+  }
+
+  viewReport(type, data) {
+    const dialogRef = this.dialog.open(ViewReportComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        type: type,
+        data: data
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      }
+    })
+  }
+
+
+  checkPerfiosScore() {
+    // let data =
+    // {
+    //   "loanApplicationUid": this.loanId,
+    //   "loanApplicationKycId": this.loanData.loanApplicationKycList[0].id
+    // }
+    this.cdlservice.getPerfiosScore().subscribe((data: any) => {
+      console.log("Perfios Score Data : ", data);
+      if (data) {
+        this.perfiosData = data;
       }
     });
   }

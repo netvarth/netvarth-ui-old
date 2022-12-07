@@ -13,6 +13,7 @@ import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitaliz
 import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from "@angular/core";
 import { ConfirmBoxModule } from '../confirm-box/confirm-box.module';
 import { TimelineModule } from 'primeng/timeline';
+import { ViewReportModule } from './view-report/view-report.module';
 
 
 const routes: Routes = [
@@ -35,6 +36,7 @@ const routes: Routes = [
     ConfirmBoxModule,
     CapitalizeFirstPipeModule,
     TimelineModule,
+    ViewReportModule,
     [RouterModule.forChild(routes)]
   ],
   schemas: [

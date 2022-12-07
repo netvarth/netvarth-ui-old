@@ -39,6 +39,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getUsers() {
+    const url = 'provider/user';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getLoanTypeList() {
     const url = 'provider/loanapplication/type';
     return this.servicemeta.httpGet(url, null);
@@ -422,6 +427,11 @@ export class CdlService {
   getMafilScore(data) {
     const url = 'provider/loanapplication/csms/generatescore';
     return this.servicemeta.httpPut(url, data);
+  }
+
+  getPerfiosScore() {
+    const url = 'provider/loanapplication/perfiosanalysis';
+    return this.servicemeta.httpGet(url);
   }
 
   getBranches(filter) {

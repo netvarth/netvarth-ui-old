@@ -295,10 +295,13 @@
           <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
             <div class="card">
               <div class="d-flex">
-                <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
+                <div>
+                  <img src="../../../../assets/images/cdl/equifax_score.png" width="100">
+                </div>&nbsp;&nbsp;
                 <div>
                   <div class="customerScoreLabel">Equifax Score</div>
-                  <div class="customerScoreInfoLabel">33</div>
+                  <div class="customerScoreInfoLabel">750</div>
+                  <div class="btn btn-primary">View Report</div>
                 </div>
               </div>
               <!-- <div class="text-right">
@@ -309,10 +312,14 @@
           <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
             <div class="card">
               <div class="d-flex">
-                <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
                 <div>
-                  <div class="customerScoreLabel">Perfios Score</div>
-                  <div class="customerScoreInfoLabel">22</div>
+                  <img src="../../../../assets/images/cdl/perfios_score.png" width="100">
+                </div>&nbsp;&nbsp;
+                <div>
+                  <div class="customerScoreLabel">Perfios Banking Habits</div>
+                  <div class="customerScoreInfoLabel" *ngIf="perfiosData && perfiosData.bankingHabits">
+                    {{perfiosData.bankingHabits}}</div>
+                  <div class="btn btn-primary" (click)="viewReport('perfios',perfiosData)">View Report</div>
                 </div>
               </div>
               <!-- <div class="text-right">
@@ -320,14 +327,17 @@
               </div> -->
             </div>
           </div>
-
+          <div class="clearfix"></div>
           <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
             <div class="card">
               <div class="d-flex">
-                <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
+                <div>
+                  <img src="../../../../assets/images/cdl/mafil_score.png" width="100">
+                </div>&nbsp;&nbsp;
                 <div>
                   <div class="customerScoreLabel">MAFIL Score</div>
-                  <div class="customerScoreInfoLabel">{{mafilScore}}</div>
+                  <div class="customerScoreInfoLabel" *ngIf="mafilScore">{{mafilScore}}</div>
+                  <div class="btn btn-primary">View Report</div>
                 </div>
               </div>
               <!-- <div class="text-right">
@@ -339,10 +349,13 @@
           <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
             <div class="card">
               <div class="d-flex">
-                <div><i class="fa fa-tachometer" aria-hidden="true"></i></div>&nbsp;&nbsp;
+                <div>
+                  <img src="../../../../assets/images/cdl/total_score.png" width="100">
+                </div>&nbsp;&nbsp;
                 <div>
                   <div class="customerScoreLabel">Total Score</div>
-                  <div class="customerScoreInfoLabel">100</div>
+                  <div class="customerScoreInfoLabel">850</div>
+                  <div class="btn btn-primary">View Report</div>
                 </div>
               </div>
               <!-- <div class="text-right">

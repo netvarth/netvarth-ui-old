@@ -102,6 +102,7 @@ export class CdlComponent implements OnInit {
   roleId: any;
   capabilities: any;
   dashboardStats: any;
+  users: any;
 
 
   constructor(
@@ -129,6 +130,7 @@ export class CdlComponent implements OnInit {
     this.getApprovedDealers();
     this.getRequestedDealers();
     this.getBarChartData();
+    this.getUsers();
     this.getDashboardStats();
   }
 
@@ -241,6 +243,13 @@ export class CdlComponent implements OnInit {
   }
 
 
+  getUsers() {
+    this.cdlservice.getUsers().subscribe((data: any) => {
+      this.users = data;
+    });
+  }
+
+
   getPieChartData() {
     this.pieChartOptions = {
       plugins: {
@@ -282,6 +291,10 @@ export class CdlComponent implements OnInit {
 
   viewAllCustomers() {
     this.router.navigate(['provider', 'customers']);
+  }
+
+  viewAllUsers() {
+    this.router.navigate(['provider', 'settings', 'general', 'users']);
   }
 
   continueApplication() {
