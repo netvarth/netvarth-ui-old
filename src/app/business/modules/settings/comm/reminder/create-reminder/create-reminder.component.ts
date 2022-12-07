@@ -17,6 +17,8 @@ export class CreateReminderComponent implements OnInit {
 	minuteStep = 10;
 	// secondStep = 30;
   meridian = true;
+  spinners = true;
+
   constructor(
     public dialogRef: MatDialogRef<CreateReminderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -38,27 +40,42 @@ export class CreateReminderComponent implements OnInit {
     //   time:time,
     //   // mode:mode
     // }
-    console.log("meridian :",this.meridian);
-    if(time.hour >= 12){
-      time['mode']='PM'
-      // const isPm = time.hour > 12;
-      //       return `${time.hour > 12 ? time.hour - 12 : time.hour}:${time.minute} {isPm ? time['mode']='PM' : time['mode']='AM'}`
-       //return (time.hour > 12 ? time.hour - 12 : time.hour) {time.hour > 12 ? time['mode']='PM' : time['mode']='AM'}`
-    }
-    else{
-      time['mode']='AM'
+    // let output = {hour: 16, minute: 3, second: 0};
+    // let outputDate = new Date();
 
-    }
-    
-    console.log("time :", time);
+    // outputDate.setHours(output.hour);
+    // outputDate.setMinutes(output.minute);
+    // outputDate.setSeconds(output.second);
 
-    if (time) {
-      this.dialogRef.close(time);
+    if (time.hour >= new Date().getHours()) {
+      console.log("meridian :",this.meridian);
+      if(time.hour >= 12){
+        time['mode']='PM'
+        // const isPm = time.hour > 12;
+        //       return `${time.hour > 12 ? time.hour - 12 : time.hour}:${time.minute} {isPm ? time['mode']='PM' : time['mode']='AM'}`
+         //return (time.hour > 12 ? time.hour - 12 : time.hour) {time.hour > 12 ? time['mode']='PM' : time['mode']='AM'}`
+      }
+      else{
+        time['mode']='AM'
+  
+      }
+      
+      console.log("time :", time);
+  
+      if (time) {
+        this.dialogRef.close(time);
+      }
+      return true;
     } else {
-      this.snackbarService.openSnackBar("please select time", {
-        panelClass: "snackbarerror"
-      });
+      
+        this.snackbarService.openSnackBar("Cannot set past time select valid slot", {
+          panelClass: "snackbarerror"
+        });
+      
+      return false;
     }
+   
+     
   }
   cancelTime() {
     this.dialogRef.close();
