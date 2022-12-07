@@ -455,8 +455,16 @@
                         </div>
                       </div>
                     </td>
-                    <td>{{customer.status}}</td>
-                    <td>{{customer.phoneNo}}</td>
+                    <td>
+                      <span [class]="'status-' + customer.status" class="text-capitalize font-weight-bold" *ngIf="customer && customer.status">
+                        {{customer.status}}
+                      </span>
+                    </td>
+                    <td>
+                      <span *ngIf="customer && customer.phoneNo">
+                        {{customer.phoneNo}}
+                      </span>
+                    </td>
                   </tr>
                 </ng-template>
               </p-table>
@@ -646,7 +654,8 @@
                       </div>
                     </td>
                     <td>
-                      <span *ngIf="user && user.userAvailable">{{user.userAvailable}}</span>
+                      <span *ngIf="user && user.userAvailable"
+                        [class]="'status-' + user.userAvailable"><b>{{user.userAvailable}}</b></span>
                     </td>
                     <td>
                       <span *ngIf="user && user.userRoles && user.userRoles[0] && user.userRoles[0].roleName">

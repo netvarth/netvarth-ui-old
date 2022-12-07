@@ -444,6 +444,28 @@
   border-radius: 8px !important;
 }
 
+.status-Sanctioned {
+  background-color: #ebd6ff !important;
+  color: #52267b !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-NotAvailable {
+  color: #f08c12 !important;
+}
+
+.status-Online,
+.status-ACTIVE {
+  color: #1E8E3E !important;
+}
+
+.status-Away,
+.status-INACTIVE {
+  color: #D93025 !important;
+}
+
 /* .status-Draft {
   background-color: #fbbdc3 !important;
   color: rgb(186, 121, 0) !important;

@@ -13,33 +13,75 @@
                     <table class="table table-borderless">
                         <tbody>
                             <tr style="width: 100%;" *ngIf="reportData.averageBankBalance">
-                                <td style="width: 50%;" class="details-title">Average Bank Balance :</td>
+                                <td style="width: 50%;" class="details-title">Average Bank Balance</td>
                                 <th style=" width: 50%;" class="details-sub-title">{{reportData.averageBankBalance}}
                                 </th>
                             </tr>
                             <tr style="width: 100%;" *ngIf="reportData.minimumBalanceDaily">
-                                <td style="width: 50%;" class="details-title">Minimum Balance Daily :</td>
+                                <td style="width: 50%;" class="details-title">Minimum Balance Daily</td>
                                 <th style=" width: 50%;" class="details-sub-title">{{reportData.minimumBalanceDaily}}
                                 </th>
                             </tr>
                             <tr style="width: 100%;" *ngIf="reportData.minimumBalanceMonthly">
-                                <td style="width: 50%;" class="details-title">Minimum Balance Monthly :</td>
+                                <td style="width: 50%;" class="details-title">Minimum Balance Monthly</td>
                                 <th style=" width: 50%;" class="details-sub-title">{{reportData.minimumBalanceMonthly}}
                                 </th>
                             </tr>
                             <tr style="width: 100%;" *ngIf="reportData.chequeBounceCount">
-                                <td style="width: 50%;" class="details-title">Check Bounce Count : </td>
+                                <td style="width: 50%;" class="details-title">Check Bounce Count </td>
                                 <th style=" width: 50%;" class="details-sub-title">{{reportData.chequeBounceCount}}
                                 </th>
                             </tr>
                             <tr style="width: 100%;" *ngIf="reportData.presentMonthlyEMI">
-                                <td style="width: 50%;" class="details-title">Present Month EMI :</td>
+                                <td style="width: 50%;" class="details-title">Present Month EMI</td>
                                 <th style=" width: 50%;" class="details-sub-title">{{reportData.presentMonthlyEMI}}
                                 </th>
                             </tr>
 
+                            <tr style="width: 100%;" *ngIf="reportData.maximumBalance">
+                                <td style="width: 50%;" class="details-title">Maximum Balance</td>
+                                <th style=" width: 50%;" class="details-sub-title">{{reportData.maximumBalance}}
+                                </th>
+                            </tr>
+
+                            <tr style="width: 100%;" *ngIf="reportData.credits">
+                                <td style="width: 50%;" class="details-title">Credits</td>
+                                <th style=" width: 50%;" class="details-sub-title">{{reportData.credits}}
+                                </th>
+                            </tr>
+
+                            <tr style="width: 100%;" *ngIf="reportData.totalCredit">
+                                <td style="width: 50%;" class="details-title">Total Credit</td>
+                                <th style=" width: 50%;" class="details-sub-title">{{reportData.totalCredit}}
+                                </th>
+                            </tr>
+
+                            <tr style="width: 100%;" *ngIf="reportData.debits">
+                                <td style="width: 50%;" class="details-title">Debits</td>
+                                <th style=" width: 50%;" class="details-sub-title">{{reportData.debits}}
+                                </th>
+                            </tr>
+
+                            <tr style="width: 100%;" *ngIf="reportData.totalDebit">
+                                <td style="width: 50%;" class="details-title">Total Debit</td>
+                                <th style=" width: 50%;" class="details-sub-title">{{reportData.totalDebit}}
+                                </th>
+                            </tr>
+
+                            <tr style="width: 100%;" *ngIf="reportData.cashWithdrawals">
+                                <td style="width: 50%;" class="details-title">Cash Withdrawals</td>
+                                <th style=" width: 50%;" class="details-sub-title">{{reportData.cashWithdrawals}}
+                                </th>
+                            </tr>
+
+                            <tr style="width: 100%;" *ngIf="reportData.totalCashWithdrawal">
+                                <td style="width: 50%;" class="details-title">Total Cash Withdrawal</td>
+                                <th style=" width: 50%;" class="details-sub-title">{{reportData.totalCashWithdrawal}}
+                                </th>
+                            </tr>
+
                             <tr style="width: 100%;" *ngIf="reportData.bankingHabits">
-                                <td style="width: 50%;" class="details-title">Banking Habits :</td>
+                                <td style="width: 50%;" class="details-title">Banking Habits</td>
                                 <th style=" width: 50%;" class="details-sub-title">{{reportData.bankingHabits}}
                                 </th>
                             </tr>
