@@ -341,7 +341,11 @@
                               <!-- {{provider_label}}  -->
                               name
                             </th>
-                            <th class="display-min-none" style="min-width: 125px;">User Type
+                            <th class="display-min-none" style="min-width: 125px;"
+                              *ngIf="accountSettings && !accountSettings.enableCdl">User Type
+                            </th>
+                            <th class="display-min-none" style="min-width: 125px;"
+                              *ngIf="accountSettings && accountSettings.enableCdl">User Role
                             </th>
                             <!-- <th class="display-min-none" style="min-width: 125px;">Contact Info</th> -->
                             <th *ngIf="domain !== 'finance'" class="display-min-none">Specializations
@@ -444,13 +448,21 @@
                               </div>
                             </td>
                             <td class="display-min-none">
-                              <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">
-                                {{provider_label | capitalizeFirst}}
-                              </span>
-                              <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label
-                                |
-                                capitalizeFirst}}</span>
-                              <span class="ttle" *ngIf="user.userType === 'ADMIN'">Admin</span>
+                              <div *ngIf="accountSettings && !accountSettings.enableCdl">
+                                <span class="ttle" *ngIf="user.userType === 'PROVIDER' ">
+                                  {{provider_label | capitalizeFirst}}
+                                </span>
+                                <span class="ttle" *ngIf="user.userType === 'ASSISTANT'">{{assistant_label
+                                  |
+                                  capitalizeFirst}}</span>
+                                <span class="ttle" *ngIf="user.userType === 'ADMIN'">Admin</span>
+                              </div>
+                              <div *ngIf="accountSettings && accountSettings.enableCdl">
+                                <span class="ttle"
+                                  *ngIf="user && user.userType && user.userRoles && user.userRoles[0] && user.userRoles[0].roleId">
+                                  {{user.userRoles[0].roleName}}
+                                </span>
+                              </div>
                             </td>
                             <!-- <td class="display-min-none">
                                                           <span *ngIf="user.mobileNo || user.whatsAppNum || user.telegramNum || user.email">
@@ -640,7 +652,8 @@
                                       aria-hidden="true"></i>{{user.city}},&nbsp;{{user.state}}
                                   </div>
                                   <div class="d-lg-none">
-                                    <div class=" mgn-up-5" *ngIf="user.userType">
+                                    <div class=" mgn-up-5"
+                                      *ngIf="user.userType && accountSettings && !accountSettings.enableCdl">
                                       <span class="b2" *ngIf="user.userType === 'PROVIDER' ">{{provider_label
                                         |
                                         capitalizeFirst}}</span>
@@ -648,6 +661,12 @@
                                         |
                                         capitalizeFirst}}</span>
                                       <span class="b2" *ngIf="user.userType === 'ADMIN'">Admin</span>
+                                    </div>
+                                    <div *ngIf="accountSettings && accountSettings.enableCdl">
+                                      <span class="ttle"
+                                        *ngIf="user && user.userType && user.userRoles && user.userRoles[0] && user.userRoles[0].roleId">
+                                        {{user.userRoles[0].roleName}}
+                                      </span>
                                     </div>
                                     <div class=" mgn-up-5" *ngIf="user.employeeId">
                                       {{user.employeeId}}

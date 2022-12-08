@@ -339,6 +339,18 @@
             <div class="container-fluid no-padding-small">
               <div class="row">
                 <div class="col-md-4 no-padding-small">
+                  
+                </div>
+                <div class="col-md-4"></div>
+                <div class="col-md-4 text-right no-padding-small">
+                  <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
+                    (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
+                    dataKey="name">
+                  </p-dropdown>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-4 no-padding-small">
                   <span>
                     <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
                       (input)="loansTable.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
@@ -348,8 +360,7 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-4 text-right no-padding-small">
                   <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
-                    (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
-                    dataKey="name">
+                    (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName" dataKey="name">
                   </p-dropdown>
                 </div>
               </div>
@@ -425,44 +436,44 @@
         </p-table>
       </div>
     </div>
+
     <div class="mt-2 col-lg-4 col-md-12">
       <div class="card loans-card">
         <div class="mt-2">
-          <div *ngIf="customers">
+          <div *ngIf="users">
             <div class="loan-data">
               <div>
-                <span class="card-title">Customers</span>
+                <span class="card-title">Users</span>
               </div>
-              <p-table [responsive]="true" responsiveLayout="scroll" [value]="customers" [paginator]="true" [rows]="5">
+              <p-table [responsive]="true" responsiveLayout="scroll" [value]="users" [paginator]="true" [rows]="5">
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Name</th>
                     <th>Status</th>
-                    <th>Phone</th>
+                    <th>Role</th>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-customer>
+                <ng-template pTemplate="body" let-user>
                   <tr>
                     <td>
                       <div class="d-flex">
                         <div class="profile-pic">
-                          <span *ngIf="customer.firstName" class="text-uppercase">{{customer.firstName[0]}}</span>
+                          <span *ngIf="user.firstName" class="text-uppercase">{{user.firstName[0]}}</span>
                         </div>
                         <div class="approvedColor text-capitalize mx-3 my-1">
-                          <span *ngIf="customer.firstName">{{customer.firstName}}</span><span
-                            *ngIf="customer.lastName">&nbsp;{{customer.lastName}}</span><br>
-                          <span *ngIf="customer.id">Id : {{customer.id}}</span>
+                          <span *ngIf="user.firstName">{{user.firstName}}</span><span
+                            *ngIf="user.lastName">&nbsp;{{user.lastName}}</span><br>
+                          <span *ngIf="user.id">Id : {{user.id}}</span>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <span [class]="'status-' + customer.status" class="text-capitalize font-weight-bold" *ngIf="customer && customer.status">
-                        {{customer.status}}
-                      </span>
+                      <span *ngIf="user && user.userAvailable"
+                        [class]="'status-' + user.userAvailable"><b>{{user.userAvailable}}</b></span>
                     </td>
                     <td>
-                      <span *ngIf="customer && customer.phoneNo">
-                        {{customer.phoneNo}}
+                      <span *ngIf="user && user.userRoles && user.userRoles[0] && user.userRoles[0].roleName">
+                        {{user.userRoles[0].roleName}}
                       </span>
                     </td>
                   </tr>
@@ -471,12 +482,13 @@
             </div>
             <div class="mt-3">
               <button pButton pRipple type="button" class="font-weight-bold pointer-cursor btn-primary"
-                (click)="viewAllCustomers()"><i class="pi pi-eye text-white"></i>&nbsp;View All</button>
+                (click)="viewAllUsers()"><i class="pi pi-eye text-white"></i>&nbsp;View All</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
   <div class="row container-fluid no-padding-small" *ngIf="capabilities && capabilities.canViewPartner">
     <div class="mt-2 col-lg-8 col-md-12">
@@ -622,44 +634,45 @@
         </p-table>
       </div>
     </div>
-
     <div class="mt-2 col-lg-4 col-md-12">
       <div class="card loans-card">
         <div class="mt-2">
-          <div *ngIf="users">
+          <div *ngIf="customers">
             <div class="loan-data">
               <div>
-                <span class="card-title">Users</span>
+                <span class="card-title">Customers</span>
               </div>
-              <p-table [responsive]="true" responsiveLayout="scroll" [value]="users" [paginator]="true" [rows]="5">
+              <p-table [responsive]="true" responsiveLayout="scroll" [value]="customers" [paginator]="true" [rows]="5">
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Name</th>
                     <th>Status</th>
-                    <th>Role</th>
+                    <th>Phone</th>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-user>
+                <ng-template pTemplate="body" let-customer>
                   <tr>
                     <td>
                       <div class="d-flex">
                         <div class="profile-pic">
-                          <span *ngIf="user.firstName" class="text-uppercase">{{user.firstName[0]}}</span>
+                          <span *ngIf="customer.firstName" class="text-uppercase">{{customer.firstName[0]}}</span>
                         </div>
                         <div class="approvedColor text-capitalize mx-3 my-1">
-                          <span *ngIf="user.firstName">{{user.firstName}}</span><span
-                            *ngIf="user.lastName">&nbsp;{{user.lastName}}</span><br>
-                          <span *ngIf="user.id">Id : {{user.id}}</span>
+                          <span *ngIf="customer.firstName">{{customer.firstName}}</span><span
+                            *ngIf="customer.lastName">&nbsp;{{customer.lastName}}</span><br>
+                          <span *ngIf="customer.id">Id : {{customer.id}}</span>
                         </div>
                       </div>
                     </td>
                     <td>
-                      <span *ngIf="user && user.userAvailable"
-                        [class]="'status-' + user.userAvailable"><b>{{user.userAvailable}}</b></span>
+                      <span [class]="'status-' + customer.status" class="text-capitalize font-weight-bold"
+                        *ngIf="customer && customer.status">
+                        {{customer.status}}
+                      </span>
                     </td>
                     <td>
-                      <span *ngIf="user && user.userRoles && user.userRoles[0] && user.userRoles[0].roleName">
-                        {{user.userRoles[0].roleName}}
+                      <span *ngIf="customer && customer.phoneNo">
+                        {{customer.phoneNo}}
                       </span>
                     </td>
                   </tr>
@@ -668,11 +681,12 @@
             </div>
             <div class="mt-3">
               <button pButton pRipple type="button" class="font-weight-bold pointer-cursor btn-primary"
-                (click)="viewAllUsers()"><i class="pi pi-eye text-white"></i>&nbsp;View All</button>
+                (click)="viewAllCustomers()"><i class="pi pi-eye text-white"></i>&nbsp;View All</button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </div>
