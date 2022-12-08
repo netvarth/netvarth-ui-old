@@ -50,14 +50,13 @@ export class CreateComponent implements OnInit {
   }
   genders = [
     {
-      name: 'Male'
+      name: 'male',
+      displayName: 'Male'
     },
     {
-      name: 'Female'
-    },
-    {
-      name: 'Others'
-    },
+      name: 'female',
+      displayName: 'Female'
+    }
   ];
   lebalUplaodFile: string = 'Click & Upload your files here';
   actionText: any;
@@ -139,7 +138,7 @@ export class CreateComponent implements OnInit {
   accountaggregating: boolean = false;
   mafilEmployee: any = false;
   movableAssets: boolean = false;
-  loanProductCategories: ArrayBuffer;
+  loanProductCategories: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -988,6 +987,8 @@ export class CreateComponent implements OnInit {
         this.nameData = {
           "firstName": this.createLoan.controls.firstname.value,
           "lastName": this.createLoan.controls.lastname.value,
+          "dob": this.createLoan.controls.dob.value,
+          "gender": this.createLoan.controls.gender.value,
         }
       }
 

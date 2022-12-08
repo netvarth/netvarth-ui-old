@@ -23,19 +23,6 @@
           </div>
         </div>
 
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Dealer Username</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" formControlName="username"
-                  placeholder="Enter Dealer Username" class="form-control" autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
 
 
         <div>
@@ -56,6 +43,21 @@
                   <a class="btn btn-verify" *ngIf="verification" [class.btn-verified]="verification"><span><i
                         class="fa fa-check"></i>&nbsp;Verified</span></a>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Username</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" formControlName="username"
+                  placeholder="Enter Dealer Username" class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>

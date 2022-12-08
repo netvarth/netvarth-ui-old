@@ -94,7 +94,7 @@
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" #gender formControlName="gender">
                         <mat-option [value]="gender.name" *ngFor="let gender of genders">
-                          <div *ngIf="gender && gender.name">{{gender.name}}</div>
+                          <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
                         </mat-option>
                       </mat-select>
                     </div>
@@ -1011,7 +1011,7 @@
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" #category formControlName="category">
-                        <mat-option [value]="category.id" *ngFor="let category of loanCategories">
+                        <mat-option [value]="category.id" *ngFor="let category of loanProductCategories">
                           <div *ngIf="category && category.name">{{category.name}}</div>
                         </mat-option>
                       </mat-select>

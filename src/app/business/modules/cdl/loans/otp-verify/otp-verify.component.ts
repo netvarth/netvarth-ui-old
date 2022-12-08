@@ -41,6 +41,8 @@ export class OtpVerifyComponent implements OnInit {
   from: any;
   name: any;
   dealerId: any;
+  gender: any;
+  dob: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -60,6 +62,12 @@ export class OtpVerifyComponent implements OnInit {
     this.from = this.data.from
     if (this.data && this.data.data && this.data.data.firstName) {
       this.firstName = this.data.data.firstName;
+    }
+    if (this.data && this.data.data && this.data.data.dob) {
+      this.dob = this.data.data.dob;
+    }
+    if (this.data && this.data.data && this.data.data.gender) {
+      this.gender = this.data.data.gender;
     }
     if (this.data && this.data.data && this.data.data.lastName) {
       this.lastName = this.data.data.lastName;
@@ -281,7 +289,9 @@ export class OtpVerifyComponent implements OnInit {
             "firstName": this.firstName,
             "lastName": this.lastName,
             "phoneNo": this.phoneNumber,
-            "countryCode": "+91"
+            "countryCode": "+91",
+            "dob": this.dob,
+            "gender":this.gender
           },
           "location": {
             "id": this.user.bussLocs[0]
