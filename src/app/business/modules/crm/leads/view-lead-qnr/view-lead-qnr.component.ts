@@ -32,6 +32,7 @@ export class ViewLeadQnrComponent implements OnInit {
   crifDetails: any;
   crifScore: any;
   showCrifSection = false;
+  showCrifSectionTemp:boolean=false;
   crifHTML: any;
   showPdfIcon: boolean;
   crifDialog: any;
@@ -111,6 +112,7 @@ export class ViewLeadQnrComponent implements OnInit {
   tempInquiryId: any;
   tempCrifDetails: any = [];
   kycFilesCount=0;
+  counter = 0;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -150,6 +152,7 @@ export class ViewLeadQnrComponent implements OnInit {
     _this.questionaire = {};
     _this.fetchLeadInfo(_this.leadUID).then(
       (leadInfo: any) => {
+        console.log('leadInfo',leadInfo)
         _this.leadInfo = leadInfo; // Setting Lead information.
         if (_this.leadInfo && _this.leadInfo.customer && this.leadInfo.customer.phoneNo) {
           _this.telephoneNumber = _this.leadInfo.customer.phoneNo;
@@ -943,20 +946,39 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((response: any) => {
+      console.log('response', response)
       if (response) {
-        this.crmService.proceedToRedirectNotesadded(this.leadInfo.uid, this.leadInfo.status.id, response).subscribe(
-          () => {
-            this.router.navigate(['provider', 'crm']);
-          }, (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          })
+        if (response && response.note !== '') {
+          this.crmService.proceedToRedirectNotesadded(this.leadInfo.uid, this.leadInfo.status.id, response).subscribe(
+            () => {
+              this.router.navigate(['provider', 'crm']);
+            }, (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            })
+        }
       }
     })
   }
-  showCrifscoreSection() {
-    if (this.generateCrifText === 'Verify CRIF Score of') {
-      this.showCrifSection = !this.showCrifSection
+  showCrifscoreSection(i) {
+    console.log(this.counter++);
+    if((this.counter) %2===0){
+      setTimeout(() => {
+        if (this.generateCrifText === 'Verify CRIF Score of') {
+          this.showCrifSection = !this.showCrifSection;
+          this.showCrifSectionTemp=false;
+        }
+      }, projectConstants.TIMEOUT_DELAY);
     }
+    else{
+      this.showCrifSectionTemp=true;
+      setTimeout(() => {
+        if (this.generateCrifText === 'Verify CRIF Score of') {
+          this.showCrifSection = !this.showCrifSection;
+          this.showCrifSectionTemp=false;
+        }
+      }, projectConstants.TIMEOUT_DELAY);
+    }
+    
   }
   getCrifInquiryVerification(kycInfoList) {
     const _this = this;
@@ -1067,6 +1089,7 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
     dialogRef.afterClosed().subscribe((response: any) => {
+      console.log('response',response)
       if (response) {
         let leadType: string = '';
         if (this.leadInfo && this.leadInfo.status && this.leadInfo.status.name === 'KYC') {
@@ -1074,11 +1097,14 @@ export class ViewLeadQnrComponent implements OnInit {
         } else {
           leadType = 'lead';
         }
-        this.crmService.rejectedStatusLeadkyc(this.leadInfo.uid, leadType, response).subscribe((response) => {
-          this.router.navigate(['provider', 'crm']);
-        }, (error) => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        })
+        if (response && response.note !== '') {
+          this.crmService.rejectedStatusLeadkyc(this.leadInfo.uid, leadType, response).subscribe((response) => {
+            this.router.navigate(['provider', 'crm']);
+          }, (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          })
+        }
+
       }
     })
   }

@@ -638,6 +638,9 @@ textarea {
   .allBtns {
     justify-content: space-between !important;
   }
+  .crifscoresmallDeviceWidth{
+    width: 100% !important;
+  }
 
 }
 
@@ -737,7 +740,7 @@ textarea::placeholder {
 
 .bggrey {
   background-color: #f8f8f8 !important;
-  padding: 15px !important;
+  padding: 10px !important;
   border-radius: 10px !important;
 }
 
@@ -812,4 +815,11 @@ textarea::placeholder {
   opacity: 5 !important;
   height: 100vh !important;
   visibility: visible !important;
+}
+.crifScoreFlex{
+  display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
 }

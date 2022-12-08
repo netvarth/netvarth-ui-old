@@ -104,21 +104,23 @@
         </div>
       </div>
       <hr />
-      <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Credit Score Generated')">
-        <div *ngFor="let item of tempCrifDetails;let i=index">
+      <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Credit Score Generated')" class="crifScoreFlex">
+        <div *ngFor="let item of tempCrifDetails;let i=index" class="crifscoresmallDeviceWidth" >
           <!---crif btn start-->
           <div class=" my-2">
             <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
                 border: 1px solid #D7FFE9 !important;
                 color: #fff;
-                width: -webkit-fill-available;" (click)="showCrifscoreSection()">
+                width: -webkit-fill-available;" (click)="showCrifscoreSection(i)">
               {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
               <span *ngIf="i===1">Co-Applicant </span>
               <span *ngIf="i>1">Co-Applicant {{i}}</span>
             </button>
           </div>
           <!----crif btn end-->
-          <div *ngIf="showCrifSection">
+          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="showCrifSectionTemp">
+          </app-common-innerloading-spinner>
+          <div *ngIf="showCrifSection" class="text-center">
             <span class="group-head">CRIF Score of
               <span *ngIf="i===0">Applicant</span>
               <span *ngIf="i===1">Co-Applicant </span>
@@ -126,8 +128,8 @@
             </span><br>
             <div class="bggrey my-2">
               <div style="display: flex;gap: 5px">
-                <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;
-          flex-direction: row-reverse; justify-content: left;">
+                <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding" style="display: flex;
+          flex-direction: row-reverse; justify-content: left;align-items: center;">
                   <div class="leadTitle">
                   </div>
                   <div class="fieldPadding">
@@ -149,6 +151,12 @@
             </div>
           </div>
         </div>
+      </div>
+      <div *ngIf="leadInfo.status.name==='Sales Verified'">
+        <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
+          <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+            (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"  [questionAnswers]="questionAnswers"></app-questionnaire>
+        </ng-container>
       </div>
       <div *ngIf="showQuestionnaire && questionaire" class="quest">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"

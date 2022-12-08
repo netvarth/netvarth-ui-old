@@ -195,7 +195,10 @@
 
 <section *ngIf="data.requestType==='createUpdateNotes'" style="padding: 20px;">
     <div class="headerLeadNote" style="border-bottom:0px !important">
-        <div class="headerText">{{data.header | capitalizeFirst}}</div>
+    <div class="d-flex">
+        <div class="headerText" *ngIf="data.header">{{data.header | capitalizeFirst}}</div>
+        <div class="astericColor" *ngIf="data.header">*</div>
+    </div>
         <div style=" cursor: pointer;" mat-dialog-close class="modal_close" tabindex="-1">
             <mat-icon>clear</mat-icon>
         </div>

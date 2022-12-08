@@ -307,9 +307,11 @@
                             *ngIf="task && task.assignee">{{task.assignee.name}}</span></td>
                         <td data-title="Due Date" class="td6" *ngIf="task && task.dueDate">{{task.dueDate | date:newDateFormat}}
                         </td>
-                        <td data-title="Status" class="td3" [ngStyle]="{'color': getColor(task.status.name)}"
+                        <td data-title="Status" class="td3"
                           *ngIf="task && task.status && task.status.name">
-                          {{task.status.name}}</td>
+                          <div [ngStyle]="{'color': getColor(task.status.name)}">
+                            {{task.status.name}}
+                          </div></td>
                         <td data-title="Due Date" class="td6" *ngIf="!task.dueDate">--</td>
                       </tr>
                     </ng-container>
