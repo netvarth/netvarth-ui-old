@@ -809,13 +809,13 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName (keyup)="doSearch()"
+                  <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName (keyup)="doSearch()" (input)="doSearch()"
                     maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter First Name">
                 </li>
               </div>
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName (keyup)="doSearch()"
+                  <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName (keyup)="doSearch()" (input)="doSearch()"
                     maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Last Name">
                 </li>
               </div>
@@ -841,7 +841,7 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="pincode" [(ngModel)]="filter.pinCode" #pincode (keyup)="doSearch()"
+                  <input type="text" id="pincode" [(ngModel)]="filter.pinCode" #pincode (input)="doSearch()" (keyup)="doSearch()"
                     maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Pincode">
                 </li>
               </div>
@@ -867,13 +867,13 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="city" [(ngModel)]="filter.city" #city (keyup)="doSearch()" maxlength="20"
+                  <input type="text" id="city" [(ngModel)]="filter.city" #city (keyup)="doSearch()" (input)="doSearch()" maxlength="20"
                     class="filterTextbox filter-textbox" placeholder="Enter city">
                 </li>
               </div>
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="state" [(ngModel)]="filter.state" #state (keyup)="doSearch()" maxlength="20"
+                  <input type="text" id="state" [(ngModel)]="filter.state" #state (keyup)="doSearch()" (input)="doSearch()" maxlength="20"
                     class="filterTextbox filter-textbox" placeholder="Enter state">
                 </li>
               </div>
@@ -939,7 +939,7 @@
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
                   <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo" #primaryMobileNo
-                    (keyup)="doSearch()" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                    (keyup)="doSearch()" (input)="doSearch()" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
                 </li>
               </div>
             </div>
@@ -964,7 +964,7 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="employeeId" [(ngModel)]="filter.employeeId" #employeeId (keyup)="doSearch()"
+                  <input type="text" id="employeeId" [(ngModel)]="filter.employeeId" #employeeId (keyup)="doSearch()" (input)="doSearch()"
                     class="filterTextbox filter-textbox" placeholder="Enter Employee ID">
                 </li>
               </div>
@@ -990,7 +990,7 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="email" [(ngModel)]="filter.email" #email (keyup)="doSearch()"
+                  <input type="text" id="email" [(ngModel)]="filter.email" #email (keyup)="doSearch()" (input)="doSearch()"
                     class="filterTextbox filter-textbox" placeholder="Enter Email">
                 </li>
               </div>
