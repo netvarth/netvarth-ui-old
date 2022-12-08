@@ -977,7 +977,7 @@
                       <div class="form-title">Number of EMI's Paid Monthly</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #emicount [value]="emicount" type="text"
+                      <input (keyup)="resetErrors()" #emicount type="text"
                         placeholder="Enter Number of EMI Paid Monthly" class="form-control" autocomplete="off"
                         formControlName="emicount" />
                     </div>
@@ -1007,11 +1007,48 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Select Category</div>
+                      <div class="form-title">Select Loan Category</div>
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" #category formControlName="category">
+                        <mat-option [value]="category.id" *ngFor="let category of loanCategories">
+                          <div *ngIf="category && category.name">{{category.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Product Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #productcategory formControlName="productcategory"
+                        (selectionChange)="changeProductCategory($event)">
                         <mat-option [value]="category.id" *ngFor="let category of loanProductCategories">
+                          <div *ngIf="category && category.name">{{category.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="loanProductSubCategories && loanProductSubCategories.length>0">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Product Sub-Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #productsubcategory
+                        formControlName="productsubcategory" (selectionChange)="changeProductSubCategory($event)">
+                        <mat-option [value]="category.id" *ngFor="let category of loanProductSubCategories">
                           <div *ngIf="category && category.name">{{category.name}}</div>
                         </mat-option>
                       </mat-select>
@@ -1037,7 +1074,7 @@
                 </div>
               </div> -->
 
-              <div>
+              <div *ngIf="productCategoryId && productSubCategoryId">
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">

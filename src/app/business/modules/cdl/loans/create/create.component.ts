@@ -139,6 +139,9 @@ export class CreateComponent implements OnInit {
   mafilEmployee: any = false;
   movableAssets: boolean = false;
   loanProductCategories: any;
+  loanProductSubCategories: any;
+  productCategoryId: any;
+  productSubCategoryId: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -197,6 +200,15 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.category && this.loanData.category.id) {
               this.createLoan.controls.category.setValue(this.loanData.category.id);
             }
+            if (this.loanData && this.loanData.productCategoryId) {
+              this.createLoan.controls.productcategory.setValue(this.loanData.productCategoryId);
+              this.getLoanProductSubCategories(this.loanData.productCategoryId)
+              this.productCategoryId = this.loanData.productCategoryId;
+            }
+            if (this.loanData && this.loanData.productSubCategoryId) {
+              this.createLoan.controls.productsubcategory.setValue(this.loanData.productSubCategoryId);
+              this.productSubCategoryId = this.loanData.productSubCategoryId;
+            }
             if (this.loanData && this.loanData.loanProduct && this.loanData.loanProduct.id) {
               this.createLoan.controls.loanproduct.setValue(this.loanData.loanProduct.id);
             }
@@ -212,12 +224,13 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.remarks) {
               this.createLoan.controls.remarks.setValue(this.loanData.remarks);
             }
-            if (this.loanData && this.loanData.employee) {
+            if (this.loanData && this.loanData.employee == false || this.loanData.employee == true) {
               this.createLoan.controls.employee.setValue(this.loanData.employee);
             }
             if (this.loanData && this.loanData.employeeCode) {
               this.createLoan.controls.employeeCode.setValue(this.loanData.employeeCode);
             }
+
             if (this.loanData && this.loanData.emiPaidAmountMonthly) {
               this.createLoan.controls.emicount.setValue(this.loanData.emiPaidAmountMonthly);
             }
@@ -251,6 +264,13 @@ export class CreateComponent implements OnInit {
 
             if (this.loanData && this.loanData.partner && this.loanData.partner.id) {
               this.createLoan.controls.dealer.setValue(this.loanData.partner.id);
+            }
+
+            if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
+              this.loanData.loanProducts.map((data) => {
+                this.SelectedloanProducts.push({ "id": data.id, "categoryId": data.categoryId, "typeId": data.typeId })
+              });
+              console.log("this.SelectedloanProducts", this.SelectedloanProducts);
             }
 
             // if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
@@ -413,7 +433,9 @@ export class CreateComponent implements OnInit {
       permanentRelationType: [null],
       permanentRelationName: [null],
       currentRelationType: [null],
-      currentRelationName: [null]
+      currentRelationName: [null],
+      productcategory: [null],
+      productsubcategory: [null]
     });
   }
 
@@ -432,12 +454,12 @@ export class CreateComponent implements OnInit {
     console.log("user", this.user);
     this.getLoanCategories();
     this.getLoanTypes();
-    this.getLoanProducts();
     this.getLoanStatuses();
     // this.getLoanSchemes();
     this.getPartners();
     this.getMafilScoreFields();
     this.getLoanProductCategories();
+    // this.getLoanProductSubCategories();
     this.getAddressRelations();
     if (this.from && this.from == 'create') {
       this.customerDetailsPanel = false;
@@ -476,6 +498,13 @@ export class CreateComponent implements OnInit {
     })
   }
 
+
+  getLoanProductSubCategories(id) {
+    this.cdlService.getLoanProductSubCategoryList(id).subscribe((data) => {
+      this.loanProductSubCategories = data;
+    })
+  }
+
   getLoanSchemes() {
     this.cdlService.getLoanSchemes().subscribe((data) => {
       this.loanSchemes = data;
@@ -507,8 +536,8 @@ export class CreateComponent implements OnInit {
   }
 
 
-  getLoanProducts() {
-    this.cdlService.getLoanProducts().subscribe((data) => {
+  getLoanProducts(categoryId, subCategoryId) {
+    this.cdlService.getLoanProducts(categoryId, subCategoryId).subscribe((data) => {
       this.loanProducts = data;
       console.log("this.loanProducts", this.loanProducts)
     })
@@ -665,6 +694,8 @@ export class CreateComponent implements OnInit {
       "type": { "id": this.createLoan.controls.loantype.value },
       "loanProducts": this.loanProductsSelected,
       "category": { "id": this.createLoan.controls.category.value },
+      "productCategoryId": this.createLoan.controls.productcategory.value,
+      "productSubCategoryId": this.createLoan.controls.productsubcategory.value,
       "location": { "id": this.user.bussLocs[0] },
       "partner": { "id": this.createLoan.controls.dealer.value },
       "locationArea": this.createLoan.controls.permanentcity.value,
@@ -1115,6 +1146,18 @@ export class CreateComponent implements OnInit {
 
 
 
+  changeProductCategory(event) {
+    this.productCategoryId = event.value;
+    this.getLoanProductSubCategories(event.value)
+  }
+
+  changeProductSubCategory(event) {
+    this.productSubCategoryId = event.value;
+    this.getLoanProducts(this.productCategoryId, this.productSubCategoryId)
+  }
+
+
+
   refreshAadharVerify() {
     this.cdlService.refreshAadharVerify(this.loanApplicationKycId).subscribe((data: any) => {
       if (data) {
@@ -1275,6 +1318,8 @@ export class CreateComponent implements OnInit {
       "type": {
         "id": this.createLoan.controls.loantype.value
       },
+      "productCategoryId": this.createLoan.controls.productcategory.value,
+      "productSubCategoryId": this.createLoan.controls.productsubcategory.value,
       // "loanScheme": {
       //   "id": this.schemeSelected.id
       // },

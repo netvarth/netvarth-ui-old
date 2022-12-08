@@ -28,6 +28,12 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+
+  getLoanProductSubCategoryList(id) {
+    const url = 'provider/loanproduct/category/' + id + '/subcategory';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   gstVerify(id, data) {
     const url = 'provider/partner/validate/gst/' + id;
     return this.servicemeta.httpPut(url, data);
@@ -58,6 +64,11 @@ export class CdlService {
 
   getLoansByFilter(filter = {}) {
     const url = 'provider/loanapplication';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  getBranchesByFilter(filter = {}) {
+    const url = 'provider/branchmaster';
     return this.servicemeta.httpGet(url, null, filter);
   }
 
@@ -149,8 +160,8 @@ export class CdlService {
   }
 
 
-  getLoanProducts() {
-    const url = 'provider/loan/products';
+  getLoanProducts(categoryId, subCategoryId) {
+    const url = 'provider/loanproduct?category-eq=' + categoryId + '&subCategory-eq=' + subCategoryId;
     return this.servicemeta.httpGet(url, null);
   }
 

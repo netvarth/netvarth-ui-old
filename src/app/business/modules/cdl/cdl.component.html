@@ -337,15 +337,15 @@
           [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
           <ng-template pTemplate="caption">
             <div class="container-fluid no-padding-small">
-              <div class="row">
+              <div class="row"
+                *ngIf="user && user.roles && user.roles[0] && user.roles[0].roleId && (user.roles[0].roleId==1 || user.roles[0].roleId==2)">
                 <div class="col-md-4 no-padding-small">
-                  
+
                 </div>
                 <div class="col-md-4"></div>
                 <div class="col-md-4 text-right no-padding-small">
-                  <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
-                    (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
-                    dataKey="name">
+                  <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="branches"
+                    (onChange)="branchChange($event)" [(ngModel)]="branchSelected" optionLabel="branchName">
                   </p-dropdown>
                 </div>
               </div>
@@ -360,7 +360,8 @@
                 <div class="col-md-4"></div>
                 <div class="col-md-4 text-right no-padding-small">
                   <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
-                    (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName" dataKey="name">
+                    (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
+                    dataKey="name">
                   </p-dropdown>
                 </div>
               </div>

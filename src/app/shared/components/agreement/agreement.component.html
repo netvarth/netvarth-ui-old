@@ -12,7 +12,11 @@
       <td colspan="2">
         <div class="d-flex justify-content-between m-1">
           <div class="text-normal">
-            <b>Branch Code & Name :</b>
+            <b>Branch Code & Name : </b>
+            <span
+              *ngIf="loanData && loanData.branch && loanData.branch.branchCode">{{loanData.branch.branchCode}}</span>
+            <span *ngIf="loanData && loanData.branch && loanData.branch.branchName"> &
+              {{loanData.branch.branchName}}</span>
           </div>
           <div class="text-normal">
             <b>Sanctioned Date :</b> {{currentDate | date:'yyyy-MM-dd'}}
@@ -197,7 +201,36 @@
     <tr class="text-left">
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <b>Purpose of Loan</b>
+          <b>Loan Category</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.category && loanData.category.name">
+            {{loanData.category.name}}
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <!-- <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Product Category</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.category && loanData.category.name">
+            {{loanData.category.name}}
+          </span>
+        </div>
+      </td>
+    </tr> -->
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Loan Products</b>
         </div>
       </td>
       <td style="width:50%">
@@ -230,8 +263,9 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            {{loanData.customer.email}}
+          <span
+            *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.minDuration && loanData.loanScheme.maxDuration">
+            {{loanData.loanScheme.minDuration}} - {{loanData.loanScheme.maxDuration}} months
           </span>
         </div>
       </td>
@@ -245,8 +279,8 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            {{loanData.customer.email}}
+          <span *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
+            {{loanData.loanScheme.schemeRate}} %
           </span>
         </div>
       </td>
@@ -305,9 +339,9 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
+          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
             Daily
-          </span>
+          </span> -->
         </div>
       </td>
     </tr>
@@ -320,8 +354,8 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            Daily
+          <span *ngIf="loanData && loanData.noOfAdvanceEmi">
+            {{loanData.noOfAdvanceEmi}}
           </span>
         </div>
       </td>
@@ -335,9 +369,9 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
+          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
             Daily
-          </span>
+          </span> -->
         </div>
       </td>
     </tr>
@@ -350,9 +384,9 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
+          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
             Daily
-          </span>
+          </span> -->
         </div>
       </td>
     </tr>
@@ -365,9 +399,9 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
+          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
             0
-          </span>
+          </span> -->
         </div>
       </td>
     </tr>
@@ -380,9 +414,9 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
+          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
             0
-          </span>
+          </span> -->
         </div>
       </td>
     </tr>
@@ -488,8 +522,7 @@
             various
             credit
             bureaus and other government authorities from time to time.<br>
-            18.<span
-              *ngIf="declaration && declaration[0] && declaration[0].content">{{declaration[0].content}}</span><br>
+            18.<span *ngIf="declaration">{{declaration}}</span><br>
           </div>
           <div class="d-flex justify-content-between">
             <div class="mt-5 mx-lg-5 mx-md-5">

@@ -59,6 +59,7 @@ export class AgreementComponent implements OnInit {
       if (params && params.account) {
         this.accountId = params.account;
       }
+      this.declaration = "मैं / हम इस लोन के लिए लागू नियमों और शर्तों को समझने की पुष्टि करते हैं और बिनाशर्त नियमों और शर्तों को स्वीकार करते हैं और सहमत हैं कि इन नियमों और शर्तों को MAFIL द्वारा किसी भी समय मुझे / हमें सूचित करके बदला जा सकता है और मैं / हम संशोधित नियमों और शर्तों से बंधे होंगे."
     })
 
     this.agreementService.getLoanFromOutside(this.loanId, this.accountId).subscribe((data: any) => {
@@ -74,17 +75,16 @@ export class AgreementComponent implements OnInit {
       }
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].permanentState) {
         this.permanentState = data.loanApplicationKycList[0].permanentState
-        this.declaration = this.stateWiseDeclaration.filter((states) => {
-          if (states.state == this.permanentState) {
-            return states
-          }
-          else {
-            return {
-              state: 'Other',
-              content: "मैं / हम इस लोन के लिए लागू नियमों और शर्तों को समझने की पुष्टि करते हैं और बिनाशर्त नियमों और शर्तों को स्वीकार करते हैं और सहमत हैं कि इन नियमों और शर्तों को MAFIL द्वारा किसी भी समय मुझे / हमें सूचित करके बदला जा सकता है और मैं / हम संशोधित नियमों और शर्तों से बंधे होंगे."
-            }
-          }
-        })
+        const stateWiseFilter = this.stateWiseDeclaration.filter((states) => states.state == this.permanentState);
+        // let stateWiseFilter = this.stateWiseDeclaration.filter((states) => {
+        //   if (states.state == this.permanentState) {
+        //     this.declaration = states
+        //   }
+        // })
+        console.log(stateWiseFilter)
+        if (stateWiseFilter && stateWiseFilter[0] && stateWiseFilter[0].content) {
+          this.declaration = stateWiseFilter[0].content;
+        }
       }
     })
   }

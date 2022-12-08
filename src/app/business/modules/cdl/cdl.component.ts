@@ -38,6 +38,7 @@ export class CdlComponent implements OnInit {
   approvedDealersCount: any = 0;
   requestedDealersCount: any = 0;
   rejectedDealersCount: any = 0;
+  branchSelected: any;
   customOptions = {
     loop: true,
     margin: 10,
@@ -103,6 +104,7 @@ export class CdlComponent implements OnInit {
   capabilities: any;
   dashboardStats: any;
   users: any;
+  branches: any;
 
 
   constructor(
@@ -132,6 +134,9 @@ export class CdlComponent implements OnInit {
     this.getBarChartData();
     this.getUsers();
     this.getDashboardStats();
+    if (this.user && this.user.roles && this.user.roles[0] && this.user.roles[0].roleId && this.user.roles[0].roleId == 1 || this.user.roles[0].roleId == 2) {
+      this.getBranchesByFilter();
+    }
   }
 
 
@@ -328,19 +333,44 @@ export class CdlComponent implements OnInit {
 
 
   statusChange(event) {
+    let api_filter = {}
     if (event.value.name == 'All') {
-      this.getLoans();
+      api_filter['branch-eq'] = this.branchSelected.id;
+      this.getLoansByFilter(api_filter);
     }
     else {
-      let api_filter = {}
       if (event.value.name == 'Rejected') {
         api_filter['applicationStatus-eq'] = event.value.name;
       }
       else {
         api_filter['spInternalStatus-eq'] = event.value.name;
       }
+      if (this.branchSelected && this.branchSelected.id) {
+        api_filter['branch-eq'] = this.branchSelected.id;
+      }
       this.getLoansByFilter(api_filter);
     }
+  }
+
+
+  branchChange(event) {
+    console.log(this.statusDisplayName)
+    let api_filter = {}
+    api_filter['branch-eq'] = this.branchSelected.id;
+    if (this.statusDisplayName && this.statusDisplayName.name) {
+      if (this.statusDisplayName.name == 'All') {
+        this.getLoansByFilter(api_filter);
+      }
+      else {
+        if (this.statusDisplayName.name == 'Rejected') {
+          api_filter['applicationStatus-eq'] = this.statusDisplayName.name;
+        }
+        else {
+          api_filter['spInternalStatus-eq'] = this.statusDisplayName.name;
+        }
+      }
+    }
+    this.getLoansByFilter(api_filter);
   }
 
   getLoans() {
@@ -351,6 +381,15 @@ export class CdlComponent implements OnInit {
       this.allLoansCount = data.length
       this.loans = data;
       this.getBarChartData();
+    });
+  }
+
+  getBranchesByFilter(api_filter = {}) {
+    this.cdlservice.getBranchesByFilter(api_filter).subscribe((data: any) => {
+      this.branches = data
+      if (this.branches && this.branches.length > 0) {
+        this.branchSelected = this.branches[0]
+      }
     });
   }
 

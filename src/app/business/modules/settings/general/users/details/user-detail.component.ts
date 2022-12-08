@@ -60,6 +60,7 @@ export class BranchUserDetailComponent implements OnInit {
   email1error = null;
   subdomainerror = null;
   subDomains: any = [];
+  selectedRole: any;
   id;
   filter = {
     firstName: "",
@@ -463,6 +464,7 @@ export class BranchUserDetailComponent implements OnInit {
   }
 
   onRoleSelect(event) {
+    console.log(this.selectedRole)
     this.userRolesSelected = [
       {
         "roleId": event,
