@@ -198,7 +198,7 @@ export class AppointmentActionsComponent implements OnInit {
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.selectedDay = seldate;
    //this.sel_checkindate = seldate
-    console.log("Selected Date :",seldate,this.sel_checkindate);
+    console.log("Selected Date, date :",seldate,this.sel_checkindate);
     if(this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay){
       this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
     }   //this.getSlots(this.sel_schedule_id);
@@ -1192,11 +1192,15 @@ export class AppointmentActionsComponent implements OnInit {
         console.log("schedules :",this.schedules);
         this.loading = false;
         for (const scheduleSlots of this.schedules) {
+          
           this.availableSlots = scheduleSlots.availableSlots;
           console.log("availableSlots",this.availableSlots)
           console.log("sel_checkindate",this.sel_checkindate)
           console.log("scheduleSlots.date",scheduleSlots.date)
+          console.log("selected Datesss :",moment(this.selectedDay).format("YYYY-MM-DD"));
 
+          if(this.sel_checkindate >= moment(this.selectedDay).format("YYYY-MM-DD")){
+        
           if((scheduleSlots.date === this.sel_checkindate) && this.appt.appointmentMode === 'ONLINE_APPOINTMENT' && (!this.apptlist_status)){
            // this.freeSlots = [];
             this.availableSlots = [];
@@ -1215,6 +1219,11 @@ export class AppointmentActionsComponent implements OnInit {
            
           }
         }
+      }
+      else{
+        this.availableSlots = [];
+        console.log("Else availableSlots",this.availableSlots)
+      }
         this.apptTime = this.freeSlots[0];
       }
     
