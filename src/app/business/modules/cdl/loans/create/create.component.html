@@ -167,7 +167,7 @@
                           Upload File
                         </label>
                         <input #photoAttach type='file' formControlName="customerphoto"
-                          (change)="filesSelected($event,'photo')" />
+                          (change)="filesSelected($event,'photo')" accept=".png,.jpg,.jpeg" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
@@ -256,7 +256,8 @@
                         <label for='input-file' (click)="aadharAttach.click()">
                           Upload File
                         </label>
-                        <input #aadharAttach type='file' (change)="filesSelected($event, 'aadhar')" />
+                        <input #aadharAttach type='file' (change)="filesSelected($event, 'aadhar')"
+                          accept=".pdf,.png,.jpg,.jpeg" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['aadhar'] && selectedFiles['aadhar'].files && selectedFiles['aadhar'].files.length > 0">
@@ -267,8 +268,9 @@
                                 <img [src]="getImage(selectedFiles['aadhar'].base64[i], file)"
                                   *ngIf="selectedFiles['aadhar'].base64[i]" width="100px" height="100px">
                                 <a [href]="file.s3path" target="_blank">
-                                  <img [src]="file.s3path" *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path"
-                                    width="100px" height="100px">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
                                 </a>
                               </div>
                               <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)">
@@ -321,7 +323,7 @@
                           Upload File
                         </label>
                         <input #panAttach type='file' formControlName="panattachment"
-                          (change)="filesSelected($event, 'pan')" />
+                          (change)="filesSelected($event, 'pan')" accept=".pdf,.png,.jpg,.jpeg" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['pan'] && selectedFiles['pan'].files && selectedFiles['pan'].files.length > 0">
@@ -332,8 +334,8 @@
                                 <img [src]="getImage(selectedFiles['pan'].base64[i], file)"
                                   *ngIf="selectedFiles['pan'].base64[i]" width="100px" height="100px">
                                 <a [href]="file.s3path" target="_blank">
-                                  <img [src]="file.s3path" *ngIf="!selectedFiles['pan'].base64[i] && file.s3path"
-                                    width="100px" height="100px">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['pan'].base64[i] && file.s3path" width="100px" height="100px">
                                 </a>
                               </div>
                               <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)">
@@ -1198,6 +1200,38 @@
                 </div>
               </div>
 
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Guarantor Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" #guarantorName placeholder="Enter Guarantor Name"
+                        class="form-control" autocomplete="off" formControlName="guarantorName" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Guarantor Relation</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" placeholder="" #guarantorType
+                        formControlName="guarantorType">
+                        <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                          <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- <div>
                 <div class="bggrey my-2">
                   <div>
@@ -1310,7 +1344,7 @@
                           Upload File
                         </label>
                         <input #bankAttach type='file' formControlName="bankstatements"
-                          (change)="filesSelected($event,'bank')" />
+                          (change)="filesSelected($event,'bank')" accept=".pdf,.png,.jpg,.jpeg" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">
@@ -1321,8 +1355,9 @@
                                 <img [src]="getImage(selectedFiles['bank'].base64[i], file)"
                                   *ngIf="selectedFiles['bank'].base64[i]" width="100px" height="100px">
                                 <a [href]="file.s3path" target="_blank">
-                                  <img [src]="file.s3path" *ngIf="!selectedFiles['bank'].base64[i] && file.s3path"
-                                    width="100px" height="100px">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['bank'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
                                 </a>
                               </div>
                               <div class="gal_action" (click)="deleteTempImage(i, 'bank',file)">

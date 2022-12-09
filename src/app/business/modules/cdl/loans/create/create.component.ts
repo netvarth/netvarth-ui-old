@@ -249,6 +249,19 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineePhone) {
               this.createLoan.controls.nomineePhone.setValue(this.loanData.loanApplicationKycList[0].nomineePhone);
             }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineeDob) {
+              this.createLoan.controls.nomineeDob.setValue(this.loanData.loanApplicationKycList[0].nomineeDob);
+            }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineePhone) {
+              this.createLoan.controls.nomineePhone.setValue(this.loanData.loanApplicationKycList[0].nomineePhone);
+            }
+
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].guarantorType) {
+              this.createLoan.controls.guarantorType.setValue(this.loanData.loanApplicationKycList[0].guarantorType);
+            }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].guarantorName) {
+              this.createLoan.controls.guarantorName.setValue(this.loanData.loanApplicationKycList[0].guarantorName);
+            }
             // if (this.loanData && this.loanData.loanScheme && this.loanData.loanScheme.schemeName) {
             //   this.createLoan.controls.scheme.setValue(this.loanData.loanScheme.schemeName);
             //   this.schemeSelected = this.loanData.loanScheme;
@@ -332,7 +345,7 @@ export class CreateComponent implements OnInit {
               this.emailverification = true;
             }
 
-            if (this.loanData && this.loanData.customerEmailVerified && this.loanData.customerMobileVerified && this.loanData.customer && this.loanData.consumerPhoto && this.loanData.consumerPhoto.length > 0) {
+            if (this.loanData && this.loanData.customerMobileVerified && this.loanData.customer && this.loanData.consumerPhoto && this.loanData.consumerPhoto.length > 0) {
               this.customerDetailsVerified = true;
             }
 
@@ -435,7 +448,9 @@ export class CreateComponent implements OnInit {
       currentRelationType: [null],
       currentRelationName: [null],
       productcategory: [null],
-      productsubcategory: [null]
+      productsubcategory: [null],
+      guarantorType: [null],
+      guarantorName: [null]
     });
   }
 
@@ -465,7 +480,12 @@ export class CreateComponent implements OnInit {
       this.customerDetailsPanel = false;
       this.kycDetailsPanel = true;
     }
+
+    if (this.productCategoryId && this.productSubCategoryId) {
+      this.getLoanProducts(this.productCategoryId, this.productSubCategoryId)
+    }
   }
+
 
 
   subtractYears(date, years) {
@@ -653,6 +673,25 @@ export class CreateComponent implements OnInit {
     }
   }
 
+
+  getImagefromUrl(url, file) {
+    if (file.fileType == 'pdf') {
+      return './assets/images/pdf.png';
+    } else if (file.fileType == 'application/vnd.ms-excel' || file.fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+      return './assets/images/xls.png';
+    } else if (file.fileType == 'audio/mp3' || file.fileType == 'audio/mpeg' || file.fileType == 'audio/ogg') {
+      return './assets/images/audio.png';
+    } else if (file.fileType == 'video/mp4' || file.fileType == 'video/mpeg') {
+      return './assets/images/video.png';
+    } else if (file.fileType == 'application/msword' || file.fileType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.fileType.includes('docx') || file.fileType.includes('doc')) {
+      return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
+    } else if (file.fileType.includes('txt')) {
+      return './assets/images/ImgeFileIcon/docTxt.png';
+    } else {
+      return url;
+    }
+  }
+
   getImage(url, file) {
     return this.fileService.getImage(url, file);
   }
@@ -741,7 +780,9 @@ export class CreateComponent implements OnInit {
           "permanentRelationType": this.createLoan.controls.permanentRelationType.value,
           "permanentRelationName": this.createLoan.controls.permanentRelationName.value,
           "currentRelationType": this.createLoan.controls.currentRelationType.value,
-          "currentRelationName": this.createLoan.controls.currentRelationName.value
+          "currentRelationName": this.createLoan.controls.currentRelationName.value,
+          "guarantorName": this.createLoan.controls.guarantorName.value,
+          "guarantorType": this.createLoan.controls.guarantorType.value
         }
       ]
     }
@@ -1352,7 +1393,8 @@ export class CreateComponent implements OnInit {
           "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,
           "vehicleNo": this.createLoan.controls.vehicleNo.value,
           "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
-
+          "guarantorName": this.createLoan.controls.guarantorName.value,
+          "guarantorType": this.createLoan.controls.guarantorType.value
         }
       ]
     }

@@ -252,8 +252,13 @@
                     <span
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments 
                         && loanData.loanApplicationKycList[0].aadhaarAttachments[0] && loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path">
-                        <img [src]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path"
-                            class="img-fluid pb-0" width="100%">
+                        <a [href]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path" target="_blank"
+                            class="pointer-cursor">
+                            <img width="100"
+                                [src]="getImagefromUrl(loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path, loanData.loanApplicationKycList[0].aadhaarAttachments[0])"
+                                [class.img-fluid]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].fileType!='pdf'"
+                                class="pb-0">
+                        </a>
                     </span>
                 </div>
             </td>
@@ -286,8 +291,13 @@
                     <span
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments 
                                 && loanData.loanApplicationKycList[0].panAttachments[0] && loanData.loanApplicationKycList[0].panAttachments[0].s3path">
-                        <img [src]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" class="img-fluid pb-0"
-                            width="100%">
+                        <a [href]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" target="_blank"
+                            class="pointer-cursor">
+                            <img width="100"
+                                [src]="getImagefromUrl(loanData.loanApplicationKycList[0].panAttachments[0].s3path, loanData.loanApplicationKycList[0].panAttachments[0])"
+                                [class.img-fluid]="loanData.loanApplicationKycList[0].panAttachments[0].fileType!='pdf'"
+                                class="pb-0">
+                        </a>
                     </span>
                 </div>
             </td>

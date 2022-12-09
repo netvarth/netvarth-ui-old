@@ -117,7 +117,8 @@
                   <label for='photoAttach' (click)="photoAttach.click()">
                     Upload File
                   </label>
-                  <input #photoAttach type='file' formControlName="photo" (change)="filesSelected($event,'photo')" />
+                  <input #photoAttach type='file' formControlName="photo" (change)="filesSelected($event,'photo')"
+                    accept=".png,.jpg,.jpeg" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -183,7 +184,8 @@
                 </div>
               </div>
               <div class="img-section clearfix"
-                *ngIf="selectedFiles['aadhar'] && selectedFiles['aadhar'].files && selectedFiles['aadhar'].files.length > 0">
+                *ngIf="selectedFiles['aadhar'] && selectedFiles['aadhar'].files && selectedFiles['aadhar'].files.length > 0"
+                accept=".pdf,.png,.jpg,.jpeg">
                 <ul class="galul">
                   <li *ngFor="let file of selectedFiles['aadhar'].files;let i = index ">
                     <div class="galimg_outer">
@@ -191,8 +193,8 @@
                         <img [src]="getImage(selectedFiles['aadhar'].base64[i], file)"
                           *ngIf="selectedFiles['aadhar'].base64[i]" width="100px" height="100px">
                         <a [href]="file.s3path" target="_blank">
-                          <img [src]="file.s3path" *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path"
-                            width="100px" height="100px">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
                       <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)" *ngIf="action!='update'">
@@ -234,8 +236,8 @@
                   <label (click)="panAttach.click()">
                     Upload File
                   </label>
-                  <input #panAttach type='file' formControlName="panattachment"
-                    (change)="filesSelected($event,'pan')" />
+                  <input #panAttach type='file' formControlName="panattachment" (change)="filesSelected($event,'pan')"
+                    accept=".pdf,.png,.jpg,.jpeg" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -247,8 +249,8 @@
                         <img [src]="getImage(selectedFiles['pan'].base64[i], file)"
                           *ngIf="selectedFiles['pan'].base64[i]" width="100px" height="100px">
                         <a [href]="file.s3path" target="_blank">
-                          <img [src]="file.s3path" *ngIf="!selectedFiles['pan'].base64[i] && file.s3path" width="100px"
-                            height="100px">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['pan'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
                       <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)" *ngIf="action!='update'">
@@ -274,8 +276,8 @@
                   <label for='storeAttach' (click)="storeAttach.click()">
                     Upload File
                   </label>
-                  <input #storeAttach type='file' formControlName="storephoto"
-                    (change)="filesSelected($event,'store')" />
+                  <input #storeAttach type='file' formControlName="storephoto" (change)="filesSelected($event,'store')"
+                    accept=".png,.jpg,.jpeg" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -287,8 +289,8 @@
                         <img [src]="getImage(selectedFiles['store'].base64[i], file)"
                           *ngIf="selectedFiles['store'].base64[i]" width="100px" height="100px">
                         <a [href]="file.s3path" target="_blank">
-                          <img [src]="file.s3path" *ngIf="!selectedFiles['store'].base64[i] && file.s3path"
-                            width="100px" height="100px">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['store'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
                       <div class="gal_action" (click)="deleteTempImage(i, 'store',file)" *ngIf="action!='update'">
@@ -315,7 +317,8 @@
                   <label for='chequeAttach' (click)="chequeAttach.click()">
                     Upload File
                   </label>
-                  <input #chequeAttach type='file' formControlName="cheque" (change)="filesSelected($event,'cheque')" />
+                  <input #chequeAttach type='file' formControlName="cheque" (change)="filesSelected($event,'cheque')"
+                    accept=".pdf,.png,.jpg,.jpeg" />
                 </div>
               </div>
 
@@ -328,8 +331,8 @@
                         <img [src]="getImage(selectedFiles['cheque'].base64[i], file)"
                           *ngIf="selectedFiles['cheque'].base64[i]" width="100px" height="100px">
                         <a [href]="file.s3path" target="_blank">
-                          <img [src]="file.s3path" *ngIf="!selectedFiles['cheque'].base64[i] && file.s3path"
-                            width="100px" height="100px">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['cheque'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
                       <div class="gal_action" (click)="deleteTempImage(i, 'cheque',file)" *ngIf="action!='update'">
@@ -533,7 +536,8 @@
                   <label for='gstAttach' (click)="gstAttach.click()">
                     Upload File
                   </label>
-                  <input #gstAttach type='file' formControlName="gstphoto" (change)="filesSelected($event,'gst')" />
+                  <input #gstAttach type='file' formControlName="gstphoto" (change)="filesSelected($event,'gst')"
+                    accept=".pdf,.png,.jpg,.jpeg" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -545,8 +549,8 @@
                         <img [src]="getImage(selectedFiles['gst'].base64[i], file)"
                           *ngIf="selectedFiles['gst'].base64[i]" width="100px" height="100px">
                         <a [href]="file.s3path" target="_blank">
-                          <img [src]="file.s3path" *ngIf="!selectedFiles['gst'].base64[i] && file.s3path" width="100px"
-                            height="100px">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['gst'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
                       <div class="gal_action" (click)="deleteTempImage(i, 'gst',file)" *ngIf="action!='update'">

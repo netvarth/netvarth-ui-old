@@ -65,6 +65,27 @@ export class LoanDetailsDocComponent implements OnInit {
     // WindowPrt.close();
   }
 
+
+
+  getImagefromUrl(url, file) {
+    if (file.fileType == 'pdf') {
+      return './assets/images/pdf.png';
+    } else if (file.fileType == 'application/vnd.ms-excel' || file.fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+      return './assets/images/xls.png';
+    } else if (file.fileType == 'audio/mp3' || file.fileType == 'audio/mpeg' || file.fileType == 'audio/ogg') {
+      return './assets/images/audio.png';
+    } else if (file.fileType == 'video/mp4' || file.fileType == 'video/mpeg') {
+      return './assets/images/video.png';
+    } else if (file.fileType == 'application/msword' || file.fileType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.fileType.includes('docx') || file.fileType.includes('doc')) {
+      return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
+    } else if (file.fileType.includes('txt')) {
+      return './assets/images/ImgeFileIcon/docTxt.png';
+    } else {
+      return url;
+    }
+  }
+
+
   goBack() {
     this.location.back();
   }
