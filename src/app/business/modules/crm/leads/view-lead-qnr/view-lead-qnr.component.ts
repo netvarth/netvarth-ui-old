@@ -113,6 +113,7 @@ export class ViewLeadQnrComponent implements OnInit {
   tempCrifDetails: any = [];
   kycFilesCount=0;
   counter = 0;
+  errorInfo: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -758,6 +759,9 @@ export class ViewLeadQnrComponent implements OnInit {
               this.submitQuestionnaire(this.leadInfo.uid);
               this.snackbarService.openSnackBar('Updated successfully');
             } else {
+              if(data){
+                this.errorInfo = data.map(function (a) { return a.questionField; });
+              }
               this.api_loading_UpdateKycProceed = false;
             }
             this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });
@@ -773,6 +777,9 @@ export class ViewLeadQnrComponent implements OnInit {
               this.submitQuestionnaire(this.leadInfo.uid);
               this.snackbarService.openSnackBar('Updated successfully');
             } else {
+              if(data){
+                this.errorInfo = data.map(function (a) { return a.questionField; });
+              }              
               this.api_loading_UpdateKycProceed = false;
             }
             this.sharedFunctions.sendMessage({ type: 'qnrValidateError', value: data });

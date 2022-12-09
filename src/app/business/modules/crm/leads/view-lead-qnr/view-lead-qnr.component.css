@@ -823,3 +823,12 @@ textarea::placeholder {
     align-items: center;
     margin-bottom: 15px;
 }
+.errorTxt{
+  font-size: 14px;
+  font-weight: 500;
+  color: #f24949;
+  line-height: 20px;
+}
+.fieldMissing{
+  font-size: 14px;
+}

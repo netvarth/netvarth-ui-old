@@ -282,6 +282,11 @@
       </div>
     </button>
   </div>
+  <ng-container *ngIf="errorInfo && errorInfo.length && errorInfo.length>0">
+    <div class="card">
+      <div *ngIf="errorInfo && errorInfo.length && errorInfo.length>0" class="errorTxt">Mandatory field's missing ({{errorInfo}})</div>
+    </div>
+  </ng-container>
   <div style="text-align: center;margin-top: 15px;">
     <ng-container>
       <!-- {{leadInfo.status | json}} -->
