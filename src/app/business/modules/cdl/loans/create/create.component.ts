@@ -31,6 +31,7 @@ export class CreateComponent implements OnInit {
   bankDetailsSaved = false;
   kycDetailsSaved = false;
   customerDetailsSaved = false;
+  calculatedMafilScore: any = 0;
   selectedMessage = {
     files: [],
     base64: [],
@@ -865,6 +866,11 @@ export class CreateComponent implements OnInit {
           })
       }
     }
+  }
+
+
+  scoreCalculate(score) {
+    this.calculatedMafilScore = this.calculatedMafilScore + score;
   }
 
   uploadAudioVideo(data) {

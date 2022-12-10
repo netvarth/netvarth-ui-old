@@ -270,6 +270,8 @@ export class OtpVerifyComponent implements OnInit {
             "firstName": this.customerDetails[0].firstName,
             "lastName": this.customerDetails[0].lastName,
             "phoneNo": this.phoneNumber,
+            "dob": this.customerDetails[0].dob,
+            "gender": this.customerDetails[0].gender,
             "countryCode": "+91"
           },
           "location": {
@@ -291,7 +293,7 @@ export class OtpVerifyComponent implements OnInit {
             "phoneNo": this.phoneNumber,
             "countryCode": "+91",
             "dob": this.dob,
-            "gender":this.gender
+            "gender": this.gender
           },
           "location": {
             "id": this.user.bussLocs[0]

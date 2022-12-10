@@ -217,3 +217,17 @@ th {
 .table-responsive {
     margin-bottom: 0 !important;
 }
+
+
+
+.overflow-y-scroll {
+    max-height: 60vh !important;
+    overflow-y: scroll !important;
+}
+
+@media(max-width: 600px) {
+    .overflow-y-scroll {
+        max-height: 500px !important;
+        overflow-y: scroll !important;
+    }
+}

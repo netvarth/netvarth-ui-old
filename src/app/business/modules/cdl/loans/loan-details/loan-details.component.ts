@@ -42,6 +42,7 @@ export class LoanDetailsComponent implements OnInit {
   perfiosScore: number;
   totalScore: number;
   loanStatus = projectConstantsLocal.TIMELINE_STATUS; perfiosData: any;
+  equifaxScore: any;
   ;
   paramsValue: any;
   address1: string;
@@ -55,6 +56,7 @@ export class LoanDetailsComponent implements OnInit {
   loanApplicationStatus: any;
   statusIndex: any;
   capabilities: any;
+  mafilScoreData: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -76,6 +78,7 @@ export class LoanDetailsComponent implements OnInit {
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
             this.checkMafilScore();
+            this.checkEquifaxScore();
             this.checkPerfiosScore();
             console.log("LoanData", this.loanData)
             this.loanApplicationStatus = this.loanData.spInternalStatus;
@@ -101,11 +104,30 @@ export class LoanDetailsComponent implements OnInit {
     }
     this.cdlservice.getMafilScore(data).subscribe((data: any) => {
       console.log("Mafil Score Data : ", data);
+      this.mafilScoreData = data
       if (data && data.creditScore) {
         this.mafilScore = data.creditScore;
       }
     });
   }
+
+
+  checkEquifaxScore() {
+    let data =
+    {
+      "loanApplicationUid": this.loanId,
+      "customerPhone": this.loanData.customer.phoneNo
+    }
+    this.cdlservice.getEquifaxScore(data).subscribe((data: any) => {
+      console.log("Equifax Score Data : ", data);
+      if (data && data.creditScore) {
+        this.equifaxScore = data.creditScore;
+      }
+    });
+  }
+
+
+
 
   viewReport(type, data) {
     const dialogRef = this.dialog.open(ViewReportComponent, {

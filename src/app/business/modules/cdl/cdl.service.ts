@@ -440,6 +440,12 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+
+  getEquifaxScore(data) {
+    const url = 'provider/loanapplication/equifaxreport';
+    return this.servicemeta.httpPost(url, data);
+  }
+
   getPerfiosScore() {
     const url = 'provider/loanapplication/perfiosanalysis';
     return this.servicemeta.httpGet(url);

@@ -27,6 +27,18 @@
   padding: 5px 10px !important;
 }
 
+div.sticky {
+  position: -webkit-sticky;
+  /* Safari */
+  position: sticky;
+  top: 0;
+}
+
+
+.score {
+  font-size: 22px !important;
+  font-weight: bold !important;
+}
 
 .btn-light {
   background-color: #e2e2e2 !important;

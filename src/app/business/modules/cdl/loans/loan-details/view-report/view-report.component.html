@@ -8,7 +8,7 @@
             <div>
                 <img src="../../../../assets/images/cdl/perfios_score.png" width="100">
             </div>
-            <div class="mt-3">
+            <div class="mt-3  overflow-y-scroll">
                 <div class="table-responsive">
                     <table class="table table-borderless">
                         <tbody>
@@ -87,6 +87,46 @@
                             </tr>
 
 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
+                Go to Home
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="card" *ngIf="type=='mafil' && reportData">
+    <div class="row">
+        <div class="text-center">
+            <div>
+                <img src="../../../../assets/images/cdl/mafil_score.png" width="100">
+            </div>
+            <div class="mt-3 overflow-y-scroll">
+                <div class="table-responsive">
+                    <table class="table table-borderless text-left" *ngIf="reportData.reports">
+                        <tbody>
+                            <tr style="width: 100%;">
+                                <th style="width: 33.33%;" class="details-title">
+                                    Field</th>
+                                <th style="width: 33.33%;" class="details-title text-center">
+                                    Field Value</th>
+                                <th style="width: 33.33%;" class="details-title text-center">
+                                    Score</th>
+                            </tr>
+                            <tr style="width: 100%;" *ngFor="let item of reportData.reports">
+                                <td style="width: 33.33%;" class="details-title" *ngIf="item && item.fieldName">
+                                    {{item.fieldName}}</td>
+                                <td style="width: 33.33%;" class="details-title text-center" *ngIf="item && item.fieldValue">
+                                    {{item.fieldValue}}</td>
+                                <td style="width: 33.33%;" class="details-title text-center" *ngIf="item">
+                                    {{item.creditScore}}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

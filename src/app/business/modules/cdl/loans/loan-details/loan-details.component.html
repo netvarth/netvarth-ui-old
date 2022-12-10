@@ -337,7 +337,7 @@
                 <div>
                   <div class="customerScoreLabel">MAFIL Score</div>
                   <div class="customerScoreInfoLabel" *ngIf="mafilScore">{{mafilScore}}</div>
-                  <div class="btn btn-primary">View Report</div>
+                  <div class="btn btn-primary" (click)="viewReport('mafil',mafilScoreData)">View Report</div>
                 </div>
               </div>
               <!-- <div class="text-right">
