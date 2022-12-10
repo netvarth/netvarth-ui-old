@@ -32,6 +32,7 @@ export class CreateComponent implements OnInit {
   kycDetailsSaved = false;
   customerDetailsSaved = false;
   calculatedMafilScore: any = 0;
+  customerEducationScore: any = 0;
   selectedMessage = {
     files: [],
     base64: [],

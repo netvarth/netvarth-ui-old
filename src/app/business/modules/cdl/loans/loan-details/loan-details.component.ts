@@ -42,8 +42,8 @@ export class LoanDetailsComponent implements OnInit {
   perfiosScore: number;
   totalScore: number;
   loanStatus = projectConstantsLocal.TIMELINE_STATUS; perfiosData: any;
-  equifaxScore: any;
-  ;
+  equifaxScore: any = 0;
+  equifaxScoreData: any;
   paramsValue: any;
   address1: string;
   address2: string;
@@ -119,9 +119,10 @@ export class LoanDetailsComponent implements OnInit {
       "customerPhone": this.loanData.customer.phoneNo
     }
     this.cdlservice.getEquifaxScore(data).subscribe((data: any) => {
+      this.equifaxScoreData = data;
       console.log("Equifax Score Data : ", data);
-      if (data && data.creditScore) {
-        this.equifaxScore = data.creditScore;
+      if (data && data.equifaxScore) {
+        this.equifaxScore = data.equifaxScore;
       }
     });
   }

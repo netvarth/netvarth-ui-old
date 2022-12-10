@@ -28,16 +28,18 @@
 }
 
 div.sticky {
-  position: -webkit-sticky;
-  /* Safari */
-  position: sticky;
-  top: 0;
+  position: -webkit-sticky !important;
+  position: sticky !important;
+  top: 30px !important;
 }
 
 
 .score {
   font-size: 22px !important;
   font-weight: bold !important;
+  background-color: #d1f3d9;
+  border-radius: 50%;
+  padding: 5px 10px 5px 5px !important;
 }
 
 .btn-light {

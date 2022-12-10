@@ -1,17 +1,21 @@
-<div class="card pointer-cursor d-flex">
-  <div class="sticky">
+<div class="card pointer-cursor d-flex justify-content-between">
+  <div class="d-flex align-items-center">
     <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
   </div>
 </div>
 
+<div class="clearfix"></div>
 <div class="card m-2">
+  <div class="text-right">
+    <div>
+      <span class="font-weight-bold score">&nbsp;{{calculatedMafilScore}}</span>
+    </div>
+  </div>
   <div class="col-md-7 d-flex justify-content-between pl-0">
     <div class="d-flex align-items-center">
       <span class="font-weight-bold">&nbsp;{{headerText}}</span>
     </div>
-    <div class="d-flex align-items-center">
-      <span class="score">{{calculatedMafilScore}}</span>
-    </div>
+
     <div class="d-flex">
       <div class="mr-2 my-auto" (click)="closeAll()">
         <a class="btn btn-light">
@@ -691,7 +695,8 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #customerEducation formControlName="customerEducation">
                       <mat-option [value]="education.id" *ngFor="let education of mafilScoreFields.customerEducation">
-                        <div *ngIf="education && education.name">{{education.name}}</div>
+                        <div *ngIf="education && education.name" (click)="scoreCalculate(education.score)">
+                          {{education.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -1020,7 +1025,7 @@
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" #category formControlName="category">
                         <mat-option [value]="category.id" *ngFor="let category of loanCategories">
-                          <div *ngIf="category && category.name" (click)="scoreCalculate(category.score)">
+                          <div *ngIf="category && category.name">
                             {{category.name}}</div>
                         </mat-option>
                       </mat-select>
