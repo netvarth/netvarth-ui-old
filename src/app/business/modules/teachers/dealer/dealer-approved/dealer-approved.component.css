@@ -1,0 +1,63 @@
+.fa-angle-left {
+  font-size: 20px !important;
+  font-weight: bold !important;
+}
+
+
+.form-title {
+  font-size: 12px !important;
+  color: #1E4079 !important;
+}
+
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+
+.card-title {
+  font-size: 12px !important;
+  color: rgb(186, 182, 182);
+}
+
+.card-border {
+  border: 2px solid #FED37D !important;
+  padding: 15px !important;
+}
+
+.sanctioned-title {
+  font-size: 20px !important;
+  color: #6DA80D !important;
+}
+
+
+
+.card-sub-title {
+  font-size: 16px !important;
+  color: #0073FF;
+}
+
+.card-small-font {
+  font-size: 12px !important;
+  color: #000;
+}
+
+.upload-btn {
+  background-color: #F6F6F6 !important;
+  border: 0.5px dashed #0073FF !important;
+  padding: 7px 40px !important;
+  color: #0073FF !important;
+  width: 50% !important;
+}
+
+mat-slider.mat-slider.mat-focus-indicator.mat-accent.mat-slider-has-ticks.mat-slider-horizontal.mat-slider-thumb-label-showing {
+  width: 100% !important;
+}
+
+.approved-amount {
+  font-size: 12px !important;
+  color: #1E4079 !important;
+}

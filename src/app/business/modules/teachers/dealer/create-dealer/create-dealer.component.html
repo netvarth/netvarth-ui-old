@@ -1,0 +1,635 @@
+<div class="card pointer-cursor">
+  <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+</div>
+
+
+<div class="card m-2">
+  <span class="font-weight-bold">&nbsp;{{headerText}}</span><br><br>
+  <form [formGroup]="createDealer" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-md-7">
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Name</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" formControlName="name" placeholder="Enter Dealer Name"
+                  class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Phone Number</div>
+              </div>
+              <div class="fieldPadding">
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" type="text" formControlName="phone" placeholder="Enter Phone Number"
+                    class="form-control" autocomplete="off" maxlength="10"
+                    [class.disabled]="action == 'update' && verification" />
+                  <a class="btn btn-verify" *ngIf="!verification" [class.btn-verified]="verification"
+                    (click)="verifyotp()">
+                    <span>Verify</span></a>
+
+                  <a class="btn btn-verify" *ngIf="verification" [class.btn-verified]="verification"><span><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Username</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" formControlName="username"
+                  placeholder="Enter Dealer Username" class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Email</div>
+              </div>
+              <div class="fieldPadding">
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" formControlName="email" type="email" placeholder="Enter Dealer Email"
+                    class="form-control" autocomplete="off"
+                    [class.disabled]="action == 'update' && emailverification" />
+
+                  <a class="btn btn-verify" *ngIf="!emailverification" [class.btn-verified]="emailverification"
+                    (click)="verifyemail()">
+                    <span>Verify</span></a>
+                  <a class="btn btn-verify" *ngIf="emailverification" [class.btn-verified]="emailverification"><span><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Description</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="description" type="text" placeholder="Enter Description"
+                  class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Photo</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='photoAttach' (click)="photoAttach.click()">
+                    Upload File
+                  </label>
+                  <input #photoAttach type='file' formControlName="photo" (change)="filesSelected($event,'photo')"
+                    accept=".png,.jpg,.jpeg" />
+                </div>
+              </div>
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
+                          *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
+                            width="100px" height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Aadhar Number</div>
+              </div>
+              <div class="fieldPadding">
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" formControlName="aadhar" type="text" placeholder="Enter Aadhar Number"
+                    class="form-control" autocomplete="off" maxlength="12" [class.disabled]="aadharverification" />
+                  <a class="btn btn-verify" [class.btn-verified]="aadharverification"
+                    *ngIf="!aadharverification && !verifyingUID" (click)="idVerification('UID')"><span>Verify</span></a>
+
+                  <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="verifyingUID"
+                    (click)="refreshAadharVerify()"><span>Refresh</span></a>
+
+                  <a class="btn btn-verify" *ngIf="!verifyingUID && aadharverification"
+                    [class.btn-verified]="aadharverification">
+                    <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="fieldPadding">
+                <div class='file file--upload'>
+                  <label (click)="aadharAttach.click()">
+                    Upload File
+                  </label>
+                  <input #aadharAttach type='file' formControlName="aadharattachment"
+                    (change)="filesSelected($event,'aadhar')" />
+                </div>
+              </div>
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['aadhar'] && selectedFiles['aadhar'].files && selectedFiles['aadhar'].files.length > 0"
+                accept=".pdf,.png,.jpg,.jpeg">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['aadhar'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['aadhar'].base64[i], file)"
+                          *ngIf="selectedFiles['aadhar'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path" width="100px" height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Pan Number</div>
+              </div>
+              <div class="fieldPadding">
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" formControlName="pan" type="text" placeholder="Enter PAN Number"
+                    class="form-control" autocomplete="off" maxlength="10" [class.disabled]="panverification" />
+                  <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="idVerification('Pan')">
+                    <span *ngIf="!panverification">Verify</span><span *ngIf="panverification"><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="fieldPadding">
+                <div class='file file--upload'>
+                  <label (click)="panAttach.click()">
+                    Upload File
+                  </label>
+                  <input #panAttach type='file' formControlName="panattachment" (change)="filesSelected($event,'pan')"
+                    accept=".pdf,.png,.jpg,.jpeg" />
+                </div>
+              </div>
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['pan'] && selectedFiles['pan'].files && selectedFiles['pan'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['pan'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['pan'].base64[i], file)"
+                          *ngIf="selectedFiles['pan'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['pan'].base64[i] && file.s3path" width="100px" height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Store Photo</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='storeAttach' (click)="storeAttach.click()">
+                    Upload File
+                  </label>
+                  <input #storeAttach type='file' formControlName="storephoto" (change)="filesSelected($event,'store')"
+                    accept=".png,.jpg,.jpeg" />
+                </div>
+              </div>
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['store'] && selectedFiles['store'].files && selectedFiles['store'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['store'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['store'].base64[i], file)"
+                          *ngIf="selectedFiles['store'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['store'].base64[i] && file.s3path" width="100px" height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'store',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Cheque/Passbook Front</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='chequeAttach' (click)="chequeAttach.click()">
+                    Upload File
+                  </label>
+                  <input #chequeAttach type='file' formControlName="cheque" (change)="filesSelected($event,'cheque')"
+                    accept=".pdf,.png,.jpg,.jpeg" />
+                </div>
+              </div>
+
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['cheque'] && selectedFiles['cheque'].files && selectedFiles['cheque'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['cheque'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['cheque'].base64[i], file)"
+                          *ngIf="selectedFiles['cheque'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['cheque'].base64[i] && file.s3path" width="100px" height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'cheque',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Address 1</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="address1" #partneraddress1 type="text"
+                  placeholder="Enter Address 1" class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Address 2</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="address2" #partneraddress2 type="text"
+                  placeholder="Enter Address 2" class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">City</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="city" #partnercity type="text" placeholder="Enter City"
+                  class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">State</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="state" #partnerstate type="text"
+                  placeholder="Enter State" class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Pincode</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" formControlName="pincode" #partnerpincode type="text"
+                  placeholder="Enter Pincode" class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Nearest Branch</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #branch formControlName="branch">
+                  <option *ngFor="let branch of branches" value="{{branch.id}}">
+                    {{branch.branchName}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Category</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #category formControlName="category">
+                  <option *ngFor="let category of partnerCategories" value="{{category.id}}">
+                    {{category.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Type</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #type formControlName="type">
+                  <option *ngFor="let type of partnerTypes" value="{{type.id}}">
+                    {{type.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Size</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #size formControlName="size">
+                  <option *ngFor="let size of partnerSizes" value="{{size.name}}">
+                    {{size.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Trade</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" #trade formControlName="trade">
+                  <option *ngFor="let trade of partnerTrades" value="{{trade.name}}">
+                    {{trade.name}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">GST Number</div>
+              </div>
+              <div class="fieldPadding">
+                <div class="d-flex">
+                  <input (keyup)="resetErrors()" type="text" placeholder="Enter GST Number" class="form-control"
+                    autocomplete="off" formControlName="gst" [class.disabled]="gstverification" />
+                  <a class="btn btn-verify" [class.btn-verified]="gstverification" (click)="verifygst()">
+                    <span *ngIf="!gstverification">Verify</span><span *ngIf="gstverification"><i
+                        class="fa fa-check"></i>&nbsp;Verified</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">GST Attachment</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='gstAttach' (click)="gstAttach.click()">
+                    Upload File
+                  </label>
+                  <input #gstAttach type='file' formControlName="gstphoto" (change)="filesSelected($event,'gst')"
+                    accept=".pdf,.png,.jpg,.jpeg" />
+                </div>
+              </div>
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['gst'] && selectedFiles['gst'].files && selectedFiles['gst'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['gst'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['gst'].base64[i], file)"
+                          *ngIf="selectedFiles['gst'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['gst'].base64[i] && file.s3path" width="100px" height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'gst',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Bank</div>
+              </div>
+              <div class="fieldPadding">
+                <select class="form-control" formControlName="bank" [class.disabled]="bankverification">
+                  <option>KOTAK</option>
+                  <option>ICICI</option>
+                  <option>SBI</option>
+                  <option>HDFC</option>
+                  <option>BOI</option>
+                  <option>AXIS</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Account Number</div>
+              </div>
+              <!-- <div class="d-flex"> -->
+              <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
+                formControlName="account" autocomplete="off" [class.disabled]="bankverification" />
+              <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
+                        <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
+                            class="fa fa-check"></i>&nbsp;Verified</span></a> -->
+              <!-- </div> -->
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Bank IFSC</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
+                  formControlName="ifsc" autocomplete="off" [class.disabled]="bankverification" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="btn btn-primary" (click)="saveBankDetails()" *ngIf="!bankverification">
+          Verify Bank
+        </button>
+      </div>
+
+    </div>
+    <div class="d-flex mt-2">
+      <div class="btn btn-draft mr-2" (click)="saveAsLead()">
+        Save as Lead
+      </div>
+      <button class="btn btn-primary" [disabled]="!bankverification" (click)="createPartner()">
+        {{btnText}}
+      </button>
+    </div>
+  </form>
+</div>

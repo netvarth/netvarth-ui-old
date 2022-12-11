@@ -1,0 +1,114 @@
+<section class="card">
+  <div class="pointer-cursor">
+    <div class="d-flex">
+      <div> <i class="fa fa-arrow-left mr-2" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="text-primary heading" class="back-btn" *ngIf="headerName">{{headerName |capitalizeFirst}}</div>
+    </div>
+  </div>
+</section>
+
+
+<section *ngIf="loading">
+  <div>
+    <app-skeleton-loading></app-skeleton-loading>
+  </div>
+</section>
+
+
+<div *ngIf="!loading">
+  <div class="card">
+    <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dealerdata [value]="dealers" dataKey="id"
+      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+      styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-4">
+            <span>
+              <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
+                (input)="dealerdata.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
+                style="width:100%" />
+            </span>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 text-right">
+            <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="dealerStatus"
+              (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
+              dataKey="name">
+            </p-dropdown>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Dealer Id
+              <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Dealer Name
+              <p-columnFilter type="text" field="partnerName" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Dealer Phone
+              <p-columnFilter type="text" field="partnerMobile" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Status
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              More Actions
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-dealer>
+        <tr class="mobile-card">
+          <td>
+            <span class="d-lg-none d-md-none">Dealer Id : </span><span
+              class="table-column-data">{{dealer.referenceNo}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Dealer Name : </span><span
+              class="table-column-data">{{dealer.partnerName}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Dealer Mobile : </span><span
+              class="table-column-data">{{dealer.partnerMobile}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Status : </span>
+            <span [class]="'customer-badge status-' + dealer.spInternalStatus" class="table-column-data">
+              {{dealer.spInternalStatus}}</span>
+          </td>
+          <td>
+            <div class="text-center">
+              <button pButton pRipple type="button" class="p-button-primary"
+                *ngIf="capabilities && capabilities.canUpdatePartner || dealer.spInternalStatus=='Draft'"
+                (click)="updateDealer(dealer.uid,'update')"><i class="pi pi-upload text-white"></i>&nbsp;Update</button>
+              <button pButton pRipple type="button" class="p-button-primary" *ngIf=" dealer.spInternalStatus!='Draft'"
+                (click)="updateDealer(dealer.uid,'view',dealer.spInternalStatus)"><i
+                  class="pi pi-eye text-white"></i>&nbsp;View</button>
+            </div>
+          </td>
+        </tr>
+        <br class="d-lg-none d-md-none">
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No dealers found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

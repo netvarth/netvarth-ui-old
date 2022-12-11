@@ -1,0 +1,47 @@
+<section class="card">
+  <div class="title-gb no-padding">
+    <div class="dash-head">
+      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="colorHeaderIcon" *ngIf="headerName">{{headerName |capitalizeFirst}}</div>
+    </div>
+  </div>
+</section>
+<div>
+  <div class="col-md-12 marginClass">
+    <div class="card">
+      <div class="row text-right">
+        <div class="form-group col-md-4 my-3">
+          <select class="form-control">
+            <option value="all"><span class="text-capitalize">Thrissur</span></option>
+            <option value="approved"><span class="text-capitalize">Kochi</span></option>
+            <option value="in progress"><span class="text-capitalize">Kottayam</span></option>
+            <option value="redirected"><span class="text-capitalize">Kannur</span></option>
+          </select>
+        </div>
+      </div>
+      <div class="table-responsive dash-list">
+        <table class="table">
+          <thead>
+            <tr class="tble-filtr-tr heght">
+              <th class="head_color">Loan Id</th>
+              <th class="head_color">Customer Name</th>
+              <th class="head_color">Phone</th>
+              <th class="head_color">Email</th>
+            </tr>
+          </thead>
+          <tbody class="table_data">
+            <ng-container>
+              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="continueApplication()">
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.loanId">{{item.loanId}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.CustomerName">{{item.CustomerName}}</td>
+                <td data-title="Loan Details" class="td1" *ngIf="item && item.phone">{{item.phone}}</td>
+                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.email">{{item.email}}
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

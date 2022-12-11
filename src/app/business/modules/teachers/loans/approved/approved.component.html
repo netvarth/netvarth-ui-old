@@ -1,0 +1,226 @@
+<div class="card pointer-cursor">
+  <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+</div>
+
+
+
+
+<div class="card m-2" *ngIf="type=='autoapproved'">
+
+
+  <div class="row" *ngIf="timetype==1 && loanSchemes && loanSchemes.length > 0">
+    <div class="col-md-4" *ngFor="let scheme of loanSchemes">
+      <div class="bggrey my-2">
+        <div>
+          <div class="border">
+            <div>
+              <img src="../../../../assets/images/cdl/carousal-1.jpg" width="100%" height="100">
+            </div>
+            <span class="font-weight-bold mt-2" *ngIf="scheme && scheme.schemeName">{{scheme.schemeName}}</span><br>
+            <div class="row text-left my-2" *ngIf="scheme && scheme.schemeType">
+              <div class="col-md-6 card-title">Scheme Type</div>
+              <div class="col-md-2 card-title no-padding">:</div>
+              <div><span class="col-md-3 card-sub-title no-padding">{{scheme.schemeType}}</span>
+              </div>
+            </div>
+            <div class="row text-left my-2" *ngIf="scheme && scheme.noOfRepayment">
+              <div class="col-md-6 card-title">EMI Tenure</div>
+              <div class="col-md-2 card-title no-padding">:</div>
+              <div><span class="col-md-3 card-sub-title no-padding">{{scheme.noOfRepayment}} Months</span></div>
+            </div>
+            <div class="row text-left my-2" *ngIf="scheme && scheme.schemeRate">
+              <div class="col-md-6 card-title">Rate of Interest</div>
+              <div class="col-md-2 card-title no-padding">:</div>
+              <div><span class="col-md-3 card-sub-title no-padding">{{scheme.schemeRate}} %</span></div>
+            </div>
+            <!-- <div class="row text-left my-2">
+              <div class="col-md-6 card-title">Monthly EMI</div>
+              <div class="col-md-2 card-title no-padding">:</div>
+              <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+              </div>
+            </div>
+            <div class="row text-left my-2">
+              <div class="col-md-6 card-title">Total Interest</div>
+              <div class="col-md-2 card-title no-padding">:</div>
+              <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+              </div>
+            </div>
+            <div class="row text-left my-2">
+              <div class="col-md-6 card-title">Payable Amount</div>
+              <div class="col-md-2 card-title no-padding">:</div>
+              <div><span class="col-md-3 card-sub-title no-padding"><i class="fa fa-inr"></i>&nbsp;12550</span>
+              </div>
+            </div> -->
+            <div *ngIf="from!='schemeslist'" class="btn btn-select text-center mt-3" (click)="selectedScheme(scheme)">
+              Select
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <div class="row" *ngIf="timetype==2">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/autoapprove.gif" width="200px">
+      </div>
+      <div class="sanctioned-title">
+        <span>Waiting For Customer Verification</span>
+      </div>
+      <div class="card-sub-title">
+        <span>We Sent a Verification Message to the Customer.</span>
+      </div>
+      <div class="d-flex mt-3 justify-content-center">
+        <div class="btn btn-primary mr-3" (click)="refreshCustomerAcceptance()">
+          Refresh
+        </div>
+        <div class="btn btn-primary" (click)="viewLoan()">
+          View Loan Details
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card m-2" *ngIf="type=='consumerAccepted'">
+  <div class="col-md-10 d-flex justify-content-between no-padding">
+    <div>
+      <span class="font-weight-bold">&nbsp;Loan Sanctioned</span>
+    </div>
+    <div *ngIf="loanId">
+      <button type="button" class="btn btn-primary" (click)="loanDetails(loanId)">View Details</button>
+    </div>
+  </div>
+  <br><br>
+  <div class="row">
+    <div class="col-md-10 card-border">
+
+      <div class="col-md-6">
+        <div>
+          <img width="80" height="60" src="../../../../assets/images/cdl/sanctioned.png">&nbsp;&nbsp;
+          <span class="font-weight-bold sanctioned-title">Loan has been sanctioned</span>
+        </div>
+        <div>
+          <span class="font-weight-bold card-title">Date : </span>
+          <span class="font-weight-bold card-small-font"
+            *ngIf="loanData && loanData.createdDate">{{loanData.createdDate}}</span><br>
+          <span class="font-weight-bold card-title">Purpose of Loan: </span>
+          <span class="font-weight-bold card-small-font"
+            *ngIf="loanData && loanData.loanProduct && loanData.loanProduct.productName">{{loanData.loanProduct.productName}}
+            Purchase</span>
+        </div><br>
+        <div class="pointer-cursor" *ngIf="user.userType != 2">
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="fieldPadding">
+                  <div class="file">
+                    <label (click)="invoiceAttach.click()">
+                      Upload File
+                    </label>
+                    <input #invoiceAttach type='file' (change)="filesSelected($event, 'invoice')" />
+                  </div>
+                  <div class="img-section clearfix"
+                    *ngIf="selectedFiles['invoice'] && selectedFiles['invoice'].files && selectedFiles['invoice'].files.length > 0">
+                    <ul class="galul">
+                      <li *ngFor="let file of selectedFiles['invoice'].files;let i = index ">
+                        <div class="galimg_outer">
+                          <div class="gal_img pointer-cursor">
+                            <img [src]="getImage(selectedFiles['invoice'].base64[i], file)"
+                              *ngIf="selectedFiles['invoice'].base64[i]" width="100px" height="100px">
+                            <a [href]="file.s3path" target="_blank">
+                              <img [src]="file.s3path" *ngIf="!selectedFiles['invoice'].base64[i] && file.s3path"
+                                width="100px" height="100px">
+                            </a>
+                          </div>
+                          <div class="gal_action" (click)="deleteTempImage(i, 'invoice',file)">
+                            <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 d-flex">
+        <div class="card">
+          <span class="font-weight-bold card-title">Loan Amount</span><br>
+          <span class="font-weight-bold" *ngIf="loanData && loanData.sanctionedAmount"><i
+              class="fa fa-inr"></i>&nbsp;{{loanData.sanctionedAmount}}</span>
+        </div>
+        <div class="card">
+          <span class="font-weight-bold card-title">Duration</span><br>
+          <span class="font-weight-bold" *ngIf="loanData && loanData.loanScheme"><i class="fa fa-clock-o"
+              aria-hidden="true"></i>&nbsp;{{loanData.loanScheme.noOfRepayment}} Months</span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="clearfix"></div>
+  <div class="row text-center">
+    <div class="col-md-10">
+      <button
+        [disabled]="selectedFiles['invoice'] && selectedFiles['invoice'].files && selectedFiles['invoice'].files.length == 0"
+        class="btn btn-primary mt-3" (click)="approveLoan()">
+        Approve Loan
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="card m-2" *ngIf="type=='approved'">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/approved.gif" width="200px">
+      </div>
+      <div class="sanctioned-title">
+        <span>Waiting For Credit Officer Approval</span>
+      </div>
+      <div class="card-sub-title">
+        <span>This Loan Application Was Sent for Approval.</span>
+      </div>
+      <div class="btn btn-primary mt-3" (click)="creditOfficerApprovalRefresh()">
+        Refresh
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="card m-2" *ngIf="type=='rejected'">
+  <div class="row">
+    <div class="text-center">
+      <div>
+        <img src="../../../../assets/images/cdl/rejected.gif" width="200px">
+      </div>
+      <div class="sanctioned-title">
+        <span>Sorry This Loan Application Was Rejected</span>
+      </div>
+      <div class="card-sub-title">
+        <span>This Loan Application Was Rejected Because of Credit Score.</span>
+      </div>
+      <div class="btn btn-primary mt-3" (click)="goHome()">
+        Go to Home
+      </div>
+    </div>
+  </div>
+</div>

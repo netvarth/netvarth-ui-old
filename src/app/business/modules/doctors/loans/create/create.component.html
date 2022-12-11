@@ -1,0 +1,2762 @@
+<div class="card pointer-cursor">
+  <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+</div>
+<div class="card m-2">
+  <div class="col-md-7 d-flex justify-content-between pl-0">
+    <div class="d-flex align-items-center">
+      <span class="font-weight-bold">&nbsp;{{headerText}}</span>
+    </div>
+    <div class="d-flex">
+      <div class="mr-2 my-auto" (click)="closeAll()">
+        <a class="btn btn-light">
+          Close all
+        </a>
+      </div>
+      <div>
+        <a class="btn btn-primary open-all-btn" (click)="expandAll()">
+          Expand all
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="clearfix"></div>
+  <br>
+  <form [formGroup]="createLoan" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-md-7">
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="customerDetailsPanel" (opened)="customerDetailsPanel = true"
+            (closed)="customerDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="customerDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Applicant Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Doctor First Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Customer First Name"
+                        class="form-control" autocomplete="off" formControlName="firstname" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Doctor Last Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Customer Last Name"
+                        class="form-control" autocomplete="off" formControlName="lastname" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Date of Birth</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off"
+                        formControlName="dob" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Gender</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #gender formControlName="gender">
+                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                          <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Phone Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
+                          autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
+                          [class.disabled]="verification" />
+                        <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
+                          (click)="verifyotp()"><span>Verify</span></a>
+
+                        <a class="btn btn-verify" *ngIf="verification" [class.btn-verified]="verification">
+                          <span *ngIf="verification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Alternate Phone Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Alternate Phone Number"
+                          class="form-control" autocomplete="off" #alternatephone formControlName="alternatephone"
+                          maxlength="10" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Email</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #email type="email" placeholder="Enter Customer Email"
+                          class="form-control" autocomplete="off" formControlName="email"
+                          [class.disabled]="emailverification" />
+
+                        <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
+                          (click)="verifyEmail()"><span>Verify</span></a>
+
+                        <a class="btn btn-verify" *ngIf="emailverification" [class.btn-verified]="emailverification">
+                          <span *ngIf="emailverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Upload Doctor Photo</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0)">
+                        <label for='photoAttach' (click)="photoAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #photoAttach type='file' formControlName="customerphoto"
+                          (change)="filesSelected($event,'photo')" accept=".png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['photo'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['photo'].base64[i], file)"
+                                  *ngIf="selectedFiles['photo'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['photo'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button [disabled]="!verification" class="btn btn-primary open-all-btn"
+                (click)="saveCustomerDetails()">Save</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <br>
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="kycDetailsPanel" (opened)="kycDetailsPanel = true"
+            (closed)="kycDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="kycDetailsSaved">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    KYC Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Aadhar Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #aadharnumber type="number" placeholder="Enter Aadhar Number"
+                          class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
+                          [class.disabled]="action == 'update' && aadharverification && !verifyingUID"
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          maxlength="12" />
+
+                        <a class="btn btn-verify" [class.btn-verified]="aadharverification"
+                          *ngIf="!aadharverification && !verifyingUID"
+                          (click)="idVerification('UID')"><span>Verify</span></a>
+
+                        <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="verifyingUID"
+                          (click)="refreshAadharVerify()"><span>Refresh</span></a>
+
+                        <a class="btn btn-verify" *ngIf="!verifyingUID && aadharverification"
+                          [class.btn-verified]="aadharverification">
+                          <span *ngIf="aadharverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="fieldPadding">
+                      <div class="file" *ngIf="!aadharverification || verifyingUID">
+                        <label for='input-file' (click)="aadharAttach.click()">
+                          Upload File
+                        </label>
+                        <input #aadharAttach type='file' (change)="filesSelected($event, 'aadhar')"
+                          accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['aadhar'] && selectedFiles['aadhar'].files && selectedFiles['aadhar'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['aadhar'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['aadhar'].base64[i], file)"
+                                  *ngIf="selectedFiles['aadhar'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Pan Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #pannumber type="text" placeholder="Enter PAN Number"
+                          class="form-control" autocomplete="off" formControlName="pannumber"
+                          [class.disabled]="action == 'update' && panverification" maxlength="10" />
+
+                        <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
+                          (click)="idVerification('Pan')"><span>Verify</span></a>
+
+                        <a class="btn btn-verify" *ngIf="panverification" [class.btn-verified]="panverification">
+                          <span *ngIf="panverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <!-- <div class="d-flex">
+                        <div class="form-title">Aadhar Atachment</div>
+                      </div> -->
+                    <div class="fieldPadding">
+                      <div class="file" *ngIf="!panverification">
+                        <label for='input-file' (click)="panAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #panAttach type='file' formControlName="panattachment"
+                          (change)="filesSelected($event, 'pan')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['pan'] && selectedFiles['pan'].files && selectedFiles['pan'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['pan'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['pan'].base64[i], file)"
+                                  *ngIf="selectedFiles['pan'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['pan'].base64[i] && file.s3path" width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Permanent Relation Type</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" placeholder="" #permanentRelationType
+                        formControlName="permanentRelationType">
+                        <mat-option [value]="relation.relationEnum" *ngFor="let relation of addressRelations">
+                          <div *ngIf="relation && relation.relationName">{{relation.relationName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Permanent Relation Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" #permanentRelationName
+                        placeholder="Enter Permanent Relation Name" class="form-control" autocomplete="off"
+                        formControlName="permanentRelationName" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Address 1</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentaddress1" #permanentaddress1 [value]="address1"
+                        type="text" placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                        formControlName="permanentaddress1" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Address 2</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentaddress2" #permanentaddress2 [value]="address2"
+                        type="text" placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                        formControlName="permanentaddress2" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">City</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentcity type="text" placeholder="Enter City"
+                        class="form-control" autocomplete="off" formControlName="permanentcity" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">State</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentstate [value]="permanentstate" type="text"
+                        placeholder="Enter State" class="form-control" autocomplete="off"
+                        formControlName="permanentstate" />
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="bggrey my-2" *ngIf="stateList">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">State</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #permanentstate formControlName="permanentstate">
+                      <mat-option [value]="state.name" *ngFor="let state of stateList">
+                        <div *ngIf="state && state.displayName">{{state.displayName}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Pincode</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentpincode type="text" placeholder="Enter Pincode"
+                        class="form-control" autocomplete="off" formControlName="permanentpincode" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="fieldPadding">
+                      <div class="form-check">
+                        <input class="form-check-input" [checked]="addresscheck" type="checkbox" value=""
+                          (change)="addresschange($event)">
+                        <span class="form-check-label" for="flexCheckDefault">
+                          Use this Address as current
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div *ngIf="showaddressfields">
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Relation Type</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <mat-select class="form-control widthWebKit" placeholder="" #currentRelationType
+                          formControlName="currentRelationType">
+                          <mat-option [value]="relation.relationEnum" *ngFor="let relation of addressRelations">
+                            <div *ngIf="relation && relation.relationName">{{relation.relationName}}</div>
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Relation Name</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" type="text" #currentRelationName
+                          placeholder="Enter Current Relation Name" class="form-control" autocomplete="off"
+                          formControlName="currentRelationName" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address 1</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentaddress1" #currentaddress1 type="text"
+                          placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                          formControlName="currentaddress1" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address 2</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentaddress2" #currentaddress2 type="text"
+                          placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                          formControlName="currentaddress2" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address City</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentcity" #currentcity type="text"
+                          placeholder="Enter City" class="form-control" autocomplete="off"
+                          formControlName="currentcity" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address State</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentstate" #currentstate type="text"
+                          placeholder="Enter State" class="form-control" autocomplete="off"
+                          formControlName="currentstate" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <div class="bggrey my-2">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">Current Address Pincode</div>
+                      </div>
+                      <div class="fieldPadding">
+                        <input (keyup)="resetErrors()" [value]="currentpincode" #currentpincode type="text"
+                          placeholder="Enter Pincode" class="form-control" autocomplete="off"
+                          formControlName="currentpincode" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-primary open-all-btn" (click)="saveAddress()"
+                [disabled]="!aadharverification || !panverification">Save</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+
+
+        <br>
+
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="educationDetailsPanel" (opened)="educationDetailsPanel = true"
+            (closed)="educationDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="educationDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Education Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Qualification</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #qualification type="text" placeholder="Enter Doctor Qualification"
+                        class="form-control" autocomplete="off" formControlName="qualification" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">College / University Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #university type="text"
+                        placeholder="Enter Doctor College / University Name" class="form-control" autocomplete="off"
+                        formControlName="university" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Year of Passout</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Passout Year" class="form-control"
+                          autocomplete="off" #passoutyear formControlName="passoutyear" maxlength="4" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">CGPA / Grade</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter CGPA / Grade" class="form-control"
+                          autocomplete="off" #cgpa formControlName="cgpa" maxlength="2" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">MCI number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="MCI number" class="form-control"
+                          autocomplete="off" #mcinumber formControlName="mcinumber" maxlength="4" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Upload MCI Document</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['mci'] && selectedFiles['mci'].files && selectedFiles['mci'].files.length > 0)">
+                        <label for='mciAttach' (click)="mciAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #mciAttach type='file' formControlName="mci" (change)="filesSelected($event,'mci')"
+                          accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['mci'] && selectedFiles['mci'].files && selectedFiles['mci'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['mci'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['mci'].base64[i], file)"
+                                  *ngIf="selectedFiles['mci'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['mci'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'mci',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Registration Certificate</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['registration'] && selectedFiles['registration'].files && selectedFiles['registration'].files.length > 0)">
+                        <label for='registrationAttach' (click)="registrationAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #registrationAttach type='file' formControlName="registration"
+                          (change)="filesSelected($event,'registration')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['registration'] && selectedFiles['registration'].files && selectedFiles['registration'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['registration'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['registration'].base64[i], file)"
+                                  *ngIf="selectedFiles['registration'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path"
+                                    *ngIf="!selectedFiles['registration'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'registration',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Certificate</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['certificate'] && selectedFiles['certificate'].files && selectedFiles['certificate'].files.length > 0)">
+                        <label for='certificateAttach' (click)="certificateAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #certificateAttach type='file' formControlName="certificate"
+                          (change)="filesSelected($event,'certificate')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['certificate'] && selectedFiles['certificate'].files && selectedFiles['certificate'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['certificate'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['certificate'].base64[i], file)"
+                                  *ngIf="selectedFiles['certificate'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path"
+                                    *ngIf="!selectedFiles['certificate'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'certificate',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div>
+              <button class="btn btn-primary open-all-btn" (click)="saveEducationDetails()">Save</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+
+        <br>
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="jobDetailsPanel" (opened)="jobDetailsPanel = true"
+            (closed)="jobDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="jobDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Job Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Current Employee</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" formControlName="currentemployee">
+                      <mat-option [value]="true">
+                        Yes
+                      </mat-option>
+                      <mat-option [value]="false">
+                        No
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Hospital / Clinic Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #hospital type="text" placeholder="Enter Hospital / Clinic Name"
+                        class="form-control" autocomplete="off" formControlName="hospital" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Specialization</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #specialization type="text" placeholder="Enter Specialization"
+                        class="form-control" autocomplete="off" formControlName="specialization" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Monthly Salary</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Monthly Salary"
+                          class="form-control" autocomplete="off" #salary formControlName="salary" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Current Job</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <div class="fieldPadding">
+                        <div class="d-flex">
+                          <input (keyup)="resetErrors()" type="text" placeholder="Years" class="form-control"
+                            autocomplete="off" #currentjobyears formControlName="currentjobyears" maxlength="2" />&nbsp;
+                          <div class="d-flex align-items-center">Years</div>
+                        </div>
+                      </div>
+                      <div class="fieldPadding">
+                        <div class="d-flex">
+                          <input (keyup)="resetErrors()" type="text" placeholder="Months" class="form-control"
+                            autocomplete="off" #currentjobmonths formControlName="currentjobmonths"
+                            maxlength="2" />&nbsp;
+                          <div class="d-flex align-items-center">Months</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Experience</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                      <div class="fieldPadding">
+                        <div class="d-flex">
+                          <input (keyup)="resetErrors()" type="text" placeholder="Years" class="form-control"
+                            autocomplete="off" #experienceyears formControlName="experienceyears" maxlength="2" />&nbsp;
+                          <div class="d-flex align-items-center">Years</div>
+                        </div>
+                      </div>
+                      <div class="fieldPadding">
+                        <div class="d-flex">
+                          <input (keyup)="resetErrors()" type="text" placeholder="Months" class="form-control"
+                            autocomplete="off" #experiencemonths formControlName="experiencemonths"
+                            maxlength="2" />&nbsp;
+                          <div class="d-flex align-items-center">Months</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Experience Certificate</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['experience'] && selectedFiles['experience'].files && selectedFiles['experience'].files.length > 0)">
+                        <label for='experienceAttach' (click)="experienceAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #experienceAttach type='file' formControlName="experience"
+                          (change)="filesSelected($event,'experience')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['experience'] && selectedFiles['experience'].files && selectedFiles['experience'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['experience'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['experience'].base64[i], file)"
+                                  *ngIf="selectedFiles['experience'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['experience'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'experience',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Id Card</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['idcard'] && selectedFiles['idcard'].files && selectedFiles['idcard'].files.length > 0)">
+                        <label for='idcard' (click)="idcard.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #idcard type='file' formControlName="id" (change)="filesSelected($event,'idcard')"
+                          accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['idcard'] && selectedFiles['idcard'].files && selectedFiles['idcard'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['idcard'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['idcard'].base64[i], file)"
+                                  *ngIf="selectedFiles['idcard'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['idcard'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'idcard',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Salary Slip</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['salaryslip'] && selectedFiles['salaryslip'].files && selectedFiles['salaryslip'].files.length > 0)">
+                        <label for='salaryslipAttach' (click)="salaryslipAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #salaryslipAttach type='file' formControlName="salaryslip"
+                          (change)="filesSelected($event,'salaryslip')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['salaryslip'] && selectedFiles['salaryslip'].files && selectedFiles['salaryslip'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['salaryslip'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['salaryslip'].base64[i], file)"
+                                  *ngIf="selectedFiles['salaryslip'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['salaryslip'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'salaryslip',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Land Tax Reciept</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['landtax'] && selectedFiles['landtax'].files && selectedFiles['landtax'].files.length > 0)">
+                        <label for='landtaxAttach' (click)="landtaxAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #landtaxAttach type='file' formControlName="landtax"
+                          (change)="filesSelected($event,'landtax')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['landtax'] && selectedFiles['landtax'].files && selectedFiles['landtax'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['landtax'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['landtax'].base64[i], file)"
+                                  *ngIf="selectedFiles['landtax'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path" *ngIf="!selectedFiles['landtax'].base64[i] && file.s3path"
+                                    width="100px" height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'landtax',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div>
+              <button class="btn btn-primary open-all-btn" (click)="saveJobDetails()">Save</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <br>
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="loanDetailsPanel" (opened)="loanDetailsPanel = true"
+            (closed)="loanDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="loanDetailsSaved">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Loan Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Select Dealer</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #dealer formControlName="dealer">
+                      <mat-option [value]="dealer.id" *ngFor="let dealer of dealers">
+                        <div *ngIf="dealer && dealer.partnerName">{{dealer.partnerName}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Employment Type</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #employmenttype formControlName="employmenttype">
+                      <mat-option [value]="employment.name" *ngFor="let employment of employmentTypes">
+                        <div *ngIf="employment && employment.displayName">{{employment.displayName}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div> -->
+
+
+
+
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.customerEducation">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Customer Education</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #customerEducation formControlName="customerEducation">
+                      <mat-option [value]="education.id" *ngFor="let education of mafilScoreFields.customerEducation">
+                        <div *ngIf="education && education.name">{{education.name}} - {{education.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.customerEmployement">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Customer Employement</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #customerEmployement
+                      formControlName="customerEmployement">
+                      <mat-option [value]="employment.id"
+                        *ngFor="let employment of mafilScoreFields.customerEmployement">
+                        <div *ngIf="employment && employment.name">{{employment.name}} - {{employment.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Montly Income</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
+                        placeholder="Enter Monthly Income" class="form-control" autocomplete="off"
+                        formControlName="salary" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Montly Income</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #monthlyIncome formControlName="monthlyIncome">
+                      <mat-option [value]="income.id" *ngFor="let income of mafilScoreFields.monthlyIncome">
+                        <div *ngIf="income && income.name">{{income.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div> -->
+
+
+              <!-- <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Existing Customer</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #existingCustomer formControlName="existingCustomer">
+                      <mat-option [value]="customer.id" *ngFor="let customer of mafilScoreFields.existingCustomer">
+                        <div *ngIf="customer && customer.name">{{customer.name}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div> -->
+
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.salaryRouting">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Salary Routing</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #salaryRouting formControlName="salaryRouting">
+                      <mat-option [value]="salary.id" *ngFor="let salary of mafilScoreFields.salaryRouting">
+                        <div *ngIf="salary && salary.name">{{salary.name}} - {{salary.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.familyDependants">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Family Dependants</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #familyDependants formControlName="familyDependants">
+                      <mat-option [value]="dependant.id" *ngFor="let dependant of mafilScoreFields.familyDependants">
+                        <div *ngIf="dependant && dependant.name">{{dependant.name}} - {{dependant.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.existingCustomer">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Existing Customer</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #existingCustomer formControlName="existingCustomer">
+                      <mat-option [value]="customer.id" *ngFor="let customer of mafilScoreFields.existingCustomer">
+                        <div *ngIf="customer && customer.name">{{customer.name}} - {{customer.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.earningMembers">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Earning Members</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #earningMembers formControlName="earningMembers">
+                      <mat-option [value]="member.id" *ngFor="let member of mafilScoreFields.earningMembers">
+                        <div *ngIf="member && member.name">{{member.name}} - {{member.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.noOfYearsAtPresentAddress">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">No of Years at Present Address</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #noOfYearsAtPresentAddress
+                      formControlName="noOfYearsAtPresentAddress">
+                      <mat-option [value]="years.id" *ngFor="let years of mafilScoreFields.noOfYearsAtPresentAddress">
+                        <div *ngIf="years && years.name">{{years.name}} - {{years.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.currentResidenceOwnershipStatus">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Current Residence Ownership Status</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #currentResidenceOwnershipStatus
+                      formControlName="currentResidenceOwnershipStatus">
+                      <mat-option [value]="ownership.id"
+                        *ngFor="let ownership of mafilScoreFields.currentResidenceOwnershipStatus">
+                        <div *ngIf="ownership && ownership.name">{{ownership.name}} - {{ownership.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.ownedMovableAssets">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Owned Movable Assets</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #ownedMovableAssets
+                      formControlName="ownedMovableAssets" (selectionChange)="changeMovableAssets($event)">
+                      <mat-option [value]="assets.id" *ngFor="let assets of mafilScoreFields.ownedMovableAssets">
+                        <div *ngIf="assets && assets.name">{{assets.name}} - {{assets.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+
+              <div *ngIf="movableAssets">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Vehicle No</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #vehicleNo type="text" placeholder="Enter Vehicle No"
+                        class="form-control" autocomplete="off" formControlName="vehicleNo" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.goodsFinanced">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Goods Financed</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #goodsFinanced formControlName="goodsFinanced">
+                      <mat-option [value]="goods.id" *ngFor="let goods of mafilScoreFields.goodsFinanced">
+                        <div *ngIf="goods && goods.name">{{goods.name}} - {{goods.score}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bggrey my-2">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">Mafil Employee</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" (selectionChange)="mafilEmployeeStatus()"
+                      formControlName="employee">
+                      <mat-option [value]="true">
+                        Yes
+                      </mat-option>
+                      <mat-option [value]="false">
+                        No
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="mafilEmployee">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Employee Code</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input #employeeCode type="text" placeholder="Employee Code" class="form-control"
+                        autocomplete="off" formControlName="employeeCode" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Montly Income</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
+                        placeholder="Enter Customer Salary" class="form-control" autocomplete="off"
+                        formControlName="salary" />
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+
+              <!-- <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Preferred Scheme</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (click)="openSchemes()" (keyup)="resetErrors()" #scheme type="text"
+                        placeholder="Preferred Scheme" class="form-control" autocomplete="off" formControlName="scheme"
+                        readonly />
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+
+
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Number of EMI's Paid Monthly</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #emicount type="text"
+                        placeholder="Enter Number of EMI Paid Monthly" class="form-control" autocomplete="off"
+                        formControlName="emicount" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Type</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #loantype formControlName="loantype">
+                        <mat-option [value]="loantype.id" *ngFor="let loantype of loanTypes">
+                          <div *ngIf="loantype && loantype.name">{{loantype.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Loan Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #category formControlName="category">
+                        <mat-option [value]="category.id" *ngFor="let category of loanCategories">
+                          <div *ngIf="category && category.name">{{category.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Product Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #productcategory formControlName="productcategory"
+                        (selectionChange)="changeProductCategory($event)">
+                        <mat-option [value]="category.id" *ngFor="let category of loanProductCategories">
+                          <div *ngIf="category && category.name">{{category.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="loanProductSubCategories && loanProductSubCategories.length>0">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Product Sub-Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #productsubcategory
+                        formControlName="productsubcategory" (selectionChange)="changeProductSubCategory($event)">
+                        <mat-option [value]="category.id" *ngFor="let category of loanProductSubCategories">
+                          <div *ngIf="category && category.name">{{category.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Category</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #category formControlName="category">
+                        <mat-option [value]="category.id" *ngFor="let category of loanCategories">
+                          <div *ngIf="category && category.name">{{category.name}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div *ngIf="productCategoryId && productSubCategoryId">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Product</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <p-multiSelect [options]="loanProducts" formControlName="loanproduct" [showToggleAll]="false"
+                        [virtualScroll]="true" [filter]="true" [itemSize]="34" defaultLabel="Select loan product"
+                        optionLabel="productName" [(ngModel)]="SelectedloanProducts"
+                        class="multiselect-custom-virtual-scroll" (onChange)="productSelect($event.value)">
+                      </p-multiSelect>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Total Bill Amount</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Bill Amount"
+                        class="form-control" autocomplete="off" [value]="totalpayment" [value]="totalpayment"
+                        formControlName="totalpayment" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Down Payment</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
+                        class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment"
+                        (keyup)="payment($event)" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Loan Required</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
+                        class="form-control" autocomplete="off" [value]="loanamount" formControlName="loanamount" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" #nomineename placeholder="Enter Nominee Name"
+                        class="form-control" autocomplete="off" [value]="nomineename" formControlName="nomineename" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Relation</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" placeholder="" #nomineetype
+                        formControlName="nomineetype">
+                        <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                          <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Phone Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Nominee Phone Number"
+                        class="form-control" autocomplete="off" #nomineePhone formControlName="nomineePhone"
+                        maxlength="10" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Date of Birth</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #nomineeDob type="date" class="form-control" autocomplete="off"
+                        formControlName="nomineeDob" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Guarantor Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" #guarantorName placeholder="Enter Guarantor Name"
+                        class="form-control" autocomplete="off" formControlName="guarantorName" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Guarantor Relation</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" placeholder="" #guarantorType
+                        formControlName="guarantorType">
+                        <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                          <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Date of Birth</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div>
+                        <p-calendar class="validDateCalendar" [defaultDate]="minDob" [maxDate]="minDob" #nomineeDob
+                          dataType="date" formControlName="nomineeDob">
+                        </p-calendar>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+
+
+            </div>
+            <div>
+              <button class="btn btn-primary open-all-btn" (click)="saveLoanDetails()">Save</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <br>
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="bankDetailsPanel" (opened)="bankDetailsPanel = true"
+            (closed)="bankDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="bankDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Bank Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Bank</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <select class="form-control" formControlName="bank">
+                        <option>KOTAK</option>
+                        <option>ICICI</option>
+                        <option>SBI</option>
+                        <option>HDFC</option>
+                        <option>BOI</option>
+                        <option>AXIS</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Account Number</div>
+                    </div>
+                    <!-- <div class="d-flex"> -->
+                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Account Number" class="form-control"
+                      formControlName="account" autocomplete="off" />
+                    <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
+                        <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
+                            class="fa fa-check"></i>&nbsp;Verified</span></a> -->
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Bank IFSC</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
+                        formControlName="ifsc" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div *ngIf="showBankAttachments">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Bank Statements</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0)">
+                        <label for='bankAttach' (click)="bankAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #bankAttach type='file' formControlName="bankstatements"
+                          (change)="filesSelected($event,'bank')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['bank'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['bank'].base64[i], file)"
+                                  *ngIf="selectedFiles['bank'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['bank'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'bank',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="d-flex">
+              <div *ngIf="!bankDetailsVerified">
+                <button class="btn btn-primary open-all-btn mr-2" (click)="verifyBankDetails()">Verify</button>
+              </div>
+              <div *ngIf="bankDetailsVerified">
+                <button class="btn btn-primary open-all-btn mr-2" (click)="saveBankDetails()">Save</button>
+              </div>
+              <div>
+                <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate Statements</button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <br>
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="coapplicantDetailsPanel" (opened)="coapplicantDetailsPanel = true"
+            (closed)="coapplicantDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="coapplicantDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Co-Applicant Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">First Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter First Name"
+                        class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Last Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Last Name"
+                        class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Date of Birth</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Gender</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #gender>
+                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                          <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Phone Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Co Applicant Phone Number"
+                          class="form-control" autocomplete="off" #coapplicantphone maxlength="10" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Email</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #email type="email" placeholder="Enter Customer Email"
+                          class="form-control" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Upload Photo</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['coapplicantphoto'] && selectedFiles['coapplicantphoto'].files && selectedFiles['coapplicantphoto'].files.length > 0)">
+                        <label for='photoAttach' (click)="photoAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #photoAttach type='file' formControlName="mci"
+                          (change)="filesSelected($event,'coapplicantphoto')" accept=".png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['coapplicantphoto'] && selectedFiles['coapplicantphoto'].files && selectedFiles['coapplicantphoto'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['coapplicantphoto'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['coapplicantphoto'].base64[i], file)"
+                                  *ngIf="selectedFiles['coapplicantphoto'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path"
+                                    *ngIf="!selectedFiles['coapplicantphoto'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'coapplicantphoto',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Aadhar Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #aadharnumber type="number" placeholder="Enter Aadhar Number"
+                          class="form-control" autocomplete="off" [value]="aadharnumber"
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          maxlength="12" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="fieldPadding">
+                      <div class="file">
+                        <label for='input-file' (click)="coapplicantaadharAttach.click()">
+                          Upload File
+                        </label>
+                        <input #coapplicantaadharAttach type='file'
+                          (change)="filesSelected($event, 'coapplicantaadhar')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['coapplicantaadhar'] && selectedFiles['coapplicantaadhar'].files && selectedFiles['coapplicantaadhar'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['coapplicantaadhar'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['coapplicantaadhar'].base64[i], file)"
+                                  *ngIf="selectedFiles['coapplicantaadhar'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['coapplicantaadhar'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'coapplicantaadhar',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Pan Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #pannumber type="text" placeholder="Enter PAN Number"
+                          class="form-control" autocomplete="off" maxlength="10" />
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <!-- <div class="d-flex">
+                                    <div class="form-title">Aadhar Atachment</div>
+                                  </div> -->
+                    <div class="fieldPadding">
+                      <div class="file" *ngIf="!panverification">
+                        <label for='input-file' (click)="coapplicantpanAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #coapplicantpanAttach type='file' formControlName="coapplicantpanattachment"
+                          (change)="filesSelected($event, 'coapplicantpan')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['coapplicantpan'] && selectedFiles['coapplicantpan'].files && selectedFiles['coapplicantpan'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['coapplicantpan'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['coapplicantpan'].base64[i], file)"
+                                  *ngIf="selectedFiles['coapplicantpan'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['coapplicantpan'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'coapplicantpan',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Permanent Relation Type</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" placeholder="" #permanentRelationType>
+                        <mat-option [value]="relation.relationEnum" *ngFor="let relation of addressRelations">
+                          <div *ngIf="relation && relation.relationName">{{relation.relationName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Permanent Relation Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" #permanentRelationName
+                        placeholder="Enter Permanent Relation Name" class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Address 1</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentaddress1" #permanentaddress1 [value]="address1"
+                        type="text" placeholder="Enter Address 1" class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Address 2</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentaddress2" #permanentaddress2 [value]="address2"
+                        type="text" placeholder="Enter Address 2" class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">City</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentcity type="text" placeholder="Enter City"
+                        class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bggrey my-2" *ngIf="stateList">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">State</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #permanentstate>
+                      <mat-option [value]="state.name" *ngFor="let state of stateList">
+                        <div *ngIf="state && state.displayName">{{state.displayName}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Pincode</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentpincode type="text" placeholder="Enter Pincode"
+                        class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button [disabled]="!verification" class="btn btn-primary open-all-btn"
+                (click)="saveCoapplicantDetails()">Save</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <br>
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="guarantorDetailsPanel" (opened)="guarantorDetailsPanel = true"
+            (closed)="guarantorDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="guarantorDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Guarantor Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">First Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter First Name"
+                        class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Last Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Last Name"
+                        class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Date of Birth</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Gender</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #gender>
+                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                          <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Phone Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Co Applicant Phone Number"
+                          class="form-control" autocomplete="off" #coapplicantphone maxlength="10" />
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Email</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #email type="email" placeholder="Enter Customer Email"
+                          class="form-control" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Upload Photo</div>
+                    </div>
+                    <div class="fieldPadding photo-border">
+                      <div class="file"
+                        *ngIf="!(selectedFiles['guarantorphoto'] && selectedFiles['guarantorphoto'].files && selectedFiles['guarantorphoto'].files.length > 0)">
+                        <label for='photoAttach' (click)="photoAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #photoAttach type='file' formControlName="mci"
+                          (change)="filesSelected($event,'guarantorphoto')" accept=".png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['guarantorphoto'] && selectedFiles['guarantorphoto'].files && selectedFiles['guarantorphoto'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['guarantorphoto'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['guarantorphoto'].base64[i], file)"
+                                  *ngIf="selectedFiles['guarantorphoto'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="file.s3path"
+                                    *ngIf="!selectedFiles['guarantorphoto'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'guarantorphoto',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Aadhar Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #aadharnumber type="number" placeholder="Enter Aadhar Number"
+                          class="form-control" autocomplete="off" [value]="aadharnumber"
+                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          maxlength="12" />
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="fieldPadding">
+                      <div class="file">
+                        <label for='input-file' (click)="guarantoraadharAttach.click()">
+                          Upload File
+                        </label>
+                        <input #guarantoraadharAttach type='file' (change)="filesSelected($event, 'guarantoraadhar')"
+                          accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['guarantoraadhar'] && selectedFiles['guarantoraadhar'].files && selectedFiles['guarantoraadhar'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['guarantoraadhar'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['guarantoraadhar'].base64[i], file)"
+                                  *ngIf="selectedFiles['guarantoraadhar'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['guarantoraadhar'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'guarantoraadhar',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Pan Number</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <div class="d-flex">
+                        <input (keyup)="resetErrors()" #pannumber type="text" placeholder="Enter PAN Number"
+                          class="form-control" autocomplete="off" maxlength="10" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <!-- <div class="d-flex">
+                                    <div class="form-title">Aadhar Atachment</div>
+                                  </div> -->
+                    <div class="fieldPadding">
+                      <div class="file">
+                        <label for='input-file' (click)="guarantorpanAttach.click()">
+                          <!-- <i class="material-icons">cloud_upload</i> -->
+                          Upload File
+                        </label>
+                        <input #guarantorpanAttach type='file' formControlName="panattachment"
+                          (change)="filesSelected($event, 'gurantorpan')" accept=".pdf,.png,.jpg,.jpeg" />
+                      </div>
+                      <div class="img-section clearfix"
+                        *ngIf="selectedFiles['gurantorpan'] && selectedFiles['gurantorpan'].files && selectedFiles['gurantorpan'].files.length > 0">
+                        <ul class="galul">
+                          <li *ngFor="let file of selectedFiles['gurantorpan'].files;let i = index ">
+                            <div class="galimg_outer">
+                              <div class="gal_img pointer-cursor">
+                                <img [src]="getImage(selectedFiles['gurantorpan'].base64[i], file)"
+                                  *ngIf="selectedFiles['gurantorpan'].base64[i]" width="100px" height="100px">
+                                <a [href]="file.s3path" target="_blank">
+                                  <img [src]="getImagefromUrl(file.s3path,file)"
+                                    *ngIf="!selectedFiles['gurantorpan'].base64[i] && file.s3path" width="100px"
+                                    height="100px">
+                                </a>
+                              </div>
+                              <div class="gal_action" (click)="deleteTempImage(i, 'gurantorpan',file)">
+                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                              </div>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Permanent Relation Type</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" placeholder="" #permanentRelationType>
+                        <mat-option [value]="relation.relationEnum" *ngFor="let relation of addressRelations">
+                          <div *ngIf="relation && relation.relationName">{{relation.relationName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Permanent Relation Name</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" #permanentRelationName
+                        placeholder="Enter Permanent Relation Name" class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Address 1</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentaddress1" #permanentaddress1 [value]="address1"
+                        type="text" placeholder="Enter Address 1" class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Address 2</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" [value]="permanentaddress2" #permanentaddress2 [value]="address2"
+                        type="text" placeholder="Enter Address 2" class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">City</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentcity type="text" placeholder="Enter City"
+                        class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bggrey my-2" *ngIf="stateList">
+                <div>
+                  <div class="d-flex">
+                    <div class="form-title">State</div>
+                  </div>
+                  <div class="fieldPadding">
+                    <mat-select class="form-control widthWebKit" #permanentstate>
+                      <mat-option [value]="state.name" *ngFor="let state of stateList">
+                        <div *ngIf="state && state.displayName">{{state.displayName}}</div>
+                      </mat-option>
+                    </mat-select>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Pincode</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #permanentpincode type="text" placeholder="Enter Pincode"
+                        class="form-control" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button [disabled]="!verification" class="btn btn-primary open-all-btn"
+                (click)="saveGuarantorDetails()">Save</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <br>
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Remarks</div>
+              </div>
+              <div class="fieldPadding">
+                <textarea (keyup)="resetErrors()" #remarks [value]="remarks" type="text" placeholder="Enter Remarks"
+                  class="form-control" autocomplete="off" formControlName="remarks"></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+      </div>
+
+    </div>
+    <div class="d-flex justify-content-center">
+      <div>
+        <div class="mr-2 btn btn-draft" (click)="saveAsLead()">
+          Save as Lead
+        </div>
+      </div>
+      <div>
+        <div class="btn btn-primary" (click)="checkELigibility()">
+          Check Eligibility
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

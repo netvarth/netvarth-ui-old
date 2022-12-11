@@ -1,0 +1,229 @@
+<div class="text-center" *ngIf="from && from == 'loancreate'">
+  <div class="p-5 pt-0">
+    <div>
+      <img width="250px" src="../../../../assets/images/cdl/eligibility.png">
+    </div>
+    <div class="otp mgn-bt-20 mt-3">
+      <span class="font-weight-bold title">Eligibility calculation in progress</span>
+      <label for="phone" class="mgn-up-10 mgn-bt-20 subtitle">Please wait while we conduct credit bureau checks</label>
+    </div>
+  </div>
+</div>
+
+
+<div class="text-center" *ngIf="from && from == 'analyzebank'">
+  <div class="p-5 pt-0">
+    <div>
+      <img width="250px" src="../../../../assets/images/cdl/eligibility.png">
+    </div>
+    <div class="otp mgn-bt-20 mt-3">
+      <span class="font-weight-bold title">Analyzing Bank Statement</span>
+      <label for="phone" class="mgn-up-10 mgn-bt-20 subtitle">Please wait while we analyze bank Statements</label>
+    </div>
+  </div>
+</div>
+
+
+<div class="text-center" *ngIf="from && from == 'remarks'">
+  <div class="p-5 pt-0">
+    <div>
+      <div class="bggrey my-2">
+        <div>
+          <div class="d-flex">
+            <div class="form-title">Remarks</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" placeholder="Enter Remarks" class="form-control" autocomplete="off"
+              [(ngModel)]="remarks"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+      <div class="mr-3">
+        <div class="btn btn-primary" (click)="checked()">Add Remarks</div>
+      </div>
+      <div>
+        <div class="btn btn-primary" (click)="close()">Close</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="text-center" *ngIf="from && from == 'approveDealer'">
+  <div class="p-5 pt-0">
+    <div>
+      <!-- <div class="bggrey my-2">
+        <div>
+          <div class="d-flex justify-content-between">
+            <mat-slide-toggle (change)="approveStatusChange($event.checked)" [checked]="dealerAutoApprove">
+              <div class="form-title-big">Auto Approve</div>
+            </mat-slide-toggle>
+            <mat-slide-toggle (change)="districtStatusChange($event.checked)" [checked]="districtWiseRestriction">
+              <div class="form-title-big">District Wise Restriction</div>
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </div>
+      <br> -->
+      <!-- <div class="bggrey my-2">
+        <div>
+          <div class="d-flex">
+            <div class="form-title">Auto Approval Upto Amount</div>
+          </div>
+          <div class="fieldPadding">
+            <input type="text" placeholder="Enter Remarks" class="form-control" autocomplete="off"
+              [(ngModel)]="autoApprovalUptoAmount">
+          </div>
+        </div>
+      </div> -->
+
+
+      <div class="bggrey my-2">
+        <div>
+          <div class="d-flex">
+            <div class="form-title">Remarks</div>
+          </div>
+          <div class="fieldPadding">
+            <textarea type="text" placeholder="Enter Remarks" class="form-control" autocomplete="off"
+              [(ngModel)]="remarks"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+      <div class="mr-3">
+        <div class="btn btn-primary" (click)="approveDealer()">Approve</div>
+      </div>
+      <div>
+        <div class="btn btn-primary" (click)="close()">Close</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="text-center" *ngIf="from && from == 'additionalqa'">
+  <div class="px-5 pb-0 pt-2">
+    <div>
+      <img width="250px" src="../../../../assets/images/cdl/validation.png">
+    </div>
+    <div class="otp mgn-bt-20 mt-3">
+      <span class="font-weight-bold title">Waiting For Validation</span><br>
+      <label class="mgn-up-10 mgn-bt-20 subtitle">Please contact the credit officer to know more</label>
+    </div>
+  </div>
+
+  <div class="mx-auto px-auto pb-5">
+    <div class="d-flex justify-content-center">
+      <div class="mr-3">
+        <img width="50px" src="../../../../assets/images/cdl/avatar2.png">
+      </div>
+      <div class="mr-3">
+        <span class="font-weight-bold name-title">Narendra</span><br>
+        <span class="mgn-up-10 subtitle">9658742578</span>
+      </div>
+      <div>
+        <div class="btn btn-primary"><i class="fa fa-phone"></i>&nbsp;Call Credit Officer</div>
+      </div>
+    </div>
+    <div class="mt-3">
+      <div class="btn btn-primary" (click)="goHome()"><i class="fa fa-home"></i>&nbsp;Go Home</div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div class="text-center" *ngIf="from && from == 'creditofficer' && this.sanctionAmount">
+  <div class=" p-5 pt-0">
+    <div class="otp mgn-bt-20 mt-3" *ngIf="loanData">
+
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Selected Scheme</div>
+            </div>
+            <div class="fieldPadding">
+              <input (click)="openSchemes()" (keyup)="resetErrors()" #scheme type="text" placeholder="Select Scheme"
+                class="form-control" autocomplete="off" readonly
+                [value]="schemeSelected && schemeSelected.schemeName ? schemeSelected.schemeName:''" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Total Bill Amount</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" #totalpayment type="number" placeholder="Enter Total Bill Amount"
+                class="form-control" autocomplete="off" [value]="totalPayment" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Down Payment</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
+                class="form-control" autocomplete="off" [value]="downPayment" disabled />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Requested Amount</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
+                class="form-control" autocomplete="off" [value]="loanAmount" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Sanction Amount</div>
+            </div>
+            <div class="fieldPadding">
+              <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
+                class="form-control" autocomplete="off" [value]="sanctionedAmount" (keyup)="payment($event)" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center mt-2">
+        <div class="mr-3">
+          <div class="btn btn-primary" (click)="sanctionLoan()">Sanction</div>
+        </div>
+        <div>
+          <div class="btn btn-primary" (click)="close()">Close</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

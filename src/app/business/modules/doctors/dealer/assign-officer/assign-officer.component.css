@@ -1,0 +1,71 @@
+.title {
+    font-size: 18px !important;
+    color: #1E4079 !important;
+}
+
+.subtitle {
+    font-size: 12px !important;
+    color: rgb(79, 79, 79);
+}
+
+.btn-primary {
+    background-color: #1e4079 !important;
+    border-color: #1e4070 !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+    border-radius: 2px !important;
+    padding: 5px 10px !important;
+}
+
+.w-100 {
+    width: 100% !important;
+}
+
+.fa-times {
+    font-weight: 100 !important;
+    font-size: 18px !important;
+    color: #1e4079 !important;
+}
+
+
+/* .card {
+    border-radius: 0px !important;
+    box-shadow: 0px 4px 4px rgb(0 0 0 / 16%) !important;
+} */
+
+.border {
+    border: 1px solid rgb(209, 209, 209) !important;
+}
+
+.officer-active {
+    font-size: 14px !important;
+    font-weight: bold !important;
+    color: rgb(1, 163, 1) !important;
+}
+
+::ng-deep .p-selectbutton .p-button.p-highlight {
+    background: #1E4079 !important;
+    border-color: #1E4079 !important;
+    color: #ffffff;
+}
+
+::ng-deep .p-ripple.p-element.p-button.p-component {
+    margin: 10px !important;
+    border: 1px solid rgb(201, 201, 201)!important;
+}
+
+.selection {
+    border: 1px solid black !important;
+}
+
+.officer-name {
+    font-size: 15px !important;
+}
+
+.officer-phone {
+    font-size: 13px !important;
+}
+
+.btn-primary {
+    font-size: 14px !important;
+}
