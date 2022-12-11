@@ -291,7 +291,7 @@ export class OtpVerifyComponent implements OnInit {
             "phoneNo": this.phoneNumber,
             "countryCode": "+91",
             "dob": this.dob,
-            "gender":this.gender
+            "gender": this.gender
           },
           "location": {
             "id": this.user.bussLocs[0]

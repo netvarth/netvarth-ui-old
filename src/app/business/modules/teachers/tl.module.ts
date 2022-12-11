@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CdlComponent } from './cdl.component';
+import { TlComponent } from './tl.component';
 import { RouterModule, Routes } from '@angular/router';
 import { OwlModule } from 'ngx-owl-carousel';
 import { OtpVerifyModule } from './loans/otp-verify/otp-verify.module';
@@ -16,7 +16,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ChartModule } from 'primeng/chart';
 
 const routes: Routes = [
-  { path: '', component: CdlComponent },
+  { path: '', component: TlComponent },
   { path: 'loans', loadChildren: () => import('./loans/loans.module').then(m => m.LoansModule) },
   { path: 'loans/:id', loadChildren: () => import('./loans/loan-details/loan-details.module').then(m => m.LoanDetailsModule) },
   { path: 'kycdoc/:id', loadChildren: () => import('./loans/loan-details/kyc-doc/kyc-doc.module').then(m => m.KycDocModule) },
@@ -32,7 +32,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    CdlComponent
+    TlComponent
   ],
   imports: [
     CommonModule,
@@ -52,7 +52,7 @@ const routes: Routes = [
     [RouterModule.forChild(routes)]
   ],
   exports: [
-    CdlComponent
+    TlComponent
   ]
 })
-export class CdlModule { }
+export class TlModule { }

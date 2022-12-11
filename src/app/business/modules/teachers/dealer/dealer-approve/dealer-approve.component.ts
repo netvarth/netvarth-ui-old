@@ -100,7 +100,7 @@ export class DealerApproveComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(
-    (data) => {
+      (data) => {
         if (data) {
           this.cdlservice.approveDealer(id, data).subscribe(() => {
             this.snackbarService.openSnackBar("Dealer Approved Successfully");

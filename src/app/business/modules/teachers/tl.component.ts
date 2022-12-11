@@ -6,11 +6,11 @@ import { GroupStorageService } from '../../../shared/services/group-storage.serv
 import { CdlService } from './cdl.service';
 import { ViewFileComponent } from './loans/loan-details/view-file/view-file.component';
 @Component({
-  selector: 'app-cdl',
-  templateUrl: './cdl.component.html',
-  styleUrls: ['./cdl.component.css']
+  selector: 'app-tl',
+  templateUrl: './tl.component.html',
+  styleUrls: ['./tl.component.css']
 })
-export class CdlComponent implements OnInit {
+export class TlComponent implements OnInit {
   user: any;
   loans: any = 0;
   viewmore: any = false;
@@ -291,7 +291,7 @@ export class CdlComponent implements OnInit {
 
 
   reports() {
-    this.router.navigate(['provider', 'cdl', 'reports']);
+    this.router.navigate(['provider', 'tl', 'reports']);
   }
 
   viewAllCustomers() {
@@ -303,11 +303,11 @@ export class CdlComponent implements OnInit {
   }
 
   continueApplication() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'create']);
+    this.router.navigate(['provider', 'tl', 'loans', 'create']);
   }
 
   openEmiCalci() {
-    this.router.navigate(['provider', 'cdl', 'emicalci']);
+    this.router.navigate(['provider', 'tl', 'emicalci']);
   }
 
   getLeadsCount() {
@@ -328,7 +328,7 @@ export class CdlComponent implements OnInit {
         spInternalStatus: 'Draft'
       }
     };
-    this.router.navigate(['cdl', 'provider', 'loans'], navigationExtras);
+    this.router.navigate(['tl', 'provider', 'loans'], navigationExtras);
   }
 
 
@@ -404,37 +404,37 @@ export class CdlComponent implements OnInit {
   }
 
   loanDetails(data) {
-    this.router.navigate(['provider', 'cdl', 'loans', data]);
+    this.router.navigate(['provider', 'tl', 'loans', data]);
   }
 
   viewMoreLoans() {
-    this.router.navigate(['provider', 'cdl', 'loans']);
+    this.router.navigate(['provider', 'tl', 'loans']);
   }
 
 
   viewMoreDealers() {
-    this.router.navigate(['provider', 'cdl', 'dealers']);
+    this.router.navigate(['provider', 'tl', 'dealers']);
   }
 
 
   CreateLoan() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'create']);
+    this.router.navigate(['provider', 'tl', 'loans', 'create']);
   }
 
   createDealer() {
-    this.router.navigate(['provider', 'cdl', 'dealers', 'create']);
+    this.router.navigate(['provider', 'tl', 'dealers', 'create']);
   }
   allLoans() {
-    this.router.navigate(['provider', 'cdl', 'loans']);
+    this.router.navigate(['provider', 'tl', 'loans']);
   }
   alldealers() {
-    this.router.navigate(['provider', 'cdl', 'dealers']);
+    this.router.navigate(['provider', 'tl', 'dealers']);
   }
   allDealers() {
-    this.router.navigate(['provider', 'cdl', 'dealers']);
+    this.router.navigate(['provider', 'tl', 'dealers']);
   }
   createLead() {
-    this.router.navigate(['provider', 'cdl', 'dealers', 'create']);
+    this.router.navigate(['provider', 'tl', 'dealers', 'create']);
   }
 
   requestedDealers() {
@@ -443,7 +443,7 @@ export class CdlComponent implements OnInit {
         spInternalStatus: 'ApprovalPending'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'dealers'], navigationExtras);
+    this.router.navigate(['provider', 'tl', 'dealers'], navigationExtras);
   }
   approvedLoans() {
     const navigationExtras: NavigationExtras = {
@@ -451,7 +451,7 @@ export class CdlComponent implements OnInit {
         type: 'approved'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+    this.router.navigate(['provider', 'tl', 'loans'], navigationExtras);
   }
   redirectedLoans() {
     const navigationExtras: NavigationExtras = {
@@ -459,7 +459,7 @@ export class CdlComponent implements OnInit {
         type: 'redirected'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+    this.router.navigate(['provider', 'tl', 'loans'], navigationExtras);
   }
 
   rejectedLoans() {
@@ -468,7 +468,7 @@ export class CdlComponent implements OnInit {
         type: 'rejected'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+    this.router.navigate(['provider', 'tl', 'loans'], navigationExtras);
   }
 
 
@@ -478,7 +478,7 @@ export class CdlComponent implements OnInit {
         type: 'ApprovalPending'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+    this.router.navigate(['provider', 'tl', 'loans'], navigationExtras);
   }
 
   allLeads() {
@@ -487,7 +487,7 @@ export class CdlComponent implements OnInit {
         spInternalStatus: 'Draft'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+    this.router.navigate(['provider', 'tl', 'loans'], navigationExtras);
   }
 
 
@@ -561,7 +561,7 @@ export class CdlComponent implements OnInit {
   }
 
   allSchemes() {
-    this.router.navigate(['provider', 'cdl', 'schemes']);
+    this.router.navigate(['provider', 'tl', 'schemes']);
   }
 
 
@@ -570,7 +570,7 @@ export class CdlComponent implements OnInit {
       this.showDealer(id, status)
     }
     else if (status == 'Approved') {
-      this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
+      this.router.navigate(['provider', 'tl', 'dealers', 'view', id]);
     }
     else {
       const navigationExtras: NavigationExtras = {
@@ -579,7 +579,7 @@ export class CdlComponent implements OnInit {
           action: action
         }
       };
-      this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
+      this.router.navigate(['provider', 'tl', 'dealers', 'update'], navigationExtras);
     }
 
   }
@@ -587,7 +587,7 @@ export class CdlComponent implements OnInit {
   showDealer(dealerId, spInternalStatus) {
 
     if (spInternalStatus == 'Approved') {
-      this.router.navigate(['provider', 'cdl', 'dealers', 'view', dealerId]);
+      this.router.navigate(['provider', 'tl', 'dealers', 'view', dealerId]);
     }
     else {
       const navigationExtras: NavigationExtras = {
@@ -595,7 +595,7 @@ export class CdlComponent implements OnInit {
           id: dealerId
         }
       };
-      this.router.navigate(['provider', 'cdl', 'dealers', 'approve'], navigationExtras);
+      this.router.navigate(['provider', 'tl', 'dealers', 'approve'], navigationExtras);
     }
 
   }

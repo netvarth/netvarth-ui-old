@@ -30,6 +30,7 @@ export class CreateComponent implements OnInit {
   loanDetailsSaved = false;
   bankDetailsSaved = false;
   kycDetailsSaved = false;
+  educationDetailsPanel = false;
   customerDetailsSaved = false;
   selectedMessage = {
     files: [],
@@ -46,6 +47,19 @@ export class CreateComponent implements OnInit {
     "aadhar": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] },
     "photo": { files: [], base64: [], caption: [] },
+    "registration": { files: [], base64: [], caption: [] },
+    "certificate": { files: [], base64: [], caption: [] },
+    "mci": { files: [], base64: [], caption: [] },
+    "experience": { files: [], base64: [], caption: [] },
+    "idcard": { files: [], base64: [], caption: [] },
+    "landtax": { files: [], base64: [], caption: [] },
+    "salaryslip": { files: [], base64: [], caption: [] },
+    "coapplicantphoto": { files: [], base64: [], caption: [] },
+    "coapplicantaadhar": { files: [], base64: [], caption: [] },
+    "coapplicantpan": { files: [], base64: [], caption: [] },
+    "gurantorpan": { files: [], base64: [], caption: [] },
+    "guarantoraadhar": { files: [], base64: [], caption: [] },
+    "guarantorphoto": { files: [], base64: [], caption: [] },
     "bank": { files: [], base64: [], caption: [] }
   }
   genders = [
@@ -105,6 +119,8 @@ export class CreateComponent implements OnInit {
   loanId: any;
   loanAmount: any;
   customerDetailsVerified: any;
+  educationDetailsVerified: any;
+
   headerText: any = "Create Loan";
   btnText: any = "Save as Lead";
   // private subs = new SubSink();
@@ -142,6 +158,12 @@ export class CreateComponent implements OnInit {
   loanProductSubCategories: any;
   productCategoryId: any;
   productSubCategoryId: any;
+  jobDetailsVerified: any;
+  jobDetailsPanel = false;
+  coapplicantDetailsPanel: any;
+  guarantorDetailsPanel: any;
+  coapplicantDetailsVerified: any;
+  guarantorDetailsVerified: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -279,12 +301,12 @@ export class CreateComponent implements OnInit {
               this.createLoan.controls.dealer.setValue(this.loanData.partner.id);
             }
 
-            if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
-              this.loanData.loanProducts.map((data) => {
-                this.SelectedloanProducts.push({ "id": data.id, "categoryId": data.categoryId, "typeId": data.typeId })
-              });
-              console.log("this.SelectedloanProducts", this.SelectedloanProducts);
-            }
+            // if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
+            //   this.loanData.loanProducts.map((data) => {
+            //     this.SelectedloanProducts.push({ "id": data.id, "categoryId": data.categoryId, "typeId": data.typeId })
+            //   });
+            //   console.log("this.SelectedloanProducts", this.SelectedloanProducts);
+            // }
 
             // if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
             //   this.loanData.loanProducts.map((data) => {
@@ -450,7 +472,16 @@ export class CreateComponent implements OnInit {
       productcategory: [null],
       productsubcategory: [null],
       guarantorType: [null],
-      guarantorName: [null]
+      guarantorName: [null],
+      alternatephone: [null],
+      mci: [null],
+      registration: [null],
+      certificate: [null],
+      qualification: [null],
+      mcinumber: [null],
+      cgpa: [null],
+      university: [null],
+      passoutyear: [null]
     });
   }
 
@@ -516,6 +547,32 @@ export class CreateComponent implements OnInit {
     this.cdlService.getLoanProductCategoryList().subscribe((data) => {
       this.loanProductCategories = data;
     })
+  }
+
+
+  saveEducationDetails() {
+    this.panelsManage(false, false, false, true, false, false, false, false);
+    this.educationDetailsVerified = true;
+    this.snackbarService.openSnackBar("Education Details Saved Successfully")
+  }
+
+  saveJobDetails() {
+    this.panelsManage(false, false, false, false, true, false, false, false);
+    this.jobDetailsVerified = true;
+    this.snackbarService.openSnackBar("Job Details Saved Successfully")
+  }
+
+  saveCoapplicantDetails() {
+    this.panelsManage(false, false, false, false, false, false, false, true);
+    this.coapplicantDetailsVerified = true;
+    this.snackbarService.openSnackBar("Co-Applicant Details Saved Successfully")
+  }
+
+
+  saveGuarantorDetails() {
+    this.panelsManage(false, false, false, false, false, false, false, false);
+    this.guarantorDetailsVerified = true;
+    this.snackbarService.openSnackBar("Co-Applicant Details Saved Successfully")
   }
 
 
@@ -600,6 +657,10 @@ export class CreateComponent implements OnInit {
     this.loanDetailsPanel = true;
     this.otherDetailsPanel = true;
     this.bankDetailsPanel = true;
+    this.educationDetailsPanel = true;
+    this.jobDetailsPanel = true;
+    this.coapplicantDetailsPanel = true;
+    this.guarantorDetailsPanel = true;
   }
 
   closeAll() {
@@ -608,7 +669,7 @@ export class CreateComponent implements OnInit {
     this.loanDetailsPanel = false;
     this.otherDetailsPanel = false;
     this.bankDetailsPanel = false;
-
+    this.educationDetailsPanel = false;
   }
 
   mafilEmployeeStatus() {
@@ -806,7 +867,7 @@ export class CreateComponent implements OnInit {
         }
         this.cdlService.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
           this.snackbarService.openSnackBar("Loan Application Updated Successfully")
-          this.router.navigate(['provider', 'cdl', 'loans']);
+          this.router.navigate(['provider', 'tl', 'loans']);
 
         },
           (error) => {
@@ -855,7 +916,7 @@ export class CreateComponent implements OnInit {
           this.cdlService.saveBankDetails(this.bankDetails).subscribe((data) => {
             console.log("this.loanProducts", this.loanProducts);
             this.snackbarService.openSnackBar("Loan Application Created Successfully")
-            this.router.navigate(['provider', 'cdl', 'loans']);
+            this.router.navigate(['provider', 'tl', 'loans']);
           }), (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
           }
@@ -929,7 +990,7 @@ export class CreateComponent implements OnInit {
   }
 
   goNext() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'approved']);
+    this.router.navigate(['provider', 'tl', 'loans', 'approved']);
   }
 
 
@@ -1001,7 +1062,7 @@ export class CreateComponent implements OnInit {
                       }
                     }
                     this.snackbarService.openSnackBar("Loan Auto Approved");
-                    this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+                    this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
                   }
                   else if (!data.isAutoApproval && data.isApproved) {
                     const navigationExtras: NavigationExtras = {
@@ -1011,7 +1072,7 @@ export class CreateComponent implements OnInit {
                       }
                     }
                     this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
-                    this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+                    this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
                   }
                   else if (!data.isAutoApproval && data.isApproved) {
                     const navigationExtras: NavigationExtras = {
@@ -1021,7 +1082,7 @@ export class CreateComponent implements OnInit {
                       }
                     }
                     this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
-                    this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+                    this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
                   }
                   else if (!data.isAutoApproval && !data.isApproved) {
                     const navigationExtras: NavigationExtras = {
@@ -1031,7 +1092,7 @@ export class CreateComponent implements OnInit {
                       }
                     }
                     this.snackbarService.openSnackBar("Sorry This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
-                    this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+                    this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
                   }
                   console.log("Response", data);
                 },
@@ -1088,7 +1149,7 @@ export class CreateComponent implements OnInit {
               }
             };
             console.log("Navigation", navigationExtras)
-            this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+            this.router.navigate(['provider', 'tl', 'loans', 'update'], navigationExtras);
           }
         }
       });
@@ -1325,7 +1386,7 @@ export class CreateComponent implements OnInit {
       }
 
       this.cdlService.addressUpdate(this.loanApplication).subscribe((s3urls: any) => {
-        this.panelsManage(false, false, true, false);
+        this.panelsManage(false, false, true, false, false, false, false, false);
         this.kycDetailsSaved = true;
         this.snackbarService.openSnackBar("Address Details Updated Successfully")
       },
@@ -1341,11 +1402,16 @@ export class CreateComponent implements OnInit {
   }
 
 
-  panelsManage(customer, kyc, loan, bank) {
+  panelsManage(customer, kyc, education, job, loan, bank, coapplicant, guarantor) {
     this.customerDetailsPanel = customer;
     this.kycDetailsPanel = kyc;
     this.loanDetailsPanel = loan;
     this.bankDetailsPanel = bank;
+    this.educationDetailsPanel = education;
+    this.jobDetailsPanel = job;
+    this.coapplicantDetailsPanel = coapplicant;
+    this.guarantorDetailsPanel = guarantor;
+
   }
 
   saveLoanDetails() {
@@ -1416,7 +1482,7 @@ export class CreateComponent implements OnInit {
       }
 
       this.cdlService.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
-        this.panelsManage(false, false, false, true);
+        this.panelsManage(false, false, false, false, false, true, false, false);
         this.loanDetailsSaved = true;
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
       },
@@ -1519,6 +1585,7 @@ export class CreateComponent implements OnInit {
         });
         this.bankDetailsSaved = true;
         this.snackbarService.openSnackBar("Bank Details Saved Successfully")
+        this.panelsManage(false, false, false, false, false, false, true, false);
 
       }), (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
@@ -1536,6 +1603,7 @@ export class CreateComponent implements OnInit {
             });
         }
         this.snackbarService.openSnackBar("Bank Details Saved Successfully")
+        this.panelsManage(false, false, false, false, false, false, true, false);
 
       }), (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })

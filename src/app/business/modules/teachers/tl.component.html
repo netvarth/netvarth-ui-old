@@ -14,7 +14,7 @@
     </div>
     <div class="d-flex">
       <div>
-        <img class="company-logo" src="./assets/images/cdl/company_logo.png">
+        <img class="company-logo" src="../../../../assets/images/cdl/company_logo.png">
       </div>
     </div>
   </div>
@@ -39,7 +39,7 @@
               </div>
             </div>
 
-            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canCreatePartner">
+            <!-- <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canCreatePartner">
               <div class="dashboard-card text-center pointer-cursor" (click)="createDealer()">
                 <div>
                   <div>
@@ -50,7 +50,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
 
@@ -67,7 +67,7 @@
               </div>
             </div>
 
-            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canViewPartner">
+            <!-- <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canViewPartner">
               <div class="dashboard-card text-center pointer-cursor" (click)="allDealers()">
                 <div>
                   <div>
@@ -78,7 +78,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
             <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canApprovePartner">
               <div class="dashboard-card text-center pointer-cursor" (click)="requestedDealers()">
@@ -94,19 +94,6 @@
             </div>
 
 
-            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canViewSchemes">
-              <div class="dashboard-card text-center pointer-cursor" (click)="allSchemes()">
-                <div>
-                  <div>
-                    <img width="60" height="60" src="./assets/images/cdl/partner/schemes.png">
-                  </div>
-                  <div class="text-center">
-                    <span class="head-card-sub-title">Schemes</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <div class="col-xs-3 no-padding-small no-padding" (click)="allLeads()"
               *ngIf="capabilities && capabilities.canViewLoan">
               <div class="dashboard-card text-center pointer-cursor">
@@ -121,6 +108,35 @@
               </div>
             </div>
 
+
+            <div class="col-xs-3 no-padding-small no-padding">
+              <div class="dashboard-card text-center pointer-cursor" (click)="allSchemes()">
+                <div>
+                  <div>
+                    <img width="60" height="60" src="./assets/images/cdl/partner/schemes.png">
+                  </div>
+                  <div class="text-center">
+                    <span class="head-card-sub-title">Schemes</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- <div class="col-xs-3 no-padding-small no-padding" (click)="viewAllUsers()">
+              <div class="dashboard-card text-center pointer-cursor">
+                <div>
+                  <div>
+                    <img width="60" height="60" src="./assets/images/cdl/partner/customers.png">
+                  </div>
+                  <div class="text-center">
+                    <span class="head-card-sub-title">Doctors</span>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+
             <div class="col-xs-3 no-padding-small no-padding" (click)="viewAllCustomers()">
               <div class="dashboard-card text-center pointer-cursor">
                 <div>
@@ -128,11 +144,12 @@
                     <img width="60" height="60" src="./assets/images/cdl/partner/customers.png">
                   </div>
                   <div class="text-center">
-                    <span class="head-card-sub-title">Customers</span>
+                    <span class="head-card-sub-title">Doctors</span>
                   </div>
                 </div>
               </div>
             </div>
+
 
             <div class="col-xs-3 no-padding-small no-padding">
               <div class="dashboard-card text-center pointer-cursor" (click)="openEmiCalci()">
@@ -444,7 +461,7 @@
           <div *ngIf="users">
             <div class="loan-data">
               <div>
-                <span class="card-title">Users</span>
+                <span class="card-title">Staff</span>
               </div>
               <p-table [responsive]="true" responsiveLayout="scroll" [value]="users" [paginator]="true" [rows]="5">
                 <ng-template pTemplate="header">
@@ -492,156 +509,14 @@
 
   </div>
   <div class="row container-fluid no-padding-small" *ngIf="capabilities && capabilities.canViewPartner">
+
     <div class="mt-2 col-lg-8 col-md-12">
-      <div class="card loans-card">
-        <div>
-          <span class="card-title">Dealers</span>
-        </div>
-
-        <div class="row">
-          <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
-            <div class="dashboard-card text-center">
-              <div class="d-flex">
-                <div>
-                  <img width="50" height="50" src="./assets/images/cdl/partner/all_loans.png">
-                </div>&nbsp;&nbsp;
-                <div class="text-left my-auto">
-                  <span class="head-card-title">All Dealers</span><br>
-                  <span class="font-weight-bold">{{allDealersCount}}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
-            <div class="dashboard-card text-center">
-              <div class="d-flex">
-                <div>
-                  <img width="50" height="50" src="./assets/images/cdl/partner/approved_loans.png">
-                </div>&nbsp;&nbsp;
-                <div class="text-left my-auto">
-                  <span class="head-card-title">Approved</span><br>
-                  <span class="font-weight-bold">{{approvedDealersCount}}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
-            <div class="dashboard-card text-center">
-              <div class="d-flex">
-                <div>
-                  <img width="50" height="50" src="./assets/images/cdl/partner/pending_loans.png">
-                </div>&nbsp;&nbsp;
-                <div class="text-left my-auto">
-                  <span class="head-card-title">Requested</span><br>
-                  <span class="font-weight-bold">{{requestedDealersCount}}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-sm-6 col-xs-6 no-padding-small">
-            <div class="dashboard-card text-center">
-              <div class="d-flex">
-                <div>
-                  <img width="50" height="50" src="./assets/images/cdl/partner/rejected_loans.png">
-                </div>&nbsp;&nbsp;
-                <div class="text-left my-auto">
-                  <span class="head-card-title">Rejected</span><br>
-                  <span class="font-weight-bold">{{rejectedDealersCount}}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <p-table [responsive]="true" responsiveLayout="scroll" #dealerTable [value]="dealers" dataKey="id"
-          [paginator]="true" [rows]="4" [showCurrentPageReport]="true"
-          styleClass="p-datatable-customers p-datatable-gridlines"
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          [globalFilterFields]="['referenceNo','partnerName','status']">
-          <ng-template pTemplate="caption">
-            <div class="container-fluid no-padding-small">
-              <div class="row">
-                <div class="col-md-4 no-padding-small">
-                  <span>
-                    <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
-                      (input)="dealerTable.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
-                      style="width:100%" />
-                  </span>
-                </div>
-              </div>
-            </div>
-          </ng-template>
-          <ng-template pTemplate="header">
-            <tr>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  Dealer Id
-                  <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  Dealer Name
-                  <p-columnFilter type="text" field="partnerName" display="menu"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  Status
-                  <p-columnFilter type="text" field="spInternalStatus" display="menu"></p-columnFilter>
-                </div>
-              </th>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  More Actions
-                </div>
-              </th>
-            </tr>
-          </ng-template>
-          <ng-template pTemplate="body" let-partner>
-            <tr class="mobile-card">
-              <td>
-                <span class="table-column-data">{{partner.referenceNo}}</span>
-              </td>
-              <td>
-                <span class="table-column-data">{{partner.partnerName}}</span>
-              </td>
-              <td>
-                <span [class]="'customer-badge status-' + partner.spInternalStatus" class="table-column-data">
-                  {{partner.spInternalStatus}}</span>
-              </td>
-              <td>
-                <div class="text-center">
-                  <button pButton pRipple type="button" class="p-button-primary btn-primary"
-                    *ngIf="capabilities && capabilities.canUpdatePartner || partner.spInternalStatus=='Draft'"
-                    (click)="updateDealer(partner.uid,'update')"><i
-                      class="pi pi-upload text-white"></i>&nbsp;Update</button>&nbsp;&nbsp;
-                  <button pButton pRipple type="button" class="p-button-primary btn-primary"
-                    (click)="updateDealer(partner.uid,'update',partner.spInternalStatus)"><i
-                      class="pi pi-eye text-white"></i>&nbsp;View</button>
-                </div>
-              </td>
-            </tr>
-            <br class="d-lg-none d-md-none">
-          </ng-template>
-          <ng-template pTemplate="emptymessage">
-            <tr>
-              <td colspan="7">No Dealers found.</td>
-            </tr>
-          </ng-template>
-        </p-table>
-      </div>
-    </div>
-    <div class="mt-2 col-lg-4 col-md-12">
       <div class="card loans-card">
         <div class="mt-2">
           <div *ngIf="customers">
             <div class="loan-data">
               <div>
-                <span class="card-title">Customers</span>
+                <span class="card-title">Doctors</span>
               </div>
               <p-table [responsive]="true" responsiveLayout="scroll" [value]="customers" [paginator]="true" [rows]="5">
                 <ng-template pTemplate="header">
