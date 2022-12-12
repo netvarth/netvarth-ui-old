@@ -104,7 +104,7 @@
         </div>
       </div>
       <hr />
-      <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Credit Score Generated')" class="crifScoreFlex">
+      <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified')" class="crifScoreFlex">
         <div *ngFor="let item of tempCrifDetails;let i=index" class="crifscoresmallDeviceWidth" >
           <!---crif btn start-->
           <div class=" my-2">

@@ -196,12 +196,17 @@ export class ViewLeadQnrComponent implements OnInit {
               _this.initApplicantForm(kycInfo);
             }
           )
-        } else if (leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Score Generated') {
+        } else if (leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified') {
           _this.crmService.getkyc(leadInfo.uid).subscribe(
             (kycInfo: any) => {
               _this.kycInfo = kycInfo;
               kycInfo.forEach((item) => {
-                _this.headerName = 'Sales Field Verification';
+                if(leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Score Generated' ){
+                  _this.headerName = 'Sales Field Verification';
+                }
+                else{
+                  _this.headerName = 'Login';
+                }
                 _this.getCrifInquiryVerification(item);
               })
             }
@@ -1010,7 +1015,7 @@ export class ViewLeadQnrComponent implements OnInit {
           }
         }, ((error: any) => {
           if (this.leadInfo && this.leadInfo.status) {
-            if (this.leadInfo.status.name === 'Credit Score Generated') {
+            if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified') {
               this.generateCrifText = 'Sorry you have no CRIF score of';
             }
           }

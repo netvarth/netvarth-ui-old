@@ -58,7 +58,10 @@
                   <th class="head_color" *ngIf="bStatusTableHead">Status</th>
                   <th class="head_color" *ngIf="tempaltename==='Rejected'">Reject From</th>
                   <th class="head_color" *ngIf="tempaltename==='Rejected'">Reject Date</th>
-                  <th class="head_color" *ngIf="tempaltename !=='Rejected'">Last Updated On</th>
+                  <th class="head_color" *ngIf="tempaltename !=='Rejected' && tempaltename !=='Loan Disbursement'">Last Updated On</th>
+                  <th class="head_color"
+                    *ngIf="tempaltename !=='Rejected' && tempaltename==='Loan Disbursement'">
+                    Loan Sanction On</th>
                   <th class="head_color" *ngIf="tempaltename==='Rejected' && leads.length>0">Notes</th>
                 </tr>
               </thead>
@@ -148,7 +151,7 @@
                         *ngIf="lead.assignee && lead.assignee.name">{{lead.assignee.name}}</span>
                     </td>
                     <td data-title="Lead Details" class="td2" *ngIf="lead.createdDate">
-                      {{lead.createdDate  |date: newDateFormat}}
+                      {{lead.createdDate |date: newDateFormat}}
                     </td>
                     <td data-title="Lead Details" class="td2"
                       *ngIf="(lead.status && (lead.status.name==='New' || lead.status.name==='Sales Verified'))&& lead.isRedirected && tempaltename !=='Rejected'">
