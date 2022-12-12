@@ -742,23 +742,8 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
             .subscribe(
                 () => {
                     if (this.selectedMessage.files.length > 0) {
-                        //const uid = []
-                       // uid.push(this.rescheduleUserId);
                         console.log("UID :",this.rescheduleUserId);
                         this.consumerNoteAndFileSave(this.rescheduleUserId);
-                        // let queryParams = {
-                        //     account_id: this.account_id,
-                        //     uuid: this.rescheduleUserId,
-                        //     type: 'waitlistreschedule',
-                        //     theme: this.theme
-                        // }
-                        // if (this.businessId) {
-                        //     queryParams['customId'] = this.customId;
-                        // }
-                        // let navigationExtras: NavigationExtras = {
-                        //     queryParams: queryParams
-                        // };
-                        // this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
                         
                     } else {
                         let queryParams = {
@@ -1552,20 +1537,20 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                                 resolve(true);
                             }
                         );
-                        let queryParams = {
-                            account_id: _this.account_id,
-                            uuid: _this.rescheduleUserId,
-                            type: 'waitlistreschedule',
-                            theme: _this.theme
-                        }
-                        if (_this.businessId) {
-                            queryParams['customId'] = _this.customId;
-                        }
-                        let navigationExtras: NavigationExtras = {
-                            queryParams: queryParams
-                        };
-                        this.setAnalytics();
-                        _this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras)
+                        // let queryParams = {
+                        //     account_id: _this.account_id,
+                        //     uuid: _this.rescheduleUserId,
+                        //     type: 'waitlistreschedule',
+                        //     theme: _this.theme
+                        // }
+                        // if (_this.businessId) {
+                        //     queryParams['customId'] = _this.customId;
+                        // }
+                        // let navigationExtras: NavigationExtras = {
+                        //     queryParams: queryParams
+                        // };
+                        // this.setAnalytics();
+                        // _this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras)
                     } else {
                         let queryParams = {
                             account_id: _this.account_id,
@@ -1579,7 +1564,7 @@ export class ConsumerCheckinComponent implements OnInit, OnDestroy {
                         let navigationExtras: NavigationExtras = {
                             queryParams: queryParams
                         };
-                        this.setAnalytics();
+                        _this.setAnalytics();
                         _this.router.navigate(['consumer', 'checkin', 'confirm'], navigationExtras);
                     }
                 }
