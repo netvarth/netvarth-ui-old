@@ -283,6 +283,12 @@ export class CdlService {
   }
 
 
+  sendDigitalDocument(id) {
+    const url = 'provider/loanapplication/digitaldocument/' + id;
+    return this.servicemeta.httpPost(url, null);
+  }
+
+
 
   getPartnerCategories() {
     const url = 'provider/partner/category';

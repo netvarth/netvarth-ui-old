@@ -161,7 +161,7 @@ export class LoanDetailsComponent implements OnInit {
       (id) => {
         if (id) {
           this.snackbarService.openSnackBar("Loan Sanctioned Successfully");
-          this.router.navigate(['provider', 'cdl', 'loans', id]);
+          this.router.navigate(['provider', 'dl', 'loans', id]);
         }
       });
   }
@@ -171,7 +171,7 @@ export class LoanDetailsComponent implements OnInit {
     this.cdlservice.ApprovalRequest(this.loanId).subscribe((data: any) => {
       if (data) {
         this.snackbarService.openSnackBar("Loan Approved Successfully");
-        this.router.navigate(['provider', 'cdl', 'loans']);
+        this.router.navigate(['provider', 'dl', 'loans']);
       }
     });
   }
@@ -219,7 +219,7 @@ export class LoanDetailsComponent implements OnInit {
               }
             };
             this.snackbarService.openSnackBar("Loan Rejected Successfully");
-            this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+            this.router.navigate(['provider', 'dl', 'loans'], navigationExtras);
           });
         }
       });
@@ -249,7 +249,7 @@ export class LoanDetailsComponent implements OnInit {
               }
             };
             this.snackbarService.openSnackBar("Loan Rejected Successfully");
-            this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+            this.router.navigate(['provider', 'dl', 'loans'], navigationExtras);
           });
         }
       });
@@ -258,12 +258,12 @@ export class LoanDetailsComponent implements OnInit {
   }
 
   showKycDoc() {
-    this.router.navigate(['provider', 'cdl', 'kycdoc', this.loanId]);
+    this.router.navigate(['provider', 'dl', 'kycdoc', this.loanId]);
   }
 
 
   showLoanDetailsDoc() {
-    this.router.navigate(['provider', 'cdl', 'loandetailsdoc', this.loanId]);
+    this.router.navigate(['provider', 'dl', 'loandetailsdoc', this.loanId]);
   }
 
 
@@ -290,7 +290,7 @@ export class LoanDetailsComponent implements OnInit {
                 }
               };
               this.snackbarService.openSnackBar("Loan Verified Successfully");
-              this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+              this.router.navigate(['provider', 'dl', 'loans'], navigationExtras);
             }
           });
         }
@@ -322,7 +322,7 @@ export class LoanDetailsComponent implements OnInit {
         type: 'action'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'loans', 'create'], navigationExtras);
+    this.router.navigate(['provider', 'dl', 'loans', 'create'], navigationExtras);
   }
 
 }

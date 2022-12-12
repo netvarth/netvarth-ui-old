@@ -86,7 +86,7 @@ export class ApprovedComponent implements OnInit {
     this.getLoanData();
     if (this.loanData) {
       if (this.loanData.spInternalStatus == 'Approved') {
-        this.router.navigate(['provider', 'cdl', 'loans', this.loanId]);
+        this.router.navigate(['provider', 'tl', 'loans', this.loanId]);
       }
     }
   }
@@ -104,7 +104,7 @@ export class ApprovedComponent implements OnInit {
 
 
   loanDetails(id) {
-    this.router.navigate(['provider', 'cdl', 'loans', id]);
+    this.router.navigate(['provider', 'tl', 'loans', id]);
   }
 
   goNext() {
@@ -127,7 +127,7 @@ export class ApprovedComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['provider', 'cdl']);
+    this.router.navigate(['provider', 'tl']);
   }
 
 
@@ -151,7 +151,7 @@ export class ApprovedComponent implements OnInit {
             (dataS3Url) => {
               console.log(dataS3Url);
               this.snackbarService.openSnackBar("Loan Approved Successfully")
-              this.router.navigate(['provider', 'cdl', 'loans']);
+              this.router.navigate(['provider', 'tl', 'loans']);
             });
         }
 
@@ -275,7 +275,7 @@ export class ApprovedComponent implements OnInit {
               uid: this.loanId
             }
           };
-          this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+          this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
         }
       };
     })
@@ -297,7 +297,7 @@ export class ApprovedComponent implements OnInit {
   }
 
   viewLoan() {
-    this.router.navigate(['provider', 'cdl', 'loans', this.loanId]);
+    this.router.navigate(['provider', 'tl', 'loans', this.loanId]);
   }
 
   gotoNext() {

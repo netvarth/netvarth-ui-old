@@ -67,19 +67,19 @@ export class TlComponent implements OnInit {
 
   carousalImages = [
     {
-      "url": "./assets/images/cdl/Slide_1.jpg"
+      "url": "./assets/images/cdl/teachers_slide.jpg"
     },
     {
-      "url": "./assets/images/cdl/Slide_2.jpg"
+      "url": "./assets/images/cdl/teachers_slide.jpg"
     },
     {
-      "url": "./assets/images/cdl/Slide_3.jpg"
+      "url": "./assets/images/cdl/teachers_slide.jpg"
     },
     {
-      "url": "./assets/images/cdl/Slide_4.jpg"
+      "url": "./assets/images/cdl/teachers_slide.jpg"
     },
     {
-      "url": "./assets/images/cdl/Slide_5.jpg"
+      "url": "./assets/images/cdl/teachers_slide.jpg"
     }
   ]
 

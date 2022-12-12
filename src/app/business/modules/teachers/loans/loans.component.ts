@@ -87,7 +87,7 @@ export class LoansComponent implements OnInit {
           action: action
         }
       };
-      this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+      this.router.navigate(['provider', 'tl', 'loans', 'update'], navigationExtras);
     }
     else if (status == 'PartnerAccepted') {
       const navigationExtras: NavigationExtras = {
@@ -96,7 +96,7 @@ export class LoansComponent implements OnInit {
           uid: id
         }
       };
-      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+      this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
     }
     else if (status == 'Sanctioned' || status == 'ApprovalRequired' || status == 'rejected' || (status == 'ApprovalPending' && this.user.userType == 2)) {
       this.loanDetails(id, status)
@@ -108,7 +108,7 @@ export class LoansComponent implements OnInit {
           uid: id
         }
       };
-      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+      this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
     }
     else if (status == 'ApprovalPending' && this.user.userType != 2) {
       const navigationExtras: NavigationExtras = {
@@ -117,7 +117,7 @@ export class LoansComponent implements OnInit {
           uid: id
         }
       };
-      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+      this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
     }
     else {
       const navigationExtras: NavigationExtras = {
@@ -127,7 +127,7 @@ export class LoansComponent implements OnInit {
           timetype: 2
         }
       };
-      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+      this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
     }
 
   }
@@ -222,7 +222,7 @@ export class LoansComponent implements OnInit {
 
 
   goBack() {
-    this.router.navigate(['provider', 'cdl']);
+    this.router.navigate(['provider', 'tl']);
     // this.location.back();
   }
 
@@ -234,10 +234,10 @@ export class LoansComponent implements OnInit {
           uid: id
         }
       };
-      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+      this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
     }
     else {
-      this.router.navigate(['provider', 'cdl', 'loans', id]);
+      this.router.navigate(['provider', 'tl', 'loans', id]);
     }
   }
 

@@ -67,19 +67,19 @@ export class CdlComponent implements OnInit {
 
   carousalImages = [
     {
-      "url": "./assets/images/cdl/Slide_1.jpg"
+      "url": "./assets/images/cdl/Slide_1.gif"
     },
     {
-      "url": "./assets/images/cdl/Slide_2.jpg"
+      "url": "./assets/images/cdl/Slide_2.gif"
     },
     {
-      "url": "./assets/images/cdl/Slide_3.jpg"
+      "url": "./assets/images/cdl/Slide_3.gif"
     },
     {
-      "url": "./assets/images/cdl/Slide_4.jpg"
+      "url": "./assets/images/cdl/Slide_4.gif"
     },
     {
-      "url": "./assets/images/cdl/Slide_5.jpg"
+      "url": "./assets/images/cdl/Slide_5.gif"
     }
   ]
 

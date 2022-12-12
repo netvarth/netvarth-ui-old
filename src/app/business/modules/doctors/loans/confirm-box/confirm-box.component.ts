@@ -87,7 +87,7 @@ export class ConfirmBoxComponent implements OnInit {
 
   goHome() {
     this.close();
-    this.router.navigate(['provider', 'cdl'])
+    this.router.navigate(['provider', 'dl'])
   }
 
   resetErrors() {
@@ -203,7 +203,7 @@ export class ConfirmBoxComponent implements OnInit {
       if (data) {
         this.dialogRef.close(this.loanId);
         this.snackbarService.openSnackBar("Loan Approved Successfully")
-        this.router.navigate(['provider', 'cdl']);
+        this.router.navigate(['provider', 'dl']);
       }
     },
       (error) => {

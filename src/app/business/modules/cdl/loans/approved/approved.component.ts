@@ -102,6 +102,13 @@ export class ApprovedComponent implements OnInit {
     }
   }
 
+  sendDigitalDocument() {
+    this.cdlService.sendDigitalDocument(this.loanId).subscribe((data) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Successfully Sent Document for Digital Signature")
+      }
+    })
+  }
 
   loanDetails(id) {
     this.router.navigate(['provider', 'cdl', 'loans', id]);

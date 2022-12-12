@@ -80,18 +80,6 @@
               </div>
             </div> -->
 
-            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canApprovePartner">
-              <div class="dashboard-card text-center pointer-cursor" (click)="requestedDealers()">
-                <div>
-                  <div>
-                    <img width="60" height="60" src="./assets/images/cdl/partner/req_dealers.png">
-                  </div>
-                  <div class="text-center">
-                    <span class="head-card-sub-title">Req Dealers</span>
-                  </div>
-                </div>
-              </div>
-            </div>
 
 
             <div class="col-xs-3 no-padding-small no-padding" (click)="allLeads()"
@@ -398,12 +386,7 @@
                   <p-columnFilter type="text" field="customer.firstName" display="menu"></p-columnFilter>
                 </div>
               </th>
-              <th>
-                <div class="p-d-flex p-jc-between p-ai-center">
-                  Dealer
-                  <p-columnFilter type="text" field="partner.partnerName" display="menu"></p-columnFilter>
-                </div>
-              </th>
+
               <th>
                 <div class="p-d-flex p-jc-between p-ai-center">
                   Status
@@ -424,10 +407,6 @@
               <td>
                 <span class="table-column-data">{{loan.customer.firstName}}
                   {{loan.customer.lastName}}</span>
-              </td>
-              <td>
-                <span *ngIf="loan && loan.partner && loan.partner.partnerName"
-                  class="table-column-data">{{loan.partner.partnerName}}</span>
               </td>
               <td>
                 <span *ngIf="loan.applicationStatus !='Rejected'"
