@@ -1,6 +1,12 @@
 .mgn-rt-5 {
     margin-right: 5px !important;
 }
+.divFlex{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 45px;
+}
 .line-clamp {
     display: -webkit-box !important;
     -webkit-line-clamp: 2 !important;

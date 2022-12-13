@@ -130,17 +130,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding ">
-            <div class="pull-left no-padding col-xs-6 mgn-up-5 " *ngIf="showViewPrescritionBtn"
-                [ngClass]="showViewPrescritionBtn ? 'pull-left no-padding col-xs-6 ' : ''">
-                <div class="prov_lbl"></div>
-                <div class="prov_nme">
-                    <button mat-flat-button class="btns"
-                        (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)">{{ 'View
-                        Prescription' | translate }}</button>
-                </div>
-            </div>
-            <div class="pull-left no-padding col-xs-6 mgn-up-5">
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding divFlex">
+            <div class="pull-left no-padding col-xs-6 mgn-up-5" *ngIf="showQnrBtn || showJoinOtherVideoBtn || showJoinJaldeeVideoBtn || showReceiptBtn">
                 <div class="">
                     <span *ngIf="showQnrBtn" class="mgn-rt-5">
                         <button mat-flat-button class="btns"
@@ -164,14 +155,30 @@
                     </span>
                 </div>
             </div>
+            <div class="pull-left  col-xs-6 no-padding mgn-up-5"
+            [ngClass]="showPayBtn ? 'pull-left no-padding col-xs-6 mgn-up-5' : ''" *ngIf="showPayBtn && !showViewPrescritionBtn">
+                <button  mat-flat-button class="btns rupee-font mgn-rt-5"
+                    (click)="cardActionPerformed('appt', 'viewBill', booking, $event)">{{'Pay' | translate}}
+                    {{booking.amountDue | currency:'&#8377;'}}</button>
+            </div>
+            <div class="pull-left no-padding col-xs-6 mgn-up-5 " *ngIf="showViewPrescritionBtn && !showPayBtn"
+            [ngClass]="showViewPrescritionBtn ? 'pull-left no-padding col-xs-6 ' : ''">
+            <div class="prov_lbl"></div>
+            <div class="prov_nme">
+                <button mat-flat-button class="btns"
+                    (click)="cardActionPerformed('appt', 'viewPrescription', booking, $event)">{{ 'View
+                    Prescription' | translate }}</button>
+            </div>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding ">
-            <div class="pull-left  col-xs-6 no-padding mgn-up-5">
-                <span *ngIf="!showReceiptBtn &&  showPaidInfo" class="amtPaid  rupee-font mgn-rt-5">{{ 'Paid' | translate }}
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xs-12 no-padding divFlex">
+            <div class="pull-left  col-xs-6 no-padding mgn-up-5" *ngIf="!showReceiptBtn &&  showPaidInfo">
+                <span  class="amtPaid  rupee-font mgn-rt-5">{{ 'Paid' | translate }}
                     {{booking.amountPaid | currency:'&#8377;'}}</span>
             </div>
-            <div class="pull-left  col-xs-6 no-padding mgn-up-5">
-                <button *ngIf="showPayBtn" mat-flat-button class="btns rupee-font mgn-rt-5"
+            <div class="pull-left  col-xs-6 no-padding mgn-up-5"
+            [ngClass]="showPayBtn ? 'pull-left no-padding col-xs-6 mgn-up-5' : ''" *ngIf="showPayBtn && showViewPrescritionBtn">
+                <button  mat-flat-button class="btns rupee-font mgn-rt-5"
                     (click)="cardActionPerformed('appt', 'viewBill', booking, $event)">{{'Pay' | translate}}
                     {{booking.amountDue | currency:'&#8377;'}}</button>
             </div>
