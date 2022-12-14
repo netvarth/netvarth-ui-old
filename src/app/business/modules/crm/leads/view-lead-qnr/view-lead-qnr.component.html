@@ -14,7 +14,7 @@
   </div>
 </section>
 <section class="container card mt-4 mx-auto"*ngIf="leadInfo && leadInfo.status 
-          && (leadInfo.status.name==='New' || leadInfo.status.name==='Sales Verified') 
+          && (leadInfo.status.name==='New' || leadInfo.status.name==='Sales Verified'|| leadInfo.status.name==='Loan Sanction') 
           && (leadInfo.redirectNotes && leadInfo.redirectNotes.length>0)">
   <div *ngIf="leadInfo.redirectNotes && leadInfo.redirectNotes.length>0 ">
     <div *ngIf="leadInfo.redirectNotes && leadInfo.redirectNotes.length>0 " class="notesHeaderSection">
@@ -59,14 +59,14 @@
     </div>
   </div>
 </section>
-<section *ngIf="leadInfo" class="container card mt-4 mx-auto" [ngClass]="{'opacity': api_loading_UpdateKyc || api_loading_UpdateKycProceed}">
+<section *ngIf="leadInfo" class="container card mt-4 mx-auto">
   <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
   <ng-container *ngIf="leadInfo.status && (leadInfo.status.name==='New' || leadInfo.status.name==='KYC Updated' || leadInfo.status.name==='KYC')">
     <ng-container *ngFor="let applicant of applicants; let i=index">
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
     </ng-container>
   </ng-container>
 
@@ -108,10 +108,10 @@
         <div *ngFor="let item of tempCrifDetails;let i=index" class="crifscoresmallDeviceWidth" >
           <!---crif btn start-->
           <div class=" my-2">
-            <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
+            <button [ngClass]="{'cursorDisable':tempType==='Rejected'}" type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
                 border: 1px solid #D7FFE9 !important;
                 color: #fff;
-                width: -webkit-fill-available;" (click)="showCrifscoreSection(i)">
+                width: -webkit-fill-available;" (click)="(tempType !=='Rejected')&& showCrifscoreSection(i)">
               {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
               <span *ngIf="i===1">Co-Applicant </span>
               <span *ngIf="i>1">Co-Applicant {{i}}</span>
@@ -182,12 +182,10 @@
           </div>
         </div>
         <div style="padding:5px">
-          <!-- (ngModelChange)="handleNotesDescription(taskDescription.value)" -->
-          <textarea rows="10" class="form-control" [(ngModel)]="notes" #taskDescription
+          <textarea [disabled]="tempType==='Rejected'" rows="10" class="form-control" [(ngModel)]="notes" #taskDescription
             (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter remarks description"
             style=" height: 40px !important;background: #FCFCFC !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
         </div>
-
         <!---cancel save btn start-->
         <div
           style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
@@ -245,7 +243,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
       <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
@@ -259,7 +257,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
       <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
@@ -273,7 +271,7 @@
   </ng-container>
   <div *ngIf="leadInfo.status.name==='New' ||leadInfo.status.name==='KYC'  " class="mgn-up-20">
     <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm"
-      (click)="addCoApplicant()">
+    [ngClass]="{'cursorDisable':tempType==='Rejected' }" (click)="tempType !=='Rejected' && addCoApplicant()">
       <div class="applicantBtn">
         <div>Add Co-Applicant</div>
         <div>
@@ -282,14 +280,80 @@
       </div>
     </button>
   </div>
+  <!---loan disbursment strat-->
+  <ng-container *ngIf="leadInfo.status.name==='Loan Sanction'">
+    <ng-container *ngFor="let applicant of applicants; let i=index">
+      <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
+        [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
+        (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
+        [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
+    </ng-container>
+     <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Loan Sanction')" class="crifScoreFlex">
+        <div *ngFor="let item of tempCrifDetails;let i=index" class="crifscoresmallDeviceWidth" >
+          <!---crif btn start-->
+          <div class=" my-2">
+            <button [ngClass]="{'cursorDisable':tempType==='Rejected'}" type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
+                border: 1px solid #D7FFE9 !important;
+                color: #fff;
+                width: -webkit-fill-available;" (click)="(tempType !=='Rejected' )&& showCrifscoreSection(i)">
+              {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
+              <span *ngIf="i===1">Co-Applicant </span>
+              <span *ngIf="i>1">Co-Applicant {{i}}</span>
+            </button>
+          </div>
+          <!----crif btn end-->
+          <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="showCrifSectionTemp">
+          </app-common-innerloading-spinner>
+          <div *ngIf="showCrifSection" class="text-center">
+            <span class="group-head">CRIF Score of
+              <span *ngIf="i===0">Applicant</span>
+              <span *ngIf="i===1">Co-Applicant </span>
+              <span *ngIf="i>1">Co-Applicant {{i}}</span>
+            </span><br>
+            <div class="bggrey my-2">
+              <div style="display: flex;gap: 5px">
+                <div class="lbl col-sm-12 col-md-12 col-lg-12 no-padding" style="display: flex;
+          flex-direction: row-reverse; justify-content: left;align-items: center;">
+                  <div class="leadTitle">
+                  </div>
+                  <div class="fieldPadding">
+                    <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="item && item.crifScoreString"> CRIF SCORE :
+                      {{item.crifScoreString}} </a>
+                    <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
+                      style="margin-left: 25px !important;width: -webkit-fill-available;"
+                      class="btn btn mb-2 action-button action-button-add confirmBtn">
+                      Check CRIF Verification </button>
+                  </div>
+                  <app-common-innerloading-spinner *ngIf="api_loadingprintCrif"></app-common-innerloading-spinner>
+                  <div *ngIf="showPdfIcon">
+                    <a (click)="printCRIF(item.crifHTML)">
+                      <img class="img" style="height: 50px; width: 50px;" src="/assets/images/ImgeFileIcon/pdf.png" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
+      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+        (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+    </ng-container>
+    <ng-container *ngIf="showQuestionnaire && questionaire" class="quest">
+      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
+        [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)">
+      </app-questionnaire>
+    </ng-container>
+  </ng-container>
+  <!-- ,!--loan disbursment end -->
   <ng-container *ngIf="errorInfo && errorInfo.length && errorInfo.length>0">
     <div class="card">
       <div *ngIf="errorInfo && errorInfo.length && errorInfo.length>0" class="errorTxt">Mandatory field's missing ({{errorInfo}})</div>
     </div>
   </ng-container>
-  <div style="text-align: center;margin-top: 15px;">
-    <ng-container>
-      <!-- {{leadInfo.status | json}} -->
+  <div style="text-align: center;margin-top: 15px;" *ngIf="leadInfo.status.name !=='Loan Sanction'">
+    <ng-container *ngIf="tempType !=='Rejected'">
       <div class=" mgn-bt-20 mgn-up-10 allBtns">
         <button type="button" class="btn btn-primary font-weight-bold cancelBtn"
           (click)="!api_loading_UpdateKyc && goBack()"
@@ -297,7 +361,6 @@
         <button [ngClass]="{'cursorDiasable':  api_loading_UpdateKycProceed}"
           class="btn btn-primary font-weight-bold confirmBtn" type="button"
           (click)=" !api_loading_UpdateKyc && updateKyc()" [disabled]="api_loading_UpdateKyc">
-          <!-- *ngIf="leadInfo.status.name==='Login' || leadInfo.status.name !=='Login Verified'" -->
           <span *ngIf="!api_loading_UpdateKyc">Save</span>
           <app-common-innerloading-spinner [spinnerParams]="{diameter:30}" *ngIf="api_loading_UpdateKyc">
           </app-common-innerloading-spinner>

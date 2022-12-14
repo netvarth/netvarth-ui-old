@@ -102,7 +102,7 @@ export class FileService {
     if (fileObj && fileObj['mimeType']) {
       file['type'] = fileObj['mimeType'];
     }
-    console.log("File :", file);
+    // console.log("File :", file);
     // console.log("File Type :", file.type)
     // console.log("File Name :", file.name.includes('docx'))
     if (file.type == 'application/pdf') {

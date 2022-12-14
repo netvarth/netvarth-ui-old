@@ -22,8 +22,8 @@
             <div style="font-size: 15px!important;font-weight: bold!important" *ngIf="coApplicantText">
                 {{coApplicantText}}
             </div>
-            <div>
-                <i (click)="removApplicant(applicantId)" style="cursor:pointer" class="fa fa-trash"
+            <div [ngClass]="{'cursorDisable':tempType==='Rejected' }">
+                <i [ngClass]="{'cursorDisable':tempType==='Rejected' }" (click)="tempType !=='Rejected' && removApplicant(applicantId)" class="fa fa-trash"
                     aria-hidden="true"></i>
             </div>
         </div>
@@ -94,7 +94,7 @@
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
                     (change)="filesSelected($event, 'kyc1')">{{lebalUplaodFile}}
-                <a class="btn btn-clean btn-icon btn-md" (click)="logofile.click()"><i class="material-icons">
+                    <a [ngClass]="{'cursorDisable':tempType==='Rejected' }"  class="btn btn-clean btn-icon btn-md" (click)="tempType !=='Rejected' && logofile.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
             <div
@@ -127,7 +127,7 @@
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
-                   <div>
+                   <div *ngIf="tempType !=='Rejected'">
                     <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc1',file)" *ngIf="mode!=='read'"></i>
                    </div>
                 </div>
@@ -172,7 +172,7 @@
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;"
                     (change)="filesSelected($event,'kyc2')">{{lebalUplaodFile}}
-                <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                    <a [ngClass]="{'cursorDisable':tempType==='Rejected' }"  class="btn btn-clean btn-icon btn-md" (click)="tempType !=='Rejected' && files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
             <div
@@ -201,11 +201,11 @@
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                 <div *ngFor="let file of applicant.validationIds[1].attachments; let i=index"style="display:flex">
-                    <div  (click)="dialogImgView(file)">
+                    <div  (click)="dialogImgView(file)" style="cursor:pointer">
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
-                   <div>
+                   <div *ngIf="tempType !=='Rejected'">
                     <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc2',file)" *ngIf="mode!=='read'"></i>
                    </div>
                 </div>
@@ -250,7 +250,7 @@
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && applicant.validationIds[2].attachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" 
                     (change)="filesSelected($event,'kyc3')">{{lebalUplaodFile}}
-                <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                    <a [ngClass]="{'cursorDisable':tempType==='Rejected' }"  class="btn btn-clean btn-icon btn-md" (click)="tempType !=='Rejected' && files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
             <div
@@ -279,11 +279,11 @@
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                 <div *ngFor="let file of applicant.validationIds[2].attachments;let i=index" style="display:flex">
-                    <div  (click)="dialogImgView(file)">
+                    <div  (click)="dialogImgView(file)" style="cursor:pointer">
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
-                   <div>
+                   <div *ngIf="tempType !=='Rejected'">
                     <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="deleteTempImage(i, 'kyc3',file)" *ngIf="mode!=='read'"></i>
                    </div>
                 </div>
@@ -555,7 +555,7 @@
             [hidden]=" applicant && applicant.otherAttachments && applicant.otherAttachments.length > 0 && applicant.otherAttachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;" 
                     (change)="filesSelected($event,'other')">{{lebalUplaodFile}}
-                <a class="btn btn-clean btn-icon btn-md" (click)="files.click()"><i class="material-icons">
+                <a [ngClass]="{'cursorDisable':tempType==='Rejected' }"  class="btn btn-clean btn-icon btn-md" (click)="tempType !=='Rejected' && files.click()"><i class="material-icons">
                         attach_file</i></a>
             </div>
             <div
@@ -584,11 +584,11 @@
             <div style="display: flex;gap: 5px">
                 <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                     <div *ngFor="let file of applicant.otherAttachments; let i=index" style="display:flex">
-                        <div (click)="dialogImgView(file)">
-                            <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
+                        <div (click)="dialogImgView(file)"style="cursor:pointer">
+                            <img style="height: 20px; width:20px;cursor:pointer" [src]="getImageType(file.fileType)" alt="">
                             {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                         </div>
-                        <div>
+                        <div *ngIf="tempType !=='Rejected'">
                             <i class="fa fa-times-circle pointer-cursor" aria-hidden="true"
                                 (click)="deleteTempImage(i, 'other','delete')" *ngIf="mode!=='read'"></i>
                         </div>
@@ -602,8 +602,8 @@
     this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation')">
     <!---crif btn start-->
     <div class=" my-2">
-        <button type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
-    border: 1px solid #D7FFE9 !important;color: #fff;width: -webkit-fill-available;" (click)="showCrifscoreSection()">{{generateCrifText}}  </button>
+        <button [ngClass]="{'cursorDisable':tempType==='Rejected' }" type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
+    border: 1px solid #D7FFE9 !important;color: #fff;width: -webkit-fill-available;" (click)="tempType !=='Rejected' && showCrifscoreSection()">{{generateCrifText}}</button>
     </div>
     <!----crif btn end-->
     <div *ngIf="showCrifSection">

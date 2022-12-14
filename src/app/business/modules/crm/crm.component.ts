@@ -132,6 +132,7 @@ export class CRMComponent implements OnInit {
     return new Promise((resolve, reject) => {
       _this.crmService.getLeadStatusDashboard().subscribe((res) => {
         if (res) {
+          console.log('dashBoardStatus',res)
           resolve(res);
           _this.redirectionList.push(res);
           // if(user && user.userType === 1 && user.isadminPrivilege){

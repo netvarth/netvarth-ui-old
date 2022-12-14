@@ -185,5 +185,8 @@ textarea {
     position: relative;
 }
 .cursorDisable{
-    cursor:not-allowed;
+    cursor:not-allowed !important;
+}
+i{
+    cursor: pointer;
 }

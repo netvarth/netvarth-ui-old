@@ -9,7 +9,7 @@ import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { PreviewpdfComponent } from '../previewpdf/previewpdf.component';
-import { projectConstants } from "../../../../../../app.component";
+// import { projectConstants } from "../../../../../../app.component";
 @Component({
   selector: 'app-applicant',
   templateUrl: './applicant.component.html',
@@ -41,6 +41,7 @@ export class ApplicantComponent implements OnInit {
   @Output() removeApplicant = new EventEmitter<any>();
   @Output() addApplicant = new EventEmitter<any>();
   @Input() mode;
+  @Input() tempType;
   failedStatusId: any;
   crifStatusId: any;
   availableDates: any = [];
@@ -97,6 +98,8 @@ export class ApplicantComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('tempType',this.tempType)
+    console.log('this.leadInfo.status',this.leadInfo)
     if (this.leadInfo.status.name === 'Login' || this.leadInfo.status.name === 'Credit Recommendation') {
       this.crifBtnForHide = false;
       this.getCrifInquiryVerification(this.applicant)
@@ -225,6 +228,10 @@ export class ApplicantComponent implements OnInit {
     if (this.applicant && this.applicant.permanentPinCode) {
       this.applicantForm.controls.permanentPinCode.setValue(this.applicant.permanentPinCode);
     }
+    //enable disable form control
+    if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
+      this.diasbleFormControl()
+    }
   }
   autoGrowTextZone(e) {
     e.target.style.height = "0px";
@@ -279,16 +286,16 @@ export class ApplicantComponent implements OnInit {
               }
               fileObjFinal['file'] = pic;
               fileObjFinal['type'] = type;
-              console.log('fileObjFinal', fileObjFinal)
+              // console.log('fileObjFinal', fileObjFinal)
               this.filesToUpload.push(fileObjFinal);
-              console.log('this.filesToUpload', this.filesToUpload);
+              // console.log('this.filesToUpload', this.filesToUpload);
               this.actionText = 'InputFileUpload';
               this.imageMode = type;
               this.sendApplicantInfo();
-              this.diasbleFormControl();
-              setTimeout(() => {
-                this.enableFormCiontrol()
-              }, projectConstants.TIMEOUT_DELAY);
+              // this.diasbleFormControl();
+              // setTimeout(() => {
+              //   this.enableFormCiontrol()
+              // }, projectConstants.TIMEOUT_DELAY);
             }
           } else {
             for (const pic of input) {
@@ -316,16 +323,16 @@ export class ApplicantComponent implements OnInit {
               }
               fileObjFinal['file'] = pic;
               fileObjFinal['type'] = type;
-              console.log('fileObjFinal', fileObjFinal)
+              // console.log('fileObjFinal', fileObjFinal)
               this.filesToUpload.push(fileObjFinal);
-              console.log('this.filesToUpload', this.filesToUpload);
+              // console.log('this.filesToUpload', this.filesToUpload);
               this.actionText = 'InputFileUpload';
               this.imageMode = type;
               this.sendApplicantInfo();
-              this.diasbleFormControl();
-              setTimeout(() => {
-                this.enableFormCiontrol()
-              }, projectConstants.TIMEOUT_DELAY);
+              // this.diasbleFormControl();
+              // setTimeout(() => {
+              //   this.enableFormCiontrol()
+              // }, projectConstants.TIMEOUT_DELAY);
             }
           }
         }).catch((error) => {
@@ -466,7 +473,7 @@ export class ApplicantComponent implements OnInit {
       }
     });
     if (files && files.length > 0) {
-      console.log(this.filesToUpload.indexOf(files[0]));
+      // console.log(this.filesToUpload.indexOf(files[0]));
       if (this.filesToUpload && this.filesToUpload.indexOf(files[0])) {
         const index = this.filesToUpload.indexOf(files[0]);
         this.filesToUpload.splice(index, 1);
@@ -475,7 +482,7 @@ export class ApplicantComponent implements OnInit {
     this.selectedFiles[type].files.splice(i, 1);
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
-    console.log("this.applicant", this.applicant)
+    // console.log("this.applicant", this.applicant)
     if (type === 'kyc1') {
       this.filesToUpload.splice(i, 1);
       this.applicant.validationIds[0].attachments.splice(i, 1);
@@ -497,10 +504,10 @@ export class ApplicantComponent implements OnInit {
       this.actionText = 'Delete';
     }
     this.sendApplicantInfo();
-    this.diasbleFormControl();
-    setTimeout(() => {
-      this.enableFormCiontrol()
-    }, projectConstants.TIMEOUT_DELAY);
+    // this.diasbleFormControl();
+    // setTimeout(() => {
+    //   this.enableFormCiontrol()
+    // }, projectConstants.TIMEOUT_DELAY);
   }
   getImage(url, file) {
     return this.fileService.getImage(url, file);
@@ -627,14 +634,14 @@ export class ApplicantComponent implements OnInit {
   }
   handleKycSelectedType(selectValue, applicantType) { }
   allowOnlyLetters(e) {
-    console.log(e);
-    console.log('window.event', window.event)
+    // console.log(e);
+    // console.log('window.event', window.event)
     if (window.event) {
       // var charCode = window.event.keyCode;    
     }
     else if (e) {
       var charCode = e.which;
-      console.log('charCode', charCode)
+      // console.log('charCode', charCode)
     }
     else { return true; }
     if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123) || (charCode = 8))

@@ -216,14 +216,18 @@ export class ViewLeadQnrComponent implements OnInit {
           if (leadInfo && leadInfo.status && leadInfo.status.name === 'Login Verified') {
             _this.headerName = 'Credit Recommendation';
           }
-          else if (leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Recommendation') {
-            _this.headerName = 'Loan Sanction';
+          else if (leadInfo && leadInfo.status && (leadInfo.status.name === 'Credit Recommendation' || leadInfo.status.name==='Loan Sanction')) {
+             _this.headerName = leadInfo.status.aliasName;
             _this.crmService.getkyc(leadInfo.uid).subscribe(
-              (kycInfo) => {
+              (kycInfo:any) => {
                 _this.initApplicantForm(kycInfo);
+                kycInfo.forEach((item) => {
+                  _this.getCrifInquiryVerification(item);
+                })
               }
             )
-          } else {
+          }
+          else {
             _this.headerName = leadInfo.status.aliasName;
           }
           _this.getQuestionaire();
@@ -270,7 +274,16 @@ export class ViewLeadQnrComponent implements OnInit {
               this.crmService.deleteCoApplicant(applicantInfo['applicantid'], this.leadInfo.uid).subscribe((response) => {
                 if (response) {
                   this.applicantsInfo = {};
-                  this.updateKyc()
+                  if(this.tempType ==='Loan Sanction'){
+                    return false;
+                  }
+                  else if(this.tempType ==='Rejected'){
+                    return false;
+                  }
+                  else{
+                    this.updateKyc();
+            
+                  }
                   // this.initLead();
                   this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
                 }
@@ -294,7 +307,16 @@ export class ViewLeadQnrComponent implements OnInit {
               if (this.applicants) {
                 const index = this.applicants.indexOf(applicantInfo['applicantid']);
                 this.applicants.splice(index, 1);
-                this.updateKyc()
+                if(this.tempType ==='Loan Sanction'){
+                  return false;
+                }
+                else if(this.tempType ==='Rejected'){
+                  return false;
+                }
+                else{
+                  this.updateKyc();
+          
+                }
                 this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
               }
             }
@@ -318,7 +340,16 @@ export class ViewLeadQnrComponent implements OnInit {
             this.crmService.deleteCoApplicant(applicantInfo['applicantid'], this.leadInfo.uid).subscribe((response) => {
               if (response) {
                 this.applicantsInfo = {};
-                this.updateKyc()
+                if(this.tempType ==='Loan Sanction'){
+                  return false;
+                }
+                else if(this.tempType ==='Rejected'){
+                  return false;
+                }
+                else{
+                  this.updateKyc();
+          
+                }
                 // this.initLead();
                 this.snackbarService.openSnackBar('Successfully removed Co-Applicant');
               }
@@ -510,44 +541,62 @@ export class ViewLeadQnrComponent implements OnInit {
     if (serviceCall === 'Delete') {
       this.api_loading = true;
       // this.afterUpdate = 'UpdateServiceCall'
-      this.updateKyc(serviceCall);
-    } else if (serviceCall === 'InputFileUpload'){
-      this.api_loading = true;
-      this.fileLoading = true;
-      // this.filesToUpload = null;
-      const uploadedFile = [];
-      console.log("Files To Upload:", this.filesToUpload);
-      let fileData = this.getFileInfo(applicant.imageMode, applicant.files);
-      console.log("Filedata",fileData);
-      for(let i=0; i< fileData.length; i++) {
-        if (!fileData[i]['driveId']) {
-          fileData[i]['uid'] = this.leadUID;
-          fileData[i]['action'] = 'add';
-          fileData[i]['order'] = ++this.kycFilesCount;
-          uploadedFile.push(fileData[i]);
-        }
+      if(this.tempType ==='Loan Sanction'){
+        return false;
       }
-      console.log(uploadedFile);
-      // this.filesToUpload = uploadedFile;
-      // this.afterUpdate = 'UpdateServiceCall';
-      this.uploadKycFile(uploadedFile).then(
-        (file)=> {
-          if (file) {
-            if (applicant.imageMode === 'kyc1') {
-              _this.applicantsInfo[applicantIndex].validationIds[0].attachments.push(file[0]);
-            } else if (applicant.imageMode === 'kyc2') {
-              _this.applicantsInfo[applicantIndex].validationIds[1].attachments.push(file[0]);
-            } else if (applicant.imageMode === 'kyc3') {
-              _this.applicantsInfo[applicantIndex].validationIds[2].attachments.push(file[0]);
-            } else {
-              if (!_this.applicantsInfo[applicantIndex].otherAttachments) {
-                _this.applicantsInfo[applicantIndex].otherAttachments = [];
-              }
-              _this.applicantsInfo[applicantIndex].otherAttachments.push(file[0]);
-            }            
+      else if(this.tempType ==='Rejected'){
+        return false;
+      }
+      else{
+        this.updateKyc(serviceCall);
+
+      }
+      
+    } else if (serviceCall === 'InputFileUpload'){
+      if(this.tempType ==='Loan Sanction'){
+
+      }
+      else if(this.tempType ==='Rejected'){
+
+      }
+      else{
+          this.api_loading = true;
+          this.fileLoading = true;
+          // this.filesToUpload = null;
+          const uploadedFile = [];
+          console.log("Files To Upload:", this.filesToUpload);
+          let fileData = this.getFileInfo(applicant.imageMode, applicant.files);
+          console.log("Filedata",fileData);
+          for(let i=0; i< fileData.length; i++) {
+            if (!fileData[i]['driveId']) {
+              fileData[i]['uid'] = this.leadUID;
+              fileData[i]['action'] = 'add';
+              fileData[i]['order'] = ++this.kycFilesCount;
+              uploadedFile.push(fileData[i]);
+            }
           }
-        }
-      );
+          console.log(uploadedFile);
+          // this.filesToUpload = uploadedFile;
+          // this.afterUpdate = 'UpdateServiceCall';
+          this.uploadKycFile(uploadedFile).then(
+            (file)=> {
+              if (file) {
+                if (applicant.imageMode === 'kyc1') {
+                  _this.applicantsInfo[applicantIndex].validationIds[0].attachments.push(file[0]);
+                } else if (applicant.imageMode === 'kyc2') {
+                  _this.applicantsInfo[applicantIndex].validationIds[1].attachments.push(file[0]);
+                } else if (applicant.imageMode === 'kyc3') {
+                  _this.applicantsInfo[applicantIndex].validationIds[2].attachments.push(file[0]);
+                } else {
+                  if (!_this.applicantsInfo[applicantIndex].otherAttachments) {
+                    _this.applicantsInfo[applicantIndex].otherAttachments = [];
+                  }
+                  _this.applicantsInfo[applicantIndex].otherAttachments.push(file[0]);
+                }            
+              }
+            }
+          );
+      }
     }
   }
   uploadKycFile(fileToUpload) {
@@ -1015,7 +1064,7 @@ export class ViewLeadQnrComponent implements OnInit {
           }
         }, ((error: any) => {
           if (this.leadInfo && this.leadInfo.status) {
-            if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified') {
+            if (this.leadInfo.status.name === 'Credit Score Generated' || this.leadInfo.status.name === 'Sales Verified'||this.leadInfo.status.name==='Loan Sanction') {
               this.generateCrifText = 'Sorry you have no CRIF score of';
             }
           }
@@ -1044,51 +1093,64 @@ export class ViewLeadQnrComponent implements OnInit {
 
 
   uploadFile(input) {
-    this.fileLoading = true;
-    const _this = this;
-    const fileString = [{
-      caption: input.caption,
-      mimeType: input.file.type,
-      url: input.file.name,
-      size: input.file.size,
-      labelName: input.labelName
-    }]
-    const dataToSend: FormData = new FormData();
-    const requestsInfo = {
-      "proId": this.leadInfo.customer.id,
-      "questionnaireId": this.questionaire.questionnaireName
+    console.log('input',input)
+    console.log('this.tempType',this.tempType)
+    if(this.tempType==='Loan Sanction'){
+      this.fileLoading = false;
+      return false;
     }
-    const requests = new Blob([JSON.stringify(requestsInfo)], { type: 'application/json' });
-    dataToSend.append('requests', requests);
-    dataToSend.append('files', new Blob([JSON.stringify(fileString)], { type: 'application/json' }));
-    this.leadsService.uploadFile(dataToSend).subscribe(
-      (info: any) => {
-        this.uploadAudioVideoQNR(info).then(() => {
-          _this.questionAnswers.answers.answerLine.forEach((element, index) => {
-            if (element.answer && element.answer.fileUpload && element.labelName === input.labelName) {
-              element.answer.fileUpload.forEach((element1, index1) => {
-                if (element1.caption === input.caption) {
-                  _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
-                  _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['driveId'] = info.urls[0].driveId;
-                  _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = info.urls[0].uid;
-                  _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['uid'] = info.urls[0].uid;
-                  _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
-                  _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['status'] = 'COMPLETE';
-                  _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['action'] = 'add';
-                  _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['action'] = 'add';
-                  _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['s3path'] = info.urls[0].viewPath;
-                  _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['s3path'] = info.urls[0].viewPath;
-                }
-              });
-            }
-          });
-          this.fileLoading = false;
-        });
-      }, error => {
-        this.fileLoading = false;
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    else if(this.tempType==='Rejected'){
+      this.fileLoading = false;
+      return false;
+    }
+    else{
+      this.fileLoading = true;
+      const _this = this;
+      const fileString = [{
+        caption: input.caption,
+        mimeType: input.file.type,
+        url: input.file.name,
+        size: input.file.size,
+        labelName: input.labelName
+      }]
+      const dataToSend: FormData = new FormData();
+      const requestsInfo = {
+        "proId": this.leadInfo.customer.id,
+        "questionnaireId": this.questionaire.questionnaireName
       }
-    )
+      const requests = new Blob([JSON.stringify(requestsInfo)], { type: 'application/json' });
+      dataToSend.append('requests', requests);
+      dataToSend.append('files', new Blob([JSON.stringify(fileString)], { type: 'application/json' }));
+      this.leadsService.uploadFile(dataToSend).subscribe(
+        (info: any) => {
+          this.uploadAudioVideoQNR(info).then(() => {
+            _this.questionAnswers.answers.answerLine.forEach((element, index) => {
+              if (element.answer && element.answer.fileUpload && element.labelName === input.labelName) {
+                element.answer.fileUpload.forEach((element1, index1) => {
+                  if (element1.caption === input.caption) {
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['driveId'] = info.urls[0].driveId;
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['driveId'] = info.urls[0].driveId;
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['uid'] = info.urls[0].uid;
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['uid'] = info.urls[0].uid;
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['status'] = 'COMPLETE';
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['status'] = 'COMPLETE';
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['action'] = 'add';
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['action'] = 'add';
+                    _this.questionAnswers.answers.answerLine[index]['answer']['fileUpload'][index1]['s3path'] = info.urls[0].viewPath;
+                    _this.questionAnswers.filestoUpload[element.labelName][element1.caption]['s3path'] = info.urls[0].viewPath;
+                  }
+                });
+              }
+            });
+            this.fileLoading = false;
+          });
+        }, error => {
+          this.fileLoading = false;
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        }
+      )
+    }
+    
   }
   reject(uid) {
     const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
@@ -1121,5 +1183,18 @@ export class ViewLeadQnrComponent implements OnInit {
     })
   }
   editable(data) {
+  }
+  ProceedStatusLoanSanction(){
+    const _this=this;
+    return new Promise((resolve,reject)=>{
+      _this.crmService.proceedToLoginVerified(_this.leadInfo.status.id, _this.leadInfo.uid).subscribe((response) => {
+        _this.api_loading_UpdateKycProceed = true;
+        _this.snackbarService.openSnackBar('Updated successfully');
+        _this.router.navigate(['provider', 'crm']);
+      }, (error) => {
+        _this.api_loading_UpdateKycProceed = false;
+        _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+    })
   }
 }

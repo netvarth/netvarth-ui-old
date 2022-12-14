@@ -99,7 +99,7 @@
                                   <li class="filterli filterDatepicker filter-li">
                                     <input type="text" [(ngModel)]="filter.check_in_start_date"
                                       [matDatepicker]="startpicker" #Fdate class="filterTextbox filter-textbox"
-                                      [max]="maxday" placeholder="Enter Start Date" (dateChange)="keyPressed()">
+                                      [max]="maxday" placeholder="Enter Start Date" (dateChange)="keyPressed('noLoanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="startpicker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #startpicker></mat-datepicker>
@@ -110,7 +110,7 @@
                                     <input type="text" [(ngModel)]="filter.check_in_end_date"
                                       [matDatepicker]="endpicker" #Fdate class="filterTextbox filter-textbox"
                                       placeholder="Enter End Date" [min]="endminday" [max]="endmaxday"
-                                      (dateChange)="keyPressed()">
+                                      (dateChange)="keyPressed('noLoanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="endpicker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #endpicker></mat-datepicker>
@@ -119,6 +119,49 @@
                               </div>
                             </div>
                           </div>
+                          <!--new fiklter loan disbursment satrt-->
+                          <div class="card" *ngIf="tempaltename==='Loan Disbursement'">
+                            <div class="card-header">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                  data-target="#collapseDate3" aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-calendar-o"></i>
+                                    </div>
+                                    <span>&nbsp;Loan Sanction Date</span>
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseDate3" class="collapse in" data-parent="#accordion3">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filterDatepicker filter-li">
+                                    <input type="text" [(ngModel)]="filter.check_in_start_date_LoanSanction"
+                                      [matDatepicker]="startpicker" #Fdateloan class="filterTextbox filter-textbox"
+                                      [max]="maxdayLoanSanction" placeholder="Enter Start Date" (dateChange)="keyPressed('loanSanction')">
+                                    <mat-datepicker-toggle matSuffix [for]="startpicker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #startpicker></mat-datepicker>
+                                  </li>
+                                </div>
+                                <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filterDatepicker filter-li">
+                                    <input type="text" [(ngModel)]="filter.check_in_end_date_LoanSanction"
+                                      [matDatepicker]="endpicker" #Fdateloan class="filterTextbox filter-textbox"
+                                      placeholder="Enter End Date" [min]="endmindayLoanSanction" [max]="endmaxdayLoanSanction"
+                                      (dateChange)="keyPressed('loanSanction')">
+                                    <mat-datepicker-toggle matSuffix [for]="endpicker">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #endpicker></mat-datepicker>
+                                  </li>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--new filter end---- -->
                         </ul>
                       </section>
                       <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">

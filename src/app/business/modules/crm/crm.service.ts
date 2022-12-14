@@ -623,8 +623,8 @@ export class CrmService {
     const url = 'provider/lead/dashboard/status';
     return this.servicemeta.httpGet(url);
   }
-  // mandatoryFilesactivity(taskUid,body){
-  //   const url='provider/task/'+ taskUid +'/withfile'
-  //     return this.servicemeta.httpPut(url, body);
-  // }
+  loanSanctionProceed(status,uid){
+    const url = 'provider/lead/questionnaire/proceed/' + status + '/' + uid;
+    return this.servicemeta.httpPut(url)
+  }
 }
