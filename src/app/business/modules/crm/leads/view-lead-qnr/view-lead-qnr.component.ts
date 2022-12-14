@@ -114,6 +114,7 @@ export class ViewLeadQnrComponent implements OnInit {
   kycFilesCount=0;
   counter = 0;
   errorInfo: any;
+  disbaleFielInput:boolean=true;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -244,6 +245,9 @@ export class ViewLeadQnrComponent implements OnInit {
   ngOnInit() {
     this.activeUser = this.groupService.getitemFromGroupStorage("ynw-user");
     this.initLead();
+    if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
+      this.disbaleFielInput=false;
+    }
   }
 
   initApplicantForm(kycList) {

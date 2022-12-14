@@ -85,6 +85,7 @@ export class ApplicantComponent implements OnInit {
   actionText: string = '';
   todayDate: Date;
   imageMode: any;
+  disbaleFielInput:boolean=true;
   constructor(
     private formBuilder: FormBuilder,
     private fileService: FileService,
@@ -230,7 +231,8 @@ export class ApplicantComponent implements OnInit {
     }
     //enable disable form control
     if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
-      this.diasbleFormControl()
+      this.diasbleFormControl();
+      this.disbaleFielInput=false;
     }
   }
   autoGrowTextZone(e) {
