@@ -25,6 +25,30 @@
                 </div>
             </div>
         </div> -->
+        <!-- <div>
+            <p-table [value]="OfficersList" selectionMode="multiple" [(selection)]="selectedOfficerIds"
+                styleClass="p-mt-5" dataKey="id">
+                <ng-template pTemplate="caption">
+                    Multiple Selection without MetaKey
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr [pSelectableRow]="Officer">
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Quantity</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-product let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="product" [pSelectableRowIndex]="rowIndex">
+                        <td>{{product.code}}</td>
+                        <td>{{product.name}}</td>
+                        <td>{{product.category}}</td>
+                        <td>{{product.quantity}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div> -->
         <div>
             <p-selectButton styleClass="selection" [options]="OfficersList" [(ngModel)]="selectedOfficerIds"
                 multiple="multiple" optionValue="id" (onChange)="handleOfficerIds()">
@@ -33,7 +57,7 @@
                         <span class="officer-name font-weight-bold">
                             <span *ngIf="officer && officer.firstName">{{officer.firstName}}</span>&nbsp;
                             <span *ngIf="officer && officer.lastName">{{officer.lastName}}</span>
-                        </span><br>
+                        </span>
                         <span class="officer-phone" *ngIf="officer && officer.mobileNo">{{officer.mobileNo}}</span>
                     </div>
                 </ng-template>

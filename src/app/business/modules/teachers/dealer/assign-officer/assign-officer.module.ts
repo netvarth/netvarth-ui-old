@@ -5,7 +5,7 @@ import { AssignOfficerComponent } from './assign-officer.component';
 
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { ButtonModule } from 'primeng/button';
-
+import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
 
 
@@ -18,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     SelectButtonModule,
-    ButtonModule
+    ButtonModule,
+    TableModule
   ],
   exports: [
     AssignOfficerComponent

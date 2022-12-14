@@ -149,51 +149,80 @@
               <hr>
             </div>
             <div class="text-left dealer-info">
-              <div class="my-2" *ngIf="dealerData && dealerData.partnerMobile">
-                <span><b>Contact : </b>+91 {{dealerData.partnerMobile}}</span><br>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.partnerPin">
-                <span><b>Location : </b>{{dealerData.partnerState}},{{dealerData.partnerPin}}</span>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.partnerName">
-                <span><b>Username : </b><span class="text-lowercase">{{dealerData.partnerName}}</span></span>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.partnerEmail">
-                <span class="my-2"><b>Email : </b>{{dealerData.partnerEmail}}</span><br>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.partnerStatus">
-                <span class="my-2"><b>Status : </b>{{dealerData.partnerStatus}}</span><br>
-              </div>
-
-              <div class="my-2" *ngIf="dealerData && dealerData.aadhaar">
-                <span><b>Aadhaar : </b>{{dealerData.aadhaar}}</span>&nbsp;
-                <span
-                  *ngIf="dealerData && dealerData.aadhaarAttachments && dealerData.aadhaarAttachments[0] && dealerData.aadhaarAttachments[0].s3path">
-                  <b class="card p-1 pointer-cursor">
-                    <a [href]="dealerData.aadhaarAttachments[0].s3path" class="text-primary" target="_blank">View</a>
-                  </b>
-                </span><br>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.pan">
-                <span><b>Pan : </b>{{dealerData.pan}}</span>&nbsp;
-                <span
-                  *ngIf="dealerData && dealerData.panAttachments && dealerData.panAttachments[0] && dealerData.panAttachments[0].s3path">
-                  <b class="card p-1 pointer-cursor">
-                    <a [href]="dealerData.panAttachments[0].s3path" class="text-primary" target="_blank">View</a>
-                  </b>
-                </span><br>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.gstin">
-                <span><b>GST ID : </b>{{dealerData.gstin}}</span><br>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.bankName">
-                <span><b>Bank Name : </b>{{dealerData.bankName}}</span><br>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.bankAccountNo">
-                <span><b>Bank Account No : </b>{{dealerData.bankAccountNo}}</span><br>
-              </div>
-              <div class="my-2" *ngIf="dealerData && dealerData.bankIfsc">
-                <span><b>Bank IFSC : </b>{{dealerData.bankIfsc}}</span><br>
+              <div class="table-responsive">
+                <table class="table table-borderless">
+                  <tbody>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerMobile">
+                      <td style="width: 50%;" class="details-title">Contact</td>
+                      <th style=" width: 50%;" class="details-sub-title">+91 {{dealerData.partnerMobile}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerPin">
+                      <td style="width: 50%;" class="details-title">Location</td>
+                      <th style=" width: 50%;" class="details-sub-title">
+                        {{dealerData.partnerState}},{{dealerData.partnerPin}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerName">
+                      <td style="width: 50%;" class="details-title">Dealer Store Name</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerName}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerUserName">
+                      <td style="width: 50%;" class="details-title">Dealer Owner Name</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerUserName}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerEmail">
+                      <td style="width: 50%;" class="details-title">Email</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerEmail}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerStatus">
+                      <td style="width: 50%;" class="details-title">Status</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerStatus}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.aadhaar">
+                      <td style="width: 50%;" class="details-title">Aadhar</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.aadhaar}} &nbsp;
+                        <span
+                          *ngIf="dealerData && dealerData.aadhaarAttachments && dealerData.aadhaarAttachments[0] && dealerData.aadhaarAttachments[0].s3path">
+                          <b class="card p-1 pointer-cursor">
+                            <a [href]="dealerData.aadhaarAttachments[0].s3path" class="text-primary"
+                              target="_blank">View</a>
+                          </b>
+                        </span>
+                      </th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.pan">
+                      <td style="width: 50%;" class="details-title">Pan</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.pan}} &nbsp;
+                        <span
+                          *ngIf="dealerData && dealerData.panAttachments && dealerData.panAttachments[0] && dealerData.panAttachments[0].s3path">
+                          <b class="card p-1 pointer-cursor">
+                            <a [href]="dealerData.panAttachments[0].s3path" class="text-primary"
+                              target="_blank">View</a>
+                          </b>
+                        </span>
+                      </th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerStatus">
+                      <td style="width: 50%;" class="details-title">Status</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerStatus}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.gstin">
+                      <td style="width: 50%;" class="details-title">GSTIN</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.gstin}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.bankName">
+                      <td style="width: 50%;" class="details-title">Bank Name</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.bankName}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.bankAccountNo">
+                      <td style="width: 50%;" class="details-title">Bank Account No</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.bankAccountNo}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.bankIfsc">
+                      <td style="width: 50%;" class="details-title">Bank IFSC</td>
+                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.bankIfsc}}</th>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
               <div class="mt-4" *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0]">
                 <img width="100%" height="300px" [src]="dealerData.storeAttachments[0].s3path">
@@ -692,7 +721,8 @@
               <img src="../../../../../../assets/images/cdl/partner/dashboard.png" class="img-fluid pb-2">
             </div><br>
             <div class="my-2 text-center">
-              <button type="button" class="text-center btn-primary w-100 p-2 font-medium">View Dealer Dashboard</button>
+              <button type="button" class="text-center btn-primary w-100 p-2 font-medium">View Dealer
+                Dashboard</button>
             </div>
           </div>
         </div>

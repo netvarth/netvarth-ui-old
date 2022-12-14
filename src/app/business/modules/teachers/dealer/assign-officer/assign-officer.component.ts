@@ -11,6 +11,7 @@ export class AssignOfficerComponent implements OnInit {
   type: any;
   OfficersList: any;
   role: any;
+  Officer: any;
   btnDisabled: any = true;
   selectedOfficerIds: any;
   dealerId: any;

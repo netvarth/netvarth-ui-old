@@ -285,3 +285,17 @@
   border-radius: 5px !important;
   padding: 10px 20px !important;
 }
+
+
+
+.table>tbody>tr>td {
+  border: none !important;
+}
+
+.table>tbody>tr>th {
+  border: none !important;
+}
+
+.table {
+  margin: 0 !important;
+}

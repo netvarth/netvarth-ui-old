@@ -42,91 +42,56 @@
             <div class="bggrey my-2">
               <div>
                 <div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Phone Number</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div>
-                      <span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerMobile">{{dealerData.partnerMobile}}</span>
-                    </div>
+                  <div class="table-responsive">
+                    <table class="table table-borderless">
+                      <tbody>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerMobile">
+                          <td style="width: 50%;" class="details-title">Phone Number</td>
+                          <th style=" width: 50%;" class="details-sub-title">+91 {{dealerData.partnerMobile}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerEmail">
+                          <td style="width: 50%;" class="details-title">Email</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerEmail}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerAddress1">
+                          <td style="width: 50%;" class="details-title">Address 1</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerAddress1}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerAddress2">
+                          <td style="width: 50%;" class="details-title">Address 2</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerAddress2}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerCity">
+                          <td style="width: 50%;" class="details-title">City</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerCity}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerState">
+                          <td style="width: 50%;" class="details-title">Permanent Address State</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerState}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerPin">
+                          <td style="width: 50%;" class="details-title">Permanent Address Pincode</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerPin}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.category && dealerData.category.name">
+                          <td style="width: 50%;" class="details-title">Category</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.category.name}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.type && dealerData.type.name">
+                          <td style="width: 50%;" class="details-title">Type</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.type.name}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerSize">
+                          <td style="width: 50%;" class="details-title">Size</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerSize}}</th>
+                        </tr>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerTrade">
+                          <td style="width: 50%;" class="details-title">Trade</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerTrade}}</th>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Email</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerEmail">{{dealerData.partnerEmail}}</span>
-                    </div>
-                  </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Address 1</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerAddress1">{{dealerData.partnerAddress1}}</span>
-                    </div>
-                  </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Address 2</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerAddress2">{{dealerData.partnerAddress2}}</span>
-                    </div>
-                  </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">City</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerCity">{{dealerData.partnerCity}}</span>
-                    </div>
-                  </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Permanent Address State</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerState">{{dealerData.partnerState}}</span>
-                    </div>
-                  </div>
-
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Permanent Address Pincode</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerPin">{{dealerData.partnerPin}}</span>
-                    </div>
-                  </div>
-
-
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Category</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.category && dealerData.category.name">{{dealerData.category.name}}</span>
-                    </div>
-                  </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Type</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.type && dealerData.type.name">{{dealerData.type.name}}</span>
-                    </div>
-                  </div>
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Size</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerSize">{{dealerData.partnerSize}}</span>
-                    </div>
-                  </div>
-
-                  <div class="row text-left my-2">
-                    <div class="col-md-5 details-title">Trade</div>
-                    <div class="col-md-1 details-title no-padding">:</div>
-                    <div><span class="col-md-6 details-sub-title no-padding"
-                        *ngIf="dealerData && dealerData.partnerTrade">{{dealerData.partnerTrade}}</span>
-                    </div>
-                  </div>
-
-
-
                 </div>
               </div>
             </div>
@@ -135,7 +100,6 @@
       </div>
     </div>
     <div class="col-md-7">
-
       <br>
 
       <div class="card">

@@ -29,17 +29,30 @@
             <p-selectButton styleClass="selection" [options]="OfficersList" [(ngModel)]="selectedOfficerIds"
                 multiple="multiple" optionValue="id" (onChange)="handleOfficerIds()">
                 <ng-template let-officer>
-                    <div>
-                        <span class="officer-name font-weight-bold">
-                            <span *ngIf="officer && officer.firstName">{{officer.firstName}}</span>&nbsp;
-                            <span *ngIf="officer && officer.lastName">{{officer.lastName}}</span>
-                        </span><br>
-                        <span class="officer-phone" *ngIf="officer && officer.mobileNo">{{officer.mobileNo}}</span>
+                    <div style="width: 100%;">
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr style="width: 100%;">
+                                    <td style="width: 50%;" class="details-title">
+                                        <span class="officer-name font-weight-bold">
+                                            <span
+                                                *ngIf="officer && officer.firstName">{{officer.firstName}}</span>&nbsp;
+                                            <span *ngIf="officer && officer.lastName">{{officer.lastName}}</span>
+                                        </span>
+                                    </td>
+                                    <th style=" width: 50%;" class="details-sub-title">
+                                        <span class="officer-phone"
+                                            *ngIf="officer && officer.mobileNo">{{officer.mobileNo}}</span>
+
+                                    </th>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </ng-template>
             </p-selectButton>
         </div>
-        <div class="text-center">
+        <div class="text-center mt-3">
             <button pButton type="button" [disabled]="btnDisabled" class="btn-primary"
                 (click)="assign()">Assign</button>
         </div>

@@ -10,7 +10,17 @@
   font-size: 12px;
 }
 
+.table>tbody>tr>td {
+  border: none !important;
+}
 
+.table>tbody>tr>th {
+  border: none !important;
+}
+
+.table {
+  margin: 0 !important;
+}
 
 .dealer-name {
   font-size: 18px;

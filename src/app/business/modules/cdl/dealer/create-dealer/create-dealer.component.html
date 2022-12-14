@@ -13,10 +13,10 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Dealer Name</div>
+                <div class="form-title">Dealer Shop Name</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" formControlName="name" placeholder="Enter Dealer Name"
+                <input (keyup)="resetErrors()" type="text" formControlName="name" placeholder="Enter Dealer Shop Name"
                   class="form-control" autocomplete="off" />
               </div>
             </div>
@@ -53,11 +53,11 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Dealer Username</div>
+                <div class="form-title">Dealer Owner Name</div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" type="text" formControlName="username"
-                  placeholder="Enter Dealer Username" class="form-control" autocomplete="off" />
+                  placeholder="Enter Dealer Owner Name" class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -110,7 +110,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Dealer Photo</div>
+                <div class="form-title">Dealer Owner Photo</div>
               </div>
               <div class="fieldPadding photo-border">
                 <div class='file file--upload'>
@@ -135,6 +135,46 @@
                         </a>
                       </div>
                       <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)" *ngIf="action!='update'">
+                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Shop Photo</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class='file file--upload'>
+                  <label for='storeAttach' (click)="storeAttach.click()">
+                    Upload File
+                  </label>
+                  <input #storeAttach type='file' formControlName="storephoto" (change)="filesSelected($event,'store')"
+                    accept=".png,.jpg,.jpeg" />
+                </div>
+              </div>
+              <div class="img-section clearfix"
+                *ngIf="selectedFiles['store'] && selectedFiles['store'].files && selectedFiles['store'].files.length > 0">
+                <ul class="galul">
+                  <li *ngFor="let file of selectedFiles['store'].files;let i = index ">
+                    <div class="galimg_outer">
+                      <div class="gal_img pointer-cursor">
+                        <img [src]="getImage(selectedFiles['store'].base64[i], file)"
+                          *ngIf="selectedFiles['store'].base64[i]" width="100px" height="100px">
+                        <a [href]="file.s3path" target="_blank">
+                          <img [src]="getImagefromUrl(file.s3path,file)"
+                            *ngIf="!selectedFiles['store'].base64[i] && file.s3path" width="100px" height="100px">
+                        </a>
+                      </div>
+                      <div class="gal_action" (click)="deleteTempImage(i, 'store',file)" *ngIf="action!='update'">
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
@@ -265,44 +305,7 @@
         </div>
 
 
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Store Photo</div>
-              </div>
-              <div class="fieldPadding photo-border">
-                <div class='file file--upload'>
-                  <label for='storeAttach' (click)="storeAttach.click()">
-                    Upload File
-                  </label>
-                  <input #storeAttach type='file' formControlName="storephoto" (change)="filesSelected($event,'store')"
-                    accept=".png,.jpg,.jpeg" />
-                </div>
-              </div>
-              <div class="img-section clearfix"
-                *ngIf="selectedFiles['store'] && selectedFiles['store'].files && selectedFiles['store'].files.length > 0">
-                <ul class="galul">
-                  <li *ngFor="let file of selectedFiles['store'].files;let i = index ">
-                    <div class="galimg_outer">
-                      <div class="gal_img pointer-cursor">
-                        <img [src]="getImage(selectedFiles['store'].base64[i], file)"
-                          *ngIf="selectedFiles['store'].base64[i]" width="100px" height="100px">
-                        <a [href]="file.s3path" target="_blank">
-                          <img [src]="getImagefromUrl(file.s3path,file)"
-                            *ngIf="!selectedFiles['store'].base64[i] && file.s3path" width="100px" height="100px">
-                        </a>
-                      </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'store',file)" *ngIf="action!='update'">
-                        <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+
 
 
 

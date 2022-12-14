@@ -50,8 +50,9 @@
 }
 
 ::ng-deep .p-ripple.p-element.p-button.p-component {
-    margin: 10px !important;
-    border: 1px solid rgb(201, 201, 201)!important;
+    /* margin: 10px !important; */
+    width: 100% !important;
+    border: 1px solid rgb(201, 201, 201) !important;
 }
 
 .selection {
@@ -68,4 +69,17 @@
 
 .btn-primary {
     font-size: 14px !important;
+}
+
+
+.table>tbody>tr>td {
+    border: none !important;
+}
+
+.table>tbody>tr>th {
+    border: none !important;
+}
+
+.table {
+    margin: 0 !important;
 }
