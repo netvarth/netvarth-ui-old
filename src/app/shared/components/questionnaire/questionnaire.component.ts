@@ -34,7 +34,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   @Input() mode; // Added by mani to check the file upload
   @Output() fileChanged = new EventEmitter<any>();
   @Output() returnAnswers = new EventEmitter<any>();
-
+  @Input() tempType;
 
   answers: any = {};
   showDataGrid: any = {};
@@ -247,7 +247,14 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         this.getAnswers(this.questions, 'get');
       }
     }
-
+    this.disableField()
+  }
+  //disable field
+  disableField(){
+    if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
+      this.buttonDisable=true;
+      // this.disableInput();
+    }
   }
   // *.component.ts
   asIsOrder(a, b) {

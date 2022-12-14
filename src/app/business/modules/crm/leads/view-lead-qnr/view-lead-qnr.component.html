@@ -155,19 +155,19 @@
       <div *ngIf="leadInfo.status.name==='Sales Verified'">
         <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
           <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
-            (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"  [questionAnswers]="questionAnswers"></app-questionnaire>
+            (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"  [questionAnswers]="questionAnswers" [tempType]="tempType"></app-questionnaire>
         </ng-container>
       </div>
       <div *ngIf="showQuestionnaire && questionaire" class="quest">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
-          [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)">
+          [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)" [tempType]="tempType">
         </app-questionnaire>
       </div>
       <div *ngIf="leadInfo.status.name==='Bank Details' || leadInfo.status.name==='Two Wheeler Details' 
       || leadInfo.status.name==='Loan Application'" class="quest">
       <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
-          (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
+          (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)" [tempType]="tempType"></app-questionnaire>
       </ng-container>
     </div>
     </div>
@@ -246,7 +246,7 @@
         [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+      <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
         (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
   </ng-container>
@@ -260,11 +260,11 @@
         [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+      <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
         (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
     <ng-container *ngIf="showQuestionnaire && questionaire" class="quest">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
+      <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
         [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)">
       </app-questionnaire>
     </ng-container>
@@ -337,11 +337,11 @@
         </div>
       </div>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+      <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
         (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"></app-questionnaire>
     </ng-container>
     <ng-container *ngIf="showQuestionnaire && questionaire" class="quest">
-      <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
+      <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
         [uuid]="leadInfo.uid" (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)">
       </app-questionnaire>
     </ng-container>
