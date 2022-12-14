@@ -230,6 +230,9 @@ export class ApplicantComponent implements OnInit {
       this.applicantForm.controls.permanentPinCode.setValue(this.applicant.permanentPinCode);
     }
     //enable disable form control
+    this.disableField()
+  }
+  disableField(){
     if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
       this.diasbleFormControl();
       this.disbaleFielInput=false;

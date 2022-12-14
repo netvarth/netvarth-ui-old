@@ -245,6 +245,9 @@ export class ViewLeadQnrComponent implements OnInit {
   ngOnInit() {
     this.activeUser = this.groupService.getitemFromGroupStorage("ynw-user");
     this.initLead();
+    this.disableField()
+  }
+  disableField(){
     if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
       this.disbaleFielInput=false;
     }

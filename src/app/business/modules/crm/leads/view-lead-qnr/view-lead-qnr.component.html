@@ -271,7 +271,7 @@
   </ng-container>
   <div *ngIf="leadInfo.status.name==='New' ||leadInfo.status.name==='KYC'  " class="mgn-up-20">
     <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm"
-    [ngClass]="{'cursorDisable':disbaleFielInput }" (click)="disbaleFielInput && addCoApplicant()">
+     (click)="disbaleFielInput && addCoApplicant()">
       <div class="applicantBtn">
         <div>Add Co-Applicant</div>
         <div>
