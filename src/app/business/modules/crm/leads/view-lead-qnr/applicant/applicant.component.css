@@ -93,6 +93,14 @@ textarea {
     .inputwithImg {
         width: 100% !important;
     }
+    .confirmBtnCrif{
+        width: 100% !important;
+        outline: #32de84 !important;
+        border: #32de84 !important;
+        font-weight: 500 !important;
+        font-size: 13px;
+        text-align: left;
+    }
 }
 
 ::ng-deep .form-control:focus {
@@ -189,4 +197,12 @@ textarea {
 }
 i{
     cursor: pointer;
+}
+.confirmBtnCrif{
+    width: 100% !important;
+    outline: #32de84 !important;
+    border: #32de84 !important;
+    font-weight: 500 !important;
+    font-size: 13px;
+    text-align: left;
 }

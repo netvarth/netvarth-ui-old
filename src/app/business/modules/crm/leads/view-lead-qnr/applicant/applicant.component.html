@@ -600,14 +600,16 @@
 </form>
 <ng-container *ngIf="this.leadInfo && this.leadInfo.status && (this.leadInfo.status.name==='KYC Updated'||
     this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation')">
-    <!---crif btn start-->
-    <div class=" my-2">
-        <button  type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
-    border: 1px solid #D7FFE9 !important;color: #fff;width: -webkit-fill-available;" (click)="(disbaleFielInput) &&showCrifscoreSection()">{{generateCrifText}}</button>
+    <div class="my-2" style="padding:10px">
+        <button  type="button" class="font-weight-bold confirmBtn confirmBtnCrif" (click)="(disbaleFielInput) &&showCrifscoreSection()">
+    <span>
+        <span>{{generateCrifText}}</span>
+    </span>
+</button>
     </div>
-    <!----crif btn end-->
     <div *ngIf="showCrifSection">
-        <span class="group-head">{{generateCrifText }}</span><br>
+        <span class="group-head">{{generateCrifText }}</span>
+        <br>
         <div class="bggrey my-2">
             <div style="display: flex;gap: 5px">
                 <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding" style="display: flex;

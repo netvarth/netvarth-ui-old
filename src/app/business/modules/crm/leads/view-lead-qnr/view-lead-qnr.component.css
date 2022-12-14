@@ -641,7 +641,23 @@ textarea {
   .crifscoresmallDeviceWidth{
     width: 100% !important;
   }
+   .confirmBtnCrif{
+        width: 100% !important;
+        outline: #32de84 !important;
+        border: #32de84 !important;
+        font-weight: 500 !important;
+        font-size: 13px;
+        text-align: left;
+    }
 
+}
+.confirmBtnCrif{
+  width: 100%;
+  outline: #32de84 !important;
+  border: #32de84 !important;
+  font-weight: 500 !important;
+  font-size: 13px;
+  text-align: left;
 }
 
 .timeField {

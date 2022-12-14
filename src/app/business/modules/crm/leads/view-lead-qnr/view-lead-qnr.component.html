@@ -66,7 +66,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicantsInfo"></app-applicant>
     </ng-container>
   </ng-container>
 
@@ -103,15 +103,12 @@
           </div>
         </div>
       </div>
-      <hr />
+      <!-- <hr /> -->
       <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Credit Score Generated' || leadInfo.status.name==='Sales Verified')" class="crifScoreFlex">
         <div *ngFor="let item of tempCrifDetails;let i=index" class="crifscoresmallDeviceWidth" >
           <!---crif btn start-->
           <div class=" my-2">
-            <button  type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
-                border: 1px solid #D7FFE9 !important;
-                color: #fff;
-                width: -webkit-fill-available;" (click)="(disbaleFielInput)&& showCrifscoreSection(i)">
+            <button  type="button" class="font-weight-bold confirmBtn confirmBtnCrif" (click)="(disbaleFielInput)&& showCrifscoreSection(i)">
               {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
               <span *ngIf="i===1">Co-Applicant </span>
               <span *ngIf="i>1">Co-Applicant {{i}}</span>
@@ -243,7 +240,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicantsInfo"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
       <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
@@ -257,7 +254,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicantsInfo"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
       <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
@@ -286,7 +283,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo" [tempType]="tempType"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType" [tempCrifDetails]="applicantsInfo"></app-applicant>
     </ng-container>
      <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Loan Sanction')" class="crifScoreFlex">
         <div *ngFor="let item of tempCrifDetails;let i=index" class="crifscoresmallDeviceWidth" >

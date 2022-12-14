@@ -42,6 +42,7 @@ export class ApplicantComponent implements OnInit {
   @Output() addApplicant = new EventEmitter<any>();
   @Input() mode;
   @Input() tempType;
+  @Input() tempCrifDetails;
   failedStatusId: any;
   crifStatusId: any;
   availableDates: any = [];
@@ -55,10 +56,10 @@ export class ApplicantComponent implements OnInit {
   api_loading: boolean = false;
   bCrifBtnDisable: boolean;
   fileOpener: any;
-  generateCrifText: string = 'Generate CRIF Score of Applicant';
+  generateCrifText: string = 'Generate CRIF Score';
   crifBtnForHide: boolean;
   kycListId: any;
-  coApplicantText: string = 'Co-Applicant Name';
+  coApplicantText: string = 'Co-Applicant Details';
   lebalName: string = 'Name';
   lebalPhoneNumber: string = 'Phone Number';
   lebalkycDetails: string = 'KYC Details';
@@ -86,6 +87,7 @@ export class ApplicantComponent implements OnInit {
   todayDate: Date;
   imageMode: any;
   disbaleFielInput:boolean=true;
+  tempCrifDetaiksIndex:any[]=[]
   constructor(
     private formBuilder: FormBuilder,
     private fileService: FileService,
@@ -101,9 +103,12 @@ export class ApplicantComponent implements OnInit {
   ngOnInit(): void {
     console.log('tempType',this.tempType)
     console.log('this.leadInfo.status',this.leadInfo)
+    console.log('this.tempCrifDetails',this.tempCrifDetails)
+    // this.tempCrifDetaiksIndex.push(this.tempCrifDetails)
+    // console.log('this.tempCrifDetaiksIndex',this.tempCrifDetaiksIndex.length)
     if (this.leadInfo.status.name === 'Login' || this.leadInfo.status.name === 'Credit Recommendation') {
       this.crifBtnForHide = false;
-      this.getCrifInquiryVerification(this.applicant)
+      this.getCrifInquiryVerification(this.applicant);
     } else {
       if (this.applicant.creditScoreCreated) {
         this.crifBtnForHide = true;
@@ -524,8 +529,8 @@ export class ApplicantComponent implements OnInit {
     return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
   }
   showCrifscoreSection() {
-    if (this.generateCrifText === 'Verify CRIF Score of Applicant' || this.leadInfo.status.name === 'KYC Updated' ||
-      this.generateCrifText === 'Re-Generate CRIF Score of Applicant') {
+    if (this.generateCrifText === 'Verify CRIF Score' || this.leadInfo.status.name === 'KYC Updated' ||
+      this.generateCrifText === 'Re-Generate CRIF Score') {
       this.showCrifSection = !this.showCrifSection;
     }
   }
@@ -565,7 +570,7 @@ export class ApplicantComponent implements OnInit {
             _this.api_loading = false;
             if (_this.applicant.creditScoreCreated) {
               if (_this.leadInfo.status.name === 'Login' || _this.leadInfo.status.name === 'Credit Recommendation') {
-                _this.generateCrifText = 'Verify CRIF Score of Applicant';
+                _this.generateCrifText = 'Verify CRIF Score';
                 _this.bCrifBtnDisable = false;
                 _this.showPdfIcon = true;
               } else {
@@ -573,11 +578,11 @@ export class ApplicantComponent implements OnInit {
                   _this.lebalCrifVerification = 'Re-Check CRIF Verification'
                   _this.bCrifBtnDisable = false;
                   _this.showPdfIcon = true;
-                  _this.generateCrifText = 'Re-Generate CRIF Score of Applicant'
+                  _this.generateCrifText = 'Re-Generate CRIF Score'
                 }
               }
             } else {
-              _this.generateCrifText = 'Verify CRIF Score of Applicant';
+              _this.generateCrifText = 'Verify CRIF Score';
               _this.bCrifBtnDisable = false;
               _this.showPdfIcon = true;
             }

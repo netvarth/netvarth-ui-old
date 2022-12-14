@@ -714,13 +714,17 @@ export class ViewLeadQnrComponent implements OnInit {
   submitQuestionnaire(uuid, type?) {
     const _this = this;
     const dataToSend: FormData = new FormData();
-    const blobpost_Data = new Blob([JSON.stringify(_this.questionAnswers.answers)], { type: 'application/json' });
+    let questionAnswer:any;
+    if(this.questionAnswers && this.questionAnswers.answers){
+      questionAnswer= this.questionAnswers.answers;
+    }
+    const blobpost_Data = new Blob([JSON.stringify(questionAnswer)], { type: 'application/json' });
     dataToSend.append('question', blobpost_Data);
     if (this.leadInfo.status.name === 'Login Verified' || this.questionaire.transactionType === 'LEADSTATUS') {
       _this.providerServices.submitLeadLoginVerifyQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         _this.complete(uuid, type);
       });
-    } else if ((this.questionaire && this.questionaire.questionAnswers && this.questionaire.questionAnswers[0].answerLine) || this.leadInfo.status.name === 'Credit Recommendation') {
+    } else if ((this.questionaire && this.questionaire.questionAnswers && this.questionaire.questionAnswers[0] && this.questionaire.questionAnswers[0].answerLine) || this.leadInfo.status.name === 'Credit Recommendation') {
       _this.providerServices.resubmitProviderLeadQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
         _this.complete(uuid, type);
       });
