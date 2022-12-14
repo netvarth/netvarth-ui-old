@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CreateDealerComponent } from './create-dealer.component';
+import { DropdownModule } from 'primeng/dropdown';
 
 
 const routes: Routes = [
@@ -27,6 +28,7 @@ const routes: Routes = [
     MatSelectModule,
     MatOptionModule,
     MatButtonModule,
+    DropdownModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

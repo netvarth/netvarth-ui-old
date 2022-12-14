@@ -33,17 +33,25 @@
                         <table class="table table-borderless">
                             <tbody>
                                 <tr style="width: 100%;">
-                                    <td style="width: 50%;" class="details-title">
+                                    <td style="width: 25%;" class="details-title">
                                         <span class="officer-name font-weight-bold">
                                             <span
                                                 *ngIf="officer && officer.firstName">{{officer.firstName}}</span>&nbsp;
                                             <span *ngIf="officer && officer.lastName">{{officer.lastName}}</span>
                                         </span>
                                     </td>
-                                    <th style=" width: 50%;" class="details-sub-title">
+                                    <th style=" width: 25%;" class="details-sub-title">
                                         <span class="officer-phone"
                                             *ngIf="officer && officer.mobileNo">{{officer.mobileNo}}</span>
 
+                                    </th>
+                                    <th style="width: 25%;" class="details-sub-title">
+                                        <div class="d-flex" *ngIf="officer && officer.userAvailable">
+                                            <div [ngClass]="officer.userAvailable">
+                                                <i class="fa fa-circle availanility-icon away"></i>
+                                                &nbsp;{{officer.userAvailable}}
+                                            </div>
+                                        </div>
                                     </th>
                                 </tr>
                             </tbody>

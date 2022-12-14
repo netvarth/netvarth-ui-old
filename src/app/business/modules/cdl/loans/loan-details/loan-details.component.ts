@@ -116,7 +116,8 @@ export class LoanDetailsComponent implements OnInit {
     let data =
     {
       "loanApplicationUid": this.loanId,
-      "customerPhone": this.loanData.customer.phoneNo
+      "customerPhone": this.loanData.customer.phoneNo,
+      "id": this.loanData.loanApplicationKycList[0].id
     }
     this.cdlservice.getEquifaxScore(data).subscribe((data: any) => {
       this.equifaxScoreData = data;

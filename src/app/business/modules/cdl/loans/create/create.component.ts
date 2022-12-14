@@ -42,6 +42,8 @@ export class CreateComponent implements OnInit {
   bankDetailsVerified: any = false;
   loanApplicationKycId: any;
   loanProductsSelected: any;
+  showCoapplicant = false;
+  banksList: any;
   todayDate = new Date()
   minDob: any;
   selectedFiles = {
@@ -144,6 +146,7 @@ export class CreateComponent implements OnInit {
   loanProductSubCategories: any;
   productCategoryId: any;
   productSubCategoryId: any;
+  totalPaymentValue: number;
   constructor(
     private location: Location,
     private router: Router,
@@ -478,6 +481,7 @@ export class CreateComponent implements OnInit {
     this.getLoanProductCategories();
     // this.getLoanProductSubCategories();
     this.getAddressRelations();
+    this.getBankList();
     if (this.from && this.from == 'create') {
       this.customerDetailsPanel = false;
       this.kycDetailsPanel = true;
@@ -539,6 +543,14 @@ export class CreateComponent implements OnInit {
     this.cdlService.getBusinessProfile().subscribe((data) => {
       this.businessDetails = data;
       console.log("this.businessDetails", this.businessDetails)
+    })
+  }
+
+
+  getBankList() {
+    this.cdlService.getBankList().subscribe((data) => {
+      this.banksList = data;
+      console.log("this.banksList", this.banksList)
     })
   }
 
@@ -1661,6 +1673,30 @@ export class CreateComponent implements OnInit {
     }
     else {
       this.showBankAttachments = false;
+    }
+    if (this.createLoan.controls.loanamount.value > 100000) {
+      this.showCoapplicant = true;
+    }
+    else {
+      this.showCoapplicant = false;
+    }
+  }
+
+  totalPayment(event) {
+    if (Number(event.target.value) > 1000) {
+      this.totalPaymentValue = Number(event.target.value);
+      this.createLoan.controls.downpayment.setValue(this.createLoan.controls.totalpayment.value * 0.2)
+      this.createLoan.controls.loanamount.setValue(this.createLoan.controls.totalpayment.value - this.createLoan.controls.downpayment.value)
+    }
+    else {
+      this.createLoan.controls.downpayment.setValue(0)
+      this.createLoan.controls.loanamount.setValue(0)
+    }
+    if (this.createLoan.controls.loanamount.value > 100000) {
+      this.showCoapplicant = true;
+    }
+    else {
+      this.showCoapplicant = false;
     }
   }
 

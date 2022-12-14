@@ -15,7 +15,7 @@ import { SelectSchemeModule } from '../select-scheme/select-scheme.module';
 import { OtpVerifyModule } from '../otp-verify/otp-verify.module';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
-
+import { DropdownModule } from 'primeng/dropdown';
 
 const routes: Routes = [
   { path: '', component: CreateComponent }
@@ -42,6 +42,7 @@ const routes: Routes = [
     SelectSchemeModule,
     MultiSelectModule,
     CalendarModule,
+    DropdownModule,
     [RouterModule.forChild(routes)]
   ]
 })

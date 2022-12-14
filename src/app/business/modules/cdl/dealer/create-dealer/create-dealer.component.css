@@ -156,3 +156,8 @@
   text-align: center;
   background: #D9D8D8;
 }
+
+
+::ng-deep .p-dropdown {
+  width: 100% !important;
+}

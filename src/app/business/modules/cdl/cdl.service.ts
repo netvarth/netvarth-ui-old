@@ -160,6 +160,12 @@ export class CdlService {
   }
 
 
+  getBankList() {
+    const url = 'provider/loanapplication/bank';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+
   getLoanProducts(categoryId, subCategoryId) {
     const url = 'provider/loanproduct?category-eq=' + categoryId + '&subCategory-eq=' + subCategoryId;
     return this.servicemeta.httpGet(url, null);

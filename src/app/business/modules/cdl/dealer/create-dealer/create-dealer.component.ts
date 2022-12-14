@@ -51,6 +51,7 @@ export class CreateDealerComponent implements OnInit {
   emailverification = false;
   businessId: any;
   businessDetails: any;
+  banksList: any;
   partnerSizes = [
     {
       name: "Small"
@@ -239,6 +240,7 @@ export class CreateDealerComponent implements OnInit {
     this.getPartnerCategories();
     this.getPartnerTypes();
     this.getBranches();
+    this.getBankList();
     this.cdlservice.getBusinessProfile().subscribe((data) => {
       this.businessDetails = data;
       if (this.businessDetails && this.businessDetails.id) {
@@ -249,6 +251,14 @@ export class CreateDealerComponent implements OnInit {
 
   resetErrors() {
 
+  }
+
+
+  getBankList() {
+    this.cdlservice.getBankList().subscribe((data) => {
+      this.banksList = data;
+      console.log("this.banksList", this.banksList)
+    })
   }
 
 

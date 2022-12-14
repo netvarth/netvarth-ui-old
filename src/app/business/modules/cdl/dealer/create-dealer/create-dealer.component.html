@@ -574,7 +574,7 @@
               <div class="d-flex">
                 <div class="form-title">Select Bank</div>
               </div>
-              <div class="fieldPadding">
+              <!-- <div class="fieldPadding">
                 <select class="form-control" formControlName="bank" [class.disabled]="bankverification">
                   <option>KOTAK</option>
                   <option>ICICI</option>
@@ -583,6 +583,18 @@
                   <option>BOI</option>
                   <option>AXIS</option>
                 </select>
+              </div> -->
+
+              <div *ngIf="banksList">
+                <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
+                  filterBy="bankName" optionValue="bankName" dropdownIcon="fa fa-caret-down" [showClear]="true"
+                  placeholder="Select Bank">
+                  <ng-template let-bank pTemplate="item">
+                    <div class="bank-item">
+                      <div>{{bank.bankName}}</div>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
               </div>
             </div>
           </div>
@@ -590,11 +602,15 @@
 
 
 
+
+
+
+
         <div>
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Account Number</div>
+                <div class="form-title">Bank Account Number</div>
               </div>
               <!-- <div class="d-flex"> -->
               <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"

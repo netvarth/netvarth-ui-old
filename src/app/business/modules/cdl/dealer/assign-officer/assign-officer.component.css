@@ -83,3 +83,12 @@
 .table {
     margin: 0 !important;
 }
+
+
+.Online {
+    color: #81db9b !important;
+}
+
+.Away {
+    color: #D93025 !important;
+}
