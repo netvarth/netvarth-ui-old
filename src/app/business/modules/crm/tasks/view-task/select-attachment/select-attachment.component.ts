@@ -8,7 +8,6 @@ import { SnackbarService } from "../../../../../../shared/services/snackbar.serv
 import { SharedServices } from "../../../../../../shared/services/shared-services";
 import { FileService } from "../../../../../../shared/services/file-service";
 import { projectConstantsLocal } from "../../../../../../shared/constants/project-constants";
-// import { Router } from '@angular/router';
 
 @Component({
   selector: "app-select-attachment",
@@ -23,15 +22,15 @@ export class SelectAttachmentComponent implements OnInit {
   };
   imgCaptions: any = [];
 
-  source:any;
+  source: any;
   selectedFiles: FileList;
   progressInfos = [];
   message = "";
   fileInfos: Observable<any>;
   action: string;
-  public fileInput:any;
-  public fileSelectErrorMsg:any;
-  public bUploadFileError:boolean=false
+  public fileInput: any;
+  public fileSelectErrorMsg: any;
+  public bUploadFileError: boolean = false
   constructor(
     public _location: Location,
     public dialogRef: MatDialogRef<SelectAttachmentComponent>,
@@ -40,18 +39,11 @@ export class SelectAttachmentComponent implements OnInit {
     private snackbarService: SnackbarService,
     public shared_services: SharedServices,
     private fileService: FileService
-  ) // private router: Router,
-
-  { 
-    console.log('this.source',this.data)
+  ) {
     this.source = this.data.source
-    console.log("Source Type :",this.source)
   }
 
   ngOnInit(): void {
-
-   
-    // this.fileInfos = this.uploadService.getFiles();
   }
 
   selectFiles(event) {
@@ -74,7 +66,6 @@ export class SelectAttachmentComponent implements OnInit {
             (100 * event.loaded) / event.total
           );
         } else if (event instanceof HttpResponse) {
-          // this.fileInfos = this.uploadService.getFiles();
         }
       },
       err => {
@@ -86,14 +77,8 @@ export class SelectAttachmentComponent implements OnInit {
 
   filesSelected(event, type?) {
     const input = event.target.files;
-    this.fileInput=input;
-    console.log(' this.fileInput', this.fileInput)
-    //let taskid = this.data.taskuid;
-    console.log("input : ", input);
-    // this.bUploadFileError=false;
-    //   this.fileSelectErrorMsg=''
-  
-    if (input.length===1) {
+    this.fileInput = input;
+    if (input.length === 1) {
       for (const file of input) {
         if (file.size > projectConstantsLocal.FILE_MAX_SIZE) {
           this.snackbarService.openSnackBar(
@@ -119,7 +104,6 @@ export class SelectAttachmentComponent implements OnInit {
           }
         }
       }
-      // this.saveFile()
     }
     else {
       if (event && event.target && event.target.files && event.target.files.length) {
@@ -133,27 +117,16 @@ export class SelectAttachmentComponent implements OnInit {
           this.action = "attachment";
         }
       }
-
-      console.log('this.selectedMessage', this.selectedMessage)
     }
-    // if( this.fileInput.length>0){
-    //   this.bUploadFileError=false;
-    //   this.fileSelectErrorMsg=''
-    // }
-    // else{
-    //   this.bUploadFileError=true;
-    //   this.fileSelectErrorMsg='Please select atleast one file'
-    // }
   }
 
-  saveFile(fileDes:any) {
+  saveFile(fileDes: any) {
     const _this = this;
-    // console.log('this.fileInput',this.fileInput.length)
     console.log('file', this.selectedMessage.files)
-    if(this.selectedMessage.files.length >0){
-      this.bUploadFileError=false;
-      this.fileSelectErrorMsg=''
-      this.dialogRef.close();
+    if (this.selectedMessage.files.length > 0) {
+      this.bUploadFileError = false;
+      this.fileSelectErrorMsg = ''
+      // this.dialogRef.close();
       console.log("The data is : ", this.data.source);
       if (this.data.source == "Lead") {
         var id = this.data.leaduid;
@@ -162,13 +135,13 @@ export class SelectAttachmentComponent implements OnInit {
         var id = this.data.taskuid;
         console.log("This is Task id : ", id);
       }
-      return new Promise(function(resolve, reject) {
+      // return new Promise(function (resolve, reject) {
         const dataToSend: FormData = new FormData();
         const captions = {};
         let i = 0;
         if (_this.selectedMessage) {
           for (const pic of _this.selectedMessage.files) {
-            console.log('pic',pic)
+            console.log('pic', pic)
             dataToSend.append("attachments", pic, pic["name"]);
             captions[i] = _this.imgCaptions[i] ? _this.imgCaptions[i] : "";
             i++;
@@ -178,62 +151,50 @@ export class SelectAttachmentComponent implements OnInit {
           type: "application/json"
         });
         dataToSend.append("captions", blobPropdata);
-        _this.sendWLAttachment(id, dataToSend).then(() => {                                                                         
-          resolve(true);
-        
+        _this.sendWLAttachment(id, dataToSend).then(() => {
+          this.dialogRef.close();
+          // resolve(true);
+        },(error)=>{
+          // console.log("Sending Task Attachment Fail");
+          _this.snackbarService.openSnackBar(
+            error,
+            { panelClass: "snackbarerror" }
+          );
         });
-      });
+      // });
     }
-    else{
-      this.bUploadFileError=true;
-      this.fileSelectErrorMsg='Please select atleast one file to upload' ;
+    else {
+      this.bUploadFileError = true;
+      this.fileSelectErrorMsg = 'Please select atleast one file to upload';
     }
-    
+
   }
   getImage(url, file) {
-    console.log('url,url',url)
-    console.log("File :", file);
-    this.bUploadFileError=false;
-    this.fileSelectErrorMsg=''
+    this.bUploadFileError = false;
+    this.fileSelectErrorMsg = ''
     return this.fileService.getImage(url, file);
   }
-  //   getImage(url, file) {
-  //     if (file.type == 'application/pdf') {
-  //         return './assets/images/pdf.png';
-  //     }
-  //     else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
-  //         return './assets/images/audio.png';
-
-  //     }
-  //     else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
-  //         return './assets/images/video.png';
-  //     }
-  //     else {
-  //         return url;
-  //     }
-  // }
-
   deleteTempImage(i) {
     this.selectedMessage.files.splice(i, 1);
     this.selectedMessage.base64.splice(i, 1);
     this.selectedMessage.caption.splice(i, 1);
     this.imgCaptions[i] = "";
-    console.log('this.selectedMessage.files',this.selectedMessage.files.length)
-    if( this.selectedMessage.files.length>0){
-      this.bUploadFileError=false;
-      this.fileSelectErrorMsg=''
+    console.log('this.selectedMessage.files', this.selectedMessage.files.length)
+    if (this.selectedMessage.files.length > 0) {
+      this.bUploadFileError = false;
+      this.fileSelectErrorMsg = ''
     }
-    else{
-      this.bUploadFileError=true;
-      this.fileSelectErrorMsg='Please select atleast one file to upload'
+    else {
+      this.bUploadFileError = true;
+      this.fileSelectErrorMsg = 'Please select atleast one file to upload'
     }
   }
 
   sendWLAttachment(Uid, dataToSend) {
     const _this = this;
-    console.log("Data Testing", this.data.source);
+    // console.log("Data Testing", this.data.source);
     if (this.data.source != "Lead") {
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         _this.shared_services.addfiletotask(Uid, dataToSend).subscribe(
           () => {
             resolve(true);
@@ -241,38 +202,31 @@ export class SelectAttachmentComponent implements OnInit {
           },
           error => {
             reject(error);
-            console.log("Sending Task Attachment Fail");
-            this.snackbarService.openSnackBar(
-              "Please select atleast one file to upload",
-              { panelClass: "snackbarerror" }
-            );
           }
         );
       });
     } else {
-      return new Promise(function(resolve, reject) {
+      return new Promise(function (resolve, reject) {
         _this.shared_services.addfiletolead(Uid, dataToSend).subscribe(
           () => {
             resolve(true);
             console.log("Sending Attachment Success");
           },
           error => {
-            reject(error);
             console.log("Sending Lead Attachment Fail");
-            this.snackbarService.openSnackBar(
+            _this.snackbarService.openSnackBar(
               "Please select atleast one file to upload",
               { panelClass: "snackbarerror" }
             );
+            reject(error);
           }
         );
       });
     }
   }
-
   dialogClose() {
     this.dialogRef.close('close');
   }
-
   goBack() {
     this._location.back();
   }
