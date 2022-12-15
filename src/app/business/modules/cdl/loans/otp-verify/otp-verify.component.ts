@@ -31,6 +31,7 @@ export class OtpVerifyComponent implements OnInit {
   customerData: any;
   phoneError: any;
   loanId: any;
+  loankycid: any;
   dialCode: any;
   firstName: any;
   lastName: any;
@@ -74,6 +75,9 @@ export class OtpVerifyComponent implements OnInit {
     }
     if (this.data && this.data.id) {
       this.loanId = this.data.id;
+    }
+    if (this.data && this.data.kycid) {
+      this.loankycid = this.data.kycid;
     }
     if (this.data && this.data.name) {
       this.name = this.data.name;
@@ -306,7 +310,11 @@ export class OtpVerifyComponent implements OnInit {
         }
       }
       if (this.customerData) {
-        this.subs.sink = this.cdlservice.verifyPhoneOTP(this.otpEntered, this.customerData,this.from)
+        if (this.from == 'guarantor') {
+          this.customerData['uid'] = this.loanId
+          this.customerData.loanApplicationKycList[0].id = this.loankycid
+        }
+        this.subs.sink = this.cdlservice.verifyPhoneOTP(this.otpEntered, this.customerData, this.from)
           .subscribe(
             (response: any) => {
               if (response) {

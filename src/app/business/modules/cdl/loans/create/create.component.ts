@@ -268,6 +268,15 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].guarantorName) {
               this.createLoan.controls.guarantorName.setValue(this.loanData.loanApplicationKycList[0].guarantorName);
             }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].isGuarantorPhoneVerified) {
+              this.guarantorVerification = true;
+            }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].guarantorDob) {
+              this.createLoan.controls.guarantorDob.setValue(this.loanData.loanApplicationKycList[0].guarantorDob);
+            }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].guarantorPhone) {
+              this.createLoan.controls.guarantorPhone.setValue(this.loanData.loanApplicationKycList[0].guarantorPhone);
+            }
             // if (this.loanData && this.loanData.loanScheme && this.loanData.loanScheme.schemeName) {
             //   this.createLoan.controls.scheme.setValue(this.loanData.loanScheme.schemeName);
             //   this.schemeSelected = this.loanData.loanScheme;
@@ -457,7 +466,8 @@ export class CreateComponent implements OnInit {
       productsubcategory: [null],
       guarantorType: [null],
       guarantorName: [null],
-      guarantorPhone: [null]
+      guarantorPhone: [null],
+      guarantorDob: [null]
     });
   }
 
@@ -798,6 +808,7 @@ export class CreateComponent implements OnInit {
           "currentRelationType": this.createLoan.controls.currentRelationType.value,
           "currentRelationName": this.createLoan.controls.currentRelationName.value,
           "guarantorName": this.createLoan.controls.guarantorName.value,
+          "guarantorDob": this.createLoan.controls.guarantorDob.value,
           "guarantorType": this.createLoan.controls.guarantorType.value,
           "guarantorPhone": this.createLoan.controls.guarantorPhone.value
         }
@@ -1123,12 +1134,13 @@ export class CreateComponent implements OnInit {
 
 
 
-  verifyGurantorotp() {
+  verifyGuarantorotp() {
     if (this.createLoan.controls.guarantorPhone.value && this.createLoan.controls.guarantorPhone.value != '' && this.createLoan.controls.guarantorPhone.value.length == 10) {
       let can_remove = false;
       if (this.createLoan.controls.guarantorName.value) {
         this.nameData = {
-          "firstName": this.createLoan.controls.guarantorName.value
+          "firstName": this.createLoan.controls.guarantorName.value,
+          "dob": this.createLoan.controls.guarantorDob.value
         }
       }
 
@@ -1140,6 +1152,8 @@ export class CreateComponent implements OnInit {
           type: 'Mobile Number',
           data: this.nameData,
           from: 'guarantor',
+          id: this.loanId,
+          kycid: this.loanApplicationKycId,
           phoneNumber: this.createLoan.controls.guarantorPhone.value
         }
       });
@@ -1463,6 +1477,7 @@ export class CreateComponent implements OnInit {
           "vehicleNo": this.createLoan.controls.vehicleNo.value,
           "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
           "guarantorName": this.createLoan.controls.guarantorName.value,
+          "guarantorDob": this.createLoan.controls.guarantorDob.value,
           "guarantorType": this.createLoan.controls.guarantorType.value,
           "guarantorPhone": this.createLoan.controls.guarantorPhone.value
         }

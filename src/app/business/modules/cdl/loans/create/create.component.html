@@ -1244,7 +1244,21 @@
                 </div>
               </div>
 
-              <!-- <div *ngIf="showCoapplicant">
+              <div *ngIf="showCoapplicant">
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Co Applicant Date of Birth</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" #guarantorDob type="date" class="form-control" autocomplete="off"
+                        formControlName="guarantorDob" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="showCoapplicant">
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
@@ -1256,7 +1270,7 @@
                           class="form-control" autocomplete="off" #guarantorPhone formControlName="guarantorPhone"
                           maxlength="10" [class.disabled]="guarantorVerification" />
                         <a class="btn btn-verify" [class.btn-verified]="guarantorVerification"
-                          *ngIf="!guarantorVerification" (click)="verifyotp()"><span>Verify</span></a>
+                          *ngIf="!guarantorVerification" (click)="verifyGuarantorotp()"><span>Verify</span></a>
 
                         <a class="btn btn-verify" *ngIf="guarantorVerification"
                           [class.btn-verified]="guarantorVerification">
@@ -1265,7 +1279,10 @@
                     </div>
                   </div>
                 </div>
-              </div> -->
+              </div>
+
+
+
 
               <!-- <div>
                 <div class="bggrey my-2">
