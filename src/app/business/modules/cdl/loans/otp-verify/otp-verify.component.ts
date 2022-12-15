@@ -306,7 +306,7 @@ export class OtpVerifyComponent implements OnInit {
         }
       }
       if (this.customerData) {
-        this.subs.sink = this.cdlservice.verifyPhoneOTP(this.otpEntered, this.customerData)
+        this.subs.sink = this.cdlservice.verifyPhoneOTP(this.otpEntered, this.customerData,this.from)
           .subscribe(
             (response: any) => {
               if (response) {

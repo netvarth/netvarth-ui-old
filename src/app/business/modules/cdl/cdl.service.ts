@@ -352,8 +352,8 @@ export class CdlService {
 
   sendPhoneOTP(data, from) {
     var url = 'provider/loanapplication/generate/phone';
-    if (from == 'partner') {
-      var url = 'provider/partner/generate/phone';
+    if (from == 'guarantor') {
+      var url = 'provider/loanapplication/generate/guarantor/phone';
     }
     return this.servicemeta.httpPost(url, data);
   }
@@ -394,10 +394,15 @@ export class CdlService {
   }
 
 
-  verifyPhoneOTP(otp, data) {
-    const url = 'provider/loanapplication/verify/' + otp + '/phone';
+  verifyPhoneOTP(otp, data, from) {
+    let url = 'provider/loanapplication/verify/' + otp + '/phone';
+    if (from == 'guarantor') {
+      url = 'provider/loanapplication/verify/' + otp + '/guarantor/phone';
+    }
     return this.servicemeta.httpPost(url, data);
   }
+
+
 
   getGraphAnalyticsData(data) {
     const url = 'provider/dashboard';

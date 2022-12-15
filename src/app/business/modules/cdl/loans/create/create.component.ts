@@ -78,6 +78,7 @@ export class CreateComponent implements OnInit {
   pincode: any = '';
   bankDetails: any;
   nameData: any;
+  guarantorVerification: any;
   verifyingUID = false;
   addresscheck: any = true;
   showaddressfields: any = false;
@@ -455,7 +456,8 @@ export class CreateComponent implements OnInit {
       productcategory: [null],
       productsubcategory: [null],
       guarantorType: [null],
-      guarantorName: [null]
+      guarantorName: [null],
+      guarantorPhone: [null]
     });
   }
 
@@ -796,7 +798,8 @@ export class CreateComponent implements OnInit {
           "currentRelationType": this.createLoan.controls.currentRelationType.value,
           "currentRelationName": this.createLoan.controls.currentRelationName.value,
           "guarantorName": this.createLoan.controls.guarantorName.value,
-          "guarantorType": this.createLoan.controls.guarantorType.value
+          "guarantorType": this.createLoan.controls.guarantorType.value,
+          "guarantorPhone": this.createLoan.controls.guarantorPhone.value
         }
       ]
     }
@@ -1120,6 +1123,53 @@ export class CreateComponent implements OnInit {
 
 
 
+  verifyGurantorotp() {
+    if (this.createLoan.controls.guarantorPhone.value && this.createLoan.controls.guarantorPhone.value != '' && this.createLoan.controls.guarantorPhone.value.length == 10) {
+      let can_remove = false;
+      if (this.createLoan.controls.guarantorName.value) {
+        this.nameData = {
+          "firstName": this.createLoan.controls.guarantorName.value
+        }
+      }
+
+      const dialogRef = this.dialog.open(OtpVerifyComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          type: 'Mobile Number',
+          data: this.nameData,
+          from: 'guarantor',
+          phoneNumber: this.createLoan.controls.guarantorPhone.value
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result.msg == "success") {
+            this.guarantorVerification = true;
+            // this.loanId = result.uid;
+            // const filter = { 'phoneNo-eq': this.createLoan.controls.guarantorPhone.value };
+            // this.getCustomerDetails(filter);
+            // const navigationExtras: NavigationExtras = {
+            //   queryParams: {
+            //     id: this.loanId,
+            //     action: 'update'
+            //   }
+            // };
+            // console.log("Navigation", navigationExtras)
+            // this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+          }
+        }
+      });
+      return can_remove;
+    }
+    else {
+      this.snackbarService.openSnackBar("Please Enter a Valid Mobile Number", { 'panelClass': 'snackbarerror' });
+    }
+  }
+
+
+
 
   saveCustomerDetails() {
     const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
@@ -1413,7 +1463,8 @@ export class CreateComponent implements OnInit {
           "vehicleNo": this.createLoan.controls.vehicleNo.value,
           "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
           "guarantorName": this.createLoan.controls.guarantorName.value,
-          "guarantorType": this.createLoan.controls.guarantorType.value
+          "guarantorType": this.createLoan.controls.guarantorType.value,
+          "guarantorPhone": this.createLoan.controls.guarantorPhone.value
         }
       ]
     }

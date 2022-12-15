@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { CdlService } from '../../cdl.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
-import { ViewReportComponent } from './view-report/view-report.component';
+// import { ViewReportComponent } from './view-report/view-report.component';
 
 @Component({
   selector: 'app-loan-details',
@@ -132,19 +132,27 @@ export class LoanDetailsComponent implements OnInit {
 
 
   viewReport(type, data) {
-    const dialogRef = this.dialog.open(ViewReportComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
+    // const dialogRef = this.dialog.open(ViewReportComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     type: type,
+    //     data: data
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //   }
+    // })
+
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
         type: type,
-        data: data
+        data: JSON.stringify(data)
       }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    })
+    };
+    this.router.navigate(['provider', 'cdl', 'report'], navigationExtras);
   }
 
 
