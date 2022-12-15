@@ -229,6 +229,7 @@ export class LeadsComponent implements OnInit {
         if(this.dataId){
           // filter['status-eq'] = this.dataId;
           filter['isRejected-eq']= true;
+          filter['sort_lastStatusUpdatedDate']='dsc'
         }
         if(this.tempaltename){
           this.headerName = this.tempaltename;
@@ -243,6 +244,7 @@ export class LeadsComponent implements OnInit {
         if(this.dataId){
           filter['status-eq'] = this.dataId;
           filter['isRejected-eq']= false;
+          filter['sort_lastStatusUpdatedDate']='dsc'
         }
         if(this.tempaltename){
           this.headerName = this.tempaltename;

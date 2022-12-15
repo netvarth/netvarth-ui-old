@@ -114,7 +114,7 @@ export class ViewLeadQnrComponent implements OnInit {
   kycFilesCount=0;
   counter = 0;
   errorInfo: any;
-  disbaleFielInput:boolean=true;
+  disbaleFielInput:boolean=false;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -249,7 +249,7 @@ export class ViewLeadQnrComponent implements OnInit {
   }
   disableField(){
     if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
-      this.disbaleFielInput=false;
+      this.disbaleFielInput=true;
     }
   }
 

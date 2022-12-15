@@ -108,7 +108,7 @@
         <div *ngFor="let item of tempCrifDetails;let i=index" class="crifscoresmallDeviceWidth" >
           <!---crif btn start-->
           <div class=" my-2">
-            <button  type="button" class="font-weight-bold confirmBtn confirmBtnCrif" (click)="(disbaleFielInput)&& showCrifscoreSection(i)">
+            <button  type="button" class="font-weight-bold confirmBtn confirmBtnCrif" (click)="(!disbaleFielInput)&& showCrifscoreSection(i)">
               {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
               <span *ngIf="i===1">Co-Applicant </span>
               <span *ngIf="i>1">Co-Applicant {{i}}</span>
@@ -179,7 +179,7 @@
           </div>
         </div>
         <div style="padding:5px">
-          <textarea [disabled]="tempType==='Rejected' || disbaleFielInput" rows="10" class="form-control" [(ngModel)]="notes" #taskDescription
+          <textarea [disabled]="disbaleFielInput" rows="10" class="form-control" [(ngModel)]="notes" #taskDescription
             (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter remarks description"
             style=" height: 40px !important;background: #FCFCFC !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
         </div>
@@ -268,7 +268,7 @@
   </ng-container>
   <div *ngIf="leadInfo.status.name==='New' ||leadInfo.status.name==='KYC'  " class="mgn-up-20">
     <button id="reset" type="button" class="btn btn-primary font-weight-bold coApplicantForm"
-     (click)="disbaleFielInput && addCoApplicant()">
+     (click)="!disbaleFielInput && addCoApplicant()">
       <div class="applicantBtn">
         <div>Add Co-Applicant</div>
         <div>
@@ -292,7 +292,7 @@
             <button  type="button" class="font-weight-bold confirmBtn" style="background: #32de84 !important;
                 border: 1px solid #D7FFE9 !important;
                 color: #fff;
-                width: -webkit-fill-available;" (click)="(disbaleFielInput )&& showCrifscoreSection(i)">
+                width: -webkit-fill-available;" (click)="(!disbaleFielInput )&& showCrifscoreSection(i)">
               {{generateCrifText}} <span *ngIf="i===0">Applicant</span>
               <span *ngIf="i===1">Co-Applicant </span>
               <span *ngIf="i>1">Co-Applicant {{i}}</span>
