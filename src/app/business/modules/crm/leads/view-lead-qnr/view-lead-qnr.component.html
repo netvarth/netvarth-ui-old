@@ -66,7 +66,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicantsInfo"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicant"></app-applicant>
     </ng-container>
   </ng-container>
 
@@ -240,7 +240,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicantsInfo"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicant"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
       <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
@@ -254,7 +254,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicantsInfo"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType"[tempCrifDetails]="applicant"></app-applicant>
     </ng-container>
     <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
       <app-questionnaire [tempType]="tempType" [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
@@ -283,7 +283,7 @@
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
         [mode]="'read'" [applicant]="applicantsInfo[applicant]" [activeUser]="activeUser.id"
         (addApplicant)="receivedApplicantInfo($event, applicant)" (removeApplicant)="removeApplicant($event, applicant)"
-        [leadInfo]="leadInfo" [tempType]="tempType" [tempCrifDetails]="applicantsInfo"></app-applicant>
+        [leadInfo]="leadInfo" [tempType]="tempType" [tempCrifDetails]="applicant"></app-applicant>
     </ng-container>
      <div *ngIf="leadInfo && leadInfo.status && (leadInfo.status.name==='Loan Sanction')" class="crifScoreFlex">
         <div *ngFor="let item of tempCrifDetails;let i=index" class="crifscoresmallDeviceWidth" >

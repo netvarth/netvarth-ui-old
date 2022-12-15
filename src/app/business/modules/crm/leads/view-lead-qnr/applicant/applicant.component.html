@@ -1,7 +1,8 @@
 <form [formGroup]="applicantForm" id="{{applicantId}}" (focusout)="sendApplicantInfo()">
     <div style="display: flex; align-items: center;  gap: 10px;" *ngIf="applicant && applicant.parent">
         <div class="imageClass">
-            <div style="color: #8A8383;" *ngIf="customerName && customerName[0]">{{customerName[0] | capitalizeFirst}}</div>
+            <div style="color: #8A8383;" *ngIf="customerName && customerName[0]">{{customerName[0] | capitalizeFirst}}
+            </div>
         </div>
         <div>
             <div>
@@ -12,7 +13,8 @@
                 <div style="font-size: 12px;color: #000000;" *ngIf="phoneNumber">+91 {{phoneNumber}}</div>
             </div>
             <div>
-                <div style="font-size: 12px;color: #000000;" *ngIf="leadInfo && leadInfo.leadId">LeadId-{{leadInfo.leadId}}</div>
+                <div style="font-size: 12px;color: #000000;" *ngIf="leadInfo && leadInfo.leadId">
+                    LeadId-{{leadInfo.leadId}}</div>
             </div>
         </div>
     </div>
@@ -49,8 +51,8 @@
                 <div class="astericColor">*</div>
             </div>
             <div class="fieldPadding">
-                <input maxlength="10" autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
-                    oncut="return false" ondrop="return false" class="form-control"
+                <input maxlength="10" autocomplete="off" onpaste="return false" oncopy="return false"
+                    ondrag="return false" oncut="return false" ondrop="return false" class="form-control"
                     formControlName="permanentPhoneNumber" #applicantPhone type="tel" placeholder="Enter number" />
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="errorMessage"
                     errorMsg="{{errorMessage}}">
@@ -67,8 +69,9 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes.value,'firstApplicant')" class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
-                        <mat-option [value]="kyc.name" *ngFor="let kyc of kycList" >
+                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes.value,'firstApplicant')"
+                        class="form-control widthWebKit" placeholder="" #idTypes formControlName="idTypes">
+                        <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
                             <div *ngIf="kyc && kyc.displayName">{{kyc.displayName}}</div>
                         </mat-option>
                     </mat-select>
@@ -94,7 +97,8 @@
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[0] && applicant.validationIds[0].attachments && applicant.validationIds[0].attachments.length > 0 && applicant.validationIds[0].attachments[0]['s3path']">
                 <input #logofile type="file" accept="/*;capture=camera" style="display:none;"
                     (change)="filesSelected($event, 'kyc1')">{{lebalUplaodFile}}
-                    <a class="btn btn-clean btn-icon btn-md" (click)="(disbaleFielInput) && logofile.click()"><i class="material-icons">
+                <a class="btn btn-clean btn-icon btn-md" (click)="(disbaleFielInput) && logofile.click()"><i
+                        class="material-icons">
                         attach_file</i></a>
             </div>
             <div
@@ -108,7 +112,8 @@
                                     <img [src]="getImage(selectedFiles['kyc1'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc1'].base64[i]">
                                 </div>
-                                <div class="gal_action" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc1',file)" *ngIf="mode!=='read'">
+                                <div class="gal_action" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc1',file)"
+                                    *ngIf="mode!=='read'">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -127,9 +132,10 @@
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
-                   <div >
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc1',file)" *ngIf="mode!=='read'"></i>
-                   </div>
+                    <div>
+                        <i class="fa fa-times-circle pointer-cursor" aria-hidden="true"
+                            (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc1',file)" *ngIf="mode!=='read'"></i>
+                    </div>
                 </div>
             </div>
 
@@ -143,7 +149,8 @@
                     <div class="astericColor">*</div>
                 </div>
                 <div class="fieldPadding">
-                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes1.value,'secondApplicant')" class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
+                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes1.value,'secondApplicant')"
+                        class="form-control widthWebKit" placeholder="" #idTypes1 formControlName="idTypes1">
                         <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
                             <div *ngIf="kyc && kyc.displayName">{{kyc.displayName}}</div>
                         </mat-option>
@@ -172,7 +179,8 @@
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
                 <input #files type="file" accept="/*;capture=camera" style="display:none;"
                     (change)="filesSelected($event,'kyc2')">{{lebalUplaodFile}}
-                    <a    class="btn btn-clean btn-icon btn-md" (click)="(disbaleFielInput) && files.click()"><i class="material-icons">
+                <a class="btn btn-clean btn-icon btn-md" (click)="(disbaleFielInput) && files.click()"><i
+                        class="material-icons">
                         attach_file</i></a>
             </div>
             <div
@@ -186,7 +194,8 @@
                                     <img [src]="getImage(selectedFiles['kyc2'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc2'].base64[i]">
                                 </div>
-                                <div  class="gal_action" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc2',file)" *ngIf="mode!=='read'">
+                                <div class="gal_action" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc2',file)"
+                                    *ngIf="mode!=='read'">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -200,14 +209,15 @@
         *ngIf="applicant && applicant.validationIds && applicant.validationIds[1] && applicant.validationIds[1].attachments && applicant.validationIds[1].attachments.length > 0 && applicant.validationIds[1].attachments[0]['s3path']">
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
-                <div *ngFor="let file of applicant.validationIds[1].attachments; let i=index"style="display:flex">
-                    <div  (click)="dialogImgView(file)" style="cursor:pointer">
+                <div *ngFor="let file of applicant.validationIds[1].attachments; let i=index" style="display:flex">
+                    <div (click)="dialogImgView(file)" style="cursor:pointer">
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
-                   <div >
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc2',file)" *ngIf="mode!=='read'"></i>
-                   </div>
+                    <div>
+                        <i class="fa fa-times-circle pointer-cursor" aria-hidden="true"
+                            (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc2',file)" *ngIf="mode!=='read'"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -221,7 +231,8 @@
                     <div>{{legbalApplicantKyc}}</div>
                 </div>
                 <div class="fieldPadding">
-                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes2.value,'thirdApplicant')" class="form-control widthWebKit" placeholder="Select applicant KYC" #idTypes2
+                    <mat-select (ngModelChange)="handleKycSelectedType(idTypes2.value,'thirdApplicant')"
+                        class="form-control widthWebKit" placeholder="Select applicant KYC" #idTypes2
                         formControlName="idTypes2">
                         <mat-option [value]="kyc.name" *ngFor="let kyc of kycList">
                             <div *ngIf="kyc && kyc.displayName">{{kyc.displayName}}</div>
@@ -248,9 +259,10 @@
         <div class="fieldPadding" *ngIf="applicant">
             <div class=""
                 [hidden]="applicant && applicant.validationIds && applicant.validationIds[2] && applicant.validationIds[2].attachments && applicant.validationIds[2].attachments.length > 0 && applicant.validationIds[2].attachments[0]['s3path']">
-                <input #files type="file" accept="/*;capture=camera" style="display:none;" 
+                <input #files type="file" accept="/*;capture=camera" style="display:none;"
                     (change)="filesSelected($event,'kyc3')">{{lebalUplaodFile}}
-                    <a   class="btn btn-clean btn-icon btn-md" (click)="(disbaleFielInput) && files.click()"><i class="material-icons">
+                <a class="btn btn-clean btn-icon btn-md" (click)="(disbaleFielInput) && files.click()"><i
+                        class="material-icons">
                         attach_file</i></a>
             </div>
             <div
@@ -264,7 +276,8 @@
                                     <img [src]="getImage(selectedFiles['kyc3'].base64[i], file)"
                                         *ngIf="selectedFiles['kyc3'].base64[i]">
                                 </div>
-                                <div  class="gal_action" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc3',file)" *ngIf="mode!=='read'">
+                                <div class="gal_action" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc3',file)"
+                                    *ngIf="mode!=='read'">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -279,13 +292,14 @@
         <div style="display: flex;gap: 5px">
             <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                 <div *ngFor="let file of applicant.validationIds[2].attachments;let i=index" style="display:flex">
-                    <div  (click)="dialogImgView(file)" style="cursor:pointer">
+                    <div (click)="dialogImgView(file)" style="cursor:pointer">
                         <img style="height: 20px; width:20px;" [src]="getImageType(file.fileType)" alt="">
                         {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                     </div>
-                   <div >
-                    <i class="fa fa-times-circle pointer-cursor" aria-hidden="true" (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc3',file)" *ngIf="mode!=='read'"></i>
-                   </div>
+                    <div>
+                        <i class="fa fa-times-circle pointer-cursor" aria-hidden="true"
+                            (click)="(disbaleFielInput) && deleteTempImage(i, 'kyc3',file)" *ngIf="mode!=='read'"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -397,7 +411,8 @@
                     <div class="matDatePicker">
                         <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
                             oncut="return false" ondrop="return false" formControlName="dob" class="form-control"
-                            type="text" matInput [matDatepicker]="picker" placeholder="Enter Date" #dob [max]="todayDate">
+                            type="text" matInput [matDatepicker]="picker" placeholder="Enter Date" #dob
+                            [max]="todayDate">
                         <mat-datepicker-toggle matSuffix [for]="picker">
                         </mat-datepicker-toggle>
                         <mat-datepicker #picker [dateClass]="dateClass.bind(this)">
@@ -539,7 +554,7 @@
                 </div>
                 <div class="fieldPadding">
                     <input autocomplete="off" onpaste="return false" oncopy="return false" ondrag="return false"
-                        oncut="return false" ondrop="return false" maxlength="6"class="form-control"
+                        oncut="return false" ondrop="return false" maxlength="6" class="form-control"
                         formControlName="pin" #pin placeholder="Enter pin code" />
                     <app-field-error-display [displayError]="true" style="color: #f24949 !important;"
                         *ngIf="errorMessage" errorMsg="{{errorMessage}}">
@@ -548,14 +563,18 @@
             </div>
         </div>
     </div>
-    <span class="group-head" *ngIf="applicant && applicant.parent && ( this.leadInfo.status.name == 'New' || this.leadInfo.status.name == 'KYC Updated' || this.leadInfo.status.name == 'KYC')">Other Files</span><br>
-    <div class="bggrey" *ngIf="applicant && applicant.parent && ( this.leadInfo.status.name == 'New' || this.leadInfo.status.name == 'KYC Updated' || this.leadInfo.status.name == 'KYC')">
+    <span class="group-head"
+        *ngIf="applicant && applicant.parent && ( this.leadInfo.status.name == 'New' || this.leadInfo.status.name == 'KYC Updated' || this.leadInfo.status.name == 'KYC')">Other
+        Files</span><br>
+    <div class="bggrey"
+        *ngIf="applicant && applicant.parent && ( this.leadInfo.status.name == 'New' || this.leadInfo.status.name == 'KYC Updated' || this.leadInfo.status.name == 'KYC')">
         <div class="fieldPadding">
             <div
-            [hidden]=" applicant && applicant.otherAttachments && applicant.otherAttachments.length > 0 && applicant.otherAttachments[0]['s3path']">
-                <input #files type="file" accept="/*;capture=camera" style="display:none;" 
+                [hidden]=" applicant && applicant.otherAttachments && applicant.otherAttachments.length > 0 && applicant.otherAttachments[0]['s3path']">
+                <input #files type="file" accept="/*;capture=camera" style="display:none;"
                     (change)="filesSelected($event,'other')">{{lebalUplaodFile}}
-                <a   class="btn btn-clean btn-icon btn-md" (click)="(disbaleFielInput) && files.click()"><i class="material-icons">
+                <a class="btn btn-clean btn-icon btn-md" (click)="(disbaleFielInput) && files.click()"><i
+                        class="material-icons">
                         attach_file</i></a>
             </div>
             <div
@@ -569,7 +588,9 @@
                                     <img [src]="getImage(selectedFiles['other'].base64[i], file)"
                                         *ngIf="selectedFiles['other'].base64[i]">
                                 </div>
-                                <div  class="gal_action" (click)="(disbaleFielInput) && deleteTempImage(i, 'other','delete')" *ngIf="mode!=='read'">
+                                <div class="gal_action"
+                                    (click)="(disbaleFielInput) && deleteTempImage(i, 'other','delete')"
+                                    *ngIf="mode!=='read'">
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </div>
                             </div>
@@ -578,19 +599,21 @@
                 </div>
             </div>
         </div>
-        
+
         <div class=" my-2 clearfix"
             *ngIf="applicant && applicant.otherAttachments && applicant.otherAttachments.length > 0 && applicant.otherAttachments[0]['s3path']">
             <div style="display: flex;gap: 5px">
                 <div class="lbl col-sm-8 col-md-7 col-lg-7 no-padding">
                     <div *ngFor="let file of applicant.otherAttachments; let i=index" style="display:flex">
-                        <div (click)="dialogImgView(file)"style="cursor:pointer">
-                            <img style="height: 20px; width:20px;cursor:pointer" [src]="getImageType(file.fileType)" alt="">
+                        <div (click)="dialogImgView(file)" style="cursor:pointer">
+                            <img style="height: 20px; width:20px;cursor:pointer" [src]="getImageType(file.fileType)"
+                                alt="">
                             {{file.fileName?.length>10 ? file.fileName.slice(0, 10)+'...' : file.fileName}}
                         </div>
-                        <div >
-                            <i  class="fa fa-times-circle pointer-cursor" aria-hidden="true"
-                                (click)="(disbaleFielInput) && deleteTempImage(i, 'other','delete')" *ngIf="mode!=='read'"></i>
+                        <div>
+                            <i class="fa fa-times-circle pointer-cursor" aria-hidden="true"
+                                (click)="(disbaleFielInput) && deleteTempImage(i, 'other','delete')"
+                                *ngIf="mode!=='read'"></i>
                         </div>
                     </div>
                 </div>
@@ -601,14 +624,23 @@
 <ng-container *ngIf="this.leadInfo && this.leadInfo.status && (this.leadInfo.status.name==='KYC Updated'||
     this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation')">
     <div class="my-2" style="padding:10px">
-        <button  type="button" class="font-weight-bold confirmBtn confirmBtnCrif" (click)="(disbaleFielInput) &&showCrifscoreSection()">
-    <span>
-        <span>{{generateCrifText}}</span>
-    </span>
-</button>
+        <button type="button" class="font-weight-bold confirmBtn confirmBtnCrif"
+            (click)="(disbaleFielInput) &&showCrifscoreSection()">
+            <span>
+                <span>{{generateCrifText}}</span>
+                <span *ngIf="tempCrifDetails===0">&nbsp;of Applicant</span>
+                <span *ngIf="tempCrifDetails===1">&nbsp;of Co-Applicant </span>
+                <span *ngIf="tempCrifDetails>1">&nbsp;of Co-Applicant {{tempCrifDetails}}</span>
+            </span>
+        </button>
     </div>
     <div *ngIf="showCrifSection">
-        <span class="group-head">{{generateCrifText }}</span>
+        <span class="group-head"><span>
+                <span>{{generateCrifText}}</span>
+                <span *ngIf="tempCrifDetails===0">&nbsp;of Applicant</span>
+                <span *ngIf="tempCrifDetails===1">&nbsp;of Co-Applicant </span>
+                <span *ngIf="tempCrifDetails>1">&nbsp;of Co-Applicant {{tempCrifDetails}}</span>
+            </span></span>
         <br>
         <div class="bggrey my-2">
             <div style="display: flex;gap: 5px">
@@ -617,7 +649,8 @@
                     <div class="leadTitle">
                     </div>
                     <div class="fieldPadding">
-                        <a class="navbar-item-color bold pointer-cursor disp-none-small" *ngIf="crifScore && crifScoreLebal">{{crifScoreLebal}} 
+                        <a class="navbar-item-color bold pointer-cursor disp-none-small"
+                            *ngIf="crifScore && crifScoreLebal">{{crifScoreLebal}}
                             {{crifScore}} </a>
                         <button *ngIf="crifBtnForHide" [ngClass]="{'cursorDisable':bCrifBtnDisable }" mat-flat-button
                             style="margin-left: 25px !important;"
@@ -628,7 +661,8 @@
                     <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
                     <div *ngIf="showPdfIcon">
                         <a (click)="printCRIF()">
-                            <img class="img" style="height: 50px; width: 50px;"src="/assets/images/ImgeFileIcon/pdf.png" />
+                            <img class="img" style="height: 50px; width: 50px;"
+                                src="/assets/images/ImgeFileIcon/pdf.png" />
                         </a>
                     </div>
                 </div>
