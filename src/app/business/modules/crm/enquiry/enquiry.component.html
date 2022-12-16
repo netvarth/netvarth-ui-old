@@ -65,7 +65,7 @@
                                 <div>Phone Number</div>
                             </div>
                             <div class="fieldPadding">
-                                <input (keypress)="handleNameField('phoneNo',phoneNo.value,$event)" autocomplete="off" formControlName="phoneNoValue" #phoneNo type="text"
+                                <input (keypress)="handleNameField('phoneNo',phoneNo.value,$event)" autocomplete="off" formControlName="phoneNoValue" #phoneNo type="tel"
                                      placeholder="{{enterPhoNeNo}}"
                                     class="form-control" autocomplete="off" minlength="10" maxlength="10" [value]="phoneNo" />
                             </div>
@@ -90,7 +90,6 @@
                                 <div class="fieldPadding">
                                     <mat-select  (ngModelChange)="handleNameField('sourcingChannel',sourcingChannel.value,$event)" class="form-control" placeholder="{{sourcingChannelPlaceholder}}"
                                         #sourcingChannel formControlName="sourcingChannel">
-                                        <!-- {{sourcingChhannelCatListNew[0] | json}} -->
                                         <mat-option  *ngFor="let item of sourcingChhannelCatList[0];let index=i" [value]="item.id" >
                                             <div>
                                                 {{item.name}}
