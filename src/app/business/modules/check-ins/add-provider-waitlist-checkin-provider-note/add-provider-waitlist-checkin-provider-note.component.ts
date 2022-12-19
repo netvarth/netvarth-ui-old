@@ -118,7 +118,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
         );
     }
     //if(this.source === 'token')
-   else  {
+    else {
       this.provider_services.addProviderWaitlistNote(this.checkin_id,
         dataToSend)
         .subscribe(
@@ -128,7 +128,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
            this.provider_services.getProviderWaitlistDetailById(this.checkin_id)
            .subscribe((res)=>{
             console.log("rrrrespone :",res)
-             this.dialogRef.close('reloadlist');
+           //  this.dialogRef.close('reloadlist');
 
 
            })
@@ -139,7 +139,7 @@ export class AddProviderWaitlistCheckInProviderNoteComponent implements OnInit {
               
               this.provider_services.getProviderWaitlistDetailById(this.checkin_id).subscribe((res)=>{
                 console.log("Respone :",res)
-                this.dialogRef.close('reloadlist');
+               // this.dialogRef.close('reloadlist');
 
               })
               this.dialogRef.close('reloadlist');

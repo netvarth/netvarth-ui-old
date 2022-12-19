@@ -170,8 +170,8 @@ export class NotesSectionComponent implements OnInit {
         }
       });
     }
-    else if (this.waitlistdata.waitlistingFor) {
-      this.uid = this.waitlistdata.ynwUuid
+    if (this.waitlistdata.waitlistingFor) {
+      this.uid = this.waitlistdata.ynwUuid;
       this.notedialogRef = this.dialog.open(AddProviderWaitlistCheckInProviderNoteComponent, {
         width: '50%',
         panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -184,9 +184,12 @@ export class NotesSectionComponent implements OnInit {
       this.notedialogRef.afterClosed().subscribe(result => {
         console.log("result ..", result)
         if (result === 'reloadlist') {
-          this.ngOnInit();
-          console.log("dialog box closed")
-
+          const navigationExtras: NavigationExtras = {
+            queryParams: {
+              timetype: 3
+            }
+          };
+          this.router.navigate(['provider', 'check-ins', this.uid], navigationExtras)
         }
       });
     }

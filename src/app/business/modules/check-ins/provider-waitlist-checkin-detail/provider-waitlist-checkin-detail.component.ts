@@ -293,6 +293,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_data = data;
+          console.log("waitlist :",this.waitlist_data);
           if (this.waitlist_data.virtualService) {
             this.whatsappNumber = this.waitlist_data.virtualService.WhatsApp;
           }
@@ -300,9 +301,9 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           this.email = this.waitlist_data.waitlistingFor[0].email;
           this.getConsumerBills();
           this.getCustomerHistoryVisit();
-          console.log('waitlist dtata', this.waitlist_data)
+          console.log('waitlist dtata', this.waitlist_data);
           this.label_length = Object.keys(this.waitlist_data.label).length
-          this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+          //this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           if (this.waitlist_data.questionnaires && this.waitlist_data.questionnaires.length > 0) {
             this.questionnaires = this.waitlist_data.questionnaires;
           }
@@ -358,8 +359,8 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
           if (this.today.valueOf() > waitlist_date.valueOf()) {
             this.waitlist_data.history = true;
           }
-          //this.getWaitlistNotes(this.waitlist_data.ynwUuid);
-          if (this.waitlist_data.waitlistStatus !== 'blocked') {
+         // this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+          if (this.waitlist_data.waitlistStatus != 'blocked') {
             this.getWaitlistNotes(this.waitlist_data.ynwUuid);
           }
           this.getCheckInHistory(this.waitlist_data.ynwUuid).then(data => {
@@ -540,6 +541,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       .subscribe(
         data => {
           this.waitlist_notes = data;
+          this.ngOnInit();
           console.log(this.waitlist_notes, ';;;;;;;;;;;;')
         },
         () => {
@@ -596,12 +598,13 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
 
     this.notedialogRef.afterClosed().subscribe(result => {
       console.log("result ..", result)
-      if (result === 'reloadlist') {
+      if (result) {
       // this.getWaitlistNotes();
        // this.getProviderSettings();
         console.log("dialog box losed")
-     //  this.getWaitlistDetail();
-       this.getWaitlistNotes(this.waitlist_data.ynwUuid);
+        this.getWaitlistNotes(checkin.ynwUuid);
+      // this.getWaitlistDetail();
+      this.ngOnInit();
       }
     });
   }
