@@ -1533,7 +1533,7 @@ export class CreateComponent implements OnInit {
 
   verifyBankDetails() {
     const verifyBank = {
-      "bankName": "SBI",
+      "bankName": this.createLoan.controls.bank.value,
       "bankAccountNo": this.createLoan.controls.account.value,
       "bankIfsc": this.createLoan.controls.ifsc.value
     }
@@ -1579,7 +1579,7 @@ export class CreateComponent implements OnInit {
     this.bankDetails = {
       "originUid": this.loanId,
       "loanApplicationUid": this.loanId,
-      "bankName": "SBI",
+      "bankName": this.createLoan.controls.bank.value,
       "bankAccountNo": this.createLoan.controls.account.value,
       "bankIfsc": this.createLoan.controls.ifsc.value
     }
