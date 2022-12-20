@@ -412,7 +412,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       tempCatValue='name';
     }
         this.providerService.getSearchCustomer(this.tempAcId, tempCatValue,tempPhoneNum).subscribe((res)=>{
-          // console.log(res);
+          console.log(res);
           if(res){
             this.customerList= res;
           }

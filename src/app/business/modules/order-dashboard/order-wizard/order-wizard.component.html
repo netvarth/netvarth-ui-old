@@ -205,7 +205,7 @@
                                                                 (click)="handleSearchSelectPhone(option,searchForm.value)" [value]="option.firstName">
                                                                 <div class="flexFirst" *ngIf="option && option.firstName">
                                                                     <div class="flexClass" style="justify-content:space-between">
-                                                                        <div *ngIf="option && option.name">{{option.name | capitalizeFirst }}</div>
+                                                                        <div *ngIf="option && option.firstName">{{option.firstName | capitalizeFirst }}</div>
                                                                     </div>
                                                                     <div>
                                                                         <i class="fa fa-search iconCls"aria-hidden="true"></i>
