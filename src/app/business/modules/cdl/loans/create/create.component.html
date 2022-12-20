@@ -122,8 +122,9 @@
                     <div class="fieldPadding">
                       <div class="d-flex">
                         <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
-                          autocomplete="off" #phone [value]="phone" formControlName="phone" maxlength="10"
-                          [class.disabled]="verification" />
+                          autocomplete="off" #phone [value]="phone" formControlName="phone"
+                          oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                          maxlength="10" [class.disabled]="verification" />
                         <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
                           (click)="verifyotp()"><span>Verify</span></a>
 
@@ -482,7 +483,9 @@
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #permanentpincode [value]="permanentpincode" type="text"
                         placeholder="Enter Pincode" class="form-control" autocomplete="off"
-                        formControlName="permanentpincode" />
+                        formControlName="permanentpincode"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                        maxlength="6" />
                     </div>
                   </div>
                 </div>
@@ -1128,8 +1131,8 @@
                       <div class="form-title">Down Payment</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="number" #downpayment placeholder="Enter Down Payment"
-                        class="form-control" autocomplete="off" [value]="downpayment" formControlName="downpayment"
+                      <input type="number" #downpayment placeholder="Enter Down Payment" class="form-control"
+                        autocomplete="off" [value]="downpayment" formControlName="downpayment"
                         (keyup)="payment($event)" />
                     </div>
                   </div>
