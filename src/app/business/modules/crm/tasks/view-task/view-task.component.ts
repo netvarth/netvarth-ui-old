@@ -3743,7 +3743,7 @@ export class ViewTaskComponent implements OnInit {
         this.api_loading1 = false;
       }
       else {
-        this.api_loading1 = true;
+        this.api_loading1 = true
         // setTimeout(() => {
         //   if (this.activityType && (this.activityType === 'UpdateFollowUP')) {
         //     this.getEnquiryDetailsRefresh()
