@@ -30,7 +30,8 @@ export class SelectAttachmentComponent implements OnInit {
   action: string;
   public fileInput: any;
   public fileSelectErrorMsg: any;
-  public bUploadFileError: boolean = false
+  public bUploadFileError: boolean = false;
+  api_loading1:boolean;
   constructor(
     public _location: Location,
     public dialogRef: MatDialogRef<SelectAttachmentComponent>,
@@ -44,6 +45,7 @@ export class SelectAttachmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.api_loading1 = false
   }
 
   selectFiles(event) {
@@ -122,6 +124,7 @@ export class SelectAttachmentComponent implements OnInit {
 
   saveFile(fileDes: any) {
     const _this = this;
+    _this.api_loading1=true;
     console.log('file', this.selectedMessage.files)
     if (this.selectedMessage.files.length > 0) {
       this.bUploadFileError = false;
@@ -152,9 +155,12 @@ export class SelectAttachmentComponent implements OnInit {
         });
         dataToSend.append("captions", blobPropdata);
         _this.sendWLAttachment(id, dataToSend).then(() => {
-          this.dialogRef.close();
+          // _this.api_loading1=false;
+          // _this.dialogRef.close();
+          // _this.snackbarService.openSnackBar("Sending Attachment Successfully");
           // resolve(true);
         },(error)=>{
+          _this.api_loading1=false;
           // console.log("Sending Task Attachment Fail");
           _this.snackbarService.openSnackBar(
             error,
@@ -164,6 +170,7 @@ export class SelectAttachmentComponent implements OnInit {
       // });
     }
     else {
+      _this.api_loading1=false;
       this.bUploadFileError = true;
       this.fileSelectErrorMsg = 'Please select atleast one file to upload';
     }
@@ -199,9 +206,17 @@ export class SelectAttachmentComponent implements OnInit {
           () => {
             resolve(true);
             console.log("Sending Attachment Success");
+            _this.dialogRef.close();
+          // _this.snackbarService.openSnackBar("Sending Attachment Successfully");
+            _this.api_loading1=false;
           },
           error => {
+            _this.api_loading1=false;
             reject(error);
+            _this.snackbarService.openSnackBar(
+              error,
+              { panelClass: "snackbarerror" }
+            );
           }
         );
       });
@@ -210,15 +225,22 @@ export class SelectAttachmentComponent implements OnInit {
         _this.shared_services.addfiletolead(Uid, dataToSend).subscribe(
           () => {
             resolve(true);
+            _this.api_loading1=false;
             console.log("Sending Attachment Success");
           },
           error => {
+            _this.api_loading1=false;
             console.log("Sending Lead Attachment Fail");
             _this.snackbarService.openSnackBar(
               "Please select atleast one file to upload",
               { panelClass: "snackbarerror" }
             );
+            _this.api_loading1=false;
             reject(error);
+            _this.snackbarService.openSnackBar(
+              error,
+              { panelClass: "snackbarerror" }
+            );
           }
         );
       });

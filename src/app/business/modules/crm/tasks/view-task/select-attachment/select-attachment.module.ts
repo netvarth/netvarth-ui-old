@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ViewAttachmentComponent } from './view-attachment/view-attachment.component';
-
+import { LoadingSpinnerModule } from '../../../../../../../../src/app/shared/modules/loading-spinner/loading-spinner.module';
 @NgModule({
   declarations: [
     SelectAttachmentComponent,
@@ -16,7 +16,8 @@ import { ViewAttachmentComponent } from './view-attachment/view-attachment.compo
     CommonModule,
     FormsModule,
     MatChipsModule,
-    MatDialogModule
+    MatDialogModule,
+    LoadingSpinnerModule
   ],
   // providers: [
   //   FileService

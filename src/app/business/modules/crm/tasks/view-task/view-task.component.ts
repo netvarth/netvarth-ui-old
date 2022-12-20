@@ -3744,16 +3744,24 @@ export class ViewTaskComponent implements OnInit {
       }
       else {
         this.api_loading1 = true;
-        setTimeout(() => {
-          if (this.activityType && (this.activityType === 'UpdateFollowUP')) {
-            this.getEnquiryDetailsRefresh()
-          }
-          else {
-            this.getTaskDetailsRefresh()
-          }
-          this.api_loading1 = false;
-          this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
-        }, 5000);
+        // setTimeout(() => {
+        //   if (this.activityType && (this.activityType === 'UpdateFollowUP')) {
+        //     this.getEnquiryDetailsRefresh()
+        //   }
+        //   else {
+        //     this.getTaskDetailsRefresh()
+        //   }
+        //   this.api_loading1 = false;
+        //   this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
+        // }, 5000);
+        if (this.activityType && (this.activityType === 'UpdateFollowUP')) {
+          this.getEnquiryDetailsRefresh()
+        }
+        else {
+          this.getTaskDetailsRefresh()
+        }
+        this.api_loading1 = false;
+        this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, { 'panelClass': 'snackbarnormal' });
       }
     });
   }

@@ -176,3 +176,14 @@
   .mat-chip.mat-standard-chip::after {
     background: transparent;
 }
+.child {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -25px 0 0 -25px;
+  }
+  .overlay {
+	opacity: 5 !important;
+	height: 100vh !important;
+	visibility: visible !important;
+  }
