@@ -1,7 +1,7 @@
 .sub-title {
   font-size: 15px !important;
   color: #bf925e !important;
-  font-weight: bold!important;
+  font-weight: bold !important;
 }
 
 .text-primary {
@@ -420,18 +420,9 @@
   border-radius: 8px !important;
 }
 
-.status-Rejected {
-  background-color: #FFCDD2 !important;
-  color: #C63737 !important;
-  font-weight: bold !important;
-  padding: 5px !important;
-  border-radius: 8px !important;
-}
-
-
-.status-Rejected {
-  background-color: #FFCDD2 !important;
-  color: #C63737 !important;
+.status-CreditApproved {
+  background-color: #e5daff !important;
+  color: #3b11a5 !important;
   font-weight: bold !important;
   padding: 5px !important;
   border-radius: 8px !important;

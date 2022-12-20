@@ -110,6 +110,15 @@ export class LoansComponent implements OnInit {
       };
       this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
     }
+    else if (status == 'CreditApproved') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'creditApproved',
+          uid: id
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+    }
     else if (status == 'ApprovalPending' && this.user.userType != 2) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
@@ -231,6 +240,15 @@ export class LoansComponent implements OnInit {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           type: 'consumerAccepted',
+          uid: id
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+    }
+    else if (status == 'CreditApproved') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'creditApproved',
           uid: id
         }
       };

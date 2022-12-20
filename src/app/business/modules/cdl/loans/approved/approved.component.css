@@ -76,6 +76,20 @@ mat-slider.mat-slider.mat-focus-indicator.mat-accent.mat-slider-has-ticks.mat-sl
   color: #1E4079 !important;
 }
 
+.loan-tag {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)), #F44336;
+  color: #FF4C51;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-size: 12px;
+}
+
+.loan-name {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
 
 .btn-verify {
   background-color: hsl(204, 86%, 96%) !important;

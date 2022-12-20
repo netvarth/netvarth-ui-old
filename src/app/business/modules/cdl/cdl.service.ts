@@ -333,6 +333,12 @@ export class CdlService {
   }
 
 
+  salesOfficerApproval(data, id) {
+    const url = 'provider/loanapplication/' + id + '/approval';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+
   suspendDealer(id, data) {
     const url = 'provider/partner/' + id + '/suspended';
     return this.servicemeta.httpPut(url, data);
@@ -354,6 +360,9 @@ export class CdlService {
     var url = 'provider/loanapplication/generate/phone';
     if (from == 'guarantor') {
       var url = 'provider/loanapplication/generate/guarantor/phone';
+    }
+    if (from == 'partner') {
+      var url = 'provider/partner/generate/phone';
     }
     return this.servicemeta.httpPost(url, data);
   }

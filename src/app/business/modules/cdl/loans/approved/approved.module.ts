@@ -4,6 +4,8 @@ import { ApprovedComponent } from './approved.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSelectModule } from '@angular/material/select';
 
 const routes: Routes = [
   { path: '', component: ApprovedComponent }
@@ -17,6 +19,9 @@ const routes: Routes = [
     CommonModule,
     MatSliderModule,
     MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

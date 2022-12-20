@@ -948,7 +948,8 @@ export class CreateComponent implements OnInit {
 
   getPartners() {
     let api_filter = {
-      'isApproved-eq': true
+      'isApproved-eq': true,
+      'isActive-eq': true
     }
     this.cdlService.getDealersByFilter(api_filter).subscribe((data) => {
       this.dealers = data;
@@ -1532,7 +1533,7 @@ export class CreateComponent implements OnInit {
 
   verifyBankDetails() {
     const verifyBank = {
-      "bankName": this.createLoan.controls.bank.value,
+      "bankName": "SBI",
       "bankAccountNo": this.createLoan.controls.account.value,
       "bankIfsc": this.createLoan.controls.ifsc.value
     }
@@ -1578,7 +1579,7 @@ export class CreateComponent implements OnInit {
     this.bankDetails = {
       "originUid": this.loanId,
       "loanApplicationUid": this.loanId,
-      "bankName": this.createLoan.controls.bank.value,
+      "bankName": "SBI",
       "bankAccountNo": this.createLoan.controls.account.value,
       "bankIfsc": this.createLoan.controls.ifsc.value
     }

@@ -1217,11 +1217,12 @@ export const projectConstantsLocal = {
     { index: 1, name: 'Draft', displayName: 'Lead' },
     { index: 2, name: 'LoanRequest', displayName: 'Loan Request' },
     { index: 3, name: 'ApprovalRequired', displayName: 'Approval Required' },
-    { index: 4, name: 'Approved', displayName: 'Approved' },
+    { index: 4, name: 'CreditApproved', displayName: 'Credit Approved' },
+    { index: 5, name: 'Approved', displayName: 'Approved' },
     // { index: 3, name: 'ApprovalPending', displayName: 'Approval Pending' },
-    { index: 5, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
-    { index: 6, name: 'Sanctioned', displayName: 'Sanctioned' },
-    { index: 7, name: 'OperationsVerified', displayName: 'Operations Verify' },
+    { index: 6, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
+    { index: 7, name: 'Sanctioned', displayName: 'Sanctioned' },
+    { index: 8, name: 'OperationsVerified', displayName: 'Operations Verify' },
     // { index: 7, name: 'Rejected', displayName: 'Rejected' }
   ],
   DEALER_STATUS: [

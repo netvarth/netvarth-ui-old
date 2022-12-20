@@ -26,12 +26,23 @@ export class ApprovedComponent implements OnInit {
   user: any;
   loanSchemes: any;
   schemeSelected: any;
+  totalPayment: any;
+  sanctionedAmount: any;
+  downPayment: any;
   loanData: any;
   partnerParentId: any;
+  loanTenure: any;
   filesToUpload: any = [];
+  tenureNumbers = Array(60);
+  advanceEmiNumbers = Array(5);
+  emiDueNumbers = Array(20);
+  advanceEmi: any;
   selectedFiles = {
     "invoice": { files: [], base64: [], caption: [] }
   }
+  approvedScheme: any;
+  approvedSchemeId: any;
+  emiDueDate: any;
   constructor(
     private location: Location,
     private dialog: MatDialog,
@@ -85,7 +96,7 @@ export class ApprovedComponent implements OnInit {
   creditOfficerApprovalRefresh() {
     this.getLoanData();
     if (this.loanData) {
-      if (this.loanData.spInternalStatus == 'Approved') {
+      if (this.loanData.spInternalStatus == 'CreditApproved') {
         this.router.navigate(['provider', 'cdl', 'loans', this.loanId]);
       }
     }
@@ -162,6 +173,26 @@ export class ApprovedComponent implements OnInit {
             });
         }
 
+      };
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
+
+
+  approveLoanBySalesOfficer() {
+    let data = {
+      "loanScheme": { "id": this.approvedSchemeId },
+      "noOfEmi": this.loanTenure,
+      "noOfAdvanceEmi": this.advanceEmi,
+      "emiDueDay": this.emiDueDate
+    }
+
+    this.cdlService.salesOfficerApproval(data, this.loanId).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Loan Approved Successfully")
+        this.router.navigate(['provider', 'cdl', 'loans']);
       };
     },
       (error) => {
@@ -300,6 +331,13 @@ export class ApprovedComponent implements OnInit {
   getLoanData() {
     this.cdlService.getLoanById(this.loanId).subscribe((data) => {
       this.loanData = data;
+      if (this.loanData) {
+        this.totalPayment = this.loanData.invoiceAmount;
+        this.downPayment = this.loanData.downpaymentAmount;
+        this.sanctionedAmount = this.loanData.sanctionedAmount;
+        this.approvedScheme = this.loanData.loanScheme.schemeName;
+        this.approvedSchemeId = this.loanData.loanScheme.id;
+      }
     })
   }
 

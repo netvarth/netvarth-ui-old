@@ -117,6 +117,14 @@ th {
   border-radius: 8px !important;
 }
 
+.status-CreditApproved {
+  background-color: #e5daff !important;
+  color: #3b11a5 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
 /* .status-Draft {
   background-color: #fbbdc3 !important;
   color: rgb(186, 121, 0) !important;

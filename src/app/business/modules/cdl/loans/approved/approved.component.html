@@ -102,7 +102,6 @@
   <br><br>
   <div class="row">
     <div class="col-md-10 card-border">
-
       <div class="col-md-6">
         <div>
           <img width="80" height="60" src="../../../../assets/images/cdl/sanctioned.png">&nbsp;&nbsp;
@@ -117,7 +116,7 @@
             *ngIf="loanData && loanData.loanProduct && loanData.loanProduct.productName">{{loanData.loanProduct.productName}}
             Purchase</span>
         </div><br>
-        <div class="pointer-cursor" *ngIf="user.userType != 2">
+        <div class="pointer-cursor" *ngIf="user.userType!= 2">
           <div>
             <div class="bggrey my-2">
               <div>
@@ -125,7 +124,7 @@
                   <div class="d-flex">
                     <div class="file">
                       <label (click)="invoiceAttach.click()">
-                        Upload Invoice1
+                        Upload Invoice
                       </label>
                       <input #invoiceAttach type='file' (change)="filesSelected($event, 'invoice')" />
                     </div>&nbsp;
@@ -155,7 +154,6 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </div>
@@ -188,6 +186,160 @@
     </div>
   </div>
 </div>
+
+
+
+
+<div class="card m-2" *ngIf="type=='creditApproved'">
+  <div class="col-md-10">
+    <div class="card">
+      <div class="d-flex">
+        <div class="text-center mt-2 mr-4"
+          *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto[0] && loanData.consumerPhoto[0].s3path">
+          <img [src]="loanData.consumerPhoto[0].s3path" width="100" height="100" class="rounded">
+        </div>
+        <div class="mt-2">
+          <div>
+            <span class="loan-name" *ngIf="loanData && loanData.customer && loanData.customer">
+              <span *ngIf="loanData.customer.firstName">{{loanData.customer.firstName}}</span>&nbsp;
+              <span *ngIf="loanData.customer.lastName">{{loanData.customer.lastName}}</span>
+            </span>
+          </div>
+          <div class="my-2">
+            <span class="loan-tag">Customer</span>
+          </div>
+          <div>
+            <div *ngIf="loanData && loanData.referenceNo" class="font-medium">
+              <span>Loan Id : <span class="font-weight-bold">{{loanData.referenceNo}}</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card mt-3">
+      <div>
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Total Bill Amount</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Total Bill Amount" class="form-control"
+                  autocomplete="off" [(ngModel)]="totalPayment" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Down Payment</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Down Payment" class="form-control"
+                  autocomplete="off" [(ngModel)]="downPayment" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Sanction Amount</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="number" placeholder="Enter Required Loan Amount"
+                  class="form-control" autocomplete="off" [(ngModel)]="sanctionedAmount" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Approved Scheme</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" type="text" class="form-control" autocomplete="off"
+                  [(ngModel)]="approvedScheme" disabled />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Select Loan Tenure</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" [(ngModel)]="loanTenure">
+                  <mat-option [value]="i+1" *ngFor="let number of tenureNumbers;let i=index">
+                    <div>{{i+1}} Months</div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Advance EMI</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" [(ngModel)]="advanceEmi">
+                  <mat-option [value]="i+1" *ngFor="let number of advanceEmiNumbers;let i=index">
+                    <div>{{i+1}} Months</div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">EMI Collection Date</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" [(ngModel)]="emiDueDate">
+                  <mat-option [value]="i+1" *ngFor="let number of emiDueNumbers;let i=index">
+                    <div>{{i+1}}</div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="clearfix"></div>
+  <div class="row text-center">
+    <div class="col-md-10">
+      <button [disabled]="!loanTenure || !advanceEmi || !advanceEmi" class="btn btn-primary mt-3"
+        (click)="approveLoanBySalesOfficer()">
+        Approve Loan
+      </button>
+    </div>
+  </div>
+</div>
+
 
 
 
