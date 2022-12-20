@@ -112,8 +112,8 @@
           <span class="font-weight-bold card-small-font"
             *ngIf="loanData && loanData.createdDate">{{loanData.createdDate}}</span><br>
           <span class="font-weight-bold card-title">Purpose of Loan: </span>
-          <span class="font-weight-bold card-small-font"
-            *ngIf="loanData && loanData.loanProduct && loanData.loanProduct.productName">{{loanData.loanProduct.productName}}
+          <span class="font-weight-bold card-small-font" *ngIf="loanData && loanData.loanProducts"><span
+              class="details-sub-title" *ngFor="let item of loanData.loanProducts">{{item.productName}},</span>
             Purchase</span>
         </div><br>
         <div class="pointer-cursor" *ngIf="user.userType!= 2">
