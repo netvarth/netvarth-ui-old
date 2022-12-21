@@ -118,7 +118,7 @@ export class TasksComponent implements OnInit {
 
     const _this = this;
     this.getLocationList().then(() => {
-      // console.log("Locations:", this.locations);
+      console.log("Locations:", this.locations);
       this.selected_location = this.locations[0];
       const filter = this.setFilter();
       // console.log('filter', filter)
@@ -267,7 +267,8 @@ setSystemDate() {
  
   handleTaskStatus(statusValue: any) {
     // console.log('statusValue', statusValue);
-    let filter = {}
+    let filter = {};
+    filter['location-eq'] = this.selected_location.id;
     // console.log("this.selected_location", this.selected_location)
     // console.log("statusFilter:", filter)
     if (statusValue === 0) {
