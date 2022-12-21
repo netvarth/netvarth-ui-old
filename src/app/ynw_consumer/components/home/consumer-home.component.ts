@@ -2186,7 +2186,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       panelClass: ['commonpopupmainclass', 'popup-class'],
       disableClose: true,
       data: {
-        accencUid: checkin.prescShortUrl ? checkin.prescShortUrl : checkin.prescUrl
+        accencUid: checkin.prescShortUrl ? (window.location.origin + checkin.prescShortUrl) : checkin.prescUrl
       }
     });
   }
