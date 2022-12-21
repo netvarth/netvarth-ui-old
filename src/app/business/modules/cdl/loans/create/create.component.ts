@@ -270,6 +270,7 @@ export class CreateComponent implements OnInit {
             }
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].isGuarantorPhoneVerified) {
               this.guarantorVerification = true;
+              this.showCoapplicant = true;
             }
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].guarantorDob) {
               this.createLoan.controls.guarantorDob.setValue(this.loanData.loanApplicationKycList[0].guarantorDob);
