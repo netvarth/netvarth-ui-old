@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router } from '@angular/router';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
@@ -12,30 +12,35 @@ import { ActivatedRoute } from '@angular/router';
 export class LeadsComponent implements OnInit {
 
   user: any;
+  statusDisplayName: any;
   statusLeadsList: any = [
     {
       'loanId': 48235,
-      'CustomerName': 'David',
+      'CustomerName': 'Krishna',
       'phone': '5784589456',
-      'email': 'david@gmail.com'
+      'email': 'krishna@gmail.com',
+      'status': 'Willing'
     },
     {
       'loanId': 48236,
       'CustomerName': 'Aswin',
       'phone': '6987453214',
-      'email': 'aswin@gmail.com'
+      'email': 'aswin@gmail.com',
+      'status': 'Willing'
     },
     {
       'loanId': 48237,
-      'CustomerName': 'Atul',
+      'CustomerName': 'Dheeraj',
       'phone': '8645784586',
-      'email': 'atul@gmail.com'
+      'email': 'dheeraj@gmail.com',
+      'status': 'Not Willing'
     },
     {
       'loanId': 48238,
-      'CustomerName': 'Davika',
+      'CustomerName': 'Narendra ',
       'phone': '9854762587',
-      'email': 'davika@gmail.com'
+      'email': 'narendra@gmail.com',
+      'status': 'Willing'
     }
   ]
   headerName: string = ''
@@ -65,26 +70,43 @@ export class LeadsComponent implements OnInit {
     });
 
   }
+
+  statusChange(event) {
+    if (event.value.name == 'All') {
+      // this.getLoans();
+    }
+    else {
+      let api_filter = {}
+      if (event.value.name == 'Rejected') {
+        api_filter['applicationStatus-eq'] = event.value.name;
+      }
+      else {
+        api_filter['spInternalStatus-eq'] = event.value.name;
+      }
+      // this.getLoansByFilter(api_filter);
+    }
+  }
+
   goBack() {
     this.location.back();
   }
   loanDetails(data) {
     console.log(data);
-    const status = data['status'];
-    const customerName = data['CustomerName']
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        type: 'loanDetails',
-        status: status,
-        customerName: customerName
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans', 'loanDetails'], navigationExtras);
+    // const status = data['status'];
+    // const customerName = data['CustomerName']
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     type: 'loanDetails',
+    //     status: status,
+    //     customerName: customerName
+    //   }
+    // };
+    this.router.navigate(['provider', 'dl', 'loans', 'loanapp_a907e477-76d0-4968-8613-165e12d1c330']);
   }
 
 
   continueApplication() {
-    this.router.navigate(['provider', 'cdl', 'loans', 'create']);
+    this.router.navigate(['provider', 'dl', 'loans', 'create']);
   }
 
 }

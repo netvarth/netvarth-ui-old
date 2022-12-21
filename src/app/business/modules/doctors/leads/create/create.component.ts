@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
+import { ActivatedRoute, Router } from '@angular/router';
+// import { MatDialog } from '@angular/material/dialog';
+// import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 // import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { FileService } from '../../../../../shared/services/file-service';
-import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
+// import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
-import { SelectSchemeComponent } from '../select-scheme/select-scheme.component';
+// import { SelectSchemeComponent } from '../select-scheme/select-scheme.component';
 import { CdlService } from '../../cdl.service';
 // import { SharedServices } from '../../../../../../../shared/services/shared-services';
 // import { SubSink } from 'subsink';
@@ -75,6 +75,7 @@ export class CreateComponent implements OnInit {
   lebalUplaodFile: string = 'Click & Upload your files here';
   actionText: any;
   schemeSelected: any;
+  statusDisplayName: any;
   aadharverification = false;
   verification = false;
   panverification = false;
@@ -85,8 +86,6 @@ export class CreateComponent implements OnInit {
   city: any = '';
   phoneNumber: any;
   state: any = '';
-  locatedPlace: string;
-  placeLocated: boolean = false;
   pincode: any = '';
   bankDetails: any;
   nameData: any;
@@ -122,8 +121,7 @@ export class CreateComponent implements OnInit {
   loanAmount: any;
   customerDetailsVerified: any;
   educationDetailsVerified: any;
-  coapplicantCount: any = 0;
-  coapplicants: any;
+
   headerText: any = "Create Loan";
   btnText: any = "Save as Lead";
   // private subs = new SubSink();
@@ -170,7 +168,7 @@ export class CreateComponent implements OnInit {
   constructor(
     private location: Location,
     private router: Router,
-    private dialog: MatDialog,
+    // private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
     private createLoanFormBuilder: FormBuilder,
@@ -784,151 +782,154 @@ export class CreateComponent implements OnInit {
     //     this.lastName = "";
     //   }
     // }
-    this.loanApplication = {
-      "customer": {
-        "firstName": this.createLoan.controls.firstname.value,
-        "lastName": this.createLoan.controls.lastname.value,
-        "phoneNo": this.createLoan.controls.phone.value,
-        "email": this.createLoan.controls.email.value,
-        "dob": this.createLoan.controls.dob.value,
-        "gender": this.createLoan.controls.gender.value,
-        "countryCode": "+91"
-      },
-      "type": { "id": this.createLoan.controls.loantype.value },
-      "loanProducts": this.loanProductsSelected,
-      "category": { "id": this.createLoan.controls.category.value },
-      "productCategoryId": this.createLoan.controls.productcategory.value,
-      "productSubCategoryId": this.createLoan.controls.productsubcategory.value,
-      "location": { "id": this.user.bussLocs[0] },
-      "partner": { "id": this.createLoan.controls.dealer.value },
-      "locationArea": this.createLoan.controls.permanentcity.value,
-      "invoiceAmount": this.createLoan.controls.totalpayment.value,
-      "downpaymentAmount": this.createLoan.controls.downpayment.value,
-      "requestedAmount": this.createLoan.controls.loanamount.value,
-      "remarks": this.createLoan.controls.remarks.value,
-      "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
-      "employee": this.mafilEmployee,
-      "employeeCode": this.createLoan.controls.employeeCode.value,
-      "loanApplicationKycList": [
-        {
-          "isCoApplicant": false,
-          "maritalStatus": this.createLoan.controls.martialstatus.value,
-          "pan": this.createLoan.controls.pannumber.value,
-          "permanentAddress1": this.createLoan.controls.permanentaddress1.value,
-          "permanentAddress2": this.createLoan.controls.permanentaddress2.value,
-          "permanentPin": this.createLoan.controls.permanentpincode.value,
-          "permanentCity": this.createLoan.controls.permanentcity.value,
-          "permanentState": this.createLoan.controls.permanentstate.value,
-          "currentAddress1": this.createLoan.controls.currentaddress1.value,
-          "currentAddress2": this.createLoan.controls.currentaddress2.value,
-          "currentPin": this.createLoan.controls.currentpincode.value,
-          "currentCity": this.createLoan.controls.currentpincode.value,
-          "currentState": this.createLoan.controls.currentstate.value,
-          "employmentStatus": this.createLoan.controls.employmenttype.value,
-          "monthlyIncome": this.createLoan.controls.salary.value,
-          "nomineeType": this.createLoan.controls.nomineetype.value,
-          "nomineeName": this.createLoan.controls.nomineename.value,
-          "nomineeDob": this.createLoan.controls.nomineeDob.value,
-          "nomineePhone": this.createLoan.controls.nomineePhone.value,
-          "customerEducation": this.createLoan.controls.customerEducation.value,
-          "customerEmployement": this.createLoan.controls.customerEmployement.value,
-          "salaryRouting": this.createLoan.controls.salaryRouting.value,
-          "familyDependants": this.createLoan.controls.familyDependants.value,
-          "earningMembers": this.createLoan.controls.earningMembers.value,
-          "existingCustomer": this.createLoan.controls.existingCustomer.value,
-          "noOfYearsAtPresentAddress": this.createLoan.controls.noOfYearsAtPresentAddress.value,
-          "currentResidenceOwnershipStatus": this.createLoan.controls.currentResidenceOwnershipStatus.value,
-          "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,
-          "vehicleNo": this.createLoan.controls.vehicleNo.value,
-          "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
-          "permanentRelationType": this.createLoan.controls.permanentRelationType.value,
-          "permanentRelationName": this.createLoan.controls.permanentRelationName.value,
-          "currentRelationType": this.createLoan.controls.currentRelationType.value,
-          "currentRelationName": this.createLoan.controls.currentRelationName.value,
-          "guarantorName": this.createLoan.controls.guarantorName.value,
-          "guarantorType": this.createLoan.controls.guarantorType.value
-        }
-      ]
-    }
+    // this.loanApplication = {
+    //   "customer": {
+    //     "firstName": this.createLoan.controls.firstname.value,
+    //     "lastName": this.createLoan.controls.lastname.value,
+    //     "phoneNo": this.createLoan.controls.phone.value,
+    //     "email": this.createLoan.controls.email.value,
+    //     "dob": this.createLoan.controls.dob.value,
+    //     "gender": this.createLoan.controls.gender.value,
+    //     "countryCode": "+91"
+    //   },
+    //   "type": { "id": this.createLoan.controls.loantype.value },
+    //   "loanProducts": this.loanProductsSelected,
+    //   "category": { "id": this.createLoan.controls.category.value },
+    //   "productCategoryId": this.createLoan.controls.productcategory.value,
+    //   "productSubCategoryId": this.createLoan.controls.productsubcategory.value,
+    //   "location": { "id": this.user.bussLocs[0] },
+    //   "partner": { "id": this.createLoan.controls.dealer.value },
+    //   "locationArea": this.createLoan.controls.permanentcity.value,
+    //   "invoiceAmount": this.createLoan.controls.totalpayment.value,
+    //   "downpaymentAmount": this.createLoan.controls.downpayment.value,
+    //   "requestedAmount": this.createLoan.controls.loanamount.value,
+    //   "remarks": this.createLoan.controls.remarks.value,
+    //   "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
+    //   "employee": this.mafilEmployee,
+    //   "employeeCode": this.createLoan.controls.employeeCode.value,
+    //   "loanApplicationKycList": [
+    //     {
+    //       "isCoApplicant": false,
+    //       "maritalStatus": this.createLoan.controls.martialstatus.value,
+    //       "pan": this.createLoan.controls.pannumber.value,
+    //       "permanentAddress1": this.createLoan.controls.permanentaddress1.value,
+    //       "permanentAddress2": this.createLoan.controls.permanentaddress2.value,
+    //       "permanentPin": this.createLoan.controls.permanentpincode.value,
+    //       "permanentCity": this.createLoan.controls.permanentcity.value,
+    //       "permanentState": this.createLoan.controls.permanentstate.value,
+    //       "currentAddress1": this.createLoan.controls.currentaddress1.value,
+    //       "currentAddress2": this.createLoan.controls.currentaddress2.value,
+    //       "currentPin": this.createLoan.controls.currentpincode.value,
+    //       "currentCity": this.createLoan.controls.currentpincode.value,
+    //       "currentState": this.createLoan.controls.currentstate.value,
+    //       "employmentStatus": this.createLoan.controls.employmenttype.value,
+    //       "monthlyIncome": this.createLoan.controls.salary.value,
+    //       "nomineeType": this.createLoan.controls.nomineetype.value,
+    //       "nomineeName": this.createLoan.controls.nomineename.value,
+    //       "nomineeDob": this.createLoan.controls.nomineeDob.value,
+    //       "nomineePhone": this.createLoan.controls.nomineePhone.value,
+    //       "customerEducation": this.createLoan.controls.customerEducation.value,
+    //       "customerEmployement": this.createLoan.controls.customerEmployement.value,
+    //       "salaryRouting": this.createLoan.controls.salaryRouting.value,
+    //       "familyDependants": this.createLoan.controls.familyDependants.value,
+    //       "earningMembers": this.createLoan.controls.earningMembers.value,
+    //       "existingCustomer": this.createLoan.controls.existingCustomer.value,
+    //       "noOfYearsAtPresentAddress": this.createLoan.controls.noOfYearsAtPresentAddress.value,
+    //       "currentResidenceOwnershipStatus": this.createLoan.controls.currentResidenceOwnershipStatus.value,
+    //       "ownedMovableAssets": this.createLoan.controls.ownedMovableAssets.value,
+    //       "vehicleNo": this.createLoan.controls.vehicleNo.value,
+    //       "goodsFinanced": this.createLoan.controls.goodsFinanced.value,
+    //       "permanentRelationType": this.createLoan.controls.permanentRelationType.value,
+    //       "permanentRelationName": this.createLoan.controls.permanentRelationName.value,
+    //       "currentRelationType": this.createLoan.controls.currentRelationType.value,
+    //       "currentRelationName": this.createLoan.controls.currentRelationName.value,
+    //       "guarantorName": this.createLoan.controls.guarantorName.value,
+    //       "guarantorType": this.createLoan.controls.guarantorType.value
+    //     }
+    //   ]
+    // }
 
 
-    if (this.loanApplication) {
-      if (this.action == "update") {
+    // if (this.loanApplication) {
+    //   if (this.action == "update") {
 
-        if (this.loanData && this.loanData.status && this.loanData.status.id) {
-          this.loanApplication['status'] = {
-            "id": this.loanData.status.id
-          };
-        }
-        if (this.loanData && this.loanData.customer && this.loanData.customer.id) {
-          this.loanApplication.customer = {
-            "id": this.loanData.customer.id
-          };
-        }
-        if (this.loanData && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
-          this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
-        }
-        this.cdlService.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
-          this.snackbarService.openSnackBar("Loan Application Updated Successfully")
-          this.router.navigate(['provider', 'tl', 'loans']);
+    //     if (this.loanData && this.loanData.status && this.loanData.status.id) {
+    //       this.loanApplication['status'] = {
+    //         "id": this.loanData.status.id
+    //       };
+    //     }
+    //     if (this.loanData && this.loanData.customer && this.loanData.customer.id) {
+    //       this.loanApplication.customer = {
+    //         "id": this.loanData.customer.id
+    //       };
+    //     }
+    //     if (this.loanData && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
+    //       this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
+    //     }
+    //     this.cdlService.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
+    //       this.snackbarService.openSnackBar("Loan Application Updated Successfully")
+    //       this.router.navigate(['provider', 'dl', 'loans']);
 
-        },
-          (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          })
-        console.log("response");
-      }
-      else {
-        console.log(this.filesToUpload);
+    //     },
+    //       (error) => {
+    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    //       })
+    //     console.log("response");
+    //   }
+    //   else {
+    //     console.log(this.filesToUpload);
 
-        for (let i = 0; i < this.filesToUpload.length; i++) {
-          this.filesToUpload[i]['order'] = i;
-          if (this.filesToUpload[i]["type"] == 'aadhar') {
-            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'] = [];
-            this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'].push(this.filesToUpload[i]);
-          }
-          if (this.filesToUpload[i]["type"] == 'pan') {
-            this.loanApplication.loanApplicationKycList[0]['panAttachments'] = [];
-            this.loanApplication.loanApplicationKycList[0]['panAttachments'].push(this.filesToUpload[i]);
-          }
-          if (this.filesToUpload[i]["type"] == 'photo') {
-            this.loanApplication['consumerPhoto'] = [];
-            this.loanApplication['consumerPhoto'].push(this.filesToUpload[i]);
-          }
-        }
+    //     for (let i = 0; i < this.filesToUpload.length; i++) {
+    //       this.filesToUpload[i]['order'] = i;
+    //       if (this.filesToUpload[i]["type"] == 'aadhar') {
+    //         this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'] = [];
+    //         this.loanApplication.loanApplicationKycList[0]['aadhaarAttachments'].push(this.filesToUpload[i]);
+    //       }
+    //       if (this.filesToUpload[i]["type"] == 'pan') {
+    //         this.loanApplication.loanApplicationKycList[0]['panAttachments'] = [];
+    //         this.loanApplication.loanApplicationKycList[0]['panAttachments'].push(this.filesToUpload[i]);
+    //       }
+    //       if (this.filesToUpload[i]["type"] == 'photo') {
+    //         this.loanApplication['consumerPhoto'] = [];
+    //         this.loanApplication['consumerPhoto'].push(this.filesToUpload[i]);
+    //       }
+    //     }
 
-        console.log("Loan Application Data : ", this.loanApplication)
+    //     console.log("Loan Application Data : ", this.loanApplication)
 
 
-        this.cdlService.createLoan(this.loanApplication).subscribe((s3urls: any) => {
-          console.log("response", s3urls);
-          if (s3urls.attachmentsUrls.length > 0) {
-            this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
-              (dataS3Url) => {
-                console.log(dataS3Url);
-              });
-          }
-          this.bankDetails = {
-            "originUid": s3urls.uid,
-            "loanApplicationUid": s3urls.uid,
-            "bankName": this.createLoan.controls.bank.value,
-            "bankAccountNo": this.createLoan.controls.account.value,
-            "bankIfsc": this.createLoan.controls.ifsc.value,
-            "bankAccountVerified": true
-          }
-          this.cdlService.saveBankDetails(this.bankDetails).subscribe((data) => {
-            console.log("this.loanProducts", this.loanProducts);
-            this.snackbarService.openSnackBar("Loan Application Created Successfully")
-            this.router.navigate(['provider', 'tl', 'loans']);
-          }), (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          }
-        },
-          (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-          })
-      }
-    }
+    //     this.cdlService.createLoan(this.loanApplication).subscribe((s3urls: any) => {
+    //       console.log("response", s3urls);
+    //       if (s3urls.attachmentsUrls.length > 0) {
+    //         this.uploadAudioVideo(s3urls['attachmentsUrls']).then(
+    //           (dataS3Url) => {
+    //             console.log(dataS3Url);
+    //           });
+    //       }
+    //       this.bankDetails = {
+    //         "originUid": s3urls.uid,
+    //         "loanApplicationUid": s3urls.uid,
+    //         "bankName": this.createLoan.controls.bank.value,
+    //         "bankAccountNo": this.createLoan.controls.account.value,
+    //         "bankIfsc": this.createLoan.controls.ifsc.value,
+    //         "bankAccountVerified": true
+    //       }
+    //       this.cdlService.saveBankDetails(this.bankDetails).subscribe((data) => {
+    //         console.log("this.loanProducts", this.loanProducts);
+    //         this.snackbarService.openSnackBar("Loan Application Created Successfully")
+    //         this.router.navigate(['provider', 'dl', 'loans']);
+    //       }), (error) => {
+    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    //       }
+    //     },
+    //       (error) => {
+    //         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    //       })
+    //   }
+    // }
+
+    this.snackbarService.openSnackBar("Lead Created Successfully")
+    this.router.navigate(['provider', 'dl', 'leads']);
   }
 
   uploadAudioVideo(data) {
@@ -993,7 +994,7 @@ export class CreateComponent implements OnInit {
   }
 
   goNext() {
-    this.router.navigate(['provider', 'tl', 'loans', 'approved']);
+    this.router.navigate(['provider', 'dl', 'loans', 'approved']);
   }
 
 
@@ -1037,83 +1038,83 @@ export class CreateComponent implements OnInit {
     if (this.loanAmount == 0) {
       this.snackbarService.openSnackBar("Please Fill All Fields", { 'panelClass': 'snackbarerror' });
     }
-    else {
-      let data = {
-        "id": this.loanData.id,
-        "uid": this.loanId,
-        "remarks": this.createLoan.controls.remarks.value
-      }
-      this.cdlService.saveRemarks(data).subscribe((data: any) => {
-        if (data) {
-          const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-            width: '50%',
-            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-            disableClose: true,
-            data: {
-              from: 'loancreate'
-            }
-          });
-          dialogRef.afterClosed().subscribe(result => {
-            if (result) {
-              if (result = "eligible") {
-                this.cdlService.ApprovalRequest(this.loanId).subscribe((data: any) => {
-                  if (data.isAutoApproval && data.isApproved) {
-                    const navigationExtras: NavigationExtras = {
-                      queryParams: {
-                        type: 'autoapproved',
-                        uid: this.loanId
-                      }
-                    }
-                    this.snackbarService.openSnackBar("Loan Auto Approved");
-                    this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
-                  }
-                  else if (!data.isAutoApproval && data.isApproved) {
-                    const navigationExtras: NavigationExtras = {
-                      queryParams: {
-                        type: 'approved',
-                        uid: this.loanId
-                      }
-                    }
-                    this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
-                    this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
-                  }
-                  else if (!data.isAutoApproval && data.isApproved) {
-                    const navigationExtras: NavigationExtras = {
-                      queryParams: {
-                        type: 'approved',
-                        uid: this.loanId
-                      }
-                    }
-                    this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
-                    this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
-                  }
-                  else if (!data.isAutoApproval && !data.isApproved) {
-                    const navigationExtras: NavigationExtras = {
-                      queryParams: {
-                        type: 'rejected',
-                        uid: this.loanId
-                      }
-                    }
-                    this.snackbarService.openSnackBar("Sorry This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
-                    this.router.navigate(['provider', 'tl', 'loans', 'approved'], navigationExtras);
-                  }
-                  console.log("Response", data);
-                },
-                  (error) => {
-                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-                  })
-              }
-            }
-            else {
-              console.log("Data Not Saved")
-            }
-          });
-        }
-        else {
-          this.snackbarService.openSnackBar("Failed to Check Eligibility", { 'panelClass': 'snackbarerror' })
-        }
-      })
-    }
+    // else {
+    //   let data = {
+    //     "id": this.loanData.id,
+    //     "uid": this.loanId,
+    //     "remarks": this.createLoan.controls.remarks.value
+    //   }
+    //   this.cdlService.saveRemarks(data).subscribe((data: any) => {
+    //     if (data) {
+    //       const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+    //         width: '50%',
+    //         panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //         disableClose: true,
+    //         data: {
+    //           from: 'loancreate'
+    //         }
+    //       });
+    //       dialogRef.afterClosed().subscribe(result => {
+    //         if (result) {
+    //           if (result = "eligible") {
+    //             this.cdlService.ApprovalRequest(this.loanId).subscribe((data: any) => {
+    //               if (data.isAutoApproval && data.isApproved) {
+    //                 const navigationExtras: NavigationExtras = {
+    //                   queryParams: {
+    //                     type: 'autoapproved',
+    //                     uid: this.loanId
+    //                   }
+    //                 }
+    //                 this.snackbarService.openSnackBar("Loan Auto Approved");
+    //                 this.router.navigate(['provider', 'dl', 'loans', 'approved'], navigationExtras);
+    //               }
+    //               else if (!data.isAutoApproval && data.isApproved) {
+    //                 const navigationExtras: NavigationExtras = {
+    //                   queryParams: {
+    //                     type: 'approved',
+    //                     uid: this.loanId
+    //                   }
+    //                 }
+    //                 this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
+    //                 this.router.navigate(['provider', 'dl', 'loans', 'approved'], navigationExtras);
+    //               }
+    //               else if (!data.isAutoApproval && data.isApproved) {
+    //                 const navigationExtras: NavigationExtras = {
+    //                   queryParams: {
+    //                     type: 'approved',
+    //                     uid: this.loanId
+    //                   }
+    //                 }
+    //                 this.snackbarService.openSnackBar("Loan Application Submitted.Waiting for Credit Officers Approval");
+    //                 this.router.navigate(['provider', 'dl', 'loans', 'approved'], navigationExtras);
+    //               }
+    //               else if (!data.isAutoApproval && !data.isApproved) {
+    //                 const navigationExtras: NavigationExtras = {
+    //                   queryParams: {
+    //                     type: 'rejected',
+    //                     uid: this.loanId
+    //                   }
+    //                 }
+    //                 this.snackbarService.openSnackBar("Sorry This Loan Was Rejected", { 'panelClass': 'snackbarerror' });
+    //                 this.router.navigate(['provider', 'dl', 'loans', 'approved'], navigationExtras);
+    //               }
+    //               console.log("Response", data);
+    //             },
+    //               (error) => {
+    //                 this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+    //               })
+    //           }
+    //         }
+    //         else {
+    //           console.log("Data Not Saved")
+    //         }
+    //       });
+    //     }
+    //     else {
+    //       this.snackbarService.openSnackBar("Failed to Check Eligibility", { 'panelClass': 'snackbarerror' })
+    //     }
+    //   })
+    // }
   }
 
   verifyotp() {
@@ -1128,34 +1129,34 @@ export class CreateComponent implements OnInit {
         }
       }
 
-      const dialogRef = this.dialog.open(OtpVerifyComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          type: 'Mobile Number',
-          data: this.nameData,
-          phoneNumber: this.createLoan.controls.phone.value
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          if (result.msg == "success") {
-            this.verification = true;
-            this.loanId = result.uid;
-            const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
-            this.getCustomerDetails(filter);
-            const navigationExtras: NavigationExtras = {
-              queryParams: {
-                id: this.loanId,
-                action: 'update'
-              }
-            };
-            console.log("Navigation", navigationExtras)
-            this.router.navigate(['provider', 'tl', 'loans', 'update'], navigationExtras);
-          }
-        }
-      });
+      // const dialogRef = this.dialog.open(OtpVerifyComponent, {
+      //   width: '50%',
+      //   panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      //   disableClose: true,
+      //   data: {
+      //     type: 'Mobile Number',
+      //     data: this.nameData,
+      //     phoneNumber: this.createLoan.controls.phone.value
+      //   }
+      // });
+      // dialogRef.afterClosed().subscribe(result => {
+      //   if (result) {
+      //     if (result.msg == "success") {
+      //       this.verification = true;
+      //       this.loanId = result.uid;
+      //       const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
+      //       this.getCustomerDetails(filter);
+      //       const navigationExtras: NavigationExtras = {
+      //         queryParams: {
+      //           id: this.loanId,
+      //           action: 'update'
+      //         }
+      //       };
+      //       console.log("Navigation", navigationExtras)
+      //       this.router.navigate(['provider', 'dl', 'loans', 'update'], navigationExtras);
+      //     }
+      //   }
+      // });
       return can_remove;
     }
     else {
@@ -1500,20 +1501,6 @@ export class CreateComponent implements OnInit {
   }
 
 
-  locate() {
-    this.locatedPlace = "Chembakavvu,Thrissur";
-    this.placeLocated = true;
-  }
-
-  unlocate() {
-    this.placeLocated = false;
-  }
-
-  addCoApplicant() {
-    this.coapplicantCount = this.coapplicantCount + 1
-    this.coapplicants = Array(this.coapplicantCount)
-  }
-
   productSelect(values) {
     console.log(values)
     this.loanProductsSelected = values.map((data) => {
@@ -1631,102 +1618,102 @@ export class CreateComponent implements OnInit {
   }
 
   verifyEmail() {
-    if (this.createLoan.controls.email.value && this.createLoan.controls.email.value != '') {
-      let can_remove = false;
-      const dialogRef = this.dialog.open(OtpVerifyComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          type: 'Email',
-          id: this.loanId,
-          email: this.createLoan.controls.email.value
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        if (result && result.msg == "success") {
-          this.emailverification = true
-          this.snackbarService.openSnackBar("Email Id Verified");
-        }
-      });
-      return can_remove;
-    }
-    else {
-      this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+    // if (this.createLoan.controls.email.value && this.createLoan.controls.email.value != '') {
+    //   let can_remove = false;
+    //   const dialogRef = this.dialog.open(OtpVerifyComponent, {
+    //     width: '50%',
+    //     panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //     disableClose: true,
+    //     data: {
+    //       type: 'Email',
+    //       id: this.loanId,
+    //       email: this.createLoan.controls.email.value
+    //     }
+    //   });
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     console.log(result);
+    //     if (result && result.msg == "success") {
+    //       this.emailverification = true
+    //       this.snackbarService.openSnackBar("Email Id Verified");
+    //     }
+    //   });
+    //   return can_remove;
+    // }
+    // else {
+    //   this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
 
-    }
+    // }
 
   }
 
   verifyaadhar() {
-    let can_remove = false;
-    const dialogRef = this.dialog.open(OtpVerifyComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        type: 'Aadhar Number'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result = "verified") {
-          this.aadharverification = true;
-          this.address1 = "Vellara Building";
-          this.address2 = "Museum CrossLane";
-          this.city = "Thrissur";
-          this.state = "Kerala";
-          this.pincode = "680020";
-          this.addresscheck = true;
-        }
-      }
-      else {
-        console.log("Data Not Saved")
-      }
-    });
-    return can_remove;
+    // let can_remove = false;
+    // const dialogRef = this.dialog.open(OtpVerifyComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     type: 'Aadhar Number'
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     if (result = "verified") {
+    //       this.aadharverification = true;
+    //       this.address1 = "Vellara Building";
+    //       this.address2 = "Museum CrossLane";
+    //       this.city = "Thrissur";
+    //       this.state = "Kerala";
+    //       this.pincode = "680020";
+    //       this.addresscheck = true;
+    //     }
+    //   }
+    //   else {
+    //     console.log("Data Not Saved")
+    //   }
+    // });
+    // return can_remove;
   }
 
   openSchemes() {
-    const dialogRef = this.dialog.open(SelectSchemeComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        schemes: this.loanSchemes
-      }
-    });
-    dialogRef.afterClosed().subscribe(scheme => {
-      if (scheme) {
-        console.log("selected", scheme);
-        this.schemeSelected = scheme;
-        this.createLoan.controls.scheme.setValue(scheme.schemeName);
-      }
-    });
+    // const dialogRef = this.dialog.open(SelectSchemeComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     schemes: this.loanSchemes
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(scheme => {
+    //   if (scheme) {
+    //     console.log("selected", scheme);
+    //     this.schemeSelected = scheme;
+    //     this.createLoan.controls.scheme.setValue(scheme.schemeName);
+    //   }
+    // });
   }
 
   verifyAccount() {
-    let can_remove = false;
-    const dialogRef = this.dialog.open(OtpVerifyComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        type: 'Account Number'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result = "verified") {
-          this.accountverification = true;
-        }
-      }
-      else {
-        console.log("Data Not Saved")
-      }
-    });
-    return can_remove;
+    // let can_remove = false;
+    // const dialogRef = this.dialog.open(OtpVerifyComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     type: 'Account Number'
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     if (result = "verified") {
+    //       this.accountverification = true;
+    //     }
+    //   }
+    //   else {
+    //     console.log("Data Not Saved")
+    //   }
+    // });
+    // return can_remove;
   }
 
 
@@ -1743,26 +1730,26 @@ export class CreateComponent implements OnInit {
   }
 
   verifypan() {
-    let can_remove = false;
-    const dialogRef = this.dialog.open(OtpVerifyComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        type: 'Pan Number'
-      }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (result = "verified") {
-          this.panverification = true;
-        }
-      }
-      else {
-        console.log("Data Not Saved")
-      }
-    });
-    return can_remove;
+    // let can_remove = false;
+    // const dialogRef = this.dialog.open(OtpVerifyComponent, {
+    //   width: '50%',
+    //   panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+    //   disableClose: true,
+    //   data: {
+    //     type: 'Pan Number'
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     if (result = "verified") {
+    //       this.panverification = true;
+    //     }
+    //   }
+    //   else {
+    //     console.log("Data Not Saved")
+    //   }
+    // });
+    // return can_remove;
   }
 
 

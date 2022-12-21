@@ -421,6 +421,10 @@ export class DlComponent implements OnInit {
     this.router.navigate(['provider', 'dl', 'loans', 'create']);
   }
 
+  CreateLead() {
+    this.router.navigate(['provider', 'dl', 'leads', 'create']);
+  }
+
   createDealer() {
     this.router.navigate(['provider', 'dl', 'dealers', 'create']);
   }
@@ -482,12 +486,12 @@ export class DlComponent implements OnInit {
   }
 
   allLeads() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        spInternalStatus: 'Draft'
-      }
-    };
-    this.router.navigate(['provider', 'dl', 'loans'], navigationExtras);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     spInternalStatus: 'Draft'
+    //   }
+    // };
+    this.router.navigate(['provider', 'dl', 'leads']);
   }
 
 

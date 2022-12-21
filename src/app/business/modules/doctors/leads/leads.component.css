@@ -17,6 +17,26 @@ table tbody tr td {
   padding: 15px;
 }
 
+.status-Willing {
+  background-color: #C8E6C9 !important;
+  color: #256029 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.p-button {
+  background-color: #1E4079 !important;
+}
+
+.status-Not {
+  background-color: #FFCDD2 !important;
+  color: #C63737 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
 .tble-filtr-tr {
   border: 1.42818px solid #DFE0EB !important;
 }

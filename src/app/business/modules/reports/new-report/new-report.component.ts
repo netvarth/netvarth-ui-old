@@ -183,13 +183,13 @@ export class NewReportComponent implements OnInit {
   document_collected_timePeriod: string;
   document_collected_StartDate: any;
   document_collectioin_EndDate: any;
-  loan_application_timePeriod:string;
+  loan_application_timePeriod: string;
   loan_application_StartDate: any;
   loan_application_EndDate: any;
-  loan_user_application_timePeriod:string;
+  loan_user_application_timePeriod: string;
   loan_user_application_StartDate: any;
   loan_user_application_EndDate: any;
-  loan_partner_application_timePeriod:string;
+  loan_partner_application_timePeriod: string;
   loan_partner_application_StartDate: any;
   loan_partner_application_EndDate: any;
   public reportForm: FormGroup;
@@ -316,7 +316,7 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod  = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
+    this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
     this.payment_status = projectConstantsLocal.PAYMENT_STATUS;
@@ -368,6 +368,7 @@ export class NewReportComponent implements OnInit {
 
 
     this.report_data_service._service_data.subscribe((res: any) => {
+      console.log("Result", res)
       this.setServiceData(res);
     });
     this.report_data_service._schedule_data.subscribe(res => {
@@ -3327,6 +3328,7 @@ export class NewReportComponent implements OnInit {
         console.log("Report Data :", this.lStorageService.setitemonLocalStorage('report', JSON.stringify(report)))
       },
       );
+      this.report_data_service.updateCustomers('All');
       this.router.navigate(['provider', 'reports', 'report-list']);
     });
   }

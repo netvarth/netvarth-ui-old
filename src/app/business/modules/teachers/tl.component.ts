@@ -433,8 +433,9 @@ export class TlComponent implements OnInit {
   allDealers() {
     this.router.navigate(['provider', 'tl', 'dealers']);
   }
-  createLead() {
-    this.router.navigate(['provider', 'tl', 'dealers', 'create']);
+
+  CreateLead() {
+    this.router.navigate(['provider', 'dl', 'leads', 'create']);
   }
 
   requestedDealers() {
@@ -481,13 +482,14 @@ export class TlComponent implements OnInit {
     this.router.navigate(['provider', 'tl', 'loans'], navigationExtras);
   }
 
+
   allLeads() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        spInternalStatus: 'Draft'
-      }
-    };
-    this.router.navigate(['provider', 'tl', 'loans'], navigationExtras);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     spInternalStatus: 'Draft'
+    //   }
+    // };
+    this.router.navigate(['provider', 'tl', 'leads']);
   }
 
 

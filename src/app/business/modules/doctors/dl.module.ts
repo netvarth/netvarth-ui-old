@@ -18,6 +18,7 @@ import { ChartModule } from 'primeng/chart';
 const routes: Routes = [
   { path: '', component: DlComponent },
   { path: 'loans', loadChildren: () => import('./loans/loans.module').then(m => m.LoansModule) },
+  { path: 'leads', loadChildren: () => import('./leads/leads.module').then(m => m.LeadsModule) },
   { path: 'loans/:id', loadChildren: () => import('./loans/loan-details/loan-details.module').then(m => m.LoanDetailsModule) },
   { path: 'kycdoc/:id', loadChildren: () => import('./loans/loan-details/kyc-doc/kyc-doc.module').then(m => m.KycDocModule) },
   { path: 'loandetailsdoc/:id', loadChildren: () => import('./loans/loan-details/loan-details-doc/loan-details-doc.module').then(m => m.LoanDetailsDocModule) },

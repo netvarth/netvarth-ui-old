@@ -38,6 +38,18 @@
                 </div>
               </div>
             </div>
+            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canCreateLoan">
+              <div class="dashboard-card text-center pointer-cursor" (click)="CreateLead()">
+                <div>
+                  <div>
+                    <img width="60" height="60" src="./assets/images/cdl/partner/create_lead.png">
+                  </div>
+                  <div class="text-center">
+                    <span class="head-card-sub-title">Create Lead</span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <!-- <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canCreatePartner">
               <div class="dashboard-card text-center pointer-cursor" (click)="createDealer()">

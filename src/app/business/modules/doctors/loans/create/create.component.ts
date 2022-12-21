@@ -164,6 +164,10 @@ export class CreateComponent implements OnInit {
   guarantorDetailsPanel: any;
   coapplicantDetailsVerified: any;
   guarantorDetailsVerified: any;
+  locatedPlace: string;
+  placeLocated: boolean = false;
+  coapplicantCount: any = 0;
+  coapplicants: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -487,8 +491,6 @@ export class CreateComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-
-
     if (this.user && this.user.partnerId) {
       this.partnerId = this.user.partnerId;
     }
@@ -517,7 +519,20 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  locate() {
+    this.locatedPlace = "Chembakavvu,Thrissur";
+    this.placeLocated = true;
+  }
 
+  unlocate() {
+    this.placeLocated = false;
+  }
+
+
+  addCoApplicant() {
+    this.coapplicantCount = this.coapplicantCount + 1
+    this.coapplicants = Array(this.coapplicantCount)
+  }
 
   subtractYears(date, years) {
     date.setFullYear(date.getFullYear() - years);
