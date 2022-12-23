@@ -59,7 +59,7 @@
               </span>
             </div>
             <div class="my-2">
-              <span class="loan-tag">Customer</span>
+              <span class="loan-tag">Applicant</span>
             </div>
             <div>
               <div *ngIf="loanData && loanData.referenceNo" class="font-medium">
@@ -182,14 +182,14 @@
 
                 <tr style="width: 100%;"
                   *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerEducationName">
-                  <td style="width: 50%;" class="details-title">Customer Education</td>
+                  <td style="width: 50%;" class="details-title">Applicant Education</td>
                   <th style=" width: 50%;" class="details-sub-title">
                     {{loanData.loanApplicationKycList[0].customerEducationName}}</th>
                 </tr>
 
                 <tr style="width: 100%;"
                   *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerEmployementName">
-                  <td style="width: 50%;" class="details-title">Customer Employment</td>
+                  <td style="width: 50%;" class="details-title">Applicant Employment</td>
                   <th style=" width: 50%;" class="details-sub-title">
                     {{loanData.loanApplicationKycList[0].customerEmployementName}}</th>
                 </tr>
@@ -217,7 +217,7 @@
 
                 <tr style="width: 100%;"
                   *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].existingCustomerName">
-                  <td style="width: 50%;" class="details-title">Existing Customer</td>
+                  <td style="width: 50%;" class="details-title">Existing Applicant</td>
                   <th style=" width: 50%;" class="details-sub-title">
                     {{loanData.loanApplicationKycList[0].existingCustomerName}}</th>
                 </tr>

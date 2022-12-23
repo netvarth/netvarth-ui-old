@@ -48,7 +48,7 @@
                   <div class="form-title">First Name</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Customer First Name"
+                  <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Applicant First Name"
                     class="form-control" autocomplete="off" formControlName="firstname" />
                 </div>
               </div>
@@ -63,7 +63,7 @@
                   <div class="form-title">Last Name</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Customer Last Name"
+                  <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Applicant Last Name"
                     class="form-control" autocomplete="off" formControlName="lastname" />
                 </div>
               </div>
@@ -103,7 +103,7 @@
                 </div>
                 <div class="fieldPadding">
                   <div class="d-flex">
-                    <input (keyup)="resetErrors()" #email type="email" placeholder="Enter Customer Email"
+                    <input (keyup)="resetErrors()" #email type="email" placeholder="Enter Applicant Email"
                       class="form-control" autocomplete="off" formControlName="email"
                       [class.disabled]="emailverification" />
 
