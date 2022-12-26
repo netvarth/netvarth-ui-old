@@ -324,7 +324,10 @@ export class LoanDetailsComponent implements OnInit {
               this.snackbarService.openSnackBar("Loan Verified Successfully");
               this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
             }
-          });
+          },
+            (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+            });
         }
       });
   }

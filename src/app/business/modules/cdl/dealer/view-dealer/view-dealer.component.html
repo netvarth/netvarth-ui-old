@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-4 my-1 mb-3 no-padding-small">
+        <div class="col-md-4 my-1 mb-3 no-padding-small mr-3" *ngIf="totalApprovedCount>0">
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
@@ -35,7 +35,7 @@
           </div>
         </div>
 
-        <div class="col-md-4 my-1 mb-3 no-padding-small">
+        <div class="col-md-4 my-1 mb-3 no-padding-small mr-3" *ngIf="RejectedLoansCount>0">
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <div class="col-md-4 my-1 no-padding-small">
+        <div class="col-md-4 my-1 no-padding-small"  *ngIf="partnerLeadsCount>0">
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
@@ -138,7 +138,7 @@
                     <span class="dealer-icon"><i class="fa fa-star-o"></i></span>
                   </div>
                   <div class="text-left py-0 my-0">
-                    <span class="dealer-icon-info">568000</span><br class="my-0 py-0">
+                    <span class="dealer-icon-info">{{totalLoanAmount}}</span><br class="my-0 py-0">
                     <span class="dealer-icon-sub-info">Total Amount</span>
                   </div>
                 </div>

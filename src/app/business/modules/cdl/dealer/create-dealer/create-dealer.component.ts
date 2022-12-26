@@ -8,6 +8,7 @@ import { CdlService } from '../../cdl.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { FileService } from '../../../../../shared/services/file-service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: 'app-create-dealer',
@@ -52,6 +53,7 @@ export class CreateDealerComponent implements OnInit {
   businessId: any;
   businessDetails: any;
   banksList: any;
+  stateList = projectConstantsLocal.INDIAN_STATES;
   partnerSizes = [
     {
       name: "Small"

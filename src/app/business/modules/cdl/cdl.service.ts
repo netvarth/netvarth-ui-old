@@ -67,6 +67,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
+  getLoansCountByFilter(filter = {}) {
+    const url = 'provider/loanapplication/count';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
   getBranchesByFilter(filter = {}) {
     const url = 'provider/branchmaster';
     return this.servicemeta.httpGet(url, null, filter);

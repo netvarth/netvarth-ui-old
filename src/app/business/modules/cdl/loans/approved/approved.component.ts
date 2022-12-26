@@ -33,7 +33,7 @@ export class ApprovedComponent implements OnInit {
   partnerParentId: any;
   loanTenure: any;
   filesToUpload: any = [];
-  tenureNumbers = Array(12);
+  tenureNumbers = Array(6);
   advanceEmiNumbers = Array(6);
   emiDueNumbers = Array(20);
   advanceEmi: any;

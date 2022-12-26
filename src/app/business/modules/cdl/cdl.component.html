@@ -446,7 +446,8 @@
               <div>
                 <span class="card-title">Users</span>
               </div>
-              <p-table [responsive]="true" responsiveLayout="scroll" [value]="users" [paginator]="true" [rows]="5">
+              <p-table [responsive]="true" responsiveLayout="scroll" [value]="users" [paginator]="true" [rows]="5"
+                [resizableColumns]="true" [autoLayout]="true">
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Name</th>
@@ -457,7 +458,7 @@
                 <ng-template pTemplate="body" let-user>
                   <tr>
                     <td>
-                      <div class="d-flex">
+                      <div class="d-flex align-items-center">
                         <div class="profile-pic">
                           <span *ngIf="user.firstName" class="text-uppercase">{{user.firstName[0]}}</span>
                         </div>
@@ -489,7 +490,6 @@
         </div>
       </div>
     </div>
-
   </div>
   <div class="row container-fluid no-padding-small" *ngIf="capabilities && capabilities.canViewPartner">
     <div class="mt-2 col-lg-8 col-md-12">
@@ -643,7 +643,8 @@
               <div>
                 <span class="card-title">Customers</span>
               </div>
-              <p-table [responsive]="true" responsiveLayout="scroll" [value]="customers" [paginator]="true" [rows]="5">
+              <p-table [responsive]="true" responsiveLayout="scroll" [value]="customers" [paginator]="true" [rows]="5"
+                [resizableColumns]="true" [autoLayout]="true">
                 <ng-template pTemplate="header">
                   <tr>
                     <th>Name</th>
@@ -654,7 +655,7 @@
                 <ng-template pTemplate="body" let-customer>
                   <tr>
                     <td>
-                      <div class="d-flex">
+                      <div class="d-flex align-items-center">
                         <div class="profile-pic">
                           <span *ngIf="customer.firstName" class="text-uppercase">{{customer.firstName[0]}}</span>
                         </div>

@@ -15,6 +15,9 @@ export class EmiCalciComponent implements OnInit {
   EmiPayment: any = 0;
   pieChartOptions: any;
   pieChartData: any;
+  rateOfInterest: any;
+  totalRepaymentAmount: any;
+  totalInterestAmount: any;
   constructor(
     private location: Location
   ) { }
@@ -40,7 +43,7 @@ export class EmiCalciComponent implements OnInit {
       labels: ['Loan Amount', 'Interest'],
       datasets: [
         {
-          data: [this.loanAmount, this.monthlyInterest * this.loanTenure],
+          data: [this.loanAmount, this.totalInterestAmount],
           backgroundColor: [
             "orange",
             "#3CB698"
@@ -56,9 +59,11 @@ export class EmiCalciComponent implements OnInit {
 
   calculateEmi() {
     console.log(this.loanAmount, this.interestRate, this.EmiPayment)
-    this.monthlyInterest = (this.loanAmount * (this.interestRate * 0.01)) / this.loanTenure;
-    this.EmiPayment = ((this.loanAmount / this.loanTenure) + this.monthlyInterest).toFixed(2);
-    console.log(this.monthlyInterest, this.EmiPayment);
+    this.monthlyInterest = this.interestRate / 12 / 100;
+    this.rateOfInterest = Math.pow(1 + this.monthlyInterest, this.loanTenure);
+    this.EmiPayment = ((this.loanAmount * this.monthlyInterest * this.rateOfInterest) / (this.rateOfInterest - 1)).toFixed(2);
+    this.totalRepaymentAmount = (this.EmiPayment * this.loanTenure).toFixed(2);
+    this.totalInterestAmount = (this.totalRepaymentAmount - this.loanAmount).toFixed(2)
     this.getPieChartData();
   }
 

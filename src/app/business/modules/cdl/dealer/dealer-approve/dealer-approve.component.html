@@ -45,6 +45,10 @@
                   <div class="table-responsive">
                     <table class="table table-borderless">
                       <tbody>
+                        <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerUserName">
+                          <td style="width: 50%;" class="details-title">Dealer Owner Name</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerUserName}}</th>
+                        </tr>
                         <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerMobile">
                           <td style="width: 50%;" class="details-title">Phone Number</td>
                           <th style=" width: 50%;" class="details-sub-title">+91 {{dealerData.partnerMobile}}</th>
@@ -66,11 +70,11 @@
                           <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerCity}}</th>
                         </tr>
                         <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerState">
-                          <td style="width: 50%;" class="details-title">Permanent Address State</td>
+                          <td style="width: 50%;" class="details-title">State</td>
                           <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerState}}</th>
                         </tr>
                         <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerPin">
-                          <td style="width: 50%;" class="details-title">Permanent Address Pincode</td>
+                          <td style="width: 50%;" class="details-title">Pincode</td>
                           <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerPin}}</th>
                         </tr>
                         <tr style="width: 100%;" *ngIf="dealerData && dealerData.category && dealerData.category.name">
@@ -89,8 +93,17 @@
                           <td style="width: 50%;" class="details-title">Trade</td>
                           <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerTrade}}</th>
                         </tr>
+                        <tr style="width: 100%;"
+                          *ngIf="dealerData && dealerData.branch && dealerData.branch.branchName">
+                          <td style="width: 50%;" class="details-title">Nearest Branch Name</td>
+                          <th style=" width: 50%;" class="details-sub-title">{{dealerData.branch.branchName}}</th>
+                        </tr>
                       </tbody>
                     </table>
+                  </div>
+                  <div class="mt-3"
+                    *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0] && dealerData.storeAttachments[0].s3path">
+                    <img class="img-fluid pb-0" [src]="dealerData.storeAttachments[0].s3path">
                   </div>
                 </div>
               </div>
@@ -100,8 +113,6 @@
       </div>
     </div>
     <div class="col-md-7">
-      <br>
-
       <div class="card">
         <div class="font-weight-bold">KYC Details</div>
         <div class="row mt-2">
@@ -155,7 +166,7 @@
             </div>
           </div>
 
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <div
               *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0] && dealerData.storeAttachments[0].s3path">
               <div>
@@ -169,15 +180,49 @@
                 </a>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
       </div>
 
       <br>
 
-      <div class="card mb-2"
-        *ngIf="user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
+      <div class="card">
+        <div class="font-weight-bold">Bank Details</div>
+        <div class="row">
+          <div class="col-md-4 mt-2 no-padding-small" *ngIf="dealerData && dealerData.bankAccountNo">
+            <div class="details-title">Account Number</div>
+            <div class="details-sub-title">{{dealerData.bankAccountNo}}</div>
+          </div>
+          <div class="col-md-4 mt-2 no-padding-small" *ngIf="dealerData && dealerData.bankName">
+            <div class="details-title">Bank</div>
+            <div class="details-sub-title">{{dealerData.bankName}} Bank</div>
+          </div>
+          <div class="col-md-4 mt-2 no-padding-small" *ngIf="dealerData && dealerData.bankIfsc">
+            <div class="details-title">IFSC Code</div>
+            <div class="details-sub-title">{{dealerData.bankIfsc}}</div>
+          </div>
+        </div>
+
+        <div>
+          <div
+            *ngIf="dealerData && dealerData.bankAttachments && dealerData.bankAttachments[0] && dealerData.bankAttachments[0].s3path">
+            <div>
+              <div class="text-left details-title">Cheque / Passbook Front</div>
+              <div class="text-left details-sub-title">{{dealerData.gstin}}</div>
+            </div>
+            <div class="mt-2">
+              <a [href]="dealerData.bankAttachments[0].s3path" target="_blank" class="btn btn-primary" type="button">
+                <span>View Cheque / Passbook Front</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="card mb-2" *ngIf="capabilities && capabilities.canApprovePartner">
         <div class="font-weight-bold">Actions</div>
         <div class="d-flex mt-2">
           <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveDealer(dealerData.uid)">
@@ -185,7 +230,7 @@
           </div>
 
           <div class="btn-redirect mr-2 pointer-cursor" (click)="suspendDealer(dealerData.uid)">
-            Suspend
+            Redirect
           </div>
 
           <div class="btn-reject pointer-cursor" (click)="rejectDealer(dealerData.uid)">

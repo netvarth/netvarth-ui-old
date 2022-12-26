@@ -28,6 +28,7 @@ export class ViewDealerComponent implements OnInit {
   ApprovedPendingloans: any;
   totalApprovedPendingCount: any = 0;
   RejectedLoans: any;
+  totalLoanAmount: any = 0;
   fromDate: any;
   toDate: any;
   RejectedLoansCount: any = 0;
@@ -352,6 +353,10 @@ export class ViewDealerComponent implements OnInit {
       this.totalLoansCount = data.length;
       this.getPieChartData();
 
+    })
+    this.cdlservice.getLoansCountByFilter(api_filter).subscribe((data: any) => {
+      this.totalLoansCount = data.length;
+      this.getPieChartData();
     })
   }
 

@@ -47,6 +47,7 @@ export class DealerApproveComponent implements OnInit {
   state: string;
   pincode: string;
   dealerData: any;
+  capabilities: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -69,6 +70,7 @@ export class DealerApproveComponent implements OnInit {
         }
       }
     })
+    this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user)
   }
   personalDetails() {
 
@@ -100,7 +102,7 @@ export class DealerApproveComponent implements OnInit {
       }
     });
     dialogRef.afterClosed().subscribe(
-    (data) => {
+      (data) => {
         if (data) {
           this.cdlservice.approveDealer(id, data).subscribe(() => {
             this.snackbarService.openSnackBar("Dealer Approved Successfully");
