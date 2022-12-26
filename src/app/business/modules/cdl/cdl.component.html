@@ -442,10 +442,19 @@
       <div class="card loans-card">
         <div class="mt-2">
           <div *ngIf="users">
-            <div class="loan-data">
-              <div>
+            <div class="d-flex justify-content-between">
+              <div class="d-flex align-items-center">
                 <span class="card-title">Users</span>
               </div>
+              <div class="col-md-4 text-right no-padding-small">
+                <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="userAvailableStatus"
+                  (onChange)="userAvailableStatusChange($event)" [(ngModel)]="statusDisplayName"
+                  optionLabel="displayName" dataKey="name">
+                </p-dropdown>
+              </div>
+            </div>
+            <div class="loan-data">
+
               <p-table [responsive]="true" responsiveLayout="scroll" [value]="users" [paginator]="true" [rows]="5"
                 [resizableColumns]="true" [autoLayout]="true">
                 <ng-template pTemplate="header">
@@ -478,6 +487,11 @@
                         {{user.userRoles[0].roleName}}
                       </span>
                     </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="7">No Users Found.</td>
                   </tr>
                 </ng-template>
               </p-table>

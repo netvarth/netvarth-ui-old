@@ -20,6 +20,11 @@ export class CdlComponent implements OnInit {
   statusList = ['all', 'approved', 'redirected', 'rejected'];
   statusLoansList: any;
   loanStatus = projectConstantsLocal.LOAN_STATUS;
+  userAvailableStatus = [
+    { name: 'Online', displayName: 'Online' },
+    { name: 'Away', displayName: 'Away' },
+    { name: 'NotAvailable', displayName: 'Not Available' },
+  ];
   allLoansCount: any;
   dealers: any;
   customersList: any;
@@ -249,7 +254,8 @@ export class CdlComponent implements OnInit {
 
 
   getUsers() {
-    this.cdlservice.getUsers().subscribe((data: any) => {
+    let params = 'sort_userAvailable=asc';
+    this.cdlservice.getUsersByOrder(params).subscribe((data: any) => {
       this.users = data;
     });
   }
@@ -353,6 +359,13 @@ export class CdlComponent implements OnInit {
   }
 
 
+  userAvailableStatusChange(event) {
+    let api_filter = {}
+    api_filter['userAvailable-eq'] = event.value.name;
+    this.getUsersByFilter(api_filter);
+  }
+
+
   branchChange(event) {
     console.log(this.statusDisplayName)
     let api_filter = {}
@@ -399,6 +412,14 @@ export class CdlComponent implements OnInit {
       if (data) {
         this.loans = data;
         this.getBarChartData();
+      }
+    });
+  }
+
+  getUsersByFilter(api_filter) {
+    this.cdlservice.getUsersByFilter(api_filter).subscribe((data: any) => {
+      if (data) {
+        this.users = data;
       }
     });
   }

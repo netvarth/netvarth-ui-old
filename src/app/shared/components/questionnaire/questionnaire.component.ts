@@ -1541,6 +1541,11 @@ if(value=== 'edit'){
         } else {
           let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: result.repeatItem.item, price: result.repeatItem.price, columnItem: result.repeatItem.columnItem }
           this.itemArray.push(dummyArray)
+
+          // let items = dummyArray.columnItem[0].answer.dataGridList[0].dataGridListColumn;
+          // for (let i = 0; i < items.length; i++) {
+          //   items[i].quantity = items[i].quantity + 1;
+          // }
         
           if (this.itemArray) {
             this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);

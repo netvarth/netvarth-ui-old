@@ -215,6 +215,11 @@ export class CreateComponent implements OnInit {
               this.createLoan.controls.productsubcategory.setValue(this.loanData.productSubCategoryId);
               this.productSubCategoryId = this.loanData.productSubCategoryId;
             }
+
+            if (this.productCategoryId && this.productSubCategoryId) {
+              console.log("Coming to Products")
+              this.getLoanProducts(this.productCategoryId, this.productSubCategoryId)
+            }
             if (this.loanData && this.loanData.loanProduct && this.loanData.loanProduct.id) {
               this.createLoan.controls.loanproduct.setValue(this.loanData.loanProduct.id);
             }
@@ -296,9 +301,9 @@ export class CreateComponent implements OnInit {
             }
 
             if (this.loanData && this.loanData.loanProducts && this.loanData.loanProducts[0]) {
-              this.loanData.loanProducts.map((data) => {
-                this.SelectedloanProducts.push({ "id": data.id, "categoryId": data.categoryId, "typeId": data.typeId })
-              });
+              // this.loanData.loanProducts.map((data) => {
+              //   this.SelectedloanProducts.push(data)
+              // });
               console.log("this.SelectedloanProducts", this.SelectedloanProducts);
             }
 
@@ -499,10 +504,8 @@ export class CreateComponent implements OnInit {
       this.customerDetailsPanel = false;
       this.kycDetailsPanel = true;
     }
-
-    if (this.productCategoryId && this.productSubCategoryId) {
-      this.getLoanProducts(this.productCategoryId, this.productSubCategoryId)
-    }
+    console.log("Coming to Products outside", this.productCategoryId, this.productSubCategoryId)
+    
   }
 
 

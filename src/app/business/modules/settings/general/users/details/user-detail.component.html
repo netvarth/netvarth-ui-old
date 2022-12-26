@@ -228,10 +228,9 @@
                                         <div class="form-group">
                                             <span class="p-float-label">
                                                 <p-dropdown #role [options]="roles" optionLabel="displayName"
-                                                    optionValue="roleId" dropdownIcon="fa fa-caret-down"
+                                                   dataKey="roleId" optionValue="roleId" dropdownIcon="fa fa-caret-down"
                                                     formControlName="selectedrole" [autoDisplayFirst]="false"
-                                                    (onChange)="onRoleSelect($event.value)" [(ngModel)]="selectedRole"
-                                                    dataKey="roleId">
+                                                    (onChange)="onRoleSelect($event.value)" >
                                                 </p-dropdown>
                                                 <label for="role">CDL Role</label>
                                             </span>

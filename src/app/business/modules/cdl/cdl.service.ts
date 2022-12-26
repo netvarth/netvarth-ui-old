@@ -50,6 +50,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getUsersByOrder(params) {
+    const url = 'provider/user?' + params;
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getLoanTypeList() {
     const url = 'provider/loanapplication/type';
     return this.servicemeta.httpGet(url, null);
@@ -64,6 +69,11 @@ export class CdlService {
 
   getLoansByFilter(filter = {}) {
     const url = 'provider/loanapplication';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  getUsersByFilter(filter = {}) {
+    const url = 'provider/user';
     return this.servicemeta.httpGet(url, null, filter);
   }
 
