@@ -65,7 +65,7 @@ export class DealerComponent implements OnInit {
     this.getDealers();
   }
   goBack() {
-    this.router.navigate(['provider', 'cdl']);
+    this.router.navigate(['provider', 'providercdl']);
     // this.location.back();
   }
 

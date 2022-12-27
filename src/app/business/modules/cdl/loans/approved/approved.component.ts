@@ -145,7 +145,7 @@ export class ApprovedComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['provider', 'cdl']);
+    this.router.navigate(['provider', 'providercdl']);
   }
 
 

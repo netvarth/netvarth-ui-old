@@ -33,7 +33,7 @@ export class PhomeComponent implements OnInit {
                   setTimeout(() => {
                     if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
                       if (this.lStorageService.getitemfromLocalStorage('cdl')) {
-                        router.navigate(['provider', 'cdl']);
+                        router.navigate(['provider', 'providercdl']);
                       } else if (settings.appointment) {
                         router.navigate(['provider', 'appointments']);
                       } else if (settings.waitlist) {

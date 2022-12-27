@@ -995,7 +995,7 @@ export class SharedFunctions {
         (settings: any) => {
           if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
             if (this.lStorageService.getitemfromLocalStorage('cdl')) {
-              this.router.navigate(['provider', 'cdl']);
+              this.router.navigate(['provider', 'providercdl']);
             } else if (settings.appointment) {
               this.router.navigate(['provider', 'appointments']);
             } else if (settings.waitlist) {

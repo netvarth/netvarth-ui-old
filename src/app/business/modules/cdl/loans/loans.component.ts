@@ -231,7 +231,7 @@ export class LoansComponent implements OnInit {
 
 
   goBack() {
-    this.router.navigate(['provider', 'cdl']);
+    this.router.navigate(['provider', 'providercdl']);
     // this.location.back();
   }
 

@@ -187,7 +187,7 @@
     <tr class="text-left">
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <b>Loan Type</b>
+          <b>I - Loan Type</b>
         </div>
       </td>
       <td style="width:50%">
@@ -198,7 +198,7 @@
         </div>
       </td>
     </tr>
-    <tr class="text-left">
+    <!-- <tr class="text-left">
       <td style="width:50%">
         <div class="text-normal mx-1">
           <b>Loan Category</b>
@@ -211,7 +211,7 @@
           </span>
         </div>
       </td>
-    </tr>
+    </tr> -->
 
     <!-- <tr class="text-left">
       <td style="width:50%">
@@ -230,47 +230,184 @@
     <tr class="text-left">
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <b>Loan Products</b>
+          <b>Purpose of Loan - Purchase of</b>
         </div>
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
           <span *ngIf="loanData && loanData.loanProducts && loanData.loanProducts.length>0">
-            <span *ngFor="let item of loanData.loanProducts">{{item.productName}},</span>
-          </span>
-        </div>
-      </td>
-    </tr>
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <b>Amount sanctioned/limit</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.sanctionedAmount">
-            {{loanData.sanctionedAmount}}
-          </span>
-        </div>
-      </td>
-    </tr>
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <b>Loan Tenure</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <span
-            *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.minDuration && loanData.loanScheme.maxDuration">
-            {{loanData.loanScheme.minDuration}} - {{loanData.loanScheme.maxDuration}} months
+            <span *ngFor="let item of loanData.loanProducts;let last=last">{{item.productName}}<span
+                *ngIf="!last">,</span></span>
           </span>
         </div>
       </td>
     </tr>
 
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Product Value/Quoted Amount</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.invoiceAmount">
+            {{loanData.invoiceAmount}}/-
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Down Payment (If any)</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.downpaymentAmount">
+            {{loanData.downpaymentAmount}}/-
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Loan Amount sanctioned/limit (In Rupees)</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.sanctionedAmount">
+            {{loanData.sanctionedAmount}}/-
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>II - Total Interest charged during entire Loan tenor (In Rupees)</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.sanctionedAmount">
+            {{loanData.sanctionedAmount}}/-
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>III - Other upfront charges;</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.sanctionedAmount">
+            -
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Insurance Charges (In Rupees)</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.sanctionedAmount">
+            245 /-
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Processing Fees (Inclusive of GST) (In Rupees)</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.sanctionedAmount">
+            400 /-
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Other Charges</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.sanctionedAmount">
+            0
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>IV - Net Disbursed Amount</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.sanctionedAmount">
+            0
+          </span>
+        </div>
+      </td>
+    </tr>
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Tenure of Loan (In Months)</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.noOfEmi">
+            {{loanData.noOfEmi}} Months
+          </span>
+        </div>
+      </td>
+    </tr>
+
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Number of Instalments of repayment - Months</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.noOfEmi">
+            {{loanData.noOfEmi}}
+          </span>
+        </div>
+      </td>
+    </tr>
     <tr class="text-left">
       <td style="width:50%">
         <div class="text-normal mx-1">
@@ -304,7 +441,7 @@
     <tr class="text-left">
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <b>Security</b>
+          <b>EMI-Installment Amount (Monthly)</b>
         </div>
       </td>
       <td style="width:50%">
@@ -316,45 +453,16 @@
       </td>
     </tr>
 
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <b>Installment Amount (Monthly)</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.emiPaidAmountMonthly">
-            {{loanData.emiPaidAmountMonthly}}
-          </span>
-        </div>
-      </td>
-    </tr>
 
     <tr class="text-left">
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <b>Insurance Premium</b>
+          <b>Advance EMI if any</b>
         </div>
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            Daily
-          </span> -->
-        </div>
-      </td>
-    </tr>
-
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <b>Advance EMI</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.noOfAdvanceEmi">
+          <span *ngIf="loanData && loanData.noOfAdvanceEmi!=0">
             {{loanData.noOfAdvanceEmi}}
           </span>
         </div>
