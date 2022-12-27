@@ -359,11 +359,11 @@ export class CdlComponent implements OnInit {
   }
 
 
-  userAvailableStatusChange(event) {
-    let api_filter = {}
-    api_filter['userAvailable-eq'] = event.value.name;
-    this.getUsersByFilter(api_filter);
-  }
+  // userAvailableStatusChange(event) {
+  //   let api_filter = {}
+  //   api_filter['userAvailable-eq'] = event.value.name;
+  //   this.getUsersByFilter(api_filter);
+  // }
 
 
   branchChange(event) {
@@ -416,13 +416,13 @@ export class CdlComponent implements OnInit {
     });
   }
 
-  getUsersByFilter(api_filter) {
-    this.cdlservice.getUsersByFilter(api_filter).subscribe((data: any) => {
-      if (data) {
-        this.users = data;
-      }
-    });
-  }
+  // getUsersByFilter(api_filter) {
+  //   this.cdlservice.getUsersByFilter(api_filter).subscribe((data: any) => {
+  //     if (data) {
+  //       this.users = data;
+  //     }
+  //   });
+  // }
 
   loanDetails(data) {
     this.router.navigate(['provider', 'cdl', 'loans', data]);
