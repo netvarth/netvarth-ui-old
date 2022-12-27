@@ -72,7 +72,7 @@ const routes: Routes = [
       { path: 'tasktemplate', loadChildren: () => import('./modules/crm/tasks/tasktemplate/tasktemplate.module').then(m => m.TasktemplateModule) },
       { path: 'leadtemplate', loadChildren: () => import('./modules/crm/leads/leadtemplate/leadtemplate.module').then(m => m.LeadtemplateModule) },
       // { path: 'crm', loadChildren: () => import('./modules/crm/crm.module').then(m => m.crmModule) },
-      { path: 'providercdl', loadChildren: () => import('./modules/cdl/cdl.module').then(m => m.CdlModule) },
+      { path: 'cdl', loadChildren: () => import('./modules/cdl/cdl.module').then(m => m.CdlModule) },
       // { path: 'dl', loadChildren: () => import('./modules/doctors/dl.module').then(m => m.DlModule) },
       // { path: 'tl', loadChildren: () => import('./modules/teachers/tl.module').then(m => m.TlModule) },
       { path: 'branches', loadChildren: () => import('./modules/branches/branches.module').then(m => m.BranchesModule) },
