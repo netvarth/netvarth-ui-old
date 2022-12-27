@@ -23,7 +23,7 @@ export class CdlComponent implements OnInit {
   userAvailableStatus = [
     { name: 'Online', displayName: 'Online' },
     { name: 'Away', displayName: 'Away' },
-    { name: 'NotAvailable', displayName: 'Not Available' },
+    { name: 'NotAvailable', displayName: 'Not Available' }
   ];
   allLoansCount: any;
   dealers: any;
