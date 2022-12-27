@@ -50,8 +50,8 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
-  getUsersByOrder(params) {
-    const url = 'provider/user?' + params;
+  getUsersByOrder() {
+    const url = 'provider/user';
     return this.servicemeta.httpGet(url, null);
   }
 

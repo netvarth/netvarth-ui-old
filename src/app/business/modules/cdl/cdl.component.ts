@@ -254,8 +254,8 @@ export class CdlComponent implements OnInit {
 
 
   getUsers() {
-    let params = 'sort_userAvailable=asc';
-    this.cdlservice.getUsersByOrder(params).subscribe((data: any) => {
+    // let params = 'sort_userAvailable=asc';
+    this.cdlservice.getUsersByOrder().subscribe((data: any) => {
       this.users = data;
     });
   }
