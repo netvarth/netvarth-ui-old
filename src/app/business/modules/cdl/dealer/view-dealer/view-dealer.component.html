@@ -49,7 +49,7 @@
           </div>
         </div>
 
-        <div class="col-md-4 my-1 no-padding-small"  *ngIf="partnerLeadsCount>0">
+        <div class="col-md-4 my-1 no-padding-small" *ngIf="partnerLeadsCount>0">
           <div class="dashboard-card text-center border pointer-cursor px-3">
             <div class="d-flex">
               <div>
@@ -160,6 +160,11 @@
                       <td style="width: 50%;" class="details-title">Location</td>
                       <th style=" width: 50%;" class="details-sub-title">
                         {{dealerData.partnerState}},{{dealerData.partnerPin}}</th>
+                    </tr>
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.branch && dealerData.branch.branchName">
+                      <td style="width: 50%;" class="details-title">Branch</td>
+                      <th style=" width: 50%;" class="details-sub-title">
+                        {{dealerData.branch.branchName}}</th>
                     </tr>
                     <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerName">
                       <td style="width: 50%;" class="details-title">Dealer Store Name</td>
