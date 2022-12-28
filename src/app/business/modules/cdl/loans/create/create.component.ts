@@ -506,7 +506,7 @@ export class CreateComponent implements OnInit {
       this.kycDetailsPanel = true;
     }
     console.log("Coming to Products outside", this.productCategoryId, this.productSubCategoryId)
-    
+
   }
 
 
@@ -1638,31 +1638,36 @@ export class CreateComponent implements OnInit {
   }
 
   verifyEmail() {
-    if (this.createLoan.controls.email.value && this.createLoan.controls.email.value != '') {
-      let can_remove = false;
-      const dialogRef = this.dialog.open(OtpVerifyComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          type: 'Email',
-          id: this.loanId,
-          email: this.createLoan.controls.email.value
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
-        if (result && result.msg == "success") {
-          this.emailverification = true
-          this.snackbarService.openSnackBar("Email Id Verified");
-        }
-      });
-      return can_remove;
+    if (this.createLoan.controls.email.value.includes('@') && this.createLoan.controls.email.value.includes('.')) {
+      if (this.createLoan.controls.email.value && this.createLoan.controls.email.value != '') {
+        let can_remove = false;
+        const dialogRef = this.dialog.open(OtpVerifyComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+          disableClose: true,
+          data: {
+            type: 'Email',
+            id: this.loanId,
+            email: this.createLoan.controls.email.value
+          }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(result);
+          if (result && result.msg == "success") {
+            this.emailverification = true
+            this.snackbarService.openSnackBar("Email Id Verified");
+          }
+        });
+        return can_remove;
+      }
+      else {
+        this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+      }
     }
     else {
       this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
-
     }
+
 
   }
 
