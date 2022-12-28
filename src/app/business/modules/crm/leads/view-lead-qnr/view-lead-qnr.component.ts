@@ -943,6 +943,8 @@ export class ViewLeadQnrComponent implements OnInit {
     this.questionaire = {};
     this.providerServices.getActiveQuestionaire(this.leadInfo.uid).subscribe(
       (questionaire: any) => {
+        console.log('questionaire',questionaire)
+        console.log('this.leadInfo.questionnaires',this.leadInfo.questionnaires)
         this.questionaire = questionaire;
         if (this.questionaire.questionAnswers) {
           this.questionAnswers = this.questionaire.questionAnswers;

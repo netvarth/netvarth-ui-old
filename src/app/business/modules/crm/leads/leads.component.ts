@@ -32,7 +32,10 @@ export class LeadsComponent implements OnInit {
     totalCnt: 0,
     perPage: this.crmService.PERPAGING_LIMIT
   };
-
+  first_name = Messages.FIRST_NAME_CAP;
+  last_name = Messages.LAST_NAME_CAP;
+  first_name_Assignee=Messages.FIRST_NAME_CAP;
+  last_name_Assignee=Messages.LAST_NAME_CAP;
   filter = {
     status: '',
     category: '',
@@ -43,7 +46,13 @@ export class LeadsComponent implements OnInit {
     check_in_end_date: null,
     check_in_start_date_LoanSanction:null,
     check_in_end_date_LoanSanction:null,
-    page: 1
+    check_in_start_date_RejectedLoan:null,
+    check_in_end_date_RejectedLoan:null,
+    page: 1,
+    first_name:'',
+    last_name:'',
+    first_name_Assignee:'',
+    last_name_Assignee:''
   };
   filters: any = {
     'status': false,
@@ -54,7 +63,13 @@ export class LeadsComponent implements OnInit {
     'check_in_start_date': false,
     'check_in_end_date': false,
     'check_in_start_date_LoanSanction':false,
-    'check_in_end_date_LoanSanction':false
+    'check_in_end_date_LoanSanction':false,
+    'check_in_start_date_RejectedLoan':false,
+    'check_in_end_date_RejectedLoan':false,
+    'first_name':false,
+    'last_name ':false,
+    'first_name_Assignee':false,
+    'last_name_Assignee':false
   };
 
   api_loading = true;
@@ -63,13 +78,16 @@ export class LeadsComponent implements OnInit {
   filterapplied: boolean;
   endminday: any;
   endmindayLoanSanction:any;
+  endmindayLoanReject:any;
   maxday: any;
   maxdayLoanSanction:any;
+  maxdayLoanReject:any;
   server_date: any;
   tomorrowDate: Date;
   yesterdayDate: Date;
   endmaxday: Date;
   endmaxdayLoanSanction:Date;
+  endmaxdayLoanReject:Date;
   filter_sidebar: boolean;
   bStatusTableHead: boolean;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
@@ -86,7 +104,6 @@ export class LeadsComponent implements OnInit {
     private dialog: MatDialog,
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
-      // console.log('qparams',qparams)
       if (qparams && qparams.type) {
         this.type = qparams.type;
       }
@@ -126,6 +143,7 @@ export class LeadsComponent implements OnInit {
           const filter = _this.setFilter();
           _this.getLeadsCount(filter).then(
             (count) => {
+              console.log('count',count)
               if (count > 0) {
                 _this.getLeads(filter);
               } else {
@@ -154,6 +172,7 @@ export class LeadsComponent implements OnInit {
       _this.crmService.getTotalLeadCount(filter)
         .subscribe(
           data => {
+            console.log('totalcount',data)
             _this.pagination.totalCnt = data;
             this.config.totalItems = data;
             resolve(data);
@@ -220,16 +239,30 @@ export class LeadsComponent implements OnInit {
     if(this.filter && this.filter.check_in_end_date_LoanSanction && this.filter.check_in_end_date_LoanSanction !=null){
       filter['sanctionedDate-le'] = moment(this.filter.check_in_end_date_LoanSanction).format("YYYY-MM-DD");
     }
-    // filter['status-eq']=24;
-    // filter['isRejected-eq']=false;
-    // filter['isSanctioned-eq']=true;
-
+    if (this.filter && this.filter.first_name && this.filter.first_name !== '') {
+      filter['customerFirstName-eq'] = this.filter.first_name;
+    }
+    if (this.filter && this.filter.last_name && this.filter.last_name !== '') {
+      filter['customerLastName-eq'] = this.filter.last_name;
+    }
+    if (this.filter && this.filter.first_name_Assignee && this.filter.first_name_Assignee !== '') {
+      filter['assigneeFirstName-eq'] = this.filter.first_name_Assignee;
+    }
+    if (this.filter && this.filter.last_name_Assignee && this.filter.last_name_Assignee !== '') {
+      filter['assigneeLastName-eq'] = this.filter.last_name_Assignee;
+    }
     if(this.type){
       if(this.type==='Rejected'){
         if(this.dataId){
-          // filter['status-eq'] = this.dataId;
           filter['isRejected-eq']= true;
-          filter['sort_lastStatusUpdatedDate']='dsc'
+          filter['sort_lastStatusUpdatedDate']='dsc';
+          if(this.filter && this.filter.check_in_start_date_RejectedLoan && this.filter.check_in_start_date_RejectedLoan !=null){
+            filter['rejectDate-ge']=moment(this.filter.check_in_start_date_RejectedLoan).format("YYYY-MM-DD");
+          }
+          if(this.filter && this.filter.check_in_end_date_RejectedLoan && this.filter.check_in_end_date_RejectedLoan !=null){
+            filter['rejectDate-le']=moment(this.filter.check_in_end_date_RejectedLoan).format("YYYY-MM-DD");
+          }
+          filter['sort_rejectDate']='dsc'
         }
         if(this.tempaltename){
           this.headerName = this.tempaltename;
@@ -261,50 +294,6 @@ export class LeadsComponent implements OnInit {
         }
       }
     }
-
-    // switch (this.type) {
-    //   // case this.type !== 'Rejected':
-    //   //   filter['statusName-eq'] = this.dataStatus;
-    //   //   filter['isRejected-eq']= false;
-    //   //   this.bStatusTableHead = true;
-    //   //   this.headerName = this.tempaltename;
-    //   //   break;
-    //   // case this.type === 'Rejected':
-    //   //   filter['statusName-eq'] = this.dataStatus;
-    //   //   filter['isRejected-eq']= true;
-    //   //   this.headerName = this.tempaltename;
-    //   //   // this.bStatusTableHead = true;
-    //   //   break;
-    //   // case 'SALESVERIFICATION':
-    //   //   filter['statusName-eq'] = 'Credit Score Generated';
-    //   //   this.headerName = 'Sales  Verification';
-    //   //   break;
-    //   // case 'DOCUMENTUPLOD':
-    //   //   filter['statusName-eq'] = 'Sales Verified';
-    //   //   this.bStatusTableHead = true;
-    //   //   this.headerName = 'Login';
-    //   //   break;
-    //   // case 'LOGIN':
-    //   //   filter['statusName-eq'] = 'Login';
-    //   //   this.headerName = 'Login Verification';
-    //   //   break;
-    //   // case 'CreditRecommendation':
-    //   //   filter['statusName-eq'] = 'Login Verified';
-    //   //   this.headerName = 'Credit Recommendation';
-    //   //   break;
-    //   // case 'LoanSanction':
-    //   //   filter['statusName-eq'] = 'Credit Recommendation';
-    //   //   this.headerName = 'Loan Sanction';
-    //   //   break;
-    //   // case 'LoanDisbursement':
-    //   //   filter['statusName-eq'] = 'Loan Sanction';
-    //   //   this.headerName = 'Loan Disbursement';
-    //   //   break;
-    //   // case 'Rejected':
-    //     // filter['statusName-eq'] = 'rejected';
-    //     // this.headerName = 'Rejected';
-    //     // break;
-    // }
     return filter;
   }
   /**
@@ -313,10 +302,6 @@ export class LeadsComponent implements OnInit {
    */
   openLead(leadUID) {
     console.log('leadUID',leadUID)
-    // if (this.type === 'LoanDisbursement') {
-    //   return false;
-    // }
-    // || this.type==='Loan Sanction' this.type === 'Rejected'  ||
     if ( this.type==='Loan Application Verified') {
       return false;
     }
@@ -341,6 +326,7 @@ export class LeadsComponent implements OnInit {
   onChangeLocationSelect(event) {
     const _this = this;
     const value = event;
+    console.log('_this.locations',_this.locations[value])
     _this.selected_location = _this.locations[value];
     console.log(_this.selected_location);
     _this.leads = [];
@@ -374,6 +360,15 @@ export class LeadsComponent implements OnInit {
     } else {
       this.maxday = this.yesterdayDate;
     }
+    if(this.filter.check_in_start_date_RejectedLoan){
+      this.endmindayLoanReject= this.filter.check_in_start_date_LoanSanction;
+    }
+    if(this.filter.check_in_end_date_RejectedLoan){
+      this.maxdayLoanReject= this.filter.check_in_end_date_RejectedLoan
+    }
+    else{
+      this.maxdayLoanReject= this.yesterdayDate
+    }
     const filter = this.setFilter()
     this.getLeadsCount(filter);
     this.getLeads(filter);
@@ -399,7 +394,13 @@ export class LeadsComponent implements OnInit {
       check_in_start_date: false,
       check_in_end_date: false,
       check_in_end_date_LoanSanction:false,
-      check_in_start_date_LoanSanction:false
+      check_in_start_date_LoanSanction:false,
+      check_in_start_date_RejectedLoan:false,
+      check_in_end_date_RejectedLoan:false,
+      first_name: false,
+      last_name: false,
+      first_name_Assignee:false,
+      last_name_Assignee:false
     };
     this.filter = {
       status: '',
@@ -411,7 +412,13 @@ export class LeadsComponent implements OnInit {
       check_in_end_date: null,
       check_in_end_date_LoanSanction:null,
       check_in_start_date_LoanSanction:null,
-      page: 1
+      page: 1,
+      check_in_start_date_RejectedLoan:null,
+      check_in_end_date_RejectedLoan:null,
+      first_name: '',
+      last_name: '',
+      first_name_Assignee:'',
+      last_name_Assignee:''
     };
   }
 
@@ -432,6 +439,21 @@ export class LeadsComponent implements OnInit {
     else if(text==='loanSanction'){
       console.log("this.filter2", this.filter)
       if (this.filter.check_in_start_date_LoanSanction || this.filter.check_in_end_date_LoanSanction) {
+        this.filterapplied = true;
+      } else {
+        this.filterapplied = false;
+      }
+    }
+    else if(text==='rejected'){
+      console.log("this.filter3rejected", this.filter)
+      if (this.filter.check_in_start_date_RejectedLoan || this.filter.check_in_end_date_RejectedLoan) {
+        this.filterapplied = true;
+      } else {
+        this.filterapplied = false;
+      }
+    }
+    else if((text==='nameFilter' || 'nameFilterAssignee')){
+      if (this.filter.first_name || this.filter.last_name || this.filter.first_name_Assignee || this.filter.last_name_Assignee) {
         this.filterapplied = true;
       } else {
         this.filterapplied = false;

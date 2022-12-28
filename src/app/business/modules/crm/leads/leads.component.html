@@ -1,8 +1,16 @@
 <section class="clearfix">
   <div class="pull-left pad-10 mgn-lt-5 mgn-rt-5">
     <div class="dash-head"> <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor"
-        aria-hidden="true" (click)="goBack()"></i>
-      <span></span>&nbsp;&nbsp;&nbsp; <div style="color:#1D3E77 !important" *ngIf="headerName">{{headerName}}</div>
+        aria-hidden="true" (click)="goBack()"></i> &nbsp; &nbsp;
+      <div style="display: flex;gap:10px">
+        <div style="color:#1D3E77 !important" *ngIf="headerName">{{headerName}}</div>
+        <div style="color:#1D3E77 !important"
+          *ngIf="leads && leads.length && tempaltename && tempaltename==='Loan Disbursement'">
+          ({{leads.length}})</div>
+          <div style="color:#1D3E77 !important"
+          *ngIf="leads && leads.length===0 && tempaltename && tempaltename==='Loan Disbursement'">
+          ({{leads.length}})</div>
+      </div>
     </div>
   </div>
   <div class="pull-right">
@@ -58,9 +66,9 @@
                   <th class="head_color" *ngIf="bStatusTableHead">Status</th>
                   <th class="head_color" *ngIf="tempaltename==='Rejected'">Reject From</th>
                   <th class="head_color" *ngIf="tempaltename==='Rejected'">Reject Date</th>
-                  <th class="head_color" *ngIf="tempaltename !=='Rejected' && tempaltename !=='Loan Disbursement'">Last Updated On</th>
-                  <th class="head_color"
-                    *ngIf="tempaltename !=='Rejected' && tempaltename==='Loan Disbursement'">
+                  <th class="head_color" *ngIf="tempaltename !=='Rejected' && tempaltename !=='Loan Disbursement'">Last
+                    Updated On</th>
+                  <th class="head_color" *ngIf="tempaltename !=='Rejected' && tempaltename==='Loan Disbursement'">
                     Loan Sanction On</th>
                   <th class="head_color" *ngIf="tempaltename==='Rejected' && leads.length>0">Notes</th>
                 </tr>
@@ -97,9 +105,10 @@
                               <div class="card-body">
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filterDatepicker filter-li">
-                                    <input type="text" [(ngModel)]="filter.check_in_start_date"
-                                      [matDatepicker]="startpicker" #Fdate class="filterTextbox filter-textbox"
-                                      [max]="maxday" placeholder="Enter Start Date" (dateChange)="keyPressed('noLoanSanction')">
+                                    <input  type="text" [(ngModel)]="filter.check_in_start_date"
+                                      [matDatepicker]="startpicker" #Fdate class="form-control1 form-control1-solid form-control1-lg"
+                                      [max]="maxday" placeholder="Enter Start Date"
+                                      (dateChange)="keyPressed('noLoanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="startpicker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #startpicker></mat-datepicker>
@@ -107,8 +116,8 @@
                                 </div>
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filterDatepicker filter-li">
-                                    <input type="text" [(ngModel)]="filter.check_in_end_date"
-                                      [matDatepicker]="endpicker" #Fdate class="filterTextbox filter-textbox"
+                                    <input  type="text" [(ngModel)]="filter.check_in_end_date"
+                                      [matDatepicker]="endpicker" #Fdate  class="form-control1 form-control1-solid form-control1-lg"
                                       placeholder="Enter End Date" [min]="endminday" [max]="endmaxday"
                                       (dateChange)="keyPressed('noLoanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="endpicker">
@@ -119,7 +128,7 @@
                               </div>
                             </div>
                           </div>
-                          <!--new fiklter loan disbursment satrt-->
+                          <!--new filter loan disbursment satrt-->
                           <div class="card" *ngIf="tempaltename==='Loan Disbursement'">
                             <div class="card-header">
                               <h2 class="mb-0">
@@ -139,9 +148,10 @@
                               <div class="card-body">
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filterDatepicker filter-li">
-                                    <input type="text" [(ngModel)]="filter.check_in_start_date_LoanSanction"
-                                      [matDatepicker]="startpicker" #Fdateloan class="filterTextbox filter-textbox"
-                                      [max]="maxdayLoanSanction" placeholder="Enter Start Date" (dateChange)="keyPressed('loanSanction')">
+                                    <input   type="text" [(ngModel)]="filter.check_in_start_date_LoanSanction"
+                                      [matDatepicker]="startpicker" #Fdateloan  class="form-control1 form-control1-solid form-control1-lg"
+                                      [max]="maxdayLoanSanction" placeholder="Enter Start Date"
+                                      (dateChange)="keyPressed('loanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="startpicker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #startpicker></mat-datepicker>
@@ -149,10 +159,10 @@
                                 </div>
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filterDatepicker filter-li">
-                                    <input type="text" [(ngModel)]="filter.check_in_end_date_LoanSanction"
-                                      [matDatepicker]="endpicker" #Fdateloan class="filterTextbox filter-textbox"
-                                      placeholder="Enter End Date" [min]="endmindayLoanSanction" [max]="endmaxdayLoanSanction"
-                                      (dateChange)="keyPressed('loanSanction')">
+                                    <input  type="text" [(ngModel)]="filter.check_in_end_date_LoanSanction"
+                                      [matDatepicker]="endpicker" #Fdateloan  class="form-control1 form-control1-solid form-control1-lg"
+                                      placeholder="Enter End Date" [min]="endmindayLoanSanction"
+                                      [max]="endmaxdayLoanSanction" (dateChange)="keyPressed('loanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="endpicker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #endpicker></mat-datepicker>
@@ -161,7 +171,117 @@
                               </div>
                             </div>
                           </div>
+                          <div class="card" *ngIf="tempaltename==='Rejected'">
+                            <div class="card-header">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse"
+                                  data-target="#collapseDate5" aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-calendar-o"></i>
+                                    </div>
+                                    <span>&nbsp;Loan Rejected Date</span>
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseDate5" class="collapse in" data-parent="#accordion5">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filterDatepicker filter-li">
+                                    <input  type="text" [(ngModel)]="filter.check_in_start_date_RejectedLoan"
+                                      [matDatepicker]="startpickerRejected" #Fdateloan  class="form-control1 form-control1-solid form-control1-lg"
+                                      [max]="maxdayLoanReject" placeholder="Enter Start Date"
+                                      (dateChange)="keyPressed('rejected')">
+                                    <mat-datepicker-toggle matSuffix [for]="startpickerRejected">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #startpickerRejected></mat-datepicker>
+                                  </li>
+                                </div>
+                                <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filterDatepicker filter-li">
+                                    <input  type="text" [(ngModel)]="filter.check_in_end_date_RejectedLoan"
+                                      [matDatepicker]="endpickerLoanReject" #Fdateloan  class="form-control1 form-control1-solid form-control1-lg"
+                                      placeholder="Enter End Date" [min]="endmindayLoanReject"
+                                      [max]="endmaxdayLoanReject" (dateChange)="keyPressed('rejected')">
+                                    <mat-datepicker-toggle matSuffix [for]="endpickerLoanReject">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #endpickerLoanReject></mat-datepicker>
+                                  </li>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                           <!--new filter end---- -->
+                          <div class="card">
+                            <div class="card-header">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName6"
+                                  aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-user"></i>
+                                    </div>
+                                    <span>&nbsp;Customer Name</span>
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseName6" class="collapse in" data-parent="#accordion1">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filter-li">
+                                      <input (ngModelChange)="keyPressed('nameFilter')" autocomplete="off" type="text" #Ffname  class="form-control1 form-control1-solid form-control1-lg"
+                                      [(ngModel)]="filter.first_name" placeholder="Enter First Name">
+                                  </li>
+                                </div>
+                                <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filter-li">
+                                    <input (ngModelChange)="keyPressed('nameFilter')" type="text" #Flname  class="form-control1 form-control1-solid form-control1-lg"
+                                      [(ngModel)]="filter.last_name" [ngModelOptions]="{standalone: true}"
+                                      placeholder="Enter Last Name">
+                                  </li>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--employee anme start-->
+                          <div class="card">
+                            <div class="card-header">
+                              <h2 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseName7"
+                                  aria-expanded="false">
+                                  <div>
+                                    <div style="display: inline-block !important;">
+                                      <i class="fa fa-user"></i>
+                                    </div>
+                                    <span>&nbsp;Employee Name</span>
+                                  </div>
+                                  <i class="fa fa-angle-down"></i>
+                                </button>
+                              </h2>
+                            </div>
+                            <div id="collapseName7" class="collapse in" data-parent="#accordion1">
+                              <div class="card-body">
+                                <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filter-li">
+                                      <input (ngModelChange)="keyPressed('nameFilterAssignee')" autocomplete="off" type="text" #Ffname  class="form-control1 form-control1-solid form-control1-lg"
+                                      [(ngModel)]="filter.first_name_Assignee" placeholder="Enter First Name">
+                                  </li>
+                                </div>
+                                <div class="filterTextinput filter-text-input">
+                                  <li class="filterli filter-li">
+                                    <input (ngModelChange)="keyPressed('nameFilterAssignee')" type="text" #Flname  class="form-control1 form-control1-solid form-control1-lg"
+                                      [(ngModel)]="filter.last_name_Assignee" [ngModelOptions]="{standalone: true}"
+                                      placeholder="Enter Last Name">
+                                  </li>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!--employee name end-->
                         </ul>
                       </section>
                       <div class="filter-footer mt-1 mx-auto text-center" *ngIf="filterapplied === true">
