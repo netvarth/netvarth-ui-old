@@ -397,6 +397,7 @@ export class CreateComponent implements OnInit {
           this.bankData = data;
           console.log("this.bankData", this.bankData)
           if (this.bankData) {
+            this.bankDetailsSaved = true;
             this.createLoan.controls.bank.setValue(this.bankData.bankName);
             this.createLoan.controls.account.setValue(this.bankData.bankAccountNo);
             this.createLoan.controls.ifsc.setValue(this.bankData.bankIfsc);
@@ -1625,6 +1626,7 @@ export class CreateComponent implements OnInit {
               console.log(dataS3Url);
             });
         }
+        this.bankDetailsSaved = true;
         this.snackbarService.openSnackBar("Bank Details Saved Successfully")
 
       }), (error) => {
