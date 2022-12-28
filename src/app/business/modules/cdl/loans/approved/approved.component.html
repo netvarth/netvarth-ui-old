@@ -113,7 +113,9 @@
             *ngIf="loanData && loanData.createdDate">{{loanData.createdDate}}</span><br>
           <span class="font-weight-bold card-title">Purpose of Loan: </span>
           <span class="font-weight-bold card-small-font" *ngIf="loanData && loanData.loanProducts"><span
-              class="details-sub-title" *ngFor="let item of loanData.loanProducts">{{item.productName}},</span>
+              class="details-sub-title"
+              *ngFor="let item of loanData.loanProducts;let last=last">{{item.productName}}<span
+                *ngIf="!last">,</span></span>
             Purchase</span>
         </div><br>
         <div class="pointer-cursor" *ngIf="user.userType!= 2">
@@ -121,7 +123,7 @@
             <div class="bggrey my-2">
               <div>
                 <div class="fieldPadding">
-                  <div class="d-flex">
+                  <div class="d-lg-flex d-md-flex">
                     <div class="file">
                       <label (click)="invoiceAttach.click()">
                         Upload Invoice
@@ -167,8 +169,8 @@
         </div>
         <div class="card">
           <span class="font-weight-bold card-title">Duration</span><br>
-          <span class="font-weight-bold" *ngIf="loanData && loanData.loanScheme"><i class="fa fa-clock-o"
-              aria-hidden="true"></i>&nbsp;{{loanData.loanScheme.noOfRepayment}} Months</span>
+          <span class="font-weight-bold" *ngIf="loanData"><i class="fa fa-clock-o"
+              aria-hidden="true"></i>&nbsp;{{loanData.noOfEmi}} Months</span>
         </div>
       </div>
 
