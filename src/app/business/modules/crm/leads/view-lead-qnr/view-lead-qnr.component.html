@@ -149,12 +149,12 @@
           </div>
         </div>
       </div>
-      <!-- <div *ngIf="leadInfo.status.name==='Sales Verified'">
+      <div *ngIf="leadInfo.status.name==='Sales Verified'">
         <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
           <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
             (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"  [questionAnswers]="questionAnswers" [tempType]="tempType"></app-questionnaire>
         </ng-container>
-      </div> -->
+      </div>
       <div *ngIf="showQuestionnaire && questionaire" class="quest">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
           [uuid]="this.leadInfo.uid" (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)" [tempType]="tempType">
