@@ -148,7 +148,7 @@ export class CreateComponent implements OnInit {
   productCategoryId: any;
   productSubCategoryId: any;
   totalPaymentValue: number;
-  subventionLoan: any;
+  subventionLoan: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -480,7 +480,8 @@ export class CreateComponent implements OnInit {
       guarantorType: [null],
       guarantorName: [null],
       guarantorPhone: [null],
-      guarantorDob: [null]
+      guarantorDob: [null],
+      subventionLoan: [null]
     });
   }
 
@@ -785,7 +786,7 @@ export class CreateComponent implements OnInit {
       "remarks": this.createLoan.controls.remarks.value,
       "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
       "employee": this.mafilEmployee,
-      "subventionLoan": this.subventionLoan,
+      "subventionLoan": this.createLoan.controls.subventionLoan.value,
       "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [
         {
@@ -1473,7 +1474,7 @@ export class CreateComponent implements OnInit {
       "requestedAmount": this.createLoan.controls.loanamount.value,
       "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
       "employee": this.mafilEmployee,
-      "subventionLoan": this.subventionLoan,
+      "subventionLoan": this.createLoan.controls.subventionLoan.value,
       "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [
         {
