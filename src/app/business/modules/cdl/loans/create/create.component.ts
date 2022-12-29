@@ -148,6 +148,7 @@ export class CreateComponent implements OnInit {
   productCategoryId: any;
   productSubCategoryId: any;
   totalPaymentValue: number;
+  subventionLoan: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -238,6 +239,11 @@ export class CreateComponent implements OnInit {
             if (this.loanData && this.loanData.employee == false || this.loanData.employee == true) {
               this.createLoan.controls.employee.setValue(this.loanData.employee);
             }
+
+            if (this.loanData && this.loanData.subventionLoan == false || this.loanData.subventionLoan == true) {
+              this.createLoan.controls.subventionLoan.setValue(this.loanData.subventionLoan);
+            }
+
             if (this.loanData && this.loanData.employeeCode) {
               this.createLoan.controls.employeeCode.setValue(this.loanData.employeeCode);
             }
@@ -647,6 +653,10 @@ export class CreateComponent implements OnInit {
     console.log(this.mafilEmployee)
   }
 
+  subventionLoanStatus() {
+    this.subventionLoan = this.createLoan.controls.subventionLoan.value;
+  }
+
   resetErrors() {
 
   }
@@ -775,6 +785,7 @@ export class CreateComponent implements OnInit {
       "remarks": this.createLoan.controls.remarks.value,
       "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
       "employee": this.mafilEmployee,
+      "subventionLoan": this.subventionLoan,
       "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [
         {
@@ -1462,6 +1473,7 @@ export class CreateComponent implements OnInit {
       "requestedAmount": this.createLoan.controls.loanamount.value,
       "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
       "employee": this.mafilEmployee,
+      "subventionLoan": this.subventionLoan,
       "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [
         {
