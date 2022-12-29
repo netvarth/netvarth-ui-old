@@ -97,7 +97,13 @@ export class ApprovedComponent implements OnInit {
     this.getLoanData();
     if (this.loanData) {
       if (this.loanData.spInternalStatus == 'CreditApproved') {
-        this.router.navigate(['provider', 'cdl', 'loans', this.loanId]);
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            type: 'creditApproved',
+            uid: this.loanId
+          }
+        };
+        this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
       }
     }
   }

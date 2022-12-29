@@ -297,7 +297,7 @@
       <td style="width:50%">
         <div class="text-normal mx-1">
           <span *ngIf="loanData && loanData.sanctionedAmount">
-            {{loanData.sanctionedAmount}}/-
+            -
           </span>
         </div>
       </td>
@@ -426,90 +426,14 @@
     <tr class="text-left">
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <b>Periodicity of Interest Applications</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            Daily
-          </span>
-        </div>
-      </td>
-    </tr>
-
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <b>EMI-Installment Amount (Monthly)</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            Daily
-          </span>
-        </div>
-      </td>
-    </tr>
-
-
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <b>Advance EMI if any</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <span *ngIf="loanData && loanData.noOfAdvanceEmi!=0">
-            {{loanData.noOfAdvanceEmi}}
-          </span>
-        </div>
-      </td>
-    </tr>
-
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <b>Credit Insurance Amount</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            Daily
-          </span> -->
-        </div>
-      </td>
-    </tr>
-
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <b>Total Processing Fees (Inclusive of GST)</b>
-        </div>
-      </td>
-      <td style="width:50%">
-        <div class="text-normal mx-1">
-          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
-            Daily
-          </span> -->
-        </div>
-      </td>
-    </tr>
-
-    <tr class="text-left">
-      <td style="width:50%">
-        <div class="text-normal mx-1">
           <b>Upfront Fees Paid (non-refundable)</b>
         </div>
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
+          <span *ngIf="loanData && loanData.customer">
             0
-          </span> -->
+          </span>
         </div>
       </td>
     </tr>
@@ -522,12 +446,29 @@
       </td>
       <td style="width:50%">
         <div class="text-normal mx-1">
-          <!-- <span *ngIf="loanData && loanData.customer && loanData.customer.email">
+          <span *ngIf="loanData && loanData.customer">
             0
-          </span> -->
+          </span>
         </div>
       </td>
     </tr>
+
+
+    <tr class="text-left">
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <b>Cooling Off/Look up Period – Days</b>
+        </div>
+      </td>
+      <td style="width:50%">
+        <div class="text-normal mx-1">
+          <span *ngIf="loanData && loanData.noOfAdvanceEmi!=0">
+            3
+          </span>
+        </div>
+      </td>
+    </tr>
+
 
     <tr class="text-left">
       <td style="width:50%">
@@ -588,20 +529,22 @@
             stability in earning, repayment ability, overall customer yield, risk premium, nature and value of primary
             and collateral securities
             (if any), past repayment track records of the customers, external ratings of the customer, industry trends
-            etc.
+            etc.<br>
+            10. Nodal Grievance Redressal Officer for Digital Lending - Saroja Kumar Panda, Ph:0487 3050238.
+            email: crm@manappuram.com
             <div class="text-center">
               <h4><b><u>Declaration</u></b></h4>
             </div>
-            10.I/We declare that all the particulars and information given in the application form are true, correct and
+            11.I/We declare that all the particulars and information given in the application form are true, correct and
             complete and
             they shall form part and parcel of any loan/credit facility which MAFIL may decide to grant me/us.<br>
-            11. I/We undertake to inform MAFIL regarding change in my/our occupation/employment/residential address and
+            12. I/We undertake to inform MAFIL regarding change in my/our occupation/employment/residential address and
             provide any further information that the company may require.<br>
-            12. I/We confirm that there are no insolvency proceedings against me/us nor I/We ever been adjudicated,
+            13. I/We confirm that there are no insolvency proceedings against me/us nor I/We ever been adjudicated,
             insolvent and
             further confirm that I/We have read the brochure, and understood the terms & conditions applicable to this
             loan/credit facility.<br>
-            13. I/We hereby authorize & give consent to MAFIL to disclose without notice to me/us, information furnished
+            14. I/We hereby authorize & give consent to MAFIL to disclose without notice to me/us, information furnished
             by me/us
             in application form/related documents executed/or to be executed in relation to the facilities availed from
             MAFIL, to
@@ -611,11 +554,11 @@
             risk analysis,
             or for other related purposes that MAFIL may deem fit. I/We waive the privilege of Privacy & Privity of
             Contract.<br>
-            14. I/We confirm that I/We do not have any other credit facilities with any bank / financial institution
+            15. I/We confirm that I/We do not have any other credit facilities with any bank / financial institution
             other than
             those
             expressively mentioned above.<br>
-            15. I/We confirm that if I/We avail of any loan/credit facilities with any other bank / financial
+            16. I/We confirm that if I/We avail of any loan/credit facilities with any other bank / financial
             institution in the
             future,
             I/We will furnish the details to MAFIL immediately. I/We confirm in my/are name jointly or severally to the
@@ -623,14 +566,14 @@
             amount, If necessary. I/We confirm that the fund will be used for stated purpose and will not be used for
             speculative
             purpose. I/We confirm that we are resident Indians.<br>
-            16. I/We also understand that the sanction of loan/credit facility is subject to the execution of documents
+            17. I/We also understand that the sanction of loan/credit facility is subject to the execution of documents
             as per
             company's requirements.<br>
-            17. I/We agree that the company has right to make such enquiries about me as it/they think(s) fit, including
+            18. I/We agree that the company has right to make such enquiries about me as it/they think(s) fit, including
             various
             credit
             bureaus and other government authorities from time to time.<br>
-            18.<span *ngIf="declaration">{{declaration}}</span><br>
+            19.<span *ngIf="declaration">{{declaration}}</span><br>
           </div>
           <div class="d-flex justify-content-between">
             <div class="mt-5 mx-lg-5 mx-md-5">
