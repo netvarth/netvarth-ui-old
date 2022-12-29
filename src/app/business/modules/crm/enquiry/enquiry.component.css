@@ -209,10 +209,8 @@
   gap: 10px;
 }
 
-.astericColor {
+.astericColor{
   color: #f24949 !important;
-  font-size: large;
-  margin-top: -3px;
 }
 
 .errorClass {

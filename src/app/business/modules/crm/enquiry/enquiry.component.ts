@@ -281,6 +281,7 @@ export class enquiryComponent implements OnInit {
                 const manualError: string = 'Please give some valid input'
                 _this.snackbarService.openSnackBar(manualError, { 'panelClass': 'snackbarerror' });
                 _this.wordProcessor.apiErrorAutoHide(_this, error);
+                this.api_loading_SearchCustomer = false;
               }
             )
         })
@@ -363,6 +364,7 @@ export class enquiryComponent implements OnInit {
                 setTimeout(() => {
                   this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }, projectConstants.TIMEOUT_DELAY);
+                this.api_loading = false;
               })
           }
 

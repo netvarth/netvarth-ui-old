@@ -561,10 +561,10 @@ export class ViewLeadQnrComponent implements OnInit {
       
     } else if (serviceCall === 'InputFileUpload'){
       if(this.tempType ==='Loan Sanction'){
-
+        return false;
       }
       else if(this.tempType ==='Rejected'){
-
+        return false;
       }
       else{
           this.api_loading = true;
@@ -590,15 +590,20 @@ export class ViewLeadQnrComponent implements OnInit {
               if (file) {
                 if (applicant.imageMode === 'kyc1') {
                   _this.applicantsInfo[applicantIndex].validationIds[0].attachments.push(file[0]);
+                  this.updateKyc(serviceCall);
                 } else if (applicant.imageMode === 'kyc2') {
                   _this.applicantsInfo[applicantIndex].validationIds[1].attachments.push(file[0]);
+                  this.updateKyc(serviceCall);
                 } else if (applicant.imageMode === 'kyc3') {
                   _this.applicantsInfo[applicantIndex].validationIds[2].attachments.push(file[0]);
+                  this.updateKyc(serviceCall);
                 } else {
+                  console.log('_this.applicantsInfo[applicantIndex].otherAttachments',_this.applicantsInfo[applicantIndex].otherAttachments)
                   if (!_this.applicantsInfo[applicantIndex].otherAttachments) {
                     _this.applicantsInfo[applicantIndex].otherAttachments = [];
                   }
                   _this.applicantsInfo[applicantIndex].otherAttachments.push(file[0]);
+                  this.updateKyc(serviceCall);
                 }            
               }
             }
@@ -613,6 +618,7 @@ export class ViewLeadQnrComponent implements OnInit {
         (result)=> {
           fileToUpload[0]['driveId'] = result[0]['driveId'];
           delete fileToUpload[0]['action'];
+          console.log('fileToUpload[0]',fileToUpload[0])
           console.log("Result", result);
           _this.uploadAudioVideoKYC(result, fileToUpload[0]).then(() => {
             _this.api_loading = false;
@@ -978,11 +984,9 @@ export class ViewLeadQnrComponent implements OnInit {
       }
       this.crmService.addLeadNotes(this.leadInfo.uid, createNoteData).subscribe((response: any) => {
         this.notes = '';
-        setTimeout(() => {
-          this.initLead();
+        this.initLead();
           this.api_loadingNotes = false;
           this.remarksDisable = false;
-        }, projectConstants.TIMEOUT_DELAY);
         this.snackbarService.openSnackBar('Remarks added successfully');
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
