@@ -1,10 +1,12 @@
-<section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small consumer-profile" [ngClass]="theme">
+<section *ngIf="curtype=='consumer'" class="container no-padding myaccount no-padding-small consumer-profile"
+    [ngClass]="theme">
     <div class="content p0 see-pages cons-members">
 
         <div class="panel panel-default">
             <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                    <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true"></app-header>
+                    <app-header *ngIf="shared_functions.checkLogin()" [customId]="customId" [accountId]="accountId"
+                        [showHeaderAction]="true"></app-header>
                 </div>
             </div>
             <div class="panel-body no-padding">
@@ -18,25 +20,27 @@
                         <div class="card">
                             <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                             <form *ngIf="!loading" [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&
-                    onSubmit(editProfileForm.value)"
-                                class="ynw-common-form-nm" (keyup)="resetApiErrors()">
+                    onSubmit(editProfileForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                                 <div class="innercard">
                                     <div class="leftcard">
                                         <div class="form-group">
- 
+
                                             <div class="">
                                                 <label class="form-control-label">{{'First Name' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="first_name"
-                                                placeholder="{{'First Name' | translate}}" formControlName="first_name" autocomplete="off" />
+                                                    placeholder="{{'First Name' | translate}}"
+                                                    formControlName="first_name" autocomplete="off" />
                                             </div>
-                                            <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
                                                 [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
                                         {
                                         'required' : 'f_nameerror' | translate,
                                         'pattern' : 'alpha_nameerror' | translate
                                         })">
                                             </app-field-error-display>
-                                            <app-field-error-display [displayError]="true" *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
                                                 errorMsg="{{'f_nameerror' | translate}}">
                                             </app-field-error-display>
                                         </div>
@@ -44,44 +48,47 @@
                                             <div class="">
                                                 <label class="form-control-label">{{'Last Name' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="last_name"
-                                                    placeholder="{{'Last Name' | translate}}" formControlName="last_name" autocomplete="off" />
+                                                    placeholder="{{'Last Name' | translate}}"
+                                                    formControlName="last_name" autocomplete="off" />
                                             </div>
-                                            <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
                                                 [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
                                         {
                                         'required' : 'l_nameerror' | translate,
                                         'pattern' : 'alpha_nameerror' | translate
                                         })">
                                             </app-field-error-display>
-                                            <app-field-error-display [displayError]="true" *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
                                                 errorMsg="{{'lnameerror' | translate}}">
                                             </app-field-error-display>
-                                            
+
                                         </div>
                                         <div class="form-group">
                                             <div class="">
                                                 <label class="form-control-label">{{'Email' | translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="email" matInput
                                                     formControlName="email" placeholder="Email(user@xyz.com)"
-                                                    autocomplete="off" (keyup)="showConfrmEmail($event)" onpaste="return false;"
-                                                    oncopy="return false" oncut="return false" ondrag="return false"
-                                                    ondrop="return false" />
+                                                    autocomplete="off" (keyup)="showConfrmEmail($event)" />
+                                                <!-- onpaste="return false;" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" -->
                                             </div>
-    
-                                            <app-field-error-display [displayError]="true" *ngIf="emailerror != null && !fed_service.isFieldValid(editProfileForm,'email')"
+
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="emailerror != null && !fed_service.isFieldValid(editProfileForm,'email')"
                                                 errorMsg="{{'email_error' | translate }}">
-                                     
                                             </app-field-error-display>
                                         </div>
                                         <div class="form-group" *ngIf="confrmshow">
                                             <div class="">
-                                                <label class="form-control-label">{{'Re-enter Email' | translate}}</label>
+                                                <label class="form-control-label">{{'Re-enter Email' |
+                                                    translate}}</label>
                                                 <input type="text" class="form-control is-invalid" id="email1"
                                                     formControlName="email1" placeholder="Re-enter Email(user@xyz.com)"
-                                                    autocomplete="off" onpaste="return false;" oncopy="return false"
-                                                    oncut="return false" ondrag="return false" ondrop="return false" />
+                                                    autocomplete="off" />
                                             </div>
-                                            <app-field-error-display [displayError]="true" *ngIf="email1error != null && !fed_service.isFieldValid(editProfileForm,'email1')"
+                                            <app-field-error-display [displayError]="true"
+                                                *ngIf="email1error != null && !fed_service.isFieldValid(editProfileForm,'email1')"
                                                 errorMsg="{{'email_error' | translate }}">
                                             </app-field-error-display>
                                         </div>
@@ -92,20 +99,23 @@
                                                 <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
                                                 <mat-radio-button value="other">Other</mat-radio-button>
                                             </mat-radio-group>
-                                            <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
                                                 errorMsg="{{'gender_error' | translate}}">
                                             </app-field-error-display>
                                         </div>
-                                        <div class="form-group col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding picker-form-group">
+                                        <div
+                                            class="form-group col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding picker-form-group">
                                             <label class="form-control-label">{{'Date of Birth' | translate}}</label>
                                             <mat-form-field class="form-control">
-                                                <input matInput [matDatepicker]="picker" 
-                                                    #inputdob formControlName="dob" [max]="tday" [min]="minday"
-                                                    disabled class="nofocus" tabindex="-1" readonly>
+                                                <input matInput [matDatepicker]="picker" #inputdob formControlName="dob"
+                                                    [max]="tday" [min]="minday" disabled class="nofocus" tabindex="-1"
+                                                    readonly>
                                                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                                 <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                             </mat-form-field>
-                                            <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
+                                            <app-field-error-display
+                                                [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
                                                 errorMsg="{{'date_error' | translate}}">
                                             </app-field-error-display>
                                         </div>
@@ -114,24 +124,27 @@
                                         <div class="grayouter">
                                             <div class="form-group">
                                                 <label class="col-form-label">Phone #</label>
-                                                <span>{{countryCode}}</span><span> {{phonenoHolder}}</span>                                                                                       
-                                                    <!-- <a class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
+                                                <span>{{countryCode}}</span><span> {{phonenoHolder}}</span>
+                                                <!-- <a class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
                                                     (click)="redirectto('change-mobile', 'consumer')">
                                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                                     </a>                                    -->
-                                                <a class="pull-right"  class="link pointer-cursor mgn-lt-10" (click)="redirectto('change-mobile', 'consumer')">Change</a>
-                                               <!--  <ul class="info-lst">
+                                                <a class="pull-right" class="link pointer-cursor mgn-lt-10"
+                                                    (click)="redirectto('change-mobile', 'consumer')">Change</a>
+                                                <!--  <ul class="info-lst">
                                                     <li>{{edit_phone_no_cap}}</li>
                                                 </ul> -->
                                             </div>
                                             <div class="col-xs-12 no-padding optional">
-                                                <label><i class="fa fa-whatsapp" style="color:green"></i> Whatsapp #</label>
+                                                <label><i class="fa fa-whatsapp" style="color:green"></i> Whatsapp
+                                                    #</label>
                                                 <div class="disp-flex">
                                                     <div class="form-group no-margin">
                                                         <input type="text" (keypress)="isNumericSign($event)" matInput
-                                                            class="form-control input-group-text" id="countryCode_whtsap"
-                                                            placeholder="" formControlName="countryCode_whtsap"
-                                                            autocomplete="off" maxlength="5" style="width:65px">
+                                                            class="form-control input-group-text"
+                                                            id="countryCode_whtsap" placeholder=""
+                                                            formControlName="countryCode_whtsap" autocomplete="off"
+                                                            maxlength="5" style="width:65px">
                                                     </div>
                                                     <div class="form-group width-100">
                                                         <input type="text" (keypress)="isNumeric($event)" matInput
@@ -142,13 +155,15 @@
                                                 </div>
                                             </div>
                                             <div class=" col-xs-12 no-padding optional" *ngIf="!fromApp">
-                                                <label><i class="fa fa-telegram" style="color:#29b6f6;"></i> Telegram #</label>
+                                                <label><i class="fa fa-telegram" style="color:#29b6f6;"></i> Telegram
+                                                    #</label>
                                                 <div class="disp-flex">
                                                     <div class="form-group no-margin">
                                                         <input type="text" (keypress)="isNumericSign($event)" matInput
-                                                            class="form-control input-group-text" id="countryCode_telegram"
-                                                            placeholder="" formControlName="countryCode_telegram"
-                                                            autocomplete="off" maxlength="5" style="width:65px">
+                                                            class="form-control input-group-text"
+                                                            id="countryCode_telegram" placeholder=""
+                                                            formControlName="countryCode_telegram" autocomplete="off"
+                                                            maxlength="5" style="width:65px">
                                                     </div>
                                                     <div class="form-group width-100">
                                                         <input type="text" (keypress)="isNumeric($event)" matInput
@@ -156,31 +171,35 @@
                                                             formControlName="telegramnumber" autocomplete="off">
 
                                                     </div>
-                                                </div>                                     
+                                                </div>
                                             </div>
                                             <div class="clearfix"></div>
-                                      
+
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">{{update_btn}}</button>
+                                <button type="submit" mat-button [disabled]="!editProfileForm.valid"
+                                    class="cs-btn bt1">{{update_btn}}</button>
 
                                 <!-- <p class="error red mgn-up-20">
                                     If you would like to remove your account 
                                 </p> -->
                             </form>
                         </div>
-                        <div class="right-menu" >
+                        <div class="right-menu">
                             <div class="right-menu-header">{{related_links_cap}}</div>
                             <ul class="related-link">
-                                <li (click)="redirectto('change-password','consumer')" class="icon-password" *ngIf="!fromApp && !customId">
+                                <li (click)="redirectto('change-password','consumer')" class="icon-password"
+                                    *ngIf="!fromApp && !customId">
                                     {{change_password_cap}}</li>
-                                <li (click)="redirectto('change-mobile', 'consumer')" class="icon-mobile" *ngIf="!customId">
+                                <li (click)="redirectto('change-mobile', 'consumer')" class="icon-mobile"
+                                    *ngIf="!customId">
                                     {{change_mobile_cap}}</li>
                                 <li (click)="redirectto('members', 'consumer')" class="icon-members" *ngIf="!customId">
                                     {{family_members_cap}}</li>
-                                <li (click)="deactiveaccount('deactive', 'consumer')" style="padding-left: 0px;" *ngIf="customId">
-                                    <span ><i class="fa fa-trash" aria-hidden="true"></i></span>
+                                <li (click)="deactiveaccount('deactive', 'consumer')" style="padding-left: 0px;"
+                                    *ngIf="customId">
+                                    <span><i class="fa fa-trash" aria-hidden="true"></i></span>
                                     <span style="margin-left: 20px;">Delete Your Account</span>
                                 </li>
                             </ul>
@@ -189,35 +208,36 @@
                 </div>
             </div>
             <div class="panel-body no-padding web" *ngIf="!fromApp && !customLink">
-                    <div class="card component-card_1 mgn-up-10 mgn-lt-10">
-                            <div class="card-body">
-                                    <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
-                                    <span class="notistyle">Telegram Notifications </span>
-                                    <mat-slide-toggle [checked]="status" (change)="enableTelegram($event)"  [ngClass]="{'active': status}">
-                                    </mat-slide-toggle>
-                                    &nbsp; {{waitlist_statusstr}}
-                                    <!-- <mat-slide-toggle  class="badge badge-info notistyles" (change)="enableTelegram($event)">{{stat}}
+                <div class="card component-card_1 mgn-up-10 mgn-lt-10">
+                    <div class="card-body">
+                        <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
+                        <span class="notistyle">Telegram Notifications </span>
+                        <mat-slide-toggle [checked]="status" (change)="enableTelegram($event)"
+                            [ngClass]="{'active': status}">
+                        </mat-slide-toggle>
+                        &nbsp; {{waitlist_statusstr}}
+                        <!-- <mat-slide-toggle  class="badge badge-info notistyles" (change)="enableTelegram($event)">{{stat}}
                                     </mat-slide-toggle> -->
-                                            <!-- <span class="badge badge-info  notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
+                        <!-- <span class="badge badge-info  notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
                                             <span class="badge badge-info notistyles"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span> -->
-                            </div>
-                        </div>
+                    </div>
+                </div>
             </div>
             <div class="panel-body no-padding disply" *ngIf="!fromApp">
-                    <div class="card component-card_1 mgn-up-10 mgn-lt-10">
-                            <div class="card-body">
-                                    <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
-                                    <span class="notistyle">Telegram Notifications</span>
-                                    <!-- [checked]="onlinepresence_status" (change)="confirm_opsearchStatus($event)" -->
-                                    <mat-slide-toggle  [checked]="waitlist_statusstr" (change)="enableTelegram($event)">
-                                    </mat-slide-toggle>
-                                    &nbsp; {{waitlist_statusstr}}
-                                    <!-- <mat-slide-toggle  class="badge badge-info notistyles"*ngIf="status" (change)="enableTelegram($event)">{{stat}}
+                <div class="card component-card_1 mgn-up-10 mgn-lt-10">
+                    <div class="card-body">
+                        <span><img class="image" src="./assets/images/Asset2@300x(1).png" alt="Basic Plus"></span>
+                        <span class="notistyle">Telegram Notifications</span>
+                        <!-- [checked]="onlinepresence_status" (change)="confirm_opsearchStatus($event)" -->
+                        <mat-slide-toggle [checked]="waitlist_statusstr" (change)="enableTelegram($event)">
+                        </mat-slide-toggle>
+                        &nbsp; {{waitlist_statusstr}}
+                        <!-- <mat-slide-toggle  class="badge badge-info notistyles"*ngIf="status" (change)="enableTelegram($event)">{{stat}}
                                     </mat-slide-toggle> -->
-                                            <!-- <span class="badge badge-info notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
+                        <!-- <span class="badge badge-info notistyles" *ngIf="!status" (click)="enableTelegram('ENABLED')">Off</span>
                                             <span class="badge badge-info notistyles"*ngIf="status" (click)="enableTelegram('DISABLED')">On</span> -->
-                            </div>
-                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -226,7 +246,8 @@
 <section *ngIf="curtype!='consumer'" class="myaccount">
     <div class="card title-gb">
         <h5 class="mgn-up-10">
-            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Account
             Settings
         </h5>
     </div>
@@ -236,41 +257,44 @@
                 <div class="card">
                     <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
                     <form *ngIf="!loading" [formGroup]="editProfileForm" novalidate (ngSubmit)="editProfileForm.valid &&
-                    onSubmit(editProfileForm.value)"
-                        class="ynw-common-form-nm" (keyup)="resetApiErrors()">
+                    onSubmit(editProfileForm.value)" class="ynw-common-form-nm" (keyup)="resetApiErrors()">
                         <div class="innercard">
                             <div class="leftcard">
                                 <div class="form-group">
                                     <div class="">
                                         <label class="form-control-label">First Name</label>
-                                        <input type="text" class="form-control is-invalid" id="first_name" placeholder="First Name"
-                                            formControlName="first_name" autocomplete="off" />
+                                        <input type="text" class="form-control is-invalid" id="first_name"
+                                            placeholder="First Name" formControlName="first_name" autocomplete="off" />
                                     </div>
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'first_name')"
                                         [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'first_name',
                                         {
                                         'required' : 'First name is required',
                                         'pattern' : 'Only alphabets are allowed'
                                         })">
                                     </app-field-error-display>
-                                    <app-field-error-display [displayError]="true" *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
+                                    <app-field-error-display [displayError]="true"
+                                        *ngIf="fnameerror != null && !fed_service.isFieldValid(editProfileForm,'first_name')"
                                         [errorMsg]="fnameerror">
                                     </app-field-error-display>
                                 </div>
                                 <div class="form-group">
                                     <div class="">
                                         <label class="form-control-label">Last Name</label>
-                                        <input type="text" class="form-control is-invalid" id="last_name" placeholder="Last Name"
-                                            formControlName="last_name" autocomplete="off" />
+                                        <input type="text" class="form-control is-invalid" id="last_name"
+                                            placeholder="Last Name" formControlName="last_name" autocomplete="off" />
                                     </div>
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'last_name')"
                                         [errorMsgs]="fed_service.getErrorMessage(editProfileForm,'last_name',
                                         {
                                         'required' : 'Last name is required',
                                         'pattern' : 'Only alphabets are allowed'
                                         })">
                                     </app-field-error-display>
-                                    <app-field-error-display [displayError]="true" *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
+                                    <app-field-error-display [displayError]="true"
+                                        *ngIf="lnameerror != null && !fed_service.isFieldValid(editProfileForm,'last_name')"
                                         [errorMsg]="lnameerror">
                                     </app-field-error-display>
                                 </div>
@@ -279,9 +303,7 @@
                                         <label class="form-control-label">Email</label>
                                         <input type="text" class="form-control is-invalid" id="email"
                                             formControlName="email" placeholder="Email(user@xyz.com)" autocomplete="off"
-                                            (keyup)="showConfrmEmail($event)" onpaste="return false;"
-                                            oncopy="return false" oncut="return false" ondrag="return false"
-                                            ondrop="return false" />
+                                            (keyup)="showConfrmEmail($event)" />
                                     </div>
                                     <app-field-error-display [displayError]="true"
                                         *ngIf="emailerror != null && !fed_service.isFieldValid(editProfileForm,'email')"
@@ -293,10 +315,10 @@
                                         <label class="form-control-label">Re-enter Email</label>
                                         <input type="text" class="form-control is-invalid" id="email1"
                                             formControlName="email1" placeholder="Re-enter Email(user@xyz.com)"
-                                            autocomplete="off" onpaste="return false;" oncopy="return false"
-                                            oncut="return false" ondrag="return false" ondrop="return false" />
+                                            autocomplete="off" />
                                     </div>
-                                    <app-field-error-display [displayError]="true" *ngIf="email1error != null && !fed_service.isFieldValid(editProfileForm,'email1')"
+                                    <app-field-error-display [displayError]="true"
+                                        *ngIf="email1error != null && !fed_service.isFieldValid(editProfileForm,'email1')"
                                         [errorMsg]="email1error">
                                     </app-field-error-display>
                                 </div>
@@ -307,7 +329,8 @@
                                         <mat-radio-button value="female">{{female_cap}}</mat-radio-button>
                                         <mat-radio-button value="others">Others</mat-radio-button>
                                     </mat-radio-group>
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'gender')"
                                         errorMsg="Please select the gender.">
                                     </app-field-error-display>
                                 </div>
@@ -319,7 +342,8 @@
                                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker [disabled]="false"></mat-datepicker>
                                     </mat-form-field>
-                                    <app-field-error-display [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
+                                    <app-field-error-display
+                                        [displayError]="fed_service.isFieldValid(editProfileForm,'dob')"
                                         errorMsg="Please select the date of birth.">
                                     </app-field-error-display>
                                 </div>
@@ -336,7 +360,8 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" mat-button [disabled]="!editProfileForm.valid" class="cs-btn bt1">{{update_btn}}</button>
+                        <button type="submit" mat-button [disabled]="!editProfileForm.valid"
+                            class="cs-btn bt1">{{update_btn}}</button>
                     </form>
                 </div>
                 <div class="right-menu">
@@ -346,14 +371,14 @@
                             {{change_password_cap}}</li>
                         <li (click)="redirectto('change-mobile','provider')" class="icon-mobile">
                             {{change_mobile_cap}}</li>
-                            <li (click)="deactiveaccount('deactive', 'provider consumer')" style="padding-left: 0px;">
-                                <span ><i class="fa fa-trash" aria-hidden="true"></i></span>
-                                <span style="margin-left: 20px;">Delete Your Account</span>
-                            </li>
+                        <li (click)="deactiveaccount('deactive', 'provider consumer')" style="padding-left: 0px;">
+                            <span><i class="fa fa-trash" aria-hidden="true"></i></span>
+                            <span style="margin-left: 20px;">Delete Your Account</span>
+                        </li>
                     </ul>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 
 </section>
