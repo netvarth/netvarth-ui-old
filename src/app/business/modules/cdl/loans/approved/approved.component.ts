@@ -43,6 +43,7 @@ export class ApprovedComponent implements OnInit {
   approvedScheme: any;
   approvedSchemeId: any;
   emiDueDate: any;
+  loanTenures: any;
   constructor(
     private location: Location,
     private dialog: MatDialog,
@@ -334,6 +335,7 @@ export class ApprovedComponent implements OnInit {
   }
 
 
+
   getLoanData() {
     this.cdlService.getLoanById(this.loanId).subscribe((data) => {
       this.loanData = data;
@@ -343,9 +345,17 @@ export class ApprovedComponent implements OnInit {
         this.sanctionedAmount = this.loanData.sanctionedAmount;
         this.approvedScheme = this.loanData.loanScheme.schemeName;
         this.approvedSchemeId = this.loanData.loanScheme.id;
+        if (this.approvedSchemeId) {
+          this.cdlService.getLoanTenures(this.approvedSchemeId).subscribe((data) => {
+            this.loanTenures = data;
+            console.log("this.loanTenures", this.loanTenures)
+          })
+        }
       }
     })
   }
+
+
 
   viewLoan() {
     this.router.navigate(['provider', 'cdl', 'loans', this.loanId]);

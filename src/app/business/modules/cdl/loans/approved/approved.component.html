@@ -284,8 +284,8 @@
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control widthWebKit" [(ngModel)]="loanTenure">
-                  <mat-option [value]="i+6" *ngFor="let number of tenureNumbers;let i=index">
-                    <div>{{i+6}} Months</div>
+                  <mat-option [value]="tenure.id" *ngFor="let tenure of loanTenures;let index=index">
+                    <div *ngIf="tenure && tenure.name">{{tenure.name}}</div>
                   </mat-option>
                 </mat-select>
               </div>

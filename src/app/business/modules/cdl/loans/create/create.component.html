@@ -284,7 +284,8 @@
                                     height="100px">
                                 </a>
                               </div>
-                              <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)">
+                              <div class="gal_action" *ngIf="!aadharverification"
+                                (click)="deleteTempImage(i, 'aadhar',file)">
                                 <i class=" fa fa-times-circle" aria-hidden="true"></i>
                               </div>
                             </div>
@@ -349,7 +350,7 @@
                                     *ngIf="!selectedFiles['pan'].base64[i] && file.s3path" width="100px" height="100px">
                                 </a>
                               </div>
-                              <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)">
+                              <div *ngIf="!panverification" class="gal_action" (click)="deleteTempImage(i, 'pan',file)">
                                 <i class=" fa fa-times-circle" aria-hidden="true"></i>
                               </div>
                             </div>
@@ -731,9 +732,10 @@
                       <div class="form-title">Montly Income</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
+                      <input (keyup)="resetErrors()" #salary [value]="salary" type="number"
                         placeholder="Enter Monthly Income" class="form-control" autocomplete="off"
-                        formControlName="salary" />
+                        formControlName="salary" maxlength="7"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                     </div>
                   </div>
                 </div>
@@ -1011,9 +1013,10 @@
                       <div class="form-title">Number of EMI's Paid Monthly</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #emicount type="text"
+                      <input (keyup)="resetErrors()" #emicount type="number"
                         placeholder="Enter Number of EMI Paid Monthly" class="form-control" autocomplete="off"
-                        formControlName="emicount" />
+                        formControlName="emicount" maxlength="1"
+                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                     </div>
                   </div>
                 </div>

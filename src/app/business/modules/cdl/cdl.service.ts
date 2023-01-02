@@ -303,6 +303,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getLoanTenures(id) {
+    const url = 'provider/loan/scheme/' + id + '/availabletenures';
+    return this.servicemeta.httpGet(url, null);
+  }
+
 
   sendDigitalDocument(id) {
     const url = 'provider/loanapplication/digitaldocument/' + id;

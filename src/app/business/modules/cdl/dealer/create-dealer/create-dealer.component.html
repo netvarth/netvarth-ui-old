@@ -135,7 +135,7 @@
                             width="100px" height="100px">
                         </a>
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)" *ngIf="action!='update'">
+                      <div class="gal_action" (click)="deleteTempImage(i, 'photo',file)">
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
@@ -175,7 +175,7 @@
                             *ngIf="!selectedFiles['store'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'store',file)" *ngIf="action!='update'">
+                      <div class="gal_action" (click)="deleteTempImage(i, 'store',file)" >
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
@@ -216,7 +216,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="fieldPadding">
-                <div class='file file--upload'>
+                <div class='file file--upload' *ngIf="!aadharverification">
                   <label (click)="aadharAttach.click()">
                     Upload File
                   </label>
@@ -238,7 +238,7 @@
                             *ngIf="!selectedFiles['aadhar'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)" *ngIf="action!='update'">
+                      <div class="gal_action" (click)="deleteTempImage(i, 'aadhar',file)" *ngIf="!aadharverification">
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
@@ -273,7 +273,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="fieldPadding">
-                <div class='file file--upload'>
+                <div class='file file--upload' *ngIf="!panverification">
                   <label (click)="panAttach.click()">
                     Upload File
                   </label>
@@ -294,7 +294,7 @@
                             *ngIf="!selectedFiles['pan'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)" *ngIf="action!='update'">
+                      <div class="gal_action" (click)="deleteTempImage(i, 'pan',file)" *ngIf="!panverification">
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
@@ -339,7 +339,7 @@
                             *ngIf="!selectedFiles['cheque'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'cheque',file)" *ngIf="action!='update'">
+                      <div class="gal_action" (click)="deleteTempImage(i, 'cheque',file)">
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
@@ -574,7 +574,7 @@
                             *ngIf="!selectedFiles['gst'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'gst',file)" *ngIf="action!='update'">
+                      <div class="gal_action" (click)="deleteTempImage(i, 'gst',file)">
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
