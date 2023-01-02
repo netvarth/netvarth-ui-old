@@ -295,20 +295,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         const _this = this;
         this.onResize();
         this.serverDate = this.lStorageService.getitemfromLocalStorage('sysdate');
-        console.log("ServerDate :",this.serverDate);
-        const newdate = this.serverDate;
-        console.log("New Date :",newdate);
-        const futrDte = new Date(newdate);
-        console.log("Future Date :",futrDte);
-        const obtmonth = futrDte.getMonth() + 1;
-        let cmonth = "" + obtmonth;
-        if (obtmonth < 10) {
-          cmonth = "0" + obtmonth;
-        }
-        const seldate =
-          futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
-        this.selectedDay = seldate;
-        console.log("Selected Date :",this.selectedDay);
+        this.selectedDay = this.dateTimeProcessor.getStringFromDate_YYYYMMDD(this.serverDate);
+        console.log("Selected Date :", this.selectedDay);
 
         if (this.appmtDate) {
             this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
@@ -333,7 +321,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     dateClass(date: Date): MatCalendarCellCssClasses {
         return (this.availableDates.indexOf(moment(date).format('YYYY-MM-DD')) !== -1) ? 'example-custom-date-class' : '';
-      }
+    }
     getServiceOptions() {
         this.subs.sink = this.sharedServices.getServiceoptionsAppt(this.selectedServiceId, this.accountId)
             .subscribe(
@@ -455,19 +443,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 let deptProviders: any = [];
                 this.users = [];
                 deptProviders = result;
-                // this.departments = result;
-                // this.accountType = this.businessProfile.accountType;
-                // if (this.accountType === 'BRANCH') {
-                //     if (this.selectedDeptId) {
-                //         this.getDepartments(this.businessProfile.id).then(
-                //             (departments:any) => {
-                //                 if (departments) {
-                //                     _this.departments = departments['departments'];
-                //                 }
-                //             }
-                //         )
-                //     }
-                // }
                 if (!this.departmentEnabled) {
                     this.users = deptProviders;
                 } else {
@@ -478,38 +453,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                     });
                 }
-                console.log("Users:", this.users);
-                // if (this.selectedUserId) {
-                //     this.setUserDetails(this.selectedUserId);
-                // }
                 break;
             }
         }
     }
-
-    // getDepartments(accountId) {
-    //     const _this = this;
-    //     return new Promise(function (resolve, reject) {
-    //         resolve(_this.departments);
-    //         // _this.subs.sink = _this.sharedServices.getProviderDept(accountId).subscribe(
-    //         //     (departments: any) => {
-    //         //         resolve(departments);
-    //         //     }
-    //         // ), () => {
-    //         //     resolve(false);
-    //         // }
-    //     })
-    //     // subscribe((data:any) => {
-    //     //     const departmentlist = data;
-    //     //     this.departmentEnabled = departmentlist.filterByDept;
-    //     //     for (let i = 0; i < departmentlist['departments'].length; i++) {
-    //     //         if (departmentlist['departments'][i].departmentStatus !== 'INACTIVE') {
-    //     //             this.departments.push(departmentlist['departments'][i]);                        
-    //     //         }
-    //     //     }
-    //     // });
-    // }
-
     setDepartmentDetails(departmentId) {
         console.log("Departments:", this.departments);
         const deptDetail = this.departments.filter(dept => dept.departmentId === departmentId);
@@ -528,8 +475,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     goBack(type?) {
         if (type) {
             console.log(this.bookStep);
-            if(this.bookStep === 5 && this.selectedService.noDateTime){
-            this.goToStep('prev');
+            if (this.bookStep === 5 && this.selectedService.noDateTime) {
+                this.goToStep('prev');
             }
             if (this.bookStep === 1) {
                 let source = this.lStorageService.getitemfromLocalStorage('source');
@@ -669,7 +616,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         _this.subs.sink = _this.sharedServices.getServicesforAppontmntByLocationId(locationId)
             .subscribe(data => {
                 _this.services = data;
-                console.log("Service By Loc :",data);
+                console.log("Service By Loc :", data);
                 _this.selectedService = [];
                 if (_this.selectedServiceId) {
                     _this.selectedServiceId = _this.selectedServiceId;
@@ -712,7 +659,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     setServiceDetails(serviceId) {
         let activeService = this.services.filter(service => service.id === serviceId)[0];
         if (activeService) {
-            console.log("Set Service :",activeService);
+            console.log("Set Service :", activeService);
             this.selectedService = {
                 name: activeService.name,
                 duration: activeService.serviceDuration,
@@ -743,8 +690,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 noDateTime: activeService.noDateTime
             };
             console.log("Active Service :", this.selectedService)
-            if(this.selectedService.noDateTime){
-                if((this.apptDetails_firstName === undefined && this.apptDetails_lastName === undefined) || this.commObj['communicationPhNo'] === undefined ){
+            if (this.selectedService.noDateTime) {
+                if ((this.apptDetails_firstName === undefined && this.apptDetails_lastName === undefined) || this.commObj['communicationPhNo'] === undefined) {
                     console.log("If block :")
                     this.authService.goThroughLogin().then((status) => {
                         console.log("Status:", status);
@@ -756,10 +703,10 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                     _this.getOneTimeInfo(activeUser, _this.accountId).then(
                                         (questions) => {
                                             console.log("Questions:", questions);
-        
-                                                    _this.bookStep = 5;
-                                                    _this.confirmAppointment('next');
-                                            
+
+                                            _this.bookStep = 5;
+                                            _this.confirmAppointment('next');
+
                                             _this.loggedIn = true;
                                             // _this.loading = false;
                                         }
@@ -774,13 +721,13 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         }
                     });
                 }
-                else{
+                else {
                     console.log("Else block :")
                     this.bookStep = 5;
                     this.confirmAppointment('next');
                     this.initAppointment();
                 }
-               
+
             }
             if (activeService.provider) {
                 this.selectedUserId = activeService.provider.id;
@@ -813,36 +760,36 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         this.subs.sink = _this.sharedServices.getSlotsByLocationServiceandDate(locid, servid, appmtDate, accountid)
             .subscribe((data: any) => {
                 _this.allSlots = [];
-                console.log("Date slots :",data);
+                console.log("Date slots :", data);
 
                 _this.slotLoaded = true;
                 // console.log(_this.freeSlots);
                 // console.log("Slots ful:", data);
-                if(data.length === 0){
+                if (data.length === 0) {
                     // Please choose other date.
                     this.snackbarService.openSnackBar('No slots available on selected date.', { 'panelClass': 'snackbarerror' });
                 }
-                console.log("selected day and change day :",this.selectedDay, appmtDate);
-              
-                
+                console.log("selected day and change day :", this.selectedDay, appmtDate);
+
+
                 for (const scheduleSlots of data) {
                     const availableSlots = scheduleSlots.availableSlots;
-                    if(appmtDate >= this.selectedDay){
-                    for (const slot of availableSlots) {
-                        // console.log("Slottt:", slot);
-                        if (showOnlyAvailable && !slot.active) {
-                        } else {
-                            slot['date'] = scheduleSlots['date'];
-                            slot['scheduleId'] = scheduleSlots['scheduleId'];
-                            slot['displayTime'] = _this.getSingleTime(slot.time);
-                            _this.allSlots.push(slot);
+                    if (appmtDate >= this.selectedDay) {
+                        for (const slot of availableSlots) {
+                            // console.log("Slottt:", slot);
+                            if (showOnlyAvailable && !slot.active) {
+                            } else {
+                                slot['date'] = scheduleSlots['date'];
+                                slot['scheduleId'] = scheduleSlots['scheduleId'];
+                                slot['displayTime'] = _this.getSingleTime(slot.time);
+                                _this.allSlots.push(slot);
+                            }
                         }
                     }
-                }
-                else{
-                    _this.allSlots = [];
-                    _this.snackbarService.openSnackBar('No slots available on selected date.', { 'panelClass': 'snackbarerror' });
-                }
+                    else {
+                        _this.allSlots = [];
+                        _this.snackbarService.openSnackBar('No slots available on selected date.', { 'panelClass': 'snackbarerror' });
+                    }
                 }
                 // console.log(_this.allSlots);
                 const availableSlots = _this.allSlots.filter(slot => slot.active);
@@ -863,7 +810,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     apptTimes.push(timetosel[0]);
                     _this.slotSelected(apptTimes);
                 }
-           
+
 
                 // }
 
@@ -897,36 +844,36 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
 
     appointmentDateChanged(appmtDate) {
-       this.selectedSlots = [];
-         console.log("In Appointment Date Changed Method:", appmtDate);
+        this.selectedSlots = [];
+        console.log("In Appointment Date Changed Method:", appmtDate);
         this.appmtDate = appmtDate;
         this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
         this.slotLoaded = false;
         this.getAvailableSlotByLocationandService(this.locationId, this.selectedServiceId, this.appmtDate, this.accountId);
     }
 
-    apptDateChanged(date){
+    apptDateChanged(date) {
         const tdate = date;
         this.ngOnInit();
-       console.log("In Appointment Date Changed Method:", tdate);
+        console.log("In Appointment Date Changed Method:", tdate);
         const newdate = tdate;
-          // .split("/")
-          // .reverse()
-          // .join("-");
-          //moment(newdate).format("YYYY-MM-DD")
-          console.log("New Date :",newdate);
-          // console.log("New Date :",newdate.split(" ").reverse().join("-"));
+        // .split("/")
+        // .reverse()
+        // .join("-");
+        //moment(newdate).format("YYYY-MM-DD")
+        console.log("New Date :", newdate);
+        // console.log("New Date :",newdate.split(" ").reverse().join("-"));
         const futrDte = new Date(newdate);
-        console.log("Future Date :",futrDte);
+        console.log("Future Date :", futrDte);
         const obtmonth = futrDte.getMonth() + 1;
         let cmonth = "" + obtmonth;
         if (obtmonth < 10) {
-          cmonth = "0" + obtmonth;
+            cmonth = "0" + obtmonth;
         }
         const seldate =
-          futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
+            futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
         this.appmtDate = seldate;
-        console.log("selected date :",this.appmtDate);
+        console.log("selected date :", this.appmtDate);
         this.isFutureDate = this.dateTimeProcessor.isFutureDate(this.serverDate, this.appmtDate);
         this.slotLoaded = false;
         this.getAvailableSlotByLocationandService(this.locationId, this.selectedServiceId, this.appmtDate, this.accountId);
@@ -955,7 +902,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     goToStep(type) {
         const _this = this;
         console.log("BookStep1:" + this.bookStep);
-        if(this.allSlots && this.allSlots.length <= 0 && this.slotLoaded){
+        if (this.allSlots && this.allSlots.length <= 0 && this.slotLoaded) {
             this.bookStep = 1;
         }
         if (type === 'next') {
@@ -1031,7 +978,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                                                 if (_this.questionnaireList && _this.questionnaireList.labels && _this.questionnaireList.labels.length > 0) {
                                                     _this.bookStep = 4;
                                                 } else {
-                                                    _this.bookStep = 5;                                                    
+                                                    _this.bookStep = 5;
                                                     this.confirmAppointment('next');
                                                 }
                                             }
@@ -1565,7 +1512,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                     console.log('Appointment:', _this.scheduledAppointment);
 
                     if (_this.appointmentType === 'reschedule') {
-                        _this.appmtFor.push({ id: _this.scheduledAppointment.appmtFor[0].id, firstName: _this.scheduledAppointment.appmtFor[0].firstName, lastName: _this.scheduledAppointment.appmtFor[0].lastName, phoneNo: _this.scheduledAppointment.phoneNumber,apptTime:_this.scheduledAppointment.appmtFor[0].apptTime });
+                        _this.appmtFor.push({ id: _this.scheduledAppointment.appmtFor[0].id, firstName: _this.scheduledAppointment.appmtFor[0].firstName, lastName: _this.scheduledAppointment.appmtFor[0].lastName, phoneNo: _this.scheduledAppointment.phoneNumber, apptTime: _this.scheduledAppointment.appmtFor[0].apptTime });
                         _this.commObj['communicationPhNo'] = _this.scheduledAppointment.phoneNumber;
                         _this.commObj['communicationPhCountryCode'] = _this.scheduledAppointment.countryCode;
                         _this.commObj['communicationEmail'] = _this.scheduledAppointment.appmtFor[0]['email'];
@@ -1626,53 +1573,9 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             .subscribe(
                 data => {
                     this.paymentmodes = data[0];
-
                     this.isPayment = true;
                     this.profileId = this.paymentmodes.profileId;
                     console.log("Profile ID :", this.profileId)
-                    //   if(this.paymentmodes.isConvenienceFee === true){
-                    // let convienientPaymentObj = {}
-                    // convienientPaymentObj = {
-                    //     "profileId" :  this.paymentmodes.profileId,
-                    //     "amount" : this.paymentDetails.amountRequiredNow
-                    // }
-                    // this.sharedServices.getConvenientFeeOfProvider(this.accountId,convienientPaymentObj).subscribe((data:any)=>{
-                    //                                // let array = []
-                    //                                console.log("Convenient response :",data)
-                    //                                this.convenientPaymentModes = data;
-                    //                                if(this.convenientPaymentModes){
-                    //                                this.convenientPaymentModes.map((res:any)=>{
-                    //                                 this.convenientFeeObj = { }
-                    //                                 if(res){
-                    //                                     this.convenientFeeObj = res;
-                    //                                         this.convenientFee = this.convenientFeeObj.convenienceFee;
-                    //                                         console.log("payment convenientFee for Indian:",this.convenientFee,res.mode,this.gatewayFee)
-
-                    //                                 }
-                    //                                })
-                    //                             }
-
-
-                    // })
-                    // console.log("isConvenienceFee paymentsss:",this.paymentmodes)
-
-                    // if (this.paymentmodes && this.paymentmodes.indiaPay) {
-                    //     this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
-                    // }
-                    // if (this.paymentmodes && this.paymentmodes.internationalPay) {
-                    //     this.non_indian_modes = this.paymentmodes.internationalBankInfo;
-                    // }
-                    // if (this.paymentmodes && !this.paymentmodes.indiaPay && this.paymentmodes.internationalPay) {
-                    //     this.shownonIndianModes = true;
-                    // } else {
-                    //     this.shownonIndianModes = false;
-                    // }
-
-
-                    //  }
-                    // else {
-                    // this.paymentmodes = data[0];
-                    // console.log("paymentsss:",this.paymentmodes)
                     if (this.paymentmodes && this.paymentmodes.indiaPay) {
                         this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
                     }
@@ -1822,7 +1725,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }, 500);
                 this.closebutton.nativeElement.click();
                 this.checkCouponvalidity();
-            } 
+            }
             else {
                 this.couponError = 'Coupon invalid';
             }
@@ -1943,12 +1846,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 return false;
             }
             if (type === 'appt') {
-                // if(this.selectedService && this.selectedService.serviceBookingType === 'request'){
-                //     // this.sharedServices.postAppointmentRequest(this.selectedService).subscribe((data: any)=>{
-                //     //     console.log("Appointment Request :",data);
-                //     // })
-                //     this.performAppointment();
-                // }
                 if (this.jcashamount > 0 && this.checkJcash) {
                     this.sharedServices.getRemainingPrepaymentAmount(this.checkJcash, this.checkJcredit, this.paymentDetails.amountRequiredNow)
                         .subscribe(data => {
@@ -2007,7 +1904,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         })
                     }
                 })
-            },error => {
+            }, error => {
                 this.isClickedOnce = false;
                 this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
             });
@@ -2054,106 +1951,30 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
 
     generateInputForAppointment() {
         console.log(this.appmtFor);
-        if(this.selectedService.serviceBookingType === 'request' && (this.selectedService.date || this.selectedService.dateTime || this.selectedService.noDateTime)){
+        if (this.selectedService.serviceBookingType === 'request' && (this.selectedService.date || this.selectedService.dateTime || this.selectedService.noDateTime)) {
             let post_Data = {
-                // 'schedule': {
-                //     'id': this.selectedApptTime['scheduleId']
-                // },
-                // 'appmtDate': this.appmtDate,
                 'service': {
                     'id': this.selectedServiceId,
                     'serviceType': this.selectedService.serviceType
                 },
-            //        "appmtFor":[{
-            //           'id':this.scheduledAppointment.appmtFor[0].id,
-            //           'firstName':this.scheduledAppointment.appmtFor[0].firstName,
-            //           'lastName':this.scheduledAppointment.appmtFor[0].lastName,
-            //   }],
-              //this.appmtFor[0].id
-              //'firstName':this.appmtFor[0].firstName
-              //'lastName':this.appmtFor[0].lastName,
                 'consumerNote': this.consumerNote,
                 'countryCode': this.parentCustomer.userProfile.countryCode,
-                // 'phoneNumber': this.commObj['communicationPhNo'],
                 'coupons': this.selectedCoupons,
             };
-            // if(!this.selectedService.date || !this.selectedService.noDateTime){
-            //    post_Data['appmtFor'][0]['apptTime'] = this.appmtFor[0].apptTime;
-            // }
-            // if (this.selectedService.provider) {
-            //     this.selectedUserId = this.selectedService.provider.id;
-            //     post_Data['provider'] = { 'id':  this.selectedUserId };
-            //     this.setUserDetails(this.selectedUserId);
-            // }
-            if(!this.selectedService.noDateTime){
+            if (!this.selectedService.noDateTime) {
                 post_Data['appmtDate'] = this.appmtDate
-              }
+            }
 
-              
-              if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+
+            if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
                 post_Data['provider'] = { 'id': this.selectedUser.id };
             } else
-             if (this.selectedService.provider) {
-                post_Data['provider'] = { 'id': this.selectedService.provider.id };
-            }
+                if (this.selectedService.provider) {
+                    post_Data['provider'] = { 'id': this.selectedService.provider.id };
+                }
             // if (this.scheduledAppointment) {
             //     post_Data['appmtFor'] = this.scheduledAppointment['appmtFor'];
             // } else {
-                if (this.appmtFor.length !== 0) {
-                    for (const list of this.appmtFor) {
-                        if (list.id === this.parentCustomer.id) {
-                            list['id'] = 0;
-                        }
-                    }
-                }
-                if (this.commObj['communicationEmail'] !== '') {
-                    this.appmtFor[0]['email'] = this.commObj['communicationEmail'];
-                }
-                if(this.commObj['communicationPhNo'] !== ''){
-                    post_Data['phoneNumber'] = this.commObj['communicationPhNo'];
-                }
-                post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.appmtFor));
-           // }
-            //  post_Data['virtualService'] = this.getVirtualServiceInput();
-
-           if (this.selectedService.serviceType === 'virtualService') {
-            if (this.validateVirtualCallInfo(this.callingModes)) {
-                post_Data['virtualService'] = this.getVirtualServiceInput();
-            } else {
-                return false;
-            }
-        }
-            console.log("Posting Data request:",post_Data);
-            return post_Data;
-        }
-        else{
-        let post_Data = {
-            // 'schedule': {
-            //     'id': this.selectedApptTime['scheduleId']
-            // },
-            'appmtDate': this.appmtDate,
-            'service': {
-                'id': this.selectedServiceId,
-                'serviceType': this.selectedService.serviceType
-            },
-            'consumerNote': this.consumerNote,
-            'countryCode': this.parentCustomer.userProfile.countryCode,
-            'phoneNumber': this.commObj['communicationPhNo'],
-            'coupons': this.selectedCoupons,
-        };
-     
-        if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
-            post_Data['provider'] = { 'id': this.selectedUser.id };
-        } else if (this.selectedService.provider) {
-            post_Data['provider'] = { 'id': this.selectedService.provider.id };
-        }
-        if (this.jcashamount > 0 && this.checkJcash) {
-            post_Data['useCredit'] = this.checkJcredit
-            post_Data['useJcash'] = this.checkJcash
-        }
-        if (this.scheduledAppointment) {
-            post_Data['appmtFor'] = this.scheduledAppointment['appmtFor'];
-        } else {
             if (this.appmtFor.length !== 0) {
                 for (const list of this.appmtFor) {
                     if (list.id === this.parentCustomer.id) {
@@ -2164,18 +1985,73 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             if (this.commObj['communicationEmail'] !== '') {
                 this.appmtFor[0]['email'] = this.commObj['communicationEmail'];
             }
-            post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.appmtFor));
-        }
-        if (this.selectedService.serviceType === 'virtualService') {
-            if (this.validateVirtualCallInfo(this.callingModes)) {
-                post_Data['virtualService'] = this.getVirtualServiceInput();
-            } else {
-                return false;
+            if (this.commObj['communicationPhNo'] !== '') {
+                post_Data['phoneNumber'] = this.commObj['communicationPhNo'];
             }
+            post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.appmtFor));
+            // }
+            //  post_Data['virtualService'] = this.getVirtualServiceInput();
+
+            if (this.selectedService.serviceType === 'virtualService') {
+                if (this.validateVirtualCallInfo(this.callingModes)) {
+                    post_Data['virtualService'] = this.getVirtualServiceInput();
+                } else {
+                    return false;
+                }
+            }
+            console.log("Posting Data request:", post_Data);
+            return post_Data;
         }
-        console.log("Posting Data Normal:",post_Data);
-        return post_Data;
-    }
+        else {
+            let post_Data = {
+                // 'schedule': {
+                //     'id': this.selectedApptTime['scheduleId']
+                // },
+                'appmtDate': this.appmtDate,
+                'service': {
+                    'id': this.selectedServiceId,
+                    'serviceType': this.selectedService.serviceType
+                },
+                'consumerNote': this.consumerNote,
+                'countryCode': this.parentCustomer.userProfile.countryCode,
+                'phoneNumber': this.commObj['communicationPhNo'],
+                'coupons': this.selectedCoupons,
+            };
+
+            if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
+                post_Data['provider'] = { 'id': this.selectedUser.id };
+            } else if (this.selectedService.provider) {
+                post_Data['provider'] = { 'id': this.selectedService.provider.id };
+            }
+            if (this.jcashamount > 0 && this.checkJcash) {
+                post_Data['useCredit'] = this.checkJcredit
+                post_Data['useJcash'] = this.checkJcash
+            }
+            if (this.scheduledAppointment) {
+                post_Data['appmtFor'] = this.scheduledAppointment['appmtFor'];
+            } else {
+                if (this.appmtFor.length !== 0) {
+                    for (const list of this.appmtFor) {
+                        if (list.id === this.parentCustomer.id) {
+                            list['id'] = 0;
+                        }
+                    }
+                }
+                if (this.commObj['communicationEmail'] !== '') {
+                    this.appmtFor[0]['email'] = this.commObj['communicationEmail'];
+                }
+                post_Data['appmtFor'] = JSON.parse(JSON.stringify(this.appmtFor));
+            }
+            if (this.selectedService.serviceType === 'virtualService') {
+                if (this.validateVirtualCallInfo(this.callingModes)) {
+                    post_Data['virtualService'] = this.getVirtualServiceInput();
+                } else {
+                    return false;
+                }
+            }
+            console.log("Posting Data Normal:", post_Data);
+            return post_Data;
+        }
     }
     async performAppointment() {
         const _this = this;
@@ -2213,97 +2089,97 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             } else {
                 let post_Data = _this.generateInputForAppointment();
                 // post_Data['appmtSlot'] = appmtSlot;
-                if(!_this.selectedService.date && !_this.selectedService.noDateTime){
+                if (!_this.selectedService.date && !_this.selectedService.noDateTime) {
                     post_Data['appmtFor'][0]['apptTime'] = appmtSlot['time'];
                 }
                 post_Data['schedule'] = { 'id': appmtSlot['scheduleId'] };
-                console.log("Post data:",post_Data);
-                if(_this.selectedService.serviceBookingType === 'request' && (_this.selectedService.date || _this.selectedService.dateTime || _this.selectedService.noDateTime)){
-                    _this.subs.sink = _this.sharedServices.postAppointmentRequest(_this.accountId,post_Data)
-                    .subscribe(data => {
-                        const retData = data;
-                        console.log("Request Data :",data);
-                        _this.appointmentIdsList = [];
-                        let parentUid;
-                        Object.keys(retData).forEach(key => {
-                            if (key === '_prepaymentAmount') {
-                                _this.prepayAmount = retData['_prepaymentAmount'];
+                console.log("Post data:", post_Data);
+                if (_this.selectedService.serviceBookingType === 'request' && (_this.selectedService.date || _this.selectedService.dateTime || _this.selectedService.noDateTime)) {
+                    _this.subs.sink = _this.sharedServices.postAppointmentRequest(_this.accountId, post_Data)
+                        .subscribe(data => {
+                            const retData = data;
+                            console.log("Request Data :", data);
+                            _this.appointmentIdsList = [];
+                            let parentUid;
+                            Object.keys(retData).forEach(key => {
+                                if (key === '_prepaymentAmount') {
+                                    _this.prepayAmount = retData['_prepaymentAmount'];
+                                } else {
+                                    _this.trackUuid = retData[key];
+                                    if (key !== 'parent_uuid') {
+                                        _this.appointmentIdsList.push(retData[key]);
+                                    }
+                                }
+                                parentUid = retData['parent_uuid'];
+                            });
+                            if (_this.selectedMessage.files.length > 0) {
+                                _this.consumerNoteAndFileSave(_this.appointmentIdsList).then(
+                                    () => {
+                                        resolve(true);
+                                    }
+                                );
                             } else {
-                                _this.trackUuid = retData[key];
-                                if (key !== 'parent_uuid') {
-                                    _this.appointmentIdsList.push(retData[key]);
-                                }
+                                _this.submitQuestionnaire(parentUid).then(
+                                    () => {
+                                        resolve(true);
+                                    }
+                                );
+                                _this.submitserviceOptionQuestionnaire(parentUid).then(
+                                    () => {
+                                        resolve(true);
+                                    }
+                                );
                             }
-                            parentUid = retData['parent_uuid'];
-                        });
-                        if (_this.selectedMessage.files.length > 0) {
-                            _this.consumerNoteAndFileSave(_this.appointmentIdsList).then(
-                                () => {
-                                    resolve(true);
-                                }
-                            );
-                        } else {
-                            _this.submitQuestionnaire(parentUid).then(
-                                () => {
-                                    resolve(true);
-                                }
-                            );
-                            _this.submitserviceOptionQuestionnaire(parentUid).then(
-                                () => {
-                                    resolve(true);
-                                }
-                            );
-                        }
-                       // _this.router.navigate(['consumer', 'appointment', 'confirm']);
+                            // _this.router.navigate(['consumer', 'appointment', 'confirm']);
 
-                    }, error => {
-                        _this.isClickedOnce = false;
-                       // if(error !== "Given schedule is provider's schedule"){
-                        // if(_this.selectedUserId === ''){
-                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                       // }
-                      
-                    });
-                }
-                else{
-                _this.subs.sink = _this.sharedServices.addCustomerAppointment(_this.accountId, post_Data)
-                    .subscribe(data => {
-                        const retData = data;
-                        _this.appointmentIdsList = [];
-                        let parentUid;
-                        Object.keys(retData).forEach(key => {
-                            if (key === '_prepaymentAmount') {
-                                _this.prepayAmount = retData['_prepaymentAmount'];
-                            } else {
-                                _this.trackUuid = retData[key];
-                                if (key !== 'parent_uuid') {
-                                    _this.appointmentIdsList.push(retData[key]);
-                                }
-                            }
-                            parentUid = retData['parent_uuid'];
+                        }, error => {
+                            _this.isClickedOnce = false;
+                            // if(error !== "Given schedule is provider's schedule"){
+                            // if(_this.selectedUserId === ''){
+                            _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                            // }
+
                         });
-                        if (_this.selectedMessage.files.length > 0) {
-                            _this.consumerNoteAndFileSave(_this.appointmentIdsList).then(
-                                () => {
-                                    resolve(true);
+                }
+                else {
+                    _this.subs.sink = _this.sharedServices.addCustomerAppointment(_this.accountId, post_Data)
+                        .subscribe(data => {
+                            const retData = data;
+                            _this.appointmentIdsList = [];
+                            let parentUid;
+                            Object.keys(retData).forEach(key => {
+                                if (key === '_prepaymentAmount') {
+                                    _this.prepayAmount = retData['_prepaymentAmount'];
+                                } else {
+                                    _this.trackUuid = retData[key];
+                                    if (key !== 'parent_uuid') {
+                                        _this.appointmentIdsList.push(retData[key]);
+                                    }
                                 }
-                            );
-                        } else {
-                            _this.submitQuestionnaire(parentUid).then(
-                                () => {
-                                    resolve(true);
-                                }
-                            );
-                            _this.submitserviceOptionQuestionnaire(parentUid).then(
-                                () => {
-                                    resolve(true);
-                                }
-                            );
-                        }
-                    }, error => {
-                        _this.isClickedOnce = false;
-                        _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                    });
+                                parentUid = retData['parent_uuid'];
+                            });
+                            if (_this.selectedMessage.files.length > 0) {
+                                _this.consumerNoteAndFileSave(_this.appointmentIdsList).then(
+                                    () => {
+                                        resolve(true);
+                                    }
+                                );
+                            } else {
+                                _this.submitQuestionnaire(parentUid).then(
+                                    () => {
+                                        resolve(true);
+                                    }
+                                );
+                                _this.submitserviceOptionQuestionnaire(parentUid).then(
+                                    () => {
+                                        resolve(true);
+                                    }
+                                );
+                            }
+                        }, error => {
+                            _this.isClickedOnce = false;
+                            _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                        });
                 }
             }
         })
@@ -2360,7 +2236,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             //     );
             // }
             // else{
-                _this.subs.sink = _this.sharedServices.addConsumerAppointmentAttachment(_this.accountId, uuid, dataToSend)
+            _this.subs.sink = _this.sharedServices.addConsumerAppointmentAttachment(_this.accountId, uuid, dataToSend)
                 .subscribe(
                     () => {
                         if (_this.appointmentType !== 'reschedule') {
@@ -2394,8 +2270,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                         _this.wordProcessor.apiErrorAutoHide(_this, error);
                     }
                 );
-          // }
-           
+            // }
+
         })
     }
     setAnalytics(source?) {
@@ -2409,38 +2285,38 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         console.log("CustomId:", this.customId);
         if (this.customId) {
             if (reqFrom && reqFrom == 'cuA') {
-                if (source ==='dateTime_login') {
+                if (source === 'dateTime_login') {
                     analytics['metricId'] = 511;
-                } else if (source ==='dateTime_withoutlogin') {
+                } else if (source === 'dateTime_withoutlogin') {
                     analytics['metricId'] = 512;
-                } else if (source ==='payment_initiated') {
+                } else if (source === 'payment_initiated') {
                     analytics['metricId'] = 516;
-                } else if (source ==='payment_completed') {
+                } else if (source === 'payment_completed') {
                     analytics['metricId'] = 519;
                 } else {
                     analytics['metricId'] = 501;
                 }
-                
+
             } else if (reqFrom && reqFrom == 'CUSTOM_WEBSITE') {
-                if (source ==='dateTime_login') {
+                if (source === 'dateTime_login') {
                     analytics['metricId'] = 513;
-                } else if (source ==='dateTime_withoutlogin') {
+                } else if (source === 'dateTime_withoutlogin') {
                     analytics['metricId'] = 514;
-                } else if (source ==='payment_initiated') {
+                } else if (source === 'payment_initiated') {
                     analytics['metricId'] = 517;
-                } else if (source ==='payment_completed') {
+                } else if (source === 'payment_completed') {
                     analytics['metricId'] = 520;
                 } else {
                     analytics['metricId'] = 502;
-                }                
+                }
             } else if (this.customId) {
-                if (source ==='dateTime_login') {
+                if (source === 'dateTime_login') {
                     analytics['metricId'] = 509;
-                } else if (source ==='dateTime_withoutlogin') {
+                } else if (source === 'dateTime_withoutlogin') {
                     analytics['metricId'] = 510;
-                } else if (source ==='payment_initiated') {
+                } else if (source === 'payment_initiated') {
                     analytics['metricId'] = 515;
-                } else if (source ==='payment_completed') {
+                } else if (source === 'payment_completed') {
                     analytics['metricId'] = 518;
                 } else {
                     analytics['metricId'] = 500;
@@ -2461,7 +2337,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
                 }
                 const blobpost_Data = new Blob([JSON.stringify(_this.oneTimeInfo.answers)], { type: 'application/json' });
                 dataToSend.append('question', blobpost_Data);
-                _this.subs.sink = _this.sharedServices.submitCustomerOnetimeInfo(dataToSend, _this.providerConsumerId, _this.accountId).subscribe((data: any) => {                    
+                _this.subs.sink = _this.sharedServices.submitCustomerOnetimeInfo(dataToSend, _this.providerConsumerId, _this.accountId).subscribe((data: any) => {
                     resolve(true);
                 }, error => {
                     _this.isClickedOnce = false;
@@ -2676,7 +2552,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
     }
     paywithRazorpay(pData: any) {
-        pData.paymentMode = this.paymentMode;        
+        pData.paymentMode = this.paymentMode;
         this.razorpayService.initializePayment(pData, this.accountId, this);
     }
     payWithPayTM(pData: any, accountId: any) {
@@ -2709,7 +2585,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             this.setAnalytics();
             this.ngZone.run(() => this.router.navigate(['consumer', 'appointment', 'confirm'], navigationExtras));
         } else {
-            this.closeloading();            
+            this.closeloading();
         }
     }
 
@@ -2769,21 +2645,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     getImage(url, file) {
         return this.fileService.getImage(url, file);
     }
-    // getImage(url, file) {
-    //     if (file.type == 'application/pdf') {
-    //         return './assets/images/pdf.png';
-    //     }
-    //     else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
-    //         return './assets/images/audio.png';
-
-    //     }
-    //     else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
-    //         return './assets/images/video.png';
-    //     }
-    //     else {
-    //         return url;
-    //     }
-    // }
     addMember() {
         this.action = 'addmember';
         this.disable = false;
@@ -2837,21 +2698,21 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             'uid': this.scheduledAppmtId,
             //'time': this.selectedSlots[0].time,
             'date': this.appmtDate,
-           // 'schedule': this.selectedSlots[0]['scheduleId'],
+            // 'schedule': this.selectedSlots[0]['scheduleId'],
             'consumerNote': this.consumerNote
         };
-         if(this.selectedSlots[0].time){
+        if (this.selectedSlots[0].time) {
             post_Data['time'] = this.selectedSlots[0].time;
-         }
-         if(this.selectedSlots[0]['scheduleId']){
+        }
+        if (this.selectedSlots[0]['scheduleId']) {
             post_Data['schedule'] = this.selectedSlots[0]['scheduleId'];
-         }
-         console.log("Reschedule :", post_Data);
+        }
+        console.log("Reschedule :", post_Data);
 
         this.subs.sink = this.sharedServices.rescheduleConsumerApptmnt(this.accountId, post_Data)
             .subscribe(
                 (res) => {
-                    console.log("reschedule res :",res);
+                    console.log("reschedule res :", res);
                     this.btnClicked = false;
                     if (this.selectedMessage.files.length > 0) {
                         this.consumerNoteAndFileSave(this.scheduledAppmtId);
@@ -2917,8 +2778,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         }
         const data = this.finalDataToSend
         return new Promise(function (resolve, reject) {
-
-            // console.log(JSON.stringify(this.serviceOPtionInfo))  
             const dataToSend: FormData = new FormData();
             if (data.files) {
                 for (const pic of data.files) {
@@ -2928,10 +2787,8 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
             const blobpost_Data = new Blob([JSON.stringify(data)], { type: 'application/json' });
             dataToSend.append('question', blobpost_Data);
             _this.subs.sink = _this.sharedServices.submitConsumerApptServiceOption(dataToSend, uuid, _this.accountId).subscribe((data: any) => {
-
                 resolve(true);
             },
-
                 error => {
                     _this.isClickedOnce = false;
                     _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -2970,7 +2827,6 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         dialogref.afterClosed().subscribe(
             result => {
                 if (result) {
-
                 }
             }
         );
