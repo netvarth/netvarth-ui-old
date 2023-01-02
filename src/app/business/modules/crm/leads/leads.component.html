@@ -3,10 +3,10 @@
     <div class="dash-head"> <i style="color:#1D3E77 !important" class="fa fa-arrow-left pointer-cursor"
         aria-hidden="true" (click)="goBack()"></i> &nbsp; &nbsp;
       <div style="display: flex;gap:10px">
-        <div style="color:#1D3E77 !important" *ngIf="headerName">{{headerName}}</div>
+        <div  style="color:#1D3E77 !important" *ngIf="headerName">{{headerName}}</div>
         <div style="color:#1D3E77 !important"
           *ngIf="leads && leads.length && tempaltename && tempaltename==='Loan Disbursement'">
-          ({{leads.length}})</div>
+          ({{leads.length}} / {{totalDisbursmentCount}})</div>
           <div style="color:#1D3E77 !important"
           *ngIf="leads && leads.length===0 && tempaltename && tempaltename==='Loan Disbursement'">
           ({{leads.length}})</div>
@@ -107,7 +107,7 @@
                                   <li class="filterli filterDatepicker filter-li">
                                     <input  type="text" [(ngModel)]="filter.check_in_start_date"
                                       [matDatepicker]="startpicker" #Fdate class="form-control1 form-control1-solid form-control1-lg"
-                                      [max]="maxday" placeholder="Enter Start Date"
+                                       placeholder="Enter Start Date"
                                       (dateChange)="keyPressed('noLoanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="startpicker">
                                     </mat-datepicker-toggle>
@@ -118,7 +118,7 @@
                                   <li class="filterli filterDatepicker filter-li">
                                     <input  type="text" [(ngModel)]="filter.check_in_end_date"
                                       [matDatepicker]="endpicker" #Fdate  class="form-control1 form-control1-solid form-control1-lg"
-                                      placeholder="Enter End Date" [min]="endminday" [max]="endmaxday"
+                                      placeholder="Enter End Date"
                                       (dateChange)="keyPressed('noLoanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="endpicker">
                                     </mat-datepicker-toggle>
@@ -150,7 +150,7 @@
                                   <li class="filterli filterDatepicker filter-li">
                                     <input   type="text" [(ngModel)]="filter.check_in_start_date_LoanSanction"
                                       [matDatepicker]="startpicker" #Fdateloan  class="form-control1 form-control1-solid form-control1-lg"
-                                      [max]="maxdayLoanSanction" placeholder="Enter Start Date"
+                                       placeholder="Enter Start Date"
                                       (dateChange)="keyPressed('loanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="startpicker">
                                     </mat-datepicker-toggle>
@@ -161,8 +161,7 @@
                                   <li class="filterli filterDatepicker filter-li">
                                     <input  type="text" [(ngModel)]="filter.check_in_end_date_LoanSanction"
                                       [matDatepicker]="endpicker" #Fdateloan  class="form-control1 form-control1-solid form-control1-lg"
-                                      placeholder="Enter End Date" [min]="endmindayLoanSanction"
-                                      [max]="endmaxdayLoanSanction" (dateChange)="keyPressed('loanSanction')">
+                                      placeholder="Enter End Date" (dateChange)="keyPressed('loanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="endpicker">
                                     </mat-datepicker-toggle>
                                     <mat-datepicker #endpicker></mat-datepicker>

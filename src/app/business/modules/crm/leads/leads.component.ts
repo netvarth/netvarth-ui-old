@@ -95,6 +95,8 @@ export class LeadsComponent implements OnInit {
   dataId:any;
   dataStatus;
   tempaltename: any;
+  tempLeads;
+  totalDisbursmentCount: any;
   constructor(
     private groupService: GroupStorageService,
     public router: Router,
@@ -154,6 +156,27 @@ export class LeadsComponent implements OnInit {
         }
       )
     });
+    if(_this.tempaltename==='Loan Disbursement'){
+      this.getLeadsWithoutLocCount().then((count)=>{
+        console.log('count',count);
+      });
+    }
+  }
+  getCurrentMonthInfo() {
+    var date = new Date();
+    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    console.log('firstDay',firstDay)
+    console.log('lastDay',lastDay)
+    if(firstDay){
+      this.filter.check_in_start_date=firstDay;
+      this.filter.check_in_start_date_LoanSanction=firstDay
+    }
+    if(lastDay){
+      this.filter.check_in_end_date=lastDay;
+      this.filter.check_in_end_date_LoanSanction=lastDay
+    }
+
   }
   /**
    * 
@@ -200,6 +223,49 @@ export class LeadsComponent implements OnInit {
       this.api_loading = false;
     });
   }
+  // getLeadsWithoutLoc() {
+  //   const _this = this;
+  //   const filter = {}
+  //   filter['status-eq'] = _this.dataId;
+  //   filter['isRejected-eq'] = false;
+  //   filter['sort_lastStatusUpdatedDate'] = 'dsc';
+  //   // delete filter['location-eq'];
+  //   return new Promise((resolve,reject)=>{
+  //     _this.crmService.getTotalLead(filter).subscribe((res: any) => {
+  //       _this.tempLeads = res;
+  //       console.log('_this.leadsWithoutFilter', _this.tempLeads)
+  //       if(this.filterapplied){
+  //         this.tempLeads=this.leads
+  //       }
+  //       resolve(res)
+  //       _this.api_loading = false;
+  //     },
+  //     ((error)=>{
+  //       reject(error)
+  //     }));
+  //   })
+    
+  // }
+  getLeadsWithoutLocCount() {
+    const _this = this;
+    return new Promise((resolve, reject) => {
+      const filter = _this.setFilter();
+      delete filter['location-eq'];
+      _this.crmService.getTotalLeadCount(filter)
+        .subscribe(
+          data => {
+            console.log('totalcountWithOutLoc', data)
+            _this.totalDisbursmentCount=data;
+            _this.pagination.totalCnt = data;
+            _this.config.totalItems = data;
+            resolve(data);
+          },
+          error => {
+            reject(error);
+          }
+        );
+    });
+  }
   /**
    * 
    */
@@ -226,7 +292,7 @@ export class LeadsComponent implements OnInit {
    */
   setFilter() {
     let filter = {}
-    filter['location-eq'] = this.selected_location.id;
+    // filter['location-eq'] = this.selected_location.id;
     if (this.filter.check_in_start_date != null) {
       filter['createdDate-ge'] = moment(this.filter.check_in_start_date).format("YYYY-MM-DD");
     }
@@ -369,6 +435,7 @@ export class LeadsComponent implements OnInit {
     else{
       this.maxdayLoanReject= this.yesterdayDate
     }
+    this.getLeadsWithoutLocCount()
     const filter = this.setFilter()
     this.getLeadsCount(filter);
     this.getLeads(filter);
@@ -377,6 +444,7 @@ export class LeadsComponent implements OnInit {
 
   clearFilter() {
     this.resetFilter();
+    this.getLeadsWithoutLocCount()
     const filter = this.setFilter();
     this.getLeadsCount(filter);
     this.getLeads(filter);
@@ -424,6 +492,8 @@ export class LeadsComponent implements OnInit {
 
   showFilterSidebar() {
     this.filter_sidebar = true;
+    this.getCurrentMonthInfo();
+    this.filterapplied = true;
   }
 
 

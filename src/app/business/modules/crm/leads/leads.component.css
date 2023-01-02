@@ -1663,3 +1663,9 @@ td {
     box-shadow: none!important;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out!important;
   }
+  /* .mat-button{
+    box-shadow: 0 0 10px rgb(0 0 0 / 12%) !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 600;
+  } */
