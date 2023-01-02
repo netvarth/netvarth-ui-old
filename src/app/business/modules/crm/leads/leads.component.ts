@@ -163,18 +163,18 @@ export class LeadsComponent implements OnInit {
     }
   }
   getCurrentMonthInfo() {
-    var date = new Date();
-    var firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-    var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+    var currentdate = new Date();
+    var firstDay = new Date(currentdate.getFullYear(), currentdate.getMonth(), 1);
+    // var lastDay = new Date(currentdate.getFullYear(), currentdate.getMonth() + 1, 0);
     console.log('firstDay',firstDay)
-    console.log('lastDay',lastDay)
+    console.log('lastDay',currentdate)
     if(firstDay){
       this.filter.check_in_start_date=firstDay;
       this.filter.check_in_start_date_LoanSanction=firstDay
     }
-    if(lastDay){
-      this.filter.check_in_end_date=lastDay;
-      this.filter.check_in_end_date_LoanSanction=lastDay
+    if(currentdate){
+      this.filter.check_in_end_date=currentdate;
+      this.filter.check_in_end_date_LoanSanction=currentdate
     }
 
   }
