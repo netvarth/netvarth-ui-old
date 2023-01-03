@@ -169,6 +169,7 @@ export class AppointmentActionsComponent implements OnInit {
     this.apiloading = true;
     this.appt = this.data.checkinData;
     console.log("Request Data :",this.appt);
+    console.log("Appt Data :",this.data);
     if (this.appt && this.appt.service && this.appt.service.virtualCallingModes) {
       this.setVirtualInfoServiceInfo(this.appt.service);
   }
@@ -222,8 +223,7 @@ export class AppointmentActionsComponent implements OnInit {
       !this.data.multiSelection &&
       this.appt.releasedQnr &&
       this.appt.releasedQnr.length > 0 &&
-      this.appt.apptStatus !== "Cancelled" &&
-      this.appt.apptStatus !== "Rejected"
+      this.appt.apptStatus !== "Cancelled"
     ) {
       this.showQnr = true;
     }
