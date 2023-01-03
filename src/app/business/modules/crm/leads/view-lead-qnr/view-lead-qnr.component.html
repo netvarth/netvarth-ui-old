@@ -149,11 +149,20 @@
           </div>
         </div>
       </div>
+    
       <div *ngIf="leadInfo.status.name==='Sales Verified'">
-        <ng-container *ngFor="let questionaire of leadInfo.questionnaires">
-          <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
-            (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"  [questionAnswers]="questionAnswers" [tempType]="tempType"></app-questionnaire>
+        <ng-container *ngFor="let lquestionaire of leadInfo.questionnaires">
+          <ng-container *ngIf="lquestionaire.questionnaireId !== questionaire.questionnaireId">
+          <app-questionnaire [questionnaireList]="lquestionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+            (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)" [tempType]="tempType"></app-questionnaire>
         </ng-container>
+      </ng-container>
+        <!-- <ng-container *ngFor="let lquestionaire of leadInfo.questionnaires">
+          <ng-container *ngIf="lquestionaire.questionnaireId !== questionaire.questionnaireId">
+            <app-questionnaire [questionnaireList]="lquestionaire" [source]="'proLead'" [mode]="'read'" [uuid]="leadInfo.uid"
+            (fileChanged)="uploadFile($event)" (returnAnswers)="getQuestionAnswers($event)"  [questionAnswers]="questionAnswers" [tempType]="tempType"></app-questionnaire>
+          </ng-container>
+        </ng-container> -->
       </div>
       <div *ngIf="showQuestionnaire && questionaire" class="quest">
         <app-questionnaire [questionnaireList]="questionaire" [source]="'proLead'" [questionAnswers]="questionAnswers"
