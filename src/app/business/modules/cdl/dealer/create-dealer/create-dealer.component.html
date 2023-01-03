@@ -175,7 +175,7 @@
                             *ngIf="!selectedFiles['store'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
-                      <div class="gal_action" (click)="deleteTempImage(i, 'store',file)" >
+                      <div class="gal_action" (click)="deleteTempImage(i, 'store',file)">
                         <i class=" fa fa-times-circle" aria-hidden="true"></i>
                       </div>
                     </div>
@@ -606,7 +606,7 @@
               <div *ngIf="banksList">
                 <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
                   filterBy="bankName" optionValue="bankName" dropdownIcon="fa fa-caret-down" [showClear]="true"
-                  placeholder="Select Bank" [disabled]="bankverification">
+                  placeholder="Select Bank" [disabled]="bankverification" (onChange)="banksSelected($event)">
                   <ng-template let-bank pTemplate="item">
                     <div class="bank-item">
                       <div>{{bank.bankName}}</div>

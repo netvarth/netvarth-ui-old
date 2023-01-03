@@ -7,6 +7,7 @@ import { GroupStorageService } from '../../../../../shared/services/group-storag
 import { MatDialog } from '@angular/material/dialog';
 import { AssignOfficerComponent } from '../assign-officer/assign-officer.component';
 import * as moment from 'moment';
+import { ConfirmBoxComponent } from '../../loans/confirm-box/confirm-box.component';
 @Component({
   selector: 'app-view-dealer',
   templateUrl: './view-dealer.component.html',
@@ -179,6 +180,33 @@ export class ViewDealerComponent implements OnInit {
         console.log("Data Not Saved")
       }
     });
+  }
+
+
+  suspendDealer() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "remarks"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data && data.type == 'remarks') {
+          let dealerNote = {
+            "note": data.remarks
+          };
+          this.cdlservice.suspendDealer(this.dealerUid, dealerNote).subscribe(() => {
+            this.snackbarService.openSnackBar("Dealer Suspended Successfully");
+            this.router.navigate(['provider', 'cdl', 'dealers']);
+          },
+            (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+            })
+        }
+      });
   }
 
 
