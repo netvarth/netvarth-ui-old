@@ -337,7 +337,7 @@ export class CreateDealerComponent implements OnInit {
 
   banksSelected(event) {
     console.log(event)
-    event.stopPropagation();
+    // event.stopPropagation();
   }
 
   filesSelected(event, type) {
