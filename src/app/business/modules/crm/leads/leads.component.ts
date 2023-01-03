@@ -169,12 +169,12 @@ export class LeadsComponent implements OnInit {
     console.log('firstDay',firstDay)
     console.log('lastDay',currentdate)
     if(firstDay){
-      this.filter.check_in_start_date=firstDay;
-      // this.filter.check_in_start_date_LoanSanction=firstDay
+      // this.filter.check_in_start_date=firstDay;
+      this.filter.check_in_start_date_LoanSanction=firstDay
     }
     if(currentdate){
-      this.filter.check_in_end_date=currentdate;
-      // this.filter.check_in_end_date_LoanSanction=currentdate
+      // this.filter.check_in_end_date=currentdate;
+      this.filter.check_in_end_date_LoanSanction=currentdate
     }
 
   }
