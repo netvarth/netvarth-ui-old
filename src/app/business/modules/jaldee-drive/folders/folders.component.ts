@@ -80,7 +80,7 @@ export class FoldersComponent implements OnInit {
     this.provider_servicesobj
       .getAllFilterAttachments(filter)
       .subscribe((data: any) => {
-        // console.log("All Files.", Object.keys(data));
+         //console.log("All Files.", Object.keys(data));
         // this.driveFiles = Object.keys(data);
         // console.log("Drive :",this.driveFiles)
 
@@ -91,13 +91,13 @@ export class FoldersComponent implements OnInit {
           // console.log("Files in folder :",data[res].files)
           // console.log("folderName :",data[res].folderName)
           // console.log("refolderSize :",data[res].folderSize)
-          this.driveFiles.push({
+          this.driveFiles.unshift({
             id: res,
             folderName: data[res].folderName,
             folderSize: data[res].folderSize
           });
           //})
-          //  console.log("Data map:",this.driveFiles)
+           // console.log("Data map:",this.driveFiles)
         });
 
         this.dataLoading = false;
