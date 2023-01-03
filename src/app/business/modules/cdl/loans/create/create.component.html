@@ -1367,9 +1367,9 @@
                         <option>AXIS</option>
                       </select> -->
                       <div *ngIf="banksList">
-                        <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
-                          filterBy="bankName" optionValue="bankName" dropdownIcon="fa fa-caret-down" [showClear]="true"
-                          placeholder="Select Bank">
+                        <p-dropdown  [options]="banksList" formControlName="bank" optionLabel="bankName"
+                          [filter]="true" filterBy="bankName" optionValue="bankName" dropdownIcon="fa fa-caret-down"
+                          [showClear]="true" placeholder="Select Bank">
                           <ng-template let-bank pTemplate="item">
                             <div class="bank-item">
                               <div>{{bank.bankName}}</div>
