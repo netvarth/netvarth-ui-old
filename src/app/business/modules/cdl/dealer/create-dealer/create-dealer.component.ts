@@ -9,6 +9,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { FileService } from '../../../../../shared/services/file-service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { GmapsComponent } from '../../gmaps/gmaps.component';
 
 @Component({
   selector: 'app-create-dealer',
@@ -73,6 +74,9 @@ export class CreateDealerComponent implements OnInit {
       name: "Retail"
     }
   ];
+  latitude: any;
+  longitude: any;
+  mapAddress: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -197,6 +201,18 @@ export class CreateDealerComponent implements OnInit {
 
             if (this.dealerData && this.dealerData.bankIfsc) {
               this.createDealer.controls.ifsc.setValue(this.dealerData.bankIfsc);
+            }
+
+            if (this.dealerData && this.dealerData.latitude) {
+              this.latitude = this.dealerData.latitude;
+            }
+
+            if (this.dealerData && this.dealerData.longitude) {
+              this.longitude = this.dealerData.longitude;
+            }
+
+            if (this.dealerData && this.dealerData.googleMapLocation) {
+              this.mapAddress = this.dealerData.googleMapLocation;
             }
 
             if (this.dealerData && this.dealerData.partnerEmailVerified) {
@@ -478,6 +494,43 @@ export class CreateDealerComponent implements OnInit {
   }
 
 
+  showGooglemap() {
+
+    let data = {
+      title: "Select Dealer Location"
+    }
+    if (this.latitude) {
+      data['latitude'] = this.latitude
+    }
+    if (this.longitude) {
+      data['longitude'] = this.longitude
+    }
+    if (this.mapAddress) {
+      data['address'] = this.mapAddress
+    }
+    const dialogRef = this.dialog.open(GmapsComponent, {
+      width: '50%',
+      panelClass: 'googlemainmappopup',
+      disableClose: true,
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (result.latitude) {
+          this.latitude = result.latitude
+        }
+        if (result.longitude) {
+          this.longitude = result.longitude
+        }
+        if (result.address) {
+          this.mapAddress = result.address
+        }
+      }
+    });
+  }
+
+
   getImagefromUrl(url, file) {
     if (file.fileType == 'pdf') {
       return './assets/images/pdf.png';
@@ -707,7 +760,10 @@ export class CreateDealerComponent implements OnInit {
       "partnerSize": this.createDealer.controls.size.value,
       "partnerTrade": this.createDealer.controls.trade.value,
       "branch": { "id": this.createDealer.controls.branch.value },
-      "partnerUserName": this.createDealer.controls.username.value
+      "partnerUserName": this.createDealer.controls.username.value,
+      "latitude": this.latitude,
+      "longitude": this.longitude,
+      "googleMapLocation": this.mapAddress
     }
 
     console.log("This.dealerData", this.dealerData);
@@ -901,7 +957,10 @@ export class CreateDealerComponent implements OnInit {
       "partnerSize": this.createDealer.controls.size.value,
       "partnerTrade": this.createDealer.controls.trade.value,
       "branch": { "id": this.createDealer.controls.branch.value },
-      "partnerUserName": this.createDealer.controls.username.value
+      "partnerUserName": this.createDealer.controls.username.value,
+      "latitude": this.latitude,
+      "longitude": this.longitude,
+      "googleMapLocation": this.mapAddress
     }
 
     console.log("This.dealerData", this.dealerData);

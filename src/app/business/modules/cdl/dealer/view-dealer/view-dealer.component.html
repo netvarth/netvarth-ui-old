@@ -20,9 +20,9 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt-4">
         <div class="col-md-4 my-1 mb-3 no-padding-small mr-3" *ngIf="totalApprovedCount>0">
-          <div class="dashboard-card text-center border pointer-cursor px-3">
+          <div class="dashboard-card text-center border pointer-cursor px-3 no-padding-small">
             <div class="d-flex">
               <div>
                 <i class="fa fa-certificate approved-loan-head-icon" aria-hidden="true"></i>
@@ -36,7 +36,7 @@
         </div>
 
         <div class="col-md-4 my-1 mb-3 no-padding-small mr-3" *ngIf="RejectedLoansCount>0">
-          <div class="dashboard-card text-center border pointer-cursor px-3">
+          <div class="dashboard-card text-center border pointer-cursor px-3 no-padding-small">
             <div class="d-flex">
               <div>
                 <i class="fa fa-signal rejected-loan-head-icon" aria-hidden="true"></i>
@@ -50,7 +50,7 @@
         </div>
 
         <div class="col-md-4 my-1 no-padding-small" *ngIf="partnerLeadsCount>0">
-          <div class="dashboard-card text-center border pointer-cursor px-3">
+          <div class="dashboard-card text-center border pointer-cursor px-3 no-padding-small">
             <div class="d-flex">
               <div>
                 <i class="fa fa-users total-amount-head-icon" aria-hidden="true"></i>
@@ -63,21 +63,26 @@
           </div>
         </div>
       </div>
-      <div>
-        <div class="d-flex justify-content-center align-items-center mt-3 text-center"
-          *ngIf="capabilities && capabilities.canUpdatePartner">
-          <div class="mr-2" (click)="updateDealer()">
-            <div class="btn btn-primary">Edit</div>
-          </div>
-          <div (click)="suspendDealer()">
-            <div class="btn btn-danger">Suspend</div>
+      <div class="mt-2">
+        <div *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0]">
+          <img width="100%" height="150px" [src]="dealerData.storeAttachments[0].s3path">
+        </div>
+        <div>
+          <div class="d-flex justify-content-center align-items-center mt-3 text-center"
+            *ngIf="capabilities && capabilities.canUpdatePartner">
+            <div class="mr-2" (click)="updateDealer()">
+              <div class="btn btn-primary">Edit</div>
+            </div>
+            <div (click)="suspendDealer()">
+              <div class="btn btn-danger">Suspend</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
     <div>
       <div>
-        <div class="">
+        <div class="scroller">
           <ul class="nav nav-pills">
             <li class="nav-item active">
               <a class="nav-link" data-toggle="tab" href="#tab1"><i class="fa fa-user"></i>&nbsp;Overview</a>
@@ -244,11 +249,11 @@
           <div>
             <div class="col-lg-6 col-md-6 pl-lg-0 no-padding-small">
               <div class="card  alerts-min-height"
-                *ngIf="partnerLeadsCount>0 && ApprovedPendingloans>0 && RejectedLoansCount>0">
+                *ngIf="partnerLeadsCount || ApprovedPendingloans || RejectedLoansCount>0">
                 <p-chart type="pie" height="350" [data]="pieChartData" [options]="pieChartOptions"></p-chart>
               </div>
               <div class="card alerts-min-height"
-                *ngIf="partnerLeadsCount==0 || ApprovedPendingloans==0 || RejectedLoansCount==0">
+                *ngIf="!partnerLeadsCount && !ApprovedPendingloans && !RejectedLoansCount">
                 <h4 class="font-weight-bold text-primary">Loans Pie Chart</h4>
                 <div class="text-center">
                   <img class="img-fluid pb-0" width="70%" src="./assets/images/cdl/no_data.gif">
@@ -354,8 +359,8 @@
               </td>
               <td>
                 <div class="text-center">
-                  <button pButton pRipple type="button" class="p-button-primary" (click)="loanDetails(loan.uid)"><i
-                      class="pi pi-eye text-white"></i>&nbsp;View</button>
+                  <button pButton pRipple type="button" class="p-button-primary"
+                    (click)="loanDetails(loan.uid)">View</button>
                 </div>
               </td>
             </tr>
@@ -443,8 +448,7 @@
                 </td>
                 <!-- <td>
                   <div class="text-center">
-                    <button pButton pRipple type="button" class="p-button-primary" (click)="loanDetails(user.uid)"><i
-                        class="pi pi-eye text-white"></i>&nbsp;View</button>
+                    <button pButton pRipple type="button" class="p-button-primary" (click)="loanDetails(user.uid)">View</button>
                   </div>
                 </td> -->
               </tr>

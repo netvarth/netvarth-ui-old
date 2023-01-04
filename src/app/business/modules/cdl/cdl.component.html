@@ -423,7 +423,7 @@
               <td>
                 <div class="text-center">
                   <button pButton pRipple type="button" class="p-button-primary  btn-primary"
-                    (click)="loanDetails(loan.uid)"><i class="pi pi-eye text-white"></i>&nbsp;View</button>
+                    (click)="loanDetails(loan.uid)">View</button>
                 </div>
               </td>
             </tr>
@@ -498,7 +498,7 @@
             </div>
             <div class="mt-3">
               <button pButton pRipple type="button" class="font-weight-bold pointer-cursor btn-primary"
-                (click)="viewAllUsers()"><i class="pi pi-eye text-white"></i>&nbsp;View All</button>
+                (click)="viewAllUsers()">View All</button>
             </div>
           </div>
         </div>
@@ -630,12 +630,11 @@
               <td>
                 <div class="text-center">
                   <button pButton pRipple type="button" class="p-button-primary btn-primary"
-                    *ngIf="capabilities && capabilities.canUpdatePartner || partner.spInternalStatus=='Draft'"
-                    (click)="updateDealer(partner.uid,'update')"><i
+                    *ngIf="partner.spInternalStatus=='Draft'" (click)="updateDealer(partner.uid,'update')"><i
                       class="pi pi-upload text-white"></i>&nbsp;Update</button>&nbsp;&nbsp;
                   <button pButton pRipple type="button" class="p-button-primary btn-primary"
-                    (click)="updateDealer(partner.uid,'update',partner.spInternalStatus)"><i
-                      class="pi pi-eye text-white"></i>&nbsp;View</button>
+                    *ngIf="partner.spInternalStatus!='Draft'"
+                    (click)="updateDealer(partner.uid,'update',partner.spInternalStatus)">View</button>
                 </div>
               </td>
             </tr>
@@ -697,7 +696,7 @@
             </div>
             <div class="mt-3">
               <button pButton pRipple type="button" class="font-weight-bold pointer-cursor btn-primary"
-                (click)="viewAllCustomers()"><i class="pi pi-eye text-white"></i>&nbsp;View All</button>
+                (click)="viewAllCustomers()">View All</button>
             </div>
           </div>
         </div>

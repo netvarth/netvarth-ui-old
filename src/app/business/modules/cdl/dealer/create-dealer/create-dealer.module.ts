@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { CreateDealerComponent } from './create-dealer.component';
 import { DropdownModule } from 'primeng/dropdown';
+import { GmapsModule } from '../../gmaps/gmaps.module';
 
 
 const routes: Routes = [
@@ -29,6 +30,7 @@ const routes: Routes = [
     MatOptionModule,
     MatButtonModule,
     DropdownModule,
+    GmapsModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [

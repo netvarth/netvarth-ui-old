@@ -352,7 +352,11 @@
                             </th>
                             <th class="display-min-none">Business {{locationText}}
                             </th>
-                            <th class="display-min-none">Languages</th>
+                            <th class="display-min-none" *ngIf="accountSettings && !accountSettings.enableCdl">Languages
+                            </th>
+                            <th class="display-min-none" *ngIf="accountSettings && accountSettings.enableCdl">
+                              Availability
+                            </th>
                             <!-- <th class="display-min-none">Booking#</th> -->
                             <th class="display-min-none"></th>
                           </tr>
@@ -418,31 +422,30 @@
                                         <a class="user-contact-details"
                                           (click)="stopprop($event); viewContactDetails(user)">View</a>
                                       </span>
-                                      <!-- {{user.countryCode}} {{user.mobileNo}} 
-                                                                          </span> -->
                                     </div>
                                     <div class="mgn-up-5" *ngIf="user.specialization && domain !== 'finance'"> <span
                                         class="b2">
                                         {{user.specialization}}
-                                        <!-- {{getSpecialization(user.specialization)}} -->
                                       </span></div>
 
-                                    <div class="mgn-up-5" *ngIf="user.businessLocations"> <span class="b2">
-                                        <!-- {{getBussLoc(user.bussLocations)}} -->
+                                    <div class="mgn-up-5" *ngIf="user.businessLocations">
+                                      <span class="b2">
                                         {{user.businessLocations}}
-                                      </span></div>
-                                    <div class="mgn-up-5" *ngIf="user.preferredLanguages"><span class="b2">
-                                        {{user.preferredLanguages}}
-                                        <!-- {{getLanguages(user.preferredLanguages)}} -->
                                       </span>
                                     </div>
-                                    <!-- <div class="mgn-up-5"
-                                                                          *ngIf="user.userType === 'PROVIDER'">
-                                                                          <span class="b1">Booking Count:
-                                                                          </span><span class="b2">
-                                                                              {{user.currentWlCount + user.currentApptCount}}
-                                                                          </span>
-                                                                      </div> -->
+                                    <div class="mgn-up-5"
+                                      *ngIf="user && user.preferredLanguages && accountSettings && !accountSettings.enableCdl">
+                                      <span class="b2">
+                                        {{user.preferredLanguages}}
+                                      </span>
+                                    </div>
+
+                                    <div class="mgn-up-5"
+                                      *ngIf="user && user.userAvailable && accountSettings && accountSettings.enableCdl">
+                                      <span class="b2" [class]="'status-' + user.userAvailable">
+                                        {{user.userAvailable}}
+                                      </span>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -473,16 +476,13 @@
                             <td class="display-min-none" *ngIf="domain !== 'finance'">
                               <span *ngIf="user.specialization   && domain !== 'finance'">
                                 {{user.specialization}}
-                                <!-- {{getSpecialization(user.specialization)}} -->
                               </span>
                             </td>
                             <td class="display-min-none">
                               <span *ngIf="user.businessLocations && !branchesEnabled">
                                 {{getBussLoc(user.bussLocations)}}
-                                <!-- {{user.businessLocations}} -->
                               </span>
                               <span *ngIf="user.branchmaster && branchesEnabled">
-                                <!-- {{getBussLoc(user.bussLocations)}} -->
                                 <span *ngFor="let branch of user.branchmaster; let last=last">
                                   <span *ngIf=" branch && branch.branchName"
                                     class="text-capitalize">{{branch.branchName}}<span *ngIf="!last">,</span></span>
@@ -490,16 +490,17 @@
                               </span>
                             </td>
                             <td class="display-min-none">
-                              <span *ngIf="user.preferredLanguages">
+                              <span
+                                *ngIf="user && user.preferredLanguages  && accountSettings && !accountSettings.enableCdl">
                                 {{user.preferredLanguages}}
-                                <!-- {{getLanguages(user.preferredLanguages)}} -->
+                              </span>
+                              <span *ngIf="user && user.userAvailable && accountSettings && accountSettings.enableCdl"
+                                [class]="'status-' + user.userAvailable">
+                                {{user.userAvailable}}
                               </span>
                             </td>
-                            <!-- <td class="display-min-none">
-                                                          <span *ngIf="user.userType === 'PROVIDER'">
-                                                              {{user.currentWlCount + user.currentApptCount}}
-                                                          </span>
-                                                      </td> -->
+
+
                             <td>
                               <div class="copy">
                                 <span class="">
@@ -828,14 +829,16 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName (keyup)="doSearch()" (input)="doSearch()"
-                    maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter First Name">
+                  <input type="text" id="firstName" [(ngModel)]="filter.firstName" #firstName (keyup)="doSearch()"
+                    (input)="doSearch()" maxlength="20" class="filterTextbox filter-textbox"
+                    placeholder="Enter First Name">
                 </li>
               </div>
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName (keyup)="doSearch()" (input)="doSearch()"
-                    maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Last Name">
+                  <input type="text" id="lastName" [(ngModel)]="filter.lastName" #lastName (keyup)="doSearch()"
+                    (input)="doSearch()" maxlength="10" class="filterTextbox filter-textbox"
+                    placeholder="Enter Last Name">
                 </li>
               </div>
             </div>
@@ -860,8 +863,9 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="pincode" [(ngModel)]="filter.pinCode" #pincode (input)="doSearch()" (keyup)="doSearch()"
-                    maxlength="10" class="filterTextbox filter-textbox" placeholder="Enter Pincode">
+                  <input type="text" id="pincode" [(ngModel)]="filter.pinCode" #pincode (input)="doSearch()"
+                    (keyup)="doSearch()" maxlength="10" class="filterTextbox filter-textbox"
+                    placeholder="Enter Pincode">
                 </li>
               </div>
             </div>
@@ -886,14 +890,14 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="city" [(ngModel)]="filter.city" #city (keyup)="doSearch()" (input)="doSearch()" maxlength="20"
-                    class="filterTextbox filter-textbox" placeholder="Enter city">
+                  <input type="text" id="city" [(ngModel)]="filter.city" #city (keyup)="doSearch()" (input)="doSearch()"
+                    maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter city">
                 </li>
               </div>
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="state" [(ngModel)]="filter.state" #state (keyup)="doSearch()" (input)="doSearch()" maxlength="20"
-                    class="filterTextbox filter-textbox" placeholder="Enter state">
+                  <input type="text" id="state" [(ngModel)]="filter.state" #state (keyup)="doSearch()"
+                    (input)="doSearch()" maxlength="20" class="filterTextbox filter-textbox" placeholder="Enter state">
                 </li>
               </div>
             </div>
@@ -958,7 +962,8 @@
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
                   <input type="text" id="primaryMobileNo" [(ngModel)]="filter.primaryMobileNo" #primaryMobileNo
-                    (keyup)="doSearch()" (input)="doSearch()" class="filterTextbox filter-textbox" placeholder="Enter Phone Number">
+                    (keyup)="doSearch()" (input)="doSearch()" class="filterTextbox filter-textbox"
+                    placeholder="Enter Phone Number">
                 </li>
               </div>
             </div>
@@ -983,8 +988,8 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="employeeId" [(ngModel)]="filter.employeeId" #employeeId (keyup)="doSearch()" (input)="doSearch()"
-                    class="filterTextbox filter-textbox" placeholder="Enter Employee ID">
+                  <input type="text" id="employeeId" [(ngModel)]="filter.employeeId" #employeeId (keyup)="doSearch()"
+                    (input)="doSearch()" class="filterTextbox filter-textbox" placeholder="Enter Employee ID">
                 </li>
               </div>
             </div>
@@ -1009,8 +1014,8 @@
             <div class="card-body">
               <div class="filterTextinput filter-text-input">
                 <li class="filterli filter-li">
-                  <input type="text" id="email" [(ngModel)]="filter.email" #email (keyup)="doSearch()" (input)="doSearch()"
-                    class="filterTextbox filter-textbox" placeholder="Enter Email">
+                  <input type="text" id="email" [(ngModel)]="filter.email" #email (keyup)="doSearch()"
+                    (input)="doSearch()" class="filterTextbox filter-textbox" placeholder="Enter Email">
                 </li>
               </div>
             </div>

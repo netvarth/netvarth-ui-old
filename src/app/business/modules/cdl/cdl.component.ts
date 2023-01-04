@@ -110,6 +110,7 @@ export class CdlComponent implements OnInit {
   dashboardStats: any;
   users: any;
   branches: any;
+  dealersRejected: any;
 
 
   constructor(
@@ -136,6 +137,7 @@ export class CdlComponent implements OnInit {
     this.getCustomers();
     this.getApprovedDealers();
     this.getRequestedDealers();
+    this.getRejectedDealers();
     this.getBarChartData();
     this.getUsers();
     this.getDashboardStats();
@@ -205,7 +207,6 @@ export class CdlComponent implements OnInit {
               }
             },
           };
-
         }
       }
     });
@@ -243,6 +244,16 @@ export class CdlComponent implements OnInit {
     this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
       this.dealersRequested = data;
       this.requestedDealersCount = data.length;
+    });
+  }
+
+
+  getRejectedDealers() {
+    const api_filter = {};
+    api_filter['spInternalStatus-eq'] = 'Rejected';
+    this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
+      this.dealersRejected = data;
+      this.rejectedDealersCount = data.length;
     });
   }
 
@@ -586,14 +597,28 @@ export class CdlComponent implements OnInit {
   }
 
 
+  // updateDealer(id, action, status?) {
+  // if (status == 'ApprovalPending') {
+  //   this.showDealer(id, status)
+  // }
+  // else if (status == 'Approved') {
+  // this.router.navigate(['provider', 'cdl', 'dealers', id]);
+  // }
+  // else {
+  //   const navigationExtras: NavigationExtras = {
+  //     queryParams: {
+  //       id: id,
+  //       action: action
+  //     }
+  //   };
+  //   this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
+  // }
+
+  // }
+
+
   updateDealer(id, action, status?) {
-    if (status == 'ApprovalPending') {
-      this.showDealer(id, status)
-    }
-    else if (status == 'Approved') {
-      this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
-    }
-    else {
+    if (action == 'update' && !status) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           id: id,
@@ -602,7 +627,15 @@ export class CdlComponent implements OnInit {
       };
       this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
     }
-
+    else if (status == 'ApprovalPending') {
+      this.showDealer(id, status)
+    }
+    else if (status == 'Approved') {
+      this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
+    }
+    else {
+      this.showDealer(id, status)
+    }
   }
 
   showDealer(dealerId, spInternalStatus) {

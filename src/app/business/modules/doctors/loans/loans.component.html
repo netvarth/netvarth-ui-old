@@ -90,11 +90,9 @@
             <div class="text-center">
               <div class="d-flex">
                 <button *ngIf="loan.spInternalStatus=='Draft'" pButton pRipple type="button"
-                  class="p-button-primary mr-2" (click)="updateLoan(loan.uid, 'update', 'Draft')"><i
-                    class="pi pi-eye text-white"></i>&nbsp;Update</button>
+                  class="p-button-primary mr-2" (click)="updateLoan(loan.uid, 'update', 'Draft')">Update</button>
                 <button pButton pRipple type="button" class="p-button-primary"
-                  (click)="loanDetails(loan.uid,loan.spInternalStatus)"><i
-                    class="pi pi-eye text-white"></i>&nbsp;View</button>
+                  (click)="loanDetails(loan.uid,loan.spInternalStatus)">View</button>
               </div>
             </div>
           </td>

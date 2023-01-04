@@ -298,3 +298,9 @@ td {
     width: 100px !important;
   }
 }
+
+
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 4px !important;
+}

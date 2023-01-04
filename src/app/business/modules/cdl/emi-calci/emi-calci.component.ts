@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -20,7 +20,9 @@ export class EmiCalciComponent implements OnInit {
   totalInterestAmount: any;
   constructor(
     private location: Location
-  ) { }
+  ) {
+
+  }
 
   ngOnInit(): void {
     this.calculateEmi();
@@ -56,7 +58,7 @@ export class EmiCalciComponent implements OnInit {
       ]
     };
   }
-
+  @HostListener("click")
   calculateEmi() {
     console.log(this.loanAmount, this.interestRate, this.EmiPayment)
     this.monthlyInterest = this.interestRate / 12 / 100;

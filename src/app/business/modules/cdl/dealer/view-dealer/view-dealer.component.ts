@@ -83,10 +83,11 @@ export class ViewDealerComponent implements OnInit {
         this.assignedCreditOfficersList = this.dealerData.creditOfficers;
         this.getPartnerLoans();
         this.getPartnerApprovedLoans();
-        this.getPartnerRejectedLoans();
+        this.getPartnerPendingLoans();
         this.getPartnerRejectedLoans();
         this.getPartnerLeads();
         this.getBarChartData();
+        this.getTotalLoanAmount();
       }
       if (data && this.dealerData.active) {
         this.status = this.dealerData.active;
@@ -125,6 +126,13 @@ export class ViewDealerComponent implements OnInit {
     this.getStaffList('Sales Officer');
     this.getStaffList('Branch Credit Head');
     this.maxDate = new Date(this.minDate);
+  }
+
+
+  getTotalLoanAmount() {
+    this.cdlservice.getPartnerTotalAmount(this.dealerId).subscribe(data => {
+      this.totalLoanAmount = data
+    });
   }
 
 

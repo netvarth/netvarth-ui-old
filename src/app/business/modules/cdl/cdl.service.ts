@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { projectConstants } from '../../../app.component';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 // import { HttpClient } from '@angular/common/http';
 import { ServiceMeta } from '../../../shared/services/service-meta';
@@ -42,6 +43,11 @@ export class CdlService {
 
   getCustomers() {
     const url = 'provider/customers';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+  getPartnerTotalAmount(id) {
+    const url = 'provider/loanapplication/loanamount/' + id;
     return this.servicemeta.httpGet(url, null);
   }
 
@@ -505,6 +511,12 @@ export class CdlService {
   getDashboardStats() {
     const url = 'provider/dashboard/stats';
     return this.servicemeta.httpGet(url, null);
+  }
+
+
+  getGoogleMapLocationAddress(lat, lon) {
+    const url = 'https://maps.googleapis.com/maps/api/geocode/json?latlng=' + lat + ',' + lon + '&key=' + projectConstants.GOOGLEAPIKEY + '&sensor=false';
+    return this.servicemeta.httpGet(url);
   }
 
   getCapabilitiesConfig(user) {

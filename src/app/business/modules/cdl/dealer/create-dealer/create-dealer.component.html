@@ -457,6 +457,13 @@
         </div>
 
 
+        <a class="btn btn-primary" (click)="showGooglemap()">Select Dealer location</a>
+
+        <div *ngIf="this.mapAddress" class="my-2">
+          <div>
+            <span><b>Selected Location : </b>{{this.mapAddress}}</span>
+          </div>
+        </div>
         <!-- <div>
           <div class="bggrey my-2">
             <div>
