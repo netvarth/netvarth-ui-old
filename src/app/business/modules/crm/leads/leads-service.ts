@@ -20,8 +20,8 @@ export class LeadsService {
    * @param body 
    * @returns 
    */
-   uploadKycFile(body) {
-    const url = '/provider/KYC/upload';
+  uploadKycFile(body) {
+    const url = 'provider/KYC/upload';
     return this.servicemeta.httpPost(url, body);
   }
 

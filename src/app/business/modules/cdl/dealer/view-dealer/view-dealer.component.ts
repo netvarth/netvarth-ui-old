@@ -130,8 +130,9 @@ export class ViewDealerComponent implements OnInit {
 
 
   getTotalLoanAmount() {
-    this.cdlservice.getPartnerTotalAmount(this.dealerId).subscribe(data => {
-      this.totalLoanAmount = data
+    this.cdlservice.getPartnerTotalAmount(this.dealerId).subscribe((data: any) => {
+      this.totalLoanAmount = data.amountString
+      this.totalLoansCount = data.count
     });
   }
 
@@ -208,6 +209,33 @@ export class ViewDealerComponent implements OnInit {
           };
           this.cdlservice.suspendDealer(this.dealerUid, dealerNote).subscribe(() => {
             this.snackbarService.openSnackBar("Dealer Suspended Successfully");
+            this.router.navigate(['provider', 'cdl', 'dealers']);
+          },
+            (error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+            })
+        }
+      });
+  }
+
+
+  resumptionDealer() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "remarks"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data && data.type == 'remarks') {
+          let dealerNote = {
+            "note": data.remarks
+          };
+          this.cdlservice.resumptionDealer(this.dealerUid, dealerNote).subscribe(() => {
+            this.snackbarService.openSnackBar("Dealer Resumpted Successfully");
             this.router.navigate(['provider', 'cdl', 'dealers']);
           },
             (error) => {
@@ -386,12 +414,11 @@ export class ViewDealerComponent implements OnInit {
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       this.statusLoansList = data;
       this.loans = data;
-      this.totalLoansCount = data.length;
       this.getPieChartData();
 
     })
     this.cdlservice.getLoansCountByFilter(api_filter).subscribe((data: any) => {
-      this.totalLoansCount = data.length;
+      // this.totalLoansCount = data.length;
       this.getPieChartData();
     })
   }

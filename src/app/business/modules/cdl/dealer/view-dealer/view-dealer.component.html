@@ -73,8 +73,13 @@
             <div class="mr-2" (click)="updateDealer()">
               <div class="btn btn-primary">Edit</div>
             </div>
-            <div (click)="suspendDealer()">
+            <div (click)="suspendDealer()"
+              *ngIf="dealerData && dealerData.spInternalStatus && dealerData.spInternalStatus == 'Approved'">
               <div class="btn btn-danger">Suspend</div>
+            </div>
+            <div (click)="resumptionDealer()"
+              *ngIf="dealerData && dealerData.spInternalStatus && dealerData.spInternalStatus == 'Suspended'">
+              <div class="btn btn-danger">Resumption</div>
             </div>
           </div>
         </div>

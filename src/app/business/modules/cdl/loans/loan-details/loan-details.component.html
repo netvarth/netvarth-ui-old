@@ -540,7 +540,32 @@
             <div class="font-weight-bold">Remarks</div>
             <span class="details-title" *ngIf="loanData && loanData.remarks">{{loanData.remarks}}</span>
             <span class="details-title" *ngIf="loanData && !loanData.remarks">No Remarks Added</span>
+          </div>
+        </div>
 
+        <div class="card marginClass min-height"
+          *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'Sanctioned' || loanData.spInternalStatus == 'OperationsVerified' && loanEmiDetailsData && loanEmiDetailsData.length>0">
+          <div>
+            <div class="font-weight-bold">EMI Details</div>
+            <div class="table-responsive">
+              <table class="table table-borderless">
+                <tbody>
+                  <tr style="width: 100%;">
+                    <th class="details-sub-title">Number</th>
+                    <th class="details-sub-title">EMI Due Date</th>
+                    <th class="details-sub-title">EMI Amount</th>
+                    <th class="details-sub-title">EMI Status</th>
+                  </tr>
+
+                  <tr style="width: 100%;" *ngFor="let emi of loanEmiDetailsData">
+                    <td *ngIf="emi && emi.emiSequenceNo && !emi.isAdvancedEmi">{{emi.emiSequenceNo}}</td>
+                    <td *ngIf="emi && emi.emiDueDate && !emi.isAdvancedEmi">{{emi.emiDueDate}}</td>
+                    <td *ngIf="emi && emi.emiAmount && !emi.isAdvancedEmi">{{emi.emiAmount}}</td>
+                    <td *ngIf="emi && emi.emiStatus && !emi.isAdvancedEmi">{{emi.emiStatus}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

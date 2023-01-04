@@ -198,6 +198,12 @@ export class CdlService {
   }
 
 
+  getDefaultScheme(id) {
+    const url = 'provider/loanapplication/' + id + '/availableschemes';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+
   getBankDetailsById(id) {
     const url = 'provider/loanapplication/' + id + '/bankdetails';
     return this.servicemeta.httpGet(url, null);
@@ -238,6 +244,11 @@ export class CdlService {
   verifyLoanByOps(id, data) {
     const url = 'provider/loanapplication/' + id + '/operationalapproval';
     return this.servicemeta.httpPut(url, data);
+  }
+
+  getLoanEmiDetails(id) {
+    const url = 'provider/loanapplication/' + id + '/loanemi';
+    return this.servicemeta.httpGet(url, null);
   }
 
   getStateByPin(pin) {
@@ -367,6 +378,11 @@ export class CdlService {
 
   suspendDealer(id, data) {
     const url = 'provider/partner/' + id + '/suspended';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  resumptionDealer(id, data) {
+    const url = 'provider/partner/' + id + '/resumption';
     return this.servicemeta.httpPut(url, data);
   }
 

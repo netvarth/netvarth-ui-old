@@ -57,6 +57,7 @@ export class LoanDetailsComponent implements OnInit {
   statusIndex: any;
   capabilities: any;
   mafilScoreData: any;
+  loanEmiDetailsData: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -80,6 +81,9 @@ export class LoanDetailsComponent implements OnInit {
             this.checkMafilScore();
             this.checkEquifaxScore();
             this.checkPerfiosScore();
+            if (this.loanData && this.loanData.spInternalStatus && this.loanData.spInternalStatus == 'Sanctioned' || this.loanData.spInternalStatus == 'OperationsVerified') {
+              this.getLoanEmiDetails(this.loanId);
+            }
             console.log("LoanData", this.loanData)
             this.loanApplicationStatus = this.loanData.spInternalStatus;
             this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
@@ -334,6 +338,18 @@ export class LoanDetailsComponent implements OnInit {
 
   redirectLoanByOps() {
 
+  }
+
+
+  getLoanEmiDetails(id) {
+    this.cdlservice.getLoanEmiDetails(id).subscribe((data: any) => {
+      if (data) {
+        this.loanEmiDetailsData = data
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
   }
 
 

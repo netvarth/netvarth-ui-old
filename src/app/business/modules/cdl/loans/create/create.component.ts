@@ -149,6 +149,7 @@ export class CreateComponent implements OnInit {
   productSubCategoryId: any;
   totalPaymentValue: number;
   subventionLoan: any = false;
+  allPanelsExpanded: boolean;
   constructor(
     private location: Location,
     private router: Router,
@@ -638,6 +639,7 @@ export class CreateComponent implements OnInit {
     this.loanDetailsPanel = true;
     this.otherDetailsPanel = true;
     this.bankDetailsPanel = true;
+    this.allPanelsExpanded = true;
   }
 
   closeAll() {
@@ -646,6 +648,7 @@ export class CreateComponent implements OnInit {
     this.loanDetailsPanel = false;
     this.otherDetailsPanel = false;
     this.bankDetailsPanel = false;
+    this.allPanelsExpanded = false;
 
   }
 

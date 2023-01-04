@@ -60,6 +60,8 @@ export class ConfirmBoxComponent implements OnInit {
             if (this.loanId) {
               console.log("this.data", this.data)
               this.getLoans(this.loanId);
+              this.getLoanSchemes();
+              this.getDefaultScheme();
             }
           }
         }
@@ -82,7 +84,16 @@ export class ConfirmBoxComponent implements OnInit {
       this.getDealer(this.data.dealerId);
     }
 
-    this.getLoanSchemes();
+
+  }
+
+
+  getDefaultScheme() {
+    this.cdlservice.getDefaultScheme(this.loanId).subscribe((data) => {
+      if (data && data[0]) {
+        this.schemeSelected = data[0]
+      }
+    })
   }
 
   goHome() {
