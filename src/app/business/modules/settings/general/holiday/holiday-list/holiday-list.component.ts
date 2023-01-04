@@ -15,8 +15,7 @@ import { DateTimeProcessor } from '../../../../../../shared/services/datetime-pr
 
 @Component({
   selector: 'app-holiday-list',
-  templateUrl: './holiday-list.component.html'
-
+  templateUrl: './holiday-list.component.html',
 })
 export class HolidayListComponent implements OnInit, OnDestroy {
 
@@ -80,8 +79,9 @@ export class HolidayListComponent implements OnInit, OnDestroy {
   }
   getNonworkingdays() {
     this.provider_servicesobj.getProviderNonworkingdays()
-      .subscribe(data => {
+      .subscribe((data : any) => {
         this.nonworking_list = data;
+        this.nonworking_list.sort().reverse();
         this.query_executed = true;
         this.isAvailableNow();
       });
@@ -172,4 +172,10 @@ export class HolidayListComponent implements OnInit, OnDestroy {
   redirecToHelp() {
     this.router.navigate(['/provider/' + this.domain + '/general->nonworking']);
   }
+  // sortFn = (a: any, b: any): number => {
+  //   console.log("sort :",a,b)
+  //   if (a < b) return -1;
+  //   if (a === b) return 0; 
+  //   if (a > b) return 1;
+  // }
 }

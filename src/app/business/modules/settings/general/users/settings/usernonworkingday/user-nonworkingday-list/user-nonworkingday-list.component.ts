@@ -89,6 +89,7 @@ export class UserNonworkingdayListComponent implements OnInit, OnDestroy {
     this.provider_servicesobj.getUserProviderNonworkingdays(this.userId)
       .subscribe(data => {
         this.nonworking_list = data;
+        this.nonworking_list.sort().reverse();
         this.query_executed = true;
         this.isAvailableNow();
       });
