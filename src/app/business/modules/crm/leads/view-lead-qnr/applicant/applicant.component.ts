@@ -104,8 +104,7 @@ export class ApplicantComponent implements OnInit {
     console.log('tempType',this.tempType)
     console.log('this.leadInfo.status',this.leadInfo)
     console.log('this.tempCrifDetails',this.tempCrifDetails)
-    // this.tempCrifDetaiksIndex.push(this.tempCrifDetails)
-    // console.log('this.tempCrifDetaiksIndex',this.tempCrifDetaiksIndex.length)
+    
     if (this.leadInfo.status.name === 'Login' || this.leadInfo.status.name === 'Credit Recommendation') {
       this.crifBtnForHide = false;
       this.getCrifInquiryVerification(this.applicant);
@@ -266,6 +265,7 @@ export class ApplicantComponent implements OnInit {
     })
   }
   filesSelected(event, type) {
+    console.log(this.leadInfo.status.name)
     const input = event.target.files;
     if (input.length < 3) {
       this.fileService.filesSelected(event, this.selectedFiles[type]).then(
