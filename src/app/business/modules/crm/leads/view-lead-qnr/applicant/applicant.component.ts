@@ -265,7 +265,9 @@ export class ApplicantComponent implements OnInit {
     })
   }
   filesSelected(event, type) {
-    console.log(this.leadInfo.status.name)
+    if(this.leadInfo.status.name==='Login' || this.leadInfo.status.name==='Credit Recommendation' ||this.leadInfo.status.name=== 'Loan Sanction'){
+      return false;
+    }
     const input = event.target.files;
     if (input.length < 3) {
       this.fileService.filesSelected(event, this.selectedFiles[type]).then(

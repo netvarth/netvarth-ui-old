@@ -44,6 +44,7 @@
     </nav>
   </div>
 </section>
+<app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
 <section>
   <div class="content comn-cls dashboard audit" *ngIf="!api_loading">
     <div class="col-md-12 no-padding-small">
@@ -54,7 +55,7 @@
       </span> &nbsp;&nbsp;&nbsp;
       <div class="row">
         <div class="card p0 w-dta">
-          <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
+          <!-- <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner> -->
           <div class="table-responsive dash-list">
             <table class="table" style="background-color: white;">
               <thead>
