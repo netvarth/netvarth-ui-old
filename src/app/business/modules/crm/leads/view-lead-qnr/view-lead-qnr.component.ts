@@ -201,6 +201,9 @@ export class ViewLeadQnrComponent implements OnInit {
           _this.crmService.getkyc(leadInfo.uid).subscribe(
             (kycInfo: any) => {
               _this.kycInfo = kycInfo;
+              if(_this.leadInfo.isRejected){
+                _this.initApplicantForm(kycInfo);
+              }
               kycInfo.forEach((item) => {
                 if(leadInfo && leadInfo.status && leadInfo.status.name === 'Credit Score Generated' ){
                   _this.headerName = 'Sales Field Verification';
@@ -216,6 +219,16 @@ export class ViewLeadQnrComponent implements OnInit {
         } else {
           if (leadInfo && leadInfo.status && leadInfo.status.name === 'Login Verified') {
             _this.headerName = 'Credit Recommendation';
+            if(_this.leadInfo.isRejected){
+              _this.crmService.getkyc(leadInfo.uid).subscribe(
+                (kycInfo: any) => {
+                  _this.kycInfo = kycInfo;
+                  if(_this.leadInfo.isRejected){
+                    _this.initApplicantForm(kycInfo);
+                  }
+                }
+              )
+            }
           }
           else if (leadInfo && leadInfo.status && (leadInfo.status.name === 'Credit Recommendation' || leadInfo.status.name==='Loan Sanction')) {
              _this.headerName = leadInfo.status.aliasName;

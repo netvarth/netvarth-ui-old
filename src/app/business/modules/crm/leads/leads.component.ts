@@ -170,11 +170,12 @@ export class LeadsComponent implements OnInit {
     console.log('lastDay',currentdate)
     if(firstDay){
       // this.filter.check_in_start_date=firstDay;
-      this.filter.check_in_start_date_LoanSanction=firstDay
+      this.filter.check_in_start_date_LoanSanction= moment(firstDay).format("YYYY-MM-DD");;
+     
     }
     if(currentdate){
       // this.filter.check_in_end_date=currentdate;
-      this.filter.check_in_end_date_LoanSanction=currentdate
+      this.filter.check_in_end_date_LoanSanction= moment(currentdate).format("YYYY-MM-DD");
     }
 
   }
@@ -500,33 +501,33 @@ export class LeadsComponent implements OnInit {
   keyPressed(text) {
     if(text==='noLoanSanction'){
       console.log("this.filter1", this.filter)
-      if (this.filter.check_in_start_date || this.filter.check_in_end_date) {
+      if (this.filter.check_in_start_date !==null || this.filter.check_in_end_date !==null) {
         this.filterapplied = true;
       } else {
-        this.filterapplied = false;
+        // this.filterapplied = false;
       }
     }
     else if(text==='loanSanction'){
       console.log("this.filter2", this.filter)
-      if (this.filter.check_in_start_date_LoanSanction || this.filter.check_in_end_date_LoanSanction) {
+      if (this.filter.check_in_start_date_LoanSanction !== null || this.filter.check_in_end_date_LoanSanction !==null) {
         this.filterapplied = true;
       } else {
-        this.filterapplied = false;
+        // this.filterapplied = false;
       }
     }
     else if(text==='rejected'){
       console.log("this.filter3rejected", this.filter)
-      if (this.filter.check_in_start_date_RejectedLoan || this.filter.check_in_end_date_RejectedLoan) {
+      if (this.filter.check_in_start_date_RejectedLoan !=null || this.filter.check_in_end_date_RejectedLoan !==null) {
         this.filterapplied = true;
       } else {
-        this.filterapplied = false;
+        // this.filterapplied = false;
       }
     }
     else if((text==='nameFilter' || 'nameFilterAssignee')){
-      if (this.filter.first_name || this.filter.last_name || this.filter.first_name_Assignee || this.filter.last_name_Assignee) {
+      if (this.filter.first_name !=='' || this.filter.last_name!=='' || this.filter.first_name_Assignee!=='' || this.filter.last_name_Assignee!=='') {
         this.filterapplied = true;
       } else {
-        this.filterapplied = false;
+        // this.filterapplied = false;
       }
     }
    
