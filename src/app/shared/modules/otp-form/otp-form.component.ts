@@ -2,7 +2,7 @@
 import { interval as observableInterval, Subscription } from 'rxjs';
 import { Component, OnInit, OnChanges, EventEmitter, Output, Input, OnDestroy, ViewChild } from '@angular/core';
 import { SharedServices } from '../../services/shared-services';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { Messages } from '../../constants/project-messages';
@@ -30,8 +30,8 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   resend_btn_cap = Messages.RESEND_BTN;
   cancel_btn_cap = Messages.CANCEL_BTN;
 
-  otp_form: FormGroup;
-  email_form: FormGroup;
+  otp_form: UntypedFormGroup;
+  email_form: UntypedFormGroup;
   buttonclicked = false;
   email_otp_req = false;
   otp_email = null;
@@ -66,7 +66,7 @@ export class OtpFormComponent implements OnInit, OnChanges, OnDestroy {
   };
   otpEntered: any;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,

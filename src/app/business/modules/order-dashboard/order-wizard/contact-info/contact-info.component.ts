@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
@@ -11,10 +11,10 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
   styleUrls: ['./contact-info.component.css']
 })
 export class ContactInfoComponent implements OnInit {
-  contantInfo: FormGroup;
+  contantInfo: UntypedFormGroup;
   customer_phone: '';
   customer_email: '';
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     private sharedfunctionObj:SharedFunctions,
     private dialogRef: MatDialogRef<ContactInfoComponent>,

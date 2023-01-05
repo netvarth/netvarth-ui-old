@@ -22,9 +22,6 @@ import { VoicecallDetailsComponent } from './voicecall-details.component';
     declarations: [
         VoicecallDetailsComponent
     ],
-    entryComponents: [
-        VoicecallDetailsComponent
-    ],
     exports: [VoicecallDetailsComponent]
 })
 export class VoicecallDetailsModule { }

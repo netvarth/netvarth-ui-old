@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Messages } from '../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
@@ -26,7 +26,7 @@ export class ConfirmPaymentLinkComponent implements OnInit {
   oops_cap = Messages.OOPS_CAP;
   not_reg_customer_cap = Messages.CUSTOMER_NOT_REGISTER_CAP;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   tday = new Date();
@@ -71,7 +71,7 @@ export class ConfirmPaymentLinkComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ConfirmPaymentLinkComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     private provider_servicesobj: ProviderServices,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from "@angular/forms";
 import { Messages } from "../../../../../../shared/constants/project-messages";
 import { FormMessageDisplayService } from "../../../../../../shared/modules/form-message-display/form-message-display.service";
 import { ProviderServices } from "../../../../../services/provider-services.service";
@@ -41,7 +41,7 @@ export class BranchUserDetailComponent implements OnInit {
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   select_subdomain_cap = Messages.SELECT_SB_DMN_CAP;
   subdomain_displayname = projectConstantsLocal.SUBDOMAIN_DISPLAYNAME;
-  userForm: FormGroup;
+  userForm: UntypedFormGroup;
   char_count = 0;
   max_char_count = 250;
   roles: any;
@@ -134,7 +134,7 @@ export class BranchUserDetailComponent implements OnInit {
     private shared_services: SharedServices,
     private router: Router,
     private dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private lStorageService: LocalStorageService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,

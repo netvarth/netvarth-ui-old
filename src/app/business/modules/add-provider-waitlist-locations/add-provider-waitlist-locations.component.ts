@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderDataStorageService } from '../../services/provider-datastorage.service';
 import { ProviderServices } from '../../services/provider-services.service';
@@ -36,7 +36,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   save_btn = Messages.SAVE_BTN;
   existing_schedule_cap = Messages.EXISTING_SCHEDULE_CAP;
   loc_placeholder = Messages.LOC_PLACEHOLDER;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   schedule_arr: any = [];
@@ -61,7 +61,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AddProviderWaitlistLocationsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     private provider_datastorageobj: ProviderDataStorageService,
@@ -508,7 +508,7 @@ export class AddProviderWaitlistLocationsComponent implements OnInit {
       }
     });
   }
-  public GetControl(form: FormGroup, field: string) {
+  public GetControl(form: UntypedFormGroup, field: string) {
     return form.get(field);
   }
 

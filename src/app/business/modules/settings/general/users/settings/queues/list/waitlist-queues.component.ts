@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { projectConstants } from '../../../../../../../../app.component';
 import { ProviderServices } from '../../../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../../shared/functions/shared-functions';
@@ -40,7 +40,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     services_selected: any = [];
     services_list: any = [];
     servicelist = [];
-    instantQForm: FormGroup;
+    instantQForm: UntypedFormGroup;
     queuedialogRef;
     isCheckin;
     selected_location = null;
@@ -118,7 +118,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         private wordProcessor: WordProcessor,
         private jaldeeTimeService: JaldeeTimeService,
         private dateTimeProcessor: DateTimeProcessor,
-        private fb: FormBuilder) {
+        private fb: UntypedFormBuilder) {
         this.activatedRoot.params.subscribe(params => {
             this.userId = params.id;
         }

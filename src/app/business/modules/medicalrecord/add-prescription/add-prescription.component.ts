@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -27,7 +27,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
   taxable_cap = Messages.TAXABLE_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = '';
   api_success = null;
   parent_id;
@@ -67,7 +67,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
   customer_label = '';
   taxDetails: any = [];
     constructor(private location: Location,
-      private fb: FormBuilder,
+      private fb: UntypedFormBuilder,
       public fed_service: FormMessageDisplayService,
       public sharedfunctionObj: SharedFunctions,
       private medicalService: MedicalrecordService,

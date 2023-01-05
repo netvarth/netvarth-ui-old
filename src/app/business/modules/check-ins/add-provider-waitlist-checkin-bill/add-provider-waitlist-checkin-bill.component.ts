@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { DatePipe, DOCUMENT } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
@@ -110,7 +110,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   update_note_btn = Messages.UPDATE_NOTE;
   @ViewChild('itemservicesearch') item_service_search;
   @ViewChild('itemserviceqty') item_service_qty;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   checkin = null;
@@ -120,7 +120,7 @@ export class AddProviderWaitlistCheckInBillComponent implements OnInit {
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   timeFormat = 'h:mm a';
-  itemServiceSearch: FormControl = new FormControl();
+  itemServiceSearch: UntypedFormControl = new UntypedFormControl();
   services: any = [];
   all_services: any = [];
   coupons: any = [];

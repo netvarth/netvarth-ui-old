@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../../../services/provider-datastorage.service';
@@ -38,7 +38,7 @@ export class AboutMeComponent implements OnInit {
   profile_summary_cap = Messages.SEARCH_PRI_PROF_SUMMARY_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
-  aboutmeForm: FormGroup;
+  aboutmeForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   show_schedule_selection = false;
@@ -85,7 +85,7 @@ export class AboutMeComponent implements OnInit {
   edit_cap = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,

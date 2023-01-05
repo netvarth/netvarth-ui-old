@@ -1,8 +1,8 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import {
-  FormControl,
-  FormGroup,
-  FormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  UntypedFormBuilder,
   Validators
 } from "@angular/forms";
 import { FormMessageDisplayService } from "../../../../shared/modules/form-message-display/form-message-display.service";
@@ -32,7 +32,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   save_btn = Messages.SAVE_BTN;
   delay_cap = Messages.DELAY_CAP;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   queues: any = [];
   api_success = null;
   api_error = null;
@@ -92,7 +92,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   //   page: 1
   // };
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: Router,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -592,7 +592,7 @@ export class AdjustscheduleDelayComponent implements OnInit {
   //   }
   changeCheckbox(data) {
     if (data) {
-      this.amForm.addControl("message", new FormControl(this.default_message));
+      this.amForm.addControl("message", new UntypedFormControl(this.default_message));
     } else {
       this.amForm.removeControl("message");
     }

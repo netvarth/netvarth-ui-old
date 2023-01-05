@@ -4,7 +4,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../shared/services/shared-services';
 import { LocalStorageService } from '../../../../shared/services/local-storage.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -23,7 +23,7 @@ export class InstantQueueComponent implements OnInit {
     fromDateCaption;
     toDateCaption;
     now: string;
-    instantQForm: FormGroup;
+    instantQForm: UntypedFormGroup;
     services_list: any = [];
     servicelist = [];
     sTimeEditable = false;
@@ -43,7 +43,7 @@ export class InstantQueueComponent implements OnInit {
         public sharedfunctionObj: SharedFunctions,
         private wordProcessor: WordProcessor,
         private shared_services: SharedServices,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private lStorageService: LocalStorageService,
         private provider_services: ProviderServices,
         private snackbarService: SnackbarService,

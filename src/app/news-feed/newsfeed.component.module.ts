@@ -20,13 +20,8 @@ import {MatMenuModule} from '@angular/material/menu';
         MatFormFieldModule,
         FormsModule,
         MatMenuModule
-
     ],
-    entryComponents: [
-        
-    ],
-    schemas:[
-    ],
+    schemas: [],
     exports: [
         NewsfeedComponent
     ]

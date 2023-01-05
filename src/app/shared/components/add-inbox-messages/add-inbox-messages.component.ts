@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { projectConstants } from '../../../app.component';
@@ -22,7 +22,7 @@ import { AddproviderAddonComponent } from '../../../business/modules/add-provide
   styleUrls: ['./add-inbox-messages.component.css']
 })
 export class AddInboxMessagesComponent implements OnInit, OnDestroy {
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   cancel_btn_cap = Messages.CANCEL_BTN;
@@ -81,7 +81,7 @@ export class AddInboxMessagesComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<AddInboxMessagesComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public sharedfunctionObj: SharedFunctions,

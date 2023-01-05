@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ReportDataService } from '../reports-data.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -23,7 +23,7 @@ export class CustomerSelectionComponent implements OnInit {
   customer_data: any;
   qParams: any;
   form_data: any;
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
   placeHolder_msg: string;
   customer_label: any;
   reportType: any;
@@ -42,7 +42,7 @@ export class CustomerSelectionComponent implements OnInit {
   constructor(private router: Router,
     private activated_route: ActivatedRoute,
     private report_data_service: ReportDataService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor) {

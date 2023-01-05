@@ -17,7 +17,6 @@ import { ServiceDetailModule } from "../service-detail/service-detail.module";
 import { ConsumerJoinModule } from "../../../ynw_consumer/components/consumer-join/join.component.module";
 import { ConfirmBoxModule } from "../confirm-box/confirm-box.module";
 import { QRCodeGeneratordetailModule } from "../qrcodegenerator/qrcodegeneratordetail.module";
-import { CheckavailabilityModule } from "../checkavailability/checkavaiablity.module";
 import { DomainConfigGenerator } from "../../services/domain-config-generator.service";
 
 const routes: Routes = [
@@ -46,8 +45,7 @@ const routes: Routes = [
     providers: [
         DomainConfigGenerator
     ],
-    exports: [ ProviderDetailComponent ],
-    entryComponents:[CheckavailabilityModule,],
+    exports: [ProviderDetailComponent],
     declarations: [
         ProviderDetailComponent
     ]

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -192,7 +192,7 @@ export class NewReportComponent implements OnInit {
   loan_partner_application_timePeriod: string;
   loan_partner_application_StartDate: any;
   loan_partner_application_EndDate: any;
-  public reportForm: FormGroup;
+  public reportForm: UntypedFormGroup;
   time_period;
   payment_modes;
   payment_status;

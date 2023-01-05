@@ -6,7 +6,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     imports: [
         MatDialogModule
     ],
-    entryComponents: [VisualizeComponent],
     declarations: [VisualizeComponent],
     exports: [VisualizeComponent]
 })

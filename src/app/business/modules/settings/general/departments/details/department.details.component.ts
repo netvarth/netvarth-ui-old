@@ -4,7 +4,7 @@ import { ProviderServices } from '../../../../../services/provider-services.serv
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { MatDialog } from '@angular/material/dialog';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ConfirmBoxComponent } from '../../../../../../shared/components/confirm-box/confirm-box.component';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
@@ -23,7 +23,7 @@ export class DepartmentDetailComponent implements OnInit {
     defaultdepartmentservice: any = [];
     selected_services: any = [];
     services_all: any = [];
-    deptServices = new FormControl();
+    deptServices = new UntypedFormControl();
     add_it_cap = Messages.BPROFILE_ADD_IT_NOW_CAP;
     showAllServices = false;
     servicesjson: any = [];

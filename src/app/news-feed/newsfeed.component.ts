@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormControl } from '@angular/forms';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 import {MatDialog} from '@angular/material/dialog';
 import { AddnewsfeeddialogComponent } from './addnewsfeed/addnewsfeeddialog.component';
@@ -11,20 +11,20 @@ import { AddnewsfeeddialogComponent } from './addnewsfeed/addnewsfeeddialog.comp
     styleUrls: ['./newsfeed.component.css']
   })
   export class NewsfeedComponent implements OnInit {
-    newsfeedform:FormGroup;
+    newsfeedform:UntypedFormGroup;
     disableform=true;
     newsfeeddisplay=false;
-    constructor(private fb: FormBuilder,public dialog: MatDialog){}
+    constructor(private fb: UntypedFormBuilder,public dialog: MatDialog){}
     ngOnInit(): void {
       this.newsfeedform = this.fb.group({
-        newsarray: new FormArray([
+        newsarray: new UntypedFormArray([
           // this.initNewsfeed(),
         ]),
       })
       console.log('form length',this.newsfeedform.value.newsarray.length)
     }
     deletefromnewsfeed(i:any) {
-      const control = <FormArray>this.newsfeedform.get('newsarray');
+      const control = <UntypedFormArray>this.newsfeedform.get('newsarray');
       control.removeAt(i);
     }
     openDialog() {
@@ -45,12 +45,12 @@ import { AddnewsfeeddialogComponent } from './addnewsfeed/addnewsfeeddialog.comp
     //   this.addnewsform()
     // }
     initNewsfeed(data) {
-      return new FormGroup({
-        newsfeedImage: new FormControl(data.newsfeedImage, Validators.required),
-        newsfeedTitle: new FormControl(data.newsfeedTitle, Validators.required),
-        newsfeedDescription: new FormControl(data.newsfeedDescription, Validators.required),
-        newsfeedLink: new FormControl(data.newsfeedLink, Validators.required),
-        category: new FormControl(data.category, Validators.required),
+      return new UntypedFormGroup({
+        newsfeedImage: new UntypedFormControl(data.newsfeedImage, Validators.required),
+        newsfeedTitle: new UntypedFormControl(data.newsfeedTitle, Validators.required),
+        newsfeedDescription: new UntypedFormControl(data.newsfeedDescription, Validators.required),
+        newsfeedLink: new UntypedFormControl(data.newsfeedLink, Validators.required),
+        category: new UntypedFormControl(data.category, Validators.required),
       });
     }
     submit(){
@@ -58,7 +58,7 @@ import { AddnewsfeeddialogComponent } from './addnewsfeed/addnewsfeeddialog.comp
       this.newsfeeddisplay=true;
     }
     addnewsform(data:any) {
-      const control = <FormArray>this.newsfeedform.get('newsarray');
+      const control = <UntypedFormArray>this.newsfeedform.get('newsarray');
       control.push(this.initNewsfeed(data))
       console.log("form checking",this.newsfeedform.value);
     }

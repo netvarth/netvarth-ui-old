@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 // import '../../../../../../../assets/js/pages/custom/wizard/wizard-3';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { TimewindowPopupComponent } from '../../../ordermanager/catalog/timewindowpopup/timewindowpopup.component';
@@ -59,7 +59,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   max_char_count = 500;
   isfocused: boolean;
   coupon_timeslots: any = [];
-  public couponForm: FormGroup;
+  public couponForm: UntypedFormGroup;
   step = 1;
   maxChars = projectConstantsLocal.VALIDATOR_MAX50;
   maxCharslong = projectConstantsLocal.VALIDATOR_MAX500;
@@ -90,7 +90,7 @@ export class CreateCouponComponent implements OnInit, OnDestroy {
   hidemeItems = true;
   maxdiscountRequired=false;
   public keepOriginalOrder = (a, b) => a.key;
-  constructor(private formbuilder: FormBuilder,
+  constructor(private formbuilder: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     private wordProcessor: WordProcessor,

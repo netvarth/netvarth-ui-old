@@ -613,8 +613,8 @@
               <div *ngIf="banksList">
                 <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
                   filterBy="bankName" optionValue="bankName" dropdownIcon="fa fa-caret-down" [showClear]="true"
-                  placeholder="Select Bank" [disabled]="bankverification" (onChange)="banksSelected($event)">
-                  <ng-template let-bank pTemplate="item">
+                  placeholder="Select Bank" [disabled]="bankverification">
+                  <ng-template let-bank>
                     <div class="bank-item">
                       <div>{{bank.bankName}}</div>
                     </div>

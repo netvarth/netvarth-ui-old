@@ -1,6 +1,6 @@
 
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../services/provider-services.service';
@@ -23,21 +23,21 @@ interface Bank {
 })
 export class DisplayboardDetailComponent implements OnInit {
 
-    myControl = new FormControl();
+    myControl = new UntypedFormControl();
     options: string[] = ['One', 'Two', 'Three'];
     filteredOptions: Observable<string[]>;
 
     /** control for the selected bank */
-    public bankCtrl: FormControl = new FormControl();
+    public bankCtrl: UntypedFormControl = new UntypedFormControl();
 
     /** control for the MatSelect filter keyword */
-    public bankFilterCtrl: FormControl = new FormControl();
+    public bankFilterCtrl: UntypedFormControl = new UntypedFormControl();
 
     /** control for the selected bank for multi-selection */
-    public bankMultiCtrl: FormControl = new FormControl();
+    public bankMultiCtrl: UntypedFormControl = new UntypedFormControl();
 
     /** control for the MatSelect filter keyword multi-selection */
-    public qBoardFilterMultictrl: FormControl = new FormControl();
+    public qBoardFilterMultictrl: UntypedFormControl = new UntypedFormControl();
 
     /** list of banks filtered by search keyword */
     public filteredBanks: ReplaySubject<Bank[]> = new ReplaySubject<Bank[]>(1);

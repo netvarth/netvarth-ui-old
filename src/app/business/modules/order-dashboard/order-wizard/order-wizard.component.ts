@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
@@ -104,9 +104,9 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   countryCode;
   jaldeeId: any;
   customer_data: any;
-  searchForm: FormGroup;
-  createCustomer: FormGroup;
-  amForm: FormGroup;
+  searchForm: UntypedFormGroup;
+  createCustomer: UntypedFormGroup;
+  amForm: UntypedFormGroup;
   form_data: any;
   step = 1;
   show_customer = false;
@@ -182,7 +182,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   countryCodePhone='+91';
   tempDataCustomerInfo;
   categoryvalueSelect:boolean=false;
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     private wordProcessor: WordProcessor,
     public router: Router,
     private dialog: MatDialog,

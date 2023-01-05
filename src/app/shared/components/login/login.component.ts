@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
   forgot_password_cap = Messages.FORGOT_PASS_CAP;
   new_user_cap = Messages.NEW_USER_CAP;
   sign_up_here_cap = Messages.SIGNUP_HERE_CAP;
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   api_error = null;
   is_provider = 'true';
   step = 1;
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit {
     this.loginForm = this.fb.group({
       emailId: ['', Validators.pattern(new RegExp(projectConstantsLocal.VALIDATOR_MOBILE_AND_EMAIL))],
       password: ['', Validators.compose([Validators.required])],
-      phone: new FormControl( [Validators.required])
+      phone: new UntypedFormControl( [Validators.required])
     });
   }
   showError() {

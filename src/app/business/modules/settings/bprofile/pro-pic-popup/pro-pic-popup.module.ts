@@ -18,9 +18,6 @@ import { FileService } from '../../../../../shared/services/file-service';
     declarations: [
         ProPicPopupComponent
     ],
-    entryComponents: [
-        ProPicPopupComponent
-    ],
     providers: [
         FileService
     ],

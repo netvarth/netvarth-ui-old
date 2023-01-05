@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { WordProcessor } from '../../../../shared/services/word-processor.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { WordProcessor } from '../../../../shared/services/word-processor.servic
 
 export class TelegramPopupComponent implements OnInit {
   note_placeholder = 'Instructions';
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   checkin_id = null;
@@ -29,7 +29,7 @@ export class TelegramPopupComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<TelegramPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private wordProcessor: WordProcessor
   ) {
     if (this.data) {

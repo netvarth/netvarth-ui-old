@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Inject, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -111,7 +111,7 @@ export class ProviderbWizardComponent implements OnInit, AfterViewInit {
   tbprof;
 
 
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   number_decimal_pattern = '^[0-9]+\.?[0-9]*$';
   number_pattern = projectConstantsLocal.VALIDATOR_NUMBERONLY;
   service;
@@ -238,7 +238,7 @@ export class ProviderbWizardComponent implements OnInit, AfterViewInit {
   };
   expressSignupClicked = false;
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public shared_functions: SharedFunctions,
     public shared_services: SharedServices,
     public provider_services: ProviderServices,
@@ -993,7 +993,7 @@ export class ProviderbWizardComponent implements OnInit, AfterViewInit {
       const value = (this.service['notificationType']) ?
         this.service['notificationType'] : 'email';
       this.amForm.addControl('notificationType',
-        new FormControl(value));
+        new UntypedFormControl(value));
     }
   }
   resetApiErrors() {
@@ -1101,7 +1101,7 @@ export class ProviderbWizardComponent implements OnInit, AfterViewInit {
           this.service['minPrePaymentAmount'] : '';
 
         this.amForm.addControl('minPrePaymentAmount',
-          new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
+          new UntypedFormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
       }
     }
   }

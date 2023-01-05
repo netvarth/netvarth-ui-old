@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 import { DateTimeProcessor } from '../../../shared/services/datetime-processor.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
 import { ProviderServices } from '../../services/provider-services.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmBoxComponent } from '../../shared/confirm-box/confirm-box.component';
@@ -18,7 +18,7 @@ export class BranchesComponent implements OnInit {
   user: any;
   headerName: string = ''
   filter_sidebar: any;
-  statusList: FormGroup;
+  statusList: UntypedFormGroup;
   selectedLabels: any;
   filterapplied = false;
   labelFilterData: any;
@@ -46,7 +46,7 @@ export class BranchesComponent implements OnInit {
     private router: Router,
     // private location: Location,
     private providerServices: ProviderServices,
-    private statusListFormBuilder: FormBuilder,
+    private statusListFormBuilder: UntypedFormBuilder,
     private dateTimeProcessor: DateTimeProcessor,
     private dialog: MatDialog,
     private snackbarService: SnackbarService

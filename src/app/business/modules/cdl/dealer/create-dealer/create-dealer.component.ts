@@ -3,7 +3,7 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../../loans/otp-verify/otp-verify.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { CdlService } from '../../cdl.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { FileService } from '../../../../../shared/services/file-service';
@@ -17,7 +17,7 @@ import { GmapsComponent } from '../../gmaps/gmaps.component';
   styleUrls: ['./create-dealer.component.css']
 })
 export class CreateDealerComponent implements OnInit {
-  createDealer: FormGroup;
+  createDealer: UntypedFormGroup;
   partnerTypes: any;
   partnerCategories: any;
   dealerData: any;
@@ -81,7 +81,7 @@ export class CreateDealerComponent implements OnInit {
     private location: Location,
     private router: Router,
     private dialog: MatDialog,
-    private createDealerFormBuilder: FormBuilder,
+    private createDealerFormBuilder: UntypedFormBuilder,
     private cdlservice: CdlService,
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,

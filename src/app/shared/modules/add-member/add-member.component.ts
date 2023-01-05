@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 // import { ConsumerServices } from '../../services/consumer-services.service';
 import { SharedServices } from '../../services/shared-services';
@@ -31,7 +31,7 @@ export class AddMemberComponent implements OnInit {
   gender = '';
   dob = '';
   dobholder = '';
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   parent_id;

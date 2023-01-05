@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { ProviderServices } from '../../../../../../services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../../../../shared/services/snackbar.service';
@@ -19,7 +19,7 @@ import { DateTimeProcessor } from '../../../../../../../shared/services/datetime
   styleUrls: ['./publish-dialog.component.css']
 })
 export class PublishDialogComponent implements OnInit {
-  public publishForm: FormGroup;
+  public publishForm: UntypedFormGroup;
   couponId: any;
   coupon: any;
   api_error='';
@@ -35,7 +35,7 @@ export class PublishDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<PublishDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formbuilder: FormBuilder,
+    private formbuilder: UntypedFormBuilder,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor,

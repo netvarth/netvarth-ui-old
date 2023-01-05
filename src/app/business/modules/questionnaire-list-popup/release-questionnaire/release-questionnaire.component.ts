@@ -3,7 +3,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
@@ -31,7 +31,7 @@ export class ReleaseQuestionnaireComponent implements OnInit {
   isTelegram = false;
   is_noSMS = false;
   countryCode;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   loading = true;
   qnrLink;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
@@ -43,7 +43,7 @@ export class ReleaseQuestionnaireComponent implements OnInit {
     private provider_services: ProviderServices,
     private snackbarService: SnackbarService,
     private dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private wordProcessor: WordProcessor,
     private dateTimeProcessor: DateTimeProcessor,
     public fed_service: FormMessageDisplayService) {

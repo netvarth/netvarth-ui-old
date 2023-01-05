@@ -15,9 +15,6 @@ import { CapitalizeFirstPipeModule } from '../../pipes/capitalize.module';
         FormsModule,
         CapitalizeFirstPipeModule
     ],
-    entryComponents: [
-        CheckinAddMemberComponent
-    ],
     declarations: [
         CheckinAddMemberComponent
     ],

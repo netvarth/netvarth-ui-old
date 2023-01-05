@@ -1,34 +1,34 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 // Import RxJs required methods
 
 @Injectable()
 export class FormMessageDisplayService {
 
-  isFieldValid(form: FormGroup, field: string) {
+  isFieldValid(form: UntypedFormGroup, field: string) {
     return !form.get(field).valid && form.get(field).touched;
   }
 
-  displayFieldCss(form: FormGroup, field: string) {
+  displayFieldCss(form: UntypedFormGroup, field: string) {
     return {
       'has-error': this.isFieldValid(form, field),
       'has-feedback': this.isFieldValid(form, field)
     };
   }
 
-  validateAllFormFields(formGroup: FormGroup) {
+  validateAllFormFields(formGroup: UntypedFormGroup) {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
-      if (control instanceof FormControl) {
+      if (control instanceof UntypedFormControl) {
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
+      } else if (control instanceof UntypedFormGroup) {
         this.validateAllFormFields(control);
       }
     });
   }
 
-  getErrorMessage(form: FormGroup, field: string, errorMsgs: Object) {
+  getErrorMessage(form: UntypedFormGroup, field: string, errorMsgs: Object) {
     const error_ob = form.get(field).errors;
     if (error_ob == null) {
       return null;

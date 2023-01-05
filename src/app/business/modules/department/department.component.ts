@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -9,7 +9,7 @@ import { projectConstantsLocal } from '../../../shared/constants/project-constan
     'templateUrl': './department.component.html'
 })
 export class DepartmentComponent implements OnInit, OnChanges {
-    deptForm: FormGroup;
+    deptForm: UntypedFormGroup;
     @Input() action;
     @Input() department;
     @Output() actionPerformed = new EventEmitter<any>();
@@ -22,7 +22,7 @@ export class DepartmentComponent implements OnInit, OnChanges {
     maxcharDept_code = projectConstantsLocal.VALIDATOR_MAX15_DEPT_CDE;
     button_title = 'Save';
     constructor(
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         public fed_service: FormMessageDisplayService,
         public provider_services: ProviderServices
     ) { }

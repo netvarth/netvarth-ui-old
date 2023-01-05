@@ -16,7 +16,7 @@ import { OrderItemsComponent } from '../order-items/order-items.component';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { AddressComponent } from '../order-wizard/address/address.component';
@@ -121,7 +121,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   selectedAddress: string;
   storeaddress: string;
   disabledNextbtn = false;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   nextAvailableTimeQueue: any;
   image_list_popup: Image[];
   imagelist: any = [];
@@ -150,7 +150,7 @@ export class OrderEditComponent implements OnInit, OnDestroy {
   @ViewChild('closeDatepickerModal') private datepickerModal: ElementRef;
   private onDestroy$: Subject<void> = new Subject<void>();
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public router: Router,
     public route: ActivatedRoute,
     private location: Location,

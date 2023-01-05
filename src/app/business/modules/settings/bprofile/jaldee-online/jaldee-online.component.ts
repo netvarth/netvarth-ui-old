@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../../../shared/services/shared-services';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../shared/constants/project-messages';
@@ -35,7 +35,7 @@ export class JaldeeOnlineComponent implements OnInit {
   jaldee_online_status_str: string;
   editMode = 3;
   public_search: boolean;
-  customForm: FormGroup;
+  customForm: UntypedFormGroup;
   showCustomId = false;
   licenseMetadata: any = [];
   licenseMetrics: any = [];
@@ -55,7 +55,7 @@ export class JaldeeOnlineComponent implements OnInit {
     private shared_services: SharedServices,
     public shared_functions: SharedFunctions,
     public fed_service: FormMessageDisplayService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private routerobj: Router,
     private dialog: MatDialog,
     private groupService: GroupStorageService,

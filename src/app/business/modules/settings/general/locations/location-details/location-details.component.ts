@@ -6,7 +6,7 @@ import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import { projectConstants } from '../../../../../../app.component';
-import { Validators, FormBuilder, FormGroup } from '@angular/forms';
+import { Validators, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -69,8 +69,8 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
   isCheckin;
   active_Schedules: any = [];
   action;
-  amForm: FormGroup;
-  locamForm: FormGroup;
+  amForm: UntypedFormGroup;
+  locamForm: UntypedFormGroup;
   schedule_arr: any = [];
   sel_badges: any = [];
   schedule_json: any = [];
@@ -100,7 +100,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     private activated_route: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private provider_shared_functions: ProviderSharedFuctions,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     private _location: Location,
     private groupService: GroupStorageService,
@@ -391,7 +391,7 @@ export class LocationDetailsComponent implements OnInit, OnDestroy {
     };
     this.router.navigate(['provider', 'settings', 'q-manager', 'queues', queue.id], navigationExtras);
   }
-  public GetControl(form: FormGroup, field: string) {
+  public GetControl(form: UntypedFormGroup, field: string) {
     return form.get(field);
   }
   showGooglemap() {

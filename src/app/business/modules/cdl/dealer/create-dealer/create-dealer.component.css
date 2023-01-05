@@ -161,3 +161,7 @@
 ::ng-deep .p-dropdown {
   width: 100% !important;
 }
+
+::ng-deep .p-dropdown ul  {
+  max-width: 300px !important;
+}

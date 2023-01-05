@@ -1,6 +1,6 @@
 import { Location } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { UntypedFormBuilder } from "@angular/forms";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { LocalStorageService } from "../../../../shared/services/local-storage.service";
 import { SnackbarService } from "../../../../shared/services/snackbar.service";
@@ -19,7 +19,7 @@ export class CreateBranchComponent implements OnInit {
   branchStatus: any;
   locationId: any;
   constructor(
-    private createBranchFormBuilder: FormBuilder,
+    private createBranchFormBuilder: UntypedFormBuilder,
     private providerServices: ProviderServices,
     private snackbarService: SnackbarService,
     private router: Router,

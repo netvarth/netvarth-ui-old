@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { Messages } from '../../../../../../shared/constants/project-messages';
@@ -27,7 +27,7 @@ export class PrivacyDetailComponent implements OnInit {
   save_btn_cap = Messages.SAVE_BTN;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   mobile_cap = Messages.MOBILE_CAP;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   parent_id;

@@ -7,7 +7,7 @@ import { SharedFunctions } from '../../../../../../../shared/functions/shared-fu
 import { ProviderSharedFuctions } from '../../../../../../functions/provider-shared-functions';
 // import { projectConstants } from '../../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../../shared/constants/project-constants';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
@@ -81,11 +81,11 @@ export class DisplayboardQSetDetailComponent implements OnInit, OnChanges {
     servMultiCtrl: any = [];
     labelMultiCtrl: any = [];
     userMultiCtrl: any = [];
-    deptMultiFilterCtrl: FormControl = new FormControl();
-    userMultiFilterCtrl: FormControl = new FormControl();
-    serviceMultiFilterCtrl: FormControl = new FormControl();
-    qMultiFilterCtrl: FormControl = new FormControl();
-    labelMultiFilterCtrl: FormControl = new FormControl();
+    deptMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
+    userMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
+    serviceMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
+    qMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
+    labelMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
     onDestroy = new Subject<void>();
     qboardConditions: any = [];
     labelList = new Object();

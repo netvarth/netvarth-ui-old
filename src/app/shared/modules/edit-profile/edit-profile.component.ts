@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import * as moment from 'moment';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
@@ -45,7 +45,7 @@ export class EditProfileComponent implements OnInit {
   family_members_cap = Messages.FAMILY_MEMBERS;
   dashboard_cap = Messages.DASHBOARD_TITLE;
   country_code = Messages.MOB_NO_PREFIX_CAP;
-  editProfileForm: FormGroup;
+  editProfileForm: UntypedFormGroup;
   private subs = new SubSink();
   api_error = null;
   api_success = null;
@@ -77,7 +77,7 @@ export class EditProfileComponent implements OnInit {
   fromApp = false;
   customLink = false;
   tel_stat: string;
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,

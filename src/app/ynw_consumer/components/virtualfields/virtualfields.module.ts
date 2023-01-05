@@ -28,9 +28,6 @@ import { MatInputModule } from "@angular/material/input";
     declarations: [
         VirtualFieldsComponent
     ],
-    entryComponents: [
-        VirtualFieldsComponent
-    ],
     exports: [
         VirtualFieldsComponent
     ]

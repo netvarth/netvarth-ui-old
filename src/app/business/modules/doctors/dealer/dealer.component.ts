@@ -5,7 +5,7 @@ import { GroupStorageService } from '../../../../shared/services/group-storage.s
 import { CdlService } from '../cdl.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-dealer',
@@ -31,7 +31,7 @@ export class DealerComponent implements OnInit {
   statusDisplayName: any;
   filters: any;
   dealerStatus = projectConstantsLocal.DEALER_STATUS;
-  statusList: FormGroup;
+  statusList: UntypedFormGroup;
   spInternalStatus: any;
   minday = new Date(1900, 0, 1);
   maxday = new Date();

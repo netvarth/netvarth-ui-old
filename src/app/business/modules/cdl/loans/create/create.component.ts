@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 // import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { FileService } from '../../../../../shared/services/file-service';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
@@ -91,7 +91,7 @@ export class CreateComponent implements OnInit {
   office: any = '';
   emi: any = '';
   remarks: any = '';
-  createLoan: FormGroup;
+  createLoan: UntypedFormGroup;
   loanApplication: any;
   loanCategories: any;
   loanProducts: any;
@@ -156,7 +156,7 @@ export class CreateComponent implements OnInit {
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
     private activated_route: ActivatedRoute,
-    private createLoanFormBuilder: FormBuilder,
+    private createLoanFormBuilder: UntypedFormBuilder,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private cdlService: CdlService,

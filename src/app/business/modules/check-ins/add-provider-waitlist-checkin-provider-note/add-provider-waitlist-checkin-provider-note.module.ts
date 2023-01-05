@@ -27,9 +27,6 @@ import { AddProviderWaitlistCheckInProviderNoteComponent } from './add-provider-
     declarations: [
         AddProviderWaitlistCheckInProviderNoteComponent
     ],
-    entryComponents: [
-        AddProviderWaitlistCheckInProviderNoteComponent
-    ],
     exports: [AddProviderWaitlistCheckInProviderNoteComponent]
 })
 export class AddProviderWaitlistCheckInProviderNoteModule { }

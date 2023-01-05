@@ -2,7 +2,7 @@ import { Component, Inject, Output, EventEmitter, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedServices } from '../../services/shared-services';
 import { SharedFunctions } from '../../functions/shared-functions';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { projectConstants } from '../../../app.component';
 import { Messages } from '../../constants/project-messages';
@@ -36,9 +36,9 @@ export class ForgotPasswordComponent {
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   custmerlogpage = 'custlogpage';
   fp = new ForgotPasswordModel();
-  fpForm: FormGroup;
-  fpForm2: FormGroup;
-  fpForm3: FormGroup;
+  fpForm: UntypedFormGroup;
+  fpForm2: UntypedFormGroup;
+  fpForm3: UntypedFormGroup;
   step = 1;
   api_error = null;
   api_success = null;
@@ -64,7 +64,7 @@ export class ForgotPasswordComponent {
     public dialogRef: MatDialogRef<ForgotPasswordComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private shared_services: SharedServices,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
     public shared_functions: SharedFunctions,
@@ -87,8 +87,8 @@ export class ForgotPasswordComponent {
    
       switch (form_num) {
         case 1: this.fpForm = this.fb.group({
-          phone: new FormControl(undefined, [Validators.required]),
-          phonenumber: new FormControl(undefined)
+          phone: new UntypedFormControl(undefined, [Validators.required]),
+          phonenumber: new UntypedFormControl(undefined)
         });
           break;
       }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { projectConstants } from '../../../../../../app.component';
@@ -24,7 +24,7 @@ export class DiscountDetailsComponent implements OnInit {
   description_mand_cap = Messages.DESCRIPTION_MAND_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   parent_id;
@@ -43,7 +43,7 @@ export class DiscountDetailsComponent implements OnInit {
   discountname: any;
   discountcaption = 'Add Discount';
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,

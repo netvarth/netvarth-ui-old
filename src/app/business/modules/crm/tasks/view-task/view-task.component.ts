@@ -9,7 +9,7 @@ import { SnackbarService } from "../../../../../shared/services/snackbar.service
 import { SelectAttachmentComponent } from "./select-attachment/select-attachment.component";
 import { CrmSelectMemberComponent } from "../../../../shared/crm-select-member/crm-select-member.component";
 import { SharedServices } from "../../../../../shared/services/shared-services";
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
@@ -191,7 +191,7 @@ export class ViewTaskComponent implements OnInit {
     private router: Router,
     public shared_services: SharedServices,
     private snackbarService: SnackbarService,
-    private createTaskFormBuilder: FormBuilder,
+    private createTaskFormBuilder: UntypedFormBuilder,
     private groupService: GroupStorageService,
     private datePipe: DatePipe,
   ) { }

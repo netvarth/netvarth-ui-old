@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators, UntypedFormArray } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { FormBase } from './form-base';
 
@@ -12,14 +12,14 @@ export class FormControlService {
     questions.forEach(question => {
       if (question.controlType === 'datagrid') {
         // group[question.key] = new FormArray([this.toFormArray(question['columns'])]);
-        group[question.key] = new FormArray(this.toArrayFormArray(question['columns']));
+        group[question.key] = new UntypedFormArray(this.toArrayFormArray(question['columns']));
       } else if (question.controlType === 'enumlist') {
-        group[question.key] = new FormArray([this.toFormControlArray(question)]);
+        group[question.key] = new UntypedFormArray([this.toFormControlArray(question)]);
       } else {
         group[question.key] = this.toFormControl(question);
       }
     });
-    return { 'form': new FormGroup(group), 'messages': this.error_message };
+    return { 'form': new UntypedFormGroup(group), 'messages': this.error_message };
   }
   toFormControl(question) {
     const validators = [];
@@ -47,9 +47,9 @@ export class FormControlService {
         'Please enter a valid URL');
     }
     if (validators.length !== 0) {
-      return new FormControl(question.value || '', Validators.compose(validators));
+      return new UntypedFormControl(question.value || '', Validators.compose(validators));
     } else {
-      return new FormControl(question.value || '');
+      return new UntypedFormControl(question.value || '');
     }
   }
   createError(question, cond, message) {
@@ -69,7 +69,7 @@ export class FormControlService {
     questions.forEach(question => {
       array[question.key] = this.toFormControl(question);
     });
-    return new FormGroup(array);
+    return new UntypedFormGroup(array);
   }
   toFormControlArray(questions) {
     const array: any = {};
@@ -77,9 +77,9 @@ export class FormControlService {
     const values = (questions['value']) ? questions['value'] : [];
     check_columns.forEach(columns => {
       const checked = (this.checkEnumListInValue(columns.name, values) === -1) ? false : true;
-      array[columns.name] = new FormControl(checked);
+      array[columns.name] = new UntypedFormControl(checked);
     });
-    return new FormGroup(array);
+    return new UntypedFormGroup(array);
   }
   checkEnumListInValue(key, values) {
     if (values.length > 0) {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../services/provider-services.service';
@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 export class AddressComponent implements OnInit {
   customer: any;
   disableSave: boolean;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   formMode: any;
   exist_add: any = [];
   edit_address: any;
@@ -29,7 +29,7 @@ export class AddressComponent implements OnInit {
     private dialogRef: MatDialogRef<AddressComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,
     private snackbarService: SnackbarService

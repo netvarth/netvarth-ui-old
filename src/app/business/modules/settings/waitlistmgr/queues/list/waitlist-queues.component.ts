@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { projectConstants } from '../../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { ProviderServices } from '../../../../../services/provider-services.service';
@@ -40,7 +40,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
     services_selected: any = [];
     services_list: any = [];
     servicelist = [];
-    instantQForm: FormGroup;
+    instantQForm: UntypedFormGroup;
     queuedialogRef;
     isCheckin;
     selected_location = null;
@@ -109,7 +109,7 @@ export class WaitlistQueuesComponent implements OnInit, OnDestroy {
         private shared_services: SharedServices,
         public fed_service: FormMessageDisplayService,
         private dialog: MatDialog,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         private groupService: GroupStorageService,
         private lStorageService: LocalStorageService,
         private snackbarService: SnackbarService,

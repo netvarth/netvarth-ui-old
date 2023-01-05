@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import {
-  FormGroup,
-  FormBuilder,
+  UntypedFormGroup,
+  UntypedFormBuilder,
   Validators,
-  FormControl
+  UntypedFormControl
 } from "@angular/forms";
 import { FormMessageDisplayService } from "../../../../shared/modules/form-message-display/form-message-display.service";
 import { ProviderServices } from "../../../services/provider-services.service";
@@ -46,7 +46,7 @@ export class CustomerCreateComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   save_btn = Messages.SAVE_BTN;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   step = 1;
@@ -140,7 +140,7 @@ export class CustomerCreateComponent implements OnInit {
   constructor(
     // public dialogRef: MatDialogRef<AddProviderCustomerComponent>,
     // @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,
@@ -468,13 +468,13 @@ export class CustomerCreateComponent implements OnInit {
         this.customidFormat.customerSeriesEnum === "MANUAL"
       ) {
         if (this.thirdParty) {
-          this.amForm.addControl("customer_id", new FormControl(""));
+          this.amForm.addControl("customer_id", new UntypedFormControl(""));
           this.customerPlaceholder = this.customer_label + " id";
           this.getCustomerCount();
         } else {
           this.amForm.addControl(
             "customer_id",
-            new FormControl("", Validators.required)
+            new UntypedFormControl("", Validators.required)
           );
           this.customerPlaceholder = this.customer_label + " id *";
         }

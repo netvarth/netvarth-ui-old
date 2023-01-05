@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';;
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Router, ActivatedRoute, NavigationExtras, NavigationEnd } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../constants/project-constants';
 import { LoginComponent } from '../../../components/login/login.component';
 import { SharedFunctions } from '../../../functions/shared-functions';
@@ -28,7 +28,7 @@ export class ProviderCustomLoginComponent implements OnInit {
   mobilenumber;
   password;
   document;
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   api_error = null;
   is_provider = 'true';
   step = 1;
@@ -60,7 +60,7 @@ export class ProviderCustomLoginComponent implements OnInit {
     public shared_services: SharedServices,
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private activateRoute: ActivatedRoute,
     private lStorageService: LocalStorageService,
     private sessionStorageService: SessionStorageService,

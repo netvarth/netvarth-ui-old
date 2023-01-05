@@ -14,9 +14,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     declarations: [
         ProviderWaitlistCheckInConsumerNoteComponent
     ],
-    entryComponents: [
-        ProviderWaitlistCheckInConsumerNoteComponent
-    ],
     exports: [ProviderWaitlistCheckInConsumerNoteComponent]
 })
 export class ProviderWaitlistCheckInConsumerNoteModule { }

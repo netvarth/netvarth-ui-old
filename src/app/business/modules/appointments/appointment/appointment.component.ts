@@ -8,7 +8,7 @@ import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import * as moment from 'moment';
 import { ProviderServices } from '../../../services/provider-services.service';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
@@ -171,7 +171,7 @@ export class AppointmentComponent implements OnInit {
         caption: []
     };
     activeWt;
-    searchForm: FormGroup;
+    searchForm: UntypedFormGroup;
     apptTime = '';
     board_count = 0;
     allSlots: any = [];
@@ -282,7 +282,7 @@ export class AppointmentComponent implements OnInit {
     tempDataCustomerInfo;
     loading: boolean;
     constructor(public fed_service: FormMessageDisplayService,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,

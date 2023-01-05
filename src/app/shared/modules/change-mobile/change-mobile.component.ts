@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
@@ -34,7 +34,7 @@ export class ChangeMobileComponent implements OnInit {
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
   changemob_cap = Messages.CHANGE_MOB_CAP;
   dashboard_cap = Messages.DASHBOARD_TITLE;
-  spForm: FormGroup;
+  spForm: UntypedFormGroup;
   private subs = new SubSink();
   api_error = null;
   api_success = null;
@@ -52,7 +52,7 @@ export class ChangeMobileComponent implements OnInit {
   customId: any;
   theme: any;
   fromApp: boolean;
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
@@ -30,7 +30,7 @@ export class ChangePasswordComponent implements OnInit {
   add_change_email_cap = Messages.ADD_CHANGE_EMAIL;
   family_members_cap = Messages.FAMILY_MEMBERS;
   dashboard_cap = Messages.DASHBOARD_TITLE;
-  spForm: FormGroup;
+  spForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   curtype;
@@ -39,7 +39,7 @@ export class ChangePasswordComponent implements OnInit {
   accountId: any;
   private subs = new SubSink();
   theme: any;
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     public shared_functions: SharedFunctions,

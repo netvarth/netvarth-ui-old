@@ -3,7 +3,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { projectConstants } from '../../../../../../app.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
@@ -37,7 +37,7 @@ export class ItemDetailsComponent implements OnInit {
     detail_desc_cap = Messages.DETAIL_DESC_CAP;
     status_cap = Messages.COUPONS_STATUS_CAP;
     item_detail_cap = Messages.ITEM_DETAIL_CAP;
-    amForm: FormGroup;
+    amForm: UntypedFormGroup;
     api_error = null;
     api_success = null;
     parent_id;
@@ -129,7 +129,7 @@ export class ItemDetailsComponent implements OnInit {
         private activated_route: ActivatedRoute,
         private router: Router,
         public dialog: MatDialog,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         public fed_service: FormMessageDisplayService,
         private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,

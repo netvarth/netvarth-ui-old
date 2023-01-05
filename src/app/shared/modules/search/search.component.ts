@@ -1,6 +1,6 @@
 /* tslint:disable:forin */
 import { Component, OnInit, Input, Output, EventEmitter, DoCheck, ViewChild, ElementRef, OnChanges, HostListener } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatSelect } from '@angular/material/select';
@@ -46,9 +46,9 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
   @Input() passedkwdet: any = [];
   @Input() passedRefine: any = [];
   @Output() searchclick = new EventEmitter<any>();
-  myControl_prov: FormControl = new FormControl();
-  myControl_loc: FormControl = new FormControl();
-  myControl_domain: FormControl = new FormControl();
+  myControl_prov: UntypedFormControl = new UntypedFormControl();
+  myControl_loc: UntypedFormControl = new UntypedFormControl();
+  myControl_domain: UntypedFormControl = new UntypedFormControl();
   public domainlist_data;
   public location_exists: boolean;
   public location_data;

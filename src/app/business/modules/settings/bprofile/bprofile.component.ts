@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter, Output, ViewChild, ElementRef, ChangeD
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { projectConstants } from '../../../../app.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { ProviderDataStorageService } from '../../../services/provider-datastorage.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
@@ -320,7 +320,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
   isCheckin;
   qrdialogRef: any;
   editMode = 3;
-  customForm: FormGroup;
+  customForm: UntypedFormGroup;
   custId;
   active_user;
   // frm_lang_cap = '';
@@ -387,7 +387,7 @@ export class BProfileComponent implements OnInit, AfterViewChecked, OnDestroy {
     private provider_datastorage: ProviderDataStorageService,
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
-    private fb: FormBuilder, private galleryService: GalleryService,
+    private fb: UntypedFormBuilder, private galleryService: GalleryService,
     private dialog: MatDialog, private angular_meta: Meta,
     public shared_functions: SharedFunctions,
     private snackbarService: SnackbarService,

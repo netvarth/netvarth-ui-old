@@ -1,7 +1,7 @@
 
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { interval as observableInterval, Subscription } from 'rxjs';
@@ -43,8 +43,8 @@ export class ProvidersignupComponent implements OnInit {
   ok_btn_cap = Messages.OK_BTN;
   signupp_cap = Messages.SIGNUPP_CAP;
   more_signup = Messages.MORE_SIGNUP;
-  corporateaction: FormGroup;
-  bankaction: FormGroup;
+  corporateaction: UntypedFormGroup;
+  bankaction: UntypedFormGroup;
   license_description;
   business_domains;
   packages;
@@ -67,7 +67,7 @@ export class ProvidersignupComponent implements OnInit {
   };
   selectedDomain = null;
   selectedSubDomain = null;
-  signupForm: FormGroup;
+  signupForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   is_provider = 'true';
@@ -114,8 +114,8 @@ export class ProvidersignupComponent implements OnInit {
   seconds_cap = Messages.SECONDS_CAP;
   enter_email_cap = Messages.ENTER_EMAIL_CAP;
   resend_btn_cap = Messages.RESEND_BTN;
-  otp_form: FormGroup;
-  email_form: FormGroup;
+  otp_form: UntypedFormGroup;
+  email_form: UntypedFormGroup;
   buttonclicked = false;
   email_otp_req = false;
   otp_email = null;
@@ -159,7 +159,7 @@ export class ProvidersignupComponent implements OnInit {
   claimDetails;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder, public fed_service: FormMessageDisplayService,
+    private fb: UntypedFormBuilder, public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices, public activatedRoute: ActivatedRoute,
     private provider_services: ProviderServices,
     public shared_functions: SharedFunctions,

@@ -24,9 +24,6 @@ import { AddProviderAddonsModule } from '../../add-provider-addons/add-provider-
     declarations: [
         CheckinDetailsSendComponent
     ],
-    entryComponents: [
-        CheckinDetailsSendComponent
-    ],
     exports: [CheckinDetailsSendComponent]
 })
 export class CheckinDetailsSendModule { }

@@ -18,7 +18,7 @@ import { UploadPrescriptionComponent } from './upload-prescription/upload-prescr
 import { DrugListComponent } from './drug-list/drug-list.component';
 import { UploadDigitalSignatureComponent } from './upload-digital-signature/upload-digital-signature.component';
 import { Location } from '@angular/common';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { ConfirmBoxComponent } from '../../../shared/confirm-box/confirm-box.component';
@@ -98,7 +98,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
   uploadsignRef: any;
 
   //add prescription  variable
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = '';
   formMode: any;
   rupee_symbol = '₹';
@@ -182,7 +182,7 @@ export class PrescriptionComponent implements OnInit, OnChanges {
     private wordProcessor: WordProcessor,
     private groupService: GroupStorageService,
     private location: Location,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
   ) {
     this.router.routeReuseStrategy.shouldReuseRoute = function () {

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { Messages } from '../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
@@ -15,7 +15,7 @@ export class SearchMoreOptionsComponent implements OnInit {
   other_filters_cap = Messages.OTHER_FILTERS_CAP;
   search_cap = Messages.SEARCH_CAP;
 
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   @Input() passedRefine: any = [];

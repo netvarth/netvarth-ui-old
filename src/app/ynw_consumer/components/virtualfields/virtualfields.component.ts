@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { S3UrlProcessor } from '../../../shared/services/s3-url-processor.service';
@@ -27,7 +27,7 @@ import { LocalStorageService } from '../../../../app/shared/services/local-stora
 
 export class VirtualFieldsComponent implements OnInit {
   lngknown = 'yes';
-  virtualForm: FormGroup;
+  virtualForm: UntypedFormGroup;
   details: any;
   gender_cap = Messages.GENDER_CAP;
   selectedLocation;
@@ -75,7 +75,7 @@ export class VirtualFieldsComponent implements OnInit {
   languageSelected: any = [];
   iseditLanguage=false;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     @Inject(MAT_DIALOG_DATA) public dialogData: any,
     public dialogRef: MatDialogRef<VirtualFieldsComponent>,
     private wordProcessor: WordProcessor,

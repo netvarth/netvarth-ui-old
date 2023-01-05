@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 @Component({
     selector: 'app-addnewsfeeddialog',
@@ -8,18 +8,18 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
     styleUrls: ['./addnewsfeeddialog.component.css']
   })
   export class AddnewsfeeddialogComponent implements OnInit {
-    newsfeedform:FormGroup;
+    newsfeedform:UntypedFormGroup;
     
-    constructor(private fb: FormBuilder,public dialogRef: MatDialogRef<'addnews'>, @Inject(MAT_DIALOG_DATA) public data: any){
+    constructor(private fb: UntypedFormBuilder,public dialogRef: MatDialogRef<'addnews'>, @Inject(MAT_DIALOG_DATA) public data: any){
 
     }
     ngOnInit(): void {
         this.newsfeedform = this.fb.group({
-        newsfeedImage: new FormControl('../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.jpg', Validators.required),
-        newsfeedTitle: new FormControl('Newsfeed title', Validators.required),
-        newsfeedDescription: new FormControl('Lorem ipsum dolor sit amet consectetur adipisicing elit.e optio atque', Validators.required),
-        newsfeedLink: new FormControl('www.google.com', Validators.required),
-        category: new FormControl('Category', Validators.required),
+        newsfeedImage: new UntypedFormControl('../../assets/templateimages/bruno-rodrigues-279xIHymPYY-unsplash.jpg', Validators.required),
+        newsfeedTitle: new UntypedFormControl('Newsfeed title', Validators.required),
+        newsfeedDescription: new UntypedFormControl('Lorem ipsum dolor sit amet consectetur adipisicing elit.e optio atque', Validators.required),
+        newsfeedLink: new UntypedFormControl('www.google.com', Validators.required),
+        category: new UntypedFormControl('Category', Validators.required),
         })
     }
     NewsfeedTitlerrormessage() {

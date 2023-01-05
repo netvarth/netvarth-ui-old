@@ -7,7 +7,7 @@ import { AddAddressComponent } from './add-address/add-address.component';
 import { SharedServices } from '../../../services/shared-services';
 import { projectConstants } from '../../../../app.component';
 import { ConsumerJoinComponent } from '../../../../ynw_consumer/components/consumer-join/join.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
@@ -107,8 +107,8 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   screenWidth: number;
   no_of_grids: number;
   isLinear = true;
-  loginForm: FormGroup;
-  storeContact: FormGroup;
+  loginForm: UntypedFormGroup;
+  storeContact: UntypedFormGroup;
   choose_type = 'store';
   action: any = '';
   catalog_Id: any;
@@ -235,7 +235,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     public route: ActivatedRoute,
     private dialog: MatDialog,
     private shared_services: SharedServices,
-    private _formBuilder: FormBuilder,
+    private _formBuilder: UntypedFormBuilder,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private lStorageService: LocalStorageService,

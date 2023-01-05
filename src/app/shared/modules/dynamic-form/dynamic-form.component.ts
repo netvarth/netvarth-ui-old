@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Messages } from '../../constants/project-messages';
 import { SharedFunctions } from '../../functions/shared-functions';
@@ -20,7 +20,7 @@ export class DynamicFormComponent implements OnInit {
   @Output() retonFormSubmit: EventEmitter<any> = new EventEmitter();
   @Output() cancelClick = new EventEmitter<any>();
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   messages = [];
   payLoad = '';
   api_error = null;

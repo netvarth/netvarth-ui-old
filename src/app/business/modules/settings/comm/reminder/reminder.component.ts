@@ -5,7 +5,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { ProviderServices } from "../../../../services/provider-services.service";
 import { Observable,of } from "rxjs";
 import { SnackbarService } from "../../../../../shared/services/snackbar.service";
-import { FormGroup,FormBuilder, Validators} from "@angular/forms";
+import { UntypedFormGroup,UntypedFormBuilder, Validators} from "@angular/forms";
 import { FormMessageDisplayService } from "../../../../../shared/modules/form-message-display/form-message-display.service";
 import { CreateReminderComponent } from "./create-reminder/create-reminder.component";
 import { GroupStorageService } from "../../../../../shared/services/group-storage.service";
@@ -23,7 +23,7 @@ declare var $: any;
 })
 export class ReminderComponent implements OnInit {
   isCreate: boolean = false;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   tempAcId: any;
   phone: any;
   filteredCustomers: Observable<string[]>;
@@ -70,7 +70,7 @@ export class ReminderComponent implements OnInit {
     totalCnt: 0,
     perPage: this.filter.page_count
   };
-  searchForm: FormGroup;
+  searchForm: UntypedFormGroup;
   categoryForSearchingarray = ['Search with PhoneNumber','Search with Name or ID', 'Search with Email ID'];
   categoryvalue = 'Search with PhoneNumber';
   countryCodePhone = '+91';
@@ -93,7 +93,7 @@ export class ReminderComponent implements OnInit {
     private router: Router,
     public fed_service: FormMessageDisplayService,
     public location: Location,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialog: MatDialog,
     private providerService: ProviderServices,
     private snackbarService: SnackbarService,

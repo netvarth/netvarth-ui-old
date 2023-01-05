@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { SelectionService } from '../../../../../../shared/services/selectionService';
@@ -42,7 +42,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
   customer_label_upper = '';
   appointment = false;
   api_loading = false;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   schedule_arr: any = [];
   holdloc_list: any = [];
   loc_list: any = [];
@@ -106,7 +106,7 @@ export class WaitlistQueueDetailComponent implements OnInit {
     private _location: Location,
     private activated_route: ActivatedRoute,
     private selectionService: SelectionService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     private snackbarService: SnackbarService,
     private wordProcessor: WordProcessor,

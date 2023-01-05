@@ -27,16 +27,12 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         MatDatepickerModule,
         HttpClientModule,
         TranslateModule.forChild({
-          loader: {
-              provide: TranslateLoader,
-              useFactory: homeHttpLoaderFactory,
-              deps: [HttpClient]
-          },
-          
-      })
-    ],
-    entryComponents: [
-        AddMemberComponent
+            loader: {
+                provide: TranslateLoader,
+                useFactory: homeHttpLoaderFactory,
+                deps: [HttpClient]
+            },
+        })
     ],
     declarations: [
         AddMemberComponent

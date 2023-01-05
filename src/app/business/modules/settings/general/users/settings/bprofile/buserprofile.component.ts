@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, Inject, AfterViewChecked, ChangeDetectorR
 import { Messages } from '../../../../../../../shared/constants/project-messages';
 import { ButtonsConfig, ButtonsStrategy, ButtonType } from '@ks89/angular-modal-gallery';
 import { projectConstants } from '../../../../../../../app.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { ProviderServices } from '../../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../../shared/functions/shared-functions';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -228,7 +228,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
   business_name_cap = Messages.SEARCH_PRI_BUISINESS_NAME_CAP;
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   show_schedule_selection = false;
@@ -266,7 +266,7 @@ export class BuserProfileComponent implements OnInit, OnDestroy, AfterViewChecke
     private sharedfunctionobj: SharedFunctions,
     private provider_shared_functions: ProviderSharedFuctions,
     private service: QuestionService,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public shared_functions: SharedFunctions,
     private routerobj: Router,
     private activated_route: ActivatedRoute,

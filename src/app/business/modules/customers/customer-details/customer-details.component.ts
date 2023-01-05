@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from "@angular/core";
-import { FormGroup } from "@angular/forms";
+import { UntypedFormGroup } from "@angular/forms";
 import { FormMessageDisplayService } from "../../../../shared/modules/form-message-display/form-message-display.service";
 import { ProviderServices } from "../../../../business/services/provider-services.service";
 import { Messages } from "../../../../shared/constants/project-messages";
@@ -25,7 +25,7 @@ export class CustomerDetailComponent implements OnInit {
   dateFormat = projectConstantsLocal.DISPLAY_DATE_FORMAT_NEW;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   mob_prefix_cap = Messages.MOB_NO_PREFIX_CAP;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   step = 1;

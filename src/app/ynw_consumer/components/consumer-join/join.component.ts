@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit, OnDestroy, Output, EventEmitter, HostListener, Input } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared/modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
@@ -30,7 +30,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   forgot_password_cap = Messages.FORGOT_PASS_CAP;
   new_user_cap = Messages.NEW_USER_CAP;
   sign_up_here_cap = Messages.SIGNUP_HERE_CAP;
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   api_error = null;
   is_provider = 'true';
   step = 1;
@@ -76,7 +76,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<ConsumerJoinComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
     private wordProcessor: WordProcessor,
@@ -129,7 +129,7 @@ export class ConsumerJoinComponent implements OnInit, OnDestroy {
     this.loginForm = this.fb.group({
       emailId: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_PHONENUMBERONLY)])],
       password: ['', Validators.compose([Validators.required])],
-      phone: new FormControl(undefined, [Validators.required]),
+      phone: new UntypedFormControl(undefined, [Validators.required]),
       first_name: [this.fname, Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
       last_name: [this.lname, Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_CHARONLY)])],
     });

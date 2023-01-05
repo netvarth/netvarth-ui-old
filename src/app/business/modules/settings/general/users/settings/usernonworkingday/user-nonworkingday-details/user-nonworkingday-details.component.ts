@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../../../../shared/constants/project-messages';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../../../services/provider-services.service';
@@ -27,7 +27,7 @@ export class UserNonworkingdayDetailsComponent implements OnInit {
   cancel_btn_cap = Messages.CANCEL_BTN;
   save_btn_cap = Messages.SAVE_BTN;
   disableButton = false;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   parent_id;
@@ -48,7 +48,7 @@ export class UserNonworkingdayDetailsComponent implements OnInit {
   confirm_data: any;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,

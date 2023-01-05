@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject,OnDestroy } from '@angular/core';
-import { Validators, FormBuilder, FormGroup} from '@angular/forms';
+import { Validators, UntypedFormBuilder, UntypedFormGroup} from '@angular/forms';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../../services/provider-services.service';
@@ -20,7 +20,7 @@ import { SubSink } from 'subsink';
   styleUrls:['./createitempopup.component.css']
 })
 export class CreateItemPopupComponent implements OnInit,OnDestroy {
-    amItemForm: FormGroup;
+    amItemForm: UntypedFormGroup;
     api_error = null;
     api_success = null;
     api_loading = true;
@@ -94,7 +94,7 @@ private subscriptions = new SubSink();
     public dialogRef: MatDialogRef<CreateItemPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public sharedfunctionObj: SharedFunctions,

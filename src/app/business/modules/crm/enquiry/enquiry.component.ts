@@ -3,7 +3,7 @@ import { projectConstants } from '../../../../../../src/app/app.component';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { CrmService } from '../crm.service';
-import { FormBuilder } from '@angular/forms';
+import { UntypedFormBuilder } from '@angular/forms';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
@@ -75,7 +75,7 @@ export class enquiryComponent implements OnInit {
     private locationobj: Location,
     private router: Router,
     private crmService: CrmService,
-    private createEnquiryFB: FormBuilder,
+    private createEnquiryFB: UntypedFormBuilder,
     private snackbarService: SnackbarService,
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { FormGroup, FormBuilder } from '@angular/forms'  
+import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms'  
 import { ProviderServices } from '../../../../../../src/app/business/services/provider-services.service';
 import { SubSink } from '../../../../../../node_modules/subsink';
 import { SharedServices } from '../../../../../../src/app/shared/services/shared-services';
@@ -14,7 +14,7 @@ import { LocalStorageService } from '../../../../../../src/app/shared/services/l
 })
 export class SubmitPaperComponent implements OnInit {
 
-  authorForm: FormGroup;  
+  authorForm: UntypedFormGroup;  
   timetype: number = 1;
   questionnaireList: any = [];
   questionAnswers;
@@ -48,7 +48,7 @@ export class SubmitPaperComponent implements OnInit {
   constructor(
   public provider_services: ProviderServices,
   public _location: Location,
-  private fb:FormBuilder,
+  private fb:UntypedFormBuilder,
   public activateroute: ActivatedRoute,
   private shared_services: SharedServices,
   private lStorageService: LocalStorageService,

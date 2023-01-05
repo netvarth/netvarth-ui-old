@@ -12,9 +12,8 @@ import { FormMessageDisplayService } from '../../../shared/modules/form-message-
 import { NgBootstrapModule } from './ngbootstrap.module';
 
 @NgModule({
-    declarations   : [
-    ],
-    imports        : [
+    declarations: [],
+    imports: [
         MaterialModule,
         CommonModule,
         FormsModule,
@@ -24,9 +23,8 @@ import { NgBootstrapModule } from './ngbootstrap.module';
         FooterModule,
         FormMessageDisplayModule,
         NgBootstrapModule
-
     ],
-    exports        : [
+    exports: [
         MaterialModule,
         CommonModule,
         FormsModule,
@@ -36,12 +34,9 @@ import { NgBootstrapModule } from './ngbootstrap.module';
         FooterModule,
         FormMessageDisplayModule,
         NgBootstrapModule
-
     ],
-    entryComponents: [
-    ],
-    providers      : [
-      FormMessageDisplayService
+    providers: [
+        FormMessageDisplayService
     ]
 })
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { SharedServices } from '../../services/shared-services';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -21,7 +21,7 @@ export class CheckinAddMemberComponent implements OnInit {
   gender = '';
   dob = '';
   dobholder = '';
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   parent_id;

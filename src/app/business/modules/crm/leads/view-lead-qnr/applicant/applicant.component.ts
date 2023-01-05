@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { FileService } from '../../../../../../shared/services/file-service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { CrmService } from '../../../crm.service';
@@ -16,7 +16,7 @@ import { PreviewpdfComponent } from '../previewpdf/previewpdf.component';
   styleUrls: ['./applicant.component.css']
 })
 export class ApplicantComponent implements OnInit {
-  applicantForm: FormGroup;
+  applicantForm: UntypedFormGroup;
   errorMessage;
   customerName;
   phoneNumber;
@@ -89,7 +89,7 @@ export class ApplicantComponent implements OnInit {
   disbaleFielInput:boolean=true;
   tempCrifDetaiksIndex:any[]=[]
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private fileService: FileService,
     private crmService: CrmService,
     private snackbarService: SnackbarService,

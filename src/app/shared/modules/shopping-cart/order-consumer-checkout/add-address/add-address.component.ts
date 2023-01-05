@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { SharedFunctions } from '../../../../functions/shared-functions';
 import { FormMessageDisplayService } from '../../../../modules/form-message-display/form-message-display.service';
 import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../constants/project-constants';
 import { SharedServices } from '../../../../services/shared-services';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
@@ -14,7 +14,7 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 })
 export class AddAddressComponent implements OnInit {
   disableSave: boolean;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   address_add: any = [];
@@ -30,7 +30,7 @@ export class AddAddressComponent implements OnInit {
     public dialogRef: MatDialogRef<AddAddressComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     public dialog: MatDialog,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public sharedfunctionObj: SharedFunctions,
     private shared_services: SharedServices,

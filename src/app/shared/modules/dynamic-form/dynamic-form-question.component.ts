@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup, FormArray } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormArray } from '@angular/forms';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { DateFormatPipe } from '../../pipes/date-format/date-format.pipe';
 import { WordProcessor } from '../../services/word-processor.service';
@@ -12,7 +12,7 @@ import { FormControlService } from './components/form-control.service';
 })
 export class DynamicFormQuestionComponent implements OnInit {
   @Input() question: FormBase<any>;
-  @Input() form: FormGroup;
+  @Input() form: UntypedFormGroup;
   @Input() messages;
   @Input() showlabel = false;
   @Input() origins;
@@ -58,14 +58,14 @@ export class DynamicFormQuestionComponent implements OnInit {
     }
   }
   addRow() {
-    const control = <FormArray>this.form['controls'][this.question.key];
+    const control = <UntypedFormArray>this.form['controls'][this.question.key];
     const addrCtrl = this.qcs.toFormArray(this.question['columns'][0]);
     control.push(addrCtrl);
 
   }
 
   removeRow(i: number) {
-    const control = <FormArray>this.form.controls[this.question.key];
+    const control = <UntypedFormArray>this.form.controls[this.question.key];
     control.removeAt(i);
   }
 

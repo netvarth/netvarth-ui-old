@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, HostListener } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { SharedFunctions } from '../../../../../shared/functions/shared-functions';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../../services/provider-services.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
@@ -32,7 +32,7 @@ export class ShareRxComponent implements OnInit {
   msgreceivers: any = [];
   spId: any;
   mrId;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   deptName;
   bname;
   location;
@@ -130,7 +130,7 @@ export class ShareRxComponent implements OnInit {
     public dialog: MatDialog,
     public fed_service: FormMessageDisplayService,
     private shared_functions: SharedFunctions,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public provider_services: ProviderServices,
     private provider_servicesobj: ProviderServices,
     private medicalService: MedicalrecordService,

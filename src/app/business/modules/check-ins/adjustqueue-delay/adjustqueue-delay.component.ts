@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../../services/provider-services.service';
 import { Messages } from '../../../../shared/constants/project-messages';
@@ -26,7 +26,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   cancel_btn = Messages.CANCEL_BTN;
   save_btn = Messages.SAVE_BTN;
   delay_cap = Messages.DELAY_CAP;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   queues: any = [];
   api_success = null;
   api_error = null;
@@ -83,7 +83,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   provider_label = '';
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private route: Router,
     public fed_service: FormMessageDisplayService,
     public shared_services: SharedServices,
@@ -456,7 +456,7 @@ export class AdjustqueueDelayComponent implements OnInit {
   changeCheckbox(data) {
     if (data) {
       this.amForm.addControl('message',
-        new FormControl(this.default_message));
+        new UntypedFormControl(this.default_message));
     } else {
       this.amForm.removeControl('message');
     }

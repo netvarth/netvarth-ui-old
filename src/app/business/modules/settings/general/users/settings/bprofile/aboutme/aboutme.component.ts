@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../../../../shared/constants/project-constants';
 import { DOCUMENT } from '@angular/common';
 import { projectConstants } from '../../../../../../../../app.component';
@@ -37,7 +37,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   subdomain_fields_mandatory = [];
   domain_fields_mandatory = [];
   formfields;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   user_arr;
   userId: any;
   blogo: any = [];
@@ -107,7 +107,7 @@ export class AboutmeComponent implements OnInit, OnDestroy {
   spinner_load = false;
   @ViewChild('closebutton') closebutton;
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private service: QuestionService,
     public fed_service: FormMessageDisplayService,
     private provider_services: ProviderServices,

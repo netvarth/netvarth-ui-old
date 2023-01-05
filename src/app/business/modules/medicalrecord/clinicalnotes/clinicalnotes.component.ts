@@ -11,7 +11,7 @@ import { Location } from '@angular/common';
 import { MedicalrecordService } from '../medicalrecord.service';
 import { SubSink } from 'subsink';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { map, startWith } from 'rxjs/operators';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
@@ -72,18 +72,18 @@ export class ClinicalnotesComponent implements OnInit, OnDestroy {
   sign = true;
   btnName: string = 'Save';
   filteredOptions: Observable<string[]>;
-  myControl = new FormControl('');
+  myControl = new UntypedFormControl('');
 
 
   separatorKeysCodes: number[] = [ENTER, COMMA];
   separatorKeysCodesO: number[] = [ENTER, COMMA];
-  symptomsCtrl = new FormControl('');
-  observationsCtrl = new FormControl('');
-  diagnosisCtrl = new FormControl('');
-  notesCtrl = new FormControl('');
-  allergiesCtrl = new FormControl('');
-  vaccinationNotesCtrl = new FormControl('');
-  complaintsCtrl = new FormControl('');
+  symptomsCtrl = new UntypedFormControl('');
+  observationsCtrl = new UntypedFormControl('');
+  diagnosisCtrl = new UntypedFormControl('');
+  notesCtrl = new UntypedFormControl('');
+  allergiesCtrl = new UntypedFormControl('');
+  vaccinationNotesCtrl = new UntypedFormControl('');
+  complaintsCtrl = new UntypedFormControl('');
 
   filteredSymptoms: Observable<string[]>;
   filteredObservations: Observable<string[]>;

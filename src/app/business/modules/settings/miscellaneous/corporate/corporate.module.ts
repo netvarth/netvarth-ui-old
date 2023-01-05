@@ -25,7 +25,6 @@ const routes: Routes = [
         MatInputModule,
         [RouterModule.forChild(routes)]
     ],
-    entryComponents: [],
     exports: [CorporateSettingsComponent]
 })
 export class CorporateModule {}

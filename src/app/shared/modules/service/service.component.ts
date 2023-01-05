@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input, HostListener } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { ServicesService } from './services.service';
 import { Subscription } from 'rxjs';
 import { projectConstants } from '../../../app.component';
@@ -79,7 +79,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     isfocused = false;
     servstatus = false;
     maxlimit = projectConstants.PRICE_MAX_VALUE;
-    serviceForm: FormGroup;
+    serviceForm: UntypedFormGroup;
     serviceSubscription: Subscription;
     preSubscription: Subscription;
     action = 'show';
@@ -181,7 +181,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     selectedReqMode: boolean = false;
     // show_internationalmode = false;
 
-    constructor(private fb: FormBuilder,
+    constructor(private fb: UntypedFormBuilder,
         public fed_service: FormMessageDisplayService,
         public sharedFunctons: SharedFunctions,
         public servicesService: ServicesService,
@@ -629,7 +629,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     this.service['notificationType'] : 'email';
             }
             this.serviceForm.addControl('notificationType',
-                new FormControl(value));
+                new UntypedFormControl(value));
         }
     }
     ngOnInit() {
@@ -899,7 +899,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     value = this.service['minPrePaymentAmount'];
                 }
                 this.serviceForm.addControl('minPrePaymentAmount',
-                    new FormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
+                    new UntypedFormControl(value, Validators.compose([Validators.required, Validators.pattern(this.number_decimal_pattern)])));
             }
         }
     }

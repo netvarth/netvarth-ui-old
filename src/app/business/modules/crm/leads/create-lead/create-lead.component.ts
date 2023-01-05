@@ -7,7 +7,7 @@ import { FormMessageDisplayService } from '../../../../../shared/modules/form-me
 // import { LocalStorageService } from '../../../../../../../src/app/shared/services/local-storage.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CrmService } from '../../crm.service';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import  {CrmSelectMemberComponent} from '../../../../shared/crm-select-member/crm-select-member.component'
@@ -145,7 +145,7 @@ export class CreateLeadComponent implements OnInit{
     private provider_services: ProviderServices,
      private crmService: CrmService,
      public fed_service: FormMessageDisplayService,
-     private createLeadFB: FormBuilder,
+     private createLeadFB: UntypedFormBuilder,
      private dialog: MatDialog, private snackbarService: SnackbarService,
      private datePipe:DatePipe,
      private wordProcessor: WordProcessor,

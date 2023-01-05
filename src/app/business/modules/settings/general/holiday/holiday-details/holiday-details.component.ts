@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Messages } from '../../../../../../shared/constants/project-messages';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
@@ -32,7 +32,7 @@ export class HolidayDetailsComponent implements OnInit {
   save_btn_cap = Messages.SAVE_BTN;
 
   disableButton = false;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   parent_id;
@@ -53,7 +53,7 @@ export class HolidayDetailsComponent implements OnInit {
   confirm_data: any;
   passtrue;
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,

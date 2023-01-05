@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { SharedServices } from '../../services/shared-services';
-import { FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../modules/form-message-display/form-message-display.service';
 import { DOCUMENT } from '@angular/common';
 import { Messages } from '../../../shared/constants/project-messages';
@@ -36,7 +36,7 @@ export class SetPasswordFormComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<SetPasswordFormComponent>,
-    private fb: FormBuilder, public sharedfunctionObj: SharedFunctions,
+    private fb: UntypedFormBuilder, public sharedfunctionObj: SharedFunctions,
     public fed_service: FormMessageDisplayService,  public translate: TranslateService,
     @Inject(DOCUMENT) public document,
     public shared_services: SharedServices) { }

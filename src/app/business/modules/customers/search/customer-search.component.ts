@@ -8,7 +8,7 @@ import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { ProviderServices } from '../../../services/provider-services.service';
 import * as moment from 'moment';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, UntypedFormControl } from '@angular/forms';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -182,7 +182,7 @@ export class CustomerSearchComponent implements OnInit {
         base64: [],
         caption: []
     };
-    searchForm: FormGroup;
+    searchForm: UntypedFormGroup;
     selectedMode: any = 'phone';
     customer_label = '';
     qParams = {};
@@ -201,7 +201,7 @@ export class CustomerSearchComponent implements OnInit {
     haveMobile = true;
     loading = false;
     customidFormat;
-    amForm: FormGroup;
+    amForm: UntypedFormGroup;
     email: any;
     disableButton = false;
     appointmentScheduleId;
@@ -222,7 +222,7 @@ export class CustomerSearchComponent implements OnInit {
     phone;
 
     constructor(public fed_service: FormMessageDisplayService,
-        private fb: FormBuilder,
+        private fb: UntypedFormBuilder,
         public shared_services: SharedServices,
         public sharedFunctionobj: SharedFunctions,
         public router: Router,
@@ -376,7 +376,7 @@ export class CustomerSearchComponent implements OnInit {
             this.loading = false;
         }
         if (this.customidFormat && this.customidFormat.customerSeriesEnum && this.customidFormat.customerSeriesEnum === 'MANUAL') {
-            this.amForm.addControl('customer_id', new FormControl('', Validators.required));
+            this.amForm.addControl('customer_id', new UntypedFormControl('', Validators.required));
         }
         if (this.phoneNo) {
             this.amForm.get('mobile_number').setValue(this.phoneNo);

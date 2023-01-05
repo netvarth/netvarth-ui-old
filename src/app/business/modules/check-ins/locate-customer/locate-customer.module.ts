@@ -11,9 +11,6 @@ import { LocateCustomerComponent } from './locate-customer.component';
     declarations: [
         LocateCustomerComponent
     ],
-    entryComponents: [
-        LocateCustomerComponent
-    ],
     exports: [LocateCustomerComponent]
 })
 export class LocateCustomerModule { }

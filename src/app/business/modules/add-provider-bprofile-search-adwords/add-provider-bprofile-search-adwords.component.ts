@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../shared//modules/form-message-display/form-message-display.service';
 import { ProviderServices } from '../../services/provider-services.service';
 import { projectConstants } from '../../../app.component';
@@ -23,13 +23,13 @@ export class AddProviderBprofileSearchAdwordsComponent implements OnInit {
   adword_errmsg = Messages.ADWORD_ERRMSG;
   disableButton = false;
   api_loading = true;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
   constructor(
     public dialogRef: MatDialogRef<AddProviderBprofileSearchAdwordsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
     public shared_functions: SharedFunctions,

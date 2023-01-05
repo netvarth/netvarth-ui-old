@@ -32,7 +32,7 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         MatFormFieldModule,
         MatInputModule,
         MatButtonModule,
-         HttpClientModule,
+        HttpClientModule,
         NgxIntlTelInputModule,
         TranslateModule.forChild({
             loader: {
@@ -45,9 +45,6 @@ export function homeHttpLoaderFactory(http: HttpClient) {
         })
     ],
     declarations: [
-        ForgotPasswordComponent
-    ],
-    entryComponents: [
         ForgotPasswordComponent
     ],
     exports: [ForgotPasswordComponent]

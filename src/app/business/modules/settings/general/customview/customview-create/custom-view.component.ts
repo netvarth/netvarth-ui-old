@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl } from '@angular/forms';
 import { ProviderServices } from '../../../../../services/provider-services.service';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
@@ -40,13 +40,13 @@ export class CustomViewComponent implements OnInit {
     loading = false;
     viewId;
     isDepartments = false;
-    firstFormGroup: FormGroup;
-    secondFormGroup: FormGroup;
-    deptMultiFilterCtrl: FormControl = new FormControl();
-    userMultiFilterCtrl: FormControl = new FormControl();
-    serviceMultiFilterCtrl: FormControl = new FormControl();
-    qMultiFilterCtrl: FormControl = new FormControl();
-    scheduleMultiFilterCtrl: FormControl = new FormControl();
+    firstFormGroup: UntypedFormGroup;
+    secondFormGroup: UntypedFormGroup;
+    deptMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
+    userMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
+    serviceMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
+    qMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
+    scheduleMultiFilterCtrl: UntypedFormControl = new UntypedFormControl();
     onDestroy = new Subject<void>();
     filterDepList: any = [];
     filterUsersList: any = [];

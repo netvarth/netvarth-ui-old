@@ -6,7 +6,7 @@ import { SharedFunctions } from '../../../../../../shared/functions/shared-funct
 import { ProviderSharedFuctions } from '../../../../../functions/provider-shared-functions';
 import * as moment from 'moment';
 import { projectConstants } from '../../../../../../app.component';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, Validators, UntypedFormBuilder } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../../shared/modules/form-message-display/form-message-display.service';
 import { Location } from '@angular/common';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
@@ -39,7 +39,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
   customer_label = '';
   appointment = false;
   api_loading = false;
-  amForm: FormGroup;
+  amForm: UntypedFormGroup;
   schedule_arr: any = [];
   holdloc_list: any = [];
   loc_list: any = [];
@@ -95,7 +95,7 @@ export class WaitlistSchedulesDetailComponent implements OnInit {
     private router: Router,
     private _location: Location,
     private activated_route: ActivatedRoute,
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
     public provider_shared_functions: ProviderSharedFuctions,
     private wordProcessor: WordProcessor,
