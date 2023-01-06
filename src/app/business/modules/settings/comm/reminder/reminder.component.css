@@ -5,6 +5,28 @@
     background-color: #189CE7 !important;
     border-color: #189CE7 !important;
 }
+
+.queue-form .leftselectAll .mat-checkbox {
+    margin: 0 10px !important;
+}
+.start-endtime-wrap {
+    flex-wrap: wrap !important;
+}
+.leftselectAll {
+    margin-left: 20px !important;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.schselectall{
+    margin-left: 18px;
+    margin-bottom: 7px;
+    padding: 5px 0;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #00aef2;
+    cursor: pointer;
+}
 .btnFlex{
     display: flex;
     height: 34px;

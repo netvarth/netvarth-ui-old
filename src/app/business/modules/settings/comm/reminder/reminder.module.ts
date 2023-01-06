@@ -20,6 +20,7 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatOptionModule } from "@angular/material/core";
 import { MatSelectModule } from "@angular/material/select";
 import { PagerModule } from '../../../../../shared/modules/pager/pager.module';
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 
 const routes: Routes = [{ path: "", component: ReminderComponent }];
@@ -29,6 +30,7 @@ const routes: Routes = [{ path: "", component: ReminderComponent }];
     CommonModule,
     NgbModule,
     MatMenuModule,
+    MatCheckboxModule,
     MatInputModule,
     MatSlideToggleModule,
     MatFormFieldModule,

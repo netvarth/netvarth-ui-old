@@ -15,6 +15,7 @@ import { DateTimeProcessor } from "../../../../../shared/services/datetime-proce
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { map, startWith } from 'rxjs/operators';
+import { Messages } from '../../../../../shared/constants/project-messages';
 declare var $: any;
 @Component({
   selector: "app-reminder",
@@ -89,6 +90,10 @@ export class ReminderComponent implements OnInit {
   reminder_title: any;
   isSelectedActive = false;
   isSelectedInActive = false;
+  select_All = Messages.SELECT_ALL;
+  selday_arr: any = [];
+  weekdays = projectConstantsLocal.myweekdaysSchedule;
+  Selall = false;
   constructor(
     private router: Router,
     public fed_service: FormMessageDisplayService,
@@ -421,6 +426,46 @@ _filter(value: string): string[] {
       // this.isEdit = false;
     }
   }
+  handleselectall() {
+    this.Selall = true;
+    this.selday_arr = [];
+    const wkdaystemp = this.weekdays;
+    this.weekdays = [];
+    for (let ii = 1; ii <= 7; ii++) {
+      this.handleDaychecbox(ii);
+    }
+    this.weekdays = wkdaystemp;
+  }
+  handleselectnone() {
+    this.Selall = false;
+    this.selday_arr = [];
+    const wkdaystemp = this.weekdays;
+    this.weekdays = [];
+    this.weekdays = wkdaystemp;
+  }
+  handleDaychecbox(dayindx) {
+    const selindx = this.selday_arr.indexOf(dayindx);
+    if (selindx === -1) {
+      this.selday_arr.push(dayindx);
+    } else {
+      this.selday_arr.splice(selindx, 1);
+    }
+    if (this.selday_arr.length === 7) {
+      this.Selall = true;
+    } else {
+      this.Selall = false;
+    }
+  }
+ // checks whether a given value is there in the given array
+  check_existsinArray(arr, val) {
+    let ret = -1;
+    for (let i = 0; i < arr.length; i++) {
+      if (arr[i] === val) {
+        ret = i;
+      }
+    }
+    return ret;
+  }
   stopprop(event) {
     event.stopPropagation();
   }
@@ -619,7 +664,17 @@ _filter(value: string): string[] {
     
       
       }
-      
+      this.selday_arr = [];
+      // extracting the selected days
+      for (let j = 0; j < this.reminderDetails.schedule.repeatIntervals.length; j++) {
+        // pushing the day details to the respective array to show it in the page
+        this.selday_arr.push(Number(this.reminderDetails.schedule.repeatIntervals[j]));
+      }
+      if (this.selday_arr.length === 7) {
+        this.Selall = true;
+      } else {
+        this.Selall = false;
+      }
       // const edtime = {
       //   hour: parseInt(
       //     moment(this.reminderDetails.schedule.timeSlots[0].eTime, [
@@ -737,6 +792,8 @@ _filter(value: string): string[] {
   }
   createAddRemainder() {
     this.isCreate = true;
+    this.Selall = false;
+    this.selday_arr = [];
     this.reminder_title = 'Create Reminder';
     // this.isEdit = false;
     // this.createForm();
@@ -919,6 +976,11 @@ _filter(value: string): string[] {
       toDate = this.dateTimeProcessor.transformToYMDFormat(form_data.toDate);
     }
     if (this.reminderId) {
+      const daystr: any = [];
+      // const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+      for (const cday of this.selday_arr) {
+        daystr.push(cday);
+      }
       if(form_data.name === "" || form_data.name === undefined){
         this.snackbarService.openSnackBar("Please enter reminder name", {
           panelClass: "snackbarerror"
@@ -930,6 +992,11 @@ _filter(value: string): string[] {
         });
 
       } 
+       // Check whether atleast one day is selected
+       else if (this.selday_arr.length === 0) {
+        const error = 'Please select the days';
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
       else if (form_data.fromDate === "" || form_data.fromDate === undefined) {
         this.snackbarService.openSnackBar("Please select from date", {
           panelClass: "snackbarerror"
@@ -957,8 +1024,11 @@ _filter(value: string): string[] {
        else {
         const postData = {
           schedule: {
-            recurringType: "Once",
-            repeatIntervals: [1, 2, 3, 4, 5, 6],
+            // recurringType: "Once",
+            // repeatIntervals: [1, 2, 3, 4, 5, 6],
+            recurringType: "Weekly",
+            //daystr
+            repeatIntervals: daystr,
             startDate: fromDate,
             terminator: {
               endDate: toDate,
@@ -1032,6 +1102,11 @@ _filter(value: string): string[] {
       // if(this.selectedConsumer.id){
       //   postData['providerConsumer'] = this.selectedConsumer.id;
       // }
+      const daystr: any = [];
+      // const today = cdate.getFullYear() + '-' + mon + '-' + cdate.getDate();
+      for (const cday of this.selday_arr) {
+        daystr.push(cday);
+      }
       if(form_data.name === "" || form_data.name === undefined){
         this.snackbarService.openSnackBar("Please enter reminder name", {
           panelClass: "snackbarerror"
@@ -1042,6 +1117,11 @@ _filter(value: string): string[] {
           panelClass: "snackbarerror"
         });
       } 
+       // Check whether atleast one day is selected
+       else if (this.selday_arr.length === 0) {
+        const error = 'Please select the days';
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      }
       else if (form_data.fromDate === "" || form_data.fromDate === undefined) {
         this.snackbarService.openSnackBar("Please select from date", {
           panelClass: "snackbarerror"
@@ -1075,8 +1155,11 @@ _filter(value: string): string[] {
       else {
         const postData = {
           schedule: {
-            recurringType: "Once",
-            repeatIntervals: [1, 2, 3, 4, 5, 6],
+            // recurringType: "Once",
+            // repeatIntervals: [1, 2, 3, 4, 5, 6],
+            recurringType: "Weekly",
+            //daystr
+            repeatIntervals: daystr,
             startDate: fromDate,
             terminator: {
               endDate: toDate,
