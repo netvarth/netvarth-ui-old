@@ -24,7 +24,7 @@ import { ThirdpartypopupComponent } from '../thirdpartypopup/thirdpartypopup.com
 import { Location } from '@angular/common';
 declare var $: any;
 import { Observable } from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 
 
 @Component({
@@ -290,14 +290,15 @@ export class ProviderCheckinComponent implements OnInit {
 
 
     //search lucene
-    tempCustomerdata:any=[]
+    tempCustomerdata: any = []
     options: any[] = [];
-    searchListDb:any[]=[]
-  filteredOptions: Observable<string[]>;
+    searchListDb: any[] = []
+    filteredOptions: Observable<string[]>;
     tempAcId: any;
-    totalName: string='';
-    countryCodePhone='+91';
-    placeholderTemp:any='7410410123';
+    totalName: string = '';
+    countryCodePhone = '+91';
+    countryCodePhoneParam = '91';
+    placeholderTemp: any = '7410410123';
     tempDataCustomerInfo;
 
 
@@ -323,7 +324,7 @@ export class ProviderCheckinComponent implements OnInit {
         this.provider_label = this.wordProcessor.getTerminologyTerm('provider');
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.activated_route.queryParams.subscribe(qparams => {
-            console.log('qparams',qparams)
+            console.log('qparams', qparams)
             if (qparams.source) {
                 this.source = qparams.source;
             }
@@ -501,59 +502,59 @@ export class ProviderCheckinComponent implements OnInit {
         // this.filterOption();
         this.bisinessProfile();
         // this.resetForm();
-        console.log('this.categoryvalue',this.categoryvalue)
+        console.log('this.categoryvalue', this.categoryvalue)
     }
-    resetForm(){
+    resetForm() {
         this.searchForm.patchValue({
-            search_input:'' 
+            search_input: ''
         })
     }
-    bisinessProfile(){
+    bisinessProfile() {
         this.searchForm.controls.search_input.setValue('');
-        this.provider_services.getBussinessProfile().subscribe((res:any)=>{
-            console.log('BProfileRes',res);
-            if(res){
-                if(res['id']){
-                    this.tempAcId= res['id'];   
+        this.provider_services.getBussinessProfile().subscribe((res: any) => {
+            console.log('BProfileRes', res);
+            if (res) {
+                if (res['id']) {
+                    this.tempAcId = res['id'];
                 }
             }
         })
     }
-    searchCustomerLucene(name){
+    searchCustomerLucene(name) {
         console.log(name)
-        console.log('this.account_id',this.tempAcId);
-        console.log('categoryvalue',this.categoryvalue);
-        let tempCatValue:any;
-        if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
-            tempCatValue='name';
+        console.log('this.account_id', this.tempAcId);
+        console.log('categoryvalue', this.categoryvalue);
+        let tempCatValue: any;
+        if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+            tempCatValue = 'name';
         }
-        else if(this.categoryvalue && this.categoryvalue==='Search with Email ID'){
-            tempCatValue='emailId';
+        else if (this.categoryvalue && this.categoryvalue === 'Search with Email ID') {
+            tempCatValue = 'emailId';
         }
-        this.providerService.getSearchCustomer(this.tempAcId,tempCatValue,name.search_input).subscribe((res:any)=>{
-            console.log('res',res);
-            this.options=res;
-            this.filteredOptions=res;
+        this.providerService.getSearchCustomer(this.tempAcId, tempCatValue, name.search_input).subscribe((res: any) => {
+            console.log('res', res);
+            this.options = res;
+            this.filteredOptions = res;
             console.log(this.filteredOptions);
         })
     }
-    countryCodePhoneInfo(codeCountrty){
-        console.log('codeCountrty',codeCountrty)
+    countryCodePhoneInfo(codeCountrty) {
+        console.log('codeCountrty', codeCountrty)
     }
-    searchCustomerLucenePhone(data,event){
+    searchCustomerLucenePhone(data, event) {
         console.log(event);
         console.log(data);
-        console.log(this.categoryvalue );
-        console.log('SearchCountryField',this.SearchCountryField)
-        let tempCatValue:any;
-        let tempPhoneNum:any;
-        if(data){
-            tempPhoneNum=data;
+        console.log(this.categoryvalue);
+        console.log('SearchCountryField', this.SearchCountryField)
+        let tempCatValue: any;
+        let tempPhoneNum: any;
+        if (data) {
+            tempPhoneNum = data;
         }
-        if(this.categoryvalue && this.categoryvalue==='Search with PhoneNumber'){
-            tempCatValue='phoneNumber';
-            console.log('this.tempAcId',this.tempAcId)
-            this.providerService.getSearchCustomer(this.tempAcId, tempCatValue,tempPhoneNum).subscribe((res: any) => {
+        if (this.categoryvalue && this.categoryvalue === 'Search with PhoneNumber') {
+            tempCatValue = 'phoneNumber';
+            console.log('this.tempAcId', this.tempAcId)
+            this.providerService.getSearchCustomer(this.tempAcId, tempCatValue, tempPhoneNum).subscribe((res: any) => {
                 console.log('res', res);
                 this.options = res;
                 this.filteredOptions = res;
@@ -561,48 +562,48 @@ export class ProviderCheckinComponent implements OnInit {
             })
         }
     }
-    handleSearchSelectPhone(data,phone){
+    handleSearchSelectPhone(data, phone) {
         console.log(data);
-        console.log('phone',phone)
-        this.tempDataCustomerInfo=data;
+        console.log('phone', phone)
+        this.tempDataCustomerInfo = data;
         this.serchCustomers(phone);
     }
-    handleSearchSelect(data,form_data){
+    handleSearchSelect(data, form_data) {
         console.log(data);
-        if(data && data['firstName'] && data['lastName'] && data['lastName'] !== 'null'){
-            this.totalName= (data['firstName'][0].toUpperCase() + data['firstName'].slice(1)) + ' ' + (data['lastName'][0].toUpperCase() + data['lastName'].slice(1)) ;
-            if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
-                if(this.totalName){
+        if (data && data['firstName'] && data['lastName'] && data['lastName'] !== 'null') {
+            this.totalName = (data['firstName'][0].toUpperCase() + data['firstName'].slice(1)) + ' ' + (data['lastName'][0].toUpperCase() + data['lastName'].slice(1));
+            if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+                if (this.totalName) {
                     this.searchForm.controls.search_input.setValue(this.totalName);
                 }
             }
         }
-        else if(data && data['firstName'] && data['lastName'] && data['lastName'] === 'null'){
-            this.totalName= (data['firstName'][0].toUpperCase() + data['firstName'].slice(1));
-            if(this.categoryvalue && this.categoryvalue==='Search with Name or ID'){
-                if(this.totalName){
+        else if (data && data['firstName'] && data['lastName'] && data['lastName'] === 'null') {
+            this.totalName = (data['firstName'][0].toUpperCase() + data['firstName'].slice(1));
+            if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+                if (this.totalName) {
                     this.searchForm.controls.search_input.setValue(this.totalName);
                 }
             }
         }
         console.log(form_data);
-        this.tempDataCustomerInfo=data;
+        this.tempDataCustomerInfo = data;
         this.searchCustomer(form_data)
     }
-    handleCategoryselect(data){
+    handleCategoryselect(data) {
         console.log(data);
         this.searchForm.patchValue({
-            search_input:'' 
+            search_input: ''
         })
     }
-    filterOption(){
-        this.filteredOptions = this.searchForm.controls.search_input.valueChanges.pipe(startWith(''),map((value:any) => this._filter(value || '')),
-          );
+    filterOption() {
+        this.filteredOptions = this.searchForm.controls.search_input.valueChanges.pipe(startWith(''), map((value: any) => this._filter(value || '')),
+        );
     }
     _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
         return this.options.filter(option => option.toLowerCase().includes(filterValue));
-      }
+    }
     openModal() {
         this.display = "block";
     }
@@ -666,7 +667,7 @@ export class ProviderCheckinComponent implements OnInit {
         // }
         let post_data = {
             'phoneNo-eq': val,
-            'countryCode-eq': this.countryCodePhone
+            'countryCode-eq': this.countryCodePhoneParam
         };
         if (post_data['phoneNo-eq'] === 0) {
             this.createNew('create');
@@ -675,19 +676,19 @@ export class ProviderCheckinComponent implements OnInit {
             .subscribe(
                 (data: any) => {
                     this.qParams['phone'] = val;
-                    this.qParams['countryCode'] =  this.countryCodePhone;
+                    this.qParams['countryCode'] = this.countryCodePhoneParam;
 
                     if (data.length === 0) {
                         this.createNew('create');
                     } else {
                         if (data.length > 1) {
-                            this.tempCustomerdata= data;
+                            this.tempCustomerdata = data;
                             const customer = data.filter(member => !member.parent);
-                            console.log('customer',customer);
+                            console.log('customer', customer);
                             // this.customer_data = customer[0];
                             // this.foundMultiConsumers = true
-                            this.customer_data= this.tempDataCustomerInfo;
-                                this.foundMultiConsumers = true;
+                            this.customer_data = this.tempDataCustomerInfo;
+                            this.foundMultiConsumers = true;
                         } else {
                             this.customer_data = data[0];
                             this.foundMultiConsumers = false
@@ -764,26 +765,26 @@ export class ProviderCheckinComponent implements OnInit {
             this.provider_services.getCustomer(post_data)
                 .subscribe(
                     (data: any) => {
-                        console.log('data',data)
+                        console.log('data', data)
                         if (data && data.length === 0) {
                             this.createNew('create');
                         } else {
                             if (data && data.length > 1) {
                                 const customer = data.filter(member => !member.parent);
-                                console.log('customer',customer)
+                                console.log('customer', customer)
                                 // if(customer && customer[0]){
                                 //     this.customer_data = customer[0];
                                 // }
                                 // this.foundMultiConsumers = true;
-                                this.customer_data= this.tempDataCustomerInfo;
+                                this.customer_data = this.tempDataCustomerInfo;
                                 this.foundMultiConsumers = true;
                             } else {
-                                if(data && data[0]){
+                                if (data && data[0]) {
                                     this.customer_data = data[0];
                                 }
                                 this.foundMultiConsumers = false;
                             }
-                            if(this.customer_data && this.customer_data.jaldeeId){
+                            if (this.customer_data && this.customer_data.jaldeeId) {
                                 this.jaldeeId = this.customer_data.jaldeeId;
                             }
                             if (this.customer_data && this.customer_data.countryCode && this.customer_data.countryCode !== '+null') {
@@ -1138,10 +1139,10 @@ export class ProviderCheckinComponent implements OnInit {
         if (this.thirdParty === '') {
             this.api_loading1 = true;
             let fn;
-            if(this.customer_data && this.customer_data.id){
+            if (this.customer_data && this.customer_data.id) {
                 fn = this.shared_services.getProviderCustomerFamilyMembers(this.customer_data.id);
             }
-            if(fn){
+            if (fn) {
                 fn.subscribe(data => {
                     this.familymembers = [];
                     this.familymembers.push(this.customer_data);
@@ -1156,7 +1157,7 @@ export class ProviderCheckinComponent implements OnInit {
                         this.api_loading1 = false;
                     });
             }
-            
+
         } else {
             this.api_loading1 = false;
         }
@@ -2744,5 +2745,5 @@ export class ProviderCheckinComponent implements OnInit {
                     this.getQueuesbyLocationandServiceId(this.sel_loc, this.servId, this.sel_checkindate, this.accId);
                 })
     }
-    
+
 }
