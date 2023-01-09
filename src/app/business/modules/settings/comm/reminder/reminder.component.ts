@@ -519,7 +519,21 @@ _filter(value: string): string[] {
       //this.removeTime(this.reminderDetails.schedule.timeSlots);
       this.isEdit = true;
       // this.updateForm(); 
-
+      (this.reminder.name = this.reminderDetails.reminderName),
+      (this.reminder.message = this.reminderDetails.message),
+      (this.reminder.fromDate =
+        this.reminderDetails.schedule.startDate || null),
+      (this.reminder.toDate = this.reminderDetails.schedule.terminator.endDate),
+      (this.reminder.time = ""),
+      (this.reminder.sms =
+        this.reminderDetails.reminderSource.Sms === "1" ? true : false),
+      (this.reminder.email =
+        this.reminderDetails.reminderSource.Email === "1" ? true : false),
+      (this.reminder.phoneNumber =
+        this.reminderDetails.reminderSource.PushNotification === "1"
+          ? true
+          : false);
+          
        let sttime ;
        const hour = parseInt(
         moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
@@ -690,20 +704,7 @@ _filter(value: string): string[] {
       //   )
       // };
       // this.reminder = {
-      (this.reminder.name = this.reminderDetails.reminderName),
-        (this.reminder.message = this.reminderDetails.message),
-        (this.reminder.fromDate =
-          this.reminderDetails.schedule.startDate || null),
-        (this.reminder.toDate = this.reminderDetails.schedule.terminator.endDate),
-        (this.reminder.time = ""),
-        (this.reminder.sms =
-          this.reminderDetails.reminderSource.Sms === "1" ? true : false),
-        (this.reminder.email =
-          this.reminderDetails.reminderSource.Email === "1" ? true : false),
-        (this.reminder.phoneNumber =
-          this.reminderDetails.reminderSource.PushNotification === "1"
-            ? true
-            : false);
+     
       // }
       // if(this.reminderDetails.reminderSource.Sms === 1){
       //   this.reminder.sms = true;
