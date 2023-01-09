@@ -96,6 +96,9 @@ export class OtpVerifyComponent implements OnInit {
       this.sendOTP();
     }
     else if (this.data && this.data.email) {
+      if (this.data.email.startsWith('555')) {
+        this.config.length = 5;
+      }
       this.sendOTP();
     }
 
@@ -185,10 +188,19 @@ export class OtpVerifyComponent implements OnInit {
       }
     }
     else if (this.data && this.data.email) {
-      if (this.otpEntered.length < 4) {
-        return false;
-      } else {
-        this.otpVerification();
+      if (this.data.email.startsWith('555')) {
+        if (this.otpEntered.length < 5) {
+          return false;
+        } else {
+          this.otpVerification();
+        }
+      }
+      else {
+        if (this.otpEntered.length < 4) {
+          return false;
+        } else {
+          this.otpVerification();
+        }
       }
     }
   }
