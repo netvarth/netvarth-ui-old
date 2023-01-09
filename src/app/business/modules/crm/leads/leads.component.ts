@@ -300,12 +300,6 @@ export class LeadsComponent implements OnInit {
     if (this.filter.check_in_end_date != null) {
       filter['createdDate-le'] = moment(this.filter.check_in_end_date).format("YYYY-MM-DD");
     }
-    if(this.filter && this.filter.check_in_start_date_LoanSanction && this.filter.check_in_start_date_LoanSanction !=null){
-      filter['sanctionedDate-ge'] = moment(this.filter.check_in_start_date_LoanSanction).format("YYYY-MM-DD");
-    }
-    if(this.filter && this.filter.check_in_end_date_LoanSanction && this.filter.check_in_end_date_LoanSanction !=null){
-      filter['sanctionedDate-le'] = moment(this.filter.check_in_end_date_LoanSanction).format("YYYY-MM-DD");
-    }
     if (this.filter && this.filter.first_name && this.filter.first_name !== '') {
       filter['customerFirstName-eq'] = this.filter.first_name;
     }
@@ -329,7 +323,10 @@ export class LeadsComponent implements OnInit {
           if(this.filter && this.filter.check_in_end_date_RejectedLoan && this.filter.check_in_end_date_RejectedLoan !=null){
             filter['rejectDate-le']=moment(this.filter.check_in_end_date_RejectedLoan).format("YYYY-MM-DD");
           }
-          filter['sort_rejectDate']='dsc'
+          filter['sort_rejectDate']='dsc';
+          delete filter['sanctionedDate-ge'];
+          delete filter['sanctionedDate-le'];
+          delete filter['sort_lastStatusUpdatedDate'];
         }
         if(this.tempaltename){
           this.headerName = this.tempaltename;
@@ -358,6 +355,18 @@ export class LeadsComponent implements OnInit {
         }
         if(this.selected_location && this.selected_location.id){
           filter['location-eq'] = this.selected_location.id;
+        }
+        if(this.tempaltename && this.tempaltename==='Loan Disbursement'){
+          if(this.filter && this.filter.check_in_start_date_LoanSanction && this.filter.check_in_start_date_LoanSanction !=null){
+            filter['sanctionedDate-ge'] = moment(this.filter.check_in_start_date_LoanSanction).format("YYYY-MM-DD");
+          }
+          if(this.filter && this.filter.check_in_end_date_LoanSanction && this.filter.check_in_end_date_LoanSanction !=null){
+            filter['sanctionedDate-le'] = moment(this.filter.check_in_end_date_LoanSanction).format("YYYY-MM-DD");
+          }
+        }
+        else{
+          delete  filter['sanctionedDate-ge'];
+          delete  filter['sanctionedDate-le'];
         }
       }
     }
@@ -504,7 +513,7 @@ export class LeadsComponent implements OnInit {
       if (this.filter.check_in_start_date !==null || this.filter.check_in_end_date !==null) {
         this.filterapplied = true;
       } else {
-        // this.filterapplied = false;
+        this.filterapplied = false;
       }
     }
     else if(text==='loanSanction'){
@@ -512,7 +521,7 @@ export class LeadsComponent implements OnInit {
       if (this.filter.check_in_start_date_LoanSanction !== null || this.filter.check_in_end_date_LoanSanction !==null) {
         this.filterapplied = true;
       } else {
-        // this.filterapplied = false;
+        this.filterapplied = false;
       }
     }
     else if(text==='rejected'){
@@ -520,14 +529,14 @@ export class LeadsComponent implements OnInit {
       if (this.filter.check_in_start_date_RejectedLoan !=null || this.filter.check_in_end_date_RejectedLoan !==null) {
         this.filterapplied = true;
       } else {
-        // this.filterapplied = false;
+        this.filterapplied = false;
       }
     }
     else if((text==='nameFilter' || 'nameFilterAssignee')){
       if (this.filter.first_name !=='' || this.filter.last_name!=='' || this.filter.first_name_Assignee!=='' || this.filter.last_name_Assignee!=='') {
         this.filterapplied = true;
       } else {
-        // this.filterapplied = false;
+        this.filterapplied = false;
       }
     }
    
