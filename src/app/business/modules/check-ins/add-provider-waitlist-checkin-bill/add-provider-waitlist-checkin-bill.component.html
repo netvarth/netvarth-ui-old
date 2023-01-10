@@ -120,13 +120,15 @@
 					<div class="row justify-content-center py-8 px-8 py-md-2 px-md-0">
 						<div class="col-12 mt-2 mb-2" style="display: flex;">
 							<div class="col-10 adjust_respo">
-								<div class="form-group mr-0 ml-0 col-xs-12 col-md-4 col-sm-4 col-lg-4"
+								<div class="form-group mr-0 ml-0 col-xs-12 col-md-4 col-sm-4 col-lg-4 no-padding-small"
 									*ngIf="showAddItemsec">
 									<div class="">
+										<label>Item</label>
 										<input class="form-control1 new_ht_calc" type="text" #itemservicesearch
 											aria-label="Number" [formControl]="itemServiceSearch"
 											(keyup)="itemServiceManualAdd('',itemServiceSearch)"
-											[matAutocomplete]="auto" placeholder="{{source !== 'order'?'Choose Service/Item':'Item'}}">
+											[matAutocomplete]="auto"
+											placeholder="{{source !== 'order'?'Choose Service/Item':'Item'}}">
 
 										<mat-autocomplete #auto="matAutocomplete">
 											<ng-container
@@ -137,7 +139,8 @@
 														<mat-option *ngFor="let value of group.values; let i = index"
 															[value]="value"
 															(onSelectionChange)="itemServiceSelected(group.type,value)">
-															{{ value }} <span class="bill_item_service">{{(group.type=='Items')?
+															{{ value }} <span
+																class="bill_item_service">{{(group.type=='Items')?
 																'Item' :
 																'Service'}}</span>
 														</mat-option>
@@ -152,9 +155,10 @@
 										</mat-autocomplete>
 									</div>
 								</div>
-								<div class="form-group mr-0 ml-0 col-xs-12 col-md-2 col-sm-2 col-lg-2"
+								<div class="form-group mr-0 ml-0 col-xs-12 col-md-2 col-sm-2 col-lg-2 no-padding-small"
 									*ngIf="showAddItemsec">
 									<div class="">
+										<label>Quantity</label>
 										<input class="form-control1 new_ht_calc" type="number" min="1"
 											max="{{qty_limit}}" aria-label="Number" value="1" size="3" id="mat-input-4"
 											aria-invalid="false" aria-required="false" (keypress)="isNumber($event)"
@@ -162,26 +166,31 @@
 											(blur)="blurQty($event.target.value, curSelItm)" placeholder="Quantity">
 									</div>
 								</div>
-								<div class="form-group mr-0 ml-0 col-xs-12 col-md-2 col-sm-2 col-lg-2"
+								<div class="form-group mr-0 ml-0 col-xs-12 col-md-2 col-sm-2 col-lg-2 no-padding-small"
 									*ngIf="showAddItemsec">
 									<div class="">
+										<label>Price</label>
 										<input class="form-control1 new_ht_calc" type="number" min="0" max="100000"
 											aria-label="Number" value="1" size="3" id="mat-input-4" aria-invalid="false"
 											aria-required="false" (keypress)="isNumber($event)"
 											(keyup)="isvalid($event)" [(ngModel)]="curSelItm.price" placeholder="Price">
 									</div>
 								</div>
-								<div style="display: flex;">
-									<div class="form-group mr-0 pt-1 ml-0 col-3" style="max-width: 40% !important;"  *ngIf="showAddItemsec">
-										<button class="cs-btn bt1 ml-0 btn-temp-primary-light small_btn"
-											(click)="addService_Item()">{{(actiontype=='adjustService'
-											||
-											actiontype=='adjustItem')?'Change':
-											add_btn_cap}}</button>
-									</div>
-									<div class="form-group mr-0 pt-1 ml-0 col-3"style="max-width: 40% !important;" *ngIf="showAddItemsec">
-										<button class="cs-btn bt2 ml-4 small_btn"
-											(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
+								<div class="d-flex align-items-center mgn-up-10"> 
+									<div style="display: flex;">
+										<div class="form-group mr-0 pt-1 ml-0 col-3" style="max-width: 40% !important;"
+											*ngIf="showAddItemsec">
+											<button class="cs-btn bt1 ml-0 btn-temp-primary-light small_btn"
+												(click)="addService_Item()">{{(actiontype=='adjustService'
+												||
+												actiontype=='adjustItem')?'Change':
+												add_btn_cap}}</button>
+										</div>
+										<div class="form-group mr-0 pt-1 ml-0 col-3" style="max-width: 40% !important;"
+											*ngIf="showAddItemsec">
+											<button class="cs-btn bt2 ml-4 small_btn"
+												(click)="hideWorkBench()">{{cancel_btn_cap}}</button>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -248,7 +257,8 @@
 								<table class="table">
 									<thead>
 										<tr>
-											<th class="pl-0 font-weight-bold text-muted  text-uppercase">{{source !== 'order'?'Service/Item':'Item'}}
+											<th class="pl-0 font-weight-bold text-muted  text-uppercase">{{source !==
+												'order'?'Service/Item':'Item'}}
 											</th>
 											<th class="text-right font-weight-bold text-muted text-uppercase">Qty</th>
 											<th class="text-right font-weight-bold text-muted text-uppercase">Rate</th>
@@ -258,7 +268,7 @@
 										<tr class="font-weight-boldest font-size-md bdr_bt"
 											*ngFor="let service of bill_data.service; let i = index">
 											<td class="pl-0 pt-7"> {{service.serviceName | capitalizeFirst}}
-											<span class="rupee-font">{{service.price | currency:'&#8377;'}}</span>
+												<span class="rupee-font">{{service.price | currency:'&#8377;'}}</span>
 												<br> <br>
 												<!-- Incase of discount name -->
 												<span *ngFor="let discount of service.discount"
@@ -408,7 +418,7 @@
 										<tr *ngFor="let item of bill_data.items; let i = index"
 											class="font-weight-boldest border-bottom-0 font-size-lg bdr_bt">
 											<td class="border-top-0 pl-0 py-4">{{item.itemName | capitalizeFirst}}
-											<span class="rupee-font">{{item.price | currency:'&#8377;'}}
+												<span class="rupee-font">{{item.price | currency:'&#8377;'}}
 												</span>
 												<br> <br>
 												<!-- Incase of discount name -->
@@ -454,7 +464,8 @@
 													class="text-right font-size-xs font-weight-boldest">
 													<span class="rupee-font text-muted-dark">- {{discount.discountValue
 														|
-														currency:'&#8377;'}}</span> <i (click)="removeItemDiscount(item.itemId, discount.id)"
+														currency:'&#8377;'}}</span> <i
+														(click)="removeItemDiscount(item.itemId, discount.id)"
 														class="fa fa-window-close btn_adjust" aria-hidden="true"></i>
 													<br><br>
 													<span *ngIf="item.discount &&item.discount.length > 0"
@@ -564,18 +575,21 @@
 												<option *ngFor="let discount of discounts; let i = index"
 													[value]="discount.id">{{discount.name}}</option>
 											</select>
-											<select *ngIf="coupons.length >0 && showPCouponSection" class="form-control  select-height"
+											<select *ngIf="coupons.length >0 && showPCouponSection"
+												class="form-control  select-height"
 												[(ngModel)]="selOrderProviderCoupon">
 												<option value="" disabled selected hidden>Select Coupon</option>
 												<option *ngFor="let coupon of coupons; let i = index"
-													[value]="coupon.couponCode"> {{coupon.couponCode}} ({{coupon.name}} )</option>
+													[value]="coupon.couponCode"> {{coupon.couponCode}} ({{coupon.name}}
+													)</option>
 											</select>
 											<select *ngIf="jCouponsList.length>0 && showJCouponSection"
 												class="form-control select-height"
 												[(ngModel)]="selOrderProviderjCoupon">
 												<option value="" disabled selected hidden>Select Jaldee Coupon</option>
 												<option *ngFor="let jcoupon of jCouponsList; let i = index"
-													[value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }} ({{jcoupon.couponName}} )
+													[value]="jcoupon.jaldeeCouponCode">{{ jcoupon.jaldeeCouponCode }}
+													({{jcoupon.couponName}} )
 												</option>
 											</select>
 											<br>
@@ -680,13 +694,17 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<h5 class="modal-title" id="exampleModalLabel">
-											
-													<!-- <span *ngIf="!displayNoteedit">{{add_display_note}}</span>
+
+												<!-- <span *ngIf="!displayNoteedit">{{add_display_note}}</span>
 													<span *ngIf="displayNoteedit">{{update_display_note}}</span>
 													<span *ngIf="!privateNoteedit">{{add_private_note}}</span>
 										<span *ngIf="privateNoteedit">{{update_private_note}}</span> -->
-												<span *ngIf="showDisplaynoteSection">{{displayNoteedit==false?'Add':'Update'}} Display Note</span>
-												<span *ngIf="showPrivatenoteSection">{{privateNoteedit==false?'Add':'Update'}} Private Note</span>
+												<span
+													*ngIf="showDisplaynoteSection">{{displayNoteedit==false?'Add':'Update'}}
+													Display Note</span>
+												<span
+													*ngIf="showPrivatenoteSection">{{privateNoteedit==false?'Add':'Update'}}
+													Private Note</span>
 											</h5>
 
 										</div>
@@ -798,7 +816,8 @@
 									<div class="flx_1">{{coupon.key}} (Coupon)</div>
 									<div class="rupee-font">
 										<span (click)="showJCCouponNote(coupon)"
-											[class.couponAmt]="coupon.value.value === '0.0'" style="margin-right: 5px">{{coupon.value.value |
+											[class.couponAmt]="coupon.value.value === '0.0'"
+											style="margin-right: 5px">{{coupon.value.value |
 											currency:'&#8377;'}}</span>
 										<i *ngIf="bill_data.billStatus!='Settled'"
 											(click)="removeProviderCoupon(coupon.key)" class="fa fa-window-close"
@@ -809,7 +828,8 @@
 									<div class="flx_1">{{jcoupon.key}} (Jaldee Coupon)</div>
 									<div class="rupee-font">
 										<span (click)="showJCCouponNote(jcoupon)"
-											[class.couponAmt]="jcoupon.value.value === '0.0'" style="margin-right: 5px">{{jcoupon.value.value |
+											[class.couponAmt]="jcoupon.value.value === '0.0'"
+											style="margin-right: 5px">{{jcoupon.value.value |
 											currency:'&#8377;'}}</span>
 										<i *ngIf="bill_data.billStatus!='Settled'" (click)="removeJCoupon(jcoupon.key)"
 											class="fa fa-window-close" aria-hidden="true"></i>
@@ -826,11 +846,12 @@
 									</div>
 								</div>
 								<div class="hr_content" *ngIf="bill_data.customerPaidCharges > 0">
-									
+
 									<!-- <div class="flx_1">{{customer_label }} Paid Charges</div> -->
-									
+
 									<div class="flx_1">Processing Fee</div>
-									<div class="rupee-font">(+){{bill_data.customerPaidCharges | currency:'&#8377;'}}</div>
+									<div class="rupee-font">(+){{bill_data.customerPaidCharges | currency:'&#8377;'}}
+									</div>
 								</div>
 								<div class="hr_content" *ngIf="bill_data.deliveryCharges > 0">
 									<div class="flx_1">Delivery Charge</div>
@@ -877,7 +898,8 @@
 																</thead>
 																<tbody
 																	*ngFor="let payment of pre_payment_log; let i = index">
-																	<tr class="font-weight-bolder font-size-sm" *ngIf = "payment.status == 'SUCCESS'">
+																	<tr class="font-weight-bolder font-size-sm"
+																		*ngIf="payment.status == 'SUCCESS'">
 																		<td class="fnt-p7 text-center pt-4">
 																			{{payment.status | capitalizeFirst}}</td>
 																		<td class=" fnt-p7 text-center pt-4">
@@ -921,7 +943,8 @@
 														</div>
 													</div>
 												</div>
-												<div class="row " *ngFor="let payment of pre_payment_log; let i = index">
+												<div class="row "
+													*ngFor="let payment of pre_payment_log; let i = index">
 													<div *ngIf="payment.refundDetails.length" class="table-responsive"
 														style="width: 100%">
 														<table class="table mb-0">
@@ -979,7 +1002,8 @@
 																if the cancellation happens due to the fault of the
 																Service Provider. An amount of 3% of the service fees
 																will be levied from the provider.</li>
-															<li>Only the prepayment amount will be transferred directly to
+															<li>Only the prepayment amount will be transferred directly
+																to
 																{{customer_label}} bank account.</li>
 															<li>The refund option will be active for 2 days after the
 																service date for the service provider.</li>
@@ -995,14 +1019,16 @@
 															<li>If the {{customer_label}} cancels the appointment, the
 																amount refunded will be 3% less (3% deduction includes
 																Jaldee service charges and Online Gateway fees).</li>
-															<li>The service provider can cancel the appointment and refund
+															<li>The service provider can cancel the appointment and
+																refund
 																any amount less than or equal to the prepayment amount
 																paid by the {{customer_label}}.</li>
 															<li>Service Providers will have to refund the full amount,
 																if the cancellation happens due to the fault of the
 																Service Provider. An amount of 3% of the service fees
 																will be levied from the provider.</li>
-															<li>Only the prepayment amount will be transferred directly to
+															<li>Only the prepayment amount will be transferred directly
+																to
 																{{customer_label}} bank account.</li>
 															<li>The refund option will be active for 2 days after the
 																service date for the service provider.</li>
@@ -1025,7 +1051,8 @@
 																if the cancellation happens due to the fault of the
 																Service Provider. An amount of 3% of the service fees
 																will be levied from the provider.</li>
-															<li>Only the prepayment amount will be transferred directly to
+															<li>Only the prepayment amount will be transferred directly
+																to
 																{{customer_label}} bank account.</li>
 															<li>The refund option will be active for 2 days after the
 																service date for the service provider.</li>
@@ -1073,12 +1100,12 @@
 													class="btn btn-success btn-square lh-p6 font-weight-bold"
 													*ngIf="applydisc && !jcashRefund && selectedPayment.paymentMode !== 'Cash' && selectedPayment.paymentMode !== 'Other'"
 													(click)="refundPayment('online')" data-dismiss="modal">Pay
-													Online</button>												
+													Online</button>
 												<button type="button"
 													class="btn btn-success btn-square lh-p6 font-weight-bold"
-													*ngIf="applydisc && jcashRefund"
-													(click)="refundPayment('jcash')" data-dismiss="modal">Confirm
-													</button>
+													*ngIf="applydisc && jcashRefund" (click)="refundPayment('jcash')"
+													data-dismiss="modal">Confirm
+												</button>
 												<button *ngIf="applydisc" type="button"
 													class="btn btn-light-primary btn-square lh-p6 font-weight-bold"
 													(click)="revokeRefund()">Cancel</button>
@@ -1216,7 +1243,8 @@
 											*ngIf="bill_data.billStatus=='Settled'">{{email_bill_cap}}</button>
 
 									</div>
-									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;" *ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus!='Settled'">
+									<div class="col-md-6 col-lg-6 col-sm-6 col-xs-12" style="text-align: end;"
+										*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus!='Settled'">
 										<button type="button"
 											class="full_wdth btn btn-temp-primary-light   font-weight-bold mr-3 my-1 lh-p8 fnt-p8 "
 											*ngIf="bill_data.billPaymentStatus!='FullyPaid' && bill_data.billStatus == 'New' && bill_data.billStatus!='Settled' && bill_data.amountDue > 0 && paymentOnline && jaldeeConsumer && walkinConsumer_status"

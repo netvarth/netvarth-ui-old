@@ -275,7 +275,12 @@
                                         <div *ngIf="showloc">
                                             <div>
                                                 <mat-radio-button checked="checked">
-                                                    {{locationDetails.District}},&nbsp;{{locationDetails.State}}
+                                                    <span
+                                                        *ngIf="locationDetails && locationDetails.PostOffice && locationDetails.PostOffice.District && locationDetails.PostOffice.State">
+                                                        <i class="fa fa-map-marker mgn-rt-5" aria-hidden="true"></i>
+                                                        <b>
+                                                            {{locationDetails.PostOffice.District}},&nbsp;{{locationDetails.PostOffice.State}}
+                                                        </b></span>
                                                 </mat-radio-button>
                                             </div>
                                         </div>
@@ -357,7 +362,7 @@
                                                         <div class="form-group p-2">
                                                             <span class="p-float-label">
                                                                 <p-calendar #inputdob formControlName="dob"
-                                                                    [maxDate]="tday" [minDate]="minday"></p-calendar>
+                                                                    [maxDate]="tday" [minDate]="minday" [showIcon]="true"></p-calendar>
                                                                 <label for="inputdob">Date of Birth</label>
                                                             </span>
                                                             <app-field-error-display

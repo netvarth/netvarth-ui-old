@@ -732,6 +732,7 @@ export class BranchUserDetailComponent implements OnInit {
             this.locationDetails = data;
             this.showloc = true;
             this.editloc = false;
+            console.log(this.locationDetails)
           },
           error => {
             this.snackbarService.openSnackBar(error, {
