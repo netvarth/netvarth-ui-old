@@ -141,10 +141,10 @@
                                         <div class="form-group">
                                             <span class="p-float-label">
                                                 <p-dropdown #department [options]="departments"
-                                                    optionLabel="departmentName" optionValue="departmentName"
+                                                    optionLabel="departmentName" optionValue="departmentId"
                                                     (onChange)="onUserSelect($event.value)"
-                                                    dropdownIcon="fa fa-caret-down" formControlName="selectedDepartment"
-                                                    [readonly]="true">
+                                                    dropdownIcon="fa fa-caret-down"
+                                                    formControlName="selectedDepartment">
                                                 </p-dropdown>
                                                 <label for="department">Department</label>
                                             </span>
@@ -228,9 +228,9 @@
                                         <div class="form-group">
                                             <span class="p-float-label">
                                                 <p-dropdown #role [options]="roles" optionLabel="displayName"
-                                                   dataKey="roleId" optionValue="roleId" dropdownIcon="fa fa-caret-down"
-                                                    formControlName="selectedrole" [autoDisplayFirst]="false"
-                                                    (onChange)="onRoleSelect($event.value)" >
+                                                    dataKey="roleId" optionValue="roleId"
+                                                    dropdownIcon="fa fa-caret-down" formControlName="selectedrole"
+                                                    [autoDisplayFirst]="false" (onChange)="onRoleSelect($event.value)">
                                                 </p-dropdown>
                                                 <label for="role">CDL Role</label>
                                             </span>
