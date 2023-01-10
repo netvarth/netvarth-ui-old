@@ -261,7 +261,7 @@
                             <div class="w-dta">
                                 <div class="row">
                                     <div class="copy one col-a col-xs-12 col-sm-12 no-padding">
-                                        <div class="card p0 w-dta active add-extra">
+                                        <div class="card p0 w-dta active add-extra pt-2">
                                             <mat-accordion>
                                                 <mat-expansion-panel [expanded]="true">
                                                     <mat-expansion-panel-header class="min90">
@@ -274,7 +274,7 @@
                                                                 </a>
                                                             </p>
                                                         </mat-panel-title>
-                                                    </mat-expansion-panel-header>                                             
+                                                    </mat-expansion-panel-header>
                                                     <div class="no-dta"
                                                         *ngIf="normal_domainfield_show== 4 && normal_subdomainfield_show== 4">
                                                         <p>{{have_not_add_cap}} {{additional_cap}} {{info_cap}}.</p>
@@ -290,19 +290,21 @@
                                                                         [expanded]="fields['value'] && fields['value'] != ''"
                                                                         [disabled]="!fields['value']"
                                                                         [hideToggle]="!fields['value']">
-                                                                        <mat-expansion-panel-header
-                                                                            [collapsedHeight]="'40px'"
-                                                                            [expandedHeight]="'40px'">
+                                                                        <mat-expansion-panel-header>
                                                                             <mat-panel-title>
-                                                                                {{fields.displayName}}
-                                                                                <span *ngIf="fields.mandatory == true"
-                                                                                    class="red">&nbsp;*</span>
-                                                                                <span class="mci-warning"
-                                                                                    *ngIf="!fields.value && fields.name==='docmci'">
-                                                                                    <i class="fa fa-exclamation-triangle"
-                                                                                        aria-hidden="true"> </i> Fill
-                                                                                    within 2
-                                                                                    weeks </span>
+                                                                                <div class="panel-title-acc">
+                                                                                    {{fields.displayName}}
+                                                                                    <span
+                                                                                        *ngIf="fields.mandatory == true"
+                                                                                        class="red">&nbsp;*</span>
+                                                                                    <span class="mci-warning"
+                                                                                        *ngIf="!fields.value && fields.name==='docmci'">
+                                                                                        <br>
+                                                                                        <i class="fa fa-exclamation-triangle"
+                                                                                            aria-hidden="true"> </i>
+                                                                                        Fill
+                                                                                        within 2 weeks </span>
+                                                                                </div>
                                                                             </mat-panel-title>
                                                                             <mat-panel-description class="acc-plus-btn">
                                                                                 <button mat-icon-button
@@ -508,9 +510,12 @@
                                                                             [collapsedHeight]="'40px'"
                                                                             [expandedHeight]="'40px'">
                                                                             <mat-panel-title>
-                                                                                {{fields.displayName}}
-                                                                                <span *ngIf="fields.mandatory == true"
-                                                                                    class="red">&nbsp;*</span>
+                                                                                <div class="panel-title-acc">
+                                                                                    {{fields.displayName}}
+                                                                                    <span
+                                                                                        *ngIf="fields.mandatory == true"
+                                                                                        class="red">&nbsp;*</span>
+                                                                                </div>
                                                                             </mat-panel-title>
                                                                             <mat-panel-description class="acc-plus-btn">
                                                                                 <button mat-icon-button

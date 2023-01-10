@@ -417,11 +417,11 @@ export class ItemDetailsComponent implements OnInit {
             return;
         }
         const iprice = parseFloat(form_data.price);
-        if (!iprice || iprice === 0) {
-            // this.api_error = 'Please enter valid price';
-            this.snackbarService.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
-            return;
-        }
+        // if (!iprice || iprice === 0) {
+        //     // this.api_error = 'Please enter valid price';
+        //     this.snackbarService.openSnackBar('Please enter valid price', { 'panelClass': 'snackbarerror' });
+        //     return;
+        // }
         if (iprice < 0) {
             //this.api_error = 'Price should not be a negative value';
             this.snackbarService.openSnackBar('Price should not be a negative value', { 'panelClass': 'snackbarerror' });
