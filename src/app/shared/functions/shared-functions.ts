@@ -32,18 +32,18 @@ export class SharedFunctions {
     });
     return promise;
   }
-/**
-     * 
-     * @param jsonStr_Obj 
-     */
- getJson(jsonStr_Obj) {
-  if(typeof jsonStr_Obj === 'object') {
+  /**
+       * 
+       * @param jsonStr_Obj 
+       */
+  getJson(jsonStr_Obj) {
+    if (typeof jsonStr_Obj === 'object') {
       return jsonStr_Obj;
-  } else {
+    } else {
       return JSON.parse(jsonStr_Obj);
+    }
   }
-}
-  
+
   public checkLogin() {
     const login = (this.lStorageService.getitemfromLocalStorage('ynw-credentials')) ? true : false;
     return login;
@@ -916,7 +916,7 @@ export class SharedFunctions {
     return xs.reduce(function (rv, x) {
       (rv[x[key]] = rv[x[key]] || []).push(x);
       return rv;
-    },{} );
+    }, {});
   }
   removeDuplicates(array, key) {
     const lookup = new Set();
@@ -992,24 +992,37 @@ export class SharedFunctions {
   // }
   gotoActiveHome() {
     this.provider_services.getAccountSettings().then(
-        (settings: any) => {
-          if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
-            if (this.lStorageService.getitemfromLocalStorage('cdl')) {
-              this.router.navigate(['provider', 'cdl']);
-            } else if (settings.appointment) {
-              this.router.navigate(['provider', 'appointments']);
-            } else if (settings.waitlist) {
-              this.router.navigate(['provider', 'check-ins']);
-            }  else if (settings.order) {
-              this.router.navigate(['provider', 'orders']);
-            } else if(settings.enableTask) {
-              this.router.navigate(['provider', 'crm']);
-            }  else {
-              this.router.navigate(['provider', 'settings']);
-            }
+      (settings: any) => {
+        if (this.groupService.getitemFromGroupStorage('isCheckin') === 0) {
+          if (this.lStorageService.getitemfromLocalStorage('cdl')) {
+            this.router.navigate(['provider', 'cdl']);
+          } else if (settings.appointment) {
+            this.router.navigate(['provider', 'appointments']);
+          } else if (settings.waitlist) {
+            this.router.navigate(['provider', 'check-ins']);
+          } else if (settings.order) {
+            this.router.navigate(['provider', 'orders']);
+          } else if (settings.enableTask) {
+            this.router.navigate(['provider', 'crm']);
           } else {
             this.router.navigate(['provider', 'settings']);
           }
-        });
+        } else {
+          this.router.navigate(['provider', 'settings']);
+        }
+      });
+  }
+
+
+  convertToJsonFromString(jsonString) {
+    let resultJson = {}
+    let base = jsonString + ''
+    base = base.substring(1, base.length - 1);
+    let jsonArray = base.split(',');
+    for (let i = 0; i < jsonArray.length; i++) {
+      let item = jsonArray[i].split(':')
+      resultJson[item[0].trim()] = item[1]
+    }
+    return resultJson;
   }
 }

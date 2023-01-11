@@ -14,6 +14,10 @@ import { Messages } from '../../../constants/project-messages';
 import { MatDialog } from '@angular/material/dialog';
 import { AddItemNotesComponent } from '../add-item-notes/add-item-notes.component';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { SubSink } from 'subsink';
+import { DialogService } from 'primeng/dynamicdialog';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
+import { ItemOptionsComponent } from '../item-options/item-options.component';
 
 @Component({
   selector: 'app-order-consumer',
@@ -21,6 +25,8 @@ import { DeviceDetectorService } from 'ngx-device-detector';
   styleUrls: ['./order-consumer.component.css']
 })
 export class OrderConsumerComponent implements OnInit {
+  private subs = new SubSink();
+  itemOptionsRef: DynamicDialogRef;
   @Input() catalog;
   @Input() business;
   @Input() orderList;
@@ -100,6 +106,8 @@ export class OrderConsumerComponent implements OnInit {
   itemCount: any;
   deviceInfo: any;
   tempRes: any;
+  serviceOptionQuestionnaireList: any;
+  serviceOptionApptt: any;
   constructor(
     private location: Location,
     private lStorageService: LocalStorageService,
@@ -109,10 +117,8 @@ export class OrderConsumerComponent implements OnInit {
     private snackbarService: SnackbarService,
     public router: Router,
     private dialog: MatDialog,
-    private deviceService: DeviceDetectorService
-
-
-
+    private deviceService: DeviceDetectorService,
+    private dialogService: DialogService
 
   ) {
     this.route.queryParams.subscribe(
@@ -143,6 +149,7 @@ export class OrderConsumerComponent implements OnInit {
       console.log("Catalog Details : ", this.catalog)
       if (this.catalog.catalogItem) {
         this.catalogItems = this.catalog.catalogItem
+        console.log("Catalog catalogItems ", this.catalogItems)
       }
     }
     if (this.business) {
@@ -157,12 +164,14 @@ export class OrderConsumerComponent implements OnInit {
       this.businessPhoneNumber = this.lStorageService.getitemfromLocalStorage('businessPhoneNumber');
     }
 
-
-
-
     this.deviceInfo = this.deviceService.getDeviceInfo();
     this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
     this.desktopView = this.deviceService.isDesktop();
+  }
+
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
   }
 
   changeTime() {
@@ -240,6 +249,22 @@ export class OrderConsumerComponent implements OnInit {
     this.catalogItems = this.orderItems;
     this.isPhysicalItemsPresent();
 
+  }
+
+
+  getServiceOptions(id) {
+    this.subs.sink = this.shared_services.getServiceoptionsOrder(id, this.account_id).subscribe(
+      (data: any) => {
+        if (data) {
+          this.serviceOptionQuestionnaireList = data;
+          if (this.serviceOptionQuestionnaireList && this.serviceOptionQuestionnaireList.questionnaireId) {
+            this.serviceOptionApptt = true;
+          }
+        }
+      },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
   }
 
   catlogArry() {
@@ -445,8 +470,95 @@ export class OrderConsumerComponent implements OnInit {
   }
 
   increment(item) {
-    this.addToCart(item);
+    this.subs.sink = this.shared_services.getServiceoptionsOrder(item.item.itemId, this.account_id).subscribe(
+      (data: any) => {
+        if (data) {
+          this.serviceOptionQuestionnaireList = data;
+          if (this.serviceOptionQuestionnaireList && this.serviceOptionQuestionnaireList.questionnaireId) {
+            this.serviceOptionApptt = true;
+            this.addItemOptions(data)
+          }
+          else {
+            this.addToCart(item);
+          }
+        }
+      },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
   }
+
+
+  addItemOptions(data) {
+    this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
+      header: 'Choose Item Options',
+      width: '70%',
+      contentStyle: { "max-height": "500px", "overflow": "auto" },
+      baseZIndex: 10000,
+      data: data,
+    });
+
+    this.itemOptionsRef.onClose.subscribe((result: any) => {
+      if (result) {
+        console.log(result)
+      }
+      else {
+        console.log("Data Not Coming")
+      }
+    });
+  }
+
+
+  // qnrPopup(question, value) {
+
+  //   this.showqnr = true;
+  //   this.sequenceId = question.sequnceId;
+
+  //   // this.questionnaireList= question;
+  //   const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
+  //     width: '50%',
+  //     panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+  //     disableClose: true,
+  //     data: {
+  //       data: question,
+  //       qnr_type: 'service_option',
+  //       view: 'qnrView',
+  //       isEdit: 'add'
+  //     }
+  //   });
+  //   removeitemdialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.dataGridList = result.data.answerLine;
+  //       this.post_Data = result.data;
+  //       this.showItem = true;
+  //       this.item = result.data.answerLine[0].answer.dataGridList[0].dataGridListColumn[0].column.list[0];
+
+  //       if (result.data.totalPrice) {
+  //         this.totalPrice = result.data.totalPrice
+  //       }
+  //       let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: this.item, price: this.totalPrice, columnItem: this.dataGridList }
+  //       this.itemArray.push(dummyArray)
+
+  //       if (this.itemArray) {
+  //         this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
+  //       }
+  //       this.serviceTotalPrice = 0;
+  //       this.itemArray.forEach((item: any) => {
+
+
+  //         this.serviceTotalPrice = this.serviceTotalPrice + item.price;
+  //         this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
+  //       });
+
+
+  //       this.id = this.id + 1
+  //       let obj = { sequenceId: this.sequenceId, dgList: this.post_Data.answerLine };
+  //       this.finalObjectList.push(obj);
+  //       this.onSubmit('serviceOption')
+
+  //     }
+  //   });
+  // }
 
   // addToCart(Item) {
   //   this.orderList.push(Item);
@@ -959,65 +1071,65 @@ export class OrderConsumerComponent implements OnInit {
     // console.log('seacrchFilterOrder', seacrchFilterOrder);
     this.getCataLogDetails(seacrchFilterOrder)
   }
-  handleSearchSelect(cataItem,searchFilter){
+  handleSearchSelect(cataItem, searchFilter) {
     // console.log(cataItem);
     // console.log('searchFilter',searchFilter);
-    
+
   }
-  getCataLogDetails(searchFilter){
-    let tempCatValue='displayName';
-    this.shared_services.getSearchCatalogItem(this.account_id,tempCatValue,searchFilter).subscribe((res:any)=>{
+  getCataLogDetails(searchFilter) {
+    let tempCatValue = 'displayName';
+    this.shared_services.getSearchCatalogItem(this.account_id, tempCatValue, searchFilter).subscribe((res: any) => {
       // console.log(res);
       // console.log(' this.catalogItems', this.catalogItems);
-      if(res.length===0){
-        this.catalogItems=res;
-        this.tempRes=res;
-        if(searchFilter.charAt(0)===''){
-          this.catalogItems=  this.catalog.catalogItem
+      if (res.length === 0) {
+        this.catalogItems = res;
+        this.tempRes = res;
+        if (searchFilter.charAt(0) === '') {
+          this.catalogItems = this.catalog.catalogItem
         }
       }
-      else{
-        this.catalogItems=[]
-        console.log('this.catalog',this.catalog.catalogItem)
-        for(let x=0;x<this.catalog.catalogItem.length;x++){
-          for(let i=0;i<res.length;i++){
-            if(this.catalog.catalogItem[x].item.itemId === res[i].itemId){
-                this.catalogItems.push({
-              item:{
-                'adhoc':this.catalog.catalogItem[x].item.adhoc,
-                'displayName':this.catalog.catalogItem[x].item.displayName,
-                'isShowOnLandingpage':this.catalog.catalogItem[x].item.isShowOnLandingpage,
-                'isStockAvailable':this.catalog.catalogItem[x].item.isStockAvailable,
-                'itemCode':this.catalog.catalogItem[x].item.itemCode,
-                'itemId':this.catalog.catalogItem[x].item.itemId,
-                'itemName':this.catalog.catalogItem[x].item.itemName,
-                'itemNameInLocal':this.catalog.catalogItem[x].item.itemNameInLocal,
-                'promotionalPrcnt':this.catalog.catalogItem[x].item.promotionalPrcnt,
-                'showPrice':this.catalog.catalogItem[x].item.showPrice,
-                'showPromotionalPrice':this.catalog.catalogItem[x].item.showPromotionalPrice,
-                'taxable':this.catalog.catalogItem[x].item.taxable,
-                'itemDesc':this.catalog.catalogItem[x].item.itemDesc,
-                'itemType':this.catalog.catalogItem[x].item.itemType,
-                'notes':[],
-                'price':this.catalog.catalogItem[x].item.price,
-                'promotionalPriceType':this.catalog.catalogItem[x].item.promotionalPriceType,
-                'shortDesc':this.catalog.catalogItem[x].item.shortDesc,
-                'status':this.catalog.catalogItem[x].item.status,
-              }
-            });
+      else {
+        this.catalogItems = []
+        console.log('this.catalog', this.catalog.catalogItem)
+        for (let x = 0; x < this.catalog.catalogItem.length; x++) {
+          for (let i = 0; i < res.length; i++) {
+            if (this.catalog.catalogItem[x].item.itemId === res[i].itemId) {
+              this.catalogItems.push({
+                item: {
+                  'adhoc': this.catalog.catalogItem[x].item.adhoc,
+                  'displayName': this.catalog.catalogItem[x].item.displayName,
+                  'isShowOnLandingpage': this.catalog.catalogItem[x].item.isShowOnLandingpage,
+                  'isStockAvailable': this.catalog.catalogItem[x].item.isStockAvailable,
+                  'itemCode': this.catalog.catalogItem[x].item.itemCode,
+                  'itemId': this.catalog.catalogItem[x].item.itemId,
+                  'itemName': this.catalog.catalogItem[x].item.itemName,
+                  'itemNameInLocal': this.catalog.catalogItem[x].item.itemNameInLocal,
+                  'promotionalPrcnt': this.catalog.catalogItem[x].item.promotionalPrcnt,
+                  'showPrice': this.catalog.catalogItem[x].item.showPrice,
+                  'showPromotionalPrice': this.catalog.catalogItem[x].item.showPromotionalPrice,
+                  'taxable': this.catalog.catalogItem[x].item.taxable,
+                  'itemDesc': this.catalog.catalogItem[x].item.itemDesc,
+                  'itemType': this.catalog.catalogItem[x].item.itemType,
+                  'notes': [],
+                  'price': this.catalog.catalogItem[x].item.price,
+                  'promotionalPriceType': this.catalog.catalogItem[x].item.promotionalPriceType,
+                  'shortDesc': this.catalog.catalogItem[x].item.shortDesc,
+                  'status': this.catalog.catalogItem[x].item.status,
+                }
+              });
             }
-          } 
-        }       
+          }
+        }
       }
-          
+
     })
   }
-  myMethod(data){
+  myMethod(data) {
     console.log(data);
     // if(data===undefined){
     //   this.catalogItems=[]
     // }
-    
+
   }
 
 }

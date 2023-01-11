@@ -17,6 +17,8 @@ import { SkeletonLoadingModule } from '../../skeleton-loading/skeleton-loading.m
 import { OrderConsumerComponent } from './order-consumer.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CapitalizeFirstPipeModule } from "../../../../shared/pipes/capitalize.module";
+import { DialogService } from 'primeng/dynamicdialog';
+import { ItemOptionsModule } from '../item-options/item-options.module';
 
 const routes: Routes = [
   { path: 'ordercheckout', loadChildren: () => import('../order-consumer-checkout/order-consumer-checkout.module').then(m => m.OrderConsumerCheckoutModule) },
@@ -41,6 +43,7 @@ const routes: Routes = [
     SkeletonLoadingModule,
     MatAutocompleteModule,
     CapitalizeFirstPipeModule,
+    ItemOptionsModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
@@ -49,6 +52,9 @@ const routes: Routes = [
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA,
     NO_ERRORS_SCHEMA
+  ],
+  providers: [
+    DialogService
   ]
 })
 

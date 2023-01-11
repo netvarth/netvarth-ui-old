@@ -143,7 +143,10 @@ export class FileService {
     console.log("Event 2", event)
     const _this = this;
     return new Promise(function (resolve, reject) {
-      const input = event.target.files;
+      var input = event.files;
+      if (event.target && event.target.files) {
+        var input = event.target.files;
+      }
       console.log("File Selected :", input);
       if (input) {
         let count = 0;
