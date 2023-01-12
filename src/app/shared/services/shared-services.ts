@@ -1097,6 +1097,11 @@ export class SharedServices {
   // CreateConsumerOrderlist(accountid, dataappend) {
   //   return this.servicemeta.httpPost('consumer/orders/shoppingList?account=' + accountid, dataappend);
   // }
+
+  submitItemOptions(itemId, orderId, accountId, postData) {
+    return this.servicemeta.httpPost('consumer/orders/item/serviceoption/' + itemId + '/' + orderId + '?account=' + accountId, postData);
+  }
+
   getAvailableDatesForPickup(catalogid, accountid?) {
     return this.servicemeta.httpGet('consumer/orders/catalogs/pickUp/dates/' + catalogid + '?account=' + accountid);
   }
@@ -1357,11 +1362,11 @@ export class SharedServices {
     return this.servicemeta.httpPut(url, data);
   }
   submitConsumerApptServiceOption(body, uuid, account) {
-    const url = 'consumer/appointment/serviceoption/' + uuid + '/?account=' + account;
+    const url = 'consumer/appointment/serviceoption/' + uuid + '?account=' + account;
     return this.servicemeta.httpPost(url, body);
   }
   submitConsumerWaitlistServiceOption(body, uuid, account) {
-    const url = 'consumer/waitlist/serviceoption/' + uuid + '/?account=' + account;
+    const url = 'consumer/waitlist/serviceoption/' + uuid + '?account=' + account;
     return this.servicemeta.httpPost(url, body);
   }
   updateProviderMUniqueId(body) {
@@ -1385,5 +1390,9 @@ export class SharedServices {
   getUsersByLocation(locationId, accountId) {
     const url = 'consumer/users/' + accountId + '/' + locationId;
     return this.servicemeta.httpGet(url);
+  }
+
+  videoaudioS3Upload(file, url) {
+    return this.servicemeta.httpPut(url, file);
   }
 }

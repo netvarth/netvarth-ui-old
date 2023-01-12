@@ -165,12 +165,12 @@ export class QnrDialogComponent implements OnInit {
     if (data.repeat_type) {
       this.repeat_type = data.repeat_type;
     }
-    if(data.isEdit){
-      this.isEdit =data.isEdit;
-   
+    if (data.isEdit) {
+      this.isEdit = data.isEdit;
+
     }
-    if(data.editableItem){
-      this.editableItem =data.editableItem;
+    if (data.editableItem) {
+      this.editableItem = data.editableItem;
     }
     this.popUpView = data.view;
     if (data.item_details) {
@@ -198,7 +198,7 @@ export class QnrDialogComponent implements OnInit {
       if (this.params.uuid) {
         this.uuid = this.params.uuid;
       }
-     
+
     });
     this.subscription = this.sharedFunctionobj.getMessage().subscribe(message => {
       switch (message.type) {
@@ -213,10 +213,10 @@ export class QnrDialogComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
-//   ngAfterViewChecked(){
-//     console.log(JSON.stringify(this.selectedPriceList))
-//     this.totalPrice = this.getTotalPrice(this.selectedPriceList);
-//  }
+  //   ngAfterViewChecked(){
+  //     console.log(JSON.stringify(this.selectedPriceList))
+  //     this.totalPrice = this.getTotalPrice(this.selectedPriceList);
+  //  }
   ngOnInit(): void {
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
 
@@ -533,350 +533,351 @@ export class QnrDialogComponent implements OnInit {
   }
   listChange(ev, value, question, column?) {
 
-    if(this.isEdit === 'edit'){
-          let itemPrice;
-          this.selectedType = value;
-          if (question.fieldDataType !== 'dataGrid') {
-     
-           
-              if (column.order && column.order === 1 && column.mandatory === true) {
-               
-                itemPrice = this.getValue(value);
-              
-                if (itemPrice !== undefined) {
-                  var itemrate: number = +itemPrice;
-                }
-                else {
-                  var itemrate = 0
-                }
-     
-                this.ansDataColumn["list"] = [value];
-                this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
-                this.ansdDtaGridColumnItem["columnId"] = column.columnId;
-                this.ansdDtaGridColumnItem["price"] = itemrate;
-                this.ansdDtaGridColumnItem["quantity"] = 1;
-              
-                let ind=this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
-                if (ind > -1) {
-                  this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind,1,this.ansdDtaGridColumnItem); // 2nd parameter means remove one item only
-                }
-               
-                let index = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-                if (index > -1) {
-                  this.selectedPriceList.splice(index, 1); // 2nd parameter means remove one item only
-                }
-                this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-     
-              }
-              else if (column.order && column.order === 2 && column.mandatory === true) {
-                this.isCheckedSecond = true;
-     
-                this.isListChanged = true;
-                itemPrice = this.getRate(value);
-                var itemrate: number = +itemPrice;
-                let ansDataColumn1 = {};
-                ansDataColumn1["list"] = [value];
-                let ansdDtaGridColumnItem1 = {};
-                ansdDtaGridColumnItem1["column"] = ansDataColumn1;
-                ansdDtaGridColumnItem1["columnId"] = column.columnId;
-                ansdDtaGridColumnItem1["price"] = itemrate;
-                ansdDtaGridColumnItem1["quantity"] = 1;
-                
-                let ind=this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
-                if (ind > -1) {
-                  this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind,1,ansdDtaGridColumnItem1); // 2nd parameter means remove one item only
-                }
-                let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-                if (index1 > -1) {
-                  this.selectedPriceList.splice(index1, 1); 
-                }
-                this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-               
-              }
-              else {
-                if (column.mandatory === true) {
-                  this.isCheckedSecond = true;
-                }
-                this.isListChanged = true;
-                if (ev) {
-                 
-               
-                    const index = this.items.indexOf(value);
-                    if (index > -1) {
-                      this.items.splice(index, 1); 
-                      this.items.push(value);
-                    }
-                 
-                }
-               
-                let ansDataColumn1 = {};
-                ansDataColumn1["list"] = this.items;
-                let ansdDtaGridColumnItem1 = {};
-                ansdDtaGridColumnItem1["column"] = ansDataColumn1;
-                ansdDtaGridColumnItem1["columnId"] = column.columnId;
-                ansdDtaGridColumnItem1["price"] = this.getRates(this.items);
-                ansdDtaGridColumnItem1["quantity"] = 1;
-              
-                let ind=this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
-                if (ind > -1) {
-                  this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind,1,ansdDtaGridColumnItem1); // 2nd parameter means remove one item only
-                }
-                let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-                if (index1 > -1) {
-                  this.selectedPriceList.splice(index1, 1);
-                }
-                this.selectedPriceList.push({ item: column.columnId, rate: this.getRates(this.items) })
-              
-              }
-   
-     
+    if (this.isEdit === 'edit') {
+      let itemPrice;
+      this.selectedType = value;
+      if (question.fieldDataType !== 'dataGrid') {
+
+
+        if (column.order && column.order === 1 && column.mandatory === true) {
+
+          itemPrice = this.getValue(value);
+
+          if (itemPrice !== undefined) {
+            var itemrate: number = +itemPrice;
           }
           else {
-     
-            if (ev.target.checked) {
-              if (!this.dataGridListColumns[question.labelName + '=' + column.order]) {
-                this.dataGridListColumns[question.labelName + '=' + column.order] = [];
-              }
-              this.dataGridListColumns[question.labelName + '=' + column.order].push(value);
-            } else {
-              const indx = this.dataGridListColumns[question.labelName + '=' + column.order].indexOf(value);
-              this.dataGridListColumns[question.labelName + '=' + column.order].splice(indx, 1);
-            }
-     
-            this.onSubmit('inputChange');
+            var itemrate = 0
           }
+
+          this.ansDataColumn["list"] = [value];
+          this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
+          this.ansdDtaGridColumnItem["columnId"] = column.columnId;
+          this.ansdDtaGridColumnItem["price"] = itemrate;
+          this.ansdDtaGridColumnItem["quantity"] = 1;
+
+          let ind = this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
+          if (ind > -1) {
+            this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind, 1, this.ansdDtaGridColumnItem); // 2nd parameter means remove one item only
+          }
+
+          let index = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+          if (index > -1) {
+            this.selectedPriceList.splice(index, 1); // 2nd parameter means remove one item only
+          }
+          this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+
+        }
+        else if (column.order && column.order === 2 && column.mandatory === true) {
+          this.isCheckedSecond = true;
+
+          this.isListChanged = true;
+          itemPrice = this.getRate(value);
+          var itemrate: number = +itemPrice;
+          let ansDataColumn1 = {};
+          ansDataColumn1["list"] = [value];
+          let ansdDtaGridColumnItem1 = {};
+          ansdDtaGridColumnItem1["column"] = ansDataColumn1;
+          ansdDtaGridColumnItem1["columnId"] = column.columnId;
+          ansdDtaGridColumnItem1["price"] = itemrate;
+          ansdDtaGridColumnItem1["quantity"] = 1;
+
+          let ind = this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
+          if (ind > -1) {
+            this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind, 1, ansdDtaGridColumnItem1); // 2nd parameter means remove one item only
+          }
+          let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+          if (index1 > -1) {
+            this.selectedPriceList.splice(index1, 1);
+          }
+          this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+
+        }
+        else {
+          if (column.mandatory === true) {
+            this.isCheckedSecond = true;
+          }
+          this.isListChanged = true;
+          if (ev) {
+
+
+            const index = this.items.indexOf(value);
+            if (index > -1) {
+              this.items.splice(index, 1);
+              this.items.push(value);
+            }
+
+          }
+
+          let ansDataColumn1 = {};
+          ansDataColumn1["list"] = this.items;
+          let ansdDtaGridColumnItem1 = {};
+          ansdDtaGridColumnItem1["column"] = ansDataColumn1;
+          ansdDtaGridColumnItem1["columnId"] = column.columnId;
+          ansdDtaGridColumnItem1["price"] = this.getRates(this.items);
+          ansdDtaGridColumnItem1["quantity"] = 1;
+
+          let ind = this.answersQnr["answer"].dataGridList[0].dataGridListColumn.findIndex(x => x.columnId === column.columnId)
+          if (ind > -1) {
+            this.answersQnr["answer"].dataGridList[0].dataGridListColumn.splice(ind, 1, ansdDtaGridColumnItem1); // 2nd parameter means remove one item only
+          }
+          let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+          if (index1 > -1) {
+            this.selectedPriceList.splice(index1, 1);
+          }
+          this.selectedPriceList.push({ item: column.columnId, rate: this.getRates(this.items) })
+
+        }
+
+
+      }
+      else {
+
+        if (ev.target.checked) {
+          if (!this.dataGridListColumns[question.labelName + '=' + column.order]) {
+            this.dataGridListColumns[question.labelName + '=' + column.order] = [];
+          }
+          this.dataGridListColumns[question.labelName + '=' + column.order].push(value);
+        } else {
+          const indx = this.dataGridListColumns[question.labelName + '=' + column.order].indexOf(value);
+          this.dataGridListColumns[question.labelName + '=' + column.order].splice(indx, 1);
+        }
+
+        this.onSubmit('inputChange');
+      }
     }
 
 
-    
-    else{
-          let itemPrice;
-          this.selectedType = value;
-          if (question.fieldDataType !== 'dataGrid') {
-     
-            if (Object.keys(this.answersQnr).length === 0) {
-     
-              itemPrice = this.getValue(value);
-     
-              if (itemPrice !== undefined) {
-                var itemrate: number = +itemPrice;
-              }
-              else {
-                var itemrate = 0
-              }
-              this.answersQnr["labelName"] = question.labelName;
-              this.answerQnr["dataGridList"] = [];
-              this.answerQnr["dataGridList"].push(this.answDataGridList)
-              this.ansList.push(value);
-              this.ansDataColumn["list"] = this.ansList;
-              this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
-              this.ansdDtaGridColumnItem["columnId"] = column.columnId;
-              this.ansdDtaGridColumnItem["price"] = itemrate;
-              this.ansdDtaGridColumnItem["quantity"] = 1;
-              this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
-              this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
-              this.answersQnr["answer"] = this.answerQnr;
-           
-              this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-     
-            }
-            else {
-              if (column.order && column.order === 1 && column.mandatory === true) {
-     
-                itemPrice = this.getValue(value);
-                if (itemPrice !== undefined) {
-                  var itemrate: number = +itemPrice;
-                }
-                else {
-                  var itemrate = 0
-                }
-     
-                this.ansDataColumn["list"] = [value];
-                this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
-                this.ansdDtaGridColumnItem["columnId"] = column.columnId;
-                this.ansdDtaGridColumnItem["price"] = itemrate;
-                this.ansdDtaGridColumnItem["quantity"] = 1;
-                this.answDataGridListColumn.pop();
-                this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
-                this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
-                this.answersQnr["answer"] = this.answerQnr;
-                let index = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-                if (index > -1) {
-                  this.selectedPriceList.splice(index, 1); // 2nd parameter means remove one item only
-                }
-                this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-     
-              }
-              else if (column.order && column.order === 2 && column.mandatory === true) {
-     
-                this.isCheckedSecond = true;
-     
-                this.isListChanged = true;
-                itemPrice = this.getRate(value);
-                var itemrate: number = +itemPrice;
-                let ansDataColumn1 = {};
-                ansDataColumn1["list"] = [value];
-                let ansdDtaGridColumnItem1 = {};
-                ansdDtaGridColumnItem1["column"] = ansDataColumn1;
-                ansdDtaGridColumnItem1["columnId"] = column.columnId;
-                ansdDtaGridColumnItem1["price"] = itemrate;
-                ansdDtaGridColumnItem1["quantity"] = 1;
-                let index = this.answDataGridListColumn.findIndex(x => x.columnId === column.columnId)
-                if (index > -1) {
-                  this.answDataGridListColumn.splice(index, 1); // 2nd parameter means remove one item only
-                }
-                this.answDataGridListColumn.push(ansdDtaGridColumnItem1);
-                this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
-                this.answersQnr["answer"] = this.answerQnr;
-                let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-                if (index1 > -1) {
-                  this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
-                }
-                this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-     
-              }
-              else {
-                if (column.mandatory === true) {
-                  this.isCheckedSecond = true;
-                }
-                this.isListChanged = true;
-                if (ev.target.checked) {
-                  this.items.push(value);
-     
-                }
-                else {
-                  const index = this.items.indexOf(value);
-                  if (index > -1) {
-                    this.items.splice(index, 1); // 2nd parameter means remove one item only
-                  }
-                }
-                // itemPrice = this.getRates(this.items);
-                // var itemrate: number = +itemPrice;
-                let ansDataColumn1 = {};
-                ansDataColumn1["list"] = this.items;
-                let ansdDtaGridColumnItem1 = {};
-                ansdDtaGridColumnItem1["column"] = ansDataColumn1;
-                ansdDtaGridColumnItem1["columnId"] = column.columnId;
-                ansdDtaGridColumnItem1["price"] = this.getRates(this.items);
-                ansdDtaGridColumnItem1["quantity"] = 1;
-                let index = this.answDataGridListColumn.findIndex(x => x.columnId === column.columnId)
-                if (index > -1) {
-                  this.answDataGridListColumn.splice(index, 1); // 2nd parameter means remove one item only
-                }
-                this.answDataGridListColumn.push(ansdDtaGridColumnItem1);
-                this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
-                this.answersQnr["answer"] = this.answerQnr;
-                let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
-                if (index1 > -1) {
-                  this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
-                }
-                this.selectedPriceList.push({ item: column.columnId, rate: this.getRates(this.items) })
-     
-              }
-     
-            }
-            
-     
+
+    else {
+      let itemPrice;
+      this.selectedType = value;
+      if (question.fieldDataType !== 'dataGrid') {
+
+        if (Object.keys(this.answersQnr).length === 0) {
+
+          itemPrice = this.getValue(value);
+
+          if (itemPrice !== undefined) {
+            var itemrate: number = +itemPrice;
           }
           else {
-     
-            if (ev.target.checked) {
-              if (!this.dataGridListColumns[question.labelName + '=' + column.order]) {
-                this.dataGridListColumns[question.labelName + '=' + column.order] = [];
-              }
-              this.dataGridListColumns[question.labelName + '=' + column.order].push(value);
-            } else {
-              const indx = this.dataGridListColumns[question.labelName + '=' + column.order].indexOf(value);
-              this.dataGridListColumns[question.labelName + '=' + column.order].splice(indx, 1);
-            }
-     
-            this.onSubmit('inputChange');
+            var itemrate = 0
           }
+          this.answersQnr["labelName"] = question.labelName;
+          this.answerQnr["dataGridList"] = [];
+          this.answerQnr["dataGridList"].push(this.answDataGridList)
+          this.ansList.push(value);
+          this.ansDataColumn["list"] = this.ansList;
+          this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
+          this.ansdDtaGridColumnItem["columnId"] = column.columnId;
+          this.ansdDtaGridColumnItem["price"] = itemrate;
+          this.ansdDtaGridColumnItem["quantity"] = 1;
+          this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
+          this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
+          this.answersQnr["answer"] = this.answerQnr;
+
+          this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+
+        }
+        else {
+          if (column.order && column.order === 1 && column.mandatory === true) {
+
+            itemPrice = this.getValue(value);
+            if (itemPrice !== undefined) {
+              var itemrate: number = +itemPrice;
+            }
+            else {
+              var itemrate = 0
+            }
+
+            this.ansDataColumn["list"] = [value];
+            this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
+            this.ansdDtaGridColumnItem["columnId"] = column.columnId;
+            this.ansdDtaGridColumnItem["price"] = itemrate;
+            this.ansdDtaGridColumnItem["quantity"] = 1;
+            this.answDataGridListColumn.pop();
+            this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
+            this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
+            this.answersQnr["answer"] = this.answerQnr;
+            let index = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+            if (index > -1) {
+              this.selectedPriceList.splice(index, 1); // 2nd parameter means remove one item only
+            }
+            this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+
+          }
+          else if (column.order && column.order === 2 && column.mandatory === true) {
+
+            this.isCheckedSecond = true;
+
+            this.isListChanged = true;
+            itemPrice = this.getRate(value);
+            var itemrate: number = +itemPrice;
+            let ansDataColumn1 = {};
+            ansDataColumn1["list"] = [value];
+            let ansdDtaGridColumnItem1 = {};
+            ansdDtaGridColumnItem1["column"] = ansDataColumn1;
+            ansdDtaGridColumnItem1["columnId"] = column.columnId;
+            ansdDtaGridColumnItem1["price"] = itemrate;
+            ansdDtaGridColumnItem1["quantity"] = 1;
+            let index = this.answDataGridListColumn.findIndex(x => x.columnId === column.columnId)
+            if (index > -1) {
+              this.answDataGridListColumn.splice(index, 1); // 2nd parameter means remove one item only
+            }
+            this.answDataGridListColumn.push(ansdDtaGridColumnItem1);
+            this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
+            this.answersQnr["answer"] = this.answerQnr;
+            let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+            if (index1 > -1) {
+              this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
+            }
+            this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
+
+          }
+          else {
+            if (column.mandatory === true) {
+              this.isCheckedSecond = true;
+            }
+            this.isListChanged = true;
+            if (ev.target.checked) {
+              this.items.push(value);
+
+            }
+            else {
+              const index = this.items.indexOf(value);
+              if (index > -1) {
+                this.items.splice(index, 1); // 2nd parameter means remove one item only
+              }
+            }
+            // itemPrice = this.getRates(this.items);
+            // var itemrate: number = +itemPrice;
+            let ansDataColumn1 = {};
+            ansDataColumn1["list"] = this.items;
+            let ansdDtaGridColumnItem1 = {};
+            ansdDtaGridColumnItem1["column"] = ansDataColumn1;
+            ansdDtaGridColumnItem1["columnId"] = column.columnId;
+            ansdDtaGridColumnItem1["price"] = this.getRates(this.items);
+            ansdDtaGridColumnItem1["quantity"] = 1;
+            let index = this.answDataGridListColumn.findIndex(x => x.columnId === column.columnId)
+            if (index > -1) {
+              this.answDataGridListColumn.splice(index, 1); // 2nd parameter means remove one item only
+            }
+            this.answDataGridListColumn.push(ansdDtaGridColumnItem1);
+            this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
+            this.answersQnr["answer"] = this.answerQnr;
+            let index1 = this.selectedPriceList.findIndex(x => x.item === column.columnId)
+            if (index1 > -1) {
+              this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
+            }
+            this.selectedPriceList.push({ item: column.columnId, rate: this.getRates(this.items) })
+
+          }
+
+        }
+
+
+      }
+      else {
+
+        if (ev.target.checked) {
+          if (!this.dataGridListColumns[question.labelName + '=' + column.order]) {
+            this.dataGridListColumns[question.labelName + '=' + column.order] = [];
+          }
+          this.dataGridListColumns[question.labelName + '=' + column.order].push(value);
+        } else {
+          const indx = this.dataGridListColumns[question.labelName + '=' + column.order].indexOf(value);
+          this.dataGridListColumns[question.labelName + '=' + column.order].splice(indx, 1);
+        }
+
+        this.onSubmit('inputChange');
+      }
     }
     this.totalPrice = this.getTotalPrice(this.selectedPriceList)
   }
 
 
   isChecked(value, question, column?) {
-  
-    if(this.isEdit === 'edit'){
 
-     
+    if (this.isEdit === 'edit') {
+
+
       this.isCheckedoption = true;
       if (question.fieldDataType !== 'dataGrid') {
-        if(column.order===1){
+        if (column.order === 1) {
           this.answersQnr = this.editableItem.columnItem[0];
         }
-      else{
-        this.answersQnr =this.answersQnr
-      }
-      
-        
-        
-          let answDataGridListColumnArray = this.answersQnr["answer"].dataGridList[0]["dataGridListColumn"];
-       
-          if (answDataGridListColumnArray) {
+        else {
+          this.answersQnr = this.answersQnr
+        }
 
-       
+
+
+        let answDataGridListColumnArray = this.answersQnr["answer"].dataGridList[0]["dataGridListColumn"];
+
+        if (answDataGridListColumnArray) {
+
+
           let item = answDataGridListColumnArray.find(x => x.columnId === column.columnId);
 
           if (item) {
-           
+
             let index1 = this.selectedPriceList.findIndex(x => x.item === item.columnId)
             if (index1 > -1) {
-              this.selectedPriceList.splice(index1, 1); 
+              this.selectedPriceList.splice(index1, 1);
             }
             this.selectedPriceList.push({ item: column.columnId, rate: item.price })
             setTimeout(() => {
               this.totalPrice = this.getTotalPrice(this.selectedPriceList)
             }, 100);
-         
-           
-            let itemList = item["column"]["list"]
-            if(column.listPropertie.maxAnswerable&&column.listPropertie.maxAnswerable===1)
-            {for (let listItem of itemList) {
-              if (listItem === value) {
-                if(column.order===1){
-                  this.selectFirst = true;
-                  this.selectedType = value
-                }
-                if(column.order===2){
-                  this.isCheckedSecond = true;
-                }
-               
 
-                return true;
+
+            let itemList = item["column"]["list"]
+            if (column.listPropertie.maxAnswerable && column.listPropertie.maxAnswerable === 1) {
+              for (let listItem of itemList) {
+                if (listItem === value) {
+                  if (column.order === 1) {
+                    this.selectFirst = true;
+                    this.selectedType = value
+                  }
+                  if (column.order === 2) {
+                    this.isCheckedSecond = true;
+                  }
+
+
+                  return true;
+                }
+                else {
+                  return false;
+                }
               }
-              else {
-                return false;
-              }
-            }}
-            else{
+            }
+            else {
               for (let listItem of itemList) {
                 if (listItem === value) {
                   let index1 = this.selectedPriceList.findIndex(x => x.item === item.columnId)
                   if (index1 > -1) {
-                    this.selectedPriceList.splice(index1, 1); 
+                    this.selectedPriceList.splice(index1, 1);
                   }
                   this.selectedPriceList.push({ item: column.columnId, rate: item.price })
                   return true;
                 }
               }
             }
-            
+
           }
           else {
             return false;
           }
 
         }
-          else {
-           
-            return false;
-          }
-        } 
-      
- 
+        else {
+
+          return false;
+        }
+      }
+
+
       else {
         if (this.dataGridColumns[question.labelName + '=' + column.order]) {
           const indx = this.dataGridColumns[question.labelName + '=' + column.order].indexOf(value);
@@ -890,58 +891,58 @@ export class QnrDialogComponent implements OnInit {
         }
       }
     }
-   else{
-    this.isCheckedoption = true;
-    if (question.fieldDataType !== 'dataGrid') {
+    else {
+      this.isCheckedoption = true;
+      if (question.fieldDataType !== 'dataGrid') {
 
-      if (this.answersQnr["labelName"]) {
+        if (this.answersQnr["labelName"]) {
 
-        let answDataGridListColumnArray = this.answersQnr["answer"].dataGridList[0]["dataGridListColumn"];
-        if (answDataGridListColumnArray) {
+          let answDataGridListColumnArray = this.answersQnr["answer"].dataGridList[0]["dataGridListColumn"];
+          if (answDataGridListColumnArray) {
 
-         
-          let item = answDataGridListColumnArray.find(x => x.columnId === column.columnId);
 
-          if (item) {
-            let itemList = item["column"]["list"]
-            for (let listItem of itemList) {
-              if (listItem === value) {
+            let item = answDataGridListColumnArray.find(x => x.columnId === column.columnId);
 
-                this.selectFirst = true;
+            if (item) {
+              let itemList = item["column"]["list"]
+              for (let listItem of itemList) {
+                if (listItem === value) {
 
-                return true;
-              }
-              else {
-                return false;
+                  this.selectFirst = true;
+
+                  return true;
+                }
+                else {
+                  return false;
+                }
               }
             }
+            else {
+              return false;
+            }
+
           }
           else {
             return false;
           }
-
-        }
-        else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    }
-
-    else {
-      if (this.dataGridColumns[question.labelName + '=' + column.order]) {
-        const indx = this.dataGridColumns[question.labelName + '=' + column.order].indexOf(value);
-        if (indx !== -1) {
-          return true;
         } else {
           return false;
         }
-      } else {
-        return false;
+      }
+
+      else {
+        if (this.dataGridColumns[question.labelName + '=' + column.order]) {
+          const indx = this.dataGridColumns[question.labelName + '=' + column.order].indexOf(value);
+          if (indx !== -1) {
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
       }
     }
-   }
 
 
   }
@@ -1033,7 +1034,7 @@ export class QnrDialogComponent implements OnInit {
       this.buttonDisable = false;
     });
   }
-  
+
   uploadAudioVideo(data, type) {
     if (data.urls && data.urls.length > 0) {
       let postData = {
@@ -1166,9 +1167,9 @@ export class QnrDialogComponent implements OnInit {
     // }
     for (let itemPrice of this.baseArray) {
       let itemRate = itemPrice + '';
-      
+
       if (itemRate.includes(item)) {
-        
+
         let rate = itemRate.split(':');
         if (!this.basePriceList.find(x => x.item === item.trim())) {
           this.basePriceList.push({ item: item.trim(), rate: rate[1] });
@@ -1178,20 +1179,20 @@ export class QnrDialogComponent implements OnInit {
     }
   }
   getRate(item) {
- 
+
     if (this.priceList.length === 0 || !this.isListChanged) {
       for (let itemType of Object.keys(JSON.parse(this.priceGridList))) {
-      
+
         if (itemType === this.selectedType + '') {
-          
+
           let priceGridSubList = JSON.parse(this.priceGridList)[itemType];
-        
+
           let priceSubKeys = Object.values(priceGridSubList);
-         
+
           for (let keys of priceSubKeys) {
-           
+
             let price = keys[item.trim()]
-           
+
             if (price !== undefined) {
               if (!this.priceList.find(x => x.item === item.trim())) {
                 this.priceList.push({ item: item.trim(), rate: price });
@@ -1483,11 +1484,12 @@ export class QnrDialogComponent implements OnInit {
       'answerLine': [this.answersQnr],
       'totalPrice': this.totalPrice
     }
+    console.log(this.postData)
     this.dialogRef.close({ data: this.postData });
   }
   closeDialogg() {
-  //  console.log(JSON.stringify(this.editableItem.columnItem[0]))
-  //   this.answersQnr = this.editableItem.columnItem[0];
+    //  console.log(JSON.stringify(this.editableItem.columnItem[0]))
+    //   this.answersQnr = this.editableItem.columnItem[0];
     this.dialogRef.close();
   }
   closeDialogPopup() {
@@ -1626,6 +1628,7 @@ export class QnrDialogComponent implements OnInit {
   }
   changesApplied(ev, question, column?) {
     this.inputChange = true;
+    console.log("column", column)
     if (column.order && column.order === 2) {
       let itemPrice;
 

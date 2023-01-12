@@ -189,7 +189,7 @@ export class CustomerCreateComponent implements OnInit {
       }
       if (qparams.countryCode) {
         this.contryCod = qparams.countryCode;
-        console.log("params countrycode :",this.contryCod)
+        console.log("params countrycode :", this.contryCod)
       } else {
         this.contryCod = "+91";
       }
@@ -294,7 +294,7 @@ export class CustomerCreateComponent implements OnInit {
             this.getCustomers(this.customerId).then(customer => {
               this.customer = customer;
               console.log("Date Getting here :", this.customer);
-              this.customerName = (this.customer[0].firstName ? this.customer[0].firstName : '') + ' ' + (this.customer[0].lastName ? this.customer[0].lastName: '');
+              this.customerName = (this.customer && this.customer[0] && this.customer[0].firstName ? this.customer[0].firstName : '') + ' ' + (this.customer && this.customer[0] && this.customer[0].lastName ? this.customer[0].lastName : '');
               if (this.action === "edit") {
                 this.viewCustomer = false;
                 this.createForm();
@@ -319,7 +319,7 @@ export class CustomerCreateComponent implements OnInit {
   getCustomers(customerId) {
     const _this = this;
     const filter = { "id-eq": customerId };
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
       _this.provider_services.getProviderCustomers(filter).subscribe(
         data => {
           resolve(data);
@@ -335,11 +335,10 @@ export class CustomerCreateComponent implements OnInit {
     const filter = { "primaryMobileNo-eq": this.phoneNo };
     this.provider_services.getJaldeeCustomer(filter).subscribe(
       (data: any) => {
-        if (data.length > 0) {
-          if (data[0].userProfile) {
+        if (data && data.length > 0) {
+          if (data && data[0] && data[0].userProfile) {
             this.customerDetails = data[0].userProfile;
-            this.amForm
-              .get("mobile_number")
+            this.amForm.get("mobile_number")
               .setValue(data[0].userProfile.primaryMobileNo);
             this.amForm
               .get("countryCode")
@@ -457,7 +456,7 @@ export class CustomerCreateComponent implements OnInit {
       this.amForm.get("customer_id").setValue(this.jld);
     });
   }
-  ngOnInit() {}
+  ngOnInit() { }
 
   getGlobalSettingsStatus() {
     this.provider_services.getAccountSettings().then((data: any) => {
@@ -561,10 +560,10 @@ export class CustomerCreateComponent implements OnInit {
       this.amForm.get("mobile_number").setValue(this.phoneNo);
     }
 
-    if (this.customer[0].countryCode) {
+    if (this.customer && this.customer[0] && this.customer[0].countryCode) {
       this.amForm.get("countryCode").setValue(this.customer[0].countryCode);
-    } 
-    if(this.customer[0].countryCode === ' ' || undefined || '' || null) {
+    }
+    if (this.customer && this.customer[0] && this.customer[0].countryCode === ' ' || undefined || '' || null) {
       this.amForm.get("countryCode").setValue('+91');
     }
     // else{
@@ -636,6 +635,7 @@ export class CustomerCreateComponent implements OnInit {
       this.disableButton = false;
       return;
     }
+    console.log("this.action", this.action)
     if (this.action === "add") {
       if (this.changetypes === "month") {
         const post_data = {
@@ -807,10 +807,10 @@ export class CustomerCreateComponent implements OnInit {
       if (form_data.customer_id) {
         post_data["jaldeeId"] = form_data.customer_id;
       }
-      console.log("Form Data :",form_data)
+      console.log("Form Data :", form_data)
       this.provider_services.updateProviderCustomer(post_data).subscribe(
         data => {
-          console.log("Datttttt :",data)
+          console.log("Datttttt :", data)
           this.wordProcessor.apiSuccessAutoHide(
             this,
             Messages.PROVIDER_CUSTOMER_CREATED
@@ -821,7 +821,7 @@ export class CustomerCreateComponent implements OnInit {
           if (this.questionAnswers && this.questionAnswers.length > 0) {
             this.submitQnr(form_data, this.customerId);
           } else {
-           this.goBackAfterEdit(form_data, this.customerId);
+            this.goBackAfterEdit(form_data, this.customerId);
           }
         },
         error => {
@@ -1094,7 +1094,7 @@ export class CustomerCreateComponent implements OnInit {
 
       .subscribe(
         (data: any) => {
-          if (data.length === 0) {
+          if (data && data.length === 0) {
             this.form_data = data;
             this.create_new = true;
             this.searchClicked = true;
@@ -1335,7 +1335,7 @@ export class CustomerCreateComponent implements OnInit {
     );
   }
   sortMessages() {
-    this.communication_history.sort(function(message1, message2) {
+    this.communication_history.sort(function (message1, message2) {
       if (message1.timeStamp < message2.timeStamp) {
         return 11;
       } else if (message1.timeStamp > message2.timeStamp) {
@@ -1497,7 +1497,7 @@ export class CustomerCreateComponent implements OnInit {
         .validateProviderQuestionnaire(this.questionAnswers.answers)
         .subscribe(
           (data: any) => {
-            if (data.length === 0) {
+            if (data && data.length === 0) {
               if (this.showBookingQnr) {
                 if (this.source === "appt-block") {
                   this.confirmApptBlock(this.newCustomerId, "qnr");

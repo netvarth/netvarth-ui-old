@@ -1011,8 +1011,6 @@ export class CreateComponent implements OnInit {
       }).catch((error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       })
-
-
   }
 
 

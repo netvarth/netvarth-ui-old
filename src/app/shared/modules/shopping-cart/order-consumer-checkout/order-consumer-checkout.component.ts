@@ -228,6 +228,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   defultTextFirstStep: string = 'The primary objective of AuthorDemy.com is to help you improve the quality of the manuscript that you have prepared for publication so that its chances for getting accepted for publication increases considerably.We are particular that you should take full advantage of this additional step that we recommend to you before you submit your manuscript for publication. We want to improve not only the quality of the publication that you submitted to us, but also the writing skill of the authors by this exercise. Ideally, we do not want you to come back to AuthorDemy.com for all your future publications. Instead, we look forward to new authors to come to us based on the positive feed back about AuthorDemy.com that you give to them based on your experience in working with AuthorDemy.com. In order to achieve these, we request you to make sure that the manuscript you submit to AuthorDemy.com is finalized based on the information and instructions provided below.'
   defultMoreText: string = '...show more';
   defultTextSecondStep: string = ''
+  itemOptionsData: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -1371,6 +1372,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
             this.paymentOperation(this.con_email, paytype);
           }
 
+
         },
           error => {
             this.isClickedOnce = false;
@@ -1411,6 +1413,30 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
             this.paymentOperation(this.con_email, paytype);
           }
 
+          if (this.trackUuid) {
+            this.itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData')[0];
+            const dataToSend: FormData = new FormData();
+            const blobpost_Data = new Blob([JSON.stringify({ 'questionnaireId': this.itemOptionsData['postData']['questionnaireId'], 'answerLine': this.itemOptionsData['postData']['answerLine'] })], { type: 'application/json' });
+            dataToSend.append('question', blobpost_Data);
+            const filesToUpload = this.itemOptionsData['fileData']['fileToUpload'];
+            this.shared_services.submitItemOptions(this.itemOptionsData['itemData']['item']['itemId'], this.trackUuid, this.account_id, dataToSend)
+              .subscribe((data: any) => {
+
+                if (data.urls.length > 0) {
+                  this.uploadAudioVideo(data.urls, filesToUpload).then(
+                    (dataS3Url) => {
+                      console.log(dataS3Url);
+                    });
+                }
+
+
+
+              }, (error) => {
+                this.isClickedOnce = false;
+                this.checkoutDisabled = false;
+                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              });
+          }
         },
           error => {
             this.isClickedOnce = false;
@@ -1420,7 +1446,55 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
 
         );
     }
+
+
   }
+
+  uploadAudioVideo(data, filesToUpload) {
+    const _this = this;
+    let count = 0;
+    console.log("DAta:", data);
+    return new Promise(async function (resolve, reject) {
+      for (const s3UrlObj of data) {
+        console.log("S3URLOBJ:", s3UrlObj);
+        console.log('_this.filesToUpload', filesToUpload)
+        const file = filesToUpload.filter((fileObj) => {
+          return ((fileObj.columnId === (s3UrlObj.columnId)) ? s3UrlObj.columnId : '');
+        })[0];
+        console.log("File:", file);
+        if (file) {
+          await _this.uploadFiles(file['file'], s3UrlObj.url).then(
+            () => {
+              count++;
+              console.log("Count", count);
+              console.log("Count", data.length);
+              if (count === data.length) {
+                console.log("HERE");
+                resolve(true);
+              }
+            }
+          );
+        }
+        else {
+          resolve(true);
+        }
+      }
+    })
+  }
+  uploadFiles(file, url) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.shared_services.videoaudioS3Upload(file, url)
+        .subscribe(() => {
+          resolve(true);
+        }, error => {
+          console.log('error', error)
+          _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          resolve(false);
+        });
+    })
+  }
+
   paymentOperation(post_Data?, paytype?) {
     if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
       console.log(post_Data.email + 'post_Data.email')

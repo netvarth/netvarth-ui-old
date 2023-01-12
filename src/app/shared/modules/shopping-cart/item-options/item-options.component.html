@@ -82,29 +82,42 @@
                             </div>
                         </div>
 
-                        <div *ngIf="question && question.dataType && question.dataType == 'date'">
-                            <div>
-                                <p-card styleClass="primengCard">
-                                    <div>
-                                        <!-- [minDate]="getDate(question.dateProperties.start)" 
-                                        [maxDate]="getDate(question.dateProperties.end)"-->
-                                        <p-calendar style="width: 100%" [(ngModel)]="answers[i]"
-                                            (ngModelChange)="saveAnswers(questions,question,i)" [showIcon]="true"
-                                            dateFormat="dd.mm.yy"></p-calendar>
-                                    </div>
-                                </p-card>
-                            </div>
-                        </div>
+
 
                         <div *ngIf="question && question.dataType && question.dataType == 'date'">
                             <div>
                                 <p-card styleClass="primengCard">
                                     <div>
-                                        <!-- [minDate]="getDate(question.dateProperties.start)" 
-                                                                [maxDate]="getDate(question.dateProperties.end)"-->
-                                        <p-calendar style="width: 100%" [(ngModel)]="answers[i]"
+                                        <p-calendar [(ngModel)]="answers[i]"
                                             (ngModelChange)="saveAnswers(questions,question,i)" [showIcon]="true"
-                                            dateFormat="dd.mm.yy"></p-calendar>
+                                            [touchUI]="true"></p-calendar>
+                                    </div>
+                                </p-card>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="question && question.dataType && question.dataType == 'number'">
+                            <div>
+                                <p-card styleClass="primengCard">
+                                    <div>
+                                        <p-inputNumber [style]="{'width':'100%'}" [showButtons]="true"
+                                            [min]="question.numberPropertie.start" [max]="question.numberPropertie.end"
+                                            [(ngModel)]="answers[i]"
+                                            (ngModelChange)="saveAnswers(questions,question,i)"></p-inputNumber>
+                                    </div>
+                                </p-card>
+                            </div>
+                        </div>
+
+                        <div *ngIf="question && question.dataType && question.dataType == 'bool'">
+                            <div>
+                                <p-card styleClass="primengCard">
+                                    <div>
+                                        <p-dropdown [style]="{'width':'100%'}" [options]="boolTypeValues"
+                                            dropdownIcon="fa fa-caret-down" [(ngModel)]="answers[i]" optionLabel="name"
+                                            optionValue="value" (ngModelChange)="saveAnswers(questions,question,i)"
+                                            [placeholder]="question.label"></p-dropdown>
                                     </div>
                                 </p-card>
                             </div>
@@ -127,13 +140,14 @@
                 </div>
             </div>
             <div *ngIf="totalPrice">
-                <span>{{totalPrice}}</span>
+                <span><b>Total Price : </b><i class="fa fa-inr" class="small-inr"></i>&nbsp;{{totalPrice}}</span>
             </div>
             <div class="text-center">
                 <button pButton pRipple type="button" class="p-button-primary btn-primary"
-                    (click)="next(questions.question.sequnceId)">{{questions.question && questions.question.sequnceId &&
+                    (click)="next(questions.question.sequnceId)">{{questions.question &&
+                    questions.question.sequnceId &&
                     questions.question.sequnceId < timeType?"Next":"Done"}}</button>
             </div>
         </div>
-    </div>
+    </div>  
 </div>

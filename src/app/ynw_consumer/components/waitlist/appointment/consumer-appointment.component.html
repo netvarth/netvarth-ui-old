@@ -50,18 +50,18 @@
 
             </div>
             <!-- <p class="addorderitemp2"> <img style="width: 65px;" src="assets/images/add.svg" /></p>
- <div class="pad-20 quest-head">
- No Item Added
- </div> -->
+            <div class="pad-20 quest-head">
+            No Item Added
+            </div> -->
             <div *ngIf="serviceOptionApptt">
 
 
               <!-- <span class="form-level-settings">You can add the the item and customize your services</span><br><br> -->
               <!-- <button type="button"
- class="mx-auto text-center next-button btn btn-light-primary font-weight-bold text-capitalize px-9 py-4"
- (click)="qnrPopup()">
- Add Item
- </button> -->
+              class="mx-auto text-center next-button btn btn-light-primary font-weight-bold text-capitalize px-9 py-4"
+              (click)="qnrPopup()">
+              Add Item
+              </button> -->
               <app-questionnaire [questionnaireList]="serviceOptionQuestionnaireList" [accountId]="accountId"
                 [questionAnswers]="serviceOPtionInfo" [source]="'serviceOptionAppt'"
                 (returnAnswers)="getserviceOptionQuestionAnswers($event)">
@@ -75,7 +75,8 @@
           <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 col-sm-12 d-flex justify-content-between">
             <button type="button"
               class="mx-auto text-center next-button btn btn-primary font-weight-bold text-capitalize px-12"
-              (click)="goToStep('next');actionCompleted()" [class.disabled]="!isSlotAvailable" [disabled] = "!serviceOPtionInfo">
+              (click)="goToStep('next');actionCompleted()" [class.disabled]="!isSlotAvailable"
+              [disabled]="!serviceOPtionInfo">
               Next
             </button>
           </div>
@@ -88,18 +89,20 @@
         <div class="lbl col-sm-12 col-md-12 col-lg-12 col-xs-12 no-padding" data-wizard-type="step-content"
           data-wizard-state="current" *ngIf="bookStep === 2 && showSlot">
           <!--  && (!selectedService.noDateTime || selectedService.noDateTime === undefined) -->
-          <div class="col-md-12 col-xs-12 col-sm-12 no-padding" *ngIf="selectedService && selectedService.serviceBookingType === 'request' && selectedService.date">
+          <div class="col-md-12 col-xs-12 col-sm-12 no-padding"
+            *ngIf="selectedService && selectedService.serviceBookingType === 'request' && selectedService.date">
             <h6 class="custom text-dark">
               <b>Choose Date
               </b>
             </h6>
-          <div class="calenderDiv" >
-            <mat-card class="demo-inline-calendar-card matCard">
-              <!-- selected_date [(ngModel)]="selected_date"-->
-              <mat-calendar [dateClass]="dateClass.bind(this)" [(selected)]="selectedDate"  (selectedChange)="apptDateChanged($event)"></mat-calendar>
-            </mat-card>
-          </div>
-          
+            <div class="calenderDiv">
+              <mat-card class="demo-inline-calendar-card matCard">
+                <!-- selected_date [(ngModel)]="selected_date"-->
+                <mat-calendar [dateClass]="dateClass.bind(this)" [(selected)]="selectedDate"
+                  (selectedChange)="apptDateChanged($event)"></mat-calendar>
+              </mat-card>
+            </div>
+
           </div>
           <div class="col-xs-12" *ngIf="selectedService && !selectedService.date && !selectedService.noDateTime">
             <app-date-pagination (date_change_event)="appointmentDateChanged($event)" [selected_date]="appmtDate"
@@ -108,12 +111,12 @@
           </div>
           <!-- *ngIf="freeSlots && freeSlots.length > 0" -->
           <ng-container *ngIf="selectedService && !selectedService.date && !selectedService.noDateTime">
-          <div class="col-xs-12" *ngIf="allSlots && allSlots.length > 0 && multipleSelection">
-            <app-slot-picker (slotSelected)="slotSelected($event)" [selectedSlot]="selectedSlots" [slots]="allSlots"
-              [mode]="'appt'" [multiple]="multipleSelection" [criteria]="selectedService.showOnlyAvailableSlots">
-            </app-slot-picker>
-          </div>
-        </ng-container>
+            <div class="col-xs-12" *ngIf="allSlots && allSlots.length > 0 && multipleSelection">
+              <app-slot-picker (slotSelected)="slotSelected($event)" [selectedSlot]="selectedSlots" [slots]="allSlots"
+                [mode]="'appt'" [multiple]="multipleSelection" [criteria]="selectedService.showOnlyAvailableSlots">
+              </app-slot-picker>
+            </div>
+          </ng-container>
           <div class="col-md-12 col-xs-12 col-sm-12 slotdiv red mt-3 text-center"
             *ngIf="allSlots && allSlots.length <= 0 && slotLoaded">
             <b>No slots available on selected date. Please choose other date.</b>
@@ -291,10 +294,10 @@
                     </div>
                     <div class="" *ngIf="selectedService.serviceBookingType === 'request'">
                       <h6 class="custom text-primary" *ngIf="!selectedService.noDateTime"><b>
-                        <!-- <span *ngIf="!isFutureDate">Today,
+                          <!-- <span *ngIf="!isFutureDate">Today,
                           </span> -->
                           <!-- *ngIf="isFutureDate" -->
-                          <span >
+                          <span>
                             {{appmtDate | date: newDateFormat}}, </span>
                           <span *ngIf="selectedService.dateTime">{{selectedApptsTime}}</span></b>
                       </h6>
@@ -307,16 +310,18 @@
                           <span>{{appmtDate | date: newDateFormat}}</span></b>
                       </h6>
                     </div> -->
-                    
+
                     <div>
-                     <!-- *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice" -->
-   <h6 class="custom text-primary" *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice"><b><span>Service Price : 
-  </span>
-  <span  class="rupee-font">
-    {{selectedService.price
-      | currency:'&#8377;'}}</span>
-  </b>
-</h6>
+                      <!-- *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice" -->
+                      <h6 class="custom text-primary"
+                        *ngIf="selectedService.price && !selectedService.isPrePayment && selectedService.showPrice">
+                        <b><span>Service Price :
+                          </span>
+                          <span class="rupee-font">
+                            {{selectedService.price
+                            | currency:'&#8377;'}}</span>
+                        </b>
+                      </h6>
                     </div>
                   </div>
                 </div>
@@ -328,12 +333,13 @@
                 <div class="text-capitalize">
                   <div class="m-auto" *ngIf="selectedService.preInfoEnabled">
                     <label class="question-header"><b>{{selectedService.preInfoTitle}} :</b></label>
-                    
-                    <div class="contact-section text-primary">{{(readMore) ? selectedService.preInfoText : selectedService.preInfoText | slice:0:200}}
+
+                    <div class="contact-section text-primary">{{(readMore) ? selectedService.preInfoText :
+                      selectedService.preInfoText | slice:0:200}}
                       <a class="changeitem pointer-cursor mgn-lt-5 mgn-rt-20 pull-right" (click)="showText()"
-                          *ngIf="selectedService.preInfoText.length > 200">
-                          {{(readMore) ? 'less': 'more'}}</a>
-                  </div>
+                        *ngIf="selectedService.preInfoText.length > 200">
+                        {{(readMore) ? 'less': 'more'}}</a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -351,7 +357,7 @@
                         <h6 class="text-primary service custom">
                           <span *ngIf="apptDetails_firstName">{{apptDetails_firstName | capitalizeFirst}}</span>&nbsp;
                           <span *ngIf="apptDetails_lastName">{{apptDetails_lastName | capitalizeFirst}}</span>
-              
+
 
                           <a *ngIf="appointmentType !== 'reschedule' && !paymentRequestId"
                             class="pointer-cursor changeitem font-weight-bold text-capitalize px-2 py-1"
@@ -408,7 +414,8 @@
               <div class="coupon-section col-md-12 col-xs-12 col-sm-12 no-padding"
                 *ngIf="(s3CouponsList.JC.length > 0) && appointmentType != 'reschedule' || (s3CouponsList.OWN.length > 0) && appointmentType != 'reschedule'">
 
-                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding" *ngIf="selectedService.serviceBookingType !== 'request'">
+                <div class="col-md-12 col-xs-12 col-sm-12 lnk mgn-up-5 no-padding"
+                  *ngIf="selectedService.serviceBookingType !== 'request'">
                   <a class="lnk pointer-cursor action" *ngIf="selectedCoupons.length === 0" (click)="applyPromocode()"
                     data-toggle="modal" data-target="#exampleModalCenter">Apply
                     Coupon Code</a>
@@ -459,16 +466,18 @@
                 *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails">
                 <div class="web" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                   <div class="text-left">
-                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt" class="ser_price no-mgn-bt bold mgn-rt-10">Service Price :
+                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
+                      class="ser_price no-mgn-bt bold mgn-rt-10">Service Price :
                       <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
- | currency:'&#8377;'}}</span></span>
- <span *ngIf="paymentDetails.showPrice && serviceOptionApptt" class="ser_price no-mgn-bt bold mgn-rt-10">Service Price :
-  <span class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
-| currency:'&#8377;'}}</span></span>
+                        | currency:'&#8377;'}}</span></span>
+                    <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
+                      class="ser_price no-mgn-bt bold mgn-rt-10">Service Price :
+                      <span class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
+                        | currency:'&#8377;'}}</span></span>
                     <span class="ser_price no-mgn-bt bold">Payment required now :
                       <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
- ? payAmount : paymentDetails.amountRequiredNow)|
- currency:'&#8377;'}}</span></span> <br>
+                        ? payAmount : paymentDetails.amountRequiredNow)|
+                        currency:'&#8377;'}}</span></span> <br>
                     <!-- <span style="font-size: small;">Additional convenience charges may apply
 
  </span> -->
@@ -477,17 +486,19 @@
                 <div class="disply"
                   *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                   <div class="text-left">
-                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt" class="ser_price no-mgn-bt bold">Service
+                    <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
+                      class="ser_price no-mgn-bt bold">Service
                       Price : <span class="ser_price no-mgn-bt bold rupee-font">{{paymentDetails.netTotal
- | currency:'&#8377;'}}</span></span>
- <span *ngIf="paymentDetails.showPrice && serviceOptionApptt" class="ser_price no-mgn-bt bold">Service
-  Price : <span class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
-| currency:'&#8377;'}}</span></span>
- <br *ngIf="paymentDetails.showPrice">
+                        | currency:'&#8377;'}}</span></span>
+                    <span *ngIf="paymentDetails.showPrice && serviceOptionApptt"
+                      class="ser_price no-mgn-bt bold">Service
+                      Price : <span class="ser_price no-mgn-bt bold rupee-font">{{total_servicefee
+                        | currency:'&#8377;'}}</span></span>
+                    <br *ngIf="paymentDetails.showPrice">
                     <span class="ser_price no-mgn-bt bold mgn-rt-10">Payment required now :
                       <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
- ? payAmount : paymentDetails.amountRequiredNow)|
- currency:'&#8377;'}}</span></span> <br>
+                        ? payAmount : paymentDetails.amountRequiredNow)|
+                        currency:'&#8377;'}}</span></span> <br>
                     <!-- <span style="font-size: small;">Additional convenience charges may apply
 
  </span> -->
@@ -515,7 +526,7 @@
                     <mat-checkbox [(ngModel)]="checkJcash" (change)="changeJcashUse($event)">
                     </mat-checkbox>
                     Use Jaldee cash balance : <span class="rupee-font">{{jcashamount|
- currency:'&#8377;'}}</span>
+                      currency:'&#8377;'}}</span>
                   </div>
                   <div class="creditleft"
                     *ngIf="jcashamount>0 && (checkJcash && jcashamount < paymentDetails.amountRequiredNow)">
@@ -534,7 +545,7 @@
                         Confirm
                       </ng-container>
                     </button>
-                   
+
                   </div>
 
 
@@ -771,8 +782,8 @@
                 </div>
               </ng-container>
               <div class="modal-footer">
-                <button type="button" class="disp-none btn btn-light-primary mat-button font-weight-bold" data-dismiss="modal"
-                  #closebutton>Cancel</button>
+                <button type="button" class="disp-none btn btn-light-primary mat-button font-weight-bold"
+                  data-dismiss="modal" #closebutton>Cancel</button>
                 <button type="button" class="btn btn-primary mat-button font-weight-bold hf-btn"
                   (click)="actionCompleted()">Ok</button>
               </div>

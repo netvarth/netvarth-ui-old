@@ -108,6 +108,7 @@ export class OrderConsumerComponent implements OnInit {
   tempRes: any;
   serviceOptionQuestionnaireList: any;
   serviceOptionApptt: any;
+  itemOptionsData: any = [];
   constructor(
     private location: Location,
     private lStorageService: LocalStorageService,
@@ -476,7 +477,7 @@ export class OrderConsumerComponent implements OnInit {
           this.serviceOptionQuestionnaireList = data;
           if (this.serviceOptionQuestionnaireList && this.serviceOptionQuestionnaireList.questionnaireId) {
             this.serviceOptionApptt = true;
-            this.addItemOptions(data)
+            this.addItemOptions(data, item)
           }
           else {
             this.addToCart(item);
@@ -489,7 +490,7 @@ export class OrderConsumerComponent implements OnInit {
   }
 
 
-  addItemOptions(data) {
+  addItemOptions(data, item) {
     this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
       header: 'Choose Item Options',
       width: '70%',
@@ -499,11 +500,18 @@ export class OrderConsumerComponent implements OnInit {
     });
 
     this.itemOptionsRef.onClose.subscribe((result: any) => {
+      console.log(result)
       if (result) {
-        console.log(result)
-      }
-      else {
-        console.log("Data Not Coming")
+        if (result.postData && result.fileData) {
+          let itemOptionsJson = {
+            "itemData": item,
+            "postData": result.postData,
+            "fileData": result.fileData
+          }
+          this.addToCart(item);
+          this.itemOptionsData.push(itemOptionsJson)
+          this.lStorageService.setitemonLocalStorage('itemOptionsData', this.itemOptionsData)
+        }
       }
     });
   }

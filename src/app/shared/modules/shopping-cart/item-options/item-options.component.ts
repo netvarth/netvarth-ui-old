@@ -3,6 +3,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileService } from '../../../../shared/services/file-service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
+import * as moment from 'moment';
+
 
 @Component({
   selector: 'app-item-options',
@@ -25,6 +27,16 @@ export class ItemOptionsComponent implements OnInit {
   selectedFiles = {};
   questionnaireAnswers: any = [];
   filesToUpload: any = [];
+  boolTypeValues: any = [
+    {
+      "name": "Yes",
+      "value": true
+    },
+    {
+      "name": "No",
+      "value": false
+    }
+  ]
   constructor(
     private itemOptionsRef: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -132,11 +144,9 @@ export class ItemOptionsComponent implements OnInit {
     if (maxAnswerable && maxAnswerable > 1 && question.dataType == 'list') {
       column["column"][question.dataType] = this.answers[index];
     } else {
-      if (question.dataType == 'list') {
+      if (question.dataType == 'list' || question.dataType == 'fileUpload') {
         column["column"][question.dataType] = [this.answers[index]];
       } else {
-        console.log(JSON.stringify(this.answers[index]))
-        // console.log("fileUpload", Object.keys(this.answers))
         column["column"][question.dataType] = this.answers[index];
       }
     }
@@ -167,7 +177,19 @@ export class ItemOptionsComponent implements OnInit {
     }
 
     console.log("questionnaireAnswers", this.questionnaireAnswers);
+    this.getTotalPrice()
 
+  }
+
+  getTotalPrice() {
+    this.totalPrice = 0;
+    for (let i = 0; i < this.questionnaireAnswers.length; i++) {
+      let questionnaireAnswersIndex = this.questionnaireAnswers[i]["answer"]["dataGridList"][0]["dataGridListColumn"];
+      questionnaireAnswersIndex.map((element) => {
+        this.totalPrice = this.totalPrice + Number(element.price);
+      })
+    }
+    console.log("this.totalPrice", this.totalPrice)
   }
 
   next(sequence) {
@@ -175,14 +197,17 @@ export class ItemOptionsComponent implements OnInit {
       this.timeType = this.timeType + 1;
     }
     else {
-      console.log("Clicked");
-      console.log(this.answers);
       let postData = {
         'questionnaireId': this.qnrId,
-        'answerLine': [this.questionnaireAnswers],
+        'answerLine': this.questionnaireAnswers,
         'totalPrice': this.totalPrice
       }
-      this.itemOptionsRef.close(postData);
+      let fileData = {
+        'selectedFiles': this.selectedFiles,
+        'fileToUpload': this.filesToUpload
+      }
+
+      this.itemOptionsRef.close({ "postData": postData, "fileData": fileData });
     }
   }
 
@@ -196,8 +221,8 @@ export class ItemOptionsComponent implements OnInit {
   }
 
   getDate(date) {
-    console.log(new Date(date))
-    return new Date(date)
+    console.log(new Date(moment(new Date(date)).format('YYYY-MM-DD')));
+    return new Date(moment(new Date(date)).format('YYYY-MM-DD'));
   }
 
 
@@ -215,7 +240,8 @@ export class ItemOptionsComponent implements OnInit {
             mimeType: pic["type"],
             action: 'add'
           }
-          fileObj['type'] = type;
+          fileObj['file'] = pic;
+          fileObj['columnId'] = type;
           _this.filesToUpload.push(fileObj);
           _this.answers[index] = fileObj;
           console.log(_this.answers[index]);

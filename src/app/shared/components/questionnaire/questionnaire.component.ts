@@ -111,7 +111,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   allList: string;
   popSearches: any;
   serviceTotalPrice: number = 0;
-   editableItem: any;
+  editableItem: any;
   constructor(private sharedService: SharedServices,
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
@@ -159,7 +159,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       this.itemArray = this.lStorageService.getitemfromLocalStorage('itemArray');
       if (this.itemArray) {
         this.showItem = true;
-    
+
       }
     }
 
@@ -250,9 +250,9 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     this.disableField()
   }
   //disable field
-  disableField(){
-    if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
-      this.buttonDisable=true;
+  disableField() {
+    if (this.tempType && (this.tempType === 'Loan Sanction' || this.tempType === 'Rejected')) {
+      this.buttonDisable = true;
       // this.disableInput();
     }
   }
@@ -1213,7 +1213,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
         const indx = this.selectedMessage.indexOf(this.filestoUpload[question.labelName][document]);
         if (indx !== -1) {
           // console.log('type2',type);
-          if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc' || type[1]==='vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+          if (type[1] === 'pdf' || type[1] === 'docx' || type[1] === 'txt' || type[1] === 'doc' || type[1] === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
             if (this.selectedMessage[indx].s3path) {
               window.open(this.selectedMessage[indx].s3path, '_blank');
             } else {
@@ -1234,24 +1234,24 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       if (indx !== -1) {
         if (type === 'video' || type === 'audio') {
           this.showAudioVideoFile(this.uploadedImages[indx]);
-        } else if (ext === 'pdf' || ext === 'docx' || ext === 'txt' || ext === 'doc' || ext==='vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        } else if (ext === 'pdf' || ext === 'docx' || ext === 'txt' || ext === 'doc' || ext === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
           window.open(this.uploadedFiles[question.labelName][document].s3path, '_blank');
         } else {
           // console.log('typetxt2',this.uploadedImages[indx]);
-          if(this.uploadedImages && this.uploadedImages[indx] &&this.uploadedImages[indx]['keyName'] && 
-          this.uploadedImages[indx]['keyName'].includes('docx') ){
+          if (this.uploadedImages && this.uploadedImages[indx] && this.uploadedImages[indx]['keyName'] &&
+            this.uploadedImages[indx]['keyName'].includes('docx')) {
             window.open(this.uploadedFiles[question.labelName][document].s3path, '_blank');
           }
-          else{
+          else {
             imagePath = this.uploadedImages[indx].s3path;
             caption = this.uploadedImages[indx].comments;
           }
-          
+
         }
       }
     }
     if (imagePath) {
-      
+
       const imgobj = new Image(
         count,
         {
@@ -1414,67 +1414,68 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     return s.split("-").reverse().join("-");
   }
   qnrPopup(question, value) {
-if(value=== 'edit'){
-  this.quesStore = this.lStorageService.getitemfromLocalStorage('quesStore');
-   this.showqnr = true;
-   this.editableItem = question;
-   console.log(JSON.stringify(this.quesStore))
-   // this.sequenceId = this.quesStore.sequnceId;
 
-   // this.questionnaireList= question;
-   const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
-     width: '50%',
-     panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-     disableClose: true,
-     data: {
-       data: this.quesStore,
-       qnr_type: 'service_option',
-       view: 'qnrView',
-       isEdit:'edit',
-       editableItem:  this.editableItem 
-     }
-   });
-   removeitemdialogRef.afterClosed().subscribe(result => {
-     if (result) {
+    if (value === 'edit') {
+      this.quesStore = this.lStorageService.getitemfromLocalStorage('quesStore');
+      this.showqnr = true;
+      this.editableItem = question;
+      console.log(JSON.stringify(this.quesStore))
+      // this.sequenceId = this.quesStore.sequnceId;
 
-       this.dataGridList = result.data.answerLine;
-       this.post_Data = result.data;
-       this.showItem = true;
-       this.item = result.data.answerLine[0].answer.dataGridList[0].dataGridListColumn[0].column.list[0];
-       if (result.data.totalPrice) {
-         this.totalPrice = result.data.totalPrice
-       }
-       let index1 = this.itemArray.findIndex(x => x.id === this.editableItem.id)
-       if (index1 > -1) {
-         this.itemArray.splice(index1, 1);
-       }
-       let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: this.item, price: this.totalPrice, columnItem: this.dataGridList }
-       this.itemArray.push(dummyArray)
+      // this.questionnaireList= question;
+      const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          data: this.quesStore,
+          qnr_type: 'service_option',
+          view: 'qnrView',
+          isEdit: 'edit',
+          editableItem: this.editableItem
+        }
+      });
+      removeitemdialogRef.afterClosed().subscribe(result => {
+        if (result) {
 
-       if (this.itemArray) {
-         this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
-       }
-       this.serviceTotalPrice = 0;
-       this.itemArray.forEach((item: any) => {
-        
+          this.dataGridList = result.data.answerLine;
+          this.post_Data = result.data;
+          this.showItem = true;
+          this.item = result.data.answerLine[0].answer.dataGridList[0].dataGridListColumn[0].column.list[0];
+          if (result.data.totalPrice) {
+            this.totalPrice = result.data.totalPrice
+          }
+          let index1 = this.itemArray.findIndex(x => x.id === this.editableItem.id)
+          if (index1 > -1) {
+            this.itemArray.splice(index1, 1);
+          }
+          let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: this.item, price: this.totalPrice, columnItem: this.dataGridList }
+          this.itemArray.push(dummyArray)
 
-         this.serviceTotalPrice = this.serviceTotalPrice + item.price;
-         this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
-       });
-   
+          if (this.itemArray) {
+            this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
+          }
+          this.serviceTotalPrice = 0;
+          this.itemArray.forEach((item: any) => {
 
-       this.id = this.id + 1
-       let obj = { sequenceId: this.sequenceId, dgList: this.post_Data.answerLine };
-       this.finalObjectList.push(obj);
-       this.onSubmit('serviceOption')
 
-     }
-   });
-}
-    else{
+            this.serviceTotalPrice = this.serviceTotalPrice + item.price;
+            this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
+          });
+
+
+          this.id = this.id + 1
+          let obj = { sequenceId: this.sequenceId, dgList: this.post_Data.answerLine };
+          this.finalObjectList.push(obj);
+          this.onSubmit('serviceOption')
+
+        }
+      });
+    }
+    else {
       this.showqnr = true;
       this.sequenceId = question.sequnceId;
-  
+
       // this.questionnaireList= question;
       const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
         width: '50%',
@@ -1484,40 +1485,40 @@ if(value=== 'edit'){
           data: question,
           qnr_type: 'service_option',
           view: 'qnrView',
-          isEdit:'add'
+          isEdit: 'add'
         }
       });
       removeitemdialogRef.afterClosed().subscribe(result => {
         if (result) {
-  
+
           this.dataGridList = result.data.answerLine;
           this.post_Data = result.data;
           this.showItem = true;
           this.item = result.data.answerLine[0].answer.dataGridList[0].dataGridListColumn[0].column.list[0];
-  
+
           if (result.data.totalPrice) {
             this.totalPrice = result.data.totalPrice
           }
           let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: this.item, price: this.totalPrice, columnItem: this.dataGridList }
           this.itemArray.push(dummyArray)
-  
+
           if (this.itemArray) {
             this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
           }
           this.serviceTotalPrice = 0;
           this.itemArray.forEach((item: any) => {
-          
-  
+
+
             this.serviceTotalPrice = this.serviceTotalPrice + item.price;
             this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
           });
-          
-  
+
+
           this.id = this.id + 1
           let obj = { sequenceId: this.sequenceId, dgList: this.post_Data.answerLine };
           this.finalObjectList.push(obj);
           this.onSubmit('serviceOption')
-  
+
         }
       });
     }
@@ -1546,18 +1547,18 @@ if(value=== 'edit'){
           // for (let i = 0; i < items.length; i++) {
           //   items[i].quantity = items[i].quantity + 1;
           // }
-        
+
           if (this.itemArray) {
             this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
           }
           this.serviceTotalPrice = 0;
           this.itemArray.forEach((item: any) => {
-          
+
 
             this.serviceTotalPrice = this.serviceTotalPrice + item.price;
 
           });
-       
+
           this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
           this.id = this.id + 1
           let obj = { sequenceId: this.sequenceId, dgList: result.repeatItem.columnItem };
@@ -1577,12 +1578,12 @@ if(value=== 'edit'){
       }
       this.serviceTotalPrice = 0;
       this.itemArray.forEach((item: any) => {
-       
+
 
         this.serviceTotalPrice = this.serviceTotalPrice + item.price;
 
       });
-    
+
       this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
       this.finalObjectList.splice(index, 1);
     }

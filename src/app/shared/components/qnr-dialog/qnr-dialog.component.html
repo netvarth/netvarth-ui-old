@@ -119,6 +119,21 @@
                           </label>
                         </div>
                       </div>
+                      <div *ngIf="data.dataType === 'plainText' && data.order!==1 && isSecondcase">
+                        <label>{{data.label}}
+                          <span class="red" *ngIf="!data.mandatory">*</span>
+                        </label>
+                        <div>
+                          <label class="checkbox border-radio">
+                            <input [(ngModel)]="plainText" (input)="onSubmit('inputChange');"
+                              [disabled]="buttonDisable || disableInput()"
+                              (ngModelChange)="changesApplied($event, getQuestion(question), data)"
+                              class="form-control1 form-control-solid" type="text">
+                            <span></span>
+
+                          </label>
+                        </div>
+                      </div>
                       <div *ngIf="data.dataType === 'bool' && data.order!==1 && isSecondcase">
                         <label class="label text-dark font-weight-bold">{{data.label}}
                           <span class="red" *ngIf="!data.mandatory">*</span>

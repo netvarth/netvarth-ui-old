@@ -51,3 +51,9 @@ input {
 /* ::ng-deep .primengCard .p-calendar {
     width: 100% !important;
 } */
+
+
+::ng-deep .primengCard .p-datepicker-touch-ui,
+.p-calendar .p-datepicker-touch-ui {
+    min-width: 100% !important;
+}

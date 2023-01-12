@@ -11,6 +11,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FileUploadModule } from 'primeng/fileupload';
 import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { CalendarModule } from 'primeng/calendar';
     InputTextModule,
     InputTextareaModule,
     FileUploadModule,
-    CalendarModule
+    CalendarModule,
+    DropdownModule,
+    InputNumberModule
   ]
 })
 export class ItemOptionsModule { }
