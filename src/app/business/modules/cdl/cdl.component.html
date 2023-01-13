@@ -39,6 +39,19 @@
               </div>
             </div>
 
+            <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canCreateLoan">
+              <div class="dashboard-card text-center pointer-cursor" (click)="createLead()">
+                <div>
+                  <div>
+                    <img width="60" height="60" src="./assets/images/cdl/partner/create_lead.png">
+                  </div>
+                  <div class="text-center">
+                    <span class="head-card-sub-title">Create Lead</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-xs-3 no-padding-small no-padding" *ngIf="capabilities && capabilities.canCreatePartner">
               <div class="dashboard-card text-center pointer-cursor" (click)="createDealer()">
                 <div>
@@ -147,7 +160,7 @@
               </div>
             </div>
 
-            <div class="col-xs-3 no-padding-small no-padding">
+            <!-- <div class="col-xs-3 no-padding-small no-padding">
               <div class="dashboard-card text-center pointer-cursor" (click)="reports()">
                 <div>
                   <div>
@@ -158,7 +171,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -423,7 +436,7 @@
               <td>
                 <div class="text-center">
                   <button pButton pRipple type="button" class="p-button-primary  btn-primary"
-                    (click)="loanDetails(loan.uid)">View</button>
+                    (click)="loanDetails(loan.uid,loan.spInternalStatus)">View</button>
                 </div>
               </td>
             </tr>

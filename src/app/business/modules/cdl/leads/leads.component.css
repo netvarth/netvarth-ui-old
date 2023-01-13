@@ -1,63 +1,154 @@
-.table {
-  background: #FFFFFF;
-  border: 1.42818px solid #DFE0EB;
-  border-radius: 11.4254px;
+.fa-arrow-left {
+  color: #1E4070 !important;
+  font-size: 16px !important;
+  font-weight: bold !important;
 }
 
-table thead tr th {
-  color: #1D3E77;
-  font-size: 13px;
-  padding: 15px;
+.heading {
+  font-size: 18px !important;
+  font-weight: 700 !important;
 }
 
-table tbody tr td {
-  color: #000000;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 15px;
-}
-
-.tble-filtr-tr {
-  border: 1.42818px solid #DFE0EB !important;
-}
-
-.dash-head {
-  display: flex;
-  gap: 5px;
-}
-
-.colorHeaderIcon {
-  color: #1D3E77 !important
-}
-
-.approvedColor {
-  color: #3DD1BF;
-}
-
-.loanStatus {
-  display: flex;
-  gap: 5px;
-}
-
-.imageApprove {
-  height: 18px;
-  width: 18px;
-}
-
-.marginClass {
-  margin-top: 10px;
-}
-
-.pendingColor {
-  color: #ffbf00;
-}
-
-.rejectedColor {
-  color: #FF0000;
-}
-
-.fa-times {
-  background-color: #FF0000;
+.btn-primary {
+  background-color: #1e4079 !important;
+  border-color: #1e4070 !important;
   color: #fff !important;
-  border-radius: 50% !important;
+  font-weight: 100 !important;
+  border-radius: 10px !important;
+}
+
+.p-button {
+  background-color: #1E4079 !important;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+th {
+  font-size: 14px !important;
+}
+
+.shadow {
+  -webkit-box-shadow: 0 0 5px 2px #fff !important;
+  -moz-box-shadow: 0 0 5px 2px #fff !important;
+  box-shadow: 0 0 5px 2px #fff !important;
+}
+
+.text-right.p-dropdown.p-component {
+  width: 400px !important;
+}
+
+.back-btn {
+  color: #1E4070 !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+}
+
+
+.text-primary {
+  color: #1E4079 !important;
+}
+
+.status-LoanRequest {
+  background-color: #bce1ff !important;
+  color: #237EC6 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-ApprovalPending {
+  background-color: #FEEDAF !important;
+  color: #935F49 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-OperationsVerified {
+  background-color: #e9e4ff !important;
+  color: #7b15aa !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+
+.status-ApprovalRequired {
+  background-color: #FEEDAF !important;
+  color: #935F49 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-Approved {
+  background-color: #C8E6C9 !important;
+  color: #256029 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-Rejected {
+  background-color: #FFCDD2 !important;
+  color: #C63737 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+
+.status-Sanctioned {
+  background-color: #ebd6ff !important;
+  color: #52267b !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+
+.status-ConsumerAccepted {
+  background-color: #d9e3ff !important;
+  color: #10359c !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-CreditApproved {
+  background-color: #e5daff !important;
+  color: #3b11a5 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+/* .status-Draft {
+  background-color: #fbbdc3 !important;
+  color: rgb(186, 121, 0) !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+} */
+
+
+@media (max-width: 767px) {
+
+  .table-column-data {
+    font-weight: bold !important;
+  }
+
+  .mobile-card {
+    box-shadow: 0px 2px 20px -10px #bbb !important;
+  }
+
+  .text-right.p-dropdown.p-component {
+    width: 400px !important;
+  }
+
+  .heading {
+    font-size: 16px !important;
+  }
 }

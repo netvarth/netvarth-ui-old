@@ -212,6 +212,8 @@ export class CdlComponent implements OnInit {
     });
   }
 
+
+
   getDealers() {
     let api_filter = {};
     api_filter['spInternalStatus-neq'] = 'Draft';
@@ -435,8 +437,28 @@ export class CdlComponent implements OnInit {
   //   });
   // }
 
-  loanDetails(data) {
-    this.router.navigate(['provider', 'cdl', 'loans', data]);
+  loanDetails(id, status) {
+    if (status == 'ConsumerAccepted') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'consumerAccepted',
+          uid: id
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+    }
+    else if (status == 'CreditApproved') {
+      const navigationExtras: NavigationExtras = {
+        queryParams: {
+          type: 'creditApproved',
+          uid: id
+        }
+      };
+      this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
+    }
+    else {
+      this.router.navigate(['provider', 'cdl', 'loans', id]);
+    }
   }
 
   viewMoreLoans() {
@@ -466,7 +488,7 @@ export class CdlComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'dealers']);
   }
   createLead() {
-    this.router.navigate(['provider', 'cdl', 'dealers', 'create']);
+    this.router.navigate(['provider', 'cdl', 'leads', 'create']);
   }
 
   requestedDealers() {
@@ -514,12 +536,12 @@ export class CdlComponent implements OnInit {
   }
 
   allLeads() {
-    const navigationExtras: NavigationExtras = {
-      queryParams: {
-        spInternalStatus: 'Draft'
-      }
-    };
-    this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+    // const navigationExtras: NavigationExtras = {
+    //   queryParams: {
+    //     spInternalStatus: 'Draft'
+    //   }
+    // };
+    this.router.navigate(['provider', 'cdl', 'leads']);
   }
 
 

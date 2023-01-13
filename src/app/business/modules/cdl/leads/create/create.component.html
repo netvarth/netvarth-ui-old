@@ -1,0 +1,211 @@
+<div class="card pointer-cursor">
+  <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+</div>
+<div class="card m-2">
+  <div class="col-md-7 d-flex justify-content-between pl-0">
+    <div class="d-flex align-items-center">
+      <span class="font-weight-bold">&nbsp;Create Lead</span>
+    </div>
+    <!-- <div class="d-flex">
+      <div class="mr-2 my-auto" (click)="closeAll()">
+        <a class="btn btn-light">
+          Close all
+        </a>
+      </div>
+      <div>
+        <a class="btn btn-primary open-all-btn" (click)="expandAll()">
+          Expand all
+        </a>
+      </div>
+    </div> -->
+  </div>
+  <div class="clearfix"></div>
+  <br>
+  <form [formGroup]="createLead" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-md-7">
+        <div>
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">First Name</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Applicant First Name"
+                    class="form-control" autocomplete="off" formControlName="firstname" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Last Name</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Applicant Last Name"
+                    class="form-control" autocomplete="off" formControlName="lastname" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Phone Number</div>
+                </div>
+                <div class="fieldPadding">
+                  <div class="d-flex">
+                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
+                      autocomplete="off" #phone formControlName="phone"
+                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                      maxlength="10" />
+
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Email</div>
+                </div>
+                <div class="fieldPadding">
+                  <div class="d-flex">
+                    <input (keyup)="resetErrors()" #email type="email" placeholder="Enter Applicant Email"
+                      class="form-control" autocomplete="off" formControlName="email" />
+
+                    <!-- <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
+                      (click)="verifyEmail()"><span>Verify</span></a>
+
+                    <a class="btn btn-verify" *ngIf="emailverification" [class.btn-verified]="emailverification">
+                      <span *ngIf="emailverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Requested Loan Amount</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Requested Loan Amount"
+                    class="form-control" autocomplete="off" formControlName="loanamount" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">City</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" #permanentcity type="text" placeholder="Enter City"
+                    class="form-control" autocomplete="off" formControlName="permanentcity" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div>
+                          <div class="bggrey my-2">
+                            <div>
+                              <div class="d-flex">
+                                <div class="form-title">State</div>
+                              </div>
+                              <div class="fieldPadding">
+                                <input (keyup)="resetErrors()" #permanentstate [value]="permanentstate" type="text"
+                                  placeholder="Enter State" class="form-control" autocomplete="off"
+                                  formControlName="permanentstate" />
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+
+          <div class="bggrey my-2" *ngIf="stateList">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">State</div>
+              </div>
+              <div class="fieldPadding">
+                <mat-select class="form-control widthWebKit" #permanentstate formControlName="permanentstate">
+                  <mat-option [value]="state.name" *ngFor="let state of stateList">
+                    <div *ngIf="state && state.displayName">{{state.displayName}}</div>
+                  </mat-option>
+                </mat-select>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Pincode</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" #permanentpincode type="text" placeholder="Enter Pincode"
+                    class="form-control" autocomplete="off" formControlName="permanentpincode"
+                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                    maxlength="6" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
+
+        </div>
+
+        <!-- </mat-expansion-panel>
+        </mat-accordion> -->
+
+      </div>
+
+    </div>
+    <div class="d-flex" *ngIf="!enquireLeadData">
+      <div>
+        <div class="mr-2 btn btn-primary" (click)="saveAsLead()">
+          Save Lead
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex" *ngIf="enquireLeadData">
+      <div>
+        <div class="mr-2 btn btn-primary" (click)="convertToLoan()">
+          Convert to Loan
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

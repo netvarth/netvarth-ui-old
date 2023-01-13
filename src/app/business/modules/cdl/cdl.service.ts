@@ -56,6 +56,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getLeadsByFilter(filter = {}) {
+    const url = 'provider/enquire';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
   getUsersByOrder() {
     const url = 'provider/user';
     return this.servicemeta.httpGet(url, null);
@@ -170,9 +175,19 @@ export class CdlService {
     return this.servicemeta.httpPost(url, data);
   }
 
+  getCdlEnquireTemplate(name) {
+    const url = 'provider/enquire/master?loanNature-eq=' + name;
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getCustomerDetails(filter = {}) {
     const url = 'provider/customers';
     return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  createEnquire(data) {
+    const url = 'provider/enquire';
+    return this.servicemeta.httpPost(url, data);
   }
 
   getBusinessProfile() {

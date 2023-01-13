@@ -150,6 +150,9 @@ export class CreateComponent implements OnInit {
   totalPaymentValue: number;
   subventionLoan: any = false;
   allPanelsExpanded: boolean;
+  enquireUid: any;
+  enquireLeadData: any;
+  disablePhone: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -166,6 +169,49 @@ export class CreateComponent implements OnInit {
     this.activated_route.queryParams.subscribe((params) => {
       if (params && params.from) {
         this.from = params.from;
+      }
+      if (params && params.type && params.type == 'enquire') {
+        if (params && params.enquireId) {
+          this.enquireUid = params.enquireId;
+          const api_filter = {};
+          api_filter['loanNature-eq'] = 'ConsumerDurableLoan';
+          api_filter['uid-eq'] = this.enquireUid;
+
+          this.cdlService.getLeadsByFilter(api_filter).subscribe((data: any) => {
+            this.enquireLeadData = data[0];
+            if (this.enquireLeadData && this.enquireLeadData.customer && this.enquireLeadData.customer.firstName) {
+              this.createLoan.controls.firstname.setValue(this.enquireLeadData.customer.firstName);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.customer && this.enquireLeadData.customer.lastName) {
+              this.createLoan.controls.lastname.setValue(this.enquireLeadData.customer.lastName);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.customer && this.enquireLeadData.customer.phoneNo) {
+              this.createLoan.controls.phone.setValue(this.enquireLeadData.customer.phoneNo);
+              this.disablePhone = true;
+            }
+            if (this.enquireLeadData && this.enquireLeadData.customer && this.enquireLeadData.customer.email) {
+              this.createLoan.controls.email.setValue(this.enquireLeadData.customer.email);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.customer && this.enquireLeadData.customer.dob) {
+              this.createLoan.controls.dob.setValue(this.enquireLeadData.customer.dob);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.customer && this.enquireLeadData.customer.gender) {
+              this.createLoan.controls.gender.setValue(this.enquireLeadData.customer.gender);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.targetPotential) {
+              this.createLoan.controls.loanamount.setValue(this.enquireLeadData.targetPotential);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.customerCity) {
+              this.createLoan.controls.permanentcity.setValue(this.enquireLeadData.customerCity);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.customerState) {
+              this.createLoan.controls.permanentstate.setValue(this.enquireLeadData.customerState);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.customerPin) {
+              this.createLoan.controls.permanentpincode.setValue(this.enquireLeadData.customerPin);
+            }
+          });
+        }
       }
       if (params && params.id) {
         this.cdlService.getLoanById(params.id).subscribe((data) => {

@@ -1,47 +1,104 @@
 <section class="card">
-  <div class="title-gb no-padding">
-    <div class="dash-head">
-      <div> <i class="fa fa-arrow-left colorHeaderIcon" aria-hidden="true" (click)="goBack()"></i></div>
-      <div class="colorHeaderIcon" *ngIf="headerName">{{headerName |capitalizeFirst}}</div>
+  <div class="pointer-cursor">
+    <div class="d-flex">
+      <div> <i class="fa fa-arrow-left mr-2" aria-hidden="true" (click)="goBack()"></i></div>
+      <div class="text-primary heading" class="back-btn" *ngIf="headerName">{{headerName |capitalizeFirst}}</div>
     </div>
   </div>
 </section>
-<div>
-  <div class="col-md-12 marginClass">
-    <div class="card">
-      <div class="row text-right">
-        <div class="form-group col-md-4 my-3">
-          <select class="form-control">
-            <option value="all"><span class="text-capitalize">Thrissur</span></option>
-            <option value="approved"><span class="text-capitalize">Kochi</span></option>
-            <option value="in progress"><span class="text-capitalize">Kottayam</span></option>
-            <option value="redirected"><span class="text-capitalize">Kannur</span></option>
-          </select>
+
+
+<section *ngIf="loading">
+  <div>
+    <app-skeleton-loading></app-skeleton-loading>
+  </div>
+</section>
+
+
+<div *ngIf="!loading">
+  <div class="card">
+    <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dt1 [value]="leads" dataKey="id"
+      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+      styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [globalFilterFields]="['enquireId','customer.Name','createdDate','status']">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-4">
+            <span>
+              <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
+                (input)="dt1.filterGlobal($event.target.value, 'contains')" placeholder="Search keyword"
+                style="width:100%" />
+            </span>
+          </div>
+          <div class="col-md-4"></div>
+          <!-- <div class="col-md-4 text-right">
+            <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
+              (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
+              dataKey="name">
+            </p-dropdown>
+          </div> -->
         </div>
-      </div>
-      <div class="table-responsive dash-list">
-        <table class="table">
-          <thead>
-            <tr class="tble-filtr-tr heght">
-              <th class="head_color">Loan Id</th>
-              <th class="head_color">Customer Name</th>
-              <th class="head_color">Phone</th>
-              <th class="head_color">Email</th>
-            </tr>
-          </thead>
-          <tbody class="table_data">
-            <ng-container>
-              <tr style="cursor:pointer" *ngFor="let item of loans;let i=index" (click)="continueApplication()">
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.loanId">{{item.loanId}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.CustomerName">{{item.CustomerName}}</td>
-                <td data-title="Loan Details" class="td1" *ngIf="item && item.phone">{{item.phone}}</td>
-                <td data-title="Loan Details" class="td1 loanStatus" *ngIf="item && item.email">{{item.email}}
-                </td>
-              </tr>
-            </ng-container>
-          </tbody>
-        </table>
-      </div>
-    </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Lead enquire Id
+              <p-columnFilter type="text" field="referenceNo" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Customer Name
+              <p-columnFilter type="text" field="customer.Name" display="menu"></p-columnFilter>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Created Date
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              More Actions
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-lead>
+        <tr class="mobile-card">
+          <td>
+            <span class="d-lg-none d-md-none">Lead Enquire Id : </span><span
+              class="table-column-data">{{lead.enquireId}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Customer Name : </span><span
+              class="table-column-data">{{lead.customer.Name}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Date : </span>
+            <span class="table-column-data">
+              {{lead.createdDate}}</span>
+          </td>
+          <td>
+            <div class="text-center">
+              <div class="d-flex">
+                <!-- <button *ngIf="loan.spInternalStatus=='Draft'" pButton pRipple type="button"
+                  class="p-button-primary mr-2" (click)="updateLoan(loan.uid, 'update', 'Draft')">Update</button> -->
+                <button pButton pRipple type="button" class="p-button-primary"
+                  (click)="viewLead(lead.uid)">View</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <br class="d-lg-none d-md-none">
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No Loans found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
   </div>
 </div>

@@ -27,20 +27,6 @@
   padding: 5px 10px !important;
 }
 
-div.sticky {
-  position: -webkit-sticky !important;
-  position: sticky !important;
-  top: 30px !important;
-}
-
-
-.score {
-  font-size: 22px !important;
-  font-weight: bold !important;
-  background-color: #d1f3d9;
-  border-radius: 50%;
-  padding: 5px 10px 5px 5px !important;
-}
 
 .btn-light {
   background-color: #e2e2e2 !important;
@@ -154,7 +140,7 @@ input[type="checkbox"] {
 
 .disabled {
   pointer-events: none !important;
-  cursor: none !important;  
+  /* cursor: not-allowed !important; */
 }
 
 .not-allowed {
@@ -274,10 +260,6 @@ input::placeholder {
 }
 
 ::ng-deep .p-calendar {
-  width: 100% !important;
-}
-
-::ng-deep .p-dropdown {
   width: 100% !important;
 }
 
