@@ -30,6 +30,7 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_STARTS_MONTH;
   historyOrdersCount;
   loading = false;
+  loadingPapers;
   orderSelected: any = [];
   showFilterSection = false;
   filterapplied = false;
@@ -721,6 +722,7 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   }
   getProviderSubmissionOrders() {
     this.loading = true;
+    this.loadingPapers = true;
     let filter = {};
     filter = this.setFilterForApi();
 
@@ -747,6 +749,7 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
         this.completedorders = data;
         this.totalPaperdCompletedCount = this.orders.length;
         this.loading = false;
+        this.loadingPapers = false;
       });
 
   }

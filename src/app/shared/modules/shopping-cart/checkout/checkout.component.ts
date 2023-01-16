@@ -975,7 +975,17 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
 
       };
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
-      this.location.back();
+      if (this.source === 'paper') {
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+            accountId: this.account_id,
+            customId: this.customId
+          }
+        }
+        this.router.navigate(['consumer'], navigationExtras);
+      } else {
+        this.location.back();
+      }     
     }
   }
 

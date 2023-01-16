@@ -38,7 +38,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="catalogType !== 'submission'">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="catalogType && catalogType !== 'submission'">
     <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Today ({{todayOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -1474,20 +1474,20 @@
 
 
 
-  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="catalogType === 'submission'">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="catalogType && catalogType === 'submission'">
     <mat-tab-group (selectedTabChange)="tabChange_papers($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Total Papers ({{totalOrdersCount}})">
-        <app-common-innerloading-spinner *ngIf="loading && (totalOrders.length==0 || !totalOrdersCount)">
+        <app-common-innerloading-spinner *ngIf="loadingPapers">
         </app-common-innerloading-spinner>
-        <div class="allTabInPannel" *ngIf="!loading">
-          <app-paper-details [loading]="loading" [orders]="totalOrders" (actionPerformed)="actionPerformed($event)"></app-paper-details>
+        <div class="allTabInPannel" *ngIf="!loadingPapers">
+          <app-paper-details [orders]="totalOrders" (actionPerformed)="actionPerformed($event)"></app-paper-details>
         </div>
         <div class="clearfix"></div>
       </mat-tab>
       <mat-tab label="Completed Papers ({{totalPaperdCompletedCount}})">
-        <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-        <div class="allTabInPannel" *ngIf="!loading">
-          <app-paper-details [loading]="loading" [orders]="completedorders"></app-paper-details>
+        <app-common-innerloading-spinner *ngIf="loadingPapers"></app-common-innerloading-spinner>
+        <div class="allTabInPannel" *ngIf="!loadingPapers">
+          <app-paper-details [orders]="completedorders"></app-paper-details>
           <div class="clearfix"></div>
         </div>
         <div class="clearfix"></div>

@@ -1,5 +1,5 @@
-<app-common-innerloading-spinner *ngIf="loading">
-</app-common-innerloading-spinner>
+<!-- <app-common-innerloading-spinner *ngIf="loading">
+</app-common-innerloading-spinner> -->
 
 <table class="table" *ngIf="!loading">
   <thead>
@@ -44,7 +44,7 @@
             {{paper.orderStatus == "Order Confirmed"?"Paper Submitted":paper.orderStatus}}</div>
         </td>
         <td data-title="Status">
-          <span class="pull-right btn btn-primary" (click)="stopprop($event);showActionPopup(paper, 1)">
+          <span class="pull-right btn btn-primary" [ngClass]="paper.orderStatus==='Completed'?'disabled':''" (click)="stopprop($event);showActionPopup(paper, 1)">
             Actions</span>
         </td>
       </tr>

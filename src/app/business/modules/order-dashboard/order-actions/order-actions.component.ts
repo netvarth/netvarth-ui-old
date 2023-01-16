@@ -149,7 +149,7 @@ export class OrderActionsComponent implements OnInit {
         panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
         disableClose: true,
         data: {
-          'message': 'Do you really want to cancel the order?',
+          'message': 'Do you really want to cancel/reject the order?',
           'type': 'order'
         }
       });
@@ -165,7 +165,7 @@ export class OrderActionsComponent implements OnInit {
       });
     } else {
       this.provider_services.changeOrderStatus(this.orderDetails.uid, status).subscribe(data => {
-        this.dialogRef.close();
+        this.dialogRef.close('refreshPapers');
       },
         error => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
