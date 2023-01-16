@@ -177,7 +177,7 @@ export class ItemOptionsComponent implements OnInit {
     }
 
     console.log("questionnaireAnswers", this.questionnaireAnswers);
-    this.getTotalPrice()
+    this.getTotalPrice();
 
   }
 

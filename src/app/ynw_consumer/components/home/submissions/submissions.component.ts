@@ -23,6 +23,7 @@ export class SubmissionsComponent implements OnInit, OnChanges {
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   history: any;
   entire_history: any;
+  paperSubmitLink: string;
 
   constructor(
     // private consumer_services: ConsumerServices,
@@ -101,7 +102,11 @@ export class SubmissionsComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getOrderHistory();
     this.initOrder();
-    console.log('this.user_details', this.user_details)
+    console.log('this.user_details', this.user_details);
+
+    this.consumer_services.GetConsumerCatalogs(this.accountId).subscribe((catalogs)=> {
+      this.paperSubmitLink = '/' + this.custom_id +  '/catalog/' + catalogs[0].id + '/item/' + catalogs[0].catalogItem[0].id;
+    })     
     // this.consumer_services.getConsumerOrders().subscribe(
     //   (data) => {
     //     this.history = data;
@@ -135,8 +140,8 @@ export class SubmissionsComponent implements OnInit, OnChanges {
       this.lStorageService.removeitemfromLocalStorage('reqFrom');
       this.lStorageService.removeitemfromLocalStorage('source');
     }
-    let url = '/53a2k52/catalog/289/item/1505'
-    this.router.navigateByUrl(url);
+    // let url = '/53a2k52/catalog/289/item/1505'
+    // let url = 'Authordemy/catalog/226/item/1354';
+    this.router.navigateByUrl(this.paperSubmitLink);
   }
-
 }
