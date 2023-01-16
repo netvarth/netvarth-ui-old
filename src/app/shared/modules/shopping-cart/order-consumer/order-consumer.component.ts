@@ -506,6 +506,37 @@ export class OrderConsumerComponent implements OnInit {
           let itemOptionsJson = {
             "itemData": item,
             "postData": result.postData,
+            "fileData": result.fileData,
+            "answersData": result.answersData,
+            "questionnaireData": data
+          }
+          this.addToCart(item);
+          this.itemOptionsData.push(itemOptionsJson)
+          this.lStorageService.setitemonLocalStorage('itemOptionsData', this.itemOptionsData)
+        }
+      }
+    });
+  }
+
+
+
+  editItemOptions(item) {
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
+      header: 'Choose Item Options',
+      width: '70%',
+      contentStyle: { "max-height": "500px", "overflow": "auto" },
+      baseZIndex: 10000,
+      data: { data: itemOptionsData, type: 'edit' }
+    });
+
+    this.itemOptionsRef.onClose.subscribe((result: any) => {
+      console.log(result)
+      if (result) {
+        if (result.postData && result.fileData) {
+          let itemOptionsJson = {
+            "itemData": item,
+            "postData": result.postData,
             "fileData": result.fileData
           }
           this.addToCart(item);

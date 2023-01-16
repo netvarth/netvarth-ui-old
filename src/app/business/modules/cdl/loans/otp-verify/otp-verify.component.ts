@@ -44,6 +44,7 @@ export class OtpVerifyComponent implements OnInit {
   dealerId: any;
   gender: any;
   dob: any;
+  enquireUid: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -73,6 +74,11 @@ export class OtpVerifyComponent implements OnInit {
     if (this.data && this.data.data && this.data.data.lastName) {
       this.lastName = this.data.data.lastName;
     }
+
+    if (this.data && this.data.data && this.data.data.enquireUid) {
+      this.enquireUid = this.data.data.enquireUid;
+    }
+
     if (this.data && this.data.id) {
       this.loanId = this.data.id;
     }
@@ -85,6 +91,7 @@ export class OtpVerifyComponent implements OnInit {
     if (this.data && this.data.dealerId) {
       this.dealerId = this.data.dealerId;
     }
+
     if (this.data && this.data.phoneNumber) {
       this.phoneNumber = this.data.phoneNumber;
       if (this.phoneNumber.startsWith('555')) {
@@ -326,6 +333,11 @@ export class OtpVerifyComponent implements OnInit {
           this.customerData['uid'] = this.loanId
           this.customerData.loanApplicationKycList[0].id = this.loankycid
         }
+
+        if (this.enquireUid) {
+          this.customerData['originUid'] = this.enquireUid
+        }
+
         this.subs.sink = this.cdlservice.verifyPhoneOTP(this.otpEntered, this.customerData, this.from)
           .subscribe(
             (response: any) => {

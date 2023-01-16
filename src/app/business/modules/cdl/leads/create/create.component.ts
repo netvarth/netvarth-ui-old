@@ -54,8 +54,8 @@ export class CreateComponent implements OnInit {
         const api_filter = {};
         api_filter['loanNature-eq'] = 'ConsumerDurableLoan';
         api_filter['uid-eq'] = this.enquireUid;
-        this.cdlService.getLeadsByFilter(api_filter).subscribe((data: any) => {
-          this.enquireLeadData = data[0];
+        this.cdlService.getLeadsByUid(this.enquireUid).subscribe((data: any) => {
+          this.enquireLeadData = data;
           if (this.enquireLeadData && this.enquireLeadData.customer && this.enquireLeadData.customer.firstName) {
             this.createLead.controls.firstname.setValue(this.enquireLeadData.customer.firstName);
           }

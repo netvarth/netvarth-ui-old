@@ -36,7 +36,8 @@ export class ItemOptionsComponent implements OnInit {
       "name": "No",
       "value": false
     }
-  ]
+  ];
+  itemOptionsData: any;
   constructor(
     private itemOptionsRef: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -45,7 +46,13 @@ export class ItemOptionsComponent implements OnInit {
     private fileService: FileService
   ) {
     if (this.config && this.config.data) {
-      this.itemData = this.config.data
+      this.itemData = this.config.data;
+    }
+    if (this.config && this.config.data && this.config.data.type && this.config.data.type == 'edit') {
+      this.answers = this.config.data.data[0].answersData;
+      this.itemData = this.config.data.data[0].questionnaireData;
+      this.getTotalPrice();
+      console.log(this.answers)
     }
   }
 
@@ -63,27 +70,26 @@ export class ItemOptionsComponent implements OnInit {
       else {
         this.answers[0] = "";
       }
+
+      this.labels.forEach(element => {
+        let answerLine = {
+          "labelName": element.question.labelName,
+          "answer": {
+            "dataGridList": [
+              {
+                "dataGridListColumn": []
+              }
+            ]
+          }
+        }
+        this.questionnaireAnswers.push(answerLine)
+      });
+
+      this.getPriceValue(this.labels[0].question.dataGridListProperties.dataGridListColumns[0].listPropertie, this.answers[0])
+      this.saveAnswers(this.labels[0], this.labels[0].question.dataGridListProperties.dataGridListColumns[0], 0, this.answers[0])
     }
     this.itemPrice = 200;
     // console.log(this.labels)
-
-    this.labels.forEach(element => {
-      let answerLine = {
-        "labelName": element.question.labelName,
-        "answer": {
-          "dataGridList": [
-            {
-              "dataGridListColumn": []
-            }
-          ]
-        }
-      }
-      this.questionnaireAnswers.push(answerLine)
-    });
-    this.getPriceValue(this.labels[0].question.dataGridListProperties.dataGridListColumns[0].listPropertie, this.answers[0])
-    this.saveAnswers(this.labels[0], this.labels[0].question.dataGridListProperties.dataGridListColumns[0], 0, this.answers[0])
-    console.log(this.labels[0], this.labels[0].question.dataGridListProperties.dataGridListColumns[0], 0)
-
   }
 
   close() {
@@ -97,6 +103,10 @@ export class ItemOptionsComponent implements OnInit {
   getDataGridListColumns(data) {
     this.questionsLength = data.length
     return data;
+  }
+
+  convertDate(date) {
+    return date;
   }
 
   getPriceValue(listPropertie, value) {
@@ -177,7 +187,7 @@ export class ItemOptionsComponent implements OnInit {
     }
 
     console.log("questionnaireAnswers", this.questionnaireAnswers);
-    this.getTotalPrice();
+    this.getTotalPrice()
 
   }
 
@@ -207,7 +217,7 @@ export class ItemOptionsComponent implements OnInit {
         'fileToUpload': this.filesToUpload
       }
 
-      this.itemOptionsRef.close({ "postData": postData, "fileData": fileData });
+      this.itemOptionsRef.close({ "postData": postData, "fileData": fileData, "answersData": this.answers });
     }
   }
 

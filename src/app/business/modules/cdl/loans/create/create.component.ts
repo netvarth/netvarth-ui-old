@@ -177,8 +177,8 @@ export class CreateComponent implements OnInit {
           api_filter['loanNature-eq'] = 'ConsumerDurableLoan';
           api_filter['uid-eq'] = this.enquireUid;
 
-          this.cdlService.getLeadsByFilter(api_filter).subscribe((data: any) => {
-            this.enquireLeadData = data[0];
+          this.cdlService.getLeadsByUid(this.enquireUid).subscribe((data: any) => {
+            this.enquireLeadData = data;
             if (this.enquireLeadData && this.enquireLeadData.customer && this.enquireLeadData.customer.firstName) {
               this.createLoan.controls.firstname.setValue(this.enquireLeadData.customer.firstName);
             }
@@ -1160,6 +1160,10 @@ export class CreateComponent implements OnInit {
           "dob": this.createLoan.controls.dob.value,
           "gender": this.createLoan.controls.gender.value,
         }
+      }
+
+      if (this.enquireUid) {
+        this.nameData['enquireUid'] = this.enquireUid
       }
 
       const dialogRef = this.dialog.open(OtpVerifyComponent, {

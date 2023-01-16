@@ -59,9 +59,9 @@
                           {{this.catalog.catalogItem.length}} Items</h6> -->
             <h6 class="card-title" class="catalog-count" *ngIf="catalogItems && catalogItems.length">
               {{catalogItems.length}} Items</h6>
-              <div class="card item-card shadow-lg mt-3" *ngIf="catalogItems && catalogItems.length===0">
-                <h4>Sorry item not found</h4>
-              </div>
+            <div class="card item-card shadow-lg mt-3" *ngIf="catalogItems && catalogItems.length===0">
+              <h4>Sorry item not found</h4>
+            </div>
             <div *ngIf="catalogItems">
               <div *ngFor="let item of catalogItems;let i=index">
                 <div class="card item-card shadow-lg mt-3">
@@ -149,7 +149,8 @@
                     <span class="font-weight-bold item-name"
                       *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
                     <span class="text-light item-desc"
-                      *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
+                      *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span><br>
+                    <span class="text-primary item-desc pointer-cursor" (click)="editItemOptions(item)">Edit</span>
                   </div>
                   <div class="cart">
                     <span class="text-red item-price"
@@ -158,6 +159,10 @@
                     <span class="text-red item-price"
                       *ngIf="item.item && item.item.price && item.item.showPromotionalPrice">&nbsp;<i
                         class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
+
+                    <!-- <span class="text-red item-price"
+                      *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
+                        class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span> -->
 
                     <div class="cart-btn pr-2">
                       <div *ngIf=" getItemQty(item)===0" (click)="increment(item)"
@@ -265,25 +270,24 @@
     </div>
   </div> -->
   <div class="card item-card shadow-lg mt-3">
-    <div >
-      <input  class="form-control" 
-        [(ngModel)]="seacrchFilterOrder" type="search" class="form-control" placeholder="Search for Items" [matAutocomplete]="autoprov"
-        (ngModelChange)="transform(seacrchFilterOrder)"/>
-        <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-          <mat-option *ngFor="let option of catalogItems" (click)="handleSearchSelect(option,seacrchFilterOrder)" 
+    <div>
+      <input class="form-control" [(ngModel)]="seacrchFilterOrder" type="search" class="form-control"
+        placeholder="Search for Items" [matAutocomplete]="autoprov" (ngModelChange)="transform(seacrchFilterOrder)" />
+      <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
+        <mat-option *ngFor="let option of catalogItems" (click)="handleSearchSelect(option,seacrchFilterOrder)"
           [value]="option.item.displayName">
-            <div class="flexClass" style="justify-content: space-between;">
-              <div class="flexClass">
-                  <div>{{option.item.displayName  | capitalizeFirst}}</div>
-                </div>
+          <div class="flexClass" style="justify-content: space-between;">
+            <div class="flexClass">
+              <div>{{option.item.displayName | capitalizeFirst}}</div>
             </div>
-          </mat-option>
-        </mat-autocomplete>
+          </div>
+        </mat-option>
+      </mat-autocomplete>
     </div>
-    <h4 class="card-title catalog-name mt-3" *ngIf="catalog && catalog.catalogName" >
+    <h4 class="card-title catalog-name mt-3" *ngIf="catalog && catalog.catalogName">
       {{this.catalog.catalogName}}</h4>
-      <h6 class="card-title catalog-count"  *ngIf="catalogItems && catalogItems.length">
-        {{catalogItems.length}} Items</h6>
+    <h6 class="card-title catalog-count" *ngIf="catalogItems && catalogItems.length">
+      {{catalogItems.length}} Items</h6>
   </div>
   <div class="card item-card shadow-lg mt-3" *ngIf="catalogItems && catalogItems.length===0">
     <h4>Sorry item not found</h4>

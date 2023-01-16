@@ -61,6 +61,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null, filter);
   }
 
+  getLeadsByUid(uid) {
+    const url = 'provider/enquire/' + uid;
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getUsersByOrder() {
     const url = 'provider/user';
     return this.servicemeta.httpGet(url, null);
