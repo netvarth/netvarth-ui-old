@@ -1,14 +1,15 @@
-<section class="container cons-inbox no-padding qnr-link" >
+<section class="container cons-inbox no-padding qnr-link full_height">
     <!-- [class.success-width]="!isBusinessOwner && (qParams.type || qnrStatus !== 'released' || waitlistStatus == 'cancelled')" -->
     <div class="comn-cls m0 p0">
-        <div class="panel-default">
-            <app-consumer-join *ngIf="!loggedIn && !customId" [userType]="userType" (actionPerformed)="actionPerformed($event)"></app-consumer-join>
+        <div class="panel-default mgn-up-50">
+            <app-consumer-join *ngIf="!loggedIn && !customId" [userType]="userType"
+                (actionPerformed)="actionPerformed($event)"></app-consumer-join>
             <app-authentication *ngIf="!loggedIn && customId" (actionPerformed)="actionPerformed($event)"
-            [accountId]="accountId" [accountConfig]="accountConfig"></app-authentication>            
+                [accountId]="accountId" [accountConfig]="accountConfig"></app-authentication>
             <app-common-innerloading-spinner *ngIf="loggedIn && loading"></app-common-innerloading-spinner>
             <div class="panel-body no-padding"
-                *ngIf="!loading && ((!qParams.type && qnrStatus === 'released' && waitlistStatus != 'cancelled') || isBusinessOwner)">
-                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card">
+                *ngIf="loggedIn && !loading && ((!qParams.type && qnrStatus === 'released' && waitlistStatus != 'cancelled') || isBusinessOwner)">
+                <div class="col-md-12 col-xs-12 col-lg-12 col-sm-12 card mgn-up-20">
                     <div class="details-pad" *ngIf="waitlist">
                         <div class="">
                             <div class="customer-details-head">
@@ -20,12 +21,12 @@
                                         : waitlist.provider.firstName +
                                         ' ' + waitlist.provider.lastName}}, {{waitlist.providerAccount?.businessName}}
                                     </h2>
-                                    <h5 *ngIf="questionnaire[0] && questionnaire[0].questionnaireId">
+                                    <!-- <h5 *ngIf="questionnaire[0] && questionnaire[0].questionnaireId">
                                         {{questionnaire[0].questionnaireId}}
-                                    </h5>
+                                    </h5> -->
                                 </div>
                             </div>
-                            <div class="customer-details">
+                            <div class="customer-details mgn-up-20">
                                 <h5
                                     *ngIf="source == 'consCheckin' && (waitlist.waitlistingFor[0].firstName || waitlist.waitlistingFor[0].lastName)">
                                     {{waitlist.waitlistingFor[0].firstName}}
@@ -52,7 +53,8 @@
                                     <i class="fa fa-mobile icon"></i>
                                     <span class="value">{{waitlist.countryCode}} {{waitlist.waitlistPhoneNumber}}</span>
                                 </div>
-                                <div class="contact-no" *ngIf="(source == 'consAppt' || source == 'consOrder') && waitlist.phoneNumber">
+                                <div class="contact-no"
+                                    *ngIf="(source == 'consAppt' || source == 'consOrder') && waitlist.phoneNumber">
                                     <i class="fa fa-mobile icon"></i>
                                     <span class="value">{{waitlist.countryCode}} {{waitlist.phoneNumber}}</span>
                                 </div>
@@ -82,7 +84,7 @@
                                 <div class="email" *ngIf="source == 'consOrder'">
                                     <i class="fa fa-calendar-o icon"></i>
                                     <span class="value">{{waitlist.orderDate | date: newDateFormat }}
-                                        </span>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -96,7 +98,8 @@
                     </div>
                 </div>
             </div>
-            <div class="success-sec" *ngIf="!loading && !isBusinessOwner && (qnrStatus == 'submitted' || qParams.type)">
+            <div class="success-sec"
+                *ngIf="loggedIn && isPermitted && (!loading && !isBusinessOwner && (qnrStatus == 'submitted' || qParams.type))">
                 <i class="fa fa-check-circle greenc" aria-hidden="true"></i>
                 <div class="success-head mgn-bt-5">
                     Your response has been submitted
@@ -105,20 +108,28 @@
                     You have successfully submitted your entries. To review your entries login to Jaldee App. For any
                     related queries contact your provider directly.
                 </div>
+                <div class="mgn-up-20">
+                    <button mat-button (click)="logout()">Logout</button>
+                </div>
             </div>
             <div class="success-sec"
-                *ngIf="!loading && !isBusinessOwner && (qnrStatus == 'unReleased' || waitlistStatus == 'cancelled')">
+                *ngIf="loggedIn && (!loading && !isBusinessOwner && (qnrStatus == 'unReleased' || waitlistStatus == 'cancelled'))">
                 <i class="fa fa-ban red" aria-hidden="true"></i>
                 <div class="success-desc">
                     You do not seem to have access to open the link. Contact {{waitlist.providerAccount.businessName}}
                     directly for any concerns.
                 </div>
+                <div class="mgn-up-20">
+                    <button mat-button (click)="logout()">Logout</button>
+                </div>
             </div>
-            <div class="success-sec"
-                *ngIf="!isPermitted">
+            <div class="success-sec" *ngIf="loggedIn && !isPermitted ">
                 <i class="fa fa-ban red" aria-hidden="true"></i>
                 <div class="success-desc">
                     You do not seem to have access to open the link. Contact directly for any concerns.
+                </div>
+                <div class="mgn-up-20">
+                    <button mat-button (click)="logout()">Logout</button>
                 </div>
             </div>
         </div>

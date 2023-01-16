@@ -73,3 +73,6 @@
 .hgt-adjust {
     min-height: 91vh;
   }
+  .full_height {
+    height: 100vh;
+  }

@@ -406,9 +406,10 @@ export class AuthService {
    * @returns true/false
    */
   goThroughLogin() {
+    const _this = this;
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
-      const _this = this;
+      
       let qrusr = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
       console.log("Entered to goThroughLogin Method");
       return new Promise((resolve) => {
@@ -420,37 +421,43 @@ export class AuthService {
       });
     } else {
       return new Promise((resolve) => {
-        const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
-        let qrusr = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
-        let customId = this.lStorageService.getitemfromLocalStorage('customId');
-        // qrusr = JSON.parse(qrusr);
-        if (!customId && qrusr && qrpw) {
-          const data = {
-            'countryCode': qrusr.countryCode,
-            'loginId': qrusr.loginId,
-            'password': qrpw,
-            'mUniqueId': null
-          };
-          this.shared_services.ConsumerLogin(data).subscribe(
-            (loginInfo: any) => {
-              this.setLoginData(loginInfo, data, 'consumer');
-              this.lStorageService.setitemonLocalStorage('qrp', data.password);
-              resolve(true);
-            },
-            (error) => {
-              if (error.status === 401 && error.error === 'Session already exists.') {
+        // const qrpw = this.lStorageService.getitemfromLocalStorage('qrp');
+        // let qrusr = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+        // let customId = this.lStorageService.getitemfromLocalStorage('customId');
+        // // qrusr = JSON.parse(qrusr);
+        // if (!customId && qrusr && qrpw) {
+        //   const data = {
+        //     'countryCode': qrusr.countryCode,
+        //     'loginId': qrusr.loginId,
+        //     'password': qrpw,
+        //     'mUniqueId': null
+        //   };
+        //   this.shared_services.ConsumerLogin(data).subscribe(
+        //     (loginInfo: any) => {
+        //       this.setLoginData(loginInfo, data, 'consumer');
+        //       this.lStorageService.setitemonLocalStorage('qrp', data.password);
+        //       resolve(true);
+        //     },
+        //     (error) => {
+        //       if (error.status === 401 && error.error === 'Session already exists.') {
+        //         resolve(true);
+        //       } else {
+        //         resolve(false);
+        //       }
+        //     }
+        //   );
+        // } else 
+        // if (customId) {
+        //   resolve(true);
+        // } else {
+        //   resolve(false);
+        // }
+              if (_this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
                 resolve(true);
               } else {
                 resolve(false);
               }
-            }
-          );
-        } else if (customId && qrusr) {
-          resolve(true);
-        } else {
-          resolve(false);
-        }
-      });
+          })
     }
   }
 

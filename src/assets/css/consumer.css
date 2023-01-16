@@ -43,7 +43,10 @@
   flex: auto;
   flex-grow: 0;
 }
-
+.consumer-dash .card .paper-db .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content {
+  display: block !important;
+  flex-grow: none !important;
+}
 .consumer-dash .card .mat-accordion .mat-expansion-panel .mat-expansion-panel-header .mat-content .mat-expansion-panel-header-title {
   color: #fff;
 }

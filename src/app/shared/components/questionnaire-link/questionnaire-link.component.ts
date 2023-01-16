@@ -319,4 +319,13 @@ export class QuestionnaireLinkComponent implements OnInit {
       this.getDetails();
     }
   }
+
+  logout() {
+    this.authService.doLogout().then(
+      ()=> {
+        this.isPermitted =true;
+        this.loggedIn = false;
+      }
+    );
+  }
 }
