@@ -33,6 +33,10 @@ export class QuestionaireViewComponent implements OnInit {
     this.getAnswers = (this.questions);
   }
 
+  openFile(file) {
+    window.open(file, '_blank');
+  }
+
   groupQuestionsBySection() {
     if (this.source === 'customer-create' || this.source === 'qnrDetails' || this.source === 'onetime') {
       this.groupedQnr = this.sharedFunctions.groupBy(this.questions, 'sectionName');

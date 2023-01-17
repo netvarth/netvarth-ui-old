@@ -13,7 +13,7 @@
 
                 <div *ngIf="group.answerLine.answer['fileUpload']" class="d-flex">
                     <div class="dzimage pointer-cursor" *ngFor="let file of group.answerLine.answer['fileUpload']">
-                        <img class="img_fit" [src]="getImg(file.s3path, file)">
+                        <img class="img_fit" [src]="getImg(file.s3path, file)" (click)="openFile(file.s3path)">
                     </div>
                 </div>
 
@@ -38,7 +38,7 @@
                                         <div *ngIf="columnData['column']['fileUpload']" class="d-flex">
                                             <div class="dzimage pointer-cursor"
                                                 *ngFor="let file of columnData['column']['fileUpload']">
-                                                <img class="img_fit" [src]="getImg(file.s3path, file)">
+                                                <img class="img_fit" [src]="getImg(file.s3path, file)" (click)="openFile(file.s3path)">
                                             </div>
                                         </div>
                                     </td>
