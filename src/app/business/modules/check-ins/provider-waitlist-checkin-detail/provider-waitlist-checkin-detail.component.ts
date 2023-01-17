@@ -19,6 +19,7 @@ import { JaldeeTimeService } from '../../../../shared/services/jaldee-time-servi
 import { CommunicationService } from '../../../../business/services/communication-service';
 import { BookingHistoryComponent } from '../../appointments/booking-history/booking-history.component';
 import { CommunicationPopupComponent } from '../../bookings/communication-popup/communication-popup.component';
+import { SubSink } from 'subsink';
 
 @Component({
   selector: 'app-provider-waitlist-checkin-detail',
@@ -116,6 +117,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   mobileNumber: any;
   email: any;
   label_length: number;
+  private subs = new SubSink();
   constructor(
     private provider_services: ProviderServices,
     private shared_Functionsobj: SharedFunctions,
@@ -215,14 +217,14 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   
   getConsumerBills() {
     const filter = { 'providerConsumer-eq': this.waitlist_data.waitlistingFor[0].id };
-    this.provider_services.getProviderBills(filter).subscribe(data => {
+    this.subs.sink = this.provider_services.getProviderBills(filter).subscribe(data => {
       this.consumerBills = data;
     })
     console.log("consumer bills called")
   }
 
   getCustomerHistoryVisit() {
-    this.provider_services.getCustomerHistoryVisit(this.waitlist_data.waitlistingFor[0].id).subscribe(
+    this.subs.sink = this.provider_services.getCustomerHistoryVisit(this.waitlist_data.waitlistingFor[0].id).subscribe(
       (data: any) => {
         this.historyvisitDetails = data;
       }
@@ -272,6 +274,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     if (this.notedialogRef) {
       this.notedialogRef.close();
     }
+    this.subs.unsubscribe();
   }
   checkDataNull(value) {
     return value.trim() !== "";
@@ -289,7 +292,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       });
   }
   getWaitlistDetail() {
-    this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
+    this.subs.sink = this.provider_services.getProviderWaitlistDetailById(this.waitlist_id)
       .subscribe(
         data => {
           this.waitlist_data = data;
@@ -394,7 +397,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     const _this = this;
     return new Promise(function (resolve, reject) {
 
-      _this.provider_services.getProviderWaitlistHistroy(uuid)
+      _this.subs.sink = _this.provider_services.getProviderWaitlistHistroy(uuid)
         .subscribe(
           data => {
             resolve(data);
@@ -508,7 +511,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     const _this = this;
     return new Promise(function (resolve, reject) {
 
-      _this.provider_services.getProviderWaitlistinternalHistroy(uuid)
+      _this.subs.sink = _this.provider_services.getProviderWaitlistinternalHistroy(uuid)
         .subscribe(
           data => {
             resolve(data);
@@ -537,19 +540,18 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     })
   }
   getWaitlistNotes(uuid) {
-    this.provider_services.getProviderWaitlistNotesnew(uuid)
+    this.subs.sink = this.provider_services.getProviderWaitlistNotesnew(uuid)
       .subscribe(
         data => {
           this.waitlist_notes = data;
-          this.ngOnInit();
-          console.log(this.waitlist_notes, ';;;;;;;;;;;;')
+          // this.ngOnInit();
         },
         () => {
         }
       );
   }
   getCommunicationHistory(uuid) {
-    this.provider_services.getProviderInbox()
+    this.subs.sink = this.provider_services.getProviderInbox()
       .subscribe(
         data => {
           const history: any = data;
@@ -657,7 +659,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     const activeSlots = [];
     const allSlots = this.jaldeeTimeService.getTimeSlotsFromQTimings(interval, QStartTime, QEndTime);
     if (this.pdtype === 1) {
-      _this.provider_services.getTodayWaitlist(filter).subscribe(
+      _this.subs.sink = _this.provider_services.getTodayWaitlist(filter).subscribe(
         (waitlist: any) => {
           for (let i = 0; i < waitlist.length; i++) {
             if (waitlist[i]['appointmentTime']) {
@@ -677,7 +679,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
       );
     } else {
       filter['date-eq'] = _this.waitlist_data.date;
-      _this.provider_services.getFutureWaitlist(filter).subscribe(
+      _this.subs.sink = _this.provider_services.getFutureWaitlist(filter).subscribe(
         (waitlist: any) => {
           for (let i = 0; i < waitlist.length; i++) {
             if (waitlist[i]['appointmentTime']) {
@@ -773,7 +775,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
   saveClicked(esttime) {
     if (esttime) {
-      this.provider_services.editWaitTime(this.waitlist_data.ynwUuid, esttime).subscribe(
+      this.subs.sink = this.provider_services.editWaitTime(this.waitlist_data.ynwUuid, esttime).subscribe(
         () => {
           this.showEditView = false;
           this.getWaitlistDetail();
@@ -803,7 +805,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   // }
   saveApptTime(time) {
     // const apptTimeFormat = moment(this.appttime).format('hh:mm A') || null;
-    this.provider_services.updateApptTime(this.waitlist_data.ynwUuid, time).subscribe(
+    this.subs.sink = this.provider_services.updateApptTime(this.waitlist_data.ynwUuid, time).subscribe(
       () => {
         this.editAppntTime = false;
         this.getWaitlistDetail();
@@ -814,7 +816,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   }
   getDisplayboardCount() {
     let layout_list: any = [];
-    this.provider_services.getDisplayboardsWaitlist()
+    this.subs.sink = this.provider_services.getDisplayboardsWaitlist()
       .subscribe(
         data => {
           layout_list = data;
@@ -924,7 +926,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
     return this.dateTimeProcessor.transformToYMDFormat(date);
   }
   getReleasedQnrs(releasedQnrs) {
-    this.provider_services.getWaitlistQuestionnaireByUid(this.waitlist_data.ynwUuid).subscribe((data: any) => {
+    this.subs.sink = this.provider_services.getWaitlistQuestionnaireByUid(this.waitlist_data.ynwUuid).subscribe((data: any) => {
       const qnrs = data.filter(function (o1) {
         return releasedQnrs.some(function (o2) {
           return o1.id === o2.id;
@@ -948,7 +950,7 @@ export class ProviderWaitlistCheckInDetailComponent implements OnInit, OnDestroy
   getTeams() {
     const _this = this;
     return new Promise<void>(function (resolve) {
-      _this.provider_services.getTeamGroup().subscribe(data => {
+      _this.subs.sink = _this.provider_services.getTeamGroup().subscribe(data => {
         _this.teams = data;
       },
         () => {
