@@ -118,7 +118,6 @@
                 <div class="shoppinglistimg-h" (click)="openImageModalRow(file)">
                   <div class="shoppinglistoverlay-y"></div><img class="shoppinglistimg" [src]="file.modal.img"
                     *ngIf="file.modal.img" />
-
                 </div>
               </div>
             </li>
@@ -166,19 +165,35 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="c-details">
-            <app-questionnaire [questionnaireList]="qnr" [source]="'proOrder'" [uuid]="orderDetails.uid"
-              [type]="'details'" [waitlistStatus]="orderDetails.orderStatus"
-              (returnAnswers)="getQuestionAnswers($event)">
-            </app-questionnaire>
+            <div class="pull-right">
+              <button class="normal-btn edit" mat-flat-button (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
+            </div>
+            <div class="col-xs-12" *ngIf="qnr['edit']">
+              <app-questionnaire [questionnaireList]="qnr" [source]="'proOrder'" [uuid]="orderDetails.uid"
+                [waitlistStatus]="orderDetails.orderStatus" (returnAnswers)="getQuestionAnswers($event)" [mode]="'edit'">
+              </app-questionnaire>
+            </div>
+            <div class="col-xs-12" *ngIf="!qnr['edit']">
+              <app-questionaire-view [questionaire]="qnr" [source]="'proOrder'"></app-questionaire-view>
+            </div>
           </div>
         </mat-expansion-panel>
       </mat-accordion>
     </ng-container>
     <ng-container *ngIf="questionnaires.length === 1">
       <div class="c-details" *ngFor="let qnr of questionnaires">
-        <app-questionnaire [questionnaireList]="qnr" [source]="'proOrder'" [uuid]="orderDetails.uid" [type]="'details'"
-          [waitlistStatus]="orderDetails.orderStatus" (returnAnswers)="getQuestionAnswers($event)">
-        </app-questionnaire>
+        <div class="pull-right">
+          <button mat-button (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
+        </div>
+        <div class="col-xs-12" *ngIf="qnr['edit']">
+          <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'" [source]="'proOrder'" [uuid]="orderDetails.uid"
+            [waitlistStatus]="orderDetails.orderStatus" (returnAnswers)="getQuestionAnswers($event)">
+          </app-questionnaire>
+        </div>
+        <div class="col-xs-12" *ngIf="!qnr['edit']">
+          <app-questionaire-view id="{{qnr.questionnaireId}}" [questionaire]="qnr"
+            [source]="'proOrder'"></app-questionaire-view>
+        </div>
       </div>
     </ng-container>
   </div>

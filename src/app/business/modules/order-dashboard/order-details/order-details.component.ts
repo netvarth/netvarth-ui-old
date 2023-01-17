@@ -341,4 +341,7 @@ for (const stat of this.orderstatus) {
   onButtonBeforeHook() {
   }
   onButtonAfterHook() { }
+  changeMode(qnr) {
+    qnr['edit'] = !qnr['edit'];
+  }
 }

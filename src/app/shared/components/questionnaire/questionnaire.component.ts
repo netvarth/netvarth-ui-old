@@ -155,6 +155,9 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
 
   }
   ngOnInit(): void {
+    if (this.mode) {
+      this.editQnr();
+    }
     if (this.lStorageService.getitemfromLocalStorage('itemArray')) {
       this.itemArray = this.lStorageService.getitemfromLocalStorage('itemArray');
       if (this.itemArray) {

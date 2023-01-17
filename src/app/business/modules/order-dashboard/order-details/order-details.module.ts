@@ -15,6 +15,8 @@ import { Nl2BrPipeModule } from "nl2br-pipe";
 import { RouterModule, Routes } from "@angular/router";
 import { QuestionnaireModule } from "../../../../../../src/app/shared/components/questionnaire/questionnaire.module";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { QuestionaireViewModule } from "../../../../shared/components/questionaire-view/questionaire-view.module";
+import { MatButtonModule } from "@angular/material/button";
 const routes: Routes = [
     {path: '', component: OrderDetailsComponent}
 ]
@@ -24,6 +26,7 @@ const routes: Routes = [
         MatDialogModule,
         MatIconModule,
         MatBadgeModule,
+        MatButtonModule,
         MatTooltipModule,
         MatExpansionModule,
         LoadingSpinnerModule,
@@ -31,6 +34,7 @@ const routes: Routes = [
         CardModule,
         OrderActionsModule,
         QuestionnaireModule,
+        QuestionaireViewModule,
         CapitalizeFirstPipeModule,
         Nl2BrPipeModule,
         [RouterModule.forChild(routes)],

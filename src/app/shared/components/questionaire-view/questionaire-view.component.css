@@ -1,0 +1,7 @@
+.p-5 {
+    padding: 5px !important
+}
+
+.table-outer table td,  .table-outer table th{
+    border: 1px solid #ddd;
+}
