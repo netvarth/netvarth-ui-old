@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 // import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { FileService } from '../../../../../shared/services/file-service';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
@@ -13,6 +13,8 @@ import { projectConstantsLocal } from '../../../../../shared/constants/project-c
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { SelectSchemeComponent } from '../select-scheme/select-scheme.component';
 import { CdlService } from '../../cdl.service';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 // import { SharedServices } from '../../../../../../../shared/services/shared-services';
 // import { SubSink } from 'subsink';
 
@@ -153,6 +155,9 @@ export class CreateComponent implements OnInit {
   enquireUid: any;
   enquireLeadData: any;
   disablePhone: any = false;
+  filteredOptions: Observable<string[]>;
+  banksListNames = new FormControl('');
+  bankListName: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -451,7 +456,7 @@ export class CreateComponent implements OnInit {
           console.log("this.bankData", this.bankData)
           if (this.bankData) {
             this.bankDetailsSaved = true;
-            this.createLoan.controls.bank.setValue(this.bankData.bankName);
+            this.bankListName = this.bankData.bankName;
             this.createLoan.controls.account.setValue(this.bankData.bankAccountNo);
             this.createLoan.controls.ifsc.setValue(this.bankData.bankIfsc);
             this.accountverification = this.bankData.bankAccountVerified;
@@ -540,7 +545,9 @@ export class CreateComponent implements OnInit {
       this.partnerId = this.user.partnerId;
     }
 
-
+    this.filteredOptions = this.banksListNames.valueChanges.pipe(startWith(''),
+      map(value => this._filter(value || '')),
+    );
 
 
     this.minDob = this.subtractYears(this.todayDate, 18);
@@ -560,7 +567,12 @@ export class CreateComponent implements OnInit {
       this.kycDetailsPanel = true;
     }
     console.log("Coming to Products outside", this.productCategoryId, this.productSubCategoryId)
+  }
 
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.banksList.filter(option => option.bankName.toLowerCase().includes(filterValue));
   }
 
 
@@ -1602,7 +1614,7 @@ export class CreateComponent implements OnInit {
 
   verifyBankDetails() {
     const verifyBank = {
-      "bankName": this.createLoan.controls.bank.value,
+      "bankName": this.bankListName,
       "bankAccountNo": this.createLoan.controls.account.value,
       "bankIfsc": this.createLoan.controls.ifsc.value
     }
@@ -1648,7 +1660,7 @@ export class CreateComponent implements OnInit {
     this.bankDetails = {
       "originUid": this.loanId,
       "loanApplicationUid": this.loanId,
-      "bankName": this.createLoan.controls.bank.value,
+      "bankName": this.bankListName,
       "bankAccountNo": this.createLoan.controls.account.value,
       "bankIfsc": this.createLoan.controls.ifsc.value
     }

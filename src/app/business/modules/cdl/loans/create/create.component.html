@@ -1366,8 +1366,18 @@
                         <option>BOI</option>
                         <option>AXIS</option>
                       </select> -->
-                      <div *ngIf="banksList">
-                        <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
+                      <div *ngIf="banksList" class="bankList mt-2">
+                        <mat-form-field [style.width.%]="100">
+                          <input type="text" class="form-control" matInput [matAutocomplete]="auto"
+                            [formControl]="banksListNames" formControlName="bank" [(ngModel)]="bankListName">
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let bank of filteredOptions | async" [value]="bank.bankName">
+                              {{bank.bankName}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+
+                        <!-- <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
                           filterBy="bankName" optionValue="bankName" dropdownIcon="fa fa-caret-down" [showClear]="true"
                           placeholder="Select Bank">
                           <ng-template let-bank pTemplate="item">
@@ -1375,7 +1385,7 @@
                               <div>{{bank.bankName}}</div>
                             </div>
                           </ng-template>
-                        </p-dropdown>
+                        </p-dropdown> -->
                       </div>
                     </div>
                   </div>
