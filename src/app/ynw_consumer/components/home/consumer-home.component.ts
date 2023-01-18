@@ -203,7 +203,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   provider_label: any;
   viewrxdialogRef;
   today_orders;
-  future_orders;
+  future_orders = [];
   tomorrowDate: Date;
   total_tdy_order: any = [];
   todayOrderslst: any = [];
@@ -325,15 +325,12 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       divider = divident / 1;
     }
     this.no_of_grids = Math.round(divident / divider);
-    // console.log(this.screenWidth);
-    // console.log(this.no_of_grids);
   }
 
 
   initConsumer() {
 
     this.authService.goThroughLogin().then((status) => {
-      console.log("Status:", status);
       if (status) {
         this.loggedIn = true;
         this.api_loading = false;
@@ -341,7 +338,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           this.fromApp = true;
         }
         this.translate.use(JSON.parse(localStorage.getItem('translatevariable')));
-        // console.log(this.bookingStatusClasses);
         this.usr_details = this.groupService.getitemFromGroupStorage('ynw-user');
         this.login_details = this.shared_functions.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
         this.tele_popUp = this.lStorageService.getitemfromLocalStorage('showTelePop');
@@ -399,7 +395,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           }
         });
         this.subs.sink = this.galleryService.getMessage().subscribe(input => {
-          console.log("Reached Here:");
           if (input && input.accountId && input.uuid && input.type === 'appt') {
             this.shared_services.addConsumerAppointmentAttachment(input.accountId, input.uuid, input.value)
               .subscribe(
@@ -601,8 +596,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       };
       this.router.navigate(['consumer', 'checkindetails'], navigationExtras);
     } else {
-      console.log('this is order');
-      console.log(booking);
       queryParams['uuid'] = booking.uid;
       queryParams['providerId'] = booking.providerAccount.id;
       const navigationExtras: NavigationExtras = {
@@ -689,13 +682,11 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
           // this.getApptRequests();
           // more case
           this.todayBookings = [];
-          console.log(this.todayBookings);
           this.todayBookings_more = [];
           // tslint:disable-next-line:no-shadowed-variable
           for (let i = 0; i < this.today_totalbookings.length; i++) {
             if (i <= 2) {
               this.todayBookings.push(this.today_totalbookings[i]);
-              console.log(this.todayBookings);
             } else {
               this.todayBookings_more.push(this.today_totalbookings[i]);
             }
@@ -881,7 +872,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.consumer_services.getApptRequestList().
       subscribe((res: any) => {
-        console.log("Requestsss :", res);
         this.waitlists = res;
         this.total_requests = this.waitlists;
         this.isRequest = true;
@@ -895,10 +885,8 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
         for (let i = 0; i < this.total_requests.length; i++) {
           if (i <= 2) {
             this.apptRequests.push(this.total_requests[i]);
-            console.log("For 3 only", this.apptRequests);
           } else {
             this.moreApptRequest.push(this.total_requests[i]);
-            console.log("more than 3", this.moreApptRequest);
 
           }
         }
@@ -973,7 +961,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     return mom_date;
   }
   getFavouriteProvider() {
-    // console.log('In Get Favourites');
     const _this = this;
     // return new Promise(function (resolve, reject) {
     _this.loadcomplete.fav_provider = false;
@@ -1392,8 +1379,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   providerDetail(provider, event) {
-    console.log('In ProviderDetail');
-    // console.log('order');
     // event.stopPropagation();
     if (this.customId) {
       if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
@@ -1967,7 +1952,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['consumer', 'appointment'], navigationExtras);
   }
   gotoHistory() {
-    console.log(this.showOrder);
     let queryParams = {
       is_orderShow: this.showOrder
     }
@@ -2197,7 +2181,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     if (virtualItems.length > 0 && orderItems.length === virtualItems.length) {
       physical_item_present = false;
       this.onlyVirtualItemsPresent = true;
-      console.log('virtual only');
     }
     return physical_item_present;
 
@@ -2212,9 +2195,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
       'orderDate-eq': this.tDate
     };
     this.subs.sink = this.consumer_services.getConsumerOrders(params).subscribe(data => {
-      console.log("Orders:", data);
       this.orders = data; // saving todays orders
-      console.log('orders' + JSON.stringify(this.orders));
       this.total_tdy_order = this.orders;
       if (data) {
         this.getFutureOrder();
@@ -2236,7 +2217,7 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     this.total_future_order = [];
     this.futureOrderslst = [];
     this.futureOrderslst_more = [];
-    this.subs.sink = this.consumer_services.getConsumerFutOrders().subscribe(data => {
+    this.subs.sink = this.consumer_services.getConsumerFutOrders().subscribe((data:any) => {
       this.future_orders = data; // saving future orders
       this.total_future_order = this.future_orders;
       if ((this.today_totalbookings.length === 0 && this.future_totalbookings.length === 0) && (this.total_future_order.length > 0 || this.total_tdy_order.length > 0)) {
@@ -2286,8 +2267,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
     }
   }
   sendAttachment(booking, type) {
-    console.log(booking);
-    console.log(type);
     const pass_ob = {};
     pass_ob['user_id'] = booking.providerAccount.id;
     if (type === 'appt') {
@@ -2304,7 +2283,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   addattachment(pass_ob) {
-    console.log(pass_ob);
     this.galleryDialog = this.dialog.open(GalleryImportComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
@@ -2323,7 +2301,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
 
   viewAttachment(booking, type) {
     if (type === 'appt') {
-      console.log(type);
       this.subs.sink = this.shared_services.getConsumerAppointmentAttachmentsByUuid(booking.uid, booking.providerAccount.id).subscribe(
         (communications: any) => {
 
@@ -2374,7 +2351,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   onButtonBeforeHook() { }
   onButtonAfterHook() { }
   gotoQuestionnaire(booking) {
-    console.log(booking);
     let uuid;
     let type;
     if (booking.waitlistingFor) {
@@ -2395,7 +2371,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   }
 
   cardClicked(actionObj) {
-    console.log(actionObj);
     switch (actionObj['type']) {
       case 'appt':
         this.performApptActions(actionObj['action'], actionObj['booking'], actionObj['event'], actionObj['timetype']);
@@ -2518,7 +2493,6 @@ export class ConsumerHomeComponent implements OnInit, OnDestroy {
   gotoDetails() {
     const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
     const source = this.lStorageService.getitemfromLocalStorage('source');
-    console.log(source);
     if (source) {
       window.location.href = source;
       this.lStorageService.removeitemfromLocalStorage('reqFrom');

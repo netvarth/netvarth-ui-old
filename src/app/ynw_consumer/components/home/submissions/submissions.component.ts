@@ -22,7 +22,7 @@ export class SubmissionsComponent implements OnInit, OnChanges {
   cancelled_papers: any = [];
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
   history: any;
-  entire_history: any;
+  entire_history: any=[];
   paperSubmitLink: string;
 
   constructor(
@@ -35,113 +35,87 @@ export class SubmissionsComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    // console.log("New ORder:", this.orders);
     this.initOrder();
   }
   initOrder() {
-    if (this.orders && this.orders.length > 0) {
-      console.log('this.orders', this.orders)
-      if (this.entire_history && this.entire_history.length > 0) {
-        this.orders = this.orders.concat(this.entire_history);
-        console.log('this.entire_orders', this.orders);
+    const _this = this;
+    // if (_this.orders && _this.orders.length > 0) 
+    // this.orders = this.orders.concat(this.entire_history);
 
-      }
-
+    if (_this.orders && _this.orders.length > 0) {
+      _this.orders = _this.orders.filter(p => p.account == _this.accountId);
     }
+    if (_this.entire_history.length > 0) {
+      _this.orders = _this.orders.concat(_this.entire_history);
+    }
+    if (_this.orders && _this.orders.length > 0) {
+      _this.ongoing_papers = _this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
+      _this.completed_papers = _this.orders.filter(p => p.orderStatus == "Completed");
+      _this.cancelled_papers = _this.orders.filter(p => p.orderStatus == "Cancelled");
+    }
+  // }
+  // }
+}
 
-  }
-
-
-  getconsumerorders() {
+getOrderHistory() {
+  const _this = this;
+  return new Promise(function (resolve) {
     const api_filter = {};
-    if (this.accountId) {
-      api_filter['account-eq'] = this.accountId;
+    if (_this.accountId) {
+      api_filter['account-eq'] = _this.accountId;
     }
-    this.subs.sink = this.consumer_services.getConsumerOrders(api_filter)
+    _this.subs.sink = _this.consumer_services.getOrderHistory(api_filter)
       .subscribe(
         data => {
-          console.log(data);
-          this.entire_history = data;
-          console.log('this.entire_history', this.entire_history);
-
-          if (this.entire_history) {
-            this.orders = this.orders.concat(this.entire_history);
-            this.orders = this.orders.filter(p => p.account == this.accountId);
-            this.ongoing_papers = this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
-            console.log('this.ongoing_papers', this.ongoing_papers)
-            this.completed_papers = this.orders.filter(p => p.orderStatus == "Completed");
-            this.cancelled_papers = this.orders.filter(p => p.orderStatus == "Cancelled");
-          }
+          resolve(data);
+        }, (error) => {
+          resolve([]);
         }
       );
-  }
+  });
+}
 
-  getOrderHistory() {
-    const api_filter = {};
-    if (this.accountId) {
-      api_filter['account-eq'] = this.accountId;
+ngOnInit(): void {
+  const _this = this;
+  _this.getOrderHistory().then(
+    (history: any) => {
+      _this.entire_history = history;
+      _this.initOrder();
     }
-    this.subs.sink = this.consumer_services.getOrderHistory(api_filter)
-      .subscribe(
-        data => {
-          console.log(data);
-          this.entire_history = data;
-          if (this.entire_history) {
-            this.orders = this.orders.filter(p => p.account == this.accountId);
-            this.orders = this.orders.concat(this.entire_history);
-            // this.orders = this.orders.filter(p => p.catalog.catalogType == "submission");
-            this.ongoing_papers = this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
-            console.log('this.ongoing_papers', this.ongoing_papers);
-            console.log('this.totalorders', this.orders);
-            this.completed_papers = this.orders.filter(p => p.orderStatus == "Completed");
-            this.cancelled_papers = this.orders.filter(p => p.orderStatus == "Cancelled");
-          }
-        }
-      );
+  );
+  _this.consumer_services.GetConsumerCatalogs(_this.accountId).subscribe((catalogs) => {
+    _this.paperSubmitLink = '/' + _this.custom_id + '/catalog/' + catalogs[0].id + '/item/' + catalogs[0].catalogItem[0].id;
+  })
+}
+
+viewPaper(accountid, uid, providerid) {
+  let queryParams = {};
+  queryParams['accountId'] = accountid;
+  if (this.custom_id) {
+    queryParams['customId'] = this.custom_id;
   }
+  queryParams['uuid'] = uid;
+  queryParams['providerId'] = providerid;
+  queryParams['source'] = 'paper';
 
-  ngOnInit(): void {
-    this.getOrderHistory();
-    this.initOrder();
-    console.log('this.user_details', this.user_details);
-
-    this.consumer_services.GetConsumerCatalogs(this.accountId).subscribe((catalogs)=> {
-      this.paperSubmitLink = '/' + this.custom_id +  '/catalog/' + catalogs[0].id + '/item/' + catalogs[0].catalogItem[0].id;
-    })     
-    // this.consumer_services.getConsumerOrders().subscribe(
-    //   (data) => {
-    //     this.history = data;
-    //     console.log("this.history", this.history.filter(p => p.catalog.catalogType == "submission"))
-    //   });
+  const navigationExtras: NavigationExtras = {
+    queryParams: queryParams
+  };
+  if (this.custom_id) {
+    this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
   }
+}
 
-  viewPaper(accountid, uid, providerid) {
-    let queryParams = {};
-    queryParams['accountId'] = accountid;
-    if (this.custom_id) {
-      queryParams['customId'] = this.custom_id;
-    }
-    queryParams['uuid'] = uid;
-    queryParams['providerId'] = providerid;
-    queryParams['source'] = 'paper';
-
-    const navigationExtras: NavigationExtras = {
-      queryParams: queryParams
-    };
-    if (this.custom_id) {
-      this.router.navigate(['consumer', 'orderdetails'], navigationExtras);
-    }
+uploadPaper() {
+  const source = this.lStorageService.getitemfromLocalStorage('source');
+  if (source) {
+    window.location.href = source;
+    this.lStorageService.removeitemfromLocalStorage('reqFrom');
+    this.lStorageService.removeitemfromLocalStorage('source');
   }
-
-  uploadPaper() {
-    const source = this.lStorageService.getitemfromLocalStorage('source');
-    console.log(source);
-    if (source) {
-      window.location.href = source;
-      this.lStorageService.removeitemfromLocalStorage('reqFrom');
-      this.lStorageService.removeitemfromLocalStorage('source');
-    }
-    // let url = '/53a2k52/catalog/289/item/1505'
-    // let url = 'Authordemy/catalog/226/item/1354';
-    this.router.navigateByUrl(this.paperSubmitLink);
-  }
+  // let url = '/53a2k52/catalog/289/item/1505'
+  // let url = 'Authordemy/catalog/226/item/1354';
+  this.router.navigateByUrl(this.paperSubmitLink);
+}
 }

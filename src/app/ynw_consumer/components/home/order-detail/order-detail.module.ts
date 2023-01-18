@@ -17,6 +17,8 @@ import { CommunicationModule } from "../../../../shared/components/communication
 import { GalleryModule } from "../../../../shared/modules/gallery/gallery.module";
 import { QuestionnaireModule } from "../../../../../../src/app/shared/components/questionnaire/questionnaire.module";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { QuestionaireViewModule } from "../../../../shared/components/questionaire-view/questionaire-view.module";
+import { MatButtonModule } from "@angular/material/button";
 
 const routes: Routes = [
     { path: '', component: OrderDetailComponent }
@@ -27,6 +29,7 @@ const routes: Routes = [
         CommonModule,
         HeaderModule,
         MatButtonToggleModule,
+        MatButtonModule,
         MatTooltipModule,
         MatIconModule,
         MatGridListModule,
@@ -37,6 +40,7 @@ const routes: Routes = [
         ActionPopupModule,
         CommunicationModule,
         QuestionnaireModule,
+        QuestionaireViewModule,
         GalleryModule,
         MatExpansionModule,
         ModalGalleryModule.forRoot({ shortcuts: ['ctrl+s', 'meta+s'], disableSsrWorkaround: true }),

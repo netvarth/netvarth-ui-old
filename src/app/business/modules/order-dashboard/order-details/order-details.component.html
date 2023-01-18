@@ -182,8 +182,8 @@
     </ng-container>
     <ng-container *ngIf="questionnaires.length === 1">
       <div class="c-details" *ngFor="let qnr of questionnaires">
-        <div class="pull-right">
-          <button mat-button (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
+        <div class="pull-right ">
+          <button class="normal-btn edit" mat-flat-button (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
         </div>
         <div class="col-xs-12" *ngIf="qnr['edit']">
           <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'" [source]="'proOrder'" [uuid]="orderDetails.uid"

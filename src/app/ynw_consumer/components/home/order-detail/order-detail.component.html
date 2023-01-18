@@ -387,12 +387,21 @@
                                                         </mat-panel-title>
                                                     </mat-expansion-panel-header>
                                                     <div class="c-details">
-                                                        <app-questionnaire [questionnaireList]="qnr"
+                                                        <div class="pull-right">
+                                                            <button class="normal-btn edit" mat-flat-button (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
+                                                        </div>
+                                                        <div class="col-xs-12" *ngIf="qnr['edit']">
+                                                        <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'" 
                                                             [source]="'consOrder'" [uuid]="waitlist.uid"
                                                             [accountId]="waitlist.providerAccount.id" [type]="'details'"
                                                             [waitlistStatus]="waitlist.orderStatus"
                                                             (returnAnswers)="getQuestionAnswers($event)">
                                                         </app-questionnaire>
+                                                    </div>
+                                                        <div class="col-xs-12" *ngIf="!qnr['edit']">
+                                                            <app-questionaire-view id="{{qnr.questionnaireId}}" [questionaire]="qnr"
+                                                              [source]="'consOrder'"></app-questionaire-view>
+                                                        </div>
                                                     </div>
                                                 </mat-expansion-panel>
                                             </mat-accordion>
@@ -400,17 +409,25 @@
                                         <ng-container *ngIf="questionnaires.length === 1">
                                             <div *ngIf="questionnaires.length === 1">
                                                 <div class="c-details" *ngFor="let qnr of questionnaires">
-                                                    <app-questionnaire [questionnaireList]="qnr" [source]="'consOrder'"
+                                                    
+                                                    <div class="pull-right">
+                                                        <button class="normal-btn edit" mat-flat-button (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
+                                                    </div>
+                                                    <div class="col-xs-12" *ngIf="qnr['edit']">
+                                                    <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'"  [source]="'consOrder'"
                                                         [uuid]="waitlist.uid" [accountId]="waitlist.providerAccount.id"
                                                         [type]="'details'" [waitlistStatus]="waitlist.orderStatus"
                                                         (returnAnswers)="getQuestionAnswers($event)">
                                                     </app-questionnaire>
+                                                    </div>
+                                                    <div class="col-xs-12" *ngIf="!qnr['edit']">
+                                                        <app-questionaire-view id="{{qnr.questionnaireId}}" [questionaire]="qnr"
+                                                          [source]="'proOrder'"></app-questionaire-view>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </ng-container>
-                                    </div>
-                                    <div class="col-md-12">
-                                    </div>
+                                    </div>                                    
                                 </div>
                             </div>
                         </div>

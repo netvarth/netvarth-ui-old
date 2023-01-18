@@ -429,5 +429,8 @@ buttons: [
       return questr[0].status;
     }
   }
+  changeMode(qnr) {
+    qnr['edit'] = !qnr['edit'];
+  }
 }
 
