@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { projectConstantsLocal } from '../../constants/project-constants';
 import { SharedFunctions } from '../../functions/shared-functions';
 import { FileService } from '../../services/file-service';
 // import { DateTimeProcessor } from '../../services/datetime-processor.service';
@@ -19,6 +20,7 @@ export class QuestionaireViewComponent implements OnInit {
   answers: any;
   dataGridColumnsAnswerList: any;
   dataGridColumns: {};
+  newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
   constructor(
     // private dateProcessor: DateTimeProcessor,
     private sharedFunctions: SharedFunctions,
@@ -26,7 +28,7 @@ export class QuestionaireViewComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    
     this.questions = this.questionaire.questionAnswers;
     console.log("Questions:", this.questions);
     this.groupQuestionsBySection();

@@ -50,7 +50,7 @@ export class SubmissionsComponent implements OnInit, OnChanges {
       _this.orders = _this.orders.concat(_this.entire_history);
     }
     if (_this.orders && _this.orders.length > 0) {
-      _this.ongoing_papers = _this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
+      _this.ongoing_papers = _this.orders.filter(p => p.orderStatus == "Order Confirmed" || p.orderStatus == "Order Received" || p.orderStatus == "Paper Submitted" || p.orderStatus == "In review");
       _this.completed_papers = _this.orders.filter(p => p.orderStatus == "Completed");
       _this.cancelled_papers = _this.orders.filter(p => p.orderStatus == "Cancelled");
     }
