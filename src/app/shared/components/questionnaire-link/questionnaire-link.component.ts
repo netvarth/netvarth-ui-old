@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 // import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ProviderServices } from '../../../business/services/provider-services.service';
 // import { ConsumerJoinComponent } from '../../../ynw_consumer/components/consumer-join/join.component';
 import { projectConstantsLocal } from '../../constants/project-constants';
@@ -49,13 +49,13 @@ export class QuestionnaireLinkComponent implements OnInit {
         this.qParams = qParams;
         this.accountId = qParams['accountId'];
       });
-      this.activated_route.queryParams.subscribe((data: any) => {
-        if (data['customId']) {
-          this.customId = data['customId'];
-        }
-      })
+    this.activated_route.queryParams.subscribe((data: any) => {
+      if (data['customId']) {
+        this.customId = data['customId'];
+      }
+    })
   }
-  
+
   ngOnInit(): void {
     if (this.customId) {
       this.initProviderConsumer();
@@ -75,7 +75,7 @@ export class QuestionnaireLinkComponent implements OnInit {
    * @param encId encId/customId which represents the Account
    * @returns the unique provider id which will gives access to the s3
    */
-   getAccountIdFromEncId(encId) {
+  getAccountIdFromEncId(encId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.sharedServices.getBusinessUniqueId(encId).subscribe(
@@ -98,27 +98,27 @@ export class QuestionnaireLinkComponent implements OnInit {
       this.localStorage.setitemonLocalStorage('reqFrom', 'WEB_LINK');
     }
     this.getAccountIdFromEncId(this.customId).then(
-      (uniqueId: any)=> {
+      (uniqueId: any) => {
         _this.configService.getUIAccountConfig(uniqueId).subscribe(
           (uiconfig: any) => {
             _this.accountConfig = uiconfig;
           });
-          _this.authService.goThroughLogin().then(
-            (status) => {
-              if (status) {
-                _this.loggedIn = true;
-                this.getDetails();
-                // const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
-                // _this.loggedUser = activeUser;;
-              } else {
-                _this.loggedIn = false;
-                // _this.api_loading = false;
-              }
-        })
+        _this.authService.goThroughLogin().then(
+          (status) => {
+            if (status) {
+              _this.loggedIn = true;
+              this.getDetails();
+              // const activeUser = _this.groupService.getitemFromGroupStorage('ynw-user');
+              // _this.loggedUser = activeUser;;
+            } else {
+              _this.loggedIn = false;
+              // _this.api_loading = false;
+            }
+          })
       }
     )
-    
-    
+
+
   }
   getDetails() {
     this.isBusinessOwner = this.localStorage.getitemfromLocalStorage('isBusinessOwner');
@@ -128,7 +128,7 @@ export class QuestionnaireLinkComponent implements OnInit {
       if (bookingType === 'appt') {
         this.source = 'consAppt';
         this.getApptDetails();
-      } else if (bookingType === 'wl'){
+      } else if (bookingType === 'wl') {
         this.source = 'consCheckin';
         this.getCheckinDetails();
       } else {
@@ -137,12 +137,12 @@ export class QuestionnaireLinkComponent implements OnInit {
       }
     } else {
       this.type = 'qnrLinkProvider';
-      this.userType="provider";
+      this.userType = "provider";
       let bookingType = this.qParams.uid.split('_')[1];
       if (bookingType === 'appt') {
         this.source = 'consAppt';
         this.getProviderApptDetails();
-      } else if (bookingType === 'wl'){
+      } else if (bookingType === 'wl') {
         this.source = 'consCheckin';
         this.getProviderWaitlistDetail();
       } else {
@@ -213,7 +213,7 @@ export class QuestionnaireLinkComponent implements OnInit {
       this.loading = false;
     });
   }
-  getOrderDetails () {
+  getOrderDetails() {
     this.sharedServices.getOrderByConsumerUUID(this.qParams.uid, this.qParams.accountId).subscribe(
       (data) => {
         this.waitlist = data;
@@ -319,13 +319,18 @@ export class QuestionnaireLinkComponent implements OnInit {
       this.getDetails();
     }
   }
-
-  logout() {
-    this.authService.doLogout().then(
-      ()=> {
-        this.isPermitted =true;
-        this.loggedIn = false;
+  gotoActiveHome() {
+    let qParams = {};
+    if (this.customId) {
+      qParams['accountId'] = this.accountId;
+      qParams['customId'] = this.customId;
+      if (this.localStorage.getitemfromLocalStorage('theme')) {
+        qParams['theme'] = this.localStorage.getitemfromLocalStorage('theme');
       }
-    );
+    }
+    const navigationExtras: NavigationExtras = {
+      queryParams: qParams
+    };
+    this.router.navigate(['/consumer'], navigationExtras);
   }
 }

@@ -105,11 +105,10 @@
                     Your response has been submitted
                 </div>
                 <div class="success-desc">
-                    You have successfully submitted your entries. To review your entries login to Jaldee App. For any
-                    related queries contact your provider directly.
+                    You have successfully submitted your entries. For any related queries contact your provider directly.
                 </div>
                 <div class="mgn-up-20">
-                    <button mat-button (click)="logout()">Logout</button>
+                    <button mat-button (click)="gotoActiveHome()">Ok</button>
                 </div>
             </div>
             <div class="success-sec"
@@ -120,7 +119,7 @@
                     directly for any concerns.
                 </div>
                 <div class="mgn-up-20">
-                    <button mat-button (click)="logout()">Logout</button>
+                    <button mat-button (click)="gotoActiveHome()">Ok</button>
                 </div>
             </div>
             <div class="success-sec" *ngIf="loggedIn && !isPermitted ">
@@ -129,7 +128,7 @@
                     You do not seem to have access to open the link. Contact directly for any concerns.
                 </div>
                 <div class="mgn-up-20">
-                    <button mat-button (click)="logout()">Logout</button>
+                    <button mat-button (click)="gotoActiveHome()">Ok</button>
                 </div>
             </div>
         </div>
