@@ -10,8 +10,8 @@
         <div class="form-group" *ngIf="!api_loading">
             <!-- <mat-form-field> -->
                 <div class="card-head-grey mgn-bt-5">{{message_label}} *</div>
-                <textarea matInput class="form-control" id="message" placeholder="Message"
-                    formControlName="message" (keypress)="keyPressed($event.target.value)" maxlength="330">
+                <textarea matInput class="form-control" id="message" placeholder="Message" 
+                    formControlName="message" (keypress)="keyPressed($event.target.value)" maxlength="180">
             </textarea>
            <!-- </mat-form-field> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
