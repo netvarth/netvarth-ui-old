@@ -38,4 +38,9 @@ export class AgreementService {
     return this.servicemeta.httpPost(url, null);
   }
 
+  getLoanEmiDetails(id) {
+    const url = 'provider/loanapplication/' + id + '/loanemi';
+    return this.servicemeta.httpGet(url, null);
+  }
+
 }

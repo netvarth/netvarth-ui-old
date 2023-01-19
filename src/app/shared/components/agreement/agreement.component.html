@@ -298,7 +298,7 @@
       <td style="width:50%">
         <div class="text-normal mx-1">
           <span *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
-            {{loanData.loanScheme.schemeRate}} %
+            <b>{{loanData.loanScheme.schemeRate}} %</b>
           </span>
         </div>
       </td>
@@ -865,8 +865,7 @@
   <div class="text-center">
     <h4 class="font-weight-bold my-3">DETAILED REPAYMENT SCHEDULE</h4>
   </div>
-  <table style="width:100%" class="table-responsive">
-
+  <table style="width:100%" class="table-responsive" *ngIf="loanEmiDetailsData">
     <tr class="text-left">
       <th style="width:20%">
         <div class="text-normal mx-1">
@@ -909,38 +908,30 @@
 
 
 
-    <tr class="text-left">
+    <tr class="text-left" *ngFor="let emi of loanEmiDetailsData">
       <td style="width:20%">
-        <div class="text-normal mx-1">
-          <span>1</span>
+        <div class="text-normal mx-1" *ngIf="emi.emiSequenceNo">
+          <span>{{emi.emiSequenceNo}}</span>
         </div>
       </td>
       <td style="width:20%">
-        <div class="text-normal mx-1">
-          <span>
-
-          </span>
+        <div class="text-normal mx-1" *ngIf="emi.openingPrincipal">
+          <span>{{emi.openingPrincipal}}</span>
         </div>
       </td>
       <td style="width:20%">
-        <div class="text-normal mx-1">
-          <span>
-
-          </span>
+        <div class="text-normal mx-1" *ngIf="emi.principalPaid">
+          <span>{{emi.principalPaid}}</span>
         </div>
       </td>
       <td style="width:20%">
-        <div class="text-normal mx-1">
-          <span>
-
-          </span>
+        <div class="text-normal mx-1" *ngIf="emi.interestPaid">
+          <span>{{emi.interestPaid}}</span>
         </div>
       </td>
       <td style="width:20%">
-        <div class="text-normal mx-1">
-          <span>
-
-          </span>
+        <div class="text-normal mx-1" *ngIf="emi.emiAmount">
+          <span>{{emi.emiAmount}}</span>
         </div>
       </td>
     </tr>
@@ -955,15 +946,15 @@
       3.All the terms and conditions mentioned in this letter are subject to the execution of the Loan agreement
       and other documents and writings as MAFIL may specify in its prescribed format.<br>
       4.Pre-EMI as applicable will be chargeable from the applicant(s)<br>
-      5.Bounce charges payable shall be Rs. 500/- for 1st instance, Rs.750/- for 2nd instance and Rs.1000/- from
-      third instance onwards, in case of any instalment / other dues bounces.<br>
+      <b>5.Bounce charges payable shall be Rs. 500/- for 1st instance, Rs.750/- for 2nd instance and Rs.1000/- from
+        third instance onwards, in case of any instalment / other dues bounces.</b><br>
       6.The offer may be kept open at the sole discretion of MAFIL after 30days from the date hereof subject to
       such
       terms and conditions as MAFIL may specify in its sole discretion.<br>
       7.Broken Period Interest (Pre EMI), *Processing Fee +Applicable GST, and Insurance Premium shall be
       calculated by the system as per the above-mentioned rates and deducted accordingly from the sanctioned
       amount.<br>
-      8.Penal charges will be charged additional 3% Per Month on overdue amount for actual days of due.<br>
+      <b>8.Penal charges will be charged additional 3% Per Month on overdue amount for actual days of due.<br></b>
       9.The rate of Interest shall be based on cost of borrowed funds, matching tenor, market liquidity, refinance
       avenues,offerings by competition, tenor of customer relationship, cost of disbursement (cost of funds). In
       addition to cost of fund, the rate of interest shall be further determined based on inherent credit and
@@ -1013,7 +1004,7 @@
       various
       credit
       bureaus and other government authorities from time to time.<br>
-      18.<span *ngIf="declaration">{{declaration}}</span><br>
+      <b>18.<span *ngIf="declaration">{{declaration}}</span><br></b>
     </div>
     <div class="d-flex justify-content-between">
       <div class="mt-5 mx-lg-5 mx-md-5">

@@ -43,6 +43,7 @@ export class AgreementComponent implements OnInit {
       content: "मैं / हम इस लोन के लिए लागू नियमों और शर्तों को समझने की पुष्टि करते हैं और बिनाशर्त नियमों और शर्तों को स्वीकार करते हैं और सहमत हैं कि इन नियमों और शर्तों को MAFIL द्वारा किसी भी समय मुझे / हमें सूचित करके बदला जा सकता है और मैं / हम संशोधित नियमों और शर्तों से बंधे होंगे."
     }
   ]
+  loanEmiDetailsData: any;
   constructor(
     private activatedroute: ActivatedRoute,
     private agreementService: AgreementService,
@@ -55,6 +56,7 @@ export class AgreementComponent implements OnInit {
     this.activatedroute.queryParams.subscribe((params) => {
       if (params && params.uid) {
         this.loanId = params.uid;
+        this.getLoanEmiDetails(this.loanId);
       }
       if (params && params.account) {
         this.accountId = params.account;
@@ -131,5 +133,16 @@ export class AgreementComponent implements OnInit {
 
   }
 
+
+  getLoanEmiDetails(id) {
+    this.agreementService.getLoanEmiDetails(id).subscribe((data: any) => {
+      if (data) {
+        this.loanEmiDetailsData = data
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
 
 }
