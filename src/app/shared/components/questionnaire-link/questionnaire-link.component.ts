@@ -305,6 +305,8 @@ export class QuestionnaireLinkComponent implements OnInit {
   getQuestionAnswers(event) {
     if (event === 'reload') {
       this.router.navigate(['questionnaire', this.qParams.uid, this.qParams.id, this.qParams.accountId, 'success']);
+    } else if (event === 'nochange') {
+      this.snackbarService.openSnackBar("Please complete the form", { 'panelClass': 'snackbarerror' });
     }
   }
   getSingleTime(slot) {

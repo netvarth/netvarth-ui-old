@@ -682,7 +682,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
           this.location.back();
         } else {
           if (this.type === 'qnr-link') {
-            this.returnAnswers.emit('reload');
+            this.returnAnswers.emit('nochange');
           } else {
             this.editQnr();
           }

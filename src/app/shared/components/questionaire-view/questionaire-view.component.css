@@ -2,6 +2,6 @@
     padding: 5px !important
 }
 
-.table-outer table td,  .table-outer table th{
+table td,  table th, table tr{
     border: 1px solid #ddd;
 }

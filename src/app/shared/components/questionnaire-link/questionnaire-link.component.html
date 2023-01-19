@@ -91,7 +91,7 @@
                     </div>
                     <div class="" *ngIf="questionnaire[0]">
                         <app-questionnaire [questionnaireList]="questionnaire[0]" [source]="source" [uuid]="qParams.uid"
-                            [accountId]="qParams.accountId" [type]="type"
+                            [accountId]="qParams.accountId" [type]="type" [mode]="'edit'"
                             [waitlistStatus]="(source == 'consCheckin') ? waitlist.waitlistStatus : ((source == 'consOrder') ? waitlist.orderStatus:waitlist.apptStatus)"
                             (returnAnswers)="getQuestionAnswers($event)">
                         </app-questionnaire>
