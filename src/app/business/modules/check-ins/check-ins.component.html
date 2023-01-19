@@ -1034,7 +1034,7 @@
                 </td>
                 <td class="q-actions td-four" [class.disp-flex]="small_device_display">
                   <a class="statusText btn-play pointer-cursor call-btn" [class.stopcall-btn]="checkin.callingStatus"
-                    *ngIf="!small_device_display && board_count > 0 && time_type == 1 && !checkin.virtualService && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
+                    *ngIf="!small_device_display && board_count > 0 && time_type == 1 && checkin.serviceType!=='virtualService' && (checkin.waitlistStatus === 'checkedIn' || checkin.waitlistStatus === 'arrived')"
                     (click)="stopprop($event);callingWaitlist(checkin)" [matTooltipClass]="tooltipcls"
                     [matTooltip]="'Alert'">
                     <i class="dashboardcallstop-icon" *ngIf="checkin.callingStatus"></i> <span
