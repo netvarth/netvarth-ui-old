@@ -31,6 +31,7 @@ export class ConsumerAuthService {
         }
     }
     goThroughConsumerLogin(loginId?, countryCode?, password?) {
+        const _this = this;
         return new Promise((resolve) => {
             if (password) {
                 const data = {
@@ -40,23 +41,23 @@ export class ConsumerAuthService {
                     'mUniqueId': null
                 };
                 console.log(data);
-                this.shared_services.ConsumerLogin(data).subscribe(
+                _this.shared_services.ConsumerLogin(data).subscribe(
                     (loginInfo: any) => {
-                        this.setLoginData(loginInfo, data, 'consumer');
-                        this.lStorageService.setitemonLocalStorage('bpwd', data.password);
+                        _this.setLoginData(loginInfo, data, 'consumer');
+                        _this.lStorageService.setitemonLocalStorage('bpwd', data.password);
                         resolve(true);
                     },
                     (error) => {
                         if (error.status === 401 && error.error === 'Session already exists.') {
-                            const activeUser = this.lStorageService.getitemfromLocalStorage('ynw-user');
+                            const activeUser = _this.lStorageService.getitemfromLocalStorage('ynw-user');
                             if (!activeUser) {
-                                this.shared_services.ConsumerLogout().subscribe(
+                                _this.shared_services.ConsumerLogout().subscribe(
                                     () => {
-                                        this.shared_services.ConsumerLogin(data).subscribe(
+                                        _this.shared_services.ConsumerLogin(data).subscribe(
                                             (loginInfo) => {
-                                                this.setLoginData(loginInfo, data, 'consumer');
-                                                this.lStorageService.setitemonLocalStorage('jld', data.password);
-                                                this.lStorageService.setitemonLocalStorage('qrp', data.password);
+                                                _this.setLoginData(loginInfo, data, 'consumer');
+                                                _this.lStorageService.setitemonLocalStorage('jld', data.password);
+                                                _this.lStorageService.setitemonLocalStorage('qrp', data.password);
                                                 resolve(true);
                                             });
                                     })
@@ -69,9 +70,9 @@ export class ConsumerAuthService {
                     }
                 );
             } else {
-                const bPwd = this.lStorageService.getitemfromLocalStorage('bpwd');
-                let bUser = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
-                const isProvider = this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
+                const bPwd = _this.lStorageService.getitemfromLocalStorage('bpwd');
+                let bUser = _this.getJson(_this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
+                const isProvider = _this.lStorageService.getitemfromLocalStorage('isBusinessOwner');
                 bUser = JSON.parse(bUser);
                 if (bUser && bPwd || (isProvider && isProvider === 'true')) {
                     const data = {
@@ -80,10 +81,10 @@ export class ConsumerAuthService {
                         'password': bPwd,
                         'mUniqueId': null
                     };
-                    this.shared_services.ConsumerLogin(data).subscribe(
+                    _this.shared_services.ConsumerLogin(data).subscribe(
                         (loginInfo: any) => {
-                            this.setLoginData(loginInfo, data, 'consumer');
-                            this.lStorageService.setitemonLocalStorage('bpwd', data.password);
+                            _this.setLoginData(loginInfo, data, 'consumer');
+                            _this.lStorageService.setitemonLocalStorage('bpwd', data.password);
                             resolve(true);
                         },
                         (error) => {
