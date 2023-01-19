@@ -85,7 +85,9 @@ export class LoanDetailsComponent implements OnInit {
               this.getLoanEmiDetails(this.loanId);
             }
             console.log("LoanData", this.loanData)
-            this.loanApplicationStatus = this.loanData.spInternalStatus;
+            if (this.loanData && this.loanData.spInternalStatus) {
+              this.loanApplicationStatus = this.loanData.spInternalStatus;
+            }
             this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
               this.bankData = data;
               console.log("BankData", this.bankData)

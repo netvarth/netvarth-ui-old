@@ -544,7 +544,7 @@
         </div>
 
         <div class="card marginClass min-height"
-          *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'Sanctioned' || loanData.spInternalStatus == 'OperationsVerified' && loanEmiDetailsData && loanEmiDetailsData.length>0">
+          *ngIf="loanData && loanData.spInternalStatus && (loanData.spInternalStatus == 'Sanctioned' || loanData.spInternalStatus == 'OperationsVerified') && loanEmiDetailsData && loanEmiDetailsData.length>0">
           <div>
             <div class="font-weight-bold">EMI Details</div>
             <div class="table-responsive">
@@ -591,7 +591,7 @@
   </section>
 
   <section class="d-flex justify-content-center m-2 my-4"
-    *ngIf="loanData && loanData.spInternalStatus == 'LoanRequest' && capabilities && capabilities.canApprovePartnerLoan">
+    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'LoanRequest' && capabilities && capabilities.canApprovePartnerLoan">
     <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveLoan()">
       Approve Loan
     </div>
@@ -607,7 +607,7 @@
 
 
   <section class="d-flex justify-content-center m-2 my-4"
-    *ngIf="loanData && loanData.spInternalStatus == 'Sanctioned'  && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==4)">
+    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'Sanctioned'  && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==4)">
     <div class="btn-sanctioned mr-2 pointer-cursor" (click)="verifyLoanByOps()">
       Verify
     </div>
