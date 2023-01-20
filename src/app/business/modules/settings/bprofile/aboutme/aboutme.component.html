@@ -37,37 +37,42 @@
                                                             data-target="#exampleModalSizeLg" (click)="clearModalData()" title="Add Business Logo"></i>  -->
                                                         </span>
                                                     </div>
-                                                    <div class="change">
+                                                    <!-- <div class="change">
                                                         <span class="change-pic" (click)="clearModalData()"
                                                             data-toggle="modal"
                                                             data-target="#exampleModalSizeLg" title="Change Business Logo">{{change_cap}}
                                                             <br /> {{pic_cap}}</span>
-                                                            <!-- <br />
+                                                            <br />
                                                             <i class="show-camera-img fa fa-trash" mat-button
-                                                            [matMenuTriggerFor]="menu" title="Remove Business Logo"></i> -->
+                                                            [matMenuTriggerFor]="menu" title="Remove Business Logo"></i>
 
                                                     </div>
-                                                    <!-- <mat-menu #menu="matMenu">
+                                                    <mat-menu #menu="matMenu">
                                                         <button mat-menu-item (click)="deleteBusinessLogo(logo)">
                                                             <i class="fa fa-trash"></i>
                                                             Remove Logo</button>
                                                     </mat-menu> -->
                                                     <!-- <div class="copy" *ngIf="logo && !logo[0]">
-                                                        <i class="show-camera-img fa fa-trash"
+                                                      <span> <i class="show-camera-img fa fa-trash"
                                                              data-toggle="modal"
-                                                            data-target="#exampleModalSizeLg"></i>
+                                                            data-target="#exampleModalSizeLg"></i> </span> 
                                                     </div> -->
                                                     
                                                 </div>
-                                                <!-- <div class="copy" *ngIf="logo && logo[0] && logo[0].s3path">
-                                                        <i class="show-camera-img fa fa-trash" mat-button
-                                                            [matMenuTriggerFor]="menu"></i>
+                                                <div *ngIf="logo && logo[0] && logo[0].s3path">
+                                                        <i class="show-camera-img fa fa-camera" mat-button
+                                                            [matMenuTriggerFor]="menu"  title="Remove Business Logo"></i>
                                                         <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item (click)="clearModalData()"
+                                                            data-toggle="modal"
+                                                            data-target="#exampleModalSizeLg" title="Change Business Logo">
+                                                                <i class="fa fa-pencil"></i>
+                                                                Change Logo</button>
                                                             <button mat-menu-item (click)="deleteBusinessLogo(logo)">
                                                                 <i class="fa fa-trash"></i>
                                                                 Remove Logo</button>
                                                         </mat-menu>
-                                                    </div> -->
+                                                    </div>
                                                 <!-- <div class="copy" *ngIf="logo && logo[0] && logo[0].s3path">
                                                     <i class="show-camera-img fa fa-trash" mat-button
                                                         [matMenuTriggerFor]="menu"></i>

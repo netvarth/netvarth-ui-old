@@ -775,8 +775,9 @@ export class ItemsComponent implements OnInit, OnDestroy {
   }
   redirecToJaldeeBilling() {
     if (this.isFrom === "ordermanager") {
-      // this.routerobj.navigate(["provider", "settings", "ordermanager"]);
-      this.location.back();
+      //, "ordermanager"
+      this.routerobj.navigate(["provider", "settings"]);
+      // this.location.back();
     } else {
       this.routerobj.navigate(["provider", "settings", "pos"]);
     }

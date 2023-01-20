@@ -139,7 +139,7 @@ button{
   transition: color .3s ease-in-out,background-color .3s ease-in-out,border-color .3s ease-in-out,box-shadow .3s ease-in-out;
 }
 .items-body{
-    height: 200px;
+    height: 450px;
     overflow: auto;
   }
 .cancel-btn{
@@ -184,15 +184,15 @@ background: #f1f1f1 !important;
 
 /* Handle */
 ::ng-deep ::-webkit-scrollbar-thumb {
-background: #888 !important; 
+background: gray !important; 
 }
 
 /* Handle on hover */
 ::ng-deep ::-webkit-scrollbar-thumb:hover {
-background: #555 !important; 
+background: gray !important; 
 }
 
 ::ng-deep ::-webkit-scrollbar-thumb:horizontal{
-  background: #555 !important;
+  background: gray !important;
   border-radius: 10px !important;
 }

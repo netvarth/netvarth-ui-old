@@ -163,7 +163,7 @@
                                         </button>
                                     </span>
                                     <mat-menu #appMenu="matMenu">
-                                        <button mat-menu-item (click)="changeDepartmentStatus(dept)">
+                                        <button mat-menu-item (click)="departmentStatusChange(dept)">
                                             <i *ngIf="dept.departmentStatus=='INACTIVE' || !dept.departmentStatus"
                                                 class="icon-enable"></i>
                                             <i *ngIf="dept.departmentStatus=='ACTIVE'" class="icon-disable"></i>

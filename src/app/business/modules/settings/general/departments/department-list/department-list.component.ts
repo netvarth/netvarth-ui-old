@@ -70,6 +70,35 @@ export class DepartmentListComponent implements OnInit {
                 }
             );
     }
+
+    departmentStatusChange(depart) {
+        console.log("department selected :",depart);
+        let status = '';
+        if(depart.departmentStatus === 'ACTIVE'){
+          status = 'disable'
+        }
+        if(depart.departmentStatus === 'INACTIVE'){
+          status = 'enable'
+        }
+        const itemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+          width: "50%",
+          panelClass: [
+            "popup-class",
+            "commonpopupmainclass",
+            "confirmationmainclass",
+          ],
+          disableClose: true,
+          data: {
+            message: `Are you sure you want to ${status}?`,
+            type: "yes/no",
+          },
+        });
+        itemdialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+          this.changeDepartmentStatus(depart);
+          }
+        });
+      }
     changeDepartmentStatus(dept) {
         if (dept.departmentStatus === 'ACTIVE') {
             this.provider_services.disableDepartment(dept.departmentId).subscribe(

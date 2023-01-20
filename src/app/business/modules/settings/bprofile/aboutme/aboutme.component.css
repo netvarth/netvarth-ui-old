@@ -72,20 +72,31 @@
     margin-left: -5px;
   } */
   .show-camera-img{
-    position: relative;
+    /* position: relative;
     left: 0;
-    transform: translate(180px, -60px);
+    transform: translate(70px, -60px);
     right: 36px;
     border: 2px solid #d2c9c9;
     border-radius: 50px;
     background: #cdd5e8;
     padding: 8px;
+    margin-left: -5px; */
+    position: relative;
+    left: 0;
+    transform: translate(70px, -60px);
+    right: 36px;
+    border: 2px solid #ccc;
+    border-radius: 50px;
+    /* background: #4a9ba8; */
+    background: #3c8dbc;
+    padding: 8px;
     margin-left: -5px;
+    color: #e9ecef;
   }
  
 @media (max-width:739px) {
     .show-camera-img {
-        position: relative;
+        /* position: relative;
         top: 0;
         left: 0;
         transform: translate(35px, -100%);
@@ -94,6 +105,18 @@
         border-radius: 90px;
         background: #e4e6eb;
         padding: 6px;
+        margin-left: -5px; */
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(35px, -100%);
+        right: 36px;
+        border: 2px solid #ccc;
+        border-radius: 50px;
+        /* background: #4a9ba8; */
+        background: #3c8dbc;
+        padding: 8px;
         margin-left: -5px;
+        color: #e9ecef;
     }
 }
