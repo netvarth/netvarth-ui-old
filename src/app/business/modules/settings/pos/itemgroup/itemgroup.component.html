@@ -1,38 +1,35 @@
-<div class="col-md-12 no-padding-small">
-    <div class="cl1" *ngIf="dept_data && action=='show'">
-        <span class="editbt" (click)="editDepartment()" *ngIf="dept_data.departmentStatus=='ACTIVE'"></span>
-        <div class="ot-it">
-            <h4>{{dept_data.departmentName | capitalizeFirst}}</h4>
-            <div class="c-ot m0">
-                <div class="item">
-                    <span class="ttle">Department Code</span>
-                    <span>{{dept_data.departmentCode}}</span>
-                </div>
-                <div class="item" *ngIf="dept_data.departmentDescription">
-                    <span class="ttle">Description</span>
-                    <span>{{dept_data.departmentDescription}}</span>
-                </div>
-            </div>
-        </div>
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="redirectToBack()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            item group
+        </h5>
     </div>
+</section>
+
+<section class="aboutme">
     <div class="content w-manager settings comn-cls lic-page">
         <div class="col-md-12 no-padding-small">
             <div class="w-dta ">
                 <div class="row">
                     <div class="one col-xs-12 col-sm-12 no-padding">
-                        <div class="col-a col-b pl0 col-sm-12 col-xl-12">
-                            <div class="p0">
-                                <div class="pubs card w-dta active bprof" *ngIf="action !== 'show'">
+                        <div class="col-a col-b pl0 col-md-8 col-lg-6 col-sm-12 col-xl-12">
+                            <div class="card p0">
+                                <div class="pubs card w-dta active bprof">
                                     <div class="cd-t">
                                         <div class="basic-i">
-                                            <div class="bi-l" style="text-align: -webkit-center;">
-                                                <div class="pro-pic" [class.yes]="profimg_exists">
-                                                    <div
-                                                        class="pro-pic-img d-flex justify-content-center align-items-center">
-                                                        <!--  *ngIf="groupDetails && groupDetails.itemGroupImages && groupDetails.itemGroupImages[0] && groupDetails.itemGroupImages[0].url" -->
-                                                        <img [src]="showimg()" alt="" class="crop-img-fit" *ngIf="dept_data && dept_data.departmentLogo && dept_data.departmentLogo[0] && dept_data.departmentLogo[0].s3path">
-                                                            <!-- <img [src]="imageToShow" alt="" class="crop-img-fit"
-                                                            *ngIf="dept_data && dept_data.departmentLogo && !dept_data.departmentLogo[0]"> -->
+                                            <h4 *ngIf="!itemGroupId">Create Item Group</h4>
+                                            <h4 *ngIf="itemGroupId">Update Item Group</h4>
+                                            <div class="bi-l">
+                                                <div *ngIf="formStatus === 'edit' || itemGroupId" class="pro-pic" [class.yes]="profimg_exists">
+
+                                                    <div class="pro-pic-img d-flex justify-content-center align-items-center">
+                                                        <!-- <img  *ngIf="groupDetails && groupDetails.itemGroupImages && groupDetails.itemGroupImages.length === 0" [src]="imageToShow" alt=""
+                                                            class="crop-img-fit">
+                                                            <img  *ngIf="groupDetails && groupDetails.itemGroupImages && groupDetails.itemGroupImages[0] && groupDetails.itemGroupImages[0].url && groupDetails.itemGroupImages.length > 0 " [src]="groupDetails.itemGroupImages[0].url"  alt=""
+                                                            class="crop-img-fit"> -->
+                                                            <img [src]="showimg()" alt="" *ngIf="groupDetails && groupDetails.itemGroupImages && groupDetails.itemGroupImages[0] && groupDetails.itemGroupImages[0].url"
+                                                            class="crop-img-fit">
                                                     </div>
                                                     <!-- <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)"> -->
                                                     <div class="add">
@@ -57,7 +54,7 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="exampleModalLabel">Upload
-                                                                    department icon</h5>
+                                                                    Group Photo</h5>
                                                             </div>
                                                             <div class="modal-body">
                                                                 <!-- Before Img selection -->
@@ -151,73 +148,48 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div class="">
 
-                                                <form [formGroup]="deptForm" novalidate (ngSubmit)="deptForm.valid && onSubmit(deptForm.value)" (keyup)="resetApiErrors()"
-                                                    *ngIf="action !== 'show'"
-                                                    class="ynw-common-form-nm wiz-service serviceform">
-                                                    <ng-container>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <mat-form-field>
-                                                                    <input matInput type="text" class="form-control"
-                                                                        id="dept_name"
-                                                                        placeholder="Enter Department Name *"
-                                                                        formControlName="departmentName"
-                                                                        autocomplete="off">
-                                                                </mat-form-field>
-                                                                <app-field-error-display
-                                                                    [displayError]="fed_service.isFieldValid(deptForm,'departmentName')"
-                                                                    [errorMsg]="fed_service.getErrorMessage(deptForm,'departmentName', { 'required' : 'Please enter the department name.','maxlength' : 'Name can contain only' + maxcharDept_name + 'characters'})">
-                                                                </app-field-error-display>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <mat-form-field>
-                                                                    <input matInput type="text" class="form-control"
-                                                                        id="dept_code"
-                                                                        placeholder="Enter Department Code *"
-                                                                        formControlName="departmentCode"
-                                                                        autocomplete="off">
-                                                                </mat-form-field>
-                                                                <app-field-error-display
-                                                                    [displayError]="fed_service.isFieldValid(deptForm,'departmentCode')"
-                                                                    [errorMsg]="fed_service.getErrorMessage(deptForm,'departmentCode', {'required' : 'Please enter the department code.','maxlength' : 'Name can contain only' + maxcharDept_code + 'characters' })">
-                                                                </app-field-error-display>
-                                                            </div>
-                                                            <div class="form-group">
-                                                                <!-- <input matInput type="text" class="form-control" id="description" placeholder="Description"formControlName="description" autocomplete="off"> -->
-                                                                <mat-form-field>
-                                                                    <textarea matInput class="form-control"
-                                                                        id="description"
-                                                                        placeholder="Briefly describe department"
-                                                                        formControlName="departmentDescription"
-                                                                        (keyup)="setCharCount()"
-                                                                        (focus)="setDescFocus()"
-                                                                        (blur)="lostDescFocus()"
-                                                                        maxlength="250"> </textarea>
-                                                                </mat-form-field>
-
-                                                                <app-field-error-display
-                                                                    [displayError]="fed_service.isFieldValid(deptForm,'departmentDescription')"
-                                                                    [errorMsg]="fed_service.getErrorMessage(deptForm,'departmentDescription', {'required' : 'Please enter the department description.','maxlength' : 'Description can contain only 250 characters' })">
-                                                                </app-field-error-display>
-                                                                <span class="max-char-length" *ngIf="isfocused">You have
-                                                                    {{char_count}} characters remaining</span>
-                                                            </div>
-                                                            <div class="actiondiv"
-                                                                style="margin-bottom:30px;display: inline-flex;">
-                                                                <button (click)="onCancel()" type="button"
-                                                                    class="cs-btn bt2">{{cancel_btn}}</button> &nbsp;
-                                                                <button type="submit" mat-button
-                                                                    [disabled]="!deptForm.valid"
-                                                                    class="cs-btn bt1">{{button_title}}</button>
-                                                                <!-- <span class="service-tooltip" *ngIf="type == 'add' && mode=='normal'">
-                    <i class="icon-bell"></i>
-                    {{tooltip}}
-                </span> -->
-                                                            </div>
+                                                    <!-- <h4>Item Group</h4> -->
+                                                    <!-- -->
+                                                    <form *ngIf="amForm" [formGroup]="amForm" novalidate
+                                                        (ngSubmit)="amForm.valid && onSubmit(amForm.value)"
+                                                        (keyup)="resetApiErrors()" class="ynw-common-form-nm">
+                                                        <div class="form-group">
+                                                            <mat-form-field>
+                                                                <input type="text" matInput class="form-control"
+                                                                    id="groupName" #groupName
+                                                                    formControlName="groupName" autocomplete="off"
+                                                                    placeholder="Enter group name">
+                                                            </mat-form-field>
+                                                            <app-field-error-display
+                                                                [displayError]="fed_service.isFieldValid(amForm,'groupName')"
+                                                                errorMsg="Please enter the group name">
+                                                            </app-field-error-display>
                                                         </div>
-                                                    </ng-container>
-                                                </form>
+                                                        <div class="form-group">
+                                                            <mat-form-field>
+                                                                <textarea maxlength="2000" matInput class="form-control"
+                                                                    id="groupDesc" #groupDesc
+                                                                    formControlName="groupDesc" rows="4"
+                                                                    placeholder=" About me (Max 2000 characters) *"></textarea>
+                                                            </mat-form-field>
+                                                            <app-field-error-display
+                                                                [displayError]="fed_service.isFieldValid(amForm,'groupDesc')"
+                                                                errorMsg="Please enter group description">
+                                                            </app-field-error-display>
+                                                        </div>
+                                                        <div class="col-md-12"
+                                                            style="margin-top: 10px;display: inline-flex;">
+                                                            <button type="button" class="cs-btn bt2"
+                                                                (click)="redirectToBack()"
+                                                                [disabled]="disableButton">Cancel</button>
+                                                            <button type="submit" style="margin-left: 15px;"
+                                                                [disabled]="!amForm.valid || disableButton"
+                                                                class="cs-btn bt1" mat-button>Save</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -229,4 +201,5 @@
             </div>
         </div>
     </div>
-</div>
+    <div class="clearfix"></div>
+</section>

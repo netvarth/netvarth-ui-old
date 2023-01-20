@@ -1,0 +1,62 @@
+::ng-deep ::-webkit-scrollbar{
+    height: 4px !important;
+    width: 4px !important;
+    background: gray !important;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1 !important; 
+}
+ 
+/* Handle */
+::ng-deep ::-webkit-scrollbar-thumb {
+  background: #888 !important; 
+}
+
+/* Handle on hover */
+::ng-deep ::-webkit-scrollbar-thumb:hover {
+  background: #555 !important; 
+}
+
+::ng-deep ::-webkit-scrollbar-thumb:horizontal{
+    background: gray !important;
+    border-radius: 10px !important;
+}
+.title-gb i {
+    color: #3c8dbc !important;
+    cursor: pointer !important;
+}
+
+.show-camera-img{
+    position: relative;
+    /* top: 0; */
+    left: 0;
+    transform: translate(-24px, 16px);
+    right: 36px;
+    border: 2px solid white;
+    border-radius: 90px;
+    background: #e4e6eb;
+    padding: 5px;
+    margin-left: -5px;
+  }
+@media (max-width:739px) {
+    .show-camera-img {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: translate(35px, -100%);
+        right: 36px;
+        border: 2px solid white;
+        border-radius: 90px;
+        background: #e4e6eb;
+        padding: 5px;
+        margin-left: -5px;
+    }
+}
+
+@media (max-width:739px){
+    .add-depart{
+        margin-top: 5px;
+    }
+}

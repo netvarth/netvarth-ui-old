@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { ItemsComponent } from './items.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmBoxModule } from '../../../../../shared/components/confirm-box/confirm-box.module';
@@ -11,15 +10,16 @@ import {RatingModule} from 'primeng/rating';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { ItemlistComponent } from './itemlist.component';
 const routes: Routes = [
-    { path: '', component: ItemsComponent },
-    { path: ':id', loadChildren: ()=> import('./details/item-details.module').then(m=>m.ItemDetailsModule) },
+    { path: '', component: ItemlistComponent },
+    // { path: ':id', loadChildren: ()=> import('./details/item-details.module').then(m=>m.ItemDetailsModule) },
     // { path: 'group', loadChildren: ()=> import('./itemgroup/itemgroup.module').then(m=>m.ItemgroupModule)}
 
 ];
 @NgModule({
     declarations: [
-        ItemsComponent    ],
+      ItemlistComponent    ],
     imports: [
         MatDialogModule,
         ConfirmBoxModule,
@@ -34,6 +34,7 @@ const routes: Routes = [
         RatingModule,
         [RouterModule.forChild(routes)]
     ],
-    exports: [ItemsComponent]
+    exports: [ItemlistComponent]
 })
-export class ItemsModule {}
+export class ItemlistModule {}
+

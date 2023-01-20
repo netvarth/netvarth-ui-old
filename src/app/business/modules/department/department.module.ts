@@ -7,6 +7,9 @@ import { CapitalizeFirstPipeModule } from '../../../shared/pipes/capitalize.modu
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
 
 @NgModule({
     imports: [
@@ -17,6 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
         CapitalizeFirstPipeModule,
         MatInputModule,
         MatFormFieldModule,
+        ImageCropperModule,
+        MatProgressBarModule,
         MatButtonModule
     ],
     declarations: [

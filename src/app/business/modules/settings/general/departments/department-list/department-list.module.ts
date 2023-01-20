@@ -8,6 +8,8 @@ import { CapitalizeFirstPipeModule } from "../../../../../../shared/pipes/capita
 import { LoadingSpinnerModule } from "../../../../../../shared/modules/loading-spinner/loading-spinner.module";
 import { DepartmentListComponent } from "./department-list.component";
 import { RouterModule, Routes } from "@angular/router";
+import {TableModule} from 'primeng/table';
+import {ButtonModule} from 'primeng/button';
 const routes: Routes = [
     {path:'', component: DepartmentListComponent}
 ]
@@ -20,6 +22,8 @@ const routes: Routes = [
         MatIconModule,
         LoadingSpinnerModule,
         CapitalizeFirstPipeModule,
+        TableModule,
+        ButtonModule,
         [RouterModule.forChild(routes)]
     ],
     exports : [DepartmentListComponent],

@@ -15720,3 +15720,6 @@ app-waitlist-queuedetail .wtsapvid-icon {
 .skin-blue .wrapper {
   background-color: transparent !important;
 }
+.scroll_bar{
+  scrollbar-width: thin !important;
+}

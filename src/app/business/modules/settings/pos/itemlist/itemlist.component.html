@@ -1,0 +1,154 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor" (click)="redirecTo()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span *ngIf="isFrom === 'all'">All Items</span>
+            <span *ngIf="itemGroupId" class="text-capitalize">Group {{groupName}}</span>
+
+            <button *ngIf="itemGroupId" mat-flat-button
+                class="btn btn action-button pull-right  btn-primary action-button-add" data-toggle="modal"
+                data-target="#itemListsModal" (click)="getitemsByFiltered()">
+                Add item</button>
+        </h5>
+
+    </div>
+
+</section>
+
+<section class="customersList p-2">
+    <div class="row mx-0 p-3 card">
+        <!-- <div class="col-lg-4" >
+        <span>sidebar of items and item groupings......</span>
+      </div> -->
+        <div class="col-lg-12" *ngIf="isFrom === 'all' || itemGroupId">
+            <p-table [value]="items" [paginator]="true" [rows]="5" [showCurrentPageReport]="true">
+                <!-- <ng-template pTemplate="caption">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        <span *ngIf="isFrom === 'all'">All Items</span>
+                        <span *ngIf="itemGroupId" class="text-capitalize">Group {{groupName}}</span>
+                    </div>
+                </ng-template> -->
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>StockAvailable</th>
+                        <th>Actions</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" class="pbody" let-item>
+                    <tr [class.disabled]="item['status'] === 'INACTIVE'">
+                        <!-- [ngClass]="{'disabled' : isDisabled}" -->
+                        <td><img [src]="getItemImg(item)" [alt]="item.displayName" width="100" class="shadow-4" /></td>
+                        <td *ngIf="item && item.displayName">{{item.displayName}}</td>
+                        <!-- 'assets/showcase/images/demo/product/' +  -->
+                        <td *ngIf="item && item.price">{{item.price | currency:'INR'}}</td>
+                        <td *ngIf="item && item.isStockAvailable === true"><span class="status-Approved">INSTOCK</span>
+                        </td>
+                        <td *ngIf="item && item.isStockAvailable === false"><span
+                                class="status-Rejected">OUTOFSTOCK</span></td>
+                        <!-- bg-success text-success bold p-3 bg-danger text-danger bold p-3-->
+                        <td>
+                            <div class="copy">
+                                <span class="">
+                                    <button type="button" mat-icon-button class="action_bt"
+                                        [matMenuTriggerFor]="appMenu">
+                                        <!-- (click)="stopprop($event);" -->
+                                        <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                </span>
+                                <mat-menu #appMenu="matMenu">
+                                    <button class="text-capitalize" mat-menu-item (click)="itemStatusChange(item)">
+                                        <!-- (click)="openShareFileWindow(file)"  <i class="fa fa-share-alt" aria-hidden="true"></i> -->
+                                        <i *ngIf="item['status'] === 'INACTIVE'" class="fa fa-eye"
+                                            aria-hidden="true"></i>
+                                        <i *ngIf="item['status'] === 'ACTIVE'" class="fa fa-eye-slash"
+                                            aria-hidden="true"></i> {{item['status'] === 'ACTIVE' ? 'disable' :
+                                        'enable'}}
+                                    </button>
+                                    <button mat-menu-item (click)="editItem(item)">
+                                        <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </td>
+
+                        <!-- <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
+                        <!-- <td><span [class]="'item-badge status-' + item.item.isStockAvailable">InStock</span></td> -->
+                    </tr>
+                    <tr *ngIf="items.length === 0"><span class="bold">No items found</span></tr>
+                </ng-template>
+                <ng-template pTemplate="paginatorleft">
+                    <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
+                </ng-template>
+                <ng-template pTemplate="paginatorright">
+                    <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
+                </ng-template>
+                <ng-template pTemplate="summary">
+                    <div class="p-d-flex p-ai-center p-jc-between">
+                        In total there are {{items ? items.length : 0 }} items...
+                    </div>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+    </div>
+</section>
+
+<div class="modal fade" id="itemListsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body items-body">
+                <div class="col-lg-12">
+                    <!-- [paginator]="true" [rows]="10" [showCurrentPageReport]="true" -->
+                    <p-table [value]="groupitems">
+                        <!-- <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-ai-center p-jc-between">
+                                {{groupitems.length | json}} Items
+                            </div>
+                        </ng-template> -->
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th><input type="checkbox" (change)="selectAllItems($event)"
+                                        [checked]="isAllItemsSelected()"> Name</th>
+                                <th>Image</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                            <tr>
+                                <td><input type="checkbox" name="Checkboxes4" [checked]="checkSelection(item)"
+                                        (click)="stopprop($event)" (change)="selectItems(item)">
+                                    {{item.displayName}}</td>
+                                <td><img [src]="getItemImg(item)" [alt]="item.displayName" width="100"
+                                        class="shadow-4" /></td>
+
+                            </tr>
+                            <!-- <tr *ngIf="groupitems && groupitems.length === 0">
+                                <td colspan="2">No items left to add</td>
+                            </tr> -->
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="p-d-flex p-ai-center p-jc-between" *ngIf="groupitems && groupitems.length > 0">
+                                {{groupitems.length}} items...
+                            </div>
+                            <div class="p-d-flex p-ai-center p-jc-between text-center" *ngIf="groupitems && groupitems.length === 0">
+                                No items left to add
+                            </div>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn cancel-btn font-weight-bold mgn-5" data-dismiss="modal"
+                    #closebutton>Cancel</button>
+                <button type="button" class="btn create-btn font-weight-bold mgn-5" (click)="addItemToItemGroup()"
+                    [disabled]="selecteditemsforgroup && selecteditemsforgroup.length === 0" #closebutton>Add</button>
+                <!-- (click)="itemGroupAction()" -->
+            </div>
+        </div>
+    </div>
+</div>

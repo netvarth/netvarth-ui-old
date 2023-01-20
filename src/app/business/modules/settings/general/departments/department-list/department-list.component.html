@@ -1,12 +1,31 @@
 <section class="">
     <div class="card title-gb">
-        <h5 class="mgn-up-10"> 
-            <span class="fa fa-arrow-left pointer-cursor"  (click)="redirecToDepartments()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToDepartments()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             Department List
+            <!-- <div class="pull-right">
+                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addDept()"
+                    class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                    <span><i class="fa fa-plus"></i>Add Department</span>
+                </a>
+            </div> -->
+            <div class="pull-right add-depart">
+                <!-- <ul class="nav jd-custom-nav chkn-dash"> -->
+                <h6>
+                    <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addDept()"
+                        class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                        <span style="color:#3c8dbc !important;"><i class="fa fa-plus"></i>Add Department</span>
+                    </a>
+                </h6>
+                <!-- </ul> -->
+            </div>
+
         </h5>
+
     </div>
-  </section>
-<section>
+</section>
+<!-- <section>
     <div class="content loc-list">
         <div class="col-md-12 no-padding-small">
             <div class="row">
@@ -16,10 +35,10 @@
                 <div class="col-md-12 no-padding">
                     <ul class="nav jd-custom-nav chkn-dash">
                          <li class="dropdown notifications-menu pull-right">
-                            <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addDept()"
-                                  class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                 class="dropdown-toggle navbar-item-color bold pointer-cursor">
                                   <span><i class="fa fa-plus"></i>Add Department</span>
-                            </a>
+                               <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addDept()"
+                          </a>
                          </li>
                     </ul>
                 </div>
@@ -63,6 +82,115 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section>
+    <div class="col-md-12 no-padding-small">
+        <div class="row">
+            <div class="card" *ngIf="loading">
+                <app-common-innerloading-spinner></app-common-innerloading-spinner>
+            </div>
+            <div *ngIf="!loading">
+                <p-table [value]="departments" [paginator]="true" [rows]="5" [showCurrentPageReport]="true">
+                    <!-- <ng-template pTemplate="caption">
+                        <div class="p-d-flex p-ai-center p-jc-between">
+                    <span ></span>
+                    <span class="pull-right">
+                                <a [matTooltipClass]="tooltipcls" [matTooltip]="add_button" (click)="addDept()"
+                                      class="dropdown-toggle navbar-item-color bold pointer-cursor">
+                                      <span><i class="fa fa-plus"></i>Add Department</span>
+                                </a>
+                            </span>
+    
+                </div>
+                    </ng-template> -->
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-dept>
+                        <tr [class.disabled]="dept.departmentStatus=='INACTIVE'">
+                            <!-- [ngClass]="{'disabled' : isDisabled}" -->
+                            <td>
+                                <!-- <img [src]="getItemImg(item)" [alt]="item.displayName" width="100"
+                            class="shadow-4" /> -->
+                            <div class="copy">
+                                <!-- <img style="width: 55px;height:55px" class="img-hover" *ngIf="itemgroup.itemGroupImages && itemgroup.itemGroupImages.length > 0" src="{{itemgroup.itemGroupImages[0].url}}" /> -->
+                                <img style="width: 55px;height:55px" class="img-hover" *ngIf="dept.departmentLogo && dept.departmentLogo.length > 0" src="{{dept.departmentLogo[0].s3path}}" />
+                                <img style="width: 55px;height:55px" class="img-hover" *ngIf="dept.departmentLogo && dept.departmentLogo.length === 0" src="{{imageToShow}}" />
+                                <!-- <img style="width: 55px;height:55px" class="img-hover" src="{{imageToShow}}" /> -->
+                                <i class="show-camera-img fa fa-camera" mat-button [matMenuTriggerFor]="menu"></i>
+                                <mat-menu #menu="matMenu">
+                                    <!-- (click)="changeGroupImg('itemGroup',itemgroup)" -->
+                                    <button mat-menu-item (click)="changeDepartImg('departIcon',dept)">
+                                        <i class="fa fa-upload"></i>
+                                        Upload Photo
+                                        <input type="file" name="image_src" id="image_src" accept="/*;capture=camera"
+                                            #filed>
+                                    </button>
+                                    <!-- (click)="deleteGroupImg(itemgroup)" -->
+                                    <button mat-menu-item (click)="deleteDepartImg(dept)">
+                                        <i class="fa fa-trash"></i>
+                                        Remove Photo</button>
+                                </mat-menu>
+                            </div>
+                            </td>
+                            <!-- *ngIf="!dept.departmentStatus || dept.departmentStatus=='INACTIVE'" -->
+                            <td>
+                                <a>
+                                    <h4 (click)="gotoDepartmentDetails(dept)" class="pointer-cursor">
+                                        {{dept.departmentName |
+                                        capitalizeFirst}}</h4>
+                                </a>
+                            </td>
+                            <!-- 'assets/showcase/images/demo/product/' +  -->
+                            <!--*ngIf="dept && dept.departmentCode" *ngIf="dept && dept.departmentDescription" -->
+                            <td>{{dept.departmentCode}}</td>
+                            <td>{{dept.departmentDescription}}</td>
+                            <td>
+                                <div class="copy">
+                                    <span class="">
+                                        <button type="button" mat-icon-button [matMenuTriggerFor]="appMenu">
+                                            <mat-icon>more_vert</mat-icon>
+                                        </button>
+                                    </span>
+                                    <mat-menu #appMenu="matMenu">
+                                        <button mat-menu-item (click)="changeDepartmentStatus(dept)">
+                                            <i *ngIf="dept.departmentStatus=='INACTIVE' || !dept.departmentStatus"
+                                                class="icon-enable"></i>
+                                            <i *ngIf="dept.departmentStatus=='ACTIVE'" class="icon-disable"></i>
+                                            {{(dept.departmentStatus=='ACTIVE') ? 'Disable' :'Enable'}}
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </td>
+
+                            <!-- <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
+                            <!-- <td><span [class]="'item-badge status-' + item.item.isStockAvailable">InStock</span></td> -->
+                        </tr>
+                        <tr *ngIf="departments && departments.length===0"><span class="bold">No departments found</span>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="paginatorleft">
+                        <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
+                    </ng-template>
+                    <ng-template pTemplate="paginatorright">
+                        <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
+                    </ng-template>
+                    <ng-template pTemplate="summary">
+                        <div class="p-d-flex p-ai-center p-jc-between">
+                            In total there are {{departments.length}} departments...
+                        </div>
+                    </ng-template>
+                </p-table>
             </div>
         </div>
     </div>

@@ -11,6 +11,7 @@ import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { FileService } from '../../../../../shared/services/file-service';
 // import { UserDataStorageService } from './../../general/users/settings/user-datastorage.service';
+import { GroupStorageService } from "../../../../../shared/services/group-storage.service";
 
 
 @Component({
@@ -25,8 +26,18 @@ export class ProPicPopupComponent implements OnInit {
     error_msg = '';
     item_pic = {
         files: [],
-        base64: null
+        base64: null,
     };
+    itemGroup_pic = {
+        files: [],
+        base64: null,
+        caption: []   
+    }
+    sendDepart_pic = {
+        files: [],
+        base64: null,
+        caption: []  
+    }
     selitem_pic = '';
     bProfile;
     blogo: any = [];
@@ -40,6 +51,9 @@ export class ProPicPopupComponent implements OnInit {
     scale = 1;
     imgType: any;
     heading;
+    itemGroupId: any;
+    active_user:any;
+    departId: any;
     constructor(public activateroute: ActivatedRoute,
         private sharedfunctionobj: SharedFunctions,
         private provider_services: ProviderServices,
@@ -47,6 +61,7 @@ export class ProPicPopupComponent implements OnInit {
         private provider_datastorage: ProviderDataStorageService,
         // private user_datastorage: UserDataStorageService,
         private fileService: FileService,
+        private groupService: GroupStorageService,
         @Inject(MAT_DIALOG_DATA) public data: any,
         public dialogRef: MatDialogRef<ProPicPopupComponent>) {
 
@@ -54,7 +69,10 @@ export class ProPicPopupComponent implements OnInit {
     ngOnInit() {
         this.bProfile = this.data.userdata;
         this.imgType = this.data.img_type;
+        this.itemGroupId = this.data.itemGroupId;
+        this.departId = this.data.departId;
         this.heading = (this.data.logoExist) ? 'Update Profile Picture' : 'Upload Profile Picture';
+        this.active_user = this.groupService.getitemFromGroupStorage("ynw-user");
     }
 
     imageSelect(event: any): void {
@@ -171,11 +189,14 @@ export class ProPicPopupComponent implements OnInit {
                     const propertiesDet = {
                         'caption': 'Logo'
                     };
+             
+
                     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
                     submit_data.append('properties', blobPropdata);
                     if (this.imgType === 'cover') {
                         this.uploadCoverPic(submit_data);
-                    } else {
+                    } 
+                    else {
                         if (this.data.userId) {
                             this.uploadUserLogo(submit_data);
                         } else {
@@ -203,6 +224,76 @@ export class ProPicPopupComponent implements OnInit {
         }
     }
 
+    saveItemImage(){
+        this.canceldisabled = true;
+        const file = this.fileToReturn;
+        this.success_error = null;
+        this.error_list = [];
+        this.error_msg = '';
+        this.savedisabled = true;
+        if (file) {
+            this.img_save_caption = 'Uploading .. ';
+            this.success_error = this.fileService.imageValidation(file);
+            if (this.success_error === true) {
+                const reader = new FileReader();
+                this.itemGroup_pic.files = file;
+                this.selitem_pic = file;
+                console.log("name :",this.selitem_pic);
+
+                const fileobj = file;
+                reader.onload = (e) => {
+                    this.itemGroup_pic.base64 = e.target['result'];
+                };
+                reader.readAsDataURL(fileobj);
+             //   if (this.bProfile.status === 'ACTIVE' || this.bProfile.status === 'INACTIVE') { // case now in bprofile edit page
+                    // generating the data to be submitted to change the logo
+                    const submit_data: FormData = new FormData();
+                    submit_data.append('files', this.selitem_pic, this.selitem_pic['name']);
+                    const propertiesDetob = {};
+                //    let i = 0;
+                    // for (const pic of this.itemGroup_pic.files) {
+                    //     submit_data.append('files', pic, pic['name']);
+                        console.log("file name :",submit_data);
+                         let properties = {};
+                         properties = {
+                             'caption': this.itemGroup_pic.caption[0] ? this.itemGroup_pic.caption[0]: '',
+                             'displayImage': true
+                         };
+                        propertiesDetob[0] = properties;
+                        // i++;
+                    // }
+                    
+                     const propertiesDet = {
+                         'propertiesMap': propertiesDetob
+                     };
+                     console.log("propertiesDet :",propertiesDet);
+
+                    const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
+                    submit_data.append('properties', blobPropdata);
+                    console.log("blobPropdata :",blobPropdata);
+                   if(this.itemGroupId){
+                   this.uploadItemGroupPic(this.itemGroupId,submit_data);
+                    }
+               // }
+            } else {
+                this.error_list.push(this.success_error);
+                if (this.error_list[0].type) {
+                    this.error_msg = 'Selected image type not supported';
+                    this.dialogRef.close();
+                } else if (this.error_list[0].size) {
+                    this.error_msg = 'Please upload images with size less than 15mb';
+                    this.dialogRef.close();
+                }
+                // this.error_msg = 'Please upload images with size < 5mb';
+                this.savedisabled = false;
+                this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+            }
+        } else {
+            this.error_msg = 'Selected image type not supported';
+            this.snackbarService.openSnackBar(this.error_msg, { 'panelClass': 'snackbarerror' });
+            this.dialogRef.close();
+        }
+    }
     uploadLogo(passdata) {
         this.provider_services.uploadLogo(passdata)
             .subscribe(
@@ -276,4 +367,150 @@ export class ProPicPopupComponent implements OnInit {
                 }
             });
     }
+    uploadItemGroupPic(itemGroupId,passdata) {
+        this.provider_services.uploadItemGroupImage(itemGroupId,passdata).subscribe(
+            data => {
+                console.log("data from propic :",data);
+
+                if (data) {
+                    this.api_success = Messages.GROUP_IMAGE_ADD;
+                    this.img_save_caption = 'Uploaded';
+                    setTimeout(() => {
+                        // this.dialogRef.close('itemGroup');
+                        this.dialogRef.close(data);
+                    }, projectConstantsLocal.TIMEOUT_DELAY);
+                }
+            });
+    }
+
+     // Save pro pic
+     saveDepartIcon() {
+        const file = this.fileToReturn;
+        this.success_error = null;
+        this.error_list = [];
+        this.error_msg = "";
+        if (file) {
+          console.log("inside file");
+          this.success_error = this.fileService.imageValidation(file);
+          if (this.success_error === true) {
+            console.log("inside success err");
+            const reader = new FileReader();
+            this.sendDepart_pic.files = file;
+            this.selitem_pic = file;
+            const fileobj = file;
+            reader.onload = (e) => {
+              this.sendDepart_pic.base64 = e.target["result"];
+            };
+            console.log(" this.sendDepart_pic.base64",  this.sendDepart_pic.base64);
+            reader.readAsDataURL(fileobj);
+            console.log("File obj:", fileobj);
+
+            // let i = 0;
+            let dataToSend = [];
+                const size = fileobj["size"] / 1024;
+                const data = {
+                  owner: this.active_user.id,
+                  fileName: fileobj["name"],
+                  fileSize: size / 1024,
+                  action:'add',
+                  caption: this.sendDepart_pic.caption[0] ? this.sendDepart_pic.caption[0] : "",
+                  fileType: fileobj["type"].split("/")[1],
+                  order: 0
+                };
+                dataToSend.push(data);
+    
+            console.log("After submit :", dataToSend);
+           if (this.departId) {
+             this.uploadDepartLogo(this.departId, dataToSend);
+            }
+            
+          } else {
+            this.error_list.push(this.success_error);
+            if (this.error_list[0].type) {
+              this.error_msg = "Selected image type not supported";
+            } else if (this.error_list[0].size) {
+              this.error_msg = "Please upload images with size less than 15mb";
+            }
+            this.snackbarService.openSnackBar(this.error_msg, {
+              panelClass: "snackbarerror",
+            });
+          }
+        } else {
+          this.error_msg = "Selected image type not supported";
+          this.snackbarService.openSnackBar(this.error_msg, {
+            panelClass: "snackbarerror",
+          });
+        }
+      }
+      uploadDepartLogo(departId, passdata) {
+        // this.provider_services.uploadLogo(passdata)
+        console.log("passdata :", departId, passdata);
+        this.provider_services
+          .uploadDepartmentIcon(departId, passdata)
+          .subscribe(
+            (s3UrlsObj: any) => {
+              console.log("s3obj :", s3UrlsObj);
+              this.api_success = Messages.DEPART_ICON_UPLOAD;
+              //this.spinner_load = false;
+              this.uploadFilesToS3(s3UrlsObj);
+              setTimeout(() => {
+               // this.closeGroupDialog();
+              //  this.redirecTo();
+             // this.getItemGroupById(itemGroupId);
+              }, 2000);
+              // this.getBusinessProfileLogo();
+            },
+            (error) => {
+              this.snackbarService.openSnackBar(error, {
+                panelClass: "snackbarerror",
+              });
+              // this.api_error = error.error;
+            }
+          );
+      }
+      uploadFile(file, url) {
+        console.log("uploadFile method :",file, url);
+        const _this = this;
+        return new Promise(function(resolve, reject) {
+          _this.provider_services.videoaudioS3Upload(file, url).subscribe(
+            () => {
+                console.log("videoaudioS3Upload method :", file,'Url',url);
+
+              resolve(true);
+            },
+            () => {
+              resolve(false);
+            }
+          );
+        });
+      }
+      async uploadFilesToS3(s3Urls) {
+        console.log("s3files :",s3Urls);
+        const _this = this;
+        let count = 0;
+        //for (let i = 0; i < s3Urls.length; i++) {
+          await _this
+            .uploadFile(
+             this.sendDepart_pic.files,
+              s3Urls[0].url
+            )
+            .then(() => {
+              count++;
+              console.log("Count=", count);
+              console.log("after upload file method :", this.sendDepart_pic);
+
+              console.log(s3Urls.length);
+            //   if (count === s3Urls) {
+                this.dialogRef.close(this.selitem_pic);
+                _this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, {
+                  panelClass: "snackbarnormal"
+                });
+                _this.sendDepart_pic = { files: [], base64: null, caption: [] };
+                // _this.getfiles();
+                // _this.apiloading = false;
+            //   }
+            });
+        //}
+      }
+
 }

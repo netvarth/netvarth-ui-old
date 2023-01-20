@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../../shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { ProviderDataStorageService } from '../../../../../../business/services/provider-datastorage.service';
+import { Location } from "@angular/common";
 
 @Component({
     'selector': 'app-item-details',
@@ -124,6 +125,8 @@ export class ItemDetailsComponent implements OnInit {
     itemType = 'physical';
     catalog_list : any =[]
     newData : any=[];
+    groupId: any;
+    groupName: any;
     constructor(private provider_services: ProviderServices,
         private sharedfunctionObj: SharedFunctions,
         private activated_route: ActivatedRoute,
@@ -133,10 +136,14 @@ export class ItemDetailsComponent implements OnInit {
         public fed_service: FormMessageDisplayService,
         private snackbarService: SnackbarService,
         private provider_datastorage: ProviderDataStorageService,
+        public location: Location,
         private wordProcessor: WordProcessor) {
         this.activated_route.queryParams.subscribe(
             (qParams) => {
                 this.iscmFrom = qParams.type;
+                this.action = qParams.action;
+                this.groupId = qParams.type;
+                this.groupName = qParams.name;
             });
         
         this.activated_route.params.subscribe(
@@ -239,13 +246,26 @@ export class ItemDetailsComponent implements OnInit {
     }
     goBack() {
         if (this.iscmFrom === 'ordermanager') {
-            const navigatExtras: NavigationExtras = {
-                queryParams: {
-                    type: this.iscmFrom ? this.iscmFrom : ''
-                }
-            };
-            this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
-        } else {
+            // const navigatExtras: NavigationExtras = {
+            //     queryParams: {
+            //         type: this.iscmFrom ? this.iscmFrom : ''
+            //     }
+            // };
+            // this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
+            this.location.back();
+        }
+        else if (this.groupId) {
+            this.location.back();
+            // const navigatExtras: NavigationExtras = {
+            //     queryParams: {
+            //         type: this.groupId,
+            //         //type: this.isFrom ? this.isFrom : ''
+            //         name:this.groupName
+            //       },
+            // };
+            // this.router.navigate(['provider', 'settings', 'pos', 'itemlist'], navigatExtras);
+        } 
+         else {
             this.router.navigate(['provider', 'settings', 'pos', 'items']);
         }
 
@@ -505,7 +525,16 @@ export class ItemDetailsComponent implements OnInit {
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
-                        } else {
+                        }
+                        else if (this.iscmFrom === 'all') {
+                            const navigatExtras: NavigationExtras = {
+                                queryParams: {
+                                    type: this.iscmFrom ? this.iscmFrom : ''
+                                }
+                            };
+                            this.router.navigate(['provider', 'settings', 'pos', 'itemlist'], navigatExtras);
+                        } 
+                         else {
                             this.router.navigate(['provider', 'settings', 'pos', 'items']);
                         }
                     }
@@ -534,7 +563,28 @@ export class ItemDetailsComponent implements OnInit {
                             }
                         };
                         this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
-                    } else {
+                    } 
+                   else if (this.iscmFrom === 'all') {
+                        const navigatExtras: NavigationExtras = {
+                            queryParams: {
+                                type: this.iscmFrom ? this.iscmFrom : ''
+                            }
+                        };
+                        this.router.navigate(['provider', 'settings', 'pos', 'itemlist'], navigatExtras);
+                    } 
+                    else if (this.groupId) {
+                        this.location.back();
+                        // const navigatExtras: NavigationExtras = {
+                        //     queryParams: {
+                        //         action: "edit",
+                        //         type: this.groupId,
+                        //         //type: this.isFrom ? this.isFrom : ''
+                        //         name:this.groupName
+                        //       },
+                        // };
+                        // this.router.navigate(['provider', 'settings', 'pos', 'itemlist'], navigatExtras);
+                    } 
+                    else {
                         this.router.navigate(['provider', 'settings', 'pos', 'items']);
                     }
                 },
@@ -605,7 +655,27 @@ export class ItemDetailsComponent implements OnInit {
                         }
                     };
                     this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
-                } else {
+                } 
+                else if (this.iscmFrom === 'all') {
+                    const navigatExtras: NavigationExtras = {
+                        queryParams: {
+                            type: this.iscmFrom ? this.iscmFrom : ''
+                        }
+                    };
+                    this.router.navigate(['provider', 'settings', 'pos', 'itemlist'], navigatExtras);
+                } 
+                else if (this.groupId) {
+                    this.location.back();
+                    // const navigatExtras: NavigationExtras = {
+                    //     queryParams: {
+                    //         action:'edit',
+                    //         type: this.groupId,
+                    //         // name:this.groupName
+                    //       },
+                    // };
+                    // this.router.navigate(['provider', 'settings', 'pos', 'itemlist'], navigatExtras);
+                } 
+                else {
                     this.router.navigate(['provider', 'settings', 'pos', 'items']);
                 }
             }
@@ -798,7 +868,9 @@ export class ItemDetailsComponent implements OnInit {
             });
             this.removeimgdialogRef.afterClosed().subscribe(result => {
                 if (result) {
-                    const imgDetails = this.imageList.filter(image => image.url === img.modal.img);
+                    const imgDetails = this. 
+                    
+                    imageList.filter(image => image.url === img.modal.img);
                     this.provider_services.deleteUplodeditemImage(imgDetails[0].keyName, this.item_id)
                         .subscribe((data) => {
                             if (type) {

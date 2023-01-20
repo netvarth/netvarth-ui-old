@@ -8,10 +8,15 @@ import { SnackbarService } from '../../../../../../shared/services/snackbar.serv
 import { WordProcessor } from '../../../../../../shared/services/word-processor.service';
 import { GroupStorageService } from '../../../../../../shared/services/group-storage.service';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { ConfirmBoxComponent } from "../../../../../../shared/components/confirm-box/confirm-box.component";
+import { MatDialog } from "@angular/material/dialog";
+import { ProPicPopupComponent } from "../../../bprofile/pro-pic-popup/pro-pic-popup.component";
 
 @Component({
     'selector': 'app-department-list',
-    'templateUrl': './department-list.component.html'
+    'templateUrl': './department-list.component.html',
+    styleUrls: ['./department-list.component.css']
+
 })
 export class DepartmentListComponent implements OnInit {
     departments: any = [];
@@ -21,7 +26,10 @@ export class DepartmentListComponent implements OnInit {
     add_button = Messages.ADD_DEPT;
     isCheckin;
     domain: any;
-
+    notedialogRef: any;
+    imageToShow = "../../assets/images/no_image_icon.png";
+    fileobj: any;
+    active_user:any;
     constructor(public router: Router,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
@@ -29,7 +37,9 @@ export class DepartmentListComponent implements OnInit {
         private provider_services: ProviderServices,
         private wordProcessor: WordProcessor,
         private snackbarService: SnackbarService,
-        private groupService: GroupStorageService) {
+        private groupService: GroupStorageService,
+        private dialog: MatDialog,
+        ) {
 
     }
     ngOnInit() {
@@ -39,6 +49,7 @@ export class DepartmentListComponent implements OnInit {
         this.getDepartments();
         this.isCheckin = this.groupService.getitemFromGroupStorage('isCheckin');
         // this.loading = false;
+        this.active_user = this.groupService.getitemFromGroupStorage("ynw-user");
     }
     gotoDepartmentDetails(dept) {
         this.router.navigate(['provider', 'settings', 'general',
@@ -96,4 +107,80 @@ export class DepartmentListComponent implements OnInit {
     addDept() {
         this.router.navigate(['provider', 'settings', 'general', 'department', 'add']);
     }
+
+     // Change pro pic
+    changeDepartImg(image,depart) {
+    console.log("Imageeee :",image);
+    this.notedialogRef = this.dialog.open(ProPicPopupComponent, {
+      width: "50%",
+      panelClass: ["popup-class", "commonpopupmainclass"],
+      disableClose: true,
+      data: {
+        //'userdata': this.bProfile,
+        departId: depart.departmentId,
+        img_type: image,
+        //'logoExist': (this.blogo[0]) ? true : false
+      },
+    });
+    this.notedialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        console.log("Ressss Item Image :", result);
+      this.fileobj = result;
+        // this.getItemGroups();
+       this.getDepartments();
+      } 
+    });
+  }
+
+
+
+  deleteDepartImg(depart) {
+    console.log("itemsss :",depart);
+    // this.itemGroupId = itemGroup.itemGroupId;
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: "50%",
+      panelClass: [
+        "popup-class",
+        "commonpopupmainclass",
+        "confirmationmainclass",
+      ],
+      disableClose: true,
+      data: {
+        message: "Do you want to remove this department icon?",
+      },
+    });
+    dialogrefd.afterClosed().subscribe((result) => {
+      if (result) {
+    let dataToSend = [];
+        // const size = this.fileobj["size"] / 1024;
+        const data = {
+          owner: depart.departmentLogo[0].owner,
+          fileName: depart.departmentLogo[0].fileName,
+          fileSize: depart.departmentLogo[0].fileSize,
+          action:'remove',
+          caption: depart.departmentLogo[0].caption,
+          fileType: depart.departmentLogo[0].fileType,
+          order: depart.departmentLogo[0].order
+        };
+        dataToSend.push(data);
+        console.log("deleting data :",dataToSend);
+        this.provider_services
+          .removeDepartmentIcon(depart.departmentId,dataToSend)
+          .subscribe((data) => {
+            // this.getItemGroupPhoto();
+            console.log("Data",data);
+            this.getDepartments();
+            this.snackbarService.openSnackBar('Department icon deleted successfully', {
+              panelClass: "snackbarnormal",
+            });
+          },
+          (error) => {
+            this.snackbarService.openSnackBar(error, {
+              panelClass: "snackbarerror",
+            });
+          }
+          );
+    }
+    });
+  }
 }

@@ -109,11 +109,22 @@ export const Messages = {
   'BPROFILE_LOCNAME_BLANK': 'Please enter the location name',
   'BPROFILE_COVER_ADD': 'Cover photo uploaded successfully',
   'BPROFILE_COVER_DEL': 'Cover photo has been removed',
+  //Group Image upload...
+  'GROUP_IMAGE_ADD': 'Item Group photo uploaded successfully',
+  'GROUP_IMAGE_DEL': 'Item Group photo has been removed',
+
   // 'BRPFOLE_SEARCH_TOOLTIP' : 'Public Search demo tool tip message. Please let us know what message you wanted here.',
   'BPROFILE_LANGUAGE_SAVED': 'Languages saved successfully',
   'BPROFILE_SPECIALIZATION_SAVED': 'Specializations saved successfully',
   'BUSINESS_NAME_MAX_LENGTH_MSG': 'Business name can contain only 50 characters',
   'BUSINESS_DESC_MAX_LENGTH_MSG': 'Business description can contain only 2000 characters',
+  //group image upload
+  'GROUP_IMAGE_UPLOAD': 'Group image uploaded successfully',
+  //Department image upload
+  'DEPART_ICON_UPLOAD': 'Department icon uploaded successfully',
+  //Business icon upload
+  'BUSIN_ICON_UPLOAD': 'Business icon uploaded successfully',
+
 
   // Adwords
   'ADWORD_LISTEMPTY': 'No Jaldee Search Keywords exist',
@@ -316,9 +327,10 @@ export const Messages = {
   'DONE_BTN': 'Complete',
   'SAVE_MEMBER_BTN': 'Save Member',
   'RESEND_BTN': 'Resend',
-
   // Consumer Constants
-
+//Item group created or updated...
+'ITEM_GROUP_CREATED': 'Item group created successfully',
+'ITEM_GROUP_UPDATED': 'Item group updated successfully',
   // Breadcrumbs
   'LEARN_MORE_CAP': 'Learn More',
 
@@ -891,10 +903,14 @@ export const Messages = {
   'BPROFILE_SUCH_AS_CAP': 'such as',
   'BPROFILE_BUSINESS_NAME_CAP': 'Business Name, Profile Summary',
   'PROFILE_PICTURE_CAP': 'Profile Picture',
+  'BUSINESS_PICTURE_CAP': 'Business Logo',
+  'GROUP_PICTURE_CAP': 'Group Picture',
+  'DEPART_PICTURE_CAP': 'Department Icon',
   'BPROFILE_ADD_IT_NOW_CAP': 'Add It Now',
   'BPROFILE_TURN_ON_PUBLIC_SEARCH': 'Need Basic Information to turn on Public Search',
   'BPROFILE_CHANGE_CAP': 'Change',
   'BPROFILE_PICTURE_CAP': 'Picture',
+  'DEPART_ICON_CAP': 'Icon',
   'BPROFILE_DELETE_PICTURE_CAP': 'Delete Picture',
   'BPROFILE_INFORMATION_CAP': 'information',
   'BPROFILE_NEED_LOCATION_CAP': 'Need Location',

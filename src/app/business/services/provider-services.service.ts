@@ -54,6 +54,7 @@ export class ProviderServices {
       return this.servicemeta.httpGet('provider/items');
     }
   }
+
   getProviderfilterItems(filter) {
     const url = 'provider/items';
     return this.servicemeta.httpGet(url, null, filter);
@@ -83,6 +84,68 @@ export class ProviderServices {
   removeItemImage(data) {
     const path = 'provider/items/' + data.itemId + '/image';
     return this.servicemeta.httpDelete(path);
+  }
+  //item grouping api services.
+  addItemGroup(data){
+    const url = 'provider/items/itemGroup';
+    return this.servicemeta.httpPost(url,data);
+  }
+  updateItemGroup(itemGroupId,data){
+    const url = 'provider/items/itemGroup/'+ itemGroupId;
+    return this.servicemeta.httpPut(url,data);
+  }
+  getItemGroups(){
+    const url = 'provider/items/itemGroup';
+    return this.servicemeta.httpGet(url);
+  }
+  getItemGroupById(itemGroupId){
+    const url = 'provider/items/itemGroup/'+ itemGroupId;
+    return this.servicemeta.httpGet(url);
+  }
+  deleteItemGroupById(itemGroupId){
+    const url = `provider/items/itemGroup/+ ${itemGroupId}`;
+    return this.servicemeta.httpDelete(url);
+  }
+  uploadItemGroupImage(itemGroupId, data) {
+    const url = 'provider/items/itemGroup/'+itemGroupId+'/'+'image';
+    return this.servicemeta.httpPost(url, data);
+  }
+  removeItemGroupImage(itemGroupId,name) {
+    const url = 'provider/items/itemGroup/' + itemGroupId + '/'+'image/' + name;
+    return this.servicemeta.httpDelete(url);
+  }
+  addItemsToGroupById(itemGroupId,itemIds){
+    const url = 'provider/items/group/'+itemGroupId;
+    return this.servicemeta.httpPut(url, itemIds);
+  }
+  getItemsByGroupId(filter){
+    const url = 'provider/items';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+
+  //upload and delete department icon api services
+  uploadDepartmentIcon(departId, data) {
+    //provider/departments/upload/icon/{departmentId}
+    const url = 'provider/departments/upload/icon/'+departId;
+    return this.servicemeta.httpPost(url, data);
+  }
+  removeDepartmentIcon(departId,data) {
+    const url = 'provider/departments/remove/icon/' + departId;
+    return this.servicemeta.httpDelete(url,data);
+  }
+  //upload and delete business logo api services..
+  uploadBusinessIcon(data) {
+    //provider/departments/upload/icon/{departmentId}
+    const url = 'provider/upload/businessLogo';
+    return this.servicemeta.httpPost(url, data);
+  }
+  removeBusinessIcon(data){
+    const url = 'provider/remove/businessLogo';
+    return this.servicemeta.httpDelete(url,data);
+  }
+  getBusinessLogo(){
+    const url = 'provider/businessLogo';
+    return this.servicemeta.httpGet(url);
   }
   getLicenseCorpSettings() {
     return this.servicemeta.httpGet('provider/corp/settings');
@@ -1882,6 +1945,14 @@ export class ProviderServices {
     const path = 'provider/coverPicture/' + name;
     return this.servicemeta.httpDelete(path);
   }
+  getGroupPhoto(){
+    const url = 'provider/cover';
+    return this.servicemeta.httpGet(url);
+  }
+  deleteGroupPhoto(name) {
+    const path = 'provider/coverPicture/' + name;
+    return this.servicemeta.httpDelete(path);
+  }
   paymentRefund(data) {
     return this.servicemeta.httpPost('provider/payment/refund', data);
   }
@@ -2560,6 +2631,10 @@ export class ProviderServices {
   getActiveQuestionaire(uid) {
     const url = 'provider/lead/questionnaire/status/' + uid;
     return this.servicemeta.httpGet(url);
+  }
+  getItemGroupingStatus(){
+    const url = 'provider/lead/questionnaire/status/';
+    return this.servicemeta.httpGet(url); 
   }
   changeLeadQuestionnaireStatus(status, uuid, id) {
     const url = 'provider/lead/questionnaire/change/' + status + '/' + uuid + '/' + id;
