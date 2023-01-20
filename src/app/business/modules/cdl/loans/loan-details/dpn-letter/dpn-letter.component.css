@@ -236,6 +236,12 @@ td {
   color: #000 !important;
 }
 
+.border-rectangle {
+  border: 1px solid black !important;
+  padding: 100px 20px !important;
+  width: 170px;
+}
+
 
 /*
 .overflow-y-scroll {

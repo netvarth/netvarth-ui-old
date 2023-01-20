@@ -13,208 +13,79 @@
     <div class="row">
       <div>
         <div class="mt-3  overflow-y-scroll" style="width: 100%;">
-          <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-end">
             <div>
-              To,<br>
-              The Manager<br>
-              Manappuram Finance Limited<br>
-              A O Valapad.<br>
-            </div>
-            <div>
+              Place : Thrissur <br>
               Date : {{currentDate | date:'yyyy-MM-dd'}}
             </div>
           </div>
           <br>
-          <div>
-            From
+          <div *ngIf="loanData && loanData.requestedAmount">
+            Rs {{loanData.requestedAmount}}/-
           </div>
-          <div class="text-center">
+          <div class="mt-4">
             <div>
-              <div *ngIf="loanData && loanData.referenceNo"><b>Loan Applicaon No : </b>{{loanData.referenceNo}}</div>
-              <div><b>Loan Account No : </b>87654827895</div>
+              ON DEMAND, I / WE, (Name of Customer)
+              <b><span
+                  *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
+                &nbsp;<span
+                  *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b>
+              (Customer Address) <b>Chembukavvu,Thrissur,Kerala,680020</b>
+              and (Name of Co-Applicant / Guarantor If applicable)
+              <b>Krishna Ps</b>
+              (Co-Applicant / Guarantor Address)
+              <b>Kodakara,Kerala,680684</b>
+              jointly and severally promise to pay to MANAPPURAM FINANCE LIMITED (“Lender”) or order the sum of
+              <b><span *ngIf="loanData && loanData.requestedAmount">
+                  Rs {{loanData.requestedAmount}}/-
+                </span></b> (Rupees only) for value
+              received, together with interest from the date hereof, at <b><span
+                  *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
+                  {{loanData.loanScheme.schemeRate }}/-
+                </span></b>. % per annum or such other rates which
+              MANAPPURAM
+              FINANCE LIMITED (“Lender”) may ﬁx from me to me,
+              compounding and payable with daily / monthly / quarterly rests, for value received.
             </div>
           </div>
-          <div class="mt-3">
-            Dear Sir,
-          </div>
 
-          <div class="mt-2" *ngIf="loanData && loanData.requestedAmount">
-            <b><u>Sub</u> : Cheques towards repayment of my Loan against CDL of Rs {{loanData.requestedAmount}}/-</b>
-          </div>
-
-          <div class="mt-3">
-            Please ﬁnd enclosed crossed cheques /NACH drawn in favour of Manappuram Finance Limited bearing the
-            following being
-            submitted
-            towards repayment of my captioned loan availed from your Company bearing the above-mentioned account number.
-          </div>
-          <div class="row col-md-12 no-padding mt-5">
-            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-              <div class="text-center">
-                <b>Applicant</b>
-              </div><br>
-              <div>
-                <span class="mt-2">1. Name of the Drawee Bank : </span><br>
-                <span class="mt-2">2. Name of the Drawee Bank Branch : </span><br>
-                <span class="mt-2">3. MICR Sort Code : </span><br>
-                <span class="mt-2">4. Account Number : </span><br>
-                <span class="mt-2">5. IFSC Code : </span><br>
-              </div>
-            </div>
-            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-              <div class="text-center">
-                <b>Co-Applicant</b>
-              </div><br>
-              <div>
-                <span class="mt-2">1. Name of the Drawee Bank : </span><br>
-                <span class="mt-2">2. Name of the Drawee Bank Branch : </span><br>
-                <span class="mt-2">3. MICR Sort Code : </span><br>
-                <span class="mt-2">4. Account Number : </span><br>
-                <span class="mt-2">5. IFSC Code : </span><br>
-              </div>
-            </div>
-          </div>
-          <div class="clearfix"></div>
-          <div class="mt-3">
-            <b>Applicant's : </b>
-            <table style="width:100%" class="table-responsive mt-2">
-              <tr class="text-center">
-                <td>
-                  <span>SI No</span>
-                </td>
-                <td>
-                  <span>From</span>
-                </td>
-                <td>
-                  <span>To</span>
-                </td>
-                <td>
-                  <span>No Cheques</span>
-                </td>
-              </tr>
-              <tr class="text-center">
-                <td>
-                  <span>1</span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span>.....No's</span>
-                </td>
-              </tr>
-              <tr class="text-center">
-                <td>
-                  <span>2</span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-              </tr>
-
-              <tr class="text-center">
-                <td colspan="2">
-                  <span>NACH - UMR Number</span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-              </tr>
-
-            </table>
-          </div>
-
-          <div class="mt-3">
-            <b>Co Applicant's : </b>
-            <table style="width:100%" class="table-responsive mt-2">
-              <tr class="text-center">
-                <td>
-                  <span>SI No</span>
-                </td>
-                <td>
-                  <span>From</span>
-                </td>
-                <td>
-                  <span>To</span>
-                </td>
-                <td>
-                  <span>No Cheques</span>
-                </td>
-              </tr>
-              <tr class="text-center">
-                <td>
-                  <span>1</span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span>.....No's</span>
-                </td>
-              </tr>
-              <tr class="text-center">
-                <td>
-                  <span>2</span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-              </tr>
-
-              <tr class="text-center">
-                <td colspan="2">
-                  <span>NACH - UMR Number</span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-                <td>
-                  <span></span>
-                </td>
-              </tr>
-
-            </table>
-          </div>
 
           <div class="mt-4">
-            I/We agree that the postdated cheques/NACH are given in satisfaction of the debt due and payable by me/us to
-            the Company
-            in terms of the captioned loan. I further undertake to replenish the requisite number of cheques/NACH on
-            these
-            cheques/NACH being exhausted, as demanded by the Company, from me to me.
+            <div class="d-flex justify-content-end">
+              <div class="mr-2 my-auto py-auto">
+                <span>Applicant Signature</span><br><br>
+                <span>Co-Applicant / Guarantor Signature</span>
+              </div>
+              <div class="border-rectangle">
+                Revenue
+                Stamp of Re. 1/- to be aﬃxed.
+              </div>
+            </div>
           </div>
+
+
+
+
           <div class="mt-4">
             <div class="d-flex justify-content-between">
               <div>
-                <span>Signature</span><br>
-                <span class="mt-4">Name of Borrower</span>
+                <span>Applicant Signature : </span><br>
+                <span class="mt-4">Applicant Name : <b><span
+                      *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
+                    &nbsp;<span
+                      *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b></span>
               </div>
               <div>
-                <span>Signature</span><br>
-                <span class="mt-4">Co-Applicant / Guarantor</span>
+                <span>Co-Applicant / Guarantor Signature : </span><br>
+                <span class="mt-4">Co-Applicant / Guarantor Name : <b>Krishna Ps</b></span>
               </div>
             </div>
+          </div>
+
+          <hr>
+
+          <div class="mt-1 mb-4 text-center">
+            <b>The Applicant / Co-Applicant Guarantor has / have to sign across the revenue stamp & DP note.</b>
           </div>
 
 
