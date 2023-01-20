@@ -12,10 +12,178 @@
             <div class="w-dta ">
                 <div class="row">
                     <div class="one col-xs-12 col-sm-12 no-padding">
-                        <div class="col-a col-b pl0 col-md-8 col-lg-6 col-sm-12 col-xl-12">
+                        <div class="col-a col-b pl0 col-md-8 col-lg-6 col-sm-12 col-xl-8">
                             <div class="card p0">
                                 <div class="pubs card w-dta active bprof">
+                                    <div class="cd-t serate">
+                                        <div class="basic-i" *ngIf="logo">
+                                            <div class="bi-l" style="text-align: -webkit-center;">
+                                                <div class="pro-pic" [class.yes]="profimg_exists">
+                                                    <div
+                                                        class="pro-pic-img d-flex justify-content-center align-items-center">
+                                                        <!--  *ngIf="dept_data && dept_data.departmentLogo && dept_data.departmentLogo[0] && dept_data.departmentLogo[0].s3path" -->
+                                                        <img [src]="showLogo()" alt="" class="crop-img-fit"
+                                                            *ngIf="logo && logo[0] && logo[0].s3path">
+                                                        <!-- <img [src]="imageToShow" alt="" class="crop-img-fit"
+                                                            *ngIf="dept_data && dept_data.departmentLogo && !dept_data.departmentLogo[0]"> -->
+                                                    </div>
+                                                    <!-- <input #logofile type="file" accept="/*;capture=camera" style="display:none;" (change)="imageSelect(logofile,$event)"> -->
+                                                    <div class="add">
+                                                        <span data-toggle="modal" data-target="#exampleModalSizeLg"
+                                                            (click)="clearModalData()">{{add_cap}}
+                                                            <br /> {{profile_pic_cap}}
+                                                            <!-- <i class="show-camera-img add-img fa fa-camera"
+                                                             data-toggle="modal" 
+                                                            data-target="#exampleModalSizeLg" (click)="clearModalData()" title="Add Business Logo"></i>  -->
+                                                        </span>
+                                                    </div>
+                                                    <div class="change">
+                                                        <span class="change-pic" (click)="clearModalData()"
+                                                            data-toggle="modal"
+                                                            data-target="#exampleModalSizeLg" title="Change Business Logo">{{change_cap}}
+                                                            <br /> {{pic_cap}}</span>
+                                                            <!-- <br />
+                                                            <i class="show-camera-img fa fa-trash" mat-button
+                                                            [matMenuTriggerFor]="menu" title="Remove Business Logo"></i> -->
+
+                                                    </div>
+                                                    <!-- <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item (click)="deleteBusinessLogo(logo)">
+                                                            <i class="fa fa-trash"></i>
+                                                            Remove Logo</button>
+                                                    </mat-menu> -->
+                                                    <!-- <div class="copy" *ngIf="logo && !logo[0]">
+                                                        <i class="show-camera-img fa fa-trash"
+                                                             data-toggle="modal"
+                                                            data-target="#exampleModalSizeLg"></i>
+                                                    </div> -->
+                                                    
+                                                </div>
+                                                <!-- <div class="copy" *ngIf="logo && logo[0] && logo[0].s3path">
+                                                        <i class="show-camera-img fa fa-trash" mat-button
+                                                            [matMenuTriggerFor]="menu"></i>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item (click)="deleteBusinessLogo(logo)">
+                                                                <i class="fa fa-trash"></i>
+                                                                Remove Logo</button>
+                                                        </mat-menu>
+                                                    </div> -->
+                                                <!-- <div class="copy" *ngIf="logo && logo[0] && logo[0].s3path">
+                                                    <i class="show-camera-img fa fa-trash" mat-button
+                                                        [matMenuTriggerFor]="menu"></i>
+                                                    <mat-menu #menu="matMenu">
+                                                        <button mat-menu-item (click)="deleteBusinessLogo(logo)">
+                                                            <i class="fa fa-trash"></i>
+                                                            Remove Logo</button>
+                                                    </mat-menu>
+                                                </div> -->
+                                                <div class="modal fade" id="exampleModalSizeLg" tabindex="-1"
+                                                    role="dialog" aria-labelledby="exampleModalSizeLg"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg"
+                                                        role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Upload
+                                                                    business logo</h5>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!-- Before Img selection -->
+                                                                <div class="uppy-Dashboard-AddFiles-list"
+                                                                    *ngIf="!imageChangedEvent">
+                                                                    <div class="button_center">
+                                                                        <div class="uppy-DashboardTab">
+                                                                            <button type="button"
+                                                                                class="uppy-DashboardTab-btn"
+                                                                                (click)="imgSel.click()">
+                                                                                <svg aria-hidden="true"
+                                                                                    focusable="false" width="32"
+                                                                                    height="32" viewBox="0 0 32 32">
+                                                                                    <g fill="none" fill-rule="evenodd">
+                                                                                        <rect width="32" height="32"
+                                                                                            rx="16" fill="#2275D7">
+                                                                                        </rect>
+                                                                                        <path
+                                                                                            d="M21.973 21.152H9.863l-1.108-5.087h14.464l-1.246 5.087zM9.935 11.37h3.958l.886 1.444a.673.673 0 0 0 .585.316h6.506v1.37H9.935v-3.13zm14.898 3.44a.793.793 0 0 0-.616-.31h-.978v-2.126c0-.379-.275-.613-.653-.613H15.75l-.886-1.445a.673.673 0 0 0-.585-.316H9.232c-.378 0-.667.209-.667.587V14.5h-.782a.793.793 0 0 0-.61.303.795.795 0 0 0-.155.663l1.45 6.633c.078.36.396.618.764.618h13.354c.36 0 .674-.246.76-.595l1.631-6.636a.795.795 0 0 0-.144-.675z"
+                                                                                            fill="#FFF"></path>
+                                                                                    </g>
+                                                                                </svg>
+                                                                                <div class="uppy-DashboardTab-name">My
+                                                                                    Device</div>
+                                                                            </button>
+                                                                        </div>
+                                                                        <input type="file" name="image_src"
+                                                                            id="image_src" accept="image/*" #imgSel
+                                                                            (change)="imageSelect1($event)"
+                                                                            class="ip_hide">
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- After Img selection cropper -->
+                                                                <div>
+                                                                    <mat-progress-bar *ngIf="loadSymbol"
+                                                                        mode="indeterminate" class="mt-10">
+                                                                    </mat-progress-bar>
+                                                                    <image-cropper *ngIf="!imgType"
+                                                                        [imageChangedEvent]="imageChangedEvent"
+                                                                        [roundCropper]="true"
+                                                                        [maintainAspectRatio]="true"
+                                                                        [aspectRatio]="1 / 1"
+                                                                        [containWithinAspectRatio]="true"
+                                                                        [resizeToWidth]="500" [onlyScaleDown]="true"
+                                                                        [imageQuality]="99"
+                                                                        [canvasRotation]="canvasRotation"
+                                                                        [transform]="transform" format="png"
+                                                                        (imageCropped)="imageCropped($event)"
+                                                                        (imageLoaded)="imageLoaded()"
+                                                                        (cropperReady)="cropperReady()"
+                                                                        (loadImageFailed)="loadImageFailed()">
+                                                                    </image-cropper>
+                                                                    <div class="crop-img-div"
+                                                                        *ngIf="imageChangedEvent && imageChangedEvent.target.files">
+                                                                        <i class="fa fa-undo custId-cursor"
+                                                                            aria-hidden="true"
+                                                                            (click)="rotateLeft()">&nbsp;Left</i>
+                                                                        <i class="fa fa-repeat custId-cursor pad-left-20"
+                                                                            aria-hidden="true"
+                                                                            (click)="rotateRight()">&nbsp;Right</i>
+                                                                        <i class="fa fa-search-plus custId-cursor pad-left-20"
+                                                                            aria-hidden="true"
+                                                                            (click)="zoomIn()">&nbsp;Zoom+</i>
+                                                                        <i class="fa fa-search-minus custId-cursor pad-left-20"
+                                                                            aria-hidden="true"
+                                                                            (click)="zoomOut()">&nbsp;Zoom-</i>
+                                                                    </div>
+
+                                                                </div>
+
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button"
+                                                                    class="btn btn-square ln-ht-1 btn-light-primary font-weight-bold"
+                                                                    data-dismiss="modal" #closebutton>Close</button>
+                                                                <button *ngIf="fileToReturn"
+                                                                    [class.btn_disable]="api_success" type="button"
+                                                                    class="btn ln-ht-1 btn-square btn-primary font-weight-bold"
+                                                                    (click)="saveImages()">{{spinner_load ? 'Uploading':
+                                                                    'save'}}
+                                                                    <i *ngIf="spinner_load"
+                                                                        class="fas fa-spinner fa-spin"
+                                                                        style="font-family: 'FontAwesome';"></i>
+                                                                </button>
+                                                                <app-form-success-display class="wdth_full"
+                                                                    [displayMsg]="true" *ngIf="api_success"
+                                                                    successMsg="{{api_success}}">
+                                                                </app-form-success-display>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="">
+
                                         <form *ngIf="aboutmeForm" [formGroup]="aboutmeForm" novalidate
                                             (ngSubmit)="aboutmeForm.valid && onSubmit(aboutmeForm.value)"
                                             (keyup)="resetApiErrors()" class="ynw-common-form-nm">
@@ -71,7 +239,8 @@
                                                                             <ng-container *ngSwitchCase="'TEXT'">
                                                                                 <div class="cont-btn">
                                                                                     <p> {{ fields.value |
-                                                                                        capitalizeFirst}}</p>
+                                                                                        capitalizeFirst}}
+                                                                                    </p>
                                                                                     <span class="editbt"
                                                                                         (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                                 </div>
@@ -80,16 +249,20 @@
                                                                                 <div class="cont-btn">
                                                                                     <p
                                                                                         [innerHTML]="fields.value | nl2br | capitalizeFirst">
-                                                                                        {{fields.value | nl2br |
-                                                                                        capitalizeFirst }}</p>
+                                                                                        {{fields.value |
+                                                                                        nl2br |
+                                                                                        capitalizeFirst }}
+                                                                                    </p>
                                                                                     <span class="editbt"
                                                                                         (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                                 </div>
                                                                             </ng-container>
                                                                             <ng-container *ngSwitchCase="'Boolean'">
                                                                                 <div class="cont-btn">
-                                                                                    <p> {{(fields.value == 'true' ||
-                                                                                        fields.value == true ) ? 'Yes' :
+                                                                                    <p> {{(fields.value ==
+                                                                                        'true' ||
+                                                                                        fields.value == true
+                                                                                        ) ? 'Yes' :
                                                                                         'No'}}</p>
                                                                                     <span class="editbt"
                                                                                         (click)="editDynamicField(fields.name, 'domain_questions')"></span>
@@ -119,7 +292,8 @@
                                                                             <ng-container *ngSwitchCase="'Date'">
                                                                                 <div class="cont-btn">
                                                                                     <p> {{fields.value |
-                                                                                        date:dateFormat}}</p>
+                                                                                        date:dateFormat}}
+                                                                                    </p>
                                                                                     <span class="editbt"
                                                                                         (click)="editDynamicField(fields.name, 'domain_questions')"></span>
                                                                                 </div>
@@ -147,7 +321,9 @@
                                                                             </ng-container>
                                                                             <ng-container *ngSwitchCase="'Enum'">
                                                                                 <div class="cont-btn">
-                                                                                    <p>{{ getdispVal('domain', fields)}}
+                                                                                    <p>{{
+                                                                                        getdispVal('domain',
+                                                                                        fields)}}
                                                                                     </p>
                                                                                     <span class="editbt"
                                                                                         (click)="editDynamicField(fields.name, 'domain_questions')"></span>
@@ -155,7 +331,9 @@
                                                                             </ng-container>
                                                                             <ng-container *ngSwitchCase="'EnumList'">
                                                                                 <div class="cont-btn">
-                                                                                    <p>{{ getdispVal('domain', fields)}}
+                                                                                    <p>{{
+                                                                                        getdispVal('domain',
+                                                                                        fields)}}
                                                                                     </p>
                                                                                     <span class="editbt"
                                                                                         (click)="editDynamicField(fields.name, 'domain_questions')"></span>
@@ -274,7 +452,8 @@
                                                                     <ng-container [ngSwitch]="fields.dataType">
                                                                         <ng-container *ngSwitchCase="'TEXT'">
                                                                             <div class="cont-btn">
-                                                                                <p> {{fields.value | capitalizeFirst}}
+                                                                                <p> {{fields.value |
+                                                                                    capitalizeFirst}}
                                                                                 </p>
 
                                                                                 <span class="editbt"
@@ -293,8 +472,10 @@
                                                                         </ng-container>
                                                                         <ng-container *ngSwitchCase="'Boolean'">
                                                                             <div class="cont-btn">
-                                                                                <p> {{(fields.value == 'true' ||
-                                                                                    fields.value == true ) ? 'Yes' :
+                                                                                <p> {{(fields.value ==
+                                                                                    'true' ||
+                                                                                    fields.value == true ) ?
+                                                                                    'Yes' :
                                                                                     'No'}}</p>
                                                                                 <span class="editbt"
                                                                                     (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
@@ -323,7 +504,8 @@
                                                                         </ng-container>
                                                                         <ng-container *ngSwitchCase="'Date'">
                                                                             <div class="cont-btn">
-                                                                                <p> {{fields.value | date:dateFormat}}
+                                                                                <p> {{fields.value |
+                                                                                    date:dateFormat}}
                                                                                 </p>
                                                                                 <span class="editbt"
                                                                                     (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
@@ -352,7 +534,8 @@
                                                                         </ng-container>
                                                                         <ng-container *ngSwitchCase="'Enum'">
                                                                             <div class="cont-btn">
-                                                                                <p> {{ getdispVal('subdomain',fields)}}
+                                                                                <p> {{
+                                                                                    getdispVal('subdomain',fields)}}
                                                                                 </p>
                                                                                 <span class="editbt"
                                                                                     (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
@@ -360,7 +543,9 @@
                                                                         </ng-container>
                                                                         <ng-container *ngSwitchCase="'EnumList'">
                                                                             <div class="cont-btn">
-                                                                                <p>{{ getdispVal('subdomain', fields)}}
+                                                                                <p>{{
+                                                                                    getdispVal('subdomain',
+                                                                                    fields)}}
                                                                                 </p>
                                                                                 <span class="editbt"
                                                                                     (click)="editDynamicField(fields.name, 'subdomain_questions')"></span>
@@ -392,9 +577,11 @@
                                                                                             *ngFor="let row of fields.value;let i = index">
                                                                                             <td *ngFor="let column of fields.Columns;let j = index"
                                                                                                 [attr.data-title]="fields.Columns[j].displayName">
-                                                                                                {{column.type=='Enum' ?
+                                                                                                {{column.type=='Enum'
+                                                                                                ?
                                                                                                 vkeyNameMap[row[column.key]]
-                                                                                                : row[column.key]}}
+                                                                                                :
+                                                                                                row[column.key]}}
                                                                                             </td>
                                                                                             <td class="action">
                                                                                                 <span class="mbt">

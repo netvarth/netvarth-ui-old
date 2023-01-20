@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject ,ViewChild} from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { FormMessageDisplayService } from '../../../../../shared//modules/form-message-display/form-message-display.service';
@@ -9,6 +9,7 @@ import { projectConstants } from '../../../../../app.component';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { Messages } from '../../../../../shared/constants/project-messages';
 import { DOCUMENT } from '@angular/common';
+import { ConfirmBoxComponent } from "../../../../../shared/components/confirm-box/confirm-box.component";
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProPicPopupComponent } from '../../bprofile/pro-pic-popup/pro-pic-popup.component';
@@ -18,10 +19,14 @@ import { WordProcessor } from '../../../../../shared/services/word-processor.ser
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { QuestionService } from '../../../../../shared/modules/dynamic-form/dynamic-form-question.service';
 import { ProviderBprofileSearchDynamicComponent } from '../../../provider-bprofile-search-dynamic/provider-bprofile-search-dynamic.component';
-
+import { ImageTransform } from "./interfaces/image-transform.interface";
+import { FileService } from "../../../../../shared/services/file-service";
+import { ImageCroppedEvent } from "ngx-image-cropper";
 @Component({
   selector: 'app-aboutme',
-  templateUrl: './aboutme.component.html'
+  templateUrl: './aboutme.component.html',
+  styleUrls: ['./aboutme.component.css']
+
 })
 export class AboutMeComponent implements OnInit {
 
@@ -41,6 +46,11 @@ export class AboutMeComponent implements OnInit {
   aboutmeForm: UntypedFormGroup;
   api_error = null;
   api_success = null;
+  success_error = null;
+  error_list = [];
+  error_msg = "";
+  showProfile = false;
+  spinner_load = false;
   show_schedule_selection = false;
   bProfile = null;
   formfields;
@@ -49,12 +59,28 @@ export class AboutMeComponent implements OnInit {
   disableButton = false;
   api_loading = true;
   add_cap = Messages.ADD_BTN;
-  profile_pic_cap = Messages.PROFILE_PICTURE_CAP;
-  pic_cap = Messages.BPROFILE_PICTURE_CAP;
+  profile_pic_cap = Messages.BUSINESS_PICTURE_CAP;
+  pic_cap = Messages.BUSINESS_PICTURE_CAP;
   blogo: any = [];
   profimg_exists = false;
   domain_fields_nonmandatory: any;
   subdomain_fields_nonmandatory: any[];
+  imageChangedEvent: any;
+  imgType = false;
+  fileToReturn: any;
+  croppedImage: any;
+  canvasRotation = 0;
+  scale = 1;
+  transform: ImageTransform = {};
+  @ViewChild("closebutton") closebutton;
+  loadSymbol = false;
+  imageToShow = "../../assets/images/no_image_icon.png" ;
+   businessLogo_pic = {
+    files: [],
+    base64: null,
+    caption: [],
+  };
+  selitem_pic = "";
   item_pic = {
     files: [],
     base64: null
@@ -74,6 +100,7 @@ export class AboutMeComponent implements OnInit {
   normal_subdomainfield_show = 1;
   vkeyNameMap = {};
   subdomain: any;
+  active_user:any;
   reqFields: any = {
     name: false,
     location: false,
@@ -84,6 +111,7 @@ export class AboutMeComponent implements OnInit {
   };
   edit_cap = Messages.EDIT_BTN;
   delete_btn = Messages.DELETE_BTN;
+  logo:any;
   constructor(
     private fb: UntypedFormBuilder,
     public fed_service: FormMessageDisplayService,
@@ -98,11 +126,16 @@ export class AboutMeComponent implements OnInit {
     private qservice: QuestionService,
     private provider_shared_functions: ProviderSharedFuctions,
     @Inject(DOCUMENT) public document,
+    private fileService: FileService,
+
   ) {
   }
   ngOnInit() {
     this.getProviderLogo();
     this.getBusinessProfile();
+    this.getBusinessLogo();
+    this.active_user = this.groupService.getitemFromGroupStorage("ynw-user");
+
   }
   // Creates the form element
   createForm() {
@@ -270,6 +303,7 @@ export class AboutMeComponent implements OnInit {
       .subscribe(
         data => {
           this.blogo = data;
+          console.log("Blog data :",this.blogo);
           const cnow = new Date();
           const dd = cnow.getHours() + '' + cnow.getMinutes() + '' + cnow.getSeconds();
           this.cacheavoider = dd;
@@ -292,6 +326,13 @@ export class AboutMeComponent implements OnInit {
         }
       );
   }
+  getBusinessLogo(){
+    this.provider_services.getBusinessLogo().subscribe((res)=>{
+      console.log("ressss :",res);
+      this.logo = res;
+      // this.showLogo();
+    })
+  }
   // display logo
   showimg() {
     let logourl = '';
@@ -307,6 +348,21 @@ export class AboutMeComponent implements OnInit {
       }
       return this.sharedfunctionObj.showlogoicon(logourl);
     }
+  }
+
+  showLogo() {
+    let logourl = '';
+    this.profimg_exists = false;
+    // if (this.businessLogo_pic.base64) {
+    //  this.profimg_exists = true;
+    //   return this.businessLogo_pic.base64;
+    // } else {
+      if (this.logo && this.logo[0]) {
+        this.profimg_exists = true;
+        logourl = (this.logo[0].s3path) ? this.logo[0].s3path : '';
+      }
+     return this.sharedfunctionObj.showlogoicon(logourl);
+    // }
   }
   // profile pic popup section
   changeProPic() {
@@ -697,5 +753,327 @@ export class AboutMeComponent implements OnInit {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
       );
+  }
+
+
+
+  imageSelect1(event: any): void {
+    this.loadSymbol = true;
+    this.imageChangedEvent = event;
+  }
+  clearModalData(source?) {
+    this.imageChangedEvent = "";
+    if (source) {
+      this.imgType = true;
+    }
+    this.api_success = false;
+    this.api_error = false;
+  }
+  imageSelect(input) {
+    this.success_error = null;
+    this.error_list = [];
+    this.error_msg = "";
+    if (input.files && input.files[0]) {
+      for (const file of input.files) {
+        this.success_error = this.fileService.imageValidation(file);
+        if (this.success_error === true) {
+          const reader = new FileReader();
+          this.businessLogo_pic.files = input.files[0];
+          this.selitem_pic = input.files[0];
+          const fileobj = input.files[0];
+          reader.onload = (e) => {
+            this.businessLogo_pic.base64 = e.target["result"];
+          };
+          reader.readAsDataURL(fileobj);
+          // if (this.user_arr.status === 'ACTIVE' || this.user_arr.status === 'INACTIVE') { // case now in bprofile edit page
+          // generating the data to be submitted to change the logo
+          const submit_data: FormData = new FormData();
+          submit_data.append(
+            "files",
+            this.selitem_pic,
+            this.selitem_pic["name"]
+          );
+          // const propertiesDet = {
+          //   'caption': ''
+          // };
+          const propertiesDetob = {};
+          // let i = 0;
+          //  for (const pic of this.item_pic.files) {
+          // submit_data.append('files', pic, pic['name']);
+          let properties = {};
+          properties = {
+            caption: this.businessLogo_pic.caption[0] || "",
+            displayImage: true,
+          };
+          propertiesDetob[0] = properties;
+          //  i++;
+          // }
+
+          const propertiesDet = {
+            propertiesMap: propertiesDetob,
+          };
+          const blobPropdata = new Blob([JSON.stringify(propertiesDet)], {
+            type: "application/json",
+          });
+          submit_data.append("properties", blobPropdata);
+         // this.updateItemGroup(this.itemGroupId, submit_data);
+          // }
+        } else {
+          this.error_list.push(this.success_error);
+          if (this.error_list[0].type) {
+            this.error_msg = "Selected image type not supported";
+          } else if (this.error_list[0].size) {
+            this.error_msg = "Please upload images with size less than 15mb";
+          }
+          // this.error_msg = 'Please upload images with size < 5mb';
+          this.snackbarService.openSnackBar(this.error_msg, {
+            panelClass: "snackbarerror",
+          });
+        }
+      }
+    }
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.loadSymbol = false;
+    this.fileToReturn = "";
+    this.croppedImage = event.base64; // preview
+    this.fileToReturn = this.base64ToFile(
+      event.base64,
+      this.imageChangedEvent.target.files[0].name
+    );
+    return this.fileToReturn;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
+  }
+  base64ToFile(imgdata, filename) {
+    const arr = imgdata.split(",");
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
+
+  rotateLeft() {
+    this.canvasRotation--;
+    this.flipAfterRotate();
+  }
+  rotateRight() {
+    this.canvasRotation++;
+    this.flipAfterRotate();
+  }
+  zoomOut() {
+    this.scale -= 0.1;
+    this.transform = {
+      ...this.transform,
+      scale: this.scale,
+    };
+  }
+  zoomIn() {
+    this.scale += 0.1;
+    this.transform = {
+      ...this.transform,
+      scale: this.scale,
+    };
+  }
+  private flipAfterRotate() {
+    const flippedH = this.transform.flipH;
+    const flippedV = this.transform.flipV;
+    this.transform = {
+      ...this.transform,
+      flipH: flippedV,
+      flipV: flippedH,
+    };
+  }
+
+  // Save pro pic
+  saveImages() {
+    console.log("save imgsss");
+    this.spinner_load = true;
+    const file = this.fileToReturn;
+    this.success_error = null;
+    this.error_list = [];
+    this.error_msg = "";
+    if (file) {
+      console.log("inside file");
+      this.success_error = this.fileService.imageValidation(file);
+      if (this.success_error === true) {
+        console.log("inside success err");
+        const reader = new FileReader();
+        this.businessLogo_pic.files = file;
+        this.selitem_pic = file;
+        const fileobj = file;
+        reader.onload = (e) => {
+          this.businessLogo_pic.base64 = e.target["result"];
+        };
+        console.log("File obj:", fileobj);
+        reader.readAsDataURL(fileobj);
+        // let i = 0;
+        let dataToSend = [];
+            const size = fileobj["size"] / 1024;
+            const data = {
+              owner: this.active_user.id,
+              fileName: fileobj["name"],
+              fileSize: size / 1024,
+              action:'add',
+              caption: this.businessLogo_pic.caption[0] ? this.businessLogo_pic.caption[0] : "",
+              fileType: fileobj["type"].split("/")[1],
+              order: 0
+            };
+            dataToSend.push(data);
+        console.log("After submit :", dataToSend);
+      //  if (this.dept_data.departmentId) {
+          this.uploadBusinessLogo(dataToSend);
+        // }
+      } else {
+        this.error_list.push(this.success_error);
+        if (this.error_list[0].type) {
+          this.error_msg = "Selected image type not supported";
+        } else if (this.error_list[0].size) {
+          this.error_msg = "Please upload images with size less than 15mb";
+        }
+        this.snackbarService.openSnackBar(this.error_msg, {
+          panelClass: "snackbarerror",
+        });
+      }
+    } else {
+      this.error_msg = "Selected image type not supported";
+      this.snackbarService.openSnackBar(this.error_msg, {
+        panelClass: "snackbarerror",
+      });
+    }
+  }
+  uploadBusinessLogo(passdata) {
+    // this.provider_services.uploadLogo(passdata)
+    console.log("passdata :", passdata);
+    this.provider_services
+      .uploadBusinessIcon(passdata)
+      .subscribe(
+        (s3UrlsObj: any) => {
+          console.log("Res :", s3UrlsObj);
+          this.api_success = Messages.BUSIN_ICON_UPLOAD;
+          this.spinner_load = false;
+          this.uploadFilesToS3(s3UrlsObj);
+          setTimeout(() => {
+            this.closeGroupDialog();
+          //  this.redirecTo();
+          }, 2000);
+        },
+        (error) => {
+          this.snackbarService.openSnackBar(error, {
+            panelClass: "snackbarerror",
+          });
+          // this.api_error = error.error;
+        }
+      );
+  }
+  uploadFile(file, url) {
+    const _this = this;
+    return new Promise(function(resolve, reject) {
+      _this.provider_services.videoaudioS3Upload(file, url).subscribe(
+        () => {
+          resolve(true);
+        },
+        () => {
+          resolve(false);
+        }
+      );
+    });
+  }
+  async uploadFilesToS3(s3Urls) {
+    const _this = this;
+    let count = 0;
+    //for (let i = 0; i < s3Urls.length; i++) {
+      // this.businessLogo_pic["files"][s3Urls[i].orderId]
+      await _this
+        .uploadFile(
+          _this.businessLogo_pic["files"],
+          s3Urls[0].url
+        )
+        .then(() => {
+          count++;
+          console.log("Count=", count);
+          console.log(s3Urls.length);
+          //this.ngOnChanges();
+            // this.getDepartmentDetailsById(this.dept_data.departmentId);
+            _this.getBusinessLogo();
+        //   if (count === s3Urls.length) {
+            _this.snackbarService.openSnackBar(Messages.ATTACHMENT_UPLOAD, {
+              panelClass: "snackbarnormal"
+            });
+            // this.router.navigate(['provider', 'settings', 'general',
+            // 'department', this.dept_data.departmentId]);
+            _this.businessLogo_pic = { files: [], base64: [], caption: [] };
+            // _this.getfiles();
+            // _this.apiloading = false;
+        //   }
+        });
+   // }
+  }
+  closeGroupDialog() {
+    this.closebutton.nativeElement.click();
+    this.api_success = "";
+  }
+
+  deleteBusinessLogo(logo) {
+    console.log("logo :",logo);
+    const dialogrefd = this.dialog.open(ConfirmBoxComponent, {
+      width: "50%",
+      panelClass: [
+        "popup-class",
+        "commonpopupmainclass",
+        "confirmationmainclass",
+      ],
+      disableClose: true,
+      data: {
+        message: "Do you want to remove this business icon?",
+      },
+    });
+    dialogrefd.afterClosed().subscribe((result) => {
+      if (result) {
+    let dataToSend = [];
+        const data = {
+          owner: logo[0].owner,
+          fileName: logo[0].fileName,
+          fileSize: logo[0].fileSize,
+          action:'remove',
+          caption: logo[0].caption,
+          fileType: logo[0].fileType,
+          order: logo[0].order
+        };
+        dataToSend.push(data);
+        console.log("deleting data :",dataToSend);
+        this.provider_services
+          .removeBusinessIcon(dataToSend)
+          .subscribe((data) => {
+            if(data){
+              // this.getBusinessLogo();
+              this.profimg_exists = false;
+              this.logo = [];
+            }
+            console.log("Data",data);
+            this.snackbarService.openSnackBar('Business icon deleted successfully', {
+              panelClass: "snackbarnormal",
+            });
+          },
+          (error) => {
+            this.snackbarService.openSnackBar(error, {
+              panelClass: "snackbarerror",
+            });
+          }
+          );
+    }
+    });
   }
 }

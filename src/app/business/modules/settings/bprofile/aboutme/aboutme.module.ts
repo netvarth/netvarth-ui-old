@@ -13,6 +13,8 @@ import { CapitalizeFirstPipeModule } from "../../../../../shared/pipes/capitaliz
 import { FormMessageDisplayModule } from "../../../../../shared/modules/form-message-display/form-message-display.module";
 import { ProPicPopupModule } from "../pro-pic-popup/pro-pic-popup.module";
 import { AboutMeComponent } from "./aboutme.component";
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 const routes: Routes = [
     { path: '', component: AboutMeComponent }
 ]
@@ -32,6 +34,8 @@ const routes: Routes = [
         FormMessageDisplayModule,
         Nl2BrPipeModule,
         Nl2BrPipeModule,
+        ImageCropperModule,
+        MatProgressBarModule,
         CapitalizeFirstPipeModule,
         [RouterModule.forChild(routes)]
     ]
