@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from '../../services/snackbar.service';
 import { AgreementService } from './agreement.service';
 import { OtpVerifyComponent } from './otp-verify/otp-verify.component';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-agreement',
   templateUrl: './agreement.component.html',
@@ -44,12 +44,14 @@ export class AgreementComponent implements OnInit {
     }
   ]
   loanEmiDetailsData: any;
+  source: any = 'consumer';
   constructor(
     private activatedroute: ActivatedRoute,
     private agreementService: AgreementService,
     private dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -61,14 +63,17 @@ export class AgreementComponent implements OnInit {
       if (params && params.account) {
         this.accountId = params.account;
       }
+      if (params && params.type) {
+        this.source = params.type;
+      }
       this.declaration = "मैं / हम इस लोन के लिए लागू नियमों और शर्तों को समझने की पुष्टि करते हैं और बिनाशर्त नियमों और शर्तों को स्वीकार करते हैं और सहमत हैं कि इन नियमों और शर्तों को MAFIL द्वारा किसी भी समय मुझे / हमें सूचित करके बदला जा सकता है और मैं / हम संशोधित नियमों और शर्तों से बंधे होंगे."
     })
 
     this.agreementService.getLoanFromOutside(this.loanId, this.accountId).subscribe((data: any) => {
       console.log("LoanData", data);
       this.loanData = data;
-      if (this.loanData.spInternalStatus != 'Approved') {
-        this.snackbarService.openSnackBar("Link Expired or Invalid")
+      if (this.loanData.spInternalStatus != 'Approved' && (this.source && this.source != 'provider')) {
+        this.snackbarService.openSnackBar("Link Expired or Invalid");
         this.router.navigate(['/']);
       }
       if (data && data.customer && data.customer.phoneNo && data.customer.email) {
@@ -89,6 +94,10 @@ export class AgreementComponent implements OnInit {
         }
       }
     })
+  }
+
+  goBack() {
+    this.location.back()
   }
 
 

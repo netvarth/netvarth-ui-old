@@ -161,6 +161,24 @@ export class LoanDetailsComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'report'], navigationExtras);
   }
 
+  viewDpnLetter() {
+    this.router.navigate(['provider', 'cdl', 'dpn-letter', this.loanId]);
+  }
+
+  viewSdcLetter() {
+    this.router.navigate(['provider', 'cdl', 'spdc-letter', this.loanId]);
+  }
+  viewconsumerAgreementLetter() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uid: this.loanId,
+        account: this.loanData.accountId,
+        type: 'provider'
+      }
+    };
+    this.router.navigate(['mafil', 'agreement'], navigationExtras);
+  }
+
 
   checkPerfiosScore() {
     // let data =

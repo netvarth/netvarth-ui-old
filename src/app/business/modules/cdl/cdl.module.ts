@@ -27,7 +27,9 @@ const routes: Routes = [
   { path: 'leads', loadChildren: () => import('./leads/leads.module').then(m => m.LeadsModule) },
   { path: 'reports', loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule) },
   { path: 'emicalci', loadChildren: () => import('./emi-calci/emi-calci.module').then(m => m.EmiCalciModule) },
-  { path: 'schemes', loadChildren: () => import('./schemes/schemes.module').then(m => m.SchemesModule) }
+  { path: 'schemes', loadChildren: () => import('./schemes/schemes.module').then(m => m.SchemesModule) },
+  { path: 'dpn-letter/:id', loadChildren: () => import('./loans/loan-details/dpn-letter/dpn-letter.module').then(m => m.DpnLetterModule) },
+  { path: 'spdc-letter/:id', loadChildren: () => import('./loans/loan-details/sdc-letter/sdc-letter.module').then(m => m.SdcLetterModule) }
 
 
 ]

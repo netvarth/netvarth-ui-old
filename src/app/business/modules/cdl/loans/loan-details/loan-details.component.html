@@ -289,7 +289,23 @@
     </div>
     <div class="col-md-7 no-padding mt-2">
       <div class="card">
-        <div class="font-weight-bold">Loan Details</div>
+        <section class="row col-md-12"
+          *ngIf="user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==4 || user.roles[0].roleId==5)">
+          <div class="font-weight-bold">Agreement & Letters</div>
+          <div class="d-flex justify-content-between">
+            <div class="mt-2">
+              <div class="btn btn-primary" (click)="viewDpnLetter()">View DPN Letter</div>
+            </div>
+            <div class="mt-2 mx-1">
+              <div class="btn btn-primary" (click)="viewSdcLetter()">View SDC Letter</div>
+            </div>
+            <div class="mt-2">
+              <div class="btn btn-primary" (click)="viewconsumerAgreementLetter()">View Consumer Agreement</div>
+            </div>
+          </div>
+        </section>
+        <div class="clearfix"></div>
+        <div class="font-weight-bold mt-4">Loan Details</div>
         <section class="row col-md-12 no-padding"
           *ngIf="user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
           <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
