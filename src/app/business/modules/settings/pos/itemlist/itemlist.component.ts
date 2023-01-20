@@ -459,6 +459,7 @@ export class ItemlistComponent implements OnInit {
           queryParams: {
             type: this.itemGroupId,
             //type: this.isFrom ? this.isFrom : ''
+            name:this.groupName
           },
         };
         this.router.navigate(
