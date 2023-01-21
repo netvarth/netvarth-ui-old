@@ -81,7 +81,7 @@ export class TeleHomeComponent implements OnInit {
         if (qparams.pwd) {
           this.password = qparams.pwd;
         }
-        if(qparams.customId) {
+        if(qparams.customId && !qparams.pwd) {
           this.customId = qparams.customId;
           this.isJaldeeConsumer = false;
         } else {

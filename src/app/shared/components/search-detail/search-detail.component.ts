@@ -323,7 +323,7 @@ export class SearchDetailComponent implements OnInit, OnDestroy {
         const bdata = bconfig.bdata;
         const saveddate = new Date(bdate);
         const diff = this.dateTimeProcessor.getdaysdifffromDates('now', saveddate);
-        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+        if (diff['hours'] < projectConstantsLocal.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           resolve(bdata);
         }

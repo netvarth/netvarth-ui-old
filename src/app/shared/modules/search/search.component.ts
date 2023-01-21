@@ -616,7 +616,7 @@ export class SearchComponent implements OnInit, OnChanges, DoCheck {
       const bdata = bconfig.bdata;
       const saveddate = new Date(bdate);
       const diff = this.dateTimeProcessor.getdaysdifffromDates('now', saveddate);
-      if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+      if (diff['hours'] < projectConstantsLocal.DOMAINLIST_APIFETCH_HOURS) {
         run_api = false;
         const bDomains = bdata;
         this.domainlist_data = this.shared_functions.sortByKey(bDomains, 'order' );

@@ -6,7 +6,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { SignUpComponent } from '../../components/signup/signup.component';
 import { LoginComponent } from '../../components/login/login.component';
 import { SearchFields } from '../../modules/search/searchfields';
-import { projectConstants } from '../../../app.component';
 import { Meta, Title } from '@angular/platform-browser';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { DateTimeProcessor } from '../../services/datetime-processor.service';
@@ -123,7 +122,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
       const saveddate = new Date(bdate);
       if (bconfig.bdata) {
         const diff = this.dateTimeProcessor.getdaysdifffromDates('now', saveddate);
-        if (diff['hours'] < projectConstants.DOMAINLIST_APIFETCH_HOURS) {
+        if (diff['hours'] < projectConstantsLocal.DOMAINLIST_APIFETCH_HOURS) {
           run_api = false;
           this.domainlist_data = bdata;
           this.domain_obtained = true;
