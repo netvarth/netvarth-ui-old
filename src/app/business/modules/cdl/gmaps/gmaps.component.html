@@ -7,11 +7,10 @@
             <i class="fa fa-times"></i>
         </div>
     </div>
-    <div>
-        <!-- [style.visibility]="!show_search ? 'hidden': 'initial'" -->
+    <!-- <div>
         <input id="pac-input" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search
             placeholder="Enter a location" style="z-index: 1;">
-    </div>
+    </div> -->
     <div class="p-3">
         <p-gmap [options]="options" [overlays]="overlays" (onMapClick)="handleMapClick($event)"
             (onOverlayDragEnd)="handleOverlayDrag($event)" [style]="{'width':'100%','height':'320px'}"></p-gmap>
@@ -24,5 +23,4 @@
             <span>Ok</span>
         </div>
     </div>
-
 </div>

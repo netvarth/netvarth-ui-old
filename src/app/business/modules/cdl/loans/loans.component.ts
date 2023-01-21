@@ -153,6 +153,7 @@ export class LoansComponent implements OnInit {
       }
       else {
         api_filter['spInternalStatus-eq'] = event.value.name;
+        api_filter['applicationStatus-neq'] = 'Rejected';
       }
       this.getLoansByFilter(api_filter);
     }

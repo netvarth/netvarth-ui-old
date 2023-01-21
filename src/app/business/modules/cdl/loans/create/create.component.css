@@ -291,7 +291,16 @@ input::placeholder {
 }
 
 ::ng-deep .bankList .mat-form-field-infix {
+  /* border: 1px solid #D2D6DE !important; */
+  padding: 0 !important;
+  border-top: none !important;
+}
+
+
+::ng-deep .bankList .mat-form-field-flex {
   border: 1px solid #D2D6DE !important;
+  /* display: flex !important;
+  align-items: center !important; */
 }
 
 ::ng-deep .bankList .mat-form-field-appearance-legacy .mat-form-field-infix {

@@ -16,6 +16,7 @@ import { OtpVerifyModule } from '../otp-verify/otp-verify.module';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { MatIconModule } from '@angular/material/icon';
 
 const routes: Routes = [
   { path: '', component: CreateComponent }
@@ -43,6 +44,7 @@ const routes: Routes = [
     MultiSelectModule,
     CalendarModule,
     DropdownModule,
+    MatIconModule,
     [RouterModule.forChild(routes)]
   ]
 })

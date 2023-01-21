@@ -316,6 +316,10 @@ th {
   font-size: 14px !important;
 }
 
+.text-red {
+  color: red !important;
+}
+
 
 @media screen and (max-width: 576px) and (min-width: 0px) {
   .desktop-only {

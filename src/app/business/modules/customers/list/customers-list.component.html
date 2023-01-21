@@ -2,7 +2,11 @@
   <div class="card title-gb">
     <h5 class="mgn-up-10">
       <a class="user-title" style="cursor:auto;">
-        <div class="pull-left pad-tp-5 display-min-none bold">{{customer_labels}}</div>
+
+        <div class="pull-left pad-tp-5 display-min-none bold">
+          <span (click)="goPrevious()"><i class="fa fa-arrow-left"></i>&nbsp;</span>
+          {{customer_labels}}
+        </div>
       </a>
       <a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
         <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add" data-toggle="modal"
@@ -31,7 +35,7 @@
             <i class="flaticon2-chat-1" aria-hidden="true"></i> {{customer_label | capitalizeFirst}}s
             <!-- To all  -->
           </button>
-          
+
         </mat-menu>
       </a>
     </h5>
@@ -81,33 +85,33 @@
           <h3 class="align-items-start flex-column">
             <!-- <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="small_device_display"
               (click)="goBack()"></span> -->
-              <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="hideGroups"
+            <span class="fa fa-arrow-left pointer-cursor mgn-rt-10" *ngIf="hideGroups"
               (click)="hideGroups = false"></span>
-              <!-- hideGroups = false *ngIf="selectedGroup == 'all' && groups.length > 0" -->
+            <!-- hideGroups = false *ngIf="selectedGroup == 'all' && groups.length > 0" -->
             <span class="card-label font-1 font-weight-bolder text-dark"
-            *ngIf="selectedGroup == 'all' && groups.length > 0" >All
+              *ngIf="selectedGroup == 'all' && groups.length > 0">All
               {{customer_label | capitalizeFirst}}s</span>
             <span class="card-label font-1 font-weight-bolder text-dark"
               *ngIf="selectedGroup !== 'all'">{{selectedGroup.groupName}}</span>
-              <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right"
+            <a (click)="showFilterSidebar()" class="btn mb-2 action-button mgn-lt-5 pull-right"
               *ngIf="filterapplied || (!showCustomers && customers.length > 0 && !filterapplied)">
               <img src="assets/images/provider-filter-icon.png"
                 style="width: 22px !important; margin-top: -4px !important;">
               Filter
             </a>
-              <a (click)="sendmsgToAll()" *ngIf="customers.length > 0 && selectedGroup === 'all'"  class="disp-none-small btn mb-2 action-button mgn-lt-5 pull-right ">
-                <i
-                class="flaticon2-chat-1" aria-hidden="true"></i>{{customer_label | capitalizeFirst}}s
-                <!-- To all  -->
+            <a (click)="sendmsgToAll()" *ngIf="customers.length > 0 && selectedGroup === 'all'"
+              class="disp-none-small btn mb-2 action-button mgn-lt-5 pull-right ">
+              <i class="flaticon2-chat-1" aria-hidden="true"></i>{{customer_label | capitalizeFirst}}s
+              <!-- To all  -->
             </a>
-            <a (click)="sendmsgToGroup()" *ngIf="selectedGroup !== 'all' && customers.length > 0"  class="btn mb-2 action-button mgn-lt-5 pull-right ">
-              <i
-              class="flaticon2-chat-1" aria-hidden="true"></i> GROUP
-          </a>
+            <a (click)="sendmsgToGroup()" *ngIf="selectedGroup !== 'all' && customers.length > 0"
+              class="btn mb-2 action-button mgn-lt-5 pull-right ">
+              <i class="flaticon2-chat-1" aria-hidden="true"></i> GROUP
+            </a>
             <div class="sel-group-desc" [class.mgn-lt-28]="hideGroups">{{selectedGroup.description}}</div>
           </h3>
         </div>
-        <div class="row displayblock" >
+        <div class="row displayblock">
           <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
               *ngIf="selectedGroup !== 'all' && !showCustomers && selectedcustomersformsg.length == 0">Add
@@ -125,11 +129,11 @@
             <!-- CustomersInboxMessage() -->
             <!-- && selectedcustomersformsg['phoneNo']  -->
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()"
-            [matTooltip]="'Send message'"
-            *ngIf="!showCustomers && (selectedcustomersformsg && selectedcustomersformsg.length>1) && !hide_msgicon"><i
-              class="flaticon2-chat-1" aria-hidden="true"></i> </button>
-           
-           <!-- CustomersInboxMessage() -->
+              [matTooltip]="'Send message'"
+              *ngIf="!showCustomers && (selectedcustomersformsg && selectedcustomersformsg.length>1) && !hide_msgicon"><i
+                class="flaticon2-chat-1" aria-hidden="true"></i> </button>
+
+            <!-- CustomersInboxMessage() -->
             <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="CustomersInboxMessage()"
               [matTooltip]="'Send message'"
               *ngIf="!showCustomers && selectedcustomersformsg.length === 1 &&  !hide_msgicon"><i
@@ -185,7 +189,7 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-user"></i>
                             </div>
-                             <span>&nbsp; Name </span>
+                            <span>&nbsp; Name </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
@@ -219,7 +223,7 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-calendar-o"></i>
                             </div>
-                               <span>&nbsp; Date of birth </span>
+                            <span>&nbsp; Date of birth </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
@@ -249,7 +253,7 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-phone"></i>
                             </div>
-                             <span>&nbsp;  Phone Number </span>
+                            <span>&nbsp; Phone Number </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
@@ -259,10 +263,10 @@
                       <div class="card-body" style="padding: 0px !important;">
                         <div class="filterTextinput filter-text-input">
                           <li class="filterli filter-li">
-                             <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode (keyup)="keyPress()"
-                              class="filterTextbox change countryCodewidth" placeholder="+91">
-                               <input type="text" id="mobile" [(ngModel)]="filter.mobile" #mobile (keyup)="keyPress()"
-                              class="filterTextbox  change phonewidth" placeholder="9955668855">                            
+                            <input type="text" id="countrycode" [(ngModel)]="filter.countrycode" #countrycode
+                              (keyup)="keyPress()" class="filterTextbox change countryCodewidth" placeholder="+91">
+                            <input type="text" id="mobile" [(ngModel)]="filter.mobile" #mobile (keyup)="keyPress()"
+                              class="filterTextbox  change phonewidth" placeholder="9955668855">
                           </li>
                         </div>
                       </div>
@@ -277,7 +281,7 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-envelope"></i>
                             </div>
-                            <span>&nbsp;   Email   </span>
+                            <span>&nbsp; Email </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
@@ -303,7 +307,7 @@
                             <div style="display: inline-block !important;">
                               <i class="fa fa-tags"></i>
                             </div>
-                          <span>&nbsp;     Labels      </span>
+                            <span>&nbsp; Labels </span>
                           </div>
                           <i class="fa fa-angle-down"></i>
                         </button>
@@ -336,7 +340,7 @@
             </aside>
           </div>
         </div>
-        <div class="card-body pt-0 pb-3" >
+        <div class="card-body pt-0 pb-3">
           <div class="tab-content">
             <div class="table-responsive1">
               <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
@@ -372,18 +376,20 @@
                         </div>
                         <div>
                           <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="customer.firstName">
-                              <!-- {{getCustomer(customer) | capitalizeFirst}} -->
-                              {{(customer.firstName | capitalizeFirst) ? (customer.firstName | capitalizeFirst) : ''}} {{(customer.lastName | capitalizeFirst) ? (customer.lastName | capitalizeFirst) : ''}}
-                              <!-- {{customer.firstName | capitalizeFirst ? customer.firstName | capitalizeFirst : '' }}
+                            <!-- {{getCustomer(customer) | capitalizeFirst}} -->
+                            {{(customer.firstName | capitalizeFirst) ? (customer.firstName | capitalizeFirst) : ''}}
+                            {{(customer.lastName | capitalizeFirst) ? (customer.lastName | capitalizeFirst) : ''}}
+                            <!-- {{customer.firstName | capitalizeFirst ? customer.firstName | capitalizeFirst : '' }}
                               {{customer.lastName | capitalizeFirst ? customer.firstName | capitalizeFirst :  ''}} -->
-                            </span>
-                            <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="(customer.firstName === '' || customer.firstName === undefined) && (customer.lastName === '' || customer.lastName === undefined)">
-                              -
-                            </span>
-                            <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="customer.firstName && customer.lastName === undefined">
+                          </span>
+                          <span class="text-dark-75 text-hover-primary mb-1 cust-name"
+                            *ngIf="(customer.firstName === '' || customer.firstName === undefined) && (customer.lastName === '' || customer.lastName === undefined)">
+                            -
+                          </span>
+                          <!-- <span class="text-dark-75 text-hover-primary mb-1 cust-name" *ngIf="customer.firstName && customer.lastName === undefined">
                               {{'-'}}                    
                              </span> -->
-                             <!-- <div>
+                          <!-- <div>
                               <span *ngIf="isMemberIdExisted"
                                 >Group Member Id : {{isMemberIdExisted}}</span>
                             </div> -->
@@ -455,10 +461,10 @@
             <div class="form-group mb-1">
               <!-- <checkbox type="checkbox" class="form-control1" id="exampleTextarea" (ngModelChange)="changeGroupMemberId(generateGrpMemId)" [(ngModel)]="generateGrpMemId"
                 (keypress)="resetError()"></checkbox> -->
-                <input type="checkbox" name="Checkboxes4" [(ngModel)]="generateGrpMemId"
-                              (click)="stopprop($event)" (change)="changeGroupMemberId(generateGrpMemId)"
-                               >     
-                                  <label for="exampleTextarea" style="margin-right:10px; margin-top:10px;margin-left: 5px;">Generate Group Member Id</label>
+              <input type="checkbox" name="Checkboxes4" [(ngModel)]="generateGrpMemId" (click)="stopprop($event)"
+                (change)="changeGroupMemberId(generateGrpMemId)">
+              <label for="exampleTextarea" style="margin-right:10px; margin-top:10px;margin-left: 5px;">Generate Group
+                Member Id</label>
 
             </div>
           </div>

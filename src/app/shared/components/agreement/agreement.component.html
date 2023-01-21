@@ -462,14 +462,14 @@
       <td style="width:60%">
         <div class="text-normal mx-1">
           <span>
-            Total interest charge during the enre tenor of the loan (in Rupees)
+            Total interest charge during the entire tenure of the loan (in Rupees)
           </span>
         </div>
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
           <span *ngIf="loanData && loanData.sanctionedAmount">
-            {{loanData.sanctionedAmount}}/-
+            <!-- {{loanData.sanctionedAmount}}/- -->
           </span>
         </div>
       </td>
@@ -492,7 +492,7 @@
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
           <span *ngIf="loanData && loanData.sanctionedAmount">
-            {{loanData.sanctionedAmount}}/-
+            <!-- {{loanData.sanctionedAmount}}/- -->
           </span>
         </div>
       </td>
@@ -648,14 +648,14 @@
       <td style="width:60%">
         <div class="text-normal mx-1">
           <span>
-            Tenor of the Loan (in months/days)
+            Tenure of the Loan (in months/days)
           </span>
         </div>
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span *ngIf="loanData && loanData.sanctionedAmount">
-
+          <span *ngIf="loanData && loanData.noOfEmi">
+            {{loanData.noOfEmi}} Months
           </span>
         </div>
       </td>
@@ -669,7 +669,7 @@
         </div>
       </td>
       <td style="width:60%">
-        <div class="text-normal mx-1">
+        <div class="text-normal mx-1">/
           <span>
             Repayment frequency by the borrower
           </span>

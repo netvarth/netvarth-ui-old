@@ -55,7 +55,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Customer First Name</div>
+                      <div class="form-title">Customer First Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Customer First Name"
@@ -70,7 +70,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Customer Last Name</div>
+                      <div class="form-title">Customer Last Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Customer Last Name"
@@ -84,7 +84,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Date of Birth</div>
+                      <div class="form-title">Date of Birth <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off"
@@ -99,7 +99,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Gender</div>
+                      <div class="form-title">Gender <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" #gender formControlName="gender">
@@ -117,7 +117,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Phone Number</div>
+                      <div class="form-title">Phone Number <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
@@ -168,7 +168,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Customer Photo</div>
+                      <div class="form-title">Customer Photo <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding photo-border">
                       <div class="file"
@@ -234,7 +234,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Aadhar Number</div>
+                      <div class="form-title">Aadhar Number <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
@@ -301,7 +301,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Pan Number</div>
+                      <div class="form-title">Pan Number <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
@@ -403,7 +403,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Address 1</div>
+                      <div class="form-title">Address 1 <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" [value]="permanentaddress1" #permanentaddress1 [value]="address1"
@@ -434,7 +434,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">City</div>
+                      <div class="form-title">City <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" [value]="permanentcity" #permanentcity type="text"
@@ -463,7 +463,7 @@
               <div class="bggrey my-2" *ngIf="stateList">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">State</div>
+                    <div class="form-title">State <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #permanentstate formControlName="permanentstate">
@@ -479,7 +479,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Pincode</div>
+                      <div class="form-title">Pincode <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #permanentpincode [value]="permanentpincode" type="text"
@@ -660,7 +660,7 @@
               <div class="bggrey my-2">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Select Dealer</div>
+                    <div class="form-title">Select Dealer <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #dealer formControlName="dealer">
@@ -694,7 +694,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.customerEducation">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Customer Education</div>
+                    <div class="form-title">Customer Education <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #customerEducation formControlName="customerEducation">
@@ -711,7 +711,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.customerEmployement">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Customer Employement</div>
+                    <div class="form-title">Customer Employement <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #customerEmployement
@@ -729,7 +729,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Montly Income</div>
+                      <div class="form-title">Montly Income <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #salary [value]="salary" type="number"
@@ -777,7 +777,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.salaryRouting">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Salary Routing</div>
+                    <div class="form-title">Salary Routing <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #salaryRouting formControlName="salaryRouting">
@@ -793,7 +793,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.familyDependants">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Family Dependants</div>
+                    <div class="form-title">Family Dependants <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #familyDependants formControlName="familyDependants">
@@ -808,7 +808,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.existingCustomer">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Existing Customer</div>
+                    <div class="form-title">Existing Customer <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #existingCustomer formControlName="existingCustomer">
@@ -823,7 +823,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.earningMembers">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Earning Members</div>
+                    <div class="form-title">Earning Members <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #earningMembers formControlName="earningMembers">
@@ -839,7 +839,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.noOfYearsAtPresentAddress">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">No of Years at Present Address</div>
+                    <div class="form-title">No of Years at Present Address <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #noOfYearsAtPresentAddress
@@ -856,7 +856,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.currentResidenceOwnershipStatus">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Current Residence Ownership Status</div>
+                    <div class="form-title">Current Residence Ownership Status <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #currentResidenceOwnershipStatus
@@ -874,7 +874,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.ownedMovableAssets">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Owned Movable Assets</div>
+                    <div class="form-title">Owned Movable Assets <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #ownedMovableAssets
@@ -892,7 +892,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Vehicle No</div>
+                      <div class="form-title">Vehicle No <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #vehicleNo type="text" placeholder="Enter Vehicle No"
@@ -906,7 +906,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.goodsFinanced">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Goods Financed</div>
+                    <div class="form-title">Goods Financed <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #goodsFinanced formControlName="goodsFinanced">
@@ -922,7 +922,7 @@
               <div class="bggrey my-2">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Mafil Employee</div>
+                    <div class="form-title">Mafil Employee <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" (selectionChange)="mafilEmployeeStatus()"
@@ -942,7 +942,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Employee Code</div>
+                      <div class="form-title">Employee Code <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input #employeeCode type="text" placeholder="Employee Code" class="form-control"
@@ -989,7 +989,7 @@
               <div class="bggrey my-2">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Subvention Loan</div>
+                    <div class="form-title">Subvention Loan <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" (selectionChange)="subventionLoanStatus()"
@@ -1010,7 +1010,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Number of EMI's Paid Monthly</div>
+                      <div class="form-title">Number of EMI's Paid Monthly <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #emicount type="number"
@@ -1027,7 +1027,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Select Type</div>
+                      <div class="form-title">Select Type <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" #loantype formControlName="loantype">
@@ -1063,7 +1063,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Select Product Category</div>
+                      <div class="form-title">Select Product Category <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" #productcategory formControlName="productcategory"
@@ -1081,7 +1081,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Select Product Sub-Category</div>
+                      <div class="form-title">Select Product Sub-Category <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" #productsubcategory
@@ -1116,7 +1116,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Select Product</div>
+                      <div class="form-title">Select Product <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <p-multiSelect [options]="loanProducts" formControlName="loanproduct" [showToggleAll]="false"
@@ -1134,7 +1134,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Total Bill Amount</div>
+                      <div class="form-title">Total Bill Amount <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="totalPayment($event)" #totalpayment type="number" placeholder="Enter Bill Amount"
@@ -1148,7 +1148,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Down Payment</div>
+                      <div class="form-title">Down Payment <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input type="number" #downpayment placeholder="Enter Down Payment" class="form-control"
@@ -1163,7 +1163,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Loan Required</div>
+                      <div class="form-title">Loan Required <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
@@ -1177,7 +1177,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Nominee Name</div>
+                      <div class="form-title">Nominee Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="text" #nomineename placeholder="Enter Nominee Name"
@@ -1191,7 +1191,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Nominee Relation</div>
+                      <div class="form-title">Nominee Relation <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" placeholder="" #nomineetype
@@ -1210,7 +1210,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Nominee Phone Number</div>
+                      <div class="form-title">Nominee Phone Number <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="text" placeholder="Enter Nominee Phone Number"
@@ -1225,7 +1225,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Nominee Date of Birth</div>
+                      <div class="form-title">Nominee Date of Birth <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #nomineeDob type="date" class="form-control" autocomplete="off"
@@ -1239,7 +1239,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Co Applicant Name</div>
+                      <div class="form-title">Co Applicant Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="text" #guarantorName placeholder="Enter Co Applicant Name"
@@ -1253,7 +1253,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Co Applicant Relation</div>
+                      <div class="form-title">Co Applicant Relation <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <mat-select class="form-control widthWebKit" placeholder="" #guarantorType
@@ -1271,7 +1271,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Co Applicant Date of Birth</div>
+                      <div class="form-title">Co Applicant Date of Birth <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #guarantorDob type="date" class="form-control" autocomplete="off"
@@ -1285,7 +1285,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Co Applicant Phone</div>
+                      <div class="form-title">Co Applicant Phone <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
@@ -1355,7 +1355,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Select Bank</div>
+                      <div class="form-title">Select Bank <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <!-- <select class="form-control" formControlName="bank">
@@ -1370,6 +1370,7 @@
                         <mat-form-field [style.width.%]="100">
                           <input type="text" class="form-control" matInput [matAutocomplete]="auto"
                             [formControl]="banksListNames" formControlName="bank" [(ngModel)]="bankListName">
+                          <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
                           <mat-autocomplete #auto="matAutocomplete">
                             <mat-option *ngFor="let bank of filteredOptions | async" [value]="bank.bankName">
                               {{bank.bankName}}
@@ -1401,7 +1402,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Bank Account Number</div>
+                      <div class="form-title">Bank Account Number <span class="text-danger">*</span></div>
                     </div>
                     <!-- <div class="d-flex"> -->
                     <input (keyup)="resetErrors()" type="text" placeholder="Enter Account Number" class="form-control"
@@ -1418,7 +1419,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Bank IFSC</div>
+                      <div class="form-title">Bank IFSC <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"

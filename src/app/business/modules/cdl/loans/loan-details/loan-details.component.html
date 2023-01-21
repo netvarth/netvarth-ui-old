@@ -10,7 +10,7 @@
   <div class="row mb-2">
     <div class="card remarks-card marginClass px-5">
       <div class="container-fluid my-2">
-        <div *ngIf="statusIndex" class="desktop-only">
+        <div *ngIf="statusIndex && loanData && loanData.applicationStatus !='Rejected'" class="desktop-only">
           <p-timeline [value]="loanStatus" layout="horizontal" [responsive]="true" styleClass="customized-timeline">
             <ng-template pTemplate="marker" let-event let-i="rowIndex">
               <span class="custom-marker p-shadow-2" *ngIf="event.index > statusIndex"
@@ -27,12 +27,12 @@
           </p-timeline>
         </div>
 
-        <div class="container mobile-only" *ngIf="loanData && loanData.spInternalStatusDisplyName">
+        <div class="container mobile-only" *ngIf="loanData && loanData.spInternalStatusDisplyName  && loanData.applicationStatus !='Rejected'">
           <span><b>Status : </b>{{loanData.spInternalStatusDisplyName}}</span>
         </div>
 
-        <div *ngIf="status=='rejected'" class="text-red mt-2">
-          <span>Sorry your loan was rejected</span>
+        <div *ngIf="loanData && loanData.applicationStatus =='Rejected'" class="text-red mt-2">
+          <span><b>Sorry,your loan was rejected</b></span>
         </div>
       </div>
     </div>
@@ -292,12 +292,12 @@
         <section class="row col-md-12"
           *ngIf="user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==4 || user.roles[0].roleId==5)">
           <div class="font-weight-bold">Agreement & Letters</div>
-          <div class="d-flex justify-content-between">
+          <div class="d-lg-flex justify-content-between">
             <div class="mt-2">
               <div class="btn btn-primary" (click)="viewDpnLetter()">View DPN Letter</div>
             </div>
             <div class="mt-2 mx-1">
-              <div class="btn btn-primary" (click)="viewSdcLetter()">View SDC Letter</div>
+              <div class="btn btn-primary" (click)="viewSdcLetter()">View SPDC Letter</div>
             </div>
             <div class="mt-2">
               <div class="btn btn-primary" (click)="viewconsumerAgreementLetter()">View Consumer Agreement</div>
@@ -371,7 +371,7 @@
                 <div>
                   <div class="customerScoreLabel">Total Score</div>
                   <div class="customerScoreInfoLabel">{{mafilScore + equifaxScore}}</div>
-                  <div class="btn btn-primary">View Report</div>
+                  <!-- <div class="btn btn-primary">View Report</div> -->
                 </div>
               </div>
               <!-- <div class="text-right">

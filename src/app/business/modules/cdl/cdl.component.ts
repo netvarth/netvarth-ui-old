@@ -363,6 +363,7 @@ export class CdlComponent implements OnInit {
       }
       else {
         api_filter['spInternalStatus-eq'] = event.value.name;
+        api_filter['applicationStatus-neq'] = 'Rejected';
       }
       if (this.branchSelected && this.branchSelected.id) {
         api_filter['branch-eq'] = this.branchSelected.id;

@@ -158,6 +158,7 @@ export class CreateComponent implements OnInit {
   filteredOptions: Observable<string[]>;
   banksListNames = new FormControl('');
   bankListName: any;
+  customerData: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -691,6 +692,38 @@ export class CreateComponent implements OnInit {
     })
   }
 
+
+  fillCustomerDetails(data) {
+    this.customerDetails = data;
+    if (this.customerDetails) {
+      if (this.customerDetails && this.customerDetails.length != 0) {
+        console.log("this.customerDetails", this.customerDetails)
+        if (this.customerDetails[0].firstName) {
+          this.createLoan.controls.firstname.setValue(this.customerDetails[0].firstName);
+        }
+        if (this.customerDetails[0].lastName) {
+          this.createLoan.controls.lastname.setValue(this.customerDetails[0].lastName);
+        }
+        if (this.customerDetails[0] && this.customerDetails[0].email) {
+          this.createLoan.controls.email.setValue(this.customerDetails[0].email)
+        }
+        if (this.customerDetails[0] && this.customerDetails[0].address) {
+          this.createLoan.controls.permanentaddress1.setValue(this.customerDetails[0].address)
+        }
+        if (this.customerDetails[0] && this.customerDetails[0].dob) {
+          this.createLoan.controls.dob.setValue(this.customerDetails[0].dob)
+        }
+        if (this.customerDetails[0] && this.customerDetails[0].id) {
+          this.customerId = this.customerDetails[0].id;
+        }
+      }
+      else {
+        this.createLoan.controls.name.setValue("")
+        this.createLoan.controls.email.setValue("")
+      }
+    }
+  }
+
   expandAll() {
     this.customerDetailsPanel = true;
     this.kycDetailsPanel = true;
@@ -1163,6 +1196,28 @@ export class CreateComponent implements OnInit {
   }
 
   verifyotp() {
+
+    if (!this.createLoan.controls.firstname.value || (this.createLoan.controls.firstname.value && this.createLoan.controls.firstname.value == '')) {
+      this.snackbarService.openSnackBar("Please Enter Customer Firstname", { 'panelClass': 'snackbarerror' });
+      return false
+    }
+
+    if (!this.createLoan.controls.lastname.value || (this.createLoan.controls.lastname.value && this.createLoan.controls.lastname.value == '')) {
+      this.snackbarService.openSnackBar("Please Enter Customer Lastname", { 'panelClass': 'snackbarerror' });
+      return false
+    }
+
+    if (!this.createLoan.controls.dob.value || (this.createLoan.controls.dob.value && this.createLoan.controls.dob.value == '')) {
+      this.snackbarService.openSnackBar("Please Enter Date of Birth", { 'panelClass': 'snackbarerror' });
+      return false
+    }
+
+    if (!this.createLoan.controls.gender.value || (this.createLoan.controls.gender.value && this.createLoan.controls.gender.value == '')) {
+      this.snackbarService.openSnackBar("Please Select Gender", { 'panelClass': 'snackbarerror' });
+      return false
+    }
+
+
     if (this.createLoan.controls.phone.value && this.createLoan.controls.phone.value != '' && this.createLoan.controls.phone.value.length == 10) {
       let can_remove = false;
       if (this.createLoan.controls.firstname.value && this.createLoan.controls.lastname.value) {
@@ -1193,6 +1248,10 @@ export class CreateComponent implements OnInit {
           if (result.msg == "success") {
             this.verification = true;
             this.loanId = result.uid;
+            if (result.customerData) {
+              this.customerData = result.customerData
+              console.log("this.customerData", this.customerData)
+            }
             const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
             this.getCustomerDetails(filter);
             const navigationExtras: NavigationExtras = {
@@ -1393,58 +1452,63 @@ export class CreateComponent implements OnInit {
 
 
   idVerification(type) {
-    this.loanApplication = {
-      "loanApplicationUid": this.loanId,
-      "customerPhone": this.createLoan.controls.phone.value,
-    }
-
-    if (type == 'Pan') {
-      this.loanApplication["pan"] = this.createLoan.controls.pannumber.value;
-    }
-    else if (type == 'UID') {
-      this.loanApplication["aadhaar"] = this.createLoan.controls.aadharnumber.value;
-    }
-
-    this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
-
-      if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
-        this.loanApplication["id"] = data.loanApplicationKycList[0].id
-      }
-      for (let i = 0; i < this.filesToUpload.length; i++) {
-        this.filesToUpload[i]['order'] = i;
-        if (this.filesToUpload[i]["type"] == 'pan' && type == 'Pan') {
-          this.loanApplication['panAttachments'] = [];
-          this.loanApplication['panAttachments'].push(this.filesToUpload[i]);
-        }
-        if (this.filesToUpload[i]["type"] == 'aadhar' && type == 'UID') {
-          this.loanApplication['aadhaarAttachments'] = [];
-          this.loanApplication['aadhaarAttachments'].push(this.filesToUpload[i]);
-        }
+    if (this.verification) {
+      this.loanApplication = {
+        "loanApplicationUid": this.loanId,
+        "customerPhone": this.createLoan.controls.phone.value,
       }
 
-      this.cdlService.verifyIds(type, this.loanApplication).subscribe((s3urls: any) => {
-        if (s3urls.length > 0) {
-          this.uploadAudioVideo(s3urls).then(
-            (dataS3Url) => {
-              console.log(dataS3Url);
-            });
+      if (type == 'Pan') {
+        this.loanApplication["pan"] = this.createLoan.controls.pannumber.value;
+      }
+      else if (type == 'UID') {
+        this.loanApplication["aadhaar"] = this.createLoan.controls.aadharnumber.value;
+      }
+
+      this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
+
+        if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
+          this.loanApplication["id"] = data.loanApplicationKycList[0].id
         }
-        if (type == 'Pan') {
-          this.panverification = true;
-          this.snackbarService.openSnackBar(type + " Verified Successfully")
+        for (let i = 0; i < this.filesToUpload.length; i++) {
+          this.filesToUpload[i]['order'] = i;
+          if (this.filesToUpload[i]["type"] == 'pan' && type == 'Pan') {
+            this.loanApplication['panAttachments'] = [];
+            this.loanApplication['panAttachments'].push(this.filesToUpload[i]);
+          }
+          if (this.filesToUpload[i]["type"] == 'aadhar' && type == 'UID') {
+            this.loanApplication['aadhaarAttachments'] = [];
+            this.loanApplication['aadhaarAttachments'].push(this.filesToUpload[i]);
+          }
         }
-        else if (type == 'UID') {
-          this.verifyingUID = true;
-          this.snackbarService.openSnackBar("We have sent the verification link to mobile.Please Verify and click on refresh")
-        }
+
+        this.cdlService.verifyIds(type, this.loanApplication).subscribe((s3urls: any) => {
+          if (s3urls.length > 0) {
+            this.uploadAudioVideo(s3urls).then(
+              (dataS3Url) => {
+                console.log(dataS3Url);
+              });
+          }
+          if (type == 'Pan') {
+            this.panverification = true;
+            this.snackbarService.openSnackBar(type + " Verified Successfully")
+          }
+          else if (type == 'UID') {
+            this.verifyingUID = true;
+            this.snackbarService.openSnackBar("We have sent the verification link to mobile.Please Verify and click on refresh")
+          }
+        },
+          (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          })
       },
         (error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         })
-    },
-      (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-      })
+    } else {
+      this.snackbarService.openSnackBar("Please Verify Phone Number First", { 'panelClass': 'snackbarerror' })
+    }
+
 
 
   }
@@ -1714,37 +1778,39 @@ export class CreateComponent implements OnInit {
   }
 
   verifyEmail() {
-    if (this.createLoan.controls.email.value && this.createLoan.controls.email.value.includes('@') && this.createLoan.controls.email.value.includes('.')) {
-      if (this.createLoan.controls.email.value != '') {
-        let can_remove = false;
-        const dialogRef = this.dialog.open(OtpVerifyComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-          disableClose: true,
-          data: {
-            type: 'Email',
-            id: this.loanId,
-            email: this.createLoan.controls.email.value
-          }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log(result);
-          if (result && result.msg == "success") {
-            this.emailverification = true
-            this.snackbarService.openSnackBar("Email Id Verified");
-          }
-        });
-        return can_remove;
+    if (this.verification) {
+      if (this.createLoan.controls.email.value && this.createLoan.controls.email.value.includes('@') && this.createLoan.controls.email.value.includes('.')) {
+        if (this.createLoan.controls.email.value != '') {
+          let can_remove = false;
+          const dialogRef = this.dialog.open(OtpVerifyComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              type: 'Email',
+              id: this.loanId,
+              email: this.createLoan.controls.email.value
+            }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+            if (result && result.msg == "success") {
+              this.emailverification = true
+              this.snackbarService.openSnackBar("Email Id Verified");
+            }
+          });
+          return can_remove;
+        }
+        else {
+          this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+        }
       }
       else {
         this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
       }
+    } else {
+      this.snackbarService.openSnackBar("Please Verify Phone Number First", { 'panelClass': 'snackbarerror' });
     }
-    else {
-      this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
-    }
-
-
   }
 
   verifyaadhar() {

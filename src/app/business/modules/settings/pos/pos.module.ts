@@ -14,9 +14,9 @@ const routes: Routes = [
     },
     { path: 'coupons/:id', loadChildren: () => import('./coupons/provider-jcoupon-details/provider-jcoupon-details.module').then(m=>m.ProviderJcouponDetailsModule) },
     { path: 'items', loadChildren: () => import('./items/items.module').then(m => m.ItemsModule) },
-    { path: 'itemgroup', loadChildren: () => import('./itemgroup/itemgroup.module').then(m => m.ItemgroupModule) },
-    { path: 'itemgroup/:id', loadChildren: () => import('./itemgroup/itemgroup.module').then(m => m.ItemgroupModule) },
-    { path: 'itemlist', loadChildren: () => import('./itemlist/itemlist.module').then(m => m.ItemlistModule) },
+    // { path: 'itemgroup', loadChildren: () => import('./itemgroup/itemgroup.module').then(m => m.ItemgroupModule) },
+    // { path: 'itemgroup/:id', loadChildren: () => import('./itemgroup/itemgroup.module').then(m => m.ItemgroupModule) },
+    // { path: 'itemlist', loadChildren: () => import('./itemlist/itemlist.module').then(m => m.ItemlistModule) },
     { path: 'coupon', loadChildren: () => import('./coupons/list/pos-coupons.module').then(m => m.CouponsModule) },
     { path: 'discount', loadChildren: () => import('./discount/discount.module').then(m => m.DiscountModule) }
 ];

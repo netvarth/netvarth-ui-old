@@ -1206,6 +1206,7 @@ export const projectConstantsLocal = {
     { name: 'LoanRequest', displayName: 'Loan Request' },
     // { name: 'ApprovalPending', displayName: 'Approval Pending' },
     { name: 'ApprovalRequired', displayName: 'Approval Required' },
+    { name: 'CreditApproved', displayName: 'Credit Approved' },
     { name: 'Rejected', displayName: 'Rejected' },
     { name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
     { name: 'Sanctioned', displayName: 'Sanctioned' },
@@ -1230,7 +1231,8 @@ export const projectConstantsLocal = {
     { name: 'Draft', displayName: 'Leads' },
     { name: 'Approved', displayName: 'Approved' },
     { name: 'ApprovalPending', displayName: 'Approval Pending' },
-    { name: 'Rejected', displayName: 'Rejected' },
+    { name: 'Suspended', displayName: 'Suspended' },
+    { name: 'Rejected', displayName: 'Rejected' }
   ],
   KYC_LIST: [
     { name: 'Passport', displayName: 'Passport', id: 0 },

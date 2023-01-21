@@ -3,13 +3,15 @@ import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../../loans/otp-verify/otp-verify.component';
-import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { CdlService } from '../../cdl.service';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { FileService } from '../../../../../shared/services/file-service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 import { GmapsComponent } from '../../gmaps/gmaps.component';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-create-dealer',
@@ -77,6 +79,9 @@ export class CreateDealerComponent implements OnInit {
   latitude: any;
   longitude: any;
   mapAddress: any;
+  filteredOptions: Observable<string[]>;
+  banksListNames = new FormControl('');
+  bankListName: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -188,7 +193,7 @@ export class CreateDealerComponent implements OnInit {
 
 
             if (this.dealerData && this.dealerData.bankName) {
-              this.createDealer.controls.bank.setValue(this.dealerData.bankName);
+              this.bankListName = this.dealerData.bankName;
             }
 
             if (this.dealerData && this.dealerData.branch && this.dealerData.branch.id) {
@@ -221,6 +226,7 @@ export class CreateDealerComponent implements OnInit {
 
             if (this.dealerData && this.dealerData.bankAccountVerified) {
               this.bankverification = true;
+              this.banksListNames.disable();
             }
 
             if (this.dealerData && this.dealerData.isPanVerified) {
@@ -230,20 +236,6 @@ export class CreateDealerComponent implements OnInit {
             if (this.dealerData && this.dealerData.isAadhaarVerified) {
               this.aadharverification = true;
             }
-
-
-
-            this.cdlservice.getBankDetailsById(params.id).subscribe((data) => {
-              this.bankData = data;
-              console.log("this.bankData", this.bankData)
-              if (this.bankData) {
-                this.createDealer.controls.bank.setValue(this.bankData.bankName);
-                this.createDealer.controls.account.setValue(this.bankData.bankAccountNo);
-                this.createDealer.controls.ifsc.setValue(this.bankData.bankIfsc);
-                // this.accountverification = this.bankData.bankAccountVerified;
-                this.selectedFiles['cheque'].files = this.bankData.bankAttachments;
-              }
-            });
 
 
 
@@ -265,6 +257,10 @@ export class CreateDealerComponent implements OnInit {
         this.businessId = this.businessDetails.id;
       }
     })
+
+    this.filteredOptions = this.banksListNames.valueChanges.pipe(startWith(''),
+      map(value => this._filter(value || '')),
+    );
   }
 
   resetErrors() {
@@ -277,6 +273,11 @@ export class CreateDealerComponent implements OnInit {
       this.banksList = data;
       console.log("this.banksList", this.banksList)
     })
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.banksList.filter(option => option.bankName.toLowerCase().includes(filterValue));
   }
 
 
@@ -665,7 +666,7 @@ export class CreateDealerComponent implements OnInit {
 
     let bankInfo = {
       "uid": this.dealerData.uid,
-      "bankName": this.createDealer.controls.bank.value,
+      "bankName": this.bankListName,
       "bankAccountNo": this.createDealer.controls.account.value,
       "bankIfsc": this.createDealer.controls.ifsc.value
     }
@@ -684,7 +685,7 @@ export class CreateDealerComponent implements OnInit {
     const verifyBank = {
       "id": this.dealerData.id,
       "uid": this.dealerData.uid,
-      "bankName": this.createDealer.controls.bank.value,
+      "bankName": this.bankListName,
       "bankAccountNo": this.createDealer.controls.account.value,
       "bankIfsc": this.createDealer.controls.ifsc.value
     }

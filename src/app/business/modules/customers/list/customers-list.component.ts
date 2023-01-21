@@ -18,6 +18,7 @@ import { DateTimeProcessor } from '../../../../shared/services/datetime-processo
 import { CommunicationService } from '../../../../business/services/communication-service';
 import { AddInboxMessagesComponent } from '../../../../../../src/app/shared/components/add-inbox-messages/add-inbox-messages.component';
 import { CommonDataStorageService } from '../../../../../../src/app/shared/services/common-datastorage.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-customers-list',
@@ -43,7 +44,7 @@ export class CustomersListComponent implements OnInit {
     last_name: '',
     date: null,
     mobile: '',
-    countrycode:'',
+    countrycode: '',
     email: '',
     page_count: projectConstants.PERPAGING_LIMIT,
     page: 1
@@ -77,7 +78,7 @@ export class CustomersListComponent implements OnInit {
     'last_name': false,
     'date': false,
     'mobile': false,
-    'countrycode':false,
+    'countrycode': false,
     'email': false
   };
   customerselection = 0;
@@ -119,12 +120,12 @@ export class CustomersListComponent implements OnInit {
   hideGroups = false;
   customerCount;
   emailerror = null;
-    email1error = null;
-    phoneerror = null;
+  email1error = null;
+  phoneerror = null;
   separateDialCode = true;
   smsdialogRef;
   grup_custmer;
-  allList:any;
+  allList: any;
   isMemberIdExisted;
   constructor(private provider_services: ProviderServices,
     private router: Router,
@@ -138,14 +139,15 @@ export class CustomersListComponent implements OnInit {
     private activated_route: ActivatedRoute,
     private snackbarService: SnackbarService,
     public common_datastorage: CommonDataStorageService,
+    private location: Location,
     private dateTimeProcessor: DateTimeProcessor) {
-       this.allList = localStorage.getItem('Detail');
-      // console.log("All List",this.allList)
+    this.allList = localStorage.getItem('Detail');
+    // console.log("All List",this.allList)
 
     this.onResize();
     this.filtericonTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_TOOPTIP');
     this.filtericonclearTooltip = this.wordProcessor.getProjectMesssages('FILTERICON_CLEARTOOLTIP');
-    
+
     if (this.groupService.getitemFromGroupStorage('group')) {
       this.selectedGroup = this.groupService.getitemFromGroupStorage('group');
     } else {
@@ -240,7 +242,7 @@ export class CustomersListComponent implements OnInit {
             .subscribe(
               data => {
                 this.customers = data;
-                console.log("Customers :",this.customers)
+                console.log("Customers :", this.customers)
                 this.apiloading = false;
                 this.loadComplete = true;
               },
@@ -260,19 +262,19 @@ export class CustomersListComponent implements OnInit {
     this.emailerror = null;
     this.email1error = null;
     this.phoneerror = null;
-}
+  }
   showCustomerAction(customer) {
     const cust = [];
     cust.push(customer)
-    console.log("Patient Detailssss: ",customer)
+    console.log("Patient Detailssss: ", customer)
     const notedialogRef = this.dialog.open(CustomerActionsComponent, {
       width: '50%',
       panelClass: ['popup-class', 'commonpopupmainclass'],
       disableClose: true,
       data: {
         customer: cust,
-        generateMemberId : this.selectedGroup.generateGrpMemId,
-        groupName : this.selectedGroup.groupName
+        generateMemberId: this.selectedGroup.generateGrpMemId,
+        groupName: this.selectedGroup.groupName
       }
     });
     notedialogRef.afterClosed().subscribe(result => {
@@ -284,12 +286,12 @@ export class CustomersListComponent implements OnInit {
           this.getCustomerListByGroup();
         }
       }
-     if(result){
+      if (result) {
         this.isMemberIdExisted = result;
-        console.log("isMemberIdExisted ",this.isMemberIdExisted)
-       
+        console.log("isMemberIdExisted ", this.isMemberIdExisted)
+
       }
-     
+
     });
   }
   clearFilter() {
@@ -341,7 +343,7 @@ export class CustomersListComponent implements OnInit {
   }
   keyPress() {
     this.labelSelection();
-    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.countrycode|| this.filter.email || this.labelFilterData !== '') {
+    if (this.filter.jaldeeid || this.filter.first_name || this.filter.last_name || this.filter.date || this.filter.mobile || this.filter.countrycode || this.filter.email || this.labelFilterData !== '') {
       this.filterapplied = true;
     } else {
       this.filterapplied = false;
@@ -374,7 +376,7 @@ export class CustomersListComponent implements OnInit {
       'last_name': false,
       'date': false,
       'mobile': false,
-      'countrycode':false,
+      'countrycode': false,
       'email': false
     };
     this.filter = {
@@ -383,7 +385,7 @@ export class CustomersListComponent implements OnInit {
       last_name: '',
       date: null,
       mobile: '',
-      countrycode:'',
+      countrycode: '',
       email: '',
       page_count: projectConstants.PERPAGING_LIMIT,
       page: 1
@@ -423,7 +425,7 @@ export class CustomersListComponent implements OnInit {
         this.filter.mobile = '';
       }
     }
-    if(this.filter.countrycode !== ''){
+    if (this.filter.countrycode !== '') {
       api_filter['countryCode-eq'] = this.filter.countrycode;
     }
     if (this.labelFilterData !== '') {
@@ -519,7 +521,7 @@ export class CustomersListComponent implements OnInit {
         source: 'provider-sendAll',
         typeOfMsg: 'multiple',
         terminologies: terminologies,
-      } 
+      }
     });
     this.smsdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
@@ -535,11 +537,11 @@ export class CustomersListComponent implements OnInit {
       autoFocus: true,
       data: {
         source: 'provider-sendAll_group',
-        grup_id : this.selectedGroup.id,
+        grup_id: this.selectedGroup.id,
         typeOfMsg: 'multiple',
-        selectedcustomersformsg : this.grup_custmer,
+        selectedcustomersformsg: this.grup_custmer,
         terminologies: terminologies,
-      } 
+      }
     });
     this.smsdialogRef.afterClosed().subscribe(result => {
       if (result === 'reloadlist') {
@@ -657,10 +659,10 @@ export class CustomersListComponent implements OnInit {
           if (this.selectedcustomersformsg[0].phoneNo && this.selectedcustomersformsg[0].email) {
             this.hide_msgicon = false;
           }
-          else{
+          else {
             this.hide_msgicon = true;
           }
-        } 
+        }
         // else {
         //   const customerList = this.selectedcustomersformsg.filter(customer => customer.phoneNo || customer.email);
         //   if (customerList.length === 0) {
@@ -692,12 +694,12 @@ export class CustomersListComponent implements OnInit {
   // }
   setLabelFilter(label, event) {
     const value = event.checked;
-      if (this.selectedLabels[label.label]) {
-        delete this.selectedLabels[label.label];
-      } else {
-        this.selectedLabels[label.label] = [];
-        this.selectedLabels[label.label].push(value);
-      }
+    if (this.selectedLabels[label.label]) {
+      delete this.selectedLabels[label.label];
+    } else {
+      this.selectedLabels[label.label] = [];
+      this.selectedLabels[label.label].push(value);
+    }
     this.keyPress();
   }
   getLabel() {
@@ -786,11 +788,11 @@ export class CustomersListComponent implements OnInit {
     }
     const postData = {
       'groupName': this.selectedGroup.groupName,
-      'providerConsumerIds':ids
+      'providerConsumerIds': ids
     };
     // this.provider_services.addCustomerToGroup(this.selectedGroup.groupName, postData).subscribe(
-     this.provider_services.addCustomerToGroup(postData).subscribe(
-     (data: any) => {
+    this.provider_services.addCustomerToGroup(postData).subscribe(
+      (data: any) => {
         this.showCustomers = false;
         this.resetList();
         this.getCustomerListByGroup();
@@ -853,16 +855,16 @@ export class CustomersListComponent implements OnInit {
       .then(
         result => {
           this.customer_count = result;
-          console.log("Group By customers count :",this.customer_count)
+          console.log("Group By customers count :", this.customer_count)
           this.grup_custmer = result;
           api_filter = this.setPaginationFilter(api_filter);
           this.provider_services.getProviderCustomers(api_filter)
             .subscribe(
               data => {
-               // if(this.generateGrpMemId === true){
+                // if(this.generateGrpMemId === true){
                 this.customers = this.groupCustomers = data;
-              //  }
-                console.log("Group By customers  :",this.customers)
+                //  }
+                console.log("Group By customers  :", this.customers)
                 this.apiloading = false;
               },
               error => {
@@ -928,9 +930,9 @@ export class CustomersListComponent implements OnInit {
       const postData = {
         'groupName': this.groupName,
         'description': this.groupDescription,
-        'generateGrpMemId':this.generateGrpMemId
+        'generateGrpMemId': this.generateGrpMemId
       };
-      console.log("Post Group Data :",postData)
+      console.log("Post Group Data :", postData)
       if (!this.groupEdit) {
         this.createGroup(postData);
       } else {
@@ -959,8 +961,8 @@ export class CustomersListComponent implements OnInit {
         this.apiError = error.error;
       });
   }
-  changeGroupMemberId(generateGrpMemId){
-    console.log("generateGrpMemId :",generateGrpMemId)
+  changeGroupMemberId(generateGrpMemId) {
+    console.log("generateGrpMemId :", generateGrpMemId)
   }
   resetGroupFields() {
     this.groupName = '';
@@ -1012,10 +1014,14 @@ export class CustomersListComponent implements OnInit {
       }
     });
   }
-  goBack(){
+  goBack() {
     this.hideGroups = true;
     this.groupLoaded = true;
     this.small_device_display = true;
+  }
+
+  goPrevious() {
+    this.location.back()
   }
   // showCustomersSection() {
   //   if (!this.groupLoaded || ((this.small_device_display && this.hideGroups && this.allList && this.groupLoaded) || !this.small_device_display || this.groups.length === 0)) {
@@ -1045,7 +1051,7 @@ export class CustomersListComponent implements OnInit {
   //          return true;
   //   }
   //   if(!this.small_device_display){
-     
+
   //    return true;
   //   }
   // }

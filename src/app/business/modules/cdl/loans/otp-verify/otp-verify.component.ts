@@ -141,6 +141,7 @@ export class OtpVerifyComponent implements OnInit {
         }
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.dialogRef.close();
       }
     )
     // }
@@ -161,6 +162,7 @@ export class OtpVerifyComponent implements OnInit {
         this.snackbarService.openSnackBar("Otp Sent Successfully");
       }, (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        this.dialogRef.close();
       }
     )
   }
@@ -329,6 +331,12 @@ export class OtpVerifyComponent implements OnInit {
         }
       }
       if (this.customerData) {
+        if (!this.customerData['customer']['dob']) {
+          this.customerData['customer']['dob'] = this.dob;
+        }
+        if (!this.customerData['customer']['gender']) {
+          this.customerData['customer']['gender'] = this.gender;
+        }
         if (this.from == 'guarantor') {
           this.customerData['uid'] = this.loanId
           this.customerData.loanApplicationKycList[0].id = this.loankycid
@@ -346,7 +354,8 @@ export class OtpVerifyComponent implements OnInit {
                 const data = {
                   type: this.type,
                   msg: "success",
-                  uid: response.uid
+                  uid: response.uid,
+                  customerData: this.customerData
                 }
                 this.dialogRef.close(data);
               }
