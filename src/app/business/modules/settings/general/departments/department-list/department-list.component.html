@@ -154,7 +154,9 @@
                             <!-- 'assets/showcase/images/demo/product/' +  -->
                             <!--*ngIf="dept && dept.departmentCode" *ngIf="dept && dept.departmentDescription" -->
                             <td>{{dept.departmentCode}}</td>
-                            <td>{{dept.departmentDescription}}</td>
+                            <td *ngIf="!small_device_display">{{dept.departmentDescription.length >= 100 ? dept.departmentDescription.slice(0,100) + '...' : dept.departmentDescription}}</td>
+                            <td *ngIf="small_device_display">{{dept.departmentDescription.length >= 50 ? dept.departmentDescription.slice(0,50) + '...' : dept.departmentDescription}}</td>
+
                             <td>
                                 <div class="copy">
                                     <span class="">

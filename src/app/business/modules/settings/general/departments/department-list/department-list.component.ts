@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { Messages } from '../../../../../../shared/constants/project-messages';
 import { SharedFunctions } from '../../../../../../shared/functions/shared-functions';
@@ -30,6 +30,8 @@ export class DepartmentListComponent implements OnInit {
     imageToShow = "../../assets/images/no_image_icon.png";
     fileobj: any;
     active_user:any;
+    screenWidth: number;
+    small_device_display = false;
     constructor(public router: Router,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
@@ -41,6 +43,19 @@ export class DepartmentListComponent implements OnInit {
         private dialog: MatDialog,
         ) {
 
+    }
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+      this.screenWidth = window.innerWidth;
+    //   if (this.screenWidth <= 767) {
+    //   } else {
+    //     this.small_device_display = false;
+    //   }
+      if (this.screenWidth <= 767) {
+        this.small_device_display = true;
+      } else {
+        this.small_device_display = false;
+      }
     }
     ngOnInit() {
         const user = this.groupService.getitemFromGroupStorage('ynw-user');

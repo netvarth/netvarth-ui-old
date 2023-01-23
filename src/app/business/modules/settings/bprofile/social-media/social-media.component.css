@@ -156,3 +156,9 @@
     background-color: #ffe2e5;
     border-color: transparent;
 }
+.btn.btn-light-success{
+    color: #ffff;
+    background-color:#3c8dbc;
+    border-color: transparent;
+
+}
