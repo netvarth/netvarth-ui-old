@@ -120,3 +120,7 @@
         color: #e9ecef;
     }
 }
+
+.logo-hover:hover{
+    opacity: 60%;
+}
