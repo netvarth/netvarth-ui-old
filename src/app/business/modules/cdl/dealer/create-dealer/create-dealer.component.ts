@@ -297,7 +297,10 @@ export class CreateDealerComponent implements OnInit {
 
 
   idVerification(type) {
-
+    if (!this.verification) {
+      this.snackbarService.openSnackBar("Please Verify Mobile Number First", { 'panelClass': 'snackbarerror' });
+      return false
+    }
     this.dealerApplication = {
       "uid": this.dealerId
     }
@@ -385,6 +388,10 @@ export class CreateDealerComponent implements OnInit {
   }
 
   verifyemail() {
+    if (!this.verification) {
+      this.snackbarService.openSnackBar("Please Verify Mobile Number First", { 'panelClass': 'snackbarerror' });
+      return false
+    }
     if (this.createDealer.controls.email.value && this.createDealer.controls.email.value != '') {
       let can_remove = false;
       const dialogRef = this.dialog.open(OtpVerifyComponent, {
@@ -442,6 +449,10 @@ export class CreateDealerComponent implements OnInit {
 
 
   verifygst() {
+    if (!this.verification) {
+      this.snackbarService.openSnackBar("Please Verify Mobile Number First", { 'panelClass': 'snackbarerror' });
+      return false
+    }
     let gstDetails = {
       "gstin": this.createDealer.controls.gst.value
     }
