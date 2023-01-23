@@ -1071,7 +1071,7 @@
                       </div>
                       <div *ngIf="termscheck" (click)="termsOpen()" class="terms">{{defultMoreText}}</div>
                     </div>
-                    <div class="confirmClr my-2 font-weight-bold bggrey">
+                    <div class="confirmClr my-2 font-weight-bold bggrey" *ngIf="cartDetails.itemTotal > 0">
                       <span class="price-tag">Total Payment</span><br>
                       <span class="price"><i class="fa fa-inr"></i>{{cartDetails.itemTotal}}</span>
                     </div>
