@@ -936,9 +936,7 @@ export class CreateComponent implements OnInit {
           };
         }
         if (this.loanData && this.loanData.customer && this.loanData.customer.id) {
-          this.loanApplication.customer = {
-            "id": this.loanData.customer.id
-          };
+          this.loanApplication.customer['id'] = this.loanData.customer.id;
         }
         if (this.loanData && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
           this.loanApplication.loanApplicationKycList[0]['id'] = this.loanData.loanApplicationKycList[0].id;
