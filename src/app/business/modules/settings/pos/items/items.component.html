@@ -70,7 +70,7 @@
       </div>
       <div class="customCard"  id="C"
       *ngFor="let itemgroup of itemGroups">
-        <div class="eachTab">
+        <div class="eachTab" (click)="goToGroupItems(itemgroup)">
           <!-- <div>
             <img style="width: 35px;height:35px" src="./assets/images/crmImages/reports.png" />
             

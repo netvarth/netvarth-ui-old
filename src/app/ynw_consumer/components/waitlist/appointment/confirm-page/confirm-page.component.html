@@ -9,7 +9,7 @@
             <div class="panel-body no-padding">
                 <div class="card p0">
                     <div class="copy locd" *ngIf="!apiloading">
-                        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding" *ngIf="appointment && appointment.apptStatus !== 'Requested'">
+                        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding" *ngIf="appointment && (appointment.apptStatus === 'Confirmed')">
                             <div class="info-img">
                                 <img src="assets/images/bg-01.png">
                             </div>
@@ -139,7 +139,8 @@
                             </div>
                            
                         </div>
-                        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding" *ngIf="appointment && appointment.apptStatus === 'Requested'">
+                        <!--  || appointment.apptStatus === 'prepaymentPending' -->
+                        <div class="col-sm-12 col-md-12 col-lg-12 post-info no-padding" *ngIf="appointment && (appointment.apptStatus === 'Requested' || appointment.apptStatus === 'prepaymentPending')">
                             <div class="info-img">
                                 <img src="assets/images/bg-01.png">
                             </div>

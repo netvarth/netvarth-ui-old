@@ -90,6 +90,8 @@ export class AppointmentActionsComponent implements OnInit {
   dateDisplayFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT_WITH_DAY;
   dateFormat = projectConstants.PIPE_DISPLAY_DATE_FORMAT;
   newDateFormat = projectConstantsLocal.DATE_MM_DD_YY_FORMAT;
+  newTimeDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
+
   loading = false;
   apptDate = "";
   domain;
@@ -203,7 +205,7 @@ export class AppointmentActionsComponent implements OnInit {
     if(this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay){
       this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
     }   //this.getSlots(this.sel_schedule_id);
-    this.multipleSelection = this.data.multiSelection;
+    this.multipleSelection = this.appt.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
     if (this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].whatsAppNum) {
@@ -220,7 +222,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
   }
     if (
-      !this.data.multiSelection &&
+      !this.appt.multiSelection &&
       this.appt.releasedQnr &&
       this.appt.releasedQnr.length > 0 &&
       this.appt.apptStatus !== "Cancelled"
@@ -287,6 +289,7 @@ export class AppointmentActionsComponent implements OnInit {
         this.action = 'status';
     }
   }
+  
   getUser() {
     if (this.userid) {
       this.provider_services.getUsers().subscribe(

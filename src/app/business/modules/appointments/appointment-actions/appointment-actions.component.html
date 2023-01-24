@@ -570,9 +570,11 @@
                             {{appt.appmtFor[0].lastName | capitalizeFirst}}</span>
                     </div>
                     <div *ngIf="appt.appmtDate">
-                        <span>Request Date : </span> <span class="bold">{{appt.appmtDate | date: newDateFormat}}</span>
+                        <span>Request Date : </span> <span class="bold">{{appt.appmtDate | date: newTimeDateFormat}}</span>
+                        <div *ngIf="appt && appt.appmtFor[0] && appt.appmtFor[0].apptTime">Request Time : {{getSingleTime(appt.appmtFor[0].apptTime)}}</div>
                     </div>
                 </div>
+                <!-- apptTakenTime -->
             </div>
         </div>
         <div class="modal-footer">
