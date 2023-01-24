@@ -1,5 +1,4 @@
-
-<form [formGroup]="amForm" class="ynw-common-form" [class.addinboxstyle]="isBusinessOwner=='false'" novalidate 
+<form [formGroup]="amForm" class="ynw-common-form" [class.addinboxstyle]="isBusinessOwner=='false'" novalidate
     (keyup)="resetApiErrors()" [ngClass]="this.data.theme">
     <h1 class="mat-dialog-title">{{title}}
         <button #queue mat-dialog-close class="modal_close">
@@ -9,50 +8,63 @@
     <mat-dialog-content>
         <div class="form-group" *ngIf="!api_loading">
             <!-- <mat-form-field> -->
-                <div class="card-head-grey mgn-bt-5">{{message_label}} *</div>
-                <textarea matInput class="form-control" id="message" placeholder="Message" 
-                    formControlName="message" (keypress)="keyPressed($event.target.value)" maxlength="180">
+            <div class="card-head-grey mgn-bt-5">{{message_label}} *</div>
+            <textarea matInput class="form-control" id="message" placeholder="Message" formControlName="message"
+                (keypress)="keyPressed($event.target.value)" maxlength="120">
             </textarea>
-           <!-- </mat-form-field> -->
+            <!-- </mat-form-field> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"
                 errorMsg="Please enter a message.">
             </app-field-error-display>
         </div>
-        <div class="mgtop40 form-group" *ngIf="!api_loading && (source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list' || source === 'provider-sendAll'  || source === 'provider-sendAll_group')">
+        <div class="mgtop40 form-group"
+            *ngIf="!api_loading && (source ==='provider-waitlist' || source === 'customer-list' || source === 'donation-list' || source === 'provider-sendAll'  || source === 'provider-sendAll_group')">
             <div class="card-head-grey">Send message via</div>
             <div class="coupon-outer">
                 <!-- countryCode !='+91' -->
                 <!-- "!smsGlobalStatusEnable || ((source === 'customer-list' || source === 'donation-list' || source === 'provider-waitlist') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && ((!phone && !phone_history )|| phone === 'null' || phone === '' || countryCode !='+91' ) || is_noSMS))" -->
-                <mat-checkbox  [disabled]="!smsGlobalStatusEnable || (selectedMessage.files.length !== 0 && (typeOfMsg === 'single' || selectedMessage.files.length !== 0 && (!phone && !phone_history )|| phone === 'null' || phone === '' || countryCode !='+91' )) || is_noSMS"   class="mgright25 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
+                <mat-checkbox
+                    [disabled]="!smsGlobalStatusEnable || (selectedMessage.files.length !== 0 && (typeOfMsg === 'single' || selectedMessage.files.length !== 0 && (!phone && !phone_history )|| phone === 'null' || phone === '' || countryCode !='+91' )) || is_noSMS"
+                    class="mgright25 example-margin" [(ngModel)]="sms" [ngModelOptions]="{standalone: true}">
                     SMS
                 </mat-checkbox>
-<!-- "((source === 'customer-list' || source === 'donation-list' || source === 'provider-waitlist') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && !email_id))" -->
-                <mat-checkbox [disabled]="(typeOfMsg === 'single' && !email_id)" class="mgright25 example-margin" [(ngModel)]="email"
-                    [ngModelOptions]="{standalone: true}">Email
+                <!-- "((source === 'customer-list' || source === 'donation-list' || source === 'provider-waitlist') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && !email_id))" -->
+                <mat-checkbox [disabled]="(typeOfMsg === 'single' && !email_id)" class="mgright25 example-margin"
+                    [(ngModel)]="email" [ngModelOptions]="{standalone: true}">Email
                 </mat-checkbox>
                 <!-- "!notificationStatusEnable || ((source === 'customer-list' || source === 'donation-list' || source === 'provider-waitlist') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (selectedMessage.files.length !== 0 ||   (source ==='provider-waitlist' || source ==='customer-list') && !email_id && (!phone || phone === 'null' || phone === '') || !jaldeeConsumer))" -->
-                <mat-checkbox  [disabled]="!notificationStatusEnable || (typeOfMsg === 'single' && (!phone || phone === 'null' || phone === ''))" class="mgright25 example-margin" [(ngModel)]="pushnotify"
-                    [ngModelOptions]="{standalone: true}">App
+                <mat-checkbox
+                    [disabled]="!notificationStatusEnable || (typeOfMsg === 'single' && (!phone || phone === 'null' || phone === ''))"
+                    class="mgright25 example-margin" [(ngModel)]="pushnotify" [ngModelOptions]="{standalone: true}">App
                     notification
                 </mat-checkbox>
                 <!-- <mat-checkbox *ngIf="notificationStatusEnable" [disabled]="true"> SMS</mat-checkbox> -->
                 <!-- "((source === 'customer-list' || source === 'donation-list' || source === 'provider-waitlist') && selectedMessage.files.length !== 0) || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))" -->
-                <mat-checkbox  [disabled]="selectedMessage.files.length !== 0 || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))" class="mgright25 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
+                <mat-checkbox
+                    [disabled]="selectedMessage.files.length !== 0 || (typeOfMsg === 'single' && (((!phone)|| phone === 'null' || phone === '' )))"
+                    class="mgright25 example-margin" [(ngModel)]="telegram" [ngModelOptions]="{standalone: true}">
                     Telegram
                 </mat-checkbox>
 
                 <!-- *ngIf="!IsTelegramDisable"  || IsTelegramDisable-->
                 <!-- typeOfMsg !== 'multiple' && -->
             </div>
-            <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid undelivered SMS'}}</div>
+            <div class="sms_credit_warn mgn-up-10" *ngIf="is_smsLow">{{smsWarnMsg}} <a
+                    (click)="gotoSmsAddon()">{{is_noSMS? 'Purchase now': 'Upgrade now'}}</a>{{is_noSMS? '' : ' to avoid
+                undelivered SMS'}}</div>
         </div>
-        <div style="color: red;" *ngIf = "typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && ((!phone && !phone_history ) || phone === 'null')">{{SEND_MESSAGE}}</div>
-        <div *ngIf = "!api_loading &&  (source === 'customer-list' || source === 'donation-list' || source ==='provider-waitlist') && selectedMessage.files.length !== 0" class="hint"><i class="fa fa-bell-o"></i>&nbsp;Message with uploaded files will be sent to email and jaldee inbox.</div>
+        <div style="color: red;"
+            *ngIf="typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && ((!phone && !phone_history ) || phone === 'null')">
+            {{SEND_MESSAGE}}</div>
+        <div *ngIf="!api_loading &&  (source === 'customer-list' || source === 'donation-list' || source ==='provider-waitlist') && selectedMessage.files.length !== 0"
+            class="hint"><i class="fa fa-bell-o"></i>&nbsp;Message with uploaded files will be sent to email and jaldee
+            inbox.</div>
         <app-common-innerloading-spinner *ngIf="api_loading"></app-common-innerloading-spinner>
     </mat-dialog-content>
     <mat-dialog-actions class="mat-scrool">
         <ng-container *ngIf="selectedMessage">
-            <div class="row col-md-12 no-padding-small attach_sendmsg" style="display: flex;" *ngFor="let item of selectedMessage.files; let i = index">
+            <div class="row col-md-12 no-padding-small attach_sendmsg" style="display: flex;"
+                *ngFor="let item of selectedMessage.files; let i = index">
                 <div class="col-md-7 no-padding-small">
                     <span class="ln-hgt-40">{{item.name}}</span>
                 </div>
@@ -91,11 +103,13 @@
         <div class="col-md-12 no-padding">
             <button type="button" mat-dialog-close class="mat-button grey-b"
                 [disabled]="disableButton">{{cancel_btn_cap}}</button>
-                <!-- amForm.get('message').value.trim() === '' || !amForm.valid ||  -->
-            <button type="button" (click)="amForm.valid && onSubmit(amForm.value)" mat-button [disabled]="disableButton || typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')"
+            <!-- amForm.get('message').value.trim() === '' || !amForm.valid ||  -->
+            <button type="button" (click)="amForm.valid && onSubmit(amForm.value)" mat-button
+                [disabled]="disableButton || typeOfMsg === 'single' && source ==='provider-waitlist' && !email_id && (!phone || phone === 'null')"
                 class="mat-button ">
                 <span *ngIf="!disableButton">{{send_btn_cap}}</span>
-                <app-common-innerloading-spinner *ngIf="disableButton" [spinnerParams]="{diameter:20}"></app-common-innerloading-spinner>
+                <app-common-innerloading-spinner *ngIf="disableButton"
+                    [spinnerParams]="{diameter:20}"></app-common-innerloading-spinner>
             </button>
             <button type="button"
                 *ngIf="source === 'customer-list' || source === 'donation-list' || source=='provider-waitlist' || source === 'provider-sendAll' || source === 'provider-sendAll_group' ||(typeOfMsg === 'single' && (source=='consumer-waitlist' || source == 'provider-waitlist-inbox' || source === 'consumer-common' || source === 'provider-common'))"

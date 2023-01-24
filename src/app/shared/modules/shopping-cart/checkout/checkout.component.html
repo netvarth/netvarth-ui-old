@@ -1079,7 +1079,7 @@
                     <form>
                       <div class="form-check text-danger d-flex mgn-up-10">
                         <label class="container1">I have read and understood all the instructions
-                          <input type="checkbox" (click)="terms_check()">
+                          <input type="checkbox" (click)="terms_check($event)">
                           <span class="mark"></span>
                         </label>
                       </div>
@@ -1281,7 +1281,7 @@
                       </div>
                       <div class="txt-align-center mgn-up-10">
                         <button type="button" class="submit-paper-btn font-weight-bold text-uppercase "
-                          [class.disabled]="isClickedOnce" [disabled]="!termscheck"
+                          [class.disabled]="isClickedOnce || !btnEnable" [disabled]="!btnEnable"
                           *ngIf=" cartDetails.advanceAmount > 0 && ((checkJcash && jcashamount < cartDetails.advanceAmount) || (!checkJcash))"
                           (click)="!isClickedOnce && confirm()">
                           Make Payment

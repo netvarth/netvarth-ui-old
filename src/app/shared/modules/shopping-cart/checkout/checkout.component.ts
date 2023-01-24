@@ -216,6 +216,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
   defultTextFirstStep: string = 'The primary objective of AuthorDemy.com is to help you improve the quality of the manuscript that you have prepared for publication so that its chances for getting accepted for publication increases considerably.We are particular that you should take full advantage of this additional step that we recommend to you before you submit your manuscript for publication. We want to improve not only the quality of the publication that you submitted to us, but also the writing skill of the authors by this exercise. Ideally, we do not want you to come back to AuthorDemy.com for all your future publications. Instead, we look forward to new authors to come to us based on the positive feed back about AuthorDemy.com that you give to them based on your experience in working with AuthorDemy.com. In order to achieve these, we request you to make sure that the manuscript you submit to AuthorDemy.com is finalized based on the information and instructions provided below.'
   defultMoreText: string = '...show more';
   defultTextSecondStep: string = ''
+  btnEnable: any = false;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -935,11 +936,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.action === 'timeChange' || this.action === 'coupons') {
       this.action = '';
     }
-    else if(this.source == 'paper' && this.bookStep=='Step 3')
-    {
+    else if (this.source == 'paper' && this.bookStep == 'Step 3') {
       this.bookStep = 'qnr';
     }
-     else {
+    else {
       const chosenDateTime = {
         delivery_type: this.choose_type,
         catlog_id: this.catalog_details.id,
@@ -985,7 +985,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         this.router.navigate(['consumer'], navigationExtras);
       } else {
         this.location.back();
-      }     
+      }
     }
   }
 
@@ -1075,7 +1075,7 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
         console.log("storePickupstorePickupstorePickup")
       }
       this.confirmOrder(post_Data, paytype);
-    } else if(this.source === "paper") {
+    } else if (this.source === "paper") {
       const contactNumber = this.storeContact.value.phone;
       const contact_email = this.storeContact.value.email;
       post_Data['phoneNumber'] = contactNumber;
@@ -1136,8 +1136,10 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  terms_check() {
-    this.termscheck = !this.termscheck;
+  terms_check(event) {
+    console.log("event.value", event.target.checked)
+    // this.termscheck = !this.termscheck;
+    this.btnEnable = event.target.checked;
   }
   termsOpen() {
     if (this.termscheck = !this.termscheck) {
@@ -1146,8 +1148,6 @@ export class CheckoutComponent implements OnInit, OnDestroy, AfterViewInit {
     else {
       this.defultMoreText = '...show more'
     }
-
-
   }
   confirmOrder(post_Data, paytype?) {
     console.log("Orderr Data :", post_Data);
