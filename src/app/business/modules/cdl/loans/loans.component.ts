@@ -151,6 +151,10 @@ export class LoansComponent implements OnInit {
       if (event.value.name == 'Rejected') {
         api_filter['applicationStatus-eq'] = event.value.name;
       }
+      else if (event.value.name == 'Redirected') {
+        api_filter['isRejected-eq'] = false;
+        api_filter['isActionRequired-eq'] = true;
+      }
       else {
         api_filter['spInternalStatus-eq'] = event.value.name;
         api_filter['applicationStatus-neq'] = 'Rejected';

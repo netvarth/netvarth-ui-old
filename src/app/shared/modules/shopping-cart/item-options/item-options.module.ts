@@ -13,6 +13,9 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatInputModule } from "@angular/material/input";
+import { MatNativeDateModule } from "@angular/material/core";
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { InputNumberModule } from 'primeng/inputnumber';
     FileUploadModule,
     CalendarModule,
     DropdownModule,
-    InputNumberModule
+    InputNumberModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule
   ]
 })
 export class ItemOptionsModule { }

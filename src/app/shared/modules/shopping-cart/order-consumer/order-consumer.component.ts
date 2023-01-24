@@ -109,6 +109,7 @@ export class OrderConsumerComponent implements OnInit {
   serviceOptionQuestionnaireList: any;
   serviceOptionApptt: any;
   itemOptionsData: any = [];
+  lastCustomization: any;
   constructor(
     private location: Location,
     private lStorageService: LocalStorageService,
@@ -477,7 +478,7 @@ export class OrderConsumerComponent implements OnInit {
           this.serviceOptionQuestionnaireList = data;
           if (this.serviceOptionQuestionnaireList && this.serviceOptionQuestionnaireList.questionnaireId) {
             this.serviceOptionApptt = true;
-            this.addItemOptions(data, item)
+            this.addItemOptions(data, item, true)
           }
           else {
             this.addToCart(item);
@@ -490,19 +491,42 @@ export class OrderConsumerComponent implements OnInit {
   }
 
 
-  addItemOptions(data, item) {
+  addItemOptions(data, item, repeatBool?) {
+
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    var repeat = false;
+    var datatoSend = { data: data, type: 'add', itemDetails: item };
+
+    if (repeatBool) {
+      if (itemOptionsData) {
+        itemOptionsData.forEach(element => {
+          console.log(element.itemData, item)
+          if (element && element.itemData && element.itemData.id === item.id) {
+            this.lastCustomization = element;
+            repeat = true;
+          }
+        });
+      }
+      if (repeat) {
+        var datatoSend = { data: data, type: 'repeat', itemDetails: item };
+        if (this.lastCustomization) {
+          datatoSend['lastCustomization'] = this.lastCustomization
+        }
+      }
+    }
+
     this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
       header: 'Choose Item Options',
-      width: '70%',
+      width: '90%',
       contentStyle: { "max-height": "500px", "overflow": "auto" },
       baseZIndex: 10000,
-      data: data,
+      data: datatoSend
     });
 
     this.itemOptionsRef.onClose.subscribe((result: any) => {
       console.log(result)
       if (result) {
-        if (result.postData && result.fileData) {
+        if (result.postData && result.fileData && (!result.type || result.type && (result.type == 'addNew' || result.type == 'repeatLast'))) {
           let itemOptionsJson = {
             "itemData": item,
             "postData": result.postData,
@@ -514,6 +538,35 @@ export class OrderConsumerComponent implements OnInit {
           this.itemOptionsData.push(itemOptionsJson)
           this.lStorageService.setitemonLocalStorage('itemOptionsData', this.itemOptionsData)
         }
+        else if (result.type) {
+          if (result && result.type == 'addNew') {
+            this.addItemOptions(data, item, false)
+          }
+          else if (result && result.type == 'repeatLast') {
+            if (result && result.lastCustomization) {
+              this.addToCart(item);
+              let itemOptionsIndex = itemOptionsData.indexOf(result.lastCustomization);
+              if (itemOptionsIndex != 'undefined') {
+                let repeatItemOptions = result.lastCustomization;
+                let repeatItemOptionsPostData = result.lastCustomization.postData;
+                if (repeatItemOptionsPostData && repeatItemOptionsPostData.answerLine && repeatItemOptionsPostData.answerLine[0].answer && repeatItemOptionsPostData.answerLine[0].answer.dataGridList[0]
+                  && repeatItemOptionsPostData.answerLine[0].answer.dataGridList[0].dataGridListColumn) {
+                  let repeatItemOptionsPostDataAnswers = result.lastCustomization.postData.answerLine[0].answer.dataGridList[0].dataGridListColumn;
+                  if (repeatItemOptionsPostDataAnswers) {
+                    repeatItemOptionsPostDataAnswers.forEach(element => {
+                      element.quantity = element.quantity + 1;
+                      element.price = element.price * 2;
+                    });
+                  }
+                  repeatItemOptionsPostData.totalPrice = repeatItemOptionsPostData.totalPrice * 2;
+                }
+                let itemOptionsDataNew = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+                itemOptionsDataNew[itemOptionsIndex] = repeatItemOptions;
+                this.lStorageService.setitemonLocalStorage('itemOptionsData', itemOptionsDataNew)
+              }
+            }
+          }
+        }
       }
     });
   }
@@ -524,10 +577,10 @@ export class OrderConsumerComponent implements OnInit {
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
     this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
       header: 'Choose Item Options',
-      width: '70%',
+      width: '90%',
       contentStyle: { "max-height": "500px", "overflow": "auto" },
       baseZIndex: 10000,
-      data: { data: itemOptionsData, type: 'edit' }
+      data: { data: itemOptionsData, type: 'edit', itemDetails: item }
     });
 
     this.itemOptionsRef.onClose.subscribe((result: any) => {

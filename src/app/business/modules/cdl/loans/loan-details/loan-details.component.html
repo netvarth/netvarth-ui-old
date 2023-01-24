@@ -27,7 +27,8 @@
           </p-timeline>
         </div>
 
-        <div class="container mobile-only" *ngIf="loanData && loanData.spInternalStatusDisplyName  && loanData.applicationStatus !='Rejected'">
+        <div class="container mobile-only"
+          *ngIf="loanData && loanData.spInternalStatusDisplyName  && loanData.applicationStatus !='Rejected'">
           <span><b>Status : </b>{{loanData.spInternalStatusDisplyName}}</span>
         </div>
 
@@ -597,8 +598,14 @@
       Sanction Loan
     </div>
 
-    <div class="btn-redirect mr-2 pointer-cursor" (click)="redirectLoan()">
+    <div class="btn-redirect mr-2 pointer-cursor" (click)="redirectLoan()"
+      *ngIf="capabilities && capabilities.canActionRequired && loanData && !loanData.isActionRequired">
       Redirect Loan
+    </div>
+
+    <div class="btn-redirect mr-2 pointer-cursor" (click)="completeLoan()"
+      *ngIf="capabilities && capabilities.canActionRequired && loanData && loanData.isActionRequired">
+      Complete Action
     </div>
 
     <div class="btn-reject pointer-cursor" (click)="rejectLoan()">

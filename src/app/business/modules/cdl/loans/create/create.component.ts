@@ -1781,6 +1781,13 @@ export class CreateComponent implements OnInit {
     if (this.verification) {
       if (this.createLoan.controls.email.value && this.createLoan.controls.email.value.includes('@') && this.createLoan.controls.email.value.includes('.')) {
         if (this.createLoan.controls.email.value != '') {
+          const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+          const isEmail = emailPattern.test(this.createLoan.controls.email.value);
+          if (!isEmail) {
+            this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+            return false
+          }
+
           let can_remove = false;
           const dialogRef = this.dialog.open(OtpVerifyComponent, {
             width: '50%',

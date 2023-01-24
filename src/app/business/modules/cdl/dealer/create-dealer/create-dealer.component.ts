@@ -392,30 +392,44 @@ export class CreateDealerComponent implements OnInit {
       this.snackbarService.openSnackBar("Please Verify Mobile Number First", { 'panelClass': 'snackbarerror' });
       return false
     }
+    const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+    const isEmail = emailPattern.test(this.createDealer.controls.email.value);
+    if (!isEmail) {
+      this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+      return false
+    }
     if (this.createDealer.controls.email.value && this.createDealer.controls.email.value != '') {
-      let can_remove = false;
-      const dialogRef = this.dialog.open(OtpVerifyComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          type: 'Email',
-          email: this.createDealer.controls.email.value,
-          dealerId: this.dealerData.id,
-          from: 'partner'
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          if (result = "verified") {
-            this.emailverification = true;
-          }
+      let api_filter = { 'partnerEmail-eq': this.createDealer.controls.email.value }
+      this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
+        if (data && data.length > 0) {
+          this.snackbarService.openSnackBar("The Dealer With This Email is Already Registered", { 'panelClass': 'snackbarerror' });
         }
         else {
-          console.log("Data Not Saved")
+          let can_remove = false;
+          const dialogRef = this.dialog.open(OtpVerifyComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              type: 'Email',
+              email: this.createDealer.controls.email.value,
+              dealerId: this.dealerData.id,
+              from: 'partner'
+            }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+              if (result = "verified") {
+                this.emailverification = true;
+              }
+            }
+            else {
+              console.log("Data Not Saved")
+            }
+          });
+          return can_remove;
         }
       });
-      return can_remove;
     }
     else {
       this.snackbarService.openSnackBar("Please Enter a Valid Email", { 'panelClass': 'snackbarerror' });
@@ -588,29 +602,37 @@ export class CreateDealerComponent implements OnInit {
 
   verifyotp() {
     if (this.createDealer.controls.phone.value && this.createDealer.controls.phone.value != '' && this.createDealer.controls.phone.value.length == 10) {
-      let can_remove = false;
-      const dialogRef = this.dialog.open(OtpVerifyComponent, {
-        width: '50%',
-        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-        disableClose: true,
-        data: {
-          type: 'Mobile Number',
-          phoneNumber: this.createDealer.controls.phone.value,
-          name: this.createDealer.controls.name.value,
-          from: 'partner'
-        }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result && result.uid) {
-          this.dealerId = result.uid;
-          this.verification = true;
-          this.updateDealer(this.dealerId, 'update')
+      let api_filter = { 'partnerMobile-eq': this.createDealer.controls.phone.value }
+      this.cdlservice.getDealersByFilter(api_filter).subscribe((data: any) => {
+        if (data && data.length > 0) {
+          this.snackbarService.openSnackBar("The Dealer With This Mobile is Already Registered", { 'panelClass': 'snackbarerror' });
         }
         else {
-          console.log("Data Not Saved")
+          let can_remove = false;
+          const dialogRef = this.dialog.open(OtpVerifyComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              type: 'Mobile Number',
+              phoneNumber: this.createDealer.controls.phone.value,
+              name: this.createDealer.controls.name.value,
+              from: 'partner'
+            }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            if (result && result.uid) {
+              this.dealerId = result.uid;
+              this.verification = true;
+              this.updateDealer(this.dealerId, 'update')
+            }
+            else {
+              console.log("Data Not Saved")
+            }
+          });
+          return can_remove;
         }
       });
-      return can_remove;
     }
     else {
       this.snackbarService.openSnackBar("Please Enter a Valid Mobile Number", { 'panelClass': 'snackbarerror' });

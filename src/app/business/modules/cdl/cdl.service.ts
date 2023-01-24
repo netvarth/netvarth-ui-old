@@ -251,8 +251,13 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
-  redirectLoan(id, data) {
-    const url = 'provider/loanapplication/' + id + '/redirect';
+  redirectLoan(id, data, status) {
+    const url = 'provider/loanapplication/' + id + '/actionrequired/spinternalstatus/' + status;
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  completeLoan(id, data) {
+    const url = 'provider/loanapplication/' + id + '/actioncompleted';
     return this.servicemeta.httpPut(url, data);
   }
 

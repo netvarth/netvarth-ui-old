@@ -268,20 +268,48 @@ export class LoanDetailsComponent implements OnInit {
           let notes = {
             note: data.remarks
           }
-          this.cdlservice.redirectLoan(this.loanId, notes).subscribe((data: any) => {
-            const navigationExtras: NavigationExtras = {
-              queryParams: {
-                type: 'rejected'
-              }
-            };
-            this.snackbarService.openSnackBar("Loan Rejected Successfully");
-            this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
-          });
+          if (this.loanData && this.loanData.spInternalStatus) {
+            this.cdlservice.redirectLoan(this.loanId, notes, this.loanData.spInternalStatus).subscribe((data: any) => {
+              const navigationExtras: NavigationExtras = {
+                queryParams: {
+                  type: 'redirected'
+                }
+              };
+              this.snackbarService.openSnackBar("Loan Redirected Successfully");
+              this.router.navigate(['provider', 'cdl', 'loans'], navigationExtras);
+            });
+          }
         }
       });
 
 
   }
+
+  completeLoan() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "remarks"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (data) => {
+        if (data && data.remarks && data.type == 'remarks') {
+          let notes = {
+            note: data.remarks
+          }
+          if (this.loanData && this.loanData.spInternalStatus) {
+            this.cdlservice.completeLoan(this.loanId, notes).subscribe((data: any) => {
+              this.snackbarService.openSnackBar("Loan Action Completed Successfully");
+              this.router.navigate(['provider', 'cdl', 'loans']);
+            });
+          }
+        }
+      });
+  }
+
 
   rejectLoan() {
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {

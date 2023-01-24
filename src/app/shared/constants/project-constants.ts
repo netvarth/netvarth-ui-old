@@ -1206,6 +1206,7 @@ export const projectConstantsLocal = {
     { name: 'LoanRequest', displayName: 'Loan Request' },
     // { name: 'ApprovalPending', displayName: 'Approval Pending' },
     { name: 'ApprovalRequired', displayName: 'Approval Required' },
+    { name: 'Redirected', displayName: 'Redirected' },
     { name: 'CreditApproved', displayName: 'Credit Approved' },
     { name: 'Rejected', displayName: 'Rejected' },
     { name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },

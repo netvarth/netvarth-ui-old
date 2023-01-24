@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { FileService } from '../../../../shared/services/file-service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
@@ -38,6 +38,9 @@ export class ItemOptionsComponent implements OnInit {
     }
   ];
   itemOptionsData: any;
+  type: any;
+  itemDetails: any;
+  lastCustomization: any;
   constructor(
     private itemOptionsRef: DynamicDialogRef,
     private config: DynamicDialogConfig,
@@ -45,52 +48,95 @@ export class ItemOptionsComponent implements OnInit {
     private snackbarService: SnackbarService,
     private fileService: FileService
   ) {
-    if (this.config && this.config.data) {
-      this.itemData = this.config.data;
+    if (window.innerWidth >= 500) {
+      this.config.width = '60%';
     }
-    if (this.config && this.config.data && this.config.data.type && this.config.data.type == 'edit') {
-      this.answers = this.config.data.data[0].answersData;
-      this.itemData = this.config.data.data[0].questionnaireData;
-      this.getTotalPrice();
-      console.log(this.answers)
+    if (this.config && this.config.data && this.config.data.type) {
+      this.type = this.config.data.type;
+      console.log("this.type", this.type)
+    }
+    if (this.config && this.config.data && this.config.data.itemDetails) {
+      this.itemDetails = this.config.data.itemDetails;
+      if (this.itemDetails && this.itemDetails.item && this.itemDetails.item.price) {
+        this.itemPrice = this.itemDetails.item.price;
+        console.log("this.itemPrice", this.itemPrice)
+      }
+    }
+    if (this.type == 'add') {
+      if (this.config && this.config.data && this.config.data.data) {
+        this.itemData = this.config.data.data;
+      }
+    }
+    if (this.type == 'edit') {
+      if (this.config && this.config.data && this.config.data.data && this.config.data.data[0]) {
+        this.itemData = this.config.data.data[0].questionnaireData;
+        this.answers = this.config.data.data[0].answersData;
+      }
+    }
+
+    if (this.type == 'repeat') {
+      this.config.width = '50%';
+      this.config.header = "Repeat Last Customization";
+      if (this.config && this.config.data && this.config.data.data && this.config.data.lastCustomization) {
+        this.lastCustomization = this.config.data.lastCustomization;
+      }
+    }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    if (window.innerWidth >= 500) {
+      this.config.width = '60%';
     }
   }
 
   ngOnInit(): void {
 
+
+
+    if (this.type == 'edit') {
+      this.totalPrice = this.config.data.data[0].postData.totalPrice
+      console.log("this.totalPrice", this.totalPrice)
+    }
+
     if (this.itemData && this.itemData.labels) {
       this.qnrId = this.itemData.id;
       this.labels = this.itemData.labels;
-      if (this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie'] && this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie']['maxAnswerable'] == 1) {
-        this.answers[0] = this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie']['values'][0];
-      }
-      else if (this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie'] && this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie']['maxAnswerable'] > 1) {
-        this.answers[0] = [this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie']['values'][0]];
-      }
-      else {
-        this.answers[0] = "";
-      }
-
-      this.labels.forEach(element => {
-        let answerLine = {
-          "labelName": element.question.labelName,
-          "answer": {
-            "dataGridList": [
-              {
-                "dataGridListColumn": []
-              }
-            ]
-          }
+      if (this.type == 'add') {
+        if (this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie'] && this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie']['maxAnswerable'] == 1) {
+          this.answers[0] = this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie']['values'][0];
         }
-        this.questionnaireAnswers.push(answerLine)
-      });
+        else if (this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie'] && this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie']['maxAnswerable'] > 1) {
+          this.answers[0] = [this.labels[0]['question']['dataGridListProperties']['dataGridListColumns'][0]['listPropertie']['values'][0]];
+        }
+        else {
+          this.answers[0] = "";
+        }
+        this.labels.forEach(element => {
+          let answerLine = {
+            "labelName": element.question.labelName,
+            "answer": {
+              "dataGridList": [
+                {
+                  "dataGridListColumn": []
+                }
+              ]
+            }
+          }
+          this.questionnaireAnswers.push(answerLine)
+        });
 
-      this.getPriceValue(this.labels[0].question.dataGridListProperties.dataGridListColumns[0].listPropertie, this.answers[0])
-      this.saveAnswers(this.labels[0], this.labels[0].question.dataGridListProperties.dataGridListColumns[0], 0, this.answers[0])
+        this.getPriceValue(this.labels[0].question.dataGridListProperties.dataGridListColumns[0].listPropertie, this.answers[0])
+        this.saveAnswers(this.labels[0], this.labels[0].question.dataGridListProperties.dataGridListColumns[0], 0, this.answers[0])
+        this.totalPrice = this.itemPrice
+      }
+
+
     }
-    this.itemPrice = 200;
-    // console.log(this.labels)
+
   }
+
+
 
   close() {
     this.itemOptionsRef.close()
@@ -105,8 +151,11 @@ export class ItemOptionsComponent implements OnInit {
     return data;
   }
 
-  convertDate(date) {
-    return date;
+  convertDate(event, questions, question, i) {
+    console.log(event)
+    this.answers[i] = moment(event).format('DD-MM-YYYY')
+    console.log(typeof (this.answers[i]))
+    this.saveAnswers(questions, question, i)
   }
 
   getPriceValue(listPropertie, value) {
@@ -192,7 +241,7 @@ export class ItemOptionsComponent implements OnInit {
   }
 
   getTotalPrice() {
-    this.totalPrice = 0;
+    this.totalPrice = this.itemPrice;
     for (let i = 0; i < this.questionnaireAnswers.length; i++) {
       let questionnaireAnswersIndex = this.questionnaireAnswers[i]["answer"]["dataGridList"][0]["dataGridListColumn"];
       questionnaireAnswersIndex.map((element) => {
@@ -233,6 +282,14 @@ export class ItemOptionsComponent implements OnInit {
   getDate(date) {
     console.log(new Date(moment(new Date(date)).format('YYYY-MM-DD')));
     return new Date(moment(new Date(date)).format('YYYY-MM-DD'));
+  }
+
+  addNewItemOptions() {
+    this.itemOptionsRef.close({ "lastCustomization": this.lastCustomization, "type": "addNew" });
+  }
+
+  repeatLastItemOptions() {
+    this.itemOptionsRef.close({ "lastCustomization": this.lastCustomization, "type": "repeatLast" });
   }
 
 

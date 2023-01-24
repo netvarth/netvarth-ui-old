@@ -47,6 +47,13 @@ input {
     border-color: #1E4079 !important;
 }
 
+.small-inr {
+    font-size: 14px !important;
+}
+
+.font-medium {
+    font-size: 18px !important;
+}
 
 /* ::ng-deep .primengCard .p-calendar {
     width: 100% !important;
