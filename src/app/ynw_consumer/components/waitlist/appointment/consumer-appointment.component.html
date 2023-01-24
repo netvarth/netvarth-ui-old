@@ -460,10 +460,10 @@
               <hr
                 *ngIf="(s3CouponsList.JC.length > 0) && appointmentType != 'reschedule'||(s3CouponsList.OWN.length > 0) && appointmentType != 'reschedule'" />
               <label class="question-header"
-                *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails.amountRequiredNow > 0">Payment
+                *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails.amountRequiredNow > 0 && selectedService && selectedService.serviceBookingType !== 'request'">Payment
                 Details</label><br />
               <div class="payment-section-details mgn-lt-10"
-                *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails">
+                *ngIf="appointmentType !== 'reschedule' && paymentLength>0 && paymentDetails && selectedService && selectedService.serviceBookingType !== 'request'">
                 <div class="web" *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0">
                   <div class="text-left">
                     <span *ngIf="paymentDetails.showPrice && !serviceOptionApptt"
@@ -569,7 +569,7 @@
                     </ng-container>
                   </div>
                   <div class="clearfix"></div>
-                  <div class="mgn-up-20 col-md-12 col-xs-12 no-padding">
+                  <div class="mgn-up-20 col-md-12 col-xs-12 no-padding" *ngIf="selectedService && selectedService.serviceBookingType !== 'request'">
                     <div class="col-md-12 txt-align-center pad_link question-header"
                       *ngIf="paymentmodes && paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                       <span (click)="togglepaymentMode()" class="pointer-cursor">

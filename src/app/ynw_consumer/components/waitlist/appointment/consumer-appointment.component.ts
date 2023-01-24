@@ -2055,7 +2055,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
     }
     async performAppointment() {
         const _this = this;
-        if (this.selectedService.isPrePayment && !this.paymentMode && this.paymentDetails.amountRequiredNow > 0) {
+        if (this.selectedService.isPrePayment && !this.paymentMode && this.paymentDetails.amountRequiredNow > 0 && this.selectedService && (this.selectedService.serviceBookingType !== 'request')) {
             this.snackbarService.openSnackBar('Please select one payment mode', { 'panelClass': 'snackbarerror' });
             this.isClickedOnce = false;
             return false;
@@ -2406,7 +2406,7 @@ export class ConsumerAppointmentComponent implements OnInit, OnDestroy {
         });
     }
     paymentOperation(paymenttype?) {
-        if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0) {
+        if (this.paymentDetails && this.paymentDetails.amountRequiredNow > 0 && this.selectedService && (this.selectedService.serviceBookingType !== 'request')) {
             this.payuPayment(paymenttype);
         } else {
             let queryParams = {
