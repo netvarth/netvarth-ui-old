@@ -211,6 +211,10 @@ export class LoansComponent implements OnInit {
               if (params.type == 'rejected') {
                 api_filter['applicationStatus-eq'] = 'Rejected';
               }
+              else if (params.type == 'redirected') {
+                api_filter['isRejected-eq'] = false;
+                api_filter['isActionRequired-eq'] = true;
+              }
               else {
                 api_filter['spInternalStatus-eq'] = params.type;
               }

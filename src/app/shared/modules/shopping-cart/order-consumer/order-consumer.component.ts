@@ -555,7 +555,7 @@ export class OrderConsumerComponent implements OnInit {
                   if (repeatItemOptionsPostDataAnswers) {
                     repeatItemOptionsPostDataAnswers.forEach(element => {
                       element.quantity = element.quantity + 1;
-                      element.price = element.price * 2;
+                      // element.price = element.price * 2;
                     });
                   }
                   repeatItemOptionsPostData.totalPrice = repeatItemOptionsPostData.totalPrice * 2;
