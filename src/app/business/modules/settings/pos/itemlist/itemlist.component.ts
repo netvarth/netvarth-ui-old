@@ -447,7 +447,7 @@ export class ItemlistComponent implements OnInit {
       (data: any) => {
         console.log("data :", data);
         this.items = data;
-        this.snackbarService.openSnackBar(`Added ${this.selecteditemsforgroup.length} items to the group ${this.itemGroupId}`, {
+        this.snackbarService.openSnackBar(`Added ${this.selecteditemsforgroup.length} items to the ${this.groupName}`, {
           panelClass: "snackbarnormal",
         });
         this.getItemsBygroupId();

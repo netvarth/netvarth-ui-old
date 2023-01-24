@@ -3,7 +3,7 @@
         <h5 class="mgn-up-10" *ngIf="isFrom === 'ordermanager'">
             <span class="fa fa-arrow-left pointer-cursor"
                 (click)="redirecToJaldeeBilling()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Items and Item Groups
+            Item Groups
             &nbsp;
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>&nbsp;&nbsp;
             &nbsp;<a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
@@ -22,8 +22,9 @@
                   class="btn btn mb-2 action-button  dropdown-toggle  pull-right">
                   Actions
                 </button>
+                <!--  data-toggle="modal" data-target="#exampleModalCenter" -->
                 <mat-menu #appMenu="matMenu">
-                  <button mat-menu-item data-toggle="modal" data-target="#exampleModalCenter">
+                  <button mat-menu-item (click)="addGroupItem()">
                     Create item Group
                   </button>
                   <button  mat-menu-item (click)="addItem()">
@@ -39,7 +40,7 @@
         <h5 class="mgn-up-10" *ngIf="isFrom !== 'ordermanager'">
           <span class="fa fa-arrow-left pointer-cursor"
               (click)="redirecToJaldeeBilling()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Items and Item Groups
+            Item Groups
           &nbsp;
           <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>&nbsp;&nbsp;
 
