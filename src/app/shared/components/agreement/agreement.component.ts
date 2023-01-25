@@ -143,6 +143,10 @@ export class AgreementComponent implements OnInit {
 
   }
 
+  round(number) {
+    return Math.round(Number(number));
+  }
+
 
   // getLoanEmiDetails(id) {
   //   this.agreementService.getLoanEmiDetails(id).subscribe((data: any) => {

@@ -468,8 +468,8 @@
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span *ngIf="loanData && loanData.sanctionedAmount">
-            <!-- {{loanData.sanctionedAmount}}/- -->
+          <span *ngIf="loanData && loanData.totalInterest">
+            {{round(loanData.totalInterest)}}/-
           </span>
         </div>
       </td>
@@ -514,8 +514,8 @@
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span>
-            400 /-
+          <span *ngIf="loanData && loanData.processingFee">
+            {{loanData.processingFee}} /-
           </span>
         </div>
       </td>
@@ -631,8 +631,8 @@
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span *ngIf="loanData && loanData.sanctionedAmount">
-
+          <span *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.displayRate">
+            <b>{{loanData.loanScheme.displayRate}} %</b>
           </span>
         </div>
       </td>
@@ -694,14 +694,14 @@
       <td style="width:60%">
         <div class="text-normal mx-1">
           <span>
-            Number of instalments of repayment
+            Number of installments of repayment
           </span>
         </div>
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span *ngIf="loanData && loanData.sanctionedAmount">
-
+          <span *ngIf="loanData && loanData.noOfEmiToPay">
+            {{loanData.noOfEmiToPay}}
           </span>
         </div>
       </td>
@@ -723,8 +723,8 @@
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span *ngIf="loanData && loanData.sanctionedAmount">
-
+          <span *ngIf="loanData && loanData.installmentAmount">
+            {{round(loanData.installmentAmount)}} /-
           </span>
         </div>
       </td>
