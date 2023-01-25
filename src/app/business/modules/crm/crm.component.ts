@@ -61,18 +61,18 @@ export class CRMComponent implements OnInit {
     {
       id: 10, type: 'Login Report'
     },
-    {
-      id: 11, type: 'HO-Leads Status Report'
-    },
+    // {
+    //   id: 11, type: 'HO-Leads Status Report'
+    // },
     {
       id: 12, type: 'Sanctioned Status Report'
     },
     {
       id: 13, type: 'Employee-Average Tat Report'
     },
-    {
-      id: 14, type: 'Employee-Daily Activity Report'
-    },
+    // {
+    //   id: 14, type: 'Employee-Daily Activity Report'
+    // },
     {
       id: 15, type: 'Customer Report'
     },

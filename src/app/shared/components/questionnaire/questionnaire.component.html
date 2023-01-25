@@ -126,11 +126,16 @@
             </div>
             <!-- for Text -->
             <div class="col-12" *ngIf="getQuestion(question).fieldDataType === 'plainText'">
-              <input [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit('inputChange');"
+              <input *ngIf="getQuestion(question).plainTextPropertie.maxNoOfLetter<=100" [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit('inputChange');"
                 [disabled]="buttonDisable || disableInput()"
                 [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
                 [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
                 class="form-control1 form-control-solid" type="text">
+              <textarea rows="3" *ngIf="getQuestion(question).plainTextPropertie.maxNoOfLetter>100" [(ngModel)]="answers[getQuestion(question).labelName]" (input)="onSubmit('inputChange');"
+                [disabled]="buttonDisable || disableInput()"
+                [minlength]="getQuestion(question).plainTextPropertie.minNoOfLetter"
+                [maxlength]="getQuestion(question).plainTextPropertie.maxNoOfLetter"
+                class="form-control2 form-control-solid"></textarea> 
               <div class="mt-2 text-danger" *ngIf="apiError[getQuestion(question).labelName]">
                 {{apiError[getQuestion(question).labelName]}}</div>
             </div>
