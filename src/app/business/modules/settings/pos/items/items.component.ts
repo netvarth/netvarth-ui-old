@@ -63,6 +63,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
   isCheckin;
   active_user;
   order = "status";
+  api_loading = false;
   items: any[];
   itemHead: { type: string };
   actions: any = [];
@@ -399,9 +400,11 @@ export class ItemsComponent implements OnInit, OnDestroy {
     // console.log("Filtered :",itemgroup.itemGroupId);
   }
   getItemGroups() {
+    this.api_loading = true;
     this.provider_servicesobj.getItemGroups().subscribe((data: any) => {
       console.log("list of item groups :", data);
       this.itemGroups = data;
+      this.api_loading = false;
       // for(let i=0;i<this.itemGroups.length;i++){
       //  this.itemGroupId = this.itemGroups['itemGroupId'][i];
       //  this.getAllItemInGroup(this.itemGroupId);
@@ -613,9 +616,10 @@ export class ItemsComponent implements OnInit, OnDestroy {
       ],
       disableClose: true,
       data: {
-        message: this.wordProcessor
-          .getProjectMesssages("ITEM_DELETE")
-          .replace("[name]", itemGroup.groupName),
+        // message: this.wordProcessor
+        //   .getProjectMesssages("ITEM_DELETE")
+        //   .replace("[name]", itemGroup.groupName),
+        message:'Do you really want to remove ' + itemGroup.groupName,
       },
     });
     this.removeitemdialogRef.afterClosed().subscribe((result) => {

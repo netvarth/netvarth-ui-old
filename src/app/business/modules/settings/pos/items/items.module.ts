@@ -11,6 +11,8 @@ import {RatingModule} from 'primeng/rating';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
+
 const routes: Routes = [
     { path: '', component: ItemsComponent },
     { path: ':id', loadChildren: ()=> import('./details/item-details.module').then(m=>m.ItemDetailsModule) },
@@ -31,6 +33,7 @@ const routes: Routes = [
         ButtonModule,
         MatMenuModule,
         MatIconModule,
+        LoadingSpinnerModule,
         RatingModule,
         [RouterModule.forChild(routes)]
     ],

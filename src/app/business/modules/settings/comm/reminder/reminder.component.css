@@ -1,5 +1,6 @@
 .sectDiv{
     background-color: #fff;
+    margin: 10px;
 }
 .btn-info{
     background-color: #189CE7 !important;
@@ -113,6 +114,7 @@
 .card-body {
     padding:1rem!important;
     padding-bottom: 0px !important;
+    margin: 8px;
 }
 .or{
     margin-top: 10px;

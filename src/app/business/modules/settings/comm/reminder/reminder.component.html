@@ -488,8 +488,8 @@
 
                             <mat-chip class="matChip" *ngFor="let consumer of selectedConsumers"
                                 (removed)="remove(consumer)">
-                                <span class="imageClass">{{consumer.firstName[0] | capitalizeFirst}}</span>&nbsp;
-                                {{consumer.firstName | capitalizeFirst}}
+                                <span class="imageClass">{{(consumer.firstName[0] ? consumer.firstName[0] : consumer.jaldeeId[0]) | capitalizeFirst}}</span>&nbsp;
+                                {{(consumer.firstName ? consumer.firstName : consumer.jaldeeId) | capitalizeFirst}} {{(consumer.lastName ? consumer.lastName : '')  | capitalizeFirst}}
                                 <button matChipRemove [hidden]="hide">
                                     <mat-icon>cancel</mat-icon>
                                 </button>

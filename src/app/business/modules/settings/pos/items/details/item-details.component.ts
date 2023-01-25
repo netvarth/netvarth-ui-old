@@ -494,6 +494,15 @@ export class ItemDetailsComponent implements OnInit {
             post_itemdata['status'] = this.item.status;
             this.editItem(post_itemdata);
         }
+        else if (this.action === 'edit' && this.groupId) {
+            post_itemdata['status'] = this.item.status;
+            this.editItem(post_itemdata);
+        }
+        else if (this.action === 'edit' && this.iscmFrom === 'all') {
+            post_itemdata['status'] = this.item.status;
+            this.editItem(post_itemdata);
+        }
+        //this.iscmFrom
     }
     addItem(post_data, isFrom?) {
         this.disableButton = true;
@@ -521,18 +530,20 @@ export class ItemDetailsComponent implements OnInit {
                         if (this.iscmFrom === 'ordermanager') {
                             const navigatExtras: NavigationExtras = {
                                 queryParams: {
-                                    type: this.iscmFrom ? this.iscmFrom : ''
+                                    type: 'ordermanager'
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
+                            // this.location.back();
                         }
                         else if (this.iscmFrom === 'all') {
                             const navigatExtras: NavigationExtras = {
                                 queryParams: {
-                                    type: this.iscmFrom ? this.iscmFrom : ''
+                                    type:'all'
                                 }
                             };
                             this.router.navigate(['provider', 'settings', 'pos', 'itemlist'], navigatExtras);
+                            // this.location.back();
                         } 
                          else {
                             this.router.navigate(['provider', 'settings', 'pos', 'items']);
@@ -563,16 +574,17 @@ export class ItemDetailsComponent implements OnInit {
                             }
                         };
                         this.router.navigate(['provider', 'settings', 'pos', 'items'], navigatExtras);
+                        // this.location.back();
                     } 
-                   else if (this.iscmFrom === 'all') {
+                   else if (this.action === 'edit' && this.iscmFrom === 'all') {
                         const navigatExtras: NavigationExtras = {
                             queryParams: {
-                                type: this.iscmFrom ? this.iscmFrom : ''
+                                type: 'all'
                             }
                         };
                         this.router.navigate(['provider', 'settings', 'pos', 'itemlist'], navigatExtras);
                     } 
-                    else if (this.groupId) {
+                    else if (this.action === 'edit' && this.groupId) {
                         this.location.back();
                         // const navigatExtras: NavigationExtras = {
                         //     queryParams: {

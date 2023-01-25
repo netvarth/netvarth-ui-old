@@ -595,6 +595,40 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     selectRequest(event){
         console.log("Service Request :",event);
+        //&& this.service_data.serviceBookingType
+        if(this.action === 'edit' && this.service_data.serviceBookingType){
+            this.snackbarService.openSnackBar('Cannot set appointment type in edit mode', { 'panelClass': 'snackbarerror' });
+            if(this.service_data.serviceBookingType === 'request'){
+                // this.serviceForm.controls['serviceBookingType'].setValue(this.service_data.serviceBookingType);
+                this.is_checked_request = true;
+                this.is_checked_booking = false;
+                this.is_service_request = false;
+                this.serviceForm.patchValue({
+                'date':  this.serviceForm.get('date').value,
+                'dateTime': this.serviceForm.get('dateTime').value,
+                'noDateTime':  this.serviceForm.get('noDateTime').value,
+            })
+            if(this.service_data.date){
+                this.selectedRequestMode = 'date';
+                this.selectedReqMode = true;
+            }
+            if(this.service_data.dateTime){
+                this.selectedRequestMode = 'dateTime';
+                this.selectedReqMode = true;
+            }
+            if(this.service_data.noDateTime){
+                this.selectedRequestMode = 'noDateTime';
+                this.selectedReqMode = true;
+            }
+            }
+            if(this.service_data.serviceBookingType === 'booking'){
+                // this.serviceForm.controls['serviceBookingType'].setValue(this.service_data.serviceBookingType);
+                this.is_checked_booking = true;
+                this.is_checked_request = false;
+                this.is_service_request = false;
+            }
+          }
+          else if(this.action === 'add'){
         if (event === 'request') {
             //this.serviceForm.addControl('serviceBookingType') = event;
             // this.serviceForm.addControl('serviceBookingType',
@@ -606,8 +640,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             // this.is_checked_request = true;
             this.is_checked_booking = false;
            // this.is_physical = 1;
-        }
-        
+        }       
         if(event === 'booking') {
             this.serviceForm.controls['serviceBookingType'].setValue(event);
             this.is_service_request = false;
@@ -617,7 +650,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
            // this.modeselected = false;
            // this.is_physical = 2;
         }
-
+    }
     }
     changeNotification() {
         if (this.serviceForm.get('notification').value === false) {
@@ -741,7 +774,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
         form_data['postInfoTitle'] = this.postInfoEnabled ? this.postInfoTitle.trim() : '';
         form_data['postInfoText'] = this.postInfoEnabled ? this.postInfoText : '';
         form_data['consumerNoteTitle'] = form_data['consumerNoteMandatory'] ? this.consumerNote : '';
-        form_data['serviceBookingType'] = form_data['serviceBookingType'];
+        if(this.action !== 'edit'){
+            form_data['serviceBookingType'] = form_data['serviceBookingType'];
+        }
+        else{
+            form_data['serviceBookingType'] = this.service_data.serviceBookingType;
+        }
+
         // form_data['date'] = form_data['date'] ? this.selectedReqMode : false;
         // form_data['dateTime'] = form_data['dateTime'] ? this.selectedReqMode : false;
         // form_data['noDateTime'] = form_data['noDateTime'] ? this.selectedReqMode : false;
@@ -826,6 +865,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
             //     }
             // }
           
+           
+              
             if (form_data.serviceType === 'virtualService') {
                 if ((form_data.virtualCallingModes[0].callingMode === 'WhatsApp' || form_data.virtualCallingModes[0].callingMode === 'Phone') && (form_data.virtualCallingModes[0].value.toString().charAt(0) === '0')) {
                     this.snackbarService.openSnackBar('Please provide valid phone number', { 'panelClass': 'snackbarerror' });
@@ -844,7 +885,10 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                 }
             }
-           else if(form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime'){
+            // else if(this.action === 'edit' && form_data["serviceBookingType"] === 'booking' || (form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime')){
+            //     this.snackbarService.openSnackBar('Cannot set appointment type in edit mode', { 'panelClass': 'snackbarerror' });
+            //   }
+           else if(this.action !== 'edit' && form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime'){
                 this.snackbarService.openSnackBar('Please select request mode', { 'panelClass': 'snackbarerror' });
             }
             else {
@@ -852,10 +896,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.snackbarService.openSnackBar('Please provide payment description', { 'panelClass': 'snackbarerror' });
                     }
                     else{
+                        // if(this.action === 'edit' && form_data["serviceBookingType"] === 'booking' || (form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime')){
+                        //         this.snackbarService.openSnackBar('Cannot set appointment type in edit mode', { 'panelClass': 'snackbarerror' });
+                        //       }
                         this.servicesService.actionPerformed(serviceActionModel);
                     }
                 
             }
+        
         }
     }
 

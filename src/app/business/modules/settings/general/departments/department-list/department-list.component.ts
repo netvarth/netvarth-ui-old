@@ -47,10 +47,6 @@ export class DepartmentListComponent implements OnInit {
     @HostListener('window:resize', ['$event'])
     onResize() {
       this.screenWidth = window.innerWidth;
-    //   if (this.screenWidth <= 767) {
-    //   } else {
-    //     this.small_device_display = false;
-    //   }
       if (this.screenWidth <= 767) {
         this.small_device_display = true;
       } else {

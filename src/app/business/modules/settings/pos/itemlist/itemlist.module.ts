@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { ItemlistComponent } from './itemlist.component';
+import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
+
 const routes: Routes = [
     { path: '', component: ItemlistComponent },
     // { path: ':id', loadChildren: ()=> import('./details/item-details.module').then(m=>m.ItemDetailsModule) },
@@ -28,6 +30,7 @@ const routes: Routes = [
         CardModule,
         CommonModule,
         TableModule,
+        LoadingSpinnerModule,
         ButtonModule,
         MatMenuModule,
         MatIconModule,

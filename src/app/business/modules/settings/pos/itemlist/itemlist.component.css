@@ -139,9 +139,11 @@ button{
   transition: color .3s ease-in-out,background-color .3s ease-in-out,border-color .3s ease-in-out,box-shadow .3s ease-in-out;
 }
 .items-body{
-    height: 450px;
+    /* height: 450px; */
     overflow: auto;
   }
+
+
 .cancel-btn{
     color: #1e4079 !important;
     background-color: #f9e2a7 !important;

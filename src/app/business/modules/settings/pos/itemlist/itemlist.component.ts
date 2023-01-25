@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild ,HostListener} from "@angular/core";
 import { ProviderServices } from "../../../../services/provider-services.service";
 import { SharedFunctions } from "../../../../../shared/functions/shared-functions";
 import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
@@ -32,6 +32,9 @@ export class ItemlistComponent implements OnInit {
   item: any;
   selectedGroupItems: any;
   groupName = '';
+  api_loading = false;
+  screenWidth: number;
+  bodyHeight: number;
 
   constructor(
     private provider_servicesobj: ProviderServices,
@@ -56,8 +59,24 @@ export class ItemlistComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+     
+  }
 
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.screenWidth = window.innerWidth;
+    // const screenHeight = window.innerHeight;
+    // if (this.iswiz) {
+    //   this.bodyHeight = screenHeight;
+    // }  
+      if (this.groupitems.length <= 2) {
+        this.bodyHeight =  200;
+      } else {
+        this.bodyHeight = 400;
+      }
+    
+  }
   redirecTo() {
     if (this.isFrom === "all") {
       const navigatExtras: NavigationExtras = {
@@ -89,14 +108,18 @@ export class ItemlistComponent implements OnInit {
   }
   getItemsBygroupId() {
     console.log("getItemsBygroupId");
+    this.api_loading = true;
     let filter = {};
     filter = this.setFilterForApi();
     console.log("filter", filter);
 
     this.provider_servicesobj.getItemsByGroupId(filter).subscribe((res:any) => {
       console.log("items by id :", res);
-      this.items = res;
-      this.selectedGroupItems = this.items;
+      if(res){
+        this.items = res;
+        this.selectedGroupItems = this.items;
+        this.api_loading = false;
+      }
      console.log("items",  this.items);
 
     });
@@ -110,28 +133,36 @@ export class ItemlistComponent implements OnInit {
     this.provider_servicesobj.getProviderItems().subscribe((data :any) => {
        currentArray = data;
        console.log('currentArray:;-',currentArray);
+      //  this.groupitems = currentArray;
        this.getFilteredItem(currentArray);
     });
   }
   getFilteredItem(currentArray){
     this.groupitems = [];
+    // this.selecteditemsforgroup = [];
     console.log('selectedGroupItems:;-',this.selectedGroupItems)
       // currentArray = currentArray.filter(val => !this.selectedGroupItems.includes(val));
       for( var i=currentArray.length - 1; i>=0; i--){
         for( var j=0; j<this.selectedGroupItems.length; j++){
             if(currentArray[i] && (currentArray[i].itemId === this.selectedGroupItems[j].itemId)){
               currentArray.splice(i, 1);
+              // this.selecteditemsforgroup.push(currentArray[i]);
+              // this.checkSelection(currentArray[i]);
+              // return true;
             }
+            // this.isAllItemsSelected();
+
         }
     }
       //alert(JSON.stringify(currentArray));
       this.groupitems = currentArray;
-      
+      this.onResize();
       console.log("currentArray ",this.groupitems);
   }
 
   getitems() {
     this.items = [];
+    this.api_loading = true;
     this.provider_servicesobj.getProviderItems().subscribe((data :any) => {
       this.item_list = data;
       // this.query_executed = true;
@@ -161,6 +192,7 @@ export class ItemlistComponent implements OnInit {
       // }
       // }
       this.items = data;
+      this.api_loading = false;
       console.log("list data :",this.items);
     });
   }
@@ -479,7 +511,8 @@ export class ItemlistComponent implements OnInit {
     let items = [];
     if (items) {
       items.push(item);
-    } else {
+    } 
+    else {
       items = this.selecteditemsforgroup;
     }
     for (let item of items) {
@@ -509,6 +542,87 @@ export class ItemlistComponent implements OnInit {
         //   error => {
         //     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         //   });
+      }
+    });
+  }
+  removItem(item?){
+    const ids = [];
+    console.log("Item selected :",item);
+    // let items = [];
+    // if (items) {
+    //   items.push(item);
+    // } 
+    if(item){
+      ids.push(item.itemId);
+    }
+    const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: "50%",
+      panelClass: [
+        "popup-class",
+        "commonpopupmainclass",
+        "confirmationmainclass",
+      ],
+      disableClose: true,
+      data: {
+        message: `Are you sure you want to remove ${item.displayName} item?`,
+        type: "yes/no",
+      },
+    });
+    removeitemdialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.provider_servicesobj.removeItemFromGroupId(this.itemGroupId, ids).subscribe(
+          (data: any) => {
+            // this.showCustomers = false;
+            //this.resetList();
+            //this.getCustomerListByGroup();
+            if(data){
+              this.getItemsBygroupId();
+              this.snackbarService.openSnackBar('Item deleted successfully', { 'panelClass': 'snackbarnormal' });
+            }
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
+      }
+    });
+  }
+  removItemFromAllItems(item?){
+    const ids = [];
+    console.log("Item selected :",item);
+    // let items = [];
+    // if (items) {
+    //   items.push(item);
+    // } 
+    if(item){
+      ids.push(item.itemId);
+    }
+    const removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: "50%",
+      panelClass: [
+        "popup-class",
+        "commonpopupmainclass",
+        "confirmationmainclass",
+      ],
+      disableClose: true,
+      data: {
+        message: "Are you sure you want to remove?",
+        type: "yes/no",
+      },
+    });
+    removeitemdialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.provider_servicesobj.removeItemsFromCatalog(this.itemGroupId, ids).subscribe(
+          (data: any) => {
+            // this.showCustomers = false;
+            //this.resetList();
+            //this.getCustomerListByGroup();
+            if(data){
+              this.snackbarService.openSnackBar('Item deleted successfully', { 'panelClass': 'snackbarnormal' });
+            }
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          });
       }
     });
   }

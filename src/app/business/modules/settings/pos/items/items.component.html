@@ -40,7 +40,7 @@
         <h5 class="mgn-up-10" *ngIf="isFrom !== 'ordermanager'">
           <span class="fa fa-arrow-left pointer-cursor"
               (click)="redirecToJaldeeBilling()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Item Groups
+            Items
           &nbsp;
           <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>&nbsp;&nbsp;
 
@@ -48,26 +48,35 @@
     </div>
 </section>
 <section class="mgn-up-15 p-2" *ngIf="isFrom === 'ordermanager'">
-    <div class="threeTab customThreeCards">
-    <div class="customCard" (click)="goToItems()" id="A">
+    <div class="card cursor-pointer" (click)="goToItems()" id="A">
         <div class="eachTab">
           <div>
-            <img style="width: 55px;height:55px" src="./assets/images/order/Items.svg" />
+            <img style="width: 55px;height:55px" src="./assets/images/order/Items.svg" /> &nbsp;&nbsp; <span class="bold">All items</span>
+            <div class="my-2">
+              <div class="pull-left">{{items.length}} items</div>
           </div>
+          </div>
+          <!-- <div class="my-2">
+            <div class="pull-left">{{items.length}} items</div>
+        </div> -->
           <div class="topicName" >
             <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
-            (click)="addItem()">
-                Add item</button>
+            (click)="goToItems()">
+                View items</button>
           </div>
         </div>
-        <div class="bold my-2">
+        <!-- <div class="bold my-2">
             All
             <p>All items</p>
-        </div>
-        <div >
-            <!--class="eachTab" <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> -->
-            <div class="pull-right">{{items.length}} items</div>
-        </div>
+        </div> -->
+       
+      </div>
+      <div class="bold my-4" *ngIf="itemGroups.length > 0">
+       Groups
+    </div>
+      <div class="threeTab customThreeCards" *ngIf="itemGroups.length > 0">
+        <div class="d-flex justify-content-center align-items-center" *ngIf="api_loading">
+          <app-common-innerloading-spinner></app-common-innerloading-spinner>
       </div>
       <div class="customCard"  id="C"
       *ngFor="let itemgroup of itemGroups">
@@ -142,8 +151,8 @@
             {{itemgroup.groupName}}
             <p style="width: 100px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">{{itemgroup.groupDesc}}</p>
         </div>
-        <div *ngIf="itemgroup.itemGroupId" (click)="getAllItemInGroup(itemgroup.itemGroupId)">
-          <!-- class="eachTab" <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> -->
+        <div *ngIf="itemgroup.itemGroupId" (click)="goToGroupItems(itemgroup)">
+          <!--(click)="getAllItemInGroup(itemgroup.itemGroupId)" class="eachTab" <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> <i class="fa fa-edit" aria-hidden="true"></i> -->
             <span class="pull-right">{{itemgroup.strength}} items</span>
       </div>
       </div>
@@ -166,241 +175,30 @@
         Remove Photo</button>
 </mat-menu>
 </div> -->
+
 <section *ngIf="isFrom !== 'ordermanager'">
-    <p class="form-level-settings mgn-lt-20" >{{frm_items_cap}}</p>
-    <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
-        <div class="bus-item-O">
-            <app-card [item]="itemHead" [terminology]='' [extras]="" [loc]="" (actionPerformed)="cardClicked($event)">
-            </app-card>
-        </div>
-    </div>
-    <div class="width100">
-        <ng-container *ngIf="item_list.length >= 1">
-            <div class="bus-item-O">
-                <app-card [item]="itemHead" [terminology]='' [extras]="" [loc]=""
-                    (actionPerformed)="cardClicked($event)"></app-card>
-            </div>
-            <div class="bus-item-O" *ngFor="let item of items">
-                <app-card [item]="item" [terminology]='' [extras]="" [loc]="" (actionPerformed)="cardClicked($event)">
-                </app-card>
-            </div>
-        </ng-container>
-    </div>
-    <div class="clearfix"></div>
-</section>
-<section class="customersList p-2" *ngIf="isFrom === 'ordermanagers'">
-    <div class="row mx-0 p-3 card">
-      <!-- <div class="col-lg-4" >
-        <span>sidebar of items and item groupings......</span>
-      </div> -->
-      <div class="col-lg-12" >
-       <p-table [value]="items" [paginator]="true" [rows]="10" [showCurrentPageReport]="true">
-        <ng-template pTemplate="caption">
-            <div class="p-d-flex p-ai-center p-jc-between">
-               All Items
-                <!-- <p-button icon="pi pi-refresh"></p-button> -->
-            </div>
-        </ng-template>
-        <ng-template pTemplate="header">
-            <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>StockAvailable</th>
-                <!-- <th>Reviews</th> -->
-                <th>Actions</th>
-            </tr>
-        </ng-template>
-        <ng-template  pTemplate="body" let-item>
-            <tr [class.disabled]="item['actions'][0]['action'] === 'enable'">
-                <!-- [ngClass]="{'disabled' : isDisabled}" -->
-                <td><img [src]="getItemImg(item.item)" [alt]="item.item.displayName" width="100" class="shadow-4" /></td>
-                <td>{{item.item.displayName}}</td>
-                <!-- 'assets/showcase/images/demo/product/' +  -->
-                <td>{{item.item.price | currency:'INR'}}</td>
-                <td *ngIf="item && item.item && item.item.isStockAvailable === true"><span class="status-Approved">INSTOCK</span></td>
-                <td *ngIf="item && item.item && item.item.isStockAvailable === false"><span class="status-Rejected">OUTOFSTOCK</span></td>
-<!-- bg-success text-success bold p-3 bg-danger text-danger bold p-3-->
-                <td>
-                    <div class="copy">
-                        <span class="">
-                          <button type="button" mat-icon-button class="action_bt" [matMenuTriggerFor]="appMenu"
-                           >
-                           <!-- (click)="stopprop($event);" -->
-                            <mat-icon>more_vert</mat-icon>
-                          </button>
-                        </span>
-                        <mat-menu #appMenu="matMenu">
-                          <button class="text-capitalize" mat-menu-item (click)="itemClicked(item)">
-                            <!-- (click)="openShareFileWindow(file)" <i class="fa fa-share-alt" aria-hidden="true"></i> -->
-                            <i *ngIf="item['actions'][0]['action'] === 'enable'" class="fa fa-eye" aria-hidden="true"></i>
-                            <i *ngIf="item['actions'][0]['action'] === 'disable'" class="fa fa-eye-slash" aria-hidden="true"></i> {{item['actions'][0]['action']}}
-                           </button>
-                       <button mat-menu-item (click)="editItem(item.item)">
-                        <i class="fa fa-edit" aria-hidden="true"></i> Edit
-                       </button>
-                        </mat-menu>
-                      </div>
-                </td>
-
-                <!-- <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
-                <!-- <td><span [class]="'item-badge status-' + item.item.isStockAvailable">InStock</span></td> -->
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="paginatorleft">
-            <!-- <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button> -->
-        </ng-template>
-        <ng-template pTemplate="paginatorright">
-            <!-- <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button> -->
-        </ng-template>
-        <ng-template pTemplate="summary">
-            <div class="p-d-flex p-ai-center p-jc-between">
-                In total there are {{items ? items.length : 0 }} items...
-            </div>
-        </ng-template>
-    </p-table>
+  <p class="form-level-settings mgn-lt-20" >{{frm_items_cap}}</p>
+  <div class="center1" *ngIf="item_list.length ==0 && query_executed == true">
+      <div class="bus-item-O">
+          <app-card [item]="itemHead" [terminology]='' [extras]="" [loc]="" (actionPerformed)="cardClicked($event)">
+          </app-card>
       </div>
-   
-    </div>
-  </section>
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-body" >
-        <div class="form-group">
-          <label for="exampleInputPassword1">Item Group Name <span class="text-danger">*</span></label>
-          <input type="text" [(ngModel)] ="itemGroupName" class="form-control1" id="exampleInputPassword1" placeholder="Item Group Name"
-             autocomplete="off" />
-        </div>
-        <div class="form-group mb-1">
-          <label for="exampleTextarea">Description</label>
-          <textarea class="form-control1" [(ngModel)] ="itemGroupDescription" id="exampleTextarea" rows="4" ></textarea>
-        </div>
-      </div>
-      <div class="modal-footer" >
-        <button type="button" class="btn cancel-btn font-weight-bold mgn-5" data-dismiss="modal" #closebutton
-          >Cancel</button>
-        <button type="button" class="btn create-btn font-weight-bold mgn-5"
-          (click)="itemGroupAction()" #closebutton>Create</button>
-      </div>
-    </div>
   </div>
-</div>
-<div class="modal fade" id="itemListsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-  <div class="modal-content">
-    <div class="modal-body items-body" >
-        <!-- <div class="row displayblock" >
-            <div class="col-sm-12 col-lg-8 col-xs-12 col-md-12 mb-4">
-              <button mat-flat-button class="font-size-xs add_btn mgn-lt-10" (click)="showCustomerstoAdd()"
-              >Add Items</button>
-            </div>
-            </div> -->
-
-            <!-- <div *ngFor="let item of items">
-                <div>
-                    <span>{{item.item.displayName}}</span>
-                </div>
-            </div> -->
-            <div class="col-lg-12" >
-                <p-table [value]="items"  [rows]="10">
-                 <ng-template pTemplate="caption">
-                     <div class="p-d-flex p-ai-center p-jc-between">
-                        Items
-                     </div>
-                 </ng-template>
-                 <ng-template pTemplate="header">
-                     <tr>
-                         <th><input type="checkbox" (change)="selectAllItems($event)"
-                          [checked]="isAllItemsSelected()"> Name</th>
-                          <th>Image</th>
-                     </tr>
-                 </ng-template>
-                 <ng-template  pTemplate="body" let-item>
-                     <tr>
-                         <td><input type="checkbox" name="Checkboxes4" [checked]="checkSelection(item)"
-                           (change)="selectcustomers(item)"
-                          >
-                          {{item.item.displayName}}</td>
-                          <td><img [src]="getItemImg(item.item)" [alt]="item.item.displayName" width="100" class="shadow-4" /></td>
-
-                     </tr>
-                 </ng-template>
-                
-                
-             </p-table>
-               </div>
-    </div>
-    <div class="modal-footer" >
-      <button type="button" class="btn cancel-btn font-weight-bold mgn-5" data-dismiss="modal" #closebutton
-        >Cancel</button>
-      <button type="button" class="btn create-btn font-weight-bold mgn-5"
-        (click)="itemGroupAction()" #closebutton>Add</button>
-    </div>
-  </div>
-</div>
-</div>
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="close-btn">
-        <button type="button" class="close" aria-label="Close" data-dismiss="modal">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <ng-container>
-        <div class="modal-body">
-          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12 bold pad-top-10 mgn-up-10 mgn-bt-10 border-tp"
-            >
-            <!-- *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)" -->
-            Uploaded Item Group photo
+  <div class="width100">
+      <ng-container *ngIf="item_list.length >= 1">
+          <div class="bus-item-O">
+              <app-card [item]="itemHead" [terminology]='' [extras]="" [loc]=""
+                  (actionPerformed)="cardClicked($event)"></app-card>
           </div>
-          <div class="img-section mgn-up-20" >
-            <!-- *ngIf="(selectedMessage.files && selectedMessage.files.length > 0)" -->
-            <ul class="galul">
-              <ng-container >
-                <!-- *ngIf="selectedMessage.files && selectedMessage.files.length > 0" -->
-                <li >
-                  <!-- *ngFor="let file of selectedMessage.files;let i = index " -->
-                  <div class="galimg_outer">
-                    <div class="gal_img">
-                      <img >
-                      <!-- [src]="getImage(selectedMessage.base64[i], file)" *ngIf="selectedMessage.base64[i]" -->
-                    </div>
-                    <div class="gal-input">
-                      <input type="text" placeholder="Caption" >
-                      <!-- [(ngModel)]="imgCaptions[i]" -->
-                    </div>
-                    <div class="gal_action" >
-                      <!-- (click)="deleteTempImage(i)" -->
-                      <i class="fa fa-times-circle" aria-hidden="true"></i>
-                    </div>
-                  </div>
-                </li>
-              </ng-container>
-            </ul>
+          <div class="bus-item-O" *ngFor="let item of items">
+              <app-card [item]="item" [terminology]='' [extras]="" [loc]="" (actionPerformed)="cardClicked($event)">
+              </app-card>
           </div>
-        </div>
       </ng-container>
-      <div class="modal-footer">
-        <!-- <div style="text-align:left; color: red;" *ngIf="isExistFile">
-         {{fileExisted}}
-        </div> -->
-        <button type="button" class="disp-none btn btn-light-primary font-weight-bold" data-dismiss="modal"
-          #closebutton>Cancel</button>
-        <button type="button" class="btn btn-primary font-weight-bold hf-btn pull-right" data-dismiss="modal"
-          #closebutton >Ok</button>
-      </div>
-      <!-- (click)="actionCompleted()" [disabled]="selectedMessage.files.length===0" -->
-      <!-- <div class="error-section" *ngIf="apiError !== ''">
-        {{apiError}}
-      </div>
-      <div class="error-section success-section" *ngIf="apiSuccess !== ''">
-        {{apiSuccess}}
-      </div> -->
-    </div>
   </div>
-</div>
+  <div class="clearfix"></div>
+</section>
+
+
+
+

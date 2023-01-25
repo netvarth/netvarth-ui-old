@@ -118,6 +118,14 @@ export class ProviderServices {
     const url = 'provider/items/group/'+itemGroupId;
     return this.servicemeta.httpPut(url, itemIds);
   }
+  removeItemsFromCatalog(catalogId , items){
+    const url = 'provider/catalog/'+catalogId+'/'+ 'items';
+    return this.servicemeta.httpDelete(url, items);
+  }
+  removeItemFromGroupId(itemGroupId , items){
+    const url = 'provider/items/group/'+itemGroupId;
+    return this.servicemeta.httpDelete(url, items);
+  }
   getItemsByGroupId(filter){
     const url = 'provider/items';
     return this.servicemeta.httpGet(url, null, filter);

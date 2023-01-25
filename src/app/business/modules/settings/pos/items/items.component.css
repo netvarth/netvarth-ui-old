@@ -5,6 +5,9 @@
    position:relative;
    
   } */
+  .pull-rgt{
+    float: right !important;
+  }
   .show-img{
     position: relative;
     /* top: 0; */

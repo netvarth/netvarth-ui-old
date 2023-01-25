@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { SnackbarService } from "../../../../../../shared/services/snackbar.service";
+// import { SnackbarService } from "../../../../../../shared/services/snackbar.service";
 
 @Component({
   selector: "app-create-reminder",
@@ -18,11 +18,13 @@ export class CreateReminderComponent implements OnInit {
 	// secondStep = 30;
   meridian = true;
   spinners = true;
+  date = new Date();
+  selectedDay: string;
 
   constructor(
     public dialogRef: MatDialogRef<CreateReminderComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private snackbarService: SnackbarService
+    //private snackbarService: SnackbarService
   ) {
     this.mode = this.data.mode;
   }
@@ -32,6 +34,18 @@ export class CreateReminderComponent implements OnInit {
     //   newtime. toLocaleString(‘en-US’, { hour: ‘numeric’, hour12: true })
     //   );
       console.log("Current time :",this.CurrentTime);
+      const newdate = this.date;
+      const futrDte = new Date(newdate);
+      console.log("Future Date :", futrDte);
+      const obtmonth = futrDte.getMonth() + 1;
+      let cmonth = "" + obtmonth;
+      if (obtmonth < 10) {
+        cmonth = "0" + obtmonth;
+      }
+      this.selectedDay =
+        futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
+      // this.selectedDay = seldate;
+      console.log("Selected Date :",this.selectedDay);
 
   }
   onSubmitTime(time) {
@@ -46,8 +60,7 @@ export class CreateReminderComponent implements OnInit {
     // outputDate.setHours(output.hour);
     // outputDate.setMinutes(output.minute);
     // outputDate.setSeconds(output.second);
-
-    if (time.hour >= new Date().getHours()) {
+    //if (time.hour >= new Date().getHours()) {
       console.log("meridian :",this.meridian);
       if(time.hour >= 12){
         time['mode']='PM'
@@ -57,23 +70,21 @@ export class CreateReminderComponent implements OnInit {
       }
       else{
         time['mode']='AM'
-  
       }
-      
       console.log("time :", time);
-  
       if (time) {
         this.dialogRef.close(time);
       }
-      return true;
-    } else {
-      
-        this.snackbarService.openSnackBar("Cannot set past time select valid slot", {
-          panelClass: "snackbarerror"
-        });
-      
-      return false;
-    }
+     // return true;
+    //}
+     // else {
+    //   this.snackbarService.openSnackBar("Cannot set past time select valid slot", {
+    //     panelClass: "snackbarerror"
+    //   });
+    
+    // return;
+ // }
+    
    
      
   }

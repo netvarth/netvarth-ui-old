@@ -290,12 +290,20 @@ _filter(value: string): string[] {
             (data: any) => {
               console.log("Respooooos :",data);
               //this.selectedConsumers = data;
-              this.reminderId = 0;
-              (this.reminder.fromDate = this.selectedDay);
-              (this.reminder.toDate = this.selectedDay);
-              this.selectedCustomerViaPhoneSearch(data[0],'edit');
-              this.selectedCustomerViaEmail_Name_ID(data[0],'form_data','edit');
-              this.initCustomerDetails(data[0],'edit');
+              if(data[0] && (data[0].phoneNo != '' || data[0].phoneNo != ' ') || data[0] && data[0].email != ''){
+                this.reminderId = 0;
+                (this.reminder.fromDate = this.selectedDay);
+                (this.reminder.toDate = this.selectedDay);
+                this.selectedCustomerViaPhoneSearch(data[0],'edit');
+                this.selectedCustomerViaEmail_Name_ID(data[0],'form_data','edit');
+                this.initCustomerDetails(data[0],'edit');
+              }
+              else{
+                this.snackbarService.openSnackBar("Selected consumer is not having phoneNo or emailId", {
+                  panelClass: "snackbarerror"
+                });
+              }
+             
               // this.selectedConsumer = data[0];
               // this.selectedConsumers.push(data[0]);
              // this.selectedConsumers.push(data);
@@ -341,7 +349,26 @@ _filter(value: string): string[] {
       //   timeSlot.minute +
       //   " " + timeSlot.mode
        // (timeSlot.hour > 12 ? "PM" : "AM");
-      console.log("selected time :", this.selectedTime);
+      console.log("selected time remind :", result);
+      if(this.reminder.fromDate == this.selectedDay && this.reminder.toDate == this.selectedDay && result.hour < new Date().getHours()){
+        // else {
+           this.snackbarService.openSnackBar("Cannot set past time select valid slot", {
+             panelClass: "snackbarerror"
+           });
+         return;
+      // }
+       }
+       else if(this.reminder.fromDate == this.selectedDay && this.reminder.toDate != this.selectedDay){
+        this.snackbarService.openSnackBar("Cannot set past slot for today", {
+          panelClass: "snackbarerror"
+        });
+       }
+       else if(this.reminder.fromDate != this.selectedDay && this.reminder.toDate == this.selectedDay){
+        this.snackbarService.openSnackBar("Cannot set past end date", {
+          panelClass: "snackbarerror"
+        });
+       }
+       else{
       if (result !== undefined) {
         const hour = parseInt(
           moment(result.hour, [
@@ -359,6 +386,7 @@ _filter(value: string): string[] {
         //   ]).format("mm"),10
         // )
       };
+    
     // timeSlot['hour'] < 10 ? '0'+timeSlot['hour'] : timeSlot['hour'];
     //  timeSlot['minute'] < 10 ? '0'+timeSlot['minute'] : timeSlot['minute']
     //     timeSlot['minute'] = result.minute < 10 ? '0'+result.minute : result.minute
@@ -382,6 +410,7 @@ _filter(value: string): string[] {
          this.selectedTimes.push(timeSlot);
           console.log("slot:", this.selectedTime);
       }
+    }
     });
   
   }
@@ -533,7 +562,7 @@ _filter(value: string): string[] {
         this.reminderDetails.reminderSource.PushNotification === "1"
           ? true
           : false);
-          
+
        let sttime ;
        const hour = parseInt(
         moment(this.reminderDetails.schedule.timeSlots[0].sTime, [
@@ -1334,7 +1363,7 @@ _filter(value: string): string[] {
       this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
       }
     }
-    else{
+    else if(customer && (customer.phoneNo != '' || customer.phoneNo != ' ')){
       // if(mode === 'edit' && this.reminderId){
       //   return this.selectedConsumers[0] = customer;
       // }
@@ -1470,7 +1499,7 @@ _filter(value: string): string[] {
       this.snackbarService.openSnackBar('Consumer already selected', { 'panelClass': 'snackbarerror' });
     }
     }
-    else{
+    else if(this.customer_data && this.customer_data.email != ''){
       // mode === 'edit' && 
       if(mode === 'edit' && this.reminderId){
         return this.selectedConsumers[0] =  this.customer_data;
