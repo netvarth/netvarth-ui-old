@@ -58,7 +58,7 @@ export class AgreementComponent implements OnInit {
     this.activatedroute.queryParams.subscribe((params) => {
       if (params && params.uid) {
         this.loanId = params.uid;
-        this.getLoanEmiDetails(this.loanId);
+        // this.getLoanEmiDetails(this.loanId);
       }
       if (params && params.account) {
         this.accountId = params.account;
@@ -72,6 +72,7 @@ export class AgreementComponent implements OnInit {
     this.agreementService.getLoanFromOutside(this.loanId, this.accountId).subscribe((data: any) => {
       console.log("LoanData", data);
       this.loanData = data;
+      this.loanEmiDetailsData = data.loanEmis;
       if (this.loanData.spInternalStatus != 'Approved' && (this.source && this.source != 'provider')) {
         this.snackbarService.openSnackBar("Link Expired or Invalid");
         this.router.navigate(['/']);
@@ -143,15 +144,15 @@ export class AgreementComponent implements OnInit {
   }
 
 
-  getLoanEmiDetails(id) {
-    this.agreementService.getLoanEmiDetails(id).subscribe((data: any) => {
-      if (data) {
-        this.loanEmiDetailsData = data
-      }
-    },
-      (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
-      });
-  }
+  // getLoanEmiDetails(id) {
+  //   this.agreementService.getLoanEmiDetails(id).subscribe((data: any) => {
+  //     if (data) {
+  //       this.loanEmiDetailsData = data
+  //     }
+  //   },
+  //     (error) => {
+  //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+  //     });
+  // }
 
 }
