@@ -8,19 +8,13 @@
   </div>
 </section>
 
-<!-- <div *ngIf="activityType !=='UpdateFollowUP' && api_loading1 " class="overlay">
-  <div class="child">
-    <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
-  </div>
-</div> -->
-
 
 <section class="container card mt-4 mx-auto" *ngIf="taskDetails">
   <div>
     <!----task details start-->
     <div class="taskAndNote">
       <div class="formWidth">
-        <div  *ngIf="(taskDetails.customer) " style="display: flex;align-items: center;gap: 10px;">
+        <div *ngIf="(taskDetails.customer) " style="display: flex;align-items: center;gap: 10px;">
           <div class="imageClass">
             <div style="color: #8A8383;" *ngIf="firstCustomerName">{{firstCustomerName | capitalizeFirst}}</div>
           </div>
@@ -100,13 +94,10 @@
                 <div *ngIf="taskDetails && taskDetails.status && taskDetails.status.name">
                   <div
                     [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' || activityType==='UpdateFollowUP' }"
-                    [formControlName]="selectMember" class="form-control"
-                    style="display: flex;justify-content: space-between;"
+                    class="form-control" style="display: flex;justify-content: space-between;"
                     (click)="(taskDetails.status.name !=='Completed') && selectMemberDialog(selectMember)">
                     <div>{{selectMember}}</div>
-                    <div
-                      [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' || activityType==='UpdateFollowUP' }"
-                      class="pointer"><i class="fa fa-user" aria-hidden="true"></i></div>
+                    <div><i class="fa fa-user" aria-hidden="true"></i></div>
                   </div>
                 </div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError"
@@ -191,13 +182,13 @@
               </div>
               <div class="fieldPadding">
                 <div *ngIf="taskDetails && taskDetails.status && taskDetails.status.name">
-                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }"
-                    [formControlName]="selectTaskManger" class="form-control"
+                  <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }" class="form-control"
                     style="display: flex;justify-content: space-between;"
                     (click)="(taskDetails.status.name !=='Completed')&& selectManagerDialog(selectTaskManger)">
                     <div>{{selectTaskManger}}</div>
                     <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed' }" style="cursor: pointer;">
-                      <i class="fa fa-user" aria-hidden="true"></i></div>
+                      <i class="fa fa-user" aria-hidden="true"></i>
+                    </div>
                   </div>
                 </div>
                 <app-field-error-display [displayError]="true" style="color: #f24949 !important;" *ngIf="taskError"
@@ -215,7 +206,7 @@
                 <div class="estField">
                   <div class="secondEst">
                     <input id="days" [value]="taskDays" (keyup)="resetErrors()" type="number" #taskDays
-                      (ngModelChange)="handleTaskEstDuration(taskDays.value)" placeholder="Days" class="form-control "
+                      placeholder="Days" class="form-control "
                       formControlName="taskDays" autocomplete="off" min="0" />
                   </div>
                   <div class="timeField" *ngIf="lebalDays">{{lebalDays}}</div>
@@ -223,7 +214,7 @@
                 <div class="estField">
                   <div class="secondEst">
                     <input id="hrs" [value]="taskHrs" (keyup)="resetErrors()" type="number" #taskHrs
-                      (ngModelChange)="handleTaskEstDuration(taskHrs.value)" placeholder="Hours" class="form-control "
+                       placeholder="Hours" class="form-control"
                       formControlName="taskHrs" autocomplete="off" min="0" max="23" />
                   </div>
                   <div class="timeField" *ngIf="lebalHours"> {{lebalHours}} </div>
@@ -231,7 +222,7 @@
                 <div class="estField">
                   <div class="secondEst">
                     <input id="min" [value]="taskMin" (keyup)="resetErrors()" type="number" #taskMin
-                      (ngModelChange)="handleTaskEstDuration(taskMin.value)" placeholder="Minutes" class="form-control"
+                       placeholder="Minutes" class="form-control"
                       formControlName="taskMin" autocomplete="off" min="0" max="59" />
                   </div>
                   <div class="timeField" *ngIf="lebalMinutes">
@@ -379,8 +370,10 @@
             </div> -->
             <div style="display:flex;gap:5px" *ngIf="files">
               <div class="card-title"><b *ngIf="files">{{files}}</b></div>
-              <div *ngIf="(taskDetails && taskDetails.status && taskDetails.status.name) && 
-              (taskDetails.status.name==='New' ||  taskDetails.status.name==='Completed') && activityType !=='UpdateFollowUP'" class="astericColor">*</div>
+              <div
+                *ngIf="(taskDetails && taskDetails.status && taskDetails.status.name) && 
+              (taskDetails.status.name==='New' ||  taskDetails.status.name==='Completed') && activityType !=='UpdateFollowUP'"
+                class="astericColor">*</div>
             </div>
             <div *ngIf="taskDetails && taskDetails.attachments && taskDetails.attachments.length>0">
               <span (click)="attatchmentDialog(taskDetails.attachments)"
@@ -390,7 +383,8 @@
           <!-- <hr /> -->
           <div class="text-left">
             <div class="filesUploadThings">
-              <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed'}" mat-button [mat-dialog-close]="true"
+              <div [ngClass]="{'fieldDisable': taskDetails.status.name==='Completed'}" mat-button
+                [mat-dialog-close]="true"
                 class="lnk action pointer-cursor btn btn-primary upload-file-btn text-primary inputFile"
                 (click)="taskDetails.status.name !=='Completed' && uploadFiles()">
                 <div class="filesUploadThingsAction" *ngIf="uploadFilesrelated">
@@ -447,7 +441,8 @@
               </div>
             </div>
             <div style="padding:10px">
-              <textarea [disabled]="taskDetails.status.name==='Completed'" rows="10" class="form-control" [(ngModel)]="notesTextarea" #taskDescription
+              <textarea [disabled]="taskDetails.status.name==='Completed'" rows="10" class="form-control"
+                [(ngModel)]="notesTextarea" #taskDescription
                 (ngModelChange)="handleNotesDescription(taskDescription.value)" (keyup)="autoGrowTextZone($event)"
                 maxlength="1000" placeholder="Enter remarks description"
                 style=" height: 45px !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
@@ -519,8 +514,9 @@
                 taskDetails.status.name==='New' && activityType !=='UpdateFollowUP'" class="astericColor">*</div>
           </div>
           <div class="fieldPadding">
-            <input [disabled]="taskDetails.status.name==='Completed'" min="0" (keyup)="resetErrors()" type="number" [(ngModel)]="actualPotential"  placeholder="Enter activity number"
-              class="form-control " autocomplete="off" />
+            <input [disabled]="taskDetails.status.name==='Completed'" min="0" (keyup)="resetErrors()" type="number"
+              [(ngModel)]="actualPotential" placeholder="Enter activity number" class="form-control "
+              autocomplete="off" />
           </div>
         </div>
         <!---actual potential end-->
@@ -531,8 +527,9 @@
             <div>{{noOfDataCollected}}</div>
           </div>
           <div class="fieldPadding">
-            <input  [disabled]="taskDetails.status.name==='Completed'" min="0" (keyup)="resetErrors()" [(ngModel)]="actualResult" type="number" #actualResultt
-              placeholder="No of data collected" class="form-control " autocomplete="off" />
+            <input [disabled]="taskDetails.status.name==='Completed'" min="0" (keyup)="resetErrors()"
+              [(ngModel)]="actualResult" type="number" #actualResultt placeholder="No of data collected"
+              class="form-control " autocomplete="off" />
           </div>
         </div>
         <!---enter result end-->
