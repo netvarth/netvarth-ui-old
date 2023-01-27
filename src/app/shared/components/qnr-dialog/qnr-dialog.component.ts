@@ -645,23 +645,16 @@ export class QnrDialogComponent implements OnInit {
 
         this.onSubmit('inputChange');
       }
-    }
-
-
-
-    else {
+    } else {
       let itemPrice;
       this.selectedType = value;
       if (question.fieldDataType !== 'dataGrid') {
-
+        console.log("AnswersQnr:", this.answersQnr);
         if (Object.keys(this.answersQnr).length === 0) {
-
           itemPrice = this.getValue(value);
-
           if (itemPrice !== undefined) {
             var itemrate: number = +itemPrice;
-          }
-          else {
+          } else {
             var itemrate = 0
           }
           this.answersQnr["labelName"] = question.labelName;
@@ -676,21 +669,15 @@ export class QnrDialogComponent implements OnInit {
           this.answDataGridListColumn.push(this.ansdDtaGridColumnItem);
           this.answDataGridList["dataGridListColumn"] = this.answDataGridListColumn;
           this.answersQnr["answer"] = this.answerQnr;
-
-          this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-
-        }
-        else {
+          this.selectedPriceList.push({ item: column.columnId, rate: itemrate });
+        } else {
           if (column.order && column.order === 1 && column.mandatory === true) {
-
             itemPrice = this.getValue(value);
             if (itemPrice !== undefined) {
               var itemrate: number = +itemPrice;
-            }
-            else {
+            } else {
               var itemrate = 0
             }
-
             this.ansDataColumn["list"] = [value];
             this.ansdDtaGridColumnItem["column"] = this.ansDataColumn;
             this.ansdDtaGridColumnItem["columnId"] = column.columnId;
@@ -705,12 +692,8 @@ export class QnrDialogComponent implements OnInit {
               this.selectedPriceList.splice(index, 1); // 2nd parameter means remove one item only
             }
             this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-
-          }
-          else if (column.order && column.order === 2 && column.mandatory === true) {
-
+          } else if (column.order && column.mandatory === true) {
             this.isCheckedSecond = true;
-
             this.isListChanged = true;
             itemPrice = this.getRate(value);
             var itemrate: number = +itemPrice;
@@ -733,16 +716,13 @@ export class QnrDialogComponent implements OnInit {
               this.selectedPriceList.splice(index1, 1); // 2nd parameter means remove one item only
             }
             this.selectedPriceList.push({ item: column.columnId, rate: itemrate })
-
-          }
-          else {
+          } else {
             if (column.mandatory === true) {
               this.isCheckedSecond = true;
             }
             this.isListChanged = true;
             if (ev.target.checked) {
               this.items.push(value);
-
             }
             else {
               const index = this.items.indexOf(value);
@@ -777,8 +757,7 @@ export class QnrDialogComponent implements OnInit {
         }
 
 
-      }
-      else {
+      } else {
 
         if (ev.target.checked) {
           if (!this.dataGridListColumns[question.labelName + '=' + column.order]) {
@@ -833,6 +812,7 @@ export class QnrDialogComponent implements OnInit {
 
 
             let itemList = item["column"]["list"]
+
             if (column.listPropertie.maxAnswerable && column.listPropertie.maxAnswerable === 1) {
               for (let listItem of itemList) {
                 if (listItem === value) {
@@ -902,9 +882,10 @@ export class QnrDialogComponent implements OnInit {
 
 
             let item = answDataGridListColumnArray.find(x => x.columnId === column.columnId);
-
+            console.log("item", item)
             if (item) {
               let itemList = item["column"]["list"]
+              console.log("itemList", itemList)
               for (let listItem of itemList) {
                 if (listItem === value) {
 
@@ -1445,7 +1426,7 @@ export class QnrDialogComponent implements OnInit {
     this.updatedGridIndex[question.labelName] = null;
   }
   saveDataGridColumn() {
-
+    console.log("Called saveDataGridColumn");
     if (!this.selectFirst) {
 
       setTimeout(() => {

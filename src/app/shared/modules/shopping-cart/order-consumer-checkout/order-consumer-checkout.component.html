@@ -475,7 +475,7 @@
                               <div class="order-label"
                                 *ngIf="(s3CouponsList.JC.length > 0 ||s3CouponsList.OWN.length > 0)">
                                 <a (click)="applyPromocode()" *ngIf="selected_coupons.length === 0">Apply Promo
-                                  Code1</a>
+                                  Code</a>
                                 <a *ngIf="selected_coupons.length > 0" (click)="applyPromocode()">Promo code
                                   {{selected_coupons.toString()}} added.</a>
                               </div>
@@ -544,8 +544,17 @@
                                 </div>
                                 <div class="card-heading mgn-up-10"></div>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-10">
-                                  <div class="bill-labels">TO PAY</div>
+                                  <div class="bill-labels">TOTAL BILL AMOUNT</div>
                                   <div class="price rupee-font">{{cartDetails.netTotal| currency:'&#8377;'}}
+                                  </div>
+                                </div>
+                                <div class="width-100 amount-details text-danger mgn-up-10 font-weight-bold"
+                                  *ngIf="cartDetails && cartDetails.advanceAmount">
+                                  <div class="bill-labels">Advance Payment of
+                                    <span class="price rupee-font text-danger">{{cartDetails.advanceAmount |
+                                      currency:'&#8377;'}}
+                                    </span>
+                                    is Required
                                   </div>
                                 </div>
 

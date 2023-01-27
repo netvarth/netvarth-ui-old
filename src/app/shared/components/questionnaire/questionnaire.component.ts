@@ -162,7 +162,6 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       this.itemArray = this.lStorageService.getitemfromLocalStorage('itemArray');
       if (this.itemArray) {
         this.showItem = true;
-
       }
     }
 
@@ -251,6 +250,10 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       }
     }
     this.disableField()
+  }
+
+  getServiceOptionsSelected(item) {
+
   }
   //disable field
   disableField() {
@@ -1528,7 +1531,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   }
   increment(item) {
     const removeitemdialogRef = this.dialog.open(QnrDialogComponent, {
-      width: '50%',
+      width: '100%',
       panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
       disableClose: true,
       data: {

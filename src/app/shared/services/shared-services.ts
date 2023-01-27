@@ -1352,6 +1352,11 @@ export class SharedServices {
     const url = 'consumer/questionnaire/serviceoptions/order/item/' + itemId + '?account=' + account;
     return this.servicemeta.httpGet(url);
   }
+
+  getItemsListWithItemOptions(catalogId, account) {
+    const url = 'consumer/questionnaire/serviceoption/order/catalog/item/' + catalogId + '/ONLINE?account=' + account;
+    return this.servicemeta.httpGet(url);
+  }
   // submitConsumerApptServiceOption(body, uuid) {
   //   alert('option')
   //   const url = 'consumer/appointment/serviceoptions/resubmit/' + uuid ;

@@ -110,6 +110,8 @@ export class OrderConsumerComponent implements OnInit {
   serviceOptionApptt: any;
   itemOptionsData: any = [];
   lastCustomization: any;
+  itemsListWithItemOptions: any;
+  itemDetails: any;
   constructor(
     private location: Location,
     private lStorageService: LocalStorageService,
@@ -182,7 +184,10 @@ export class OrderConsumerComponent implements OnInit {
   }
 
   getItemQty(item) {
-    const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
+    qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
+    if (this.haveItemOptions(item)) {
+      var qty = this.orderList.filter(i => i.itemOptionsIndex === item.itemOptionsIndex).length;
+    }
     if (qty === 0) {
       this.removeItemFromCart(item);
     }
@@ -200,6 +205,7 @@ export class OrderConsumerComponent implements OnInit {
         if (catalogs.length !== 0) {
           this.catalog_loading = true;
           this.activeCatalog = catalogs[0];
+          console.log("this.activeCatalog", this.activeCatalog)
           this.orderType = this.activeCatalog.orderType;
           if (this.activeCatalog.catalogImages && this.activeCatalog.catalogImages[0]) {
             this.catalogImage = this.activeCatalog.catalogImages[0].url;
@@ -236,7 +242,7 @@ export class OrderConsumerComponent implements OnInit {
           }
           this.shared_services.setOrderDetails(this.activeCatalog);
           for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-            const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+            const catalogItemId = this.activeCatalog.catalogItem[itemIndex].itemId;
             const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
             const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
             const showpric = this.activeCatalog.showPrice;
@@ -471,6 +477,27 @@ export class OrderConsumerComponent implements OnInit {
     }
   }
 
+  haveItemOptions(item) {
+    if (this.itemsListWithItemOptions && this.itemsListWithItemOptions.length > 0) {
+      var haveItemOptions = false;
+      this.itemsListWithItemOptions.forEach(element => {
+        if (element.item.itemId == item.item.itemId) {
+          haveItemOptions = true;
+        }
+      });
+
+      if (haveItemOptions) {
+        return true
+      }
+      else {
+        return false
+      }
+    }
+    else {
+      return false
+    }
+  }
+
   increment(item) {
     this.subs.sink = this.shared_services.getServiceoptionsOrder(item.item.itemId, this.account_id).subscribe(
       (data: any) => {
@@ -490,17 +517,30 @@ export class OrderConsumerComponent implements OnInit {
       });
   }
 
+  getItemsListWithItemOptions() {
+    this.subs.sink = this.shared_services.getItemsListWithItemOptions(this.catalog_Id, this.account_id).subscribe(
+      (data: any) => {
+        if (data) {
+          this.itemsListWithItemOptions = data;
+        }
+      },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+
 
   addItemOptions(data, item, repeatBool?) {
+    this.itemDetails = Object.assign({}, item);
+    var datatoSend = { data: data, type: 'add', itemDetails: this.itemDetails };
 
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
     var repeat = false;
-    var datatoSend = { data: data, type: 'add', itemDetails: item };
 
     if (repeatBool) {
       if (itemOptionsData) {
         itemOptionsData.forEach(element => {
-          console.log(element.itemData, item)
+          console.log(element, item)
           if (element && element.itemData && element.itemData.id === item.id) {
             this.lastCustomization = element;
             repeat = true;
@@ -514,6 +554,16 @@ export class OrderConsumerComponent implements OnInit {
         }
       }
     }
+
+
+    if (!repeat) {
+      console.log("Coming Here")
+      var itemOptionsIndex = Math.floor(Math.random() * (999 - 100 + 1) + 100);
+      this.itemDetails['itemOptionsIndex'] = itemOptionsIndex;
+    }
+
+    console.log("this.itemDetails", this.itemDetails)
+
 
     this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
       header: 'Choose Item Options',
@@ -573,8 +623,15 @@ export class OrderConsumerComponent implements OnInit {
 
 
 
-  editItemOptions(item) {
-    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+  editItemOptions(item, index) {
+    console.log("index", index)
+    var itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    itemOptionsData.forEach(element => {
+      if (element.itemData.itemOptionsIndex == index) {
+        itemOptionsData = element;
+      }
+    });
+
     this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
       header: 'Choose Item Options',
       width: '90%',
@@ -798,6 +855,9 @@ export class OrderConsumerComponent implements OnInit {
       console.log(this.catalog_details);
       if (this.catalog_details) {
         this.catalog_Id = this.catalog_details.id;
+        if (this.catalog_Id && this.account_id) {
+          this.getItemsListWithItemOptions()
+        }
         this.catalog_type = this.catalog_details.catalogType;
         if (this.catalog_details.pickUp) {
           if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {

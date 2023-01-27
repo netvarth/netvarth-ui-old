@@ -68,9 +68,9 @@ export class ItemOptionsComponent implements OnInit {
       }
     }
     if (this.type == 'edit') {
-      if (this.config && this.config.data && this.config.data.data && this.config.data.data[0]) {
-        this.itemData = this.config.data.data[0].questionnaireData;
-        this.answers = this.config.data.data[0].answersData;
+      if (this.config && this.config.data && this.config.data.data && this.config.data.data) {
+        this.itemData = this.config.data.data.questionnaireData;
+        this.answers = this.config.data.data.answersData;
       }
     }
 
@@ -95,7 +95,7 @@ export class ItemOptionsComponent implements OnInit {
 
 
     if (this.type == 'edit') {
-      this.totalPrice = this.config.data.data[0].postData.totalPrice
+      this.totalPrice = this.config.data.data.postData.totalPrice
       console.log("this.totalPrice", this.totalPrice)
     }
 
@@ -156,6 +156,11 @@ export class ItemOptionsComponent implements OnInit {
     this.answers[i] = moment(event).format('DD-MM-YYYY')
     console.log(typeof (this.answers[i]))
     this.saveAnswers(questions, question, i)
+  }
+
+  convertToDate(date) {
+    let dateToConvert = new Date(date);
+    return moment(dateToConvert).format('DD-MM-YYYY');
   }
 
   getPriceValue(listPropertie, value) {

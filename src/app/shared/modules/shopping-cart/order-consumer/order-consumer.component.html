@@ -150,7 +150,8 @@
                       *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
                     <span class="text-light item-desc"
                       *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span><br>
-                    <span class="text-primary item-desc pointer-cursor" (click)="editItemOptions(item)">Edit</span>
+                    <span class="text-primary item-desc pointer-cursor" *ngIf="haveItemOptions(item)"
+                      (click)="editItemOptions(item,item.itemOptionsIndex)">Edit</span>
                   </div>
                   <div class="cart">
                     <span class="text-red item-price"
