@@ -1013,6 +1013,9 @@ export class AppointmentComponent implements OnInit {
         // 'id': this.sel_queue_id
         if (this.type === 'followup') {
             this.sel_ser = this.servId;
+            console.log("sel_ser_det",this.sel_ser_det);
+            console.log("follow_up_Details",this.follow_up_Details);
+
             this.sel_ser_det.serviceType = this.follow_up_Details.service.serviceType;
             this.waitlist_for.push({ id: this.cusId, firstName: this.cusfirstname, lastName: this.cuslastname, apptTime: this.apptTime });
             const post_Data = {
@@ -1030,9 +1033,13 @@ export class AppointmentComponent implements OnInit {
                 'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
                 'appointmentMode': this.apptType
             };
-            if (this.follow_up_Details.provider && this.follow_up_Details.provider.id) {
+            if (this.follow_up_Details.provider) {
                 post_Data['provider'] = { 'id': this.follow_up_Details.provider.id };
             }
+            // console.log("selected Id :", this.selectedUser);
+            // if (this.selectedUser) {
+            //     post_Data['provider'] = { 'id': this.selectedUser.id };
+            // }
             this.virtualServiceArray = {}
             if (this.sel_ser_det.serviceType === 'virtualService') {
 
@@ -1052,6 +1059,7 @@ export class AppointmentComponent implements OnInit {
                 // }
 
             }
+            console.log("Posting Data :",post_Data);
             if (this.api_error === null) {
                 post_Data['consumer'] = { id: this.cusId };
                 post_Data['ignorePrePayment'] = true;
@@ -1230,6 +1238,7 @@ export class AppointmentComponent implements OnInit {
                 'appmtFor': JSON.parse(JSON.stringify(this.waitlist_for)),
                 'appointmentMode': this.apptType
             };
+            console.log("Selected User :", this.selectedUser);
             if (this.selectedUser && this.selectedUser.firstName !== Messages.NOUSERCAP) {
                 post_Data['provider'] = { 'id': this.selectedUser.id };
             }

@@ -35,7 +35,7 @@
                 </div>
             </div>
         </div> -->
-        <div class="action-box pointer-cursor" (click)="reminderAction()">
+        <div class="action-box pointer-cursor" *ngIf="customerDetails && customerDetails[0] && (customerDetails[0].email || phoneNum)" (click)="reminderAction()">
         <div class="action-box-sub">
             <!-- <img src="./assets/images/Reminder.png" alt="Basic Plus"> -->
             <span class="reminder-icon"></span>
