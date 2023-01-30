@@ -1571,7 +1571,7 @@ export class CustTemplate2Component implements OnInit {
           //console.log("logged In");
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           if (_this.userType === 'consumer') {
-              _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
+            _this.showCheckin(location.id, location.place, location.googleMapUrl, service.serviceAvailability.availableDate, service, 'consumer');
           }
         } else {
           const passParam = { callback: '', current_provider: current_provider };
@@ -1623,7 +1623,7 @@ export class CustTemplate2Component implements OnInit {
           _this.userType = _this.sharedFunctionobj.isBusinessOwner('returntyp');
           // console.log("User Type:" + _this.userType);
           if (_this.userType === 'consumer') {
-              _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
+            _this.showAppointment(location.id, location.place, location.googleMapUrl, service.serviceAvailability.nextAvailableDate, service, 'consumer');
           }
         } else {
           const passParam = { callback: 'appointment', current_provider: current_provider };
@@ -1631,7 +1631,7 @@ export class CustTemplate2Component implements OnInit {
         }
       });
   }
-  
+
   doLogin(origin?, passParam?) {
     // this.snackbarService.openSnackBar('You need to login to check in');
     const current_provider = passParam['current_provider'];
@@ -1670,7 +1670,7 @@ export class CustTemplate2Component implements OnInit {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1678,7 +1678,7 @@ export class CustTemplate2Component implements OnInit {
             this.checkout();
           }
         } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else if (result === 'showsignup') {
         this.doSignup(passParam);
@@ -1711,7 +1711,7 @@ export class CustTemplate2Component implements OnInit {
         } else if (passParam['callback'] === 'donation') {
           this.showDonation(passParam['loc_id'], passParam['date'], passParam['service']);
         } else if (passParam['callback'] === 'appointment') {
-            this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showAppointment(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         } else if (passParam['callback'] === 'order') {
           if (this.orderType === 'SHOPPINGLIST') {
             this.shoppinglistupload();
@@ -1719,7 +1719,7 @@ export class CustTemplate2Component implements OnInit {
             this.checkout();
           }
         } else {
-            this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
+          this.showCheckin(current_provider['location']['id'], current_provider['location']['place'], current_provider['location']['googleMapUrl'], current_provider['cdate'], current_provider['service'], 'consumer');
         }
       } else {
         this.loading_direct = false;
@@ -1739,7 +1739,7 @@ export class CustTemplate2Component implements OnInit {
       service_id: service.id,
       virtual_info: JSON.stringify(virtualinfo)
     };
-    if (service['serviceType']==='virtualService') {
+    if (service['serviceType'] === 'virtualService') {
       queryParam['tel_serv_stat'] = true;
     } else {
       queryParam['tel_serv_stat'] = false;
@@ -1768,7 +1768,7 @@ export class CustTemplate2Component implements OnInit {
       sel_date: curdate,
       virtual_info: JSON.stringify(virtualinfo)
     };
-    if (service['serviceType']==='virtualService') {
+    if (service['serviceType'] === 'virtualService') {
       queryParam['tel_serv_stat'] = true;
     } else {
       queryParam['tel_serv_stat'] = false;
@@ -2016,11 +2016,11 @@ export class CustTemplate2Component implements OnInit {
   cardClicked(actionObj) {
 
     if (actionObj['type'] === 'waitlist') {
-        this.checkinClicked(actionObj['location'], actionObj['service']);
+      this.checkinClicked(actionObj['location'], actionObj['service']);
     } else if (actionObj['type'] === 'appt') {
-        this.appointmentClicked(actionObj['location'], actionObj['service']);
+      this.appointmentClicked(actionObj['location'], actionObj['service']);
     } else if (actionObj['type'] === 'donation') {
-        this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
+      this.payClicked(actionObj['location'].id, actionObj['location'].place, new Date(), actionObj['service']);
     } else if (actionObj['type'] === 'item') {
       if (actionObj['action'] === 'view') {
         this.itemDetails(actionObj['service']);
@@ -2315,7 +2315,7 @@ export class CustTemplate2Component implements OnInit {
             this.shared_services.setOrderDetails(this.activeCatalog);
             if (this.activeCatalog && this.activeCatalog.catalogItem) {
               for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].itemId;
+                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
                 const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
                 const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
                 const showpric = this.activeCatalog.showPrice;

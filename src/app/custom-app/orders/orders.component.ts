@@ -43,7 +43,7 @@ export class OrdersComponent implements OnInit {
   nextAvailableTime;
   price: number;
   spId_local_id: any;
-  userType='';
+  userType = '';
   showmoreDesc = false;
   showmoreSpec = false;
   onlyVirtualItems = false;
@@ -72,7 +72,7 @@ export class OrdersComponent implements OnInit {
   constructor(
     private lStorageService: LocalStorageService,
     private shared_services: SharedServices,
-    private dialog:MatDialog,
+    private dialog: MatDialog,
     private router: Router,
     private sharedFunctionObj: SharedFunctions,
     public translate: TranslateService
@@ -144,7 +144,7 @@ export class OrdersComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 'success') {
-        
+
       } else if (result === 'showsignup') {
         // this.doSignup(passParam);
       } else {
@@ -171,7 +171,7 @@ export class OrdersComponent implements OnInit {
     }
     return physical_item_present;
   }
-checkVirtualOrPhysical() {
+  checkVirtualOrPhysical() {
     // console.log('checkvirtualorphysical');
     let showCatalogItems = false;
     if (this.activeCatalog.nextAvailableDeliveryDetails || this.activeCatalog.nextAvailablePickUpDetails) {
@@ -239,7 +239,7 @@ checkVirtualOrPhysical() {
             this.shared_services.setOrderDetails(this.activeCatalog);
             if (this.activeCatalog && this.activeCatalog.catalogItem) {
               for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].itemId;
+                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
                 const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
                 const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
                 const showpric = this.activeCatalog.showPrice;
@@ -294,7 +294,7 @@ checkVirtualOrPhysical() {
       }
     }
   }
-getConfirmation() {
+  getConfirmation() {
     let can_remove = false;
     const dialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',

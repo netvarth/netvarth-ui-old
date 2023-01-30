@@ -275,7 +275,7 @@ export class CatalogItemComponent implements OnInit {
           this.shared_services.setOrderDetails(this.activeCatalog);
           if (this.activeCatalog && this.activeCatalog.catalogItem) {
             for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-              const catalogItemId = this.activeCatalog.catalogItem[itemIndex].itemId;
+              const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
               const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
               const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
               const showpric = this.activeCatalog.showPrice;

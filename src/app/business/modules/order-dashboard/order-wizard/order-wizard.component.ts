@@ -175,13 +175,13 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   uuid;
 
   //auto suggestion variable
-  categoryvalue:string='Search with Phone Number';
+  categoryvalue: string = 'Search with Phone Number';
   categoryForSearchingarray = ['Search with Phone Number', 'Search with Email ID', 'Search with Name']
-  customerList:any;
+  customerList: any;
   tempAcId;
-  countryCodePhone='+91';
+  countryCodePhone = '+91';
   tempDataCustomerInfo;
-  categoryvalueSelect:boolean=false;
+  categoryvalueSelect: boolean = false;
   constructor(private fb: UntypedFormBuilder,
     private wordProcessor: WordProcessor,
     public router: Router,
@@ -269,7 +269,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     this.no_of_grids = Math.round(divident / divider);
   }
   ngOnInit() {
-    
+
     this.accountId = this.groupService.getitemFromGroupStorage('accountId');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.searchby = 'Search by ' + this.customer_label + ' phone number/email/name';
@@ -277,7 +277,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
     this.getCatalog();
     this.gets3curl();
     this.bisinessProfile()
-    
+
 
 
   }
@@ -334,7 +334,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   createForm() {
     this.searchForm = this.fb.group({
       search_input: ['', Validators.compose([Validators.required])],
-      search_inputDialCode:['+91',[Validators.required]]
+      search_inputDialCode: ['+91', [Validators.required]]
     });
     this.amForm = this.fb.group({
       phoneNumber: ['', Validators.compose([Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(projectConstantsLocal.VALIDATOR_NUMBERONLY)])],
@@ -358,65 +358,65 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       this.searchCustomer(form_data);
     }
   }
-  handleCategoryselect(filterName){
-    if(filterName==='Search with Phone Number'){
+  handleCategoryselect(filterName) {
+    if (filterName === 'Search with Phone Number') {
       this.searchForm.controls.search_input.setValue('');
-      this.categoryvalue='Search with Phone Number';
+      this.categoryvalue = 'Search with Phone Number';
       this.searchby = 'Search by ' + this.customer_label + ' phone number';
     }
-    else if(filterName==='Search with Email ID'){
+    else if (filterName === 'Search with Email ID') {
       this.searchForm.controls.search_input.setValue('');
-      this.categoryvalue='Search with Email ID';
+      this.categoryvalue = 'Search with Email ID';
       this.searchby = 'Search by ' + this.customer_label + ' email';
     }
-    else if(filterName==='Search with Name'){
+    else if (filterName === 'Search with Name') {
       this.searchForm.controls.search_input.setValue('');
-      this.categoryvalue='Search with Name';
+      this.categoryvalue = 'Search with Name';
       this.searchby = 'Search by ' + this.customer_label + ' name';
     }
   }
-  handleFormField(categoryvalue,customerInfo){
+  handleFormField(categoryvalue, customerInfo) {
     // console.log('categoryvalue',categoryvalue)
     // console.log('customerInfo',customerInfo);
-    if(customerInfo && customerInfo['search_input']){
-      const phNoInput= customerInfo['search_input'];
+    if (customerInfo && customerInfo['search_input']) {
+      const phNoInput = customerInfo['search_input'];
       this.getCustomerList(phNoInput);
     }
   }
-  handleSearchSelectPhone(custInfo,phNoValue){
+  handleSearchSelectPhone(custInfo, phNoValue) {
     // console.log('custInfo',custInfo);
     // console.log('phNoValue',phNoValue);
-    this.tempDataCustomerInfo=custInfo;
+    this.tempDataCustomerInfo = custInfo;
     this.searchCustomer(phNoValue)
   }
-  bisinessProfile(){
+  bisinessProfile() {
     this.searchForm.controls.search_input.setValue('');
-    this.provider_services.getBussinessProfile().subscribe((res:any)=>{
-        // console.log('BProfileRes',res);
-        if(res){
-            if(res['id']){
-                this.tempAcId= res['id'];   
-            }
+    this.provider_services.getBussinessProfile().subscribe((res: any) => {
+      // console.log('BProfileRes',res);
+      if (res) {
+        if (res['id']) {
+          this.tempAcId = res['id'];
         }
+      }
     })
-}
-  getCustomerList(tempPhoneNum){
-    let tempCatValue:any;
-    if(this.categoryvalue==='Search with Phone Number'){
-      tempCatValue='phoneNumber';
+  }
+  getCustomerList(tempPhoneNum) {
+    let tempCatValue: any;
+    if (this.categoryvalue === 'Search with Phone Number') {
+      tempCatValue = 'phoneNumber';
     }
-    else if(this.categoryvalue==='Search with Email ID'){
-      tempCatValue='emailId';
+    else if (this.categoryvalue === 'Search with Email ID') {
+      tempCatValue = 'emailId';
     }
-    else if(this.categoryvalue==='Search with Name'){
-      tempCatValue='name';
+    else if (this.categoryvalue === 'Search with Name') {
+      tempCatValue = 'name';
     }
-        this.providerService.getSearchCustomer(this.tempAcId, tempCatValue,tempPhoneNum).subscribe((res)=>{
-          console.log(res);
-          if(res){
-            this.customerList= res;
-          }
-        })
+    this.providerService.getSearchCustomer(this.tempAcId, tempCatValue, tempPhoneNum).subscribe((res) => {
+      console.log(res);
+      if (res) {
+        this.customerList = res;
+      }
+    })
   }
 
 
@@ -452,11 +452,11 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         if (isNumber && isCount10) {
           mode = 'phone';
           this.prefillnewCustomerwithfield = 'phone';
-        } 
-        else if (isNumber && form_data.search_input.length >7) {
+        }
+        else if (isNumber && form_data.search_input.length > 7) {
           mode = 'phone';
           this.prefillnewCustomerwithfield = 'phone';
-        } else if (isNumber && form_data.search_input.length <7 ) {
+        } else if (isNumber && form_data.search_input.length < 7) {
           mode = 'id';
           this.prefillnewCustomerwithfield = 'id';
         }
@@ -498,8 +498,8 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
               // console.log('data2',data)
               if (data.length > 1) {
                 const customer = data.filter(member => !member.parent);
-                console.log('customer',customer)
-                this.customer_data= this.tempDataCustomerInfo
+                console.log('customer', customer)
+                this.customer_data = this.tempDataCustomerInfo
                 // this.customer_data = customer[0];
                 this.jaldeeId = this.customer_data.jaldeeId;
 
@@ -599,7 +599,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
             this.catalogExpired = true;
           }
           for (let itemIndex = 0; itemIndex < this.catalog_details.catalogItem.length; itemIndex++) {
-            const catalogItemId = this.catalog_details.catalogItem[itemIndex].itemId;
+            const catalogItemId = this.catalog_details.catalogItem[itemIndex].id;
             const minQty = this.catalog_details.catalogItem[itemIndex].minQuantity;
             const maxQty = this.catalog_details.catalogItem[itemIndex].maxQuantity;
             const showpric = this.catalog_details.showPrice;
@@ -640,7 +640,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
         }
         this.getOrderAvailableDatesForPickup();
         this.getOrderAvailableDatesForHome();
-        
+
         // this.getAvailabilityByDate(this.sel_checkindate);    
         this.showfuturediv = false;
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
@@ -676,7 +676,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
 
       }
     });
-  
+
   }
 
 
@@ -1224,51 +1224,51 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
       dataToSend.append('captions', blobPropdata);
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
-     
+
       this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe(data => {
-        // this.uuid = data;
-        const retData = data;
-        let retUuid;
-        Object.keys(retData).forEach(key => {
+        .pipe(takeUntil(this.onDestroy$))
+        .subscribe(data => {
+          // this.uuid = data;
+          const retData = data;
+          let retUuid;
+          Object.keys(retData).forEach(key => {
             retUuid = retData[key];
             this.uuid = retData[key];
-        });
-        if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-          this.submitQuestionnaire(retUuid);
-      } 
-        this.placeOrderDisabled = false;
-        this.snackbarService.openSnackBar('Your Order placed successfully');
-        this.router.navigate(['provider', 'orders']);
-
-      },
-        error => {
+          });
+          if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+            this.submitQuestionnaire(retUuid);
+          }
           this.placeOrderDisabled = false;
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-        }
+          this.snackbarService.openSnackBar('Your Order placed successfully');
+          this.router.navigate(['provider', 'orders']);
 
-      );
+        },
+          error => {
+            this.placeOrderDisabled = false;
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          }
+
+        );
     }
 
-      
-     
+
+
     else {
-     
+
       const blobpost_Data = new Blob([JSON.stringify(post_Data)], { type: 'application/json' });
       dataToSend.append('order', blobpost_Data);
       this.shared_services.CreateWalkinOrder(this.accountId, dataToSend)
         .pipe(takeUntil(this.onDestroy$))
         .subscribe(data => {
           const retData = data;
-        let retUuid;
-        Object.keys(retData).forEach(key => {
+          let retUuid;
+          Object.keys(retData).forEach(key => {
             retUuid = retData[key];
             this.uuid = retData[key];
-        });
+          });
           if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
             this.submitQuestionnaire(retUuid);
-        } 
+          }
           this.placeOrderDisabled = false;
           this.snackbarService.openSnackBar('Your Order placed successfully');
           this.orderList = [];
@@ -1281,8 +1281,8 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
 
         );
     }
-      
-    
+
+
 
   }
   addAddress() {
@@ -1495,7 +1495,7 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
                   img: this.selectedImagelist.base64[i],
                   description: this.selectedImagelist.caption[i] || ''
                 }, this.selectedImagelist.files[i].name);
-                // console.log("Uploaded Image :",imgobj)
+              // console.log("Uploaded Image :",imgobj)
               this.image_list_popup.push(imgobj);
             }
           }
@@ -1549,74 +1549,74 @@ export class OrderWizardComponent implements OnInit, OnDestroy {
   getQuestionAnswers(event) {
     this.questionAnswers = null;
     this.questionAnswers = event;
-}
-getProviderQuestionnaire() {
-  // let consumerId;
-  // if (this.showBlockHint) {
-  //     consumerId = this.customer_data.id;
-  // } 
-  this.channel = 'WALKIN';
-  this.providerService.getProviderorderQuestionnaire(this.catalog_Id , this.channel , this.customer_data.id ).subscribe(data => {
+  }
+  getProviderQuestionnaire() {
+    // let consumerId;
+    // if (this.showBlockHint) {
+    //     consumerId = this.customer_data.id;
+    // } 
+    this.channel = 'WALKIN';
+    this.providerService.getProviderorderQuestionnaire(this.catalog_Id, this.channel, this.customer_data.id).subscribe(data => {
       this.questionnaireList = data;
-          if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
-              this.showQuestionnaire = true;
-             
-          } 
-          // else {
-          //     this.confirmWaitlistBlockPopup();
-          // }
-      
-  });
-}
-submitQuestionnaire(uuid) {
-  const dataToSend: FormData = new FormData();
-  // if (this.questionAnswers.files) {
-  //     for (const pic of this.questionAnswers.files) {
-  //         dataToSend.append('files', pic['name']);
-  //     }
-  // }
-  const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
-  dataToSend.append('question', blobpost_Data);
-  this.providerService.submitProviderOrderQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
+      if (this.questionnaireList && this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
+        this.showQuestionnaire = true;
+
+      }
+      // else {
+      //     this.confirmWaitlistBlockPopup();
+      // }
+
+    });
+  }
+  submitQuestionnaire(uuid) {
+    const dataToSend: FormData = new FormData();
+    // if (this.questionAnswers.files) {
+    //     for (const pic of this.questionAnswers.files) {
+    //         dataToSend.append('files', pic['name']);
+    //     }
+    // }
+    const blobpost_Data = new Blob([JSON.stringify(this.questionAnswers.answers)], { type: 'application/json' });
+    dataToSend.append('question', blobpost_Data);
+    this.providerService.submitProviderOrderQuestionnaire(dataToSend, uuid).subscribe((data: any) => {
       let postData = {
-          urls: []
+        urls: []
       };
       if (data.urls && data.urls.length > 0) {
-          for (const url of data.urls) {
-              this.api_loading_video = true;
-              const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
-              this.provider_services.videoaudioS3Upload(file, url.url)
-                  .subscribe(() => {
-                      postData['urls'].push({ uid: url.uid, labelName: url.labelName });
-                      if (data.urls.length === postData['urls'].length) {
-                          this.provider_services.providerOrderQnrUploadStatusUpdate(uuid, postData)
-                              .subscribe((data) => {
-                                  this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-                                  this.router.navigate(['provider', 'orders']);
-                              },
-                                  error => {
-                                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                                      this.api_loading = false;
-                                      this.api_loading_video = false;
-                                  });
-                      }
+        for (const url of data.urls) {
+          this.api_loading_video = true;
+          const file = this.questionAnswers.filestoUpload[url.labelName][url.document];
+          this.provider_services.videoaudioS3Upload(file, url.url)
+            .subscribe(() => {
+              postData['urls'].push({ uid: url.uid, labelName: url.labelName });
+              if (data.urls.length === postData['urls'].length) {
+                this.provider_services.providerOrderQnrUploadStatusUpdate(uuid, postData)
+                  .subscribe((data) => {
+                    this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+                    this.router.navigate(['provider', 'orders']);
                   },
-                      error => {
-                          this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
-                          this.api_loading = false;
-                          this.api_loading_video = false;
-                      });
-          }
+                    error => {
+                      this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                      this.api_loading = false;
+                      this.api_loading_video = false;
+                    });
+              }
+            },
+              error => {
+                this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
+                this.api_loading_video = false;
+              });
+        }
       } else {
-          this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
-          this.router.navigate(['provider', 'orders']);
+        this.snackbarService.openSnackBar(this.wordProcessor.getProjectMesssages('APPOINTMNT_SUCC'));
+        this.router.navigate(['provider', 'orders']);
       }
-  }, error => {
+    }, error => {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
       this.api_loading = false;
       this.api_loading_video = false;
-  });
-}
+    });
+  }
 }
 
 
