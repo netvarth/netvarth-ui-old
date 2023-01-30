@@ -83,7 +83,23 @@ th {
   border-radius: 8px !important;
 }
 
-.status-Approved {
+.status-SchemeConfirmed {
+  background-color: #cce6c8 !important;
+  color: #052407 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-BranchApproved {
+  background-color: #C8E6C9 !important;
+  color: #256029 !important;
+  font-weight: bold !important;
+  padding: 5px !important;
+  border-radius: 8px !important;
+}
+
+.status-SchemeConfirmed {
   background-color: #C8E6C9 !important;
   color: #256029 !important;
   font-weight: bold !important;

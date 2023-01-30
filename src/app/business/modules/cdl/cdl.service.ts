@@ -256,6 +256,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  approveLoanByBranchManager(id, data) {
+    const url = 'provider/loanapplication/' + id + '/branchapproval';
+    return this.servicemeta.httpPut(url, data);
+  }
+
   completeLoan(id, data) {
     const url = 'provider/loanapplication/' + id + '/actioncompleted';
     return this.servicemeta.httpPut(url, data);

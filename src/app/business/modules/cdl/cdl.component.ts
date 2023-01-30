@@ -287,7 +287,7 @@ export class CdlComponent implements OnInit {
 
 
     this.pieChartData = {
-      labels: ['Leads', 'Approved', 'Pending', 'Rejected'],
+      labels: ['Leads', 'Scheme Confirmed', 'Pending', 'Rejected'],
       datasets: [
         {
           data: [this.leadsCount, this.approvedLoansCount, this.pendingLoansCount, this.rejectedLoansCount],
@@ -548,7 +548,7 @@ export class CdlComponent implements OnInit {
 
   getApprovedloansCount() {
     const api_filter = {};
-    api_filter['spInternalStatus-eq'] = 'Approved';
+    api_filter['spInternalStatus-eq'] = 'SchemeConfirmed';
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       if (data && data.length > 0) {
         this.approvedLoansCount = data.length
@@ -653,7 +653,7 @@ export class CdlComponent implements OnInit {
     else if (status == 'ApprovalPending') {
       this.showDealer(id, status)
     }
-    else if (status == 'Approved' || status == 'Suspended') {
+    else if (status == 'SchemeConfirmed' || status == 'Suspended') {
       this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
     }
     else {
@@ -663,7 +663,7 @@ export class CdlComponent implements OnInit {
 
   showDealer(dealerId, spInternalStatus) {
 
-    if (spInternalStatus == 'Approved') {
+    if (spInternalStatus == 'SchemeConfirmed') {
       this.router.navigate(['provider', 'cdl', 'dealers', 'view', dealerId]);
     }
     else {

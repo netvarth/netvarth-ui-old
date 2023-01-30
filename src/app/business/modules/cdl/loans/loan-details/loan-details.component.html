@@ -630,6 +630,23 @@
 
 
   <section class="d-flex justify-content-center m-2 my-4"
+    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'SchemeConfirmed' && user && user.roles && user.roles[0] && user.roles[0].roleId==3">
+    <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveLoanByBranchManager()">
+      Approve Loan
+    </div>
+
+    <!-- <div class="btn-redirect mr-2 pointer-cursor" (click)="redirectLoan()">
+          Redirect Loan
+        </div> -->
+
+    <div class="btn-reject pointer-cursor" (click)="rejectLoan()">
+      Reject Loan
+    </div>
+  </section>
+
+
+
+  <section class="d-flex justify-content-center m-2 my-4"
     *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'Sanctioned'  && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==4)">
     <div class="btn-sanctioned mr-2 pointer-cursor" (click)="verifyLoanByOps()">
       Verify

@@ -169,7 +169,7 @@ export class LoansComponent implements OnInit {
           this.activated_route.queryParams.subscribe((params) => {
             if (params) {
               if (params && (params.type === 'approved')) {
-                this.headerName = "Approved Loans";
+                this.headerName = "Scheme Confirmed Loans";
               }
               else if (params && (params.type === 'redirected')) {
                 this.headerName = "Redirected Loans";

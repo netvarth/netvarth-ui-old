@@ -426,7 +426,7 @@ export class ViewDealerComponent implements OnInit {
   getPartnerApprovedLoans() {
     const api_filter = {};
     api_filter['partner-eq'] = this.dealerId;
-    api_filter['spInternalStatus-eq'] = "Approved";
+    api_filter['spInternalStatus-eq'] = "SchemeConfirmed";
     this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
       this.statusLoansList = data;
       this.Approvedloans = data;

@@ -85,7 +85,7 @@ export class ApprovedComponent implements OnInit {
   creditOfficerApprovalRefresh() {
     this.getLoanData();
     if (this.loanData) {
-      if (this.loanData.spInternalStatus == 'Approved') {
+      if (this.loanData.spInternalStatus == 'SchemeConfirmed') {
         this.router.navigate(['provider', 'dl', 'loans', this.loanId]);
       }
     }

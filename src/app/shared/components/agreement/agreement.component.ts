@@ -73,7 +73,7 @@ export class AgreementComponent implements OnInit {
       console.log("LoanData", data);
       this.loanData = data;
       this.loanEmiDetailsData = data.loanEmis;
-      if (this.loanData.spInternalStatus != 'Approved' && (this.source && this.source != 'provider')) {
+      if ((this.loanData.spInternalStatus != 'BranchApproved' && this.loanData.spInternalStatus != 'SchemeConfirmed') && (this.source && this.source != 'provider')) {
         this.snackbarService.openSnackBar("Link Expired or Invalid");
         this.router.navigate(['/']);
       }

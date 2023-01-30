@@ -83,7 +83,7 @@ export class DealerComponent implements OnInit {
     else if (status == 'ApprovalPending') {
       this.showDealer(id, status)
     }
-    else if (status == 'Approved' || status == 'Suspended') {
+    else if (status == 'SchemeConfirmed' || status == 'Suspended') {
       this.router.navigate(['provider', 'cdl', 'dealers', 'view', id]);
     }
     else {
