@@ -229,6 +229,8 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   defultMoreText: string = '...show more';
   defultTextSecondStep: string = ''
   itemOptionsData: any;
+  newOrderList: any = [];
+  itemsListWithItemOptions: any;
   constructor(
     public sharedFunctionobj: SharedFunctions,
     private location: Location,
@@ -469,6 +471,9 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.desktopView = this.deviceService.isDesktop();
 
 
+    this.getItemsListWithItemOptions()
+
+
   }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
@@ -636,6 +641,104 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         }
       );
   }
+
+  getNetTotal() {
+    let netTotal = 0;
+    if (this.cartDetails) {
+      if (this.cartDetails.itemTotal) {
+        netTotal = netTotal + this.cartDetails.itemTotal;
+      }
+      if (this.cartDetails.taxAmount) {
+        netTotal = netTotal + this.cartDetails.taxAmount;
+      }
+      if (this.cartDetails.deliveryCharge) {
+        netTotal = netTotal + this.cartDetails.deliveryCharge;
+      }
+      if (this.cartDetails.totalDiscount) {
+        netTotal = netTotal - this.cartDetails.totalDiscount;
+      }
+    }
+    this.cartDetails['netTotal'] = netTotal;
+    // console.log("this.cartDetails.itemTotal", this.cartDetails)
+    return netTotal;
+  }
+
+  getitemTotalPrice() {
+    let totalPrice = 0;
+    for (let i = 0; i < this.newOrderList.length; i++) {
+      totalPrice = totalPrice + this.getItemPrice(this.newOrderList[i], this.newOrderList[i].itemOptionsIndex)
+    }
+    this.cartDetails['itemTotal'] = totalPrice
+    return totalPrice
+  }
+  getItemsListWithItemOptions() {
+    this.subs.sink = this.shared_services.getItemsListWithItemOptions(this.catalog_Id, this.account_id).subscribe(
+      (data: any) => {
+        if (data) {
+          this.itemsListWithItemOptions = data;
+          if (this.itemsListWithItemOptions) {
+            this.getNewOrderList();
+          }
+        }
+      },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
+  }
+
+  haveItemOptions(item) {
+    if (this.itemsListWithItemOptions && this.itemsListWithItemOptions.length > 0) {
+      var haveItemOptions = false;
+      this.itemsListWithItemOptions.forEach(element => {
+        if (element.item.itemId == item.item.itemId) {
+          haveItemOptions = true;
+        }
+      });
+
+      if (haveItemOptions) {
+        return true
+      }
+      else {
+        return false
+      }
+    }
+    else {
+      return false
+    }
+  }
+
+  getNewOrderList() {
+    let itemOptionsIds = [];
+    let itemsIds = [];
+    this.newOrderList = [];
+    if (this.orderList && this.orderList.length > 0) {
+      for (let i = 0; i < this.orderList.length; i++) {
+        if (this.haveItemOptions(this.orderList[i])) {
+          if (itemOptionsIds.indexOf(this.orderList[i].itemOptionsIndex) === -1) {
+            itemOptionsIds.push(this.orderList[i].itemOptionsIndex);
+            this.newOrderList.push(this.orderList[i]);
+          }
+        }
+        else {
+          if (itemsIds.indexOf(this.orderList[i].id) === -1) {
+            itemsIds.push(this.orderList[i].id);
+            this.newOrderList.push(this.orderList[i]);
+          }
+        }
+      }
+    }
+    console.log("this.newOrderList", this.newOrderList)
+  }
+
+  getItemQty(item, index?) {
+    let qty = this.newOrderList.filter(i => i.item.itemId === item.item.itemId).length;
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    if (this.haveItemOptions(item) && itemOptionsData && index) {
+      qty = this.orderList.filter(i => i.itemOptionsIndex === index).length;
+    }
+    return qty;
+  }
+
   getCartDetails() {
     console.log('details');
     let delivery = false;
@@ -1034,10 +1137,10 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     return deliveryCharge.toFixed(2);
   }
 
-  getItemQty(item) {
-    const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
-    return qty;
-  }
+  // getItemQty(item) {
+  //   const qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
+  //   return qty;
+  // }
 
   getaddress() {
     this.shared_services.getConsumeraddress()
@@ -1579,7 +1682,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.getAvailabilityByDate(this.sel_checkindate);
   }
   getOrderItems() {
-
+    console.log("getOrderItems", this.orders)
     this.orderSummary = [];
     this.orders.forEach(item => {
       let consumerNote = '';
@@ -1598,6 +1701,22 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.customer_email = address.email;
     this.selectedAddress = address;
   }
+
+  getItemPrice(item, index) {
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    if (this.haveItemOptions(item) && itemOptionsData && index) {
+      for (let i = 0; i < itemOptionsData.length; i++) {
+        if (itemOptionsData[i] && itemOptionsData[i].itemData && itemOptionsData[i].itemData.itemOptionsIndex === index) {
+          return Number(itemOptionsData[i].postData.totalPrice)
+        }
+      }
+    }
+    else {
+      return item.item.price
+    }
+  }
+
+
   // handleFuturetoggle() {
   //   this.showfuturediv = !this.showfuturediv;
   // }

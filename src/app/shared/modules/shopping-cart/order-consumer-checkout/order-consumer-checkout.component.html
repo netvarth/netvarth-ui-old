@@ -435,7 +435,7 @@
                           <div class="bill-breakup">
                             <div class="list border">
                               <div class="list-content" style="text-align: left;"
-                                *ngFor="let item of cartDetails.orderItems; let i = index">
+                                *ngFor="let item of newOrderList; let i = index">
                                 <div class="copy one">
                                   <div class="col-a col-b cd-b">
                                     <div class="mgn-up-10">
@@ -444,22 +444,26 @@
                                           <div class="name d-flex mr-2">
                                             <div class="mr-2">
                                               <img
-                                                *ngIf="item && item.itemImages && item.itemImages[0] && item.itemImages[0].thumbUrl"
-                                                src="{{item.itemImages[0].thumbUrl}}" class="item-image" width="60"
+                                                *ngIf="item && item.item && item.item.itemImages && item.item.itemImages[0] && item.item.itemImages[0].thumbUrl"
+                                                src="{{item.item.itemImages[0].thumbUrl}}" class="item-image" width="60"
                                                 height="60">
                                               <img
-                                                *ngIf="!item || !item.itemImages || !item.itemImages[0] || !item.itemImages[0].thumbUrl"
+                                                *ngIf="!item || !item.item || !item.item.itemImages || !item.item.itemImages[0] || !item.item.itemImages[0].thumbUrl"
                                                 src="../../../../assets/images/order/Items.svg" class="item-image"
                                                 width="60" height="60">
                                             </div>
                                             <div>
-                                              <div><span class="item-name">{{item.name}}</span></div>
-                                              <div class="quantity item-qty">Quantity : {{item.quantity}}</div>
+                                              <div><span class="item-name"
+                                                  *ngIf="item && item.item && item.item.displayName">{{item.item.displayName}}</span>
+                                              </div>
+                                              <div class="quantity item-qty">Quantity :
+                                                {{getItemQty(item,item.itemOptionsIndex)}}
+                                              </div>
                                             </div>
                                           </div>
                                           <div>
                                             <div *ngIf="catalog_details.showPrice" class="price rupee-font">
-                                              {{item.totalPrice | currency:'&#8377;'}}</div>
+                                              {{getItemPrice(item,item.itemOptionsIndex) | currency:'&#8377;'}}</div>
                                             <!-- <div class="quantity item-qty">{{item.quantity}}</div> -->
                                           </div>
                                         </div>
@@ -467,7 +471,7 @@
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                              </div><br>
                               <div class="snd_msg_outer">
                                 <textarea placeholder="Any notes? Write here..." class="txtArea"
                                   [(ngModel)]="orderNote"></textarea>
@@ -503,8 +507,7 @@
                               <div class="">
                                 <div class="disp-flex width-100 amount-details">
                                   <div class="bill-labels">Item Total</div>
-                                  <div class="price item-price rupee-font"> {{cartDetails.itemTotal |
-                                    currency:'&#8377;'}}
+                                  <div class="price item-price rupee-font"> {{getitemTotalPrice() | currency:'&#8377;'}}
                                   </div>
                                 </div>
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.taxAmount">
@@ -545,7 +548,7 @@
                                 <div class="card-heading mgn-up-10"></div>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-10">
                                   <div class="bill-labels">TOTAL BILL AMOUNT</div>
-                                  <div class="price rupee-font">{{cartDetails.netTotal| currency:'&#8377;'}}
+                                  <div class="price rupee-font">{{getNetTotal() | currency:'&#8377;'}}
                                   </div>
                                 </div>
                                 <div class="width-100 amount-details text-danger mgn-up-10 font-weight-bold"
