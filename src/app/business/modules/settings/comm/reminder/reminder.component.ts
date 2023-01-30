@@ -358,12 +358,12 @@ _filter(value: string): string[] {
          return;
       // }
        }
-       else if(this.reminder.fromDate == this.selectedDay && this.reminder.toDate != this.selectedDay){
+       else if(this.reminder.fromDate == this.selectedDay && this.reminder.toDate != this.selectedDay && result.hour < new Date().getHours()){
         this.snackbarService.openSnackBar("Cannot set past slot for today", {
           panelClass: "snackbarerror"
         });
        }
-       else if(this.reminder.fromDate != this.selectedDay && this.reminder.toDate == this.selectedDay){
+       else if(this.reminder.fromDate != this.selectedDay && this.reminder.toDate == this.selectedDay && result.hour < new Date().getHours()){
         this.snackbarService.openSnackBar("Cannot set past end date", {
           panelClass: "snackbarerror"
         });

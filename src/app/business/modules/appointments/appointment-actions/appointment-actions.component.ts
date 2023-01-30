@@ -1270,7 +1270,6 @@ export class AppointmentActionsComponent implements OnInit {
       this.dateTimeProcessor.REGION_LANGUAGE,
       { timeZone: this.dateTimeProcessor.TIME_ZONE_REGION }
     );
-   // this.ngOnInit();
     const date = moment(dte, "YYYY-MM-DD HH:mm").format();
     const newdate = new Date(date);
     const newdate1 = new Date(date);
@@ -1291,11 +1290,13 @@ export class AppointmentActionsComponent implements OnInit {
     if (type === "pre") {
       if (strtDt.getTime() >= nDt.getTime()) {
         this.sel_checkindate = ndate;
+        console.log("pre selected date :", this.sel_checkindate);
        this.getAppointmentSlots();
       }
     } else {
       if (nDt.getTime() >= strtDt.getTime()) {
         this.sel_checkindate = ndate;
+        console.log("post selected date :", this.sel_checkindate);
         this.getAppointmentSlots();
       }
     }
@@ -1334,14 +1335,15 @@ export class AppointmentActionsComponent implements OnInit {
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.sel_checkindate = seldate;
     console.log("handle selected date :",this.sel_checkindate);
+    this.getAppointmentSlots();
 
     //if((this.sel_checkindate === seldate) && this.appt.appointmentMode !== 'ONLINE_APPOINTMENT' && (this.apptlist_status || this.futureDateApptlist)){
     // }
-    this.getSchedulesbyLocationandServiceIdavailability(
-      this.locId,
-      this.servId,
-      this.accountid
-    );
+    // this.getSchedulesbyLocationandServiceIdavailability(
+    //   this.locId,
+    //   this.servId,
+    //   this.accountid
+    // );
   }
   disableButn() {
     if (

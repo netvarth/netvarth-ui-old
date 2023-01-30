@@ -722,11 +722,19 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
 
     this.provider_bussiness_id = this.businessjson.id;
     console.log('businessId' + this.provider_bussiness_id);
-    if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
-      if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-        this.bLogo = this.businessjson.logo.url;
+    // if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
+    //   if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
+    //     this.bLogo = this.businessjson.logo.url;
+    //   }
+    // } 
+    if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] !== null && this.businessjson.businessLogo[0] !== undefined) {
+      if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] && this.businessjson.businessLogo[0].s3path !== undefined && this.businessjson.businessLogo[0].s3path !== '') {
+        this.bLogo = this.businessjson.businessLogo[0].s3path;
+        console.log('business logo : ', this.businessjson);
+
       }
-    } else {
+    }
+    else {
       // this.bLogo = '';
       this.bLogo = '../../../assets/images/img-null.svg';
     }
@@ -959,12 +967,20 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.account_Type = this.businessjson.accountType;
     this.business_exists = true;
     this.provider_bussiness_id = this.businessjson.id;
-    if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
-      if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
-        this.bLogo = this.businessjson.logo.url;
+    // if (this.businessjson.logo !== null && this.businessjson.logo !== undefined) {
+    //   if (this.businessjson.logo.url !== undefined && this.businessjson.logo.url !== '') {
+    //     this.bLogo = this.businessjson.logo.url;
+    //     this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+    //   }
+    // } 
+    if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] !== null && this.businessjson.businessLogo[0] !== undefined) {
+      if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] && this.businessjson.businessLogo[0].s3path !== undefined && this.businessjson.businessLogo[0].s3path !== '') {
+        this.bLogo = this.businessjson.businessLogo[0].s3path;
         this.galleryjson[0] = { keyName: 'logo', caption: '', prefix: '', url: this.bLogo, thumbUrl: this.bLogo, type: '' };
+
       }
-    } else {
+    }
+    else {
       // this.bLogo = '';
       this.bLogo = '../../../assets/images/img-null.svg';
     }
@@ -2640,9 +2656,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       let blogoUrl;
-      if (this.businessjson.logo) {
-        blogoUrl = this.businessjson.logo.url;
-      } else {
+      // if (this.businessjson.logo) {
+      //   blogoUrl = this.businessjson.logo.url;
+      // } 
+      if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] !== null && this.businessjson.businessLogo[0] !== undefined) {
+        if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] && this.businessjson.businessLogo[0].s3path !== undefined && this.businessjson.businessLogo[0].s3path !== '') {
+          blogoUrl = this.businessjson.businessLogo[0].s3path;
+        }
+      }
+      else {
         blogoUrl = '';
       }
       const businessObject = {
@@ -2670,9 +2692,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
   }
   itemDetails(item) {
     let blogoUrl;
-    if (this.businessjson.logo) {
-      blogoUrl = this.businessjson.logo.url;
-    } else {
+    // if (this.businessjson.logo) {
+    //   blogoUrl = this.businessjson.logo.url;
+    // } 
+    if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] !== null && this.businessjson.businessLogo[0] !== undefined) {
+      if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] && this.businessjson.businessLogo[0].s3path !== undefined && this.businessjson.businessLogo[0].s3path !== '') {
+        blogoUrl = this.businessjson.businessLogo[0].s3path;
+      }
+    }
+    else {
       blogoUrl = '';
     }
     const businessObject = {
@@ -2750,9 +2778,15 @@ export class ProviderDetailComponent implements OnInit, OnDestroy {
     this.userType = this.sharedFunctionobj.isBusinessOwner('returntyp');
     if (this.userType === 'consumer') {
       let blogoUrl;
-      if (this.businessjson.logo) {
-        blogoUrl = this.businessjson.logo.url;
-      } else {
+      // if (this.businessjson.logo) {
+      //   blogoUrl = this.businessjson.logo.url;
+      // } 
+      if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] !== null && this.businessjson.businessLogo[0] !== undefined) {
+        if (this.businessjson && this.businessjson.businessLogo && this.businessjson.businessLogo[0] && this.businessjson.businessLogo[0].s3path !== undefined && this.businessjson.businessLogo[0].s3path !== '') {
+          blogoUrl = this.businessjson.businessLogo[0].s3path;
+        }
+      }
+      else {
         blogoUrl = '';
       }
       const businessObject = {

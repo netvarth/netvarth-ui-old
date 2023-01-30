@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription,Observable } from 'rxjs';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { projectConstants } from '../../../../app.component';
 import { FormMessageDisplayService } from '../../../../shared/modules/form-message-display/form-message-display.service';
@@ -127,6 +127,13 @@ export class CustomerSearchComponent implements OnInit {
     dispCustomerEmail = false;
     categoryForSearchingarray=['Search with PhoneNumber','Search with Email ID','Search with Name or ID']
     categoryvalue='Search with PhoneNumber';
+    options: any[] = [];
+    searchListDb: any[] = []
+    filteredCustomers: Observable<string[]>;
+    tempAcId: any;
+    totalName: string = '';
+    placeholderTemp: any = '7410410123';
+    countryCodePhone = '+91';
     CweekDays = { 0: 'Sun', 1: 'Mon', 2: 'Tue', 3: 'Wed', 4: 'Thu', 5: 'Fri', 6: 'Sat' };
     queueQryExecuted = false;
     todaydate;
@@ -301,7 +308,19 @@ export class CustomerSearchComponent implements OnInit {
         this.server_date = this.lStorageService.getitemfromLocalStorage('sysdate');
         this.get_token_cap = Messages.GET_TOKEN;        
         this.loading = true;
-        this.getGlobalSettingsStatus();        
+        this.getGlobalSettingsStatus(); 
+        this.bisinessProfile();       
+    }
+    bisinessProfile() {
+        this.searchForm.controls.search_input.setValue('');
+        this.provider_services.getBussinessProfile().subscribe((res: any) => {
+            console.log('BProfileRes', res);
+            if (res) {
+                if (res['id']) {
+                    this.tempAcId = res['id'];
+                }
+            }
+        })
     }
     getGlobalSettingsStatus() {
         this.provider_services.getAccountSettings().then(
@@ -627,6 +646,7 @@ export class CustomerSearchComponent implements OnInit {
         this.provider_services.getCustomer(post_data)
             .subscribe(
                 (data: any) => {
+                    console.log("data :",data);
                     this.loading = false;
                     if (data.length === 0) {
                         
@@ -653,11 +673,13 @@ export class CustomerSearchComponent implements OnInit {
                             this.customerPhone = this.customer_data.phoneNo;
                             this.searchClicked = true;
                             this.foundMultiCustomer = false;
+                            this.router.navigate(['/provider/customers/' + data[0].id]);
                         } else {
                             this.searchClicked = true;
                             this.foundMultiCustomer = true;
                             this.foundCustomer = false;
                             this.multiCustomerData = data;
+                            this.router.navigate(['/provider/customers/' + data[0].id]);
                         }
                     }
                 },
@@ -763,4 +785,122 @@ export class CustomerSearchComponent implements OnInit {
     isNumeric(evt) {
         return this.sharedFunctionobj.isNumeric(evt);
     }
+     /**
+     * 
+     * @param data 
+     * @param event 
+     */
+     searchCustomerByPhone(phoneNumber, event) {
+        // Check min length   
+        console.log("phone :",phoneNumber);
+        this.provider_services.getSearchCustomer(this.tempAcId, 'phoneNumber', phoneNumber).subscribe((res: any) => {
+            console.log('res', res);
+            // this.options = res;
+            this.filteredCustomers = res;
+        })
+    }
+   /**
+     * 
+     * @param data 
+     * @param phone 
+     */
+    selectedCustomerViaPhoneSearch(customer) {
+        this.customer_data = customer;
+        this.foundMultiCustomer = false;
+        // this.initConsumerAppointment(this.customer_data);
+        // this.initCustomerDetails(customer);
+        this.router.navigate(['/provider/customers/' + customer.id]);
+    }
+    searchedCustomer(customer){
+        this.router.navigate(['/provider/customers/' + customer.id]);
+    }
+    /**
+     * 
+     * @param name 
+     */
+    searchCustomerLucene(searchCriteria) {
+        let searchBy: any;
+        console.log("Searching : ",searchCriteria);
+        if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+            searchBy = 'name';
+        }
+        else if (this.categoryvalue && this.categoryvalue === 'Search with Email ID') {
+            searchBy = 'emailId';
+        }
+        this.provider_services.getSearchCustomer(this.tempAcId, searchBy, searchCriteria.search_input).subscribe((res: any) => {
+            console.log('res', res);
+            // this.options = res;
+            this.filteredCustomers = res;
+        })
+    }
+    /**
+     * 
+     * @param data 
+     * @param form_data 
+     */
+    selectedCustomerViaEmail_Name_ID(data, form_data) {
+        console.log(data);
+        console.log(form_data)
+        if (data && data['firstName'] && data['lastName'] && data['lastName'] !== 'null') {
+            this.totalName = (data['firstName'][0].toUpperCase() + data['firstName'].slice(1)) + ' ' + (data['lastName'][0].toUpperCase() + data['lastName'].slice(1));
+            if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+                if (this.totalName) {
+                    this.searchForm.controls.search_input.setValue(this.totalName);
+                }
+            }
+        }
+        else if (data && data['firstName'] && data['lastName'] && data['lastName'] === 'null') {
+            this.totalName = (data['firstName'][0].toUpperCase() + data['firstName'].slice(1));
+            if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
+                if (this.totalName) {
+                    this.searchForm.controls.search_input.setValue(this.totalName);
+                }
+            }
+        }
+        this.customer_data = data;
+        // this.initConsumerAppointment(data);
+        // this.tempDataCustomerInfo = data;
+        this.searchCustomer(form_data);
+        // this.initCustomerDetails(data);
+    }
+    /**
+     * 
+     * @param postData 
+     */
+    initCustomerDetails(postData) {
+        this.provider_services.getCustomer(postData).subscribe(
+            (customers: any) => {
+                if (customers.length === 0) {
+                    // this.createNew('create');
+                    this.createNew();
+
+                } else {
+                    if (customers.length === 1) {
+                        this.customer_data = customers[0];
+                        this.foundMultiCustomer = false;
+                        this.router.navigate(['/provider/customers/' + customers[0].id]);
+                    } else {
+                        this.customer_data = customers.filter(member => !member.parent)[0];
+                        this.foundMultiCustomer = true; 
+                        this.router.navigate(['/provider/customers/' + customers[0].id]);
+                    }
+                    // this.initConsumerAppointment(this.customer_data);
+                }
+                
+            }, error => {
+                this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+        );
+    }
+
+    serchCustomerByPhone(val) {
+        let post_data = {
+            'phoneNo-eq': val,
+            'countryCode-eq': this.countryCodePhone
+        };
+        this.qParams['phone'] = val;
+        this.qParams['countryCode'] = this.countryCodePhone;
+        this.initCustomerDetails(post_data);
+    }
+
 }
