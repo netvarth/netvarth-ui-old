@@ -112,6 +112,10 @@ export class OrderConsumerComponent implements OnInit {
   lastCustomization: any;
   itemsListWithItemOptions: any;
   itemDetails: any;
+  updatedItemOptionsData: any;
+  selectedIndex: any;
+  newOrderList: any = [];
+  repeatSelectedIndex: any;
   constructor(
     private location: Location,
     private lStorageService: LocalStorageService,
@@ -183,15 +187,30 @@ export class OrderConsumerComponent implements OnInit {
     this.getAvailabilityByDate(this.sel_checkindate);
   }
 
-  getItemQty(item) {
-    qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
-    if (this.haveItemOptions(item)) {
-      var qty = this.orderList.filter(i => i.itemOptionsIndex === item.itemOptionsIndex).length;
+  getItemQty(item, index?) {
+    let qty = this.orderList.filter(i => i.item.itemId === item.item.itemId).length;
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    if (this.haveItemOptions(item) && itemOptionsData && index) {
+      qty = this.orderList.filter(i => i.itemOptionsIndex === index).length;
     }
     if (qty === 0) {
       this.removeItemFromCart(item);
     }
     return qty;
+  }
+
+  getItemPrice(item, index) {
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    if (this.haveItemOptions(item) && itemOptionsData && index) {
+      for (let i = 0; i < itemOptionsData.length; i++) {
+        if (itemOptionsData[i] && itemOptionsData[i].itemData && itemOptionsData[i].itemData.itemOptionsIndex === index) {
+          return Number(itemOptionsData[i].postData.totalPrice)
+        }
+      }
+    }
+    else {
+      return item.item.price
+    }
   }
 
 
@@ -461,6 +480,8 @@ export class OrderConsumerComponent implements OnInit {
     if (this.orders.length === 0) {
       this.disabledConfirmbtn = true;
     }
+
+    this.getNewOrderList()
   }
   goBack() {
     this.location.back();
@@ -539,13 +560,13 @@ export class OrderConsumerComponent implements OnInit {
 
     if (repeatBool) {
       if (itemOptionsData) {
-        itemOptionsData.forEach(element => {
-          console.log(element, item)
-          if (element && element.itemData && element.itemData.id === item.id) {
-            this.lastCustomization = element;
+        for (let i = 0; i < itemOptionsData.length; i++) {
+          if (itemOptionsData[i] && itemOptionsData[i].itemData && itemOptionsData[i].itemData.id === item.id) {
+            this.lastCustomization = itemOptionsData[i];
             repeat = true;
+            this.repeatSelectedIndex = i
           }
-        });
+        }
       }
       if (repeat) {
         var datatoSend = { data: data, type: 'repeat', itemDetails: item };
@@ -560,10 +581,9 @@ export class OrderConsumerComponent implements OnInit {
       console.log("Coming Here")
       var itemOptionsIndex = Math.floor(Math.random() * (999 - 100 + 1) + 100);
       this.itemDetails['itemOptionsIndex'] = itemOptionsIndex;
+      datatoSend = { data: data, type: 'add', itemDetails: this.itemDetails };
+      console.log("datatoSend", datatoSend)
     }
-
-    console.log("this.itemDetails", this.itemDetails)
-
 
     this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
       header: 'Choose Item Options',
@@ -574,18 +594,22 @@ export class OrderConsumerComponent implements OnInit {
     });
 
     this.itemOptionsRef.onClose.subscribe((result: any) => {
-      console.log(result)
       if (result) {
         if (result.postData && result.fileData && (!result.type || result.type && (result.type == 'addNew' || result.type == 'repeatLast'))) {
           let itemOptionsJson = {
-            "itemData": item,
+            "itemData": this.itemDetails,
             "postData": result.postData,
             "fileData": result.fileData,
             "answersData": result.answersData,
             "questionnaireData": data
           }
-          this.addToCart(item);
+          this.addToCart(this.itemDetails);
+          let previousItemOptionsData = this.lStorageService.getitemfromLocalStorage("itemOptionsData")
+          if (previousItemOptionsData) {
+            this.itemOptionsData = previousItemOptionsData;
+          }
           this.itemOptionsData.push(itemOptionsJson)
+          console.log("this.itemOptionsData", this.itemOptionsData)
           this.lStorageService.setitemonLocalStorage('itemOptionsData', this.itemOptionsData)
         }
         else if (result.type) {
@@ -595,8 +619,7 @@ export class OrderConsumerComponent implements OnInit {
           else if (result && result.type == 'repeatLast') {
             if (result && result.lastCustomization) {
               this.addToCart(item);
-              let itemOptionsIndex = itemOptionsData.indexOf(result.lastCustomization);
-              if (itemOptionsIndex != 'undefined') {
+              if (this.repeatSelectedIndex != 'undefined') {
                 let repeatItemOptions = result.lastCustomization;
                 let repeatItemOptionsPostData = result.lastCustomization.postData;
                 if (repeatItemOptionsPostData && repeatItemOptionsPostData.answerLine && repeatItemOptionsPostData.answerLine[0].answer && repeatItemOptionsPostData.answerLine[0].answer.dataGridList[0]
@@ -611,7 +634,7 @@ export class OrderConsumerComponent implements OnInit {
                   // repeatItemOptionsPostData.totalPrice = repeatItemOptionsPostData.totalPrice * 2;
                 }
                 let itemOptionsDataNew = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
-                itemOptionsDataNew[itemOptionsIndex] = repeatItemOptions;
+                itemOptionsDataNew[this.repeatSelectedIndex] = repeatItemOptions;
                 this.lStorageService.setitemonLocalStorage('itemOptionsData', itemOptionsDataNew)
               }
             }
@@ -625,33 +648,43 @@ export class OrderConsumerComponent implements OnInit {
 
   editItemOptions(item, index) {
     console.log("index", index)
-    var itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
-    itemOptionsData.forEach(element => {
-      if (element.itemData.itemOptionsIndex == index) {
-        itemOptionsData = element;
+    this.itemDetails = Object.assign({}, item);
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    for (let i = 0; i < itemOptionsData.length; i++) {
+      if (itemOptionsData[i].itemData.itemOptionsIndex == index) {
+        this.updatedItemOptionsData = itemOptionsData[i];
+        this.selectedIndex = i;
       }
-    });
-
+    }
+    // itemOptionsData.forEach(element => {
+    //   if (element.itemData.itemOptionsIndex == index) {
+    //     this.updatedItemOptionsData = element;
+    //     this.selectedIndex = itemOptionsData.indexOf(element);
+    //   }
+    // });
     this.itemOptionsRef = this.dialogService.open(ItemOptionsComponent, {
-      header: 'Choose Item Options',
+      header: 'Edit Item Options',
       width: '90%',
       contentStyle: { "max-height": "500px", "overflow": "auto" },
       baseZIndex: 10000,
-      data: { data: itemOptionsData, type: 'edit', itemDetails: item }
+      data: { data: this.updatedItemOptionsData, type: 'edit', itemDetails: this.itemDetails }
     });
 
     this.itemOptionsRef.onClose.subscribe((result: any) => {
-      console.log(result)
       if (result) {
         if (result.postData && result.fileData) {
+          console.log("result.postData", result.postData)
           let itemOptionsJson = {
-            "itemData": item,
+            "itemData": this.itemDetails,
             "postData": result.postData,
-            "fileData": result.fileData
+            "fileData": result.fileData,
+            "answersData": result.answersData,
+            "questionnaireData": this.updatedItemOptionsData.questionnaireData
           }
-          this.addToCart(item);
-          this.itemOptionsData.push(itemOptionsJson)
-          this.lStorageService.setitemonLocalStorage('itemOptionsData', this.itemOptionsData)
+          itemOptionsData[this.selectedIndex] = itemOptionsJson;
+          this.lStorageService.removeitemfromLocalStorage('itemOptionsData')
+          this.lStorageService.setitemonLocalStorage('itemOptionsData', itemOptionsData)
+          this.getTotalItemAndPrice()
         }
       }
     });
@@ -737,7 +770,7 @@ export class OrderConsumerComponent implements OnInit {
           this.orderList.push(itemObj);
           this.lStorageService.setitemonLocalStorage('order', this.orderList);
           this.getTotalItemAndPrice();
-          console.log("Testing order catalog", this.lStorageService.getitemfromLocalStorage('order'))
+          console.log("Testing order catalog", this.lStorageService.getitemfromLocalStorage('order'));
           this.getItemQty(itemObj);
         }
       } else {
@@ -747,10 +780,32 @@ export class OrderConsumerComponent implements OnInit {
         this.getItemQty(itemObj);
       }
     }
+    // this.newOrderList = this.orderList.filter((item, index) => this.orderList.indexOf(item) === index);
+    this.getNewOrderList();
 
   }
 
-
+  getNewOrderList() {
+    let itemOptionsIds = [];
+    let itemsIds = [];
+    this.newOrderList = [];
+    if (this.orderList && this.orderList.length > 0) {
+      for (let i = 0; i < this.orderList.length; i++) {
+        if (this.haveItemOptions(this.orderList[i])) {
+          if (itemOptionsIds.indexOf(this.orderList[i].itemOptionsIndex) === -1) {
+            itemOptionsIds.push(this.orderList[i].itemOptionsIndex);
+            this.newOrderList.push(this.orderList[i]);
+          }
+        }
+        else {
+          if (itemsIds.indexOf(this.orderList[i].id) === -1) {
+            itemsIds.push(this.orderList[i].id);
+            this.newOrderList.push(this.orderList[i]);
+          }
+        }
+      }
+    }
+  }
 
   getConfirmation() {
     let can_remove = false;
@@ -799,12 +854,12 @@ export class OrderConsumerComponent implements OnInit {
   //   this.getTotalItemAndPrice();
   // }
 
-  decrement(item) {
-    this.removeFromCart(item);
+  decrement(item, index?) {
+    this.removeFromCart(item, index);
   }
 
 
-  removeFromCart(itemObj) {
+  removeFromCart(itemObj, index?) {
     const item = itemObj.item;
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === item.itemId) {
@@ -814,8 +869,20 @@ export class OrderConsumerComponent implements OnInit {
       }
     }
 
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    if (this.haveItemOptions(itemObj) && index && itemOptionsData) {
+      for (const i in itemOptionsData) {
+        if (this.itemOptionsData[i].itemData.itemOptionsIndex === index) {
+          this.itemOptionsData.splice(i, 1);
+          break;
+        }
+      }
+      this.lStorageService.setitemonLocalStorage('itemOptionsData', itemOptionsData);
+    }
+
     this.getTotalItemAndPrice();
     this.getItemQty(itemObj);
+    this.getNewOrderList();
   }
 
   getTotalItemAndPrice() {
@@ -823,6 +890,16 @@ export class OrderConsumerComponent implements OnInit {
     this.order_count = 0;
     for (const itemObj of this.orderList) {
       let item_price = itemObj.item.price;
+      if (this.haveItemOptions(itemObj)) {
+        let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+        if (itemOptionsData) {
+          for (let i = 0; i < itemOptionsData.length; i++) {
+            if (itemOptionsData[i].itemData.itemOptionsIndex == itemObj.itemOptionsIndex) {
+              item_price = itemOptionsData[i].postData.totalPrice;
+            }
+          }
+        }
+      }
       if (itemObj.item.showPromotionalPrice) {
         item_price = itemObj.item.promotionalPrice;
       }

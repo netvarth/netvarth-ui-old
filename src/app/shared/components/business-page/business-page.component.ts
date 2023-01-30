@@ -2620,7 +2620,7 @@ export class BusinessPageComponent implements OnInit, AfterViewInit, OnDestroy {
             this.shared_services.setOrderDetails(this.activeCatalog);
             if (this.activeCatalog && this.activeCatalog.catalogItem) {
               for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+                const catalogItemId = this.activeCatalog.catalogItem[itemIndex].itemId;
                 const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
                 const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
                 const showpric = this.activeCatalog.showPrice;

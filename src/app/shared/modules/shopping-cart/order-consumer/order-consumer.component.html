@@ -142,8 +142,8 @@
             </div>
           </div>
           <div *ngIf="action!='timeChange'">
-            <div *ngFor="let item of catalogItems; let i=index">
-              <div class=" card item-card mt-2" *ngIf="getItemQty(item) > 0">
+            <div *ngFor="let item of newOrderList; let i=index">
+              <div class=" card item-card mt-2" *ngIf="getItemQty(item,item.itemOptionsIndex) > 0">
                 <div class="d-flex justify-content-between">
                   <div>
                     <span class="font-weight-bold item-name"
@@ -156,7 +156,7 @@
                   <div class="cart">
                     <span class="text-red item-price"
                       *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
-                        class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
+                        class="fa fa-inr"></i>&nbsp;{{getItemPrice(item,item.itemOptionsIndex)}}</span>
                     <span class="text-red item-price"
                       *ngIf="item.item && item.item.price && item.item.showPromotionalPrice">&nbsp;<i
                         class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
@@ -175,7 +175,7 @@
                           class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding">-
                         </div>
                         <div class="item-pad bodr-btm-up item-qty">
-                          {{getItemQty(item)}}
+                          {{getItemQty(item,item.itemOptionsIndex)}}
                         </div>
                         <div (click)="increment(item)" class="cusr-pointer add-qty pointer-cursor item-padding"
                           [class.pointer-none]="getItemQty(item) >= item.maxqty"

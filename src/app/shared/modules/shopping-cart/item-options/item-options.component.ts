@@ -4,6 +4,8 @@ import { FileService } from '../../../../shared/services/file-service';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { SharedFunctions } from '../../../../shared/functions/shared-functions';
 import * as moment from 'moment';
+import { ActivatedRoute } from '@angular/router';
+import { SharedServices } from '../../../../shared/services/shared-services';
 
 
 @Component({
@@ -41,12 +43,15 @@ export class ItemOptionsComponent implements OnInit {
   type: any;
   itemDetails: any;
   lastCustomization: any;
+  account_id: any;
   constructor(
     private itemOptionsRef: DynamicDialogRef,
     private config: DynamicDialogConfig,
     private sharedFunctions: SharedFunctions,
     private snackbarService: SnackbarService,
-    private fileService: FileService
+    private fileService: FileService,
+    private activatedRoute: ActivatedRoute,
+    private sharedServices: SharedServices
   ) {
     if (window.innerWidth >= 500) {
       this.config.width = '60%';
@@ -59,7 +64,7 @@ export class ItemOptionsComponent implements OnInit {
       this.itemDetails = this.config.data.itemDetails;
       if (this.itemDetails && this.itemDetails.item && this.itemDetails.item.price) {
         this.itemPrice = this.itemDetails.item.price;
-        console.log("this.itemPrice", this.itemPrice)
+        console.log("this.itemDetails", this.itemDetails)
       }
     }
     if (this.type == 'add') {
@@ -71,6 +76,9 @@ export class ItemOptionsComponent implements OnInit {
       if (this.config && this.config.data && this.config.data.data && this.config.data.data) {
         this.itemData = this.config.data.data.questionnaireData;
         this.answers = this.config.data.data.answersData;
+        this.questionnaireAnswers = this.config.data.data.postData.answerLine;
+        this.totalPrice = this.config.data.data.postData.totalPrice;
+        this.qnrId = this.config.data.data.postData.questionnaireId;
       }
     }
 
@@ -81,6 +89,15 @@ export class ItemOptionsComponent implements OnInit {
         this.lastCustomization = this.config.data.lastCustomization;
       }
     }
+
+
+    this.activatedRoute.queryParams.subscribe(
+      params => {
+        if (params && params.account_id) {
+          this.account_id = params.account_id;
+          console.log("account_id", this.account_id)
+        }
+      });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -270,8 +287,31 @@ export class ItemOptionsComponent implements OnInit {
         'selectedFiles': this.selectedFiles,
         'fileToUpload': this.filesToUpload
       }
-
+      this.validateQuestionnaire(postData);
+      console.log("this.totalPrice", this.totalPrice)
       this.itemOptionsRef.close({ "postData": postData, "fileData": fileData, "answersData": this.answers });
+    }
+  }
+
+  validateQuestionnaire(postData) {
+    let questionnaireAnswersData = {
+      'questionnaireId': postData.questionnaireId,
+      'answerLine': postData.answerLine
+    }
+    if (!this.questionnaireAnswers) {
+      this.questionnaireAnswers = {
+        answers: {
+          answerLine: [],
+          questionnaireId: postData.questionnaireId
+        }
+      }
+    }
+    if (questionnaireAnswersData) {
+      this.sharedServices.validateConsumerQuestionnaire(questionnaireAnswersData, this.account_id).subscribe((data: any) => {
+        console.log("result Data", data)
+      }, (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      });
     }
   }
 
