@@ -874,6 +874,7 @@ export class OrderConsumerComponent implements OnInit {
       for (const i in itemOptionsData) {
         if (this.itemOptionsData[i].itemData.itemOptionsIndex === index) {
           this.itemOptionsData.splice(i, 1);
+          console.log("Coming Here")
           break;
         }
       }
