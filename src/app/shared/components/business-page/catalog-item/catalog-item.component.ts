@@ -322,7 +322,7 @@ export class CatalogItemComponent implements OnInit {
 
         if (this.activeCatalog.catalogType == 'submission') {
           this.loading = true;
-          if (this.cartItems.length == 0) {
+          if (this.cartItems && this.cartItems.length == 0) {
             this.addToCart();
           }
           this.checkout();
