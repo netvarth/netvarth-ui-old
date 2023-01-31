@@ -216,7 +216,7 @@ export class LoanDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (id) => {
         if (id) {
-          this.snackbarService.openSnackBar("Loan Sanctioned Successfully");
+          this.snackbarService.openSnackBar("Loan Verified Successfully");
           this.router.navigate(['provider', 'cdl', 'loans', id]);
         }
       });
