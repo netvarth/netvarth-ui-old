@@ -1682,17 +1682,18 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.getAvailabilityByDate(this.sel_checkindate);
   }
   getOrderItems() {
-    console.log("getOrderItems", this.orders)
     this.orderSummary = [];
-    this.orders.forEach(item => {
-      let consumerNote = '';
-      const itemId = item.item.itemId;
-      const qty = this.getItemQty(item);
-      if (item.consumerNote) {
-        consumerNote = item.consumerNote;
-      }
-      this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
-    });
+    if (this.orders) {
+      this.orders.forEach(item => {
+        let consumerNote = '';
+        const itemId = item.item.itemId;
+        const qty = this.getItemQty(item);
+        if (item.consumerNote) {
+          consumerNote = item.consumerNote;
+        }
+        this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
+      });
+    }
     return this.orderSummary;
   }
   highlight(index, address) {

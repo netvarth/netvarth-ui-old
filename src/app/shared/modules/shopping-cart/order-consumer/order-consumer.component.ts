@@ -173,8 +173,11 @@ export class OrderConsumerComponent implements OnInit {
     }
 
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
-    this.desktopView = this.deviceService.isDesktop();
+    
+    // this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
+    // this.desktopView = this.deviceService.isDesktop();
+    // this.mobileView = this.deviceService.isDesktop();
+
   }
 
 
@@ -261,7 +264,7 @@ export class OrderConsumerComponent implements OnInit {
           }
           this.shared_services.setOrderDetails(this.activeCatalog);
           for (let itemIndex = 0; itemIndex < this.activeCatalog.catalogItem.length; itemIndex++) {
-            const catalogItemId = this.activeCatalog.catalogItem[itemIndex].id;
+            const catalogItemId = this.activeCatalog.catalogItem[itemIndex].itemId;
             const minQty = this.activeCatalog.catalogItem[itemIndex].minQuantity;
             const maxQty = this.activeCatalog.catalogItem[itemIndex].maxQuantity;
             const showpric = this.activeCatalog.showPrice;
@@ -874,7 +877,6 @@ export class OrderConsumerComponent implements OnInit {
       for (const i in itemOptionsData) {
         if (this.itemOptionsData[i].itemData.itemOptionsIndex === index) {
           this.itemOptionsData.splice(i, 1);
-          console.log("Coming Here")
           break;
         }
       }

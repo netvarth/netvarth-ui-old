@@ -3,7 +3,7 @@
 </div>
 
 
-<div *ngIf="desktopView && !apiloading">
+<div *ngIf="!apiloading">
   <div class="container card">
     <div>
       <div class="pointer-cursor">
@@ -232,7 +232,7 @@
 
 <!-- Mobile View -->
 
-
+<!-- 
 
 
 
@@ -251,25 +251,6 @@
     </div>
   </div>
 
-  <!-- <div class="clearfix"></div> -->
-
-  <!-- <br> -->
-  <!-- <div class="row">
-    <div class="form-group no-padding-small">
-      <input class="form-control" [(ngModel)]="seacrchFilterOrder" type="search" class="form-control"
-        placeholder="Search for Items" [matAutocomplete]="autoprov" (ngModelChange)="transform(seacrchFilterOrder)" />
-      <mat-autocomplete #autoprov="matAutocomplete" class="matAutocomplete">
-        <mat-option *ngFor="let option of catalogItems" (click)="handleSearchSelect(option,seacrchFilterOrder)"
-          [value]="option.item.displayName">
-          <div class="flexClass" style="justify-content: space-between;">
-            <div class="flexClass">
-              <div>{{option.item.displayName | capitalizeFirst}}</div>
-            </div>
-          </div>
-        </mat-option>
-      </mat-autocomplete>
-    </div>
-  </div> -->
   <div class="card item-card shadow-lg mt-3">
     <div>
       <input class="form-control" [(ngModel)]="seacrchFilterOrder" type="search" class="form-control"
@@ -366,4 +347,4 @@
         [class.disabled]="!isfutureAvailableTime || (orderList && orderList.length==0) || !orderList">Checkout</a>
     </div>
   </div>
-</div>
+</div> -->
