@@ -730,7 +730,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Montly Income <span class="text-danger">*</span></div>
+                      <div class="form-title">Net Montly Income <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #salary [value]="salary" type="number"
@@ -809,7 +809,7 @@
               <div class="bggrey my-2" *ngIf="mafilScoreFields && mafilScoreFields.existingCustomer">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Existing Customer <span class="text-danger">*</span></div>
+                    <div class="form-title">Mafil Existing Customer <span class="text-danger">*</span></div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #existingCustomer formControlName="existingCustomer">
