@@ -561,6 +561,15 @@ export class CrmService {
   addKycForAAdhar(data) {
     return this.servicemeta.httpPost('provider/customers/KYC/create' + 'UID', data);
   }
+
+  //API to Retain Rejected Lead - PUT REST API
+  retainRejectedLead(leadUid,body){
+    //provider/lead/{leadUid}/retainrejected
+    const url = 'provider/lead/'+ leadUid + '/retainrejected'
+    return this.servicemeta.httpPut(url, body)
+  }
+
+
   // getkyc(id){
   //   const url = 'provider/customers/KYC/' + id;
   //   return this.servicemeta.httpGet(url);

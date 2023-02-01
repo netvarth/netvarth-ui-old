@@ -67,11 +67,14 @@ export class ServiceComponent implements OnInit, OnDestroy {
     tooltipDonation = Messages.NEW_DONATION_TOOLTIP;
     frm_service_price = Messages.SER_PRICE;
     rupee_symbol = '₹';
+    percentage_symbol = '%';
     base_licence = false;
     is_virtual_serv = false;
     is_service_request = false;
     is_checked_request = false;
     is_checked_booking = true;
+    is_checked_fixed = true;
+    is_checked_percentage = false;
     button_title = 'Save';
     customer_label = '';
     char_count = 0;
@@ -179,6 +182,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
     selected = false;
     selectedPaymentProfile: any;
     selectedReqMode: boolean = false;
+    is_change: boolean = false;
     // show_internationalmode = false;
 
     constructor(private fb: UntypedFormBuilder,
@@ -251,8 +255,16 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                 if (this.service_data.serviceType === 'virtualService') {
                                     this.is_virtual_serv = true;
                                 }
-                                
-                                if(this.service_data.serviceBookingType === 'request'){
+                                if(this.service_data && this.service_data.prePaymentType === 'fixed'){
+                                    this.is_checked_fixed = true;
+                                    this.is_checked_percentage = false;
+                                }
+                                if(this.service_data && this.service_data.prePaymentType === 'percentage'){                                    this.is_checked_fixed = false;
+                                    this.is_checked_percentage = true;
+                                    this.is_checked_fixed = false;
+
+                                }
+                                if(this.service_data && this.service_data.serviceBookingType === 'request'){
                                     this.is_checked_request = true;
                                     this.is_checked_booking = false;
                                     this.serviceForm.patchValue({
@@ -273,7 +285,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                     this.selectedReqMode = true;
                                 }
                                 }
-                                if(this.service_data.serviceBookingType === 'booking'){
+                                if(this.service_data && this.service_data.serviceBookingType === 'booking'){
                                     this.is_checked_booking = true;
                                     this.is_checked_request = false;
                                 }
@@ -327,6 +339,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'date': this.service_data['date'] || this.serviceForm.get('date').value,
                                             'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
                                             'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+                                            'prePaymentType': this.service_data['prePaymentType'] || this.serviceForm.get('prePaymentType').value,
+
                         
                                         });
                                     } else {
@@ -344,6 +358,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'date': this.service_data['date'] || this.serviceForm.get('date').value,
                                             'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
                                             'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+                                            'prePaymentType': this.service_data['prePaymentType'] || this.serviceForm.get('prePaymentType').value,
 
                                         });
                                     }
@@ -384,6 +399,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'date': this.service_data['date'] || this.serviceForm.get('date').value,
                                             'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
                                             'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+                                            'prePaymentType': this.service_data['prePaymentType'] || this.serviceForm.get('prePaymentType').value,
 
                                         });
                                     } else {
@@ -410,6 +426,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
                                             'date': this.service_data['date'] || this.serviceForm.get('date').value,
                                             'dateTime': this.service_data['dateTime'] || this.serviceForm.get('dateTime').value,
                                             'noDateTime': this.service_data['noDateTime'] || this.serviceForm.get('noDateTime').value,
+                                            'prePaymentType': this.service_data['prePaymentType'] || this.serviceForm.get('prePaymentType').value,
 
                                         });
                                         if (this.service_data.serviceType === 'virtualService') {
@@ -595,8 +612,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     selectRequest(event){
         console.log("Service Request :",event);
-        //&& this.service_data.serviceBookingType
         if(this.action === 'edit' && this.service_data.serviceBookingType){
+            this.is_change = true;
             this.snackbarService.openSnackBar('Cannot set appointment type in edit mode', { 'panelClass': 'snackbarerror' });
             if(this.service_data.serviceBookingType === 'request'){
                 // this.serviceForm.controls['serviceBookingType'].setValue(this.service_data.serviceBookingType);
@@ -629,6 +646,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
             }
           }
           else if(this.action === 'add'){
+            // this.is_change = false;
         if (event === 'request') {
             //this.serviceForm.addControl('serviceBookingType') = event;
             // this.serviceForm.addControl('serviceBookingType',
@@ -651,6 +669,20 @@ export class ServiceComponent implements OnInit, OnDestroy {
            // this.is_physical = 2;
         }
     }
+    }
+    selectPrePaymentType(type){
+        console.log("Type :",type);
+        if(type === 'fixed'){
+         this.serviceForm.controls['prePaymentType'].setValue(type);
+        // console.log("min prepayment :",Math.floor(this.service_data['minPrePaymentAmount']));
+         this.is_checked_fixed = true;
+         this.is_checked_percentage = false;
+        }
+        if(type === 'percentage'){
+            this.serviceForm.controls['prePaymentType'].setValue(type);
+            this.is_checked_percentage = true;
+            this.is_checked_fixed = false;
+        }
     }
     changeNotification() {
         if (this.serviceForm.get('notification').value === false) {
@@ -774,6 +806,12 @@ export class ServiceComponent implements OnInit, OnDestroy {
         form_data['postInfoTitle'] = this.postInfoEnabled ? this.postInfoTitle.trim() : '';
         form_data['postInfoText'] = this.postInfoEnabled ? this.postInfoText : '';
         form_data['consumerNoteTitle'] = form_data['consumerNoteMandatory'] ? this.consumerNote : '';
+        if(form_data['prePaymentType'] === 'fixed'){
+            form_data['minPrePaymentAmount'] = form_data.minPrePaymentAmount ? form_data.minPrePaymentAmount : 0;
+        }
+        if(form_data['prePaymentType'] === 'percentage'){
+            form_data['minPrePaymentAmount'] = form_data.minPrePaymentAmount ? form_data.minPrePaymentAmount : 0;
+        }
         if(this.action !== 'edit'){
             form_data['serviceBookingType'] = form_data['serviceBookingType'];
         }
@@ -885,10 +923,13 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     }
                 }
             }
+            // else if(this.action === 'edit' && (this.is_change)){
+            //     this.snackbarService.openSnackBar('Cannot set appointment type in edit mode', { 'panelClass': 'snackbarerror' });
+            // }
             // else if(this.action === 'edit' && form_data["serviceBookingType"] === 'booking' || (form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime')){
             //     this.snackbarService.openSnackBar('Cannot set appointment type in edit mode', { 'panelClass': 'snackbarerror' });
             //   }
-           else if(this.action !== 'edit' && form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime'){
+           else if(form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime'){
                 this.snackbarService.openSnackBar('Please select request mode', { 'panelClass': 'snackbarerror' });
             }
             else {
@@ -896,9 +937,6 @@ export class ServiceComponent implements OnInit, OnDestroy {
                         this.snackbarService.openSnackBar('Please provide payment description', { 'panelClass': 'snackbarerror' });
                     }
                     else{
-                        // if(this.action === 'edit' && form_data["serviceBookingType"] === 'booking' || (form_data["serviceBookingType"] === 'request' && this.selectedRequestMode !== 'date' && this.selectedRequestMode !== 'dateTime' && this.selectedRequestMode !== 'noDateTime')){
-                        //         this.snackbarService.openSnackBar('Cannot set appointment type in edit mode', { 'panelClass': 'snackbarerror' });
-                        //       }
                         this.servicesService.actionPerformed(serviceActionModel);
                     }
                 
@@ -979,7 +1017,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     serviceBookingType:['booking'],
                     date:[false],
                     dateTime:[false],
-                    noDateTime:[false]
+                    noDateTime:[false],
+                    prePaymentType:['fixed']
                 });
                 if (this.paymentProfiles.length > 0) {
                     this.serviceForm.get('paymentProfileId').setValue('spDefaultBillProfile');
@@ -1006,8 +1045,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     serviceBookingType:['booking'],
                     date:[false],
                     dateTime:[false],
-                    noDateTime:[false]
-
+                    noDateTime:[false],
+                    prePaymentType:['fixed']
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
@@ -1042,7 +1081,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     serviceBookingType:['booking'],
                     date:[false],
                     dateTime:[false],
-                    noDateTime:[false]
+                    noDateTime:[false],
+                    prePaymentType:['fixed']
 
                 });
             } else {
@@ -1060,8 +1100,8 @@ export class ServiceComponent implements OnInit, OnDestroy {
                     serviceBookingType:['booking'],
                     date:[false],
                     dateTime:[false],
-                    noDateTime:[false]
-
+                    noDateTime:[false],
+                    prePaymentType:['fixed']
                 });
                 this.serviceForm.get('resoucesRequired').setValue('1');
                 this.serviceForm.get('maxBookingsAllowed').setValue('1');
@@ -1395,5 +1435,9 @@ export class ServiceComponent implements OnInit, OnDestroy {
     }
     isNumericSign(evt) {
         return this.sharedFunctons.isNumericSign(evt);
+    }
+    isNumericWithoutdot(evt){
+        return this.sharedFunctons.isNumericwithoutdot(evt);
+
     }
 }

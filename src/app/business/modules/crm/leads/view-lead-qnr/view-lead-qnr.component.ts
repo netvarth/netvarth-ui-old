@@ -1212,6 +1212,33 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
   }
+  retain(uid) {
+    const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+      width: "100%",
+      panelClass: ["popup-class", "confirmationmainclass"],
+      data: {
+        requestType: 'createUpdateNotes',
+        info: uid,
+        header: 'Add remarks',
+      }
+    })
+    dialogRef.afterClosed().subscribe((response: any) => {
+      console.log('response',response)
+      if (response) {
+        if (response && response.note !== '') {
+          this.crmService.retainRejectedLead(this.leadInfo.uid, response).subscribe((response) => {
+            console.log("Response :",response);
+            if(response){
+              this.snackbarService.openSnackBar('Lead retained successfully', { 'panelClass': 'snackbarnormal' });
+            }
+            this.router.navigate(['provider', 'crm']);
+          }, (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          })
+        }
+      }
+    })
+  }
   editable(data) {
   }
   ProceedStatusLoanSanction(){

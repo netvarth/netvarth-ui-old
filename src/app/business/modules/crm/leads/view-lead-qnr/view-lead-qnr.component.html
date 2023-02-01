@@ -45,14 +45,17 @@
               </div>
             </div>
             <div *ngIf="note.createdDate && note.createdDate.slice(11,13)<12">
-              {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
+              {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am )
             </div>
             <div *ngIf="note.createdDate && note.createdDate.slice(11,13)===12">
-              {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
+              {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm )
             </div>
             <div *ngIf="note.createdDate && note.createdDate.slice(11,13)>12">
               {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
             </div>
+          </div>
+          <div class="notesListSection" *ngIf="note && note.createdByName">
+            By {{note.createdByName}}
           </div>
         </div>
       </div>
@@ -201,7 +204,8 @@
     </div>
     </div>
   </ng-container>
-  <ng-container class="remarksSection" *ngIf="leadInfo.status.name === 'KYC Updated' && !leadInfo.isRejected">
+  <ng-container class="remarksSection" *ngIf="!leadInfo.isRejected">
+    <!-- leadInfo.status.name === 'KYC Updated' && -->
     <div style="margin-top:10px;margin-bottom: 10px;">
       <div class="textareaStart">
         <div class="fiesWithIcon">
@@ -252,14 +256,17 @@
                   </div>
                 </div>
                 <div *ngIf="note.createdDate.slice(11,13)<12">
-                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
+                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am )
                 </div>
                 <div *ngIf="note.createdDate.slice(11,13)===12">
-                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
+                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm )
                 </div>
                 <div *ngIf="note.createdDate.slice(11,13)>12">
                   {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
                 </div>
+              </div>
+              <div class="notesListSection" *ngIf="note && note.createdByName">
+                By {{note.createdByName}}
               </div>
             </div>
           </div>
@@ -377,7 +384,7 @@
   </ng-container>
   <!-- ,!--loan disbursment end -->
 
-  <ng-container class="remarksSection" *ngIf="  leadInfo.isRejected">
+  <ng-container class="remarksSection" *ngIf="leadInfo.isRejected">
     <div style="margin-top:10px;margin-bottom: 10px;">
       <div class="textareaStart">
         <div class="fiesWithIcon">
@@ -392,7 +399,7 @@
             style=" height: 40px !important;background: #FCFCFC !important;border: 1.07315px solid #C9C9C9 !important;border-radius: 11.8046px !important;"></textarea>
         </div>
         <!---cancel save btn start-->
-        <div
+        <div 
           style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
           <div style="text-align: center;">
             <ng-container>
@@ -421,21 +428,24 @@
                 {{note.note}}
               </div>
               <div class="notesListSection" style="gap:0.5px;justify-content:flex-start !important">
-                <div>({{note.createdDate.slice(0,2) }}</div>
+                <div *ngIf="note && note.createdDate">({{note.createdDate.slice(0,2) }}</div>
                 <div *ngFor="let month of monthName">
-                  <div *ngIf="month.count===note.createdDate.slice(3,5)">
+                  <div *ngIf="month.count === note.createdDate.slice(3,5)">
                     {{month.monthName}},
                   </div>
                 </div>
-                <div *ngIf="note.createdDate.slice(11,13)<12">
-                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am
+                <div *ngIf="note && note.createdDate && note.createdDate.slice(11,13)<12">
+                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am )
                 </div>
-                <div *ngIf="note.createdDate.slice(11,13)===12">
-                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm
+                <div *ngIf="note && note.createdDate && note.createdDate.slice(11,13)===12">
+                  {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm )
                 </div>
-                <div *ngIf="note.createdDate.slice(11,13)>12">
+                <div *ngIf="note && note.createdDate && note.createdDate.slice(11,13)>12">
                   {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
                 </div>
+              </div>
+              <div class="notesListSection" *ngIf="note && note.createdByName">
+                By {{note.createdByName}}
               </div>
             </div>
           </div>
@@ -491,4 +501,15 @@
       </div>
     </ng-container>
   </div>
+  <div style="text-align: center;margin-top: 15px;" *ngIf="tempType === 'Rejected'">
+    <!-- *ngIf="leadInfo.status.name ==='Rejected'"  -->
+    <div class=" mgn-bt-20 mgn-up-10 allBtns">
+      <button [ngClass]="{'cursorDiasable': api_loading_UpdateKyc || api_loading_UpdateKycProceed}" type="button"
+      class="btn btn-primary font-weight-bold confirmBtn"
+      style="background: #FADDDD !important;color:black !important"
+      (click)="!api_loading_UpdateKyc && retain(leadUID)">Retain
+    </button>
+    </div>
+  </div>
+  
 </section>
