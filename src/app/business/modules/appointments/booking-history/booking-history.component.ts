@@ -21,7 +21,7 @@ export class BookingHistoryComponent implements OnInit {
   provider_label: any;
   customer_label: any;
   newDateFormat = projectConstantsLocal.DATE_EE_MM_DD_YY_FORMAT;
-  newTimeDateFormat = projectConstantsLocal.DATE_MM_DD_YY_HH_MM_A_FORMAT;
+  newTimeDateFormat = projectConstantsLocal.DATE_FORMAT_WITH_DATE_TIME;
 
   constructor(
       public dialogRef: MatDialogRef<BookingHistoryComponent>,
@@ -30,7 +30,7 @@ export class BookingHistoryComponent implements OnInit {
     ) {
       //console.log(data)
       this.bookinghistorydetails=data.details;
-      console.log("bookinghistorydetails :",this.bookinghistorydetails)
+      console.log("bookinghistorydetails :",this.bookinghistorydetails);
       this.booking_history_uuid = data.uuid
       this.appointmentby=data.appointmentby;
       console.log(this.appointmentby)
@@ -56,6 +56,7 @@ export class BookingHistoryComponent implements OnInit {
   getformatedTime(time) {
     let timeDate;
     timeDate = time.replace(/\s/, 'T');
+    console.log("time Date :",timeDate);
     return timeDate;
   }
 }
