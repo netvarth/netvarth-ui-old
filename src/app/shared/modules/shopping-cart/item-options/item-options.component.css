@@ -6,6 +6,9 @@
     border-radius: 3px !important;
 }
 
+.question-label {
+    font-size: 20px;
+}
 
 ::ng-deep .primengCard .p-card-body {
     padding-top: 0px !important;
@@ -64,3 +67,13 @@ input {
 .p-calendar .p-datepicker-touch-ui {
     min-width: 100% !important;
 }
+
+h6 {
+    font-size: 1rem !important;
+}
+/* 
+@media screen and (max-width: 768px) {
+    h6 {
+        font-size: 1rem !important;
+    }
+} */

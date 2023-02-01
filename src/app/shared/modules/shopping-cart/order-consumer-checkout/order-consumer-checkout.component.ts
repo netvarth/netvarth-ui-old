@@ -304,11 +304,9 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     if (this.chosenDateDetails.selected_coupons) {
       if (this.chosenDateDetails.selected_coupons.length > 0) {
         this.selected_coupons = this.chosenDateDetails.selected_coupons;
-        console.log(this.selected_coupons);
       }
     } if (this.chosenDateDetails.couponsList) {
       this.couponsList = this.chosenDateDetails.couponsList;
-      console.log(this.couponsList);
     }
 
     if (this.choose_type === 'store') {
@@ -349,88 +347,21 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.linear = false;
     this.orderList = this.lStorageService.getitemfromLocalStorage('consumerorders');
     if (this.orderList) {
-      console.log("this.orderList", this.orderList)
-      this.orders = [...new Map(this.orderList.map(item => [item.item['itemId'], item])).values()];
-      this.isPhysicalItemsPresent();
+      const _this = this;
+      _this.getItemsListWithItemOptions(_this.orderList).then(
+        () => {
+          _this.orders = [...new Map(_this.orderList.map(item => [item.item['itemId'], item])).values()];
+          console.log("_this.orders", _this.orders)
+          _this.isPhysicalItemsPresent();
+          _this.getCatalogDetailsOnInit();
+        }
+      );
     }
 
     this.getConsumerQuestionnaire();
 
 
-    this.getCatalogDetails(this.account_id).then(data => {
-      this.catalog_details = data;
-      this.imagelist = this.selectedImagelist;
-      this.orderType = this.catalog_details.orderType;
-      this.loading = false;
-      this.gets3curl();
-      if (this.catalog_details.advanceAmount > 0 && this.orderType === 'SHOPPINGLIST') {
-        // this.getJaldeeCashandCredit();
-        this.getlisttDetails();
-      }
-      if (this.orderType !== 'SHOPPINGLIST') {
-        this.getCartDetails();
-      }
-      if (this.orderType === 'SHOPPINGLIST') {
-        this.imagelist = {
-          files: [],
-          base64: [],
-          caption: []
-        };
 
-        this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
-          width: '50%',
-          panelClass: ['popup-class', 'commonpopupmainclass'],
-          disableClose: true,
-          data: {
-            source: this.imagelist,
-            type: 'add'
-          }
-        });
-        this.shoppinglistdialogRef.afterClosed().subscribe(result => {
-          if (result) {
-            this.selectedImagelist = {
-              files: [],
-              base64: [],
-              caption: []
-            };
-            console.log(result);
-            this.selectedImagelist = result;
-            console.log(this.selectedImagelist.files);
-            this.image_list_popup = [];
-            if (this.selectedImagelist.files.length > 0) {
-              for (let i = 0; i < this.selectedImagelist.files.length; i++) {
-                const imgobj = new Image(i,
-                  {
-                    img: this.selectedImagelist.base64[i],
-                    description: this.selectedImagelist.caption[i] || ''
-                  }, this.selectedImagelist.files[i].name);
-                this.image_list_popup.push(imgobj);
-              }
-              console.log(this.image_list_popup);
-
-            }
-          }
-        });
-      }
-      this.advance_amount = this.catalog_details.advanceAmount;
-
-      if (this.catalog_details.pickUp) {
-        if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
-          this.store_pickup = true;
-          this.storeChecked = true;
-          this.getOrderAvailableDatesForPickup();
-        }
-      } if (this.catalog_details.homeDelivery) {
-        if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
-          console.log('inisde home');
-          this.home_delivery = true;
-          this.storeChecked = false;
-          this.getOrderAvailableDatesForHome();
-
-        }
-      }
-
-    });
     this.getStoreContact();
 
     this.showfuturediv = false;
@@ -471,17 +402,88 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.desktopView = this.deviceService.isDesktop();
 
 
-    this.getItemsListWithItemOptions()
 
 
   }
+
+
+  getCatalogDetailsOnInit() {
+    this.getCatalogDetails(this.account_id).then(data => {
+      console.log("getCatalogDetails")
+      this.catalog_details = data;
+      this.imagelist = this.selectedImagelist;
+      this.orderType = this.catalog_details.orderType;
+      this.loading = false;
+      this.gets3curl();
+      if (this.catalog_details.advanceAmount > 0 && this.orderType === 'SHOPPINGLIST') {
+        // this.getJaldeeCashandCredit();
+        this.getlisttDetails();
+      }
+      if (this.orderType !== 'SHOPPINGLIST') {
+        this.getCartDetails();
+      }
+      if (this.orderType === 'SHOPPINGLIST') {
+        this.imagelist = {
+          files: [],
+          base64: [],
+          caption: []
+        };
+
+        this.shoppinglistdialogRef = this.dialog.open(ShoppinglistuploadComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            source: this.imagelist,
+            type: 'add'
+          }
+        });
+        this.shoppinglistdialogRef.afterClosed().subscribe(result => {
+          if (result) {
+            this.selectedImagelist = {
+              files: [],
+              base64: [],
+              caption: []
+            };
+            this.selectedImagelist = result;
+            this.image_list_popup = [];
+            if (this.selectedImagelist.files.length > 0) {
+              for (let i = 0; i < this.selectedImagelist.files.length; i++) {
+                const imgobj = new Image(i,
+                  {
+                    img: this.selectedImagelist.base64[i],
+                    description: this.selectedImagelist.caption[i] || ''
+                  }, this.selectedImagelist.files[i].name);
+                this.image_list_popup.push(imgobj);
+              }
+            }
+          }
+        });
+      }
+      this.advance_amount = this.catalog_details.advanceAmount;
+
+      if (this.catalog_details.pickUp) {
+        if (this.catalog_details.pickUp.orderPickUp && this.catalog_details.nextAvailablePickUpDetails) {
+          this.store_pickup = true;
+          this.storeChecked = true;
+          this.getOrderAvailableDatesForPickup();
+        }
+      } if (this.catalog_details.homeDelivery) {
+        if (this.catalog_details.homeDelivery.homeDelivery && this.catalog_details.nextAvailableDeliveryDetails) {
+          this.home_delivery = true;
+          this.storeChecked = false;
+          this.getOrderAvailableDatesForHome();
+
+        }
+      }
+
+    });
+  }
   isPhysicalItemsPresent() {
     let physical_item_present = true;
-    console.log(this.orders);
     const virtualItems = this.orders.filter(orderitem => orderitem.item.itemType === 'VIRTUAL')
 
     if (virtualItems.length > 0 && this.orders.length === virtualItems.length) {
-      console.log('insidee');
       physical_item_present = false;
       this.onlyvirtualItemsPresent = true;
       this.isfutureAvailableTime = true;
@@ -501,7 +503,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
           //  this.convenientFee = this.convenientFeeObj.convenienceFee;
           // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
           this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
-          console.log("convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
         }
       }
     })
@@ -529,7 +530,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
           //  this.convenientFee = this.convenientFeeObj.convenienceFee;
           // this.gatewayFee = this.convenientFeeObj.consumerGatewayFee;
           this.gatewayFee = this.convenientFeeObj.totalGatewayFee;
-          console.log("convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
         }
       }
     })
@@ -556,7 +556,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
           }
           this.shared_services.getConvenientFeeOfProvider(this.account_id, convienientPaymentObj).subscribe((data: any) => {
             // let array = []
-            console.log("Convenient response :", data)
             this.convenientPaymentModes = data;
             if (this.convenientPaymentModes) {
               this.convenientPaymentModes.map((res: any) => {
@@ -564,7 +563,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
                 if (res) {
                   this.convenientFeeObj = res;
                   this.convenientFee = this.convenientFeeObj.convenienceFee;
-                  console.log("payment convenientFee for Indian:", this.convenientFee, res.mode, this.gatewayFee)
 
                 }
               })
@@ -572,7 +570,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
 
 
           })
-          console.log("isConvenienceFee paymentsss:", this.paymentmodes)
           if (this.paymentmodes && this.paymentmodes.indiaPay) {
             this.indian_payment_modes = this.paymentmodes.indiaBankInfo;
           }
@@ -602,7 +599,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         this.storeContact.controls.phone.setValue(this.phonenumber);
       }
       this.customer_phoneNumber = activeUser.primaryPhoneNumber;
-      console.log(this.customer_phoneNumber);
       this.getaddress();
       //this.nextbtn.nativeElement.click();
     } else {
@@ -627,9 +623,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
-          console.log('cartData' + data);
           this.cartDetails = data;
-          console.log("this.cartDetails", this.cartDetails)
           if (this.cartDetails.eligibleJcashAmt) {
             this.checkJcash = true
             this.jcashamount = this.cartDetails.eligibleJcashAmt.jCashAmt;
@@ -659,7 +653,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       }
     }
     this.cartDetails['netTotal'] = netTotal;
-    // console.log("this.cartDetails.itemTotal", this.cartDetails)
     return netTotal;
   }
 
@@ -671,19 +664,26 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.cartDetails['itemTotal'] = totalPrice
     return totalPrice
   }
-  getItemsListWithItemOptions() {
-    this.subs.sink = this.shared_services.getItemsListWithItemOptions(this.catalog_Id, this.account_id).subscribe(
-      (data: any) => {
-        if (data) {
-          this.itemsListWithItemOptions = data;
-          if (this.itemsListWithItemOptions) {
-            this.getNewOrderList();
+  getItemsListWithItemOptions(orderList) {
+    console.log("this.getItemsListWithItemOptions")
+    const _this = this;
+    return new Promise(function (resolve) {
+      _this.subs.sink = _this.shared_services.getItemsListWithItemOptions(_this.catalog_Id, _this.account_id).subscribe(
+        (data: any) => {
+          if (data) {
+            _this.itemsListWithItemOptions = data;
+            if (_this.itemsListWithItemOptions) {
+              _this.getNewOrderList(orderList);
+            }
+            resolve(true);
           }
-        }
-      },
-      (error) => {
-        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-      });
+        },
+        (error) => {
+          _this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          resolve(true);
+        });
+    })
+
   }
 
   haveItemOptions(item) {
@@ -707,31 +707,31 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     }
   }
 
-  getNewOrderList() {
+  getNewOrderList(orderList) {
     let itemOptionsIds = [];
     let itemsIds = [];
     this.newOrderList = [];
-    if (this.orderList && this.orderList.length > 0) {
-      for (let i = 0; i < this.orderList.length; i++) {
-        if (this.haveItemOptions(this.orderList[i])) {
-          if (itemOptionsIds.indexOf(this.orderList[i].itemOptionsIndex) === -1) {
-            itemOptionsIds.push(this.orderList[i].itemOptionsIndex);
-            this.newOrderList.push(this.orderList[i]);
+    if (orderList && orderList.length > 0) {
+      for (let i = 0; i < orderList.length; i++) {
+        if (this.haveItemOptions(orderList[i])) {
+          if (itemOptionsIds.indexOf(orderList[i].itemOptionsIndex) === -1) {
+            itemOptionsIds.push(orderList[i].itemOptionsIndex);
+            this.newOrderList.push(orderList[i]);
           }
         }
         else {
-          if (itemsIds.indexOf(this.orderList[i].id) === -1) {
-            itemsIds.push(this.orderList[i].id);
-            this.newOrderList.push(this.orderList[i]);
+          if (itemsIds.indexOf(orderList[i].id) === -1) {
+            itemsIds.push(orderList[i].id);
+            this.newOrderList.push(orderList[i]);
           }
         }
       }
     }
-    console.log("this.newOrderList", this.newOrderList)
+    this.orders = this.newOrderList
   }
 
   getItemQty(item, index?) {
-    let qty = this.newOrderList.filter(i => i.item.itemId === item.item.itemId).length;
+    let qty = this.newOrderList.filter(i => i.id === item.item.itemId).length;
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
     if (this.haveItemOptions(item) && itemOptionsData && index) {
       qty = this.orderList.filter(i => i.itemOptionsIndex === index).length;
@@ -740,7 +740,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
 
   getCartDetails() {
-    console.log('details');
     let delivery = false;
     if (this.delivery_type === 'home') {
       delivery = true;
@@ -759,16 +758,13 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
-          console.log(data);
           this.cartDetails = data;
-          console.log("this.cartDetails", this.cartDetails)
           this.couponlist = [];
           this.pcouponlist = [];
           if (this.cartDetails.jCouponList) {
             for (const [key, value] of Object.entries(this.cartDetails.jCouponList)) {
               if (value['value'] !== '0.0') {
                 this.couponlist.push(key);
-                console.log(this.couponlist);
               }
             }
           }
@@ -776,7 +772,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
             for (const [key, value] of Object.entries(this.cartDetails.proCouponList)) {
               if (value['value'] !== '0.0') {
                 this.pcouponlist.push(key);
-                console.log(this.pcouponlist);
               }
             }
           }
@@ -796,17 +791,14 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     return this.totalamountPay;
   }
   OnChangeJcash(event) {
-    console.log(event.checked);
 
   }
   gets3curl() {
-    console.log('getS3url');
     this.api_loading1 = true;
     let accountS3List = 'coupon,providerCoupon';
     this.subs.sink = this.s3Processor.getJsonsbyTypes(this.provider_id,
       null, accountS3List).subscribe(
         (accountS3s) => {
-          console.log(accountS3s);
           if (accountS3s['coupon']) {
             this.processS3s('coupon', accountS3s['coupon']);
           }
@@ -818,13 +810,10 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       );
   }
   processS3s(type, res) {
-    console.log('inisde');
     let result = this.s3Processor.getJson(res);
-    console.log(JSON.stringify(result));
     switch (type) {
       case 'coupon': {
         this.s3CouponsList.JC = result;
-        console.log(this.s3CouponsList.JC);
         if (this.s3CouponsList.JC.length > 0) {
           this.showCouponWB = true;
         }
@@ -832,7 +821,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       }
       case 'providerCoupon': {
         this.s3CouponsList.OWN = result;
-        console.log(this.s3CouponsList.OWN);
         if (this.s3CouponsList.OWN.length > 0) {
           this.showCouponWB = true;
         }
@@ -889,7 +877,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
 
   addToCart(itemObj) {
     const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
-    console.log("spId", typeof (spId), typeof (this.account_id));
     if (spId === null) {
       this.orderList = [];
       this.lStorageService.setitemonLocalStorage('order_spId', this.account_id);
@@ -907,7 +894,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
           this.orderList.push(itemObj);
           this.lStorageService.setitemonLocalStorage('order', this.orderList);
           this.getTotalItemAndPrice();
-          console.log("Testing order catalog", this.lStorageService.getitemfromLocalStorage('order'))
           this.getItemQty(itemObj);
         }
       } else {
@@ -959,7 +945,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       this.order_count = this.order_count + 1;
     }
 
-    console.log("Price : ", this.price, this.orderList)
     return this.price;
   }
 
@@ -988,7 +973,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     });
   }
   deleteNotes(item, index) {
-    console.log(this.orderList);
     this.canceldialogRef = this.dialog.open(ConfirmBoxComponent, {
       width: '50%',
       panelClass: ['commonpopupmainclass', 'confirmationmainclass'],
@@ -999,10 +983,8 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     });
     this.canceldialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(this.orderList);
         this.orderList.map((Item, i) => {
           if (Item.item.itemId === item.item.itemId) {
-            console.log(Item.consumerNote);
             Item['consumerNote'] = Item.consumerNote.splice;
           }
         });
@@ -1246,7 +1228,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   goBackToHome() {
     // const reqFrom = this.lStorageService.getitemfromLocalStorage('reqFrom');
     const source = this.lStorageService.getitemfromLocalStorage('source');
-    console.log(source);
     if (source) {
       window.location.href = source;
       this.lStorageService.removeitemfromLocalStorage('reqFrom');
@@ -1265,6 +1246,27 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       this.lStorageService.setitemonLocalStorage('chosenDateTime', chosenDateTime);
       this.location.back();
     }
+  }
+  getItemQtyforCreatingOrder(item, index?) {
+    let qty = this.orderList.filter(i => i.id === item.item.itemId).length;
+    return qty;
+  }
+
+  getOrderItemsforCreatingOrder() {
+    this.orderSummary = [];
+    console.log("this.orders in method", this.orders)
+    if (this.orders && this.orders.length > 0) {
+      this.orders.forEach(item => {
+        let consumerNote = '';
+        const itemId = item.item.itemId;
+        const qty = this.getItemQtyforCreatingOrder(item, item.itemOptionsIndex);
+        if (item.consumerNote) {
+          consumerNote = item.consumerNote;
+        }
+        this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
+      });
+    }
+    return this.orderSummary;
   }
 
   confirm(paytype?) {
@@ -1285,7 +1287,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       'countryCode': '+91',
     }
     if (this.orderType !== 'SHOPPINGLIST') {
-      post_Data['orderItem'] = this.getOrderItems();
+      post_Data['orderItem'] = this.getOrderItemsforCreatingOrder();
     }
     if (this.jcashamount > 0 && this.checkJcash) {
       post_Data['useCredit'] = this.checkJcredit
@@ -1341,7 +1343,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         this.snackbarService.openSnackBar('Please provide Contact Details', { 'panelClass': 'snackbarerror' });
         return;
       } else {
-        console.log("StoreContact:", this.storeContact);
         const contactNumber = this.storeContact.value.phone;
         const contact_email = this.storeContact.value.email;
         post_Data['phoneNumber'] = contactNumber,
@@ -1350,7 +1351,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       }
       if (this.delivery_type === 'store' && !this.onlyvirtualItemsPresent) {
         post_Data['storePickup'] = true;
-        console.log("storePickupstorePickupstorePickup")
       }
       this.confirmOrder(post_Data, paytype);
     } else if (this.source === "paper") {
@@ -1380,7 +1380,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     } else {
       this.confirmOrder(post_Data, paytype);
     }
-    console.log("StoreContact:", this.storeContact);
 
   }
 
@@ -1428,7 +1427,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
 
   }
   confirmOrder(post_Data, paytype?) {
-    console.log("Orderr Data :", post_Data);
     const dataToSend: FormData = new FormData();
     if (this.orderType === 'SHOPPINGLIST') {
       const captions = {};
@@ -1449,7 +1447,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
           const retData = data;
 
           if (this.customId) {
-            console.log("businessid" + this.account_id);
             this.shared_services.addProvidertoFavourite(this.account_id)
               .subscribe(() => {
               });
@@ -1491,7 +1488,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         .subscribe(data => {
           const retData = data;
           if (this.customId) {
-            console.log("businessid" + this.account_id);
             this.shared_services.addProvidertoFavourite(this.account_id)
               .subscribe(() => {
               });
@@ -1512,33 +1508,47 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
           if (this.questionnaireList.labels && this.questionnaireList.labels.length > 0) {
             this.submitQuestionnaire(this.trackUuid, paytype);
           } else {
-            console.log(post_Data)
             this.paymentOperation(this.con_email, paytype);
           }
+          this.itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
 
-          if (this.trackUuid) {
-            this.itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData')[0];
-            const dataToSend: FormData = new FormData();
-            const blobpost_Data = new Blob([JSON.stringify({ 'questionnaireId': this.itemOptionsData['postData']['questionnaireId'], 'answerLine': this.itemOptionsData['postData']['answerLine'] })], { type: 'application/json' });
-            dataToSend.append('question', blobpost_Data);
-            const filesToUpload = this.itemOptionsData['fileData']['fileToUpload'];
-            this.shared_services.submitItemOptions(this.itemOptionsData['itemData']['item']['itemId'], this.trackUuid, this.account_id, dataToSend)
-              .subscribe((data: any) => {
+          if (this.trackUuid && this.itemOptionsData && this.itemOptionsData.length > 0) {
+            let itemOptionsDatatoSend = [];
+            let itemIdsinside = [];
+            for (let i = 0; i < this.itemOptionsData.length; i++) {
+              if (itemIdsinside.indexOf(this.itemOptionsData[i].itemData.id) === -1) {
+                itemIdsinside.push(this.itemOptionsData[i].itemData.id);
+                this.newOrderList.push(this.orderList[i]);
+                itemOptionsDatatoSend.push(this.itemOptionsData[i])
+              }
+              else {
+                itemOptionsDatatoSend[itemIdsinside.indexOf(this.itemOptionsData[i].itemData.id)].postData.answerLine[0].answer.dataGridList.push(this.itemOptionsData[i].postData.answerLine[0].answer.dataGridList[0])
+              }
+              console.log("itemOptionsDatatoSend", itemOptionsDatatoSend)
+            }
 
-                if (data.urls.length > 0) {
-                  this.uploadAudioVideo(data.urls, filesToUpload).then(
-                    (dataS3Url) => {
-                      console.log(dataS3Url);
-                    });
-                }
+            for (let i = 0; i < itemOptionsDatatoSend.length; i++) {
+              const dataToSend: FormData = new FormData();
+              const blobpost_Data = new Blob([JSON.stringify({ 'questionnaireId': itemOptionsDatatoSend[i]['postData']['questionnaireId'], 'answerLine': itemOptionsDatatoSend[i]['postData']['answerLine'] })], { type: 'application/json' });
+              dataToSend.append('question', blobpost_Data);
+              const filesToUpload = itemOptionsDatatoSend[i]['fileData']['fileToUpload'];
+              this.shared_services.submitItemOptions(itemOptionsDatatoSend[i]['itemData']['item']['itemId'], this.trackUuid, this.account_id, dataToSend)
+                .subscribe((data: any) => {
+
+                  if (data.urls.length > 0) {
+                    this.uploadAudioVideo(data.urls, filesToUpload).then(
+                      (dataS3Url) => {
+                      });
+                  }
 
 
 
-              }, (error) => {
-                this.isClickedOnce = false;
-                this.checkoutDisabled = false;
-                this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-              });
+                }, (error) => {
+                  this.isClickedOnce = false;
+                  this.checkoutDisabled = false;
+                  this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                });
+            }
           }
         },
           error => {
@@ -1546,33 +1556,23 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
             this.checkoutDisabled = false;
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           }
-
         );
     }
-
-
   }
 
   uploadAudioVideo(data, filesToUpload) {
     const _this = this;
     let count = 0;
-    console.log("DAta:", data);
     return new Promise(async function (resolve, reject) {
       for (const s3UrlObj of data) {
-        console.log("S3URLOBJ:", s3UrlObj);
-        console.log('_this.filesToUpload', filesToUpload)
         const file = filesToUpload.filter((fileObj) => {
           return ((fileObj.columnId === (s3UrlObj.columnId)) ? s3UrlObj.columnId : '');
         })[0];
-        console.log("File:", file);
         if (file) {
           await _this.uploadFiles(file['file'], s3UrlObj.url).then(
             () => {
               count++;
-              console.log("Count", count);
-              console.log("Count", data.length);
               if (count === data.length) {
-                console.log("HERE");
                 resolve(true);
               }
             }
@@ -1591,7 +1591,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         .subscribe(() => {
           resolve(true);
         }, error => {
-          console.log('error', error)
           _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
           resolve(false);
         });
@@ -1600,7 +1599,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
 
   paymentOperation(post_Data?, paytype?) {
     if (this.catalog_details.paymentType !== 'NONE' && this.prepayAmount > 0) {
-      console.log(post_Data.email + 'post_Data.email')
       this.shared_services.CreateConsumerEmail(this.trackUuid, this.account_id, this.con_email)
         .subscribe(res => {
           if (this.jcashamount > 0 && this.checkJcash) {
@@ -1638,7 +1636,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         let navigationExtras: NavigationExtras = {
           queryParams: queryParams
         };
-        console.log("Payment Data :", this.from);
         this.router.navigate(['consumer'], navigationExtras);
         // this.router.navigate([`${this.customId}`,'dashboard'], navigationExtras);
 
@@ -1683,11 +1680,12 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
   getOrderItems() {
     this.orderSummary = [];
-    if (this.orders) {
+    console.log("this.orders in method", this.orders)
+    if (this.orders && this.orders.length > 0) {
       this.orders.forEach(item => {
         let consumerNote = '';
         const itemId = item.item.itemId;
-        const qty = this.getItemQty(item);
+        const qty = this.getItemQty(item, item.itemOptionsIndex);
         if (item.consumerNote) {
           consumerNote = item.consumerNote;
         }
@@ -1708,7 +1706,8 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     if (this.haveItemOptions(item) && itemOptionsData && index) {
       for (let i = 0; i < itemOptionsData.length; i++) {
         if (itemOptionsData[i] && itemOptionsData[i].itemData && itemOptionsData[i].itemData.itemOptionsIndex === index) {
-          return Number(itemOptionsData[i].postData.totalPrice)
+          let repeatItemOptionsPostDataAnswers = itemOptionsData[i].postData.answerLine[0].answer.dataGridList[0].dataGridListColumn;
+          return Number(itemOptionsData[i].postData.totalPrice * repeatItemOptionsPostDataAnswers[0]['quantity'])
         }
       }
     }
@@ -1852,12 +1851,9 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     const dte2 = moment(dte0, 'YYYY-MM-DD HH:mm').format();
     const datee2 = new Date(dte2);
     const last_date = moment().add(30, 'days');
-    console.log('30 day date..' + last_date);
     const thirty_date = moment(last_date, 'YYYY-MM-DD HH:mm').format();
     if (dte2 > thirty_date) {
-      console.log('greater than 30');
     } else {
-      console.log('less than 30');
     }
 
     if (datee2.getTime() !== date2.getTime()) { // this is to decide whether future date selection is to be displayed. This is displayed if the sel_checkindate is a future date
@@ -1885,11 +1881,8 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         this.nextAvailableTimeQueue = this.catalog_details.pickUp.pickUpSchedule.timeSlots;
         this.queue = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.pickUp.pickUpSchedule.timeSlots[0]['eTime'];
-        console.log('greater than 30');
       }
       else if ((storeIntervals.includes(currentday)) && (date < thirty_date)) {
-        console.log('less than 30');
-        console.log(this.store_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
         if (this.store_availables) {
           const availability = this.store_availables.filter(obj => obj.date === sel_check_date);
@@ -1916,9 +1909,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         this.nextAvailableTimeQueue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots;
         this.queue = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0];
         this.futureAvailableTime = this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['sTime'] + ' - ' + this.catalog_details.homeDelivery.deliverySchedule.timeSlots[0]['eTime'];
-        console.log('greater than 30');
       } else if (homeIntervals.includes(currentday) && (date < thirty_date)) {
-        console.log(this.home_availables);
         const sel_check_date = moment(date, 'YYYY-MM-DD').format('YYYY-MM-DD');
         const availability = this.home_availables.filter(obj => obj.date === sel_check_date);
         if (availability.length > 0) {
@@ -2086,7 +2077,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
               }, this.selectedImagelist.files[i].name);
             this.image_list_popup.push(imgobj);
           }
-          console.log(this.image_list_popup);
 
         }
       }
@@ -2094,7 +2084,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
   handleQueueSelection(queue, index) {
     this.queue = queue;
-    console.log("Queue Selected : ", queue, index);
   }
 
   // openPayment() {
@@ -2170,7 +2159,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
           this.orderDetails['profileId'] = this.paymentmodes.profileId;
           this.orderDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
           this.orderDetails['paymentGateway'] = this.convenientFeeObj.gateway
-          console.log("Non-Indian Payment Info", this.orderDetails)
         }
       }
       if (this.convenientFeeObj && !this.convenientFeeObj.isInternational && !this.isInternatonal) {
@@ -2182,14 +2170,12 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
           this.orderDetails['profileId'] = this.paymentmodes.profileId;
           this.orderDetails['paymentSettingsId'] = this.convenientFeeObj.paymentSettingsId
           this.orderDetails['paymentGateway'] = this.convenientFeeObj.gateway
-          console.log("Indian Payment Info", this.orderDetails)
         }
       }
     })
     this.lStorageService.setitemonLocalStorage('uuid', this.trackUuid);
     this.lStorageService.setitemonLocalStorage('acid', this.account_id);
     this.lStorageService.setitemonLocalStorage('p_src', 'c_c');
-    console.log("orderDetails", this.orderDetails);
     if (this.remainingadvanceamount == 0 && this.checkJcash) {
       const postData = {
         'amountToPay': this.prepayAmount,
@@ -2316,7 +2302,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
 
   finishCheckout(status) {
-    console.log("Finish Checkout");
     if (status) {
       this.isClickedOnce = false;
       this.lStorageService.removeitemfromLocalStorage('order_sp');
