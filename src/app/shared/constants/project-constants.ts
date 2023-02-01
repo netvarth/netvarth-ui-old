@@ -119,6 +119,7 @@ export const projectConstantsLocal = {
   DATE_EE_MM_DD_YY_FORMAT: 'EEE, MMM dd, y',
   DATE_MM_DD_YY_HH_MM_A_FORMAT: 'medium',
   DATE_FORMAT_WITH_TIME: 'MMM d, y h:mm a',
+  DATE_FORMAT_WITH_DATE_TIME: 'EEE, MMM d, y hh:mm a',
   BASE_SCHEDULE: [
     {
       day: 4,
