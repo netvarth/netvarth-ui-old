@@ -1223,11 +1223,11 @@ export const projectConstantsLocal = {
     { index: 3, name: 'ApprovalRequired', displayName: 'Approval Required' },
     { index: 4, name: 'CreditApproved', displayName: 'Credit Verified' },
     { index: 5, name: 'SchemeConfirmed', displayName: 'Scheme Confirmed' },
-    { index: 5, name: 'BranchApproved', displayName: 'BM Approved' },
+    { index: 6, name: 'BranchApproved', displayName: 'BM Approved' },
     // { index: 3, name: 'ApprovalPending', displayName: 'Approval Pending' },
-    { index: 6, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
-    { index: 7, name: 'Sanctioned', displayName: 'Sanctioned' },
-    { index: 8, name: 'OperationsVerified', displayName: 'Operations Verify' },
+    { index: 7, name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
+    { index: 8, name: 'Sanctioned', displayName: 'Sanctioned' },
+    { index: 9, name: 'OperationsVerified', displayName: 'Operations Verify' }
     // { index: 7, name: 'Rejected', displayName: 'Rejected' }
   ],
   DEALER_STATUS: [
