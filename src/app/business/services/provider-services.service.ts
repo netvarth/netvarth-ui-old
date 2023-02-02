@@ -2005,6 +2005,15 @@ export class ProviderServices {
     const url = 'provider/orders/future/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
+  getProviderSubmissionOrdersCount(filter = {}){
+    ///rest/provider/orders/OrderSubmission/count
+    const url = 'provider/orders/OrderSubmission/count';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
+  getProviderCompletedOrdersCount(filter = {}){
+    const url = 'provider/orders/OrderSubmission/count';
+    return this.servicemeta.httpGet(url, null, filter);
+  }
   getProviderOrderById(id) {
     const url = 'provider/orders/' + id;
     return this.servicemeta.httpGet(url);

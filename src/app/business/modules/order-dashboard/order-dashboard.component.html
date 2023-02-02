@@ -1482,6 +1482,12 @@
         <div class="allTabInPannel" *ngIf="!loadingPapers">
           <app-paper-details [orders]="totalOrders" (actionPerformed)="actionPerformed($event)"></app-paper-details>
         </div>
+          <!--  class="search_paging" -->
+          <div class="search_paging" *ngIf="totalOrders.length !== 0">
+            <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+              (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+            </app-pager>
+          </div>
         <div class="clearfix"></div>
       </mat-tab>
       <mat-tab label="Completed Papers ({{totalPaperdCompletedCount}})">
@@ -1490,6 +1496,12 @@
           <app-paper-details [orders]="completedorders"></app-paper-details>
           <div class="clearfix"></div>
         </div>
+           <!--  class="search_paging" -->
+          <div class="search_paging" *ngIf="completedorders.length !== 0">
+          <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+           (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+            </app-pager>
+            </div>
         <div class="clearfix"></div>
       </mat-tab>
     </mat-tab-group>

@@ -6,7 +6,8 @@
     <tr>
       <th>Name</th>
       <th>Date</th>
-      <th *ngIf="this.selectedUser && this.selectedUser.firstName">Assigned</th>
+      <!-- <th *ngIf="this.selectedUser && this.selectedUser.firstName">Assigned</th> -->
+      <th>Assignee</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
@@ -29,13 +30,19 @@
           </div>
 
         </td>
-        <td data-title="Assigned" width="400" class="td3" *ngIf="this.users && this.users.length >0">
+        <td data-title="Assigned" width="400" class="td3"b>
           <div class=" imgClass">
-            <!-- <div>
+            <!--*ngIf="this.users && this.users.length >0" <div>
                                 <img class="img mr-2" src="/assets/images/avatar5.png" width="20" height="20"/>
                               </div> -->
-            <div *ngIf="selectedUser && selectedUser.firstName || selectedUser.lastName">
+            <!-- <div *ngIf="selectedUser && selectedUser.firstName || selectedUser.lastName">
               {{selectedUser.firstName}} {{selectedUser.lastName}}
+            </div> -->
+            <div *ngIf="paper && paper.provider">
+              {{paper.provider.firstName}} {{paper.provider.lastName ? paper.provider.lastName  : ''}}
+            </div>
+            <div *ngIf="paper && !paper.provider">
+              Not Assigned
             </div>
           </div>
         </td>

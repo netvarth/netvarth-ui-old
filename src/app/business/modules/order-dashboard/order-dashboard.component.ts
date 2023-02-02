@@ -143,6 +143,8 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
+    this.getProviderCompletedOrdersCount();
+    this.getProviderSubmissionOrdersCount();
     this.subs.sink = observableInterval(this.refreshTime * 500).subscribe(() => {
       this.refresh();
     });
@@ -181,11 +183,12 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     switch (type) {
       case 1: {
         this.getProviderSubmissionOrders();
-
+        this.getProviderSubmissionOrdersCount();
         break;
       }
       case 2: {
         this.getProviderCompletedOrders();
+        this.getProviderCompletedOrdersCount();
         break;
       }
 
@@ -290,22 +293,31 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     let filter = {};
     filter = this.setFilterForApi();
     filter = this.setPaginationFilter(filter);
-
-    //if (from_oninit) { this.historyOrdersCount = result; }
     this.subs.sink = this.providerservices.getProviderHistoryOrders(filter).subscribe(data => {
       this.historyOrders = data;
       console.log("History Orders :", this.historyOrders)
-
-      // this.historyOrdersCount = this.pagination.totalCnt;
-      // console.log(" historyOrdersCount :",this.historyOrdersCount)
-
       this.loading = false;
-
     });
   }
 
   setPaginationFilter(api_filter) {
     if (this.historyOrdersCount <= 10) {
+      this.pagination.startpageval = 1;
+    }
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  setPaginationFilterForSubmissionOrders(api_filter){
+    if (this.totalOrdersCount <= 10) {
+      this.pagination.startpageval = 1;
+    }
+    api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
+    api_filter['count'] = this.filter.page_count;
+    return api_filter;
+  }
+  setPaginationFilterForPaperCompleted(api_filter){
+    if (this.totalPaperdCompletedCount <= 10) {
       this.pagination.startpageval = 1;
     }
     api_filter['from'] = (this.pagination.startpageval) ? (this.pagination.startpageval - 1) * this.filter.page_count : 0;
@@ -318,8 +330,24 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.subs.sink = this.providerservices.getProviderHistoryOrdersCount(filter).subscribe(data => {
       this.historyOrdersCount = data;
       this.pagination.totalCnt = data;
-
-
+    });
+  }
+  getProviderSubmissionOrdersCount(){
+    let filter = {};
+    filter = this.setFilterForApi();
+    this.subs.sink = this.providerservices.getProviderSubmissionOrdersCount(filter).subscribe(data => {
+      console.log("totalOrdersCount :",data);
+      this.totalOrdersCount = data;
+      this.pagination.totalCnt = data;
+    });
+  }
+  getProviderCompletedOrdersCount(){
+    let filter = {};
+    filter = this.setFilterForCompletedPapersApi();
+    this.subs.sink = this.providerservices.getProviderCompletedOrdersCount(filter).subscribe(data => {
+      console.log("totalPaperdCompletedCount :",data);
+      this.totalPaperdCompletedCount = data;
+      this.pagination.totalCnt = data;
     });
   }
   checkOrder(order, index) {
@@ -390,8 +418,6 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     } else {
       this.setTabSelection(this.selectedTab);
     }
-
-
   }
   keyPressed() {
     this.labelSelection();
@@ -505,6 +531,11 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     if (this.labelFilterData !== '') {
       api_filter['label-eq'] = this.labelFilterData;
     }
+    return api_filter;
+  }
+  setFilterForCompletedPapersApi(){
+    const api_filter = {};
+      api_filter['orderStatus-eq'] = 'Completed';
     return api_filter;
   }
   getDefaultCatalogStatus() {
@@ -725,13 +756,14 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.loadingPapers = true;
     let filter = {};
     filter = this.setFilterForApi();
-
+    filter = this.setPaginationFilterForSubmissionOrders(filter);
     this.subs.sink = this.providerservices.getProviderSubmissionOrders(filter)
 
-      .subscribe(data => {
+      .subscribe((data : any) => {
+        console.log("total data :",data);
         this.orders = data;
         this.totalOrders = data;
-        this.totalOrdersCount = this.totalOrders.length;
+        // this.totalOrdersCount = this.totalOrders.length;
         this.loading = false;
         this.getProviderCompletedOrders()
       });
@@ -741,13 +773,14 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.loading = true;
     let filter = {};
     filter = this.setFilterForApi();
+    filter = this.setPaginationFilterForPaperCompleted(filter);
 
     this.subs.sink = this.providerservices.getProviderCompletedOrders(filter)
 
       .subscribe(data => {
         this.orders = data;
         this.completedorders = data;
-        this.totalPaperdCompletedCount = this.orders.length;
+        // this.totalPaperdCompletedCount = this.orders.length;
         this.loading = false;
         this.loadingPapers = false;
       });

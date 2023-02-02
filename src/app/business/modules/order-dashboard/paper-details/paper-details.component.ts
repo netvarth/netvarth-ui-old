@@ -27,7 +27,7 @@ export class PaperDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProviders();
+    // this.getProviders();
   }
 
   stopprop(event) {
@@ -49,7 +49,8 @@ export class PaperDetailsComponent implements OnInit {
       if (this.groupService.getitemFromGroupStorage('appt-selectedUser')) {
         this.selectedUser = this.groupService.getitemFromGroupStorage('appt-selectedUser');
         console.log("If selected user", this.selectedUser)
-      } else {
+      }
+       else {
         if (this.users && this.users[0]) {
           this.selectedUser = this.users[0];
           console.log("else selected user", this.selectedUser)
