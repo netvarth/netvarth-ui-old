@@ -162,7 +162,7 @@
                                         class="bold price rupee-font service-li-value">{{servicedetails.minPrePaymentAmount |
                                         currency:'&#8377;'}}</span>
                                         <span *ngIf="servicedetails && servicedetails.prePaymentType === 'percentage'"
-                                        class="bold price rupee-font service-li-value">{{servicedetails.minPrePaymentAmount}}%</span>
+                                        class="bold price rupee-font service-li-value">{{servicedetails.minPrePaymentAmount}}% of {{servicedetails.totalAmount | currency:'&#8377;'}}</span>
                                 </li>
                             </ul>
                         </div>
