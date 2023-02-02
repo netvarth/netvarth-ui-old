@@ -38,7 +38,8 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="catalogType && catalogType !== 'submission'">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist"
+    *ngIf="catalogType && catalogType !== 'submission'">
     <mat-tab-group (selectedTabChange)="tabChange($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Today ({{todayOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
@@ -58,7 +59,8 @@
               </mat-select>
             </div>
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
-              <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
+              <span *ngIf="selectedOrders && selectedOrders.length > 1" class="main-act-btn pointer-cursor"
+                (click)="showActionPopup()">
                 Actions</span>
             </div>
             <div class="pull-right mgn-up-5">
@@ -231,7 +233,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card" *ngIf="providerLabels.length > 0">
+                      <div class="card" *ngIf="providerLabels && providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -248,7 +250,7 @@
                         </div>
                         <div id="collapseLabels2" class="collapse in" data-parent="#accordion2">
                           <div class="card-body">
-                            <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
+                            <div class="filter-checkbox-input" *ngIf="providerLabels && providerLabels.length > 0">
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                 <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
                                   (change)="setLabelFilter('all', $event)">
@@ -279,10 +281,10 @@
               </div>
             </div>
           </div>
-          <div *ngIf="todayOrders.length == 0">
+          <div *ngIf="todayOrders && todayOrders.length == 0">
             No orders for today
           </div>
-          <ng-container *ngIf="todayOrders.length > 0">
+          <ng-container *ngIf="todayOrders && todayOrders.length > 0">
             <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of todayOrders;let i=index">
               <div (click)="gotoDetails(order)">
                 <div class="top-sec">
@@ -378,7 +380,8 @@
               </mat-select>
             </div>
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-10">
-              <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
+              <span *ngIf="selectedOrders && selectedOrders.length > 1" class="main-act-btn pointer-cursor"
+                (click)="showActionPopup()">
                 Actions</span>
             </div>
             <div class="pull-right mgn-up-5">
@@ -551,7 +554,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card" *ngIf="providerLabels.length > 0">
+                      <div class="card" *ngIf="providerLabels && providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -568,7 +571,7 @@
                         </div>
                         <div id="collapseLabels2" class="collapse in" data-parent="#accordion2">
                           <div class="card-body">
-                            <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
+                            <div class="filter-checkbox-input" *ngIf="providerLabels && providerLabels.length > 0">
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                 <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
                                   (change)="setLabelFilter('all', $event)">
@@ -757,7 +760,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card" *ngIf="providerLabels.length > 0">
+                      <div class="card" *ngIf="providerLabels && providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -774,7 +777,7 @@
                         </div>
                         <div id="collapseLabels2" class="collapse in" data-parent="#accordion2">
                           <div class="card-body">
-                            <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
+                            <div class="filter-checkbox-input" *ngIf="providerLabels && providerLabels.length > 0">
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                 <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
                                   (change)="setLabelFilter('all', $event)">
@@ -805,10 +808,10 @@
               </div>
             </div>
           </div>
-          <div *ngIf="futureOrdes.length == 0">
+          <div *ngIf="futureOrdes && futureOrdes.length == 0">
             No future orders
           </div>
-          <ng-container *ngIf="futureOrdes.length > 0">
+          <ng-container *ngIf="futureOrdes && futureOrdes.length > 0">
             <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of futureOrdes;let i=index">
               <div (click)="gotoDetails(order)">
                 <div class="top-sec">
@@ -888,7 +891,8 @@
         <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 no-padding mgn-bt-30 order-hght" *ngIf="!loading">
           <div class="col-md-12 col-xs-12 col-sm-12 mgn-up-5">
             <div class="col-md-3 col-xs-6 col-sm-4 mgn-up-5">
-              <span *ngIf="selectedOrders.length > 1" class="main-act-btn pointer-cursor" (click)="showActionPopup()">
+              <span *ngIf="selectedOrders && selectedOrders.length > 1" class="main-act-btn pointer-cursor"
+                (click)="showActionPopup()">
                 Actions</span>
             </div>
             <div class="pull-right mgn-up-5">
@@ -1092,7 +1096,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card" *ngIf="providerLabels.length > 0">
+                      <div class="card" *ngIf="providerLabels && providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -1109,7 +1113,7 @@
                         </div>
                         <div id="collapseLabels2" class="collapse in" data-parent="#accordion2">
                           <div class="card-body">
-                            <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
+                            <div class="filter-checkbox-input" *ngIf="providerLabels && providerLabels.length > 0">
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                 <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
                                   (change)="setLabelFilter('all', $event)">
@@ -1332,7 +1336,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="card" *ngIf="providerLabels.length > 0">
+                      <div class="card" *ngIf="providerLabels && providerLabels.length > 0">
                         <div class="card-header">
                           <h2 class="mb-0">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
@@ -1349,7 +1353,7 @@
                         </div>
                         <div id="collapseLabels2" class="collapse in" data-parent="#accordion2">
                           <div class="card-body">
-                            <div class="filter-checkbox-input" *ngIf="providerLabels.length > 0">
+                            <div class="filter-checkbox-input" *ngIf="providerLabels && providerLabels.length > 0">
                               <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize">
                                 <mat-checkbox class="filter-checkbox" [checked]="allLabelSelected"
                                   (change)="setLabelFilter('all', $event)">
@@ -1380,10 +1384,10 @@
               </div>
             </div>
           </div>
-          <div *ngIf="historyOrders.length == 0">
+          <div *ngIf="historyOrders && historyOrders.length == 0">
             No history orders
           </div>
-          <ng-container *ngIf="historyOrders.length > 0">
+          <ng-container *ngIf="historyOrders && historyOrders.length > 0">
             <div class="card boxshadow-style pointer-cursor no-padding" *ngFor="let order of historyOrders;let i=index">
               <div (click)="gotoDetails(order)">
                 <div class="top-sec">
@@ -1460,7 +1464,7 @@
 
         </div>
         <!--  class="search_paging" -->
-        <div class="search_paging" *ngIf="historyOrders.length !== 0">
+        <div class="search_paging" *ngIf="historyOrders && historyOrders.length !== 0">
           <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
             (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
           </app-pager>
@@ -1474,7 +1478,8 @@
 
 
 
-  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist" *ngIf="catalogType && catalogType === 'submission'">
+  <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 mgn-up-20 orderlist"
+    *ngIf="catalogType && catalogType === 'submission'">
     <mat-tab-group (selectedTabChange)="tabChange_papers($event)" [selectedIndex]="selectedTab - 1">
       <mat-tab label="Total Papers ({{totalOrdersCount}})">
         <app-common-innerloading-spinner *ngIf="loadingPapers">
@@ -1482,12 +1487,12 @@
         <div class="allTabInPannel" *ngIf="!loadingPapers">
           <app-paper-details [orders]="totalOrders" (actionPerformed)="actionPerformed($event)"></app-paper-details>
         </div>
-          <!--  class="search_paging" -->
-          <div class="search_paging" *ngIf="totalOrders.length !== 0">
-            <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-              (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
-            </app-pager>
-          </div>
+        <!--  class="search_paging" -->
+        <div class="search_paging" *ngIf="totalOrders && totalOrders.length !== 0">
+          <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
+            (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+          </app-pager>
+        </div>
         <div class="clearfix"></div>
       </mat-tab>
       <mat-tab label="Completed Papers ({{totalPaperdCompletedCount}})">
@@ -1496,12 +1501,12 @@
           <app-paper-details [orders]="completedorders"></app-paper-details>
           <div class="clearfix"></div>
         </div>
-           <!--  class="search_paging" -->
-          <div class="search_paging" *ngIf="completedorders.length !== 0">
+        <!--  class="search_paging" -->
+        <div class="search_paging" *ngIf="completedorders && completedorders.length !== 0">
           <app-pager [total_pages]="pagination.totalCnt" [pagesize]="pagination.perPage"
-           (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
-            </app-pager>
-            </div>
+            (pagerclick)="handle_pageclick($event)" [curpage]="pagination.startpageval">
+          </app-pager>
+        </div>
         <div class="clearfix"></div>
       </mat-tab>
     </mat-tab-group>

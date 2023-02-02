@@ -237,7 +237,7 @@ export class UserServiceChnageComponent implements OnInit {
               }
             );
         }
-        else if(this.source == 'order'){
+        else if (this.source == 'order') {
           const post_data = {
             'uid': this.uuid,
             'provider': {
@@ -281,7 +281,7 @@ export class UserServiceChnageComponent implements OnInit {
     this.selectrow = true;
     this.selectedUser = user;
     if (this.selectrow === true && user.id) {
-      if (user.bussLocations.length > 1) {
+      if (user && user.bussLocations && user.bussLocations.length > 1) {
         this.updateUserWithLocation(user)
       }
       else {
