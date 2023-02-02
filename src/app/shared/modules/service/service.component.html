@@ -51,7 +51,7 @@
         <div class="item" *ngIf="service_data.isPrePayment">
           <span class="ttle">{{pre_pay_amt}}</span>
           <span class="rupee-font" *ngIf="service_data && service_data.prePaymentType === 'fixed'">{{service_data.minPrePaymentAmount | currency:'INR':'symbol':'.2-2'}}</span>
-          <span class="rupee-font" *ngIf="service_data && service_data.prePaymentType === 'percentage'">{{service_data.minPrePaymentAmount}}{{percentage_symbol}} of {{service_data.totalAmount | currency:'INR':'symbol':'.2-2'}}</span>
+          <span class="rupee-font" *ngIf="service_data && service_data.prePaymentType === 'percentage'">{{service_data.minPrePaymentAmount}}{{percentage_symbol}} of Service Price</span>
         </div>
         <div class="item" *ngIf="service_data.serviceType && !is_donation">
           <span class="ttle">Service Type</span>
