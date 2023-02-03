@@ -115,6 +115,7 @@ export class ViewLeadQnrComponent implements OnInit {
   counter = 0;
   errorInfo: any;
   disbaleFielInput:boolean=false;
+  leadNotes: any;
   constructor(
     private activatedRoute: ActivatedRoute,
     private crmService: CrmService,
@@ -156,6 +157,7 @@ export class ViewLeadQnrComponent implements OnInit {
       (leadInfo: any) => {
         console.log('leadInfo',leadInfo)
         _this.leadInfo = leadInfo; // Setting Lead information.
+        _this.leadNotes = _this.leadInfo.notes.sort().reverse();
         if (_this.leadInfo && _this.leadInfo.customer && this.leadInfo.customer.phoneNo) {
           _this.telephoneNumber = _this.leadInfo.customer.phoneNo;
         }
@@ -261,7 +263,8 @@ export class ViewLeadQnrComponent implements OnInit {
     this.disableField()
   }
   disableField(){
-    if(this.tempType && (this.tempType==='Loan Sanction' || this.tempType==='Rejected')){
+    if(this.tempType && (this.tempType==='Loan Sanction')){
+      //|| this.tempType==='Rejected'
       this.disbaleFielInput=true;
     }
   }
@@ -1239,6 +1242,36 @@ export class ViewLeadQnrComponent implements OnInit {
       }
     })
   }
+
+  remarksAdd(uid) {
+    const dialogRef = this.dialog.open(CrmSelectMemberComponent, {
+      width: "100%",
+      panelClass: ["popup-class", "confirmationmainclass"],
+      data: {
+        requestType: 'createUpdateNotes',
+        info: uid,
+        header: 'Add remarks',
+      }
+    })
+    dialogRef.afterClosed().subscribe((response: any) => {
+      console.log('response',response)
+      if (response) {
+        if (response && response.note !== '') {
+          this.crmService.addLeadNotes(this.leadInfo.uid, response).subscribe((response: any) => {
+            this.notes = '';
+            this.initLead();
+              this.api_loadingNotes = false;
+              this.remarksDisable = false;
+            this.snackbarService.openSnackBar('Remarks added successfully');
+          }, (error) => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          })
+        }
+      }
+    })
+  }
+
+ 
   editable(data) {
   }
   ProceedStatusLoanSanction(){

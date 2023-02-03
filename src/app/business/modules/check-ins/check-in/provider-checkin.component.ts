@@ -526,7 +526,15 @@ export class ProviderCheckinComponent implements OnInit {
         console.log('categoryvalue', this.categoryvalue);
         let tempCatValue: any;
         if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
-            tempCatValue = 'name';
+            // tempCatValue = 'name';
+            if(isNaN(name.search_input)){
+                tempCatValue = 'name';
+                console.log("name :", name);
+            }
+            else{
+                tempCatValue = 'id';
+                console.log("id :",name);
+            }
         }
         else if (this.categoryvalue && this.categoryvalue === 'Search with Email ID') {
             tempCatValue = 'emailId';

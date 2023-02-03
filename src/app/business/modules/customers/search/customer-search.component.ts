@@ -820,9 +820,16 @@ export class CustomerSearchComponent implements OnInit {
      */
     searchCustomerLucene(searchCriteria) {
         let searchBy: any;
-        console.log("Searching : ",searchCriteria);
+        console.log("Searching : ", searchCriteria);
         if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
-            searchBy = 'name';
+            if(isNaN(searchCriteria.search_input)){
+                searchBy = 'name';
+                console.log("name :", searchCriteria);
+            }
+            else{
+                searchBy = 'id';
+                console.log("id :",searchCriteria);
+            }
         }
         else if (this.categoryvalue && this.categoryvalue === 'Search with Email ID') {
             searchBy = 'emailId';
