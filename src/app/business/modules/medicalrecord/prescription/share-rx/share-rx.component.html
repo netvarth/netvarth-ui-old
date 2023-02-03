@@ -35,7 +35,7 @@
             </div>
             <div class="fieldPadding">
                 <textarea (ngModelChange)="messageBoxhandle(message.value)" rowa="10" class="form-control widthWebKit" formControlName="message" #message
-                    (keyup)="autoGrowTextZone($event)" maxlength="1000" placeholder="Enter message description">
+                    (keyup)="autoGrowTextZone($event)" maxlength="120" placeholder="Enter message description">
             </textarea>
             </div>
         </div>
