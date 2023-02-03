@@ -173,7 +173,7 @@ export class OrderConsumerComponent implements OnInit {
     }
 
     this.deviceInfo = this.deviceService.getDeviceInfo();
-    
+
     // this.mobileView = this.deviceService.isMobile() || this.deviceService.isTablet();
     // this.desktopView = this.deviceService.isDesktop();
     // this.mobileView = this.deviceService.isDesktop();
@@ -869,22 +869,26 @@ export class OrderConsumerComponent implements OnInit {
     for (const i in this.orderList) {
       if (this.orderList[i].item.itemId === item.itemId) {
         this.orderList.splice(i, 1);
-        // this.lStorageService.setitemonLocalStorage('order', this.orderList);
         break;
       }
     }
-
+    console.log("index", index)
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
     if (this.haveItemOptions(itemObj) && index && itemOptionsData) {
-      for (const i in itemOptionsData) {
-        if (this.itemOptionsData[i].itemData.itemOptionsIndex === index) {
-          this.itemOptionsData.splice(i, 1);
-          break;
+      for (let i = 0; i < itemOptionsData.length; i++) {
+        if (itemOptionsData[i] && itemOptionsData[i].itemData.itemOptionsIndex === index) {
+          let quantity = itemOptionsData[i].postData.answerLine[0].answer.dataGridList[0].dataGridListColumn;
+          for (let i = 0; i < quantity.length; i++) {
+            quantity[i].quantity = quantity[i].quantity - 1;
+            if (quantity[i].quantity == 0) {
+              itemOptionsData.splice(i, 1);
+              break;
+            }
+          }
         }
+        this.lStorageService.setitemonLocalStorage('itemOptionsData', itemOptionsData);
       }
-      this.lStorageService.setitemonLocalStorage('itemOptionsData', itemOptionsData);
     }
-
     this.getTotalItemAndPrice();
     this.getItemQty(itemObj);
     this.getNewOrderList();

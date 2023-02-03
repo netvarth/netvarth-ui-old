@@ -15,7 +15,8 @@
                     <div class="panel panel-default">
                         <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row ">
                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
-                                <app-header *ngIf="sharedfunctionObj.checkLogin()" [customId]="customId" [accountId]="accountId" [showHeaderAction]="true">
+                                <app-header *ngIf="sharedfunctionObj.checkLogin()" [customId]="customId"
+                                    [accountId]="accountId" [showHeaderAction]="true">
                                 </app-header>
                             </div>
                         </div>
@@ -175,6 +176,56 @@
                                                                                     <div class="price rupee-font">
                                                                                         {{item.netRate |
                                                                                         currency:'&#8377; '}}</div>
+                                                                                </div>
+                                                                            </div>
+
+
+                                                                            <div
+                                                                                *ngIf="item && item.serviceOptions && item.serviceOptions.length>0">
+                                                                                <div class="list-content"
+                                                                                    *ngFor="let serviceOption of item.serviceOptions">
+                                                                                    <div class="c-row one itemlist">
+                                                                                        <div class="name name-grey"
+                                                                                            *ngIf="serviceOption && serviceOption.serviceOptionName">
+                                                                                            {{serviceOption.serviceOptionName
+                                                                                            |
+                                                                                            capitalizeFirst}}
+                                                                                            {{haveItemOptions(item)}}
+                                                                                            <span
+                                                                                                [matTooltipClass]="tooltipcls"
+                                                                                                [matTooltip]="'Taxable'"
+                                                                                                *ngIf="item.GSTpercentage > 0"><sup>Tax</sup></span>
+                                                                                        </div>
+                                                                                        <div class="quantity">
+                                                                                        </div>
+                                                                                        <div class="price rupee-font"
+                                                                                            *ngIf="serviceOption && serviceOption.totalPrice">
+                                                                                            {{serviceOption.totalPrice |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
+                                                                                    <div class="c-row two section-two">
+                                                                                        <div class="discount-row two-col"
+                                                                                            *ngFor="let discount of item.discount">
+                                                                                            <div class="name">
+                                                                                                {{discount.name}}
+                                                                                            </div>
+                                                                                            <div
+                                                                                                class="price rupee-font">
+                                                                                                (-){{discount.discountValue
+                                                                                                |
+                                                                                                currency:'&#8377; '}}
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="c-row one three two-col"
+                                                                                        *ngIf="item.discount && item.discount.length > 0">
+                                                                                        <div class="name">
+                                                                                            {{sub_tot_cap}}
+                                                                                        </div>
+                                                                                        <div class="price rupee-font">
+                                                                                            {{item.netRate |
+                                                                                            currency:'&#8377; '}}</div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -434,8 +485,8 @@
                                                                 <div
                                                                     class="title-sec col-md-12 col-sm-12 col-xs-12 no-padding">
                                                                 </div>
-                                                                <div class="col-md-12 col-sm-12 col-xs-12 cc-dc-nb no-padding"
-                                                                    >
+                                                                <div
+                                                                    class="col-md-12 col-sm-12 col-xs-12 cc-dc-nb no-padding">
                                                                     <!-- <div class="clearfix"></div> -->
                                                                     <div
                                                                         *ngIf=" ((checkJcash && jcashamount < bill_data.amountDue) || (!checkJcash))">
@@ -481,7 +532,7 @@
                                                                             (click)="!isClickedOnce && payuPayment()">
                                                                             Make Payment
                                                                         </button>
-                                                                       
+
                                                                         <button
                                                                             class=" next-button btn btn-primary font-weight-bold text-uppercase mt-3"
                                                                             (click)="payuPayment()"

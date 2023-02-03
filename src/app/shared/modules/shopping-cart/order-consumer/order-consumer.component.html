@@ -171,7 +171,7 @@
                         Add&nbsp;+&nbsp;
                       </div>
                       <div *ngIf="getItemQty(item) >= 1" class=" d-flex justify-content-between">
-                        <div (click)="decrement(item)"
+                        <div (click)="decrement(item,item.itemOptionsIndex)"
                           class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding">-
                         </div>
                         <div class="item-pad bodr-btm-up item-qty">
