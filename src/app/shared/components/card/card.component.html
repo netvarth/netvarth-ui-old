@@ -385,20 +385,20 @@
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 card-timings-cont" *ngIf="cardType!='card_1'">
             <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding"
-                *ngIf="user.apptTime && user.apptTime.caption && user.apptTime.availableSchedule.availableDate === todayDate">
+                *ngIf="user.apptTime && user.apptTime.caption">
                 <div class="no-padding card-head-grey">{{user.apptTime.caption | translate}}</div>
                 <h6 class="no-padding">{{user.apptTime.date}}</h6>
             </div>
             <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding"
-                *ngIf="(!user.apptTime || (user.apptTime && (!user.apptTime.caption || user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && user.waitingTime.caption">
+                *ngIf="!user.apptTime && user.waitingTime && user.waitingTime.caption">
                 <div class="no-padding card-head-grey">{{user.waitingTime.caption | translate}}</div>
                 <h6 class="no-padding">{{user.waitingTime.date}}</h6>
             </div>
-            <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding"
+            <!-- <div class="col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding"
                 *ngIf="(!user.apptTime || ((user.apptTime.caption && user.apptTime.availableSchedule && user.apptTime.availableSchedule.availableDate !== todayDate))) && user.waitingTime && !user.waitingTime.caption">
                 <div class="no-padding card-head-grey">{{user.apptTime.caption | translate}}</div>
                 <h6 class="no-padding">{{user.apptTime.date}}</h6>
-            </div>
+            </div> -->
         </div>
         <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 no-padding">
             <button (click)="cardActionPerformed(item.type, null, null, null, user.id, $event)"
