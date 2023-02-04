@@ -538,21 +538,21 @@
             <div class="mt-2">
               <div class="btn btn-primary" (click)="viewDpnLetter()">View DPN Letter</div>
             </div>
-            <div class="mt-2 mx-1">
+            <div class="mt-2 mx-md-1">
               <div class="btn btn-primary" (click)="viewSdcLetter()">View SPDC Letter</div>
             </div>
             <div class="mt-2">
               <div class="btn btn-primary" (click)="viewconsumerAgreementLetter()">View Sanction Letter</div>
             </div>
           </div>
-          <div class="d-lg-flex mt-2">
-            <div class="text-right"
+          <div class="d-lg-flex">
+            <div class="mt-2"
               *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
               <a (click)="showLoanDetailsDoc()" target="_blank" class="btn btn-primary">
                 <span>View Loan Details Doc</span>
               </a>
             </div>
-            <div class="mx-2"
+            <div class="mx-md-2 mt-2"
               *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0] && capabilities && capabilities.canViewKycReport">
               <a (click)="showKycDoc()" target="_blank" class="btn btn-primary">
                 <span>View KYC Doc</span>

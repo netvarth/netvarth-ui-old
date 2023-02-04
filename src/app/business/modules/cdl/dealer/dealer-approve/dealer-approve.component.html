@@ -222,19 +222,20 @@
 
       <br>
 
-      <div class="card mb-2" *ngIf="capabilities && capabilities.canApprovePartner">
-        <div class="font-weight-bold">Actions</div>
-        <div class="d-flex mt-2">
-          <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveDealer(dealerData.uid)">
-            Approve
-          </div>
-
-          <div class="btn-redirect mr-2 pointer-cursor" (click)="suspendDealer(dealerData.uid)">
-            Suspend
-          </div>
-
-          <div class="btn-reject pointer-cursor" (click)="rejectDealer(dealerData.uid)">
-            Reject
+      <div *ngIf="dealerData && dealerData.spInternalStatus && dealerData.spInternalStatus != 'Rejected'">
+        <div class="card mb-2" *ngIf="capabilities && capabilities.canApprovePartner">
+          <div class="font-weight-bold">Actions</div>
+          <div class="d-flex mt-2">
+            <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveDealer(dealerData.uid)">
+              Approve
+            </div>
+            <div class="btn-redirect mr-2 pointer-cursor" (click)="suspendDealer(dealerData.uid)"
+              *ngIf="dealerData && dealerData.spInternalStatus && dealerData.spInternalStatus == 'Approved'">
+              Suspend
+            </div>
+            <div class="btn-reject pointer-cursor" (click)="rejectDealer(dealerData.uid)">
+              Reject
+            </div>
           </div>
         </div>
       </div>

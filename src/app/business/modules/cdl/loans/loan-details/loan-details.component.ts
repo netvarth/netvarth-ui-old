@@ -397,7 +397,7 @@ export class LoanDetailsComponent implements OnInit {
             if (data) {
               const navigationExtras: NavigationExtras = {
                 queryParams: {
-                  type: 'Sanctioned'
+                  type: 'OperationsVerified'
                 }
               };
               this.snackbarService.openSnackBar("Loan Verified Successfully");
