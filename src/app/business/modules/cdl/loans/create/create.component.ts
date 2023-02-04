@@ -867,6 +867,7 @@ export class CreateComponent implements OnInit {
           "isCoApplicant": false,
           "maritalStatus": this.createLoan.controls.martialstatus.value,
           "pan": this.createLoan.controls.pannumber.value,
+          "aadhaar": this.createLoan.controls.aadharnumber.value,
           "permanentAddress1": this.createLoan.controls.permanentaddress1.value,
           "permanentAddress2": this.createLoan.controls.permanentaddress2.value,
           "permanentPin": this.createLoan.controls.permanentpincode.value,
