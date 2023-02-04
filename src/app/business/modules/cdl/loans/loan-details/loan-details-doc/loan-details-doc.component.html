@@ -585,13 +585,28 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Category</b>
+                    <b>Product Category</b>
                 </div>
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.category && loanData.category.name">
-                        {{loanData.category.name}}
+                    <span *ngIf="loanData && loanData.productCategoryName">
+                        {{loanData.productCategoryName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Product Sub Category</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData && loanData.productSubCategoryName">
+                        {{loanData.productSubCategoryName}}
                     </span>
                 </div>
             </td>
@@ -653,6 +668,21 @@
                 <div class="text-normal mx-1">
                     <span *ngIf="loanData && loanData.requestedAmount">
                         {{loanData.requestedAmount}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <b>Sanctioned Amount</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData && loanData.sanctionedAmount">
+                        {{loanData.sanctionedAmount}}
                     </span>
                 </div>
             </td>

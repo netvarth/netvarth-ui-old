@@ -178,7 +178,7 @@
                           Upload File
                         </label>
                         <input #photoAttach type='file' formControlName="customerphoto"
-                          (change)="filesSelected($event,'photo')" accept=".png,.jpg,.jpeg" />
+                          (change)="filesSelected($event,'photo')" accept="image/*;capture=camera" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['photo'] && selectedFiles['photo'].files && selectedFiles['photo'].files.length > 0">
@@ -269,7 +269,7 @@
                           Upload File
                         </label>
                         <input #aadharAttach type='file' (change)="filesSelected($event, 'aadhar')"
-                          accept=".pdf,.png,.jpg,.jpeg" />
+                          accept="image/*;capture=camera" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['aadhar'] && selectedFiles['aadhar'].files && selectedFiles['aadhar'].files.length > 0">
@@ -336,7 +336,7 @@
                           Upload File
                         </label>
                         <input #panAttach type='file' formControlName="panattachment"
-                          (change)="filesSelected($event, 'pan')" accept=".pdf,.png,.jpg,.jpeg" />
+                          (change)="filesSelected($event, 'pan')" accept="image/*;capture=camera" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['pan'] && selectedFiles['pan'].files && selectedFiles['pan'].files.length > 0">
@@ -730,7 +730,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Net Montly Income <span class="text-danger">*</span></div>
+                      <div class="form-title">Net Monthly Income <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #salary [value]="salary" type="number"
@@ -1011,12 +1011,13 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Number of EMI's Paid Monthly <span class="text-danger">*</span></div>
+                      <div class="form-title">Number of Existing EMI's Paid Monthly <span class="text-danger">*</span>
+                      </div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #emicount type="number"
-                        placeholder="Enter Number of EMI Paid Monthly" class="form-control" autocomplete="off"
-                        formControlName="emicount" maxlength="1"
+                        placeholder="Enter Number of Existing EMI's Paid Monthly" class="form-control"
+                        autocomplete="off" formControlName="emicount" maxlength="1"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                     </div>
                   </div>
@@ -1445,7 +1446,7 @@
                           Upload File
                         </label>
                         <input #bankAttach type='file' formControlName="bankstatements"
-                          (change)="filesSelected($event,'bank')" accept=".pdf,.png,.jpg,.jpeg" />
+                          (change)="filesSelected($event,'bank')" accept="image/*;capture=camera" />
                       </div>
                       <div class="img-section clearfix"
                         *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">

@@ -8,7 +8,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 
 const routes: Routes = [
-  { path: '', component: AgreementComponent }
+  { path: '', component: AgreementComponent },
+  { path: 'dpn-letter', loadChildren: () => import('./dpn-letter/dpn-letter.module').then(m => m.DpnLetterModule) },
+  { path: 'spdc-letter', loadChildren: () => import('./spdc-letter/spdc-letter.module').then(m => m.SpdcLetterModule) }
 ]
 
 

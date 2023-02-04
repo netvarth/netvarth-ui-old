@@ -33,7 +33,13 @@
                                 *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>&nbsp;
                             <span
                                 *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span><br>
-                            <b>Home Branch Name & Id :</b> Thrissur & M-2134
+                            <b>Customer Mobile Number : </b><span
+                                *ngIf="loanData && loanData.customer && loanData.customer.phoneNo">{{loanData.customer.phoneNo}}</span><br>
+                            <b>Home Branch Name & Id : </b> <span
+                                *ngIf="loanData && loanData.branch && loanData.branch.branchName">{{loanData.branch.branchName}}</span>
+                            &
+                            <span
+                                *ngIf="loanData && loanData.branch && loanData.branch.branchCode">{{loanData.branch.branchCode}}</span>
                         </div>
                     </div>
                 </td>

@@ -119,7 +119,7 @@
                     Upload File
                   </label>
                   <input #photoAttach type='file' formControlName="photo" (change)="filesSelected($event,'photo')"
-                    accept=".png,.jpg,.jpeg" />
+                    accept="image/*;capture=camera" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -159,7 +159,7 @@
                     Upload File
                   </label>
                   <input #storeAttach type='file' formControlName="storephoto" (change)="filesSelected($event,'store')"
-                    accept=".png,.jpg,.jpeg" />
+                    accept="image/*;capture=camera" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -221,7 +221,7 @@
                     Upload File
                   </label>
                   <input #aadharAttach type='file' formControlName="aadharattachment"
-                    (change)="filesSelected($event,'aadhar')" />
+                    (change)="filesSelected($event,'aadhar')" accept="image/*;capture=camera" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -278,7 +278,7 @@
                     Upload File
                   </label>
                   <input #panAttach type='file' formControlName="panattachment" (change)="filesSelected($event,'pan')"
-                    accept=".pdf,.png,.jpg,.jpeg" />
+                    accept="image/*;capture=camera" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -322,7 +322,7 @@
                     Upload File
                   </label>
                   <input #chequeAttach type='file' formControlName="cheque" (change)="filesSelected($event,'cheque')"
-                    accept=".pdf,.png,.jpg,.jpeg" />
+                    accept="image/*;capture=camera" />
                 </div>
               </div>
 
@@ -443,7 +443,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">Nearest Branch</div>
+                <div class="form-title">Nearest Mafil Branch</div>
               </div>
               <div class="fieldPadding">
                 <select class="form-control" #branch formControlName="branch">
@@ -565,7 +565,7 @@
                     Upload File
                   </label>
                   <input #gstAttach type='file' formControlName="gstphoto" (change)="filesSelected($event,'gst')"
-                    accept=".pdf,.png,.jpg,.jpeg" />
+                    accept="image/*;capture=camera" />
                 </div>
               </div>
               <div class="img-section clearfix"

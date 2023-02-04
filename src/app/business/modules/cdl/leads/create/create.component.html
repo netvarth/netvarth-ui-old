@@ -113,7 +113,7 @@
                     <input (keyup)="resetErrors()" type="text" placeholder="Enter Aadhar Number" class="form-control"
                       autocomplete="off"
                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                      maxlength="12" />
+                      maxlength="12" formControlName="aadhar" />
                   </div>
                 </div>
               </div>
@@ -129,9 +129,8 @@
                 <div class="fieldPadding">
                   <div class="d-flex">
                     <input (keyup)="resetErrors()" type="text" placeholder="Enter Pan Number" class="form-control"
-                      autocomplete="off"
-                      oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                      maxlength="10" />
+                      autocomplete="off" oninput="this.value = this.value.toUpperCase()" maxlength="10"
+                      formControlName="pan" />
                   </div>
                 </div>
               </div>

@@ -43,4 +43,20 @@ export class AgreementService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  uploadDigitalSign(id, submit_data) {
+    const url = 'provider/loanapplication/verify/';
+    return this.servicemeta.httpPost(url, null);
+  }
+
+  b64toBlobforSign(b64Data) {
+    const byteString = atob(b64Data.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: 'image/jpeg' });
+  }
+
 }

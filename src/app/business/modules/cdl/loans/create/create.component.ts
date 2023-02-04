@@ -216,6 +216,12 @@ export class CreateComponent implements OnInit {
             if (this.enquireLeadData && this.enquireLeadData.customerPin) {
               this.createLoan.controls.permanentpincode.setValue(this.enquireLeadData.customerPin);
             }
+            if (this.enquireLeadData && this.enquireLeadData.aadhaar) {
+              this.createLoan.controls.aadharnumber.setValue(this.enquireLeadData.aadhaar);
+            }
+            if (this.enquireLeadData && this.enquireLeadData.pan) {
+              this.createLoan.controls.pannumber.setValue(this.enquireLeadData.pan);
+            }
           });
         }
       }
@@ -837,25 +843,6 @@ export class CreateComponent implements OnInit {
 
   saveAsLead() {
 
-
-    // if (this.addresscheck) {
-    //   this.createLoan.controls.currentaddress1.setValue(this.createLoan.controls.permanentAddress1.value);
-    //   this.createLoan.controls.currentaddress2.setValue(this.createLoan.controls.permanentAddress2.value);
-    //   this.createLoan.controls.currentcity.setValue(this.createLoan.controls.permanentCity.value);
-    //   this.createLoan.controls.currentstate.setValue(this.createLoan.controls.permanentState.value);
-    //   this.createLoan.controls.currentpincode.setValue(this.createLoan.controls.permanentPin.value);
-    // }
-    // if (this.createLoan.controls.name.value) {
-    //   let nameVal = this.createLoan.controls.name.value;
-    //   const name = nameVal.split(" ");
-    //   this.firstName = name[0];
-    //   if (name[1]) {
-    //     this.lastName = name[1];
-    //   }
-    //   else {
-    //     this.lastName = "";
-    //   }
-    // }
     this.loanApplication = {
       "customer": {
         "firstName": this.createLoan.controls.firstname.value,
@@ -866,13 +853,6 @@ export class CreateComponent implements OnInit {
         "gender": this.createLoan.controls.gender.value,
         "countryCode": "+91"
       },
-      "type": { "id": this.createLoan.controls.loantype.value },
-      "loanProducts": this.loanProductsSelected,
-      "category": { "id": this.createLoan.controls.category.value },
-      "productCategoryId": this.createLoan.controls.productcategory.value,
-      "productSubCategoryId": this.createLoan.controls.productsubcategory.value,
-      "location": { "id": this.user.bussLocs[0] },
-      "partner": { "id": this.createLoan.controls.dealer.value },
       "locationArea": this.createLoan.controls.permanentcity.value,
       "invoiceAmount": this.createLoan.controls.totalpayment.value,
       "downpaymentAmount": this.createLoan.controls.downpayment.value,
@@ -925,6 +905,48 @@ export class CreateComponent implements OnInit {
         }
       ]
     }
+
+    if (this.createLoan.controls.loantype.value) {
+      this.loanApplication["type"] = { "id": this.createLoan.controls.loantype.value }
+    }
+
+    if (this.loanProductsSelected) {
+      this.loanApplication["loanProducts"] = this.loanProductsSelected
+    }
+
+    if (this.createLoan.controls.category.value) {
+      this.loanApplication["category"] = { "id": this.createLoan.controls.category.value }
+    }
+
+    if (this.createLoan.controls.productcategory.value) {
+      this.loanApplication["productCategoryId"] = { "id": this.createLoan.controls.productcategory.value }
+    }
+
+    if (this.createLoan.controls.productcategory.value) {
+      this.loanApplication["productSubCategoryId"] = { "id": this.createLoan.controls.productcategory.value }
+    }
+
+    if (this.user.bussLocs[0]) {
+      this.loanApplication["location"] = { "id": this.user.bussLocs[0] }
+    }
+
+    if (this.createLoan.controls.dealer.value) {
+      this.loanApplication["partner"] = { "id": this.createLoan.controls.dealer.value }
+    }
+
+
+    Object.keys(this.loanApplication).forEach(key => {
+      if (this.loanApplication[key] === null || this.loanApplication[key] === undefined) {
+        delete this.loanApplication[key];
+      }
+    });
+
+
+    Object.keys(this.loanApplication.loanApplicationKycList[0]).forEach(key => {
+      if (this.loanApplication.loanApplicationKycList[0][key] === null || this.loanApplication.loanApplicationKycList[0][key] === undefined) {
+        delete this.loanApplication.loanApplicationKycList[0][key];
+      }
+    });
 
 
     if (this.loanApplication) {

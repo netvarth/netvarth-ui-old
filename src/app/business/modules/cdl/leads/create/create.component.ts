@@ -80,6 +80,12 @@ export class CreateComponent implements OnInit {
           if (this.enquireLeadData && this.enquireLeadData.customerPin) {
             this.createLead.controls.permanentpincode.setValue(this.enquireLeadData.customerPin);
           }
+          if (this.enquireLeadData && this.enquireLeadData.aadhaar) {
+            this.createLead.controls.aadhar.setValue(this.enquireLeadData.aadhaar);
+          }
+          if (this.enquireLeadData && this.enquireLeadData.pan) {
+            this.createLead.controls.pan.setValue(this.enquireLeadData.pan);
+          }
         });
       }
     });
@@ -91,7 +97,9 @@ export class CreateComponent implements OnInit {
       permanentcity: [null],
       permanentstate: [null],
       permanentpincode: [null],
-      loanamount: [null]
+      loanamount: [null],
+      aadhar: [null],
+      pan: [null]
     });
   }
 
@@ -139,6 +147,8 @@ export class CreateComponent implements OnInit {
               "category": { "id": this.categoryId },
               "customer": { "id": customerId },
               "customerCity": this.createLead.controls.permanentcity.value,
+              "aadhaar": this.createLead.controls.aadhar.value,
+              "pan": this.createLead.controls.pan.value,
               "customerState": this.createLead.controls.permanentstate.value,
               "customerPin": this.createLead.controls.permanentpincode.value,
               "location": { "id": this.user.bussLocs[0] },

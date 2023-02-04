@@ -1,0 +1,26 @@
+<div class="m-2">
+    <div class="d-flex justify-content-between">
+        <div>
+            <span class="dialog-heading">Draw Your signature</span>
+        </div>
+        <div class="pointer-cursor" (click)="close()">
+            <i class="fa fa-times"></i>
+        </div>
+    </div>
+    <div class="mt-2">
+        <div class="border-light">
+            <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"></signature-pad>
+        </div>
+        <div class="text-center mt-2">
+            <div class="caveClrBtn">
+                <a class="btn btn-primary font-weight-bold cancelBtn" (click)="clearSign()">
+                    <i class="fa fa-trash" aria-hidden="true"></i><span class="ml-1">Clear</span></a>
+                <a class="btn btn-primary font-weight-bold confirmBtn mx-3" (click)="drawComplete()">
+                    <i class="fa fa-save"></i><span class="ml-1">Save</span></a>
+                <a class="undoBtn btn btn-primary font-weight-bold" (click)="undoSignature()"> <i class="fa fa-undo"
+                        aria-hidden="true">
+                    </i><span class="ml-1">Undo</span></a>
+            </div>
+        </div>
+    </div>
+</div>
