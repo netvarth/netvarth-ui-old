@@ -61,7 +61,8 @@
                         <label class="label text-dark font-weight-bold">{{data.label}}2
                           <span class="red" *ngIf="data.mandatory">*</span>
                         </label><br>
-                        <div *ngIf="data.listPropertie.maxAnswerable && data.listPropertie.maxAnswerable === 1">
+                        <div
+                          *ngIf="(data.listPropertie.maxAnswerable && data.listPropertie.maxAnswerable === 1) || !data.listPropertie.maxAnswerable">
                           <label class="checkbox border-radio" *ngFor="let value of data.listPropertie.values">
                             <input type="radio" name="{{data.columnId}}"
                               (change)="listChange($event, value, getQuestion(question), data)"
