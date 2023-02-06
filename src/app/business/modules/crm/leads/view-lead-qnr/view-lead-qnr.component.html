@@ -25,25 +25,23 @@
         </div>
       </div>
       <div *ngIf="leadInfo && (leadInfo.status.name === 'KYC Updated' || tempType === 'Rejected')"
-      style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
-      <div style="text-align: center;">
-        <ng-container>
-          <div>
-            <button type="button"
-              class="btn btn-primary font-weight-bold confirmBtnRemarks"
-               (click)="remarksAdd(leadUID)">Add
-              Remarks</button>
-          </div>
-        </ng-container>
+        style="display: flex;justify-content: flex-end;align-items: center;margin-right: 10px;margin-bottom: 10px;">
+        <div style="text-align: center;">
+          <ng-container>
+            <div>
+              <button type="button" class="btn btn-primary font-weight-bold confirmBtnRemarks"
+                (click)="remarksAdd(leadUID)">Add
+                Remarks</button>
+            </div>
+          </ng-container>
+        </div>
       </div>
-    </div>
       <!-- <div>
         <span (click)="noteView(leadInfo)" class="pointer-cursor fa fa-external-link"></span>
       </div> -->
     </div>
-  
-    <div id="myDiv" class="my-2 heightlimitSalesVerified"
-      *ngIf="(leadNotes &&  leadNotes.length>0)">
+
+    <div id="myDiv" class="my-2 heightlimitSalesVerified" *ngIf="(leadNotes &&  leadNotes.length>0)">
       <div>
         <div *ngFor="let note of leadNotes;let i=index" class="allNotesList">
           <div class="notesListSection" *ngIf="note.note">
@@ -73,36 +71,42 @@
       </div>
     </div>
     <div id="myDiv" class="my-2 heightlimitSalesVerified"
-    *ngIf="(leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0)">
-    <div>
-      <div *ngFor="let note of leadInfo.redirectNotes;let i=index" class="allNotesList">
-        <div class="notesListSection" *ngIf="note.note">
-          {{note.note}}
-        </div>
-        <div class="notesListSection" style="gap:0.5px;justify-content:flex-start !important">
-          <div *ngIf="note.createdDate">({{note.createdDate.slice(0,2) }}</div>
-          <div *ngFor="let month of monthName">
-            <div *ngIf="month.count===note.createdDate.slice(3,5)">
-              {{month.monthName}},
+      *ngIf="(leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0)">
+      <div>
+        <div *ngFor="let note of leadInfo.redirectNotes;let i=index" class="allNotesList">
+          <div class="notesListSection" *ngIf="note.note">
+            {{note.note}}
+          </div>
+          <div class="notesListSection" style="gap:0.5px;justify-content:flex-start !important">
+            <div *ngIf="note.createdDate">({{note.createdDate.slice(0,2) }}</div>
+            <div *ngFor="let month of monthName">
+              <div *ngIf="month.count===note.createdDate.slice(3,5)">
+                {{month.monthName}},
+              </div>
+            </div>
+            <div *ngIf="note.createdDate && note.createdDate.slice(11,13)<12">
+              {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am )
+            </div>
+            <div *ngIf="note.createdDate && note.createdDate.slice(11,13)===12">
+              {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm )
+            </div>
+            <div *ngIf="note.createdDate && note.createdDate.slice(11,13)>12">
+              {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
             </div>
           </div>
-          <div *ngIf="note.createdDate && note.createdDate.slice(11,13)<12">
-            {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} am )
+          <div class="notesListSection" *ngIf="note && note.createdByName">
+            By {{note.createdByName}}
           </div>
-          <div *ngIf="note.createdDate && note.createdDate.slice(11,13)===12">
-            {{note.createdDate.slice(11,13)}} : {{note.createdDate.slice(14,16)}} pm )
-          </div>
-          <div *ngIf="note.createdDate && note.createdDate.slice(11,13)>12">
-            {{note.createdDate.slice(11,13)-12}} : {{note.createdDate.slice(14,16)}} pm )
-          </div>
-        </div>
-        <div class="notesListSection" *ngIf="note && note.createdByName">
-          By {{note.createdByName}}
         </div>
       </div>
-    </div>
 
-  </div>
+    </div>
+    <div id="myDiv" class="my-2heightlimitSalesVerified label"
+      *ngIf="(leadNotes &&  leadNotes.length == 0) && (leadInfo.redirectNotes && leadInfo.redirectNotes.length == 0)">
+      <div class="notesListSection ml-2">
+        No Remarks Added
+      </div>
+    </div>
   </div>
 </section>
 
@@ -258,7 +262,7 @@
       </div>
     </div>
   </ng-container>
-  
+
   <ng-container *ngIf="leadInfo.status.name==='Login'">
     <ng-container *ngFor="let applicant of applicants; let i=index">
       <app-applicant [kycCreated]="leadInfo.kycCreated" [applicantId]="applicant" [parentId]="leadInfo.uid"
@@ -494,7 +498,7 @@
     </div>
   </div>
 </ng-container> -->
-<!-- <ng-container class="remarksSection" *ngIf="!leadInfo.isRejected && leadInfo.status.name === 'KYC Updated' && (leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0)">
+  <!-- <ng-container class="remarksSection" *ngIf="!leadInfo.isRejected && leadInfo.status.name === 'KYC Updated' && (leadInfo.redirectNotes &&  leadInfo.redirectNotes.length>0)">
   <div style="margin-top:10px;margin-bottom: 10px;">
     <div class="textareaStart">
       <div class="fiesWithIcon">
