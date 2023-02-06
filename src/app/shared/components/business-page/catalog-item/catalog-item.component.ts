@@ -173,7 +173,7 @@ export class CatalogItemComponent implements OnInit {
                   _this.setItemDetails(_this.catalogId, _this.itemId, _this.accountId);
                 }
               }, () => {
-                _this.setItemDetails(this.catalogId, _this.itemId, _this.accountId);
+                _this.setItemDetails(_this.catalogId, _this.itemId, _this.accountId);
               })
           }
         )
