@@ -1,11 +1,11 @@
 <section class="content bus-page item-details-consumer" [ngClass]="accountProperties?accountProperties['theme']:''">
-    <div class="panel panel-default" *ngIf="loading || homeView === 'paper_submission'" class="full-height">
+    <div class="panel panel-default" *ngIf="loading || homeView==='paper_submission'" class="full-height">
         <div class="child">
             <app-common-innerloading-spinner>
             </app-common-innerloading-spinner>
         </div>
     </div>
-    <div class="container" *ngIf="businessProfile && !loading && homeView !== 'paper_submission'">
+    <div class="container" *ngIf="businessProfile && !loading && homeView!=='paper_submission'">
         <div class="row pad-bt-10 bus-page-header">
             <div class="panel panel-default">
                 <div class="panel-heading col-xs-12 col-sm-12 co-md-12 col-lg-12 no-padding top-row">
