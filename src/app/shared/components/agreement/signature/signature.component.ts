@@ -13,12 +13,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 export class SignatureComponent implements OnInit {
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
   signaturePadOptions: Object = {
-    'minWidth': 5,
+    'minWidth': 2,
     'canvasWidth': 500,
     'canvasHeight': 300
   };
   selectedColor: any;
   sign: boolean;
+  loanId: any;
+  loanKycId: any;
 
   constructor(
     private agreementService: AgreementService,
@@ -28,7 +30,12 @@ export class SignatureComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    if (this.data && this.data.uId) {
+      this.loanId = this.data.uId;
+    }
+    if (this.data && this.data.kycId) {
+      this.loanKycId = this.data.kycId;
+    }
   }
 
   ngAfterViewInit() {
@@ -53,8 +60,8 @@ export class SignatureComponent implements OnInit {
     };
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
-    if (submit_data) {
-      this.uploadDigitalsign(123, submit_data);
+    if (submit_data && this.loanId && this.loanKycId) {
+      this.uploadDigitalsign(this.loanId, this.loanKycId, submit_data);
     }
   }
 
@@ -85,16 +92,15 @@ export class SignatureComponent implements OnInit {
     this.signaturePad.clear();
   }
 
-  uploadDigitalsign(id, submit_data) {
-    console.log(id, submit_data)
-    // this.agreementService.uploadDigitalSign(id, submit_data)
-    //   .subscribe((data) => {
-    this.snackbarService.openSnackBar('Digital sign uploaded successfully');
-    //     this.signatureRef.close(data);
-    //   },
-    //     (error: any) => {
-    //       this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-    //     });
+  uploadDigitalsign(uId, kycId, submit_data) {
+    this.agreementService.uploadDigitalSign(uId, kycId, submit_data)
+      .subscribe((data) => {
+        this.snackbarService.openSnackBar('Digital sign uploaded successfully');
+        this.signatureRef.close(data);
+      },
+        (error: any) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+        });
   }
 
 

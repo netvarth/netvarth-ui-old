@@ -43,9 +43,9 @@ export class AgreementService {
     return this.servicemeta.httpGet(url, null);
   }
 
-  uploadDigitalSign(id, submit_data) {
-    const url = 'provider/loanapplication/verify/';
-    return this.servicemeta.httpPost(url, null);
+  uploadDigitalSign(Uid, KycId, submit_data) {
+    const url = 'provider/loanapplication/' + Uid + '/kyc/' + KycId + '/digitalsign';
+    return this.servicemeta.httpPost(url, submit_data);
   }
 
   b64toBlobforSign(b64Data) {

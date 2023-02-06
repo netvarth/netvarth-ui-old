@@ -23,6 +23,7 @@ export class DpnLetterComponent implements OnInit {
   loanId: any;
   loanData: any;
   accountId: any;
+  loanKycId: any;
 
 
   constructor(
@@ -45,6 +46,8 @@ export class DpnLetterComponent implements OnInit {
           if (this.loanId && this.accountId) {
             this.agreementService.getLoanFromOutside(this.loanId, this.accountId).subscribe((data: any) => {
               this.loanData = data;
+              this.loanKycId = this.loanData.loanApplicationKycList[0].id;
+              console.log("this.loanKycId", this.loanKycId)
               if (this.loanData.spInternalStatus == 'kjkjk') {
                 this.snackbarService.openSnackBar("Link Expired or Invalid");
                 this.router.navigate(['/']);
@@ -82,7 +85,8 @@ export class DpnLetterComponent implements OnInit {
       panelClass: ['popup-class'],
       disableClose: true,
       data: {
-
+        "uId": this.loanId,
+        "kycId": this.loanKycId
       }
     });
     uploadmanualsignatureRef.afterClosed().subscribe((res) => {
