@@ -1794,49 +1794,44 @@
 
             <div>
               <div *ngIf="cartDetails">
-                <div *ngFor="let item of cartDetails.orderItems;let i=index">
+                <div *ngFor="let item of newOrderList;let i=index">
                   <div class="card item-card shadow-lg mt-3">
                     <div class="d-flex justify-content-between">
                       <div class="d-flex">
                         <div class="cart">
                           <div>
-                            <img *ngIf="item.itemImages && item.itemImages[0] && item.itemImages[0].thumbUrl"
-                              src="{{item.itemImages[0].thumbUrl}}" class="item-image-mobile" width="100" height="100">
-                            <img *ngIf="!item.itemImages || !item.itemImages[0] || !item.itemImages[0].thumbUrl"
-                              src="../../../../assets/images/order/Items.svg" class="item-image-mobile" width="100"
-                              height="100">
+                            <img
+                              *ngIf="item && item.item && item.item.itemImages && item.item.itemImages[0] && item.item.itemImages[0].thumbUrl"
+                              src="{{item.item.itemImages[0].thumbUrl}}" class="item-image" width="70" height="70">
+                            <img
+                              *ngIf="!item && !item.item && !item.item.itemImages || !item.item.itemImages[0] || !item.item.itemImages[0].thumbUrl"
+                              src="../../../../assets/images/order/Items.svg" class="item-image-mobile" width="70"
+                              height="70">
                           </div>
                         </div>
 
                         <div class="ml-3">
-                          <span class="font-weight-bold item-name-mobile" *ngIf="item.name">{{item.name}}</span><br>
-                          <span class="text-red item-name-mobile" *ngIf="item.totalPrice"><i
-                              class=" fa fa-inr"></i>&nbsp;{{item.totalPrice}}</span>
-                          <!-- <div *ngIf="item.quantity>0">
-                            <span class="add_nte" (click)="addNotes(item,i)">
-                              {{item.consumerNote ? 'Edit Note':'Add Note'}}
-                            </span> &nbsp;
-                            <span [matTooltip]="'Delete'" (click)="deleteNotes(item,i)">
-                              <i *ngIf="item.consumerNote" class="fa fa-trash"></i>
-                            </span>
-                          </div> -->
+                          <span class="font-weight-bold item-name-mobile"
+                            *ngIf="item && item.item && item.item.displayName">{{item.item.displayName}}</span><br>
+                          <span class="text-red item-name-mobile" *ngIf="item"><i
+                              class=" fa fa-inr"></i>&nbsp;{{getItemPrice(item,item.itemOptionsIndex)}}</span><br>
+                          <span class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding pointer-none">
+                            Qty : {{getItemQty(item,item.itemOptionsIndex)}}
+                          </span>
                         </div>
-                        <div class="d-flex">
+
+                        <!-- <div class="d-flex">
                           <div class="cart-btn-mobile">
                             <div *ngIf=" item.quantity===0" (click)="increment(item)"
                               class="cusr-pointer pointer-cursor text-center">
                               Add&nbsp;+&nbsp;
                             </div>
-                            <div *ngIf="item.quantity >= 1">
-                              <div
-                                class="item-pad bodr-lft bodr-btm-up item-qty pointer-cursor item-padding pointer-none">
-                                Qty : {{item.quantity}}
-                              </div>
-                              <!-- <div class="cusr-pointer item-qty pointer-cursor item-padding pointer-none shaded">+
-                              </div> -->
+                            <div>
+                              
+
                             </div>
                           </div>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -2180,8 +2175,7 @@
                               <div class="">
                                 <div class="disp-flex width-100 amount-details">
                                   <div class="bill-labels">Item Total</div>
-                                  <div class="price item-price rupee-font"> {{cartDetails.itemTotal |
-                                    currency:'&#8377;'}}
+                                  <div class="price item-price rupee-font"> {{getitemTotalPrice() | currency:'&#8377;'}}
                                   </div>
                                 </div>
                                 <div class="disp-flex width-100 amount-details" *ngIf="cartDetails.taxAmount">
@@ -2222,7 +2216,7 @@
                                 <div class="card-heading mgn-up-10"></div>
                                 <div class="disp-flex width-100 amount-details to-pay mgn-up-10">
                                   <div class="bill-labels">TO PAY</div>
-                                  <div class="price rupee-font">{{cartDetails.netTotal| currency:'&#8377;'}}
+                                  <div class="price rupee-font">{{getNetTotal() | currency:'&#8377;'}}
                                   </div>
                                 </div>
 

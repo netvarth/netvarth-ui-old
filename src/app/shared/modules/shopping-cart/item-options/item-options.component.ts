@@ -83,7 +83,12 @@ export class ItemOptionsComponent implements OnInit {
     }
 
     if (this.type == 'repeat') {
-      this.config.width = '50%';
+      if (window.innerWidth >= 500) {
+        this.config.width = '60%';
+      }
+      else {
+        this.config.width = '90%';
+      }
       this.config.header = "Repeat Last Customization";
       if (this.config && this.config.data && this.config.data.data && this.config.data.lastCustomization) {
         this.lastCustomization = this.config.data.lastCustomization;

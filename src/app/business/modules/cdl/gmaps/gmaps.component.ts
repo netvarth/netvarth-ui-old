@@ -9,7 +9,7 @@ import { CdlService } from '../cdl.service';
 })
 export class GmapsComponent implements OnInit {
   options: any;
-  map: google.maps.Map;
+map: google.maps.Map;
   overlays: google.maps.Marker[];
   selectedPosition: any;
   latitude: any = 10.5276;

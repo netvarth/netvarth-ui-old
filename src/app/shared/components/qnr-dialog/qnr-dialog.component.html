@@ -396,7 +396,7 @@
         <hr>
       </div>
       <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
-      <div class="d-flex flex-column-fluid width-100">
+      <div class="d-flex flex-column-fluid">
         <div class="col-xl-12 force_center" [class.no-padding]="uuid">
           <div class="">
             <div class="qnrsec">
@@ -404,10 +404,10 @@
                 <div class="border-radio m-0">
                   <div class="d-flex justify-content-between">
                     <div>
-                      <h6 class="mb-0">{{item.item}}</h6>
+                      <h6 class="mb-0 text-mobile">{{item.item}}</h6>
                     </div>
                     <div>
-                      <h6 class="mb-0"><i class="fa fa-inr"></i> {{item.price}} /-</h6>
+                      <h6 class="mb-0 text-mobile"><i class="fa fa-inr"></i> {{item.price}} /-</h6>
                     </div>
                   </div>
                 </div><br>

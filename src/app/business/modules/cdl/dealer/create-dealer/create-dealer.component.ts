@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -9,9 +9,11 @@ import { SnackbarService } from '../../../../../shared/services/snackbar.service
 import { FileService } from '../../../../../shared/services/file-service';
 import { WordProcessor } from '../../../../../shared/services/word-processor.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
-import { GmapsComponent } from '../../gmaps/gmaps.component';
+// import { GmapsComponent } from '../../gmaps/gmaps.component';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { GoogleMapComponent } from '../../googlemap/googlemap.component';
 
 @Component({
   selector: 'app-create-dealer',
@@ -81,7 +83,11 @@ export class CreateDealerComponent implements OnInit {
   mapAddress: any;
   filteredOptions: Observable<string[]>;
   banksListNames = new FormControl('');
+  filteredBranchOptions: Observable<string[]>;
+  branchListNames = new FormControl('');
   bankListName: any;
+  selectedBranch: any;
+  @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent>
   constructor(
     private location: Location,
     private router: Router,
@@ -261,6 +267,11 @@ export class CreateDealerComponent implements OnInit {
     this.filteredOptions = this.banksListNames.valueChanges.pipe(startWith(''),
       map(value => this._filter(value || '')),
     );
+
+
+    this.filteredBranchOptions = this.branchListNames.valueChanges.pipe(startWith(''),
+      map(value => this._branchFilter(value || '')),
+    );
   }
 
   resetErrors() {
@@ -280,6 +291,12 @@ export class CreateDealerComponent implements OnInit {
     return this.banksList.filter(option => option.bankName.toLowerCase().includes(filterValue));
   }
 
+  private _branchFilter(value: string): string[] {
+    console.log("value", value)
+    const filterValue = value.toLowerCase();
+    return this.branches.filter(option => option.branchName.toLowerCase().includes(filterValue));
+  }
+
 
   getBranches() {
     let api_filter = {}
@@ -295,6 +312,11 @@ export class CreateDealerComponent implements OnInit {
   }
 
 
+  getBranchName(id, name) {
+    this.selectedBranch = id;
+    return name;
+    // return this.branches.find(branch => branch.id === id).branchName;
+  }
 
   idVerification(type) {
     if (!this.verification) {
@@ -534,7 +556,7 @@ export class CreateDealerComponent implements OnInit {
     if (this.mapAddress) {
       data['address'] = this.mapAddress
     }
-    const dialogRef = this.dialog.open(GmapsComponent, {
+    const dialogRef = this.dialog.open(GoogleMapComponent, {
       width: '50%',
       panelClass: 'googlemainmappopup',
       disableClose: true,
@@ -543,17 +565,23 @@ export class CreateDealerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (result.latitude) {
-          this.latitude = result.latitude
+        console.log("result", result)
+        if (result.map_point && result.map_point.latitude) {
+          this.latitude = result.map_point.latitude;
         }
-        if (result.longitude) {
-          this.longitude = result.longitude
+        if (result.map_point && result.map_point.longitude) {
+          this.longitude = result.map_point.longitude;
         }
         if (result.address) {
-          this.mapAddress = result.address
+          this.mapAddress = result.address;
         }
       }
     });
+  }
+
+  displayFn(branch) {
+    this.selectedBranch = branch.id;
+    return branch ? branch.branchName : undefined;
   }
 
 

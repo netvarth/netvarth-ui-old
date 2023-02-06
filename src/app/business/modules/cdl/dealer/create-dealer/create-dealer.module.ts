@@ -13,6 +13,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { GmapsModule } from '../../gmaps/gmaps.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { GooglemapModule } from '../../googlemap/googlemap.module';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 const routes: Routes = [
@@ -45,6 +47,8 @@ const routes: Routes = [
     FormsModule,
     DropdownModule,
     MatIconModule,
+    GooglemapModule,
+    NgxMatSelectSearchModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
