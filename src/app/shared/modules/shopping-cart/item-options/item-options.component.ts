@@ -150,7 +150,7 @@ export class ItemOptionsComponent implements OnInit {
 
         this.getPriceValue(this.labels[0].question.dataGridListProperties.dataGridListColumns[0].listPropertie, this.answers[0])
         this.saveAnswers(this.labels[0], this.labels[0].question.dataGridListProperties.dataGridListColumns[0], 0, this.answers[0])
-        this.totalPrice = this.itemPrice
+        this.totalPrice = this.itemPrice + Number(this.getPriceValue(this.labels[0].question.dataGridListProperties.dataGridListColumns[0].listPropertie, this.answers[0]))
       }
 
 

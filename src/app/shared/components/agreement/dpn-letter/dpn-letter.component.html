@@ -13,7 +13,7 @@
 <div class="container">
     <div id="printMe">
         <div class="card p-5">
-            <div class="row">
+            <div>
                 <div>
                     <div class="d-flex justify-content-end">
                         <div>
@@ -46,13 +46,13 @@
                                     *ngIf="loanData && loanData.loanApplicationKycList[0].permanentPin">{{loanData.loanApplicationKycList[0].permanentPin}}</span>
                             </b>
                             and (Name of Co-Applicant / Guarantor If applicable)
-                            <b>Krishna Ps</b>
+                            <b>N/A</b>
                             (Co-Applicant / Guarantor Address)
-                            <b>Kodakara,Kerala,680684</b>
+                            <b>N/A</b>
                             jointly and severally promise to pay to MANAPPURAM FINANCE LIMITED (“Lender”) or order the
                             sum of
-                            <b><span *ngIf="loanData && loanData.requestedAmount">
-                                    Rs {{loanData.requestedAmount}}/-
+                            <b><span *ngIf="loanData && loanData.sanctionedAmount">
+                                    Rs {{loanData.sanctionedAmount}}/-
                                 </span></b> (Rupees only) for value
                             received, together with interest from the date hereof, at <b><span
                                     *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
@@ -68,7 +68,19 @@
                     <div class="mt-4">
                         <div class="d-flex justify-content-end">
                             <div class="mr-2 my-auto py-auto">
+                                <div class="text-center">
+                                    <img *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url"
+                                        [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
+                                        width="100px"><br>
+                                </div>
+                                <div class="text-center"
+                                    *ngIf="!loanData.loanApplicationKycList || !loanData.loanApplicationKycList[0] || !loanData.loanApplicationKycList[0].digitalSignature || !loanData.loanApplicationKycList[0].digitalSignature.url">
+                                    <button class="btn btn-primary" (click)="manualSignature()">Sign</button>
+                                </div>
                                 <span>Applicant Signature</span><br><br>
+                                <div class="text-center font-weight-bold">
+                                    <span>N/A</span>
+                                </div>
                                 <span>Co-Applicant / Guarantor Signature</span>
                             </div>
                             <div class="border-rectangle">
@@ -84,15 +96,24 @@
                     <div class="mt-4">
                         <div class="d-md-flex justify-content-between">
                             <div class="mt-4">
-                                <span>Applicant Signature : </span><br>
+                                <div class="text-center"
+                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
+                                    <img [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
+                                        width="100px"><br>
+                                </div>
+
+                                <span>Applicant Signature</span><br>
                                 <span class="mt-4">Applicant Name : <b><span
                                             *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
                                         &nbsp;<span
                                             *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b></span>
                             </div>
                             <div class="mt-4">
-                                <span>Co-Applicant / Guarantor Signature : </span><br>
-                                <span class="mt-4">Co-Applicant / Guarantor Name : <b>Krishna Ps</b></span>
+                                <div class="text-center font-weight-bold">
+                                    <span>N/A</span>
+                                </div>
+                                <span>Co-Applicant / Guarantor Signature</span><br>
+                                <span class="mt-4">Co-Applicant / Guarantor Name : <b><span>N/A</span></b></span>
                             </div>
                         </div>
                     </div>
@@ -116,9 +137,4 @@
             </div>
         </div>
     </div>
-</div>
-
-
-<div>
-    <button class="manualSignBtn" (click)="manualSignature()">Create Digital Signature Manually</button>
 </div>

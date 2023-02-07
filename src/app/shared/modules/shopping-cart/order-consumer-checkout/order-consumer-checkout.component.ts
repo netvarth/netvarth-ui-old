@@ -1702,6 +1702,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
 
   getItemPrice(item, index) {
+    console.log("Coming Here")
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
     if (this.haveItemOptions(item) && itemOptionsData && index) {
       for (let i = 0; i < itemOptionsData.length; i++) {

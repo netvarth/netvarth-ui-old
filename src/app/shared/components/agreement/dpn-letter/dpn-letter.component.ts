@@ -30,29 +30,22 @@ export class DpnLetterComponent implements OnInit {
     private dialog: MatDialog,
     public dialogRef: MatDialogRef<DpnLetterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private ActivatedRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private location: Location,
     private agreementService: AgreementService,
     private snackbarService: SnackbarService,
     private router: Router
   ) {
-    this.ActivatedRoute.queryParams.subscribe((params) => {
+    this.activatedRoute.queryParams.subscribe((params) => {
+      console.log("params", params)
       if (params) {
         if (params && params.uid) {
           this.loanId = params.uid;
           if (params && params.account) {
             this.accountId = params.account;
-          }
-          if (this.loanId && this.accountId) {
-            this.agreementService.getLoanFromOutside(this.loanId, this.accountId).subscribe((data: any) => {
-              this.loanData = data;
-              this.loanKycId = this.loanData.loanApplicationKycList[0].id;
-              console.log("this.loanKycId", this.loanKycId)
-              if (this.loanData.spInternalStatus == 'kjkjk') {
-                this.snackbarService.openSnackBar("Link Expired or Invalid");
-                this.router.navigate(['/']);
-              }
-            });
+            if (this.loanId && this.accountId) {
+              this.getloanDetails(this.loanId, this.accountId)
+            }
           }
         }
       }
@@ -61,6 +54,18 @@ export class DpnLetterComponent implements OnInit {
 
   ngOnInit(): void {
     // this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+  }
+
+  getloanDetails(loanId, accountId) {
+    this.agreementService.getLoanFromOutside(loanId, accountId).subscribe((data: any) => {
+      this.loanData = data;
+      this.loanKycId = this.loanData.loanApplicationKycList[0].id;
+      console.log("this.loanKycId", this.loanKycId)
+      if (this.loanData.spInternalStatus == 'kjkjk') {
+        this.snackbarService.openSnackBar("Link Expired or Invalid");
+        this.router.navigate(['/']);
+      }
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -86,11 +91,14 @@ export class DpnLetterComponent implements OnInit {
       disableClose: true,
       data: {
         "uId": this.loanId,
-        "kycId": this.loanKycId
+        "kycId": this.loanKycId,
+        "account": this.accountId
       }
     });
     uploadmanualsignatureRef.afterClosed().subscribe((res) => {
-
+      if (res) {
+        this.getloanDetails(this.loanId, this.accountId)
+      }
     }
     );
   }

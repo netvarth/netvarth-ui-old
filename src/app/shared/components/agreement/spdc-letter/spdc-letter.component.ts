@@ -1,9 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, HostListener, Inject, OnInit } from '@angular/core';
 import { GroupStorageService } from '../../../../shared/services/group-storage.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { AgreementService } from '../agreement.service';
+import { SignatureComponent } from '../signature/signature.component';
+import { SnackbarService } from '../../../../shared/services/snackbar.service';
 
 @Component({
   selector: 'app-spdc-letter',
@@ -21,13 +23,19 @@ export class SpdcLetterComponent implements OnInit {
   loanData: any;
   accountId: any;
   source: any;
+  screenHeight: string;
+  screenWidth: string;
+  loanKycId: any;
   constructor(
     public dialogRef: MatDialogRef<SpdcLetterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private groupService: GroupStorageService,
     private ActivatedRoute: ActivatedRoute,
     private location: Location,
-    private agreementService: AgreementService
+    private agreementService: AgreementService,
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService,
+    private router: Router
   ) {
     this.ActivatedRoute.params.subscribe((params) => {
       if (params) {
@@ -37,11 +45,11 @@ export class SpdcLetterComponent implements OnInit {
         if (params && params.type) {
           this.source = params.type;
         }
-        if (params && params.id) {
-          this.loanId = params.id;
-          this.agreementService.getLoanFromOutside(params.id, this.accountId).subscribe((data: any) => {
-            this.loanData = data;
-          });
+        if (params && params.uid) {
+          this.loanId = params.uid;
+          if (this.loanId && this.accountId) {
+            this.getloanDetails(this.loanId, this.accountId);
+          }
         }
       }
     })
@@ -49,6 +57,56 @@ export class SpdcLetterComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+  }
+
+  getloanDetails(loanId, accountId) {
+    this.agreementService.getLoanFromOutside(loanId, accountId).subscribe((data: any) => {
+      this.loanData = data;
+      // if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
+      //   this.loanKycId = this.loanData.loanApplicationKycList[0].id;
+      // }
+      console.log("this.loanData", this.loanData)
+      if (this.loanData.spInternalStatus == 'kjkjk') {
+        this.snackbarService.openSnackBar("Link Expired or Invalid");
+        this.router.navigate(['/']);
+      }
+    });
+  }
+
+
+  @HostListener('window:resize', ['$event'])
+  onReSize() {
+    if (window && window.innerWidth) {
+      if (window.innerWidth <= 768) {
+        this.screenHeight = '90%';
+      }
+      else {
+        //  this.ScreenHeight='85%';
+        this.screenWidth = '50%'
+      }
+    }
+
+  }
+
+  manualSignature() {
+    const height: any = this.screenHeight;
+    const uploadmanualsignatureRef = this.dialog.open(SignatureComponent, {
+      width: this.screenWidth,
+      height: height,//this.ScreenHeight,
+      panelClass: ['popup-class'],
+      disableClose: true,
+      data: {
+        "uId": this.loanId,
+        "kycId": this.loanKycId,
+        "account": this.accountId
+      }
+    });
+    uploadmanualsignatureRef.afterClosed().subscribe((res) => {
+      if (res) {
+        this.getloanDetails(this.loanId, this.accountId)
+      }
+    }
+    );
   }
 
   onPrint() {

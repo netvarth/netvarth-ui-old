@@ -623,7 +623,7 @@ export class OrderConsumerComponent implements OnInit {
           }
           else if (result && result.type == 'repeatLast') {
             if (result && result.lastCustomization) {
-              this.addToCart(item);
+              this.addToCart(this.itemDetails);
               if (this.repeatSelectedIndex != 'undefined') {
                 let repeatItemOptions = result.lastCustomization;
                 let repeatItemOptionsPostData = result.lastCustomization.postData;

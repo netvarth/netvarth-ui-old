@@ -1804,7 +1804,7 @@
                               *ngIf="item && item.item && item.item.itemImages && item.item.itemImages[0] && item.item.itemImages[0].thumbUrl"
                               src="{{item.item.itemImages[0].thumbUrl}}" class="item-image" width="70" height="70">
                             <img
-                              *ngIf="!item && !item.item && !item.item.itemImages || !item.item.itemImages[0] || !item.item.itemImages[0].thumbUrl"
+                              *ngIf="!item || !item.item || !item.item.itemImages || !item.item.itemImages[0] || !item.item.itemImages[0].thumbUrl"
                               src="../../../../assets/images/order/Items.svg" class="item-image-mobile" width="70"
                               height="70">
                           </div>

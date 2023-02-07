@@ -213,6 +213,14 @@
                     <div class="mt-4">
                         <div class="d-flex justify-content-between">
                             <div>
+                                <!-- <div class="text-center">
+                                    <img *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url"
+                                        [src]="loanData.loanApplicationKycList[0].digitalSignature.url" width="100px"><br>
+                                </div>
+                                <div class="text-center"
+                                    *ngIf="!loanData.loanApplicationKycList || !loanData.loanApplicationKycList[0] || !loanData.loanApplicationKycList[0].digitalSignature || !loanData.loanApplicationKycList[0].digitalSignature.url">
+                                    <button class="btn btn-primary" (click)="manualSignature()">Sign</button>
+                                </div> -->
                                 <span>Signature</span><br>
                                 <span class="mt-4">Name of Borrower</span>
                             </div>

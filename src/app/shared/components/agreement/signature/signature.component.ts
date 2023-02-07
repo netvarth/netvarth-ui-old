@@ -21,6 +21,7 @@ export class SignatureComponent implements OnInit {
   sign: boolean;
   loanId: any;
   loanKycId: any;
+  accountId: any;
 
   constructor(
     private agreementService: AgreementService,
@@ -35,6 +36,9 @@ export class SignatureComponent implements OnInit {
     }
     if (this.data && this.data.kycId) {
       this.loanKycId = this.data.kycId;
+    }
+    if (this.data && this.data.account) {
+      this.accountId = this.data.account;
     }
   }
 
@@ -93,7 +97,7 @@ export class SignatureComponent implements OnInit {
   }
 
   uploadDigitalsign(uId, kycId, submit_data) {
-    this.agreementService.uploadDigitalSign(uId, kycId, submit_data)
+    this.agreementService.uploadDigitalSign(uId, kycId, submit_data, this.accountId)
       .subscribe((data) => {
         this.snackbarService.openSnackBar('Digital sign uploaded successfully');
         this.signatureRef.close(data);
