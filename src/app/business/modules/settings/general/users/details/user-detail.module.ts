@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { ReactiveFormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatOptionModule } from "@angular/material/core";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -44,6 +44,7 @@ const routes: Routes = [
         DropdownModule,
         AccordionModule,
         CalendarModule,
+        FormsModule,
         TooltipModule,
         [RouterModule.forChild(routes)]
     ],

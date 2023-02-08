@@ -339,8 +339,8 @@
                   <a class="pointer-cursor">
                     <span class="lnk setings">Items
                       <span class="pull-right badge bg-blue">{{item_count}}</span>
-                      </span>
-                      <p class="settings_info">Items and Items grouping</p>
+                    </span>
+                    <p class="settings_info">Items and Items grouping</p>
                   </a>
                 </li>
                 <li (click)="redirecTo('catalogs')">
@@ -400,6 +400,19 @@
                       </span>
                       <p class="settings_info">
                         Consumer Durable Loan
+                      </p>
+                    </span>
+                  </a>
+                </li>
+
+                <li (click)="redirecTo('cdlrbac')" *ngIf="showCdl">
+                  <a class="pointer-cursor">
+                    <span class="lnk setings">CDL RBAC
+                      <span class="pull-right">
+                        {{cdlRbacstatusDisplayName}}
+                      </span>
+                      <p class="settings_info">
+                        CDL Role Access Based Control
                       </p>
                     </span>
                   </a>

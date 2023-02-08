@@ -175,6 +175,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   cdlStatus: any;
   leadstatusstr: any;
   branchStatus: any;
+  cdlRbacStatus: any;
+  cdlRbacstatusDisplayName: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -762,6 +764,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.cdlStatus = data.enableCdl;
         this.cdlstatusDisplayName = (this.cdlStatus) ? 'On' : 'Off';
 
+        this.cdlRbacStatus = data.enableRbac;
+        this.cdlRbacstatusDisplayName = (this.cdlRbacStatus) ? 'On' : 'Off';
+
         this.branchStatus = data.enableBranchMaster;
         this.branchStatusDisplayName = (this.branchStatus) ? 'On' : 'Off';
 
@@ -1014,8 +1019,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
       case 'ordermanager':
         this.routerobj.navigate(['provider', 'settings', 'ordermanager']);
         break;
-        case 'itemgrouping':
-        this.routerobj.navigate(['provider', 'settings','ordermanager', 'itemgrouping']);
+      case 'itemgrouping':
+        this.routerobj.navigate(['provider', 'settings', 'ordermanager', 'itemgrouping']);
         break;
       case 'lms':
         this.routerobj.navigate(['provider', 'settings', 'lms']);
@@ -1025,6 +1030,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'cdl':
         this.routerobj.navigate(['provider', 'settings', 'cdl']);
+        break;
+      case 'cdlrbac':
+        this.routerobj.navigate(['provider', 'settings', 'cdlrbac']);
         break;
       case 'leadmanager':
         this.routerobj.navigate(['provider', 'settings', 'leadmanager']);

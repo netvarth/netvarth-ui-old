@@ -753,8 +753,10 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       'orderItem': this.getOrderItems(),
       'homeDelivery': delivery,
       'coupons': this.selected_coupons,
-      'orderDate': this.sel_checkindate
+      'orderDate': this.sel_checkindate,
+      'srvAnswers': this.getServiceOptionsAnswers()
     };
+    // this.getServiceOptionsAnswers()
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
@@ -786,6 +788,27 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         }
       );
   }
+
+  getServiceOptionsAnswers() {
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    let itemOptionsDatatoSend = [];
+    if (itemOptionsData && itemOptionsData.length > 0) {
+      let itemIdsinside = []
+      for (let i = 0; i < itemOptionsData.length; i++) {
+        itemOptionsDatatoSend.push({ 'questionnaireId': itemOptionsData[i]['postData']['questionnaireId'], 'answerLine': itemOptionsData[i]['postData']['answerLine'] })
+        if (itemIdsinside.indexOf(itemOptionsData[i].itemData.id) === -1) {
+          itemIdsinside.push(itemOptionsData[i].itemData.id);
+          itemOptionsDatatoSend.push({ 'questionnaireId': itemOptionsData[i]['postData']['questionnaireId'], 'answerLine': itemOptionsData[i]['postData']['answerLine'] })
+        }
+        else {
+          itemOptionsDatatoSend[itemIdsinside.indexOf(itemOptionsData[i].itemData.id)].answerLine[0].answer.dataGridList.push(itemOptionsData[i].postData.answerLine[0].answer.dataGridList[0])
+        }
+      }
+    }
+    // return itemOptionsDatatoSend;
+    console.log("itemOptionsDatatoSend", itemOptionsDatatoSend)
+  }
+
   getAmountToPay(paymentDetails) {
     this.totalamountPay = paymentDetails.advanceAmount;
     return this.totalamountPay;
@@ -1298,41 +1321,39 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       let timeSlot = {
         'sTime': timeslot[0],
         'eTime': timeslot[1]
-
       }
       post_Data['timeSlot'] = timeSlot;
       post_Data['orderDate'] = this.sel_checkindate;
-
-      if (this.delivery_type === 'home') {
-        if ((this.added_address === null || this.added_address.length === 0)) {
-          if (this.source !== "paper") {
-            this.checkoutDisabled = false;
-            this.isClickedOnce = false;
-            this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
-            return;
-          }
-
-        } else {
-          const delivery_address = {
-            'firstName': this.selectedAddress.firstName,
-            'lastName': this.selectedAddress.lastName,
-            'phoneNumber': this.selectedAddress.phoneNumber,
-            'countryCode': '+91',
-            'email': this.selectedAddress.email,
-            'address': this.selectedAddress.address,
-            'city': this.selectedAddress.city,
-            'postalCode': this.selectedAddress.postalCode,
-            'landMark': this.selectedAddress.landMark
-
-          };
-          if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
-            this.emailId = this.customer_email;
-          }
-          post_Data['homeDelivery'] = true;
-          post_Data['homeDeliveryAddress'] = delivery_address;
-          post_Data['email'] = this.selectedAddress.email;
-
+    }
+    if (this.delivery_type === 'home') {
+      if ((this.added_address === null || this.added_address.length === 0)) {
+        if (this.source !== "paper") {
+          this.checkoutDisabled = false;
+          this.isClickedOnce = false;
+          this.snackbarService.openSnackBar('Please add delivery address', { 'panelClass': 'snackbarerror' });
+          return;
         }
+
+      } else {
+        const delivery_address = {
+          'firstName': this.selectedAddress.firstName,
+          'lastName': this.selectedAddress.lastName,
+          'phoneNumber': this.selectedAddress.phoneNumber,
+          'countryCode': '+91',
+          'email': this.selectedAddress.email,
+          'address': this.selectedAddress.address,
+          'city': this.selectedAddress.city,
+          'postalCode': this.selectedAddress.postalCode,
+          'landMark': this.selectedAddress.landMark
+
+        };
+        if (this.emailId === '' || this.emailId === undefined || this.emailId == null) {
+          this.emailId = this.customer_email;
+        }
+        post_Data['homeDelivery'] = true;
+        post_Data['homeDeliveryAddress'] = delivery_address;
+        post_Data['email'] = this.selectedAddress.email;
+
       }
     }
     if ((this.delivery_type === 'store' || this.onlyvirtualItemsPresent) && this.source !== "paper") {
@@ -1380,7 +1401,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     } else {
       this.confirmOrder(post_Data, paytype);
     }
-
   }
 
   doLogin(origin?, passParam?) {
@@ -1518,7 +1538,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
             for (let i = 0; i < this.itemOptionsData.length; i++) {
               if (itemIdsinside.indexOf(this.itemOptionsData[i].itemData.id) === -1) {
                 itemIdsinside.push(this.itemOptionsData[i].itemData.id);
-                this.newOrderList.push(this.orderList[i]);
+                // this.newOrderList.push(this.orderList[i]);
                 itemOptionsDatatoSend.push(this.itemOptionsData[i])
               }
               else {
@@ -1702,7 +1722,6 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
 
   getItemPrice(item, index) {
-    console.log("Coming Here")
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
     if (this.haveItemOptions(item) && itemOptionsData && index) {
       for (let i = 0; i < itemOptionsData.length; i++) {

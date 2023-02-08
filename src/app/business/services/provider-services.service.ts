@@ -86,47 +86,47 @@ export class ProviderServices {
     return this.servicemeta.httpDelete(path);
   }
   //item grouping api services.
-  addItemGroup(data){
+  addItemGroup(data) {
     const url = 'provider/items/itemGroup';
-    return this.servicemeta.httpPost(url,data);
+    return this.servicemeta.httpPost(url, data);
   }
-  updateItemGroup(itemGroupId,data){
-    const url = 'provider/items/itemGroup/'+ itemGroupId;
-    return this.servicemeta.httpPut(url,data);
+  updateItemGroup(itemGroupId, data) {
+    const url = 'provider/items/itemGroup/' + itemGroupId;
+    return this.servicemeta.httpPut(url, data);
   }
-  getItemGroups(){
+  getItemGroups() {
     const url = 'provider/items/itemGroup';
     return this.servicemeta.httpGet(url);
   }
-  getItemGroupById(itemGroupId){
-    const url = 'provider/items/itemGroup/'+ itemGroupId;
+  getItemGroupById(itemGroupId) {
+    const url = 'provider/items/itemGroup/' + itemGroupId;
     return this.servicemeta.httpGet(url);
   }
-  deleteItemGroupById(itemGroupId){
+  deleteItemGroupById(itemGroupId) {
     const url = `provider/items/itemGroup/+ ${itemGroupId}`;
     return this.servicemeta.httpDelete(url);
   }
   uploadItemGroupImage(itemGroupId, data) {
-    const url = 'provider/items/itemGroup/'+itemGroupId+'/'+'image';
+    const url = 'provider/items/itemGroup/' + itemGroupId + '/' + 'image';
     return this.servicemeta.httpPost(url, data);
   }
-  removeItemGroupImage(itemGroupId,name) {
-    const url = 'provider/items/itemGroup/' + itemGroupId + '/'+'image/' + name;
+  removeItemGroupImage(itemGroupId, name) {
+    const url = 'provider/items/itemGroup/' + itemGroupId + '/' + 'image/' + name;
     return this.servicemeta.httpDelete(url);
   }
-  addItemsToGroupById(itemGroupId,itemIds){
-    const url = 'provider/items/group/'+itemGroupId;
+  addItemsToGroupById(itemGroupId, itemIds) {
+    const url = 'provider/items/group/' + itemGroupId;
     return this.servicemeta.httpPut(url, itemIds);
   }
-  removeItemsFromCatalog(catalogId , items){
-    const url = 'provider/catalog/'+catalogId+'/'+ 'items';
+  removeItemsFromCatalog(catalogId, items) {
+    const url = 'provider/catalog/' + catalogId + '/' + 'items';
     return this.servicemeta.httpDelete(url, items);
   }
-  removeItemFromGroupId(itemGroupId , items){
-    const url = 'provider/items/group/'+itemGroupId;
+  removeItemFromGroupId(itemGroupId, items) {
+    const url = 'provider/items/group/' + itemGroupId;
     return this.servicemeta.httpDelete(url, items);
   }
-  getItemsByGroupId(filter){
+  getItemsByGroupId(filter) {
     const url = 'provider/items';
     return this.servicemeta.httpGet(url, null, filter);
   }
@@ -134,12 +134,12 @@ export class ProviderServices {
   //upload and delete department icon api services
   uploadDepartmentIcon(departId, data) {
     //provider/departments/upload/icon/{departmentId}
-    const url = 'provider/departments/upload/icon/'+departId;
+    const url = 'provider/departments/upload/icon/' + departId;
     return this.servicemeta.httpPost(url, data);
   }
-  removeDepartmentIcon(departId,data) {
+  removeDepartmentIcon(departId, data) {
     const url = 'provider/departments/remove/icon/' + departId;
-    return this.servicemeta.httpDelete(url,data);
+    return this.servicemeta.httpDelete(url, data);
   }
   //upload and delete business logo api services..
   uploadBusinessIcon(data) {
@@ -147,11 +147,11 @@ export class ProviderServices {
     const url = 'provider/upload/businessLogo';
     return this.servicemeta.httpPost(url, data);
   }
-  removeBusinessIcon(data){
+  removeBusinessIcon(data) {
     const url = 'provider/remove/businessLogo';
-    return this.servicemeta.httpDelete(url,data);
+    return this.servicemeta.httpDelete(url, data);
   }
-  getBusinessLogo(){
+  getBusinessLogo() {
     const url = 'provider/businessLogo';
     return this.servicemeta.httpGet(url);
   }
@@ -391,6 +391,11 @@ export class ProviderServices {
 
   getRolesData(features) {
     return this.servicemeta.httpGet('provider/user/defaultRolesCapabilities/' + features);
+  }
+
+
+  getRolesInAccount(filter = {}) {
+    return this.servicemeta.httpGet('provider/accessscope/roles', null, filter);
   }
 
   getInternalStatus() {
@@ -1953,7 +1958,7 @@ export class ProviderServices {
     const path = 'provider/coverPicture/' + name;
     return this.servicemeta.httpDelete(path);
   }
-  getGroupPhoto(){
+  getGroupPhoto() {
     const url = 'provider/cover';
     return this.servicemeta.httpGet(url);
   }
@@ -2005,12 +2010,12 @@ export class ProviderServices {
     const url = 'provider/orders/future/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
-  getProviderSubmissionOrdersCount(filter = {}){
+  getProviderSubmissionOrdersCount(filter = {}) {
     ///rest/provider/orders/OrderSubmission/count
     const url = 'provider/orders/OrderSubmission/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
-  getProviderCompletedOrdersCount(filter = {}){
+  getProviderCompletedOrdersCount(filter = {}) {
     const url = 'provider/orders/OrderSubmission/count';
     return this.servicemeta.httpGet(url, null, filter);
   }
@@ -2604,6 +2609,11 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
 
+  setProviderCdlRbacStatus(status) {
+    const url = 'provider/account/settings/cdlrbac/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
   setProviderBranchStatus(status) {
     const url = 'provider/account/settings/branchMaster/' + status;
     return this.servicemeta.httpPut(url);
@@ -2649,9 +2659,9 @@ export class ProviderServices {
     const url = 'provider/lead/questionnaire/status/' + uid;
     return this.servicemeta.httpGet(url);
   }
-  getItemGroupingStatus(){
+  getItemGroupingStatus() {
     const url = 'provider/lead/questionnaire/status/';
-    return this.servicemeta.httpGet(url); 
+    return this.servicemeta.httpGet(url);
   }
   changeLeadQuestionnaireStatus(status, uuid, id) {
     const url = 'provider/lead/questionnaire/change/' + status + '/' + uuid + '/' + id;

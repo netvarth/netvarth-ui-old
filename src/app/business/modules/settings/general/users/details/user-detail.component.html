@@ -227,10 +227,10 @@
                                         *ngIf="settings && settings.enableCdl">
                                         <div class="form-group">
                                             <span class="p-float-label">
-                                                <p-dropdown #role [options]="roles" optionLabel="displayName"
-                                                    dataKey="roleId" optionValue="roleId"
-                                                    dropdownIcon="fa fa-caret-down" formControlName="selectedrole"
-                                                    [autoDisplayFirst]="false" (onChange)="onRoleSelect($event.value)">
+                                                <p-dropdown #role [options]="accountRoles" optionLabel="roleName"
+                                                    dataKey="roleId" dropdownIcon="fa fa-caret-down"
+                                                    formControlName="selectedRole"
+                                                    (onChange)="onRoleSelect($event.value)">
                                                 </p-dropdown>
                                                 <label for="role">CDL Role</label>
                                             </span>
@@ -361,10 +361,11 @@
                                                     <div class="col-md-6 col-sm-6 col-xs-12 mt-3 no-padding-small">
                                                         <div class="form-group p-2">
                                                             <span class="p-float-label">
-                                                                <p-calendar #inputdob formControlName="dob" dateFormat="yy-mm-dd"
-                                                                    [maxDate]="tday" [minDate]="minday" [showIcon]="true"></p-calendar>
+                                                                <p-calendar #inputdob formControlName="dob"
+                                                                    dateFormat="yy-mm-dd" [maxDate]="tday"
+                                                                    [minDate]="minday" [showIcon]="true"></p-calendar>
                                                                 <label for="inputdob">Date of Birth</label>
-                                                                
+
                                                             </span>
                                                             <app-field-error-display
                                                                 [displayError]="fed_service.isFieldValid(userForm,'dob')"

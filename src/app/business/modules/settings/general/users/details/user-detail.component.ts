@@ -126,6 +126,7 @@ export class BranchUserDetailComponent implements OnInit {
   userList: any = [];
   settings: any;
   userRolesSelected: any;
+  accountRoles: any = [];
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -251,19 +252,41 @@ export class BranchUserDetailComponent implements OnInit {
     }
     this.settings = this.groupService.getitemFromGroupStorage('settings');
     console.log("settings", this.settings)
-    if (this.settings && this.settings.enableCdl) {
-      this.getRolesData('cdl');
-    }
+    // if (this.settings && this.settings.enableCdl) {
+    //   this.getRolesData('cdl');
+    // }
+    // if (this.accountRoles) {
+    //   this.getRolesInAccount('cdl');
+    // }
+
+    this.getRolesInAccount('cdl');
+
   }
 
-  getRolesData(features) {
+  // getRolesData(features) {
+  //   this.api_loading = true;
+  //   this.provider_services.getRolesData(features).subscribe(data => {
+  //     this.roles = data;
+  //     this.api_loading = false;
+  //     console.log("roles : ", this.roles);
+  //   });
+  //   console.log("Roles : ", this.roles);
+  // }
+
+
+  getRolesInAccount(features) {
     this.api_loading = true;
-    this.provider_services.getRolesData(features).subscribe(data => {
-      this.roles = data;
+    let api_filter = {}
+    api_filter["featureName-eq"] = features;
+    this.provider_services.getRolesInAccount().subscribe(data => {
+      this.accountRoles = data;
       this.api_loading = false;
-      console.log("roles : ", this.roles);
+      console.log("accountRoles : ", this.accountRoles);
     });
   }
+
+
+
 
 
   getProviderLocations() {
@@ -447,7 +470,7 @@ export class BranchUserDetailComponent implements OnInit {
       console.log("this.user_data.userRoles[0].roleId", typeof (Number(this.user_data.userRoles[0].roleId)))
       this.userForm.get("selectedrole").setValue(this.user_data.userRoles[0].roleId);
     }
-    this.userForm.controls.selectedrole.setValue(Number(this.user_data.userRoles[0].roleId));
+    this.userForm.controls.selectedrole.setValue(this.user_data.userRoles[0].roleId);
 
     console.log("After set the form", this.userForm.controls.selectedrole.value);
   }
@@ -462,10 +485,11 @@ export class BranchUserDetailComponent implements OnInit {
   }
 
   onRoleSelect(event) {
-    console.log(this.selectedRole)
+    console.log(event)
     this.userRolesSelected = [
       {
-        "roleId": event,
+        "id": event.id,
+        "roleId": event.roleId,
         "defaultRole": true
       }]
   }

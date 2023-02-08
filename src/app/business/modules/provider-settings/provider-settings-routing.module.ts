@@ -22,6 +22,7 @@ const routes: Routes = [
       { path: 'ordermanager', loadChildren: () => import('../../../business/modules/settings/ordermanager/ordermanager.module').then(m => m.OrdermanagerModule) },
       { path: 'lms', loadChildren: () => import('../../../business/modules/settings/taskmanager/taskmanager.module').then(m => m.TaskmanagerModule) },
       { path: 'cdl', loadChildren: () => import('../../../business/modules/settings/cdl-manager/cdl-manager.module').then(m => m.CdlManagerModule) },
+      { path: 'cdlrbac', loadChildren: () => import('../../../business/modules/settings/cdlrbac-manager/cdlrbac-manager.module').then(m => m.CdlrbacManagerModule) },
       { path: 'branch', loadChildren: () => import('../../../business/modules/settings/branch-manager/branch-manager.module').then(m => m.BranchManagerModule) },
       { path: 'leadmanager', loadChildren: () => import('../../../business/modules/settings/leadmanager/leadmanager.module').then(m => m.LeadmanagerModule) }
     ]
