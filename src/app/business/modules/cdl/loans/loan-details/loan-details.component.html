@@ -630,7 +630,7 @@
 
 
   <section class="d-flex justify-content-center m-2 my-4"
-    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'SchemeConfirmed' && user && user.roles && user.roles[0] && user.roles[0].id==3">
+    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'SchemeConfirmed' && capabilities && capabilities.canLoanApplicationBranchVerification">
     <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveLoanByBranchManager()">
       Approve Loan
     </div>

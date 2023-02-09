@@ -611,7 +611,8 @@ export class CdlService {
         'canTransformLeadtoLoan': roleCapabilities.includes('transformLeadtoLoan'),
         'canLoanApplicationOperationsVerification': roleCapabilities.includes('loanApplicationOperationsVerification'),
         'canViewCustomerPhoneNumber': roleCapabilities.includes('viewCustomerPhoneNumber'),
-        'canViewKycReport': roleCapabilities.includes('viewKycReport')
+        'canViewKycReport': roleCapabilities.includes('viewKycReport'),
+        'canLoanApplicationBranchVerification': roleCapabilities.includes('loanApplicationBranchVerification')
       }
       return capabilities;
     }
