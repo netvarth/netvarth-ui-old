@@ -1443,7 +1443,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
       });
       removeitemdialogRef.afterClosed().subscribe(result => {
         if (result) {
-
+          console.log("result.data.answerLine", result.data.answerLine)
           this.dataGridList = result.data.answerLine;
           this.post_Data = result.data;
           this.showItem = true;
@@ -1480,6 +1480,7 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
     }
     else {
       this.showqnr = true;
+      console.log("this.sequenceId", question)
       this.sequenceId = question.sequnceId;
 
       // this.questionnaireList= question;
@@ -1544,15 +1545,19 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
 
       if (result) {
         if (result === 'addNew') {
+          this.quesStore = this.lStorageService.getitemfromLocalStorage('quesStore');
           this.qnrPopup(this.quesStore, true)
         } else {
+          if (!this.sequenceId) {
+            this.sequenceId = item.sequenceId
+          }
           let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: result.repeatItem.item, price: result.repeatItem.price, columnItem: result.repeatItem.columnItem }
-          this.itemArray.push(dummyArray)
-
-          // let items = dummyArray.columnItem[0].answer.dataGridList[0].dataGridListColumn;
-          // for (let i = 0; i < items.length; i++) {
-          //   items[i].quantity = items[i].quantity + 1;
-          // }
+          // this.itemArray.push(dummyArray)
+          console.log("Coming Here to Else Part", item, this.sequenceId)
+          let items = dummyArray.columnItem[0].answer.dataGridList[0].dataGridListColumn;
+          for (let i = 0; i < items.length; i++) {
+            items[i].quantity = items[i].quantity + 1;
+          }
 
           if (this.itemArray) {
             this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);

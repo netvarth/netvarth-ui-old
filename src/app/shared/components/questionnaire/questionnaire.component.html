@@ -345,7 +345,7 @@
                   <div class="text-capitalize">
                     <div class="">
                       <span class="text-primary">
-                        {{items.item}}<br>{{getServiceOptionsSelected(item)}} 
+                        {{items.item}}<br>{{getServiceOptionsSelected(item)}}
                       </span>
                       <!-- <span class="disp-none-small">&nbsp;-&nbsp;</span>
                       <span class="disp-none-large"><br></span> -->
@@ -358,7 +358,9 @@
                   <div (click)="decrement(items);" class="pointer-cursor quantity quantity-1">
                     <span class="p-10">-</span>
                   </div>
-                  <div class="mx-2 pointer-cursor"><span class="quantity">1</span>
+                  <div class="mx-2 pointer-cursor"><span class="quantity"
+                      *ngIf="items && items.columnItem && items.columnItem[0] && items.columnItem[0].answer && items.columnItem[0].answer.dataGridList && items.columnItem[0].answer.dataGridList[0] && items.columnItem[0].answer.dataGridList[0].dataGridListColumn && items.columnItem[0].answer.dataGridList[0].dataGridListColumn[0] && items.columnItem[0].answer.dataGridList[0].dataGridListColumn[0].quantity">
+                      {{items.columnItem[0].answer.dataGridList[0].dataGridListColumn[0].quantity}}</span>
                   </div>
                   <div (click)="increment(items);" class="pointer-cursor quantity quantity-1">
                     <span class="p-10">+</span>
