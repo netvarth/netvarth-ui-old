@@ -105,7 +105,6 @@ export class CdlComponent implements OnInit {
 
   approvedDealers: any;
   dealersRequested: any;
-  roleId: any;
   capabilities: any;
   dashboardStats: any;
   users: any;
@@ -141,7 +140,7 @@ export class CdlComponent implements OnInit {
     this.getBarChartData();
     this.getUsers();
     this.getDashboardStats();
-    if (this.user && this.user.roles && this.user.roles[0] && this.user.roles[0].roleId && this.user.roles[0].roleId == 1 || this.user.roles[0].roleId == 2) {
+    if (this.capabilities && this.capabilities.canCreateBranch) {
       this.getBranchesByFilter();
     }
   }

@@ -287,8 +287,7 @@
       <div class="card">
 
         <div class="font-weight-bold mt-4">Loan Details</div>
-        <section class="row col-md-12 no-padding"
-          *ngIf="user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
+        <section class="row col-md-12 no-padding" *ngIf="capabilities && capabilities.canViewKycReport">
           <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
             <div class="card">
               <div class="d-flex">
@@ -450,7 +449,7 @@
           </div>
 
           <div class="row mt-2"
-            *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0] && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
+            *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0] && capabilities && capabilities.canViewKycReport">
             <div class="col-md-4 no-padding-small">
               <a class="btn btn-primary btn-primary-full">
                 <span>View Statement Reports</span>
@@ -531,8 +530,7 @@
           </div>
         </div>
 
-        <div class="card marginClass min-height"
-          *ngIf="user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==4 || user.roles[0].roleId==5)">
+        <div class="card marginClass min-height" *ngIf="capabilities && capabilities.canViewKycReport">
           <div class="font-weight-bold">Agreement & Letters</div>
           <div class="d-lg-flex justify-content-between">
             <div class="mt-2">
@@ -595,7 +593,7 @@
 <div class="clearfix"></div>
 <div>
   <section class="d-flex justify-content-center m-2 my-4"
-    *ngIf="loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending') && loanData.applicationStatus != 'Rejected' && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==5)">
+    *ngIf="loanData && (loanData.spInternalStatus == 'ApprovalRequired' || loanData.spInternalStatus == 'ApprovalPending') && loanData.applicationStatus != 'Rejected' && capabilities && capabilities.canApproveLoan">
     <div class="btn-sanctioned mr-2 pointer-cursor" (click)="sanctionLoan()">
       Verify Loan
     </div>
@@ -632,7 +630,7 @@
 
 
   <section class="d-flex justify-content-center m-2 my-4"
-    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'SchemeConfirmed' && user && user.roles && user.roles[0] && user.roles[0].roleId==3">
+    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'SchemeConfirmed' && user && user.roles && user.roles[0] && user.roles[0].id==3">
     <div class="btn-sanctioned mr-2 pointer-cursor" (click)="approveLoanByBranchManager()">
       Approve Loan
     </div>
@@ -649,7 +647,7 @@
 
 
   <section class="d-flex justify-content-center m-2 my-4"
-    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'Sanctioned'  && user && user.roles && user.roles[0]&& (user.roles[0].roleId==3 || user.roles[0].roleId==4)">
+    *ngIf="loanData && loanData.spInternalStatus && loanData.spInternalStatus == 'Sanctioned'  && capabilities && capabilities.canLoanApplicationOperationsVerification">
     <div class="btn-sanctioned mr-2 pointer-cursor" (click)="verifyLoanByOps()">
       Verify
     </div>
