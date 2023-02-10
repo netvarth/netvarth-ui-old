@@ -119,6 +119,11 @@ export class CatalogItemComponent implements OnInit {
     });
     this.image_list_popup = [];
     this.catalogimage_list_popup = [];
+    if (this.lStorageService.getitemfromLocalStorage('order') && this.lStorageService.getitemfromLocalStorage('order').length > 0) {
+      if (this.lStorageService.getitemfromLocalStorage('order')[0] == null) {
+        this.lStorageService.removeitemfromLocalStorage('order')
+      }
+    }
   }
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -170,7 +175,7 @@ export class CatalogItemComponent implements OnInit {
                 // _this.viewMode =
                 if (uiconfig['mode']) {
                   _this.homeView = uiconfig['mode'];
-              
+
                   _this.setItemDetails(_this.catalogId, _this.itemId, _this.accountId);
                 }
               }, () => {

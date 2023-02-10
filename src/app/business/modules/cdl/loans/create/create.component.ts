@@ -920,11 +920,11 @@ export class CreateComponent implements OnInit {
     }
 
     if (this.createLoan.controls.productcategory.value) {
-      this.loanApplication["productCategoryId"] = { "id": this.createLoan.controls.productcategory.value }
+      this.loanApplication["productCategoryId"] = this.createLoan.controls.productcategory.value
     }
 
     if (this.createLoan.controls.productcategory.value) {
-      this.loanApplication["productSubCategoryId"] = { "id": this.createLoan.controls.productcategory.value }
+      this.loanApplication["productSubCategoryId"] = this.createLoan.controls.productcategory.value
     }
 
     if (this.user.bussLocs[0]) {
@@ -1081,7 +1081,8 @@ export class CreateComponent implements OnInit {
   getPartners() {
     let api_filter = {
       'isApproved-eq': true,
-      'isActive-eq': true
+      'isActive-eq': true,
+      'salesOfficers-eq': 'userId::' + this.user.id
     }
     this.cdlService.getDealersByFilter(api_filter).subscribe((data) => {
       this.dealers = data;
