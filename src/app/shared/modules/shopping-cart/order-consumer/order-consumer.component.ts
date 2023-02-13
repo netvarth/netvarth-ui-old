@@ -577,10 +577,10 @@ export class OrderConsumerComponent implements OnInit {
           datatoSend['lastCustomization'] = this.lastCustomization
         }
         console.log("Coming to Repeat", this.lastCustomization)
-        if (this.lastCustomization && this.lastCustomization.itemData && this.lastCustomization.itemData.itemOptionsIndex)
-        {
-          this.itemDetails['itemOptionsIndex'] = this.lastCustomization.itemData.itemOptionsIndex;
-        }
+        // if (this.lastCustomization && this.lastCustomization.itemData && this.lastCustomization.itemData.itemOptionsIndex)
+        // {
+        //   this.itemDetails['itemOptionsIndex'] = this.lastCustomization.itemData.itemOptionsIndex;
+        // }
       }
     }
 
@@ -876,26 +876,43 @@ export class OrderConsumerComponent implements OnInit {
         break;
       }
     }
-    console.log("index", index)
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
-    if (this.haveItemOptions(itemObj) && index && itemOptionsData) {
-      for (let i = 0; i < itemOptionsData.length; i++) {
-        if (itemOptionsData[i] && itemOptionsData[i].itemData.itemOptionsIndex === index) {
-          let quantity = itemOptionsData[i].postData.answerLine[0].answer.dataGridList[0].dataGridListColumn;
-          for (let i = 0; i < quantity.length; i++) {
-            quantity[i].quantity = quantity[i].quantity - 1;
-            if (quantity[i].quantity == 0) {
-              itemOptionsData.splice(i, 1);
-              break;
-            }
-          }
+
+    let Itemindex = itemOptionsData.findIndex(x => x.itemData.itemOptionsIndex === itemObj.itemOptionsIndex);
+    if (Itemindex > -1) {
+      console.log("index", itemOptionsData[index])
+      if (this.getItemQty(itemOptionsData[index]) == 1) {
+        itemOptionsData.splice(index, 1);
+      }
+      else {
+        let items = itemOptionsData[index].postData.answerLine[0].answer.dataGridList[0].dataGridListColumn;
+        for (let i = 0; i < items.length; i++) {
+          items[i].quantity = items[i].quantity - 1;
         }
+      }
+      if (itemOptionsData) {
         this.lStorageService.setitemonLocalStorage('itemOptionsData', itemOptionsData);
       }
     }
-    this.getTotalItemAndPrice();
-    this.getItemQty(itemObj);
-    this.getNewOrderList();
+    // if (this.haveItemOptions(itemObj) && index && itemOptionsData) {
+    //   for (let i = 0; i < itemOptionsData.length; i++) {
+    //     if (itemOptionsData[i] && itemOptionsData[i].itemData.itemOptionsIndex === index) {
+    //       let quantity = itemOptionsData[i].postData.answerLine[0].answer.dataGridList[0].dataGridListColumn;
+    //       for (let i = 0; i < quantity.length; i++) {
+    //         quantity[i].quantity = quantity[i].quantity - 1;
+    //         if (quantity[i].quantity == 0) {
+    //           itemOptionsData.splice(i, 1);
+    //           break;
+    //         }
+    //       }
+    //       this.lStorageService.setitemonLocalStorage('itemOptionsData', itemOptionsData);
+    //       break;
+    //     }
+    //   }
+    // }
+    // this.getTotalItemAndPrice();
+    // this.getItemQty(itemObj);
+    // this.getNewOrderList();
   }
 
   getTotalItemAndPrice() {

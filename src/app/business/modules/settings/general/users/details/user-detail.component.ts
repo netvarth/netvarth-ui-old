@@ -60,7 +60,6 @@ export class BranchUserDetailComponent implements OnInit {
   email1error = null;
   subdomainerror = null;
   subDomains: any = [];
-  selectedRole: any;
   id;
   filter = {
     firstName: "",
@@ -127,6 +126,7 @@ export class BranchUserDetailComponent implements OnInit {
   settings: any;
   userRolesSelected: any;
   accountRoles: any = [];
+  selectionTesting: any = 4;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -156,7 +156,6 @@ export class BranchUserDetailComponent implements OnInit {
       // this.updateForm()
 
     }
-
     this.provider_services.getUsers().subscribe(res => {
       this.userList = res;
       console.log("User Data :", this.userList);
@@ -378,7 +377,7 @@ export class BranchUserDetailComponent implements OnInit {
       bProfilePermitted: [""],
       showCsmrDataBase: [""],
       selectedUserType: [],
-      selectedrole: ""
+      selectedrole: []
     });
     this.userForm.patchValue(
       {
@@ -389,6 +388,9 @@ export class BranchUserDetailComponent implements OnInit {
     this.userForm
       .get("selectedUserType")
       .setValue(this.userTypesFormfill[0].value);
+    // this.userForm
+    //   .get("selectedrole")
+    //   .setValue(3);
     this.getWaitlistMgr();
   }
   getUserData() {
@@ -466,9 +468,9 @@ export class BranchUserDetailComponent implements OnInit {
       });
     }
 
-    if (this.user_data && this.user_data.userRoles && this.user_data.userRoles[0] && this.user_data.userRoles[0].roleId) {
-      console.log("this.user_data.userRoles[0].roleId", typeof (Number(this.user_data.userRoles[0].roleId)))
-      this.userForm.get("selectedrole").setValue(this.user_data.userRoles[0].roleId);
+    if (this.user_data && this.user_data.userRoles && this.user_data.userRoles[0] && this.user_data.userRoles[0].id) {
+      console.log("this.user_data.userRoles[0].id", this.user_data.userRoles[0].id)
+      this.userForm.controls.selectedrole.setValue(this.user_data.userRoles[0].id);
     }
     this.userForm.controls.selectedrole.setValue(this.user_data.userRoles[0].roleId);
 
@@ -486,10 +488,12 @@ export class BranchUserDetailComponent implements OnInit {
 
   onRoleSelect(event) {
     console.log(event)
+    let selectedRoleDetails = this.accountRoles.find(x => x.id == event);
+    console.log("selectedRoleDetails", selectedRoleDetails)
     this.userRolesSelected = [
       {
-        "id": event.id,
-        "roleId": event.roleId,
+        "id": selectedRoleDetails.id,
+        "roleId": selectedRoleDetails.roleId,
         "defaultRole": true
       }]
   }
