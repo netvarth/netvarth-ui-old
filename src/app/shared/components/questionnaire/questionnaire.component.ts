@@ -1515,8 +1515,8 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
           this.serviceTotalPrice = 0;
           this.itemArray.forEach((item: any) => {
 
-
-            this.serviceTotalPrice = this.serviceTotalPrice + item.price;
+            let quantity = item.columnItem[0].answer.dataGridList[0].dataGridListColumn[0].quantity;
+            this.serviceTotalPrice = (this.serviceTotalPrice + item.price) * quantity;
             this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
           });
 
@@ -1553,22 +1553,28 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
           }
           let dummyArray = { id: this.id, sequenceId: this.sequenceId, item: result.repeatItem.item, price: result.repeatItem.price, columnItem: result.repeatItem.columnItem }
           // this.itemArray.push(dummyArray)
+          console.log("dummyArray", dummyArray)
           console.log("Coming Here to Else Part", item, this.sequenceId)
           let items = dummyArray.columnItem[0].answer.dataGridList[0].dataGridListColumn;
           for (let i = 0; i < items.length; i++) {
             items[i].quantity = items[i].quantity + 1;
           }
 
+          // dummyArray['price'] = dummyArray['price'] + dummyArray['price']
+
           if (this.itemArray) {
             this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
           }
+          console.log("This.ItemArray", this.itemArray)
           this.serviceTotalPrice = 0;
           this.itemArray.forEach((item: any) => {
-
-
-            this.serviceTotalPrice = this.serviceTotalPrice + item.price;
-
+            let quantity = item.columnItem[0].answer.dataGridList[0].dataGridListColumn[0].quantity;
+            console.log("quantity", quantity)
+            this.serviceTotalPrice += item.price * quantity;
           });
+
+
+          console.log("serviceTotalPrice", this.serviceTotalPrice)
 
           this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
           this.id = this.id + 1
@@ -1579,6 +1585,12 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
 
       }
     });
+  }
+
+  getItemQuantity(item) {
+    let quantity = item.columnItem[0].answer.dataGridList[0].dataGridListColumn[0].quantity;
+    return quantity
+    // console.log("item", item)
   }
   decrement(removingItem) {
     let index = this.itemArray.findIndex(x => x.id === removingItem.id)
