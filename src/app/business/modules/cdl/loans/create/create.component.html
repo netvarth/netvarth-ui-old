@@ -1510,9 +1510,9 @@
     </div>
     <div class="d-flex justify-content-center">
       <div>
-        <div class="mr-2 btn btn-draft" (click)="saveAsLead()">
+        <button class="mr-2 btn btn-draft" [disabled]="!customerDetailsVerified" (click)="saveAsLead()">
           Save as Lead
-        </div>
+        </button>
       </div>
       <div>
         <button class="btn btn-primary" [disabled]="!bankDetailsSaved" (click)="checkELigibility()">

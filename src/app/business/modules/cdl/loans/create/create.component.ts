@@ -920,15 +920,15 @@ export class CreateComponent implements OnInit {
     }
 
     if (this.createLoan.controls.productcategory.value) {
-      this.loanApplication["productCategoryId"] = this.createLoan.controls.productcategory.value
+      this.loanApplication["productCategoryId"] = { "id": this.createLoan.controls.productcategory.value }
     }
 
     if (this.createLoan.controls.productcategory.value) {
-      this.loanApplication["productSubCategoryId"] = this.createLoan.controls.productcategory.value
+      this.loanApplication["productSubCategoryId"] = { "id": this.createLoan.controls.productcategory.value }
     }
 
-    if (this.user.bussLocs[0]) {
-      this.loanApplication["location"] = { "id": this.user.bussLocs[0] }
+    if (this.loanData && this.loanData.location && this.loanData.location.id) {
+      this.loanApplication["location"] = { "id": this.loanData.location.id }
     }
 
     if (this.createLoan.controls.dealer.value) {
@@ -1076,6 +1076,7 @@ export class CreateComponent implements OnInit {
         });
     })
   }
+
 
 
   getPartners() {
@@ -1364,7 +1365,7 @@ export class CreateComponent implements OnInit {
           "gender": this.createLoan.controls.gender.value
         },
         // "assignee": { "id": 139799 },
-        "location": { "id": this.user.bussLocs[0] },
+        // "location": { "id": this.user.bussLocs[0] },
         "loanApplicationKycList": [
           {
             "id": 0,
@@ -1372,6 +1373,11 @@ export class CreateComponent implements OnInit {
           }
         ]
       }
+
+      if (this.loanData && this.loanData.location && this.loanData.location.id) {
+        this.loanApplication["location"] = { "id": this.loanData.location.id }
+      }
+
 
       for (let i = 0; i < this.filesToUpload.length; i++) {
         this.filesToUpload[i]['order'] = i;
@@ -1454,12 +1460,14 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.permanentaddress2.setValue(data.loanApplicationKycList[0].permanentAddress2);
             this.createLoan.controls.permanentcity.setValue(data.loanApplicationKycList[0].permanentCity);
             this.createLoan.controls.permanentpincode.setValue(data.loanApplicationKycList[0].permanentPin);
-            this.cdlService.getStateByPin(data.loanApplicationKycList[0].permanentPin).subscribe((data: any) => {
-              if (data && data.length > 0) {
-                this.createLoan.controls.permanentstate.setValue(data[0].state);
-              }
-              this.verifyingUID = false;
-            })
+            if (data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].permanentPin) {
+              this.cdlService.getStateByPin(data.loanApplicationKycList[0].permanentPin).subscribe((data: any) => {
+                if (data && data.length > 0) {
+                  this.createLoan.controls.permanentstate.setValue(data[0].state);
+                }
+                this.verifyingUID = false;
+              })
+            }
           }
           this.verifyingUID = false;
         })

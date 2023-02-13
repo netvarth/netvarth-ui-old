@@ -299,9 +299,9 @@ export class OtpVerifyComponent implements OnInit {
             "gender": this.customerDetails[0].gender,
             "countryCode": "+91"
           },
-          "location": {
-            "id": this.user.bussLocs[0]
-          },
+          // "location": {
+          //   "id": this.user.bussLocs[0]
+          // },
           "loanApplicationKycList": [
             {
               "isCoApplicant": false
@@ -320,9 +320,9 @@ export class OtpVerifyComponent implements OnInit {
             "dob": this.dob,
             "gender": this.gender
           },
-          "location": {
-            "id": this.user.bussLocs[0]
-          },
+          // "location": {
+          //   "id": this.user.bussLocs[0]
+          // },
           "loanApplicationKycList": [
             {
               "isCoApplicant": false
