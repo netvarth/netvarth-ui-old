@@ -577,9 +577,13 @@ export class OrderConsumerComponent implements OnInit {
           datatoSend['lastCustomization'] = this.lastCustomization
         }
         console.log("Coming to Repeat", this.lastCustomization)
-
+        if (this.lastCustomization && this.lastCustomization.itemData && this.lastCustomization.itemData.itemOptionsIndex)
+        {
+          this.itemDetails['itemOptionsIndex'] = this.lastCustomization.itemData.itemOptionsIndex;
+        }
       }
     }
+
 
 
     if (!repeat) {

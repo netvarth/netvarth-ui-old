@@ -1595,16 +1595,22 @@ export class QuestionnaireComponent implements OnInit, OnChanges {
   decrement(removingItem) {
     let index = this.itemArray.findIndex(x => x.id === removingItem.id)
     if (index > -1) {
-      this.itemArray.splice(index, 1); // 2nd parameter means remove one item only
+      console.log("this.itemArray[index]", this.itemArray[index])
+      if (this.getItemQuantity(this.itemArray[index]) == 1) {
+        this.itemArray.splice(index, 1); // 2nd parameter means remove one item only
+      }
+      else {
+        let items = this.itemArray[index].columnItem[0].answer.dataGridList[0].dataGridListColumn;
+        for (let i = 0; i < items.length; i++) {
+          items[i].quantity = items[i].quantity - 1;
+        }
+      }
       if (this.itemArray) {
         this.lStorageService.setitemonLocalStorage('itemArray', this.itemArray);
       }
       this.serviceTotalPrice = 0;
       this.itemArray.forEach((item: any) => {
-
-
         this.serviceTotalPrice = this.serviceTotalPrice + item.price;
-
       });
 
       this.lStorageService.setitemonLocalStorage('serviceTotalPrice', this.serviceTotalPrice);
