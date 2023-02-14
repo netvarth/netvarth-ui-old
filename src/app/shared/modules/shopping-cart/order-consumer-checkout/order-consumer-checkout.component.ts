@@ -750,13 +750,12 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       'catalog': {
         'id': this.catalog_Id
       },
-      'orderItem': this.getOrderItems(),
+      'orderItem': this.getOrderItemsforCreatingOrder(),
       'homeDelivery': delivery,
       'coupons': this.selected_coupons,
       'orderDate': this.sel_checkindate,
       'srvAnswers': this.getServiceOptionsAnswers()
     };
-    // this.getServiceOptionsAnswers()
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
         data => {
@@ -805,8 +804,9 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         }
       }
     }
-    // return itemOptionsDatatoSend;
     console.log("itemOptionsDatatoSend", itemOptionsDatatoSend)
+
+    return itemOptionsDatatoSend[0];
   }
 
   getAmountToPay(paymentDetails) {
@@ -1289,6 +1289,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
       });
     }
+    console.log("this.orders in creation", this.orderSummary)
     return this.orderSummary;
   }
 
@@ -1312,6 +1313,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     if (this.orderType !== 'SHOPPINGLIST') {
       post_Data['orderItem'] = this.getOrderItemsforCreatingOrder();
     }
+    post_Data['srvAnswers'] = this.getServiceOptionsAnswers();
     if (this.jcashamount > 0 && this.checkJcash) {
       post_Data['useCredit'] = this.checkJcredit
       post_Data['useJcash'] = this.checkJcash
@@ -1712,6 +1714,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
       });
     }
+    console.log("this.orderSummary", this.orderSummary)
     return this.orderSummary;
   }
   highlight(index, address) {
