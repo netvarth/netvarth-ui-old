@@ -140,6 +140,7 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.getDefaultCatalogStatus();
     this.doSearch();
     this.getProviderSubmissionOrders();
+    this.getProviderCompletedOrders();
     this.getProviderTodayOrdersCount();
     this.getProviderFutureOrdersCount();
     this.getProviderHistoryOrdersCount();
@@ -179,6 +180,7 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   }
   setTabSelection_papers(type) {
     this.selectedTab = type;
+    console.log("selectedTab :",this.selectedTab);
     this.groupService.setitemToGroupStorage('orderTab', this.selectedTab);
     switch (type) {
       case 1: {
@@ -763,9 +765,10 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
         console.log("total data :",data);
         this.orders = data;
         this.totalOrders = data;
+        // this.getProviderCompletedOrders()
         // this.totalOrdersCount = this.totalOrders.length;
         this.loading = false;
-        this.getProviderCompletedOrders()
+        this.loadingPapers = false;
       });
 
   }
