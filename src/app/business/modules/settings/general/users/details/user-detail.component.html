@@ -228,7 +228,7 @@
                         </div>
                         <div class="fieldPadding font-weight-bold">
                           <mat-select class="form-control widthWebKit" formControlName="selectedrole"
-                            (selectionChange)="onRoleSelect($event.value)">
+                            (selectionChange)="onRoleSelect($event.value)" [(ngModel)]="selectionTesting">
                             <mat-option [value]="role.id" *ngFor="let role of accountRoles">
                               <div *ngIf="role.roleName && role.roleName"><b>{{role.roleName}}</b></div>
                             </mat-option>

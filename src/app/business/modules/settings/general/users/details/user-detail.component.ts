@@ -259,7 +259,6 @@ export class BranchUserDetailComponent implements OnInit {
     // }
 
     this.getRolesInAccount('cdl');
-
   }
 
   // getRolesData(features) {
@@ -281,6 +280,7 @@ export class BranchUserDetailComponent implements OnInit {
       this.accountRoles = data;
       this.api_loading = false;
       console.log("accountRoles : ", this.accountRoles);
+
     });
   }
 
@@ -400,6 +400,8 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.actionparam.type === "edit") {
           this.usercaption = "User Details";
           this.type = this.user_data.userType;
+          console.log("this.user_data.userRoles[0].id", this.user_data.userRoles[0].id)
+          this.selectionTesting = this.user_data.userRoles[0].id
           if (this.sector === "healthCare") {
             if (this.type === "PROVIDER") {
               this.type = "DOCTOR";
@@ -470,11 +472,10 @@ export class BranchUserDetailComponent implements OnInit {
 
     if (this.user_data && this.user_data.userRoles && this.user_data.userRoles[0] && this.user_data.userRoles[0].id) {
       console.log("this.user_data.userRoles[0].id", this.user_data.userRoles[0].id)
-      this.userForm.controls.selectedrole.setValue(this.user_data.userRoles[0].id);
+      if (this.accountRoles) {
+        this.selectionTesting = this.user_data.userRoles[0].id;
+      }
     }
-    this.userForm.controls.selectedrole.setValue(this.user_data.userRoles[0].roleId);
-
-    console.log("After set the form", this.userForm.controls.selectedrole.value);
   }
   onUserSelect(event) {
     this.type = event.value;
