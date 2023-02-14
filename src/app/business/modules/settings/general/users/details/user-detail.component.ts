@@ -22,6 +22,7 @@ import {
   SearchCountryField
 } from "ngx-intl-tel-input";
 import { CommonDataStorageService } from "../../../../../../shared/services/common-datastorage.service";
+import { CdlService } from "../../../../../modules/cdl/cdl.service";
 
 @Component({
   selector: "app-branchuser-detail",
@@ -127,6 +128,8 @@ export class BranchUserDetailComponent implements OnInit {
   userRolesSelected: any;
   accountRoles: any = [];
   selectionTesting: any = 4;
+  user: any;
+  capabilities: any;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -140,7 +143,8 @@ export class BranchUserDetailComponent implements OnInit {
     private groupService: GroupStorageService,
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
-    private commonDataStorage: CommonDataStorageService
+    private commonDataStorage: CommonDataStorageService,
+    private cdlservice: CdlService
   ) {
     this.activated_route.queryParams.subscribe(data => {
       this.actionparam = data;
@@ -257,7 +261,11 @@ export class BranchUserDetailComponent implements OnInit {
     // if (this.accountRoles) {
     //   this.getRolesInAccount('cdl');
     // }
-
+    this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.user) {
+      this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
+    }
+    console.log("this.capabilities", this.capabilities)
     this.getRolesInAccount('cdl');
   }
 
