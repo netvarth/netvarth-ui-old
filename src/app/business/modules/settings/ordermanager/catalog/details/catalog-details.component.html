@@ -706,19 +706,19 @@
                                       <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(item)" class="p-button-rounded p-button-text"></button>
                                       <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(item)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
                                       <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"  #closebutton class="p-button-rounded p-button-text p-button-danger"></button>
-                                      <button *ngIf="item.itemId" class="pi pi-more" mat-icon-button
+                                      <!-- <button *ngIf="item.itemId" class="pi pi-more" mat-icon-button
                                       [matMenuTriggerFor]="appMenu">
                                       <mat-icon>more_vert</mat-icon>
-                                    </button>
+                                    </button> -->
                                   </div>
                                   </td>
-                                  <mat-menu #appMenu="matMenu">
+                                  <!-- <mat-menu #appMenu="matMenu">
                                     <button mat-menu-item (click)="catelogItemqrCodegeneraterOnlineID(item)">
                                       <i class="fa fa-share-alt"></i>Share item
                                     </button>
                                     <button mat-menu-item (click)="deleteCatalogItem(item)">
                                       <i class="icon-delete"></i>Remove</button>
-                                  </mat-menu>
+                                  </mat-menu> -->
                               </tr>
                           </ng-template>
                           <ng-template pTemplate="summary">
