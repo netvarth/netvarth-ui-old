@@ -356,7 +356,7 @@
 
                         <ng-template pTemplate="right">
                           <button pButton pRipple label="Add New Item" icon="pi pi-plus" class="p-button-success mr-2"
-                            data-toggle="modal" data-target="#itemListsModal" (click)="openDailogue()"></button>
+                            data-toggle="modal" data-target="#itemListsModal" (click)="openDailogue()" *ngIf="itemsforadd && itemsforadd.length > 0"></button>
                         </ng-template>
                       </p-toolbar>
                       <!--  [(selection)]="selectedProducts" [globalFilterFields]="['displayName','price','minQuantity','maxQuantity']"-->
