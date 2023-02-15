@@ -614,7 +614,7 @@ export class ServiceComponent implements OnInit, OnDestroy {
         console.log("Service Request :",event);
         if(this.action === 'edit' && this.service_data.serviceBookingType){
             this.is_change = true;
-            this.snackbarService.openSnackBar('Cannot set appointment type in edit mode', { 'panelClass': 'snackbarerror' });
+            this.snackbarService.openSnackBar('Appointment type cannot be changed', { 'panelClass': 'snackbarerror' });
             if(this.service_data.serviceBookingType === 'request'){
                 // this.serviceForm.controls['serviceBookingType'].setValue(this.service_data.serviceBookingType);
                 this.is_checked_request = true;
