@@ -79,6 +79,9 @@
                                                             <button type="button" mat-menu-item *ngIf="catalog.catalogStatus=='ACTIVE'" (click)="catalogqrCodegeneraterOnlineID(catalog)">
                                                                 <i class="fa fa-share-alt"></i>Share catalog
                                                               </button>
+                                                              <button type="button" mat-menu-item (click)="goToItems(catalog)">
+                                                                <img style="width: 16px;height:16px" src="./assets/images/order/Items.svg" />&nbsp; Catalog Items
+                                                              </button>
                                                         </mat-menu>
                                                     </span>
                                                     <span class="mbt-mobile-show">

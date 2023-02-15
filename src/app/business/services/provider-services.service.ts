@@ -2052,6 +2052,13 @@ export class ProviderServices {
       return this.servicemeta.httpGet('provider/catalog');
     }
   }
+  getCatalogItems(id?){
+    return this.servicemeta.httpGet('provider/catalog/' + id);
+  }
+  addItemsToCatalog(catalogId,list){
+    const url ='provider/catalog/' + catalogId + '/items'
+    return this.servicemeta.httpPost(url,list);
+  }
   stateChangeCatalog(id, status) {
     const url = 'provider/catalog/' + id + '/' + status;
     return this.servicemeta.httpPut(url);

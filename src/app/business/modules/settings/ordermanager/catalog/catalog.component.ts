@@ -84,6 +84,23 @@ export class CatalogComponent implements OnInit, OnDestroy {
             this.removeitemdialogRef.close();
         }
     }
+    goToItems(catalog) {
+        console.log("catalog id:",catalog.id);
+        let catalogId;
+        catalogId = catalog.id;;
+
+        const navigatExtras: NavigationExtras = {
+          queryParams: {
+            type: "all",
+            //type: this.isFrom ? this.isFrom : '',
+            catalogId:catalogId
+          },
+        };
+        this.router.navigate(
+          ["provider", "settings", "pos", "itemlist"],
+          navigatExtras
+        );
+      }
     catalogqrCodegeneraterOnlineID(catalog) {
         console.log("catalog :",catalog)
          let pid = '';

@@ -6,6 +6,8 @@ import { Location } from "@angular/common";
 import { SnackbarService } from "../../../../../shared/services/snackbar.service";
 import { ConfirmBoxComponent } from "../../../../../shared/components/confirm-box/confirm-box.component";
 import { MatDialog } from "@angular/material/dialog";
+import { ServiceQRCodeGeneratordetailComponent } from '../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
+import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
 
 @Component({
   selector: "app-itemlist",
@@ -35,6 +37,11 @@ export class ItemlistComponent implements OnInit {
   api_loading = false;
   screenWidth: number;
   bodyHeight: number;
+  catalogId: any;
+  bprofile: any = [];
+  qrdialogRef: any;
+  removeItemFromCatalogRef:any;
+  wndw_path = projectConstantsLocal.PATH;
 
   constructor(
     private provider_servicesobj: ProviderServices,
@@ -48,9 +55,16 @@ export class ItemlistComponent implements OnInit {
     this.activated_route.queryParams.subscribe((qParams) => {
       this.isFrom = qParams.type;
       this.groupName = qParams.name;
-      if (this.isFrom === "all") {
+      this.catalogId = qParams.catalogId;
+      if(this.isFrom === "all" && !this.catalogId) {
         this.getitems();
-      } else {
+      } 
+      else if(this.isFrom === "all" && this.catalogId){
+        console.log("Catalog :",this.catalogId);
+        this.getCatalogItems(this.catalogId);
+        // this.getitems();
+      }
+      else {
         this.itemGroupId = qParams.type;
         console.log("item group id :", this.itemGroupId);
         this.getItemsBygroupId();
@@ -60,7 +74,7 @@ export class ItemlistComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     
+    this.getBusinessProfile();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -77,8 +91,57 @@ export class ItemlistComponent implements OnInit {
       }
     
   }
+  
+  catelogItemqrCodegeneraterOnlineID(item) {
+    console.log("Item :",item)
+     let pid = '';
+    // let usrid = '';
+    if (!this.bprofile.customId) {
+        pid = this.bprofile.accEncUid;
+    } else {
+        pid = this.bprofile.customId;
+    }
+    this.qrdialogRef = this.dialog.open(ServiceQRCodeGeneratordetailComponent, {
+        width: '40%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'servceqrcodesmall'],
+        disableClose: true,
+        data: {
+            accencUid: pid,
+            path: this.wndw_path,
+           // serviceid: this.service.id,
+           // userid: usrid,
+            itemId:item.itemId,
+            catalogId:this.catalogId,
+            requestType:'shareItem'
+        }
+    });
+    this.qrdialogRef.afterClosed().subscribe(result => {
+        if (result === 'reloadlist') {
+            this.getBusinessProfile();
+        }
+    });
+}
+getBusinessProfile() {
+    this.provider_servicesobj.getBussinessProfile()
+        .subscribe(
+            (data :any) => {
+                this.bprofile = data;
+                console.log("bProfile :",data)
+            })
+}
+editCatalogItem(){
+  const navigatExtras: NavigationExtras = {
+    queryParams: {
+      action: "edit",
+    },
+  };
+  this.router.navigate(
+    ["provider", "settings", "ordermanager", "catalogs",this.catalogId],
+    navigatExtras
+  );
+}
   redirecTo() {
-    if (this.isFrom === "all") {
+    if(this.isFrom === "all" && !this.catalogId) {
       const navigatExtras: NavigationExtras = {
         queryParams: {
           type: "ordermanager",
@@ -88,7 +151,19 @@ export class ItemlistComponent implements OnInit {
         ["provider", "settings", "pos", "items"],
         navigatExtras
       );
-    } else {
+    } 
+    else if(this.isFrom === "all" && this.catalogId) {
+      // const navigatExtras: NavigationExtras = {
+      //   queryParams: {
+      //     type: "ordermanager",
+      //   },
+      // };
+      // this.router.navigate(
+      //   ["provider", "settings", "ordermanager", "catalogs"]
+      // );
+      this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs']);
+    } 
+    else {
       this.location.back();
     }
   }
@@ -159,6 +234,44 @@ export class ItemlistComponent implements OnInit {
       this.onResize();
       console.log("currentArray ",this.groupitems);
   }
+
+  getCatalogItems(catalogId){
+    this.items = [];
+    this.api_loading = true;
+    this.provider_servicesobj.getCatalogItems(catalogId).subscribe((data :any) => {
+     this.items = data.catalogItem.map((o1)=>{
+      return o1.item;
+     })
+      this.api_loading = false;
+      console.log("catalog items :",this.items);
+    });
+  }
+  deleteCatalogItem(item) {
+    console.log("Item delete :",item);
+    this.removeItemFromCatalogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+            'message': 'Do you really want to remove this item from catalog?'
+        }
+    });
+     this.removeItemFromCatalogRef.afterClosed().subscribe(result => {
+        if (result) {
+            this.api_loading = true;
+            this.provider_servicesobj.deleteCatalogItem(this.catalogId, item.itemId).subscribe(
+                (data) => {
+                    this.snackbarService.openSnackBar('Catalog item deleted successfully', { 'panelClass': 'snackbarnormal' });
+                    this.getCatalogItems(this.catalogId);
+                    this.api_loading = false;
+                }, error => {
+                    this.api_loading = false;
+                    this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                }
+            );
+        }
+    });
+}
 
   getitems() {
     this.items = [];
@@ -331,10 +444,10 @@ export class ItemlistComponent implements OnInit {
   isAllItemsSelected() {
     let items = 0;
     for (let item of this.groupitems) {
-      const custArr = this.selecteditemsforgroup.filter(
+      const itemArr = this.selecteditemsforgroup.filter(
         (cust) => cust.itemId === item.itemId
       );
-      if (custArr.length > 0) {
+      if (itemArr.length > 0) {
         items++;
       }
     }
@@ -348,35 +461,21 @@ export class ItemlistComponent implements OnInit {
   selectAllItems(event) {
     if (event.target.checked) {
       for (let i = 0; i < this.groupitems.length; i++) {
-        const customer = this.selecteditemsforgroup.filter(
-          (customer) => customer.itemId === this.groupitems[i].itemId
+        const items = this.selecteditemsforgroup.filter(
+          (item) => item.itemId === this.groupitems[i].itemId
         );
-        if (customer.length === 0) {
+        if (items.length === 0) {
           this.selecteditemsforgroup.push(this.groupitems[i]);
         }
         if (this.selecteditemsforgroup.length > 1) {
-          // this.selecteditemsforgroup.push(this.items[i]);
+          // this.selecteditemsforgroup.push(this.groupitems[i]);
           console.log("selected items :", this.selecteditemsforgroup);
-          // if (
-          //   this.selecteditemsforgroup[0].phoneNo &&
-          //   this.selecteditemsforgroup[0].email
-          // ) {
-          //   this.hide_msgicon = false;
-          // } else {
-          //   this.hide_msgicon = true;
-          // }
         }
-        // else {
-        //   const customerList = this.selectedcustomersformsg.filter(customer => customer.phoneNo || customer.email);
-        //   if (customerList.length === 0) {
-        //     this.hide_msgicon = true;
-        //   }
-        // }
       }
     } else {
       for (let i = 0; i < this.groupitems.length; i++) {
         const item = this.selecteditemsforgroup.filter(
-          (customer) => customer.itemId === this.groupitems[i].itemId
+          (item) => item.itemId === this.groupitems[i].itemId
         );
         if (item.length > 0) {
           this.selecteditemsforgroup = this.selecteditemsforgroup.filter(
@@ -404,10 +503,10 @@ export class ItemlistComponent implements OnInit {
     console.log("items :", item);
     this.item = item;
     // this.hide_msgicon = false;
-    const custArr = this.selecteditemsforgroup.filter(
+    const itemArr = this.selecteditemsforgroup.filter(
       (cust) =>cust.itemId === item.itemId
     );
-    if (custArr.length === 0) {
+    if (itemArr.length === 0) {
       this.selecteditemsforgroup.push(item);
     } else {
       this.selecteditemsforgroup.splice(
@@ -427,10 +526,10 @@ export class ItemlistComponent implements OnInit {
 
   checkSelection(item) {
     // console.log("item :",item)
-    const custom = this.selecteditemsforgroup.filter(
+    const itemArr = this.selecteditemsforgroup.filter(
       (cust) => cust.itemId === item.itemId
     );
-    if (custom.length > 0) {
+    if (itemArr.length > 0) {
       return true;
     }
   }

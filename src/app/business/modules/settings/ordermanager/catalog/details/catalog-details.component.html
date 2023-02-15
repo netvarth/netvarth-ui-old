@@ -310,14 +310,14 @@
                   <!--end::Wizard Step 1-->
                   <!--begin::Wizard Step 2-->
                   <div class="pb-5" *ngIf="step == 2">
-                    <div class="disp-flex">
+                    <!-- <div class="disp-flex">
                       <h4 class="mb-10 font-weight-bolder text-dark">Items </h4>
 
                       <div class="col-lg-6">
                         <button type="button" class="btn btn-success mr-2" style="font-weight:bolder;"
                           (click)="showCreateItemPopup()">Create New Item</button>
                       </div>
-                    </div>
+                    </div> -->
 
 
                     <div class="row" style="background: #ecf0f5;">
@@ -345,9 +345,208 @@
                       </div>
 
                     </div>
+                    <!--Begin primeng:card-->
+                    <div class="card" *ngIf="cataId">
+                      <p-toolbar styleClass="mb-4 gap-2">
+                        <ng-template pTemplate="left">
+                          <button pButton pRipple label="Create New Item" icon="pi pi-plus"
+                            class="p-button-success mr-2 smallDiv" (click)="showCreateItemPopup()"></button>
+                          <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger" (click)="deleteSelectedProducts()" [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
+                        </ng-template>
 
+                        <ng-template pTemplate="right">
+                          <button pButton pRipple label="Add New Item" icon="pi pi-plus" class="p-button-success mr-2"
+                            data-toggle="modal" data-target="#itemListsModal" (click)="openDailogue()"></button>
+                        </ng-template>
+                      </p-toolbar>
+                      <!--  [(selection)]="selectedProducts" [globalFilterFields]="['displayName','price','minQuantity','maxQuantity']"-->
+                      <p-table #dt [value]="catalogItems" dataKey="id" editMode="row" [rows]="5" [paginator]="true"
+                        [tableStyle]="{'min-width': 'auto'}" [rowHover]="true"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [showCurrentPageReport]="true">
+                        <ng-template pTemplate="caption">
+                          <div class="d-flex align-items-center justify-content-between">
+                            <h5 class="m-0">Catalog Items</h5>
+                            <!-- <span class="p-input-icon-left">
+                                      <i class="pi pi-search"></i>
+                                      <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                                  </span> -->
+                          </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <!-- <p-sortIcon field="maxQuantity"></p-sortIcon> -->
+                            <th pSortableColumn="displayName">Name</th>
+                            <th>Image</th>
+                            <th pSortableColumn="price">Price</th>
+                            <th pSortableColumn="minQuantity">MinQuantity</th>
+                            <th pSortableColumn="maxQuantity">MaxQuantity</th>
+                            <th pSortableColumn="action">Actions</th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                          <tr [pEditableRow]="item">
+                            <td>{{item.item.displayName}}</td>
+                            <td><img [src]="getItemImg(item.item)" [alt]="item.item.displayName" width="100"
+                                class="shadow-4" /></td>
+                            <td>{{item.item.price | currency:'INR'}}</td>
+                            <td>
+                              <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                  <input pInputText type="number" min="1" (keypress)="isNumber($event)"
+                                    (click)="$event.stopPropagation();" id="minquty_{{item.itemId}}"
+                                    value="{{item.minQuantity}}">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                  {{item.minQuantity}}
+                                </ng-template>
+                              </p-cellEditor>
+                            </td>
+                            <td>
+                              <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                  <input pInputText type="number" min="1" (keypress)="isNumber($event)"
+                                    (click)="$event.stopPropagation();" id="maxquty_{{item.itemId}}"
+                                    value="{{item.maxQuantity}}">
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                  {{item.maxQuantity}}
+                                </ng-template>
+                              </p-cellEditor>
+                            </td>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow
+                                  icon="pi pi-pencil" (click)="onRowEditInit(item)"
+                                  class="p-button-rounded p-button-text"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow
+                                  icon="pi pi-check" (click)="onRowEditSave(item)"
+                                  class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                                <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow
+                                  icon="pi pi-times" #closebutton
+                                  class="p-button-rounded p-button-text p-button-danger"></button>
+                                <button *ngIf="item.id" class="pi pi-more" mat-icon-button
+                                  [matMenuTriggerFor]="appMenu">
+                                  <mat-icon>more_vert</mat-icon>
+                                </button>
+                              </div>
+                            </td>
+                            <mat-menu #appMenu="matMenu">
+                              <button mat-menu-item (click)="catelogItemqrCodegeneraterOnlineID(item)">
+                                <i class="fa fa-share-alt"></i>Share item
+                              </button>
+                              <button mat-menu-item (click)="deleteCatalogItem(item)">
+                                <i class="icon-delete"></i>Remove</button>
+                            </mat-menu>
+                            <!-- <td>
+                                    <div class="flex align-items-center justify-content-center gap-2">
+                                        <button  pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"  class="p-button-rounded p-button-text"></button>
+                                        <button  pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"  class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                                        <button  pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"  class="p-button-rounded p-button-text p-button-danger"></button>
+                                    </div>
+                                </td> -->
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                          <div class="flex align-items-center justify-content-between">
+                            In total there are {{catalogItems ? catalogItems.length : 0 }} Catalog Items.
+                          </div>
+                        </ng-template>
+                      </p-table>
+                    </div>
+
+                    <p-dialog [(visible)]="catalogItemDialog" [style]="{width: '500px'}" header="Items" [modal]="true"
+                      styleClass="p-fluid">
+                      <p-table #dt [value]="itemsforadd" [tableStyle]="{'min-width': '75rem'}" [rowHover]="true"
+                        dataKey="id" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                        [showCurrentPageReport]="true">
+                        <ng-template pTemplate="caption">
+                          <div class="flex align-items-center justify-content-between">
+                            <h5 class="m-0">Items</h5>
+                          </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>&nbsp;
+                            <th pSortableColumn="displayName">Name <p-sortIcon field="displayName"></p-sortIcon></th>
+                            <th>Image</th>
+                            \
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                          <tr>
+                            <p-tableCheckbox [value]="item"></p-tableCheckbox>&nbsp;
+                            <td>{{item.displayName}}</td>
+                            <td><img [src]="getItemImg(item)" [alt]="item.displayName" width="50" class="shadow-4" />
+                            </td>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                          <div class="flex align-items-center justify-content-between">
+                            In total there are {{itemsforadd ? itemsforadd.length : 0 }} Items.
+                          </div>
+                        </ng-template>
+                      </p-table>
+                    </p-dialog>
+                    <div class="modal fade" id="itemListsModal" tabindex="-1" role="dialog"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <!-- items-body -->
+                          <div class="modal-body items-body" [ngStyle]="{'height.px': bodyHeight}">
+                            <div class="col-lg-12">
+                              <!-- [paginator]="true" [rows]="10" [showCurrentPageReport]="true" -->
+                              <p-table [value]="itemsforadd">
+                                <!-- <ng-template pTemplate="caption">
+                            <div class="p-d-flex p-ai-center p-jc-between">
+                                {{groupitems.length | json}} Items
+                            </div>
+                        </ng-template> -->
+                                <ng-template pTemplate="header">
+                                  <tr>
+                                    <th><input type="checkbox" (change)="selectAllItems($event)"
+                                        [checked]="isAllItemsSelected()" *ngIf="itemsforadd && itemsforadd.length > 0"> Name</th>
+                                    <th>Image</th>
+                                  </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-item>
+                                  <tr>
+                                    <td><input type="checkbox" name="Checkboxes4" (change)="selectItems(item)"
+                                        [checked]="checkSelection(item)" (click)="stopprop($event)">
+                                      {{item.displayName}}</td>
+                                    <td><img [src]="getItemImg(item)" [alt]="item.displayName" width="50" height="50"
+                                        class="shadow-4" /></td>
+
+                                  </tr>
+                                  <!-- <tr *ngIf="groupitems && groupitems.length === 0">
+                                <td colspan="2">No items left to add</td>
+                            </tr> -->
+                                </ng-template>
+                                <ng-template pTemplate="summary">
+                                  <div class="p-d-flex p-ai-center p-jc-between"
+                                    *ngIf="itemsforadd && itemsforadd.length > 0">
+                                    {{itemsforadd.length}} items...
+                                  </div>
+                                  <div class="p-d-flex p-ai-center p-jc-between text-center"
+                                    *ngIf="itemsforadd && itemsforadd.length === 0">
+                                    No items left to add
+                                  </div>
+                                </ng-template>
+                              </p-table>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn cancel-btn font-weight-bold mgn-5" data-dismiss="modal"
+                              #closebutton>Cancel</button>
+                            <button type="button" class="btn create-btn font-weight-bold mgn-5"
+                              [disabled]="selecteditemsforcatalog && selecteditemsforcatalog.length === 0"
+                              (click)="addItemToCatalogItem()" #closebutton>Add</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                     <!--begin::Card-->
-                    <div class="row bg-grey" *ngIf="cataId">
+                    <!-- <div class="row bg-grey" *ngIf="cataId">
                       <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of catalogItems;let i=index;"
                         [class.disable_card]="item.itemType === 'VIRTUAL'&& isExpired(item)">
                         <button *ngIf="item.id" class="pull-right more_btn" mat-icon-button
@@ -355,10 +554,6 @@
                           <mat-icon>more_horiz</mat-icon>
                         </button>
                         <mat-menu #appMenu="matMenu">
-                          <!-- <button mat-menu-item (click)="editCatalogItem(item)">
-                            <i class="icon-edit"></i>Edit</button>
-                          <button mat-menu-item (click)="deleteCatalogItem(item)">
-                            <i class="icon-delete"></i>Remove</button> -->
                           <button mat-menu-item (click)="catelogItemqrCodegeneraterOnlineID(catalogItems[i])">
                             <i class="fa fa-share-alt"></i>Share item
                           </button>
@@ -367,16 +562,14 @@
                         </mat-menu>
                         <div class="card card-custom card-shadowless itemselected">
                           <div class="card-body p-0">
-                            <!--begin::Image-->
+                           
                             <div class="overlay">
 
                               <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
                                 [ngStyle]="{ 'background-image': 'url(' + getItemImg(item.item) + ')'}">
                               </div>
                             </div>
-                            <!--end::Image-->
-
-                            <!--begin::Details-->
+                  
                             <div
                               class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
                               <a
@@ -384,7 +577,7 @@
 
                               <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.item.price}}
                               </div>
-                              <!-- min -->
+                             
                               <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Min
                                       Qty</i></span></div>
@@ -395,7 +588,7 @@
                                   (keypress)="isNumber($event)" id="minquty_{{item.itemId}}" type="number" min="1"
                                   value="{{item.minQuantity}}">
                               </div>
-                              <!-- Max -->
+                              
                               <div class="input-group mt-2">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Max
                                       Qty</i></span></div>
@@ -407,49 +600,30 @@
                                   value="{{item.maxQuantity}}">
                               </div>
                             </div>
-                            <!--end::Details-->
+                           
                           </div>
                         </div>
 
 
                       </div>
-                      <!--[class.disable_card] = "item.itemType === 'VIRTUAL'&& isExpired(item)"-->
                       <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of itemsforadd;let i=index;">
-
                         <div class="card card-custom card-shadowless" (click)="selectaddItem(i)"
                           [class.itemselected]="item.selected"
                           [class.disable_card]="item.itemType === 'VIRTUAL'&& isExpired(item)">
                           <div class="card-body p-0">
-                            <!-- <button *ngIf="item.itemId" class="pull-right more_btn" mat-icon-button
-                              [matMenuTriggerFor]="appMenu">
-                              <mat-icon>more_horiz</mat-icon>
-                            </button>
-                            <mat-menu #appMenu="matMenu">
-
-                              <button mat-menu-item  (click)="catelogItemqrCodegeneraterOnlineID(itemsforadd[i])">
-                                <i class="fa fa-share-alt"></i>Share item
-                              </button>
-                            </mat-menu> -->
-                            <!--begin::Image-->
                             <div class="overlay">
-
-                              <div class="overlay-wrapper rounded bg-light text-center"
+                              <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
                                 [ngStyle]="{ 'background-image': 'url(' + getItemImg(item) + ')'}">
                               </div>
                             </div>
-                            <!--end::Image-->
-
-                            <!--begin::Details-->
                             <div
                               class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
-
                               <a
                                 class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}*</a>
                               <small *ngIf="item.itemType === 'VIRTUAL'&& isExpired(item)"
                                 class="text-danger font-weight-bold">Expired</small>
 
                               <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div>
-                              <!-- min -->
                               <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Min
                                       Qty</i></span></div>
@@ -458,7 +632,6 @@
                                   placeholder="Min Qty" (keypress)="isNumber($event); $event.stopPropagation();"
                                   id="minquty_{{item.itemId}}" type="number" min="1" value="{{item.minQuantity}}">
                               </div>
-                              <!-- Max -->
                               <div class="input-group mt-2">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Max
                                       Qty</i></span></div>
@@ -468,40 +641,112 @@
                                   type="number" min="1" value="{{item.maxQuantity}}">
                               </div>
                             </div>
-                            <!--end::Details-->
                           </div>
                         </div>
 
 
                       </div>
-
-
-                    </div>
-
-                    <div class="row bg-grey" *ngIf="!cataId">
+                    </div> -->
+                    <div class="card" *ngIf="!cataId">
+                      <p-toolbar styleClass="mb-4 gap-2">
+                          <ng-template pTemplate="left">
+                              <button pButton pRipple label="Create New Item" icon="pi pi-plus" class="p-button-success mr-2 smallDiv" (click)="showCreateItemPopup()"></button>
+                          </ng-template>
+                  
+                          <!-- <ng-template pTemplate="right">
+                            <button  pButton pRipple label="Add New Item" icon="pi pi-plus" class="p-button-success mr-2" data-toggle="modal"
+                            data-target="#itemsModal" (click)="openDailogue()"></button>
+                          </ng-template> -->
+                      </p-toolbar>
+                      <p-table #dt [value]="catalogItem" dataKey="id" editMode="row" [rows]="5" [paginator]="true"  [tableStyle]="{'min-width': 'auto'}"
+                          [rowHover]="true"
+                          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+                          <ng-template pTemplate="caption">
+                              <div class="d-flex align-items-center justify-content-between">
+                                  <h5 class="m-0">Catalog Items</h5>
+                              </div>
+                          </ng-template>
+                          <ng-template pTemplate="header">
+                              <tr>
+                                  <th pSortableColumn="displayName">Name</th>
+                                  <th>Image</th>
+                                  <th pSortableColumn="price">Price</th>
+                                  <th pSortableColumn="minQuantity">MinQuantity</th>
+                                  <th pSortableColumn="maxQuantity">MaxQuantity</th>
+                                  <th pSortableColumn="action">Actions</th>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-item let-editing="editing" let-ri="rowIndex">
+                              <tr [pEditableRow]="item">
+                                  <td><input type="checkbox" name="Checkboxes4" (change)="selectItem(ri)"
+                                    [checked]="item.selected">&nbsp;{{item.displayName}}</td>
+                                  <td><img [src]="getItemImg(item)" [alt]="item.displayName" width="100" class="shadow-4" /></td>
+                                  <td>{{item.price | currency:'INR'}}</td>
+                                  <td>
+                                    <p-cellEditor>
+                                      <ng-template pTemplate="input">
+                                          <input pInputText  type="number" min="1" (keypress)="isNumber($event)" (click)="$event.stopPropagation();" id="minquty_{{item.itemId}}" value="{{item.minQuantity}}">
+                                      </ng-template>
+                                      <ng-template pTemplate="output">
+                                          {{item.minQuantity}}
+                                      </ng-template>
+                                  </p-cellEditor>
+                                  </td>
+                                  <td> 
+                                    <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText  type="number" min="1" (keypress)="isNumber($event)" (click)="$event.stopPropagation();" id="maxquty_{{item.itemId}}" value="{{item.maxQuantity}}">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{item.maxQuantity}}
+                                    </ng-template>
+                                </p-cellEditor></td>
+                                  <td>
+                                    <div class="d-flex align-items-center">
+                                      <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(item)" class="p-button-rounded p-button-text"></button>
+                                      <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(item)" class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                                      <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"  #closebutton class="p-button-rounded p-button-text p-button-danger"></button>
+                                      <button *ngIf="item.itemId" class="pi pi-more" mat-icon-button
+                                      [matMenuTriggerFor]="appMenu">
+                                      <mat-icon>more_vert</mat-icon>
+                                    </button>
+                                  </div>
+                                  </td>
+                                  <mat-menu #appMenu="matMenu">
+                                    <button mat-menu-item (click)="catelogItemqrCodegeneraterOnlineID(item)">
+                                      <i class="fa fa-share-alt"></i>Share item
+                                    </button>
+                                    <button mat-menu-item (click)="deleteCatalogItem(item)">
+                                      <i class="icon-delete"></i>Remove</button>
+                                  </mat-menu>
+                              </tr>
+                          </ng-template>
+                          <ng-template pTemplate="summary">
+                              <div class="flex align-items-center justify-content-between">
+                                  In total there are {{catalogItem ? catalogItem.length : 0 }} Catalog Items.
+                              </div>
+                          </ng-template>
+                      </p-table>
+                  </div> 
+                  <!-- <div class="row bg-grey" *ngIf="!cataId">
 
                       <div class="col-md-4 mt-4 col-xxl-3 col-lg-4 mb-3" *ngFor="let item of catalogItem;let i=index;">
 
                         <div class="card card-custom card-shadowless" (click)="selectItem(i)"
                           [class.itemselected]="item.selected">
                           <div class="card-body p-0">
-                            <!--begin::Image-->
                             <div class="overlay">
 
                               <div class="overlay-wrapper rounded bg-light text-center bg_item_img"
                                 [ngStyle]="{ 'background-image': 'url(' + getItemImg(item) + ')'}">
                               </div>
                             </div>
-                            <!--end::Image-->
-
-                            <!--begin::Details-->
                             <div
                               class="text-center mt-5 mb-md-0 mb-lg-1 mb-md-0 mb-lg-1 mb-lg-0 mb-1 d-flex flex-column item_info">
                               <a
                                 class="font-size-h5 font-weight-bolder text-dark-75 text-hover-primary mb-1">{{item.displayName}}*</a>
 
                               <div class="font-size-h6 text-muted font-weight-bolder rupee-font">₹ {{item.price}}</div>
-                              <!-- min -->
                               <div class="input-group">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Min
                                       Qty</i></span></div>
@@ -509,7 +754,6 @@
                                   (keypress)="isNumber($event);" id="minquty_{{item.itemId}}" type="number" min="1"
                                   value="{{item.minQuantity}}">
                               </div>
-                              <!-- Max -->
                               <div class="input-group mt-2">
                                 <div class="input-group-prepend"><span class="input-grp-txt1 rounded-0"><i class="">Max
                                       Qty</i></span></div>
@@ -518,15 +762,10 @@
                                   value="{{item.maxQuantity}}">
                               </div>
                             </div>
-                            <!--end::Details-->
                           </div>
                         </div>
-
-
                       </div>
-
-
-                    </div>
+                    </div>  -->
                   </div>
                   <!--end::Wizard Step 2-->
 

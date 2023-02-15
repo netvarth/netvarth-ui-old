@@ -2,9 +2,9 @@
     <div class="card title-gb">
         <h5 class="mgn-up-10">
             <span class="fa fa-arrow-left pointer-cursor" (click)="redirecTo()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <span *ngIf="isFrom === 'all'">All Items</span>
+            <span *ngIf="isFrom === 'all' && !catalogId">All Items</span>
+            <span *ngIf="isFrom === 'all' && catalogId">Catalog Items</span>
             <span *ngIf="itemGroupId" class="text-capitalize">{{groupName}}</span>
-
             <button *ngIf="itemGroupId" mat-flat-button
                 class="btn btn action-button pull-right  btn-primary action-button-add" data-toggle="modal"
                 data-target="#itemListsModal" (click)="getitemsByFiltered()">
@@ -19,7 +19,7 @@
         <!-- <div class="col-lg-4" >
         <span>sidebar of items and item groupings......</span>
       </div> -->
-        <div class="col-lg-12" *ngIf="isFrom === 'all' || itemGroupId">
+        <div class="col-lg-12" *ngIf="(this.isFrom === 'all' && !this.catalogId) || (this.isFrom === 'all' && this.catalogId) || itemGroupId">
             <p-table [value]="items" [paginator]="true" [rows]="5" [showCurrentPageReport]="true">
                 <!-- <ng-template pTemplate="caption">
                     <div class="p-d-flex p-ai-center p-jc-between">
@@ -58,7 +58,7 @@
                                     </button>
                                 </span>
                                 <mat-menu #appMenu="matMenu">
-                                    <button class="text-capitalize" mat-menu-item (click)="itemStatusChange(item)">
+                                    <button class="text-capitalize" *ngIf="!catalogId" mat-menu-item (click)="itemStatusChange(item)">
                                         <!-- (click)="openShareFileWindow(file)"  <i class="fa fa-share-alt" aria-hidden="true"></i> -->
                                         <i *ngIf="item['status'] === 'INACTIVE'" class="fa fa-eye"
                                             aria-hidden="true"></i>
@@ -66,21 +66,24 @@
                                             aria-hidden="true"></i> {{item['status'] === 'ACTIVE' ? 'disable' :
                                         'enable'}}
                                     </button>
-                                    <button mat-menu-item (click)="editItem(item)">
+                                    <button mat-menu-item *ngIf="!catalogId" (click)="editItem(item)">
                                         <i class="fa fa-edit" aria-hidden="true"></i> Edit
                                     </button>
+                                    <!-- <button mat-menu-item *ngIf="catalogId" (click)="editCatalogItem()">
+                                        <i class="fa fa-edit" aria-hidden="true"></i> Edit
+                                    </button> -->
                                     <button *ngIf="itemGroupId" mat-menu-item (click)="removItem(item)">
                                         <i class="fa fa-trash" aria-hidden="true"></i> Remove
                                     </button>
-                                    <!-- <button *ngIf="!itemGroupId" mat-menu-item (click)="removItemFromAllItems(item)">
+                                    <button mat-menu-item *ngIf="catalogId" (click)="catelogItemqrCodegeneraterOnlineID(item)">
+                                        <i class="fa fa-share-alt"></i>Share item
+                                      </button>
+                                      <button *ngIf="catalogId" mat-menu-item (click)="deleteCatalogItem(item)">
                                         <i class="fa fa-trash" aria-hidden="true"></i> Remove
-                                    </button> -->
+                                    </button>
                                 </mat-menu>
                             </div>
                         </td>
-
-                        <!-- <td><p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating></td> -->
-                        <!-- <td><span [class]="'item-badge status-' + item.item.isStockAvailable">InStock</span></td> -->
                     </tr>
                     <tr *ngIf="items.length === 0"><span class="bold">No items found</span></tr>
                 </ng-template>
