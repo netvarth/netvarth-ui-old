@@ -156,7 +156,7 @@
                   <div class="cart">
                     <span class="text-red item-price"
                       *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
-                        class="fa fa-inr"></i>&nbsp;{{getItemPrice(item,item.itemOptionsIndex)}}</span>
+                        class="fa fa-inr"></i>&nbsp;{{getItemPrice(item,item.itemOptionsIndex) * getItemQty(item,item.itemOptionsIndex)}}</span>
                     <span class="text-red item-price"
                       *ngIf="item.item && item.item.price && item.item.showPromotionalPrice">&nbsp;<i
                         class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>

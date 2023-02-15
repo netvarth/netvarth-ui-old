@@ -22,6 +22,7 @@ export class SignatureComponent implements OnInit {
   loanId: any;
   loanKycId: any;
   accountId: any;
+  type: any;
 
   constructor(
     private agreementService: AgreementService,
@@ -39,6 +40,9 @@ export class SignatureComponent implements OnInit {
     }
     if (this.data && this.data.account) {
       this.accountId = this.data.account;
+    }
+    if (this.data && this.data.type) {
+      this.type = this.data.type;
     }
   }
 
@@ -65,7 +69,7 @@ export class SignatureComponent implements OnInit {
     const blobPropdata = new Blob([JSON.stringify(propertiesDet)], { type: 'application/json' });
     submit_data.append('properties', blobPropdata);
     if (submit_data && this.loanId && this.loanKycId) {
-      this.uploadDigitalsign(this.loanId, this.loanKycId, submit_data);
+      this.uploadDigitalsign(this.loanId, this.loanKycId, submit_data, this.type);
     }
   }
 
@@ -96,8 +100,8 @@ export class SignatureComponent implements OnInit {
     this.signaturePad.clear();
   }
 
-  uploadDigitalsign(uId, kycId, submit_data) {
-    this.agreementService.uploadDigitalSign(uId, kycId, submit_data, this.accountId)
+  uploadDigitalsign(uId, kycId, submit_data, type) {
+    this.agreementService.uploadDigitalSign(uId, kycId, submit_data, this.accountId, type)
       .subscribe((data) => {
         this.snackbarService.openSnackBar('Digital sign uploaded successfully');
         this.signatureRef.close(data);

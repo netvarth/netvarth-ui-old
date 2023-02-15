@@ -43,8 +43,8 @@ export class AgreementService {
     return this.servicemeta.httpGet(url, null);
   }
 
-  uploadDigitalSign(Uid, KycId, submit_data, accountId) {
-    const url = 'provider/loanapplication/' + Uid + '/kyc/' + KycId + '/digitalsign?account=' + accountId;
+  uploadDigitalSign(Uid, KycId, submit_data, accountId, type) {
+    const url = 'provider/loanapplication/' + Uid + '/kyc/' + KycId + '/digitalsign/' + type + '?account=' + accountId;
     return this.servicemeta.httpPost(url, submit_data);
   }
 

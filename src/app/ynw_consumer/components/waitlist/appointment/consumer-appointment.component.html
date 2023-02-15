@@ -569,7 +569,8 @@
                     </ng-container>
                   </div>
                   <div class="clearfix"></div>
-                  <div class="mgn-up-20 col-md-12 col-xs-12 no-padding" *ngIf="selectedService && selectedService.serviceBookingType !== 'request'">
+                  <div class="mgn-up-20 col-md-12 col-xs-12 no-padding"
+                    *ngIf="selectedService && selectedService.serviceBookingType !== 'request'">
                     <div class="col-md-12 txt-align-center pad_link question-header"
                       *ngIf="paymentmodes && paymentmodes.internationalPay && paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
                       <span (click)="togglepaymentMode()" class="pointer-cursor">

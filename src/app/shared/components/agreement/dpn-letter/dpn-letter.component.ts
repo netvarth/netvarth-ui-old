@@ -82,17 +82,19 @@ export class DpnLetterComponent implements OnInit {
 
   }
 
-  manualSignature() {
+  manualSignature(type) {
     const height: any = this.screenHeight;
     const uploadmanualsignatureRef = this.dialog.open(SignatureComponent, {
       width: this.screenWidth,
-      height: height,//this.ScreenHeight,
+      height: height,
+      //this.ScreenHeight,
       panelClass: ['popup-class'],
       disableClose: true,
       data: {
         "uId": this.loanId,
         "kycId": this.loanKycId,
-        "account": this.accountId
+        "account": this.accountId,
+        "type": type
       }
     });
     uploadmanualsignatureRef.afterClosed().subscribe((res) => {

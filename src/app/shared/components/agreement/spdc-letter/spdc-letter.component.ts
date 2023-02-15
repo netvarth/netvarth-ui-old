@@ -37,7 +37,8 @@ export class SpdcLetterComponent implements OnInit {
     private snackbarService: SnackbarService,
     private router: Router
   ) {
-    this.ActivatedRoute.params.subscribe((params) => {
+    this.ActivatedRoute.queryParams.subscribe((params) => {
+      console.log("params", params)
       if (params) {
         if (params && params.account) {
           this.accountId = params.account;
@@ -62,9 +63,9 @@ export class SpdcLetterComponent implements OnInit {
   getloanDetails(loanId, accountId) {
     this.agreementService.getLoanFromOutside(loanId, accountId).subscribe((data: any) => {
       this.loanData = data;
-      // if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
-      //   this.loanKycId = this.loanData.loanApplicationKycList[0].id;
-      // }
+      if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
+        this.loanKycId = this.loanData.loanApplicationKycList[0].id;
+      }
       console.log("this.loanData", this.loanData)
       if (this.loanData.spInternalStatus == 'kjkjk') {
         this.snackbarService.openSnackBar("Link Expired or Invalid");
@@ -88,7 +89,7 @@ export class SpdcLetterComponent implements OnInit {
 
   }
 
-  manualSignature() {
+  manualSignature(type) {
     const height: any = this.screenHeight;
     const uploadmanualsignatureRef = this.dialog.open(SignatureComponent, {
       width: this.screenWidth,
@@ -98,7 +99,8 @@ export class SpdcLetterComponent implements OnInit {
       data: {
         "uId": this.loanId,
         "kycId": this.loanKycId,
-        "account": this.accountId
+        "account": this.accountId,
+        "type": type
       }
     });
     uploadmanualsignatureRef.afterClosed().subscribe((res) => {

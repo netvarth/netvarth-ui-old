@@ -731,7 +731,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   }
 
   getItemQty(item, index?) {
-    let qty = this.newOrderList.filter(i => i.id === item.item.itemId).length;
+    let qty = this.orderList.filter(i => i.id === item.item.itemId).length;
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
     if (this.haveItemOptions(item) && itemOptionsData && index) {
       qty = this.orderList.filter(i => i.itemOptionsIndex === index).length;
@@ -1735,7 +1735,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       }
     }
     else {
-      return item.item.price
+      return item.item.price * this.getItemQty(item);
     }
   }
 
