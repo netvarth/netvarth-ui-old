@@ -363,7 +363,7 @@
                       <p-table #dt [value]="catalogItems" dataKey="id" editMode="row" [rows]="5" [paginator]="true"
                         [tableStyle]="{'min-width': 'auto'}" [rowHover]="true"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                        [showCurrentPageReport]="true">
+                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,15,20]">
                         <ng-template pTemplate="caption">
                           <div class="d-flex align-items-center justify-content-between">
                             <h5 class="m-0">Catalog Items</h5>
