@@ -88,15 +88,16 @@
                                                        
                                                         <button class="editcls" type="button"
                                                             (click)="editCatalog(catalog)">{{edit_btn}}</button>
-                                                            <button type="button"  (click)="catalogqrCodegeneraterOnlineID(catalog)" style="margin-right:5px;border-radius:10px; color:blue">
-                                                                <i class="fa fa-share-alt gap-1"></i>Share catalog
+                                                            <button type="button"  (click)="catalogqrCodegeneraterOnlineID(catalog)" style="margin-right:5px;border-radius:10px;">
+                                                                <i class="fa fa-share-alt gap-1"></i> Share catalog
                                                               </button>
-                                                        <button class="status tel-serv-flex" type="button"
-                                                            style="color:blue;border-radius: 10px;" (click)="dochangeStatus(catalog)">
+                                                              <!-- tel-serv-flex -->
+                                                        <button class="status" type="button"
+                                                            style="border-radius: 10px;" (click)="dochangeStatus(catalog)">
                                                             <i
-                                                                *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"></i>
+                                                                *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"></i> 
                                                             <i *ngIf="catalog.catalogStatus=='ACTIVE'"
-                                                                class="icon-disable icon-disable1"></i>
+                                                                class="icon-disable icon-disable1"></i> 
                                                             {{(catalog.catalogStatus=='ACTIVE') ? 'Disable'
                                                             :'Enable'}}</button>
                                                             <button type="button" (click)="goToItems(catalog)" style="margin-right:5px;margin-left:5px;border-radius:10px;">
