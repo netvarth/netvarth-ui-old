@@ -312,7 +312,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         // else{
         //       this.setItemFromCatalog();
         // }
-        this.getCatalog();
+        // this.getCatalog();
     }
     onRowEditInit(item) {
                 console.log("init :",item);
@@ -321,13 +321,17 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
     onRowEditSave(item) {
         this.catalogSelectedItemsadd = [];
        if (item.minQuantity > 0 && item.maxQuantity > 0) {
-            // delete this.catalogItems[item.id];
             item.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + item.itemId + '')).value || '1';
             item.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + item.itemId + '')).value || '5';
             if (item.minQuantity > item.maxQuantity) {
-                // ' + this.catalogItem[item].displayName + ' 
                 item.minQuantity = 1;
                 this.snackbarService.openSnackBar('' + item.item.displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+                this.api_loading = false;
+                return;
+            }
+            else if(item.maxQuantity > 5){
+                item.maxQuantity = 5;
+                this.snackbarService.openSnackBar('' + item.item.displayName + ' maximum quantity should not be greater than 5', { 'panelClass': 'snackbarerror' });
                 this.api_loading = false;
                 return;
             }
@@ -337,10 +341,9 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                     'maxQuantity' : parseInt(item.maxQuantity),
                 }
                 console.log("itemUpdate",itemUpdate);
-                this.updateItems(itemUpdate, item.id);
-                // this.editCatalog(postdata);
-                // console.log("Save Item :",item);
-                this.snackbarService.openSnackBar('Details updated successfully', { 'panelClass': 'snackbarnormal' });
+                if(itemUpdate){
+                    this.updateItems(itemUpdate, item.item.itemId);
+                }
             }    
         }
         else {
@@ -457,11 +460,6 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
           },(error)=>{
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
           })
-        //   let items ={
-        //     'catalogItem':this.catalogSelectedItemsadd
-        //   }
-          
-       
         console.log("Added catalogSelectedItemsadd :",this.itemsToAdd);
       }
 
@@ -643,10 +641,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             this.subscriptions.sink = this.provider_services.getProviderfilterItems(apiFilter)
                 .subscribe(
                     data => {
-                        // console.log(JSON.stringify(data));
-
                         this.item_list = data;
-                        console.log('item_list :',this.item_list);
                         this.item_count = this.item_list.length;
                         this.catalogItem = data;
                         this.selectedItemForCatalog = data;
@@ -654,8 +649,6 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                             itm.minQuantity = 1;
                             itm.maxQuantity = 5;
                         }
-                       
-                        console.log("promise catalog:",this.catalogItem);
                         resolve(data);
                     },
                     error => {
@@ -2224,6 +2217,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 // this.getCatalog();
                 // this.getItems();
                 if(data){
+                    this.snackbarService.openSnackBar('Details updated successfully', { 'panelClass': 'snackbarnormal' });
                     this.getUpdatedItems();
                 }
                 this.api_loading = false;
@@ -2257,7 +2251,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         );
     }
 
-    deleteCatalogItem(itm) {
+    deleteCatalogItem(item) {
         this.removeitemdialogRef = this.dialog.open(ConfirmBoxComponent, {
             width: '50%',
             panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
@@ -2270,11 +2264,11 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
 
             if (result) {
                 this.api_loading = true;
-                this.subscriptions.sink = this.provider_services.deleteCatalogItem(this.cataId, itm.item.itemId).subscribe(
+                this.subscriptions.sink = this.provider_services.deleteCatalogItem(this.cataId, item.item.itemId).subscribe(
                     (data) => {
                         // this.getCatalog();
                         if(data){
-                            this.snackbarService.openSnackBar(`${itm.item.displayName} item is deleted successfully`, { 'panelClass': 'snackbarnormal' });
+                            this.snackbarService.openSnackBar(`${item.item.displayName} item is deleted successfully`, { 'panelClass': 'snackbarnormal' });
                             this.getUpdatedItems();
                         }
                         this.api_loading = false;

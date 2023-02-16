@@ -85,6 +85,7 @@
                                                         </mat-menu>
                                                     </span>
                                                     <span class="mbt-mobile-show">
+                                                       
                                                         <button class="editcls" type="button"
                                                             (click)="editCatalog(catalog)">{{edit_btn}}</button>
                                                             <button type="button"  (click)="catalogqrCodegeneraterOnlineID(catalog)" style="margin-right:5px;border-radius:10px; color:blue">
@@ -98,6 +99,10 @@
                                                                 class="icon-disable icon-disable1"></i>
                                                             {{(catalog.catalogStatus=='ACTIVE') ? 'Disable'
                                                             :'Enable'}}</button>
+                                                            <button type="button" (click)="goToItems(catalog)" style="margin-right:5px;margin-left:5px;border-radius:10px;">
+                                                                <img style="width: 16px;height:16px" src="./assets/images/order/Items.svg" />&nbsp; Catalog Items
+                                                              </button>
+                                                           
                                                     </span>
                                                 </td>
                                             </tr>
