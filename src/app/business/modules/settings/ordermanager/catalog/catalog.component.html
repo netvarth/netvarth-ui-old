@@ -88,11 +88,11 @@
                                                        
                                                         <button class="editcls" type="button"
                                                             (click)="editCatalog(catalog)">{{edit_btn}}</button>
-                                                            <button type="button"  (click)="catalogqrCodegeneraterOnlineID(catalog)" style="margin-right:5px;border-radius:10px;">
+                                                            <!-- <button type="button"  (click)="catalogqrCodegeneraterOnlineID(catalog)" style="margin-right:5px;border-radius:10px;">
                                                                 <i class="fa fa-share-alt gap-1"></i> Share catalog
-                                                              </button>
+                                                              </button> -->
                                                               <!-- tel-serv-flex -->
-                                                        <button class="status" type="button"
+                                                        <!-- <button class="status" type="button"
                                                             style="border-radius: 10px;" (click)="dochangeStatus(catalog)">
                                                             <i
                                                                 *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"></i> 
@@ -102,7 +102,28 @@
                                                             :'Enable'}}</button>
                                                             <button type="button" (click)="goToItems(catalog)" style="margin-right:5px;margin-left:5px;border-radius:10px;">
                                                                 <img style="width: 16px;height:16px" src="./assets/images/order/Items.svg" />&nbsp; Catalog Items
+                                                              </button> -->
+                                                              <button type="button" mat-icon-button
+                                                              [matMenuTriggerFor]="smallDeviceMenu">
+                                                              <mat-icon>more_vert</mat-icon>
+                                                          </button>
+                                                          <mat-menu #smallDeviceMenu="matMenu">
+                                                              <button type="button" (click)="dochangeStatus(catalog)"
+                                                                  mat-menu-item>
+                                                                  <i
+                                                                      *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"></i>
+                                                                  <i *ngIf="catalog.catalogStatus=='ACTIVE'"
+                                                                      class="icon-disable"></i>
+                                                                  {{(catalog.catalogStatus=='ACTIVE') ? 'Disable'
+                                                                  :'Enable'}}
                                                               </button>
+                                                              <button type="button" mat-menu-item *ngIf="catalog.catalogStatus=='ACTIVE'" (click)="catalogqrCodegeneraterOnlineID(catalog)">
+                                                                  <i class="fa fa-share-alt"></i>Share catalog
+                                                                </button>
+                                                                <button type="button" mat-menu-item (click)="goToItems(catalog)">
+                                                                  <img style="width: 16px;height:16px" src="./assets/images/order/Items.svg" />&nbsp; Catalog Items
+                                                                </button>
+                                                          </mat-menu>
                                                            
                                                     </span>
                                                 </td>
