@@ -2188,7 +2188,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             }
         }
          
-          this.itemsforadd = items;
+          this.itemsforadd = items.sort().reverse();
           this.onResize();
           console.log("currentArray ",this.itemsforadd);
       }
@@ -2335,7 +2335,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                             this.catalogcaption = this.catalog.catalogName;
                         }
                         if (this.catalog.catalogItem) {
-                            this.catalogItems = this.catalog.catalogItem;
+                            this.catalogItems = this.catalog.catalogItem.sort().reverse();
                             this.selectedCatalogItems =  this.catalog.catalogItem;
                             console.log("edit catalog:",this.catalogItems);
                             this.setItemFromCataDetails();
