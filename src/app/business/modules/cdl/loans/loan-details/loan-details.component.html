@@ -438,6 +438,7 @@
               <div class="details-title">Bank Statements</div>
             </div>
           </div>
+
           <div class="row mt-2"
             *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
             <div class="col-md-4 no-padding-small">
@@ -456,6 +457,17 @@
               </a>
             </div>
           </div>
+
+          <div class="row mt-4" *ngIf="accountaggregatingStatusShowing">
+            <div class="col-md-4 no-padding-small">
+              <div>
+                <div class="btn btn-primary open-all-btn-success">Statement Aggregation
+                  {{accountaggregatingStatus}}
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <br>
         </div>
 

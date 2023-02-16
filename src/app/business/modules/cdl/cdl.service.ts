@@ -76,6 +76,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getAccountAggregatorStatus(uId, kycId) {
+    const url = 'provider/loanapplication/accountaggregatestatus/' + uId + '/' + kycId;
+    return this.servicemeta.httpGet(url, null);
+  }
+
 
   getLoans() {
     const url = 'provider/loanapplication';

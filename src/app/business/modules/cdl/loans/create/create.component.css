@@ -18,6 +18,24 @@
   padding: 10px 20px !important;
 }
 
+.btn-success {
+  background-color: green !important;
+  border-color: green !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+
+.open-all-btn-success {
+  background-color: green !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 2px !important;
+  padding: 5px 10px !important;
+}
+
 .open-all-btn {
   background-color: #1e4079 !important;
   border: none !important;

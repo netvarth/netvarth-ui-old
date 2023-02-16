@@ -58,6 +58,8 @@ export class LoanDetailsComponent implements OnInit {
   capabilities: any;
   mafilScoreData: any;
   loanEmiDetailsData: any;
+  accountaggregatingStatus: ArrayBuffer;
+  accountaggregatingStatusShowing: boolean;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -76,6 +78,9 @@ export class LoanDetailsComponent implements OnInit {
       if (params) {
         if (params && params.id) {
           this.loanId = params.id;
+          if (this.loanId) {
+            this.getAccountAggregatorStatus(this.loanId, 0)
+          }
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
             this.checkMafilScore();
@@ -115,6 +120,14 @@ export class LoanDetailsComponent implements OnInit {
         this.mafilScore = data.creditScore;
       }
     });
+  }
+
+
+  getAccountAggregatorStatus(uId, kycId) {
+    this.cdlservice.getAccountAggregatorStatus(uId, 0).subscribe((data) => {
+      this.accountaggregatingStatus = data;
+      this.accountaggregatingStatusShowing = true;
+    })
   }
 
 

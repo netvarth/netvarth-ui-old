@@ -159,6 +159,8 @@ export class CreateComponent implements OnInit {
   banksListNames = new FormControl('');
   bankListName: any;
   customerData: any;
+  accountaggregatingStatus: ArrayBuffer;
+  accountaggregatingStatusShowing: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -312,6 +314,7 @@ export class CreateComponent implements OnInit {
             }
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
               this.loanApplicationKycId = this.loanData.loanApplicationKycList[0].id;
+              this.getAccountAggregatorStatus(this.loanId, this.loanApplicationKycId);
             }
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineeName) {
               this.createLoan.controls.nomineename.setValue(this.loanData.loanApplicationKycList[0].nomineeName);
@@ -544,6 +547,7 @@ export class CreateComponent implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
 
@@ -573,6 +577,7 @@ export class CreateComponent implements OnInit {
       this.customerDetailsPanel = false;
       this.kycDetailsPanel = true;
     }
+
     console.log("Coming to Products outside", this.productCategoryId, this.productSubCategoryId)
   }
 
@@ -649,6 +654,15 @@ export class CreateComponent implements OnInit {
     this.cdlService.getLoanTypeList().subscribe((data) => {
       this.loanTypes = data;
       console.log("this.loanTypes", this.loanTypes)
+    })
+  }
+
+  getAccountAggregatorStatus(uId, kycId) {
+    this.cdlService.getAccountAggregatorStatus(uId, 0).subscribe((data) => {
+      this.accountaggregatingStatus = data;
+      this.accountaggregatingStatusShowing = true;
+      console.log(" this.accountaggregatingStatus", this.accountaggregatingStatus, this.accountaggregatingStatusShowing)
+      console.log(" this.accountaggregatingStatus", this.accountaggregatingStatus)
     })
   }
 

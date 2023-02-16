@@ -7,6 +7,8 @@
   gap: 5px;
 }
 
+
+
 .personalDetails {
   color: #30A5FA;
   font-size: 15px;
@@ -350,4 +352,23 @@ th {
 
 ::ng-deep .p-timeline-horizontal .p-timeline-event:last-child {
   flex: 1 !important;
+}
+
+
+.btn-success {
+  background-color: green !important;
+  border-color: green !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 5px !important;
+  padding: 10px 20px !important;
+}
+
+.open-all-btn-success {
+  background-color: green !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 2px !important;
+  padding: 5px 10px !important;
 }
