@@ -336,7 +336,7 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   }
   getProviderSubmissionOrdersCount(){
     let filter = {};
-    filter = this.setFilterForApi();
+    filter = this.setFilterForAllPapersApi();
     this.subs.sink = this.providerservices.getProviderSubmissionOrdersCount(filter).subscribe(data => {
       console.log("totalOrdersCount :",data);
       this.totalOrdersCount = data;
@@ -538,6 +538,11 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   setFilterForCompletedPapersApi(){
     const api_filter = {};
       api_filter['orderStatus-eq'] = 'Completed';
+    return api_filter;
+  }
+  setFilterForAllPapersApi(){
+    const api_filter = {};
+      api_filter['orderStatus-neq'] = 'Completed';
     return api_filter;
   }
   getDefaultCatalogStatus() {
@@ -757,13 +762,13 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.loadingPapers = true;
     let filter = {};
-    filter = this.setFilterForApi();
+    filter = this.setFilterForAllPapersApi();
     filter = this.setPaginationFilterForSubmissionOrders(filter);
     this.subs.sink = this.providerservices.getProviderSubmissionOrders(filter)
 
       .subscribe((data : any) => {
         console.log("total data :",data);
-        this.orders = data;
+        // this.orders = data;
         this.totalOrders = data;
         // this.getProviderCompletedOrders()
         // this.totalOrdersCount = this.totalOrders.length;
@@ -775,13 +780,13 @@ export class OrderDashboardComponent implements OnInit, OnDestroy {
   getProviderCompletedOrders() {
     this.loading = true;
     let filter = {};
-    filter = this.setFilterForApi();
+    filter = this.setFilterForCompletedPapersApi();
     filter = this.setPaginationFilterForPaperCompleted(filter);
 
     this.subs.sink = this.providerservices.getProviderCompletedOrders(filter)
 
       .subscribe(data => {
-        this.orders = data;
+        // this.orders = data;
         this.completedorders = data;
         // this.totalPaperdCompletedCount = this.orders.length;
         this.loading = false;
