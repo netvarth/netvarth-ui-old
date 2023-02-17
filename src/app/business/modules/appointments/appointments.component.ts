@@ -511,6 +511,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
     this.bisinessProfile()
   }
+
+  showQuesshowQuestionnaires(appt) {
+    // this.dialogRef.close();
+    this.router.navigate(["provider", "appointments", "questionnaires"], {
+      queryParams: { source: "appt", uid: appt.uid }
+    });
+  }
+
   getServiceName(serviceName) {
     let name = '';
     if (serviceName.length > 20) {
@@ -2966,6 +2974,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;
+      console.log("Appointment action clicked :",waitlist);
     } else {
       if (status === 'started') {
         Object.keys(this.startedAppointmentsChecked).forEach(apptIndex => {

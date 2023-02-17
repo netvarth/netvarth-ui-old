@@ -1914,7 +1914,22 @@
                 <td *ngIf="appt.apptStatus === 'Requested'">
                  <span> <button class="btn btn-danger"  (click)="showAppointmentReject('reject',appt)">Reject</button></span>
                 </td>
-                <td colspan="2" class="text-center" *ngIf="appt.apptStatus === 'RequestRejected'"><span class="text-danger bold">Rejected</span></td>
+                <td  *ngIf="appt.apptStatus !== 'RequestRejected' && !appt.multiSelection && appt.releasedQnr &&
+                appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled'">
+                          <!--    && !appt.multiSelection && appt.releasedQnr &&
+                     appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled' -->
+                  <span class="actionbtn">
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button type="button" (click)="showQuesshowQuestionnaires(appt)" mat-menu-item>
+                        <span class="qnr-icon" style="width:20px;height:20px"></span>&nbsp;<span class="bold">More Info</span>
+                      </button>
+                    </mat-menu>
+                  </span>
+                </td>
+                <td colspan="3" class="text-center" *ngIf="appt.apptStatus === 'RequestRejected'"><span class="text-danger bold">Rejected</span></td>
               </ng-container>
               </tr>
               </ng-container>
@@ -1929,6 +1944,21 @@
                 <span class="nameDiv" *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
                     <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
                     </div> 
+                    <div *ngIf="appt.apptStatus !== 'RequestRejected' && !appt.multiSelection && appt.releasedQnr &&
+                     appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled'">
+<!--  && !appt.multiSelection && appt.releasedQnr &&
+                     appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled' -->
+                      <span class="actionbtn">
+                        <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                          <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button type="button" (click)="showQuesshowQuestionnaires(appt)" mat-menu-item>
+                            <span class="qnr-icon" style="width:20px;height:20px"></span>&nbsp;<span class="bold">More Info</span>
+                          </button>
+                        </mat-menu>
+                      </span>
+                    </div>
                 </td>
                 <td class="smallDiv">
                   <div>
