@@ -24,6 +24,7 @@ export class DpnLetterComponent implements OnInit {
   loanData: any;
   accountId: any;
   loanKycId: any;
+  source: any;
 
 
   constructor(
@@ -47,6 +48,9 @@ export class DpnLetterComponent implements OnInit {
               this.getloanDetails(this.loanId, this.accountId)
             }
           }
+        }
+        if (params && params.type) {
+          this.source = params.type;
         }
       }
     })

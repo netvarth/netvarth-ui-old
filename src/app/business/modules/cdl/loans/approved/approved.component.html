@@ -301,8 +301,8 @@
               </div>
               <div class="fieldPadding">
                 <mat-select class="form-control widthWebKit" [(ngModel)]="advanceEmi">
-                  <mat-option [value]="i+1" *ngFor="let number of advanceEmiNumbers;let i=index">
-                    <div>{{i+1}} Months</div>
+                  <mat-option [value]="i" *ngFor="let number of advanceEmiNumbers;let i=index">
+                    <div>{{i}} Months</div>
                   </mat-option>
                 </mat-select>
               </div>

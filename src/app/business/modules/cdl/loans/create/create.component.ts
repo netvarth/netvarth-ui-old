@@ -309,6 +309,10 @@ export class CreateComponent implements OnInit {
               this.createLoan.controls.employeeCode.setValue(this.loanData.employeeCode);
             }
 
+            if (this.loanData && this.loanData.referralEmployeeCode) {
+              this.createLoan.controls.referralCode.setValue(this.loanData.referralEmployeeCode);
+            }
+
             if (this.loanData && this.loanData.emiPaidAmountMonthly) {
               this.createLoan.controls.emicount.setValue(this.loanData.emiPaidAmountMonthly);
             }
@@ -543,7 +547,8 @@ export class CreateComponent implements OnInit {
       guarantorName: [null],
       guarantorPhone: [null],
       guarantorDob: [null],
-      subventionLoan: [null]
+      subventionLoan: [null],
+      referralCode: [null]
     });
   }
 
@@ -874,6 +879,7 @@ export class CreateComponent implements OnInit {
       "remarks": this.createLoan.controls.remarks.value,
       "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
       "employee": this.mafilEmployee,
+      "referralEmployeeCode": this.createLoan.controls.referralCode.value,
       "subventionLoan": this.createLoan.controls.subventionLoan.value,
       "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [
@@ -1645,6 +1651,7 @@ export class CreateComponent implements OnInit {
       "requestedAmount": this.createLoan.controls.loanamount.value,
       "emiPaidAmountMonthly": this.createLoan.controls.emicount.value,
       "employee": this.mafilEmployee,
+      "referralEmployeeCode": this.createLoan.controls.referralCode.value,
       "subventionLoan": this.createLoan.controls.subventionLoan.value,
       "employeeCode": this.createLoan.controls.employeeCode.value,
       "loanApplicationKycList": [

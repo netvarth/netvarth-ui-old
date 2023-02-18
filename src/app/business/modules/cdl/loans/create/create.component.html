@@ -435,11 +435,11 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">City <span class="text-danger">*</span></div>
+                      <div class="form-title">District <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" [value]="permanentcity" #permanentcity type="text"
-                        placeholder="Enter City" class="form-control" autocomplete="off"
+                        placeholder="Enter District" class="form-control" autocomplete="off"
                         formControlName="permanentcity" />
                     </div>
                   </div>
@@ -585,11 +585,11 @@
                   <div class="bggrey my-2">
                     <div>
                       <div class="d-flex">
-                        <div class="form-title">Current Address City</div>
+                        <div class="form-title">Current Address District</div>
                       </div>
                       <div class="fieldPadding">
                         <input (keyup)="resetErrors()" [value]="currentcity" #currentcity type="text"
-                          placeholder="Enter City" class="form-control" autocomplete="off"
+                          placeholder="Enter District" class="form-control" autocomplete="off"
                           formControlName="currentcity" />
                       </div>
                     </div>
@@ -1042,6 +1042,23 @@
                 </div>
               </div>
 
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Enter Employee Referral Code <span class="text-danger">*</span></div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input #referralCode type="text" placeholder="Enter Employee Referral Code" class="form-control"
+                        autocomplete="off" formControlName="referralCode" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
               <!-- <div>
                 <div class="bggrey my-2">
                   <div>
@@ -1353,6 +1370,19 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div>
+
+              <div class="d-flex">
+                <div *ngIf="!accountaggregatingStatusShowing">
+                  <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate
+                    Statements</button>
+                </div>
+                <div *ngIf="accountaggregatingStatusShowing">
+                  <div class="btn btn-primary open-all-btn-success">Statement Aggregation
+                    {{accountaggregatingStatus}}
+                  </div>
+                </div>
+              </div>
+
               <div>
                 <div class="bggrey my-2">
                   <div>
@@ -1482,14 +1512,6 @@
               <div *ngIf="bankDetailsVerified">
                 <button class="btn btn-primary open-all-btn mr-2" (click)="saveBankDetails()">Save</button>
               </div>
-              <div *ngIf="!accountaggregatingStatusShowing">
-                <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate Statements</button>
-              </div>
-              <div *ngIf="accountaggregatingStatusShowing">
-                <div class="btn btn-primary open-all-btn-success">Statement Aggregation
-                  {{accountaggregatingStatus}}
-                </div>
-              </div>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
@@ -1516,7 +1538,7 @@
     <div class="d-flex justify-content-center">
       <div>
         <button class="mr-2 btn btn-draft" [disabled]="!customerDetailsVerified" (click)="saveAsLead()">
-          Save as Lead
+          Save
         </button>
       </div>
       <div>

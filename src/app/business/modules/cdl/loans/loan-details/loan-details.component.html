@@ -38,6 +38,21 @@
       </div>
     </div>
   </div>
+  <div *ngIf="loanData && loanData.generalNotes && loanData.generalNotes.length>0">
+    <div class="card marginClass">
+      <div class="container-fluid my-2">
+        <div>
+          <div class="font-weight-bold">
+            Remarks
+          </div>
+          <div class="notes" *ngFor="let notes of loanData.generalNotes">
+            <span class="notes">{{notes.note}}</span><span class="notes-suffix"> (Added at {{notes.description}}
+              Status) </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row col-md-12">
     <div class="col-md-5 no-padding-small mt-2">
       <div class="card">
@@ -467,7 +482,7 @@
               </div>
             </div>
           </div>
-          
+
           <br>
         </div>
 

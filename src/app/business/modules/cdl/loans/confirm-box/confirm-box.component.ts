@@ -207,7 +207,8 @@ export class ConfirmBoxComponent implements OnInit {
       "invoiceAmount": this.totalPayment,
       "downpaymentAmount": this.downPayment,
       "requestedAmount": this.loanAmount,
-      "sanctionedAmount": Number(this.sanctionedAmount)
+      "sanctionedAmount": Number(this.sanctionedAmount),
+      "note": this.remarks
     }
 
     this.cdlservice.manualLoanApproval(this.loanId, this.loanApplication).subscribe((data: any) => {

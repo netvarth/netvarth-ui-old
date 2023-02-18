@@ -175,11 +175,27 @@ export class LoanDetailsComponent implements OnInit {
   }
 
   viewDpnLetter() {
-    this.router.navigate(['provider', 'cdl', 'dpn-letter', this.loanId]);
+    // this.router.navigate(['provider', 'cdl', 'dpn-letter', this.loanId]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uid: this.loanId,
+        account: this.loanData.accountId,
+        type: 'provider'
+      }
+    };
+    this.router.navigate(['consumer', 'agreement', 'dpn-letter'], navigationExtras);
   }
 
   viewSdcLetter() {
-    this.router.navigate(['provider', 'cdl', 'spdc-letter', this.loanId]);
+    // this.router.navigate(['provider', 'cdl', 'spdc-letter', this.loanId]);
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        uid: this.loanId,
+        account: this.loanData.accountId,
+        type: 'provider'
+      }
+    };
+    this.router.navigate(['consumer', 'agreement', 'spdc-letter'  ], navigationExtras);
   }
   viewconsumerAgreementLetter() {
     const navigationExtras: NavigationExtras = {
@@ -189,7 +205,7 @@ export class LoanDetailsComponent implements OnInit {
         type: 'provider'
       }
     };
-    this.router.navigate(['mafil', 'agreement'], navigationExtras);
+    this.router.navigate(['consumer', 'agreement'], navigationExtras);
   }
 
 

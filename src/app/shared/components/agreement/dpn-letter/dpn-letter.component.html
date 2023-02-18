@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="source && source=='provider'">
   <div class="card d-flex justify-content-between">
     <div class="pointer-cursor">
       <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
@@ -74,7 +74,7 @@
                     [src]="loanData.loanApplicationKycList[0].dpnDigitalSignature.url" width="100px"><br>
                 </div>
                 <div class="text-center"
-                  *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].dpnSigned)">
+                  *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].dpnSigned) && source!='provider'">
                   <button class="btn btn-primary" (click)="manualSignature('DPN')">Sign</button>
                 </div>
                 <span>Applicant Signature</span><br><br>

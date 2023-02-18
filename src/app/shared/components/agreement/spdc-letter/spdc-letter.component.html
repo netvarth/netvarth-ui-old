@@ -1,14 +1,16 @@
-<div class="card d-flex justify-content-between">
-  <div class="pointer-cursor">
-    <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
-  </div>
-  <div class="text-right">
-    <button (click)="onPrint()" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;
-      Print</button>
+<div class="container">
+  <div class="card d-flex justify-content-between">
+    <div class="pointer-cursor">
+      <span (click)="goBack()"><i class="fa fa-angle-left"></i>&nbsp;&nbsp;Back</span>
+    </div>
+    <div class="text-right">
+      <button (click)="onPrint()" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;
+        Print</button>
+    </div>
   </div>
 </div>
 
-<div id="printMe">
+<div id="printMe" class="container">
   <div class="card">
     <div class="row">
       <div>
@@ -219,7 +221,7 @@
                     [src]="loanData.loanApplicationKycList[0].spdcDigitalSignature.url" width="100px"><br>
                 </div>
                 <div class="text-center"
-                  *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].spdcSigned)">
+                  *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].spdcSigned) && source!='provider'">
                   <button class="btn btn-primary" (click)="manualSignature('SPDC')">Sign</button>
                 </div>
                 <span>Signature</span><br>
