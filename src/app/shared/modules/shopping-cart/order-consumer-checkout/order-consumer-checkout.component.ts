@@ -754,7 +754,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       'homeDelivery': delivery,
       'coupons': this.selected_coupons,
       'orderDate': this.sel_checkindate,
-      'srvAnswers': this.getServiceOptionsAnswers()
+      // 'srvAnswers': this.getServiceOptionsAnswers()
     };
     this.shared_services.getCartdetails(this.account_id, passdata)
       .subscribe(
@@ -788,13 +788,35 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       );
   }
 
+
+  getServiceOptionsAnswersForCreatingaOrder(id) {
+    let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
+    let itemOptionsDatatoSend = [];
+    if (itemOptionsData && itemOptionsData.length > 0) {
+      let itemIdsinside = []
+      for (let i = 0; i < itemOptionsData.length; i++) {
+        if (itemOptionsData[i]['itemData']['id'] == id) {
+          if (itemIdsinside.indexOf(itemOptionsData[i].itemData.id) === -1) {
+            itemIdsinside.push(itemOptionsData[i].itemData.id);
+            itemOptionsDatatoSend.push({ 'questionnaireId': itemOptionsData[i]['postData']['questionnaireId'], 'answerLine': itemOptionsData[i]['postData']['answerLine'] })
+          }
+          else {
+            itemOptionsDatatoSend[itemIdsinside.indexOf(itemOptionsData[i].itemData.id)].answerLine[0].answer.dataGridList.push(itemOptionsData[i].postData.answerLine[0].answer.dataGridList[0])
+          }
+        }
+      }
+    }
+    console.log("itemOptionsDatatoSend", itemOptionsDatatoSend)
+
+    return itemOptionsDatatoSend[0];
+  }
+
   getServiceOptionsAnswers() {
     let itemOptionsData = this.lStorageService.getitemfromLocalStorage('itemOptionsData');
     let itemOptionsDatatoSend = [];
     if (itemOptionsData && itemOptionsData.length > 0) {
       let itemIdsinside = []
       for (let i = 0; i < itemOptionsData.length; i++) {
-        itemOptionsDatatoSend.push({ 'questionnaireId': itemOptionsData[i]['postData']['questionnaireId'], 'answerLine': itemOptionsData[i]['postData']['answerLine'] })
         if (itemIdsinside.indexOf(itemOptionsData[i].itemData.id) === -1) {
           itemIdsinside.push(itemOptionsData[i].itemData.id);
           itemOptionsDatatoSend.push({ 'questionnaireId': itemOptionsData[i]['postData']['questionnaireId'], 'answerLine': itemOptionsData[i]['postData']['answerLine'] })
@@ -1286,7 +1308,12 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         if (item.consumerNote) {
           consumerNote = item.consumerNote;
         }
-        this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
+        if (this.haveItemOptions(item)) {
+          this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName, 'srvAnswers': this.getServiceOptionsAnswersForCreatingaOrder(itemId) });
+        }
+        else {
+          this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
+        }
       });
     }
     console.log("this.orders in creation", this.orderSummary)
@@ -1313,7 +1340,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     if (this.orderType !== 'SHOPPINGLIST') {
       post_Data['orderItem'] = this.getOrderItemsforCreatingOrder();
     }
-    post_Data['srvAnswers'] = this.getServiceOptionsAnswers();
+    // post_Data['srvAnswers'] = this.getServiceOptionsAnswers();
     if (this.jcashamount > 0 && this.checkJcash) {
       post_Data['useCredit'] = this.checkJcredit
       post_Data['useJcash'] = this.checkJcash
