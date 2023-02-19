@@ -46,6 +46,7 @@ export class ProviderLoginComponent implements OnInit {
   carouselTwo;
   evnt;
   deviceId: any;
+  accountSettings: any;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -78,17 +79,17 @@ export class ProviderLoginComponent implements OnInit {
       }
       if (data.muid) {
         const prevMuid = this.lStorageService.getitemfromLocalStorage('mUniqueId');
-        if(data.muid!== prevMuid) {
+        if (data.muid !== prevMuid) {
           const request = {
             "mUniqueIdOld": prevMuid,
             "mUniqueId": data.muid
           }
           this.shared_services.updateProviderMUniqueId(request).subscribe(
-            ()=>{
+            () => {
               this.lStorageService.setitemonLocalStorage('mUniqueId', data.muid);
             }
-          )          
-        }        
+          )
+        }
       }
     });
     this.evnt = router.events.subscribe(event => {
@@ -118,7 +119,7 @@ export class ProviderLoginComponent implements OnInit {
                     router.navigate(['provider', 'settings']);
                   }
                 }, 500);
-              }, (error)=>{
+              }, (error) => {
                 this.loading = false;
               });
           } else {
@@ -235,7 +236,16 @@ export class ProviderLoginComponent implements OnInit {
             }
           } else {
             // console.log("2 provider")
-            this.router.navigate(['/provider']);
+            this.providerServices.getAccountSettings().then(
+              (settings: any) => {
+                console.log("Settings value:", settings);
+                if (settings && settings.enableCdl) {
+                  this.router.navigate(['provider', 'cdl']);
+                }
+                else {
+                  this.router.navigate(['/provider']);
+                }
+              });
           }
         },
         error => {
