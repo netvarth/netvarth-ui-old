@@ -334,7 +334,7 @@
   <div class="clearfix"></div>
   <div class="row text-center">
     <div class="col-md-10">
-      <button [disabled]="!loanTenure || !advanceEmi || !advanceEmi" class="btn btn-primary mt-3"
+      <button [disabled]="!loanTenure || !emiDueDate || (advanceEmi != 0 && !advanceEmi)" class="btn btn-primary mt-3"
         (click)="approveLoanBySalesOfficer()">
         Request for Approval
       </button>
