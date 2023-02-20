@@ -26,6 +26,7 @@ export class DocumentLetterComponent implements OnInit {
   accountId: any;
   loanKycId: any;
   source: any;
+  signCompleted: any = false;
 
 
   constructor(
@@ -66,7 +67,7 @@ export class DocumentLetterComponent implements OnInit {
       this.loanData = data;
       this.loanKycId = this.loanData.loanApplicationKycList[0].id;
       console.log("this.loanKycId", this.loanKycId)
-      if (this.loanData.spInternalStatus == 'kjkjk') {
+      if (this.loanData && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0].digitalSignature && this.loanData.loanApplicationKycList[0].digitalSignature.url) {
         this.snackbarService.openSnackBar("Link Expired or Invalid");
         this.router.navigate(['/']);
       }
@@ -105,6 +106,7 @@ export class DocumentLetterComponent implements OnInit {
     uploadmanualsignatureRef.afterClosed().subscribe((res) => {
       if (res) {
         this.getloanDetails(this.loanId, this.accountId)
+        this.signCompleted = true;
       }
     }
     );

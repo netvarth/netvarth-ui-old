@@ -219,6 +219,24 @@
       </div>
     </div>
     <div class="card mt-3">
+
+      <div>
+        <div class="bggrey my-2">
+          <div>
+            <div class="d-flex">
+              <div class="form-title">Select Dealer</div>
+            </div>
+            <div class="fieldPadding">
+              <mat-select class="form-control widthWebKit" [(ngModel)]="partnerName">
+                <mat-option [value]="dealer.id" *ngFor="let dealer of dealers;let index=index">
+                  <div *ngIf="dealer && dealer.partnerName">{{dealer.partnerName}}</div>
+                </mat-option>
+              </mat-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div>
         <div>
           <div class="bggrey my-2">
@@ -334,8 +352,8 @@
   <div class="clearfix"></div>
   <div class="row text-center">
     <div class="col-md-10">
-      <button [disabled]="!loanTenure || !emiDueDate || (advanceEmi != 0 && !advanceEmi)" class="btn btn-primary mt-3"
-        (click)="approveLoanBySalesOfficer()">
+      <button [disabled]="!loanTenure || !emiDueDate || (advanceEmi != 0 && !advanceEmi) || !partnerName"
+        class="btn btn-primary mt-3" (click)="approveLoanBySalesOfficer()">
         Request for Approval
       </button>
     </div>

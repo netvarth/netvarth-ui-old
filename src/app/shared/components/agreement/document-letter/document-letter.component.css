@@ -22,7 +22,7 @@
 .btn-primary {
     background-color: #1e4079 !important;
     /* border-color: #1e4070 !important; */
-    border: none!important;
+    border: none !important;
     color: #fff !important;
     font-weight: 100 !important;
     border-radius: 5px !important;
@@ -243,6 +243,23 @@ td {
     width: 170px;
 }
 
+
+.policy {
+    width: 80%;
+    padding: 15px;
+    margin: 10%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-size: 18px
+}
+
+
+@media(max-width: 768px) {
+    .policy {
+        width: 100%;
+        margin: 0%;
+    }
+}
 
 
 /*

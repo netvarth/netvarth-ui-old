@@ -44,6 +44,8 @@ export class ApprovedComponent implements OnInit {
   approvedSchemeId: any;
   emiDueDate: any;
   loanTenures: any;
+  dealers: any;
+  partnerName: any;
   constructor(
     private location: Location,
     private dialog: MatDialog,
@@ -90,7 +92,20 @@ export class ApprovedComponent implements OnInit {
     });
 
     this.getLoanSchemes();
+    this.getPartners();
 
+  }
+
+  getPartners() {
+    let api_filter = {
+      'isApproved-eq': true,
+      'isActive-eq': true,
+      'salesOfficers-eq': 'userId::' + this.user.id
+    }
+    this.cdlService.getDealersByFilter(api_filter).subscribe((data) => {
+      this.dealers = data;
+      console.log("this.dealers", this.dealers)
+    })
   }
 
 
@@ -191,6 +206,7 @@ export class ApprovedComponent implements OnInit {
   approveLoanBySalesOfficer() {
     let data = {
       "loanScheme": { "id": this.approvedSchemeId },
+      "partner": { "id": this.partnerName },
       "noOfEmi": this.loanTenure,
       "noOfAdvanceEmi": this.advanceEmi,
       "emiDueDay": this.emiDueDate
