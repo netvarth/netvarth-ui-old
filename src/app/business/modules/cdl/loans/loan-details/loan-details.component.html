@@ -559,14 +559,11 @@
 
         <div class="card marginClass min-height" *ngIf="capabilities && capabilities.canViewKycReport">
           <div class="font-weight-bold">Agreement & Letters</div>
-          <div class="d-lg-flex justify-content-between">
+          <div class="d-lg-flex">
             <div class="mt-2">
-              <div class="btn btn-primary" (click)="viewDpnLetter()">View DPN Letter</div>
+              <div class="btn btn-primary" (click)="viewDpnSpdcLetter()">View DPN & SPDC Letter</div>
             </div>
-            <div class="mt-2 mx-md-1">
-              <div class="btn btn-primary" (click)="viewSdcLetter()">View SPDC Letter</div>
-            </div>
-            <div class="mt-2">
+            <div class=" mx-md-2 mt-2">
               <div class="btn btn-primary" (click)="viewconsumerAgreementLetter()">View Sanction Letter</div>
             </div>
           </div>

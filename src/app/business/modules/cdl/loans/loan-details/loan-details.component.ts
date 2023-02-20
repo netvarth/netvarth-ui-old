@@ -174,7 +174,7 @@ export class LoanDetailsComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'report'], navigationExtras);
   }
 
-  viewDpnLetter() {
+  viewDpnSpdcLetter() {
     // this.router.navigate(['provider', 'cdl', 'dpn-letter', this.loanId]);
     const navigationExtras: NavigationExtras = {
       queryParams: {
@@ -183,7 +183,7 @@ export class LoanDetailsComponent implements OnInit {
         type: 'provider'
       }
     };
-    this.router.navigate(['consumer', 'agreement', 'dpn-letter'], navigationExtras);
+    this.router.navigate(['consumer', 'agreement', 'document-letter'], navigationExtras);
   }
 
   viewSdcLetter() {

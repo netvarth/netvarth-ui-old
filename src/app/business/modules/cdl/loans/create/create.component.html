@@ -1371,14 +1371,60 @@
             </mat-expansion-panel-header>
             <div>
 
-              <div class="d-flex">
-                <div *ngIf="!accountaggregatingStatusShowing">
-                  <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate
-                    Statements</button>
+              <div class="d-md-flex">
+                <div class="mr-3">
+                  <div *ngIf="!accountaggregatingStatusShowing">
+                    <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate
+                      Statements</button>
+                  </div>
+                  <div *ngIf="accountaggregatingStatusShowing">
+                    <div class="btn btn-primary open-all-btn-success">Statement Aggregation
+                      {{accountaggregatingStatus}}
+                    </div>
+                  </div>
                 </div>
-                <div *ngIf="accountaggregatingStatusShowing">
-                  <div class="btn btn-primary open-all-btn-success">Statement Aggregation
-                    {{accountaggregatingStatus}}
+
+                <div class="mx-5">
+                  <span class="font-weight-bold">OR</span>
+                </div>
+
+                <!-- *ngIf="showBankAttachments" -->
+                <div>
+                  <div class="bggrey">
+                    <div>
+                      <div class="fieldPadding">
+                        <div class="file"
+                          *ngIf="!(selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0)">
+                          <label for='bankAttach' (click)="bankAttach.click()">
+                            <!-- <i class="material-icons">cloud_upload</i> -->
+                            Upload Statements
+                          </label>
+                          <input #bankAttach type='file' formControlName="bankstatements"
+                            (change)="filesSelected($event,'bank')" accept="image/*;capture=camera" />
+                        </div>
+                        <div class="img-section clearfix"
+                          *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">
+                          <ul class="galul">
+                            <li *ngFor="let file of selectedFiles['bank'].files;let i = index ">
+                              <div class="galimg_outer">
+                                <div class="gal_img pointer-cursor">
+                                  <img [src]="getImage(selectedFiles['bank'].base64[i], file)"
+                                    *ngIf="selectedFiles['bank'].base64[i]" width="100px" height="100px">
+                                  <a [href]="file.s3path" target="_blank">
+                                    <img [src]="getImagefromUrl(file.s3path,file)"
+                                      *ngIf="!selectedFiles['bank'].base64[i] && file.s3path" width="100px"
+                                      height="100px">
+                                  </a>
+                                </div>
+                                <div class="gal_action" (click)="deleteTempImage(i, 'bank',file)">
+                                  <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1462,47 +1508,6 @@
               </div>
 
 
-              <div *ngIf="showBankAttachments">
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Bank Statements</div>
-                    </div>
-                    <div class="fieldPadding photo-border">
-                      <div class="file"
-                        *ngIf="!(selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0)">
-                        <label for='bankAttach' (click)="bankAttach.click()">
-                          <!-- <i class="material-icons">cloud_upload</i> -->
-                          Upload File
-                        </label>
-                        <input #bankAttach type='file' formControlName="bankstatements"
-                          (change)="filesSelected($event,'bank')" accept="image/*;capture=camera" />
-                      </div>
-                      <div class="img-section clearfix"
-                        *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">
-                        <ul class="galul">
-                          <li *ngFor="let file of selectedFiles['bank'].files;let i = index ">
-                            <div class="galimg_outer">
-                              <div class="gal_img pointer-cursor">
-                                <img [src]="getImage(selectedFiles['bank'].base64[i], file)"
-                                  *ngIf="selectedFiles['bank'].base64[i]" width="100px" height="100px">
-                                <a [href]="file.s3path" target="_blank">
-                                  <img [src]="getImagefromUrl(file.s3path,file)"
-                                    *ngIf="!selectedFiles['bank'].base64[i] && file.s3path" width="100px"
-                                    height="100px">
-                                </a>
-                              </div>
-                              <div class="gal_action" (click)="deleteTempImage(i, 'bank',file)">
-                                <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
             </div>
             <div class="d-flex">

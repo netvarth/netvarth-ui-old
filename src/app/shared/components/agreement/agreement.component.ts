@@ -77,9 +77,14 @@ export class AgreementComponent implements OnInit {
         this.snackbarService.openSnackBar("Link Expired or Invalid");
         this.router.navigate(['/']);
       }
-      if (data && data.customer && data.customer.phoneNo && data.customer.email) {
+      if (data && data.customer && data.customer.phoneNo) {
         this.phoneNumber = data.customer.phoneNo
-        this.email = data.customer.email
+        if (data.customer.email) {
+          this.email = data.customer.email;
+        }
+        else {
+          this.email = "";
+        }
       }
       if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].permanentState) {
         this.permanentState = data.loanApplicationKycList[0].permanentState
