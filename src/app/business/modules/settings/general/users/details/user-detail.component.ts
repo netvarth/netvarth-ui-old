@@ -408,8 +408,9 @@ export class BranchUserDetailComponent implements OnInit {
         if (this.actionparam.type === "edit") {
           this.usercaption = "User Details";
           this.type = this.user_data.userType;
-          console.log("this.user_data.userRoles[0].id", this.user_data.userRoles[0].id)
-          this.selectionTesting = this.user_data.userRoles[0].id
+          if (this.user_data && this.user_data.userRoles && this.user_data.userRoles[0] && this.user_data.userRoles[0].id) {
+            this.selectionTesting = this.user_data.userRoles[0].id;
+          }
           if (this.sector === "healthCare") {
             if (this.type === "PROVIDER") {
               this.type = "DOCTOR";
