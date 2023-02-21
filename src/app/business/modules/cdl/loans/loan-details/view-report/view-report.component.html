@@ -163,25 +163,26 @@
                     <div class="table-responsive">
                         <table class="table table-borderless">
                             <tbody>
-                                <tr style="width: 100%;" *ngIf="reportData.noOfAccounts">
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.noOfAccounts || reportData.noOfAccounts == 0">
                                     <td style="width: 50%;" class="details-title">No of Accounts </td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.noOfAccounts}}
                                     </th>
                                 </tr>
-                                <tr style="width: 100%;" *ngIf="reportData.loansCount">
+                                <tr style="width: 100%;" *ngIf="reportData.loansCount || reportData.loansCount == 0">
                                     <td style="width: 50%;" class="details-title">Loans Count</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.loansCount}}
                                     </th>
                                 </tr>
                                 <tr style="width: 100%;"
-                                    *ngIf="reportData.recentActivity && reportData.recentActivity.totalInquiries">
+                                    *ngIf="reportData.recentActivity && (reportData.recentActivity.totalInquiries || (reportData.recentActivity.totalInquiries && reportData.recentActivity.totalInquiries==0))">
                                     <td style="width: 50%;" class="details-title">Total Enquiries</td>
                                     <th style=" width: 50%;" class="details-sub-title">
                                         {{reportData.recentActivity.totalInquiries}}
                                     </th>
                                 </tr>
                                 <tr style="width: 100%;"
-                                    *ngIf="reportData.recentActivity && reportData.recentActivity.accountsDeliquent">
+                                    *ngIf="reportData.recentActivity &&( reportData.recentActivity.accountsDeliquent || (reportData.recentActivity.accountsDeliquent && reportData.recentActivity.accountsDeliquent == 0))">
                                     <td style="width: 50%;" class="details-title">Accounts Deliquent</td>
                                     <th style=" width: 50%;" class="details-sub-title">
                                         {{reportData.recentActivity.accountsDeliquent}}
@@ -189,7 +190,7 @@
                                 </tr>
 
                                 <tr style="width: 100%;"
-                                    *ngIf="reportData.recentActivity && reportData.recentActivity.accountsOpened">
+                                    *ngIf="reportData.recentActivity && (reportData.recentActivity.accountsOpened || (reportData.recentActivity.accountsOpened && reportData.recentActivity.accountsOpened == 0))">
                                     <td style="width: 50%;" class="details-title">Accounts Opened</td>
                                     <th style=" width: 50%;" class="details-sub-title">
                                         {{reportData.recentActivity.accountsOpened}}
@@ -197,7 +198,7 @@
                                 </tr>
 
                                 <tr style="width: 100%;"
-                                    *ngIf="reportData.recentActivity && reportData.recentActivity.accountsUpdated">
+                                    *ngIf="reportData.recentActivity && (reportData.recentActivity.accountsUpdated || (reportData.recentActivity.accountsUpdated && reportData.recentActivity.accountsUpdated == 0))">
                                     <td style="width: 50%;" class="details-title">Accounts Updated</td>
                                     <th style=" width: 50%;" class="details-sub-title">
                                         {{reportData.recentActivity.accountsUpdated}}

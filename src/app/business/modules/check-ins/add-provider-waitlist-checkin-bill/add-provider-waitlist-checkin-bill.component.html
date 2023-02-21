@@ -176,7 +176,7 @@
 											(keyup)="isvalid($event)" [(ngModel)]="curSelItm.price" placeholder="Price">
 									</div>
 								</div>
-								<div class="d-flex align-items-center mgn-up-10"> 
+								<div class="d-flex align-items-center mgn-up-10">
 									<div style="display: flex;">
 										<div class="form-group mr-0 pt-1 ml-0 col-3" style="max-width: 40% !important;"
 											*ngIf="showAddItemsec">
@@ -421,6 +421,10 @@
 												<span class="rupee-font">{{item.price | currency:'&#8377;'}}
 												</span>
 												<br> <br>
+												<span class="rupee-font"
+													*ngIf="item && item.serviceOptions && item.serviceOptions.length>0">{{item.price
+													| currency:'&#8377;'}}
+												</span>
 												<!-- Incase of discount name -->
 												<span *ngFor="let discount of item.discount"
 													class="text-right text-muted-dark font-size-xs ">{{discount.name}}</span>

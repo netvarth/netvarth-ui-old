@@ -247,6 +247,11 @@ export class ItemOptionsComponent implements OnInit {
       }
       column["price"] = price;
     }
+    else if (question && question.listPropertie && !question.listPropertie.basePrice && question.listPropertie.maxAnswerable && question.listPropertie.maxAnswerable == 1) {
+      let price = 0;
+      price = price + this.priceGridList[this.answers[0]][question.columnId][this.answers[index]];
+      column["price"] = price;
+    }
     else {
       column["price"] = 0;
     }
@@ -263,6 +268,8 @@ export class ItemOptionsComponent implements OnInit {
     }
 
     console.log("questionnaireAnswers", this.questionnaireAnswers);
+    console.log("priceGridList", this.priceGridList);
+
     this.getTotalPrice()
 
   }

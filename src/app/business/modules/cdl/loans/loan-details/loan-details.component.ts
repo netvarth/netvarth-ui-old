@@ -60,6 +60,7 @@ export class LoanDetailsComponent implements OnInit {
   loanEmiDetailsData: any;
   accountaggregatingStatus: ArrayBuffer;
   accountaggregatingStatusShowing: boolean;
+  showEquifaxScore: any = false;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -84,7 +85,6 @@ export class LoanDetailsComponent implements OnInit {
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
             this.checkMafilScore();
-            this.checkEquifaxScore();
             this.checkPerfiosScore();
             if (this.loanData && this.loanData.spInternalStatus && this.loanData.spInternalStatus == 'Sanctioned' || this.loanData.spInternalStatus == 'OperationsVerified') {
               this.getLoanEmiDetails(this.loanId);
@@ -141,8 +141,10 @@ export class LoanDetailsComponent implements OnInit {
     this.cdlservice.getEquifaxScore(data).subscribe((data: any) => {
       this.equifaxScoreData = data;
       console.log("Equifax Score Data : ", data);
-      if (data && data.equifaxScore) {
+      if (data && (data.equifaxScore || data.equifaxScore == 0)) {
         this.equifaxScore = data.equifaxScore;
+        this.totalScore = this.totalScore + Number(this.equifaxScore);
+        this.showEquifaxScore = true;
       }
     });
   }
@@ -174,6 +176,10 @@ export class LoanDetailsComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'report'], navigationExtras);
   }
 
+  viewEquifaxScore() {
+    this.checkEquifaxScore();
+  }
+
   viewDpnSpdcLetter() {
     // this.router.navigate(['provider', 'cdl', 'dpn-letter', this.loanId]);
     const navigationExtras: NavigationExtras = {
@@ -195,7 +201,7 @@ export class LoanDetailsComponent implements OnInit {
         type: 'provider'
       }
     };
-    this.router.navigate(['consumer', 'agreement', 'spdc-letter'  ], navigationExtras);
+    this.router.navigate(['consumer', 'agreement', 'spdc-letter'], navigationExtras);
   }
   viewconsumerAgreementLetter() {
     const navigationExtras: NavigationExtras = {
