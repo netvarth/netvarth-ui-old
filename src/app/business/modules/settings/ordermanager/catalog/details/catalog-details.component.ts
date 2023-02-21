@@ -1861,22 +1861,34 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
         }
     }
 
+    // getItemImg(item) {
+    //     if (item.itemImages) {
+    //         const img = item.itemImages.filter(image => image.displayImage);
+    //         if(img && img[0] && img[0].imageSize === 0){
+    //             return '../../../../assets/images/order/Items.svg';
+    //         }
+    //         if (img && img[0]) {
+    //             return  img[0].s3path || img[0].url;
+    //         } 
+    //         else {
+    //             return '../../../../assets/images/order/Items.svg';
+    //         }
+    //     } else {
+    //         return '../../../../assets/images/order/Items.svg';
+    //     }
+    // }
     getItemImg(item) {
         if (item.itemImages) {
-            const img = item.itemImages.filter(image => image.displayImage);
-            if(img && img[0] && img[0].imageSize === 0){
-                return '../../../../assets/images/order/Items.svg';
-            }
-            if (img && img[0]) {
-                return  img[0].s3path || img[0].url;
-            } 
-            else {
-                return '../../../../assets/images/order/Items.svg';
-            }
+          const img = item.itemImages.filter((image) => image.displayImage);
+          if (img[0]) {
+            return img[0].url || img[0].s3path;
+          } else {
+            return "./assets/images/order/Items.svg";
+          }
         } else {
-            return '../../../../assets/images/order/Items.svg';
+          return "./assets/images/order/Items.svg";
         }
-    }
+      }
     selectedItems() {
         this.catalogItemsSelected = [];
         for (let ia = 0; ia < this.catalogItem.length; ia++) {
