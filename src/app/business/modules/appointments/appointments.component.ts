@@ -512,8 +512,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.bisinessProfile()
   }
 
-  showQuesshowQuestionnaires(appt) {
-    // this.dialogRef.close();
+  showQuestionnaire(appt) {
     this.router.navigate(["provider", "appointments", "questionnaires"], {
       queryParams: { source: "appt", uid: appt.uid }
     });

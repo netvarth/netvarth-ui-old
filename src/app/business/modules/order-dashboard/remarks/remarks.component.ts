@@ -7,8 +7,11 @@ import { ProviderServices } from '../../../services/provider-services.service';
 import { AdvancedLayout, PlainGalleryConfig, PlainGalleryStrategy, ButtonsConfig, ButtonsStrategy, Image, ButtonType } from '@ks89/angular-modal-gallery';
 import { Messages } from '../../../../shared/constants/project-messages';
 import { Subject } from 'rxjs';
+import { MatDialog} from '@angular/material/dialog';
 import { SnackbarService } from '../../../../../../src/app/shared/services/snackbar.service';
 import { WordProcessor } from '../../../../../../src/app/shared/services/word-processor.service';
+import { ReleaseQuestionnaireComponent } from '../../questionnaire-list-popup/release-questionnaire/release-questionnaire.component';
+
 @Component({
   selector: 'app-remarks',
   templateUrl: './remarks.component.html',
@@ -22,6 +25,7 @@ export class RemarksComponent implements OnInit {
   loading = false;
   orderDetails: any = [];
   orderItems: any = [];
+  // @Input() waitlist_data;
   selectedType = 'list';
   customerLabel = '';
   display_dateFormat = projectConstantsLocal.DATE_FORMAT_WITH_MONTH;
@@ -67,9 +71,12 @@ export class RemarksComponent implements OnInit {
   disableButton;
   disablebutton: boolean;
   account: any;
+  source = '';
+  waitlist_data:any=[];
   constructor(public activaterouter: ActivatedRoute,
     private snackbarService: SnackbarService,
     public providerservice: ProviderServices,
+    private dialog: MatDialog,
     private provider_services: ProviderServices,
     public router: Router,
     private providerService: ProviderServices,
@@ -78,7 +85,9 @@ export class RemarksComponent implements OnInit {
 
     public location: Location, public sharedFunctions: SharedFunctions) {
     this.activateRoute.queryParams.subscribe(params => {
-
+      if (params.source) {
+        this.source = params.source;
+      }
       if (params.uid) {
         this.uid = params.uid;
       }
@@ -90,6 +99,7 @@ export class RemarksComponent implements OnInit {
 
   ngOnInit() {
     this.getOrderDetails(this.uid);
+    this.getOrderDetail();
 
   }
   public ngOnDestroy(): void {
@@ -120,7 +130,6 @@ export class RemarksComponent implements OnInit {
     this.questionAnswers = event;
     console.log(this.questionAnswers)
   }
-
   getOrderDetails(uid) {
 
     this.loading = true;
@@ -143,8 +152,44 @@ export class RemarksComponent implements OnInit {
   selectViewType(type) {
     this.selectedType = type;
   }
-
-
+  getOrderDetail() {
+    this.provider_services.getProviderOrderDetailById(this.uid)
+      .subscribe(
+        data => {
+          this.waitlist_data = data;
+          console.log('waitlist_data' ,  this.waitlist_data)
+          // this.releasedQnrs = this.waitlist_data.releasedQnr;
+          this.loading = false;
+        });
+  }
+  shareRemarks(){
+    let isEmail;
+    let isPhone;
+    let id;
+    if(this.source === 'order'){
+      isEmail = (this.waitlist_data.email) ? true : false;
+      isPhone = (this.waitlist_data.phoneNumber) ? true : false;
+      id = this.waitlist_data.questionnaire.questionnaireId;
+    }
+    const dialogrefd = this.dialog.open(ReleaseQuestionnaireComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass'],
+      disableClose: true,
+      data: {
+        waitlist_data: this.waitlist_data,
+        source: this.source,
+        qnrId: id,
+        isEmail: isEmail,
+        isPhone: isPhone
+      }
+    });
+    dialogrefd.afterClosed().subscribe(result => {
+      if (result === 'reload') {
+        this.snackbarService.openSnackBar("Remarks Released Successfully");
+        this.router.navigate(['provider', 'orders']);
+      }
+    });
+  }
 
 
   submitQuestionnaire() {
@@ -166,8 +211,10 @@ export class RemarksComponent implements OnInit {
               if (data.urls.length === postData['urls'].length) {
                 this.provider_services.providerOrderQnrUploadStatusUpdate(this.uid, postData)
                   .subscribe((data) => {
+                    console.log("Data res:",data);
                     this.snackbarService.openSnackBar("Remarks Released Successfully");
-                    this.router.navigate(['provider', 'orders']);
+                    this.shareRemarks();
+                   // this.router.navigate(['provider', 'orders']);
                   },
                     error => {
                       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -184,7 +231,8 @@ export class RemarksComponent implements OnInit {
         }
       } else {
         this.snackbarService.openSnackBar("Remarks Released Successfully");
-        this.router.navigate(['provider', 'orders']);
+        this.shareRemarks();
+        //this.router.navigate(['provider', 'orders']);
       }
     }, error => {
       this.snackbarService.openSnackBar(this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });

@@ -325,7 +325,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
             item.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + item.itemId + '')).value || '5';
             if (item.minQuantity > item.maxQuantity) {
                 item.minQuantity = 1;
-                this.snackbarService.openSnackBar('' + item.item.displayName + ' maximum quantity should be greater than equal to minimum quantity', { 'panelClass': 'snackbarerror' });
+                this.snackbarService.openSnackBar('' + item.item.displayName + ' minimum quantity should be less than or equal to maximum quantity', { 'panelClass': 'snackbarerror' });
                 this.api_loading = false;
                 return;
             }
@@ -335,7 +335,7 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
                 this.api_loading = false;
                 return;
             }
-            else{
+            else if (item.minQuantity <= item.maxQuantity && item.maxQuantity <= 5) {
                 let itemUpdate = {
                     'minQuantity' : parseInt(item.minQuantity),
                     'maxQuantity' : parseInt(item.maxQuantity),
