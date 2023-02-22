@@ -43,6 +43,11 @@ export class AgreementService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getBankDetailsById(id) {
+    const url = 'provider/loanapplication/' + id + '/bankdetails';
+    return this.servicemeta.httpGet(url, null);
+  }
+
   uploadDigitalSign(Uid, KycId, submit_data, accountId, type?) {
     // const url = 'provider/loanapplication/' + Uid + '/kyc/' + KycId + '/digitalsign/' + type + '?account=' + accountId;
     const url = 'provider/loanapplication/' + Uid + '/kyc/' + KycId + '/digitalsign/' + '?account=' + accountId;

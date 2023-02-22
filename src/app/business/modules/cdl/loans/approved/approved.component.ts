@@ -361,7 +361,9 @@ export class ApprovedComponent implements OnInit {
         this.sanctionedAmount = this.loanData.sanctionedAmount;
         this.approvedScheme = this.loanData.loanScheme.schemeName;
         this.approvedSchemeId = this.loanData.loanScheme.id;
-        // this.partnerName = this.loanData.partner.id;
+        if (this.loanData.partner && this.loanData.partner.id) {
+          this.partnerName = this.loanData.partner.id;
+        }
         if (this.approvedSchemeId) {
           this.cdlService.getLoanTenures(this.approvedSchemeId).subscribe((data) => {
             this.loanTenures = data;

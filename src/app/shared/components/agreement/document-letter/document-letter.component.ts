@@ -27,6 +27,7 @@ export class DocumentLetterComponent implements OnInit {
   loanKycId: any;
   source: any;
   signCompleted: any = false;
+  bankData: any;
 
 
   constructor(
@@ -44,6 +45,7 @@ export class DocumentLetterComponent implements OnInit {
       if (params) {
         if (params && params.uid) {
           this.loanId = params.uid;
+          this.getBankDetails(params.uid);
           if (params && params.account) {
             this.accountId = params.account;
             if (this.loanId && this.accountId) {
@@ -60,6 +62,14 @@ export class DocumentLetterComponent implements OnInit {
 
   ngOnInit(): void {
     // this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+  }
+
+
+  getBankDetails(id) {
+    this.agreementService.getBankDetailsById(id).subscribe((data) => {
+      this.bankData = data;
+      console.log("this.bankData", this.bankData)
+    });
   }
 
   getloanDetails(loanId, accountId) {
