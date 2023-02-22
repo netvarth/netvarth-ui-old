@@ -15,7 +15,6 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    CommonModule,
     MatDialogModule,
     SignatureModule,
     [RouterModule.forChild(routes)]

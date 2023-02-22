@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: '', component: AgreementComponent },
   { path: 'dpn-letter', loadChildren: () => import('./dpn-letter/dpn-letter.module').then(m => m.DpnLetterModule) },
   { path: 'spdc-letter', loadChildren: () => import('./spdc-letter/spdc-letter.module').then(m => m.SpdcLetterModule) },
-  { path: 'document-letter', loadChildren: () => import('./document-letter/document-letter.module').then(m => m.DocumentLetterModule) }
+  { path: 'document-letter', loadChildren: () => import('./document-letter/document-letter.module').then(m => m.DocumentLetterModule) },
+  { path: 'thank-you', loadChildren: () => import('./thank-you/thank-you.module').then(m => m.ThankYouModule) }
 ]
 
 
