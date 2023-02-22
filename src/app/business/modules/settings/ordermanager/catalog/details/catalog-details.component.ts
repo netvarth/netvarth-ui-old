@@ -323,19 +323,20 @@ export class CatalogdetailComponent implements OnInit, OnDestroy {
        if (item.minQuantity > 0 && item.maxQuantity > 0) {
             item.minQuantity = (<HTMLInputElement>document.getElementById('minquty_' + item.itemId + '')).value || '1';
             item.maxQuantity = (<HTMLInputElement>document.getElementById('maxquty_' + item.itemId + '')).value || '5';
-            if (item.minQuantity > item.maxQuantity) {
+            if (parseInt(item.minQuantity) > parseInt(item.maxQuantity)) {
                 item.minQuantity = 1;
                 this.snackbarService.openSnackBar('' + item.item.displayName + ' minimum quantity should be less than or equal to maximum quantity', { 'panelClass': 'snackbarerror' });
                 this.api_loading = false;
                 return;
             }
-            else if(item.maxQuantity > 5){
-                item.maxQuantity = 5;
-                this.snackbarService.openSnackBar('' + item.item.displayName + ' maximum quantity should not be greater than 5', { 'panelClass': 'snackbarerror' });
-                this.api_loading = false;
-                return;
-            }
-            else if (item.minQuantity <= item.maxQuantity && item.maxQuantity <= 5) {
+            // else if(item.maxQuantity > 5){
+            //     item.maxQuantity = 5;
+            //     this.snackbarService.openSnackBar('' + item.item.displayName + ' maximum quantity should not be greater than 5', { 'panelClass': 'snackbarerror' });
+            //     this.api_loading = false;
+            //     return;
+            // }
+            //&& item.maxQuantity <= 5
+            else if (parseInt(item.minQuantity) <= parseInt(item.maxQuantity)) {
                 let itemUpdate = {
                     'minQuantity' : parseInt(item.minQuantity),
                     'maxQuantity' : parseInt(item.maxQuantity),
