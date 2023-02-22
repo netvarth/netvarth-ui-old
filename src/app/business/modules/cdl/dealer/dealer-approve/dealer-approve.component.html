@@ -166,6 +166,22 @@
             </div>
           </div>
 
+
+          <div class="col-md-6"
+            *ngIf="dealerData && dealerData.licenceAttachments && dealerData.licenceAttachments[0] && dealerData.licenceAttachments[0].s3path">
+            <div>
+              <div>
+                <div class="text-left details-title">Dealer Agreement</div>
+              </div>
+              <div class="mt-2">
+                <a [href]="dealerData.licenceAttachments[0].s3path" target="_blank" class="btn btn-primary"
+                  type="button">
+                  <span>View Dealer Agreement</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
           <!-- <div class="col-md-6">
             <div
               *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0] && dealerData.storeAttachments[0].s3path">

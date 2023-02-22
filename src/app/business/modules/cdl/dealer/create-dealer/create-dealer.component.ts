@@ -40,7 +40,8 @@ export class CreateDealerComponent implements OnInit {
     "aadhar": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] },
     "cheque": { files: [], base64: [], caption: [] },
-    "gst": { files: [], base64: [], caption: [] }
+    "gst": { files: [], base64: [], caption: [] },
+    "licenese": { files: [], base64: [], caption: [] }
   }
   filesToUpload: any = [];
   actionText: any;
@@ -188,6 +189,7 @@ export class CreateDealerComponent implements OnInit {
             this.selectedFiles['store'].files = this.dealerData.storeAttachments;
             this.selectedFiles['cheque'].files = this.dealerData.bankAttachments;
             this.selectedFiles['gst'].files = this.dealerData.gstAttachments;
+            this.selectedFiles['licenese'].files = this.dealerData.licenceAttachments;
 
             if (this.dealerData && this.dealerData.partnerMobileVerified) {
               this.verification = true;
@@ -862,6 +864,10 @@ export class CreateDealerComponent implements OnInit {
             this.dealerData['gstAttachments'] = [];
             this.dealerData['gstAttachments'].push(this.filesToUpload[i]);
           }
+          if (this.filesToUpload[i]["type"] == 'licenese') {
+            this.dealerData['licenceAttachments'] = [];
+            this.dealerData['licenceAttachments'].push(this.filesToUpload[i]);
+          }
         }
 
         this.cdlservice.createPartner(this.dealerData).subscribe((s3urls: any) => {
@@ -1049,6 +1055,14 @@ export class CreateDealerComponent implements OnInit {
       if (this.filesToUpload[i]["type"] == 'cheque') {
         this.dealerData['bankAttachments'] = [];
         this.dealerData['bankAttachments'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'gst') {
+        this.dealerData['gstAttachments'] = [];
+        this.dealerData['gstAttachments'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'licenese') {
+        this.dealerData['licenceAttachments'] = [];
+        this.dealerData['licenceAttachments'].push(this.filesToUpload[i]);
       }
     }
 
