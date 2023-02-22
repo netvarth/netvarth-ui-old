@@ -379,6 +379,32 @@ export class OtpVerifyComponent implements OnInit {
           this.customerData['originUid'] = this.enquireUid
         }
 
+        if (this.from == 'coapplicant') {
+          this.customerData = {};
+          if (this.loanId) {
+            this.customerData['originUid'] = this.loanId;
+          }
+          if (this.relation) {
+            this.customerData['coApplicantType'] = this.relation;
+          }
+          if (this.firstName) {
+            this.customerData["customerFirstName"] = this.firstName;
+          }
+          if (this.lastName) {
+            this.customerData["customerLastName"] = this.lastName;
+          }
+
+          this.customerData["customerPhoneCode"] = "+91";
+
+          if (this.phoneNumber) {
+            this.customerData["customerPhone"] = this.phoneNumber;
+          }
+
+          if (this.dob) {
+            this.customerData["dob"] = this.dob;
+          }
+        }
+
         this.subs.sink = this.cdlservice.verifyPhoneOTP(this.otpEntered, this.customerData, this.from)
           .subscribe(
             (response: any) => {
@@ -388,6 +414,7 @@ export class OtpVerifyComponent implements OnInit {
                   type: this.type,
                   msg: "success",
                   uid: response.uid,
+                  id: response.id,
                   customerData: this.customerData
                 }
                 this.dialogRef.close(data);

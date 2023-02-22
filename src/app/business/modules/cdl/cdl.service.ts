@@ -488,6 +488,9 @@ export class CdlService {
     if (from == 'guarantor') {
       url = 'provider/loanapplication/verify/' + otp + '/guarantor/phone';
     }
+    else if (from == 'coapplicant') {
+      url = 'provider/loanapplication/verify/coapplicant/' + otp + '/phoneotp';
+    }
     return this.servicemeta.httpPost(url, data);
   }
 

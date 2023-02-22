@@ -165,6 +165,7 @@ export class CreateComponent implements OnInit {
   coApplicantDetailsPanel: any = false;
   coApplicantbankListName: any;
   coApplicantDetailsPanelVerified: any = false;
+  coApplicantId: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -1391,21 +1392,25 @@ export class CreateComponent implements OnInit {
         if (result) {
           if (result.msg == "success") {
             this.coapplicantPhoneVerification = true;
-            this.loanId = result.uid;
-            if (result.customerData) {
-              this.customerData = result.customerData
-              console.log("this.customerData", this.customerData)
+            // this.loanId = result.uid;
+            if (result.id) {
+              this.coApplicantId = result.id
             }
-            const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
-            this.getCustomerDetails(filter);
-            const navigationExtras: NavigationExtras = {
-              queryParams: {
-                id: this.loanId,
-                action: 'update'
-              }
-            };
-            console.log("Navigation", navigationExtras)
-            this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+            console.log("coApplicantId", this.coApplicantId)
+            // if (result.customerData) {
+            //   this.customerData = result.customerData
+            //   console.log("this.customerData", this.customerData)
+            // }
+            // const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
+            // this.getCustomerDetails(filter);
+            // const navigationExtras: NavigationExtras = {
+            //   queryParams: {
+            //     id: this.loanId,
+            //     action: 'update'
+            //   }
+            // };
+            // console.log("Navigation", navigationExtras)
+            // this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
           }
         }
       });
@@ -1445,6 +1450,9 @@ export class CreateComponent implements OnInit {
         if (result) {
           if (result.msg == "success") {
             this.guarantorVerification = true;
+            if (result.id) {
+              this.coApplicantId = result.id
+            }
             // this.loanId = result.uid;
             // const filter = { 'phoneNo-eq': this.createLoan.controls.guarantorPhone.value };
             // this.getCustomerDetails(filter);
@@ -1454,7 +1462,7 @@ export class CreateComponent implements OnInit {
             //     action: 'update'
             //   }
             // };
-            // console.log("Navigation", navigationExtras)
+            console.log("coApplicantId", this.coApplicantId)
             // this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
           }
         }
