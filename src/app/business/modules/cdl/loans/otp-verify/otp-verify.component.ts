@@ -45,6 +45,7 @@ export class OtpVerifyComponent implements OnInit {
   gender: any;
   dob: any;
   enquireUid: any;
+  relation: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -62,6 +63,7 @@ export class OtpVerifyComponent implements OnInit {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.type = this.data.type
     this.from = this.data.from
+    console.log("Data", this.data)
     if (this.data && this.data.data && this.data.data.firstName) {
       this.firstName = this.data.data.firstName;
     }
@@ -73,6 +75,10 @@ export class OtpVerifyComponent implements OnInit {
     }
     if (this.data && this.data.data && this.data.data.lastName) {
       this.lastName = this.data.data.lastName;
+    }
+
+    if (this.data && this.data.data && this.data.data.relation) {
+      this.relation = this.data.data.relation;
     }
 
     if (this.data && this.data.data && this.data.data.enquireUid) {
@@ -128,6 +134,33 @@ export class OtpVerifyComponent implements OnInit {
     let credentials = {
       countryCode: "+91",
       number: loginId,
+    }
+    if (this.from == "coapplicant") {
+      delete credentials['countryCode'];
+      delete credentials['number'];
+
+      if (this.loanId) {
+        credentials['originUid'] = this.loanId;
+      }
+      if (this.relation) {
+        credentials['coApplicantType'] = this.relation;
+      }
+      if (this.firstName) {
+        credentials["customerFirstName"] = this.firstName;
+      }
+      if (this.lastName) {
+        credentials["customerLastName"] = this.lastName;
+      }
+
+      credentials["customerPhoneCode"] = "+91";
+
+      if (this.phoneNumber) {
+        credentials["customerPhone"] = this.phoneNumber;
+      }
+
+      if (this.dob) {
+        credentials["dob"] = this.dob;
+      }
     }
     console.log("coming here", credentials)
     // if (!loginId.startsWith('555')) {

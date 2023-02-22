@@ -5,7 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OtpVerifyComponent } from '../otp-verify/otp-verify.component';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 // import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
-import { FormControl, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
+import { FormControl, UntypedFormArray, UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { FileService } from '../../../../../shared/services/file-service';
 import { ConfirmBoxComponent } from '../confirm-box/confirm-box.component';
@@ -48,6 +48,7 @@ export class CreateComponent implements OnInit {
   banksList: any;
   todayDate = new Date()
   minDob: any;
+  coapplicantPhoneVerification: any;
   selectedFiles = {
     "aadhar": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] },
@@ -159,8 +160,11 @@ export class CreateComponent implements OnInit {
   banksListNames = new FormControl('');
   bankListName: any;
   customerData: any;
-  accountaggregatingStatus: ArrayBuffer;
+  accountaggregatingStatus: any;
   accountaggregatingStatusShowing: any = false;
+  coApplicantDetailsPanel: any = false;
+  coApplicantbankListName: any;
+  coApplicantDetailsPanelVerified: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -548,8 +552,49 @@ export class CreateComponent implements OnInit {
       guarantorPhone: [null],
       guarantorDob: [null],
       subventionLoan: [null],
-      referralCode: [null]
+      referralCode: [null],
+      coapplicants: this.createLoanFormBuilder.array([])
     });
+  }
+
+
+  coapplicants(): UntypedFormArray {
+    return this.createLoan.get("coapplicants") as UntypedFormArray
+  }
+
+  newCoApplicant(): UntypedFormGroup {
+    return this.createLoanFormBuilder.group({
+      coapplicantphone: [null],
+      coapplicantfirstname: [null],
+      coapplicantlastname: [null],
+      coapplicantemail: [null],
+      coapplicantdob: [null],
+      coapplicantgender: [null],
+      coapplicantcurrentaddress1: [null],
+      coapplicantcurrentaddress2: [null],
+      coapplicantcurrentcity: [null],
+      coapplicantcurrentdistrict: [null],
+      coapplicantcurrentstate: [null],
+      coapplicantcurrentpincode: [null],
+      coapplicantmartialstatus: [null],
+      coapplicantbank: [null],
+      coapplicantifsc: [null],
+      coapplicantaccount: [null],
+      coapplicantrelation: [null]
+    })
+  }
+
+  addCoApplicant() {
+    this.coapplicants().push(this.newCoApplicant());
+  }
+
+  removeCoApplicant(i: number) {
+    this.coapplicants().removeAt(i);
+  }
+
+  saveCoApplicantDetails() {
+    console.log("this.createLoan.value", this.createLoan.value);
+    this.coApplicantDetailsPanelVerified = true;
   }
 
 
@@ -582,7 +627,7 @@ export class CreateComponent implements OnInit {
       this.customerDetailsPanel = false;
       this.kycDetailsPanel = true;
     }
-
+    this.addCoApplicant();
     console.log("Coming to Products outside", this.productCategoryId, this.productSubCategoryId)
   }
 
@@ -756,6 +801,7 @@ export class CreateComponent implements OnInit {
     this.otherDetailsPanel = true;
     this.bankDetailsPanel = true;
     this.allPanelsExpanded = true;
+    this.coApplicantDetailsPanel = true;
   }
 
   closeAll() {
@@ -764,6 +810,7 @@ export class CreateComponent implements OnInit {
     this.loanDetailsPanel = false;
     this.otherDetailsPanel = false;
     this.bankDetailsPanel = false;
+    this.coApplicantDetailsPanel = false;
     this.allPanelsExpanded = false;
 
   }
@@ -1317,6 +1364,60 @@ export class CreateComponent implements OnInit {
 
 
 
+  verifycoApplicantOtp(i) {
+    if (this.createLoan.controls.coapplicants.value[i].coapplicantphone && this.createLoan.controls.coapplicants.value[i].coapplicantphone != '' && this.createLoan.controls.coapplicants.value[i].coapplicantphone.length == 10) {
+      let can_remove = false;
+      this.nameData = {
+        "firstName": this.createLoan.controls.coapplicants.value[i].coapplicantfirstname,
+        "lastName": this.createLoan.controls.coapplicants.value[i].coapplicantlastname,
+        "dob": this.createLoan.controls.coapplicants.value[i].coapplicantdob,
+        "relation": this.createLoan.controls.coapplicants.value[i].coapplicantrelation
+      }
+
+      const dialogRef = this.dialog.open(OtpVerifyComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+        disableClose: true,
+        data: {
+          type: 'Mobile Number',
+          data: this.nameData,
+          from: 'coapplicant',
+          id: this.loanId,
+          kycid: this.loanApplicationKycId,
+          phoneNumber: this.createLoan.controls.coapplicants.value[i].coapplicantphone
+        }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (result.msg == "success") {
+            this.coapplicantPhoneVerification = true;
+            this.loanId = result.uid;
+            if (result.customerData) {
+              this.customerData = result.customerData
+              console.log("this.customerData", this.customerData)
+            }
+            const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
+            this.getCustomerDetails(filter);
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                id: this.loanId,
+                action: 'update'
+              }
+            };
+            console.log("Navigation", navigationExtras)
+            this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
+          }
+        }
+      });
+      return can_remove;
+    }
+    else {
+      this.snackbarService.openSnackBar("Please Enter a Valid Mobile Number", { 'panelClass': 'snackbarerror' });
+    }
+  }
+
+
+
   verifyGuarantorotp() {
     if (this.createLoan.controls.guarantorPhone.value && this.createLoan.controls.guarantorPhone.value != '' && this.createLoan.controls.guarantorPhone.value.length == 10) {
       let can_remove = false;
@@ -1603,7 +1704,7 @@ export class CreateComponent implements OnInit {
       }
 
       this.cdlService.addressUpdate(this.loanApplication).subscribe((s3urls: any) => {
-        this.panelsManage(false, false, true, false);
+        this.panelsManage(false, false, true, false, false);
         this.kycDetailsSaved = true;
         this.snackbarService.openSnackBar("Address Details Updated Successfully")
       },
@@ -1619,10 +1720,11 @@ export class CreateComponent implements OnInit {
   }
 
 
-  panelsManage(customer, kyc, loan, bank) {
+  panelsManage(customer, kyc, loan, coapplicant, bank) {
     this.customerDetailsPanel = customer;
     this.kycDetailsPanel = kyc;
     this.loanDetailsPanel = loan;
+    this.coApplicantDetailsPanel = coapplicant;
     this.bankDetailsPanel = bank;
   }
 
@@ -1698,7 +1800,7 @@ export class CreateComponent implements OnInit {
       }
 
       this.cdlService.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
-        this.panelsManage(false, false, false, true);
+        this.panelsManage(false, false, false, true, false);
         this.loanDetailsSaved = true;
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
       },
@@ -1711,6 +1813,9 @@ export class CreateComponent implements OnInit {
       })
 
   }
+
+
+
 
 
   productSelect(values) {

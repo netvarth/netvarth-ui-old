@@ -10,12 +10,12 @@
             </div>
         </div>
     </div>
-    
+
     <div class="container">
         <div id="printMe">
             <div class="card p-5 dpn-letter">
                 <div class="text-center">
-                    <h4 class="font-weight-bold"><u>DPN Letter</u></h4>
+                    <h4 class="font-weight-bold"><u>DEMAND PROMISSORY NOTE</u></h4>
                 </div>
                 <div class="mt-5">
                     <div>
@@ -53,22 +53,23 @@
                                 <b>N/A</b>
                                 (Co-Applicant / Guarantor Address)
                                 <b>N/A</b>
-                                jointly and severally promise to pay to MANAPPURAM FINANCE LIMITED (“Lender”) or order the
+                                jointly and severally promise to pay to MANAPPURAM FINANCE LIMITED (“Lender”) or order
+                                the
                                 sum of
                                 <b><span *ngIf="loanData && loanData.sanctionedAmount">
                                         Rs {{loanData.sanctionedAmount}}/-
                                     </span></b> (Rupees only) for value
                                 received, together with interest from the date hereof, at <b><span
                                         *ngIf="loanData && loanData.loanScheme && loanData.loanScheme.schemeRate">
-                                        {{loanData.loanScheme.schemeRate }}/-
-                                    </span></b>. % per annum or such other rates which
+                                        {{loanData.loanScheme.schemeRate }} %
+                                    </span></b>per annum or such other rates which
                                 MANAPPURAM
                                 FINANCE LIMITED (“Lender”) may ﬁx from me to me,
                                 compounding and payable with daily / monthly / quarterly rests, for value received.
                             </div>
                         </div>
-    
-    
+
+
                         <div class="mt-4">
                             <div class="d-flex justify-content-end">
                                 <div class="mr-2 my-auto py-auto">
@@ -89,7 +90,7 @@
                       *ngIf="!loanData.loanApplicationKycList || !loanData.loanApplicationKycList[0] || !loanData.loanApplicationKycList[0].digitalSignature || !loanData.loanApplicationKycList[0].digitalSignature.url">
                       <button class="btn btn-primary" (click)="manualSignature('coapplicant')">Sign</button>
                     </div> -->
-    
+
                                     <span>Co-Applicant / Guarantor Signature</span>
                                 </div>
                                 <div class="border-rectangle">
@@ -98,10 +99,10 @@
                                 </div>
                             </div>
                         </div>
-    
-    
-    
-    
+
+
+
+
                         <div class="mt-4">
                             <div class="d-md-flex justify-content-between">
                                 <div class="mt-4">
@@ -114,7 +115,7 @@
                                         *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url) && source!='provider'">
                                         <span class="font-weight-bold text-danger">Not Yet Signed</span>
                                     </div>
-    
+
                                     <span>Applicant Signature</span><br>
                                     <span class="mt-4">Applicant Name : <b><span
                                                 *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
@@ -130,30 +131,30 @@
                                 </div>
                             </div>
                         </div>
-    
+
                         <hr>
-    
+
                         <div class="mt-1 mb-4 text-center">
                             <b>The Applicant / Co-Applicant Guarantor has / have to sign across the revenue stamp & DP
                                 note.</b>
                         </div>
-    
-    
+
+
                         <div class="text-center py-2 bg-yellow mt-4 font-weight-bold">
                             CDL
                         </div>
-    
+
                     </div>
                     <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
                         Go to Home
                     </div> -->
                 </div>
             </div>
-    
-    
+
+
             <div class="card p-5 mt-5 spdc-letter">
                 <div class="text-center">
-                    <h4 class="font-weight-bold"><u>SPDC Letter</u></h4>
+                    <h4 class="font-weight-bold"><u>SECURITY POST DATED CHEQUE</u></h4>
                 </div>
                 <div class="row">
                     <div>
@@ -183,19 +184,20 @@
                             <div class="mt-3">
                                 Dear Sir,
                             </div>
-    
+
                             <div class="mt-2" *ngIf="loanData && loanData.requestedAmount">
                                 <b><u>Sub</u> : Cheques towards repayment of my Loan against CDL of Rs
                                     {{loanData.requestedAmount}}/-</b>
                             </div>
-    
+
                             <div class="mt-3">
                                 Please ﬁnd enclosed crossed cheques /NACH drawn in favour of Manappuram Finance Limited
                                 bearing
                                 the
                                 following being
                                 submitted
-                                towards repayment of my captioned loan availed from your Company bearing the above-mentioned
+                                towards repayment of my captioned loan availed from your Company bearing the
+                                above-mentioned
                                 account number.
                             </div>
                             <div class="row col-md-12 no-padding mt-5">
@@ -270,7 +272,7 @@
                                             <span></span>
                                         </td>
                                     </tr>
-    
+
                                     <tr class="text-center">
                                         <td colspan="2">
                                             <span>NACH - UMR Number</span>
@@ -282,10 +284,10 @@
                                             <span></span>
                                         </td>
                                     </tr>
-    
+
                                 </table>
                             </div>
-    
+
                             <div class="mt-3">
                                 <b>Co Applicant's : </b>
                                 <table style="width:100%" class="table-responsive mt-2">
@@ -331,7 +333,7 @@
                                             <span></span>
                                         </td>
                                     </tr>
-    
+
                                     <tr class="text-center">
                                         <td colspan="2">
                                             <span>NACH - UMR Number</span>
@@ -343,10 +345,10 @@
                                             <span></span>
                                         </td>
                                     </tr>
-    
+
                                 </table>
                             </div>
-    
+
                             <div class="mt-4">
                                 I/We agree that the postdated cheques/NACH are given in satisfaction of the debt due and
                                 payable
@@ -381,12 +383,12 @@
                                     </div>
                                 </div>
                             </div>
-    
-    
+
+
                             <div class="text-center py-2 bg-yellow mt-4 font-weight-bold">
                                 CDL
                             </div>
-    
+
                         </div>
                         <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
                             Go to Home

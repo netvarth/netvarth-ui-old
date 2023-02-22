@@ -438,7 +438,10 @@ export class CdlService {
     if (from == 'guarantor') {
       var url = 'provider/loanapplication/generate/guarantor/phone';
     }
-    if (from == 'partner') {
+    else if (from == 'coapplicant') {
+      var url = 'provider/loanapplication/generate/coapplicant/phoneotp';
+    }
+    else if (from == 'partner') {
       var url = 'provider/partner/generate/phone';
     }
     return this.servicemeta.httpPost(url, data);

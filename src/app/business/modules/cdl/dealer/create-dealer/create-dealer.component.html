@@ -384,7 +384,7 @@
           <div class="bggrey my-2">
             <div>
               <div class="d-flex">
-                <div class="form-title">City</div>
+                <div class="form-title">District</div>
               </div>
               <div class="fieldPadding">
                 <input (keyup)="resetErrors()" formControlName="city" #partnercity type="text" placeholder="Enter City"
@@ -470,7 +470,7 @@
             </div>
           </div>
         </div>
-<!-- 
+        <!-- 
         <div class="clearfix"></div>
         <div>
           <div class="bggrey my-2">
@@ -719,13 +719,18 @@
       </div>
 
     </div>
-    <div class="d-flex mt-2">
-      <button class="btn btn-draft mr-2" [disabled]="!verification" (click)="saveAsLead()">
-        Save as Lead
-      </button>
-      <button class="btn btn-primary" [disabled]="!bankverification" (click)="createPartner()">
-        {{btnText}}
-      </button>
+    <hr>
+    <div class="mt-2">
+      <div>
+        <button class="btn btn-draft mr-2" [disabled]="!verification" (click)="saveAsLead()">
+          Save
+        </button>
+      </div>
+      <div class="mt-2">
+        <button class="btn btn-primary" [disabled]="!bankverification" (click)="createPartner()">
+          {{btnText}}
+        </button>
+      </div>
     </div>
   </form>
 </div>

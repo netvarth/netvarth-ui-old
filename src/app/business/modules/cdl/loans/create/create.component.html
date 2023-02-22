@@ -1195,7 +1195,7 @@
               <div>
                 <div class="bggrey my-2">
                   <div>
-                    <div class="d-flex">
+                    <div class="d-flex">e
                       <div class="form-title">Nominee Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
@@ -1254,7 +1254,7 @@
                 </div>
               </div>
 
-              <div *ngIf="showCoapplicant">
+              <!-- <div *ngIf="showCoapplicant">
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
@@ -1321,7 +1321,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
 
 
@@ -1348,6 +1348,314 @@
             </div>
             <div>
               <button class="btn btn-primary open-all-btn" (click)="saveLoanDetails()">Save</button>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <br>
+
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="coApplicantDetailsPanel" (opened)="coApplicantDetailsPanel = true"
+            (closed)="coApplicantDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="coApplicantDetailsPanelVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Co-Applicant Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ng-container formArrayName="coapplicants">
+              <div *ngFor="let coapplicant of coapplicants().controls; let i=index" [formGroupName]="i">
+                <div>
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Relation With Applicant <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <mat-select class="form-control widthWebKit" #coapplicantrelation
+                            formControlName="coapplicantrelation">
+                            <mat-option [value]="relation.name" *ngFor="let relation of relations">
+                              <div *ngIf="relation && relation.displayName">{{relation.displayName}}</div>
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">First Name <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" #coapplicantfirstname type="text"
+                            placeholder="Enter First Name" class="form-control" autocomplete="off"
+                            formControlName="coapplicantfirstname" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Last Name <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" #coapplicantlastname type="text" placeholder="Enter Last Name"
+                            class="form-control" autocomplete="off" formControlName="coapplicantlastname" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Date of Birth <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" #coapplicantdob type="date" class="form-control"
+                            autocomplete="off" formControlName="coapplicantdob" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Gender</div>
+                        </div>
+                        <div class="fieldPadding">
+                          <mat-select class="form-control widthWebKit" #coapplicantgender
+                            formControlName="coapplicantgender">
+                            <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                              <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
+                            </mat-option>
+                          </mat-select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Phone Number <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <div class="d-flex">
+                            <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number"
+                              class="form-control" autocomplete="off" #coapplicantphone
+                              formControlName="coapplicantphone"
+                              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                              maxlength="10" [class.disabled]="coapplicantPhoneVerification"
+                              [disabled]="coapplicantPhoneVerification" />
+                            <a class="btn btn-verify" [class.btn-verified]="coapplicantPhoneVerification"
+                              *ngIf="!coapplicantPhoneVerification"
+                              (click)="verifycoApplicantOtp(i)"><span>Verify</span></a>
+
+                            <a class="btn btn-verify" *ngIf="coapplicantPhoneVerification"
+                              [class.btn-verified]="coapplicantPhoneVerification">
+                              <span *ngIf="coapplicantPhoneVerification"><i
+                                  class="fa fa-check"></i>&nbsp;Verified</span></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Email</div>
+                        </div>
+                        <div class="fieldPadding">
+                          <div class="d-flex">
+                            <input (keyup)="resetErrors()" #coapplicantemail type="email" placeholder="Enter Email"
+                              class="form-control" autocomplete="off" formControlName="coapplicantemail"
+                              [class.disabled]="emailverification" />
+
+                            <a class="btn btn-verify" [class.btn-verified]="emailverification"
+                              *ngIf="!emailverification" (click)="verifyEmail()"><span>Verify</span></a>
+
+                            <a class="btn btn-verify" *ngIf="emailverification"
+                              [class.btn-verified]="emailverification">
+                              <span *ngIf="emailverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Current Address 1</div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" #coapplicantcurrentaddress1 type="text"
+                            placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                            formControlName="coapplicantcurrentaddress1" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Current Address 2</div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" #coapplicantcurrentaddress2 type="text"
+                            placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                            formControlName="coapplicantcurrentaddress2" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Current Address District</div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" #coapplicantcurrentdistrict type="text"
+                            placeholder="Enter District" class="form-control" autocomplete="off"
+                            formControlName="coapplicantcurrentdistrict" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Current Address State</div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" #coapplicantcurrentstate type="text" placeholder="Enter State"
+                            class="form-control" autocomplete="off" formControlName="coapplicantcurrentstate" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Current Address Pincode</div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" #coapplicantcurrentpincode type="text"
+                            placeholder="Enter Pincode" class="form-control" autocomplete="off"
+                            formControlName="coapplicantcurrentpincode" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Select Bank <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <div *ngIf="banksList" class="bankList mt-2">
+                            <mat-form-field [style.width.%]="100">
+                              <input type="text" class="form-control" matInput [matAutocomplete]="auto"
+                                [formControl]="banksListNames" formControlName="coapplicantbank"
+                                [(ngModel)]="coApplicantbankListName">
+                              <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+                              <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let bank of filteredOptions | async" [value]="bank.bankName">
+                                  {{bank.bankName}}
+                                </mat-option>
+                              </mat-autocomplete>
+                            </mat-form-field>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Bank Account Number <span class="text-danger">*</span></div>
+                        </div>
+                        <!-- <div class="d-flex"> -->
+                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Account Number"
+                          class="form-control" formControlName="coapplicantaccount" autocomplete="off" />
+                        <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
+                                                      <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
+                                                          class="fa fa-check"></i>&nbsp;Verified</span></a> -->
+                        <!-- </div> -->
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Bank IFSC <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
+                            formControlName="coapplicantifsc" autocomplete="off" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <!-- <div>
+              <button class="btn btn-primary open-all-btn" (click)="addCoApplicant()">Add Co-Applicant</button>
+            </div> -->
+            <div class="mt-4">
+              <button class="btn btn-primary open-all-btn" (click)="saveCoApplicantDetails()">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

@@ -130,9 +130,9 @@
                       </label>
                       <input #invoiceAttach type='file' (change)="filesSelected($event, 'invoice')" />
                     </div>&nbsp;
-                    <div class="d-flex align-items-center">
+                    <!-- <div class="d-flex align-items-center">
                       <a (click)="sendDigitalDocument()" class="btn btn-primary">Send for Digital Signature</a>
-                    </div>
+                    </div> -->
                   </div>
                   <div class="img-section clearfix"
                     *ngIf="selectedFiles['invoice'] && selectedFiles['invoice'].files && selectedFiles['invoice'].files.length > 0">
