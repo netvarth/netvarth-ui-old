@@ -162,6 +162,7 @@ export class CreateComponent implements OnInit {
   enquireLeadData: any;
   disablePhone: any = false;
   filteredOptions: Observable<string[]>;
+  coapplicantfilteredOptions: Observable<string[]>;
   banksListNames = new FormControl('');
   coApplicantbanksListNames = new FormControl('');
   bankListName: any;
@@ -314,6 +315,9 @@ export class CreateComponent implements OnInit {
             }
             if (this.loanData && this.loanData.requestedAmount) {
               this.createLoan.controls.loanamount.setValue(this.loanData.requestedAmount);
+              if (this.loanData.requestedAmount > 50000) {
+                this.showCoapplicant = true;
+              }
             }
             if (this.loanData && this.loanData.remarks) {
               this.createLoan.controls.remarks.setValue(this.loanData.remarks);
@@ -626,7 +630,7 @@ export class CreateComponent implements OnInit {
     if (item.panAttachments) {
       this.selectedFiles['coapplicantpan'].files = item.panAttachments;
     }
-    if (item.isAadhaarVerified && item.isPanVerified && item.phoneVerified && item.emailVerified) {
+    if (item.isAadhaarVerified && item.isPanVerified && item.phoneVerified) {
       this.coApplicantDetailsPanelVerified = true;
     }
   }
@@ -723,7 +727,7 @@ export class CreateComponent implements OnInit {
       map(value => this._filter(value || '')),
     );
 
-    this.filteredOptions = this.coApplicantbanksListNames.valueChanges.pipe(startWith(''),
+    this.coapplicantfilteredOptions = this.coApplicantbanksListNames.valueChanges.pipe(startWith(''),
       map(value => this._filter(value || '')),
     );
 

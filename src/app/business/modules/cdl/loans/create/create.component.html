@@ -611,6 +611,7 @@
                   </div>
                 </div>
 
+
                 <div>
                   <div class="bggrey my-2">
                     <div>
@@ -663,7 +664,7 @@
               <div class="bggrey my-2">
                 <div>
                   <div class="d-flex">
-                    <div class="form-title">Select Dealer <span class="text-danger">*</span></div>
+                    <div class="form-title">Select Dealer</div>
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #dealer formControlName="dealer">
@@ -1708,7 +1709,7 @@
                     </div>
                   </div>
 
-                  <div>
+                  <!-- <div>
                     <div class="bggrey my-2">
                       <div>
                         <div class="d-flex">
@@ -1718,6 +1719,22 @@
                           <input (keyup)="resetErrors()" #coapplicantcurrentstate type="text" placeholder="Enter State"
                             class="form-control" autocomplete="off" formControlName="coapplicantcurrentstate" />
                         </div>
+                      </div>
+                    </div>
+                  </div> -->
+
+                  <div class="bggrey my-2" *ngIf="stateList">
+                    <div>
+                      <div class="d-flex">
+                        <div class="form-title">State <span class="text-danger">*</span></div>
+                      </div>
+                      <div class="fieldPadding">
+                        <mat-select class="form-control widthWebKit" #coapplicantcurrentstate
+                          formControlName="coapplicantcurrentstate">
+                          <mat-option [value]="state.name" *ngFor="let state of stateList">
+                            <div *ngIf="state && state.displayName">{{state.displayName}}</div>
+                          </mat-option>
+                        </mat-select>
                       </div>
                     </div>
                   </div>
@@ -1752,7 +1769,8 @@
                                 [(ngModel)]="coApplicantbankListName">
                               <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
                               <mat-autocomplete #auto="matAutocomplete">
-                                <mat-option *ngFor="let bank of filteredOptions | async" [value]="bank.bankName">
+                                <mat-option *ngFor="let bank of coapplicantfilteredOptions | async"
+                                  [value]="bank.bankName">
                                   {{bank.bankName}}
                                 </mat-option>
                               </mat-autocomplete>
