@@ -52,6 +52,8 @@ export class CreateComponent implements OnInit {
   selectedFiles = {
     "aadhar": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] },
+    "coapplicantaadhar": { files: [], base64: [], caption: [] },
+    "coapplicantpan": { files: [], base64: [], caption: [] },
     "photo": { files: [], base64: [], caption: [] },
     "bank": { files: [], base64: [], caption: [] }
   }
@@ -69,8 +71,10 @@ export class CreateComponent implements OnInit {
   actionText: any;
   schemeSelected: any;
   aadharverification = false;
+  coapplicantaadharverification = false;
   verification = false;
   panverification = false;
+  coapplicantpanverification = false;
   emailverification = false;
   accountverification = false;
   address1: any = '';
@@ -83,6 +87,7 @@ export class CreateComponent implements OnInit {
   nameData: any;
   guarantorVerification: any;
   verifyingUID = false;
+  coapplicantverifyingUID = false;
   addresscheck: any = true;
   showaddressfields: any = false;
   phone: any = '';
@@ -158,6 +163,7 @@ export class CreateComponent implements OnInit {
   disablePhone: any = false;
   filteredOptions: Observable<string[]>;
   banksListNames = new FormControl('');
+  coApplicantbanksListNames = new FormControl('');
   bankListName: any;
   customerData: any;
   accountaggregatingStatus: any;
@@ -166,6 +172,7 @@ export class CreateComponent implements OnInit {
   coApplicantbankListName: any;
   coApplicantDetailsPanelVerified: any = false;
   coApplicantId: any;
+  coapplicantemailverification: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -270,6 +277,15 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.martialstatus.setValue(this.loanData.loanApplicationKycList[0].maritalStatus);
             this.createLoan.controls.employmenttype.setValue(this.loanData.loanApplicationKycList[0].employmentStatus);
             this.createLoan.controls.salary.setValue(this.loanData.loanApplicationKycList[0].monthlyIncome);
+
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[1]) {
+              this.setCoApplicantValues(this.loanData.loanApplicationKycList[1])
+              // if (this.loanData.loanApplicationKycList[1].customerFirstName) {
+              //   console.log("Coming to co applicant", this.loanData.loanApplicationKycList[1].customerFirstName)
+              //   console.log("this.createLoan.controls.coapplicants.value[0].coapplicantfirstname", this.createLoan.controls.coapplicants)
+              //   this.createLoan.controls.coapplicants.value[0].coapplicantfirstname.setValue(this.loanData.loanApplicationKycList[1].customerFirstName);
+              // }
+            }
             if (this.loanData && this.loanData.category && this.loanData.category.id) {
               this.createLoan.controls.category.setValue(this.loanData.category.id);
             }
@@ -563,6 +579,58 @@ export class CreateComponent implements OnInit {
     return this.createLoan.get("coapplicants") as UntypedFormArray
   }
 
+  setCoApplicantValues(item) {
+    const formArray = new UntypedFormArray([]);
+    // for (let x of item) {
+    formArray.push(this.createLoanFormBuilder.group({
+      coapplicantfirstname: item.customerFirstName,
+      coapplicantlastname: item.customerLastName,
+      coapplicantdob: item.dob,
+      coapplicantphone: item.customerPhone,
+      coapplicantrelation: item.coApplicantType,
+      coapplicantgender: item.gender,
+      coapplicantemail: item && item.customerEmail || "",
+      coapplicantaadharnumber: item && item.aadhaar || "",
+      coapplicantpannumber: item && item.pan || "",
+      coapplicantcurrentaddress1: item && item.permanentAddress1 || "",
+      coapplicantcurrentaddress2: item && item.permanentAddress2 || "",
+      coapplicantcurrentdistrict: item && item.permanentCity || "",
+      coapplicantcurrentstate: item && item.permanentState || "",
+      coapplicantcurrentpincode: item && item.permanentPin || "",
+      coapplicantbank: item && item.bankName || "",
+      coapplicantaccount: item && item.bankAccountNo || "",
+      coapplicantifsc: item && item.bankIfsc || ""
+    }));
+    // }
+    this.coApplicantbankListName = item && item.bankName
+    this.createLoan.setControl('coapplicants', formArray);
+    if (item.phoneVerified) {
+      this.coapplicantPhoneVerification = true;
+    }
+    if (item.emailVerified) {
+      this.coapplicantemailverification = true;
+    }
+    if (item.id) {
+      this.coApplicantId = item.id;
+    }
+    if (item.isAadhaarVerified) {
+      this.coapplicantaadharverification = true;
+    }
+    if (item.aadhaarAttachments) {
+      this.selectedFiles['coapplicantaadhar'].files = item.aadhaarAttachments;
+    }
+
+    if (item.isPanVerified) {
+      this.coapplicantpanverification = true;
+    }
+    if (item.panAttachments) {
+      this.selectedFiles['coapplicantpan'].files = item.panAttachments;
+    }
+    if (item.isAadhaarVerified && item.isPanVerified && item.phoneVerified && item.emailVerified) {
+      this.coApplicantDetailsPanelVerified = true;
+    }
+  }
+
   newCoApplicant(): UntypedFormGroup {
     return this.createLoanFormBuilder.group({
       coapplicantphone: [null],
@@ -571,6 +639,10 @@ export class CreateComponent implements OnInit {
       coapplicantemail: [null],
       coapplicantdob: [null],
       coapplicantgender: [null],
+      coapplicantaadharnumber: [null],
+      coapplicantaadharattachment: [null],
+      coapplicantpannumber: [null],
+      coapplicantpanattachment: [null],
       coapplicantcurrentaddress1: [null],
       coapplicantcurrentaddress2: [null],
       coapplicantcurrentcity: [null],
@@ -593,9 +665,49 @@ export class CreateComponent implements OnInit {
     this.coapplicants().removeAt(i);
   }
 
-  saveCoApplicantDetails() {
+  saveCoApplicantDetails(i) {
     console.log("this.createLoan.value", this.createLoan.value);
-    this.coApplicantDetailsPanelVerified = true;
+    let coapplicantDetails = [
+      {
+        "id": this.coApplicantId,
+        "originUid": this.loanId,
+        "customerFirstName": this.createLoan.controls.coapplicants.value[i].coapplicantfirstname,
+        "customerLastName": this.createLoan.controls.coapplicants.value[i].coapplicantlastname,
+        "customerPhoneCode": "+91",
+        "customerPhone": this.createLoan.controls.coapplicants.value[i].coapplicantphone,
+        "customerDob": this.createLoan.controls.coapplicants.value[i].coapplicantdob,
+        "gender": this.createLoan.controls.coapplicants.value[i].coapplicantgender,
+        // "maritalStatus": this.createLoan.controls.coapplicants.value[i].coapplicantphone,
+        "currentAddress1": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentaddress1,
+        "currentAddress2": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentaddress2,
+        "currentPin": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentpincode,
+        "currentCity": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentdistrict,
+        "currentDistrict": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentdistrict,
+        "currentState": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentstate,
+        "permanentAddress1": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentaddress1,
+        "permanentAddress2": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentaddress2,
+        "permanentPin": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentpincode,
+        "permanentCity": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentdistrict,
+        "permanentDistrict": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentdistrict,
+        "permanentState": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentstate,
+        "bankName": this.createLoan.controls.coapplicants.value[i].coapplicantbank,
+        "bankAccountNo": this.createLoan.controls.coapplicants.value[i].coapplicantaccount,
+        "bankIfsc": this.createLoan.controls.coapplicants.value[i].coapplicantifsc
+      }
+    ]
+
+    this.cdlService.updateCoApplicant(this.loanId, coapplicantDetails).subscribe((data: any) => {
+      if (data) {
+        this.coApplicantDetailsPanelVerified = true;
+        this.snackbarService.openSnackBar("Co-Applicant Details Saved Successfully");
+        this.panelsManage(false, false, false, false, true);
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+
+    console.log("coapplicantDetails", coapplicantDetails)
   }
 
 
@@ -608,6 +720,10 @@ export class CreateComponent implements OnInit {
     }
 
     this.filteredOptions = this.banksListNames.valueChanges.pipe(startWith(''),
+      map(value => this._filter(value || '')),
+    );
+
+    this.filteredOptions = this.coApplicantbanksListNames.valueChanges.pipe(startWith(''),
       map(value => this._filter(value || '')),
     );
 
@@ -1372,7 +1488,8 @@ export class CreateComponent implements OnInit {
         "firstName": this.createLoan.controls.coapplicants.value[i].coapplicantfirstname,
         "lastName": this.createLoan.controls.coapplicants.value[i].coapplicantlastname,
         "dob": this.createLoan.controls.coapplicants.value[i].coapplicantdob,
-        "relation": this.createLoan.controls.coapplicants.value[i].coapplicantrelation
+        "relation": this.createLoan.controls.coapplicants.value[i].coapplicantrelation,
+        "gender": this.createLoan.controls.coapplicants.value[i].coapplicantgender
       }
 
       const dialogRef = this.dialog.open(OtpVerifyComponent, {
@@ -1605,6 +1722,15 @@ export class CreateComponent implements OnInit {
   }
 
 
+  refreshcoApplicantAadharVerify() {
+    this.cdlService.refreshAadharVerify(this.coApplicantId).subscribe((data: any) => {
+      if (data) {
+        this.coapplicantaadharverification = true;
+        this.coapplicantverifyingUID = false;
+      }
+    });
+  }
+
 
 
 
@@ -1670,6 +1796,61 @@ export class CreateComponent implements OnInit {
 
 
 
+  }
+
+
+  coApplicangtIdVerification(type, i) {
+    if (this.coapplicantPhoneVerification) {
+      this.loanApplication = {
+        "id": this.coApplicantId,
+        "originUid": this.loanId
+      }
+
+      if (type == 'Pan') {
+        this.loanApplication["pan"] = this.createLoan.controls.coapplicants.value[i].coapplicantpannumber;
+      }
+      else if (type == 'UID') {
+        console.log("this.createLoan.controls.coapplicants.value[i].coapplicantaadharnumber", this.createLoan.controls.coapplicants.value[i])
+        this.loanApplication["aadhaar"] = this.createLoan.controls.coapplicants.value[i].coapplicantaadharnumber;
+      }
+
+      for (let i = 0; i < this.filesToUpload.length; i++) {
+        this.filesToUpload[i]['order'] = i;
+        if (this.filesToUpload[i]["type"] == 'coapplicantpan' && type == 'Pan') {
+          this.loanApplication['panAttachments'] = [];
+          this.loanApplication['panAttachments'].push(this.filesToUpload[i]);
+        }
+        if (this.filesToUpload[i]["type"] == 'coapplicantaadhar' && type == 'UID') {
+          this.loanApplication['aadhaarAttachments'] = [];
+          this.loanApplication['aadhaarAttachments'].push(this.filesToUpload[i]);
+        }
+      }
+
+
+      this.cdlService.verifyIds(type, this.loanApplication, 'coapplicant').subscribe((s3urls: any) => {
+        if (s3urls.length > 0) {
+          this.uploadAudioVideo(s3urls).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+            });
+        }
+        if (type == 'Pan') {
+          this.coapplicantpanverification = true;
+          this.snackbarService.openSnackBar(type + " Verified Successfully")
+        }
+        else if (type == 'UID') {
+          this.coapplicantverifyingUID = true;
+          this.snackbarService.openSnackBar("We have sent the verification link to mobile.Please Verify and click on refresh")
+        }
+      },
+        (error) => {
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+        })
+
+
+    } else {
+      this.snackbarService.openSnackBar("Please Verify Phone Number First", { 'panelClass': 'snackbarerror' })
+    }
   }
 
 
@@ -1752,9 +1933,9 @@ export class CreateComponent implements OnInit {
       // "loanScheme": {
       //   "id": this.schemeSelected.id
       // },
-      "partner": {
-        "id": this.createLoan.controls.dealer.value
-      },
+      // "partner": {
+      //   "id": this.createLoan.controls.dealer.value
+      // },
       "montlyIncome": this.createLoan.controls.salary.value,
       "invoiceAmount": this.createLoan.controls.totalpayment.value,
       "downpaymentAmount": this.createLoan.controls.downpayment.value,
@@ -1789,6 +1970,10 @@ export class CreateComponent implements OnInit {
           "guarantorPhone": this.createLoan.controls.guarantorPhone.value
         }
       ]
+    }
+
+    if (this.createLoan.controls.dealer.value) {
+      this.loanApplication["partner"] = { "id": this.createLoan.controls.dealer.value }
     }
 
     this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
@@ -1984,6 +2169,53 @@ export class CreateComponent implements OnInit {
     }
   }
 
+
+  verifyCoApplicantEmail(i) {
+    if (this.coapplicantPhoneVerification) {
+      if (this.createLoan.controls.coapplicants.value[i].coapplicantemail) {
+        if (this.createLoan.controls.coapplicants.value[i].coapplicantemail != '') {
+          const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+          const isEmail = emailPattern.test(this.createLoan.controls.coapplicants.value[i].coapplicantemail);
+          if (!isEmail) {
+            this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+            return false
+          }
+
+          let can_remove = false;
+          const dialogRef = this.dialog.open(OtpVerifyComponent, {
+            width: '50%',
+            panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+            disableClose: true,
+            data: {
+              type: 'Email',
+              id: this.loanId,
+              from: 'coapplicant',
+              kycid: this.coApplicantId,
+              email: this.createLoan.controls.coapplicants.value[i].coapplicantemail
+            }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            console.log(result);
+            if (result && result.msg == "success") {
+              this.coapplicantemailverification = true;
+              this.snackbarService.openSnackBar("Email Id Verified");
+            }
+          });
+          return can_remove;
+        }
+        else {
+          this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+        }
+      }
+      else {
+        this.snackbarService.openSnackBar("Please Enter a Valid Email Id", { 'panelClass': 'snackbarerror' });
+      }
+    }
+    else {
+      this.snackbarService.openSnackBar("Please Verify Phone Number First", { 'panelClass': 'snackbarerror' });
+    }
+  }
+
   verifyaadhar() {
     let can_remove = false;
     const dialogRef = this.dialog.open(OtpVerifyComponent, {
@@ -2083,7 +2315,7 @@ export class CreateComponent implements OnInit {
       this.createLoan.controls.downpayment.setValue(0)
       this.createLoan.controls.loanamount.setValue(0)
     }
-    if (this.createLoan.controls.loanamount.value > 100000) {
+    if (this.createLoan.controls.loanamount.value > 50000) {
       this.showCoapplicant = true;
     }
     else {

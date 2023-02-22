@@ -658,6 +658,8 @@
             </mat-expansion-panel-header>
             <div>
 
+
+
               <div class="bggrey my-2">
                 <div>
                   <div class="d-flex">
@@ -665,6 +667,9 @@
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #dealer formControlName="dealer">
+                      <mat-option value="0">
+                        <div>Select Dealer Later</div>
+                      </mat-option>
                       <mat-option [value]="dealer.id" *ngFor="let dealer of dealers">
                         <div *ngIf="dealer && dealer.partnerName">{{dealer.partnerName}}</div>
                       </mat-option>
@@ -1195,7 +1200,7 @@
               <div>
                 <div class="bggrey my-2">
                   <div>
-                    <div class="d-flex">e
+                    <div class="d-flex">
                       <div class="form-title">Nominee Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
@@ -1352,9 +1357,10 @@
           </mat-expansion-panel>
         </mat-accordion>
 
-        <br>
 
-        <mat-accordion>
+
+        <mat-accordion *ngIf="showCoapplicant">
+          <br>
           <mat-expansion-panel [expanded]="coApplicantDetailsPanel" (opened)="coApplicantDetailsPanel = true"
             (closed)="coApplicantDetailsPanel = false">
             <mat-expansion-panel-header>
@@ -1497,19 +1503,163 @@
                           <div class="d-flex">
                             <input (keyup)="resetErrors()" #coapplicantemail type="email" placeholder="Enter Email"
                               class="form-control" autocomplete="off" formControlName="coapplicantemail"
-                              [class.disabled]="emailverification" />
+                              [class.disabled]="coapplicantemailverification" />
 
-                            <a class="btn btn-verify" [class.btn-verified]="emailverification"
-                              *ngIf="!emailverification" (click)="verifyEmail()"><span>Verify</span></a>
+                            <a class="btn btn-verify" [class.btn-verified]="coapplicantemailverification"
+                              *ngIf="!coapplicantemailverification"
+                              (click)="verifyCoApplicantEmail(i)"><span>Verify</span></a>
 
-                            <a class="btn btn-verify" *ngIf="emailverification"
-                              [class.btn-verified]="emailverification">
-                              <span *ngIf="emailverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
+                            <a class="btn btn-verify" *ngIf="coapplicantemailverification"
+                              [class.btn-verified]="coapplicantemailverification">
+                              <span *ngIf="coapplicantemailverification"><i
+                                  class="fa fa-check"></i>&nbsp;Verified</span></a>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Aadhar Number <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <div class="d-flex">
+                            <input (keyup)="resetErrors()" #coapplicantaadharnumber type="number"
+                              placeholder="Enter Aadhar Number" class="form-control" autocomplete="off"
+                              formControlName="coapplicantaadharnumber"
+                              [class.disabled]="action == 'update' && coapplicantaadharverification && !coapplicantverifyingUID"
+                              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                              maxlength="12" />
+
+                            <a class="btn btn-verify" [class.btn-verified]="coapplicantaadharverification"
+                              *ngIf="!coapplicantaadharverification && !coapplicantverifyingUID"
+                              (click)="coApplicangtIdVerification('UID',i)"><span>Verify</span></a>
+
+                            <a class="btn btn-verify" [class.btn-verified]="coapplicantaadharverification"
+                              *ngIf="coapplicantverifyingUID"
+                              (click)="refreshcoApplicantAadharVerify()"><span>Refresh</span></a>
+
+                            <a class="btn btn-verify" *ngIf="!coapplicantverifyingUID && coapplicantaadharverification"
+                              [class.btn-verified]="coapplicantaadharverification">
+                              <span *ngIf="coapplicantaadharverification"><i
+                                  class="fa fa-check"></i>&nbsp;Verified</span></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="fieldPadding">
+                          <div class="file" *ngIf="!coapplicantaadharverification || coapplicantverifyingUID">
+                            <label for='input-file' (click)="aadharAttach.click()">
+                              Upload File
+                            </label>
+                            <input #aadharAttach type='file' (change)="filesSelected($event, 'coapplicantaadhar')"
+                              accept="image/*;capture=camera" formControlName="coapplicantaadharattachment" />
+                          </div>
+                          <div class="img-section clearfix"
+                            *ngIf="selectedFiles['coapplicantaadhar'] && selectedFiles['coapplicantaadhar'].files && selectedFiles['coapplicantaadhar'].files.length > 0">
+                            <ul class="galul">
+                              <li *ngFor="let file of selectedFiles['coapplicantaadhar'].files;let i = index ">
+                                <div class="galimg_outer">
+                                  <div class="gal_img pointer-cursor">
+                                    <img [src]="getImage(selectedFiles['coapplicantaadhar'].base64[i], file)"
+                                      *ngIf="selectedFiles['coapplicantaadhar'].base64[i]" width="100px" height="100px">
+                                    <a [href]="file.s3path" target="_blank">
+                                      <img [src]="getImagefromUrl(file.s3path,file)"
+                                        *ngIf="!selectedFiles['coapplicantaadhar'].base64[i] && file.s3path"
+                                        width="100px" height="100px">
+                                    </a>
+                                  </div>
+                                  <div class="gal_action" *ngIf="!coapplicantaadharverification"
+                                    (click)="deleteTempImage(i, 'coapplicantaadhar',file)">
+                                    <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Pan Number <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <div class="d-flex">
+                            <input (keyup)="resetErrors()" #coapplicantpannumber type="text"
+                              placeholder="Enter PAN Number" class="form-control" autocomplete="off"
+                              formControlName="coapplicantpannumber"
+                              [class.disabled]="action == 'update' && coapplicantpanverification" maxlength="10" />
+
+                            <a class="btn btn-verify" [class.btn-verified]="coapplicantpanverification"
+                              *ngIf="!coapplicantpanverification"
+                              (click)="coApplicangtIdVerification('Pan',i)"><span>Verify</span></a>
+
+                            <a class="btn btn-verify" *ngIf="coapplicantpanverification"
+                              [class.btn-verified]="coapplicantpanverification">
+                              <span *ngIf="coapplicantpanverification"><i
+                                  class="fa fa-check"></i>&nbsp;Verified</span></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <!-- <div class="d-flex">
+                                          <div class="form-title">Aadhar Atachment</div>
+                                        </div> -->
+                        <div class="fieldPadding">
+                          <div class="file" *ngIf="!coapplicantpanverification">
+                            <label for='input-file' (click)="panAttach.click()">
+                              <!-- <i class="material-icons">cloud_upload</i> -->
+                              Upload File
+                            </label>
+                            <input #panAttach type='file' formControlName="coapplicantpanattachment"
+                              (change)="filesSelected($event, 'coapplicantpan')" accept="image/*;capture=camera" />
+                          </div>
+                          <div class="img-section clearfix"
+                            *ngIf="selectedFiles['coapplicantpan'] && selectedFiles['coapplicantpan'].files && selectedFiles['coapplicantpan'].files.length > 0">
+                            <ul class="galul">
+                              <li *ngFor="let file of selectedFiles['coapplicantpan'].files;let i = index ">
+                                <div class="galimg_outer">
+                                  <div class="gal_img pointer-cursor">
+                                    <img [src]="getImage(selectedFiles['coapplicantpan'].base64[i], file)"
+                                      *ngIf="selectedFiles['coapplicantpan'].base64[i]" width="100px" height="100px">
+                                    <a [href]="file.s3path" target="_blank">
+                                      <img [src]="getImagefromUrl(file.s3path,file)"
+                                        *ngIf="!selectedFiles['coapplicantpan'].base64[i] && file.s3path" width="100px"
+                                        height="100px">
+                                    </a>
+                                  </div>
+                                  <div *ngIf="!coapplicantpanverification" class="gal_action"
+                                    (click)="deleteTempImage(i, 'coapplicantpan',file)">
+                                    <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
 
 
                   <div>
@@ -1598,7 +1748,7 @@
                           <div *ngIf="banksList" class="bankList mt-2">
                             <mat-form-field [style.width.%]="100">
                               <input type="text" class="form-control" matInput [matAutocomplete]="auto"
-                                [formControl]="banksListNames" formControlName="coapplicantbank"
+                                [formControl]="coApplicantbanksListNames" formControlName="coapplicantbank"
                                 [(ngModel)]="coApplicantbankListName">
                               <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
                               <mat-autocomplete #auto="matAutocomplete">
@@ -1655,7 +1805,7 @@
               <button class="btn btn-primary open-all-btn" (click)="addCoApplicant()">Add Co-Applicant</button>
             </div> -->
             <div class="mt-4">
-              <button class="btn btn-primary open-all-btn" (click)="saveCoApplicantDetails()">Save</button>
+              <button class="btn btn-primary open-all-btn" (click)="saveCoApplicantDetails(0)">Save</button>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

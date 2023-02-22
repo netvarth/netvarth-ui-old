@@ -56,6 +56,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  updateCoApplicant(id, data) {
+    const url = 'provider/loanapplication/' + id + '/updatekyc';
+    return this.servicemeta.httpPost(url, data);
+  }
+
   getLeadsByFilter(filter = {}) {
     const url = 'provider/enquire';
     return this.servicemeta.httpGet(url, null, filter);
@@ -301,8 +306,11 @@ export class CdlService {
 
 
 
-  verifyIds(type, data) {
-    const url = 'provider/loanapplication/update/' + type;
+  verifyIds(type, data, from?) {
+    let url = 'provider/loanapplication/update/' + type;
+    if (from && from == 'coapplicant') {
+      url = 'provider/loanapplication/updatekyc/document/' + type;
+    }
     return this.servicemeta.httpPut(url, data);
   }
 
@@ -511,6 +519,9 @@ export class CdlService {
     if (from && from == 'partner') {
       var url = 'provider/partner/generate/email';
     }
+    else if (from && from == 'coapplicant') {
+      var url = 'provider/loanapplication/generate/coapplicant/emailotp';
+    }
     return this.servicemeta.httpPost(url, data);
   }
 
@@ -519,6 +530,9 @@ export class CdlService {
     if (from && from == 'partner') {
       var url = 'provider/partner/verify/' + otp + '/email';
       return this.servicemeta.httpPost(url, data);
+    }
+    else if (from && from == 'coapplicant') {
+      var url = 'provider/loanapplication/verify/coapplicant/' + otp + '/emailotp';
     }
     return this.servicemeta.httpPost(url, data);
   }

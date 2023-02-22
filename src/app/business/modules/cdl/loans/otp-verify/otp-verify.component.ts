@@ -46,6 +46,7 @@ export class OtpVerifyComponent implements OnInit {
   dob: any;
   enquireUid: any;
   relation: any;
+  email: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -109,6 +110,7 @@ export class OtpVerifyComponent implements OnInit {
       this.sendOTP();
     }
     else if (this.data && this.data.email) {
+      this.email = this.data.email;
       if (this.data.email.startsWith('555')) {
         this.config.length = 5;
       }
@@ -158,6 +160,10 @@ export class OtpVerifyComponent implements OnInit {
         credentials["customerPhone"] = this.phoneNumber;
       }
 
+      if (this.gender) {
+        credentials["gender"] = this.gender;
+      }
+
       if (this.dob) {
         credentials["dob"] = this.dob;
       }
@@ -188,6 +194,23 @@ export class OtpVerifyComponent implements OnInit {
   performEmailOTP(loginId) {
     let credentials = {
       email: loginId,
+    }
+
+    if (this.from == 'coapplicant') {
+      delete credentials['email'];
+
+      if (this.loanId) {
+        credentials['originUid'] = this.loanId;
+      }
+
+      if (this.loankycid) {
+        credentials['id'] = this.loankycid;
+      }
+
+      if (loginId) {
+        credentials['customerEmail'] = loginId;
+      }
+
     }
 
     this.subs.sink = this.cdlservice.sendEmailOTP(credentials, this.from).subscribe(
@@ -297,6 +320,24 @@ export class OtpVerifyComponent implements OnInit {
       }
     }
 
+    if (this.from == 'coapplicant') {
+      delete data['uid'];
+      delete data['id']
+
+      if (this.loanId) {
+        data['originUid'] = this.loanId;
+      }
+
+      if (this.loankycid) {
+        data['id'] = this.loankycid;
+      }
+
+      if (this.email) {
+        data['customerEmail'] = this.email;
+      }
+
+    }
+
     this.subs.sink = this.cdlservice.verifyEmailOTP(this.otpEntered, this.from, data)
       .subscribe(
         (response: any) => {
@@ -402,6 +443,9 @@ export class OtpVerifyComponent implements OnInit {
 
           if (this.dob) {
             this.customerData["dob"] = this.dob;
+          }
+          if (this.gender) {
+            this.customerData["gender"] = this.gender;
           }
         }
 
