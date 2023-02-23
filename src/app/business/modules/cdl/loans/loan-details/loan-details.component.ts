@@ -150,6 +150,42 @@ export class LoanDetailsComponent implements OnInit {
   }
 
 
+  viewDigitalDocument() {
+    this.cdlservice.getDigitalDocument(this.loanId).subscribe((data: any) => {
+      if (data) {
+        if (!data.isSigned) {
+          this.snackbarService.openSnackBar("Digital Document Not Signed Yet", { 'panelClass': 'snackbarerror' })
+        }
+        else if (data.isSigned) {
+          if (data.digitalDocumenthPath) {
+            window.open(data.digitalDocumenthPath, "_blank");
+          }
+        }
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+
+  viewInsuranceDocument() {
+    this.cdlservice.getInsuranceDocument(this.loanId).subscribe((data: any) => {
+      if (data) {
+        if (!data.isSigned) {
+          this.snackbarService.openSnackBar("Digital Insurance Not Signed Yet", { 'panelClass': 'snackbarerror' })
+        }
+        else if (data.isSigned) {
+          if (data.digitalDocumenthPath) {
+            window.open(data.digitalDocumenthPath, "_blank");
+          }
+        }
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
 
 
   viewReport(type, data) {
