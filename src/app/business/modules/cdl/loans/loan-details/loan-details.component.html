@@ -56,7 +56,6 @@
   <div class="row col-md-12">
     <div class="col-md-5 no-padding-small mt-2">
       <div class="card">
-
         <div class="d-flex">
           <div class="text-center mt-2 mr-4"
             *ngIf="loanData && loanData.consumerPhoto && loanData.consumerPhoto[0] && loanData.consumerPhoto[0].s3path">
@@ -297,6 +296,121 @@
           </div>
         </div>
       </div>
+      <div class="card mt-2" *ngIf="loanData && loanData.loanApplicationKycList[1]">
+        <div class="text-left">
+          <span class="font-weight-bold text-primary">Co-Applicant Details</span>
+          <hr class="mt-2">
+        </div>
+        <div class="table-responsive">
+          <table class="table table-borderless">
+            <tbody>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].coApplicantType">
+                <td style="width: 50%;" class="details-title">Relation With Applicant</td>
+                <th style=" width: 50%;" class="details-sub-title">
+                  {{loanData.loanApplicationKycList[1].coApplicantType}}</th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerFirstName">
+                <td style="width: 50%;" class="details-title">Name</td>
+                <th style=" width: 50%;" class="details-sub-title">
+                  <span *ngIf="loanData.loanApplicationKycList[1].customerFirstName">
+                    {{loanData.loanApplicationKycList[1].customerFirstName}}
+                  </span>
+
+                  <span *ngIf="loanData.loanApplicationKycList[1].customerLastName">
+                    {{loanData.loanApplicationKycList[1].customerLastName}}
+                  </span>
+                </th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerPhone">
+                <td style="width: 50%;" class="details-title">Phone Number</td>
+                <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].customerPhone}}
+                </th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerEmail">
+                <td style="width: 50%;" class="details-title">Email</td>
+                <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].customerEmail}}
+                </th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].gender">
+                <td style="width: 50%;" class="details-title">Gender</td>
+                <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].gender}}</th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].dob">
+                <td style="width: 50%;" class="details-title">Date of Birth</td>
+                <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].dob}}</th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">
+                <td style="width: 50%;" class="details-title">Address</td>
+                <th style=" width: 50%;" class="details-sub-title">
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">{{loanData.loanApplicationKycList[1].permanentAddress1}},</span>
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentAddress2">{{loanData.loanApplicationKycList[1].permanentAddress2}},</span>
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentCity">{{loanData.loanApplicationKycList[1].permanentCity}},</span>
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentState">{{loanData.loanApplicationKycList[1].permanentState}},</span>
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].permanentPin">{{loanData.loanApplicationKycList[1].permanentPin}}</span>
+                </th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].aadhaar">
+                <td style="width: 50%;" class="details-title">Aadhaar</td>
+                <th style=" width: 50%;" class="details-sub-title">
+                  {{loanData.loanApplicationKycList[1].aadhaar}} &nbsp;
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].aadhaarAttachments && loanData.loanApplicationKycList[1].aadhaarAttachments[0] && loanData.loanApplicationKycList[1].aadhaarAttachments[0].s3path">
+                    <b class="card p-1 pointer-cursor">
+                      <a [href]="loanData.loanApplicationKycList[1].aadhaarAttachments[0].s3path" class="text-primary"
+                        target="_blank">View</a>
+                    </b>
+                  </span>
+                </th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].pan">
+                <td style="width: 50%;" class="details-title">Pan</td>
+                <th style=" width: 50%;" class="details-sub-title">
+                  {{loanData.loanApplicationKycList[1].pan}} &nbsp;
+                  <span
+                    *ngIf="loanData.loanApplicationKycList[1].panAttachments && loanData.loanApplicationKycList[1].panAttachments[0] && loanData.loanApplicationKycList[1].panAttachments[0].s3path">
+                    <b class="card p-1 pointer-cursor">
+                      <a [href]="loanData.loanApplicationKycList[1].panAttachments[0].s3path" class="text-primary"
+                        target="_blank">View</a>
+                    </b>
+                  </span>
+                </th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankName">
+                <td style="width: 50%;" class="details-title">Bank Name</td>
+                <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].bankName}}
+                </th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankAccountNo">
+                <td style="width: 50%;" class="details-title">Bank AccountNo</td>
+                <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].bankAccountNo}}
+                </th>
+              </tr>
+
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankIfsc">
+                <td style="width: 50%;" class="details-title">Bank IFSC</td>
+                <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].bankIfsc}}</th>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="col-md-7 no-padding mt-2">
       <div class="card">
@@ -460,21 +574,20 @@
           <div class="row mt-2"
             *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0]">
             <div class="col-md-4 no-padding-small">
-              <a [href]="bankData.bankStatementAttachments[0].s3path" target="_blank"
-                class="btn btn-primary btn-primary-full">
+              <a [href]="bankData.bankStatementAttachments[0].s3path" target="_blank" class="btn btn-primary">
                 <span>View Statements</span>
               </a>
             </div>
           </div>
 
-          <div class="row mt-2"
+          <!-- <div class="row mt-2"
             *ngIf="bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0] && capabilities && capabilities.canViewKycReport">
             <div class="col-md-4 no-padding-small">
-              <a class="btn btn-primary btn-primary-full">
+              <a class="btn btn-primary">
                 <span>View Statement Reports</span>
               </a>
             </div>
-          </div>
+          </div> -->
 
           <div class="row mt-4" *ngIf="accountaggregatingStatusShowing">
             <div class="col-md-4 no-padding-small">

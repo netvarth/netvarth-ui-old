@@ -28,6 +28,7 @@ export class DocumentLetterComponent implements OnInit {
   source: any;
   signCompleted: any = false;
   bankData: any;
+  isCoApplicant: any = false;
 
 
   constructor(
@@ -62,6 +63,23 @@ export class DocumentLetterComponent implements OnInit {
 
   ngOnInit(): void {
     // this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[1]) {
+      this.isCoApplicant = true;
+    }
+    if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].digitalSignature && this.loanData.loanApplicationKycList[0].digitalSignature.url) {
+      if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[1]) {
+        if (this.loanData.loanApplicationKycList[1].digitalSignature && this.loanData.loanApplicationKycList[1].digitalSignature.url && ((this.source && this.source != 'provider') || !this.source)) {
+          this.snackbarService.openSnackBar("Link Expired or Invalid");
+          this.router.navigate(['/']);
+        }
+      }
+      else {
+        if (((this.source && this.source != 'provider') || !this.source)) {
+          this.snackbarService.openSnackBar("Link Expired or Invalid");
+          this.router.navigate(['/']);
+        }
+      }
+    }
   }
 
 
@@ -77,10 +95,7 @@ export class DocumentLetterComponent implements OnInit {
       this.loanData = data;
       this.loanKycId = this.loanData.loanApplicationKycList[0].id;
       console.log("this.loanKycId", this.loanKycId)
-      if (this.loanData && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0].digitalSignature && this.loanData.loanApplicationKycList[0].digitalSignature.url) {
-        this.snackbarService.openSnackBar("Link Expired or Invalid");
-        this.router.navigate(['/']);
-      }
+
     });
   }
 
@@ -98,25 +113,36 @@ export class DocumentLetterComponent implements OnInit {
 
   }
 
-  manualSignature(type) {
+  manualSignature(type?) {
     const height: any = this.screenHeight;
+    let data = {
+      "uId": this.loanId,
+      "kycId": this.loanKycId,
+      "account": this.accountId
+    };
+
+    if (type && type == 'coapplicant') {
+      data['kycId'] = this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[1] && this.loanData.loanApplicationKycList[1].id;
+    }
     const uploadmanualsignatureRef = this.dialog.open(SignatureComponent, {
       width: this.screenWidth,
       height: height,
       //this.ScreenHeight,
       panelClass: ['popup-class'],
       disableClose: true,
-      data: {
-        "uId": this.loanId,
-        "kycId": this.loanKycId,
-        "account": this.accountId,
-        "type": type
-      }
+      data: data
     });
     uploadmanualsignatureRef.afterClosed().subscribe((res) => {
       if (res) {
         this.getloanDetails(this.loanId, this.accountId)
-        this.signCompleted = true;
+        if (this.isCoApplicant) {
+          if (type && type == 'coapplicant') {
+            this.signCompleted = true;
+          }
+        }
+        else {
+          this.signCompleted = true;
+        }
       }
     }
     );

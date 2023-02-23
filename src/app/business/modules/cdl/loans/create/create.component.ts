@@ -704,7 +704,7 @@ export class CreateComponent implements OnInit {
       if (data) {
         this.coApplicantDetailsPanelVerified = true;
         this.snackbarService.openSnackBar("Co-Applicant Details Saved Successfully");
-        this.panelsManage(false, false, false, false, true);
+        this.panelsManage(false, false, false, true, false);
       }
     },
       (error) => {
@@ -1759,14 +1759,15 @@ export class CreateComponent implements OnInit {
         if (data && data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].id) {
           this.loanApplication["id"] = data.loanApplicationKycList[0].id
         }
+        this.loanApplication['panAttachments'] = [];
+        this.loanApplication['aadhaarAttachments'] = [];
+
         for (let i = 0; i < this.filesToUpload.length; i++) {
           this.filesToUpload[i]['order'] = i;
           if (this.filesToUpload[i]["type"] == 'pan' && type == 'Pan') {
-            this.loanApplication['panAttachments'] = [];
             this.loanApplication['panAttachments'].push(this.filesToUpload[i]);
           }
           if (this.filesToUpload[i]["type"] == 'aadhar' && type == 'UID') {
-            this.loanApplication['aadhaarAttachments'] = [];
             this.loanApplication['aadhaarAttachments'].push(this.filesToUpload[i]);
           }
         }
@@ -1913,12 +1914,14 @@ export class CreateComponent implements OnInit {
   }
 
 
-  panelsManage(customer, kyc, loan, coapplicant, bank) {
+  panelsManage(customer, kyc, loan, bank, coapplicant?) {
     this.customerDetailsPanel = customer;
     this.kycDetailsPanel = kyc;
     this.loanDetailsPanel = loan;
-    this.coApplicantDetailsPanel = coapplicant;
     this.bankDetailsPanel = bank;
+    if (coapplicant) {
+      this.coApplicantDetailsPanel = coapplicant;
+    }
   }
 
   saveLoanDetails() {
@@ -1997,7 +2000,12 @@ export class CreateComponent implements OnInit {
       }
 
       this.cdlService.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
-        this.panelsManage(false, false, false, true, false);
+        if (this.showCoapplicant) {
+          this.panelsManage(false, false, false, false, true);
+        }
+        else {
+          this.panelsManage(false, false, false, true);
+        }
         this.loanDetailsSaved = true;
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
       },

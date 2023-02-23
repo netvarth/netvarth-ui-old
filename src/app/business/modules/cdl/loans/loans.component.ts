@@ -142,6 +142,11 @@ export class LoansComponent implements OnInit {
   }
 
 
+  loadLoans(event) {
+    console.log("LoansEvent", event)
+  }
+
+
   statusChange(event) {
     if (event.value.name == 'All') {
       this.getLoans();

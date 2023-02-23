@@ -17,8 +17,8 @@
 
 <div *ngIf="!loading">
   <div class="card">
-    <p-table [responsive]="true" responsiveLayout="stack" scrollHeight="flex" #dt1 [value]="loans" dataKey="id"
-      [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
+    <p-table [responsive]="true" responsiveLayout="scroll" #dt1 [value]="loans" dataKey="id" [rows]="10"
+      [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
       styleClass="p-datatable-customers p-datatable-gridlines" [paginator]="true"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
       [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']">
@@ -118,3 +118,85 @@
     </p-table>
   </div>
 </div>
+<!-- 
+<div *ngIf="!loading">
+  <div class="card">
+    <p-table [value]="loans" [lazy]="true" (onLazyLoad)="loadLoans($event)" dataKey="id" [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10" [totalRecords]="loans && loans.length"
+      [loading]="loading" responsiveLayout="stack" scrollHeight="flex"
+      [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
+      styleClass="p-datatable-customers p-datatable-gridlines"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="referenceNo">Loan Id <p-sortIcon field="referenceNo"></p-sortIcon></th>
+          <th pSortableColumn="customer.firstName">Customer Name <p-sortIcon field="customer.firstName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="partner.partnerName">Dealer <p-sortIcon field="partner.partnerName"></p-sortIcon></th>
+          <th pSortableColumn="spInternalStatusDisplyName">Status <p-sortIcon
+              field="spInternalStatusDisplyName"></p-sortIcon>
+          </th>
+          <th>More Actions</th>
+        </tr>
+        <tr>
+          <th>
+            <p-columnFilter type="text" field="referenceNo"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="customer.firstName"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="partner.partnerName"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text" field="spInternalStatusDisplyName"></p-columnFilter>
+          </th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-loan>
+        <tr class="mobile-card">
+          <td>
+            <span class="d-lg-none d-md-none">Loan Application No : </span><span
+              class="table-column-data">{{loan.referenceNo}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Customer Name : </span><span
+              class="table-column-data">{{loan.customer.firstName}}
+              {{loan.customer.lastName}}</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none d-sm-block">Dealer : </span><span class="table-column-data"
+              *ngIf="loan && loan.partner && loan.partner.partnerName">{{loan.partner.partnerName}}</span>
+            <span class="table-column-data" *ngIf="loan && !loan.partner || !loan.partner.partnerName">-</span>
+          </td>
+          <td>
+            <span class="d-lg-none d-md-none">Status : </span>
+            <span *ngIf="loan.applicationStatus !='Rejected'" [class]="'customer-badge status-' + loan.spInternalStatus"
+              class="table-column-data">
+              {{loan.spInternalStatusDisplyName}}</span>
+            <span *ngIf="loan.applicationStatus =='Rejected'"
+              [class]="'customer-badge status-' + loan.applicationStatus" class="table-column-data">
+              {{loan.applicationStatus}}</span>
+          </td>
+          <td>
+            <div class="text-center">
+              <div class="d-flex">
+                <button *ngIf="loan.spInternalStatus=='Draft'" pButton pRipple type="button"
+                  class="p-button-primary mr-2" (click)="updateLoan(loan.uid, 'update', 'Draft')">Update</button>
+                <button pButton pRipple type="button" class="p-button-primary"
+                  (click)="loanDetails(loan.uid,loan.spInternalStatus)">View</button>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <br class="d-lg-none d-md-none">
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="7">No Loans found.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div> -->

@@ -50,9 +50,38 @@
                                         *ngIf="loanData && loanData.loanApplicationKycList[0].permanentPin">{{loanData.loanApplicationKycList[0].permanentPin}}</span>
                                 </b>
                                 and (Name of Co-Applicant / Guarantor If applicable)
-                                <b>N/A</b>
+                                <b
+                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                                    <span *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
+                                    loanData.loanApplicationKycList[1].customerFirstName">
+                                        {{loanData.loanApplicationKycList[1].customerFirstName}}
+                                    </span><span
+                                        *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
+                                        {{loanData.loanApplicationKycList[1].customerLastName}}
+                                    </span>
+                                </b>
+                                <b
+                                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                                    N/A
+                                </b>
                                 (Co-Applicant / Guarantor Address)
-                                <b>N/A</b>
+                                <b
+                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                                    <span
+                                        *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">{{loanData.loanApplicationKycList[1].permanentAddress1}},</span>
+                                    <span
+                                        *ngIf="loanData.loanApplicationKycList[1].permanentAddress2">{{loanData.loanApplicationKycList[1].permanentAddress2}},</span>
+                                    <span
+                                        *ngIf="loanData.loanApplicationKycList[1].permanentCity">{{loanData.loanApplicationKycList[1].permanentCity}},</span>
+                                    <span
+                                        *ngIf="loanData.loanApplicationKycList[1].permanentState">{{loanData.loanApplicationKycList[1].permanentState}},</span>
+                                    <span
+                                        *ngIf="loanData.loanApplicationKycList[1].permanentPin">{{loanData.loanApplicationKycList[1].permanentPin}}</span>
+                                </b>
+                                <b
+                                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                                    N/A
+                                </b>
                                 jointly and severally promise to pay to MANAPPURAM FINANCE LIMITED (“Lender”) or order
                                 the
                                 sum of
@@ -79,18 +108,30 @@
                                             width="100px"><br>
                                     </div>
                                     <div
-                                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url) && source!='provider'">
+                                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url)">
                                         <span class="font-weight-bold text-danger">Not Yet Signed</span>
                                     </div>
                                     <span>Applicant Signature</span><br><br>
-                                    <div class="text-center font-weight-bold">
+                                    <div class="text-center font-weight-bold"
+                                        *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
                                         <span>N/A</span>
                                     </div>
-                                    <!-- <div class="text-center"
-                      *ngIf="!loanData.loanApplicationKycList || !loanData.loanApplicationKycList[0] || !loanData.loanApplicationKycList[0].digitalSignature || !loanData.loanApplicationKycList[0].digitalSignature.url">
-                      <button class="btn btn-primary" (click)="manualSignature('coapplicant')">Sign</button>
-                    </div> -->
-
+                                    <div class="font-weight-bold"
+                                        *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                                        N/A
+                                    </div>
+                                    <div class="font-weight-bold"
+                                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                                        <div class="text-center"
+                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
+                                            <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url"
+                                                width="100px"><br>
+                                        </div>
+                                        <div
+                                            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
+                                            <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                                        </div>
+                                    </div>
                                     <span>Co-Applicant / Guarantor Signature</span>
                                 </div>
                                 <div class="border-rectangle">
@@ -106,13 +147,13 @@
                         <div class="mt-4">
                             <div class="d-md-flex justify-content-between">
                                 <div class="mt-4">
-                                    <div class="text-center">
-                                        <img *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url"
-                                            [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
+                                    <div class="text-center"
+                                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
+                                        <img [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
                                             width="100px"><br>
                                     </div>
                                     <div
-                                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url) && source!='provider'">
+                                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature&& loanData.loanApplicationKycList[0].digitalSignature.url)">
                                         <span class="font-weight-bold text-danger">Not Yet Signed</span>
                                     </div>
 
@@ -123,11 +164,39 @@
                                                 *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b></span>
                                 </div>
                                 <div class="mt-4">
-                                    <div class="text-center font-weight-bold">
-                                        <span>N/A</span>
+                                    <div class="font-weight-bold"
+                                        *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                                        N/A
+                                    </div>
+                                    <div class="font-weight-bold"
+                                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                                        <div class="text-center"
+                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
+                                            <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url"
+                                                width="100px"><br>
+                                        </div>
+                                        <div
+                                            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
+                                            <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                                        </div>
                                     </div>
                                     <span>Co-Applicant / Guarantor Signature</span><br>
-                                    <span class="mt-4">Co-Applicant / Guarantor Name : <b><span>N/A</span></b></span>
+                                    <span class="mt-4">Co-Applicant / Guarantor Name : <b
+                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                                            <span
+                                                *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
+                                                                        loanData.loanApplicationKycList[1].customerFirstName">
+                                                {{loanData.loanApplicationKycList[1].customerFirstName}}
+                                            </span><span
+                                                *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
+                                                {{loanData.loanApplicationKycList[1].customerLastName}}
+                                            </span>
+                                        </b>
+                                        <b
+                                            *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                                            N/A
+                                        </b>
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +301,12 @@
                                     </div><br>
                                     <div>
                                         <span class="mt-2">1. Name of the Drawee Bank :
-                                            <span class="font-weight-bold">N/A</span>
+                                            <span
+                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankName"
+                                                class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankName}}</span>
+                                            <span
+                                                *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
+                                                class="font-weight-bold">N/A</span>
                                         </span><br>
                                         <span class="mt-2">2. Name of the Drawee Bank Branch :
                                             <span class="font-weight-bold">N/A</span>
@@ -241,10 +315,22 @@
                                             <span class="font-weight-bold">N/A</span>
                                         </span><br>
                                         <span class="mt-2">4. Account Number :
-                                            <span class="font-weight-bold">N/A</span>
+                                            <span class="font-weight-bold">
+                                                <span
+                                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankAccountNo"
+                                                    class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankAccountNo}}</span>
+                                                <span
+                                                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
+                                                    class="font-weight-bold">N/A</span>
+                                            </span>
                                         </span><br>
                                         <span class="mt-2">5. IFSC Code :
-                                            <span class="font-weight-bold">N/A</span>
+                                            <span
+                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankIfsc"
+                                                class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankIfsc}}</span>
+                                            <span
+                                                *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
+                                                class="font-weight-bold">N/A</span>
                                         </span><br>
                                     </div>
                                 </div>
@@ -381,28 +467,58 @@
                                 cheques/NACH on
                                 these
                                 cheques/NACH being exhausted, as demanded by the Company, from me to me.
-                            </div>
+                            </div><br>
                             <div class="mt-4">
                                 <div class="d-flex justify-content-between">
                                     <div>
-                                        <div class="text-center">
-                                            <img *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url"
-                                                [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
+                                        <div class="text-center"
+                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url">
+                                            <img [src]="loanData.loanApplicationKycList[0].digitalSignature.url"
                                                 width="100px"><br>
                                         </div>
                                         <div
-                                            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url) && source!='provider'">
+                                            *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url)">
                                             <span class="font-weight-bold text-danger">Not Yet Signed</span>
                                         </div>
                                         <span>Signature</span><br>
-                                        <span class="mt-4">Name of Borrower</span>
+                                        <span class="mt-4">Name of Borrower : <b><span
+                                                    *ngIf="loanData && loanData.customer && loanData.customer.firstName">{{loanData.customer.firstName}}</span>
+                                                &nbsp;<span
+                                                    *ngIf="loanData && loanData.customer && loanData.customer.lastName">{{loanData.customer.lastName}}</span></b></span>
                                     </div>
                                     <div>
-                                        <div class="font-weight-bold">
+                                        <div class="font-weight-bold"
+                                            *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
                                             N/A
                                         </div>
+                                        <div class="font-weight-bold"
+                                            *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                                            <div class="text-center"
+                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url">
+                                                <img [src]="loanData.loanApplicationKycList[1].digitalSignature.url"
+                                                    width="100px"><br>
+                                            </div>
+                                            <div
+                                                *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url)">
+                                                <span class="font-weight-bold text-danger">Not Yet Signed</span>
+                                            </div>
+                                        </div>
                                         <span>Signature</span><br>
-                                        <span class="mt-4">Co-Applicant / Guarantor</span>
+                                        <span class="mt-4">Co-Applicant / Guarantor : <b
+                                                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+                                                <span
+                                                    *ngIf=" loanData && loanData.loanApplicationKycList[1] &&
+                                                                                                                loanData.loanApplicationKycList[1].customerFirstName">
+                                                    {{loanData.loanApplicationKycList[1].customerFirstName}}
+                                                </span><span
+                                                    *ngIf="loanData && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].customerLastName">
+                                                    {{loanData.loanApplicationKycList[1].customerLastName}}
+                                                </span>
+                                            </b>
+                                            <b
+                                                *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]">
+                                                N/A
+                                            </b></span>
                                     </div>
                                 </div>
                             </div>
@@ -418,9 +534,16 @@
                         </div> -->
                     </div>
                 </div>
-                <div class="text-center mt-3"
-                    *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url) && source!='provider'">
-                    <button class="btn btn-primary" (click)="manualSignature('DPN')">Sign</button>
+                <div class="d-flex justify-content-center">
+                    <div class="text-center mt-3"
+                        *ngIf="!(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].digitalSignature && loanData.loanApplicationKycList[0].digitalSignature.url) && source!='provider'">
+                        <button class="btn btn-primary" (click)="manualSignature()">Applicant Sign</button>
+                    </div>
+                    <div class="text-center mt-3 ml-2"
+                        *ngIf="(loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]) && !(loanData && loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].digitalSignature && loanData.loanApplicationKycList[1].digitalSignature.url) && source!='provider'">
+                        <button class="btn btn-primary" (click)="manualSignature('coapplicant')">Co-Applicant
+                            Sign</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -340,14 +340,16 @@ export class CreateDealerComponent implements OnInit {
       if (data && data.dealerApplicationKycList && data.dealerApplicationKycList[0] && data.dealerApplicationKycList[0].id) {
         this.dealerApplication["id"] = data.dealerApplicationKycList[0].id
       }
+      console.log("this.filesToUpload", this.filesToUpload)
+      this.dealerApplication['aadhaarAttachments'] = [];
+      this.dealerApplication['panAttachments'] = [];
+
       for (let i = 0; i < this.filesToUpload.length; i++) {
         this.filesToUpload[i]['order'] = i;
         if (this.filesToUpload[i]["type"] == 'pan' && type == 'Pan') {
-          this.dealerApplication['panAttachments'] = [];
           this.dealerApplication['panAttachments'].push(this.filesToUpload[i]);
         }
         if (this.filesToUpload[i]["type"] == 'aadhar' && type == 'UID') {
-          this.dealerApplication['aadhaarAttachments'] = [];
           this.dealerApplication['aadhaarAttachments'].push(this.filesToUpload[i]);
         }
       }
