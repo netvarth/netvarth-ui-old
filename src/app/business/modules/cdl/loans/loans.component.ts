@@ -8,6 +8,7 @@ import { CdlService } from '../cdl.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { DateTimeProcessor } from '../../../../shared/services/datetime-processor.service';
 import { UntypedFormGroup, UntypedFormBuilder } from '@angular/forms';
+// import { ColumnFilterFormElement } from 'primeng/table';
 
 
 
@@ -46,6 +47,10 @@ export class LoansComponent implements OnInit {
     perPage: 10
   };
   spInternalStatus: any;
+  totalLoansCount: any;
+  statusDropdownClicked: any = false;
+  loanGlobalSearchActive: any = false;
+  globalSearchValue: any;
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
@@ -70,6 +75,13 @@ export class LoansComponent implements OnInit {
       currentPage: 1,
       totalItems: 0
     };
+
+    // ColumnFilterFormElement.prototype.onModelChange = function (value) {
+    //   this.filterConstraint.value = value;
+    //   if (this.type || value === '') {
+    //     this.dt._filter();
+    //   }
+    // }
 
   }
 
@@ -143,11 +155,31 @@ export class LoansComponent implements OnInit {
 
 
   loadLoans(event) {
-    console.log("LoansEvent", event)
+    this.getTotalLoansCount()
+    let api_filter = this.cdlservice.setFiltersFromPrimeTable(event);
+    if (this.statusDropdownClicked) {
+      if (this.statusDisplayName && this.statusDisplayName.name) {
+        if (this.statusDisplayName.name != 'All') {
+          api_filter['spInternalStatus-eq'] = this.statusDisplayName.name;
+        }
+      }
+    }
+    // if (this.loanGlobalSearchActive) {
+    //   api_filter['referenceNo-like'] = this.statusDisplayName.name;
+    // }
+    if (api_filter) {
+      this.getTotalLoansCount(api_filter)
+      this.cdlservice.getLoansByFilter(api_filter).subscribe((data: any) => {
+        this.loans = data;
+      })
+    }
   }
 
 
+
+
   statusChange(event) {
+    this.statusDropdownClicked = true;
     if (event.value.name == 'All') {
       this.getLoans();
     }
@@ -242,7 +274,18 @@ export class LoansComponent implements OnInit {
     }
   }
 
-
+  loanGlobalSearch(globalSearchValue) {
+    if (globalSearchValue != '') {
+      this.loanGlobalSearchActive = true;
+      let api_filter = {}
+      // api_filter['spInternalStatus-like'] = globalSearchValue;
+      api_filter['referenceNo-eq'] = globalSearchValue;
+      api_filter['or=customerFirstName-eq'] = globalSearchValue;
+      api_filter['or=partnerName-eq'] = globalSearchValue;
+      this.getLoansByFilter(api_filter);
+      this.getTotalLoansCount(api_filter);
+    }
+  }
 
   goBack() {
     this.router.navigate(['provider', 'cdl']);
@@ -288,6 +331,14 @@ export class LoansComponent implements OnInit {
     return api_filter;
   }
 
+  getTotalLoansCount(filter?) {
+    if (!filter) {
+      filter = {}
+    }
+    this.cdlservice.getLoansCountByFilter(filter).subscribe((data: any) => {
+      this.totalLoansCount = data;
+    });
+  }
 
   showFilterSidebar() {
     this.filter_sidebar = true;

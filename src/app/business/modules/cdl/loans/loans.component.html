@@ -15,7 +15,7 @@
 </section>
 
 
-<div *ngIf="!loading">
+<!-- <div *ngIf="!loading">
   <div class="card">
     <p-table [responsive]="true" responsiveLayout="scroll" #dt1 [value]="loans" dataKey="id" [rows]="10"
       [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
@@ -117,24 +117,41 @@
       </ng-template>
     </p-table>
   </div>
-</div>
-<!-- 
+</div> -->
+
 <div *ngIf="!loading">
   <div class="card">
-    <p-table [value]="loans" [lazy]="true" (onLazyLoad)="loadLoans($event)" dataKey="id" [showCurrentPageReport]="true"
-      [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10" [totalRecords]="loans && loans.length"
-      [loading]="loading" responsiveLayout="stack" scrollHeight="flex"
+    <p-table #loansTable [value]="loans" [lazy]="true" (onLazyLoad)="loadLoans($event)" dataKey="id"
+      [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10"
+      [totalRecords]="totalLoansCount" [loading]="loading" responsiveLayout="stack" scrollHeight="flex"
       [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
       styleClass="p-datatable-customers p-datatable-gridlines"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+      <ng-template pTemplate="caption">
+        <div class="row">
+          <div class="col-md-4">
+            <span class="p-input-icon-right">
+              <i class="pi pi-search pointer-cursor" (click)="loanGlobalSearch(globalSearchValue)"></i>
+              <input pInputText type="text" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
+                class="search-field" [(ngModel)]="globalSearchValue" placeholder="Search Loans" style="width:100%" />
+            </span>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 text-right">
+            <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
+              (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
+              dataKey="name">
+            </p-dropdown>
+          </div>
+        </div>
+      </ng-template>
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="referenceNo">Loan Id <p-sortIcon field="referenceNo"></p-sortIcon></th>
-          <th pSortableColumn="customer.firstName">Customer Name <p-sortIcon field="customer.firstName"></p-sortIcon>
+          <th pSortableColumn="customerFirstName">Customer Name <p-sortIcon field="customerFirstName"></p-sortIcon>
           </th>
-          <th pSortableColumn="partner.partnerName">Dealer <p-sortIcon field="partner.partnerName"></p-sortIcon></th>
-          <th pSortableColumn="spInternalStatusDisplyName">Status <p-sortIcon
-              field="spInternalStatusDisplyName"></p-sortIcon>
+          <th pSortableColumn="partnerName">Dealer <p-sortIcon field="partnerName"></p-sortIcon></th>
+          <th pSortableColumn="spInternalStatus">Status <p-sortIcon field="spInternalStatus"></p-sortIcon>
           </th>
           <th>More Actions</th>
         </tr>
@@ -143,13 +160,24 @@
             <p-columnFilter type="text" field="referenceNo"></p-columnFilter>
           </th>
           <th>
-            <p-columnFilter type="text" field="customer.firstName"></p-columnFilter>
+            <p-columnFilter type="text" field="customerFirstName"></p-columnFilter>
           </th>
           <th>
-            <p-columnFilter type="text" field="partner.partnerName"></p-columnFilter>
+            <p-columnFilter type="text" field="partnerName"></p-columnFilter>
           </th>
           <th>
-            <p-columnFilter type="text" field="spInternalStatusDisplyName"></p-columnFilter>
+            <!-- <p-columnFilter field="spInternalStatus">
+              <ng-template pTemplate="filter">
+                <p-dropdown [options]="loanStatus"
+                  optionLabel="displayName">
+                  <ng-template let-option pTemplate="item">
+                    <div class="p-dropdown-spInternalStatus-option">
+                      <span class="ml-1">{{option.name}}</span>
+                    </div>
+                  </ng-template>
+                </p-dropdown>
+              </ng-template>
+            </p-columnFilter> -->
           </th>
           <th></th>
         </tr>
@@ -199,4 +227,4 @@
       </ng-template>
     </p-table>
   </div>
-</div> -->
+</div>

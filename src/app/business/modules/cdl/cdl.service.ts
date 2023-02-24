@@ -600,6 +600,60 @@ export class CdlService {
     return this.servicemeta.httpGet(url);
   }
 
+
+  setFiltersFromPrimeTable(event) {
+    let api_filter = {}
+    if ((event && event.first) || (event && event.first == 0)) {
+      api_filter['from'] = event.first;
+    }
+
+    if (event && event.rows) {
+      api_filter['count'] = event.rows;
+    }
+
+    if (event && event.filters) {
+      let filters = event.filters;
+      Object.entries(filters).forEach(([key, value]) => {
+        if (filters[key]['value'] != null) {
+          let filterSuffix = ''
+          if (filters[key]['matchMode'] == 'startsWith') {
+            filterSuffix = 'startWith';
+          }
+          else if (filters[key]['matchMode'] == 'contains') {
+            filterSuffix = 'like';
+          }
+          else if (filters[key]['matchMode'] == 'endsWith') {
+            filterSuffix = 'endWith';
+          }
+          else if (filters[key]['matchMode'] == 'equals') {
+            filterSuffix = 'eq';
+          }
+          else if (filters[key]['matchMode'] == 'notEquals') {
+            filterSuffix = 'neq';
+          }
+          if (filterSuffix != '') {
+            api_filter[key + '-' + filterSuffix] = filters[key]['value'];
+          }
+        }
+      });
+    }
+
+    if (event && event.sortField) {
+      let filterValue;
+      if (event.sortOrder && event.sortOrder == 1) {
+        filterValue = 'asc';
+      }
+      else if (event.sortOrder && event.sortOrder == -1) {
+        filterValue = 'dsc';
+      }
+      if (filterValue) {
+        api_filter['sort_' + event.sortField] = filterValue;
+      }
+    }
+    return api_filter;
+  }
+
+
   getCapabilitiesConfig(user) {
     if (user && user.roles && user.roles[0] && user.roles[0].capabilities) {
       console.log("Role Capabilities in Sevice File", user)

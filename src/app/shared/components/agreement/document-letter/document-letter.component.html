@@ -309,7 +309,14 @@
                                                 class="font-weight-bold">N/A</span>
                                         </span><br>
                                         <span class="mt-2">2. Name of the Drawee Bank Branch :
-                                            <span class="font-weight-bold">N/A</span>
+                                            <span class="font-weight-bold">
+                                                <span
+                                                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].bankBranchName"
+                                                    class="font-weight-bold">{{loanData.loanApplicationKycList[1].bankBranchName}}</span>
+                                                <span
+                                                    *ngIf="loanData && loanData.loanApplicationKycList && !loanData.loanApplicationKycList[1]"
+                                                    class="font-weight-bold">N/A</span>
+                                            </span>
                                         </span><br>
                                         <span class="mt-2">3. MICR Sort Code :
                                             <span class="font-weight-bold">N/A</span>

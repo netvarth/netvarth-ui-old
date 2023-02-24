@@ -407,6 +407,12 @@
                 <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].bankIfsc}}</th>
               </tr>
 
+              <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankBranchName">
+                <td style="width: 50%;" class="details-title">Bank Branch Name</td>
+                <th style=" width: 50%;" class="details-sub-title">{{loanData.loanApplicationKycList[1].bankBranchName}}
+                </th>
+              </tr>
+
             </tbody>
           </table>
         </div>

@@ -364,6 +364,10 @@ export class CreateComponent implements OnInit {
               this.createLoan.controls.nomineePhone.setValue(this.loanData.loanApplicationKycList[0].nomineePhone);
             }
 
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].nomineeGender) {
+              this.createLoan.controls.nomineeGender.setValue(this.loanData.loanApplicationKycList[0].nomineeGender);
+            }
+
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].guarantorType) {
               this.createLoan.controls.guarantorType.setValue(this.loanData.loanApplicationKycList[0].guarantorType);
             }
@@ -541,6 +545,7 @@ export class CreateComponent implements OnInit {
       nomineename: [null],
       nomineePhone: [null],
       nomineeDob: [null],
+      nomineeGender: [null],
       bank: [null],
       ifsc: [null],
       account: [null],
@@ -603,7 +608,8 @@ export class CreateComponent implements OnInit {
       coapplicantcurrentpincode: item && item.permanentPin || "",
       coapplicantbank: item && item.bankName || "",
       coapplicantaccount: item && item.bankAccountNo || "",
-      coapplicantifsc: item && item.bankIfsc || ""
+      coapplicantifsc: item && item.bankIfsc || "",
+      coapplicantbankbranch: item && item.bankBranchName || ""
     }));
     // }
     this.coApplicantbankListName = item && item.bankName
@@ -657,7 +663,8 @@ export class CreateComponent implements OnInit {
       coapplicantbank: [null],
       coapplicantifsc: [null],
       coapplicantaccount: [null],
-      coapplicantrelation: [null]
+      coapplicantrelation: [null],
+      coapplicantbankbranch: [null]
     })
   }
 
@@ -696,7 +703,8 @@ export class CreateComponent implements OnInit {
         "permanentState": this.createLoan.controls.coapplicants.value[i].coapplicantcurrentstate,
         "bankName": this.createLoan.controls.coapplicants.value[i].coapplicantbank,
         "bankAccountNo": this.createLoan.controls.coapplicants.value[i].coapplicantaccount,
-        "bankIfsc": this.createLoan.controls.coapplicants.value[i].coapplicantifsc
+        "bankIfsc": this.createLoan.controls.coapplicants.value[i].coapplicantifsc,
+        "bankBranchName": this.createLoan.controls.coapplicants.value[i].coapplicantbankbranch
       }
     ]
 
@@ -1072,6 +1080,7 @@ export class CreateComponent implements OnInit {
           "nomineeName": this.createLoan.controls.nomineename.value,
           "nomineeDob": this.createLoan.controls.nomineeDob.value,
           "nomineePhone": this.createLoan.controls.nomineePhone.value,
+          "nomineeGender": this.createLoan.controls.nomineeGender.value,
           "customerEducation": this.createLoan.controls.customerEducation.value,
           "customerEmployement": this.createLoan.controls.customerEmployement.value,
           "salaryRouting": this.createLoan.controls.salaryRouting.value,
@@ -1960,6 +1969,7 @@ export class CreateComponent implements OnInit {
           "nomineeName": this.createLoan.controls.nomineename.value,
           "nomineeDob": this.createLoan.controls.nomineeDob.value,
           "nomineePhone": this.createLoan.controls.nomineePhone.value,
+          "nomineeGender": this.createLoan.controls.nomineeGender.value,
           "customerEducation": this.createLoan.controls.customerEducation.value,
           "customerEmployement": this.createLoan.controls.customerEmployement.value,
           "salaryRouting": this.createLoan.controls.salaryRouting.value,
@@ -2320,6 +2330,24 @@ export class CreateComponent implements OnInit {
   totalPayment(event) {
     if (Number(event.target.value) > 1000) {
       this.totalPaymentValue = Number(event.target.value);
+      this.createLoan.controls.downpayment.setValue(this.createLoan.controls.totalpayment.value * 0.2)
+      this.createLoan.controls.loanamount.setValue(this.createLoan.controls.totalpayment.value - this.createLoan.controls.downpayment.value)
+    }
+    else {
+      this.createLoan.controls.downpayment.setValue(0)
+      this.createLoan.controls.loanamount.setValue(0)
+    }
+    if (this.createLoan.controls.loanamount.value > 50000) {
+      this.showCoapplicant = true;
+    }
+    else {
+      this.showCoapplicant = false;
+    }
+  }
+
+  checkAmount() {
+    if (this.createLoan.controls.totalpayment.value > 1000) {
+      this.totalPaymentValue = Number(this.createLoan.controls.totalpayment.value);
       this.createLoan.controls.downpayment.setValue(this.createLoan.controls.totalpayment.value * 0.2)
       this.createLoan.controls.loanamount.setValue(this.createLoan.controls.totalpayment.value - this.createLoan.controls.downpayment.value)
     }

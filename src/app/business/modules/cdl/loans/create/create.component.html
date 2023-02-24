@@ -1260,6 +1260,23 @@
                 </div>
               </div>
 
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Gender</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #nomineeGender formControlName="nomineeGender">
+                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                          <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
               <!-- <div *ngIf="showCoapplicant">
                 <div class="bggrey my-2">
                   <div>
@@ -1816,6 +1833,22 @@
                       </div>
                     </div>
                   </div>
+
+
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Bank Branch <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding">
+                          <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank Branch"
+                            class="form-control" formControlName="coapplicantbankbranch" autocomplete="off" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
               </div>
             </ng-container>
