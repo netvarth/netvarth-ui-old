@@ -15,7 +15,7 @@
 </section>
 
 
-<!-- <div *ngIf="!loading">
+<div *ngIf="!loading">
   <div class="card">
     <p-table [responsive]="true" responsiveLayout="scroll" #dt1 [value]="loans" dataKey="id" [rows]="10"
       [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
@@ -117,9 +117,9 @@
       </ng-template>
     </p-table>
   </div>
-</div> -->
+</div>
 
-<div *ngIf="!loading">
+<!-- <div *ngIf="!loading">
   <div class="card">
     <p-table #loansTable [value]="loans" [lazy]="true" (onLazyLoad)="loadLoans($event)" dataKey="id"
       [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10"
@@ -166,18 +166,6 @@
             <p-columnFilter type="text" field="partnerName"></p-columnFilter>
           </th>
           <th>
-            <!-- <p-columnFilter field="spInternalStatus">
-              <ng-template pTemplate="filter">
-                <p-dropdown [options]="loanStatus"
-                  optionLabel="displayName">
-                  <ng-template let-option pTemplate="item">
-                    <div class="p-dropdown-spInternalStatus-option">
-                      <span class="ml-1">{{option.name}}</span>
-                    </div>
-                  </ng-template>
-                </p-dropdown>
-              </ng-template>
-            </p-columnFilter> -->
           </th>
           <th></th>
         </tr>
@@ -227,4 +215,4 @@
       </ng-template>
     </p-table>
   </div>
-</div>
+</div> -->
