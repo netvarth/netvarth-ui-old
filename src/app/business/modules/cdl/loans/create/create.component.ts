@@ -174,6 +174,7 @@ export class CreateComponent implements OnInit {
   coApplicantDetailsPanelVerified: any = false;
   coApplicantId: any;
   coapplicantemailverification: any = false;
+  aadharVerfied: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -255,7 +256,10 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.email.setValue(this.loanData.customer.email);
             this.createLoan.controls.dob.setValue(this.loanData.customer.dob);
             this.createLoan.controls.gender.setValue(this.loanData.customer.gender);
-            this.createLoan.controls.aadharnumber.setValue(this.loanData.loanApplicationKycList[0].aadhaar);
+            if (this.loanData.loanApplicationKycList[0].aadhaar) {
+              this.createLoan.controls.aadharnumber.setValue(this.loanData.loanApplicationKycList[0].aadhaar);
+              this.aadharVerfied = true;
+            }
             this.createLoan.controls.pannumber.setValue(this.loanData.loanApplicationKycList[0].pan);
             if (this.loanData && this.loanData.type && this.loanData.type.id) {
               this.createLoan.controls.loantype.setValue(this.loanData.type.id);
@@ -1719,14 +1723,15 @@ export class CreateComponent implements OnInit {
             this.createLoan.controls.permanentaddress2.setValue(data.loanApplicationKycList[0].permanentAddress2);
             this.createLoan.controls.permanentcity.setValue(data.loanApplicationKycList[0].permanentCity);
             this.createLoan.controls.permanentpincode.setValue(data.loanApplicationKycList[0].permanentPin);
-            if (data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].permanentPin) {
-              this.cdlService.getStateByPin(data.loanApplicationKycList[0].permanentPin).subscribe((data: any) => {
-                if (data && data.length > 0) {
-                  this.createLoan.controls.permanentstate.setValue(data[0].state);
-                }
-                this.verifyingUID = false;
-              })
-            }
+            this.createLoan.controls.permanentstate.setValue(data.loanApplicationKycList[0].permanentState);
+            // if (data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].permanentPin) {
+            //   this.cdlService.getStateByPin(data.loanApplicationKycList[0].permanentPin).subscribe((data: any) => {
+            //     if (data && data.length > 0) {
+            //       this.createLoan.controls.permanentstate.setValue(data[0].state);
+            //     }
+            //     this.verifyingUID = false;
+            //   })
+            // }
           }
           this.verifyingUID = false;
         })
@@ -1738,6 +1743,16 @@ export class CreateComponent implements OnInit {
   refreshcoApplicantAadharVerify() {
     this.cdlService.refreshAadharVerify(this.coApplicantId).subscribe((data: any) => {
       if (data) {
+        this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
+          if (data) {
+            this.createLoan.controls.coapplicantcurrentaddress1.setValue(data.loanApplicationKycList[1].permanentAddress1);
+            this.createLoan.controls.coapplicantcurrentaddress2.setValue(data.loanApplicationKycList[1].permanentAddress2);
+            this.createLoan.controls.coapplicantcurrentdistrict.setValue(data.loanApplicationKycList[1].permanentDistrict);
+            this.createLoan.controls.coapplicantcurrentstate.setValue(data.loanApplicationKycList[1].permanentPin);
+            this.createLoan.controls.coapplicantcurrentpincode.setValue(data.loanApplicationKycList[1].permanentState);
+          }
+          this.verifyingUID = false;
+        })
         this.coapplicantaadharverification = true;
         this.coapplicantverifyingUID = false;
       }

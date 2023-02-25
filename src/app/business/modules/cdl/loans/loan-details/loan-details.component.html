@@ -420,7 +420,6 @@
     </div>
     <div class="col-md-7 no-padding mt-2">
       <div class="card">
-
         <div class="font-weight-bold mt-4">Loan Details</div>
         <section class="row col-md-12 no-padding" *ngIf="capabilities && capabilities.canViewKycReport">
           <div class="col-lg-6 col-md-6 col-xs-12 col-sm-12 mt-2">
@@ -514,12 +513,14 @@
                   <div class="d-flex align-items-center">
                     <div class="text-left details-sub-title">{{loanData.loanApplicationKycList[0].aadhaar}}</div>
                   </div>
-                  <div class="mt-2"
-                    *ngIf="loanData.loanApplicationKycList[0].aadhaarAttachments&& loanData.loanApplicationKycList[0].aadhaarAttachments[0]">
-                    <a [href]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path" target="_blank"
-                      class="btn btn-primary">
-                      <span>View Aadhar</span>
-                    </a>
+                  <div *ngIf="loanData.loanApplicationKycList[0].aadhaarAttachments">
+                    <div class=" mt-2"
+                      *ngFor="let attachment of loanData.loanApplicationKycList[0].aadhaarAttachments;let i=index;">
+                      <a [href]="attachment.s3path" target="_blank" class="btn btn-primary">
+                        <span>View File <span
+                            *ngIf="loanData.loanApplicationKycList[0].aadhaarAttachments.length > 1">{{i+1}}</span></span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -538,16 +539,37 @@
                   <div class="d-flex align-items-center">
                     <div class="text-left details-sub-title">{{loanData.loanApplicationKycList[0].pan}}</div>
                   </div>
-                  <div class="mt-2"
-                    *ngIf="loanData.loanApplicationKycList[0].panAttachments&& loanData.loanApplicationKycList[0].panAttachments[0]">
-                    <a [href]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" target="_blank"
-                      class="btn btn-primary">
-                      <span>View Pan</span>
-                    </a>
+                  <div *ngIf="loanData.loanApplicationKycList[0].panAttachments">
+                    <div class=" mt-2"
+                      *ngFor="let attachment of loanData.loanApplicationKycList[0].panAttachments;let i=index;">
+                      <a [href]="attachment.s3path" target="_blank" class="btn btn-primary">
+                        <span>View File <span
+                            *ngIf="loanData.loanApplicationKycList[0].panAttachments.length > 1">{{i+1}}</span></span>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            <div class="col-md-12 no-padding-small mt-3">
+              <div
+                *ngIf="loanData && loanData.partnerAcceptanceAttachments && loanData.partnerAcceptanceAttachments.length>0">
+                <div class="text-left details-title">Uploaded Invoice&nbsp;
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div *ngIf="loanData.partnerAcceptanceAttachments">
+                    <div class=" mt-2" *ngFor="let attachment of loanData.partnerAcceptanceAttachments;let i=index;">
+                      <a [href]="attachment.s3path" target="_blank" class="btn btn-primary">
+                        <span>View File <span
+                            *ngIf="loanData.partnerAcceptanceAttachments.length > 1">{{i+1}}</span></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -690,19 +712,19 @@
             </div>
 
           </div>
-          <div class="d-lg-flex">
+          <div class="d-lg-flex" *ngIf="loanData && loanData.isAcceptanceOtpUpdated">
             <div class="mt-2">
-              <div class="btn btn-primary" (click)="viewDigitalDocument()">View Digital Document</div>
+              <div class="btn btn-primary" (click)="viewDigitalDocument()">View Agreement</div>
             </div>
             <div class="mx-md-2 mt-2">
-              <div class="btn btn-primary" (click)="viewInsuranceDocument()">View Insurance Document</div>
+              <div class="btn btn-primary" (click)="viewInsuranceDocument()">View Insurance Agreement</div>
             </div>
           </div>
           <div class="d-lg-flex">
             <div class="mt-2"
               *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
               <a (click)="showLoanDetailsDoc()" target="_blank" class="btn btn-primary">
-                <span>View Loan Details Doc</span>
+                <span>View CAM report Doc</span>
               </a>
             </div>
             <div class="mx-md-2 mt-2"

@@ -176,10 +176,10 @@ export class ApprovedComponent implements OnInit {
       "uid": this.loanId,
     }
     console.log("filestoUpload", this.filesToUpload)
+    loanData['partnerAcceptanceAttachments'] = [];
     for (let i = 0; i < this.filesToUpload.length; i++) {
       this.filesToUpload[i]['order'] = i;
       if (this.filesToUpload[i]["type"] == 'invoice') {
-        loanData['partnerAcceptanceAttachments'] = [];
         loanData['partnerAcceptanceAttachments'].push(this.filesToUpload[i]);
       }
     }

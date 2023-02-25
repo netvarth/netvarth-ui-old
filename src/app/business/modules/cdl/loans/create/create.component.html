@@ -235,14 +235,15 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Aadhar Number <span class="text-danger">*</span></div>
+                      <div class="form-title">Aadhar Number {{aadharVerfied}}<span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
-                        <input (keyup)="resetErrors()" #aadharnumber type="number" placeholder="Enter Aadhar Number"
+                        <!-- [type]="aadharVerfied ? 'text':'number'" -->
+                        <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
                           class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
                           [class.disabled]="action == 'update' && aadharverification && !verifyingUID"
-                          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                          oninput="javascript: if (this.value.length > this.maxLength || typeof(this.value)=='String') {this.value = this.value.slice(0, this.maxLength);}"
                           maxlength="12" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification"
@@ -468,7 +469,7 @@
                   </div>
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #permanentstate formControlName="permanentstate">
-                      <mat-option [value]="state.name" *ngFor="let state of stateList">
+                      <mat-option [value]="state.displayName" *ngFor="let state of stateList">
                         <div *ngIf="state && state.displayName">{{state.displayName}}</div>
                       </mat-option>
                     </mat-select>
@@ -596,16 +597,21 @@
                   </div>
                 </div>
 
-                <div>
+                <div *ngIf="stateList">
                   <div class="bggrey my-2">
                     <div>
                       <div class="d-flex">
                         <div class="form-title">Current Address State</div>
                       </div>
                       <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" [value]="currentstate" #currentstate type="text"
+                        <!-- <input (keyup)="resetErrors()" [value]="currentstate" #currentstate type="text"
                           placeholder="Enter State" class="form-control" autocomplete="off"
-                          formControlName="currentstate" />
+                          formControlName="currentstate" /> -->
+                        <mat-select class="form-control widthWebKit" #currentstate formControlName="currentstate">
+                          <mat-option [value]="state.displayName" *ngFor="let state of stateList">
+                            <div *ngIf="state && state.displayName">{{state.displayName}}</div>
+                          </mat-option>
+                        </mat-select>
                       </div>
                     </div>
                   </div>
@@ -1192,7 +1198,8 @@
                     </div>
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
-                        class="form-control" autocomplete="off" [value]="loanamount" formControlName="loanamount" />
+                        class="form-control" autocomplete="off" disabled="true" [value]="loanamount"
+                        formControlName="loanamount" />
                     </div>
                   </div>
                 </div>
@@ -1240,6 +1247,7 @@
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="text" placeholder="Enter Nominee Phone Number"
                         class="form-control" autocomplete="off" #nomineePhone formControlName="nomineePhone"
+                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                         maxlength="10" />
                     </div>
                   </div>
@@ -1255,23 +1263,6 @@
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" #nomineeDob type="date" class="form-control" autocomplete="off"
                         formControlName="nomineeDob" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Nominee Gender</div>
-                    </div>
-                    <div class="fieldPadding">
-                      <mat-select class="form-control widthWebKit" #nomineeGender formControlName="nomineeGender">
-                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
-                          <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
-                        </mat-option>
-                      </mat-select>
                     </div>
                   </div>
                 </div>

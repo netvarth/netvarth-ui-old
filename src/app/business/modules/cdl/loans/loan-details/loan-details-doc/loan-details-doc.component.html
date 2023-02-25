@@ -17,7 +17,7 @@
             <td colspan="2">
                 <div class="my-3">
                     <img src="../../../../assets/images/cdl/company_logo.png"><br>
-                    <h4 class="font-weight-bold">CDL - Loan Details Document</h4>
+                    <h4 class="font-weight-bold">CDL - CAM Report</h4>
                 </div>
             </td>
         </tr>
@@ -217,7 +217,7 @@
             </td>
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <span *ngIf="loanData && loanData.consumerPhoto 
+                    <span *ngIf="loanData && loanData.consumerPhoto
                                         && loanData.consumerPhoto[0] && loanData.consumerPhoto[0].s3path">
                         <img [src]="loanData.consumerPhoto[0].s3path" class="img-fluid pb-0" width="200px">
                     </span>
@@ -250,7 +250,7 @@
             <td style="width:50%">
                 <div class="text-normal mx-1">
                     <span
-                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments 
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments
                         && loanData.loanApplicationKycList[0].aadhaarAttachments[0] && loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path">
                         <a [href]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path" target="_blank"
                             class="pointer-cursor">
@@ -289,7 +289,7 @@
             <td style="width:50%">
                 <div class="text-normal mx-1">
                     <span
-                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments 
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments
                                 && loanData.loanApplicationKycList[0].panAttachments[0] && loanData.loanApplicationKycList[0].panAttachments[0].s3path">
                         <a [href]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" target="_blank"
                             class="pointer-cursor">
