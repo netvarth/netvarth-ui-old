@@ -38,7 +38,12 @@ export class ApprovedComponent implements OnInit {
   emiDueNumbers = Array(20);
   advanceEmi: any;
   selectedFiles = {
-    "invoice": { files: [], base64: [], caption: [] }
+    "invoice": { files: [], base64: [], caption: [] },
+    "postDatedCheque": { files: [], base64: [], caption: [] },
+    "securityPostDatedCheque": { files: [], base64: [], caption: [] },
+    "salarySlip": { files: [], base64: [], caption: [] },
+    "taxReceipt": { files: [], base64: [], caption: [] },
+    "attachments": { files: [], base64: [], caption: [] }
   }
   approvedScheme: any;
   approvedSchemeId: any;
@@ -46,6 +51,7 @@ export class ApprovedComponent implements OnInit {
   loanTenures: any;
   dealers: any;
   partnerName: any;
+  loanKycId: any;
   constructor(
     private location: Location,
     private dialog: MatDialog,
@@ -212,10 +218,53 @@ export class ApprovedComponent implements OnInit {
       "emiDueDay": this.emiDueDate
     }
 
+    let attachmentsData = {}
+
+    attachmentsData['postDatedCheque'] = [];
+    attachmentsData['securityPostDatedCheque'] = [];
+    attachmentsData['salarySlip'] = [];
+    attachmentsData['taxReceipt'] = [];
+    attachmentsData['attachments'] = [];
+
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      this.filesToUpload[i]['order'] = i;
+
+      if (this.filesToUpload[i]["type"] == 'postDatedCheque') {
+        attachmentsData['postDatedCheque'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'securityPostDatedCheque') {
+        attachmentsData['securityPostDatedCheque'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'salarySlip') {
+        attachmentsData['salarySlip'].push(this.filesToUpload[i]);
+      }
+
+      if (this.filesToUpload[i]["type"] == 'taxReceipt') {
+        attachmentsData['taxReceipt'].push(this.filesToUpload[i]);
+      }
+      if (this.filesToUpload[i]["type"] == 'attachments') {
+        attachmentsData['attachments'].push(this.filesToUpload[i]);
+      }
+    }
+
+
+
+    console.log("Data", data)
+
     this.cdlService.salesOfficerApproval(data, this.loanId).subscribe((data: any) => {
       if (data) {
-        this.snackbarService.openSnackBar("Loan Approved Successfully")
-        this.router.navigate(['provider', 'cdl', 'loans']);
+        this.cdlService.AttachmentsOnsalesOfficerApproval(this.loanId, this.loanKycId, attachmentsData).subscribe((data: any) => {
+          if (data) {
+            if (data.length > 0) {
+              this.uploadAudioVideo(data).then(
+                (dataS3Url) => {
+                  console.log(dataS3Url);
+                  this.snackbarService.openSnackBar("Loan Approved Successfully")
+                  this.router.navigate(['provider', 'cdl', 'loans']);
+                });
+            }
+          }
+        });
       };
     },
       (error) => {
@@ -363,6 +412,9 @@ export class ApprovedComponent implements OnInit {
         this.approvedSchemeId = this.loanData.loanScheme.id;
         if (this.loanData.partner && this.loanData.partner.id) {
           this.partnerName = this.loanData.partner.id;
+        }
+        if (this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].id) {
+          this.loanKycId = this.loanData.loanApplicationKycList[0].id;
         }
         if (this.approvedSchemeId) {
           this.cdlService.getLoanTenures(this.approvedSchemeId).subscribe((data) => {

@@ -36,7 +36,7 @@
                     <div class="col-12"
                       *ngFor="let data of getQuestion(question).dataGridListProperties.dataGridListColumns">
                       <div *ngIf="data.order==1 && !isSecondcase">
-                        <label class="label text-dark font-weight-bold">{{data.label}}1
+                        <label class="label text-dark font-weight-bold">{{data.label}}
                           <span class="red"
                             *ngIf="getQuestion(question).dataGridListProperties.dataGridListColumns[0].mandatory">*</span>
                         </label>
@@ -58,7 +58,7 @@
                         </div>
                       </div>
                       <div *ngIf="data.dataType === 'list' && data.order!==1 && isSecondcase">
-                        <label class="label text-dark font-weight-bold">{{data.label}}2
+                        <label class="label text-dark font-weight-bold">{{data.label}}
                           <span class="red" *ngIf="data.mandatory">*</span>
                         </label><br>
                         <div

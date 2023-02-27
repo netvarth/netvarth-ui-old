@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { GroupStorageService } from '../../../../../../src/app/shared/services/group-storage.service';
 // import { Location } from '@angular/common';
@@ -51,6 +51,8 @@ export class LoansComponent implements OnInit {
   statusDropdownClicked: any = false;
   loanGlobalSearchActive: any = false;
   globalSearchValue: any;
+  cols: any[];
+  _selectedColumns: any[];
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
@@ -89,6 +91,41 @@ export class LoansComponent implements OnInit {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.getLoans()
 
+
+    this.cols = [
+      // { field: 'referenceNo', title: 'Loan Id', value: '[referenceNo]', haveColumnFilter: true },
+      { field: 'customerFirstName', title: 'Customer Name', value: '[customer.firstName,customer.lastName]', haveColumnFilter: true, type: 'text' },
+      { field: 'partnerName', title: 'Dealer', value: '[partner.partnerName]', haveColumnFilter: true, type: 'text' },
+      { field: 'createdDate', title: 'Created Date', value: '[createdDate]', haveColumnFilter: true, type: 'date' },
+      { field: 'spInternalStatus', title: 'Status', value: '[spInternalStatusDisplyName]', haveColumnFilter: false, type: 'text' }
+    ];
+
+    this._selectedColumns = this.cols;
+
+  }
+
+  @Input() get selectedColumns(): any[] {
+    return this._selectedColumns;
+  }
+
+  set selectedColumns(val: any[]) {
+    //restore original order
+    this._selectedColumns = this.cols.filter(col => val.includes(col));
+  }
+
+
+  showColumn(column) {
+    if (this.selectedColumns) {
+      for (let i = 0; i < this.selectedColumns.length; i++) {
+        if (this.selectedColumns[i].field == column) {
+          return true;
+        }
+      }
+      return false
+    }
+
+    // return this.selectedColumns.filter(col => col.field == column) ? true : false;
+    // console.log("selectedColumns", this.selectedColumns)
   }
 
   updateLoan(id, action, status) {
@@ -279,9 +316,9 @@ export class LoansComponent implements OnInit {
       this.loanGlobalSearchActive = true;
       let api_filter = {}
       // api_filter['spInternalStatus-like'] = globalSearchValue;
-      api_filter['referenceNo-eq'] = globalSearchValue;
-      api_filter['or=customerFirstName-eq'] = globalSearchValue;
-      api_filter['or=partnerName-eq'] = globalSearchValue;
+      api_filter['or=referenceNo-like'] = globalSearchValue;
+      api_filter['or=customerFirstName-like'] = globalSearchValue;
+      api_filter['or=partnerName-like'] = globalSearchValue;
       this.getLoansByFilter(api_filter);
       this.getTotalLoansCount(api_filter);
     }

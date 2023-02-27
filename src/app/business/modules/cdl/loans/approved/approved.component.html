@@ -345,6 +345,213 @@
             </div>
           </div>
         </div>
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Post Dated Cheque</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class="file">
+                  <label for='postDatedChequeAttach' (click)="postDatedChequeAttach.click()">
+                    <!-- <i class="material-icons">cloud_upload</i> -->
+                    Upload File
+                  </label>
+                  <input #postDatedChequeAttach type='file' (change)="filesSelected($event,'postDatedCheque')"
+                    accept="image/*;capture=camera" />
+                </div>
+                <div class="img-section clearfix">
+                  <ul class="galul">
+                    <li *ngFor="let file of selectedFiles['postDatedCheque'].files;let i = index ">
+                      <div class="galimg_outer">
+                        <div class="gal_img pointer-cursor">
+                          <img [src]="getImage(selectedFiles['postDatedCheque'].base64[i], file)"
+                            *ngIf="selectedFiles['postDatedCheque'].base64[i]" width="100px" height="100px">
+                          <a [href]="file.s3path" target="_blank">
+                            <img [src]="file.s3path" *ngIf="!selectedFiles['postDatedCheque'].base64[i] && file.s3path"
+                              width="100px" height="100px">
+                          </a>
+                        </div>
+                        <div class="gal_action" (click)="deleteTempImage(i, 'postDatedCheque',file)">
+                          <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Security Post Dated Cheque</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class="file">
+                  <label for='securityPostDatedChequeAttach' (click)="securityPostDatedChequeAttach.click()">
+                    <!-- <i class="material-icons">cloud_upload</i> -->
+                    Upload File
+                  </label>
+                  <input #securityPostDatedChequeAttach type='file'
+                    (change)="filesSelected($event,'securityPostDatedCheque')" accept="image/*;capture=camera" />
+                </div>
+                <div class="img-section clearfix"
+                  *ngIf="selectedFiles['securityPostDatedCheque'] && selectedFiles['securityPostDatedCheque'].files && selectedFiles['securityPostDatedCheque'].files.length > 0">
+                  <ul class="galul">
+                    <li *ngFor="let file of selectedFiles['securityPostDatedCheque'].files;let i = index ">
+                      <div class="galimg_outer">
+                        <div class="gal_img pointer-cursor">
+                          <img [src]="getImage(selectedFiles['securityPostDatedCheque'].base64[i], file)"
+                            *ngIf="selectedFiles['securityPostDatedCheque'].base64[i]" width="100px" height="100px">
+                          <a [href]="file.s3path" target="_blank">
+                            <img [src]="file.s3path"
+                              *ngIf="!selectedFiles['securityPostDatedCheque'].base64[i] && file.s3path" width="100px"
+                              height="100px">
+                          </a>
+                        </div>
+                        <div class="gal_action" (click)="deleteTempImage(i, 'securityPostDatedCheque',file)">
+                          <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Salary Slip</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class="file">
+                  <label for='salarySlipAttach' (click)="salarySlipAttach.click()">
+                    <!-- <i class="material-icons">cloud_upload</i> -->
+                    Upload File
+                  </label>
+                  <input #salarySlipAttach type='file' (change)="filesSelected($event,'salarySlip')"
+                    accept="image/*;capture=camera" />
+                </div>
+                <div class="img-section clearfix"
+                  *ngIf="selectedFiles['salarySlip'] && selectedFiles['salarySlip'].files && selectedFiles['salarySlip'].files.length > 0">
+                  <ul class="galul">
+                    <li *ngFor="let file of selectedFiles['salarySlip'].files;let i = index ">
+                      <div class="galimg_outer">
+                        <div class="gal_img pointer-cursor">
+                          <img [src]="getImage(selectedFiles['salarySlip'].base64[i], file)"
+                            *ngIf="selectedFiles['salarySlip'].base64[i]" width="100px" height="100px">
+                          <a [href]="file.s3path" target="_blank">
+                            <img [src]="file.s3path" *ngIf="!selectedFiles['salarySlip'].base64[i] && file.s3path"
+                              width="100px" height="100px">
+                          </a>
+                        </div>
+                        <div class="gal_action" (click)="deleteTempImage(i, 'salarySlip',file)">
+                          <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Tax Receipt</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class="file">
+                  <label for='taxReceiptAttach' (click)="taxReceiptAttach.click()">
+                    <!-- <i class="material-icons">cloud_upload</i> -->
+                    Upload File
+                  </label>
+                  <input #taxReceiptAttach type='file' (change)="filesSelected($event,'taxReceipt')"
+                    accept="image/*;capture=camera" />
+                </div>
+                <div class="img-section clearfix"
+                  *ngIf="selectedFiles['taxReceipt'] && selectedFiles['taxReceipt'].files && selectedFiles['taxReceipt'].files.length > 0">
+                  <ul class="galul">
+                    <li *ngFor="let file of selectedFiles['taxReceipt'].files;let i = index ">
+                      <div class="galimg_outer">
+                        <div class="gal_img pointer-cursor">
+                          <img [src]="getImage(selectedFiles['taxReceipt'].base64[i], file)"
+                            *ngIf="selectedFiles['taxReceipt'].base64[i]" width="100px" height="100px">
+                          <a [href]="file.s3path" target="_blank">
+                            <img [src]="file.s3path" *ngIf="!selectedFiles['taxReceipt'].base64[i] && file.s3path"
+                              width="100px" height="100px">
+                          </a>
+                        </div>
+                        <div class="gal_action" (click)="deleteTempImage(i, 'taxReceipt',file)">
+                          <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Other Attachments</div>
+              </div>
+              <div class="fieldPadding photo-border">
+                <div class="file">
+                  <label for='attachmentsAttach' (click)="attachmentsAttach.click()">
+                    <!-- <i class="material-icons">cloud_upload</i> -->
+                    Upload File
+                  </label>
+                  <input #attachmentsAttach type='file' (change)="filesSelected($event,'attachments')"
+                    accept="image/*;capture=camera" />
+                </div>
+                <div class="img-section clearfix"
+                  *ngIf="selectedFiles['attachments'] && selectedFiles['attachments'].files && selectedFiles['attachments'].files.length > 0">
+                  <ul class="galul">
+                    <li *ngFor="let file of selectedFiles['attachments'].files;let i = index ">
+                      <div class="galimg_outer">
+                        <div class="gal_img pointer-cursor">
+                          <img [src]="getImage(selectedFiles['attachments'].base64[i], file)"
+                            *ngIf="selectedFiles['attachments'].base64[i]" width="100px" height="100px">
+                          <a [href]="file.s3path" target="_blank">
+                            <img [src]="file.s3path" *ngIf="!selectedFiles['attachments'].base64[i] && file.s3path"
+                              width="100px" height="100px">
+                          </a>
+                        </div>
+                        <div class="gal_action" (click)="deleteTempImage(i, 'attachments',file)">
+                          <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
       </div>
     </div>
   </div>

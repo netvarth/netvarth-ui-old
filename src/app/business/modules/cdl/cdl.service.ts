@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 import { projectConstants } from '../../../app.component';
 import { GroupStorageService } from '../../../shared/services/group-storage.service';
 // import { HttpClient } from '@angular/common/http';
@@ -418,6 +419,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  AttachmentsOnsalesOfficerApproval(id, kycId, data) {
+    const url = 'provider/loanapplication/' + id + '/kyc/' + kycId + '/attachments';
+    return this.servicemeta.httpPut(url, data);
+  }
+
 
   suspendDealer(id, data) {
     const url = 'provider/partner/' + id + '/suspended';
@@ -630,6 +636,16 @@ export class CdlService {
           }
           else if (filters[key]['matchMode'] == 'notEquals') {
             filterSuffix = 'neq';
+          }
+          else if (filters[key]['matchMode'] == "dateIs") {
+            filterSuffix = 'eq';
+            let dateValue = new Date(filters[key]['value']);
+            filters[key]['value'] = moment(dateValue).format('YYYY-MM-DD');
+          }
+          else if (filters[key]['matchMode'] == "dateIsNot") {
+            filterSuffix = 'neq';
+            let dateValue = new Date(filters[key]['value']);
+            filters[key]['value'] = moment(dateValue).format('YYYY-MM-DD');
           }
           if (filterSuffix != '') {
             api_filter[key + '-' + filterSuffix] = filters[key]['value'];

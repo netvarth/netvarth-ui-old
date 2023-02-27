@@ -15,7 +15,7 @@
 </section>
 
 
-<div *ngIf="!loading">
+<!-- <div *ngIf="!loading">
   <div class="card">
     <p-table [responsive]="true" responsiveLayout="scroll" #dt1 [value]="loans" dataKey="id" [rows]="10"
       [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [loading]="loading"
@@ -117,27 +117,32 @@
       </ng-template>
     </p-table>
   </div>
-</div>
-
-<!-- <div *ngIf="!loading">
+</div> -->
+<div *ngIf="!loading">
   <div class="card">
-    <p-table #loansTable [value]="loans" [lazy]="true" (onLazyLoad)="loadLoans($event)" dataKey="id"
-      [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10"
+    <p-table [columns]="selectedColumns" #loansTable [value]="loans" [lazy]="true" (onLazyLoad)="loadLoans($event)"
+      dataKey="id" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10"
       [totalRecords]="totalLoansCount" [loading]="loading" responsiveLayout="stack" scrollHeight="flex"
       [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
       styleClass="p-datatable-customers p-datatable-gridlines"
       currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
       <ng-template pTemplate="caption">
         <div class="row">
-          <div class="col-md-4">
-            <span class="p-input-icon-right">
+          <div class="col-md-4 no-padding-small">
+            <span class="p-input-icon-right" [style]="{'width':'100%'}">
               <i class="pi pi-search pointer-cursor" (click)="loanGlobalSearch(globalSearchValue)"></i>
               <input pInputText type="text" [style]="{'width':'100%'}" [inputStyle]="{'width':'100%'}"
                 class="search-field" [(ngModel)]="globalSearchValue" placeholder="Search Loans" style="width:100%" />
             </span>
           </div>
-          <div class="col-md-4"></div>
-          <div class="col-md-4 text-right">
+          <div class="col-md-4 no-padding-small">
+            <div class="full-width">
+              <p-multiSelect [options]="cols" [(ngModel)]="selectedColumns" optionLabel="title"
+                selectedItemsLabel="{0} columns selected" [style]="{'min-width': '200px','width': '100%'}"
+                placeholder="Choose Columns"></p-multiSelect>
+            </div>
+          </div>
+          <div class="col-md-4 no-padding-small text-right">
             <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="loanStatus"
               (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
               dataKey="name">
@@ -145,48 +150,46 @@
           </div>
         </div>
       </ng-template>
-      <ng-template pTemplate="header">
+      <ng-template pTemplate="header" let-columns>
         <tr>
           <th pSortableColumn="referenceNo">Loan Id <p-sortIcon field="referenceNo"></p-sortIcon></th>
-          <th pSortableColumn="customerFirstName">Customer Name <p-sortIcon field="customerFirstName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="partnerName">Dealer <p-sortIcon field="partnerName"></p-sortIcon></th>
-          <th pSortableColumn="spInternalStatus">Status <p-sortIcon field="spInternalStatus"></p-sortIcon>
-          </th>
+          <th *ngFor="let col of columns" pSortableColumn="{{col.field}}">{{col.title}} <p-sortIcon
+              field="{{col.field}}"></p-sortIcon></th>
           <th>More Actions</th>
         </tr>
+
         <tr>
           <th>
             <p-columnFilter type="text" field="referenceNo"></p-columnFilter>
           </th>
-          <th>
-            <p-columnFilter type="text" field="customerFirstName"></p-columnFilter>
-          </th>
-          <th>
-            <p-columnFilter type="text" field="partnerName"></p-columnFilter>
-          </th>
-          <th>
+          <th *ngFor="let col of columns">
+            <p-columnFilter type="{{col.type}}" field="{{col.field}}"></p-columnFilter>
           </th>
           <th></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-loan>
+      <ng-template pTemplate="body" let-loan let-columns="columns">
         <tr class="mobile-card">
           <td>
             <span class="d-lg-none d-md-none">Loan Application No : </span><span
               class="table-column-data">{{loan.referenceNo}}</span>
           </td>
-          <td>
+          <td *ngIf="showColumn('customerFirstName') && selectedColumns">
             <span class="d-lg-none d-md-none">Customer Name : </span><span
               class="table-column-data">{{loan.customer.firstName}}
               {{loan.customer.lastName}}</span>
           </td>
-          <td>
+          <td *ngIf="showColumn('partnerName') && selectedColumns">
             <span class="d-lg-none d-md-none d-sm-block">Dealer : </span><span class="table-column-data"
               *ngIf="loan && loan.partner && loan.partner.partnerName">{{loan.partner.partnerName}}</span>
             <span class="table-column-data" *ngIf="loan && !loan.partner || !loan.partner.partnerName">-</span>
           </td>
-          <td>
+          <td *ngIf="showColumn('createdDate') && selectedColumns">
+            <span class="d-lg-none d-md-none d-sm-block">created Date : </span><span class="table-column-data"
+              *ngIf="loan && loan.createdDate">{{loan.createdDate | date:'longDate'}}</span>
+            <span class="table-column-data" *ngIf="loan && !loan.createdDate">-</span>
+          </td>
+          <td *ngIf="showColumn('spInternalStatus') && selectedColumns">
             <span class="d-lg-none d-md-none">Status : </span>
             <span *ngIf="loan.applicationStatus !='Rejected'" [class]="'customer-badge status-' + loan.spInternalStatus"
               class="table-column-data">
@@ -215,4 +218,4 @@
       </ng-template>
     </p-table>
   </div>
-</div> -->
+</div>

@@ -235,7 +235,7 @@
                 <div class="bggrey my-2">
                   <div>
                     <div class="d-flex">
-                      <div class="form-title">Aadhar Number {{aadharVerfied}}<span class="text-danger">*</span></div>
+                      <div class="form-title">Aadhar Number<span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
@@ -1268,6 +1268,24 @@
                 </div>
               </div>
 
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Nominee Gender</div>
+                    </div>
+                    <div class="fieldPadding">
+                      <mat-select class="form-control widthWebKit" #nomineeGender formControlName="nomineeGender">
+                        <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                          <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
+                        </mat-option>
+                      </mat-select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
               <!-- <div *ngIf="showCoapplicant">
                 <div class="bggrey my-2">
                   <div>
@@ -1528,6 +1546,47 @@
                     </div>
                   </div>
 
+                  <div>
+                    <div class="bggrey my-2">
+                      <div>
+                        <div class="d-flex">
+                          <div class="form-title">Co-Applicant Photo <span class="text-danger">*</span></div>
+                        </div>
+                        <div class="fieldPadding photo-border">
+                          <div class="file"
+                            *ngIf="!(selectedFiles['coapplicantphoto'] && selectedFiles['coapplicantphoto'].files && selectedFiles['coapplicantphoto'].files.length > 0)">
+                            <label for='coapplicantphotoAttach' (click)="coapplicantphotoAttach.click()">
+                              <!-- <i class="material-icons">cloud_upload</i> -->
+                              Upload File
+                            </label>
+                            <input #coapplicantphotoAttach type='file'
+                              (change)="filesSelected($event,'coapplicantphoto')" accept="image/*;capture=camera" />
+                          </div>
+                          <div class="img-section clearfix"
+                            *ngIf="selectedFiles['coapplicantphoto'] && selectedFiles['coapplicantphoto'].files && selectedFiles['coapplicantphoto'].files.length > 0">
+                            <ul class="galul">
+                              <li *ngFor="let file of selectedFiles['coapplicantphoto'].files;let i = index ">
+                                <div class="galimg_outer">
+                                  <div class="gal_img pointer-cursor">
+                                    <img [src]="getImage(selectedFiles['coapplicantphoto'].base64[i], file)"
+                                      *ngIf="selectedFiles['coapplicantphoto'].base64[i]" width="100px" height="100px">
+                                    <a [href]="file.s3path" target="_blank">
+                                      <img [src]="file.s3path"
+                                        *ngIf="!selectedFiles['coapplicantphoto'].base64[i] && file.s3path"
+                                        width="100px" height="100px">
+                                    </a>
+                                  </div>
+                                  <div class="gal_action" (click)="deleteTempImage(i, 'coapplicantphoto',file)">
+                                    <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <div>
                     <div class="bggrey my-2">
@@ -1537,7 +1596,7 @@
                         </div>
                         <div class="fieldPadding">
                           <div class="d-flex">
-                            <input (keyup)="resetErrors()" #coapplicantaadharnumber type="number"
+                            <input (keyup)="resetErrors()" #coapplicantaadharnumber type="text"
                               placeholder="Enter Aadhar Number" class="form-control" autocomplete="off"
                               formControlName="coapplicantaadharnumber"
                               [class.disabled]="action == 'update' && coapplicantaadharverification && !coapplicantverifyingUID"
@@ -2002,6 +2061,20 @@
                     <div class="fieldPadding">
                       <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
                         formControlName="ifsc" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Bank Branch <span class="text-danger">*</span></div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank Branch" class="form-control"
+                        formControlName="bankbranch" autocomplete="off" />
                     </div>
                   </div>
                 </div>

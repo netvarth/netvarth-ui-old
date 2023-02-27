@@ -54,6 +54,7 @@ export class CreateComponent implements OnInit {
     "pan": { files: [], base64: [], caption: [] },
     "coapplicantaadhar": { files: [], base64: [], caption: [] },
     "coapplicantpan": { files: [], base64: [], caption: [] },
+    "coapplicantphoto": { files: [], base64: [], caption: [] },
     "photo": { files: [], base64: [], caption: [] },
     "bank": { files: [], base64: [], caption: [] }
   }
@@ -495,6 +496,9 @@ export class CreateComponent implements OnInit {
             this.selectedFiles['pan'].files = this.loanData.loanApplicationKycList[0].panAttachments;
 
 
+
+
+
           }
         })
         console.log(params.id);
@@ -506,6 +510,7 @@ export class CreateComponent implements OnInit {
             this.bankListName = this.bankData.bankName;
             this.createLoan.controls.account.setValue(this.bankData.bankAccountNo);
             this.createLoan.controls.ifsc.setValue(this.bankData.bankIfsc);
+            this.createLoan.controls.bankbranch.setValue(this.bankData.bankBranchName);
             this.accountverification = this.bankData.bankAccountVerified;
             this.selectedFiles['bank'].files = this.bankData.bankStatementAttachments;
           }
@@ -583,6 +588,7 @@ export class CreateComponent implements OnInit {
       guarantorDob: [null],
       subventionLoan: [null],
       referralCode: [null],
+      bankbranch: [null],
       coapplicants: this.createLoanFormBuilder.array([])
     });
   }
@@ -634,6 +640,10 @@ export class CreateComponent implements OnInit {
       this.selectedFiles['coapplicantaadhar'].files = item.aadhaarAttachments;
     }
 
+    if (item.customerPhoto) {
+      this.selectedFiles['coapplicantphoto'].files = item.customerPhoto;
+    }
+
     if (item.isPanVerified) {
       this.coapplicantpanverification = true;
     }
@@ -668,7 +678,8 @@ export class CreateComponent implements OnInit {
       coapplicantifsc: [null],
       coapplicantaccount: [null],
       coapplicantrelation: [null],
-      coapplicantbankbranch: [null]
+      coapplicantbankbranch: [null],
+      coapplicantphoto: [null]
     })
   }
 
@@ -712,8 +723,23 @@ export class CreateComponent implements OnInit {
       }
     ]
 
+
+    for (let i = 0; i < this.filesToUpload.length; i++) {
+      this.filesToUpload[i]['order'] = i;
+      if (this.filesToUpload[i]["type"] == 'coapplicantphoto') {
+        coapplicantDetails[0]['customerPhoto'] = [];
+        coapplicantDetails[0]['customerPhoto'].push(this.filesToUpload[i]);
+      }
+    }
+
     this.cdlService.updateCoApplicant(this.loanId, coapplicantDetails).subscribe((data: any) => {
       if (data) {
+        if (data.length > 0) {
+          this.uploadAudioVideo(data).then(
+            (dataS3Url) => {
+              console.log(dataS3Url);
+            });
+        }
         this.coApplicantDetailsPanelVerified = true;
         this.snackbarService.openSnackBar("Co-Applicant Details Saved Successfully");
         this.panelsManage(false, false, false, true, false);
@@ -1211,6 +1237,7 @@ export class CreateComponent implements OnInit {
             "bankName": this.createLoan.controls.bank.value,
             "bankAccountNo": this.createLoan.controls.account.value,
             "bankIfsc": this.createLoan.controls.ifsc.value,
+            "bankBranchName": this.createLoan.controls.bankbranch.value,
             "bankAccountVerified": true
           }
           this.cdlService.saveBankDetails(this.bankDetails).subscribe((data) => {
@@ -1943,7 +1970,7 @@ export class CreateComponent implements OnInit {
     this.kycDetailsPanel = kyc;
     this.loanDetailsPanel = loan;
     this.bankDetailsPanel = bank;
-    if (coapplicant) {
+    if (coapplicant == false || coapplicant == true) {
       this.coApplicantDetailsPanel = coapplicant;
     }
   }
@@ -2066,7 +2093,8 @@ export class CreateComponent implements OnInit {
     const verifyBank = {
       "bankName": this.bankListName,
       "bankAccountNo": this.createLoan.controls.account.value,
-      "bankIfsc": this.createLoan.controls.ifsc.value
+      "bankIfsc": this.createLoan.controls.ifsc.value,
+      "bankBranchName": this.createLoan.controls.bankbranch.value
     }
 
     if (this.loanId) {
@@ -2112,7 +2140,8 @@ export class CreateComponent implements OnInit {
       "loanApplicationUid": this.loanId,
       "bankName": this.bankListName,
       "bankAccountNo": this.createLoan.controls.account.value,
-      "bankIfsc": this.createLoan.controls.ifsc.value
+      "bankIfsc": this.createLoan.controls.ifsc.value,
+      "bankBranchName": this.createLoan.controls.bankbranch.value
     }
 
     for (let i = 0; i < this.filesToUpload.length; i++) {

@@ -118,7 +118,6 @@ input[type="file"] {
   padding-bottom: 0px !important;
 }
 
-
 /* File Input Styles  */
 
 .file {
@@ -132,11 +131,11 @@ input[type="file"] {
 }
 
 .file>label {
-  font-size: 18px !important;
+  font-size: 14px !important;
   font-weight: bold;
   cursor: pointer;
   outline: 0;
-  user-select: none;
+  /* user-select: none; */
   border: 0.5px dashed hsl(204, 86%, 53%);
   border-radius: 5px;
   background-color: hsl(204, 86%, 96%);
@@ -169,6 +168,11 @@ input[type="file"] {
   background-color: hsl(204, 86%, 96%);
 }
 
+
+.photo-border {
+  border: 1px solid #D2D6DE !important;
+  padding: 5px 5px 0px 5px !important;
+}
 
 
 .galul {

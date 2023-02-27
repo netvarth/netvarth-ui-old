@@ -9,6 +9,10 @@
   font-weight: 700 !important;
 }
 
+.full-width {
+  width: 100% !important;
+}
+
 .btn-primary {
   background-color: #1e4079 !important;
   border-color: #1e4070 !important;
