@@ -3418,12 +3418,14 @@ export class ViewTaskComponent implements OnInit {
       console.log('createNoteData', createNoteData);
       console.log('this.taskDetails.attachments', this.taskDetails.attachments.length)
       if (this.updateUserType === ('PROVIDER' || 'CONSUMER') && this.taskDetails && updateTaskData) {
-        if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length === 0) {
+        if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length === 0
+          && this.taskDetails.taskAttachments && this.taskDetails.taskAttachments.length && this.taskDetails.taskAttachments.length === 0) {
           const error = 'Please upload attatchments';
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
         }
         else {
-          if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length > 0) {
+          if (this.taskDetails && (this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length > 0)
+          || (this.taskDetails.taskAttachments && this.taskDetails.taskAttachments.length && this.taskDetails.taskAttachments.length > 0)) {
             this.crmService.updateTask(this.taskDetails.taskUid, updateTaskData).subscribe((response) => {
               if (response) {
                 this.api_loadingSaveTask = true;
@@ -3469,97 +3471,97 @@ export class ViewTaskComponent implements OnInit {
       }
     }
   }
-  sendMessage() {
-    if (this.taskDetails && this.taskDetails.attachments) {
-      let post_data = {};
-      if (this.taskDetailsForm.controls.taskTitle.value) {
-        post_data['title'] = this.taskDetailsForm.controls.taskTitle.value;
-      }
-      if (this.taskDetailsForm.controls.taskDescription.value) {
-        post_data['description'] = this.taskDetailsForm.controls.taskDescription.value;
-      }
-      if (this.updateUserType) {
-        post_data['userType'] = this.updateUserType;
-      }
-      if (this.taskDetailsForm.controls.userTaskCategory.value) {
-        // post_data['category']=
-        // {'id':post_data['id']}=this.taskDetailsForm.controls.userTaskCategory.value;
-        post_data['category'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskCategory.value }
-      }
-      if (this.taskDetailsForm.controls.userTaskType.value) {
-        // post_data['type']={'id':post_data['id']}=this.taskDetailsForm.controls.userTaskType.value;
-        post_data['type'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskType.value }
-      }
-      if (this.taskDetailsForm.controls.taskStatus.value) {
-        post_data['status'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.taskStatus.value }
-      }
-      if (this.taskDetailsForm.controls.userTaskPriority.value) {
-        post_data['priority'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskPriority.value }
-      }
-      if (this.updteLocationId) {
-        post_data['location'] = { 'id': post_data['id'] = this.updteLocationId }
-      }
-      if (this.updateMemberId) {
-        post_data['assignee'] = { 'id': post_data['id'] = this.updateMemberId }
-      }
-      if (this.updateManagerId) {
-        post_data['manager'] = { 'id': post_data['id'] = this.updateManagerId }
-      }
-      if (this.taskDetailsForm.controls.targetResult.value) {
-        post_data['targetResult'] = this.taskDetailsForm.controls.targetResult.value;
-      }
-      if (this.taskDetailsForm.controls.targetPotential.value) {
-        post_data['targetPotential'] = this.taskDetailsForm.controls.targetPotential.value;
-      }
-      if (this.estTime) {
-        post_data['estDuration'] = this.estTime;
-      }
-      if (this.actualResult) {
-        post_data['actualResult'] = this.actualResult;
-      }
-      if (this.actualPotential) {
-        post_data['actualPotential'] = this.actualPotential;
-      }
-      if (this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value, 'yyyy-MM-dd')) {
-        post_data['dueDate'] = this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value, 'yyyy-MM-dd');
-      }
-      if (this.taskDetailsForm.controls.areaName.value) {
-        post_data['locationArea'] = this.taskDetailsForm.controls.areaName.value;
-      }
+  // sendMessage() {
+  //   if (this.taskDetails && (this.taskDetails.attachments || this.taskDetails.taskAttachments)) {
+  //     let post_data = {};
+  //     if (this.taskDetailsForm.controls.taskTitle.value) {
+  //       post_data['title'] = this.taskDetailsForm.controls.taskTitle.value;
+  //     }
+  //     if (this.taskDetailsForm.controls.taskDescription.value) {
+  //       post_data['description'] = this.taskDetailsForm.controls.taskDescription.value;
+  //     }
+  //     if (this.updateUserType) {
+  //       post_data['userType'] = this.updateUserType;
+  //     }
+  //     if (this.taskDetailsForm.controls.userTaskCategory.value) {
+  //       // post_data['category']=
+  //       // {'id':post_data['id']}=this.taskDetailsForm.controls.userTaskCategory.value;
+  //       post_data['category'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskCategory.value }
+  //     }
+  //     if (this.taskDetailsForm.controls.userTaskType.value) {
+  //       // post_data['type']={'id':post_data['id']}=this.taskDetailsForm.controls.userTaskType.value;
+  //       post_data['type'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskType.value }
+  //     }
+  //     if (this.taskDetailsForm.controls.taskStatus.value) {
+  //       post_data['status'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.taskStatus.value }
+  //     }
+  //     if (this.taskDetailsForm.controls.userTaskPriority.value) {
+  //       post_data['priority'] = { 'id': post_data['id'] = this.taskDetailsForm.controls.userTaskPriority.value }
+  //     }
+  //     if (this.updteLocationId) {
+  //       post_data['location'] = { 'id': post_data['id'] = this.updteLocationId }
+  //     }
+  //     if (this.updateMemberId) {
+  //       post_data['assignee'] = { 'id': post_data['id'] = this.updateMemberId }
+  //     }
+  //     if (this.updateManagerId) {
+  //       post_data['manager'] = { 'id': post_data['id'] = this.updateManagerId }
+  //     }
+  //     if (this.taskDetailsForm.controls.targetResult.value) {
+  //       post_data['targetResult'] = this.taskDetailsForm.controls.targetResult.value;
+  //     }
+  //     if (this.taskDetailsForm.controls.targetPotential.value) {
+  //       post_data['targetPotential'] = this.taskDetailsForm.controls.targetPotential.value;
+  //     }
+  //     if (this.estTime) {
+  //       post_data['estDuration'] = this.estTime;
+  //     }
+  //     if (this.actualResult) {
+  //       post_data['actualResult'] = this.actualResult;
+  //     }
+  //     if (this.actualPotential) {
+  //       post_data['actualPotential'] = this.actualPotential;
+  //     }
+  //     if (this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value, 'yyyy-MM-dd')) {
+  //       post_data['dueDate'] = this.datePipe.transform(this.taskDetailsForm.controls.taskDate.value, 'yyyy-MM-dd');
+  //     }
+  //     if (this.taskDetailsForm.controls.areaName.value) {
+  //       post_data['locationArea'] = this.taskDetailsForm.controls.areaName.value;
+  //     }
 
-      const dataToSend: FormData = new FormData();
-      console.log('post_data', post_data)
-      const captions = {};
-      const tempattachments = {}
-      console.log('this.taskDetails.attachments', this.taskDetails.attachments)
-      let i = 0;
-      // let pic;
-      if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length > 0) {
-        for (const pic of this.taskDetails.attachments) {
-          console.log('pic', pic);
-          // const tempFileName= pic['originalName']+ '.' +pic['type']
-          dataToSend.append("attachments", pic, pic['originalName']);
-          console.log('dataToSend2', dataToSend)
-          captions[i] = 'caption';
-          tempattachments[i] = pic;
-          i++;
-          //   const blobPropdataAttatch = new Blob([JSON.stringify(tempattachments)], { type: 'image/png' });
-          // dataToSend.append('attachments', blobPropdataAttatch,pic['originalName']);
-        }
-      }
-      const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
-      dataToSend.append('captions', blobPropdata);
-      const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
-      dataToSend.append('task', blobpost_Data);
-      console.log('dataToSendlast', dataToSend)
-      // this.crmService.mandatoryFilesactivity(this.taskDetails.taskUid,dataToSend).subscribe((res)=>{
-      //   console.log(res)
-      // },((error)=>{
-      //   console.log(error);
-      // }))
+  //     const dataToSend: FormData = new FormData();
+  //     console.log('post_data', post_data)
+  //     const captions = {};
+  //     const tempattachments = {}
+  //     console.log('this.taskDetails.attachments', this.taskDetails.attachments)
+  //     let i = 0;
+  //     // let pic;
+  //     if (this.taskDetails && this.taskDetails.attachments && this.taskDetails.attachments.length && this.taskDetails.attachments.length > 0) {
+  //       for (const pic of this.taskDetails.attachments) {
+  //         console.log('pic', pic);
+  //         // const tempFileName= pic['originalName']+ '.' +pic['type']
+  //         dataToSend.append("attachments", pic, pic['originalName']);
+  //         console.log('dataToSend2', dataToSend)
+  //         captions[i] = 'caption';
+  //         tempattachments[i] = pic;
+  //         i++;
+  //         //   const blobPropdataAttatch = new Blob([JSON.stringify(tempattachments)], { type: 'image/png' });
+  //         // dataToSend.append('attachments', blobPropdataAttatch,pic['originalName']);
+  //       }
+  //     }
+  //     const blobPropdata = new Blob([JSON.stringify(captions)], { type: 'application/json' });
+  //     dataToSend.append('captions', blobPropdata);
+  //     const blobpost_Data = new Blob([JSON.stringify(post_data)], { type: 'application/json' });
+  //     dataToSend.append('task', blobpost_Data);
+  //     console.log('dataToSendlast', dataToSend)
+  //     // this.crmService.mandatoryFilesactivity(this.taskDetails.taskUid,dataToSend).subscribe((res)=>{
+  //     //   console.log(res)
+  //     // },((error)=>{
+  //     //   console.log(error);
+  //     // }))
 
-    }
-  }
+  //   }
+  // }
   handleNotesDescription(textValue: any) {
     if (textValue != '') {
       this.errorMsg = false;
