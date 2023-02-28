@@ -262,7 +262,28 @@ uploadFiles() {
           leaduid : this.leadUid
       }
   });
-  
+  dialogRef.componentInstance.sendInput.subscribe(
+    (dataToSend: any)=> {
+      this.api_loading = true;
+      this.shared_services.addfiletolead(this.leadUid, dataToSend).subscribe(
+              () => {                 
+                console.log("Sending Attachment Success");
+                dialogRef.close();
+                this.api_loading = false;
+              // _this.snackbarService.openSnackBar("Sending Attachment Successfully");
+               
+              },
+              error => {
+                this.api_loading=false;
+                // reject(error);
+                this.snackbarService.openSnackBar(
+                  error,
+                  { panelClass: "snackbarerror" }
+                );
+              }
+            );
+    }
+  )
   dialogRef.afterClosed().subscribe((res)=>{
     // this.api_loading = true;
     // setTimeout(() => {

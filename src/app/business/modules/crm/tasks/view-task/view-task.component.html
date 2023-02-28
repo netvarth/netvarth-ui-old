@@ -403,9 +403,8 @@
               </div>
             </div>
             <app-common-innerloading-spinner *ngIf="api_loading1"></app-common-innerloading-spinner>
-            <div class="my-2 height-limit"
-              *ngIf="taskDetails && taskDetails.attachments&& taskDetails.attachments.length>0">
-              <div>
+            <div class="my-2 height-limit">
+              <div *ngIf="taskDetails && taskDetails.attachments&& taskDetails.attachments.length>0">
                 <div *ngFor="let attachment of taskDetails.attachments;let i=index" class="allNotesList">
                   <div class="notesListSection">
                     <div style="color: #121212;" *ngIf="attachment && attachment.originalName && attachment.type && attachment.size
@@ -417,6 +416,25 @@
                     <div class="d-flex justify-content-around" *ngIf="attachment">
                       <a style="cursor: pointer;" *ngIf="attachment && (attachment.type == 'jpg' || attachment.type == 'jpeg' || attachment.type == 'png'
                          || attachment.type == 'gif')" (click)="viewAttachment(attachment)"><i class="fa fa-eye"
+                          aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
+                      <a *ngIf="attachment.s3path" style="cursor: pointer;" href="{{attachment.s3path}}"
+                        target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="taskDetails && taskDetails.taskAttachments&& taskDetails.taskAttachments.length>0">
+                <div *ngFor="let attachment of taskDetails.taskAttachments;let i=index" class="allNotesList">
+                  <div class="notesListSection">
+                    <div style="color: #121212;" *ngIf="attachment && attachment.fileName && attachment.fileType && attachment.fileSize
+                    ">{{attachment.fileName}}<br>
+                      <span class="labelFile"><b *ngIf="fileType">{{fileType}}
+                        </b>{{attachment.fileType}} &nbsp;&nbsp;&nbsp;<b *ngIf="size">{{size}} </b>{{attachment.fileSize}}
+                        MB</span>
+                    </div>
+                    <div class="d-flex justify-content-around" *ngIf="attachment">
+                      <a style="cursor: pointer;" *ngIf="attachment && (attachment.fileType == 'jpg' || attachment.fileType == 'jpeg' || attachment.fileType == 'png'
+                         || attachment.fileType == 'gif')" (click)="viewAttachment(attachment)"><i class="fa fa-eye"
                           aria-hidden="true"></i></a>&nbsp;&nbsp;&nbsp;
                       <a *ngIf="attachment.s3path" style="cursor: pointer;" href="{{attachment.s3path}}"
                         target="_blank"><i class="fa fa-download" aria-hidden="true"></i></a>

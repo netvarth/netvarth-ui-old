@@ -1,5 +1,5 @@
 <!-- Questionnaire View Popup -->
-<ng-container *ngIf="selectedQnr">
+<!-- <ng-container *ngIf="selectedQnr">
   <h1 class="mat-dialog-title">
     <span class="mgn-lt-10">{{(selectedQnr.questionnaireName) ? selectedQnr.questionnaireName :
       selectedQnr.questionnaireId}}</span>
@@ -15,10 +15,10 @@
       (returnAnswers)="getQuestionAnswers($event)">
     </app-questionnaire>
   </div>
-</ng-container>
+</ng-container> -->
 
 <!-- Questionnaires List Page -->
-<ng-container *ngIf="!selectedQnr">
+<!-- <ng-container *ngIf="!selectedQnr">
   <section class="" *ngIf="!type">
     <div class="card title-gb">
       <h5 class="mgn-up-10">
@@ -35,7 +35,7 @@
             [source]="(waitlist_data.waitlistStatus) ? 'proCheckin' : 'proAppt'" [uuid]="uid" [type]="'details'"
             [waitlistStatus]="(waitlist_data.waitlistStatus) ? waitlist_data.waitlistStatus : waitlist_data.apptStatus">
           </app-questionnaire>
-        </div>
+        </div> 
         <div class="card no-padding-small" *ngIf="questionnaires && questionnaires.length > 0">
           <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
           <div class="table-responsive1" *ngIf="!loading">
@@ -52,8 +52,86 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </div> 
       </div>
     </div>
   </section>
+</ng-container>-->
+<section class="">
+  <div class="card title-gb">
+    <h5 class="mgn-up-10">
+      Questionnaires
+    </h5>
+  </div>
+</section>
+<ng-container *ngIf="questionnaires.length > 0">
+  <mat-accordion class="qnr-accord no-padding" *ngFor="let qnr of questionnaires">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="qnrstatus" style="width:50%">
+            {{qnr.questionnaireName ? (qnr.questionnaireName.length>20)? (qnr.questionnaireName |
+            slice:0:20)+'...':(qnr.questionnaireName) :
+            (qnr.questionnaireId.length>20)? (qnr.questionnaireId | slice:0:20)+'...':(qnr.questionnaireId)}}
+          </div>
+          <div class="qnrstatus" style="width:20%">
+            {{qnrStatuses[getQnrStatus(qnr.id?qnr.id:qnr.questionnaireId)]}}
+            <!-- <span class="greenc"
+                          *ngIf="getQnrStatus(qnr) === 'submitted'">Submitted</span>
+                      <span class="red"
+                          *ngIf="getQnrStatus(qnr) !== 'submitted'">Released</span> -->
+          </div>
+          <div class="qnr-action-btns ml-auto p-1" style="width:30%">
+            <a class="btn" (click)="changeReleaseStatus(qnr.id, $event)"
+              *ngIf="getQnrStatus(qnr.id?qnr.id:qnr.questionnaireId)!='submitted'">{{(getQnrStatus(qnr.id?qnr.id:qnr.questionnaireId)
+              ===
+              'released') ? 'Unrelease' : 'Release'}}</a>
+          </div>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div class="c-details">
+        <!-- <div class="col-xs-12">
+          <div class="pull-right">
+            <button class="normal-btn edit" mat-flat-button
+              (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
+          </div>
+        </div> -->
+        <div class="col-xs-12" *ngIf="qnr['edit']">
+          <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'" [source]="'consOrder'" [uuid]="waitlist_data.uid"
+            [accountId]="waitlist_data.providerAccount.id" [type]="'details'"
+            [waitlistStatus]="waitlist_data.orderStatus" (returnAnswers)="getQuestionAnswers($event)">
+          </app-questionnaire>
+        </div>
+        <div class="col-xs-12" *ngIf="!qnr['edit']">
+          <app-questionaire-view id="{{qnr.questionnaireId}}" [questionaire]="qnr"
+            [source]="'consOrder'"></app-questionaire-view>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </ng-container>
+<!-- <ng-container *ngIf="questionnaires.length === 1">
+  <div *ngIf="questionnaires.length === 1">
+      <div class="c-details" *ngFor="let qnr of questionnaires">
+          <div class="col-xs-12">
+              <div class="pull-right">
+                  <button class="normal-btn edit" mat-flat-button
+                      (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
+              </div>
+          </div>
+          <div class="col-xs-12" *ngIf="qnr['edit']">
+              <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'"
+                  [source]="'consOrder'" [uuid]="waitlist.uid"
+                  [accountId]="waitlist.providerAccount.id" [type]="'details'"
+                  [waitlistStatus]="waitlist.orderStatus"
+                  (returnAnswers)="getQuestionAnswers($event)">
+              </app-questionnaire>
+          </div>
+          <div class="col-xs-12" *ngIf="!qnr['edit']">
+              <app-questionaire-view id="{{qnr.questionnaireId}}"
+                  [questionaire]="qnr"
+                  [source]="'proOrder'"></app-questionaire-view>
+          </div>
+      </div>
+  </div>
+</ng-container> -->

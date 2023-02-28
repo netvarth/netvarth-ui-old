@@ -15,6 +15,7 @@ import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { ViewAttachmentComponent } from "./select-attachment/view-attachment/view-attachment.component";
+import { WordProcessor } from "../../../../../shared/services/word-processor.service";
 @Component({
   selector: "app-view-task",
   templateUrl: "./view-task.component.html",
@@ -194,6 +195,7 @@ export class ViewTaskComponent implements OnInit {
     private createTaskFormBuilder: UntypedFormBuilder,
     private groupService: GroupStorageService,
     private datePipe: DatePipe,
+    private wordProcessor: WordProcessor
   ) { }
 
   ngOnInit(): void {
@@ -3727,7 +3729,43 @@ export class ViewTaskComponent implements OnInit {
     }
   }
   //new ui method end
-
+  uploadAudioVideo(data, filesToUpload) {
+    const _this = this;
+    let count = 0;
+    return new Promise(async function (resolve, reject) {
+      for (const s3UrlObj of data) {
+        const file = filesToUpload.filter((fileObj) => {
+          return ((fileObj.order === (s3UrlObj.orderId)) ? fileObj : '');
+        })[0];
+        if (file) {
+          await _this.uploadFilesToS3(file['file'], s3UrlObj.url).then(
+            () => {
+              count++;
+              console.log("Count", data.length);
+              if (count === data.length) {
+                resolve(true);
+              }
+            }
+          );
+        }
+        else {
+          resolve(true);
+        }
+      }
+    })
+  }
+  uploadFilesToS3(file, url) {
+    const _this = this;
+    return new Promise(function (resolve, reject) {
+      _this.crmService.videoaudioS3Upload(file, url)
+        .subscribe(() => {
+          resolve(true);
+        }, error => {
+          _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
+          resolve(false);
+        });
+    })
+  }
   uploadFiles() {
     const dialogRef = this.dialog.open(SelectAttachmentComponent, {
       panelClass: ["popup-class", "confirmationmainclass"],
@@ -3738,12 +3776,57 @@ export class ViewTaskComponent implements OnInit {
         type: this.taskType
       }
     });
+    dialogRef.componentInstance.sendInput.subscribe(
+      (dataToSend: any) => {
+        const user = this.groupService.getitemFromGroupStorage('ynw-user');
+        let input = dataToSend.files;
+        let filesToUpload = [];
+        let index=0;
+        for (const pic of input) {
+          const size = pic["size"] / 1024;
+          let fileObj = {
+            owner: user.id,
+            fileName: pic["name"],
+            fileSize: size / 1024,
+            caption: "",
+            fileType: pic["type"].split("/")[1],
+            action: 'add'
+          }
+          fileObj['file'] = pic;
+          fileObj['order'] = index;
+          index++;
+          filesToUpload.push(fileObj);
+        }
+        this.api_loading = true;
+        let taskattachments = {
+          "taskAttachments": filesToUpload
+        }
+        this.crmService.uploadFilesToTask(this.taskUid, taskattachments).subscribe(
+          (s3Urls: any) => {
+            if (s3Urls.length > 0) {
+              this.uploadAudioVideo(s3Urls, filesToUpload).then(
+                (dataS3Url) => {
+                  console.log(dataS3Url);
+                  console.log("Sending Attachment Success");
+                  dialogRef.close();
+                  this.api_loading = false;
+                });
+              }
+          }, error => {
+            this.api_loading = false;
+            this.snackbarService.openSnackBar(error,
+              { panelClass: "snackbarerror" }
+            );
+          }
+        );
+      }
+    )
     dialogRef.afterClosed().subscribe(res => {
       if (res === 'close') {
         this.api_loading1 = false;
       }
       else {
-        this.api_loading1 = true
+        this.api_loading1 = true;
         // setTimeout(() => {
         //   if (this.activityType && (this.activityType === 'UpdateFollowUP')) {
         //     this.getEnquiryDetailsRefresh()

@@ -1,9 +1,9 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, EventEmitter, Inject, OnInit, Output } from "@angular/core";
 import { Location } from "@angular/common";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { CrmService } from "../../../crm.service";
+// import { CrmService } from "../../../crm.service";
 import { Observable } from "rxjs";
-import { HttpEventType, HttpResponse } from "@angular/common/http";
+// import { HttpEventType, HttpResponse } from "@angular/common/http";
 import { SnackbarService } from "../../../../../../shared/services/snackbar.service";
 import { SharedServices } from "../../../../../../shared/services/shared-services";
 import { FileService } from "../../../../../../shared/services/file-service";
@@ -15,6 +15,9 @@ import { projectConstantsLocal } from "../../../../../../shared/constants/projec
   styleUrls: ["./select-attachment.component.css"]
 })
 export class SelectAttachmentComponent implements OnInit {
+  
+  @Output() sendInput = new EventEmitter<any>();
+  
   selectedMessage = {
     files: [],
     base64: [],
@@ -31,11 +34,11 @@ export class SelectAttachmentComponent implements OnInit {
   public fileInput: any;
   public fileSelectErrorMsg: any;
   public bUploadFileError: boolean = false;
-  api_loading1:boolean;
+  // api_loading1:boolean;
   constructor(
     public _location: Location,
     public dialogRef: MatDialogRef<SelectAttachmentComponent>,
-    private uploadService: CrmService,
+    // private uploadService: CrmService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private snackbarService: SnackbarService,
     public shared_services: SharedServices,
@@ -45,37 +48,37 @@ export class SelectAttachmentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.api_loading1 = false
+    // this.api_loading1 = false
   }
 
   selectFiles(event) {
     this.progressInfos = [];
     this.selectedFiles = event.target.files;
   }
-  uploadFiles() {
-    this.message = "";
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      this.upload(i, this.selectedFiles[i]);
-    }
-  }
+  // uploadFiles() {
+  //   this.message = "";
+  //   for (let i = 0; i < this.selectedFiles.length; i++) {
+  //     this.upload(i, this.selectedFiles[i]);
+  //   }
+  // }
 
-  upload(idx, file) {
-    this.progressInfos[idx] = { value: 0, fileName: file.name };
-    this.uploadService.upload(file).subscribe(
-      event => {
-        if (event.type === HttpEventType.UploadProgress) {
-          this.progressInfos[idx].value = Math.round(
-            (100 * event.loaded) / event.total
-          );
-        } else if (event instanceof HttpResponse) {
-        }
-      },
-      err => {
-        this.progressInfos[idx].value = 0;
-        this.message = "Could not upload the file : " + file.name;
-      }
-    );
-  }
+  // upload(idx, file) {
+  //   this.progressInfos[idx] = { value: 0, fileName: file.name };
+  //   this.uploadService.upload(file).subscribe(
+  //     event => {
+  //       if (event.type === HttpEventType.UploadProgress) {
+  //         this.progressInfos[idx].value = Math.round(
+  //           (100 * event.loaded) / event.total
+  //         );
+  //       } else if (event instanceof HttpResponse) {
+  //       }
+  //     },
+  //     err => {
+  //       this.progressInfos[idx].value = 0;
+  //       this.message = "Could not upload the file : " + file.name;
+  //     }
+  //   );
+  // }
 
   filesSelected(event, type?) {
     const input = event.target.files;
@@ -124,7 +127,7 @@ export class SelectAttachmentComponent implements OnInit {
 
   saveFile(fileDes: any) {
     const _this = this;
-    _this.api_loading1=true;
+    // _this.api_loading1=true;
     console.log('file', this.selectedMessage.files)
     if (this.selectedMessage.files.length > 0) {
       this.bUploadFileError = false;
@@ -138,39 +141,40 @@ export class SelectAttachmentComponent implements OnInit {
         var id = this.data.taskuid;
         console.log("This is Task id : ", id);
       }
-      // return new Promise(function (resolve, reject) {
-        const dataToSend: FormData = new FormData();
-        const captions = {};
-        let i = 0;
-        if (_this.selectedMessage) {
-          for (const pic of _this.selectedMessage.files) {
-            console.log('pic', pic)
-            dataToSend.append("attachments", pic, pic["name"]);
-            captions[i] = _this.imgCaptions[i] ? _this.imgCaptions[i] : "";
-            i++;
-          }
-        }
-        const blobPropdata = new Blob([JSON.stringify(captions)], {
-          type: "application/json"
-        });
-        dataToSend.append("captions", blobPropdata);
-        _this.sendWLAttachment(id, dataToSend).then(() => {
-          // _this.api_loading1=false;
-          // _this.dialogRef.close();
-          // _this.snackbarService.openSnackBar("Sending Attachment Successfully");
-          // resolve(true);
-        },(error)=>{
-          _this.api_loading1=false;
-          // console.log("Sending Task Attachment Fail");
-          _this.snackbarService.openSnackBar(
-            error,
-            { panelClass: "snackbarerror" }
-          );
-        });
+      // // return new Promise(function (resolve, reject) {
+      //   const dataToSend: FormData = new FormData();
+      //   const captions = {};
+      //   let i = 0;
+        // if (_this.selectedMessage) {
+        //   for (const pic of _this.selectedMessage.files) {
+        //     console.log('pic', pic)
+        //     dataToSend.append("attachments", pic, pic["name"]);
+        //     captions[i] = _this.imgCaptions[i] ? _this.imgCaptions[i] : "";
+        //     i++;
+        //   }
+        // }
+        // const blobPropdata = new Blob([JSON.stringify(captions)], {
+        //   type: "application/json"
+        // });
+        // dataToSend.append("captions", blobPropdata);
+        this.sendInput.emit(_this.selectedMessage);
+        // _this.sendWLAttachment(id, dataToSend).then(() => {
+        //   // _this.api_loading1=false;
+        //   // _this.dialogRef.close();
+        //   // _this.snackbarService.openSnackBar("Sending Attachment Successfully");
+        //   // resolve(true);
+        // },(error)=>{
+        //   _this.api_loading1=false;
+        //   // console.log("Sending Task Attachment Fail");
+        //   _this.snackbarService.openSnackBar(
+        //     error,
+        //     { panelClass: "snackbarerror" }
+        //   );
+        // });
       // });
     }
     else {
-      _this.api_loading1=false;
+      // _this.api_loading1=false;
       this.bUploadFileError = true;
       this.fileSelectErrorMsg = 'Please select atleast one file to upload';
     }
@@ -198,53 +202,53 @@ export class SelectAttachmentComponent implements OnInit {
   }
 
   sendWLAttachment(Uid, dataToSend) {
-    const _this = this;
+    // const _this = this;
     // console.log("Data Testing", this.data.source);
-    if (this.data.source != "Lead") {
-      return new Promise(function (resolve, reject) {
-        _this.shared_services.addfiletotask(Uid, dataToSend).subscribe(
-          () => {
-            resolve(true);
-            console.log("Sending Attachment Success");
-            _this.dialogRef.close();
-          // _this.snackbarService.openSnackBar("Sending Attachment Successfully");
-            _this.api_loading1=false;
-          },
-          error => {
-            _this.api_loading1=false;
-            reject(error);
-            _this.snackbarService.openSnackBar(
-              error,
-              { panelClass: "snackbarerror" }
-            );
-          }
-        );
-      });
-    } else {
-      return new Promise(function (resolve, reject) {
-        _this.shared_services.addfiletolead(Uid, dataToSend).subscribe(
-          () => {
-            resolve(true);
-            _this.api_loading1=false;
-            console.log("Sending Attachment Success");
-          },
-          error => {
-            _this.api_loading1=false;
-            console.log("Sending Lead Attachment Fail");
-            _this.snackbarService.openSnackBar(
-              "Please select atleast one file to upload",
-              { panelClass: "snackbarerror" }
-            );
-            _this.api_loading1=false;
-            reject(error);
-            _this.snackbarService.openSnackBar(
-              error,
-              { panelClass: "snackbarerror" }
-            );
-          }
-        );
-      });
-    }
+    // if (this.data.source != "Lead") {
+    //   return new Promise(function (resolve, reject) {
+    //     _this.shared_services.addfiletotask(Uid, dataToSend).subscribe(
+    //       () => {
+    //         resolve(true);
+    //         console.log("Sending Attachment Success");
+    //         _this.dialogRef.close();
+    //       // _this.snackbarService.openSnackBar("Sending Attachment Successfully");
+    //         _this.api_loading1=false;
+    //       },
+    //       error => {
+    //         _this.api_loading1=false;
+    //         reject(error);
+    //         _this.snackbarService.openSnackBar(
+    //           error,
+    //           { panelClass: "snackbarerror" }
+    //         );
+    //       }
+    //     );
+    //   });
+    // } else {
+    //   return new Promise(function (resolve, reject) {
+    //     _this.shared_services.addfiletolead(Uid, dataToSend).subscribe(
+    //       () => {
+    //         resolve(true);
+    //         _this.api_loading1=false;
+    //         console.log("Sending Attachment Success");
+    //       },
+    //       error => {
+    //         _this.api_loading1=false;
+    //         console.log("Sending Lead Attachment Fail");
+    //         _this.snackbarService.openSnackBar(
+    //           "Please select atleast one file to upload",
+    //           { panelClass: "snackbarerror" }
+    //         );
+    //         _this.api_loading1=false;
+    //         reject(error);
+    //         _this.snackbarService.openSnackBar(
+    //           error,
+    //           { panelClass: "snackbarerror" }
+    //         );
+    //       }
+    //     );
+    //   });
+    // }
   }
   dialogClose() {
     this.dialogRef.close('close');

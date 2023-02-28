@@ -112,3 +112,15 @@ i {
     font-size: 1.25rem;
     color: #b5b5c3;
 }
+.mat-expansion-panel-header {
+    padding: 0 10px !important;
+}
+@media(max-width:400px) {
+    .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+        font-size: 0.85rem !important;
+    }
+    .qnr-action-btns a{
+        font-size: 0.75rem !important;
+    }
+ 
+}

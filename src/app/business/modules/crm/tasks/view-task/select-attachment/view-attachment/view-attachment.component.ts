@@ -17,7 +17,12 @@ export class ViewAttachmentComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("this.data.attachmentDetails", this.data.attachmentDetails)
-    let filetype = this.data.attachmentDetails.type
+    let filetype;
+    if (this.data.attachmentDetails.type) {
+      filetype = this.data.attachmentDetails.type
+    } else if (this.data.attachmentDetails.fileType) {
+      filetype = this.data.attachmentDetails.fileType;
+    }
     this.filePath = this.data.attachmentDetails.s3path
     if (filetype == 'jpeg' || filetype == 'jpg' || filetype == 'png' || filetype == 'gif') {
       this.type = "image"

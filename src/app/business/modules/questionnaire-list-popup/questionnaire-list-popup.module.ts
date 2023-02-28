@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { QuestionaireViewModule } from '../../../shared/components/questionaire-view/questionaire-view.module';
 import { QuestionnaireModule } from '../../../shared/components/questionnaire/questionnaire.module';
 import { LoadingSpinnerModule } from '../../../shared/modules/loading-spinner/loading-spinner.module';
@@ -17,7 +18,8 @@ import { ReleaseQuestionnaireModule } from './release-questionnaire/release-ques
         LoadingSpinnerModule,
         QuestionnaireModule,
         QuestionaireViewModule,
-        ReleaseQuestionnaireModule
+        ReleaseQuestionnaireModule,
+        MatExpansionModule
     ],
     exports: [QuestionnaireListPopupComponent]
 })

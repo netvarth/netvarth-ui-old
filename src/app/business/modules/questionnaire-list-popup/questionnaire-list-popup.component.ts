@@ -60,10 +60,8 @@ export class QuestionnaireListPopupComponent implements OnInit {
     else if (this.source === 'order') {
       this.getOrderQuestionnaires();
     }
-    this.selectedQnr = this.data.selectedQnr;
-    if (this.waitlist_data && this.waitlist_data.releasedQnr) {
-      this.releasedQnrs = this.waitlist_data.releasedQnr;
-    }
+    // this.selectedQnr = this.data.selectedQnr;
+    
   }
   getWaitlistDetail() {
     this.providerServices.getProviderWaitlistDetailById(this.uid)
@@ -95,23 +93,47 @@ export class QuestionnaireListPopupComponent implements OnInit {
   }
   getWaitlistQuestionnaires() {
     this.providerServices.getWaitlistQuestionnaireByUid(this.uid).subscribe(data => {
-      this.questionnaires = data;
-      this.loading = false;
+      this.setQuestionaireList(data);
+      // this.questionnaires = data;
+      // this.loading = false;
     });
   }
   getOrderQuestionnaires() {
     this.providerServices.getOrderQuestionnaireByUid(this.uid).subscribe(data => {
-      this.questionnaires = data;
-      this.loading = false;
+      this.setQuestionaireList(data);
+      // this.questionnaires = data;
+      // this.loading = false;
     });
   }
   getApptQuestionnaires() {
     this.providerServices.getApptQuestionnaireByUid(this.uid).subscribe(data => {
-      this.questionnaires = data;
-      this.loading = false;
+      this.setQuestionaireList(data);
+      // this.questionnaires = data;
+      // this.loading = false;
     });
   }
-  changeReleaseStatus(id) {
+  setQuestionaireList(questionaireGeneral: any) {
+    
+    let questionaires = [];
+    console.log("questionaireGeneral", questionaireGeneral);
+    for(let  i=0; i< questionaireGeneral.length; i++) {      
+      const questionnaire = this.waitlist_data.questionnaires.filter(quest => quest.questionnaireId === questionaireGeneral[i].id);
+      console.log(questionnaire);
+      if (questionnaire[0]) {
+        questionaires.push(questionnaire[0]);
+      } else {
+        questionaires.push(questionaireGeneral[i]);
+      }
+    }
+    this.questionnaires = questionaires;
+    console.log("Questionaries", this.questionnaires);
+    this.loading = false;
+  }
+  changeMode(qnr) {
+    qnr['edit'] = !qnr['edit'];
+  }
+  changeReleaseStatus(id, event) {
+    event.preventDefault();
     let isEmail;
     let isPhone;
     if (this.source === 'appt') {
@@ -199,6 +221,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     }
   }
   getQnrStatus(id) {
+    console.log("Released Qnr", this.releasedQnrs)
     const qnrStatus = this.releasedQnrs.filter(qnr => qnr.id === id);
     if (qnrStatus[0] && qnrStatus[0].status) {
       return qnrStatus[0].status;
@@ -241,9 +264,21 @@ export class QuestionnaireListPopupComponent implements OnInit {
   gotoPrev() {
     this.location.back();
   }
-  getQuestionAnswers(event) {
-    if (event === 'reload') {
-      this.closeDialog('reload');
+  reload() {
+    if (this.source === 'appt') {
+      this.getApptDetails();
+    } else if (this.source === 'checkin') {
+      this.getWaitlistDetail();
     }
+    else if (this.source === 'order') {
+      this.getOrderDetail();
+    }
+  }
+  getQuestionAnswers(event) {
+    alert(event);
+    this.reload();
+    // if (event === 'reload') {
+    //   this.closeDialog('reload');
+    // }
   }
 }

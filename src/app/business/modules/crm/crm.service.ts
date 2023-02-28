@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent } from '@angular/common/http';
+// import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -22,8 +22,8 @@ export class CrmService {
 
 
   constructor(
-    private servicemeta: ServiceMeta,
-    private http: HttpClient
+    private servicemeta: ServiceMeta
+    // private http: HttpClient
   ) { }
 
   getTasks(): Observable<any> {
@@ -295,13 +295,22 @@ export class CrmService {
   }
 
 
-  upload(file: File): Observable<HttpEvent<any>> {
-    const formData: FormData = new FormData();
-    formData.append('file', file);
-    return this.http.post<any>('provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt/attachment', formData, {
-      reportProgress: true,
-      observe: 'events'
-    });
+  // upload(file: File): Observable<HttpEvent<any>> {
+  //   const formData: FormData = new FormData();
+  //   formData.append('file', file);
+  //   return this.http.post<any>('provider/task/ta_64a19eb3-9561-42f9-a346-0e50cc57bb73-pt/attachment', formData, {
+  //     reportProgress: true,
+  //     observe: 'events'
+  //   });
+  // }
+
+  uploadFilesToTask (id, data) {
+    const url = 'provider/task/' + id + '/taskattachment';
+    return this.servicemeta.httpPost(url, data);
+  }
+
+  videoaudioS3Upload(file, url) {
+    return this.servicemeta.httpPut(url, file);
   }
 
   addProgressvalue(taskUid, progressValue, data) {
