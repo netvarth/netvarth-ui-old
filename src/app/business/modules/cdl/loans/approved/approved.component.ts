@@ -105,7 +105,8 @@ export class ApprovedComponent implements OnInit {
   getPartners() {
     let api_filter = {
       'isApproved-eq': true,
-      'isActive-eq': true
+      'isActive-eq': true,
+      'salesOfficers-eq': 'userId::' + this.user.id
     }
     this.cdlService.getDealersByFilter(api_filter).subscribe((data) => {
       this.dealers = data;

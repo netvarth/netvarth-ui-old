@@ -53,6 +53,7 @@ export class LoansComponent implements OnInit {
   globalSearchValue: any;
   cols: any[];
   _selectedColumns: any[];
+  capabilities: { canCreateLoan: any; canUpdateLoan: any; canViewLoan: any; canCreatePartner: any; canUpdatePartner: any; canViewPartner: any; canViewSchemes: any; canApprovePartnerLoan: any; canRejectLoan: any; canApprovePartner: any; canApproveLoan: any; canContactPartner: any; canActionRequired: any; canCreditScoreCheck: any; canAnalyseBankStatement: any; canGenerateMafilScore: any; canLoanDisbursement: any; canUpdateCreditOfficer: any; canUpdateSalesOfficer: any; canUpdatePartnerSettings: any; canMakePartnerInactive: any; canCreateLocation: any; canUpdateLocation: any; canCreateBranch: any; canUpdateBranch: any; canCreateUser: any; canUpdateUser: any; canSuspendPartner: any; canDisableUser: any; canDisablePartner: any; canEnablePartner: any; canVerification: any; canCreditVerification: any; canDocumentVerification: any; canInvoiceUpdation: any; canCreateLead: any; canUpdateLead: any; canViewLead: any; canTransformLeadtoLoan: any; canLoanApplicationOperationsVerification: any; canViewCustomerPhoneNumber: any; canViewKycReport: any; canLoanApplicationBranchVerification: any; };
   constructor(
     private groupService: GroupStorageService,
     private router: Router,
@@ -89,6 +90,9 @@ export class LoansComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.user) {
+      this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
+    }
     this.getLoans()
 
 
@@ -339,7 +343,7 @@ export class LoansComponent implements OnInit {
       };
       this.router.navigate(['provider', 'cdl', 'loans', 'approved'], navigationExtras);
     }
-    else if (status == 'CreditApproved') {
+    else if (status == 'CreditApproved' && this.capabilities.canCreateLoan) {
       const navigationExtras: NavigationExtras = {
         queryParams: {
           type: 'creditApproved',
