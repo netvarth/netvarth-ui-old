@@ -61,6 +61,7 @@ export class LoanDetailsComponent implements OnInit {
   accountaggregatingStatus: ArrayBuffer;
   accountaggregatingStatusShowing: boolean;
   showEquifaxScore: any = false;
+  customerPhoneNo: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -84,6 +85,9 @@ export class LoanDetailsComponent implements OnInit {
           }
           this.cdlservice.getLoanById(params.id).subscribe((data) => {
             this.loanData = data;
+            if (this.loanData && this.loanData.customer && this.loanData.customer.phoneNo) {
+              this.customerPhoneNo = this.loanData.customer.phoneNo;
+            }
             this.checkMafilScore();
             this.checkPerfiosScore();
             if (this.loanData && this.loanData.spInternalStatus && this.loanData.spInternalStatus == 'Sanctioned' || this.loanData.spInternalStatus == 'OperationsVerified') {
@@ -252,12 +256,13 @@ export class LoanDetailsComponent implements OnInit {
 
 
   checkPerfiosScore() {
-    // let data =
-    // {
-    //   "loanApplicationUid": this.loanId,
-    //   "loanApplicationKycId": this.loanData.loanApplicationKycList[0].id
-    // }
-    this.cdlservice.getPerfiosScore().subscribe((data: any) => {
+    let data =
+    {
+      "loanApplicationUid": this.loanId,
+      "id": this.loanData.loanApplicationKycList[0].id,
+      "customerPhone": this.customerPhoneNo
+    }
+    this.cdlservice.getPerfiosScore(data).subscribe((data: any) => {
       console.log("Perfios Score Data : ", data);
       if (data) {
         this.perfiosData = data;
@@ -268,6 +273,10 @@ export class LoanDetailsComponent implements OnInit {
   checkTimeline() {
     this.statusIndex = this.loanStatus.filter((data) => data.name == this.loanApplicationStatus)[0].index
     console.log("this.statusIndex", this.statusIndex)
+  }
+
+  getStringWithSpaces(string) {
+    return string.match(/[A-Z][a-z]+|[0-9]+/g).join(" ")
   }
 
   goBack() {

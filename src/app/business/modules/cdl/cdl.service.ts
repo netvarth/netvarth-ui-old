@@ -585,9 +585,9 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
-  getPerfiosScore() {
-    const url = 'provider/loanapplication/perfiosanalysis';
-    return this.servicemeta.httpGet(url);
+  getPerfiosScore(data) {
+    const url = 'provider/loanapplication/perfios';
+    return this.servicemeta.httpPost(url, data);
   }
 
   getBranches(filter) {

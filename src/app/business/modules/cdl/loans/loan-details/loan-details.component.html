@@ -455,7 +455,7 @@
                 <div>
                   <div class="customerScoreLabel">Perfios Banking Habits</div>
                   <div class="customerScoreInfoLabel" *ngIf="perfiosData && perfiosData.bankingHabits">
-                    {{perfiosData.bankingHabits}}</div>
+                    {{getStringWithSpaces(perfiosData.bankingHabits)}}</div>
                   <div class="btn btn-primary" (click)="viewReport('perfios',perfiosData)">View Report</div>
                 </div>
               </div>
@@ -709,6 +709,77 @@
             <div class="font-weight-bold">Remarks</div>
             <span class="details-title" *ngIf="loanData && loanData.remarks">{{loanData.remarks}}</span>
             <span class="details-title" *ngIf="loanData && !loanData.remarks">No Remarks Added</span>
+          </div>
+        </div>
+
+
+        <div class="card marginClass min-height">
+          <div class="font-weight-bold">Files Uploaded in Credit Verification</div>
+          <div class="row mt-2">
+            <div class="col-md-12 no-padding-small">
+              <div
+                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].postDatedCheque">
+                <div class="text-left details-title">Post Dated Cheque&nbsp;
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div>
+                    {{loanData.loanApplicationKycList[0].postDatedCheque}}
+                    <div class=" mt-2"
+                      *ngFor="let attachment of loanData.loanApplicationKycList[0].postDatedCheque;let i=index;">
+                      <a [href]="attachment.s3path" target="_blank" class="btn btn-primary">
+                        <span>View File <span
+                            *ngIf="loanData.loanApplicationKycList[0].postDatedCheque.length > 1">{{i+1}}</span></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="col-md-12 no-padding-small mt-3">
+              <div
+                *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].pan">
+                <div class="text-left details-title">Pan Number&nbsp;
+                  <img src="../../../../assets/images/cdl/check.png" width="20"
+                    *ngIf="loanData.loanApplicationKycList[0].isPanVerified">
+                  <img src="../../../../assets/images/cdl/cancel.png" width="20"
+                    *ngIf="!loanData.loanApplicationKycList[0].isPanVerified">
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex align-items-center">
+                    <div class="text-left details-sub-title">{{loanData.loanApplicationKycList[0].pan}}</div>
+                  </div>
+                  <div *ngIf="loanData.loanApplicationKycList[0].panAttachments">
+                    <div class=" mt-2"
+                      *ngFor="let attachment of loanData.loanApplicationKycList[0].panAttachments;let i=index;">
+                      <a [href]="attachment.s3path" target="_blank" class="btn btn-primary">
+                        <span>View File <span
+                            *ngIf="loanData.loanApplicationKycList[0].panAttachments.length > 1">{{i+1}}</span></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 no-padding-small mt-3">
+              <div
+                *ngIf="loanData && loanData.partnerAcceptanceAttachments && loanData.partnerAcceptanceAttachments.length>0">
+                <div class="text-left details-title">Uploaded Invoice&nbsp;
+                </div>
+                <div class="d-flex justify-content-between">
+                  <div *ngIf="loanData.partnerAcceptanceAttachments">
+                    <div class=" mt-2" *ngFor="let attachment of loanData.partnerAcceptanceAttachments;let i=index;">
+                      <a [href]="attachment.s3path" target="_blank" class="btn btn-primary">
+                        <span>View File <span
+                            *ngIf="loanData.partnerAcceptanceAttachments.length > 1">{{i+1}}</span></span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
