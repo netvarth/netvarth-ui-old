@@ -60,11 +60,16 @@
 <section class="">
   <div class="card title-gb">
     <h5 class="mgn-up-10">
-      Questionnaires
+      <a class="user-title" style="cursor:auto;">
+        <div class="pad-tp-5 display-min-none bold">
+          <span (click)="gotoPrev()"><i class="fa fa-arrow-left"></i>&nbsp;</span>
+          Questionnaires
+        </div>
+      </a>
     </h5>
   </div>
 </section>
-<ng-container *ngIf="questionnaires.length > 0">
+<ng-container *ngIf="questionnaires.length > 1">
   <mat-accordion class="qnr-accord no-padding" *ngFor="let qnr of questionnaires">
     <mat-expansion-panel>
       <mat-expansion-panel-header>
@@ -97,41 +102,41 @@
           </div>
         </div> -->
         <div class="col-xs-12" *ngIf="qnr['edit']">
-          <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'" [source]="'consOrder'" [uuid]="waitlist_data.uid"
-            [accountId]="waitlist_data.providerAccount.id" [type]="'details'"
-            [waitlistStatus]="waitlist_data.orderStatus" (returnAnswers)="getQuestionAnswers($event)">
+          <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'" [source]="(waitlist_data.waitlistStatus) ? 'proCheckin' : 'proAppt'" [uuid]="waitlist_data.uid"
+            [accountId]="waitlist_data.providerAccount.id" [type]="'details'" 
+            [waitlistStatus]="(waitlist_data.waitlistStatus) ? waitlist_data.waitlistStatus : waitlist_data.apptStatus" (returnAnswers)="getQuestionAnswers($event)">
           </app-questionnaire>
         </div>
         <div class="col-xs-12" *ngIf="!qnr['edit']">
           <app-questionaire-view id="{{qnr.questionnaireId}}" [questionaire]="qnr"
-            [source]="'consOrder'"></app-questionaire-view>
+          [source]="(waitlist_data.waitlistStatus) ? 'proCheckin' : 'proAppt'"></app-questionaire-view>
         </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
 </ng-container>
-<!-- <ng-container *ngIf="questionnaires.length === 1">
-  <div *ngIf="questionnaires.length === 1">
+<ng-container *ngIf="questionnaires.length === 1">
+  <div>
       <div class="c-details" *ngFor="let qnr of questionnaires">
-          <div class="col-xs-12">
+          <!-- <div class="col-xs-12">
               <div class="pull-right">
                   <button class="normal-btn edit" mat-flat-button
                       (click)="changeMode(qnr)">{{qnr['edit']?'View':'Edit'}}</button>
               </div>
-          </div>
+          </div> -->
           <div class="col-xs-12" *ngIf="qnr['edit']">
               <app-questionnaire [questionnaireList]="qnr" [mode]="'edit'"
-                  [source]="'consOrder'" [uuid]="waitlist.uid"
-                  [accountId]="waitlist.providerAccount.id" [type]="'details'"
-                  [waitlistStatus]="waitlist.orderStatus"
+              [source]="(waitlist_data.waitlistStatus) ? 'proCheckin' : 'proAppt'" [uuid]="waitlist_data.uid"
+                  [accountId]="waitlist_data.providerAccount.id" [type]="'details'"
+                  [waitlistStatus]="(waitlist_data.waitlistStatus) ? waitlist_data.waitlistStatus : waitlist_data.apptStatus"
                   (returnAnswers)="getQuestionAnswers($event)">
               </app-questionnaire>
           </div>
           <div class="col-xs-12" *ngIf="!qnr['edit']">
               <app-questionaire-view id="{{qnr.questionnaireId}}"
                   [questionaire]="qnr"
-                  [source]="'proOrder'"></app-questionaire-view>
+                  [source]="(waitlist_data.waitlistStatus) ? 'proCheckin' : 'proAppt'"></app-questionaire-view>
           </div>
       </div>
   </div>
-</ng-container> -->
+</ng-container>

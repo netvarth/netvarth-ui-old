@@ -281,4 +281,7 @@ export class QuestionnaireListPopupComponent implements OnInit {
     //   this.closeDialog('reload');
     // }
   }
+  goPrevious() {
+    this.location.back();
+  }
 }

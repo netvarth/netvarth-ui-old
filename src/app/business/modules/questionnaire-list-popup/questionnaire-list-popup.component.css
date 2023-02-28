@@ -43,14 +43,21 @@
     padding: 0 !important;
 }
 h5 {
+    font-size: 1.25rem;
     margin-bottom: 0.5rem;
     font-weight: 500;
     line-height: 1.2;
 }
+a:not([href]) {
+    color: inherit;
+}
 .table td {
     padding: 0.75rem;
 }
-
+.fa-arrow-left {
+    color: #000 !important;
+    font-weight: bold !important;
+}
 @media (max-width: 500px) {
     .qnr-action-btns a {
         padding: 5px !important;
