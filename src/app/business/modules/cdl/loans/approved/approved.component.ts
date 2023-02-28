@@ -263,6 +263,10 @@ export class ApprovedComponent implements OnInit {
                   this.router.navigate(['provider', 'cdl', 'loans']);
                 });
             }
+            else {
+              this.snackbarService.openSnackBar("Loan Approved Successfully")
+              this.router.navigate(['provider', 'cdl', 'loans']);
+            }
           }
         });
       };

@@ -1,0 +1,260 @@
+<div class="card">
+    <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-center">
+            <div>
+                <img width="60" height="60" src="./assets/images/ivr/profile.png">
+            </div>
+            <div class="pt-1">
+                <span class="font-weight-bold welcome-text">Welcome back,
+                    <span *ngIf="user && user.firstName">{{user.firstName}}</span>
+                    <span *ngIf="user && user.lastName"> {{user.lastName}}</span>
+                </span>
+                <br><span class="sub-title"
+                    *ngIf="user && user.primaryPhoneNumber">+91&nbsp;{{user.primaryPhoneNumber}}</span>
+            </div>
+        </div>
+        <!-- <div>
+            <div>
+                <img class="company-logo" src="./assets/images/cdl/company_logo.png">
+            </div>
+        </div> -->
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-6 mt-4">
+        <div>
+            <div class="row mx-0 p-0">
+                <div class="col-md-4 col-sm-4 col-xs-4 px-1 pointer-cursor" (click)="createToken()">
+                    <div class="card text-center">
+                        <div>
+                            <img width="60" height="60" src="./assets/images/ivr/create_token.png">
+                        </div>
+                        <span class="font-weight-bold card-title mt-2">
+                            Create Token
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4 px-1">
+                    <div class="card text-center">
+                        <div>
+                            <img width="60" height="60" src="./assets/images/ivr/missed_calls.png">
+                        </div>
+                        <span class="font-weight-bold card-title mt-2">
+                            Missed Calls
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4 px-1">
+                    <div class="card text-center">
+                        <div>
+                            <img width="60" height="60" src="./assets/images/ivr/my_calls.png">
+                        </div>
+                        <span class="font-weight-bold card-title mt-2">
+                            My Calls
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="row mx-0 p-0 mt-3">
+                    <div class="text-center">
+                        <div class="col-lg-3 col-md-4 px-1">
+                            <div>
+                                <p-chart type="doughnut" [data]="doughnutChartData"
+                                    [options]="doughnutChartOptions"></p-chart>
+                            </div>
+                        </div>
+                        <div class="col-lg-9 col-md-8 px-1 mt-4">
+                            <div class="col-md-12">
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 px-1">
+                                    <div class="text-left">
+                                        <span class="fa fa-stop-circle all-calls"></span>&nbsp;
+                                        <span class="font-weight-bold">All Calls</span><br>
+                                        <span class="calls-count">40</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 px-1">
+                                    <div class="text-left">
+                                        <span class="fa fa-stop-circle missed-calls"></span>&nbsp;
+                                        <span class="font-weight-bold">Missed Calls</span><br>
+                                        <span class="calls-count">30</span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-6 px-1 mt-md-2 mt-lg-0">
+                                    <div class="text-left">
+                                        <span class="fa fa-stop-circle answered-calls"></span>&nbsp;
+                                        <span class="font-weight-bold">Answered Calls</span><br>
+                                        <span class="calls-count">30</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mt-4">
+        <div class="card">
+            <div class="row mx-0 p-0">
+                <span class="font-weight-bold">Analytics</span>
+                <div>
+                    <p-chart type="line" height="310" [data]="lineChartData" [options]="lineChartOptions"></p-chart>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mt-4">
+        <div class="card">
+            <div>
+                <span class="font-weight-bold">Calls</span>
+            </div>
+            <div class="mt-3">
+                <p-table #callsTable [value]="calls" dataKey="id" [showCurrentPageReport]="true"
+                    [rowsPerPageOptions]="[5,15,25,50]" [paginator]="true" [rows]="5" [totalRecords]="totalCallsCount"
+                    responsiveLayout="stack" scrollHeight="flex"
+                    styleClass="p-datatable-customers p-datatable-gridlines"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Calls">
+                    <ng-template pTemplate="caption">
+                        <div class="container-fluid no-padding">
+                            <div class="row mt-2">
+                                <div class="col-md-4 no-padding">
+                                    <span>
+                                        <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
+                                            (input)="callsTable.filterGlobal($event.target.value, 'contains')"
+                                            placeholder="Search keyword" style="width:100%" />
+                                    </span>
+                                </div>
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 text-right no-padding">
+                                    <p-dropdown styleClass="text-left" [style]="{'width':'100%'}"
+                                        [options]="ivrCallsStatus" (onChange)="statusChange($event)"
+                                        optionLabel="displayName" dataKey="name">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th>Phone Number</th>
+                            <th>Status</th>
+                            <th>Language</th>
+                            <th>More Actions</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-call>
+                        <tr class="mobile-card">
+                            <td>
+                                <span class="d-lg-none d-md-none">Phone Number : </span><span
+                                    class="table-column-data">{{call.consumerPhone.number}}</span>
+                            </td>
+                            <td>
+                                <span class="d-lg-none d-md-none">Status : </span><span
+                                    class="table-column-data text-capitalize"
+                                    [class]="'status-' + call.callStatus">{{call.callStatus}}</span>
+                            </td>
+                            <td>
+                                <span class="d-lg-none d-md-none d-sm-block">Language : </span><span
+                                    class="table-column-data" *ngIf="call && call.language">{{call.language}}</span>
+                            </td>
+                            <td>
+                                <span class="d-lg-none d-md-none d-sm-block">More Actions : </span>
+                                <div class="d-flex text-center">
+                                    <button pButton pRipple type="button" class="p-button-primary btn-primary">View
+                                        Details</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <br class="d-lg-none d-md-none">
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No Calls found.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mt-4">
+        <div class="card">
+            <div>
+                <span class="font-weight-bold text-capitalize">{{customer_label}}s</span>
+            </div>
+            <div class="mt-3">
+                <p-table #customersTable [value]="customers" dataKey="id" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,15,25,50]" [paginator]="true" [rows]="5" responsiveLayout="stack"
+                    scrollHeight="flex" styleClass="p-datatable-customers p-datatable-gridlines"
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} Customers">
+                    <ng-template pTemplate="caption">
+                        <div class="container-fluid no-padding">
+                            <div class="row mt-2">
+                                <div class="col-md-8 no-padding">
+                                    <span>
+                                        <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
+                                            (input)="customersTable.filterGlobal($event.target.value, 'contains')"
+                                            placeholder="Search keyword" style="width:100%" />
+                                    </span>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="text-left">
+                                        <button pButton pRipple type="button" class="p-button-primary btn-primary"
+                                            (click)="viewAllCustomers()">View
+                                            All</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-customer>
+                        <tr class="mobile-card">
+                            <td class="font-weight-bold">
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <div class="d-flex align-items-center">
+                                            <div class="profile-pic">
+                                                <span *ngIf="customer.firstName"
+                                                    class="text-uppercase">{{customer.firstName[0]}}</span>
+                                                <span *ngIf="!customer.firstName" class="text-uppercase"><i
+                                                        class="fa fa-ban"></i></span>
+                                            </div>
+                                            <div class="approvedColor text-capitalize mx-3 my-1">
+                                                <span *ngIf="customer.firstName">{{customer.firstName}}</span><span
+                                                    *ngIf="customer.lastName">&nbsp;{{customer.lastName}}</span><br>
+                                                <span *ngIf="customer.id">Id : {{customer.id}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="pointer-cursor d-flex justify-content-center">
+                                        <span [matMenuTriggerFor]="menu" class="p-2"><i class="fa fa-ellipsis-v"
+                                                aria-hidden="true"></i></span>
+                                        <mat-menu #menu="matMenu">
+                                            <button mat-menu-item (click)="viewCustomer(customer.id)"><i
+                                                    class="fa fa-eye"></i>&nbsp;View</button>
+                                            <button mat-menu-item (click)="editCustomer(customer.id)"><i
+                                                    class="fa fa-pencil"></i>&nbsp;Edit</button>
+                                        </mat-menu>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <br class="d-lg-none d-md-none">
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                        <tr>
+                            <td colspan="7">No Customers found.</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -537,8 +537,8 @@
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span>
-            245 /-
+          <span *ngIf="loanData && loanData.creditInsuranceAmount">
+            {{loanData.creditInsuranceAmount}} /-
           </span>
         </div>
       </td>
@@ -584,8 +584,8 @@
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span *ngIf="loanData && loanData.sanctionedAmount">
-
+          <span *ngIf="loanData && loanData.netDisbursedAmount">
+            {{loanData.netDisbursedAmount}}
           </span>
         </div>
       </td>
@@ -607,8 +607,8 @@
       </td>
       <td style="width:20%">
         <div class="text-normal mx-1 text-center">
-          <span *ngIf="loanData && loanData.sanctionedAmount">
-
+          <span *ngIf="loanData && loanData.totalAmountToPay">
+            {{loanData.totalAmountToPay}}
           </span>
         </div>
       </td>

@@ -527,13 +527,13 @@ export class ProviderCheckinComponent implements OnInit {
         let tempCatValue: any;
         if (this.categoryvalue && this.categoryvalue === 'Search with Name or ID') {
             // tempCatValue = 'name';
-            if(isNaN(name.search_input)){
+            if (isNaN(name.search_input)) {
                 tempCatValue = 'name';
                 console.log("name :", name);
             }
-            else{
+            else {
                 tempCatValue = 'id';
-                console.log("id :",name);
+                console.log("id :", name);
             }
         }
         else if (this.categoryvalue && this.categoryvalue === 'Search with Email ID') {
@@ -2615,7 +2615,10 @@ export class ProviderCheckinComponent implements OnInit {
         this.thirdparty_error = null;
     }
     goBack() {
-        if (this.showQuestionnaire) {
+        if (this.source && this.source == 'ivr') {
+            this.router.navigate(['provider', 'ivr']);
+        }
+        else if (this.showQuestionnaire) {
             this.showQuestionnaire = false;
         } else if (this.showCheckin && this.type !== 'followup') {
             this.showCheckin = false;
