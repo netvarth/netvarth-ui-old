@@ -619,7 +619,6 @@ export class CreateComponent implements OnInit {
       coapplicantcurrentdistrict: item && item.permanentCity || "",
       coapplicantcurrentstate: item && item.permanentState || "",
       coapplicantcurrentpincode: item && item.permanentPin || "",
-      coapplicantbank: item && item.bankName || "",
       coapplicantaccount: item && item.bankAccountNo || "",
       coapplicantifsc: item && item.bankIfsc || "",
       coapplicantbankbranch: item && item.bankBranchName || ""
@@ -632,6 +631,9 @@ export class CreateComponent implements OnInit {
     }
     if (item.emailVerified) {
       this.coapplicantemailverification = true;
+    }
+    if (item && item.bankName) {
+      this.coApplicantbankListName = item.bankName;
     }
     if (item.id) {
       this.coApplicantId = item.id;
@@ -667,9 +669,7 @@ export class CreateComponent implements OnInit {
       coapplicantdob: [null],
       coapplicantgender: [null],
       coapplicantaadharnumber: [null],
-      coapplicantaadharattachment: [null],
       coapplicantpannumber: [null],
-      coapplicantpanattachment: [null],
       coapplicantcurrentaddress1: [null],
       coapplicantcurrentaddress2: [null],
       coapplicantcurrentcity: [null],
@@ -677,7 +677,6 @@ export class CreateComponent implements OnInit {
       coapplicantcurrentstate: [null],
       coapplicantcurrentpincode: [null],
       coapplicantmartialstatus: [null],
-      coapplicantbank: [null],
       coapplicantifsc: [null],
       coapplicantaccount: [null],
       coapplicantrelation: [null],
@@ -796,6 +795,7 @@ export class CreateComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
+    console.log("filterValue", filterValue)
     return this.banksList.filter(option => option.bankName.toLowerCase().includes(filterValue));
   }
 
@@ -1775,13 +1775,11 @@ export class CreateComponent implements OnInit {
       if (data) {
         this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
           if (data) {
-            this.createLoan.controls.coapplicantcurrentaddress1.setValue(data.loanApplicationKycList[1].permanentAddress1);
-            this.createLoan.controls.coapplicantcurrentaddress2.setValue(data.loanApplicationKycList[1].permanentAddress2);
-            this.createLoan.controls.coapplicantcurrentdistrict.setValue(data.loanApplicationKycList[1].permanentDistrict);
-            this.createLoan.controls.coapplicantcurrentstate.setValue(data.loanApplicationKycList[1].permanentPin);
-            this.createLoan.controls.coapplicantcurrentpincode.setValue(data.loanApplicationKycList[1].permanentState);
+            if (data && data.loanApplicationKycList && data.loanApplicationKycList[1]) {
+              this.setCoApplicantValues(data.loanApplicationKycList[1])
+            }
           }
-          this.verifyingUID = false;
+          this.coapplicantverifyingUID = false;
         })
         this.coapplicantaadharverification = true;
         this.coapplicantverifyingUID = false;

@@ -20,7 +20,7 @@ export class IvrComponent implements OnInit {
   doughnutChartData: any;
   doughnutChartOptions: any;
   calls: any;
-  totalCallsCount: any;
+  totalCallsCount: any = 0;
   statusDisplayName: any;
   ivrCallsStatus = projectConstantsLocal.IVR_CALL_STATUS;
 
@@ -40,44 +40,13 @@ export class IvrComponent implements OnInit {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     this.customer_label = this.wordProcessor.getTerminologyTerm('customer');
     this.getAnalyticsChartOptions();
-    this.getAnalyticsDoughnutChartOptions();
     this.getIvrCalls();
     this.getCustomers();
+    this.getIvrCallsCount();
 
     this.primengConfig.ripple = true;
 
-    this.customerMoreActionMenuItems = [{
-      label: 'Options',
-      items: [{
-        label: 'Update',
-        icon: 'pi pi-refresh',
-        command: () => {
 
-        }
-      },
-      {
-        label: 'Delete',
-        icon: 'pi pi-times',
-        command: () => {
-
-        }
-      }
-      ]
-    },
-    {
-      label: 'Navigate',
-      items: [{
-        label: 'Angular Website',
-        icon: 'pi pi-external-link',
-        url: 'http://angular.io'
-      },
-      {
-        label: 'Router',
-        icon: 'pi pi-upload'
-      }
-      ]
-    }
-    ];
   }
 
   viewCustomer(id) {
@@ -157,43 +126,6 @@ export class IvrComponent implements OnInit {
     };
   }
 
-
-  getAnalyticsDoughnutChartOptions() {
-    this.doughnutChartData = {
-      // labels: ['All Calls', 'Missed Calls', 'Answered Calls'],
-      datasets: [
-        {
-          data: [150, 50, 100],
-          backgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-          ],
-          hoverBackgroundColor: [
-            "#FF6384",
-            "#36A2EB",
-            "#FFCE56"
-          ]
-        }
-      ]
-    };
-
-
-    this.doughnutChartOptions = {
-
-      plugins: {
-        legend: {
-          labels: {
-            color: "#495057",
-          },
-        },
-      },
-    };
-
-  }
-
-
-
   getIvrCalls() {
     this.ivrService.getAllIvrCalls().subscribe((data: any) => {
       this.calls = data;
@@ -206,6 +138,15 @@ export class IvrComponent implements OnInit {
   getIvrCallsbyFilter(filter) {
     this.ivrService.getAllIvrCallsbyFilter(filter).subscribe((data: any) => {
       this.calls = data;
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+  getIvrCallsCount(filter = {}) {
+    this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
+      this.totalCallsCount = data;
     },
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })

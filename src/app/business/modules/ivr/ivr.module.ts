@@ -14,7 +14,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 const routes: Routes = [
-  { path: '', component: IvrComponent }
+  { path: '', component: IvrComponent },
+  { path: 'calls', loadChildren: () => import('./calls/calls.module').then(m => m.CallsModule) },
+
 ]
 
 @NgModule({

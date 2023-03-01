@@ -1384,7 +1384,188 @@
           </mat-expansion-panel>
         </mat-accordion>
 
+        <br>
 
+        <mat-accordion>
+          <mat-expansion-panel [expanded]="bankDetailsPanel" (opened)="bankDetailsPanel = true"
+            (closed)="bankDetailsPanel = false">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <div class="d-flex justify-content-center">
+                  <div *ngIf="bankDetailsVerified">
+                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
+                  </div>
+                  <div class="d-flex align-items-center">
+                    Bank Details
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+
+              <div class="d-md-flex">
+                <div class="mr-3">
+                  <div *ngIf="!accountaggregatingStatusShowing">
+                    <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate
+                      Statements</button>
+                  </div>
+                  <div *ngIf="accountaggregatingStatusShowing">
+                    <div class="btn btn-primary open-all-btn-success">Statement Aggregation
+                      {{accountaggregatingStatus}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mx-5">
+                  <span class="font-weight-bold">OR</span>
+                </div>
+
+                <!-- *ngIf="showBankAttachments" -->
+                <div>
+                  <div class="bggrey">
+                    <div>
+                      <div class="fieldPadding">
+                        <div class="file"
+                          *ngIf="!(selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0)">
+                          <label for='bankAttach' (click)="bankAttach.click()">
+                            <!-- <i class="material-icons">cloud_upload</i> -->
+                            Upload Statements
+                          </label>
+                          <input #bankAttach type='file' formControlName="bankstatements"
+                            (change)="filesSelected($event,'bank')" accept="image/*;capture=camera" />
+                        </div>
+                        <div class="img-section clearfix"
+                          *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">
+                          <ul class="galul">
+                            <li *ngFor="let file of selectedFiles['bank'].files;let i = index ">
+                              <div class="galimg_outer">
+                                <div class="gal_img pointer-cursor">
+                                  <img [src]="getImage(selectedFiles['bank'].base64[i], file)"
+                                    *ngIf="selectedFiles['bank'].base64[i]" width="100px" height="100px">
+                                  <a [href]="file.s3path" target="_blank">
+                                    <img [src]="getImagefromUrl(file.s3path,file)"
+                                      *ngIf="!selectedFiles['bank'].base64[i] && file.s3path" width="100px"
+                                      height="100px">
+                                  </a>
+                                </div>
+                                <div class="gal_action" (click)="deleteTempImage(i, 'bank',file)">
+                                  <i class=" fa fa-times-circle" aria-hidden="true"></i>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Select Bank <span class="text-danger">*</span></div>
+                    </div>
+                    <div class="fieldPadding">
+                      <!-- <select class="form-control" formControlName="bank">
+                        <option>KOTAK</option>
+                        <option>ICICI</option>
+                        <option>SBI</option>
+                        <option>HDFC</option>
+                        <option>BOI</option>
+                        <option>AXIS</option>
+                      </select> -->
+                      <div *ngIf="banksList" class="bankList mt-2">
+                        <mat-form-field [style.width.%]="100">
+                          <input type="text" class="form-control" matInput [matAutocomplete]="auto"
+                            [formControl]="banksListNames" formControlName="bank" [(ngModel)]="bankListName">
+                          <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
+                          <mat-autocomplete #auto="matAutocomplete">
+                            <mat-option *ngFor="let bank of filteredOptions | async" [value]="bank.bankName">
+                              {{bank.bankName}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+
+                        <!-- <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
+                          filterBy="bankName" optionValue="bankName" dropdownIcon="fa fa-caret-down" [showClear]="true"
+                          placeholder="Select Bank">
+                          <ng-template let-bank pTemplate="item">
+                            <div class="bank-item">
+                              <div>{{bank.bankName}}</div>
+                            </div>
+                          </ng-template>
+                        </p-dropdown> -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
+
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Bank Account Number <span class="text-danger">*</span></div>
+                    </div>
+                    <!-- <div class="d-flex"> -->
+                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Account Number" class="form-control"
+                      formControlName="account" autocomplete="off" />
+                    <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
+                        <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
+                            class="fa fa-check"></i>&nbsp;Verified</span></a> -->
+                    <!-- </div> -->
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Bank IFSC <span class="text-danger">*</span></div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
+                        formControlName="ifsc" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div class="bggrey my-2">
+                  <div>
+                    <div class="d-flex">
+                      <div class="form-title">Bank Branch <span class="text-danger">*</span></div>
+                    </div>
+                    <div class="fieldPadding">
+                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank Branch" class="form-control"
+                        formControlName="bankbranch" autocomplete="off" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+            </div>
+            <div class="d-flex">
+              <div *ngIf="!bankDetailsVerified">
+                <button class="btn btn-primary open-all-btn mr-2" (click)="verifyBankDetails()">Verify</button>
+              </div>
+              <div *ngIf="bankDetailsVerified">
+                <button class="btn btn-primary open-all-btn mr-2" (click)="saveBankDetails()">Save</button>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
 
         <mat-accordion *ngIf="showCoapplicant">
           <br>
@@ -1699,8 +1880,8 @@
                               <!-- <i class="material-icons">cloud_upload</i> -->
                               Upload File
                             </label>
-                            <input #panAttach type='file' formControlName="coapplicantpanattachment"
-                              (change)="filesSelected($event, 'coapplicantpan')" accept="image/*;capture=camera" />
+                            <input #panAttach type='file' (change)="filesSelected($event, 'coapplicantpan')"
+                              accept="image/*;capture=camera" />
                           </div>
                           <div class="img-section clearfix"
                             *ngIf="selectedFiles['coapplicantpan'] && selectedFiles['coapplicantpan'].files && selectedFiles['coapplicantpan'].files.length > 0">
@@ -1799,7 +1980,7 @@
                       <div class="fieldPadding">
                         <mat-select class="form-control widthWebKit" #coapplicantcurrentstate
                           formControlName="coapplicantcurrentstate">
-                          <mat-option [value]="state.name" *ngFor="let state of stateList">
+                          <mat-option [value]="state.displayName" *ngFor="let state of stateList">
                             <div *ngIf="state && state.displayName">{{state.displayName}}</div>
                           </mat-option>
                         </mat-select>
@@ -1833,8 +2014,7 @@
                           <div *ngIf="banksList" class="bankList mt-2">
                             <mat-form-field [style.width.%]="100">
                               <input type="text" class="form-control" matInput [matAutocomplete]="auto"
-                                [formControl]="coApplicantbanksListNames" formControlName="coapplicantbank"
-                                [(ngModel)]="coApplicantbankListName">
+                                [formControl]="coApplicantbanksListNames" [(ngModel)]="coApplicantbankListName">
                               <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
                               <mat-autocomplete #auto="matAutocomplete">
                                 <mat-option *ngFor="let bank of coapplicantfilteredOptions | async"
@@ -1912,188 +2092,7 @@
           </mat-expansion-panel>
         </mat-accordion>
 
-        <br>
 
-        <mat-accordion>
-          <mat-expansion-panel [expanded]="bankDetailsPanel" (opened)="bankDetailsPanel = true"
-            (closed)="bankDetailsPanel = false">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                <div class="d-flex justify-content-center">
-                  <div *ngIf="bankDetailsVerified">
-                    <img width="30" height="30" src="../../../../assets/images/cdl/check-mark.png">
-                  </div>
-                  <div class="d-flex align-items-center">
-                    Bank Details
-                  </div>
-                </div>
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div>
-
-              <div class="d-md-flex">
-                <div class="mr-3">
-                  <div *ngIf="!accountaggregatingStatusShowing">
-                    <button class="btn btn-primary open-all-btn" (click)="aggregateAccount()">Aggregate
-                      Statements</button>
-                  </div>
-                  <div *ngIf="accountaggregatingStatusShowing">
-                    <div class="btn btn-primary open-all-btn-success">Statement Aggregation
-                      {{accountaggregatingStatus}}
-                    </div>
-                  </div>
-                </div>
-
-                <div class="mx-5">
-                  <span class="font-weight-bold">OR</span>
-                </div>
-
-                <!-- *ngIf="showBankAttachments" -->
-                <div>
-                  <div class="bggrey">
-                    <div>
-                      <div class="fieldPadding">
-                        <div class="file"
-                          *ngIf="!(selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0)">
-                          <label for='bankAttach' (click)="bankAttach.click()">
-                            <!-- <i class="material-icons">cloud_upload</i> -->
-                            Upload Statements
-                          </label>
-                          <input #bankAttach type='file' formControlName="bankstatements"
-                            (change)="filesSelected($event,'bank')" accept="image/*;capture=camera" />
-                        </div>
-                        <div class="img-section clearfix"
-                          *ngIf="selectedFiles['bank'] && selectedFiles['bank'].files && selectedFiles['bank'].files.length > 0">
-                          <ul class="galul">
-                            <li *ngFor="let file of selectedFiles['bank'].files;let i = index ">
-                              <div class="galimg_outer">
-                                <div class="gal_img pointer-cursor">
-                                  <img [src]="getImage(selectedFiles['bank'].base64[i], file)"
-                                    *ngIf="selectedFiles['bank'].base64[i]" width="100px" height="100px">
-                                  <a [href]="file.s3path" target="_blank">
-                                    <img [src]="getImagefromUrl(file.s3path,file)"
-                                      *ngIf="!selectedFiles['bank'].base64[i] && file.s3path" width="100px"
-                                      height="100px">
-                                  </a>
-                                </div>
-                                <div class="gal_action" (click)="deleteTempImage(i, 'bank',file)">
-                                  <i class=" fa fa-times-circle" aria-hidden="true"></i>
-                                </div>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Select Bank <span class="text-danger">*</span></div>
-                    </div>
-                    <div class="fieldPadding">
-                      <!-- <select class="form-control" formControlName="bank">
-                        <option>KOTAK</option>
-                        <option>ICICI</option>
-                        <option>SBI</option>
-                        <option>HDFC</option>
-                        <option>BOI</option>
-                        <option>AXIS</option>
-                      </select> -->
-                      <div *ngIf="banksList" class="bankList mt-2">
-                        <mat-form-field [style.width.%]="100">
-                          <input type="text" class="form-control" matInput [matAutocomplete]="auto"
-                            [formControl]="banksListNames" formControlName="bank" [(ngModel)]="bankListName">
-                          <mat-icon matSuffix>keyboard_arrow_down</mat-icon>
-                          <mat-autocomplete #auto="matAutocomplete">
-                            <mat-option *ngFor="let bank of filteredOptions | async" [value]="bank.bankName">
-                              {{bank.bankName}}
-                            </mat-option>
-                          </mat-autocomplete>
-                        </mat-form-field>
-
-                        <!-- <p-dropdown [options]="banksList" formControlName="bank" optionLabel="bankName" [filter]="true"
-                          filterBy="bankName" optionValue="bankName" dropdownIcon="fa fa-caret-down" [showClear]="true"
-                          placeholder="Select Bank">
-                          <ng-template let-bank pTemplate="item">
-                            <div class="bank-item">
-                              <div>{{bank.bankName}}</div>
-                            </div>
-                          </ng-template>
-                        </p-dropdown> -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-
-
-
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Bank Account Number <span class="text-danger">*</span></div>
-                    </div>
-                    <!-- <div class="d-flex"> -->
-                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Account Number" class="form-control"
-                      formControlName="account" autocomplete="off" />
-                    <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
-                        <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
-                            class="fa fa-check"></i>&nbsp;Verified</span></a> -->
-                    <!-- </div> -->
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Bank IFSC <span class="text-danger">*</span></div>
-                    </div>
-                    <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
-                        formControlName="ifsc" autocomplete="off" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div class="bggrey my-2">
-                  <div>
-                    <div class="d-flex">
-                      <div class="form-title">Bank Branch <span class="text-danger">*</span></div>
-                    </div>
-                    <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank Branch" class="form-control"
-                        formControlName="bankbranch" autocomplete="off" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-
-
-            </div>
-            <div class="d-flex">
-              <div *ngIf="!bankDetailsVerified">
-                <button class="btn btn-primary open-all-btn mr-2" (click)="verifyBankDetails()">Verify</button>
-              </div>
-              <div *ngIf="bankDetailsVerified">
-                <button class="btn btn-primary open-all-btn mr-2" (click)="saveBankDetails()">Save</button>
-              </div>
-            </div>
-          </mat-expansion-panel>
-        </mat-accordion>
         <br>
         <div>
           <div class="bggrey my-2">

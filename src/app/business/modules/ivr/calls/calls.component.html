@@ -1,0 +1,97 @@
+<section class="card">
+    <div class="pointer-cursor">
+        <div class="d-flex">
+            <div> <i class="fa fa-arrow-left mr-2" aria-hidden="true" (click)="goBack()"></i></div>
+            <div class="text-primary heading" class="back-btn">Calls</div>
+        </div>
+    </div>
+</section>
+
+
+<section *ngIf="loading">
+    <div>
+        <app-skeleton-loading></app-skeleton-loading>
+    </div>
+</section>
+
+<div *ngIf="!loading">
+    <div class="card">
+        <p-table #callsTable [value]="calls" [lazy]="true" (onLazyLoad)="loadCalls($event)" dataKey="id"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true" [rows]="10"
+            [totalRecords]="ivrCallsCount" [loading]="loading" responsiveLayout="stack" scrollHeight="flex"
+            [globalFilterFields]="['referenceNo','customer.firstName','partner.partnerName','status']"
+            styleClass="p-datatable-customers p-datatable-gridlines"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">
+            <ng-template pTemplate="caption">
+                <div class="row">
+                    <div class="col-md-4 no-padding-small">
+                        <span class="p-input-icon-right" [style]="{'width':'100%'}">
+                            <i class="pi pi-search pointer-cursor" (click)="loanGlobalSearch(globalSearchValue)"></i>
+                            <input pInputText type="text" [style]="{'width':'100%'}" class="search-field"
+                                [(ngModel)]="globalSearchValue" placeholder="Search Calls" style="width:100%" />
+                        </span>
+                    </div>
+                    <div class="col-md-4 no-padding-small">
+                    </div>
+                    <div class="col-md-4 no-padding-small text-right">
+                        <p-dropdown styleClass="text-left" [style]="{'width':'100%'}" [options]="ivrCallsStatus"
+                            (onChange)="statusChange($event)" [(ngModel)]="statusDisplayName" optionLabel="displayName"
+                            dataKey="name">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="consumerPhone">Phone Number <p-sortIcon field="consumerPhone"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="callStatus">Status <p-sortIcon field="callStatus"></p-sortIcon></th>
+                    <th pSortableColumn="language">Language <p-sortIcon field="language"></p-sortIcon></th>
+                    <th>More Actions</th>
+                </tr>
+                <tr>
+                    <th>
+                        <p-columnFilter type="text" field="consumerPhone"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="callStatus"></p-columnFilter>
+                    </th>
+                    <th>
+                        <p-columnFilter type="text" field="language"></p-columnFilter>
+                    </th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-call>
+                <tr class="mobile-card">
+                    <td>
+                        <span class="d-lg-none d-md-none">Phone Number : </span><span
+                            class="table-column-data">{{call.consumerPhone.number}}</span>
+                    </td>
+                    <td>
+                        <span class="d-lg-none d-md-none">Status : </span><span
+                            class="table-column-data text-capitalize"
+                            [class]="'status-' + call.callStatus">{{call.callStatus}}</span>
+                    </td>
+                    <td>
+                        <span class="d-lg-none d-md-none d-sm-block">Language : </span><span class="table-column-data"
+                            *ngIf="call && call.language">{{call.language}}</span>
+                    </td>
+                    <td>
+                        <span class="d-lg-none d-md-none d-sm-block">More Actions : </span>
+                        <div class="d-flex text-center">
+                            <button pButton pRipple type="button" class="p-button-primary btn-primary">View
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <br class="d-lg-none d-md-none">
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7">No Loans found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
