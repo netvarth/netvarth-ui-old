@@ -280,7 +280,8 @@
                                                 class="font-weight-bold">{{bankData.bankName}}</span>
                                         </div>
                                         <span class="mt-2">2. Name of the Drawee Bank Branch :
-                                            <span class="font-weight-bold">N/A</span>
+                                            <span *ngIf="bankData && bankData.bankBranchName"
+                                                class="font-weight-bold">{{bankData.bankBranchName}}</span>
                                         </span><br>
                                         <span class="mt-2">3. MICR Sort Code :
                                             <span class="font-weight-bold">N/A</span>
