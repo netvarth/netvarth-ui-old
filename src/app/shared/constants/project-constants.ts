@@ -1251,15 +1251,7 @@ export const projectConstantsLocal = {
     { name: 'All', displayName: 'All Calls' },
     { name: 'connected', displayName: 'Connected Calls' },
     { name: 'missed', displayName: 'Missed Calls' },
-    { name: 'voicemail', displayName: 'Voice Mail' },
-    { name: 'ApprovalRequired', displayName: 'Approval Required' },
-    { name: 'Redirected', displayName: 'Redirected' },
-    { name: 'CreditApproved', displayName: 'Credit Verified' },
-    { name: 'BranchApproved', displayName: 'BM Approved' },
-    { name: 'ConsumerAccepted', displayName: 'Consumer Accepted' },
-    { name: 'Sanctioned', displayName: 'Sanctioned' },
-    { name: 'OperationsVerified', displayName: 'Operations Verified' },
-    { name: 'Rejected', displayName: 'Rejected' }
+    { name: 'voicemail', displayName: 'Voice Mail' }
   ],
   PHONE_TYPES: [
     { name: 'Residence', displayName: 'Residence' },

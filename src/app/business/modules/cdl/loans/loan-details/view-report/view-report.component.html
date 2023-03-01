@@ -19,82 +19,94 @@
                     <div class="table-responsive">
                         <table class="table table-borderless">
                             <tbody>
-                                <tr style="width: 100%;" *ngIf="reportData.averageBankBalance">
+
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.bankingHabits || reportData.bankingHabits==0">
+                                    <td style="width: 50%;" class="details-title">Banking Habits</td>
+                                    <th style=" width: 50%;" class="details-sub-title">{{reportData.bankingHabits}}
+                                    </th>
+                                </tr>
+
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.averageBankBalance || reportData.averageBankBalance==0">
                                     <td style="width: 50%;" class="details-title">Average Bank Balance</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.averageBankBalance}}
                                     </th>
                                 </tr>
-                                <tr style="width: 100%;" *ngIf="reportData.minimumBalanceDaily">
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.minimumBalanceDaily || reportData.minimumBalanceDaily==0">
                                     <td style="width: 50%;" class="details-title">Minimum Balance Daily</td>
                                     <th style=" width: 50%;" class="details-sub-title">
                                         {{reportData.minimumBalanceDaily}}
                                     </th>
                                 </tr>
-                                <tr style="width: 100%;" *ngIf="reportData.minimumBalanceMonthly">
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.minimumBalanceMonthly || reportData.minimumBalanceMonthly==0">
                                     <td style="width: 50%;" class="details-title">Minimum Balance Monthly</td>
                                     <th style=" width: 50%;" class="details-sub-title">
                                         {{reportData.minimumBalanceMonthly}}
                                     </th>
                                 </tr>
-                                <tr style="width: 100%;" *ngIf="reportData.chequeBounceCount">
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.chequeBounceCount || reportData.chequeBounceCount==0">
                                     <td style="width: 50%;" class="details-title">Check Bounce Count </td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.chequeBounceCount}}
                                     </th>
                                 </tr>
-                                <tr style="width: 100%;" *ngIf="reportData.presentMonthlyEMI">
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.presentMonthlyEMI || reportData.presentMonthlyEMI==0">
                                     <td style="width: 50%;" class="details-title">Present Month EMI</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.presentMonthlyEMI}}
                                     </th>
                                 </tr>
 
-                                <tr style="width: 100%;" *ngIf="reportData.maximumBalance">
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.maximumBalance || reportData.maximumBalance==0">
                                     <td style="width: 50%;" class="details-title">Maximum Balance</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.maximumBalance}}
                                     </th>
                                 </tr>
 
-                                <tr style="width: 100%;" *ngIf="reportData.credits">
+                                <tr style="width: 100%;" *ngIf="reportData.credits && reportData.credits==0">
                                     <td style="width: 50%;" class="details-title">Credits</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.credits}}
                                     </th>
                                 </tr>
 
-                                <tr style="width: 100%;" *ngIf="reportData.totalCredit">
+                                <tr style="width: 100%;" *ngIf="reportData.totalCredit || reportData.totalCredit==0">
                                     <td style="width: 50%;" class="details-title">Total Credit</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.totalCredit}}
                                     </th>
                                 </tr>
 
-                                <tr style="width: 100%;" *ngIf="reportData.debits">
+                                <tr style="width: 100%;" *ngIf="reportData.debits || reportData.debits==0">
                                     <td style="width: 50%;" class="details-title">Debits</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.debits}}
                                     </th>
                                 </tr>
 
-                                <tr style="width: 100%;" *ngIf="reportData.totalDebit">
+                                <tr style="width: 100%;" *ngIf="reportData.totalDebit || reportData.totalDebit==0">
                                     <td style="width: 50%;" class="details-title">Total Debit</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.totalDebit}}
                                     </th>
                                 </tr>
 
-                                <tr style="width: 100%;" *ngIf="reportData.cashWithdrawals">
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.cashWithdrawals || reportData.cashWithdrawals==0">
                                     <td style="width: 50%;" class="details-title">Cash Withdrawals</td>
                                     <th style=" width: 50%;" class="details-sub-title">{{reportData.cashWithdrawals}}
                                     </th>
                                 </tr>
 
-                                <tr style="width: 100%;" *ngIf="reportData.totalCashWithdrawal">
+                                <tr style="width: 100%;"
+                                    *ngIf="reportData.totalCashWithdrawal || reportData.totalCashWithdrawal==0">
                                     <td style="width: 50%;" class="details-title">Total Cash Withdrawal</td>
                                     <th style=" width: 50%;" class="details-sub-title">
                                         {{reportData.totalCashWithdrawal}}
                                     </th>
                                 </tr>
 
-                                <tr style="width: 100%;" *ngIf="reportData.bankingHabits">
-                                    <td style="width: 50%;" class="details-title">Banking Habits</td>
-                                    <th style=" width: 50%;" class="details-sub-title">{{reportData.bankingHabits}}
-                                    </th>
-                                </tr>
+
 
 
                             </tbody>

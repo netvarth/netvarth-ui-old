@@ -247,8 +247,8 @@
                           maxlength="12" />
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification"
-                          *ngIf="!aadharverification && !verifyingUID"
-                          (click)="idVerification('UID')"><span>Verify</span></a>
+                          *ngIf="!aadharverification && !verifyingUID" (click)="idVerification('UID')"
+                          [class.disabled]="documentVerifying"><span>Verify</span></a>
 
                         <a class="btn btn-verify" [class.btn-verified]="aadharverification" *ngIf="verifyingUID"
                           (click)="refreshAadharVerify()"><span>Refresh</span></a>
@@ -313,7 +313,7 @@
                           maxlength="10" />
 
                         <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
-                          (click)="idVerification('Pan')"><span>Verify</span></a>
+                          (click)="idVerification('Pan')" [class.disabled]="documentVerifying"><span>Verify</span></a>
 
                         <a class="btn btn-verify" *ngIf="panverification" [class.btn-verified]="panverification">
                           <span *ngIf="panverification"><i class="fa fa-check"></i>&nbsp;Verified</span></a>
@@ -1605,7 +1605,8 @@
 
                             <a class="btn btn-verify" [class.btn-verified]="coapplicantaadharverification"
                               *ngIf="!coapplicantaadharverification && !coapplicantverifyingUID"
-                              (click)="coApplicangtIdVerification('UID',i)"><span>Verify</span></a>
+                              (click)="coApplicangtIdVerification('UID',i)"
+                              [class.disabled]="coapplicantDocumentVerifying"><span>Verify</span></a>
 
                             <a class="btn btn-verify" [class.btn-verified]="coapplicantaadharverification"
                               *ngIf="coapplicantverifyingUID"
@@ -1672,8 +1673,8 @@
                               [class.disabled]="action == 'update' && coapplicantpanverification" maxlength="10" />
 
                             <a class="btn btn-verify" [class.btn-verified]="coapplicantpanverification"
-                              *ngIf="!coapplicantpanverification"
-                              (click)="coApplicangtIdVerification('Pan',i)"><span>Verify</span></a>
+                              *ngIf="!coapplicantpanverification" (click)="coApplicangtIdVerification('Pan',i)"
+                              [class.disabled]="coapplicantDocumentVerifying"><span>Verify</span></a>
 
                             <a class="btn btn-verify" *ngIf="coapplicantpanverification"
                               [class.btn-verified]="coapplicantpanverification">

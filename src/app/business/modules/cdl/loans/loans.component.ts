@@ -320,9 +320,10 @@ export class LoansComponent implements OnInit {
       this.loanGlobalSearchActive = true;
       let api_filter = {}
       // api_filter['spInternalStatus-like'] = globalSearchValue;
-      api_filter['or=referenceNo-like'] = globalSearchValue;
-      api_filter['or=customerFirstName-like'] = globalSearchValue;
-      api_filter['or=partnerName-like'] = globalSearchValue;
+      // form_data.search_input + ',firstName-eq=' + form_data.search_input;
+      api_filter['or=referenceNo-like'] = globalSearchValue + ',customerFirstName-like=' + globalSearchValue + ',partnerName-like=' + globalSearchValue;
+      // api_filter['or=customerFirstName-like'] = globalSearchValue;
+      // api_filter['or=partnerName-like'] = globalSearchValue;
       this.getLoansByFilter(api_filter);
       this.getTotalLoansCount(api_filter);
     }

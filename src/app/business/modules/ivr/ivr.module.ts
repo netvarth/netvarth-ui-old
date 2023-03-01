@@ -11,6 +11,7 @@ import { TableModule } from 'primeng/table';
 import { MenuModule } from 'primeng/menu';
 import { RippleModule } from 'primeng/ripple';
 import { MatMenuModule } from '@angular/material/menu';
+import { RoundProgressModule } from 'angular-svg-round-progressbar';
 
 const routes: Routes = [
   { path: '', component: IvrComponent }
@@ -32,6 +33,7 @@ const routes: Routes = [
     MenuModule,
     RippleModule,
     MatMenuModule,
+    [RoundProgressModule],
     [RouterModule.forChild(routes)]
   ]
 })

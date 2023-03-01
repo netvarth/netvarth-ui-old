@@ -31,12 +31,12 @@
 }
 
 .missed-calls {
-    color: #36A2EB !important;
+    color: #FA5252 !important;
     font-size: 18px !important;
 }
 
 .answered-calls {
-    color: #FFCE56 !important;
+    color: #40C057 !important;
     font-size: 18px !important;
 }
 
@@ -84,10 +84,26 @@
 }
 
 
+.semi-progress-bar {
+    top: auto;
+    bottom: 0%;
+    left: 30%;
+    position: absolute;
+    color: #bbb;
+    font-weight: 100;
+    line-height: 1;
+}
 
 
+.progress-wrapper {
+    position: relative;
+    margin: 20px auto;
+    font-size: 40px;
+}
 
-
+.table-column-data {
+    font-weight: bolder !important;
+}
 
 
 /* Mobile Only Styles */
@@ -117,6 +133,18 @@
     .card-title {
         font-size: 13px !important;
     }
+
+    .dashboard-card {
+        min-height: 140px !important;
+    }
+
+    .progress-wrapper {
+        font-size: 50px !important;
+    }
+
+    .semi-progress-bar {
+        left: 35% !important;
+    }
 }
 
 
@@ -125,6 +153,22 @@
 @media (min-width: 1025px) {
     .mobile-only {
         display: none;
+    }
+
+    .dashboard-card {
+        min-height: 145px !important;
+    }
+
+    .progress-wrapper {
+        font-size: 30px !important;
+    }
+
+    .semi-progress-bar {
+        left: 35% !important;
+    }
+
+    .mt-sm-5 {
+        margin-top: 20px !important;
     }
 }
 
@@ -137,5 +181,40 @@
 
     .desktop-only {
         display: none;
+    }
+
+    .progress-wrapper {
+        font-size: 60px !important;
+    }
+
+    .semi-progress-bar {
+        left: 35% !important;
+    }
+
+    .dashboard-card {
+        min-height: 145px !important;
+    }
+
+    .d-md-none {
+        display: block !important;
+    }
+
+    .mt-sm-5 {
+        margin-top: 60px !important;
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .d-md-none {
+        display: none !important;
+    }
+
+    .mt-sm-5 {
+        margin-top: 0px !important;
+    }
+
+    .progress-wrapper {
+        font-size: 30px !important;
     }
 }

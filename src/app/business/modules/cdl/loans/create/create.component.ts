@@ -15,6 +15,7 @@ import { SelectSchemeComponent } from '../select-scheme/select-scheme.component'
 import { CdlService } from '../../cdl.service';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
 // import { SharedServices } from '../../../../../../../shared/services/shared-services';
 // import { SubSink } from 'subsink';
 
@@ -33,6 +34,7 @@ export class CreateComponent implements OnInit {
   bankDetailsSaved = false;
   kycDetailsSaved = false;
   customerDetailsSaved = false;
+  documentVerifying = false;
   calculatedMafilScore: any = 0;
   customerEducationScore: any = 0;
   selectedMessage = {
@@ -176,6 +178,7 @@ export class CreateComponent implements OnInit {
   coApplicantId: any;
   coapplicantemailverification: any = false;
   aadharVerfied: any = false;
+  coapplicantDocumentVerifying: boolean;
   constructor(
     private location: Location,
     private router: Router,
@@ -1792,6 +1795,7 @@ export class CreateComponent implements OnInit {
 
 
   idVerification(type) {
+    this.documentVerifying = true;
     if (this.verification) {
       this.loanApplication = {
         "loanApplicationUid": this.loanId,
@@ -1832,10 +1836,12 @@ export class CreateComponent implements OnInit {
           }
           if (type == 'Pan') {
             this.panverification = true;
+            this.documentVerifying = false;
             this.snackbarService.openSnackBar(type + " Verified Successfully")
           }
           else if (type == 'UID') {
             this.verifyingUID = true;
+            this.documentVerifying = false;
             this.snackbarService.openSnackBar("We have sent the verification link to mobile.Please Verify and click on refresh")
           }
         },
@@ -1856,6 +1862,7 @@ export class CreateComponent implements OnInit {
 
 
   coApplicangtIdVerification(type, i) {
+    this.coapplicantDocumentVerifying = true;
     if (this.coapplicantPhoneVerification) {
       this.loanApplication = {
         "id": this.coApplicantId,
@@ -1892,10 +1899,12 @@ export class CreateComponent implements OnInit {
         }
         if (type == 'Pan') {
           this.coapplicantpanverification = true;
+          this.coapplicantDocumentVerifying = false;
           this.snackbarService.openSnackBar(type + " Verified Successfully")
         }
         else if (type == 'UID') {
           this.coapplicantverifyingUID = true;
+          this.coapplicantDocumentVerifying = false;
           this.snackbarService.openSnackBar("We have sent the verification link to mobile.Please Verify and click on refresh")
         }
       },
