@@ -86,6 +86,10 @@ export class ProviderServices {
     return this.servicemeta.httpDelete(path);
   }
   //item grouping api services.
+  updateItemGroupingStatus(status) {
+    const url = 'provider/account/settings/itemGroup/' + status;
+    return this.servicemeta.httpPut(url);
+  }
   addItemGroup(data) {
     const url = 'provider/items/itemGroup';
     return this.servicemeta.httpPost(url, data);
