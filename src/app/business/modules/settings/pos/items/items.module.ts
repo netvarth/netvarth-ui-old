@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { LoadingSpinnerModule } from "../../../../../shared/modules/loading-spinner/loading-spinner.module";
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 const routes: Routes = [
     { path: '', component: ItemsComponent },
@@ -31,6 +32,7 @@ const routes: Routes = [
         CommonModule,
         TableModule,
         ButtonModule,
+        MatSlideToggleModule,
         MatMenuModule,
         MatIconModule,
         LoadingSpinnerModule,

@@ -21,6 +21,8 @@ import { Location } from "@angular/common";
 export class ItemsComponent implements OnInit, OnDestroy {
   tooltipcls = "";
   blogo: any = [];
+  itemGroupStatus;
+  item_group_statusstr = 'Off';
   imgCaptions: any = [];
   name_cap = Messages.ITEM_NAME_CAP;
   price_cap = Messages.PRICES_CAP;
@@ -103,6 +105,7 @@ export class ItemsComponent implements OnInit, OnDestroy {
     this.active_user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.getitems();
     this.getItemGroups();
+    this.getAccountSetting();
     //  this.getItemGroupById(1);
     //this.getItemGroupPhoto();
     // this.getAllItemInGroup(this.itemGroupId);
@@ -175,7 +178,56 @@ export class ItemsComponent implements OnInit, OnDestroy {
     });
   }
 
-
+  getAccountSetting(){
+    this.provider_servicesobj.getAccountSetting().subscribe
+    ((res:any)=>{
+      this.itemGroupStatus = res.enableItemGroup;
+      this.item_group_statusstr = (this.itemGroupStatus) ? 'On' : 'Off';
+      console.log("account settingsss ",res);
+    })
+  }
+  handleItemGroupStatus(event) {
+    console.log("enter status :",event);
+    const status = (event.checked) ? 'ENABLED' : 'DISABLED';
+    if (event.checked) {
+      const confirmdialogRef = this.dialog.open(ConfirmBoxComponent, {
+        width: '50%',
+        panelClass: ['popup-class', 'commonpopupmainclass'],
+        disableClose: true,
+        data: {
+          message: "Do you want to enable item groups",
+        }
+      });
+      confirmdialogRef.afterClosed().subscribe(result => {
+        // this.getOrderStatus();
+        if(result){
+          this.provider_servicesobj.updateItemGroupingStatus(status).
+          subscribe((res:any)=>{
+            this.itemGroupStatus = res;
+            this.item_group_statusstr = (this.itemGroupStatus) ? 'On' : 'Off';
+            console.log("Status :",res);
+            this.getAccountSetting();
+            this.snackbarService.openSnackBar('Item grouping ' + status + ' successfully', { 'panelclass': 'snackbarnormal' });
+          },(error) => {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+              // this.getOrderStatus();
+            });
+        }
+      });
+    } else {
+      // this.getItemGroups();
+      this.getAccountSetting();
+      this.item_group_statusstr = (this.itemGroupStatus) ? 'On' : 'Off';
+      // this.subscriptions.sink = this.provider_services.setProviderOrderSStatus(event.checked).subscribe(data => {
+      //   this.snackbarService.openSnackBar('Order settings ' + status + ' successfully', { 'panelclass': 'snackbarerror' });
+      //   this.commonDataStorage.setSettings('order', null);
+      //   this.getOrderStatus();
+      // }, (error) => {
+      //   this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+      //   this.getOrderStatus();
+      // });
+    }
+  }
 
   deleteGroupImg(itemGroup) {
     console.log("itemsss :",itemGroup);

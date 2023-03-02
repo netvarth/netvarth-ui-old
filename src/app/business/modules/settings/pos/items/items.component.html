@@ -6,12 +6,20 @@
             Item Groups
             &nbsp;
             <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i>&nbsp;&nbsp;
-            &nbsp;<a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
+            &nbsp;<a  *ngIf="itemGroupStatus" class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
                 <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
                 (click)="addGroupItem()">
                 <!-- data-toggle="modal"   data-target="#exampleModalCenter" -->
                   Create Item Group</button>
               </a>&nbsp;
+              &nbsp;<a *ngIf="!itemGroupStatus" class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
+                <!-- <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
+                (click)="handleItemGroupStatus()">
+                Enable Item Group
+              </button> -->
+              <mat-slide-toggle class="mgn-lt-20" [(ngModel)]="itemGroupStatus" (change)="handleItemGroupStatus($event)">
+              </mat-slide-toggle>&nbsp;{{item_group_statusstr}}
+            </a>&nbsp;
               &nbsp;<a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
                 <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
                 (click)="addItem()">
@@ -24,9 +32,13 @@
                 </button>
                 <!--  data-toggle="modal" data-target="#exampleModalCenter" -->
                 <mat-menu #appMenu="matMenu">
-                  <button mat-menu-item (click)="addGroupItem()">
+                  <button mat-menu-item (click)="addGroupItem()" *ngIf="itemGroupStatus">
                     Create item Group
                   </button>
+                  <a  *ngIf="!itemGroupStatus">
+                  <mat-slide-toggle  class="mgn-lt-20" [(ngModel)]="itemGroupStatus" (change)="handleItemGroupStatus($event)">
+                  </mat-slide-toggle>&nbsp;{{item_group_statusstr}}
+                </a>
                   <button  mat-menu-item (click)="addItem()">
                     Create Item
                   </button>
