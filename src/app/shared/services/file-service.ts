@@ -105,21 +105,24 @@ export class FileService {
     // console.log("File :", file);
     // console.log("File Type :", file.type)
     // console.log("File Name :", file.name.includes('docx'))
-    if (file.type == 'application/pdf') {
-      return './assets/images/pdf.png';
-    } else if (file.type == 'application/vnd.ms-excel' || file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-      return './assets/images/xls.png';
-    } else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
-      return './assets/images/audio.png';
-    } else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
-      return './assets/images/video.png';
-    } else if (file.type == 'application/msword' || file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.type.includes('docx') || file.type.includes('doc')) {
-      return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
-    } else if (file.type.includes('txt')) {
-      return './assets/images/ImgeFileIcon/docTxt.png';
-    } else {
-      return url;
+    if (file.type) {
+      if (file.type == 'application/pdf') {
+        return './assets/images/pdf.png';
+      } else if (file.type == 'application/vnd.ms-excel' || file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        return './assets/images/xls.png';
+      } else if (file.type == 'audio/mp3' || file.type == 'audio/mpeg' || file.type == 'audio/ogg') {
+        return './assets/images/audio.png';
+      } else if (file.type == 'video/mp4' || file.type == 'video/mpeg') {
+        return './assets/images/video.png';
+      } else if (file.type == 'application/msword' || file.type == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.type.includes('docx') || file.type.includes('doc')) {
+        return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
+      } else if (file.type.includes('txt')) {
+        return './assets/images/ImgeFileIcon/docTxt.png';
+      } else {
+        return url;
+      }
     }
+    return url;
   }
   getImageByType(type) {
     if (type == 'pdf') {

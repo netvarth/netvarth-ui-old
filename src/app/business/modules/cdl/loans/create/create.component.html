@@ -1168,8 +1168,9 @@
                       <div class="form-title">Total Bill Amount <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="totalPayment($event)" #totalpayment type="number" placeholder="Enter Bill Amount"
-                        class="form-control" autocomplete="off" [value]="totalpayment" formControlName="totalpayment" />
+                      <input (keyup)="totalPayment($event)" #totalpayment type="text" placeholder="Enter Bill Amount"
+                        class="form-control" autocomplete="off" [value]="totalpayment" formControlName="totalpayment"
+                        (keypress)="onlyAcceptNumberInput($event)" />
                     </div>
                   </div>
                 </div>
@@ -1182,9 +1183,9 @@
                       <div class="form-title">Down Payment <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input type="number" #downpayment placeholder="Enter Down Payment" class="form-control"
-                        autocomplete="off" [value]="downpayment" formControlName="downpayment"
-                        (keyup)="payment($event)" />
+                      <input type="text" #downpayment placeholder="Enter Down Payment" class="form-control"
+                        autocomplete="off" [value]="downpayment" formControlName="downpayment" (keyup)="payment($event)"
+                        (keypress)="onlyAcceptNumberInput($event)" />
                     </div>
                   </div>
                 </div>
@@ -1811,7 +1812,7 @@
                               Upload File
                             </label>
                             <input #aadharAttach type='file' (change)="filesSelected($event, 'coapplicantaadhar')"
-                              accept="image/*;capture=camera" formControlName="coapplicantaadharattachment" />
+                              accept="image/*;capture=camera" />
                           </div>
                           <div class="img-section clearfix"
                             *ngIf="selectedFiles['coapplicantaadhar'] && selectedFiles['coapplicantaadhar'].files && selectedFiles['coapplicantaadhar'].files.length > 0">

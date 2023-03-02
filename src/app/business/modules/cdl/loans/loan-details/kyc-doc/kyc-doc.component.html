@@ -48,18 +48,28 @@
         <br>
         <div class="row text-center">
             <div class="col-md-6">
-                <span class="font-weight-bold">Aadhar Card</span>
-                <div class="mt-2"
-                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments && loanData.loanApplicationKycList[0].aadhaarAttachments[0]">
-                    <img [src]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path" class="img-fluid pb-0">
+                <span class="font-weight-bold">Aadhar Card<span
+                        *ngIf="loanData && loanData.loanApplicationKycList &&loanData.loanApplicationKycList[0].aadhaarAttachments.length > 1">s</span></span>
+                <div class="col-md-12" *ngIf="loanData.loanApplicationKycList[0].aadhaarAttachments">
+                    <div class="mt-2 col-md-6"
+                        *ngFor="let attachment of loanData.loanApplicationKycList[0].aadhaarAttachments;let i=index;">
+                        <a [href]="attachment.s3path" target="_blank">
+                            <img [src]="attachment.s3path" class="img-fluid pb-0">
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <div class="col-md-6">
-                <span class="font-weight-bold">Pan Card</span>
-                <div class="mt-2"
-                    *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
-                    <img [src]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" class="img-fluid pb-0">
+                <span class="font-weight-bold">Pan Card<span
+                        *ngIf="loanData && loanData.loanApplicationKycList &&loanData.loanApplicationKycList[0].panAttachments.length > 1">s</span></span>
+                <div class="col-md-12" *ngIf="loanData.loanApplicationKycList[0].panAttachments">
+                    <div class="mt-2 col-md-6"
+                        *ngFor="let attachment of loanData.loanApplicationKycList[0].panAttachments;let i=index;">
+                        <a [href]="attachment.s3path" target="_blank">
+                            <img [src]="attachment.s3path" class="img-fluid pb-0">
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

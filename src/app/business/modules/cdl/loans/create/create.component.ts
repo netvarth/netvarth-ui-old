@@ -51,6 +51,7 @@ export class CreateComponent implements OnInit {
   todayDate = new Date()
   minDob: any;
   coapplicantPhoneVerification: any;
+  coApplicantCurrentAddress1: any = "Thrissur";
   selectedFiles = {
     "aadhar": { files: [], base64: [], caption: [] },
     "pan": { files: [], base64: [], caption: [] },
@@ -624,7 +625,6 @@ export class CreateComponent implements OnInit {
       coapplicantbankbranch: item && item.bankBranchName || ""
     }));
     // }
-    this.coApplicantbankListName = item && item.bankName
     this.createLoan.setControl('coapplicants', formArray);
     if (item.phoneVerified) {
       this.coapplicantPhoneVerification = true;
@@ -632,7 +632,7 @@ export class CreateComponent implements OnInit {
     if (item.emailVerified) {
       this.coapplicantemailverification = true;
     }
-    if (item && item.bankName) {
+    if (item && item.bankName && item.bankName != undefined) {
       this.coApplicantbankListName = item.bankName;
     }
     if (item.id) {
@@ -660,6 +660,23 @@ export class CreateComponent implements OnInit {
     }
   }
 
+
+  get employees(): UntypedFormArray {
+    return this.createLoan.get('coapplicants') as UntypedFormArray;
+  }
+
+  setCoApplicantAddressValues(item) {
+    const formArray = new UntypedFormArray([]);
+    formArray.push(this.createLoanFormBuilder.group({
+      coapplicantcurrentaddress1: item && item.permanentAddress1 || "",
+      coapplicantcurrentaddress2: item && item.permanentAddress2 || "",
+      coapplicantcurrentdistrict: item && item.permanentCity || "",
+      coapplicantcurrentstate: item && item.permanentState || "",
+      coapplicantcurrentpincode: item && item.permanentPin || ""
+    }));
+  }
+
+
   newCoApplicant(): UntypedFormGroup {
     return this.createLoanFormBuilder.group({
       coapplicantphone: [null],
@@ -684,6 +701,7 @@ export class CreateComponent implements OnInit {
       coapplicantphoto: [null]
     })
   }
+
 
   addCoApplicant() {
     this.coapplicants().push(this.newCoApplicant());
@@ -744,7 +762,7 @@ export class CreateComponent implements OnInit {
         }
         this.coApplicantDetailsPanelVerified = true;
         this.snackbarService.openSnackBar("Co-Applicant Details Saved Successfully");
-        this.panelsManage(false, false, false, true, false);
+        this.panelsManage(false, false, false, false, false);
       }
     },
       (error) => {
@@ -790,12 +808,12 @@ export class CreateComponent implements OnInit {
     }
     this.addCoApplicant();
     console.log("Coming to Products outside", this.productCategoryId, this.productSubCategoryId)
+    console.log("this.createLoan.controls.coapplicants.value[i].coapplicantfirstname", this.createLoan.controls.coapplicants.value[0].coapplicantfirstname)
   }
 
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    console.log("filterValue", filterValue)
     return this.banksList.filter(option => option.bankName.toLowerCase().includes(filterValue));
   }
 
@@ -893,34 +911,17 @@ export class CreateComponent implements OnInit {
     })
   }
 
+
+  onlyAcceptNumberInput(event) {
+    var ASCIICode = (event.which) ? event.which : event.keyCode
+    if (ASCIICode > 31 && (ASCIICode < 48 || ASCIICode > 57))
+      return false;
+    return true;
+  }
+
   getCustomerDetails(filter) {
     this.cdlService.getCustomerDetails(filter).subscribe((data) => {
       this.customerDetails = data;
-      // if (this.customerDetails && this.customerDetails.length != 0) {
-      //   console.log("this.customerDetails", this.customerDetails)
-      //   if (this.customerDetails[0].firstName) {
-      //     this.createLoan.controls.firstname.setValue(this.customerDetails[0].firstName);
-      //   }
-      //   if (this.customerDetails[0].lastName) {
-      //     this.createLoan.controls.lastname.setValue(this.customerDetails[0].lastName);
-      //   }
-      //   if (this.customerDetails[0] && this.customerDetails[0].email) {
-      //     this.createLoan.controls.email.setValue(this.customerDetails[0].email)
-      //   }
-      //   if (this.customerDetails[0] && this.customerDetails[0].address) {
-      //     this.createLoan.controls.permanentaddress1.setValue(this.customerDetails[0].address)
-      //   }
-      //   if (this.customerDetails[0] && this.customerDetails[0].dob) {
-      //     this.createLoan.controls.dob.setValue(this.customerDetails[0].dob)
-      //   }
-      //   if (this.customerDetails[0] && this.customerDetails[0].id) {
-      //     this.customerId = this.customerDetails[0].id;
-      //   }
-      // }
-      // else {
-      //   this.createLoan.controls.name.setValue("")
-      //   this.createLoan.controls.email.setValue("")
-      // }
     })
   }
 
@@ -950,8 +951,7 @@ export class CreateComponent implements OnInit {
         }
       }
       else {
-        this.createLoan.controls.name.setValue("")
-        this.createLoan.controls.email.setValue("")
+        this.createLoan.controls.name.setValue("");
       }
     }
   }
@@ -1045,21 +1045,24 @@ export class CreateComponent implements OnInit {
 
 
   getImagefromUrl(url, file) {
-    if (file.fileType == 'pdf') {
-      return './assets/images/pdf.png';
-    } else if (file.fileType == 'application/vnd.ms-excel' || file.fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
-      return './assets/images/xls.png';
-    } else if (file.fileType == 'audio/mp3' || file.fileType == 'audio/mpeg' || file.fileType == 'audio/ogg') {
-      return './assets/images/audio.png';
-    } else if (file.fileType == 'video/mp4' || file.fileType == 'video/mpeg') {
-      return './assets/images/video.png';
-    } else if (file.fileType == 'application/msword' || file.fileType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.fileType.includes('docx') || file.fileType.includes('doc')) {
-      return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
-    } else if (file.fileType.includes('txt')) {
-      return './assets/images/ImgeFileIcon/docTxt.png';
-    } else {
-      return url;
+    if (file.fileType) {
+      if (file.fileType == 'pdf') {
+        return './assets/images/pdf.png';
+      } else if (file.fileType == 'application/vnd.ms-excel' || file.fileType == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        return './assets/images/xls.png';
+      } else if (file.fileType == 'audio/mp3' || file.fileType == 'audio/mpeg' || file.fileType == 'audio/ogg') {
+        return './assets/images/audio.png';
+      } else if (file.fileType == 'video/mp4' || file.fileType == 'video/mpeg') {
+        return './assets/images/video.png';
+      } else if (file.fileType == 'application/msword' || file.fileType == 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.fileType.includes('docx') || file.fileType.includes('doc')) {
+        return './assets/images/ImgeFileIcon/wordDocsBgWhite.jpg';
+      } else if (file.fileType.includes('txt')) {
+        return './assets/images/ImgeFileIcon/docTxt.png';
+      } else {
+        return url;
+      }
     }
+    return url;
   }
 
   getImage(url, file) {
@@ -1844,7 +1847,8 @@ export class CreateComponent implements OnInit {
           }
         },
           (error) => {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.documentVerifying = false;
           })
       },
         (error) => {
@@ -1907,7 +1911,8 @@ export class CreateComponent implements OnInit {
         }
       },
         (error) => {
-          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+          this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+          this.coapplicantDocumentVerifying = false;
         })
 
 
@@ -2059,12 +2064,9 @@ export class CreateComponent implements OnInit {
       }
 
       this.cdlService.loanDetailsSave(this.loanApplication).subscribe((s3urls: any) => {
-        if (this.showCoapplicant) {
-          this.panelsManage(false, false, false, false, true);
-        }
-        else {
-          this.panelsManage(false, false, false, true);
-        }
+
+        this.panelsManage(false, false, false, true, false);
+
         this.loanDetailsSaved = true;
         this.snackbarService.openSnackBar("Loan Details Updated Successfully")
       },

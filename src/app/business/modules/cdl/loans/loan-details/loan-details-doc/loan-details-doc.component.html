@@ -108,16 +108,16 @@
                 <div class="text-normal mx-1">
                     <span *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]">
                         <span
-                            *ngIf="loanData.loanApplicationKycList[0].currentAddress1">{{loanData.loanApplicationKycList[0].currentAddress1}}</span>,
+                            *ngIf="loanData.loanApplicationKycList[0].currentAddress1">{{loanData.loanApplicationKycList[0].currentAddress1}},</span>
                         <span *ngIf="loanData.loanApplicationKycList[0].currentAddress2">
-                            {{loanData.loanApplicationKycList[0].currentAddress2}}
-                        </span>,
+                            {{loanData.loanApplicationKycList[0].currentAddress2}},
+                        </span>
                         <span *ngIf="loanData.loanApplicationKycList[0].currentCity">
-                            {{loanData.loanApplicationKycList[0].currentCity}}
-                        </span>,
+                            {{loanData.loanApplicationKycList[0].currentCity}},
+                        </span>
                         <span *ngIf="loanData.loanApplicationKycList[0].currentState">
-                            {{loanData.loanApplicationKycList[0].currentState}}
-                        </span>,
+                            {{loanData.loanApplicationKycList[0].currentState}},
+                        </span>
                         <span *ngIf="loanData.loanApplicationKycList[0].currentPin">
                             {{loanData.loanApplicationKycList[0].currentPin}}
                         </span>
@@ -135,16 +135,16 @@
                 <div class="text-normal mx-1">
                     <span *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0]">
                         <span
-                            *ngIf="loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}}</span>,
+                            *ngIf="loanData.loanApplicationKycList[0].permanentAddress1">{{loanData.loanApplicationKycList[0].permanentAddress1}},</span>
                         <span *ngIf="loanData.loanApplicationKycList[0].permanentAddress2">
-                            {{loanData.loanApplicationKycList[0].permanentAddress2}}
-                        </span>,
+                            {{loanData.loanApplicationKycList[0].permanentAddress2}},
+                        </span>
                         <span *ngIf="loanData.loanApplicationKycList[0].permanentCity">
-                            {{loanData.loanApplicationKycList[0].permanentCity}}
-                        </span>,
+                            {{loanData.loanApplicationKycList[0].permanentCity}},
+                        </span>
                         <span *ngIf="loanData.loanApplicationKycList[0].permanentState">
-                            {{loanData.loanApplicationKycList[0].permanentState}}
-                        </span>,
+                            {{loanData.loanApplicationKycList[0].permanentState}},
+                        </span>
                         <span *ngIf="loanData.loanApplicationKycList[0].permanentPin">
                             {{loanData.loanApplicationKycList[0].permanentPin}}
                         </span>
@@ -244,7 +244,7 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Aadhar Attachment</b>
+                    <b>Aadhar Attachments</b>
                 </div>
             </td>
             <td style="width:50%">
@@ -252,13 +252,14 @@
                     <span
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].aadhaarAttachments
                         && loanData.loanApplicationKycList[0].aadhaarAttachments[0] && loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path">
-                        <a [href]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path" target="_blank"
-                            class="pointer-cursor">
-                            <img width="100"
-                                [src]="getImagefromUrl(loanData.loanApplicationKycList[0].aadhaarAttachments[0].s3path, loanData.loanApplicationKycList[0].aadhaarAttachments[0])"
-                                [class.img-fluid]="loanData.loanApplicationKycList[0].aadhaarAttachments[0].fileType!='pdf'"
-                                class="pb-0">
-                        </a>
+                        <div class="col-md-12" *ngIf="loanData.loanApplicationKycList[0].aadhaarAttachments">
+                            <div class="mt-2 col-md-6"
+                                *ngFor="let attachment of loanData.loanApplicationKycList[0].aadhaarAttachments;let i=index;">
+                                <a [href]="attachment.s3path" target="_blank">
+                                    <img [src]="attachment.s3path" class="img-fluid pb-0">
+                                </a>
+                            </div>
+                        </div>
                     </span>
                 </div>
             </td>
@@ -283,7 +284,7 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
-                    <b>Pan Attachment</b>
+                    <b>Pan Attachments</b>
                 </div>
             </td>
             <td style="width:50%">
@@ -291,13 +292,14 @@
                     <span
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments
                                 && loanData.loanApplicationKycList[0].panAttachments[0] && loanData.loanApplicationKycList[0].panAttachments[0].s3path">
-                        <a [href]="loanData.loanApplicationKycList[0].panAttachments[0].s3path" target="_blank"
-                            class="pointer-cursor">
-                            <img width="100"
-                                [src]="getImagefromUrl(loanData.loanApplicationKycList[0].panAttachments[0].s3path, loanData.loanApplicationKycList[0].panAttachments[0])"
-                                [class.img-fluid]="loanData.loanApplicationKycList[0].panAttachments[0].fileType!='pdf'"
-                                class="pb-0">
-                        </a>
+                        <div class="col-md-12" *ngIf="loanData.loanApplicationKycList[0].panAttachments">
+                            <div class="mt-2 col-md-6"
+                                *ngFor="let attachment of loanData.loanApplicationKycList[0].panAttachments;let i=index;">
+                                <a [href]="attachment.s3path" target="_blank">
+                                    <img [src]="attachment.s3path" class="img-fluid pb-0">
+                                </a>
+                            </div>
+                        </div>
                     </span>
                 </div>
             </td>
@@ -748,6 +750,243 @@
                         *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeDob">
                         {{loanData.loanApplicationKycList[0].nomineeDob}}
                     </span>
+                </div>
+            </td>
+        </tr>
+        <tr class="text-left" *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1]">
+            <td style="width:50%" colspan="2">
+                <div class="text-normal mx-1 my-2 text-center">
+                    <b>Co-Applicant Details</b>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].coApplicantType">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Relation With Applicant</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>{{loanData.loanApplicationKycList[1].coApplicantType}}</b>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerFirstName">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Co-Applicant Name</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    <span *ngIf="loanData.loanApplicationKycList[1].customerFirstName">
+                        {{loanData.loanApplicationKycList[1].customerFirstName}}
+                    </span>
+
+                    <span *ngIf="loanData.loanApplicationKycList[1].customerLastName">
+                        {{loanData.loanApplicationKycList[1].customerLastName}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerPhone">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Phone Number</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].customerPhone}}
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].customerEmail">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Email</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].customerEmail}}
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].gender">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Gender</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].gender}}
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].dob">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Date of Birth</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">{{loanData.loanApplicationKycList[1].dob}}</div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Address</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentAddress1">{{loanData.loanApplicationKycList[1].permanentAddress1}},</span>
+                    <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentAddress2">{{loanData.loanApplicationKycList[1].permanentAddress2}},</span>
+                    <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentCity">{{loanData.loanApplicationKycList[1].permanentCity}},</span>
+                    <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentState">{{loanData.loanApplicationKycList[1].permanentState}},</span>
+                    <span
+                        *ngIf="loanData.loanApplicationKycList[1].permanentPin">{{loanData.loanApplicationKycList[1].permanentPin}}</span>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].aadhaar">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Aadhaar</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].aadhaar}}
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].aadhaar">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Aadhaar Attachments</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].aadhaarAttachments
+                                    && loanData.loanApplicationKycList[1].aadhaarAttachments[0] && loanData.loanApplicationKycList[1].aadhaarAttachments[0].s3path">
+                        <div class="col-md-12" *ngIf="loanData.loanApplicationKycList[1].aadhaarAttachments">
+                            <div class="mt-2 col-md-6"
+                                *ngFor="let attachment of loanData.loanApplicationKycList[1].aadhaarAttachments;let i=index;">
+                                <a [href]="attachment.s3path" target="_blank">
+                                    <img [src]="attachment.s3path" class="img-fluid pb-0">
+                                </a>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].pan">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Pan</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].pan}}
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].pan">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Pan Attachments</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[1] && loanData.loanApplicationKycList[1].panAttachments
+                                                            && loanData.loanApplicationKycList[1].panAttachments[0] && loanData.loanApplicationKycList[1].panAttachments[0].s3path">
+                        <div class="col-md-12" *ngIf="loanData.loanApplicationKycList[1].panAttachments">
+                            <div class="mt-2 col-md-6"
+                                *ngFor="let attachment of loanData.loanApplicationKycList[1].panAttachments;let i=index;">
+                                <a [href]="attachment.s3path" target="_blank">
+                                    <img [src]="attachment.s3path" class="img-fluid pb-0">
+                                </a>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankName">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Bank Name</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].bankName}}
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankAccountNo">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Bank AccountNo</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].bankAccountNo}}
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankIfsc">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Bank IFSC</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].bankIfsc}}
+                </div>
+            </td>
+        </tr>
+
+        <tr style="width: 100%;" *ngIf="loanData.loanApplicationKycList[1].bankBranchName">
+            <td style="width: 50%;">
+                <div class="text-normal mx-1">
+                    <b>Bank Branch Name</b>
+                </div>
+            </td>
+            <td style=" width: 50%;">
+                <div class="text-normal mx-1">
+                    {{loanData.loanApplicationKycList[1].bankBranchName}}
                 </div>
             </td>
         </tr>
