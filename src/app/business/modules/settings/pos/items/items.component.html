@@ -13,12 +13,12 @@
                   Create Item Group</button>
               </a>&nbsp;
               &nbsp;<a *ngIf="!itemGroupStatus" class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
-                <!-- <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
+                <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
                 (click)="handleItemGroupStatus()">
                 Enable Item Group
-              </button> -->
-              <mat-slide-toggle class="mgn-lt-20" [(ngModel)]="itemGroupStatus" (change)="handleItemGroupStatus($event)">
-              </mat-slide-toggle>&nbsp;{{item_group_statusstr}}
+              </button>
+              <!-- <mat-slide-toggle class="m  gn-lt-20" [(ngModel)]="itemGroupStatus" (change)="handleItemGroupStatus($event)">
+              </mat-slide-toggle>&nbsp;{{item_group_statusstr}} -->
             </a>&nbsp;
               &nbsp;<a class="navbar-item-color bold pointer-cursor pull-right mgn-lt-5 disp-none-small">
                 <button mat-flat-button class="btn btn mb-2 action-button  btn-primary action-button-add"
@@ -35,10 +35,13 @@
                   <button mat-menu-item (click)="addGroupItem()" *ngIf="itemGroupStatus">
                     Create item Group
                   </button>
-                  <a  *ngIf="!itemGroupStatus">
+                  <button mat-menu-item (click)="handleItemGroupStatus()" *ngIf="!itemGroupStatus">
+                    Enable item Group
+                  </button>
+                  <!-- <a  *ngIf="!itemGroupStatus">
                   <mat-slide-toggle  class="mgn-lt-20" [(ngModel)]="itemGroupStatus" (change)="handleItemGroupStatus($event)">
                   </mat-slide-toggle>&nbsp;{{item_group_statusstr}}
-                </a>
+                </a> -->
                   <button  mat-menu-item (click)="addItem()">
                     Create Item
                   </button>
