@@ -843,11 +843,9 @@ export class NewReportComponent implements OnInit {
         if (res === 'All') {
           this.appointment_service = 'All';
           this.appointment_service_id = 0;
-          this.appointment_users = 'All';
         } else {
           this.appointment_service = res.split(',').length - 1 + ' services selected';
           this.appointment_service_id = res.replace(/,\s*$/, '');
-          this.appointment_users = res.split(',').length - 1 + ' users selected';
         }
         break;
       }
