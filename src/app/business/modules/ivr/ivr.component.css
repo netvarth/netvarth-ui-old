@@ -138,38 +138,15 @@
     }
 
     .progress-wrapper {
-        font-size: 50px !important;
-    }
-
-    .semi-progress-bar {
-        left: 35% !important;
-    }
-}
-
-
-/* Large Desktop Styles */
-
-@media (min-width: 1025px) {
-    .mobile-only {
-        display: none;
-    }
-
-    .dashboard-card {
-        min-height: 145px !important;
-    }
-
-    .progress-wrapper {
         font-size: 30px !important;
     }
 
     .semi-progress-bar {
-        left: 35% !important;
-    }
-
-    .mt-sm-5 {
-        margin-top: 20px !important;
+        left: 32% !important;
     }
 }
+
+
 
 /* Normal Desktop Styles or Tab Styles  */
 
@@ -183,11 +160,11 @@
     }
 
     .progress-wrapper {
-        font-size: 60px !important;
+        font-size: 40px !important;
     }
 
     .semi-progress-bar {
-        left: 35% !important;
+        left: 30% !important;
     }
 
     .dashboard-card {
@@ -214,6 +191,31 @@
     }
 
     .progress-wrapper {
-        font-size: 30px !important;
+        font-size: 20px !important;
+    }
+}
+
+
+/* Large Desktop Styles */
+
+@media (min-width: 1025px) {
+    .mobile-only {
+        display: none;
+    }
+
+    .dashboard-card {
+        min-height: 145px !important;
+    }
+
+    .progress-wrapper {
+        font-size: 25px !important;
+    }
+
+    .semi-progress-bar {
+        left: 27% !important;
+    }
+
+    .mt-sm-5 {
+        margin-top: 20px !important;
     }
 }

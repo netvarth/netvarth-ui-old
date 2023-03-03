@@ -147,6 +147,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   livetrack_statusstr: string;
   walkinConsumer_status: any;
   walkinConsumer_statusstr: string;
+  multiFactorAuthentication_statusstr: string;
   jaldeeintegration_status: any;
   jaldeeintegration_statusstr: string;
   createappointment_status: any;
@@ -177,6 +178,7 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   branchStatus: any;
   cdlRbacStatus: any;
   cdlRbacstatusDisplayName: string;
+  mfaStatus: any;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -774,7 +776,12 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.leadstatus = data.enableLead;
         this.leadstatusstr = (this.leadstatus) ? 'On' : 'Off';
 
+
       });
+    this.provider_services.getAccountSetting().subscribe((data: any) => {
+      this.mfaStatus = data.multiFactorAuthenticationRequired;
+      this.multiFactorAuthentication_statusstr = (this.mfaStatus) ? 'On' : 'Off';
+    })
   }
   handle_posStatus(event) {
     const value = (event.checked) ? true : false;
@@ -839,6 +846,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'integration':
         this.routerobj.navigate(['provider', 'settings', 'bprofile', 'jaldee-integration']);
+        break;
+      case 'mfa':
+        this.routerobj.navigate(['provider', 'settings', 'bprofile', 'multi-factor-authentication']);
         break;
       case 'locations':
         this.routerobj.navigate(['provider', 'settings', 'general', 'locations']);

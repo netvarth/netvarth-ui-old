@@ -27,6 +27,8 @@ export class IvrComponent implements OnInit {
   customers: any;
   customerMoreActionMenuItems: MenuItem[];
   customer_label: any;
+  connectedCallsCount: any;
+  missedCallsCount: any;
   constructor(
     private groupService: GroupStorageService,
     private ivrService: IvrService,
@@ -43,10 +45,9 @@ export class IvrComponent implements OnInit {
     this.getIvrCalls();
     this.getCustomers();
     this.getIvrCallsCount();
-
+    this.getIvrMissedCallsCount();
+    this.getIvrConnectedCallsCount();
     this.primengConfig.ripple = true;
-
-
   }
 
   viewCustomer(id) {
@@ -74,6 +75,29 @@ export class IvrComponent implements OnInit {
     };
     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras)
 
+  }
+
+  gotoMissedCalls() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'missed'
+      }
+    };
+    this.router.navigate(['provider', 'ivr', 'calls'], navigationExtras)
+  }
+
+  gotoConnectedCalls() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'connected'
+      }
+    };
+    this.router.navigate(['provider', 'ivr', 'calls'], navigationExtras)
+  }
+
+
+  gotoMyCalls() {
+    this.router.navigate(['provider', 'ivr', 'calls'])
   }
 
   viewAllCustomers() {
@@ -153,6 +177,30 @@ export class IvrComponent implements OnInit {
       });
   }
 
+
+  getIvrMissedCallsCount() {
+    let filter = {
+      "callStatus-eq": 'missed'
+    }
+    this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
+      this.missedCallsCount = data;
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+  getIvrConnectedCallsCount() {
+    let filter = {
+      "callStatus-eq": 'connected'
+    }
+    this.ivrService.getIvrCallsCount(filter).subscribe((data: any) => {
+      this.connectedCallsCount = data;
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
 
   statusChange(event) {
     let api_filter = {}

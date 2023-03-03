@@ -87,7 +87,7 @@ export class ProviderServices {
   }
   //item grouping api services.
   updateItemGroupingStatus(status) {
-  
+
     const url = 'provider/account/settings/itemGroup/' + status;
     return this.servicemeta.httpPut(url);
   }
@@ -1497,9 +1497,20 @@ export class ProviderServices {
     const url = 'provider/account/settings/jaldeeIntegrationSettings';
     return this.servicemeta.httpGet(url);
   }
+
+  getMfaSettings() {
+    const url = 'provider/account/settings/mfa';
+    return this.servicemeta.httpGet(url);
+  }
+
   setJaldeeIntegration(data) {
     const url = 'provider/account/settings/jaldeeIntegration';
     return this.servicemeta.httpPut(url, data);
+  }
+
+  handleMultiFactorAuthentication(status) {
+    const url = 'provider/account/settings/mfa/' + status;
+    return this.servicemeta.httpPut(url, null);
   }
   setDonations(status) {
     const url = 'provider/account/settings/donationFundRaising/' + status;
@@ -2057,12 +2068,12 @@ export class ProviderServices {
       return this.servicemeta.httpGet('provider/catalog');
     }
   }
-  getCatalogItems(id?){
+  getCatalogItems(id?) {
     return this.servicemeta.httpGet('provider/catalog/' + id);
   }
-  addItemsToCatalog(catalogId,list){
-    const url ='provider/catalog/' + catalogId + '/items'
-    return this.servicemeta.httpPost(url,list);
+  addItemsToCatalog(catalogId, list) {
+    const url = 'provider/catalog/' + catalogId + '/items'
+    return this.servicemeta.httpPost(url, list);
   }
   stateChangeCatalog(id, status) {
     const url = 'provider/catalog/' + id + '/' + status;

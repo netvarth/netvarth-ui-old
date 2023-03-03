@@ -315,11 +315,16 @@ export class AuthService {
     const promise = new Promise((resolve, reject) => {
       this.shared_services.ProviderLogin(post_data)
         .subscribe(
-          data => {
-            this.providerDataStorage.setWeightageArray([]);
-            this.lStorageService.setitemonLocalStorage('popupShown', 'false');
-            this.setLoginData(data, post_data, 'provider');
-            resolve(data);
+          (data: any) => {
+            if (data && data.multiFactorAuthenticationRequired) {
+              resolve(data);
+            }
+            else {
+              this.providerDataStorage.setWeightageArray([]);
+              this.lStorageService.setitemonLocalStorage('popupShown', 'false');
+              this.setLoginData(data, post_data, 'provider');
+              resolve(data);
+            }
           },
           error => {
             this.sendMessage({ ttype: 'main_loading', action: false });
@@ -409,7 +414,7 @@ export class AuthService {
     const _this = this;
     this.lStorageService.removeitemfromLocalStorage('authorizationToken');
     if (this.lStorageService.getitemfromLocalStorage('reqFrom') === 'cuA') {
-      
+
       let qrusr = this.getJson(this.lStorageService.getitemfromLocalStorage('ynw-credentials'));
       console.log("Entered to goThroughLogin Method");
       return new Promise((resolve) => {
@@ -452,12 +457,12 @@ export class AuthService {
         // } else {
         //   resolve(false);
         // }
-              if (_this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
-                resolve(true);
-              } else {
-                resolve(false);
-              }
-          })
+        if (_this.lStorageService.getitemfromLocalStorage('ynw-credentials')) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
     }
   }
 

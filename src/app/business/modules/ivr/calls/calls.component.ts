@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { IvrService } from '../ivr.service';
@@ -18,15 +18,27 @@ export class CallsComponent implements OnInit {
   loanGlobalSearchActive: any = false;
   globalSearchValue: any;
   ivrCallsStatus = projectConstantsLocal.IVR_CALL_STATUS;
+  statusType: any;
 
   constructor(
     private router: Router,
     private ivrService: IvrService,
-    private snackbarService: SnackbarService
-  ) { }
+    private snackbarService: SnackbarService,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      if (params && params.type) {
+        this.statusType = params.type;
+        this.statusDisplayName = { name: params.type, displayName: params.type + 'Calls' };
+        this.statusChange({ value: { name: params.type } })
+      }
+    })
+  }
 
   ngOnInit(): void {
-    this.getIvrCalls()
+    if (!this.statusType) {
+      this.getIvrCalls();
+    }
   }
 
   loadCalls(event) {
@@ -34,7 +46,7 @@ export class CallsComponent implements OnInit {
     let api_filter = this.ivrService.setFiltersFromPrimeTable(event);
     if (this.statusDropdownClicked) {
       if (this.statusDisplayName && this.statusDisplayName.name) {
-        if (this.statusDisplayName.name != 'All') {
+        if (this.statusDisplayName.name != 'All' || this.statusType) {
           api_filter['callStatus-eq'] = this.statusDisplayName.name;
         }
       }
@@ -104,7 +116,7 @@ export class CallsComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['provider', 'calls']);
+    this.router.navigate(['provider', 'ivr']);
   }
 
 }

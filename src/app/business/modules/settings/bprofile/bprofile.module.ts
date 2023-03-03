@@ -25,16 +25,19 @@ import { AddProviderWaitlistLocationsModule } from '../../add-provider-waitlist-
 import { FileService } from '../../../../shared/services/file-service';
 const routes: Routes = [
     { path: '', component: BProfileComponent },
-    { path: '', children: [
-        { path: 'specializations', loadChildren: ()=> import('./specializations/specializations.module').then(m=>m.SpecializationsModule)},
-        { path: 'languages',loadChildren: ()=> import('./languages/languages.module').then(m=>m.LanguagesModule)},
-        { path: 'additionalinfo', loadChildren: ()=> import('./additionalinfo/additionalinfo.module').then(m=>m.AdditionalInfoModule)},
-        { path: 'aboutme',loadChildren: ()=> import('./aboutme/aboutme.module').then(m=>m.AboutMeModule) },
-        { path: 'jaldeeonline',loadChildren: ()=> import('./jaldee-online/jaldee-online.module').then(m=>m.JaldeeOnlineModule)},
-        { path: 'social',loadChildren: ()=> import('./social-media/social-media.module').then(m=>m.SocialMediaModule)}
-    ]},
-    { path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule)},
-    { path: 'jaldee-integration', loadChildren: () => import('./integration/integration-settings.module').then(m => m.IntegrationSettingsModule) }
+    {
+        path: '', children: [
+            { path: 'specializations', loadChildren: () => import('./specializations/specializations.module').then(m => m.SpecializationsModule) },
+            { path: 'languages', loadChildren: () => import('./languages/languages.module').then(m => m.LanguagesModule) },
+            { path: 'additionalinfo', loadChildren: () => import('./additionalinfo/additionalinfo.module').then(m => m.AdditionalInfoModule) },
+            { path: 'aboutme', loadChildren: () => import('./aboutme/aboutme.module').then(m => m.AboutMeModule) },
+            { path: 'jaldeeonline', loadChildren: () => import('./jaldee-online/jaldee-online.module').then(m => m.JaldeeOnlineModule) },
+            { path: 'social', loadChildren: () => import('./social-media/social-media.module').then(m => m.SocialMediaModule) }
+        ]
+    },
+    { path: 'privacy', loadChildren: () => import('./privacy/privacy.module').then(m => m.PrivacyModule) },
+    { path: 'jaldee-integration', loadChildren: () => import('./integration/integration-settings.module').then(m => m.IntegrationSettingsModule) },
+    { path: 'multi-factor-authentication', loadChildren: () => import('./multi-factor-authentication/multi-factor-authentication.module').then(m => m.MultiFactorAuthenticationModule) }
 ];
 @NgModule({
     imports: [
@@ -75,4 +78,4 @@ const routes: Routes = [
         NO_ERRORS_SCHEMA
     ],
 })
-export class BProfileModule {}
+export class BProfileModule { }

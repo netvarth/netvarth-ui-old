@@ -4,7 +4,7 @@
   <div class="child" *ngIf="loading">
     <app-common-innerloading-spinner>
     </app-common-innerloading-spinner>
-</div>
+  </div>
   <div class="login login-3 wizard d-flex flex-column flex-lg-row flex-column-fluid no-padding" *ngIf="!loading">
     <!--begin::Aside-->
     <div class="login-aside d-flex flex-column flex-row-auto">
@@ -35,7 +35,7 @@
       <!--begin::Wrapper-->
       <div class="d-flex flex-row-fluid flex-center">
         <!--begin::Signin-->
-        <div class="login-form">
+        <div class="login-form" *ngIf="!showOtpPage">
           <!--begin::Form-->
           <form [formGroup]="loginForm" class="form" id="kt_login_singin_form" novalidate (ngSubmit)="loginForm.valid &&
             onSubmit (loginForm.value)" action="">
@@ -58,10 +58,10 @@
                 formControlName="emailId" placeholder="Enter Mobile/Email" autocomplete="off" />
               <app-field-error-display class="text-left" [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
-    {
-    'required' : 'Mobile/Email is required',
-    'pattern' : 'Space not allowed'
-    })">
+                  {
+                  'required' : 'Mobile/Email is required',
+                  'pattern' : 'Space not allowed'
+                  })">
               </app-field-error-display>
             </div>
             <!--end::Form group-->
@@ -69,15 +69,15 @@
             <div class="form-group">
               <div class="d-flex justify-content-between mt-n5">
                 <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
-               
+
               </div>
               <input class="form-control py-7 px-6 rounded-lg border-0" type="password" id="password"
                 placeholder="Enter password" formControlName="password" autocomplete="off" />
               <app-field-error-display class="text-left" [displayError]="fed_service.isFieldValid(loginForm,'password')"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'password',
-    {
-    'required' : 'Password is required'
-    })">
+              {
+              'required' : 'Password is required'
+              })">
               </app-field-error-display>
             </div>
             <!--end::Form group-->
@@ -92,21 +92,52 @@
                 Login
               </button>
               <a (click)="doForgotPassword()"
-              class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">
-              Forgot Password ?
-            </a>
-              
+                class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">
+                Forgot Password ?
+              </a>
+
             </div>
             <div class="pb-lg-0 pb-5">
               <button *ngIf="!qParams['src']" (click)="doSignuppage()" type="button"
-              class="btn btn-light-primary font-weight-bolder px-8 py-2 my-3 font-size-lg">Join as a service
-              provider</button>
+                class="btn btn-light-primary font-weight-bolder px-8 py-2 my-3 font-size-lg">Join as a service
+                provider</button>
             </div>
             <!--end::Action-->
           </form>
           <!--end::Form-->
         </div>
         <!--end::Signin-->
+
+        <div class="login-form" *ngIf="showOtpPage">
+          <div class="text-center">
+            <div class="row">
+              <div class="form-group otp">
+                <div class="font-weight-bold otp-title">Please Enter Otp For Verification</div>
+                <div class="mt-3">
+                  <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)"
+                    [config]="otpConfig"></ng-otp-input>
+                  <!-- <p class="mgn-up-20">Not received yet! <a class="pointer-cursor link"
+                                      (click)="sendOTP('resent')">Resend</a>
+                                  </p> -->
+                  <div class="text-center">
+                    <button type="submit" (click)="goBackFromOtp()"
+                      class="btn btn-primary font-weight-bolder font-size-lg px-4 py-2 my-3 mr-3">
+                      Back
+                    </button>
+                    <button type="submit" (click)="LoginWithMultiFactorOtp()"
+                      class="btn btn-primary font-weight-bolder font-size-lg px-4 py-2 my-3 mr-3"
+                      [class.disabled]="api_loading" [class.spinner]="api_loading"
+                      [class.spinner-darker-success]="api_loading" [class.spinner-center]="api_loading">
+                      Login
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
       </div>
       <!--end::Wrapper-->
     </div>

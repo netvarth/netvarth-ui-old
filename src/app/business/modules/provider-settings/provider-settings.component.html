@@ -99,6 +99,17 @@
                       </span>
                     </span>
                     <p class="settings_info">Manage your account integration with jaldee.com</p>
+                  </a>
+                </li>
+                <li (click)="redirecTo('mfa')" class="pointer-cursor" [matTooltipClass]="tooltipcls"
+                  [matTooltip]="integration">
+                  <a class="pointer-cursor">
+                    <span class="lnk setings">Multi Factor Authentication
+                      <span class="pull-right">
+                        {{multiFactorAuthentication_statusstr}}
+                      </span>
+                    </span>
+                    <p class="settings_info">Manage your account authentication</p>
 
                   </a>
                 </li>
