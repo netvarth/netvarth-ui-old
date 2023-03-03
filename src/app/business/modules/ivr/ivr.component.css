@@ -215,6 +215,10 @@
         left: 27% !important;
     }
 
+    .semi-progress-bar-title {
+        font-size: 20px !important;
+    }
+
     .mt-sm-5 {
         margin-top: 20px !important;
     }

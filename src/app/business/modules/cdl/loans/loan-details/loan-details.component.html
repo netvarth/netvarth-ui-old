@@ -861,11 +861,20 @@
 
           </div>
           <div class="d-lg-flex" *ngIf="loanData && loanData.isAcceptanceOtpUpdated">
-            <div class="mt-2">
+            <div class="mt-2" *ngIf="digitalDocumenId && digitalDocumenId!=''">
               <div class="btn btn-primary" (click)="viewDigitalDocument()">View Agreement</div>
             </div>
-            <div class="mx-md-2 mt-2">
+
+            <div class="mt-2" *ngIf="!digitalDocumenId || (digitalDocumenId && digitalDocumenId=='')">
+              <div class="btn btn-primary" (click)="sendDigitalAgreement()">Send Agreement</div>
+            </div>
+
+            <div class="mx-md-2 mt-2" *ngIf="digitalInsuranceId && digitalInsuranceId!=''">
               <div class="btn btn-primary" (click)="viewInsuranceDocument()">View Insurance Agreement</div>
+            </div>
+
+            <div class="mx-md-2 mt-2" *ngIf="!digitalInsuranceId || (digitalInsuranceId && digitalInsuranceId=='')">
+              <div class="btn btn-primary" (click)="sendInsuranceDocument()">View Insurance Agreement</div>
             </div>
           </div>
           <div class="d-lg-flex">

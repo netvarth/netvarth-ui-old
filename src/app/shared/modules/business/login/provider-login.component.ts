@@ -291,6 +291,12 @@ export class ProviderLoginComponent implements OnInit {
       );
   }
 
+
+  resendMfaOTP() {
+    this.onSubmit(this.otpPageData[0])
+    this.snackbarService.openSnackBar("Otp Resend Successfully");
+  }
+
   createForm() {
     this.loginForm = this.fb.group({
       emailId: ['', Validators.compose([Validators.required, Validators.pattern(projectConstantsLocal.VALIDATOR_SPACE_NOT_ALLOWED)])],

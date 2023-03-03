@@ -62,6 +62,8 @@ export class LoanDetailsComponent implements OnInit {
   accountaggregatingStatusShowing: boolean;
   showEquifaxScore: any = false;
   customerPhoneNo: any;
+  digitalDocumenId: any;
+  digitalInsuranceId: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -87,6 +89,12 @@ export class LoanDetailsComponent implements OnInit {
             this.loanData = data;
             if (this.loanData && this.loanData.customer && this.loanData.customer.phoneNo) {
               this.customerPhoneNo = this.loanData.customer.phoneNo;
+            }
+            if (this.loanData && this.loanData.digitalDocumenId) {
+              this.digitalDocumenId = this.loanData.digitalDocumenId;
+            }
+            if (this.loanData && this.loanData.digitalInsuranceId) {
+              this.digitalInsuranceId = this.loanData.digitalInsuranceId;
             }
             this.checkMafilScore();
             this.checkPerfiosScore();
@@ -165,6 +173,29 @@ export class LoanDetailsComponent implements OnInit {
             window.open(data.digitalDocumenthPath, "_blank");
           }
         }
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+
+  sendDigitalAgreement() {
+    this.cdlservice.sendDigitalDocument(this.loanId).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Digital Document Sent Successfully", { 'panelClass': 'snackbarerror' })
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
+  }
+
+  sendInsuranceDocument() {
+    this.cdlservice.sendInsuranceDocument(this.loanId).subscribe((data: any) => {
+      if (data) {
+        this.snackbarService.openSnackBar("Insurance Document Sent Successfully", { 'panelClass': 'snackbarerror' })
       }
     },
       (error) => {

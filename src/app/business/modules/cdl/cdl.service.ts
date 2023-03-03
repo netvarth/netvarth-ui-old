@@ -585,6 +585,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  sendInsuranceDocument(id) {
+    const url = 'provider/loanapplication/digitalinsurance/' + id;
+    return this.servicemeta.httpPost(url, null);
+  }
+
   getPerfiosScore(data) {
     const url = 'provider/loanapplication/perfios';
     return this.servicemeta.httpPost(url, data);

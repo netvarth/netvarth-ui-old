@@ -117,8 +117,8 @@
                   <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)"
                     [config]="otpConfig"></ng-otp-input>
                   <!-- <p class="mgn-up-20">Not received yet! <a class="pointer-cursor link"
-                                      (click)="sendOTP('resent')">Resend</a>
-                                  </p> -->
+                      (click)="resendMfaOTP()">Resend</a>
+                  </p> -->
                   <div class="text-center">
                     <button type="submit" (click)="goBackFromOtp()"
                       class="btn btn-primary font-weight-bolder font-size-lg px-4 py-2 my-3 mr-3">
