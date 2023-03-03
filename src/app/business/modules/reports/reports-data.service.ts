@@ -14,6 +14,8 @@ export class ReportDataService {
   _queue_data = this.queueData.asObservable();
   private customerData = new BehaviorSubject<any>('All');
   _customers = this.customerData.asObservable();
+  private userData = new BehaviorSubject<any>('All');
+  _users = this.userData.asObservable();
   private reportData = new BehaviorSubject<any>({});
   _reports = this.reportData.asObservable();
   criteriaInput: any = {};
@@ -31,13 +33,16 @@ export class ReportDataService {
   }
   updateCustomers(data) {
     this.customerData.next(data);
-
   }
+  updateUsers(data){
+    this.userData.next(data);
+  }
+
   storeSelectedValues(data) {
     this.reportData.next(data);
   }
   updatedUserDataSelection(data){
-    this.reportData.next(data);
+    this.userData.next(data);
   }
 
   getReport() {

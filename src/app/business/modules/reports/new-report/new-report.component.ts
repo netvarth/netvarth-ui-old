@@ -15,6 +15,7 @@ import { MatSelect } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { Location } from '@angular/common';
 import { ConfirmBoxComponent } from '../../../../business/shared/confirm-box/confirm-box.component';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 @Component({
   selector: 'app-new-report',
   templateUrl: './new-report.component.html',
@@ -100,6 +101,12 @@ export class NewReportComponent implements OnInit {
   HO_lead_EndDate;
   appointment_service_id: number;
   appointment_service: string;
+  appointment_users: string;
+  payment_users: string;
+  token_users: string;
+  appointment_userId: any;
+  token_userId: any;
+  payment_userId: any;
   donation_service_id: any;
   donation_service: string;
   payment_service_id: any;
@@ -225,6 +232,7 @@ export class NewReportComponent implements OnInit {
   location: any = [];
   locName: any;
   locationFilter: any = [];
+  accountType;
   constructor(
     private router: Router,
     private activated_route: ActivatedRoute,
@@ -236,6 +244,7 @@ export class NewReportComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private snackbarService: SnackbarService,
     private lStorageService: LocalStorageService,
+    private groupService: GroupStorageService,
     private dialog: MatDialog
   ) {
     this.activated_route.queryParams.subscribe(qparams => {
@@ -316,6 +325,8 @@ export class NewReportComponent implements OnInit {
   }
 
   ngOnInit() {
+    const user = this.groupService.getitemFromGroupStorage('ynw-user');
+    this.accountType = user.accountType;
     this.payment_timePeriod = this.loan_application_timePeriod = this.loan_partner_application_timePeriod = this.loan_user_application_timePeriod = this.customer_timePeriod = this.customer_wise_timePeriod = this.document_collected_timePeriod = this.customer_crif_status_timePeriod = this.crm_timePeriod = this.employee_Activity_timePeriod = this.daily_Activity_timePeriod = this.sanctioned_timePeriod = this.HO_lead_timePeriod = this.recommended_timePeriod = this.login_timePeriod = this.processing_files_timePeriod = this.lead_timePeriod = this.consolidated_timePeriod = this.tat_timePeriod = this.lead_status_timePeriod = this.enquiry_timePeriod = this.monthly_timePeriod = this.appointment_timePeriod = this.waitlist_timePeriod = this.donation_timePeriod = this.order_timePeriod = this.user_timePeriod = 'LAST_THIRTY_DAYS';
     this.time_period = projectConstantsLocal.REPORT_TIMEPERIOD;
     this.payment_modes = projectConstantsLocal.PAYMENT_MODES;
@@ -379,8 +390,10 @@ export class NewReportComponent implements OnInit {
     });
     this.report_data_service._customers.subscribe(res => {
       this.setCustomerData(res);
-
     });
+    this.report_data_service._users.subscribe(res => {
+      this.setUserData(res);
+    })
     this.report_data_service._reports.subscribe(res => {
       this.setReportData(res);
     });
@@ -830,9 +843,11 @@ export class NewReportComponent implements OnInit {
         if (res === 'All') {
           this.appointment_service = 'All';
           this.appointment_service_id = 0;
+          this.appointment_users = 'All';
         } else {
           this.appointment_service = res.split(',').length - 1 + ' services selected';
           this.appointment_service_id = res.replace(/,\s*$/, '');
+          this.appointment_users = res.split(',').length - 1 + ' users selected';
         }
         break;
       }
@@ -840,9 +855,11 @@ export class NewReportComponent implements OnInit {
         if (res === 'All') {
           this.token_service = 'All';
           this.token_service_id = 0;
+          this.token_users = 'All';
         } else {
           this.token_service = res.split(',').length - 1 + ' services selected';
           this.token_service_id = res.replace(/,\s*$/, '');
+          this.token_users = res.split(',').length - 1 + ' users selected';
         }
         break;
       }
@@ -888,6 +905,40 @@ export class NewReportComponent implements OnInit {
         } else {
           this.token_schedule = res.split(',').length - 1 + ' schedules selected';
           this.token_schedule_id = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+    }
+  }
+  setUserData(res) {
+    switch (this.report_type) {
+      case 'payment': {
+        if (res === 'All') {
+          this.payment_users = 'All';
+          this.payment_userId = 0;
+        } else {
+          this.payment_users = res.split(',').length - 1 + ' users selected';
+          this.payment_userId = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'appointment': {
+        if (res === 'All') {
+          this.appointment_users = 'All';
+          this.appointment_userId = 0;
+        } else {
+          this.appointment_users = res.split(',').length - 1 + ' users selected';
+          this.appointment_userId = res.replace(/,\s*$/, '');
+        }
+        break;
+      }
+      case 'token': {
+        if (res === 'All') {
+          this.token_users = 'All';
+          this.token_userId = 0;
+        } else {
+          this.token_users = res.split(',').length - 1 + ' users selected';
+          this.token_userId = res.replace(/,\s*$/, '');
         }
         break;
       }
@@ -1200,6 +1251,9 @@ export class NewReportComponent implements OnInit {
           'donationEmail': this.payment_donationEmail,
           'donationPhone': this.payment_donationPhone,
         };
+        if (this.payment_userId) {
+          this.filterparams['provider']= this.payment_userId;
+        }
         if (this.payment_paymentMode === 0) {
           delete this.filterparams.paymentMode;
         }
@@ -1267,6 +1321,9 @@ export class NewReportComponent implements OnInit {
           'appointmentMode': this.appointment_mode,
           'apptForId': this.appointment_customerId
         };
+        if (this.appointment_userId) {
+          this.filterparams['provider']= this.appointment_userId;
+        }
         if (!this.appointment_customerId) {
           delete this.filterparams.appmtFor;
         }
@@ -2926,6 +2983,9 @@ export class NewReportComponent implements OnInit {
           'waitlistMode': this.waitlist_mode,
           'waitlistingForId': this.waitlist_customerId
         };
+        if (this.token_userId) {
+          this.filterparams['provider']= this.token_userId;
+        }
         if (!this.waitlist_customerId) {
           delete this.filterparams.waitlistingFor;
         }
