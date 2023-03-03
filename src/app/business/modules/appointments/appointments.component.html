@@ -509,7 +509,8 @@
                         </li>
                         <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                           *ngFor="let multiUser of users">
-                          <span *ngIf="multiUser.status === 'ACTIVE' && multiUser.userType && multiUser.userType==='PROVIDER'">
+                          <span
+                            *ngIf="multiUser.status === 'ACTIVE' && multiUser.userType && multiUser.userType==='PROVIDER'">
                             <mat-checkbox class="filter-checkbox"
                               [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
                               (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
@@ -1586,13 +1587,23 @@
                           </li>
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                             *ngFor="let multiUser of users">
-                            <span *ngIf="multiUser.admin === true">
+                            <span
+                              *ngIf="multiUser.status === 'ACTIVE' && multiUser.userType && multiUser.userType==='PROVIDER'">
                               <mat-checkbox class="filter-checkbox"
                                 [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
                                 (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
                                 {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
                             </span>
                           </li>
+                          <!-- <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let multiUser of users">
+                            <span *ngIf="multiUser.admin === true">
+                              <mat-checkbox class="filter-checkbox"
+                                [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                                (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
+                                {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                            </span>
+                          </li> -->
                         </div>
                       </div>
                     </div>
@@ -1850,7 +1861,7 @@
     </mat-tab>
     <mat-tab label="Request ({{appointment_requests_count}})">
       <!-- <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner> -->
-      <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive" >
+      <div class="col-md-12 col-xs-12 col-sm-12 no-padding adj-hgt table-responsive">
         <div>
           <table class="table tbl-qboard childDetails singleDash">
             <thead id="childActionBar">
@@ -1883,70 +1894,45 @@
             <!--               *ngIf="check_in_filtered_list.length > 0 && (activeSchedules.length > 0 || activeUser || (active_user.accountType === 'BRANCH' && activeSchedules.length == 0)) && !small_device_display" -->
             <tbody *ngIf="!loading && appt_request_list.length > 0">
               <ng-container *ngIf="!small_device_display">
-              <tr [class.disabled]="appt.apptStatus === 'RequestRejected'" *ngFor="let appt of appt_request_list, let i=index">
-                <ng-container>
-                <!-- <td class="imgRow">
+                <tr [class.disabled]="appt.apptStatus === 'RequestRejected'"
+                  *ngFor="let appt of appt_request_list, let i=index">
+                  <ng-container>
+                    <!-- <td class="imgRow">
                   <div>
                   <img src="../../../assets/images/mr_male.svg"
                style="width: 40px !important;"></div>
                
                 </td> -->
-                <td>
-                  <div>
-                    <span class="nameDiv" *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
-                     <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
-                    </div>
-                </td>
-                <td>
-                   <span class="bold" *ngIf="appt.appmtDate">{{appt.appmtDate | date: newTimeDateFormat}}</span>
-                    <div *ngIf="appt.appmtFor[0].apptTime">{{getSingleTime(appt.appmtFor[0].apptTime)}}</div>
-                </td>
-                <td>
-                   <span class="bold">Location</span> 
-                    <div *ngIf="appt.location.place">{{appt.location.place}}</div>
-                </td>
-                <!-- [class.disabled]="appt.apptStatus === 'RequestRejected'" -->
-                <td *ngIf="appt.apptStatus === 'Requested'">
-                 <span> <button class="btn btn-success "  (click)="showAppointmentRequest('request',appt)">Accept</button></span>
-                 <!--  data-toggle="modal" data-target="#exampleModalCenter" -->
-                
-                </td>
-                <td *ngIf="appt.apptStatus === 'Requested'">
-                 <span> <button class="btn btn-danger"  (click)="showAppointmentReject('reject',appt)">Reject</button></span>
-                </td>
-                <td  *ngIf="appt.apptStatus !== 'RequestRejected' && !appt.multiSelection && appt.releasedQnr &&
+                    <td>
+                      <div>
+                        <span class="nameDiv"
+                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName |
+                          capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
+                        <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
+                      </div>
+                    </td>
+                    <td>
+                      <span class="bold" *ngIf="appt.appmtDate">{{appt.appmtDate | date: newTimeDateFormat}}</span>
+                      <div *ngIf="appt.appmtFor[0].apptTime">{{getSingleTime(appt.appmtFor[0].apptTime)}}</div>
+                    </td>
+                    <td>
+                      <span class="bold">Location</span>
+                      <div *ngIf="appt.location.place">{{appt.location.place}}</div>
+                    </td>
+                    <!-- [class.disabled]="appt.apptStatus === 'RequestRejected'" -->
+                    <td *ngIf="appt.apptStatus === 'Requested'">
+                      <span> <button class="btn btn-success "
+                          (click)="showAppointmentRequest('request',appt)">Accept</button></span>
+                      <!--  data-toggle="modal" data-target="#exampleModalCenter" -->
+
+                    </td>
+                    <td *ngIf="appt.apptStatus === 'Requested'">
+                      <span> <button class="btn btn-danger"
+                          (click)="showAppointmentReject('reject',appt)">Reject</button></span>
+                    </td>
+                    <td *ngIf="appt.apptStatus !== 'RequestRejected' && !appt.multiSelection && appt.releasedQnr &&
                 appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled'">
-                          <!--    && !appt.multiSelection && appt.releasedQnr &&
-                     appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled' -->
-                  <span class="actionbtn">
-                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
-                      <mat-icon>more_vert</mat-icon>
-                    </button>
-                    <mat-menu #menu="matMenu">
-                      <button type="button" (click)="showQuestionnaire(appt)" mat-menu-item>
-                        <span class="qnr-icon" style="width:20px;height:20px"></span>&nbsp;<span class="bold">More Info</span>
-                      </button>
-                    </mat-menu>
-                  </span>
-                </td>
-                <td colspan="3" class="text-center" *ngIf="appt.apptStatus === 'RequestRejected'"><span class="text-danger bold">Rejected</span></td>
-              </ng-container>
-              </tr>
-              </ng-container>
-              <ng-container *ngIf="small_device_display" >
-              <tr  class="card mb-2" [class.disabled]="appt.apptStatus === 'RequestRejected'"  *ngFor="let appt of appt_request_list, let i=index">
-                <ng-container >
-                <td class="profileDiv">
-                  <!-- <div>
-                  <img src="../../../assets/images/mr_male.svg"
-               style="width: 40px !important; margin-right: 5px;"></div> -->
-               <div>
-                <span class="nameDiv" *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName | capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
-                    <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
-                    </div> 
-                    <div *ngIf="appt.apptStatus !== 'RequestRejected' && !appt.multiSelection && appt.releasedQnr &&
-                     appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled'">
-<!--  && !appt.multiSelection && appt.releasedQnr &&
+                      <!--    && !appt.multiSelection && appt.releasedQnr &&
                      appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled' -->
                       <span class="actionbtn">
                         <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
@@ -1954,38 +1940,77 @@
                         </button>
                         <mat-menu #menu="matMenu">
                           <button type="button" (click)="showQuestionnaire(appt)" mat-menu-item>
-                            <span class="qnr-icon" style="width:20px;height:20px"></span>&nbsp;<span class="bold">More Info</span>
+                            <span class="qnr-icon" style="width:20px;height:20px"></span>&nbsp;<span class="bold">More
+                              Info</span>
                           </button>
                         </mat-menu>
                       </span>
-                    </div>
-                </td>
-                <td class="smallDiv">
-                  <div>
-                    <span class="bold" *ngIf="appt.appmtDate">{{appt.appmtDate | date: newTimeDateFormat}}</span>
-                    <div *ngIf="appt.appmtFor[0].apptTime">{{getSingleTime(appt.appmtFor[0].apptTime)}}</div>
-                  </div>
-                <!-- </td>
-                <td> -->
-                  <div>
-                    <span class="bold">Location</span> 
-                    <div *ngIf="appt.location.place">{{appt.location.place}}</div>
-                  </div>
-                </td>
-                <td class="smallDiv" *ngIf="appt.apptStatus === 'Requested'">
-
-                 <div > <button class="btn btn-success btnSize"  (click)="showAppointmentRequest('request',appt)">Accept</button></div>
-                 <!--  data-toggle="modal" data-target="#exampleModalCenter" -->
-                
-                <!-- </td>
-                <td> -->
-                 <div class=""> <button class="btn btn-danger btnSize"  (click)="showAppointmentRequest('reject',appt)">Reject</button></div>
-                </td>
-                <td colspan="2" class="rejectedDiv" *ngIf="appt.apptStatus === 'RequestRejected'"><span class="text-danger bold">Rejected</span></td>
+                    </td>
+                    <td colspan="3" class="text-center" *ngIf="appt.apptStatus === 'RequestRejected'"><span
+                        class="text-danger bold">Rejected</span></td>
+                  </ng-container>
+                </tr>
               </ng-container>
-              </tr>
-            </ng-container>
-              
+              <ng-container *ngIf="small_device_display">
+                <tr class="card mb-2" [class.disabled]="appt.apptStatus === 'RequestRejected'"
+                  *ngFor="let appt of appt_request_list, let i=index">
+                  <ng-container>
+                    <td class="profileDiv">
+                      <!-- <div>
+                  <img src="../../../assets/images/mr_male.svg"
+               style="width: 40px !important; margin-right: 5px;"></div> -->
+                      <div>
+                        <span class="nameDiv"
+                          *ngIf="appt.appmtFor[0].firstName || appt.appmtFor[0].lastName">{{appt.appmtFor[0].firstName |
+                          capitalizeFirst}} {{appt.appmtFor[0].lastName | capitalizeFirst}}</span> <br>
+                        <!-- <span>{{appt.countryCode}} {{appt.whatsApp_PhNumber}}</span> -->
+                      </div>
+                      <div *ngIf="appt.apptStatus !== 'RequestRejected' && !appt.multiSelection && appt.releasedQnr &&
+                     appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled'">
+                        <!--  && !appt.multiSelection && appt.releasedQnr &&
+                     appt.releasedQnr.length > 0 && appt.apptStatus !== 'Cancelled' -->
+                        <span class="actionbtn">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu" (click)="stopprop($event)">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button type="button" (click)="showQuestionnaire(appt)" mat-menu-item>
+                              <span class="qnr-icon" style="width:20px;height:20px"></span>&nbsp;<span class="bold">More
+                                Info</span>
+                            </button>
+                          </mat-menu>
+                        </span>
+                      </div>
+                    </td>
+                    <td class="smallDiv">
+                      <div>
+                        <span class="bold" *ngIf="appt.appmtDate">{{appt.appmtDate | date: newTimeDateFormat}}</span>
+                        <div *ngIf="appt.appmtFor[0].apptTime">{{getSingleTime(appt.appmtFor[0].apptTime)}}</div>
+                      </div>
+                      <!-- </td>
+                <td> -->
+                      <div>
+                        <span class="bold">Location</span>
+                        <div *ngIf="appt.location.place">{{appt.location.place}}</div>
+                      </div>
+                    </td>
+                    <td class="smallDiv" *ngIf="appt.apptStatus === 'Requested'">
+
+                      <div> <button class="btn btn-success btnSize"
+                          (click)="showAppointmentRequest('request',appt)">Accept</button></div>
+                      <!--  data-toggle="modal" data-target="#exampleModalCenter" -->
+
+                      <!-- </td>
+                <td> -->
+                      <div class=""> <button class="btn btn-danger btnSize"
+                          (click)="showAppointmentRequest('reject',appt)">Reject</button></div>
+                    </td>
+                    <td colspan="2" class="rejectedDiv" *ngIf="appt.apptStatus === 'RequestRejected'"><span
+                        class="text-danger bold">Rejected</span></td>
+                  </ng-container>
+                </tr>
+              </ng-container>
+
             </tbody>
             <tbody *ngIf="!loading && appt_request_list.length == 0">
               <tr>
@@ -2045,9 +2070,9 @@
               </div>
             </tbody> -->
           </table>
-          </div>
-          </div>
-          </mat-tab>
+        </div>
+      </div>
+    </mat-tab>
     <mat-tab label="History ({{history_waitlist_count}})">
       <app-common-innerloading-spinner *ngIf="loading"></app-common-innerloading-spinner>
       <div *ngIf="!loading">
@@ -2452,6 +2477,19 @@
                               (change)="setFilterDataCheckbox('multiUser', 'all', $event)">
                               All</mat-checkbox>
                           </li>
+
+                          <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
+                            *ngFor="let multiUser of users">
+                            <span
+                              *ngIf="multiUser.status === 'ACTIVE' && multiUser.userType && multiUser.userType==='PROVIDER'">
+                              <mat-checkbox class="filter-checkbox"
+                                [checked]="multiUserFilter && multiUserFilter.indexOf(multiUser.id) !== -1"
+                                (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
+                                {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
+                            </span>
+                          </li>
+                          <!-- 
+
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                             *ngFor="let multiUser of users">
                             <span *ngIf="multiUser.admin === true">
@@ -2460,7 +2498,7 @@
                                 (change)="setFilterDataCheckbox('multiUser',multiUser.id, $event)">
                                 {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
                             </span>
-                          </li>
+                          </li> -->
                         </div>
                       </div>
                     </div>
@@ -2713,7 +2751,7 @@
         </table>
       </div>
     </mat-tab>
-   
+
   </mat-tab-group>
   </div>
   </div>
@@ -2728,8 +2766,3 @@
     </button>
   </div>
 </section>
-
-
-
-
-
