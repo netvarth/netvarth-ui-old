@@ -491,6 +491,15 @@ export class CdlComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'leads', 'create']);
   }
 
+  checkEquifax() {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        src: 'equifax'
+      }
+    };
+    this.router.navigate(['provider', 'cdl', 'leads', 'create'], navigationExtras);
+  }
+
   requestedDealers() {
     const navigationExtras: NavigationExtras = {
       queryParams: {

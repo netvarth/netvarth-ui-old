@@ -6,6 +6,9 @@ import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { GroupStorageService } from '../../../../../shared/services/group-storage.service';
 import { CdlService } from '../../cdl.service';
 import { projectConstantsLocal } from '../../../../../shared/constants/project-constants';
+import { ConfirmBoxComponent } from '../../loans/confirm-box/confirm-box.component';
+import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -36,6 +39,8 @@ export class CreateComponent implements OnInit {
   categoryId: any;
   enquireUid: any;
   enquireLeadData: any;
+  heading: any = 'Create Lead';
+  src: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -45,7 +50,8 @@ export class CreateComponent implements OnInit {
     private createLoanFormBuilder: UntypedFormBuilder,
     private groupService: GroupStorageService,
     private activatedRoute: ActivatedRoute,
-    private cdlService: CdlService
+    private cdlService: CdlService,
+    private dialog: MatDialog
   ) {
     this.activatedRoute.params.subscribe((params) => {
       console.log("params", params)
@@ -89,6 +95,12 @@ export class CreateComponent implements OnInit {
         });
       }
     });
+
+    this.activatedRoute.queryParams.subscribe((qparams) => {
+      if (qparams && qparams.src) {
+        this.src = qparams.src;
+      }
+    });
     this.createLead = this.createLoanFormBuilder.group({
       phone: [null],
       firstname: [null],
@@ -101,10 +113,15 @@ export class CreateComponent implements OnInit {
       aadhar: [null],
       pan: [null]
     });
+
+
   }
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
+    if (this.src && this.src == 'equifax') {
+      this.heading = "Check Equifax";
+    }
   }
 
   saveAsLead() {
@@ -170,6 +187,24 @@ export class CreateComponent implements OnInit {
         }
       });
     }
+  }
+
+  checkEquifax() {
+    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+      disableClose: true,
+      data: {
+        from: "equifax"
+      }
+    });
+    dialogRef.afterClosed().subscribe(
+      (id) => {
+        if (id) {
+          this.snackbarService.openSnackBar("Loan Verified Successfully");
+          this.router.navigate(['provider', 'cdl', 'loans', id]);
+        }
+      });
   }
 
   convertToLoan() {
