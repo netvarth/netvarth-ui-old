@@ -2632,6 +2632,11 @@ export class ProviderServices {
     return this.servicemeta.httpPut(url);
   }
 
+  setProviderIvrStatus(status) {
+    const url = 'provider/account/settings/ivr/' + status;
+    return this.servicemeta.httpPut(url);
+  }
+
   setProviderCdlRbacStatus(status) {
     const url = 'provider/account/settings/cdlrbac/' + status;
     return this.servicemeta.httpPut(url);

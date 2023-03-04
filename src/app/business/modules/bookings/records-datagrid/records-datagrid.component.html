@@ -12,8 +12,8 @@
         <div class="column operations-column">
             <div class="card cardBorder">
                 <div class="card-header collapsed" *ngIf="view=='small' && heading" [attr.data-target]="'#' + heading"
-                aria-expanded="false" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
-                [attr.data-toggle]="small_device_display ? 'collapse' : ''">
+                    aria-expanded="false" [ngStyle]="{'padding': small_device_display ? '20px 10px' : '8px 10px'}"
+                    [attr.data-toggle]="small_device_display ? 'collapse' : ''">
                     <div class="text-capitalize">{{getHeading()}}</div>
                     <div class="mgn-lt-auto">
                         <i class="fa fa-external-link pointer-cursor" aria-hidden="true"
@@ -22,11 +22,13 @@
                         <i class="fa fa-angle-down" *ngIf="small_device_display"></i>
                     </div>
                 </div>
-                
-                <div class="tableBody" id="{{heading}}" [class.collapse]="view=='small' && heading && small_device_display" >
+
+                <div class="tableBody" id="{{heading}}"
+                    [class.collapse]="view=='small' && heading && small_device_display">
                     <div class="table-responsive"
                         [ngStyle]="{'height': (source == 'customers') ? '365px' : (view=='small') ? '317px' : 'auto' }">
-                        <app-common-innerloading-spinner *ngIf="loading && source == 'bill'"></app-common-innerloading-spinner>
+                        <app-common-innerloading-spinner
+                            *ngIf="loading && source == 'bill'"></app-common-innerloading-spinner>
                         <div class="inner-card add-record rounded-sm pointer-cursor" (click)="gotoAdd()"
                             *ngIf="source == 'providers' || (source == 'customers' && admin)">
                             <a class="inner-card-heading">
@@ -49,11 +51,11 @@
                                         </td>
                                         <td> {{record.waitlist.date | date: newDateFormat}}
                                         </td>
-                                        <td> 
+                                        <td>
                                             <div *ngIf="record.waitlist.token">Token#
                                                 {{record.waitlist.token}} </div>
                                         </td>
-                                        
+
                                         <td> <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'GoogleMeet'"
                                                 class="fa meet-icon"></i>
                                             <i *ngIf="record.waitlist.service.serviceType === 'virtualService' && record.waitlist.service.virtualCallingModes[0].callingMode === 'Zoom'"
@@ -140,9 +142,9 @@
                                         </td>
                                         <td><span class="rupee-font" *ngIf="record.totalAmountPaid > 0">
                                                 {{record.totalAmountPaid |
-                                                currency:'&#8377;' }} Paid</span> 
+                                                currency:'&#8377;' }} Paid</span>
                                         </td>
-                                            <!-- <div class="m-1 p-2 card d-flex justify-content-between">
+                                        <!-- <div class="m-1 p-2 card d-flex justify-content-between">
                                                 <div class="">
                                                     <div>
                                                         <div class="">
@@ -170,7 +172,7 @@
                                                 </div>
                                             </div> -->
                                     </ng-container>
-                                    
+
                                     <ng-container *ngIf="source == 'waitlist'">
                                         <td> {{record.date | date: newDateFormat}}
                                             <div *ngIf="record.token">Token#
@@ -277,6 +279,23 @@
                                             {{paymentStatuses[record.billPaymentStatus]}}
                                         </td>
                                     </ng-container>
+
+                                    <ng-container *ngIf="source == 'ivr'">
+                                        <ng-container>
+                                            <td>
+                                                {{record.myOperatorId}}
+                                            </td>
+                                            <td>
+                                                <span class="rupee-font">
+                                                    {{record.Callduration}}</span>
+                                            </td>
+                                            <td [class]="'status-' + record.callStatus">
+                                                {{record.callStatus}}
+                                            </td>
+                                        </ng-container>
+                                    </ng-container>
+
+
                                     <ng-container *ngIf="source == 'providers'">
                                         <td class="table-img">
                                             <img [src]="getViewImg(record)">

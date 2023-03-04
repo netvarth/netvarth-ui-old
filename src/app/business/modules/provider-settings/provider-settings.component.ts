@@ -179,6 +179,8 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
   cdlRbacStatus: any;
   cdlRbacstatusDisplayName: string;
   mfaStatus: any;
+  ivrStatus: any;
+  ivrStatusstr: string;
   constructor(private provider_services: ProviderServices,
     private shared_functions: SharedFunctions,
     private cdf: ChangeDetectorRef,
@@ -777,6 +779,10 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         this.leadstatusstr = (this.leadstatus) ? 'On' : 'Off';
 
 
+        this.ivrStatus = data.enableIvr;
+        this.ivrStatusstr = (this.ivrStatus) ? 'On' : 'Off';
+
+
       });
     this.provider_services.getAccountSetting().subscribe((data: any) => {
       this.mfaStatus = data.multiFactorAuthenticationRequired;
@@ -941,6 +947,9 @@ export class ProviderSettingsComponent implements OnInit, OnDestroy, AfterViewCh
         break;
       case 'comm':
         this.routerobj.navigate(['provider', 'settings', 'comm']);
+        break;
+      case 'ivr':
+        this.routerobj.navigate(['provider', 'settings', 'ivrmanager']);
         break;
       case 'video':
         this.routerobj.navigate(['provider', 'settings', 'comm', 'video']);

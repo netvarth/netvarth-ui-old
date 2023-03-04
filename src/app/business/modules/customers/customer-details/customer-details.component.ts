@@ -16,6 +16,7 @@ import { DateTimeProcessor } from "../../../../shared/services/datetime-processo
 import { CommunicationPopupComponent } from "../../bookings/communication-popup/communication-popup.component";
 import { SubSink } from "subsink";
 import { CommunicationService } from "../../../../business/services/communication-service";
+import { IvrService } from "../../ivr/ivr.service";
 @Component({
   selector: "app-customer-details",
   templateUrl: "./customer-details.component.html",
@@ -133,6 +134,8 @@ export class CustomerDetailComponent implements OnInit {
   groupName: string;
   groupMemberTextId;
   groups: any[] = [];
+  src: any;
+  ivrCallData: any;
   constructor(
     public fed_service: FormMessageDisplayService,
     public provider_services: ProviderServices,
@@ -144,7 +147,8 @@ export class CustomerDetailComponent implements OnInit {
     private wordProcessor: WordProcessor,
     private communicationService: CommunicationService,
     private dateTimeProcessor: DateTimeProcessor,
-    private groupService: GroupStorageService
+    private groupService: GroupStorageService,
+    private ivrService: IvrService
   ) {
     const customer_label = this.wordProcessor.getTerminologyTerm("customer");
     this.customer_label =
@@ -164,6 +168,9 @@ export class CustomerDetailComponent implements OnInit {
       }
       if (qparams.type) {
         this.type = qparams.type;
+      }
+      if (qparams.src) {
+        this.src = qparams.src;
       }
       if (qparams.checkinType) {
         this.checkin_type = qparams.checkinType;
@@ -239,6 +246,10 @@ export class CustomerDetailComponent implements OnInit {
       }
     });
     localStorage.setItem("Detail", "All");
+
+    if (this.src && this.src == 'ivr') {
+      this.getIvrCallHistoryOfcustomer()
+    }
   }
   @HostListener("window:resize", ["$event"])
   onResize() {
@@ -270,6 +281,17 @@ export class CustomerDetailComponent implements OnInit {
         }
       );
     });
+  }
+
+  getIvrCallHistoryOfcustomer() {
+    this.ivrService.getAllIvrCallsByUid(this.uid).subscribe((response: any) => {
+      if (response) {
+        this.ivrCallData = response;
+      }
+    },
+      (error) => {
+
+      })
   }
   ngOnInit() {
     this.groupId = localStorage.getItem("groupId");

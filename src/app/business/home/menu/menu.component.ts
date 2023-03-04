@@ -49,6 +49,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   bCrm: boolean = false;
   public LMSStatus: boolean = true;
   showCDL: any;
+  ivrStatus: any;
   constructor(
     private shared_functions: SharedFunctions,
     public shared_service: SharedServices,
@@ -140,6 +141,9 @@ export class MenuComponent implements OnInit, OnDestroy {
           break;
         case 'cdlstatus':
           this.showCDL = message.cdlstatus;
+          break;
+        case 'ivrstatus':
+          this.ivrStatus = message.ivrstatus;
           break;
         case 'leadstatus':
           this.leadStatus = message.leadstatus;
@@ -278,6 +282,7 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.apptstatus = settings.appointment;
       this.checkinStatus = settings.waitlist;
       this.taskStatus = settings.enableTask;
+      this.ivrStatus = settings.enableIvr;
       this.showCDL = settings.enableCdl;
     } else {
       this.provider_services.getAccountSettings().then(
@@ -288,6 +293,7 @@ export class MenuComponent implements OnInit, OnDestroy {
           this.taskStatus = data.enableTask;
           this.showCDL = data.enableCdl;
           this.leadStatus = data.enableLead;
+          this.ivrStatus = settings.enableIvr;
         });
     }
   }

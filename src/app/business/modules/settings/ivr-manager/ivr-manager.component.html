@@ -1,0 +1,26 @@
+<section class="">
+    <div class="card title-gb">
+        <h5 class="mgn-up-10">
+            <span class="fa fa-arrow-left pointer-cursor"
+                (click)="redirecToSettings()"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <!-- CRM -->
+            IVR
+            <!-- <i class="fa fa-question-circle-o fa-lg fl-right" (click)="redirecToHelp()"></i> -->
+        </h5>
+    </div>
+</section>
+<section>
+    <div class="ordermgmt col-sm-12 col-md-12 col-lg-12 col-xs-12">
+        <div class="col-sm-12 col-md-12 col-lg-12 mgn-up-20 mgn-bt-20" style="margin-bottom: 10px">
+            <div>
+                <label>
+                    IVR
+                    <mat-slide-toggle class="mgn-lt-20" [(ngModel)]="ivrStatus" (change)="handleivrStatus($event)">
+                    </mat-slide-toggle>&nbsp;{{ivrstatusDisplayName}}
+                </label>
+                <div class="form-level-settings"> Interactive voice response
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

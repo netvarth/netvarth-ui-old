@@ -24,7 +24,8 @@ const routes: Routes = [
       { path: 'cdl', loadChildren: () => import('../../../business/modules/settings/cdl-manager/cdl-manager.module').then(m => m.CdlManagerModule) },
       { path: 'cdlrbac', loadChildren: () => import('../../../business/modules/settings/cdlrbac-manager/cdlrbac-manager.module').then(m => m.CdlrbacManagerModule) },
       { path: 'branch', loadChildren: () => import('../../../business/modules/settings/branch-manager/branch-manager.module').then(m => m.BranchManagerModule) },
-      { path: 'leadmanager', loadChildren: () => import('../../../business/modules/settings/leadmanager/leadmanager.module').then(m => m.LeadmanagerModule) }
+      { path: 'leadmanager', loadChildren: () => import('../../../business/modules/settings/leadmanager/leadmanager.module').then(m => m.LeadmanagerModule) },
+      { path: 'ivrmanager', loadChildren: () => import('../../../business/modules/settings/ivr-manager/ivr-manager.module').then(m => m.IvrManagerModule) }
     ]
   },
 ];
