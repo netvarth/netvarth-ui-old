@@ -1199,7 +1199,7 @@ export class CreateComponent implements OnInit {
         }
         this.cdlService.updateLoan(this.loanId, this.loanApplication).subscribe((s3urls: any) => {
           this.snackbarService.openSnackBar("Loan Application Updated Successfully")
-          this.router.navigate(['provider', 'cdl', 'loans']);
+          // this.router.navigate(['provider', 'cdl', 'loans']);
 
         },
           (error) => {
@@ -1249,7 +1249,7 @@ export class CreateComponent implements OnInit {
           this.cdlService.saveBankDetails(this.bankDetails).subscribe((data) => {
             console.log("this.loanProducts", this.loanProducts);
             this.snackbarService.openSnackBar("Loan Application Created Successfully")
-            this.router.navigate(['provider', 'cdl', 'loans']);
+            // this.router.navigate(['provider', 'cdl', 'loans']);
           }), (error) => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
           }
@@ -2173,6 +2173,8 @@ export class CreateComponent implements OnInit {
           this.bankData = bankInfo;
         });
         this.bankDetailsSaved = true;
+        this.coApplicantDetailsPanel = true;
+        this.panelsManage(false, false, false, false, true);
         this.snackbarService.openSnackBar("Bank Details Saved Successfully")
 
       }), (error) => {
@@ -2191,6 +2193,9 @@ export class CreateComponent implements OnInit {
             });
         }
         this.bankDetailsSaved = true;
+
+        this.coApplicantDetailsPanel = true;
+        this.panelsManage(false, false, false, false, true);
         this.snackbarService.openSnackBar("Bank Details Saved Successfully")
 
       }), (error) => {

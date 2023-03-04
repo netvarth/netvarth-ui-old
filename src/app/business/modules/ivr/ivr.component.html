@@ -21,11 +21,38 @@
     </div>
 </div>
 
-
 <div class="row">
     <div class="col-md-6 mt-4">
         <div>
-            <div class="row mx-0 p-0">
+            <div class="row">
+                <div class="col-md-12 no-padding px-1">
+                    <div class="card text-center p-2">
+                        <span class="font-weight-bold card-title">
+                            <div class="px-2 d-flex justify-content-between">
+                                <div>
+                                    <span class="table-column-data">+91 9704315643</span>
+                                </div>
+                                <div>
+                                    <span class="table-column-data text-capitalize status-ongoing"><i
+                                            class="fa fa-circle pt-1" aria-hidden="true"></i>&nbsp;Ongoing</span>
+                                </div>
+                                <div>
+                                    <span class="table-column-data">English</span>
+                                </div>
+                            </div>
+                            <!-- <td>
+                                <div class="d-flex text-center">
+                                    <button pButton pRipple type="button"
+                                        class="p-button-primary btn-primary">View
+                                    </button>
+                                </div>
+                            </td> -->
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mx-0 p-0 mt-2">
                 <div class="col-md-4 col-sm-4 col-xs-4 px-1 pointer-cursor" (click)="createToken()">
                     <div class="card text-center dashboard-card">
                         <div>
@@ -57,13 +84,11 @@
                     </div>
                 </div>
             </div>
-            <div class="card mt-4 p-2">
+            <div class="card mt-2 p-2">
                 <div class="row mx-0 p-0 mt-3">
                     <div class="text-center">
                         <div class="col-lg-4 col-md-6 col-sm-6 px-1">
                             <div>
-                                <!-- <p-chart type="doughnut" [data]="doughnutChartData"
-                                    [options]="doughnutChartOptions"></p-chart> -->
                                 <div class="progress-wrapper">
                                     <div class="semi-progress-bar text-center">
                                         <b>
@@ -87,7 +112,7 @@
                                             </div>&nbsp;
                                             <div class="font-weight-bold">Missed Calls</div>
                                         </div>
-                                        <span class="calls-count">30</span>
+                                        <span class="calls-count">{{missedCallsCount}}</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-sm-6 col-xs-6 px-1">
@@ -97,7 +122,7 @@
                                             </div>&nbsp;
                                             <div class="font-weight-bold">Answered Calls</div>
                                         </div>
-                                        <span class="calls-count">30</span>
+                                        <span class="calls-count">{{connectedCallsCount}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +203,8 @@
                             <td>
                                 <span class="d-lg-none d-md-none d-sm-block">More Actions : </span>
                                 <div class="d-flex text-center">
-                                    <button pButton pRipple type="button" class="p-button-primary btn-primary">View
+                                    <button pButton pRipple type="button" class="p-button-primary btn-primary"
+                                        (click)="gotoCustomersPage(call.consumerId,call.uid)">View
                                     </button>
                                 </div>
                             </td>

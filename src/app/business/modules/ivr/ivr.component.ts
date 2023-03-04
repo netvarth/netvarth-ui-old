@@ -23,12 +23,12 @@ export class IvrComponent implements OnInit {
   totalCallsCount: any = 0;
   statusDisplayName: any;
   ivrCallsStatus = projectConstantsLocal.IVR_CALL_STATUS;
-
   customers: any;
   customerMoreActionMenuItems: MenuItem[];
   customer_label: any;
-  connectedCallsCount: any;
-  missedCallsCount: any;
+  connectedCallsCount: any = 0;
+  missedCallsCount: any = 0;
+  graphData: any;
   constructor(
     private groupService: GroupStorageService,
     private ivrService: IvrService,
@@ -47,7 +47,21 @@ export class IvrComponent implements OnInit {
     this.getIvrCallsCount();
     this.getIvrMissedCallsCount();
     this.getIvrConnectedCallsCount();
+    this.getGraphDetails('WEEKLY');
     this.primengConfig.ripple = true;
+  }
+
+
+  getGraphDetails(category) {
+    let data = {
+      category: category
+    }
+    this.ivrService.getChartData(data).subscribe((data: any) => {
+      this.graphData = data;
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      });
   }
 
   viewCustomer(id) {
@@ -75,6 +89,16 @@ export class IvrComponent implements OnInit {
     };
     this.router.navigate(['provider', 'check-ins', 'add'], navigationExtras)
 
+  }
+
+  gotoCustomersPage(id, uid) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        src: 'ivr',
+        uid: uid
+      }
+    };
+    this.router.navigate(['provider', 'customers', id], navigationExtras)
   }
 
   gotoMissedCalls() {

@@ -18,12 +18,24 @@
     border-color: #1e4070 !important;
     color: #fff !important;
     font-weight: 100 !important;
-    border-radius: 10px !important;
+    border-radius: 4px !important;
 }
 
-.p-button {
-    background-color: #1E4079 !important;
+.btn-warning {
+    background-color: #EFA855 !important;
+    border-color: #EFA855 !important;
+    color: #fff !important;
+    font-weight: 100 !important;
+    border-radius: 4px !important;
 }
+
+.font-weight-600 {
+    font-weight: 600 !important;
+}
+
+/* .p-button {
+    background-color: #1E4079 !important;
+} */
 
 .text-white {
     color: #fff !important;

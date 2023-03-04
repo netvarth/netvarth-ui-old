@@ -64,6 +64,14 @@
     border-radius: 8px !important;
 }
 
+.status-ongoing {
+    background-color: #ebd6ff !important;
+    color: #52267b !important;
+    font-weight: bold !important;
+    padding: 5px 10px !important;
+    border-radius: 15px !important;
+}
+
 .btn-primary {
     background-color: #1e4079 !important;
     border-color: #1e4070 !important;

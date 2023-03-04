@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { GroupStorageService } from '../../../../shared/services/group-storage.service';
 import { projectConstantsLocal } from '../../../../shared/constants/project-constants';
 import { SnackbarService } from '../../../../shared/services/snackbar.service';
 import { IvrService } from '../ivr.service';
@@ -19,12 +20,14 @@ export class CallsComponent implements OnInit {
   globalSearchValue: any;
   ivrCallsStatus = projectConstantsLocal.IVR_CALL_STATUS;
   statusType: any;
+  user: any;
 
   constructor(
     private router: Router,
     private ivrService: IvrService,
     private snackbarService: SnackbarService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private groupService: GroupStorageService
   ) {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params && params.type) {
@@ -36,6 +39,7 @@ export class CallsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.user = this.groupService.getitemFromGroupStorage('ynw-user');
     if (!this.statusType) {
       this.getIvrCalls();
     }
@@ -104,6 +108,53 @@ export class CallsComponent implements OnInit {
       (error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
       });
+  }
+
+  assignToCall(uid) {
+    let data = {
+      "uid": uid,
+      "userType": "PROVIDER",
+      "userId": this.user.id
+    }
+
+    this.ivrService.assignToCall(data).subscribe((response: any) => {
+      if (response) {
+        this.snackbarService.openSnackBar("You are Assigned to this Call Successfully")
+        this.ngOnInit();
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
+
+
+  unassignToCall(uid) {
+    let data = {
+      "uid": uid,
+      "userType": "PROVIDER",
+      "userId": this.user.id
+    }
+
+    this.ivrService.unassignToCall(data).subscribe((response: any) => {
+      if (response) {
+        this.ngOnInit();
+        this.snackbarService.openSnackBar("You are Unassigned to this Call Successfully")
+      }
+    },
+      (error) => {
+        this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
+      })
+  }
+
+  gotoCustomersPage(id, uid) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        src: 'ivr',
+        uid: uid
+      }
+    };
+    this.router.navigate(['provider', 'customers', id], navigationExtras)
   }
 
   getIvrCallsbyFilter(filter) {

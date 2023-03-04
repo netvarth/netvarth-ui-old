@@ -16,6 +16,11 @@ export class IvrService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  getAllIvrCallsByUid(id) {
+    const url = 'provider/ivr/' + id;
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getAllIvrCallsbyFilter(filter = {}) {
     const url = 'provider/ivr';
     return this.servicemeta.httpGet(url, null, filter);
@@ -29,6 +34,21 @@ export class IvrService {
   getCustomers() {
     const url = 'provider/customers';
     return this.servicemeta.httpGet(url, null);
+  }
+
+  getChartData(data) {
+    const url = 'provider/ivr/graph';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  assignToCall(data) {
+    const url = 'provider/ivr/assign';
+    return this.servicemeta.httpPut(url, data);
+  }
+
+  unassignToCall(data) {
+    const url = 'provider/ivr/unassign';
+    return this.servicemeta.httpPut(url, data);
   }
 
   setFiltersFromPrimeTable(event) {
