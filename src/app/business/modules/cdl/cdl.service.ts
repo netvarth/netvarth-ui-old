@@ -287,6 +287,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  getEquifaxReport(id) {
+    const url = 'provider/equifax/' + id;
+    return this.servicemeta.httpGet(url, null);
+  }
+
   getLoanEmiDetails(id) {
     const url = 'provider/loanapplication/' + id + '/loanemi';
     return this.servicemeta.httpGet(url, null);

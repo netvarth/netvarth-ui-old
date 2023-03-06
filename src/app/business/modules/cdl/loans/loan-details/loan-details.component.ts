@@ -237,11 +237,20 @@ export class LoanDetailsComponent implements OnInit {
     //   if (result) {
     //   }
     // })
-
+    let inputData: any;
+    inputData = JSON.stringify(data);
+    if (type == 'equifax') {
+      let sampleData = {
+        "loanId": this.loanId,
+        "equifaxId": this.loanData.loanApplicationKycList[0].equifaxId,
+        "equifaxScore": this.loanData.loanApplicationKycList[0].equifaxScore
+      }
+      inputData = JSON.stringify(sampleData);
+    }
     const navigationExtras: NavigationExtras = {
       queryParams: {
         type: type,
-        data: JSON.stringify(data)
+        data: inputData
       }
     };
     this.router.navigate(['provider', 'cdl', 'report'], navigationExtras);

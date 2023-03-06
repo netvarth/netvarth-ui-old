@@ -424,6 +424,7 @@ export class ProviderLoginComponent implements OnInit {
           },
           error => {
             this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.api_loading = false;
           }
         );
     }

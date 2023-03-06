@@ -10,7 +10,7 @@
             <!-- <mat-form-field> -->
             <div class="card-head-grey mgn-bt-5">{{message_label}} *</div>
             <textarea matInput class="form-control" id="message" placeholder="Message" formControlName="message"
-                (keypress)="keyPressed($event.target.value)" maxlength="120">
+                (keypress)="keyPressed($event.target.value)" maxlength="300">
             </textarea>
             <!-- </mat-form-field> -->
             <app-field-error-display [displayError]="fed_service.isFieldValid(amForm,'message')"

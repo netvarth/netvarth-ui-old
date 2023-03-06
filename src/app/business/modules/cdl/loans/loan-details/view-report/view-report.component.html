@@ -5,6 +5,7 @@
     <div class="text-right">
         <button (click)="onPrint()" class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;
             Print</button>
+        <!-- <button printSectionId="printMe" ngxPrint  [useExistingCss]="true">print</button> -->
     </div>
 </div>
 
@@ -171,61 +172,1138 @@
                 <div>
                     <img src="../../../../assets/images/cdl/equifax_score.png" width="100">
                 </div>
-                <div class="mt-3  overflow-y-scroll" *ngIf="reportData">
-                    <div class="table-responsive">
-                        <table class="table table-borderless">
-                            <tbody>
-                                <tr style="width: 100%;"
-                                    *ngIf="reportData.noOfAccounts || reportData.noOfAccounts == 0">
-                                    <td style="width: 50%;" class="details-title">No of Accounts </td>
-                                    <th style=" width: 50%;" class="details-sub-title">{{reportData.noOfAccounts}}
-                                    </th>
-                                </tr>
-                                <tr style="width: 100%;" *ngIf="reportData.loansCount || reportData.loansCount == 0">
-                                    <td style="width: 50%;" class="details-title">Loans Count</td>
-                                    <th style=" width: 50%;" class="details-sub-title">{{reportData.loansCount}}
-                                    </th>
-                                </tr>
-                                <tr style="width: 100%;"
-                                    *ngIf="reportData.recentActivity && (reportData.recentActivity.totalInquiries || (reportData.recentActivity.totalInquiries && reportData.recentActivity.totalInquiries==0))">
-                                    <td style="width: 50%;" class="details-title">Total Enquiries</td>
-                                    <th style=" width: 50%;" class="details-sub-title">
-                                        {{reportData.recentActivity.totalInquiries}}
-                                    </th>
-                                </tr>
-                                <tr style="width: 100%;"
-                                    *ngIf="reportData.recentActivity &&( reportData.recentActivity.accountsDeliquent || (reportData.recentActivity.accountsDeliquent && reportData.recentActivity.accountsDeliquent == 0))">
-                                    <td style="width: 50%;" class="details-title">Accounts Deliquent</td>
-                                    <th style=" width: 50%;" class="details-sub-title">
-                                        {{reportData.recentActivity.accountsDeliquent}}
-                                    </th>
-                                </tr>
+                <div *ngIf="equifaxScore" class="my-2">
+                    <span>Score : <b class="equifax-score">{{equifaxScore}}</b></span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="mt-2 text-left" *ngIf="equifaxReportData.IDAndContactInfo">
+                    <span class="font-weight-bold">Personal Details</span>
+                </div>
 
-                                <tr style="width: 100%;"
-                                    *ngIf="reportData.recentActivity && (reportData.recentActivity.accountsOpened || (reportData.recentActivity.accountsOpened && reportData.recentActivity.accountsOpened == 0))">
-                                    <td style="width: 50%;" class="details-title">Accounts Opened</td>
-                                    <th style=" width: 50%;" class="details-sub-title">
-                                        {{reportData.recentActivity.accountsOpened}}
-                                    </th>
-                                </tr>
+                <div *ngIf="equifaxReportData && equifaxReportData.IDAndContactInfo" class="border mt-3">
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Previous Name : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo.PreviousName">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.PreviousName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">PAN ID : </div>
+                                <div class="details-sub-title-equifax" *ngIf="equifaxReportData.IDAndContactInfo.IdentityInfo && equifaxReportData.IDAndContactInfo.IdentityInfo.PANId && equifaxReportData.IDAndContactInfo.IdentityInfo.PANId[0]
+                                     && equifaxReportData.IDAndContactInfo.IdentityInfo.PANId[0].IdNumber">
+                                    {{equifaxReportData.IDAndContactInfo.IdentityInfo.PANId[0].IdNumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Home : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo.PreviousName">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.PreviousName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                <tr style="width: 100%;"
-                                    *ngIf="reportData.recentActivity && (reportData.recentActivity.accountsUpdated || (reportData.recentActivity.accountsUpdated && reportData.recentActivity.accountsUpdated == 0))">
-                                    <td style="width: 50%;" class="details-title">Accounts Updated</td>
-                                    <th style=" width: 50%;" class="details-sub-title">
-                                        {{reportData.recentActivity.accountsUpdated}}
-                                    </th>
-                                </tr>
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Alias Name : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo.AliasName">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.AliasName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Voter ID : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.IdentityInfo && equifaxReportData.IDAndContactInfo.IdentityInfo.VoterID && equifaxReportData.IDAndContactInfo.IdentityInfo.VoterID[0]
+                                                         && equifaxReportData.IDAndContactInfo.IdentityInfo.VoterID[0].IdNumber">
+                                    {{equifaxReportData.IDAndContactInfo.IdentityInfo.VoterID[0].IdNumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Office : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo.PreviousName">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.PreviousName}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
 
-                            </tbody>
-                        </table>
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">DOB : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo.DateOfBirth">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.DateOfBirth}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Passport ID : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.IdentityInfo && equifaxReportData.IDAndContactInfo.IdentityInfo.PassportID && equifaxReportData.IDAndContactInfo.IdentityInfo.PassportID[0]
+                                                                             && equifaxReportData.IDAndContactInfo.IdentityInfo.PassportID[0].IdNumber">
+                                    {{equifaxReportData.IDAndContactInfo.IdentityInfo.PassportID[0].IdNumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Mobile : </div>
+                                <div class="details-sub-title-equifax" *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[0] && 
+                                    equifaxReportData.IDAndContactInfo.PhoneInfo[0].Number">
+                                    {{equifaxReportData.IDAndContactInfo.PhoneInfo[0].Number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Age : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo.Age && equifaxReportData.IDAndContactInfo.PersonalInfo.Age.Age">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.Age.Age}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">UID : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.IdentityInfo && equifaxReportData.IDAndContactInfo.IdentityInfo.NationalIDCard && equifaxReportData.IDAndContactInfo.IdentityInfo.NationalIDCard[0]
+                                                                                                 && equifaxReportData.IDAndContactInfo.IdentityInfo.NationalIDCard[0].IdNumber">
+                                    {{equifaxReportData.IDAndContactInfo.IdentityInfo.NationalIDCard[0].IdNumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Alt. Home/Other No : </div>
+                                <div class="details-sub-title-equifax" *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[1] && 
+                                                        equifaxReportData.IDAndContactInfo.PhoneInfo[1].Number">
+                                    {{equifaxReportData.IDAndContactInfo.PhoneInfo[1].Number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Gender : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo && equifaxReportData.IDAndContactInfo.PersonalInfo.Gender">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.Gender}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Driver's License : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.IdentityInfo && equifaxReportData.IDAndContactInfo.IdentityInfo.DriverLicence && equifaxReportData.IDAndContactInfo.IdentityInfo.DriverLicence[0]
+                                                                                                                     && equifaxReportData.IDAndContactInfo.IdentityInfo.DriverLicence[0].IdNumber">
+                                    {{equifaxReportData.IDAndContactInfo.IdentityInfo.DriverLicence[0].IdNumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Alt. Office : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[2] && 
+                                                                            equifaxReportData.IDAndContactInfo.PhoneInfo[2].Number">
+                                    {{equifaxReportData.IDAndContactInfo.PhoneInfo[2].Number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Total Income : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo && equifaxReportData.IDAndContactInfo.PersonalInfo.TotalIncome">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.TotalIncome}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Ration Card : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.IdentityInfo && equifaxReportData.IDAndContactInfo.IdentityInfo.RationCard && equifaxReportData.IDAndContactInfo.IdentityInfo.RationCard[0]
+                                                                                                                                         && equifaxReportData.IDAndContactInfo.IdentityInfo.RationCard[0].IdNumber">
+                                    {{equifaxReportData.IDAndContactInfo.IdentityInfo.RationCard[0].IdNumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Alt. Mobile : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PhoneInfo && equifaxReportData.IDAndContactInfo.PhoneInfo[3] && 
+                                                                                                equifaxReportData.IDAndContactInfo.PhoneInfo[3].Number">
+                                    {{equifaxReportData.IDAndContactInfo.PhoneInfo[3].Number}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Occupations : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.PersonalInfo && equifaxReportData.IDAndContactInfo.PersonalInfo.Occupations">
+                                    {{equifaxReportData.IDAndContactInfo.PersonalInfo.Occupations}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Photo Credit Card : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.IdentityInfo && equifaxReportData.IDAndContactInfo.IdentityInfo.PhotoCreditCard && equifaxReportData.IDAndContactInfo.IdentityInfo.PhotoCreditCard[0]
+                                                                                                                                                             && equifaxReportData.IDAndContactInfo.IdentityInfo.PhotoCreditCard[0].IdNumber">
+                                    {{equifaxReportData.IDAndContactInfo.IdentityInfo.PhotoCreditCard[0].IdNumber}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Email : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.IDAndContactInfo.EmailAddressInfo && equifaxReportData.IDAndContactInfo.EmailAddressInfo[0] && 
+                                                                                                                    equifaxReportData.IDAndContactInfo.EmailAddressInfo[0].EmailAddress">
+                                    {{equifaxReportData.IDAndContactInfo.EmailAddressInfo[0].EmailAddress}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <!-- <div class="btn btn-primary mt-3" (click)="goHome()">
-                Go to Home
-            </div> -->
+
+
+                <div class="clearfix"></div>
+                <div class="mt-2 text-left"
+                    *ngIf="equifaxReportData && equifaxReportData.IDAndContactInfo && equifaxReportData.IDAndContactInfo.AddressInfo">
+                    <span class="font-weight-bold">Address Details</span>
+                </div>
+
+                <div *ngIf="equifaxReportData && equifaxReportData.IDAndContactInfo && equifaxReportData.IDAndContactInfo.AddressInfo"
+                    class="border mt-2">
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                        <div class="col-md-2 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax font-weight-none">Type</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax font-weight-none">Address</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax font-weight-none">State</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax font-weight-none">Postal</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax font-weight-none">Date Reported</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngFor="let address of equifaxReportData.IDAndContactInfo.AddressInfo">
+                        <div class="row no-padding mt-2" *ngIf="equifaxReportData.IDAndContactInfo">
+                            <div class="col-md-2 no-padding-small">
+                                <div class="d-flex">
+                                    <div class="details-sub-title-equifax" *ngIf="address && address.Type">
+                                        {{address.Type}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padding-small">
+                                <div class="d-flex">
+                                    <div class="details-sub-title-equifax" *ngIf="address && address.Address">
+                                        {{address.Address}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 no-padding-small">
+                                <div class="d-flex">
+                                    <div class="details-sub-title-equifax" *ngIf="address && address.State">
+                                        {{address.State}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 no-padding-small">
+                                <div class="d-flex">
+                                    <div class="details-sub-title-equifax" *ngIf="address && address.Postal">
+                                        {{address.Postal}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-2 no-padding-small">
+                                <div class="d-flex">
+                                    <div class="details-sub-title-equifax" *ngIf="address && address.ReportedDate">
+                                        {{address.ReportedDate}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="clearfix"></div>
+                <div class="mt-2 text-left" *ngIf="equifaxReportData && equifaxReportData.InquiryRequestInfo">
+                    <span class="font-weight-bold">Input Enquiry</span>
+                </div>
+
+                <div *ngIf="equifaxReportData && equifaxReportData.InquiryRequestInfo" class="border mt-2">
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.InquiryRequestInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Consumer's First Name : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.FirstName">
+                                    {{equifaxReportData.InquiryRequestInfo.FirstName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">PAN : </div>
+                                <div class="details-sub-title-equifax" *ngIf="enquiryIds && enquiryIds.pan">
+                                    {{enquiryIds.pan}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3 font-weight-bold">Address Information 1 : </div>
+                                <!-- <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryEmails && equifaxReportData.InquiryRequestInfo.InquiryEmails[0] && 
+                                                                                                                                        equifaxReportData.InquiryRequestInfo.InquiryEmails[0].EmailAddress">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryEmails[0].EmailAddress}}
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.InquiryRequestInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Consumer's Last Name : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.LastName">
+                                    {{equifaxReportData.InquiryRequestInfo.LastName}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Voter ID : </div>
+                                <div class="details-sub-title-equifax" *ngIf="enquiryIds && enquiryIds.voter">
+                                    {{enquiryIds.voter}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-1">Address </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryAddresses && equifaxReportData.InquiryRequestInfo.InquiryAddresses[0] && equifaxReportData.InquiryRequestInfo.InquiryAddresses[0].AddressLine1">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryAddresses[0].AddressLine1}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.InquiryRequestInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">DOB : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.DOB">
+                                    {{equifaxReportData.InquiryRequestInfo.DOB}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Passport ID : </div>
+                                <div class="details-sub-title-equifax" *ngIf="enquiryIds && enquiryIds.passport">
+                                    {{enquiryIds.passport}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">State : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryAddresses && equifaxReportData.InquiryRequestInfo.InquiryAddresses[0] && equifaxReportData.InquiryRequestInfo.InquiryAddresses[0].State">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryAddresses[0].State}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.InquiryRequestInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">GENDER : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.Gender">
+                                    {{equifaxReportData.InquiryRequestInfo.Gender == 'M' ? 'Male':'Female'}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">UID : </div>
+                                <div class="details-sub-title-equifax" *ngIf="enquiryIds && enquiryIds.aadhaar">
+                                    {{enquiryIds.aadhaar}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Postal : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryAddresses && equifaxReportData.InquiryRequestInfo.InquiryAddresses[0] && equifaxReportData.InquiryRequestInfo.InquiryAddresses[0].Postal">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryAddresses[0].Postal}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.InquiryRequestInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Inquiry / Request Purpose : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.InquiryPurpose">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryPurpose}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Driver's License : </div>
+                                <div class="details-sub-title-equifax" *ngIf="enquiryIds && enquiryIds.licence">
+                                    {{enquiryIds.licence}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3 font-weight-bold">Address Information 2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.InquiryRequestInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Transaction Amount : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.TransactionAmount">
+                                    {{equifaxReportData.InquiryRequestInfo.TransactionAmount}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Phone : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.InquiryPhones && equifaxReportData.InquiryRequestInfo.InquiryPhones[0] && equifaxReportData.InquiryRequestInfo.InquiryPhones[0].Number">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryPhones[0].Number}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-2">Address</div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryAddresses && equifaxReportData.InquiryRequestInfo.InquiryAddresses[1] && equifaxReportData.InquiryRequestInfo.InquiryAddresses[1].AddressLine1">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryAddresses[1].AddressLine1}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.InquiryRequestInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Inquiry Account 1 : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.InquiryAccount">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryAccount}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Mobile Phone : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.InquiryPhones && equifaxReportData.InquiryRequestInfo.InquiryPhones[1] && equifaxReportData.InquiryRequestInfo.InquiryPhones[0].Number">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryPhones[1].Number}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-2">State</div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryAddresses && equifaxReportData.InquiryRequestInfo.InquiryAddresses[1] && equifaxReportData.InquiryRequestInfo.InquiryAddresses[1].State">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryAddresses[1].State}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.InquiryRequestInfo">
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <!-- <div class="details-title-equifax mr-3">Inquiry Account 1 : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.InquiryAccount">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryAccount}}
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <!-- <div class="d-flex">
+                                <div class="details-title-equifax mr-3">Mobile Phone : </div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo && equifaxReportData.InquiryRequestInfo.InquiryPhones && equifaxReportData.InquiryRequestInfo.InquiryPhones[1] && equifaxReportData.InquiryRequestInfo.InquiryPhones[0].Number">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryPhones[1].Number}}
+                                </div>
+                            </div> -->
+                        </div>
+                        <div class="col-md-4 no-padding-small">
+                            <div class="d-flex">
+                                <div class="details-title-equifax mr-2">Postal</div>
+                                <div class="details-sub-title-equifax"
+                                    *ngIf="equifaxReportData.InquiryRequestInfo.InquiryAddresses && equifaxReportData.InquiryRequestInfo.InquiryAddresses[1] && equifaxReportData.InquiryRequestInfo.InquiryAddresses[1].Postal">
+                                    {{equifaxReportData.InquiryRequestInfo.InquiryAddresses[1].Postal}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="mt-2 text-left" *ngIf="equifaxReportData.RetailAccountsSummary">
+                    <span class="font-weight-bold">Summary</span>
+                </div>
+                <div *ngIf="equifaxReportData && equifaxReportData.RetailAccountsSummary" class="border mt-3">
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.RetailAccountsSummary">
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.NoOfAccounts">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">No of Accounts : </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.NoOfAccounts}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.TotalBalanceAmount">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Total Balance Amount : </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    Rs. {{equifaxReportData.RetailAccountsSummary.TotalBalanceAmount}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.RecentAccount">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Recent Account : </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.RecentAccount}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.RetailAccountsSummary">
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.NoOfActiveAccounts">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Number of Open Accounts :
+                                </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.NoOfActiveAccounts}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.TotalPastDue">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Total Past Due Amount :
+                                </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    Rs. {{equifaxReportData.RetailAccountsSummary.TotalPastDue}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.OldestAccount">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Oldest Account : </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.OldestAccount}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.RetailAccountsSummary">
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.NoOfPastDueAccounts">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Number of Past Due Accounts :
+                                </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.NoOfPastDueAccounts}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.TotalHighCredit">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Total High Credit : </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.TotalHighCredit}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.TotalCreditLimit">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Total Credit Limit : </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.TotalCreditLimit}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.RetailAccountsSummary">
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.NoOfWriteOffs">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Number of Write-off Accounts
+                                    :
+                                </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.NoOfWriteOffs}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.TotalSanctionAmount">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Total Sanction Amount :
+                                </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    Rs. {{equifaxReportData.RetailAccountsSummary.TotalSanctionAmount}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.SingleHighestCredit">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Single Highest Credit :
+                                </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.SingleHighestCredit}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.RetailAccountsSummary">
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.NoOfZeroBalanceAccounts">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Number of Zero Balance
+                                    Accounts :
+                                </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    {{equifaxReportData.RetailAccountsSummary.NoOfZeroBalanceAccounts}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.TotalMonthlyPaymentAmount">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Total Monthly Payment
+                                    Amount : </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    Rs. {{equifaxReportData.RetailAccountsSummary.TotalMonthlyPaymentAmount}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.SingleHighestSanctionAmount">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Single Highest Sanction
+                                    Amount : </div>
+                                <div style=" width: 30%;" class="details-sub-title-equifax">
+                                    Rs. {{equifaxReportData.RetailAccountsSummary.SingleHighestSanctionAmount}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="row no-padding mt-2" *ngIf="equifaxReportData.RetailAccountsSummary">
+                        <div class="col-md-4 no-padding-small"
+                            *ngIf="equifaxReportData.RetailAccountsSummary.MostSevereStatusWithIn24Months">
+                            <div class="d-flex">
+                                <div style="width: 70%;" class="details-title-equifax">Most Severe Status < 24 Months :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{equifaxReportData.RetailAccountsSummary.MostSevereStatusWithIn24Months}}
+                                        </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padding-small"
+                                *ngIf="equifaxReportData.RetailAccountsSummary.AverageOpenBalance">
+                                <div class="d-flex">
+                                    <div style="width: 70%;" class="details-title-equifax">Average Open Balance :
+                                    </div>
+                                    <div style=" width: 30%;" class="details-sub-title-equifax">
+                                        Rs. {{equifaxReportData.RetailAccountsSummary.AverageOpenBalance}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 no-padding-small"
+                                *ngIf="equifaxReportData.RetailAccountsSummary.SingleHighestBalance">
+                                <div class="d-flex">
+                                    <div style="width: 70%;" class="details-title-equifax">Single Highest Balance :
+                                    </div>
+                                    <div style=" width: 30%;" class="details-sub-title-equifax">
+                                        Rs. {{equifaxReportData.RetailAccountsSummary.SingleHighestBalance}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- <div class="mt-3  overflow-y-scroll" *ngIf="reportData">
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <tbody>
+                                    <tr style="width: 100%;"
+                                        *ngIf="reportData.noOfAccounts || reportData.noOfAccounts == 0">
+                                        <td style="width: 50%;" class="details-title">No of Accounts </td>
+                                        <th style=" width: 50%;" class="details-sub-title">{{reportData.noOfAccounts}}
+                                        </th>
+                                    </tr>
+                                    <tr style="width: 100%;"
+                                        *ngIf="reportData.loansCount || reportData.loansCount == 0">
+                                        <td style="width: 50%;" class="details-title">Loans Count</td>
+                                        <th style=" width: 50%;" class="details-sub-title">{{reportData.loansCount}}
+                                        </th>
+                                    </tr>
+                                    <tr style="width: 100%;"
+                                        *ngIf="reportData.recentActivity && (reportData.recentActivity.totalInquiries || (reportData.recentActivity.totalInquiries && reportData.recentActivity.totalInquiries==0))">
+                                        <td style="width: 50%;" class="details-title">Total Enquiries</td>
+                                        <th style=" width: 50%;" class="details-sub-title">
+                                            {{reportData.recentActivity.totalInquiries}}
+                                        </th>
+                                    </tr>
+                                    <tr style="width: 100%;"
+                                        *ngIf="reportData.recentActivity &&( reportData.recentActivity.accountsDeliquent || (reportData.recentActivity.accountsDeliquent && reportData.recentActivity.accountsDeliquent == 0))">
+                                        <td style="width: 50%;" class="details-title">Accounts Deliquent</td>
+                                        <th style=" width: 50%;" class="details-sub-title">
+                                            {{reportData.recentActivity.accountsDeliquent}}
+                                        </th>
+                                    </tr>
+
+                                    <tr style="width: 100%;"
+                                        *ngIf="reportData.recentActivity && (reportData.recentActivity.accountsOpened || (reportData.recentActivity.accountsOpened && reportData.recentActivity.accountsOpened == 0))">
+                                        <td style="width: 50%;" class="details-title">Accounts Opened</td>
+                                        <th style=" width: 50%;" class="details-sub-title">
+                                            {{reportData.recentActivity.accountsOpened}}
+                                        </th>
+                                    </tr>
+
+                                    <tr style="width: 100%;"
+                                        *ngIf="reportData.recentActivity && (reportData.recentActivity.accountsUpdated || (reportData.recentActivity.accountsUpdated && reportData.recentActivity.accountsUpdated == 0))">
+                                        <td style="width: 50%;" class="details-title">Accounts Updated</td>
+                                        <th style=" width: 50%;" class="details-sub-title">
+                                            {{reportData.recentActivity.accountsUpdated}}
+                                        </th>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="mt-2" *ngIf="equifaxReportData && equifaxReportData.RetailAccountDetails">
+                    <span class="font-weight-bold">Account Details</span>
+                </div>
+                <div *ngIf="equifaxReportData && equifaxReportData.RetailAccountDetails" class="mt-2">
+                    <div *ngFor="let account of equifaxReportData.RetailAccountDetails">
+                        <div class="border mt-2">
+                            <div class="row no-padding mt-2">
+                                <div class="col-md-3 no-padding-small" *ngIf="account.AccountNumber">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Account
+                                            Number :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{account.AccountNumber}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small" *ngIf="account.Balance">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Balance :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            Rs. {{account.Balance}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small" *ngIf="account.Open">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Open :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{account.Open}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small" *ngIf="account.DateReported">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Date
+                                            Reported
+                                            :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{account.DateReported}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row no-padding mt-2">
+                                <div class="col-md-3 no-padding-small" *ngIf="account.Institution">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">
+                                            Institution :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{account.Institution}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small" *ngIf="account.PastDueAmount">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Past Due
+                                            Amount :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            Rs. {{account.PastDueAmount}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Interest
+                                            Rate
+                                            :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.InterestRate">
+                                            {{account.InterestRate}} %
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small" *ngIf="account.DateOpened">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Date
+                                            Opened :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{account.DateOpened}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row no-padding mt-2">
+                                <div class="col-md-3 no-padding-small" *ngIf="account.AccountType">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Type :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{account.AccountType}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Last
+                                            Payment
+                                            : </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.LastPayment">
+                                            Rs. {{account.LastPayment}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small" *ngIf="account.LastPaymentDate">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Last
+                                            Payment
+                                            Date
+                                            : </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{account.LastPaymentDate}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Date
+                                            Closed :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.DateClosed">
+                                            {{account.DateClosed}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row no-padding mt-2">
+                                <div class="col-md-3 no-padding-small" *ngIf="account.OwnershipType">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Ownership
+                                            Type :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            {{account.OwnershipType}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Write-off
+                                            Amount
+                                            : </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.writeOff">
+                                            {{account.writeOff}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small" *ngIf="account.SanctionAmount">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Sanction
+                                            Amount
+                                            : </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax">
+                                            Rs. {{account.SanctionAmount}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Reason :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.Reason">
+                                            {{account.Reason}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row no-padding mt-2">
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Repayment
+                                            Tenure
+                                            :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.RepaymentTenure">
+                                            {{account.RepaymentTenure}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Monthly
+                                            Payment
+                                            Amount : </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.InstallmentAmount">
+                                            Rs. {{account.InstallmentAmount}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Credit
+                                            Limit
+                                            : </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.CreditLimit">
+                                            {{account.CreditLimit}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">
+                                            Collateral
+                                            Value
+                                            :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.CollateralValue">
+                                            {{account.CollateralValue}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row no-padding mt-2">
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Dispute
+                                            Code
+                                            :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.DisputeCode">
+                                            {{account.DisputeCode}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">Term
+                                            Frequency :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.TermFrequency">
+                                            {{account.TermFrequency}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <!-- <div class="d-flex">
+                                                                <div style="width: 70%;" class="details-title-equifax text-center">Credit Limit
+                                                                    : </div>
+                                                                <div style=" width: 30%;" class="details-sub-title-equifax"
+                                                                    *ngIf="account.CreditLimit">
+                                                                    {{account.CreditLimit}}
+                                                                </div>
+                                                            </div> -->
+                                </div>
+                                <div class="col-md-3 no-padding-small">
+                                    <div class="d-flex">
+                                        <div style="width: 70%;" class="details-title-equifax text-center">
+                                            Collateral
+                                            Type
+                                            :
+                                        </div>
+                                        <div style=" width: 30%;" class="details-sub-title-equifax"
+                                            *ngIf="account.CollateralType">
+                                            {{account.CollateralType}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="row no-padding mt-2">
+                                <div class="col-md-12 no-padding-small">
+                                    <div class="d-flex">
+                                        <div class="details-title-equifax text-center mr-3">Account
+                                            status
+                                            :
+                                        </div>
+                                        <div class="details-sub-title-equifax" *ngIf="account.AccountStatus">
+                                            {{account.AccountStatus}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 no-padding-small">
+                                    <div class="d-flex">
+                                        <div class="details-title-equifax text-center mr-3">Asset
+                                            Classification :
+                                        </div>
+                                        <div class="details-sub-title-equifax" *ngIf="account.AssetClassification">
+                                            {{account.AssetClassification}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 no-padding-small">
+                                    <div class="d-flex">
+                                        <div class="details-title-equifax text-center mr-3">Suit Filed Status :
+                                        </div>
+                                        <div class="details-sub-title-equifax" *ngIf="account.SuitFiledStatus">
+                                            {{account.SuitFiledStatus}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
