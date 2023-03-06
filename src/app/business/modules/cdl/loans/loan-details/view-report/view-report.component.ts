@@ -17,268 +17,6 @@ export class ViewReportComponent implements OnInit {
   type: any;
   user: any;
   reportData: any;
-
-  equifaxSample: any = {
-    "RetailAccountsSummary": {
-      "TotalSanctionAmount": "62007.00",
-      "NoOfPastDueAccounts": "0",
-      "TotalCreditLimit": "0.0",
-      "RecentAccount": "Consumer Loan on 17-03-2022",
-      "TotalHighCredit": "0.00",
-      "NoOfActiveAccounts": "2",
-      "MostSevereStatusWithIn24Months": "Non-Delnqt",
-      "OldestAccount": "Consumer Loan on 07-03-2021",
-      "SingleHighestSanctionAmount": "33990.00",
-      "NoOfAccounts": "7",
-      "NoOfWriteOffs": "0",
-      "SingleHighestCredit": "0.00",
-      "AverageOpenBalance": "18130.00",
-      "TotalPastDue": "0.00",
-      "NoOfZeroBalanceAccounts": "0",
-      "TotalMonthlyPaymentAmount": "0.00",
-      "TotalBalanceAmount": "36260.00",
-      "SingleHighestBalance": "27767.00"
-    },
-    "RetailAccountDetails": [
-      {
-        "OwnershipType": "Individual",
-        "DateOpened": "2022-03-17",
-        "DateReported": "2022-12-31",
-        "TermFrequency": "Monthly",
-        "LastPaymentDate": "2022-11-02",
-        "PastDueAmount": "0",
-        "source": "INDIVIDUAL",
-        "Institution": "FINANCE",
-        "AccountType": "Consumer Loan",
-        "Open": "Yes",
-        "AccountNumber": "**********",
-        "AccountStatus": "Current Account",
-        "SanctionAmount": "33990",
-        "Balance": "8493",
-        "seq": "1"
-      },
-      {
-        "OwnershipType": "Individual",
-        "DateOpened": "2022-02-11",
-        "DateReported": "2022-11-30",
-        "TermFrequency": "Monthly",
-        "LastPaymentDate": "2022-11-30",
-        "PastDueAmount": "0",
-        "source": "INDIVIDUAL",
-        "Institution": "FINANCE",
-        "AccountType": "Consumer Loan",
-        "Open": "Yes",
-        "AccountNumber": "**********",
-        "AccountStatus": "Current Account",
-        "SanctionAmount": "28017",
-        "Balance": "27767",
-        "seq": "2"
-      },
-      {
-        "OwnershipType": "Individual",
-        "DateOpened": "2021-03-31",
-        "DateReported": "2022-05-31",
-        "TermFrequency": "Monthly",
-        "LastPaymentDate": "2022-04-02",
-        "RepaymentTenure": "18",
-        "InstallmentAmount": "2500",
-        "PastDueAmount": "0",
-        "source": "INDIVIDUAL",
-        "Institution": "FINANCE",
-        "AccountType": "Consumer Loan",
-        "Reason": "Closed Account",
-        "Open": "No",
-        "AccountNumber": "**********",
-        "AccountStatus": "Closed Account",
-        "DateClosed": "2022-04-10",
-        "SanctionAmount": "45000",
-        "Balance": "0",
-        "seq": "5"
-      },
-      {
-        "OwnershipType": "Individual",
-        "DateOpened": "2022-02-13",
-        "LastPayment": "1241",
-        "DateReported": "2022-05-31",
-        "TermFrequency": "Monthly",
-        "LastPaymentDate": "2022-05-03",
-        "RepaymentTenure": "3",
-        "InstallmentAmount": "416",
-        "PastDueAmount": "0",
-        "source": "INDIVIDUAL",
-        "Institution": "FINANCE",
-        "AccountType": "Consumer Loan",
-        "Reason": "Closed Account",
-        "Open": "No",
-        "AccountNumber": "**********",
-        "AccountStatus": "Closed Account",
-        "DateClosed": "2022-05-03",
-        "SanctionAmount": "1199",
-        "AssetClassification": "Standard",
-        "InterestRate": "24",
-        "Balance": "0",
-        "seq": "6"
-      },
-      {
-        "OwnershipType": "Individual",
-        "DateOpened": "2021-09-02",
-        "DateReported": "2022-04-30",
-        "TermFrequency": "Monthly",
-        "LastPaymentDate": "2022-02-02",
-        "PastDueAmount": "0",
-        "source": "INDIVIDUAL",
-        "Institution": "FINANCE",
-        "AccountType": "Consumer Loan",
-        "Reason": "Closed Account",
-        "Open": "No",
-        "AccountNumber": "**********",
-        "AccountStatus": "Closed Account",
-        "DateClosed": "2022-03-09",
-        "SanctionAmount": "18198",
-        "Balance": "0",
-        "seq": "7"
-      }
-    ],
-    "IDAndContactInfo": {
-      "IdentityInfo": {
-        "PANId": [
-          {
-            "seq": "1",
-            "IdNumber": "LZYPS1368D",
-            "ReportedDate": "2022-09-30"
-          }
-        ],
-        "NationalIDCard": [
-          {
-            "seq": "1",
-            "IdNumber": "XXXXXXXXXXXX",
-            "ReportedDate": "2022-08-31"
-          }
-        ]
-      },
-      "PhoneInfo": [
-        {
-          "ReportedDate": "2022-09-30",
-          "Number": "9745355216",
-          "seq": "1",
-          "typeCode": "M"
-        },
-        {
-          "ReportedDate": "2022-08-31",
-          "Number": "919745355216",
-          "seq": "2",
-          "typeCode": "M"
-        }
-      ],
-      "EmailAddressInfo": [
-        {
-          "seq": "1",
-          "EmailAddress": "KRISHNADAS.0810@GMAIL.COM",
-          "ReportedDate": "2022-04-30"
-        }
-      ],
-      "PersonalInfo": {
-        " AliasName": {},
-        "DateOfBirth": "1996-04-15",
-        "PlaceOfBirthInfo": {},
-        "Gender": "Male",
-        "TotalIncome": "25000",
-        "Age": {
-          "Age": "26"
-        },
-        "Name": {
-          "FirstName": "KRISHNADAS ",
-          "FullName": "KRISHNADAS PS ",
-          "LastName": "PS "
-        }
-      },
-      "AddressInfo": [
-        {
-          "Type": "Permanent",
-          "ReportedDate": "2022-09-30",
-          "Address": "POZHANGODATH HOUSEKAROORNEAR TEMPLEKAROOR THRISSUR 680684",
-          "Seq": "1",
-          "State": "KL",
-          "Postal": "680684"
-        },
-        {
-          "Type": "Primary",
-          "ReportedDate": "2022-08-31",
-          "Address": "POZHANGODTH HOUSE MANKULANKARA PO  KAROOR KODAKARA THRISSUR",
-          "Seq": "2",
-          "State": "KL",
-          "Postal": "680684"
-        },
-        {
-          "Type": "Rents",
-          "ReportedDate": "2022-05-31",
-          "Address": "POZHANGODTH HOUSE MANKULANKARA PO  KAROOR KODAKARA KODAKARA THRISSUR",
-          "Seq": "3",
-          "State": "KL",
-          "Postal": "680684"
-        },
-        {
-          "Type": "Permanent",
-          "ReportedDate": "2022-04-30",
-          "Address": "POZHANGODATH HOUSEKAROORNEAR TEMPLEKAROO R THRISSUR 680684",
-          "Seq": "4",
-          "State": "KL",
-          "Postal": "680684"
-        },
-        {
-          "Type": "Primary",
-          "ReportedDate": "2022-03-31",
-          "Address": "SO SREEDHARAN P POZHANGODATH SO SREEDHARAN P POZHANGODATH THRISSUR KERALA 680684",
-          "Seq": "5",
-          "State": "KL",
-          "Postal": "680684"
-        }
-      ]
-    },
-    "InquiryRequestInfo": {
-      "DOB": "1991-11-04",
-      "Gender": "M",
-      "LastName": "K M",
-      "FirstName": "kiran kumar",
-      "IDDetails": [
-        {
-          "seq": "1",
-          "IDType": "M",
-          "Source": "Inquiry",
-          "IDValue": "XXXXXXXXXXXX"
-        },
-        {
-          "seq": "2",
-          "IDType": "T",
-          "Source": "Inquiry",
-          "IDValue": "dnkpm0652l"
-        }
-      ],
-      "InquiryPhones": [
-        {
-          "seq": "1",
-          "Number": "8943621001",
-          "PhoneType": [
-            "M"
-          ]
-        }
-      ],
-      "InquiryPurpose": "00",
-      "InquiryAddresses": [
-        {
-          "seq": "1",
-          "City": "Thrissur",
-          "State": "KL",
-          "Postal": "680732",
-          "AddressType": [
-            "H"
-          ],
-          "AddressLine1": "S/O Mohanan,Kuruppamparambil House,P O Malapallipuram,Pallippuram,Thrissur,Kerala,680732"
-        }
-      ],
-      "TransactionAmount": "0"
-    },
-  }
   equiFaxData: any;
   enquiryIds: any = {};
   equifaxReportData: any = {};
@@ -316,45 +54,41 @@ export class ViewReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.groupService.getitemFromGroupStorage('ynw-user');
-    // if (this.data && this.data.type) {
-    //   this.type = this.data.type
-    // }
-    // if (this.data && this.data.data) {
-    //   this.reportData = this.data.data
-    // }
-    this.equiFaxData = this.equifaxSample;
-    if (this.type == 'equifax') {
-      let Ids = this.equiFaxData && this.equiFaxData.InquiryRequestInfo && this.equiFaxData.InquiryRequestInfo.IDDetails;
-      for (let i = 0; i < Ids.length; i++) {
-        if (Ids[i].IDType == 'M') {
-          this.enquiryIds["aadhaar"] = Ids[i].IDValue;
-        }
-        else if (Ids[i].IDType == 'T') {
-          this.enquiryIds["pan"] = Ids[i].IDValue;
-        }
-        else if (Ids[i].IDType == 'V') {
-          this.enquiryIds["voterId"] = Ids[i].IDValue;
-        }
-        else if (Ids[i].IDType == 'P') {
-          this.enquiryIds["passport"] = Ids[i].IDValue;
-        }
-        else if (Ids[i].IDType == 'R') {
-          this.enquiryIds["ration"] = Ids[i].IDValue;
-        }
-        else if (Ids[i].IDType == 'D') {
-          this.enquiryIds["licence"] = Ids[i].IDValue;
-        }
-        else if (Ids[i].IDType == 'O') {
-          this.enquiryIds["other"] = Ids[i].IDValue;
-        }
-      }
-    }
 
-    console.log("this.enquiryIds", this.enquiryIds)
+
   }
 
   getequiFaxReport(id) {
     this.cdlService.getEquifaxReport(id).subscribe((data: any) => {
+      if (this.type == 'equifax') {
+        let Ids = data && data.responseDataDetails.InquiryRequestInfo && data.responseDataDetails.InquiryRequestInfo.IDDetails;
+        if (Ids && Ids.length > 0)
+          for (let i = 0; i < Ids.length; i++) {
+            if (Ids[i].IDType == 'M') {
+              this.enquiryIds["aadhaar"] = Ids[i].IDValue;
+            }
+            else if (Ids[i].IDType == 'T') {
+              this.enquiryIds["pan"] = Ids[i].IDValue;
+            }
+            else if (Ids[i].IDType == 'V') {
+              this.enquiryIds["voterId"] = Ids[i].IDValue;
+            }
+            else if (Ids[i].IDType == 'P') {
+              this.enquiryIds["passport"] = Ids[i].IDValue;
+            }
+            else if (Ids[i].IDType == 'R') {
+              this.enquiryIds["ration"] = Ids[i].IDValue;
+            }
+            else if (Ids[i].IDType == 'D') {
+              this.enquiryIds["licence"] = Ids[i].IDValue;
+            }
+            else if (Ids[i].IDType == 'O') {
+              this.enquiryIds["other"] = Ids[i].IDValue;
+            }
+          }
+      }
+
+      console.log("this.enquiryIds", this.enquiryIds)
       if (data && data.responseDataDetails && data.responseDataDetails.CCRResponse) {
         if (data.responseDataDetails.InquiryRequestInfo) {
           this.equifaxReportData['InquiryRequestInfo'] = data.responseDataDetails.InquiryRequestInfo;
