@@ -2187,6 +2187,7 @@ export class CreateComponent implements OnInit {
     this.cdlService.accountAggregate(this.loanId, 0).subscribe((data: any) => {
       if (data) {
         this.accountaggregating = false;
+        this.getAccountAggregatorStatus(this.loanId, this.loanApplicationKycId);
         this.snackbarService.openSnackBar("We have sent you a link for Account Aggregation Please gohead and verify your details")
       }
     },

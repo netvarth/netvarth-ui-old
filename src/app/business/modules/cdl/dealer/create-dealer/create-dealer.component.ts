@@ -1078,7 +1078,7 @@ export class CreateDealerComponent implements OnInit {
             });
         }
         this.snackbarService.openSnackBar("Dealer Saved As Draft Successfully")
-        this.router.navigate(['provider', 'cdl', 'dealers'])
+        // this.router.navigate(['provider', 'cdl', 'dealers'])
       },
         (error) => {
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
