@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { SnackbarService } from '../../../../../shared/services/snackbar.service';
 import { CdlService } from '../../cdl.service';
 import { SelectSchemeComponent } from '../select-scheme/select-scheme.component';
@@ -37,6 +37,9 @@ export class ConfirmBoxComponent implements OnInit {
   totalPayment: any = 0;
   downPayment: any = 0;
   loanAmount: any = 0;
+  equifaxReportData: any;
+  equifaxScore: any;
+  equifaxFormData: any;
   constructor(
     public dialogRef: MatDialogRef<ConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -66,6 +69,17 @@ export class ConfirmBoxComponent implements OnInit {
           }
         }
       }
+
+    }
+
+    if (this.data && this.data.equifaxData) {
+      this.equifaxReportData = this.data.equifaxData;
+      this.equifaxScore = this.equifaxReportData.score;
+      console.log("this.equifaxReportData", this.equifaxReportData)
+    }
+
+    if (this.data && this.data.equifaxFormData) {
+      this.equifaxFormData = this.data.equifaxFormData;
     }
 
     if (this.from && this.from == 'loancreate') {
@@ -87,6 +101,16 @@ export class ConfirmBoxComponent implements OnInit {
 
   }
 
+  convertToLoan() {
+    this.close();
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        type: 'equifax',
+        dataFromEquiFax: JSON.stringify(this.equifaxFormData)
+      }
+    }
+    this.router.navigate(['provider', 'cdl', 'loans', 'create'], navigationExtras);
+  }
 
   getDefaultScheme() {
     this.cdlservice.getDefaultScheme(this.loanId).subscribe((data) => {

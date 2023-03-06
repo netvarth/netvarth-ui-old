@@ -206,6 +206,11 @@ export class CdlService {
     return this.servicemeta.httpPost(url, data);
   }
 
+  getEquifax(data) {
+    const url = 'provider/equifax/generatereport';
+    return this.servicemeta.httpPost(url, data);
+  }
+
   getBusinessProfile() {
     const url = 'provider/bProfile';
     return this.servicemeta.httpGet(url, null);

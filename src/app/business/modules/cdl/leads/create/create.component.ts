@@ -111,7 +111,10 @@ export class CreateComponent implements OnInit {
       permanentpincode: [null],
       loanamount: [null],
       aadhar: [null],
-      pan: [null]
+      pan: [null],
+      permanentaddress: [null],
+      gender: [null],
+      dob: [null]
     });
 
 
@@ -190,21 +193,69 @@ export class CreateComponent implements OnInit {
   }
 
   checkEquifax() {
-    const dialogRef = this.dialog.open(ConfirmBoxComponent, {
-      width: '50%',
-      panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
-      disableClose: true,
-      data: {
-        from: "equifax"
-      }
-    });
-    dialogRef.afterClosed().subscribe(
-      (id) => {
-        if (id) {
-          this.snackbarService.openSnackBar("Loan Verified Successfully");
-          this.router.navigate(['provider', 'cdl', 'loans', id]);
+    let equifaxData =
+    {
+      "customerFirstName": this.createLead.controls.firstname.value,
+      "customerLastName": this.createLead.controls.lastname.value,
+      "dob": this.createLead.controls.dob.value,
+      "gender": this.createLead.controls.gender.value,
+      "customerPhone": this.createLead.controls.phone.value,
+      "permanentAddress1": this.createLead.controls.permanentaddress.value,
+      "permanentCity": this.createLead.controls.permanentcity.value,
+      "permanentState": this.createLead.controls.permanentstate.value,
+      "permanentPin": this.createLead.controls.permanentpincode.value,
+      "aadhaar": this.createLead.controls.aadhar.value,
+      "pan": this.createLead.controls.pan.value
+    }
+
+
+    let equifaxFormData =
+    {
+      "customerFirstName": this.createLead.controls.firstname.value,
+      "customerLastName": this.createLead.controls.lastname.value,
+      "dob": this.createLead.controls.dob.value,
+      "gender": this.createLead.controls.gender.value,
+      "customerPhone": this.createLead.controls.phone.value,
+      "customerEmail": this.createLead.controls.email.value,
+      "permanentAddress1": this.createLead.controls.permanentaddress.value,
+      "permanentCity": this.createLead.controls.permanentcity.value,
+      "permanentState": this.createLead.controls.permanentstate.value,
+      "permanentPin": this.createLead.controls.permanentpincode.value,
+      "aadhaar": this.createLead.controls.aadhar.value,
+      "pan": this.createLead.controls.pan.value,
+      "loanAmount": this.createLead.controls.loanamount.value
+
+    }
+
+    this.cdlService.getEquifax(equifaxData).subscribe((data: any) => {
+      if (data) {
+        if (data.id) {
+          this.cdlService.getEquifaxReport(data.id).subscribe((reportData) => {
+            if (reportData) {
+              const dialogRef = this.dialog.open(ConfirmBoxComponent, {
+                width: '50%',
+                panelClass: ['popup-class', 'commonpopupmainclass', 'confirmationmainclass'],
+                disableClose: true,
+                data: {
+                  from: "equifax",
+                  equifaxData: reportData,
+                  equifaxFormData: equifaxFormData
+                }
+              });
+              dialogRef.afterClosed().subscribe(
+                (id) => {
+
+                });
+            }
+          });
         }
-      });
+      }
+    }, (error) => {
+      console.log('error', error)
+      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+    });
+
+
   }
 
   convertToLoan() {

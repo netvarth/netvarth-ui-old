@@ -102,6 +102,39 @@
           </div>
 
 
+          <div *ngIf="src=='equifax'">
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Date of Birth <span class="text-danger">*</span></div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off"
+                    formControlName="dob" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="src=='equifax'">
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Gender <span class="text-danger">*</span></div>
+                </div>
+                <div class="fieldPadding">
+                  <mat-select class="form-control widthWebKit" #gender formControlName="gender">
+                    <mat-option [value]="gender.name" *ngFor="let gender of genders">
+                      <div *ngIf="gender && gender.displayName">{{gender.displayName}}</div>
+                    </mat-option>
+                  </mat-select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
           <div>
             <div class="bggrey my-2">
               <div>
@@ -146,6 +179,21 @@
                 <div class="fieldPadding">
                   <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Requested Loan Amount"
                     class="form-control" autocomplete="off" formControlName="loanamount" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="src=='equifax'">
+            <div class="bggrey my-2">
+              <div>
+                <div class="d-flex">
+                  <div class="form-title">Address</div>
+                </div>
+                <div class="fieldPadding">
+                  <input (keyup)="resetErrors()" #permanentaddress type="text" placeholder="Enter Address"
+                    class="form-control" autocomplete="off" formControlName="permanentaddress" />
                 </div>
               </div>
             </div>

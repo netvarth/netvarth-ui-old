@@ -31,7 +31,15 @@
     </div>
     <div class="otp mgn-bt-20 mt-3">
       <span class="font-weight-bold title">Equifax Score</span><br>
-      <span for="phone" class="mgn-up-10 mgn-bt-20 title text-success font-weight-bold">755</span>
+      <span for="phone" class="mgn-up-10 mgn-bt-20 title text-success font-weight-bold">{{equifaxScore}}</span>
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+      <div class="mr-3">
+        <div class="btn btn-primary" (click)="close()">Close</div>
+      </div>
+      <div>
+        <div class="btn btn-primary" (click)="convertToLoan()">Convert to Loan</div>
+      </div>
     </div>
   </div>
 </div>

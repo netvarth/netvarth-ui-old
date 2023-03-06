@@ -180,6 +180,7 @@ export class CreateComponent implements OnInit {
   coapplicantemailverification: any = false;
   aadharVerfied: any = false;
   coapplicantDocumentVerifying: boolean;
+  equifaxData: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -192,6 +193,81 @@ export class CreateComponent implements OnInit {
     private cdlService: CdlService,
     private fileService: FileService,
   ) {
+
+
+    this.createLoan = this.createLoanFormBuilder.group({
+      phone: [null],
+      firstname: [null],
+      lastname: [null],
+      email: [null],
+      loantype: [null],
+      customerphoto: [null],
+      aadharnumber: [null],
+      aadharattachment: [null],
+      permanentaddress1: [null],
+      permanentaddress2: [null],
+      permanentcity: [null],
+      permanentstate: [null],
+      permanentpincode: [null],
+      pannumber: [null],
+      panattachment: [null],
+      martialstatus: [null],
+      employmenttype: [null],
+      category: [null],
+      salary: [null],
+      emicount: [null],
+      device: [null],
+      totalpayment: [null],
+      downpayment: [null],
+      currentaddress1: [null],
+      currentaddress2: [null],
+      currentcity: [null],
+      currentstate: [null],
+      currentpincode: [null],
+      loanamount: [null],
+      remarks: [null],
+      loanproduct: [null],
+      nomineetype: [null],
+      nomineename: [null],
+      nomineePhone: [null],
+      nomineeDob: [null],
+      nomineeGender: [null],
+      bank: [null],
+      ifsc: [null],
+      account: [null],
+      bankstatements: [null],
+      // scheme: [null],
+      dealer: [null],
+      customerEducation: [null],
+      customerEmployement: [null],
+      salaryRouting: [null],
+      familyDependants: [null],
+      noOfYearsAtPresentAddress: [null],
+      currentResidenceOwnershipStatus: [null],
+      ownedMovableAssets: [null],
+      vehicleNo: [null],
+      goodsFinanced: [null],
+      dob: [null],
+      earningMembers: [null],
+      gender: [null],
+      existingCustomer: [null],
+      employee: [null],
+      employeeCode: [null],
+      permanentRelationType: [null],
+      permanentRelationName: [null],
+      currentRelationType: [null],
+      currentRelationName: [null],
+      productcategory: [null],
+      productsubcategory: [null],
+      guarantorType: [null],
+      guarantorName: [null],
+      guarantorPhone: [null],
+      guarantorDob: [null],
+      subventionLoan: [null],
+      referralCode: [null],
+      bankbranch: [null],
+      coapplicants: this.createLoanFormBuilder.array([])
+    });
 
     this.activated_route.queryParams.subscribe((params) => {
       if (params && params.from) {
@@ -246,6 +322,9 @@ export class CreateComponent implements OnInit {
           });
         }
       }
+
+
+
       if (params && params.id) {
         this.cdlService.getLoanById(params.id).subscribe((data) => {
           this.loanData = data;
@@ -520,81 +599,57 @@ export class CreateComponent implements OnInit {
           }
         });
       }
+
+      if (params && params.type && params.type == 'equifax') {
+        if (params.dataFromEquiFax) {
+          this.equifaxData = JSON.parse(params.dataFromEquiFax);
+          if (this.equifaxData && this.equifaxData.customerFirstName) {
+            this.createLoan.controls.firstname.setValue(this.equifaxData.customerFirstName);
+          }
+          if (this.equifaxData && this.equifaxData.customerLastName) {
+            this.createLoan.controls.lastname.setValue(this.equifaxData.customerLastName);
+          }
+          if (this.equifaxData && this.equifaxData.dob) {
+            this.createLoan.controls.dob.setValue(this.equifaxData.dob);
+          }
+          if (this.equifaxData && this.equifaxData.gender) {
+            this.createLoan.controls.gender.setValue(this.equifaxData.gender);
+          }
+          if (this.equifaxData && this.equifaxData.customerPhone) {
+            this.createLoan.controls.phone.setValue(this.equifaxData.customerPhone);
+            this.disablePhone = true;
+          }
+          if (this.equifaxData && this.equifaxData.customerEmail) {
+            this.createLoan.controls.email.setValue(this.equifaxData.customerEmail);
+          }
+
+          if (this.equifaxData && this.equifaxData.permanentAddress1) {
+            this.createLoan.controls.permanentaddress1.setValue(this.equifaxData.permanentAddress1);
+          }
+
+          if (this.equifaxData && this.equifaxData.permanentCity) {
+            this.createLoan.controls.permanentcity.setValue(this.equifaxData.permanentCity);
+          }
+          if (this.equifaxData && this.equifaxData.permanentState) {
+            this.createLoan.controls.permanentstate.setValue(this.equifaxData.permanentState);
+          }
+          if (this.equifaxData && this.equifaxData.permanentPin) {
+            this.createLoan.controls.permanentpincode.setValue(this.equifaxData.permanentPin);
+          }
+          if (this.equifaxData && this.equifaxData.aadhaar) {
+            this.createLoan.controls.aadharnumber.setValue(this.equifaxData.aadhaar);
+          }
+          if (this.equifaxData && this.equifaxData.pan) {
+            this.createLoan.controls.pannumber.setValue(this.equifaxData.pan);
+          }
+          if (this.equifaxData && this.equifaxData.loanAmount) {
+            this.createLoan.controls.loanamount.setValue(this.equifaxData.loanAmount);
+          }
+        }
+      }
     });
 
-    this.createLoan = this.createLoanFormBuilder.group({
-      phone: [null],
-      firstname: [null],
-      lastname: [null],
-      email: [null],
-      loantype: [null],
-      customerphoto: [null],
-      aadharnumber: [null],
-      aadharattachment: [null],
-      permanentaddress1: [null],
-      permanentaddress2: [null],
-      permanentcity: [null],
-      permanentstate: [null],
-      permanentpincode: [null],
-      pannumber: [null],
-      panattachment: [null],
-      martialstatus: [null],
-      employmenttype: [null],
-      category: [null],
-      salary: [null],
-      emicount: [null],
-      device: [null],
-      totalpayment: [null],
-      downpayment: [null],
-      currentaddress1: [null],
-      currentaddress2: [null],
-      currentcity: [null],
-      currentstate: [null],
-      currentpincode: [null],
-      loanamount: [null],
-      remarks: [null],
-      loanproduct: [null],
-      nomineetype: [null],
-      nomineename: [null],
-      nomineePhone: [null],
-      nomineeDob: [null],
-      nomineeGender: [null],
-      bank: [null],
-      ifsc: [null],
-      account: [null],
-      bankstatements: [null],
-      // scheme: [null],
-      dealer: [null],
-      customerEducation: [null],
-      customerEmployement: [null],
-      salaryRouting: [null],
-      familyDependants: [null],
-      noOfYearsAtPresentAddress: [null],
-      currentResidenceOwnershipStatus: [null],
-      ownedMovableAssets: [null],
-      vehicleNo: [null],
-      goodsFinanced: [null],
-      dob: [null],
-      earningMembers: [null],
-      gender: [null],
-      existingCustomer: [null],
-      employee: [null],
-      employeeCode: [null],
-      permanentRelationType: [null],
-      permanentRelationName: [null],
-      currentRelationType: [null],
-      currentRelationName: [null],
-      productcategory: [null],
-      productsubcategory: [null],
-      guarantorType: [null],
-      guarantorName: [null],
-      guarantorPhone: [null],
-      guarantorDob: [null],
-      subventionLoan: [null],
-      referralCode: [null],
-      bankbranch: [null],
-      coapplicants: this.createLoanFormBuilder.array([])
-    });
+
   }
 
 
