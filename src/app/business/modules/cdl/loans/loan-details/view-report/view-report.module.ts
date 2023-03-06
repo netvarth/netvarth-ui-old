@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ViewReportComponent } from './view-report.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RouterModule, Routes } from '@angular/router';
-import { NgxPrintModule } from 'ngx-print';
+// import { NgxPrintModule } from 'ngx-print';
 
 const routes: Routes = [
   { path: '', component: ViewReportComponent }
@@ -18,7 +18,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     MatDialogModule,
-    NgxPrintModule,
+    // NgxPrintModule,
     [RouterModule.forChild(routes)]
   ],
   exports: [
