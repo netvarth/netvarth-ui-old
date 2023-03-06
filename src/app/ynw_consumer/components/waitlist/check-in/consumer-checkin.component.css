@@ -2336,3 +2336,8 @@ button {
 .text-primary{
   color: #1e4079 !important;
 }
+.pay-cnfm {
+  color: red;
+  font-size: .9rem;
+  margin-top: 10px;
+} 

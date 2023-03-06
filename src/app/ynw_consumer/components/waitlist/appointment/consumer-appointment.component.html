@@ -478,10 +478,9 @@
                       <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
                         ? payAmount : paymentDetails.amountRequiredNow)|
                         currency:'&#8377;'}}</span></span> <br>
-                    <!-- <span style="font-size: small;">Additional convenience charges may apply
-
- </span> -->
+                    <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
                   </div>
+                  <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>
                 </div>
                 <div class="disply"
                   *ngIf="paymentLength>0 && paymentDetails && paymentDetails.amountRequiredNow > 0 && ((checkJcash && jcashamount < paymentDetails.amountRequiredNow) || (!checkJcash))">
@@ -499,10 +498,9 @@
                       <span class="ser_price no-mgn-bt bold rupee-font">{{(checkJcash
                         ? payAmount : paymentDetails.amountRequiredNow)|
                         currency:'&#8377;'}}</span></span> <br>
-                    <!-- <span style="font-size: small;">Additional convenience charges may apply
-
- </span> -->
+                    <!-- <span style="font-size: small;">Additional convenience charges may apply</span> -->
                   </div>
+                  <p class="pay-cnfm">* Booking will be confirmed only after the payment</p>                                                                      
                 </div>
                 <!-- <span style="font-size: small;" *ngIf="paymentMode && isInternational === false && convenientFee > 0">
  <span class="ser_price no-mgn-bt rupee-font">Convenient Fee: {{convenientFee | currency:'&#8377;'}}</span>
