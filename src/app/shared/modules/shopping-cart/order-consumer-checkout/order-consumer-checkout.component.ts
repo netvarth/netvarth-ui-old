@@ -48,7 +48,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
   api_loading1: boolean;
   coupon_status = null;
   checkoutDisabled: boolean;
-  loading = true;
+  loading = false;
   disabled = false;
   userEmail = '';
   orderNote: any;
@@ -268,6 +268,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     });
     this.route.queryParams.subscribe(
       params => {
+        console.log("Parms:",params);
 
         if (params.catalog_Id) {
           this.catalogId = params.catalog_Id;
@@ -298,7 +299,9 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.chosenDateDetails = this.lStorageService.getitemfromLocalStorage('chosenDateTime');
     this.delivery_type = this.chosenDateDetails.delivery_type;
     this.choose_type = this.delivery_type;
-    this.catalog_Id = this.chosenDateDetails.catlog_id;
+    if(this.chosenDateDetails && this.chosenDateDetails.catlog_id){
+      this.catalog_Id = this.chosenDateDetails.catlog_id;
+    }
     this.advance_amount = this.chosenDateDetails.advance_amount;
     this.account_id = this.chosenDateDetails.account_id;
     if (this.chosenDateDetails.selected_coupons) {
@@ -351,11 +354,14 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       _this.getItemsListWithItemOptions(_this.orderList).then(
         () => {
           _this.orders = [...new Map(_this.orderList.map(item => [item.item['itemId'], item])).values()];
-          console.log("_this.orders", _this.orders)
+          console.log("_this.orders", _this.orders);
           _this.isPhysicalItemsPresent();
           _this.getCatalogDetailsOnInit();
         }
       );
+    }
+    else{
+      this.getCatalogDetailsOnInit();
     }
 
     this.getConsumerQuestionnaire();
@@ -1303,9 +1309,10 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     if (this.orders && this.orders.length > 0) {
       this.orders.forEach(item => {
         let consumerNote = '';
+        if(item && item.item && item.item.itemId){
         const itemId = item.item.itemId;
         const qty = this.getItemQtyforCreatingOrder(item, item.itemOptionsIndex);
-        if (item.consumerNote) {
+        if (item && item.consumerNote) {
           consumerNote = item.consumerNote;
         }
         if (this.haveItemOptions(item)) {
@@ -1314,6 +1321,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
         else {
           this.orderSummary.push({ 'id': itemId, 'quantity': qty, 'consumerNote': consumerNote, 'itemType': item.item.itemType, 'name': item.item.displayName });
         }
+      }
       });
     }
     console.log("this.orders in creation", this.orderSummary)
@@ -1325,9 +1333,10 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     let timeslot: any;
     this.isClickedOnce = true;
     this.checkoutDisabled = true;
+    // if(this.catalog_details && this.catalog_details.id){
     post_Data = {
       'catalog': {
-        'id': this.catalog_details.id
+        'id': this.catalog_details ? this.catalog_details.id : ''
       },
       'orderFor': {
         'id': 0
@@ -1337,6 +1346,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       'coupons': this.selected_coupons,
       'countryCode': '+91',
     }
+  // }
     if (this.orderType !== 'SHOPPINGLIST') {
       post_Data['orderItem'] = this.getOrderItemsforCreatingOrder();
     }
@@ -2455,6 +2465,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
     this.questionAnswers = event;
   }
   getConsumerQuestionnaire() {
+    if(this.catalogId){
     this.subs.sink = this.shared_services.getConsumerOrderQuestionnaire(this.catalogId, this.account_id).subscribe(data => {
       this.questionnaireList = data;
       if (this.questionnaireList.questionnaireId) {
@@ -2464,6 +2475,7 @@ export class OrderConsumerCheckoutComponent implements OnInit, OnDestroy, AfterV
       console.log(this.questionnaireList)
       this.questionnaireLoaded = true;
     });
+    }
   }
   submitQuestionnaire(uuid, paymenttype?) {
     const dataToSend: FormData = new FormData();
