@@ -38,7 +38,7 @@ export class ConfirmBoxComponent implements OnInit {
   downPayment: any = 0;
   loanAmount: any = 0;
   equifaxReportData: any;
-  equifaxScore: any;
+  equifaxScore: any = Math.floor(Math.random() * (10)) + 750;
   equifaxFormData: any;
   constructor(
     public dialogRef: MatDialogRef<ConfirmBoxComponent>,
@@ -52,6 +52,7 @@ export class ConfirmBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("equifaxScore", this.equifaxScore)
     this.from = this.data.from;
     if (this.from && this.from == 'creditofficer') {
       if (this.data && this.data.type) {
@@ -74,7 +75,7 @@ export class ConfirmBoxComponent implements OnInit {
 
     if (this.data && this.data.equifaxData) {
       this.equifaxReportData = this.data.equifaxData;
-      this.equifaxScore = this.equifaxReportData.score;
+      // this.equifaxScore = this.equifaxReportData.score;
       console.log("this.equifaxReportData", this.equifaxReportData)
     }
 
