@@ -83,7 +83,7 @@ export class ProviderLoginComponent implements OnInit {
       this.qParams = data;
       console.log("Params:", data);
       if (data.notification) {
-        this.handleNotification(data.notification);
+        this.handleNotification(JSON.parse(data.notification));
       }
       if (data.device) {
         this.lStorageService.setitemonLocalStorage('deviceName', data.device);
