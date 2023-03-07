@@ -219,7 +219,8 @@
 									<button mat-menu-item
 										*ngIf="(source == 'order' && items.length > 0) || source != 'order'"
 										(click)="showAddItem()">
-										<span><span *ngIf="source!=='order'">Add Service/</span>Item</span>
+										<span  *ngIf="source!=='order'">Add Service</span>
+										<span  *ngIf="source==='order'">Add Item</span>
 									</button>
 									<button mat-menu-item data-toggle="modal" data-target="#exampleModalDeliveryCharge"
 										(click)="showDeliveryCharge()" *ngIf="source==='order' && checkin.homeDelivery">
