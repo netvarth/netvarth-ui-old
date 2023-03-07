@@ -82,6 +82,9 @@ export class ProviderLoginComponent implements OnInit {
     this.activateRoute.queryParams.subscribe(data => {
       this.qParams = data;
       console.log("Params:", data);
+      if (data.notification) {
+        this.handleNotification(data.notification);
+      }
       if (data.device) {
         this.lStorageService.setitemonLocalStorage('deviceName', data.device);
       }
@@ -430,5 +433,26 @@ export class ProviderLoginComponent implements OnInit {
     }
   }
 
+  handleNotification(notification) {
+    switch (notification.click_action) {
+      case "PAYMENTFAIL":
+      case "BILL_PAYMENT_SUCCESS":
+      case "CONSUMER_SHARE_PRESCRIPTION":
+      case "CONSUMER_SHARE_MEDICAL_RECODE":
+      case "PRE_PAYMENT_SUCCESS":
+        break;
+      case "MASSCOMMUNICATION":
+        break;
+      case "INSTANT_VIDEO":
+        break;
+      case "IVR_CALL_CONNECTED":
+        console.log("Notification:", notification);
+        this.router.navigate(['provider', 'ivr']);
+        break;
+      default:
+        // this.router.navigate([this.accountService.getCustomId(), this.accountService.getTemplateJson().template]);
+        break;
+    }
+  }
 
 }
