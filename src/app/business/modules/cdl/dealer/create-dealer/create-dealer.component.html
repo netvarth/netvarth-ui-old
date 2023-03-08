@@ -16,13 +16,43 @@
                 <div class="form-title">Dealer Shop Name</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" formControlName="name" placeholder="Enter Dealer Shop Name"
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                  formControlName="name" placeholder="Enter Dealer Shop Name" class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Owner First Name</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                  formControlName="firstname" placeholder="Enter Dealer Owner First Name as per PAN Card"
                   class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
         </div>
 
+        <div>
+          <div class="bggrey my-2">
+            <div>
+              <div class="d-flex">
+                <div class="form-title">Dealer Owner Last Name</div>
+              </div>
+              <div class="fieldPadding">
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                  formControlName="lastname" placeholder="Enter Dealer Owner Lasr Name as per PAN Card"
+                  class="form-control" autocomplete="off" />
+              </div>
+            </div>
+          </div>
+        </div>
 
 
         <div>
@@ -33,9 +63,9 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="text" formControlName="phone" placeholder="Enter Phone Number"
-                    class="form-control" autocomplete="off" maxlength="10"
-                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                    formControlName="phone" placeholder="Enter Phone Number" class="form-control" autocomplete="off"
+                    maxlength="10" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                     [class.disabled]="action == 'update' && verification" />
                   <a class="btn btn-verify" *ngIf="!verification" [class.btn-verified]="verification"
                     (click)="verifyotp()">
@@ -50,19 +80,7 @@
         </div>
 
 
-        <div>
-          <div class="bggrey my-2">
-            <div>
-              <div class="d-flex">
-                <div class="form-title">Dealer Owner Name</div>
-              </div>
-              <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" formControlName="username"
-                  placeholder="Enter Dealer Owner Name" class="form-control" autocomplete="off" />
-              </div>
-            </div>
-          </div>
-        </div>
+
 
 
 
@@ -75,8 +93,8 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" formControlName="email" type="email" placeholder="Enter Dealer Email"
-                    class="form-control" autocomplete="off"
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" formControlName="email"
+                    type="email" placeholder="Enter Dealer Email" class="form-control" autocomplete="off"
                     [class.disabled]="action == 'update' && emailverification" />
 
                   <a class="btn btn-verify" *ngIf="!emailverification" [class.btn-verified]="emailverification"
@@ -99,8 +117,9 @@
                 <div class="form-title">Description</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" formControlName="description" type="text" placeholder="Enter Description"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                  formControlName="description" type="text" placeholder="Enter Description" class="form-control"
+                  autocomplete="off" />
               </div>
             </div>
           </div>
@@ -194,8 +213,9 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" formControlName="aadhar" type="text" placeholder="Enter Aadhar Number"
-                    class="form-control" autocomplete="off" maxlength="12" [class.disabled]="aadharverification" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                    formControlName="aadhar" type="text" placeholder="Enter Aadhar Number" class="form-control"
+                    autocomplete="off" maxlength="12" [class.disabled]="aadharverification" />
                   <a class="btn btn-verify" [class.btn-verified]="aadharverification"
                     *ngIf="!aadharverification && !verifyingUID" (click)="idVerification('UID')"><span>Verify</span></a>
 
@@ -258,8 +278,9 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" formControlName="pan" type="text" placeholder="Enter PAN Number"
-                    class="form-control" autocomplete="off" maxlength="10" [class.disabled]="panverification" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" formControlName="pan"
+                    type="text" placeholder="Enter PAN Number" class="form-control" autocomplete="off" maxlength="10"
+                    [class.disabled]="panverification" />
                   <a class="btn btn-verify" [class.btn-verified]="panverification" (click)="idVerification('Pan')">
                     <span *ngIf="!panverification">Verify</span><span *ngIf="panverification"><i
                         class="fa fa-check"></i>&nbsp;Verified</span></a>
@@ -358,8 +379,9 @@
                 <div class="form-title">Address 1</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" formControlName="address1" #partneraddress1 type="text"
-                  placeholder="Enter Address 1" class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                  formControlName="address1" #partneraddress1 type="text" placeholder="Enter Address 1"
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -373,8 +395,9 @@
                 <div class="form-title">Address 2</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" formControlName="address2" #partneraddress2 type="text"
-                  placeholder="Enter Address 2" class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                  formControlName="address2" #partneraddress2 type="text" placeholder="Enter Address 2"
+                  class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -387,8 +410,8 @@
                 <div class="form-title">District</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" formControlName="city" #partnercity type="text" placeholder="Enter City"
-                  class="form-control" autocomplete="off" />
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" formControlName="city"
+                  #partnercity type="text" placeholder="Enter City" class="form-control" autocomplete="off" />
               </div>
             </div>
           </div>
@@ -401,7 +424,7 @@
                 <div class="form-title">State</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" formControlName="state" #partnerstate type="text"
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"  formControlName="state" #partnerstate type="text"
                   placeholder="Enter State" class="form-control" autocomplete="off" />
               </div>
             </div>
@@ -431,7 +454,8 @@
                 <div class="form-title">Pincode</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" formControlName="pincode" #partnerpincode type="text"
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" formControlName="pincode"
+                  #partnerpincode type="text"
                   oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="6"
                   placeholder="Enter Pincode" class="form-control" autocomplete="off" />
               </div>
@@ -581,8 +605,9 @@
               </div>
               <div class="fieldPadding">
                 <div class="d-flex">
-                  <input (keyup)="resetErrors()" type="text" placeholder="Enter GST Number" class="form-control"
-                    autocomplete="off" formControlName="gst" [class.disabled]="gstverification" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                    placeholder="Enter GST Number" class="form-control" autocomplete="off" formControlName="gst"
+                    [class.disabled]="gstverification" />
                   <a class="btn btn-verify" [class.btn-verified]="gstverification" (click)="verifygst()">
                     <span *ngIf="!gstverification">Verify</span><span *ngIf="gstverification"><i
                         class="fa fa-check"></i>&nbsp;Verified</span></a>
@@ -642,8 +667,8 @@
                   <label for='licenseAttach' (click)="licenseAttach.click()">
                     Upload File
                   </label>
-                  <input #licenseAttach type='file'
-                    (change)="filesSelected($event,'licenese')" accept="image/*;capture=camera" />
+                  <input #licenseAttach type='file' (change)="filesSelected($event,'licenese')"
+                    accept="image/*;capture=camera" />
                 </div>
               </div>
               <div class="img-section clearfix"
@@ -656,8 +681,7 @@
                           *ngIf="selectedFiles['licenese'].base64[i]" width="100px" height="100px">
                         <a [href]="file.s3path" target="_blank">
                           <img [src]="getImagefromUrl(file.s3path,file)"
-                            *ngIf="!selectedFiles['licenese'].base64[i] && file.s3path" width="100px"
-                            height="100px">
+                            *ngIf="!selectedFiles['licenese'].base64[i] && file.s3path" width="100px" height="100px">
                         </a>
                       </div>
                       <div class="gal_action" (click)="deleteTempImage(i, 'licenese',file)">
@@ -730,8 +754,9 @@
                 <div class="form-title">Bank Account Number</div>
               </div>
               <!-- <div class="d-flex"> -->
-              <input (keyup)="resetErrors()" type="number" placeholder="Enter Account Number" class="form-control"
-                formControlName="account" autocomplete="off" [class.disabled]="bankverification" />
+              <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="number"
+                placeholder="Enter Account Number" class="form-control" formControlName="account" autocomplete="off"
+                [class.disabled]="bankverification" />
               <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
                         <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
                             class="fa fa-check"></i>&nbsp;Verified</span></a> -->
@@ -747,8 +772,9 @@
                 <div class="form-title">Bank IFSC</div>
               </div>
               <div class="fieldPadding">
-                <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
-                  formControlName="ifsc" autocomplete="off" [class.disabled]="bankverification" />
+                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                  placeholder="Enter Bank IFSC" class="form-control" formControlName="ifsc" autocomplete="off"
+                  [class.disabled]="bankverification" />
               </div>
             </div>
           </div>

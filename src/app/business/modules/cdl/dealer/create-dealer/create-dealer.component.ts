@@ -49,7 +49,7 @@ export class CreateDealerComponent implements OnInit {
   aadharverification = false;
   gstverification = false;
   headerText: any = "Create Dealer";
-  btnText: any = "Sent for Approval";
+  btnText: any = "Send for Approval";
   action: any;
   dealerId: any;
   from: any;
@@ -128,7 +128,8 @@ export class CreateDealerComponent implements OnInit {
       account: [null],
       ifsc: [null],
       branch: [null],
-      username: [null]
+      firstname: [null],
+      lastname: [null]
     });
 
 
@@ -150,10 +151,10 @@ export class CreateDealerComponent implements OnInit {
             if (this.from && this.from == 'create') {
               this.verification = true;
               this.headerText = "Create Dealer";
-              this.btnText = "Sent for Approval";
+              this.btnText = "Send for Approval";
             }
             this.createDealer.controls.name.setValue(this.dealerData.partnerName);
-            this.createDealer.controls.username.setValue(this.dealerData.partnerUserName);
+
             this.createDealer.controls.phone.setValue(this.dealerData.partnerMobile);
             this.createDealer.controls.email.setValue(this.dealerData.partnerEmail);
             this.createDealer.controls.description.setValue(this.dealerData.description);
@@ -172,8 +173,12 @@ export class CreateDealerComponent implements OnInit {
               this.createDealer.controls.category.setValue(this.dealerData.category.id);
             }
 
-            if (this.dealerData && this.dealerData.username) {
-              this.createDealer.controls.username.setValue(this.dealerData.username);
+            if (this.dealerData && this.dealerData.partnerUserFirstName) {
+              this.createDealer.controls.firstname.setValue(this.dealerData.partnerUserFirstName);
+            }
+
+            if (this.dealerData && this.dealerData.partnerUserLastName) {
+              this.createDealer.controls.lastname.setValue(this.dealerData.partnerUserLastName);
             }
 
             if (this.dealerData && this.dealerData.branch && this.dealerData.branch.id) {
@@ -181,7 +186,6 @@ export class CreateDealerComponent implements OnInit {
             }
             this.createDealer.controls.size.setValue(this.dealerData.partnerSize);
             this.createDealer.controls.trade.setValue(this.dealerData.partnerTrade);
-
 
             this.selectedFiles['photo'].files = this.dealerData.partnerAttachments;
             this.selectedFiles['aadhar'].files = this.dealerData.aadhaarAttachments;
@@ -640,6 +644,11 @@ export class CreateDealerComponent implements OnInit {
           this.snackbarService.openSnackBar("The Dealer With This Mobile is Already Registered", { 'panelClass': 'snackbarerror' });
         }
         else {
+          let nameData = {
+            "firstName": this.createDealer.controls.firstname.value,
+            "lastName": this.createDealer.controls.lastname.value,
+            "partnerName": this.createDealer.controls.name.value
+          }
           let can_remove = false;
           const dialogRef = this.dialog.open(OtpVerifyComponent, {
             width: '50%',
@@ -648,7 +657,7 @@ export class CreateDealerComponent implements OnInit {
             data: {
               type: 'Mobile Number',
               phoneNumber: this.createDealer.controls.phone.value,
-              name: this.createDealer.controls.name.value,
+              data: nameData,
               from: 'partner'
             }
           });
@@ -827,7 +836,8 @@ export class CreateDealerComponent implements OnInit {
       "partnerSize": this.createDealer.controls.size.value,
       "partnerTrade": this.createDealer.controls.trade.value,
       "branch": { "id": this.createDealer.controls.branch.value },
-      "partnerUserName": this.createDealer.controls.username.value,
+      "partnerUserFirstName": this.createDealer.controls.firstname.value,
+      "partnerUserLastName": this.createDealer.controls.lastname.value,
       "latitude": this.latitude,
       "longitude": this.longitude,
       "googleMapLocation": this.mapAddress
@@ -1029,7 +1039,8 @@ export class CreateDealerComponent implements OnInit {
       "partnerSize": this.createDealer.controls.size.value,
       "partnerTrade": this.createDealer.controls.trade.value,
       "branch": { "id": this.createDealer.controls.branch.value },
-      "partnerUserName": this.createDealer.controls.username.value,
+      "partnerUserFirstName": this.createDealer.controls.firstname.value,
+      "partnerUserLastName": this.createDealer.controls.lastname.value,
       "latitude": this.latitude,
       "longitude": this.longitude,
       "googleMapLocation": this.mapAddress

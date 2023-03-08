@@ -47,6 +47,7 @@ export class OtpVerifyComponent implements OnInit {
   enquireUid: any;
   relation: any;
   email: any;
+  partnerName: any;
   constructor(
     public dialogRef: MatDialogRef<OtpVerifyComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -67,6 +68,9 @@ export class OtpVerifyComponent implements OnInit {
     console.log("Data", this.data)
     if (this.data && this.data.data && this.data.data.firstName) {
       this.firstName = this.data.data.firstName;
+    }
+    if (this.data && this.data.data && this.data.data.partnerName) {
+      this.partnerName = this.data.data.partnerName;
     }
     if (this.data && this.data.data && this.data.data.dob) {
       this.dob = this.data.data.dob;
@@ -133,7 +137,8 @@ export class OtpVerifyComponent implements OnInit {
     }
   }
   performSendOTP(loginId, mode?) {
-    let credentials = {
+    let credentials;
+    credentials = {
       countryCode: "+91",
       number: loginId,
     }
@@ -166,6 +171,16 @@ export class OtpVerifyComponent implements OnInit {
 
       if (this.dob) {
         credentials["dob"] = this.dob;
+      }
+    }
+
+    if (this.from == "partner") {
+      credentials = {
+        "partnerName": this.partnerName,
+        "countryCode": "+91",
+        "partnerUserFirstName": this.firstName,
+        "partnerUserLastName": this.lastName,
+        "partnerMobile": this.phoneNumber
       }
     }
     console.log("coming here", credentials)
@@ -475,10 +490,13 @@ export class OtpVerifyComponent implements OnInit {
 
   partnerOtpVerify() {
     this.partnerData = {
-      "partnerName": this.name,
-      "partnerAliasName": this.name,
+      "partnerName": this.partnerName,
+      "countryCode": "+91",
+      "partnerUserFirstName": this.firstName,
+      "partnerUserLastName": this.lastName,
       "partnerMobile": this.phoneNumber
     }
+
     if (this.partnerData) {
       this.subs.sink = this.cdlservice.partnerOtpVerify(this.otpEntered, this.partnerData)
         .subscribe(

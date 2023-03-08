@@ -180,9 +180,14 @@
                       <td style="width: 50%;" class="details-title">Dealer Store Name</td>
                       <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerName}}</th>
                     </tr>
-                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerUserName">
+                    <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerUserFirstName">
                       <td style="width: 50%;" class="details-title">Dealer Owner Name</td>
-                      <th style=" width: 50%;" class="details-sub-title">{{dealerData.partnerUserName}}</th>
+                      <th style=" width: 50%;" class="details-sub-title">
+                        <span
+                          *ngIf="dealerData && dealerData.partnerUserFirstName">{{dealerData.partnerUserFirstName}}</span>&nbsp;
+                        <span
+                          *ngIf="dealerData && dealerData.partnerUserLastName">{{dealerData.partnerUserLastName}}</span>
+                      </th>
                     </tr>
                     <tr style="width: 100%;" *ngIf="dealerData && dealerData.partnerEmail">
                       <td style="width: 50%;" class="details-title">Email</td>
