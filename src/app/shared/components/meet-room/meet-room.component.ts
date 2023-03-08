@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, ElementRef, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
+import { AfterViewInit, ChangeDetectorRef, ElementRef, OnDestroy, OnInit, Renderer2, RendererFactory2, ViewChild } from "@angular/core";
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TwilioService } from "../../services/twilio-service";
@@ -22,7 +22,7 @@ import { RequestDialogComponent } from "../../modules/request-dialog/request-dia
 /**
  * Class for a provider to join a meeting
  */
-export class MeetRoomComponent implements OnInit, AfterViewInit {
+export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
     uuid: any;
     type;
     screenWidth: number;
@@ -260,9 +260,10 @@ export class MeetRoomComponent implements OnInit, AfterViewInit {
     ngOnDestroy() {
         const _this = this;
         _this.subs.unsubscribe();
-        _this.previewTracks.forEach(track => {
-            _this.removePreviewTrackToDom(track, track.kind);
-        })
+        _this.disconnect();
+        // _this.previewTracks.forEach(track => {
+        //     _this.removePreviewTrackToDom(track, track.kind);
+        // })
     }
     /**
      * Method to exit from a meeting

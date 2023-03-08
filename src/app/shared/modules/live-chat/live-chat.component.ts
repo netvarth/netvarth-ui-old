@@ -547,9 +547,10 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             _this.cronHandle.unsubscribe();
         }
         _this.subs.unsubscribe();
-        _this.previewTracks.forEach(track=>{
-            _this.removePreviewTrackToDom(track, track.kind);
-        })
+        _this.disconnect();
+        // _this.previewTracks.forEach(track=>{
+        //     _this.removePreviewTrackToDom(track, track.kind);
+        // })
         // if (this.twilioService.previewTracks) {
         //     this.disconnect();
         // }
