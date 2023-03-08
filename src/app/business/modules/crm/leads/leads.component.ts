@@ -97,6 +97,8 @@ export class LeadsComponent implements OnInit {
   tempaltename: any;
   tempLeads;
   totalDisbursmentCount: any;
+  minday = new Date(1900, 0, 1);
+  maxxday = new Date();
   constructor(
     private groupService: GroupStorageService,
     public router: Router,

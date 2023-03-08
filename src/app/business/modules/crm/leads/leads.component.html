@@ -106,7 +106,7 @@
                               <div class="card-body">
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filterDatepicker filter-li">
-                                    <input  type="text" [(ngModel)]="filter.check_in_start_date"
+                                    <input  type="text" [(ngModel)]="filter.check_in_start_date" [min]="minday" [max]="maxxday"
                                       [matDatepicker]="startpicker" #Fdate class="form-control1 form-control1-solid form-control1-lg"
                                        placeholder="Enter Start Date"
                                       (dateChange)="keyPressed('noLoanSanction')">
@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filterDatepicker filter-li">
-                                    <input  type="text" [(ngModel)]="filter.check_in_end_date"
+                                    <input  type="text" [(ngModel)]="filter.check_in_end_date" [min]="minday" [max]="maxxday"
                                       [matDatepicker]="endpicker" #Fdate  class="form-control1 form-control1-solid form-control1-lg"
                                       placeholder="Enter End Date"
                                       (dateChange)="keyPressed('noLoanSanction')">
@@ -149,7 +149,7 @@
                               <div class="card-body">
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filterDatepicker filter-li">
-                                    <input   type="text" [(ngModel)]="filter.check_in_start_date_LoanSanction"
+                                    <input   type="text" [(ngModel)]="filter.check_in_start_date_LoanSanction" [min]="minday" [max]="maxxday"
                                       [matDatepicker]="startpicker" #Fdateloan  class="form-control1 form-control1-solid form-control1-lg"
                                        placeholder="Enter Start Date"
                                       (dateChange)="keyPressed('loanSanction')">
@@ -160,7 +160,7 @@
                                 </div>
                                 <div class="filterTextinput filter-text-input">
                                   <li class="filterli filterDatepicker filter-li">
-                                    <input  type="text" [(ngModel)]="filter.check_in_end_date_LoanSanction"
+                                    <input  type="text" [(ngModel)]="filter.check_in_end_date_LoanSanction" [min]="minday" [max]="maxxday"
                                       [matDatepicker]="endpicker" #Fdateloan  class="form-control1 form-control1-solid form-control1-lg"
                                       placeholder="Enter End Date" (dateChange)="keyPressed('loanSanction')">
                                     <mat-datepicker-toggle matSuffix [for]="endpicker">
