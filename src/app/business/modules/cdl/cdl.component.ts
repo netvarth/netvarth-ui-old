@@ -497,7 +497,7 @@ export class CdlComponent implements OnInit {
         src: 'equifax'
       }
     };
-    this.router.navigate(['provider', 'cdl', 'leads', 'create'], navigationExtras);
+    this.router.navigate(['provider', 'cdl', 'equifax', 'checkequifax'], navigationExtras);
   }
 
   requestedDealers() {

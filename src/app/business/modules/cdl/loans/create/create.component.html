@@ -58,8 +58,9 @@
                       <div class="form-title">Customer First Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Customer First Name"
-                        class="form-control" autocomplete="off" formControlName="firstname" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #firstname
+                        type="text" placeholder="Enter Customer First Name as in Pan Card" class="form-control"
+                        autocomplete="off" formControlName="firstname" />
                     </div>
                   </div>
                 </div>
@@ -73,8 +74,9 @@
                       <div class="form-title">Customer Last Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Customer Last Name"
-                        class="form-control" autocomplete="off" formControlName="lastname" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #lastname
+                        type="text" placeholder="Enter Customer Last Name as in Pan Card" class="form-control"
+                        autocomplete="off" formControlName="lastname" />
                     </div>
                   </div>
                 </div>
@@ -87,8 +89,8 @@
                       <div class="form-title">Date of Birth <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off"
-                        formControlName="dob" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #dob type="date"
+                        class="form-control" autocomplete="off" formControlName="dob" />
                     </div>
                   </div>
                 </div>
@@ -121,8 +123,9 @@
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
-                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
-                          autocomplete="off" #phone [value]="phone" formControlName="phone"
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                          placeholder="Enter Phone Number" class="form-control" autocomplete="off" #phone
+                          [value]="phone" formControlName="phone"
                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                           maxlength="10" [class.disabled]="verification" [class.disabled]="disablePhone" />
                         <a class="btn btn-verify" [class.btn-verified]="verification" *ngIf="!verification"
@@ -145,9 +148,9 @@
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
-                        <input (keyup)="resetErrors()" #email [value]="email" type="email"
-                          placeholder="Enter Customer Email" class="form-control" autocomplete="off"
-                          formControlName="email" [class.disabled]="emailverification" />
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #email
+                          [value]="email" type="email" placeholder="Enter Customer Email" class="form-control"
+                          autocomplete="off" formControlName="email" [class.disabled]="emailverification" />
 
                         <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
                           (click)="verifyEmail()"><span>Verify</span></a>
@@ -240,8 +243,9 @@
                     <div class="fieldPadding">
                       <div class="d-flex">
                         <!-- [type]="aadharVerfied ? 'text':'number'" -->
-                        <input (keyup)="resetErrors()" #aadharnumber type="text" placeholder="Enter Aadhar Number"
-                          class="form-control" autocomplete="off" formControlName="aadharnumber" [value]="aadharnumber"
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #aadharnumber
+                          type="text" placeholder="Enter Aadhar Number" class="form-control" autocomplete="off"
+                          formControlName="aadharnumber" [value]="aadharnumber"
                           [class.disabled]="action == 'update' && aadharverification && !verifyingUID"
                           oninput="javascript: if (this.value.length > this.maxLength || typeof(this.value)=='String') {this.value = this.value.slice(0, this.maxLength);}"
                           maxlength="12" />
@@ -307,10 +311,10 @@
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
-                        <input (keyup)="resetErrors()" #pannumber [value]="pannumber" type="text"
-                          placeholder="Enter PAN Number" class="form-control" autocomplete="off"
-                          formControlName="pannumber" [class.disabled]="action == 'update' && panverification"
-                          maxlength="10" />
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #pannumber
+                          [value]="pannumber" type="text" placeholder="Enter PAN Number" class="form-control"
+                          autocomplete="off" formControlName="pannumber"
+                          [class.disabled]="action == 'update' && panverification" maxlength="10" />
 
                         <a class="btn btn-verify" [class.btn-verified]="panverification" *ngIf="!panverification"
                           (click)="idVerification('Pan')" [class.disabled]="documentVerifying"><span>Verify</span></a>
@@ -391,9 +395,9 @@
                       <div class="form-title">Permanent Relation Name</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" #permanentRelationName
-                        placeholder="Enter Permanent Relation Name" class="form-control" autocomplete="off"
-                        formControlName="permanentRelationName" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                        #permanentRelationName placeholder="Enter Permanent Relation Name" class="form-control"
+                        autocomplete="off" formControlName="permanentRelationName" />
                     </div>
                   </div>
                 </div>
@@ -408,8 +412,9 @@
                       <div class="form-title">Address 1 <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" [value]="permanentaddress1" #permanentaddress1 [value]="address1"
-                        type="text" placeholder="Enter Address 1" class="form-control" autocomplete="off"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                        [value]="permanentaddress1" #permanentaddress1 [value]="address1" type="text"
+                        placeholder="Enter Address 1" class="form-control" autocomplete="off"
                         formControlName="permanentaddress1" />
                     </div>
                   </div>
@@ -424,8 +429,9 @@
                       <div class="form-title">Address 2</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" [value]="permanentaddress2" #permanentaddress2 [value]="address2"
-                        type="text" placeholder="Enter Address 2" class="form-control" autocomplete="off"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                        [value]="permanentaddress2" #permanentaddress2 [value]="address2" type="text"
+                        placeholder="Enter Address 2" class="form-control" autocomplete="off"
                         formControlName="permanentaddress2" />
                     </div>
                   </div>
@@ -439,9 +445,9 @@
                       <div class="form-title">District <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" [value]="permanentcity" #permanentcity type="text"
-                        placeholder="Enter District" class="form-control" autocomplete="off"
-                        formControlName="permanentcity" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                        [value]="permanentcity" #permanentcity type="text" placeholder="Enter District"
+                        class="form-control" autocomplete="off" formControlName="permanentcity" />
                     </div>
                   </div>
                 </div>
@@ -454,7 +460,7 @@
                       <div class="form-title">State</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #permanentstate [value]="permanentstate" type="text"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #permanentstate [value]="permanentstate" type="text"
                         placeholder="Enter State" class="form-control" autocomplete="off"
                         formControlName="permanentstate" />
                     </div>
@@ -484,9 +490,9 @@
                       <div class="form-title">Pincode <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #permanentpincode [value]="permanentpincode" type="text"
-                        placeholder="Enter Pincode" class="form-control" autocomplete="off"
-                        formControlName="permanentpincode"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #permanentpincode
+                        [value]="permanentpincode" type="text" placeholder="Enter Pincode" class="form-control"
+                        autocomplete="off" formControlName="permanentpincode"
                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                         maxlength="6" />
                     </div>
@@ -542,9 +548,9 @@
                         <div class="form-title">Current Relation Name</div>
                       </div>
                       <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" type="text" #currentRelationName
-                          placeholder="Enter Current Relation Name" class="form-control" autocomplete="off"
-                          formControlName="currentRelationName" />
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                          #currentRelationName placeholder="Enter Current Relation Name" class="form-control"
+                          autocomplete="off" formControlName="currentRelationName" />
                       </div>
                     </div>
                   </div>
@@ -558,9 +564,9 @@
                         <div class="form-title">Current Address 1</div>
                       </div>
                       <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" [value]="currentaddress1" #currentaddress1 type="text"
-                          placeholder="Enter Address 1" class="form-control" autocomplete="off"
-                          formControlName="currentaddress1" />
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                          [value]="currentaddress1" #currentaddress1 type="text" placeholder="Enter Address 1"
+                          class="form-control" autocomplete="off" formControlName="currentaddress1" />
                       </div>
                     </div>
                   </div>
@@ -574,9 +580,9 @@
                         <div class="form-title">Current Address 2</div>
                       </div>
                       <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" [value]="currentaddress2" #currentaddress2 type="text"
-                          placeholder="Enter Address 2" class="form-control" autocomplete="off"
-                          formControlName="currentaddress2" />
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                          [value]="currentaddress2" #currentaddress2 type="text" placeholder="Enter Address 2"
+                          class="form-control" autocomplete="off" formControlName="currentaddress2" />
                       </div>
                     </div>
                   </div>
@@ -589,9 +595,9 @@
                         <div class="form-title">Current Address District</div>
                       </div>
                       <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" [value]="currentcity" #currentcity type="text"
-                          placeholder="Enter District" class="form-control" autocomplete="off"
-                          formControlName="currentcity" />
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                          [value]="currentcity" #currentcity type="text" placeholder="Enter District"
+                          class="form-control" autocomplete="off" formControlName="currentcity" />
                       </div>
                     </div>
                   </div>
@@ -604,7 +610,7 @@
                         <div class="form-title">Current Address State</div>
                       </div>
                       <div class="fieldPadding">
-                        <!-- <input (keyup)="resetErrors()" [value]="currentstate" #currentstate type="text"
+                        <!-- <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" [value]="currentstate" #currentstate type="text"
                           placeholder="Enter State" class="form-control" autocomplete="off"
                           formControlName="currentstate" /> -->
                         <mat-select class="form-control widthWebKit" #currentstate formControlName="currentstate">
@@ -625,9 +631,9 @@
                         <div class="form-title">Current Address Pincode</div>
                       </div>
                       <div class="fieldPadding">
-                        <input (keyup)="resetErrors()" [value]="currentpincode" #currentpincode type="text"
-                          placeholder="Enter Pincode" class="form-control" autocomplete="off"
-                          formControlName="currentpincode" />
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                          [value]="currentpincode" #currentpincode type="text" placeholder="Enter Pincode"
+                          class="form-control" autocomplete="off" formControlName="currentpincode" />
                       </div>
                     </div>
                   </div>
@@ -713,7 +719,7 @@
                     <mat-select class="form-control widthWebKit" #customerEducation formControlName="customerEducation">
                       <mat-option [value]="education.id" *ngFor="let education of mafilScoreFields.customerEducation">
                         <div *ngIf="education && education.name" (click)="scoreCalculate(education.score)">
-                          {{education.name}} - {{education.score}}</div>
+                          {{education.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -731,7 +737,7 @@
                       formControlName="customerEmployement">
                       <mat-option [value]="employment.id"
                         *ngFor="let employment of mafilScoreFields.customerEmployement">
-                        <div *ngIf="employment && employment.name">{{employment.name}}- {{employment.score}}</div>
+                        <div *ngIf="employment && employment.name">{{employment.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -745,9 +751,9 @@
                       <div class="form-title">Net Monthly Income <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #salary [value]="salary" type="number"
-                        placeholder="Enter Monthly Income" class="form-control" autocomplete="off"
-                        formControlName="salary" maxlength="7"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #salary
+                        [value]="salary" type="number" placeholder="Enter Monthly Income" class="form-control"
+                        autocomplete="off" formControlName="salary" maxlength="7"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                     </div>
                   </div>
@@ -795,7 +801,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #salaryRouting formControlName="salaryRouting">
                       <mat-option [value]="salary.id" *ngFor="let salary of mafilScoreFields.salaryRouting">
-                        <div *ngIf="salary && salary.name">{{salary.name}} - {{salary.score}}</div>
+                        <div *ngIf="salary && salary.name">{{salary.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -811,7 +817,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #familyDependants formControlName="familyDependants">
                       <mat-option [value]="dependant.id" *ngFor="let dependant of mafilScoreFields.familyDependants">
-                        <div *ngIf="dependant && dependant.name">{{dependant.name}} - {{dependant.score}}</div>
+                        <div *ngIf="dependant && dependant.name">{{dependant.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -826,7 +832,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #existingCustomer formControlName="existingCustomer">
                       <mat-option [value]="customer.id" *ngFor="let customer of mafilScoreFields.existingCustomer">
-                        <div *ngIf="customer && customer.name">{{customer.name}} - {{customer.score}}</div>
+                        <div *ngIf="customer && customer.name">{{customer.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -841,7 +847,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #earningMembers formControlName="earningMembers">
                       <mat-option [value]="member.id" *ngFor="let member of mafilScoreFields.earningMembers">
-                        <div *ngIf="member && member.name">{{member.name}} - {{member.score}}</div>
+                        <div *ngIf="member && member.name">{{member.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -858,7 +864,7 @@
                     <mat-select class="form-control widthWebKit" #noOfYearsAtPresentAddress
                       formControlName="noOfYearsAtPresentAddress">
                       <mat-option [value]="years.id" *ngFor="let years of mafilScoreFields.noOfYearsAtPresentAddress">
-                        <div *ngIf="years && years.name">{{years.name}} - {{years.score}}</div>
+                        <div *ngIf="years && years.name">{{years.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -876,7 +882,7 @@
                       formControlName="currentResidenceOwnershipStatus">
                       <mat-option [value]="ownership.id"
                         *ngFor="let ownership of mafilScoreFields.currentResidenceOwnershipStatus">
-                        <div *ngIf="ownership && ownership.name">{{ownership.name}} - {{ownership.score}}</div>
+                        <div *ngIf="ownership && ownership.name">{{ownership.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -893,7 +899,7 @@
                     <mat-select class="form-control widthWebKit" #ownedMovableAssets
                       formControlName="ownedMovableAssets" (selectionChange)="changeMovableAssets($event)">
                       <mat-option [value]="assets.id" *ngFor="let assets of mafilScoreFields.ownedMovableAssets">
-                        <div *ngIf="assets && assets.name">{{assets.name}} - {{assets.score}}</div>
+                        <div *ngIf="assets && assets.name">{{assets.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -908,8 +914,9 @@
                       <div class="form-title">Vehicle No <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #vehicleNo type="text" placeholder="Enter Vehicle No"
-                        class="form-control" autocomplete="off" formControlName="vehicleNo" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #vehicleNo
+                        type="text" placeholder="Enter Vehicle No" class="form-control" autocomplete="off"
+                        formControlName="vehicleNo" />
                     </div>
                   </div>
                 </div>
@@ -924,7 +931,7 @@
                   <div class="fieldPadding">
                     <mat-select class="form-control widthWebKit" #goodsFinanced formControlName="goodsFinanced">
                       <mat-option [value]="goods.id" *ngFor="let goods of mafilScoreFields.goodsFinanced">
-                        <div *ngIf="goods && goods.name">{{goods.name}} - {{goods.score}}</div>
+                        <div *ngIf="goods && goods.name">{{goods.name}}</div>
                       </mat-option>
                     </mat-select>
                   </div>
@@ -972,7 +979,7 @@
                       <div class="form-title">Montly Income</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #salary [value]="salary" type="text"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #salary [value]="salary" type="text"
                         placeholder="Enter Customer Salary" class="form-control" autocomplete="off"
                         formControlName="salary" />
                     </div>
@@ -988,7 +995,7 @@
                       <div class="form-title">Preferred Scheme</div>
                     </div>
                     <div class="fieldPadding">
-                      <input (click)="openSchemes()" (keyup)="resetErrors()" #scheme type="text"
+                      <input (click)="openSchemes()" (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #scheme type="text"
                         placeholder="Preferred Scheme" class="form-control" autocomplete="off" formControlName="scheme"
                         readonly />
                     </div>
@@ -1027,8 +1034,8 @@
                       </div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #emicount type="number"
-                        placeholder="Enter Number of Existing EMI's Paid Monthly" class="form-control"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #emicount
+                        type="number" placeholder="Enter Number of Existing EMI's Paid Monthly" class="form-control"
                         autocomplete="off" formControlName="emicount" maxlength="1"
                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" />
                     </div>
@@ -1198,9 +1205,9 @@
                       <div class="form-title">Loan Required <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Required Loan Amount"
-                        class="form-control" autocomplete="off" disabled="true" [value]="loanamount"
-                        formControlName="loanamount" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="number"
+                        #loanamount placeholder="Enter Required Loan Amount" class="form-control" autocomplete="off"
+                        disabled="true" [value]="loanamount" formControlName="loanamount" />
                     </div>
                   </div>
                 </div>
@@ -1213,8 +1220,9 @@
                       <div class="form-title">Nominee Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" #nomineename placeholder="Enter Nominee Name"
-                        class="form-control" autocomplete="off" [value]="nomineename" formControlName="nomineename" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                        #nomineename placeholder="Enter Nominee Name" class="form-control" autocomplete="off"
+                        [value]="nomineename" formControlName="nomineename" />
                     </div>
                   </div>
                 </div>
@@ -1246,8 +1254,9 @@
                       <div class="form-title">Nominee Phone Number <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Nominee Phone Number"
-                        class="form-control" autocomplete="off" #nomineePhone formControlName="nomineePhone"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                        placeholder="Enter Nominee Phone Number" class="form-control" autocomplete="off" #nomineePhone
+                        formControlName="nomineePhone"
                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                         maxlength="10" />
                     </div>
@@ -1262,8 +1271,8 @@
                       <div class="form-title">Nominee Date of Birth <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #nomineeDob type="date" class="form-control" autocomplete="off"
-                        formControlName="nomineeDob" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #nomineeDob
+                        type="date" class="form-control" autocomplete="off" formControlName="nomineeDob" />
                     </div>
                   </div>
                 </div>
@@ -1294,7 +1303,7 @@
                       <div class="form-title">Co Applicant Name <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" #guarantorName placeholder="Enter Co Applicant Name"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text" #guarantorName placeholder="Enter Co Applicant Name"
                         class="form-control" autocomplete="off" formControlName="guarantorName" />
                     </div>
                   </div>
@@ -1326,7 +1335,7 @@
                       <div class="form-title">Co Applicant Date of Birth <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" #guarantorDob type="date" class="form-control" autocomplete="off"
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #guarantorDob type="date" class="form-control" autocomplete="off"
                         formControlName="guarantorDob" />
                     </div>
                   </div>
@@ -1341,7 +1350,7 @@
                     </div>
                     <div class="fieldPadding">
                       <div class="d-flex">
-                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Co Applicant Phone Number"
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text" placeholder="Enter Co Applicant Phone Number"
                           class="form-control" autocomplete="off" #guarantorPhone formControlName="guarantorPhone"
                           maxlength="10" [class.disabled]="guarantorVerification" />
                         <a class="btn btn-verify" [class.btn-verified]="guarantorVerification"
@@ -1516,8 +1525,9 @@
                       <div class="form-title">Bank Account Number <span class="text-danger">*</span></div>
                     </div>
                     <!-- <div class="d-flex"> -->
-                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Account Number" class="form-control"
-                      formControlName="account" autocomplete="off" />
+                    <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                      placeholder="Enter Account Number" class="form-control" formControlName="account"
+                      autocomplete="off" />
                     <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
                         <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
                             class="fa fa-check"></i>&nbsp;Verified</span></a> -->
@@ -1533,8 +1543,8 @@
                       <div class="form-title">Bank IFSC <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
-                        formControlName="ifsc" autocomplete="off" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                        placeholder="Enter Bank IFSC" class="form-control" formControlName="ifsc" autocomplete="off" />
                     </div>
                   </div>
                 </div>
@@ -1547,8 +1557,9 @@
                       <div class="form-title">Bank Branch <span class="text-danger">*</span></div>
                     </div>
                     <div class="fieldPadding">
-                      <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank Branch" class="form-control"
-                        formControlName="bankbranch" autocomplete="off" />
+                      <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                        placeholder="Enter Bank Branch" class="form-control" formControlName="bankbranch"
+                        autocomplete="off" />
                     </div>
                   </div>
                 </div>
@@ -1614,9 +1625,9 @@
                           <div class="form-title">First Name <span class="text-danger">*</span></div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" #coapplicantfirstname type="text"
-                            placeholder="Enter First Name" class="form-control" autocomplete="off"
-                            formControlName="coapplicantfirstname" />
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                            #coapplicantfirstname type="text" placeholder="Enter First Name as in Pan Card"
+                            class="form-control" autocomplete="off" formControlName="coapplicantfirstname" />
                         </div>
                       </div>
                     </div>
@@ -1630,7 +1641,8 @@
                           <div class="form-title">Last Name <span class="text-danger">*</span></div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" #coapplicantlastname type="text" placeholder="Enter Last Name"
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                            #coapplicantlastname type="text" placeholder="Enter Last Name as in Pan Card"
                             class="form-control" autocomplete="off" formControlName="coapplicantlastname" />
                         </div>
                       </div>
@@ -1644,8 +1656,8 @@
                           <div class="form-title">Date of Birth <span class="text-danger">*</span></div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" #coapplicantdob type="date" class="form-control"
-                            autocomplete="off" formControlName="coapplicantdob" />
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #coapplicantdob
+                            type="date" class="form-control" autocomplete="off" formControlName="coapplicantdob" />
                         </div>
                       </div>
                     </div>
@@ -1681,8 +1693,8 @@
                         </div>
                         <div class="fieldPadding">
                           <div class="d-flex">
-                            <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number"
-                              class="form-control" autocomplete="off" #coapplicantphone
+                            <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                              placeholder="Enter Phone Number" class="form-control" autocomplete="off" #coapplicantphone
                               formControlName="coapplicantphone"
                               oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                               maxlength="10" [class.disabled]="coapplicantPhoneVerification"
@@ -1710,8 +1722,9 @@
                         </div>
                         <div class="fieldPadding">
                           <div class="d-flex">
-                            <input (keyup)="resetErrors()" #coapplicantemail type="email" placeholder="Enter Email"
-                              class="form-control" autocomplete="off" formControlName="coapplicantemail"
+                            <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                              #coapplicantemail type="email" placeholder="Enter Email" class="form-control"
+                              autocomplete="off" formControlName="coapplicantemail"
                               [class.disabled]="coapplicantemailverification" />
 
                             <a class="btn btn-verify" [class.btn-verified]="coapplicantemailverification"
@@ -1778,9 +1791,9 @@
                         </div>
                         <div class="fieldPadding">
                           <div class="d-flex">
-                            <input (keyup)="resetErrors()" #coapplicantaadharnumber type="text"
-                              placeholder="Enter Aadhar Number" class="form-control" autocomplete="off"
-                              formControlName="coapplicantaadharnumber"
+                            <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                              #coapplicantaadharnumber type="text" placeholder="Enter Aadhar Number"
+                              class="form-control" autocomplete="off" formControlName="coapplicantaadharnumber"
                               [class.disabled]="action == 'update' && coapplicantaadharverification && !coapplicantverifyingUID"
                               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                               maxlength="12" />
@@ -1849,9 +1862,9 @@
                         </div>
                         <div class="fieldPadding">
                           <div class="d-flex">
-                            <input (keyup)="resetErrors()" #coapplicantpannumber type="text"
-                              placeholder="Enter PAN Number" class="form-control" autocomplete="off"
-                              formControlName="coapplicantpannumber"
+                            <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                              #coapplicantpannumber type="text" placeholder="Enter PAN Number" class="form-control"
+                              autocomplete="off" formControlName="coapplicantpannumber"
                               [class.disabled]="action == 'update' && coapplicantpanverification" maxlength="10" />
 
                             <a class="btn btn-verify" [class.btn-verified]="coapplicantpanverification"
@@ -1920,9 +1933,9 @@
                           <div class="form-title">Current Address 1</div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" #coapplicantcurrentaddress1 type="text"
-                            placeholder="Enter Address 1" class="form-control" autocomplete="off"
-                            formControlName="coapplicantcurrentaddress1" />
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                            #coapplicantcurrentaddress1 type="text" placeholder="Enter Address 1" class="form-control"
+                            autocomplete="off" formControlName="coapplicantcurrentaddress1" />
                         </div>
                       </div>
                     </div>
@@ -1936,9 +1949,9 @@
                           <div class="form-title">Current Address 2</div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" #coapplicantcurrentaddress2 type="text"
-                            placeholder="Enter Address 2" class="form-control" autocomplete="off"
-                            formControlName="coapplicantcurrentaddress2" />
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                            #coapplicantcurrentaddress2 type="text" placeholder="Enter Address 2" class="form-control"
+                            autocomplete="off" formControlName="coapplicantcurrentaddress2" />
                         </div>
                       </div>
                     </div>
@@ -1951,9 +1964,9 @@
                           <div class="form-title">Current Address District</div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" #coapplicantcurrentdistrict type="text"
-                            placeholder="Enter District" class="form-control" autocomplete="off"
-                            formControlName="coapplicantcurrentdistrict" />
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                            #coapplicantcurrentdistrict type="text" placeholder="Enter District" class="form-control"
+                            autocomplete="off" formControlName="coapplicantcurrentdistrict" />
                         </div>
                       </div>
                     </div>
@@ -1966,7 +1979,7 @@
                           <div class="form-title">Current Address State</div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" #coapplicantcurrentstate type="text" placeholder="Enter State"
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #coapplicantcurrentstate type="text" placeholder="Enter State"
                             class="form-control" autocomplete="off" formControlName="coapplicantcurrentstate" />
                         </div>
                       </div>
@@ -1996,9 +2009,9 @@
                           <div class="form-title">Current Address Pincode</div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" #coapplicantcurrentpincode type="text"
-                            placeholder="Enter Pincode" class="form-control" autocomplete="off"
-                            formControlName="coapplicantcurrentpincode" />
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()"
+                            #coapplicantcurrentpincode type="text" placeholder="Enter Pincode" class="form-control"
+                            autocomplete="off" formControlName="coapplicantcurrentpincode" />
                         </div>
                       </div>
                     </div>
@@ -2042,8 +2055,9 @@
                           <div class="form-title">Bank Account Number <span class="text-danger">*</span></div>
                         </div>
                         <!-- <div class="d-flex"> -->
-                        <input (keyup)="resetErrors()" type="text" placeholder="Enter Account Number"
-                          class="form-control" formControlName="coapplicantaccount" autocomplete="off" />
+                        <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                          placeholder="Enter Account Number" class="form-control" formControlName="coapplicantaccount"
+                          autocomplete="off" />
                         <!-- <a class="btn btn-verify" [class.btn-verified]="accountverification" (click)="verifyAccount()">
                                                       <span *ngIf="!accountverification">Verify</span><span *ngIf="accountverification"><i
                                                           class="fa fa-check"></i>&nbsp;Verified</span></a> -->
@@ -2059,8 +2073,9 @@
                           <div class="form-title">Bank IFSC <span class="text-danger">*</span></div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank IFSC" class="form-control"
-                            formControlName="coapplicantifsc" autocomplete="off" />
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                            placeholder="Enter Bank IFSC" class="form-control" formControlName="coapplicantifsc"
+                            autocomplete="off" />
                         </div>
                       </div>
                     </div>
@@ -2074,8 +2089,9 @@
                           <div class="form-title">Bank Branch <span class="text-danger">*</span></div>
                         </div>
                         <div class="fieldPadding">
-                          <input (keyup)="resetErrors()" type="text" placeholder="Enter Bank Branch"
-                            class="form-control" formControlName="coapplicantbankbranch" autocomplete="off" />
+                          <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                            placeholder="Enter Bank Branch" class="form-control" formControlName="coapplicantbankbranch"
+                            autocomplete="off" />
                         </div>
                       </div>
                     </div>
@@ -2102,8 +2118,9 @@
                 <div class="form-title">Remarks</div>
               </div>
               <div class="fieldPadding">
-                <textarea (keyup)="resetErrors()" #remarks [value]="remarks" type="text" placeholder="Enter Remarks"
-                  class="form-control" autocomplete="off" formControlName="remarks"></textarea>
+                <textarea (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #remarks
+                  [value]="remarks" type="text" placeholder="Enter Remarks" class="form-control" autocomplete="off"
+                  formControlName="remarks"></textarea>
               </div>
             </div>
           </div>

@@ -181,6 +181,8 @@ export class CreateComponent implements OnInit {
   aadharVerfied: any = false;
   coapplicantDocumentVerifying: boolean;
   equifaxData: any;
+  equifaxId: any;
+  type: any;
   constructor(
     private location: Location,
     private router: Router,
@@ -273,6 +275,9 @@ export class CreateComponent implements OnInit {
       if (params && params.from) {
         this.from = params.from;
       }
+      if (params && params.type) {
+        this.type = params.type;
+      }
       if (params && params.type && params.type == 'enquire') {
         if (params && params.enquireId) {
           this.enquireUid = params.enquireId;
@@ -327,6 +332,8 @@ export class CreateComponent implements OnInit {
 
       if (params && params.id) {
         this.cdlService.getLoanById(params.id).subscribe((data) => {
+          console.log("LaonData", data)
+
           this.loanData = data;
           this.action = params.action;
           this.loanId = params.id;
@@ -583,6 +590,13 @@ export class CreateComponent implements OnInit {
 
 
           }
+
+          if (params && params.type && params.type == 'equifax') {
+            if (params.equifaxId) {
+              this.equifaxId = params.equifaxId;
+              this.setequifaxFormData(this.equifaxId)
+            }
+          }
         })
         console.log(params.id);
         this.cdlService.getBankDetailsById(params.id).subscribe((data) => {
@@ -600,53 +614,13 @@ export class CreateComponent implements OnInit {
         });
       }
 
-      if (params && params.type && params.type == 'equifax') {
-        if (params.dataFromEquiFax) {
-          this.equifaxData = JSON.parse(params.dataFromEquiFax);
-          if (this.equifaxData && this.equifaxData.customerFirstName) {
-            this.createLoan.controls.firstname.setValue(this.equifaxData.customerFirstName);
-          }
-          if (this.equifaxData && this.equifaxData.customerLastName) {
-            this.createLoan.controls.lastname.setValue(this.equifaxData.customerLastName);
-          }
-          if (this.equifaxData && this.equifaxData.dob) {
-            this.createLoan.controls.dob.setValue(this.equifaxData.dob);
-          }
-          if (this.equifaxData && this.equifaxData.gender) {
-            this.createLoan.controls.gender.setValue(this.equifaxData.gender);
-          }
-          if (this.equifaxData && this.equifaxData.customerPhone) {
-            this.createLoan.controls.phone.setValue(this.equifaxData.customerPhone);
-            this.disablePhone = true;
-          }
-          if (this.equifaxData && this.equifaxData.customerEmail) {
-            this.createLoan.controls.email.setValue(this.equifaxData.customerEmail);
-          }
-
-          if (this.equifaxData && this.equifaxData.permanentAddress1) {
-            this.createLoan.controls.permanentaddress1.setValue(this.equifaxData.permanentAddress1);
-          }
-
-          if (this.equifaxData && this.equifaxData.permanentCity) {
-            this.createLoan.controls.permanentcity.setValue(this.equifaxData.permanentCity);
-          }
-          if (this.equifaxData && this.equifaxData.permanentState) {
-            this.createLoan.controls.permanentstate.setValue(this.equifaxData.permanentState);
-          }
-          if (this.equifaxData && this.equifaxData.permanentPin) {
-            this.createLoan.controls.permanentpincode.setValue(this.equifaxData.permanentPin);
-          }
-          if (this.equifaxData && this.equifaxData.aadhaar) {
-            this.createLoan.controls.aadharnumber.setValue(this.equifaxData.aadhaar);
-          }
-          if (this.equifaxData && this.equifaxData.pan) {
-            this.createLoan.controls.pannumber.setValue(this.equifaxData.pan);
-          }
-          if (this.equifaxData && this.equifaxData.loanAmount) {
-            this.createLoan.controls.loanamount.setValue(this.equifaxData.loanAmount);
-          }
+      if (params && params.type && params.type == 'equifax' && !params.id) {
+        if (params.equifaxId) {
+          this.equifaxId = params.equifaxId;
+          this.setequifaxFormData(this.equifaxId)
         }
       }
+
     });
 
 
@@ -655,6 +629,56 @@ export class CreateComponent implements OnInit {
 
   coapplicants(): UntypedFormArray {
     return this.createLoan.get("coapplicants") as UntypedFormArray
+  }
+
+  setequifaxFormData(id) {
+    this.cdlService.getEquifaxReport(id).subscribe((equifaxData: any) => {
+      console.log("equifaxData", equifaxData)
+      if ((this.action && this.action != 'update') || !this.action) {
+        if (equifaxData && equifaxData.customerFirstName) {
+          this.createLoan.controls.firstname.setValue(equifaxData.customerFirstName);
+        }
+        if (equifaxData && equifaxData.customerLastName) {
+          this.createLoan.controls.lastname.setValue(equifaxData.customerLastName);
+        }
+        if (equifaxData && equifaxData.dob) {
+          this.createLoan.controls.dob.setValue(equifaxData.dob);
+        }
+        if (equifaxData && equifaxData.gender) {
+          this.createLoan.controls.gender.setValue(equifaxData.gender);
+        }
+        if (equifaxData && equifaxData.customerPhone) {
+          this.createLoan.controls.phone.setValue(equifaxData.customerPhone);
+          this.disablePhone = true;
+        }
+      }
+      if (equifaxData && equifaxData.customerEmail) {
+        this.createLoan.controls.email.setValue(equifaxData.customerEmail);
+      }
+
+      if (equifaxData && equifaxData.permanentAddress1) {
+        this.createLoan.controls.permanentaddress1.setValue(equifaxData.permanentAddress1);
+      }
+
+      if (equifaxData && equifaxData.permanentCity) {
+        this.createLoan.controls.permanentcity.setValue(equifaxData.permanentCity);
+      }
+      if (equifaxData && equifaxData.permanentState) {
+        this.createLoan.controls.permanentstate.setValue(equifaxData.permanentState);
+      }
+      if (equifaxData && equifaxData.permanentPin) {
+        this.createLoan.controls.permanentpincode.setValue(equifaxData.permanentPin);
+      }
+      if (equifaxData && equifaxData.aadhaar) {
+        this.createLoan.controls.aadharnumber.setValue(equifaxData.aadhaar);
+      }
+      if (equifaxData && equifaxData.pan) {
+        this.createLoan.controls.pannumber.setValue(equifaxData.pan);
+      }
+      if (equifaxData && equifaxData.loanAmount) {
+        this.createLoan.controls.loanamount.setValue(equifaxData.transactionAmount);
+      }
+    });
   }
 
   setCoApplicantValues(item) {
@@ -1566,11 +1590,16 @@ export class CreateComponent implements OnInit {
             }
             const filter = { 'phoneNo-eq': this.createLoan.controls.phone.value };
             this.getCustomerDetails(filter);
+            let datatoPass = {
+              id: this.loanId,
+              action: 'update'
+            }
+            if (this.type && this.type == 'equifax') {
+              datatoPass['type'] = 'equifax';
+              datatoPass['equifaxId'] = this.equifaxId;
+            }
             const navigationExtras: NavigationExtras = {
-              queryParams: {
-                id: this.loanId,
-                action: 'update'
-              }
+              queryParams: datatoPass
             };
             console.log("Navigation", navigationExtras)
             this.router.navigate(['provider', 'cdl', 'loans', 'update'], navigationExtras);
@@ -1807,11 +1836,22 @@ export class CreateComponent implements OnInit {
         this.aadharverification = true;
         this.cdlService.getLoanById(this.loanId).subscribe((data: any) => {
           if (data) {
-            this.createLoan.controls.permanentaddress1.setValue(data.loanApplicationKycList[0].permanentAddress1);
-            this.createLoan.controls.permanentaddress2.setValue(data.loanApplicationKycList[0].permanentAddress2);
-            this.createLoan.controls.permanentcity.setValue(data.loanApplicationKycList[0].permanentCity);
-            this.createLoan.controls.permanentpincode.setValue(data.loanApplicationKycList[0].permanentPin);
-            this.createLoan.controls.permanentstate.setValue(data.loanApplicationKycList[0].permanentState);
+            if (data.loanApplicationKycList[0].permanentAddress1) {
+              this.createLoan.controls.permanentaddress1.setValue(data.loanApplicationKycList[0].permanentAddress1);
+            }
+            if (data.loanApplicationKycList[0].permanentAddress2) {
+              this.createLoan.controls.permanentaddress2.setValue(data.loanApplicationKycList[0].permanentAddress2);
+            }
+            if (data.loanApplicationKycList[0].permanentCity) {
+              this.createLoan.controls.permanentcity.setValue(data.loanApplicationKycList[0].permanentCity);
+            }
+            if (data.loanApplicationKycList[0].permanentPin) {
+              this.createLoan.controls.permanentpincode.setValue(data.loanApplicationKycList[0].permanentPin);
+            }
+            if (data.loanApplicationKycList[0].permanentState) {
+              this.createLoan.controls.permanentstate.setValue(data.loanApplicationKycList[0].permanentState);
+            }
+
             // if (data.loanApplicationKycList && data.loanApplicationKycList[0] && data.loanApplicationKycList[0].permanentPin) {
             //   this.cdlService.getStateByPin(data.loanApplicationKycList[0].permanentPin).subscribe((data: any) => {
             //     if (data && data.length > 0) {

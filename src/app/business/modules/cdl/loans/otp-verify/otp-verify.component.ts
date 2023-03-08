@@ -173,7 +173,7 @@ export class OtpVerifyComponent implements OnInit {
     this.subs.sink = this.cdlservice.sendPhoneOTP(credentials, this.from).subscribe(
       (response: any) => {
         if (mode == 'resent') {
-          this.snackbarService.openSnackBar("Otp Resend Successfully");
+          this.snackbarService.openSnackBar("Otp Resent Successfully");
         }
         else {
           this.snackbarService.openSnackBar("Otp Sent Successfully");

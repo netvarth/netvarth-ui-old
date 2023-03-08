@@ -411,8 +411,12 @@ export class ApprovedComponent implements OnInit {
       if (this.loanData) {
         this.totalPayment = this.loanData.invoiceAmount;
         this.downPayment = this.loanData.downpaymentAmount;
-        this.sanctionedAmount = this.loanData.sanctionedAmount;
-        this.approvedScheme = this.loanData.loanScheme.schemeName;
+        if (this.loanData.sanctionedAmount) {
+          this.sanctionedAmount = this.loanData.sanctionedAmount;
+        }
+        if (this.loanData.loanScheme && this.loanData.loanScheme.schemeName) {
+          this.approvedScheme = this.loanData.loanScheme.schemeName;
+        }
         this.approvedSchemeId = this.loanData.loanScheme.id;
         if (this.loanData.partner && this.loanData.partner.id) {
           this.partnerName = this.loanData.partner.id;

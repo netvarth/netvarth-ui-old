@@ -32,8 +32,9 @@
                   <div class="form-title">First Name</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" #firstname type="text" placeholder="Enter Applicant First Name"
-                    class="form-control" autocomplete="off" formControlName="firstname" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #firstname type="text"
+                    placeholder="Enter Applicant First Name" class="form-control" autocomplete="off"
+                    formControlName="firstname" />
                 </div>
               </div>
             </div>
@@ -47,8 +48,9 @@
                   <div class="form-title">Last Name</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" #lastname type="text" placeholder="Enter Applicant Last Name"
-                    class="form-control" autocomplete="off" formControlName="lastname" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #lastname type="text"
+                    placeholder="Enter Applicant Last Name" class="form-control" autocomplete="off"
+                    formControlName="lastname" />
                 </div>
               </div>
             </div>
@@ -65,8 +67,9 @@
                 </div>
                 <div class="fieldPadding">
                   <div class="d-flex">
-                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Phone Number" class="form-control"
-                      autocomplete="off" #phone formControlName="phone"
+                    <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                      placeholder="Enter Phone Number" class="form-control" autocomplete="off" #phone
+                      formControlName="phone"
                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                       maxlength="10" />
                   </div>
@@ -87,8 +90,9 @@
                 </div>
                 <div class="fieldPadding">
                   <div class="d-flex">
-                    <input (keyup)="resetErrors()" #email type="email" placeholder="Enter Applicant Email"
-                      class="form-control" autocomplete="off" formControlName="email" />
+                    <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #email type="email"
+                      placeholder="Enter Applicant Email" class="form-control" autocomplete="off"
+                      formControlName="email" />
 
                     <!-- <a class="btn btn-verify" [class.btn-verified]="emailverification" *ngIf="!emailverification"
                       (click)="verifyEmail()"><span>Verify</span></a>
@@ -109,8 +113,8 @@
                   <div class="form-title">Date of Birth <span class="text-danger">*</span></div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" #dob type="date" class="form-control" autocomplete="off"
-                    formControlName="dob" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #dob type="date"
+                    class="form-control" autocomplete="off" formControlName="dob" />
                 </div>
               </div>
             </div>
@@ -143,8 +147,8 @@
                 </div>
                 <div class="fieldPadding">
                   <div class="d-flex">
-                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Aadhar Number" class="form-control"
-                      autocomplete="off"
+                    <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                      placeholder="Enter Aadhar Number" class="form-control" autocomplete="off"
                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                       maxlength="12" formControlName="aadhar" />
                   </div>
@@ -161,8 +165,8 @@
                 </div>
                 <div class="fieldPadding">
                   <div class="d-flex">
-                    <input (keyup)="resetErrors()" type="text" placeholder="Enter Pan Number" class="form-control"
-                      autocomplete="off" oninput="this.value = this.value.toUpperCase()" maxlength="10"
+                    <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="text"
+                      placeholder="Enter Pan Number" class="form-control" autocomplete="off" maxlength="10"
                       formControlName="pan" />
                   </div>
                 </div>
@@ -177,8 +181,9 @@
                   <div class="form-title">Requested Loan Amount</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" type="number" #loanamount placeholder="Enter Requested Loan Amount"
-                    class="form-control" autocomplete="off" formControlName="loanamount" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" type="number"
+                    #loanamount placeholder="Enter Requested Loan Amount" class="form-control" autocomplete="off"
+                    formControlName="loanamount" />
                 </div>
               </div>
             </div>
@@ -192,8 +197,9 @@
                   <div class="form-title">Address</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" #permanentaddress type="text" placeholder="Enter Address"
-                    class="form-control" autocomplete="off" formControlName="permanentaddress" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #permanentaddress
+                    type="text" placeholder="Enter Address" class="form-control" autocomplete="off"
+                    formControlName="permanentaddress" />
                 </div>
               </div>
             </div>
@@ -207,8 +213,9 @@
                   <div class="form-title">District</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" #permanentcity type="text" placeholder="Enter District"
-                    class="form-control" autocomplete="off" formControlName="permanentcity" />
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #permanentcity
+                    type="text" placeholder="Enter District" class="form-control" autocomplete="off"
+                    formControlName="permanentcity" />
                 </div>
               </div>
             </div>
@@ -221,7 +228,7 @@
                                 <div class="form-title">State</div>
                               </div>
                               <div class="fieldPadding">
-                                <input (keyup)="resetErrors()" #permanentstate [value]="permanentstate" type="text"
+                                <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #permanentstate [value]="permanentstate" type="text"
                                   placeholder="Enter State" class="form-control" autocomplete="off"
                                   formControlName="permanentstate" />
                               </div>
@@ -251,8 +258,9 @@
                   <div class="form-title">Pincode</div>
                 </div>
                 <div class="fieldPadding">
-                  <input (keyup)="resetErrors()" #permanentpincode type="text" placeholder="Enter Pincode"
-                    class="form-control" autocomplete="off" formControlName="permanentpincode"
+                  <input (keyup)="resetErrors()" oninput="this.value = this.value.toUpperCase()" #permanentpincode
+                    type="text" placeholder="Enter Pincode" class="form-control" autocomplete="off"
+                    formControlName="permanentpincode"
                     oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                     maxlength="6" />
                 </div>

@@ -38,8 +38,9 @@ export class ConfirmBoxComponent implements OnInit {
   downPayment: any = 0;
   loanAmount: any = 0;
   equifaxReportData: any;
-  equifaxScore: any = Math.floor(Math.random() * (10)) + 750;
+  equifaxScore: any;
   equifaxFormData: any;
+  equifaxId: any;
   constructor(
     public dialogRef: MatDialogRef<ConfirmBoxComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -52,7 +53,6 @@ export class ConfirmBoxComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("equifaxScore", this.equifaxScore)
     this.from = this.data.from;
     if (this.from && this.from == 'creditofficer') {
       if (this.data && this.data.type) {
@@ -75,12 +75,16 @@ export class ConfirmBoxComponent implements OnInit {
 
     if (this.data && this.data.equifaxData) {
       this.equifaxReportData = this.data.equifaxData;
-      // this.equifaxScore = this.equifaxReportData.score;
+      this.equifaxScore = this.equifaxReportData.score;
       console.log("this.equifaxReportData", this.equifaxReportData)
     }
 
     if (this.data && this.data.equifaxFormData) {
       this.equifaxFormData = this.data.equifaxFormData;
+    }
+
+    if (this.data && this.data.equifaxId) {
+      this.equifaxId = this.data.equifaxId;
     }
 
     if (this.from && this.from == 'loancreate') {
@@ -107,7 +111,7 @@ export class ConfirmBoxComponent implements OnInit {
     const navigationExtras: NavigationExtras = {
       queryParams: {
         type: 'equifax',
-        dataFromEquiFax: JSON.stringify(this.equifaxFormData)
+        equifaxId: this.equifaxId
       }
     }
     this.router.navigate(['provider', 'cdl', 'loans', 'create'], navigationExtras);

@@ -49,7 +49,7 @@ export class CreateDealerComponent implements OnInit {
   aadharverification = false;
   gstverification = false;
   headerText: any = "Create Dealer";
-  btnText: any = "Create Dealer";
+  btnText: any = "Sent for Approval";
   action: any;
   dealerId: any;
   from: any;
@@ -145,12 +145,12 @@ export class CreateDealerComponent implements OnInit {
           console.log("this.dealerData", this.dealerData)
 
           this.headerText = "Update Dealer";
-          this.btnText = "Update Dealer";
+          // this.btnText = "Update Dealer";
           if (params.action == 'update' && this.dealerData) {
             if (this.from && this.from == 'create') {
               this.verification = true;
               this.headerText = "Create Dealer";
-              this.btnText = "Create Dealer";
+              this.btnText = "Sent for Approval";
             }
             this.createDealer.controls.name.setValue(this.dealerData.partnerName);
             this.createDealer.controls.username.setValue(this.dealerData.partnerUserName);

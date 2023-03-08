@@ -205,7 +205,8 @@ export class CreateComponent implements OnInit {
       "permanentState": this.createLead.controls.permanentstate.value,
       "permanentPin": this.createLead.controls.permanentpincode.value,
       "aadhaar": this.createLead.controls.aadhar.value,
-      "pan": this.createLead.controls.pan.value
+      "pan": this.createLead.controls.pan.value,
+      "transactionAmount": this.createLead.controls.loanamount.value
     }
 
 
@@ -239,7 +240,8 @@ export class CreateComponent implements OnInit {
                 data: {
                   from: "equifax",
                   equifaxData: reportData,
-                  equifaxFormData: equifaxFormData
+                  equifaxFormData: equifaxFormData,
+                  equifaxId: data.id
                 }
               });
               dialogRef.afterClosed().subscribe(

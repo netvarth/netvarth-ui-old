@@ -28,7 +28,8 @@ import { SelectSchemeModule } from '../loans/select-scheme/select-scheme.module'
 const routes: Routes = [
   { path: '', component: LeadsComponent },
   { path: 'create', loadChildren: () => import('./create/create.module').then(m => m.CreateModule) },
-  { path: 'create/:id', loadChildren: () => import('./create/create.module').then(m => m.CreateModule) },
+  { path: 'checkequifax', loadChildren: () => import('./create/create.module').then(m => m.CreateModule) },
+  { path: 'create/:id', loadChildren: () => import('./create/create.module').then(m => m.CreateModule) }
 
 
 ]
