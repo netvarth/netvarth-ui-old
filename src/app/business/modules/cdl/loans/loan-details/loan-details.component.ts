@@ -64,6 +64,7 @@ export class LoanDetailsComponent implements OnInit {
   customerPhoneNo: any;
   digitalDocumenId: any;
   digitalInsuranceId: any;
+  mafilScorePercentange: any;
   constructor(
     private snackbarService: SnackbarService,
     private router: Router,
@@ -130,6 +131,7 @@ export class LoanDetailsComponent implements OnInit {
       this.mafilScoreData = data
       if (data && data.creditScore) {
         this.mafilScore = data.creditScore;
+        this.mafilScorePercentange = data.creditScorePercentage.toFixed(2);
       }
     });
   }

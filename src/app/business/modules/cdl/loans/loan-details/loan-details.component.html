@@ -490,8 +490,8 @@
                   <img src="../../../../assets/images/cdl/total_score.png" width="100">
                 </div>&nbsp;&nbsp;
                 <div>
-                  <div class="customerScoreLabel">Total Score</div>
-                  <div class="customerScoreInfoLabel">{{mafilScore + equifaxScore}}</div>
+                  <div class="customerScoreLabel">Mafil Score (%)</div>
+                  <div class="customerScoreInfoLabel" *ngIf="mafilScorePercentange">{{mafilScorePercentange}} %</div>
                   <!-- <div class="btn btn-primary">View Report</div> -->
                 </div>
               </div>

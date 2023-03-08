@@ -130,6 +130,10 @@
                 <div>
                     <img src="../../../../assets/images/cdl/logo.png" width="300">
                 </div>
+                <div>
+                    <span *ngIf="reportData.creditScore" class="equifax-score">Score :
+                        <b>{{reportData.creditScore}}</b></span>
+                </div>
                 <div class="mt-3 overflow-y-scroll">
                     <div class="table-responsive">
                         <table class="table table-borderless text-left" *ngIf="reportData.reports">
