@@ -149,14 +149,14 @@
                                 </li>
                                 <li
                                     *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0 && servicedetails.showPrice">
-                                    <span class="service-li-title">Service Fee<i class="fa fa-info-circle"
+                                    <span class="service-li-title">Service Fee <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
                                             [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
                                         class="bold price rupee-font service-li-value">{{servicedetails.totalAmount |
                                         currency:'&#8377;'}}</span>
                                 </li>
                                 <li
                                     *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount">
-                                    <span class="service-li-title">Amount Required Now <i class="fa fa-info-circle"
+                                    <span class="service-li-title">Amount Required Now <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
                                             [matTooltip]="servicedetails.paymentDescription"></i></span><br />
                                             <span *ngIf="servicedetails && servicedetails.prePaymentType === 'fixed'"
                                         class="bold price rupee-font service-li-value">{{servicedetails.minPrePaymentAmount |

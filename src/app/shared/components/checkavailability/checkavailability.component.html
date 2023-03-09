@@ -92,13 +92,13 @@
                         <span class="service-li-title">Duration</span><br /><span class="bold">{{HHMM}}</span>
                     </li> -->
                 <li *ngIf="servicedetails && servicedetails.totalAmount && servicedetails.totalAmount != 0 && servicedetails.showPrice">
-                    <span class="service-li-title">Service Fee<i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription"
+                    <span class="service-li-title">Service Fee <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
                             [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
                         class="bold price rupee-font">{{servicedetails.totalAmount |
-                        currency:'&#8377;'}}</span>
+                        currency:'&#8377;'}}f</span>
                 </li>
                 <li *ngIf="servicedetails && servicedetails.isPrePayment && servicedetails.minPrePaymentAmount">
-                    <span class="service-li-title">Amount Required Now <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription"
+                    <span class="service-li-title">Amount Required Now <i class="fa fa-info-circle" *ngIf="servicedetails.paymentDescription && servicedetails.paymentDescription !== ''"
                             [matTooltip]="servicedetails.paymentDescription"></i></span><br /><span
                         class="bold price rupee-font">{{servicedetails.minPrePaymentAmount |
                         currency:'&#8377;'}}</span>
