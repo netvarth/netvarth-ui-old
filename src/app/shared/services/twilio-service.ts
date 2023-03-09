@@ -270,14 +270,14 @@ export class TwilioService {
             console.log("Already in Room: '" + participant.identity + "'");
             _this.attachParticipantTracks(participant, _this.remoteVideo.nativeElement, room);
             _this.participantsCount = room.participants.size;
-            console.log('first:' + this.participantsCount);
+            console.log('first:participantsCount:' + _this.participantsCount);
         });
 
         // When a Participant joins the Room, log the event.
         room.on('participantConnected', function (participant) {
             console.log("Joining: '" + participant.identity + "'");
             _this.participantsCount = room.participants.size;
-            console.log("connected:" + room.participants.size);
+            console.log("connected - Participants:" + room.participants.size);
             if (_this.participantsCount === 0) {
                 _this.activateTimer(true);
             } else {
@@ -288,6 +288,8 @@ export class TwilioService {
         // When a Participant adds a Track, attach it to the DOM.
         room.on('trackSubscribed', function (track, trackPublication, participant) {
             console.log(participant.identity + ' added track: ' + track.kind);
+            _this.participantsCount = room.participants.size;
+            console.log("Participants:" +_this.participantsCount);
             // var previewContainer = document.getElementById('remoteVideo');
             _this.attachTracks([track], _this.remoteVideo.nativeElement, room);
             console.log('tracksubscribed');
@@ -316,7 +318,7 @@ export class TwilioService {
             console.log("Participant '" + participant.identity + "' left the room");
             _this.detachParticipantTracks(participant, room, _this);
             _this.participantsCount = room.participants.size;
-            console.log("disConnected:" + room.participants.size);
+            console.log("disConnected - Participants Size:" + room.participants.size);
             _this.removeRemoteParticipantDetails(_this.remoteVideo.nativeElement);
             _this.activateTimer(true);
         });
