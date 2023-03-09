@@ -49,12 +49,14 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     btnClicked = false;
     reqDialogRef: any;
     media: any;
-
+    timerSub: Subscription;
+    exitFromMeeting = false;
     audioTrack;
     videoTrack;
     previewTracks = [];
     previewTracksClone = [];
     theme: any;
+    timer;
     constructor(
         private location: Location,
         private activateroute: ActivatedRoute,
@@ -86,7 +88,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 if (qParams['account']) {
                     _this.account = qParams['account'];
                 }
-                if(qParams['theme']){
+                if (qParams['theme']) {
                     this.theme = qParams['theme'];
                 }
             }
@@ -96,7 +98,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
                 _this.uuid = params['id'];
                 _this.type = _this.uuid.substring((_this.uuid.lastIndexOf('_') + 1), _this.uuid.length);
                 _this.getTeleBooking(_this.uuid, _this.type, _this.account);
-                _this.twilioService.preview= true;
+                _this.twilioService.preview = true;
             }
         );
     }
@@ -126,7 +128,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     /**
          * Method for Preview Camera before entering to the meeting room
         */
-     getAudioStatus() {
+    getAudioStatus() {
         const _this = this;
         return new Promise((resolve, reject) => {
             Video.createLocalAudioTrack().then(track => {
@@ -253,7 +255,22 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         const _this = this;
         // this.twilioService.previewContainer = this.previewContainer;
         // this.twilioService.previewMedia();
+        this.timerSub = this.twilioService.getTimer().subscribe(
+            (timerStatus) => {
+                if (timerStatus) {
+                    console.log("Timer Status: true");
+                    _this.exitFromMeeting = true;
+                    clearTimeout(this.timer);
+                    this.timer = setTimeout(() => {
+                        _this.exitMeeting();
+                    }, 60000);
+                } else {
+                    _this.exitFromMeeting = true;
+                }
 
+
+            }
+        )
         _this.cronHandle = observableInterval(_this.refreshTime * 500).subscribe(() => {
             _this.isProviderReady();
         });
@@ -303,6 +320,11 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
         ).catch(error => {
             _this.openRequestDialog('both');
         });
+    }
+    exitMeeting() {
+        if (this.exitFromMeeting) {
+            this.disconnect();
+        }
     }
     /**
      * Method which marks the consumer readiness and returns the token 
@@ -392,10 +414,10 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             const customId = this.lStorageService.getitemfromLocalStorage('customId');
             if (customId) {
                 queryParams['customId'] = customId;
-                queryParams['accountId']= _this.account;
+                queryParams['accountId'] = _this.account;
             }
             if (this.theme) {
-                queryParams['theme']=this.theme;
+                queryParams['theme'] = this.theme;
             }
             let navigationExtras: NavigationExtras = {
                 queryParams: queryParams
@@ -461,7 +483,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
     /**
      * Method to switch from and back cameras
      */
-     switchCamera(videoDevices) {
+    switchCamera(videoDevices) {
         this.twilioService.switchCamera(videoDevices);
     }
     // switchCamera(media) {
@@ -547,6 +569,7 @@ export class LiveChatComponent implements OnInit, OnDestroy, AfterViewInit {
             _this.cronHandle.unsubscribe();
         }
         _this.subs.unsubscribe();
+        _this.timerSub.unsubscribe();
         _this.disconnect();
         // _this.previewTracks.forEach(track=>{
         //     _this.removePreviewTrackToDom(track, track.kind);

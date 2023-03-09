@@ -1,4 +1,5 @@
 import { Injectable, ElementRef, Renderer2, RendererFactory2 } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import * as Video from 'twilio-video';
 @Injectable({
     providedIn: 'any'
@@ -18,13 +19,11 @@ export class TwilioService {
     private renderer: Renderer2;
     cameraMode: string;
     previewTracks;
-    
+    timerSubject =  new Subject<any>();
     selectedVideoId: string;
-
     activeCamIndex;
     cam1Device: string;
     cam2Device: string;
-
     activeRoom;
     previewTracksClone;
     btnClicked = false;
@@ -32,6 +31,13 @@ export class TwilioService {
     constructor(public rendererFactory: RendererFactory2) {
         this.renderer = rendererFactory.createRenderer(null, null);
     }
+    activateTimer(timer: any) {
+        this.timerSubject.next(timer);
+    }
+    getTimer(): Observable<any> {
+        return this.timerSubject.asObservable();
+    }
+    
     unmuteVideo() {
         const _this = this;
         _this.previewTracks.forEach(localTrack => {
@@ -272,6 +278,13 @@ export class TwilioService {
             console.log("Joining: '" + participant.identity + "'");
             _this.participantsCount = room.participants.size;
             console.log("connected:" + room.participants.size);
+            if (_this.participantsCount === 1) {
+                setTimeout(() => {
+                    _this.activateTimer(true);
+                }, 6000);
+            } else {
+                _this.activateTimer(false);
+            }
         });
 
         // When a Participant adds a Track, attach it to the DOM.
@@ -302,6 +315,7 @@ export class TwilioService {
             _this.participantsCount = room.participants.size;
             console.log("disConnected:" + room.participants.size);
             _this.removeRemoteParticipantDetails(_this.remoteVideo.nativeElement);
+            _this.activateTimer(true);
         });
 
         // Once the LocalParticipant leaves the room, detach the Tracks

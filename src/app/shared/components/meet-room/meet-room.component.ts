@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, ElementRef, OnDestroy, OnInit, Render
 import { Component } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { TwilioService } from "../../services/twilio-service";
-import { interval as observableInterval } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { MeetService } from "../../services/meet-service";
 import { Title } from "@angular/platform-browser";
 import { SnackbarService } from "../../services/snackbar.service";
@@ -55,7 +55,9 @@ export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
     showRecording: boolean;
     reqDialogRef: any;
     media: any;
-
+    timerSub: Subscription;
+    exitFromMeeting = false;
+    timer;
     audioTrack;
     videoTrack;
     previewTracks = [];
@@ -208,6 +210,22 @@ export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         const _this = this;
         console.log("ngAfterViewInit");
         _this.cd.detectChanges();
+        this.timerSub = this.twilioService.getTimer().subscribe(
+            (timerStatus) => {
+                if (timerStatus) {
+                    console.log("Timer Status: true");
+                    _this.exitFromMeeting = true;
+                    clearTimeout(this.timer);
+                    this.timer = setTimeout(() => {
+                        _this.exitMeeting();
+                    }, 60000);
+                } else {
+                    _this.exitFromMeeting = true;
+                }
+
+
+            }
+        )
         _this.subs.sink = observableInterval(_this.refreshTime * 500).subscribe(() => {
             _this.isConsumerReady();
         });
@@ -254,12 +272,18 @@ export class MeetRoomComponent implements OnInit, AfterViewInit, OnDestroy {
             _this.openRequestDialog('both');
         });
     }
+    exitMeeting() {
+        if (this.exitFromMeeting) {
+            this.disconnect();
+        }
+    }
     /**
      * invokes when the page destroys
      */
     ngOnDestroy() {
         const _this = this;
         _this.subs.unsubscribe();
+        _this.timerSub.unsubscribe();
         _this.disconnect();
         // _this.previewTracks.forEach(track => {
         //     _this.removePreviewTrackToDom(track, track.kind);

@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, ElementRef, OnDestroy, OnInit, Render
 import { Component } from "@angular/core";
 import { ActivatedRoute, NavigationExtras, Router } from "@angular/router";
 import { TwilioService } from "../../../shared/services/twilio-service";
-import { interval as observableInterval } from 'rxjs';
+import { interval as observableInterval, Subscription } from 'rxjs';
 import { MeetService } from "../../../shared/services/meet-service";
 import { Title } from "@angular/platform-browser";
 import { SnackbarService } from "../../../shared/services/snackbar.service";
@@ -51,7 +51,9 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
     previewTracksClone = [];
     videocredits: any;
     videocreditShow = true;
-
+    timerSub: Subscription;
+    exitFromMeeting = false;
+    timer;
     constructor(private activateroute: ActivatedRoute,
         public twilioService: TwilioService,
         public rendererFactory: RendererFactory2,
@@ -205,6 +207,22 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
         const _this = this;
         console.log("ngAfterViewInit");
         _this.cd.detectChanges();
+        this.timerSub = this.twilioService.getTimer().subscribe(
+            (timerStatus) => {
+                if (timerStatus) {
+                    console.log("Timer Status: true");
+                    _this.exitFromMeeting = true;
+                    clearTimeout(this.timer);
+                    this.timer = setTimeout(() => {
+                        _this.exitMeeting();
+                    }, 60000);
+                } else {
+                    _this.exitFromMeeting = true;
+                }
+
+
+            }
+        )
         _this.subs.sink = observableInterval(_this.refreshTime * 500).subscribe(() => {
             _this.isConsumerReady();
         });
@@ -252,6 +270,11 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
             _this.openRequestDialog('b-both');
         });
 
+    }
+    exitMeeting() {
+        if (this.exitFromMeeting) {
+            this.disconnect();
+        }
     }
     getAudioStatus() {
         const _this = this;
