@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./thank-you.component.css']
 })
 export class ThankYouComponent implements OnInit {
-  displayText: string;
+  displayText: string = "You May Close This Window";
 
   constructor(
     private router: Router,
