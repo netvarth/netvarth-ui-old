@@ -217,7 +217,7 @@ export class MeetingRoomComponent implements OnInit, AfterViewInit, OnDestroy {
                         _this.exitMeeting();
                     }, 60000);
                 } else {
-                    _this.exitFromMeeting = true;
+                    _this.exitFromMeeting = false;
                 }
 
 

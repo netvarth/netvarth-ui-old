@@ -279,9 +279,7 @@ export class TwilioService {
             _this.participantsCount = room.participants.size;
             console.log("connected:" + room.participants.size);
             if (_this.participantsCount === 1) {
-                setTimeout(() => {
-                    _this.activateTimer(true);
-                }, 6000);
+                _this.activateTimer(true);
             } else {
                 _this.activateTimer(false);
             }
