@@ -278,7 +278,7 @@ export class TwilioService {
             console.log("Joining: '" + participant.identity + "'");
             _this.participantsCount = room.participants.size;
             console.log("connected:" + room.participants.size);
-            if (_this.participantsCount === 1) {
+            if (_this.participantsCount === 0) {
                 _this.activateTimer(true);
             } else {
                 _this.activateTimer(false);
@@ -293,7 +293,12 @@ export class TwilioService {
             console.log('tracksubscribed');
             if(track.kind === 'video') {
                 _this.removeRemoteParticipantDetails(_this.remoteVideo.nativeElement);
-            } 
+            }
+            if (_this.participantsCount === 0) {
+                _this.activateTimer(true);
+            } else {
+                _this.activateTimer(false);
+            }
         });
 
         // When a Participant removes a Track, detach it from the DOM.
