@@ -242,6 +242,7 @@ export class CreateComponent implements OnInit {
       dealer: [null],
       customerEducation: [null],
       customerEmployement: [null],
+      customerOccupation: [null],
       salaryRouting: [null],
       familyDependants: [null],
       noOfYearsAtPresentAddress: [null],
@@ -516,6 +517,9 @@ export class CreateComponent implements OnInit {
 
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].customerEmployement) {
               this.createLoan.controls.customerEmployement.setValue(this.loanData.loanApplicationKycList[0].customerEmployement);
+            }
+            if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].customerOccupation) {
+              this.createLoan.controls.customerOccupation.setValue(this.loanData.loanApplicationKycList[0].customerOccupation);
             }
 
             if (this.loanData && this.loanData.loanApplicationKycList && this.loanData.loanApplicationKycList[0] && this.loanData.loanApplicationKycList[0].salaryRouting) {
@@ -1198,6 +1202,7 @@ export class CreateComponent implements OnInit {
           "nomineeGender": this.createLoan.controls.nomineeGender.value,
           "customerEducation": this.createLoan.controls.customerEducation.value,
           "customerEmployement": this.createLoan.controls.customerEmployement.value,
+          "customerOccupation": this.createLoan.controls.customerOccupation.value,
           "salaryRouting": this.createLoan.controls.salaryRouting.value,
           "familyDependants": this.createLoan.controls.familyDependants.value,
           "earningMembers": this.createLoan.controls.earningMembers.value,
@@ -2121,6 +2126,7 @@ export class CreateComponent implements OnInit {
           "nomineeGender": this.createLoan.controls.nomineeGender.value,
           "customerEducation": this.createLoan.controls.customerEducation.value,
           "customerEmployement": this.createLoan.controls.customerEmployement.value,
+          "customerOccupation": this.createLoan.controls.customerOccupation.value,
           "salaryRouting": this.createLoan.controls.salaryRouting.value,
           "familyDependants": this.createLoan.controls.familyDependants.value,
           "earningMembers": this.createLoan.controls.earningMembers.value,
