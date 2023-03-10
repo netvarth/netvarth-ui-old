@@ -1,5 +1,6 @@
 <div *ngIf="calledFrom=='checkin'" class="addmem-head">{{fill_foll_details_cap}}</div>
-<div *ngIf="data && data[0] && data[0].requestType && data[0].requestType !=='deactiveAccount'" class="ynw-common-form">
+<div *ngIf="data && (data.moreparams || data.member)" class="ynw-common-form">
+    <!-- && data[0] && data[0].requestType !=='deactiveAccount'-->
     <div class="form-group">
         <label class="form-control-label">{{'First Name' | translate}}</label>
         <input type="text" matInput [(ngModel)]="firstname" (keyup)="valuechange()" class="form-control" id="first_name"
@@ -62,8 +63,7 @@
         <input type="email" matInput class="form-control" [(ngModel)]="email" (keyup)="valuechange()" />
     </div>
 </div>
-
-<div *ngIf="data && data[0] && data[0].requestType && data[0].requestType==='deactiveAccount'" class="ynw-common-form">
+<div *ngIf="data && data[0] && data[0].requestType==='deactiveAccount'" class="ynw-common-form">
     <div *ngIf="beforeDelete">
         <div class="deletePosition">
             <img class="deleteIcon" src="../../../../assets/images/myjaldee/deleteAccount.png" />
