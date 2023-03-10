@@ -28,18 +28,20 @@ import { FormsModule } from '@angular/forms';
 import { BookingHistoryModule } from '../../shared/booking-history/booking-history.module';
 import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { FullViewCalendarModule } from '../dashboard/full-view-calendar/full-view-calendar.module';
+
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
     {
         path: '',
         children: [
             { path: 'adjustdelay', loadChildren: () => import('./schedule-delay/adjust-schedule-delay.module').then(m => m.AdjustScheduleDelayModule) },
-            { path: 'appointment', loadChildren: ()=> import('./appointment/appointment.module').then(m=>m.AppointmentModule) },
+            { path: 'appointment', loadChildren: () => import('./appointment/appointment.module').then(m => m.AppointmentModule) },
             { path: 'questionnaires', loadChildren: () => import('../questionnaire-list-popup/questionnaire-list-popup.module').then(m => m.QuestionnaireListPopupModule) },
-            { path: ':id', loadChildren: ()=> import('./provider-appointment-detail/provider-appointment-detail.module').then(m=>m.ProviderAppointmentDetailModule) },
+            { path: ':id', loadChildren: () => import('./provider-appointment-detail/provider-appointment-detail.module').then(m => m.ProviderAppointmentDetailModule) },
             { path: ':id/user', loadChildren: () => import('../../../shared/modules/user-service-change/user-service-change.module').then(m => m.UserServiceChangeModule) },
             { path: ':id/team', loadChildren: () => import('../../../shared/modules/assign-team/assign-team.module').then(m => m.AssignTeamModule) },
-            { path: ':id/print', loadChildren: ()=> import('../../shared/print-booking-details/print-booking-detail.module').then(m=>m.PrintBookingDetailModule)}           
+            { path: ':id/print', loadChildren: () => import('../../shared/print-booking-details/print-booking-detail.module').then(m => m.PrintBookingDetailModule) }
 
         ]
     }
@@ -74,6 +76,7 @@ const routes: Routes = [
         FormsModule,
         BookingHistoryModule,
         MatAutocompleteModule,
+        FullViewCalendarModule,
         [RouterModule.forChild(routes)]
     ],
     declarations: [
@@ -83,7 +86,7 @@ const routes: Routes = [
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,
         NO_ERRORS_SCHEMA
-      ],
-      providers: [TeleBookingService]
+    ],
+    providers: [TeleBookingService]
 })
 export class AppointmentsModule { }

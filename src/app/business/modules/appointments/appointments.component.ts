@@ -1,4 +1,4 @@
-import { Component, OnInit,Inject, OnDestroy, AfterViewInit, HostListener, QueryList, ElementRef, ViewChildren, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, OnDestroy, AfterViewInit, HostListener, QueryList, ElementRef, ViewChildren, ViewChild } from '@angular/core';
 import { SharedFunctions } from '../../../shared/functions/shared-functions';
 import { SharedServices } from '../../../shared/services/shared-services';
 import { projectConstants } from '../../../app.component';
@@ -6,8 +6,10 @@ import { ProviderServices } from '../../services/provider-services.service';
 import * as moment from 'moment';
 import { Messages } from '../../../shared/constants/project-messages';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDialogRef,
-  MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {
+  MatDialog, MatDialogRef,
+  MAT_DIALOG_DATA
+} from '@angular/material/dialog';
 import { ProviderSharedFuctions } from '../../functions/provider-shared-functions';
 import { ProviderWaitlistCheckInConsumerNoteComponent } from '../check-ins/provider-waitlist-checkin-consumer-note/provider-waitlist-checkin-consumer-note.component';
 import { projectConstantsLocal } from '../../../shared/constants/project-constants';
@@ -25,6 +27,8 @@ import { DateTimeProcessor } from '../../../shared/services/datetime-processor.s
 import { AttachmentPopupComponent } from '../../../../app/shared/components/attachment-popup/attachment-popup.component';
 import { LocalStorageService } from '../../../shared/services/local-storage.service';
 import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
+
+
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
@@ -115,7 +119,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     future_appt_date: null,
     age: 'all',
     gender: 'all',
-    serviceBookingType:'',
+    serviceBookingType: '',
   }; // same in resetFilter Fn
   filters = {
     first_name: false,
@@ -149,7 +153,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   timeSlotAppts: any = [];
   statusMultiCtrl: any = [];
   appt_list: any = [];
-  appt_request_list : any = [];
+  appt_request_list: any = [];
   users: any = [];
   filterapplied = false;
   noFilter = true;
@@ -379,6 +383,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   tempAcId;
   customerList;
   apptData: any;
+
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
     private provider_services: ProviderServices,
@@ -612,10 +617,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.time_type === 2) {
       this.getFutureAppointments();
     }
-    if(this.time_type === 3){
-    this.getAppointmentRequests();
+    if (this.time_type === 3) {
+      this.getAppointmentRequests();
     }
-    
+
   }
   isQueueSelected(qId) {
     if (this.selQIds.indexOf(qId) !== -1) {
@@ -771,7 +776,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   selectLocationFromCookies(cookie_location_id) {
-    const _this= this;
+    const _this = this;
     this.locationSelected(this.selectLocationFromCookie(cookie_location_id)).then(
       (schedules: any) => {
         _this.initViews(schedules, '').then(
@@ -941,7 +946,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       future_appt_date: null,
       age: 'all',
       gender: 'all',
-      serviceBookingType:'',
+      serviceBookingType: '',
     };
     this.statusMultiCtrl = [];
   }
@@ -986,7 +991,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       case 3: this.getAppointmentRequests();//request
         break;
-        case 4: this.getHistoryAppmts();
+      case 4: this.getHistoryAppmts();
         break;
     }
     this.getCounts();
@@ -1024,7 +1029,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         break;
       case 3: this.getAppointmentRequests();
         break;
-        case 4: this.getHistoryAppmts();
+      case 4: this.getHistoryAppmts();
         break;
     }
     this.getCounts();
@@ -1086,7 +1091,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   getCounts() {
-   const _this = this;
+    const _this = this;
     if (this.time_type !== 2 && this.activeSchedules.length > 0) {
       this.getFutureAppointmentsCount()
         .then(
@@ -1111,14 +1116,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         );
     }
-   // if (this.time_type !== 3) {
-      this.getAppointmentRequestsCount()
-        .then(
-          (result) => {
-            _this.appointment_requests_count = result;
-          }
-        );
-   // }
+    // if (this.time_type !== 3) {
+    this.getAppointmentRequestsCount()
+      .then(
+        (result) => {
+          _this.appointment_requests_count = result;
+        }
+      );
+    // }
   }
   getActiveAppointments(appointments, status) {
     if (status === 'new') {
@@ -1357,8 +1362,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         //     Mfilter['provider-eq'] = this.activeUser;
         //   }
         // } else {
-          Mfilter['schedule-eq'] = queueid;
-      //  }
+        Mfilter['schedule-eq'] = queueid;
+        //  }
       }
       no_filter = true;
     }
@@ -1372,7 +1377,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.provider_services.getAppointmentRequestsCount(Mfilter)
         .subscribe(
           data => {
-            console.log("Appointment request count:",data);
+            console.log("Appointment request count:", data);
             if (no_filter) { this.appointment_requests_count = data; }
             resolve(data);
           },
@@ -1456,7 +1461,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(
               (data: any) => {
                 _this.appt_list = data;
-                console.log("Todays Appt :",_this.appt_list)
+                console.log("Todays Appt :", _this.appt_list)
                 _this.appt_list.map(function (appt) {
                   if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
                     appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
@@ -1555,7 +1560,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(
               (data: any) => {
                 let appts = data;
-                console.log("Future Appt :",data );
+                console.log("Future Appt :", data);
                 appts.map(function (appt) {
                   if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
                     appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
@@ -1584,7 +1589,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       _this.loading = false;
     }
-    
+
   }
   getHistoryAppointmentes() {
     const _this = this;
@@ -1631,7 +1636,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     );
   }
-  getAppointmentRequests(){
+  getAppointmentRequests() {
     const _this = this;
     _this.loading = true;
     let Mfilter = _this.setFilterForApptRequestApi();
@@ -1663,9 +1668,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     // if (_this.filter.serviceBookingType === 'request') {
     //   Mfilter['requested-eq'] = 'request';
     // }
-  //  _this.resetPaginationData();
+    //  _this.resetPaginationData();
     // _this.pagination.startpageval = 1;
-   // _this.pagination.totalCnt = 0; // no need of pagination in today
+    // _this.pagination.totalCnt = 0; // no need of pagination in today
     if (_this.activeSchedules.length > 0 || _this.activeUser || (_this.active_user.accountType === 'BRANCH' && _this.activeSchedules.length == 0)) {
       const promise = _this.getAppointmentRequestsCount(Mfilter);
       promise.then(
@@ -1678,14 +1683,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               (data: any) => {
                 _this.appt_request_list = data;
 
-                console.log("Appointment Requests :",_this.appt_request_list)
+                console.log("Appointment Requests :", _this.appt_request_list)
                 _this.appt_request_list.map(function (appt) {
                   // if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
                   //   appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
                   // }
-                  if(appt.apptStatus === 'Requested'){
-                  //  console.log("Request appts :",appt);
-                  return appt;
+                  if (appt.apptStatus === 'Requested') {
+                    //  console.log("Request appts :",appt);
+                    return appt;
                   }
                 });
                 // _this.todayAppointments = _this.shared_functions.groupBy(_this.appt_list, 'apptStatus');
@@ -1724,13 +1729,13 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (filter) {
       api_filter = filter;
     }
-    console.log("filter request :",api_filter);
+    console.log("filter request :", api_filter);
     if (this.filteredSchedule.length > 0 && this.filter.schedule !== 'all') {
       // if (this.activeUser) {
       //   api_filter['provider-eq'] = this.activeUser;
       // } else {
-        api_filter['schedule-eq'] = this.filteredSchedule.toString();
-     // }
+      api_filter['schedule-eq'] = this.filteredSchedule.toString();
+      // }
 
     }
     if (this.filterLocation.length > 0 && this.filter.location !== 'all') {
@@ -1843,7 +1848,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   handle_pageclick(pg) {
     this.pagination.startpageval = pg;
-    console.log("page :",pg);
+    console.log("page :", pg);
     this.filter.page = pg;
     this.groupService.setitemToGroupStorage('appthP', pg);
     this.groupService.setitemToGroupStorage('appthPFil', this.filter);
@@ -2017,7 +2022,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     return typeof time_min === "number" ? time_min : 0;
   }
   getTimeMinute(time) {
-    console.log("Delay Time :",time);
+    console.log("Delay Time :", time);
     let hr;
     let min;
     if (time >= 60) {
@@ -2547,7 +2552,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   printHistoryCheckin() {
-    const _this= this;
+    const _this = this;
     const Mfilter = this.setFilterForApi();
     const promise = this.getHistoryAppointmentsCount(Mfilter);
     promise.then(
@@ -2617,7 +2622,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onChangeLocationSelect(event) {
-    const _this= this;
+    const _this = this;
     const value = event;
     this.resetFields();
     this.clearApptIdsFromStorage();
@@ -2897,7 +2902,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   getAllShedules() {
-    const _this= this;
+    const _this = this;
     this.provider_services.getProviderSchedules().subscribe(
       (schedules: any) => {
         if (schedules.length > 0) {
@@ -2973,7 +2978,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;
-      console.log("Appointment action clicked :",waitlist);
+      console.log("Appointment action clicked :", waitlist);
     } else {
       if (status === 'started') {
         Object.keys(this.startedAppointmentsChecked).forEach(apptIndex => {
@@ -3024,79 +3029,79 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     });
   }
-  removeApptRequest(appt){
-    console.log("request :",appt.uid);
+  removeApptRequest(appt) {
+    console.log("request :", appt.uid);
     this.shared_services.deleteApptRequest(appt.uid).
-    subscribe((res:any)=>{
-      console.log("Req res:",res);
-      this.snackbarService.openSnackBar('Appointment request deleted successfully',{
-        panelClass: "snackbarnormal"
-      });
-      this.dialogRef.close('reload');
-    },
-    error => {
-      this.snackbarService.openSnackBar(error.error, {
-        panelClass: "snackbarerror"
-      });
+      subscribe((res: any) => {
+        console.log("Req res:", res);
+        this.snackbarService.openSnackBar('Appointment request deleted successfully', {
+          panelClass: "snackbarnormal"
+        });
+        this.dialogRef.close('reload');
+      },
+        error => {
+          this.snackbarService.openSnackBar(error.error, {
+            panelClass: "snackbarerror"
+          });
+        });
+
+  }
+  showAppointmentRequest(status, appt?) {
+    console.log("Request :", status)
+    let waitlist = [];
+    if (appt) {
+      waitlist = appt;
+    }
+    //  else {
+    //   if (status === 'request') {
+    //     Object.keys(this.startedAppointmentsChecked).forEach(apptIndex => {
+    //       waitlist.push(this.startedAppointmentsChecked[apptIndex]);
+    //     });
+    //   } else {
+    //     Object.keys(this.appointmentsChecked).forEach(apptIndex => {
+    //       waitlist.push(this.appointmentsChecked[apptIndex]);
+    //     });
+    //   }
+    // }
+    const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        status: status,
+        checkinData: waitlist,
+      }
     });
-    
+    actiondialogRef.afterClosed().subscribe(data => {
+      if (data === 'reload') {
+        this.getAppointmentRequests();
+        this.getAppointmentRequestsCount();
+      }
+    });
   }
- showAppointmentRequest(status,appt?) {
-  console.log("Request :",status)
-  let waitlist = [];
-  if (appt) {
-    waitlist = appt;
+  showAppointmentReject(status, appt?) {
+    console.log("Reject :", status)
+    let waitlist = [];
+    if (appt) {
+      waitlist = appt;
+    }
+
+    const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
+      data: {
+        status: status,
+        checkinData: waitlist,
+      }
+    });
+    actiondialogRef.afterClosed().subscribe(data => {
+      if (data === 'reload') {
+        this.getAppointmentRequests();
+        this.getAppointmentRequestsCount();
+      }
+    });
   }
-  //  else {
-  //   if (status === 'request') {
-  //     Object.keys(this.startedAppointmentsChecked).forEach(apptIndex => {
-  //       waitlist.push(this.startedAppointmentsChecked[apptIndex]);
-  //     });
-  //   } else {
-  //     Object.keys(this.appointmentsChecked).forEach(apptIndex => {
-  //       waitlist.push(this.appointmentsChecked[apptIndex]);
-  //     });
-  //   }
- // }
-  const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-    disableClose: true,
-    data: {
-      status: status,
-      checkinData: waitlist,
-    }
-  });
-  actiondialogRef.afterClosed().subscribe(data => {
-    if (data === 'reload') {
-      this.getAppointmentRequests();
-      this.getAppointmentRequestsCount();
-    }
-  });
-}
-showAppointmentReject(status,appt?){
-  console.log("Reject :",status)
-  let waitlist = [];
-  if (appt) {
-    waitlist = appt;
-  }
- 
-  const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
-    width: '50%',
-    panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
-    disableClose: true,
-    data: {
-      status: status,
-      checkinData: waitlist,
-    }
-  });
-  actiondialogRef.afterClosed().subscribe(data => {
-    if (data === 'reload') {
-      this.getAppointmentRequests();
-      this.getAppointmentRequestsCount();
-    }
-  });
-}
 
   CreateVoiceCall(appt?) {
     let appmt;
@@ -3178,7 +3183,7 @@ showAppointmentReject(status,appt?){
     }
   }
   tabChange(event) {
-    console.log("Tab change :",event);
+    console.log("Tab change :", event);
     this.lStorageService.removeitemfromLocalStorage('filter');
     this.resetCheckList();
     this.chkSelectAppointments = false;
@@ -3298,7 +3303,7 @@ showAppointmentReject(status,appt?){
     return new Promise<void>(function (resolve) {
       _this.provider_services.getTeamGroup().subscribe(data => {
         _this.teams = data;
-        console.log("Teams :",  _this.teams)
+        console.log("Teams :", _this.teams)
       },
         () => {
           resolve();
@@ -3310,74 +3315,74 @@ showAppointmentReject(status,appt?){
     // return userObject[0].name;
     const userObject = this.teams.filter(user => parseInt(user.id) === teamid);
     //console.log("Assigned Team :", userObject)
-    if(userObject){
-    if (userObject[0] && userObject[0].name) {
-      return userObject[0].name;
+    if (userObject) {
+      if (userObject[0] && userObject[0].name) {
+        return userObject[0].name;
+      }
     }
-  }
   }
   gotoUnassign() {
     this.unassignview = true;
     this.loadApiSwitch('reloadAPIs');
   }
-  handleFormField(formField,context){
+  handleFormField(formField, context) {
     console.log(formField)
     console.log(context);
-    if(context==='phoneNumber'){
-      let tempContext='phoneNumber'
-      this.getCustomerList(formField,tempContext);
+    if (context === 'phoneNumber') {
+      let tempContext = 'phoneNumber'
+      this.getCustomerList(formField, tempContext);
     }
-    else if(context==='firstName'){
-      let tempContext='name'
-      this.getCustomerList(formField,tempContext);
+    else if (context === 'firstName') {
+      let tempContext = 'name'
+      this.getCustomerList(formField, tempContext);
     }
     // else if(){
 
     // }
     // this.getCustomerList(formField)
   }
-  handleSearchSelect(filterValue,nameInfo){
-    console.log('filterValue',filterValue)
+  handleSearchSelect(filterValue, nameInfo) {
+    console.log('filterValue', filterValue)
     console.log(nameInfo);
-    if(filterValue['firstName']){
-      this.filterapplied=true;
+    if (filterValue['firstName']) {
+      this.filterapplied = true;
       // this.doSearch()
-      if(filterValue && filterValue['lastName']){
-        this.filter.last_name= filterValue['lastName'];
+      if (filterValue && filterValue['lastName']) {
+        this.filter.last_name = filterValue['lastName'];
       }
-      if(filterValue && filterValue['firstname']){
-        this.filter.first_name= filterValue['firstname'];
+      if (filterValue && filterValue['firstname']) {
+        this.filter.first_name = filterValue['firstname'];
       }
     }
-    
+
   }
-  bisinessProfile(){
+  bisinessProfile() {
     // this.searchForm.controls.search_input.setValue('');
-    this.provider_services.getBussinessProfile().subscribe((res:any)=>{
-        console.log('BProfileRes',res);
-        if(res){
-            if(res['id']){
-                this.tempAcId= res['id'];  
-            }
+    this.provider_services.getBussinessProfile().subscribe((res: any) => {
+      console.log('BProfileRes', res);
+      if (res) {
+        if (res['id']) {
+          this.tempAcId = res['id'];
         }
+      }
     })
   }
-    getCustomerList(tempPhoneNum,tempCatValue) {
-      // let tempCatValue: any;
-      // tempCatValue = 'name';
-      this.provider_services.getSearchCustomer(this.tempAcId, tempCatValue, tempPhoneNum).subscribe((res:any) => {
-        console.log(res);
-        if(res.length===0){
-          this.filter.last_name='';
-          this.filter.first_name='';
-          this.clearFilter()
+  getCustomerList(tempPhoneNum, tempCatValue) {
+    // let tempCatValue: any;
+    // tempCatValue = 'name';
+    this.provider_services.getSearchCustomer(this.tempAcId, tempCatValue, tempPhoneNum).subscribe((res: any) => {
+      console.log(res);
+      if (res.length === 0) {
+        this.filter.last_name = '';
+        this.filter.first_name = '';
+        this.clearFilter()
+      }
+      else {
+        if (res) {
+          this.customerList = res;
         }
-        else{
-          if (res) {
-            this.customerList = res;
-          }
-        }
-        
-      })
-    }
+      }
+
+    })
+  }
 }

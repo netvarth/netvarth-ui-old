@@ -259,12 +259,12 @@ export class ApprovedComponent implements OnInit {
               this.uploadAudioVideo(data).then(
                 (dataS3Url) => {
                   console.log(dataS3Url);
-                  this.snackbarService.openSnackBar("Loan Approved Successfully")
+                  this.snackbarService.openSnackBar("Loan Application Updated successfully")
                   this.router.navigate(['provider', 'cdl', 'loans']);
                 });
             }
             else {
-              this.snackbarService.openSnackBar("Loan Approved Successfully")
+              this.snackbarService.openSnackBar("Loan Application Updated successfully")
               this.router.navigate(['provider', 'cdl', 'loans']);
             }
           }

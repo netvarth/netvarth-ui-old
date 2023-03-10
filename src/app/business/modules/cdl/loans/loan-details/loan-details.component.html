@@ -885,14 +885,12 @@
             </div>
           </div>
           <div class="d-lg-flex">
-            <div class="mt-2"
-              *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0]">
+            <div class="mt-2">
               <a (click)="showLoanDetailsDoc()" target="_blank" class="btn btn-primary">
                 <span>View CAM report Doc</span>
               </a>
             </div>
-            <div class="mx-md-2 mt-2"
-              *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].panAttachments && loanData.loanApplicationKycList[0].panAttachments[0] && capabilities && capabilities.canViewKycReport">
+            <div class="mx-md-2 mt-2" *ngIf="capabilities && capabilities.canViewKycReport">
               <a (click)="showKycDoc()" target="_blank" class="btn btn-primary">
                 <span>View KYC Doc</span>
               </a>

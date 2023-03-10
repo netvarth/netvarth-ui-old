@@ -1,0 +1,9 @@
+<p-toggleButton onLabel="Show&nbsp;Weekends" offLabel="Hide Weekends" class="full-calendar-week-toggle-button"
+    onIcon="pi&nbsp;pi-eye" offIcon="pi pi-eye-slash" (onChange)="toggleWeekends()"></p-toggleButton>
+
+
+<full-calendar [options]="calendarOptions" [events]="eventsPromise | async">
+    <ng-template #eventContent let-arg>
+        <b>{{ arg.event.title }}</b>
+    </ng-template>
+</full-calendar>
