@@ -1,5 +1,5 @@
 <div *ngIf="calledFrom=='checkin'" class="addmem-head">{{fill_foll_details_cap}}</div>
-<div *ngIf="data && (data.moreparams || data.member)" class="ynw-common-form">
+<div *ngIf="data && data.type && (data.type==='add' || data.type==='edit')" class="ynw-common-form">
     <!-- && data[0] && data[0].requestType !=='deactiveAccount'-->
     <div class="form-group">
         <label class="form-control-label">{{'First Name' | translate}}</label>
