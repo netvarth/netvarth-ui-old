@@ -219,6 +219,13 @@
                 </tr>
 
                 <tr style="width: 100%;"
+                  *ngIf="loanData && loanData.emiPaidAmountMonthly">
+                  <td style="width: 50%;" class="details-title">No Of EMI Paid Monthly</td>
+                  <th style=" width: 50%;" class="details-sub-title">
+                    {{loanData.emiPaidAmountMonthly}}</th>
+                </tr>
+
+                <tr style="width: 100%;"
                   *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].salaryRoutingName">
                   <td style="width: 50%;" class="details-title">Salary Routing</td>
                   <th style=" width: 50%;" class="details-sub-title">
@@ -656,16 +663,12 @@
               <div class="details-title">Loan Required</div>
               <div class="details-sub-title">{{loanData.requestedAmount}}</div>
             </div>
-          </div>
-          <div class="row mt-2">
-            <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.emiPaidAmountMonthly">
-              <div class="details-title">No Of EMI Paid Monthly</div>
-              <div class="details-sub-title">{{loanData.emiPaidAmountMonthly}}</div>
-            </div>
             <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.downpaymentAmount">
               <div class="details-title">Down payment</div>
               <div class="details-sub-title">{{loanData.downpaymentAmount}}</div>
             </div>
+          </div>
+          <div class="row mt-2">
             <div class="col-md-4 no-padding-small mt-2" *ngIf="loanData && loanData.invoiceAmount">
               <div class="details-title">Total Bill Amount</div>
               <div class="details-sub-title">{{loanData.invoiceAmount}}</div>
@@ -699,8 +702,6 @@
               <div class="details-title">Nominee Date of Birth</div>
               <div class="details-sub-title">{{loanData.loanApplicationKycList[0].nomineeDob}}</div>
             </div>
-          </div>
-          <div class="row mt-2">
             <div class="col-md-4 no-padding-small mt-2"
               *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].nomineeGender">
               <div class="details-title">Nominee Gender</div>
