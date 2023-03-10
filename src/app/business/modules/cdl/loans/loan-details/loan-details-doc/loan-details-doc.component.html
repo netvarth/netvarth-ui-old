@@ -367,6 +367,22 @@
         <tr class="text-left">
             <td style="width:50%">
                 <div class="text-normal mx-1">
+                    <b>Customer Occupation</b>
+                </div>
+            </td>
+            <td style="width:50%">
+                <div class="text-normal mx-1">
+                    <span
+                        *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerOccupation">
+                        {{loanData.loanApplicationKycList[0].customerOccupation}}
+                    </span>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="text-left">
+            <td style="width:50%">
+                <div class="text-normal mx-1">
                     <b>Monthly Income</b>
                 </div>
             </td>

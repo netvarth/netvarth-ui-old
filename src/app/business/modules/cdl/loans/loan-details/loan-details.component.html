@@ -205,6 +205,13 @@
                 </tr>
 
                 <tr style="width: 100%;"
+                  *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].customerOccupation">
+                  <td style="width: 50%;" class="details-title">Customer Occupation</td>
+                  <th style=" width: 50%;" class="details-sub-title">
+                    {{loanData.loanApplicationKycList[0].customerOccupation}}</th>
+                </tr>
+
+                <tr style="width: 100%;"
                   *ngIf="loanData && loanData.loanApplicationKycList && loanData.loanApplicationKycList[0] && loanData.loanApplicationKycList[0].monthlyIncome">
                   <td style="width: 50%;" class="details-title">Monthly Income</td>
                   <th style=" width: 50%;" class="details-sub-title">
