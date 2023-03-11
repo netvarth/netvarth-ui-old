@@ -1901,7 +1901,7 @@
                   <div>
                   <img src="../../../assets/images/mr_male.svg"
                style="width: 40px !important;"></div>
-               
+
                 </td> -->
                     <td>
                       <div>
@@ -2488,7 +2488,7 @@
                                 {{multiUser.firstName}} {{multiUser.lastName }}</mat-checkbox>
                             </span>
                           </li>
-                          <!-- 
+                          <!--
 
                           <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                             *ngFor="let multiUser of users">
@@ -2768,10 +2768,10 @@
 </section>
 
 
-<!-- 
+
 
 <section class="app-appointments-component dashboard content pro-dash" *ngIf="showDashbard && !apiloading">
-  <div class="card">
-    <app-full-view-calendar></app-full-view-calendar>
+  <div class="card" *ngIf="(todayAppointmentsForCalendar && todayAppointmentsForCalendar.length>0) || (futureAppointmentsForCalendar && futureAppointmentsForCalendar.length>0)" >
+    <app-full-view-calendar [futureBookings]="futureAppointmentsForCalendar" [todayBookings]="todayAppointmentsForCalendar" ></app-full-view-calendar>
   </div>
-</section> -->
+</section>

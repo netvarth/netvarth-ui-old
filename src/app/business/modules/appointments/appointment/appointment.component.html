@@ -61,7 +61,7 @@
                                         [selectedCountryISO]="selectedCountry" [separateDialCode]="separateDialCode"
                                         name="phone" [(ngModel)]="phone" (keyup)="resetApiErrors()" (ngModelChange)="searchCustomerLucenePhone(phone,$event)">
                                     </ngx-intl-tel-input> -->
-                                    <input autocomplete="off" type="text" class="inputstyling customDialCode" 
+                                    <input autocomplete="off" type="text" class="inputstyling customDialCode"
                                     [(ngModel)]="countryCodePhone">
                                     <input autocomplete="off" placeholder="{{placeholderTemp}}" type="number"
                                         class="inputstyling" [(ngModel)]="phone"
@@ -139,7 +139,7 @@
                                             <span class="sts-msg error">Please enter the
                                                 {{customer_label | capitalizeFirst}} ID or Email</span>
                                             <app-field-error-display style="color: #f24949 !important;"
-                                                [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list. 
+                                                [displayError]="true" *ngIf="create_new" errorMsg="Sorry, We were not able to find the record in our {{customer_label}}s list.
                                                 Please create {{customer_label}} to take appointment">
                                             </app-field-error-display>
                                         </div>
@@ -529,7 +529,7 @@
                                                         <div><i class="fa fa-clock-o" aria-hidden="true"></i></div>
                                                         <div class="date-head">Appointment Schedule</div>
                                                     </div>
-                                                    <mat-form-field>                                                      
+                                                    <mat-form-field>
                                                         <mat-select class="inputbox timeSlot"
                                                             [(ngModel)]="selectedSchedule"
                                                             (selectionChange)="handleQueueSelection(userapptsch.value)"

@@ -3,7 +3,9 @@
 
 
 <full-calendar [options]="calendarOptions" [events]="eventsPromise | async">
-    <ng-template #eventContent let-arg>
+    <ng-template #eventContent let-arg >
+       <div (click)="bookingClicked(arg)">
         <b>{{ arg.event.title }}</b>
+       </div>
     </ng-template>
 </full-calendar>

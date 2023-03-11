@@ -383,6 +383,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   tempAcId;
   customerList;
   apptData: any;
+  futureAppointmentsForCalendar: any = [];
+  todayAppointmentsForCalendar: any = [];
 
   constructor(private shared_functions: SharedFunctions,
     private shared_services: SharedServices,
@@ -1461,6 +1463,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
             .subscribe(
               (data: any) => {
                 _this.appt_list = data;
+                this.todayAppointmentsForCalendar = data;
                 console.log("Todays Appt :", _this.appt_list)
                 _this.appt_list.map(function (appt) {
                   if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
@@ -1561,6 +1564,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
               (data: any) => {
                 let appts = data;
                 console.log("Future Appt :", data);
+                this.futureAppointmentsForCalendar = data;
                 appts.map(function (appt) {
                   if (appt.service.virtualCallingModes && (appt.service.virtualCallingModes[0].callingMode === 'Phone' || appt.service.virtualCallingModes[0].callingMode === 'WhatsApp') && appt.virtualService[appt.service.virtualCallingModes[0].callingMode]) {
                     appt.whatsApp_PhNumber = _this.teleService.getTeleNumber(appt.virtualService[appt.service.virtualCallingModes[0].callingMode]);
