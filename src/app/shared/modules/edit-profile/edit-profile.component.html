@@ -195,7 +195,8 @@
                                 <li (click)="redirectto('change-mobile', 'consumer')" class="icon-mobile"
                                     *ngIf="!customId">
                                     {{change_mobile_cap}}</li>
-                                <li (click)="redirectto('members', 'consumer')" class="icon-members" *ngIf="!customId">
+                                <li (click)="redirectto('members', 'consumer')" class="icon-members">
+                                    <!--*ngIf="!customId"-->
                                     {{family_members_cap}}</li>
                                 <li (click)="deactiveaccount('deactive', 'consumer')" style="padding-left: 0px;"
                                     *ngIf="customId">
