@@ -2219,7 +2219,12 @@
                                   <div class="price rupee-font">{{getNetTotal() | currency:'&#8377;'}}
                                   </div>
                                 </div>
-
+                                  <span *ngIf="cartDetails.advanceAmount >0" style="font-size: small;color: red;"><i
+                              class="fa fa-info-circle " aria-hidden="true"></i>&nbsp;An advance of <span
+                              class="rupee-font">{{getAmountToPay(cartDetails) |
+                              currency:'&#8377;'}}
+                            </span>required</span><br>
+                               
                                 <div *ngIf="cartDetails.advanceAmount">
                                   <div *ngIf="jcashamount>0" class="jaldeecredit">
                                     <mat-checkbox [(ngModel)]="checkJcash" (change)='OnChangeJcash($event)'>
