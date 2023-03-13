@@ -73,13 +73,16 @@
                       <div class="pt-1">
                         <span class="font-weight-bold item-name"
                           *ngIf="item.item && item.item.displayName">{{item.item.displayName}}</span><br>
-                        <span class="text-red item-name"
-                          *ngIf="item.item && item.item.price && !item.item.showPromotionalPrice"><i
-                            class="fa fa-inr"></i>&nbsp;{{item.item.price}}</span>
-                        <span class="text-red item-price"
-                          *ngIf="item.item && item.item.price && item.item.showPromotionalPrice"><s><i
-                              class="fa fa-inr"></i>&nbsp;{{item.item.price}}</s>&nbsp;<i
-                            class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
+                          <span class="text-red item-name"  *ngIf="this.catalog && this.catalog.showPrice">
+                          <span class="text-red item-price"
+                            *ngIf="item.item && item.item.price && item.item.showPrice"><s><i
+                                class="fa fa-inr"></i>&nbsp;{{item.item.price}}</s>&nbsp;
+                                
+                               </span>
+                               <span class="text-red item-price" *ngIf="item.item && item.item.price && item.item.showPromotionalPrice">  <i
+                                class="fa fa-inr"></i>&nbsp;{{item.item.promotionalPrice}}</span><br>
+                          </span>
+                          
                         <span class="text-light item-desc"
                           *ngIf="item.item && item.item.shortDesc">{{item.item.shortDesc}}</span>
                         <div *ngIf="getItemQty(item)>0">
