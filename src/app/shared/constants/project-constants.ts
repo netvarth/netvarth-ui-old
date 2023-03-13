@@ -1281,6 +1281,9 @@ export const projectConstantsLocal = {
     },
     "mafil": {
       pathref: 153693,
+      prefix: "@manappuram.com",
+      idCaption: "Employee Id",
+      idPlaceholder: "Enter employee id",
       "cdl": true
     }
   },

@@ -156,7 +156,7 @@ export class CreateComponent implements OnInit {
   mafilEmployee: any = false;
   movableAssets: boolean = false;
   loanProductCategories: any;
-  loanProductSubCategories: any;
+  loanProductSubCategories: any = [];
   productCategoryId: any;
   productSubCategoryId: any;
   totalPaymentValue: number;
@@ -396,9 +396,14 @@ export class CreateComponent implements OnInit {
               this.productSubCategoryId = this.loanData.productSubCategoryId;
             }
 
-            if (this.productCategoryId && this.productSubCategoryId) {
+            if (this.productCategoryId) {
               console.log("Coming to Products")
-              this.getLoanProducts(this.productCategoryId, this.productSubCategoryId)
+              if (this.productSubCategoryId) {
+                this.getLoanProducts(this.productCategoryId, this.productSubCategoryId)
+              }
+              else {
+                this.getLoanProducts(this.productCategoryId)
+              }
             }
             if (this.loanData && this.loanData.loanProduct && this.loanData.loanProduct.id) {
               this.createLoan.controls.loanproduct.setValue(this.loanData.loanProduct.id);
@@ -934,8 +939,14 @@ export class CreateComponent implements OnInit {
 
 
   getLoanProductSubCategories(id) {
-    this.cdlService.getLoanProductSubCategoryList(id).subscribe((data) => {
-      this.loanProductSubCategories = data;
+    this.cdlService.getLoanProductSubCategoryList(id).subscribe((data: any) => {
+      if (data && data.length > 0) {
+        this.loanProductSubCategories = data;
+      }
+      else {
+        this.loanProductSubCategories = []
+        this.getLoanProducts(this.productCategoryId)
+      }
     })
   }
 
@@ -987,7 +998,7 @@ export class CreateComponent implements OnInit {
   }
 
 
-  getLoanProducts(categoryId, subCategoryId) {
+  getLoanProducts(categoryId, subCategoryId = 0) {
     this.cdlService.getLoanProducts(categoryId, subCategoryId).subscribe((data) => {
       this.loanProducts = data;
       console.log("this.loanProducts", this.loanProducts)

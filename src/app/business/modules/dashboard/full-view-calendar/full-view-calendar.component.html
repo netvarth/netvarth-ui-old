@@ -1,11 +1,17 @@
-<p-toggleButton onLabel="Show&nbsp;Weekends" offLabel="Hide Weekends" class="full-calendar-week-toggle-button"
-    onIcon="pi&nbsp;pi-eye" offIcon="pi pi-eye-slash" (onChange)="toggleWeekends()"></p-toggleButton>
+<div class="full-view-calendar">
+    <p-toggleButton onLabel="Show&nbsp;Weekends" offLabel="Hide Weekends" class="full-calendar-week-toggle-button"
+        onIcon="pi&nbsp;pi-eye" offIcon="pi pi-eye-slash" (onChange)="toggleWeekends()"></p-toggleButton>
 
-
-<full-calendar [options]="calendarOptions" [events]="eventsPromise | async">
-    <ng-template #eventContent let-arg >
-       <div (click)="bookingClicked(arg)">
-        <b>{{ arg.event.title }}</b>
-       </div>
-    </ng-template>
-</full-calendar>
+    <full-calendar [options]="calendarOptions" [events]="eventsPromise | async" #calendar>
+        <ng-template #eventContent let-arg>
+            <div (click)="bookingClicked(arg)" class="text-center text-dark">
+                <div>
+                    <b>{{ arg.event.title }}</b>
+                </div>
+                <div>
+                    <b>{{ arg.event.extendedProps.bookingData.appmtTime }}</b>
+                </div>
+            </div>
+        </ng-template>
+    </full-calendar>
+</div>

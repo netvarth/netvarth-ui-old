@@ -168,11 +168,12 @@ export class ProviderCustomLoginComponent implements OnInit {
   }
 
   initPageValues() {
-    console.log(this.busLoginId);
+    console.log("this.busLoginId", this.prefix);
     console.log(projectConstantsLocal.CUSTOM_PROV_APP);
     if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix']) {
       this.prefix = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['prefix'];
     }
+    console.log("this.busLoginId", this.prefix);
     if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref']) {
       this.logoUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/plogo.png';
       console.log(this.logoUrl);

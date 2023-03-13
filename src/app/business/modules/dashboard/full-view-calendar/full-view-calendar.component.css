@@ -1,3 +1,17 @@
 ::ng-deep .full-calendar-week-toggle-button .p-togglebutton.p-button.p-highlight {
     background-color: #1E4079 !important;
 }
+
+
+
+
+@media (max-width: 576px) {
+    ::ng-deep .full-view-calendar .fc .fc-toolbar {
+        display: block !important;
+    }
+
+    ::ng-deep .full-view-calendar .fc .fc-toolbar-title {
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
+    }
+}

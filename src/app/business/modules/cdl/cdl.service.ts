@@ -224,7 +224,10 @@ export class CdlService {
 
 
   getLoanProducts(categoryId, subCategoryId) {
-    const url = 'provider/loanproduct?category-eq=' + categoryId + '&subCategory-eq=' + subCategoryId;
+    let url = 'provider/loanproduct?category-eq=' + categoryId
+    if (subCategoryId != 0) {
+      url = 'provider/loanproduct?category-eq=' + categoryId + '&subCategory-eq=' + subCategoryId;
+    }
     return this.servicemeta.httpGet(url, null);
   }
 
