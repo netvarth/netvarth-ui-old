@@ -58,7 +58,7 @@ export class LoanDetailsComponent implements OnInit {
   capabilities: any;
   mafilScoreData: any;
   loanEmiDetailsData: any;
-  accountaggregatingStatus: ArrayBuffer;
+  accountaggregatingStatus: any;
   accountaggregatingStatusShowing: boolean;
   showEquifaxScore: any = false;
   customerPhoneNo: any;
@@ -144,6 +144,15 @@ export class LoanDetailsComponent implements OnInit {
     })
   }
 
+
+  refreshAccountAggregator() {
+    this.cdlservice.refreshAccountAggregator(this.loanId).subscribe((data) => {
+      this.cdlservice.getBankDetailsById(this.loanId).subscribe((data) => {
+        this.bankData = data;
+        this.snackbarService.openSnackBar("Statement Fetched Successfully");
+      });
+    })
+  }
 
   checkEquifaxScore() {
     let data =

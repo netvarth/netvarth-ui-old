@@ -373,6 +373,24 @@ th {
   padding: 5px 10px !important;
 }
 
+.approved {
+  background-color: green !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 2px !important;
+  padding: 5px 10px !important;
+}
+
+.open-all-btn-warning {
+  background-color: rgb(129, 129, 6) !important;
+  border: none !important;
+  color: #fff !important;
+  font-weight: 100 !important;
+  border-radius: 2px !important;
+  padding: 5px 10px !important;
+}
+
 .notes-suffix {
   font-size: 12px;
 }

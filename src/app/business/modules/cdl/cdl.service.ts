@@ -87,6 +87,11 @@ export class CdlService {
     return this.servicemeta.httpGet(url, null);
   }
 
+  refreshAccountAggregator(id) {
+    const url = 'provider/loanapplication/upload/bankstatement/' + id;
+    return this.servicemeta.httpPost(url, null);
+  }
+
 
   getLoans() {
     const url = 'provider/loanapplication';

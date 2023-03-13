@@ -218,8 +218,7 @@
                     {{loanData.loanApplicationKycList[0].monthlyIncome}}</th>
                 </tr>
 
-                <tr style="width: 100%;"
-                  *ngIf="loanData && loanData.emiPaidAmountMonthly">
+                <tr style="width: 100%;" *ngIf="loanData && loanData.emiPaidAmountMonthly">
                   <td style="width: 50%;" class="details-title">No Of EMI Paid Monthly</td>
                   <th style=" width: 50%;" class="details-sub-title">
                     {{loanData.emiPaidAmountMonthly}}</th>
@@ -635,11 +634,19 @@
             </div>
           </div> -->
 
-          <div class="row mt-4" *ngIf="accountaggregatingStatusShowing">
-            <div class="col-md-4 no-padding-small">
+          <div class="row mt-4"
+            *ngIf="accountaggregatingStatusShowing && !(bankData && bankData.bankStatementAttachments && bankData.bankStatementAttachments[0])">
+            <div class="col-md-12 no-padding-small">
               <div>
-                <div class="btn btn-primary open-all-btn-success">Statement Aggregation
+                <div class="btn btn-warning" [class.approved]="accountaggregatingStatus == 'Approved'">Statement
+                  Aggregation
                   {{accountaggregatingStatus}}
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 no-padding-small mt-3" *ngIf="accountaggregatingStatus == 'Approved'">
+              <div>
+                <div class="btn btn-primary" (click)="refreshAccountAggregator()">Refresh
                 </div>
               </div>
             </div>
