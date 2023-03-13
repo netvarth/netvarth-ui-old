@@ -310,11 +310,11 @@
                     <div class="bill-section" *ngIf="this.orderType !== 'SHOPPINGLIST'">
                       <div class="bill-section-content">
                         <div class="bill-wrapper">
-                          <span *ngIf="cartDetails.advanceAmount >0" style="font-size: small;color: red;"><i
+                          <!-- <span *ngIf="cartDetails.advanceAmount >0" style="font-size: small;color: red;"><i
                               class="fa fa-info-circle " aria-hidden="true"></i>&nbsp;An advance of <span
                               class="rupee-font">{{getAmountToPay(cartDetails) |
                               currency:'&#8377;'}}
-                            </span>required</span><br>
+                            </span>required</span><br> -->
                           <span style="font-size: small;" *ngIf="convenientFee > 0">
                             <span class="ser_price no-mgn-bt rupee-font">Convenient Fee:
                               {{convenientFee | currency:'&#8377;'}}</span>
@@ -2606,11 +2606,11 @@
               <div class="bill-section">
                 <div class="bill-section-content">
                   <div class="bill-wrapper">
-                    <span *ngIf="cartDetails.advanceAmount >0" style="font-size: small;color: red;"><i
+                    <!-- <span *ngIf="cartDetails.advanceAmount >0" style="font-size: small;color: red;"><i
                         class="fa fa-info-circle " aria-hidden="true"></i>&nbsp;An advance of <span
                         class="rupee-font">{{getAmountToPay(cartDetails) |
                         currency:'&#8377;'}}
-                      </span>required</span><br>
+                      </span>required</span><br> -->
                     <span style="font-size: small;" *ngIf="convenientFee > 0">
                       <span class="ser_price no-mgn-bt rupee-font">Convenient Fee:
                         {{convenientFee | currency:'&#8377;'}}</span>
