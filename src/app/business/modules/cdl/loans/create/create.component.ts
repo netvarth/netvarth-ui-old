@@ -1252,7 +1252,7 @@ export class CreateComponent implements OnInit {
     }
 
     if (this.createLoan.controls.productcategory.value) {
-      this.loanApplication["productSubCategoryId"] = this.createLoan.controls.productcategory.value
+      this.loanApplication["productSubCategoryId"] = this.createLoan.controls.productsubcategory.value
     }
 
     if (this.loanData && this.loanData.location && this.loanData.location.id) {

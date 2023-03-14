@@ -28,6 +28,17 @@
     <div id="kt_aside_menu" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500"
       class="aside-menu">
       <ul class="menu-nav">
+
+        <!-- <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
+          (click)="showMenuSection()">
+          <a routerLink="dashboard" routerLinkActive="active-menu" class="menu-link menu-toggle">
+            <span class="svg-icon menu-icon">
+              <img src="../../../../assets/images/dashboard/icon.png" width="20" height="20">
+            </span><span class="menu-text">Dashboard</span><i class="menu-arrow"></i></a>
+          <div class="menu-submenu"><i class="menu-arrow"></i>
+          </div>
+        </li> -->
+
         <li aria-haspopup="true" data-menu-toggle="hover" class="menu-item menu-item-submenu"
           (click)="showMenuSection()" *ngIf="apptstatus">
           <a routerLink="appointments" routerLinkActive="active-menu" class="menu-link menu-toggle">

@@ -788,7 +788,7 @@
     <hr>
     <div class="mt-2">
       <div>
-        <button class="btn btn-draft mr-2" [disabled]="!verification" (click)="saveAsLead()">
+        <button class="btn btn-draft mr-2" [disabled]="!verification || disableBtn" (click)="saveAsLead()">
           Save
         </button>
       </div>

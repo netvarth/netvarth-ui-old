@@ -40,7 +40,7 @@ import { TeleBookingService } from '../../../../shared/services/tele-bookings-se
 })
 export class AppointmentActionsComponent implements OnInit {
   tooltipcls = "";
-  elementType = "url"; 
+  elementType = "url";
   appt;
   // selected: Date | null;
   selectedDate: Date = new Date();
@@ -78,7 +78,7 @@ export class AppointmentActionsComponent implements OnInit {
   schedules: any = [];
   availableSlots: any = [];
   freeSlots: any = [];
-  allSlots:any = [];
+  allSlots: any = [];
   hold_sel_checkindate;
   apptTime;
   today;
@@ -154,7 +154,7 @@ export class AppointmentActionsComponent implements OnInit {
     this.server_date = this.lStorageService.getitemfromLocalStorage("sysdate");
   }
   ngOnInit() {
-   
+
     // this.provider_services.getApptlistMgr()
     // .then(
     //     data => {
@@ -170,28 +170,28 @@ export class AppointmentActionsComponent implements OnInit {
     this.getLabel();
     this.apiloading = true;
     this.appt = this.data.checkinData;
-    console.log("Request Data :",this.appt);
-    console.log("Appt Data :",this.data);
+    console.log("Request Data :", this.appt);
+    console.log("Appt Data :", this.data);
     if (this.appt && this.appt.service && this.appt.service.virtualCallingModes) {
       this.setVirtualInfoServiceInfo(this.appt.service);
-  }
-  if(this.appt && this.appt.schedule && this.appt.schedule.id){
-    this.sel_schedule_id = this.appt.schedule.id;
-  }
-  if(this.appt && this.appt.service && this.appt.service.id){
-    this.servId = this.appt.service.id;
-  }
-  if(this.appt && this.appt.location && this.appt.location.id){
-    this.locId = this.appt.location.id;
-  }
-  if(this.appt && this.appt.providerAccount && this.appt.providerAccount.id){
-    this.accountid = this.appt.providerAccount.id;
-  }
+    }
+    if (this.appt && this.appt.schedule && this.appt.schedule.id) {
+      this.sel_schedule_id = this.appt.schedule.id;
+    }
+    if (this.appt && this.appt.service && this.appt.service.id) {
+      this.servId = this.appt.service.id;
+    }
+    if (this.appt && this.appt.location && this.appt.location.id) {
+      this.locId = this.appt.location.id;
+    }
+    if (this.appt && this.appt.providerAccount && this.appt.providerAccount.id) {
+      this.accountid = this.appt.providerAccount.id;
+    }
     console.log("Schedule Id :", this.sel_schedule_id);
     const newdate = this.selectedDate;
-    console.log("New Date :",newdate);
+    console.log("New Date :", newdate);
     const futrDte = new Date(newdate);
-    console.log("Future Date :",futrDte);
+    console.log("Future Date :", futrDte);
     const obtmonth = futrDte.getMonth() + 1;
     let cmonth = "" + obtmonth;
     if (obtmonth < 10) {
@@ -200,27 +200,27 @@ export class AppointmentActionsComponent implements OnInit {
     const seldate =
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.selectedDay = seldate;
-   //this.sel_checkindate = seldate
-    console.log("Selected Date, date :",seldate,this.sel_checkindate);
-    if(this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay){
-      this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
+    //this.sel_checkindate = seldate
+    console.log("Selected Date, date :", seldate, this.sel_checkindate);
+    if (this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay) {
+      this.getSlotsBySheduleandDate(this.appt.schedule.id, this.selectedDay);
     }   //this.getSlots(this.sel_schedule_id);
     this.multipleSelection = this.appt.multiSelection;
     console.log("Appointment Actions :", this.appt);
     console.log("Appointment Selection :", this.appt.multiSelection);
     if (this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].whatsAppNum) {
       this.commObj['comWhatsappNo'] = this.appt.appmtFor[0].whatsAppNum.number;
-      if(this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].whatsAppNum && this.appt.appmtFor[0].whatsAppNum.countryCode){
+      if (this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].whatsAppNum && this.appt.appmtFor[0].whatsAppNum.countryCode) {
         this.commObj['comWhatsappCountryCode'] = this.appt.appmtFor[0].whatsAppNum.countryCode;
       }
-  } else {
-    if(this.appt && this.appt.userProfile && this.appt.userProfile.primaryMobileNo){
-      this.commObj['comWhatsappNo'] = this.appt.userProfile.primaryMobileNo;
+    } else {
+      if (this.appt && this.appt.userProfile && this.appt.userProfile.primaryMobileNo) {
+        this.commObj['comWhatsappNo'] = this.appt.userProfile.primaryMobileNo;
+      }
+      if (this.appt && this.appt.userProfile && this.appt.userProfile.countryCode) {
+        this.commObj['comWhatsappCountryCode'] = this.appt.userProfile.countryCode;
+      }
     }
-    if(this.appt && this.appt.userProfile &&  this.appt.userProfile.countryCode){
-      this.commObj['comWhatsappCountryCode'] = this.appt.userProfile.countryCode;
-    }
-  }
     if (
       !this.appt.multiSelection &&
       this.appt.releasedQnr &&
@@ -233,7 +233,7 @@ export class AppointmentActionsComponent implements OnInit {
     if (!this.data.multiSelection) {
       if (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]) {
         this.callingNumber = this.teleService.getTeleNumber(this.appt.virtualService[this.appt.service.virtualCallingModes[0].callingMode]);
-    }
+      }
       this.getPos();
       this.setData();
       this.getInternStatus();
@@ -249,7 +249,7 @@ export class AppointmentActionsComponent implements OnInit {
     this.subdomain = user.subSector;
     this.customer_label = this.wordProcessor.getTerminologyTerm("customer");
     this.active_user = user.userType;
-    if(user && user.id){
+    if (user && user.id) {
       this.userid = user.id;
     }
     this.subscription = this.galleryService.getMessage().subscribe(input => {
@@ -284,25 +284,24 @@ export class AppointmentActionsComponent implements OnInit {
       this.getProviderLocation();
     }
 
-    if(this.data.status && this.data.src && this.data.status == true && this.data.src == 'detail')
-    {
-        this.action = 'status';
+    if (this.data.status && this.data.src && this.data.status == true && this.data.src == 'detail') {
+      this.action = 'status';
     }
   }
-  
+
   getUser() {
     if (this.userid) {
       this.provider_services.getUsers().subscribe(
         (data: any) => {
           this.users = data;
-          this.user_arr = this.users.filter(user => user&& (user.id === this.userid));
+          this.user_arr = this.users.filter(user => user && (user.id === this.userid));
           if (this.user_arr[0].status === "ACTIVE") {
             this.isUserdisable = true;
           } else {
             this.isUserdisable = false;
           }
         },
-        error => {}
+        error => { }
       );
     }
   }
@@ -311,11 +310,11 @@ export class AppointmentActionsComponent implements OnInit {
       this.subscription.unsubscribe();
     }
   }
-  date_value_changed(){
+  date_value_changed() {
     console.log("date change :");
 
   }
-  
+
   showMoreTimeSlots() {
     this.showMoreAvailableSlots = !this.showMoreAvailableSlots;
   }
@@ -330,16 +329,16 @@ export class AppointmentActionsComponent implements OnInit {
     } else {
       this.sel_checkindate = this.hold_sel_checkindate = this.appt.appmtDate;
     }
-    if(this.appt && this.appt.schedule && this.appt.schedule.id){
+    if (this.appt && this.appt.schedule && this.appt.schedule.id) {
       this.sel_schedule_id = this.appt.schedule.id;
     }
-    if(this.appt && this.appt.service && this.appt.service.id){
+    if (this.appt && this.appt.service && this.appt.service.id) {
       this.servId = this.appt.service.id;
     }
-    if(this.appt && this.appt.location && this.appt.location.id){
+    if (this.appt && this.appt.location && this.appt.location.id) {
       this.locId = this.appt.location.id;
     }
-    if(this.appt && this.appt.providerAccount && this.appt.providerAccount.id){
+    if (this.appt && this.appt.providerAccount && this.appt.providerAccount.id) {
       this.accountid = this.appt.providerAccount.id;
     }
   }
@@ -423,8 +422,8 @@ export class AppointmentActionsComponent implements OnInit {
     this.communicationService
       .addConsumerInboxMessage(checkin, this, "appt")
       .then(
-        () => {},
-        () => {}
+        () => { },
+        () => { }
       );
   }
 
@@ -445,7 +444,7 @@ export class AppointmentActionsComponent implements OnInit {
     this.action = "reschedule";
   }
   delayActionClicked() {
-   //this.dialogRef.close();
+    //this.dialogRef.close();
     const delayAction = this.dialog.open(AdjustscheduleDelayComponent, {
       width: "50%",
       panelClass: ["popup-class", "commonpopupmainclass"],
@@ -458,7 +457,7 @@ export class AppointmentActionsComponent implements OnInit {
       }
     });
     delayAction.afterClosed().subscribe(result => {
-    
+
       if (result === "reload") {
         this.dialogRef.close("reload");
         this.provider_services.getAppointmentDelays();
@@ -484,7 +483,7 @@ export class AppointmentActionsComponent implements OnInit {
         chekintype: "appointment"
       }
     });
-    smsdialogRef.afterClosed().subscribe(result => {});
+    smsdialogRef.afterClosed().subscribe(result => { });
   }
   locateCustomer() {
     this.dialogRef.close();
@@ -584,7 +583,7 @@ export class AppointmentActionsComponent implements OnInit {
     });
   }
   changeWaitlistStatus(action) {
-    console.log("Action :",action);
+    console.log("Action :", action);
     const _this = this;
     if (action !== "Rejected") {
       _this.buttonClicked = true;
@@ -751,7 +750,7 @@ export class AppointmentActionsComponent implements OnInit {
         layout_list = displayboards.filter(
           displayboard => !displayboard.isContainer
         );
-        this.board_count = layout_list.length;
+        this.board_count = layout_list && layout_list.length;
         this.setActions();
       },
       error => {
@@ -825,7 +824,7 @@ export class AppointmentActionsComponent implements OnInit {
       this.showStart = true;
     }
     if (
-      (this.data.timetype === 1 || this.data.timetype === 2)  &&
+      (this.data.timetype === 1 || this.data.timetype === 2) &&
       (this.appt.apptStatus === "Arrived" ||
         this.appt.apptStatus === "Confirmed" ||
         this.appt.apptStatus === "Started" ||
@@ -867,7 +866,7 @@ export class AppointmentActionsComponent implements OnInit {
       this.data.timetype !== 2 &&
       this.appt.apptStatus !== "blocked" &&
       this.appt.apptStatus !== "Cancelled" &&
-        this.appt.apptStatus !== "Rejected"
+      this.appt.apptStatus !== "Rejected"
     ) {
       this.showmrrx = true;
     }
@@ -882,7 +881,7 @@ export class AppointmentActionsComponent implements OnInit {
       this.changeService = false;
     }
     if (
-      this.users.length > 1 &&
+      this.users && this.users.length > 1 &&
       !this.data.multiSelection &&
       this.accountType == "BRANCH" &&
       this.appt.schedule.provider.id === 0 &&
@@ -961,9 +960,11 @@ export class AppointmentActionsComponent implements OnInit {
     });
   }
   getDisplayname(label) {
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      if (this.providerLabels[i].label === label) {
-        return this.providerLabels[i].displayName;
+    if (this.providerLabels) {
+      for (let i = 0; i < this.providerLabels.length; i++) {
+        if (this.providerLabels[i].label === label) {
+          return this.providerLabels[i].displayName;
+        }
       }
     }
   }
@@ -998,8 +999,8 @@ export class AppointmentActionsComponent implements OnInit {
     this.dialogRef.close();
     const customerDetails = this.appt.appmtFor[0];
     let customerId;
-    if(customerDetails && customerDetails.id){
-       customerId = customerDetails.id;
+    if (customerDetails && customerDetails.id) {
+      customerId = customerDetails.id;
     }
     let whtasappNum;
     if (
@@ -1032,7 +1033,7 @@ export class AppointmentActionsComponent implements OnInit {
   voiceCallConfirmed() {
     // const customerDetails = this.appt;
     let customerId;
-    if(this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].id){
+    if (this.appt && this.appt.appmtFor && this.appt.appmtFor[0] && this.appt.appmtFor[0].id) {
       customerId = this.appt.appmtFor[0].id;
     }
     const num = this.appt.countryCode + " " + this.appt.phoneNumber;
@@ -1066,9 +1067,11 @@ export class AppointmentActionsComponent implements OnInit {
     this.dialogRef.close();
   }
   labels() {
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
-        this.providerLabels[i].valueSet[j].selected = false;
+    if (this.providerLabels) {
+      for (let i = 0; i < this.providerLabels.length; i++) {
+        for (let j = 0; j < this.providerLabels[i].valueSet.length; j++) {
+          this.providerLabels[i].valueSet[j].selected = false;
+        }
       }
     }
     setTimeout(() => {
@@ -1110,7 +1113,7 @@ export class AppointmentActionsComponent implements OnInit {
       });
   }
   showCallingModes(modes) {
-    console.log("Resume called :",modes)
+    console.log("Resume called :", modes)
     const navigationExtras: NavigationExtras = {
       queryParams: {
         waiting_id: modes.uid,
@@ -1119,7 +1122,7 @@ export class AppointmentActionsComponent implements OnInit {
     };
     this.router.navigate(["provider", "telehealth"], navigationExtras);
     this.dialogRef.close();
- 
+
   }
   getPos() {
     this.provider_services.getProviderPOSStatus().then(
@@ -1154,9 +1157,9 @@ export class AppointmentActionsComponent implements OnInit {
       () => {
         this.snackbarService.openSnackBar(
           "Appointment rescheduled to " +
-            this.dateformat.transformToMonthlyDate(this.sel_checkindate) +
-            "," +
-            this.getSingleTime(this.apptTime["time"])
+          this.dateformat.transformToMonthlyDate(this.sel_checkindate) +
+          "," +
+          this.getSingleTime(this.apptTime["time"])
         );
         this.dialogRef.close("reload");
         // this._location.back();
@@ -1170,16 +1173,16 @@ export class AppointmentActionsComponent implements OnInit {
   }
   timeSelected(slot) {
     this.apptTime = slot;
-    console.log("Selected Time :",this.apptTime);
+    console.log("Selected Time :", this.apptTime);
     this.selectedTime = slot.time;
   }
   getAppointmentSlots() {
     this.provider_services.getApptlistMgr()
-    .then(
+      .then(
         data => {
-            this.apptlist_status = data['enableToday'] || false;
-            this.futureDateApptlist = data['futureAppt'] || false;
-            console.log("Today Status :",this.apptlist_status);
+          this.apptlist_status = data['enableToday'] || false;
+          this.futureDateApptlist = data['futureAppt'] || false;
+          console.log("Today Status :", this.apptlist_status);
         });
     this.freeSlots = [];
     this.loading = true;
@@ -1192,44 +1195,44 @@ export class AppointmentActionsComponent implements OnInit {
       )
       .subscribe(data => {
         this.schedules = data;
-        console.log("schedules :",this.schedules);
+        console.log("schedules :", this.schedules);
         this.loading = false;
         for (const scheduleSlots of this.schedules) {
-          
+
           this.availableSlots = scheduleSlots.availableSlots;
-          console.log("availableSlots",this.availableSlots)
-          console.log("sel_checkindate",this.sel_checkindate)
-          console.log("scheduleSlots.date",scheduleSlots.date)
-          console.log("selected Datesss :",moment(this.selectedDay).format("YYYY-MM-DD"));
+          console.log("availableSlots", this.availableSlots)
+          console.log("sel_checkindate", this.sel_checkindate)
+          console.log("scheduleSlots.date", scheduleSlots.date)
+          console.log("selected Datesss :", moment(this.selectedDay).format("YYYY-MM-DD"));
 
-          if(this.sel_checkindate >= moment(this.selectedDay).format("YYYY-MM-DD")){
-        
-          if((scheduleSlots.date === this.sel_checkindate) && this.appt.appointmentMode === 'ONLINE_APPOINTMENT' && (!this.apptlist_status)){
-           // this.freeSlots = [];
-            this.availableSlots = [];
-            console.log("Todayssss online:",this.apptlist_status);
-          }
-          else{
-          for (const freslot of this.availableSlots) {
-          
-            if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
-              freslot["scheduleId"] = scheduleSlots["scheduleId"];
-             // console.log("freslot ",freslot)
+          if (this.sel_checkindate >= moment(this.selectedDay).format("YYYY-MM-DD")) {
 
-              freslot["displayTime"] = this.getSingleTime(freslot.time);
-              this.freeSlots.push(freslot);
+            if ((scheduleSlots.date === this.sel_checkindate) && this.appt.appointmentMode === 'ONLINE_APPOINTMENT' && (!this.apptlist_status)) {
+              // this.freeSlots = [];
+              this.availableSlots = [];
+              console.log("Todayssss online:", this.apptlist_status);
             }
-           
+            else {
+              for (const freslot of this.availableSlots) {
+
+                if (freslot.noOfAvailbleSlots !== "0" && freslot.active) {
+                  freslot["scheduleId"] = scheduleSlots["scheduleId"];
+                  // console.log("freslot ",freslot)
+
+                  freslot["displayTime"] = this.getSingleTime(freslot.time);
+                  this.freeSlots.push(freslot);
+                }
+
+              }
+            }
           }
+          else {
+            this.availableSlots = [];
+            console.log("Else availableSlots", this.availableSlots)
+          }
+          this.apptTime = this.freeSlots[0];
         }
-      }
-      else{
-        this.availableSlots = [];
-        console.log("Else availableSlots",this.availableSlots)
-      }
-        this.apptTime = this.freeSlots[0];
-      }
-    
+
       });
   }
   disableMinus() {
@@ -1241,10 +1244,10 @@ export class AppointmentActionsComponent implements OnInit {
     const seldate = new Date(seldate2);
     const selecttdate = new Date(
       seldate.getFullYear() +
-        "-" +
-        this.dateTimeProcessor.addZero(seldate.getMonth() + 1) +
-        "-" +
-        this.dateTimeProcessor.addZero(seldate.getDate())
+      "-" +
+      this.dateTimeProcessor.addZero(seldate.getMonth() + 1) +
+      "-" +
+      this.dateTimeProcessor.addZero(seldate.getDate())
     );
     const strtDt1 = this.server_date.toLocaleString(
       this.dateTimeProcessor.REGION_LANGUAGE,
@@ -1254,10 +1257,10 @@ export class AppointmentActionsComponent implements OnInit {
     const strtDt = new Date(strtDt2);
     const startdate = new Date(
       strtDt.getFullYear() +
-        "-" +
-        this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) +
-        "-" +
-        this.dateTimeProcessor.addZero(strtDt.getDate())
+      "-" +
+      this.dateTimeProcessor.addZero(strtDt.getMonth() + 1) +
+      "-" +
+      this.dateTimeProcessor.addZero(strtDt.getDate())
     );
     if (startdate >= selecttdate) {
       return true;
@@ -1291,7 +1294,7 @@ export class AppointmentActionsComponent implements OnInit {
       if (strtDt.getTime() >= nDt.getTime()) {
         this.sel_checkindate = ndate;
         console.log("pre selected date :", this.sel_checkindate);
-       this.getAppointmentSlots();
+        this.getAppointmentSlots();
       }
     } else {
       if (nDt.getTime() >= strtDt.getTime()) {
@@ -1318,9 +1321,9 @@ export class AppointmentActionsComponent implements OnInit {
     this.maxDate = new Date(this.today.getFullYear() + 4, 12, 31);
   }
   handleFutureDateChange(e) {
-    console.log("Date picker :",e);
+    console.log("Date picker :", e);
     const tdate = e.targetElement.value;
-    console.log("tdate :",tdate)
+    console.log("tdate :", tdate)
     const newdate = tdate
       .split("/")
       .reverse()
@@ -1334,7 +1337,7 @@ export class AppointmentActionsComponent implements OnInit {
     const seldate =
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.sel_checkindate = seldate;
-    console.log("handle selected date :",this.sel_checkindate);
+    console.log("handle selected date :", this.sel_checkindate);
     this.getAppointmentSlots();
 
     //if((this.sel_checkindate === seldate) && this.appt.appointmentMode !== 'ONLINE_APPOINTMENT' && (this.apptlist_status || this.futureDateApptlist)){
@@ -1357,11 +1360,11 @@ export class AppointmentActionsComponent implements OnInit {
       return false;
     }
   }
-  disableNxtBtn(){
-    if(this.selectedTime === '' || this.selectedTime === undefined){
+  disableNxtBtn() {
+    if (this.selectedTime === '' || this.selectedTime === undefined) {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
@@ -1389,7 +1392,7 @@ export class AppointmentActionsComponent implements OnInit {
     }
     if (
       Object.keys(this.labelMap).length > 0 ||
-      this.labelsforRemove.length > 0
+      (this.labelsforRemove && this.labelsforRemove.length > 0)
     ) {
       this.showApply = true;
     }
@@ -1444,9 +1447,9 @@ export class AppointmentActionsComponent implements OnInit {
 
     const customerDetails = this.appt.appmtFor[0];
     let customerId;
-    if(customerDetails && customerDetails.id){
+    if (customerDetails && customerDetails.id) {
       customerId = customerDetails.id;
-    }    const bookingId = this.appt.uid;
+    } const bookingId = this.appt.uid;
     const bookingType = "APPT";
     this.router.navigate(
       [
@@ -1472,9 +1475,9 @@ export class AppointmentActionsComponent implements OnInit {
 
     const customerDetails = this.appt.appmtFor[0];
     let customerId;
-    if(customerDetails && customerDetails.id){
+    if (customerDetails && customerDetails.id) {
       customerId = customerDetails.id;
-    }    const bookingId = this.appt.uid;
+    } const bookingId = this.appt.uid;
     const bookingType = "APPT";
     this.router.navigate(
       [
@@ -1528,14 +1531,14 @@ export class AppointmentActionsComponent implements OnInit {
       }
     );
   }
-  
+
   appointmentDateChanged(e) {
     const tdate = e;
-   console.log("In Appointment Date Changed Method:", tdate);
+    console.log("In Appointment Date Changed Method:", tdate);
     const newdate = tdate;
-    console.log("New Date :",newdate);
+    console.log("New Date :", newdate);
     const futrDte = new Date(newdate);
-    console.log("Future Date :",futrDte);
+    console.log("Future Date :", futrDte);
     const obtmonth = futrDte.getMonth() + 1;
     let cmonth = "" + obtmonth;
     if (obtmonth < 10) {
@@ -1544,63 +1547,63 @@ export class AppointmentActionsComponent implements OnInit {
     const seldate =
       futrDte.getFullYear() + "-" + cmonth + "-" + futrDte.getDate();
     this.sel_checkindate = seldate;
-    console.log("selected date :",this.sel_checkindate);
+    console.log("selected date :", this.sel_checkindate);
     this.getSchedulesbyLocationandServiceIdavailability(
       this.locId,
       this.servId,
       this.accountid
     );
-    if(this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay){
-      this.getSlotsBySheduleandDate(this.appt.schedule.id,this.selectedDay);
+    if (this.appt && this.appt.schedule && this.appt.schedule.id && this.selectedDay) {
+      this.getSlotsBySheduleandDate(this.appt.schedule.id, this.selectedDay);
     }    //this.getAppointmentSlots();
-   //this.getSlots(this.sel_schedule_id); 
- }
+    //this.getSlots(this.sel_schedule_id); 
+  }
 
-  getSlots(selectedScheduleId){
+  getSlots(selectedScheduleId) {
     this.allSlots = [];
     this.loading = true;
     this.provider_services
-    .getAppointmentSlotsByScheduleid(
-      selectedScheduleId
-    ).subscribe((data:any)=>{
-      this.availableSlots = data.availableSlots;
-      console.log("ACtive Sechdule :",data["scheduleId"]);
-      this.loading = false;
-      console.log("freslot ",this.availableSlots)
+      .getAppointmentSlotsByScheduleid(
+        selectedScheduleId
+      ).subscribe((data: any) => {
+        this.availableSlots = data.availableSlots;
+        console.log("ACtive Sechdule :", data["scheduleId"]);
+        this.loading = false;
+        console.log("freslot ", this.availableSlots)
         for (const freslot of this.availableSlots) {
-        // && freslot.active
+          // && freslot.active
           if (freslot.noOfAvailbleSlots !== "0") {
             freslot["displayTime"] = this.getSingleTime(freslot.time);
             this.allSlots.push(freslot);
           }
         }
-      this.apptTime = this.allSlots[0];
-    })
+        this.apptTime = this.allSlots[0];
+      })
   }
 
-getSlotsBySheduleandDate(scheduleId,selDate){
-  this.allSlots = [];
-  this.loading = true;
-  this.provider_services.getSlotsByScheduleandDate(scheduleId,selDate).
-  subscribe((res:any)=>{
-    this.schedules = res;
-    this.loading = false;
-    for (const scheduleSlots of this.schedules) {
-      this.availableSlots = scheduleSlots.availableSlots;
-      console.log("availableSlots",this.availableSlots)
-      for (const freslot of this.availableSlots) {
-        if (freslot.noOfAvailbleSlots !== "0") {
-          freslot["scheduleId"] = scheduleSlots["scheduleId"];
-          freslot["displayTime"] = this.getSingleTime(freslot.time);
-          this.allSlots.push(freslot);
+  getSlotsBySheduleandDate(scheduleId, selDate) {
+    this.allSlots = [];
+    this.loading = true;
+    this.provider_services.getSlotsByScheduleandDate(scheduleId, selDate).
+      subscribe((res: any) => {
+        this.schedules = res;
+        this.loading = false;
+        for (const scheduleSlots of this.schedules) {
+          this.availableSlots = scheduleSlots.availableSlots;
+          console.log("availableSlots", this.availableSlots)
+          for (const freslot of this.availableSlots) {
+            if (freslot.noOfAvailbleSlots !== "0") {
+              freslot["scheduleId"] = scheduleSlots["scheduleId"];
+              freslot["displayTime"] = this.getSingleTime(freslot.time);
+              this.allSlots.push(freslot);
+            }
+
+          }
+
+          this.apptTime = this.allSlots[0];
         }
-       
-      }
-    
-    this.apptTime = this.allSlots[0];
+      })
   }
-  })
-}
 
 
   getSchedulesbyLocationandServiceIdavailability(locid, servid, accountid) {
@@ -1611,33 +1614,33 @@ getSlotsBySheduleandDate(scheduleId,selDate){
         .subscribe((data: any) => {
           const availables = data.filter(obj => obj.availableSlots);
           console.log("Availabelel slots :", availables);
-          const availDates = availables.map(function(a) {
+          const availDates = availables.map(function (a) {
             return a.date;
           });
-          _this.availableDates = availDates.filter(function(elem, index, self) {
+          _this.availableDates = availDates.filter(function (elem, index, self) {
             return index === self.indexOf(elem);
           });
         });
     }
   }
-  sendAcceptRequest(){
+  sendAcceptRequest() {
     let post_data = {
-     // date: this.appt.appmtDate
-        "consumerNote":this.appt.consumerNote,
-        "countryCode": this.appt.countryCode,
-        // "appointmentMode": this.appt.appointmentMode,
-        "uid": this.appt.uid,
-        "appmtFor":[{
-          'id':this.appt.appmtFor[0].id,
-          'firstName':this.appt.appmtFor[0].firstName,
-          'lastName':this.appt.appmtFor[0].lastName,
-          'apptTime': this.selectedTime
-        }]
+      // date: this.appt.appmtDate
+      "consumerNote": this.appt.consumerNote,
+      "countryCode": this.appt.countryCode,
+      // "appointmentMode": this.appt.appointmentMode,
+      "uid": this.appt.uid,
+      "appmtFor": [{
+        'id': this.appt.appmtFor[0].id,
+        'firstName': this.appt.appmtFor[0].firstName,
+        'lastName': this.appt.appmtFor[0].lastName,
+        'apptTime': this.selectedTime
+      }]
     };
-    if(this.sel_checkindate !== undefined || this.sel_checkindate !== ''){
+    if (this.sel_checkindate !== undefined || this.sel_checkindate !== '') {
       post_data['appmtDate'] = this.sel_checkindate
     }
-    if(this.sel_checkindate === undefined || this.sel_checkindate === ''){
+    if (this.sel_checkindate === undefined || this.sel_checkindate === '') {
       post_data['appmtDate'] = this.selectedDay;
     }
     // if(this.selectedTime){
@@ -1647,185 +1650,185 @@ getSlotsBySheduleandDate(scheduleId,selDate){
     //   post_data['appointmentMode'] = {'id':this.appt.appointmentMode}
 
     // }
-     if(this.appt && this.appt.schedule && this.appt.schedule.id){
-      post_data['schedule'] = {'id':this.appt.schedule.id}
-     }
-     if(this.appt.service){
+    if (this.appt && this.appt.schedule && this.appt.schedule.id) {
+      post_data['schedule'] = { 'id': this.appt.schedule.id }
+    }
+    if (this.appt.service) {
       post_data['service'] = {
         "id": this.appt.service.id,
         "serviceType": this.appt.service.serviceType
       }
-     }
-     if(this.appt.provider){
-      post_data['provider'] = {'id':this.appt.provider.id}
     }
-    if(this.appt.providerConsumer){
-      post_data['consumer'] = {'id':this.appt.providerConsumer.id}
+    if (this.appt.provider) {
+      post_data['provider'] = { 'id': this.appt.provider.id }
+    }
+    if (this.appt.providerConsumer) {
+      post_data['consumer'] = { 'id': this.appt.providerConsumer.id }
     }
     if (this.appt.service.serviceType === 'virtualService') {
-     if (this.validateVirtualCallInfo(this.callingModes)) {
+      if (this.validateVirtualCallInfo(this.callingModes)) {
         post_data['virtualService'] = this.getVirtualServiceInput();
       } else {
-          return false;
+        return false;
       }
-  }
+    }
     //  post_data['appmtFor'] = JSON.parse(JSON.stringify(this.appt.appmtFor));
     //  post_data['appmtFor'][0]['id'] = this.appt.appmtFor[0].id;
     //  post_data['appmtFor'][0]['firstName'] = this.appt.appmtFor[0].firstName;
     //  post_data['appmtFor'][0]['lastName'] = this.appt.appmtFor[0].lastName;
     // post_data['appmtFor'][0]['apptTime'] = this.selectedTime;
-     // post_data['date'] = appt.appmtDate;
-    console.log("send data:",post_data);
+    // post_data['date'] = appt.appmtDate;
+    console.log("send data:", post_data);
     this.provider_services.postAppointmentRequest(post_data).
-    subscribe((res:any)=>{
-      console.log("Response :",res);
-     this.snackbarService.openSnackBar('Appointment request confirmed successfully',{
-      panelClass: "snackbarnormal"
-    });
-    this.dialogRef.close('reload');
-  },
-  error => {
-    this.snackbarService.openSnackBar(error.error, {
-      panelClass: "snackbarerror"
-    });
-  });
-    
+      subscribe((res: any) => {
+        console.log("Response :", res);
+        this.snackbarService.openSnackBar('Appointment request confirmed successfully', {
+          panelClass: "snackbarnormal"
+        });
+        this.dialogRef.close('reload');
+      },
+        error => {
+          this.snackbarService.openSnackBar(error.error, {
+            panelClass: "snackbarerror"
+          });
+        });
+
 
   }
   setVirtualInfoServiceInfo(activeService) {
     if (activeService && activeService.virtualCallingModes && activeService.virtualCallingModes[0] && activeService.virtualCallingModes[0].callingMode && (activeService.virtualCallingModes[0].callingMode === 'WhatsApp' || activeService.virtualCallingModes[0].callingMode === 'Phone')) {
-        // if (appointmentType === 'reschedule') {
-            if (activeService.virtualCallingModes[0].callingMode === 'WhatsApp') {
-                this.callingModes = this.appt.virtualService['WhatsApp'];
-            } else {
-                this.callingModes = this.appt.virtualService['Phone'];
-            }
-            const phNumber = this.appt.countryCode + this.appt.phoneNumber;
-            const callMode = '+' + activeService.virtualCallingModes[0].value;
-            if (callMode === phNumber) {
-                this.changePhone = false;
-            } else {
-                this.changePhone = true;
-            }
-       // }
+      // if (appointmentType === 'reschedule') {
+      if (activeService.virtualCallingModes[0].callingMode === 'WhatsApp') {
+        this.callingModes = this.appt.virtualService['WhatsApp'];
+      } else {
+        this.callingModes = this.appt.virtualService['Phone'];
+      }
+      const phNumber = this.appt.countryCode + this.appt.phoneNumber;
+      const callMode = '+' + activeService.virtualCallingModes[0].value;
+      if (callMode === phNumber) {
+        this.changePhone = false;
+      } else {
+        this.changePhone = true;
+      }
+      // }
     }
-}
+  }
 
   validateVirtualCallInfo(callingModes?) {
     let valid = true;
     if (callingModes === '') {
-        for (const i in this.appt.virtualCallingModes) {
-            if (this.appt && this.appt.virtualCallingModes && this.appt.virtualCallingModes && this.appt.virtualCallingModes[i] && this.appt.virtualCallingModes[i].callingMode && (this.appt.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.virtualCallingModes[i].callingMode === 'Phone') || (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet')) {
-                if (!this.commObj['comWhatsappNo'] ) {
-                  // && this.appt.serviceBookingType !== 'request'
-                    this.snackbarService.openSnackBar('Please provide valid mobile number', { 'panelClass': 'snackbarerror' });
-                    valid = false;
-                    break;
-                }
-            }
+      for (const i in this.appt.virtualCallingModes) {
+        if (this.appt && this.appt.virtualCallingModes && this.appt.virtualCallingModes && this.appt.virtualCallingModes[i] && this.appt.virtualCallingModes[i].callingMode && (this.appt.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.virtualCallingModes[i].callingMode === 'Phone') || (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet')) {
+          if (!this.commObj['comWhatsappNo']) {
+            // && this.appt.serviceBookingType !== 'request'
+            this.snackbarService.openSnackBar('Please provide valid mobile number', { 'panelClass': 'snackbarerror' });
+            valid = false;
+            break;
+          }
         }
+      }
     }
     return valid;
-}
-// validateVirtualCallInfo(callingModes) {
-//   let valid = true;
-//   if (callingModes === '' || callingModes.length < 10) {
-//       for (const i in this.appt.service.virtualCallingModes) {
-//           if (this.appt.service.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.service.virtualCallingModes[i].callingMode === 'Phone') {
-//               if (!this.commObj['comWhatsappNo']) {
-//                   this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
-//                   valid = false;
-//                   break;
-//               }
-//           }
-//       }
-//   }
-//   return valid;
-// }
-// getVirtualServiceInput() {
-//     let virtualServiceArray = {};
-//     //this.virtualServiceArray = {};
-//     if (this.callingModes !== '' && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes.length > 0) {
-//         if (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom' ) {
-//           //|| this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'
-//             virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
-//         } else {
-//             virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];
-//         }
-//     }
-//     if(this.appt.virtualService.WhatsApp){
-//       virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.virtualService.WhatsApp;
-//     }
+  }
+  // validateVirtualCallInfo(callingModes) {
+  //   let valid = true;
+  //   if (callingModes === '' || callingModes.length < 10) {
+  //       for (const i in this.appt.service.virtualCallingModes) {
+  //           if (this.appt.service.virtualCallingModes[i].callingMode === 'WhatsApp' || this.appt.service.virtualCallingModes[i].callingMode === 'Phone') {
+  //               if (!this.commObj['comWhatsappNo']) {
+  //                   this.snackbarService.openSnackBar('Please enter valid mobile number', { 'panelClass': 'snackbarerror' });
+  //                   valid = false;
+  //                   break;
+  //               }
+  //           }
+  //       }
+  //   }
+  //   return valid;
+  // }
+  // getVirtualServiceInput() {
+  //     let virtualServiceArray = {};
+  //     //this.virtualServiceArray = {};
+  //     if (this.callingModes !== '' && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes.length > 0) {
+  //         if (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom' ) {
+  //           //|| this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp'
+  //             virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
+  //         } else {
+  //             virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];
+  //         }
+  //     }
+  //     if(this.appt.virtualService.WhatsApp){
+  //       virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.virtualService.WhatsApp;
+  //     }
 
-//     for (const i in virtualServiceArray) {
-//         if (i === 'WhatsApp') {
-//             return virtualServiceArray;
-//         } else if (i === 'GoogleMeet') {
-//             return virtualServiceArray;
-//         } else if (i === 'Zoom') {
-//             return virtualServiceArray;
-//         } else if (i === 'Phone') {
-//             return virtualServiceArray;
-//         } else if (i === 'VideoCall') {
-//             return { 'VideoCall': '' };
-//         }
-//     }
-// }
-getVirtualServiceInput() {
-  let virtualServiceArray = {};
-  if (this.callingModes !== '') {
-      if (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom') || (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'Phone') ) {
-          virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
-          //|| (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp')
-      } 
-      else if((this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp')){
-        virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = '+91'+this.appt.service.virtualCallingModes[0].value;
+  //     for (const i in virtualServiceArray) {
+  //         if (i === 'WhatsApp') {
+  //             return virtualServiceArray;
+  //         } else if (i === 'GoogleMeet') {
+  //             return virtualServiceArray;
+  //         } else if (i === 'Zoom') {
+  //             return virtualServiceArray;
+  //         } else if (i === 'Phone') {
+  //             return virtualServiceArray;
+  //         } else if (i === 'VideoCall') {
+  //             return { 'VideoCall': '' };
+  //         }
+  //     }
+  // }
+  getVirtualServiceInput() {
+    let virtualServiceArray = {};
+    if (this.callingModes !== '') {
+      if (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && (this.appt.service.virtualCallingModes[0].callingMode === 'GoogleMeet' || this.appt.service.virtualCallingModes[0].callingMode === 'Zoom') || (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'Phone')) {
+        virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.appt.service.virtualCallingModes[0].value;
+        //|| (this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp')
+      }
+      else if ((this.appt && this.appt.service && this.appt.service.virtualCallingModes && this.appt.service.virtualCallingModes[0] && this.appt.service.virtualCallingModes[0].callingMode && this.appt.service.virtualCallingModes[0].callingMode === 'WhatsApp')) {
+        virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = '+91' + this.appt.service.virtualCallingModes[0].value;
 
       }
       else {
-          virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
+        virtualServiceArray[this.appt.service.virtualCallingModes[0].callingMode] = this.commObj['comWhatsappCountryCode'] + this.commObj['comWhatsappNo'];;
       }
-  }
-  for (const i in virtualServiceArray) {
+    }
+    for (const i in virtualServiceArray) {
       if (i === 'WhatsApp') {
-          return virtualServiceArray;
+        return virtualServiceArray;
       } else if (i === 'GoogleMeet') {
-          return virtualServiceArray;
+        return virtualServiceArray;
       } else if (i === 'Zoom') {
-          return virtualServiceArray;
+        return virtualServiceArray;
       } else if (i === 'Phone') {
-       // if(virtualServiceArray){
-          return virtualServiceArray;
+        // if(virtualServiceArray){
+        return virtualServiceArray;
         // }
         // else{
         //   return { 'Phone': '' };
         // }
       } else if (i === 'VideoCall') {
-          return { 'VideoCall': '' };
+        return { 'VideoCall': '' };
       }
+    }
   }
-}
   dateClass(date: Date): MatCalendarCellCssClasses {
     return this.availableDates.indexOf(moment(date).format("YYYY-MM-DD")) !== -1
       ? "example-custom-date-class"
       : "";
   }
-  removeApptRequest(appt){
-    console.log("request :",appt.uid);
+  removeApptRequest(appt) {
+    console.log("request :", appt.uid);
     this.shared_services.deleteApptRequest(appt.uid).
-    subscribe((res:any)=>{
-      console.log("Req res:",res);
-      this.snackbarService.openSnackBar('Appointment request rejected successfully',{
-        panelClass: "snackbarnormal"
-      });
-      this.dialogRef.close('reload');
-    },
-    error => {
-      this.snackbarService.openSnackBar(error.error, {
-        panelClass: "snackbarerror"
-      });
-    });
-    
+      subscribe((res: any) => {
+        console.log("Req res:", res);
+        this.snackbarService.openSnackBar('Appointment request rejected successfully', {
+          panelClass: "snackbarnormal"
+        });
+        this.dialogRef.close('reload');
+      },
+        error => {
+          this.snackbarService.openSnackBar(error.error, {
+            panelClass: "snackbarerror"
+          });
+        });
+
   }
   sendimages() {
     this.galleryDialog = this.dialog.open(GalleryImportComponent, {
@@ -1845,7 +1848,7 @@ getVirtualServiceInput() {
     if (Object.keys(this.labelMap).length > 0) {
       this.addLabel();
     }
-    if (this.labelsforRemove.length > 0) {
+    if (this.labelsforRemove && this.labelsforRemove.length > 0) {
       this.deleteLabel();
     }
   }
@@ -1872,7 +1875,7 @@ getVirtualServiceInput() {
         recordingUrls: this.appt.s3VideoUrls
       }
     });
-    smsdialogRef.afterClosed().subscribe(result => {});
+    smsdialogRef.afterClosed().subscribe(result => { });
   }
   getStatusLabel(status) {
     const label_status = this.wordProcessor.firstToUpper(
@@ -1962,7 +1965,7 @@ getVirtualServiceInput() {
       queryParams: {
         type: "followup",
         followup_uuid: this.appt.uid,
-       // providerId:this.appt.provider.id,
+        // providerId:this.appt.provider.id,
         date: moment(this.sel_checkindate).format("YYYY-MM-DD")
       }
     };

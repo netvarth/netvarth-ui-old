@@ -5,7 +5,7 @@ import { FullViewCalendarComponent } from './full-view-calendar.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { FormsModule } from '@angular/forms';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { BookingActionsModule } from '../booking-actions/booking-actions.module';
+import { AppointmentActionsModule } from '../../appointments/appointment-actions/appointment-actions.module';
 
 @NgModule({
   declarations: [FullViewCalendarComponent],
@@ -14,7 +14,7 @@ import { BookingActionsModule } from '../booking-actions/booking-actions.module'
     FullCalendarModule,
     FormsModule,
     DynamicDialogModule,
-    BookingActionsModule,
+    AppointmentActionsModule,
     ToggleButtonModule
   ],
   exports: [

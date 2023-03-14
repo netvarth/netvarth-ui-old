@@ -89,6 +89,7 @@ export class CreateDealerComponent implements OnInit {
   bankListName: any;
   selectedBranch: any;
   @Output() optionSelected: EventEmitter<MatAutocompleteSelectedEvent>
+  disableBtn: any = false;
   constructor(
     private location: Location,
     private router: Router,
@@ -1018,7 +1019,16 @@ export class CreateDealerComponent implements OnInit {
   }
 
 
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
+  }
+
+
   saveAsLead() {
+    this.disableBtn = true;
     this.dealerData = {
       "uid": this.dealerId,
       "partnerName": this.createDealer.controls.name.value,
@@ -1086,12 +1096,31 @@ export class CreateDealerComponent implements OnInit {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
               console.log(dataS3Url);
+              this.snackbarService.openSnackBar("Dealer Saved As Draft Successfully")
+              this.disableBtn = false;
+              let _this = this;
+              let currentUrl = _this.router.url;
+              _this.router.navigate(['provider', 'cdl', 'dealers']).then(() => {
+                _this.router.navigateByUrl(currentUrl).then(() => {
+
+                })
+              })
+            }).catch((error) => {
+              this.disableBtn = false;
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
             });
+        } else {
+          let _this = this;
+          let currentUrl = _this.router.url;
+          _this.router.navigate(['provider', 'cdl', 'dealers']).then(() => {
+            _this.router.navigateByUrl(currentUrl).then(() => {
+
+            })
+          })
         }
-        this.snackbarService.openSnackBar("Dealer Saved As Draft Successfully")
-        // this.router.navigate(['provider', 'cdl', 'dealers'])
       },
         (error) => {
+          this.disableBtn = false;
           this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
         })
     }

@@ -2,8 +2,22 @@
     background-color: #1E4079 !important;
 }
 
+.Completed {
+    color: rgb(18, 104, 18) !important;
+}
 
 
+.Cancelled {
+    color: rgb(172, 30, 30) !important;
+}
+
+.Confirmed {
+    color: rgb(80, 28, 80) !important;
+}
+
+.Started {
+    color: rgb(124, 124, 40) !important;
+}
 
 @media (max-width: 576px) {
     ::ng-deep .full-view-calendar .fc .fc-toolbar {

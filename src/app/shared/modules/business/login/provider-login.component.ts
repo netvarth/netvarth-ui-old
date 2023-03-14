@@ -263,7 +263,8 @@ export class ProviderLoginComponent implements OnInit {
                 this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
               } else {
                 console.log("1 provider")
-                this.router.navigate(['/provider']);
+                // this.router.navigate(['/provider/dashboard']);
+                this.router.navigate(['/']);
               }
             } else {
               // console.log("2 provider")
@@ -274,7 +275,8 @@ export class ProviderLoginComponent implements OnInit {
                     this.router.navigate(['provider', 'cdl']);
                   }
                   else {
-                    this.router.navigate(['/provider']);
+                    // this.router.navigate(['/provider/dashboard']);
+                    this.router.navigate(['/']);
                   }
                 });
             }

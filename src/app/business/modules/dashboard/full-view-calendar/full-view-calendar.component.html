@@ -11,6 +11,9 @@
                 <div>
                     <b>{{ arg.event.extendedProps.bookingData.appmtTime }}</b>
                 </div>
+                <div [class]="arg.event.extendedProps.bookingData.apptStatus">
+                    <b>{{ arg.event.extendedProps.bookingData.apptStatus }}</b>
+                </div>
             </div>
         </ng-template>
     </full-calendar>

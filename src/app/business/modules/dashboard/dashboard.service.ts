@@ -24,4 +24,10 @@ export class DashboardService {
     let url = "provider/appointment/history"
     return this.serviceMeta.httpGet(url, null, filter);
   }
+
+  getLabelList() {
+    const url = 'provider/waitlist/label';
+    return this.serviceMeta.httpGet(url);
+  }
+
 }

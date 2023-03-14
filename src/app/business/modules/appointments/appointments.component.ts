@@ -2979,6 +2979,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.keyPressed();
   }
   showCheckinActions(status, checkin?) {
+    console.log("checkin data", status)
     let waitlist = [];
     if (checkin) {
       waitlist = checkin;

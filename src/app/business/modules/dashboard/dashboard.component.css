@@ -1,0 +1,76 @@
+.waving-hand-icon {
+    font-size: 18px !important;
+}
+
+.font-weight-400 {
+    font-weight: 400 !important;
+}
+
+.dashboard-heading-card {
+    width: 160px !important;
+}
+
+.fa-circle {
+    font-size: 10px !important;
+}
+
+.dashboard-stats-card-small {
+    height: 250px !important;
+}
+
+.dashboard-stats-card-small-title {
+    font-size: 30px !important;
+    font-weight: bold !important;
+}
+
+.text-grey {
+    color: #757575 !important;
+}
+
+.small-icon {
+    font-size: 16px !important;
+}
+
+::ng-deep .provider-dashboard .p-card {
+    color: #000 !important;
+}
+
+::ng-deep .title-card .p-card-content,
+::ng-deep .title-card .p-card-content,
+::ng-deep .dashboard-stats-card-small .p-card-content,
+::ng-deep .dashboard-heading .p-card-content,
+::ng-deep .dashboard-heading-cards .p-card-content {
+    padding: 0 !important;
+}
+
+
+::ng-deep .dashboard-heading .p-card {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+::ng-deep .dashboard-heading .p-card-body {
+    padding-left: 0 !important;
+}
+
+::ng-deep .dashboard-heading-cards .p-card,
+::ng-deep .dashboard-stats-card-small .p-card {
+    border-radius: 7px !important;
+}
+
+::ng-deep .dashboard-heading-cards .dashboard-heading-card .p-card {
+    border-radius: 2px !important;
+}
+
+
+
+@media (max-width: 576px) {
+    .dashboard-heading-card {
+        width: 140px !important;
+    }
+
+    .dashboard-stats-card-small {
+        height: 220px !important;
+    }
+}

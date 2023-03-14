@@ -52,7 +52,7 @@
             </div>
             <!-- && (this.appt.schedule.provider.id === 0) -->
             <div class="action-box pointer-cursor"
-                *ngIf="(this.users.length > 1 && !this.data.multiSelection && this.accountType == 'BRANCH' && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed'))"
+                *ngIf="(this.users && this.users.length > 1 && !this.data.multiSelection && this.accountType == 'BRANCH' && (this.appt.apptStatus === 'Arrived' || this.appt.apptStatus === 'Confirmed'))"
                 (click)="changeWaitlistservice()">
                 <div class="action-box-sub">
                     <span class="doctor-change-icon"></span>
@@ -63,7 +63,7 @@
             </div>
             <!-- && (this.appt.schedule.provider.id === 0)  -->
             <div class="action-box pointer-cursor"
-                *ngIf="!data.multiSelection && accountType=='BRANCH'  && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId == 0"
+                *ngIf="!data.multiSelection && accountType=='BRANCH'  && groups && groups.length > 0 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed') && appt.teamId == 0"
                 (click)="assignteam()">
                 <div class="action-box-sub">
                     <span class="team-icon-action"></span>
@@ -73,7 +73,7 @@
 
 
             <div class="action-box pointer-cursor"
-                *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0)  && appt.teamId != 0 && groups.length > 1 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
+                *ngIf="!data.multiSelection && accountType=='BRANCH' && (this.appt.schedule.provider.id === 0)  && appt.teamId != 0 && groups && groups.length > 1 && (appt.apptStatus === 'Arrived' || appt.apptStatus === 'Confirmed')"
                 (click)="assignteam()">
                 <div class="action-box-sub">
                     <span class="team-icon-action"></span>

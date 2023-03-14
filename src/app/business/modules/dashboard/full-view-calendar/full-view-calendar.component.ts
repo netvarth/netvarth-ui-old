@@ -5,13 +5,12 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import { DashboardService } from '../dashboard.service';
-import { BookingActionsComponent } from '../booking-actions/booking-actions.component';
-import { DialogService } from 'primeng/dynamicdialog';
+import { AppointmentActionsComponent } from '../../appointments/appointment-actions/appointment-actions.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-full-view-calendar',
   templateUrl: './full-view-calendar.component.html',
-  providers: [DialogService],
   styleUrls: ['./full-view-calendar.component.css']
 })
 export class FullViewCalendarComponent implements OnInit {
@@ -26,9 +25,9 @@ export class FullViewCalendarComponent implements OnInit {
     dateClick: this.handleDateClick.bind(this),
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     headerToolbar: {
-      left: 'prev,next today',
+      // left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      // right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
     weekends: true,
     datesSet: this.handleMonthChange.bind(this),
@@ -46,11 +45,30 @@ export class FullViewCalendarComponent implements OnInit {
   };
   eventsPromise: Promise<EventInput>;
   totalBookings: any = [];
+  startedAppointmentsChecked: any = [];
+  appointmentsChecked: any = [];
+  apptStartedMultiSelection: any;
+  apptMultiSelection: any;
+  providerLabels: any[];
+  allLabels: any;
+  chkSelectAppointments: any;
+  chkAppointments: any;
+  selectedAppt: any[];
+  apptSingleSelection: any;
+  check_in_filtered_list: any[];
+  appt_request_list: any[];
+  startedChkAppointments: {};
+  apptStartedSingleSelection: any;
+  time_type: number;
+  statusAction: any;
+  loading = true;
 
   constructor(
     private dashboardService: DashboardService,
-    public dialogService: DialogService
-  ) { }
+    private dialog: MatDialog
+  ) {
+
+  }
 
   handleDateClick(event) {
     console.log('date click! ', event)
@@ -150,7 +168,7 @@ export class FullViewCalendarComponent implements OnInit {
   ngAfterViewInit() {
     this.calendarApi = this.calendarComponent.getApi();
     let currentDate = this.calendarApi.view.currentEnd;
-    this.handleMonthChange({ event: currentDate });
+    this.handleMonthChange({ endStr: currentDate });
   }
 
   toggleWeekends() {
@@ -158,19 +176,25 @@ export class FullViewCalendarComponent implements OnInit {
   }
 
   bookingClicked(event) {
-    const ref = this.dialogService.open(BookingActionsComponent, {
+    let checkin = event.event.extendedProps.bookingData;
+    console.log("checkin data", checkin)
+    let waitlist = [];
+    if (checkin) {
+      waitlist = checkin;
+      console.log("Appointment action clicked :", waitlist);
+    }
+    const actiondialogRef = this.dialog.open(AppointmentActionsComponent, {
+      width: '50%',
+      panelClass: ['popup-class', 'commonpopupmainclass', 'checkinactionclass'],
+      disableClose: true,
       data: {
-        id: '51gF3'
-      },
-      header: 'Select an action to Perform',
-      width: '50%'
-    });
-    ref.onClose.subscribe((data: any) => {
-      if (data) {
-
+        checkinData: waitlist
       }
     });
-
+    actiondialogRef.afterClosed().subscribe(data => {
+      console.log("data", data)
+      this.ngAfterViewInit();
+    });
   }
 
   randomIntFromInterval(min, max) {
