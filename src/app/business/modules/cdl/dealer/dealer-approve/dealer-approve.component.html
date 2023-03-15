@@ -121,88 +121,82 @@
       <div class="card">
         <div class="font-weight-bold">KYC Details</div>
         <div class="row mt-2">
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div *ngIf="dealerData && dealerData.aadhaar">
-              <div>
-                <div class="text-left details-title">Aadhar Number</div>
-                <div class="text-left details-sub-title">{{dealerData.aadhaar}}</div>
+              <div class="text-left details-title">Aadhar Number
               </div>
-              <div class="mt-2"
-                *ngIf="dealerData && dealerData.aadhaarAttachments && dealerData.aadhaarAttachments[0] && dealerData.aadhaarAttachments[0].s3path">
-                <a [href]="dealerData.aadhaarAttachments[0].s3path" target="_blank" class="btn btn-primary"
-                  type="button">
-                  <span>View Aadhar</span>
-                </a>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="text-left details-sub-title"><b>{{dealerData.aadhaar}}</b></div>
+                </div>
+                <div *ngIf="dealerData.aadhaarAttachments">
+                  <div class="mt-2" *ngFor="let attachment of dealerData.aadhaarAttachments;let i=index;">
+                    <a [href]="attachment.s3path" target="_blank" class="btn btn-primary p-1">
+                      <span>View File <span *ngIf="dealerData.aadhaarAttachments.length > 1">{{i+1}}</span></span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="col-md-6">
+
+          <div class="col-md-12">
             <div *ngIf="dealerData && dealerData.pan">
-              <div>
-                <div class="text-left details-title">Pan Number</div>
-                <div class="text-left details-sub-title">{{dealerData.pan}}</div>
+              <div class="text-left details-title">Pan Number
               </div>
-              <div class="mt-2"
-                *ngIf="dealerData && dealerData.panAttachments && dealerData.panAttachments[0] && dealerData.panAttachments[0].s3path">
-                <a [href]="dealerData.panAttachments[0].s3path" target="_blank" class="btn btn-primary" type="button">
-                  <span>View Pancard</span>
-                </a>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="text-left details-sub-title"><b>{{dealerData.pan}}</b></div>
+                </div>
+                <div *ngIf="dealerData.panAttachments">
+                  <div class="mt-2" *ngFor="let attachment of dealerData.panAttachments;let i=index;">
+                    <a [href]="attachment.s3path" target="_blank" class="btn btn-primary p-1">
+                      <span>View File <span *ngIf="dealerData.panAttachments.length > 1">{{i+1}}</span></span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-
-        <div class="row mt-2">
-
-          <div class="col-md-6">
+          <div class="col-md-12">
             <div *ngIf="dealerData && dealerData.gstin">
-              <div>
-                <div class="text-left details-title">GSTIN</div>
-                <div class="text-left details-sub-title">{{dealerData.gstin}}</div>
+              <div class="text-left details-title">GSTIN
               </div>
-              <div class="mt-2"
-                *ngIf="dealerData && dealerData.gstAttachments && dealerData.gstAttachments[0] && dealerData.gstAttachments[0].s3path">
-                <a [href]="dealerData.gstAttachments[0].s3path" target="_blank" class="btn btn-primary" type="button">
-                  <span>View GSTIN</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-md-6"
-            *ngIf="dealerData && dealerData.licenceAttachments && dealerData.licenceAttachments[0] && dealerData.licenceAttachments[0].s3path">
-            <div>
-              <div>
-                <div class="text-left details-title">Dealer Agreement</div>
-              </div>
-              <div class="mt-2">
-                <a [href]="dealerData.licenceAttachments[0].s3path" target="_blank" class="btn btn-primary"
-                  type="button">
-                  <span>View Dealer Agreement</span>
-                </a>
+              <div class="d-flex justify-content-between">
+                <div class="d-flex align-items-center">
+                  <div class="text-left details-sub-title"><b>{{dealerData.gstin}}</b></div>
+                </div>
+                <div *ngIf="dealerData.gstAttachments">
+                  <div class="mt-2" *ngFor="let attachment of dealerData.gstAttachments;let i=index;">
+                    <a [href]="attachment.s3path" target="_blank" class="btn btn-primary p-1">
+                      <span>View File <span *ngIf="dealerData.gstAttachments.length > 1">{{i+1}}</span></span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- <div class="col-md-6">
-            <div
-              *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0] && dealerData.storeAttachments[0].s3path">
-              <div>
-                <div class="text-left details-title">Store</div>
-                <div class="text-left details-sub-title"></div>
+          <div class="col-md-12">
+            <div *ngIf="dealerData && dealerData.licenceAttachments">
+              <div class="text-left details-title">Dealer Agreement
               </div>
-              <div class="mt-2"
-                *ngIf="dealerData && dealerData.storeAttachments && dealerData.storeAttachments[0] && dealerData.storeAttachments[0].s3path">
-                <a [href]="dealerData.storeAttachments[0].s3path" target="_blank" class="btn btn-primary" type="button">
-                  <span>View Store Photo</span>
-                </a>
+              <div class="d-flex justify-content-between">
+                <div *ngIf="dealerData.licenceAttachments" class="d-flex">
+                  <div class="mt-2 mr-2" *ngFor="let attachment of dealerData.licenceAttachments;let i=index;">
+                    <a [href]="attachment.s3path" target="_blank" class="btn btn-primary p-1">
+                      <span>View File <span *ngIf="dealerData.licenceAttachments.length > 1">{{i+1}}</span></span>
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
-          </div> -->
+          </div>
+
         </div>
+
 
       </div>
 
@@ -226,18 +220,21 @@
         </div>
 
         <div>
-          <div
-            *ngIf="dealerData && dealerData.bankAttachments && dealerData.bankAttachments[0] && dealerData.bankAttachments[0].s3path">
-            <div>
-              <div class="text-left details-title">Cheque / Passbook Front</div>
-              <div class="text-left details-sub-title">{{dealerData.gstin}}</div>
+
+          <div *ngIf="dealerData && dealerData.bankAttachments">
+            <div class="text-left details-title">Cheque / Passbook Front
             </div>
-            <div class="mt-2">
-              <a [href]="dealerData.bankAttachments[0].s3path" target="_blank" class="btn btn-primary" type="button">
-                <span>View Cheque / Passbook Front</span>
-              </a>
+            <div class="d-flex justify-content-between">
+              <div *ngIf="dealerData.bankAttachments" class="d-flex">
+                <div class="mt-2 mr-2" *ngFor="let attachment of dealerData.bankAttachments;let i=index;">
+                  <a [href]="attachment.s3path" target="_blank" class="btn btn-primary p-1">
+                    <span>View File <span *ngIf="dealerData.bankAttachments.length > 1">{{i+1}}</span></span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
 
