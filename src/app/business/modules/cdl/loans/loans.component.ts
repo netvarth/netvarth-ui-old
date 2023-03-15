@@ -93,7 +93,7 @@ export class LoansComponent implements OnInit {
     if (this.user) {
       this.capabilities = this.cdlservice.getCapabilitiesConfig(this.user);
     }
-    this.getLoans()
+    // this.getLoans()
 
 
     this.cols = [

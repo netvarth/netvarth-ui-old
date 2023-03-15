@@ -41,6 +41,11 @@ export class CdlService {
     return this.servicemeta.httpPut(url, data);
   }
 
+  uploadFilesToS3(data) {
+    const url = 'provider/fileShare/upload';
+    return this.servicemeta.httpPost(url, data);
+  }
+
 
   getCustomers() {
     const url = 'provider/customers';
@@ -408,6 +413,11 @@ export class CdlService {
 
   videoaudioS3Upload(file, url) {
     return this.servicemeta.httpPut(url, file);
+  }
+
+  videoaudioS3UploadStatusUpdate(status, id) {
+    const url = 'provider/fileShare/upload/' + status + '/' + id;
+    return this.servicemeta.httpPut(url, null);
   }
 
   approveDealer(id, data) {

@@ -196,6 +196,20 @@ export class CreateDealerComponent implements OnInit {
             this.selectedFiles['gst'].files = this.dealerData.gstAttachments;
             this.selectedFiles['licenese'].files = this.dealerData.licenceAttachments;
 
+            // if (this.dealerData && this.dealerData.storeAttachments) {
+            //   this.dealerData.storeAttachments.forEach(attachment => {
+            //     attachment['type'] = 'store';
+            //     this.filesToUpload.push(attachment);
+            //   });
+            // }
+
+            // if (this.dealerData && this.dealerData.storeAttachments) {
+            //   this.dealerData.storeAttachments.forEach(attachment => {
+            //     attachment['type'] = 'store';
+            //     this.filesToUpload.push(attachment);
+            //   });
+            // }
+
             if (this.dealerData && this.dealerData.partnerMobileVerified) {
               this.verification = true;
             }
@@ -395,28 +409,53 @@ export class CreateDealerComponent implements OnInit {
     console.log("Event ", event, type)
     const input = event.target.files;
     console.log("input ", input)
+    let fileUploadtoS3 = []
     this.fileService.filesSelected(event, this.selectedFiles[type]).then(
       () => {
+        let index = this.filesToUpload && this.filesToUpload.length > 0 ? this.filesToUpload.length : 0;
         for (const pic of input) {
           const size = pic["size"] / 1024;
           let fileObj = {
             owner: this.businessId,
+            ownerType: "Provider",
             fileName: pic["name"],
             fileSize: size / 1024,
             caption: "",
             fileType: pic["type"].split("/")[1],
             action: 'add'
           }
+          console.log("pic", pic)
           fileObj['file'] = pic;
           fileObj['type'] = type;
+          fileObj['order'] = index;
           this.filesToUpload.push(fileObj);
+          fileUploadtoS3.push(fileObj);
+          index++;
         }
+
+        this.cdlservice.uploadFilesToS3(fileUploadtoS3).subscribe(
+          (s3Urls: any) => {
+            if (s3Urls && s3Urls.length > 0) {
+              this.uploadAudioVideo(s3Urls).then(
+                (dataS3Url) => {
+                  console.log(dataS3Url);
+                  console.log("Sending Attachment Success");
+                });
+            }
+          }, error => {
+            this.snackbarService.openSnackBar(error,
+              { panelClass: "snackbarerror" }
+            );
+          }
+        );
+
       }).catch((error) => {
         this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
       })
 
 
   }
+
 
   verifyemail() {
     if (!this.verification) {
@@ -694,46 +733,35 @@ export class CreateDealerComponent implements OnInit {
     this.router.navigate(['provider', 'cdl', 'dealers', 'update'], navigationExtras);
   }
 
-  deleteTempImage(i, type, deleteText) {
+  deleteTempImage(i, type, file) {
+    console.log('file', file);
+    delete file['s3path'];
+    delete file['uid'];
+    file["action"] = "remove";
+    file["type"] = type;
+    this.filesToUpload.push(file);
+
     let files = this.filesToUpload.filter((fileObj) => {
-      // console.log('fileObj',fileObj)
       if (fileObj && fileObj.fileName && this.selectedFiles[type] && this.selectedFiles[type].files[i] && this.selectedFiles[type].files[i].name) {
         if (fileObj.type) {
           return (fileObj.fileName === this.selectedFiles[type].files[i].name && fileObj.type === type);
         }
       }
     });
-    // console.log("files",files,i)
+
     if (files && files.length > 0) {
       console.log(this.filesToUpload.indexOf(files[0]));
-      if (this.filesToUpload && this.filesToUpload.indexOf(files[0])) {
-        const index = this.filesToUpload.indexOf(files[0]);
-        this.filesToUpload.splice(index, 1);
-      }
+      // if (this.filesToUpload && this.filesToUpload.indexOf(files[0])) {
+      //   const index = this.filesToUpload.indexOf(files[0]);
+      //   this.filesToUpload.splice(index, 1);
+      // }
+      file['action'] = 'remove';
     }
+    console.log("this.filesToUpload", this.filesToUpload)
     this.selectedFiles[type].files.splice(i, 1);
     this.selectedFiles[type].base64.splice(i, 1);
     this.selectedFiles[type].caption.splice(i, 1);
-    // if (type === 'aadhar') {
-    //   this.dealerData.aadharAttachments.splice(i, 1);
-    //   this.actionText = 'Delete';
 
-    // } else if (type === 'pan') {
-    //   this.dealerData.panAttachments.splice(i, 1);
-    //   this.actionText = 'Delete';
-    // }
-    // else if (type === 'photo') {
-    //   this.dealerData.partnerAttachments.splice(i, 1);
-    //   this.actionText = 'Delete';
-    // }
-    // else if (type === 'store') {
-    //   this.dealerData.storeAttachments.splice(i, 1);
-    //   this.actionText = 'Delete';
-    // }
-    // else if (type === 'cheque') {
-    //   this.dealerData.bankAttachments.splice(i, 1);
-    //   this.actionText = 'Delete';
-    // }
   }
 
 
@@ -823,8 +851,8 @@ export class CreateDealerComponent implements OnInit {
       "partnerMobile": this.createDealer.controls.phone.value,
       "partnerEmail": this.createDealer.controls.email.value,
       "description": this.createDealer.controls.description.value,
-      "type": { "id": this.createDealer.controls.type.value },
-      "category": { "id": this.createDealer.controls.category.value },
+      // "type": { "id": this.createDealer.controls.type.value },
+      // "category": { "id": this.createDealer.controls.category.value },
       "partnerAddress1": this.createDealer.controls.address1.value,
       "partnerAddress2": this.createDealer.controls.address2.value,
       "partnerPin": this.createDealer.controls.pincode.value,
@@ -850,6 +878,13 @@ export class CreateDealerComponent implements OnInit {
 
     if (this.dealerData) {
       console.log("Loan Application Data : ", this.dealerData)
+      this.dealerData['partnerAttachments'] = [];
+      this.dealerData['storeAttachments'] = [];
+      this.dealerData['aadhaarAttachments'] = [];
+      this.dealerData['panAttachments'] = [];
+      this.dealerData['bankAttachments'] = [];
+      this.dealerData['gstAttachments'] = [];
+      this.dealerData['licenceAttachments'] = [];
       if (this.action != 'update') {
         for (let i = 0; i < this.filesToUpload.length; i++) {
           this.filesToUpload[i]['order'] = i;
@@ -898,31 +933,31 @@ export class CreateDealerComponent implements OnInit {
           })
       }
       else {
-
+        this.dealerData['partnerAttachments'] = [];
+        this.dealerData['storeAttachments'] = [];
+        this.dealerData['aadhaarAttachments'] = [];
+        this.dealerData['panAttachments'] = [];
+        this.dealerData['bankAttachments'] = [];
+        this.dealerData['gstAttachments'] = [];
+        this.dealerData['licenceAttachments'] = [];
         for (let i = 0; i < this.filesToUpload.length; i++) {
-          this.filesToUpload[i]['order'] = i;
+          // this.filesToUpload[i]['order'] = i;
           if (this.filesToUpload[i]["type"] == 'photo') {
-            this.dealerData['partnerAttachments'] = [];
             this.dealerData['partnerAttachments'].push(this.filesToUpload[i]);
           }
           if (this.filesToUpload[i]["type"] == 'store') {
-            this.dealerData['storeAttachments'] = [];
             this.dealerData['storeAttachments'].push(this.filesToUpload[i]);
           }
           if (this.filesToUpload[i]["type"] == 'aadhar') {
-            this.dealerData['aadhaarAttachments'] = [];
             this.dealerData['aadhaarAttachments'].push(this.filesToUpload[i]);
           }
           if (this.filesToUpload[i]["type"] == 'pan') {
-            this.dealerData['panAttachments'] = [];
             this.dealerData['panAttachments'].push(this.filesToUpload[i]);
           }
           if (this.filesToUpload[i]["type"] == 'cheque') {
-            this.dealerData['bankAttachments'] = [];
             this.dealerData['bankAttachments'].push(this.filesToUpload[i]);
           }
           if (this.filesToUpload[i]["type"] == 'gst') {
-            this.dealerData['gstAttachments'] = [];
             this.dealerData['gstAttachments'].push(this.filesToUpload[i]);
           }
         }
@@ -959,21 +994,19 @@ export class CreateDealerComponent implements OnInit {
     console.log("DAta:", data);
     return new Promise(async function (resolve, reject) {
       for (const s3UrlObj of data) {
-        console.log("S3URLOBJ:", s3UrlObj);
         console.log('_this.filesToUpload', _this.filesToUpload)
-        const file = _this.filesToUpload.filter((fileObj) => {
+        let file = _this.filesToUpload.filter((fileObj) => {
           return ((fileObj.order === (s3UrlObj.orderId)) ? fileObj : '');
         })[0];
         console.log("File:", file);
         if (file) {
-          await _this.uploadFiles(file['file'], s3UrlObj.url).then(
+          file['driveId'] = s3UrlObj.driveId;
+          await _this.uploadFiles(file['file'], s3UrlObj.url, s3UrlObj.driveId).then(
             () => {
               count++;
-              console.log("Count", count);
-              console.log("Count", data.length);
               if (count === data.length) {
-                console.log("HERE");
                 resolve(true);
+                console.log('_this.filesToUpload', _this.filesToUpload)
               }
             }
           );
@@ -984,12 +1017,15 @@ export class CreateDealerComponent implements OnInit {
       }
     })
   }
-  uploadFiles(file, url) {
+  uploadFiles(file, url, driveId) {
     const _this = this;
     return new Promise(function (resolve, reject) {
       _this.cdlservice.videoaudioS3Upload(file, url)
         .subscribe(() => {
-          resolve(true);
+          console.log("Final Attchment Sending Attachment Success", file)
+          _this.cdlservice.videoaudioS3UploadStatusUpdate('COMPLETE', driveId).subscribe((data: any) => {
+            resolve(true);
+          })
         }, error => {
           console.log('error', error)
           _this.snackbarService.openSnackBar(_this.wordProcessor.getProjectErrorMesssages(error), { 'panelClass': 'snackbarerror' });
@@ -1027,6 +1063,7 @@ export class CreateDealerComponent implements OnInit {
   }
 
 
+
   saveAsLead() {
     this.disableBtn = true;
     this.dealerData = {
@@ -1056,35 +1093,36 @@ export class CreateDealerComponent implements OnInit {
       "googleMapLocation": this.mapAddress
     }
 
-    console.log("This.dealerData", this.dealerData);
+    console.log("This.filesToUpload", this.filesToUpload);
+    this.dealerData['partnerAttachments'] = [];
+    this.dealerData['storeAttachments'] = [];
+    this.dealerData['aadhaarAttachments'] = [];
+    this.dealerData['panAttachments'] = [];
+    this.dealerData['bankAttachments'] = [];
+    this.dealerData['gstAttachments'] = [];
+    this.dealerData['licenceAttachments'] = [];
+
     for (let i = 0; i < this.filesToUpload.length; i++) {
-      this.filesToUpload[i]['order'] = i;
+      // this.filesToUpload[i]['order'] = i;
       if (this.filesToUpload[i]["type"] == 'photo') {
-        this.dealerData['partnerAttachments'] = [];
         this.dealerData['partnerAttachments'].push(this.filesToUpload[i]);
       }
       if (this.filesToUpload[i]["type"] == 'store') {
-        this.dealerData['storeAttachments'] = [];
         this.dealerData['storeAttachments'].push(this.filesToUpload[i]);
       }
       if (this.filesToUpload[i]["type"] == 'aadhar') {
-        this.dealerData['aadhaarAttachments'] = [];
         this.dealerData['aadhaarAttachments'].push(this.filesToUpload[i]);
       }
       if (this.filesToUpload[i]["type"] == 'pan') {
-        this.dealerData['panAttachments'] = [];
         this.dealerData['panAttachments'].push(this.filesToUpload[i]);
       }
       if (this.filesToUpload[i]["type"] == 'cheque') {
-        this.dealerData['bankAttachments'] = [];
         this.dealerData['bankAttachments'].push(this.filesToUpload[i]);
       }
       if (this.filesToUpload[i]["type"] == 'gst') {
-        this.dealerData['gstAttachments'] = [];
         this.dealerData['gstAttachments'].push(this.filesToUpload[i]);
       }
       if (this.filesToUpload[i]["type"] == 'licenese') {
-        this.dealerData['licenceAttachments'] = [];
         this.dealerData['licenceAttachments'].push(this.filesToUpload[i]);
       }
     }
@@ -1096,7 +1134,7 @@ export class CreateDealerComponent implements OnInit {
           this.uploadAudioVideo(s3urls).then(
             (dataS3Url) => {
               console.log(dataS3Url);
-              this.snackbarService.openSnackBar("Dealer Saved As Draft Successfully")
+
               this.disableBtn = false;
               let _this = this;
               let currentUrl = _this.router.url;
@@ -1110,6 +1148,7 @@ export class CreateDealerComponent implements OnInit {
               this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' })
             });
         } else {
+          this.snackbarService.openSnackBar("Dealer Saved As Draft Successfully")
           let _this = this;
           let currentUrl = _this.router.url;
           _this.router.navigate(['provider', 'cdl', 'dealers']).then(() => {
