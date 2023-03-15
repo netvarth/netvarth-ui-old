@@ -1,0 +1,36 @@
+.font-medium {
+    font-size: 18px !important;
+    font-weight: bold !important;
+}
+
+.text-grey {
+    color: #757575 !important;
+}
+
+.p-button-primary {
+    background-color: #1A6BE3 !important;
+}
+
+.p-button-light {
+    background-color: rgba(255, 255, 255, 1) !important;
+    color: rgba(113, 138, 158, 1) !important;
+}
+
+::ng-deep .booking-snippet .p-card-content {
+    padding: 0 !important;
+}
+
+
+::ng-deep .booking-snippet .p-card {
+    border: 1.11294px solid #EAF0FC;
+    box-shadow: 0px 4.45178px 8.90355px rgba(0, 0, 0, 0.08);
+}
+
+
+@media (max-width: 576px) {
+    .my-sm-3 {
+        margin-top: 7px !important;
+        margin-bottom: 7px !important;
+    }
+
+}

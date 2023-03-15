@@ -23,12 +23,38 @@
     font-weight: bold !important;
 }
 
+.dashboard-stats-card-large-title {
+    font-size: 30px !important;
+    font-weight: 600 !important;
+}
+
+.font-medium {
+    font-size: 23px !important;
+    font-weight: 500 !important;
+}
+
+.font-medium .fa-inr {
+    font-size: 20px !important;
+}
+
 .text-grey {
     color: #757575 !important;
 }
 
 .small-icon {
     font-size: 16px !important;
+}
+
+.p-button-primary {
+    background-color: #1A6BE3 !important;
+}
+
+.p-button-rounded-white {
+    border-color: rgb(183, 180, 180) !important;
+}
+
+.p-button-light {
+    background-color: rgba(255, 255, 255, 1) !important;
 }
 
 ::ng-deep .provider-dashboard .p-card {
@@ -38,6 +64,7 @@
 ::ng-deep .title-card .p-card-content,
 ::ng-deep .title-card .p-card-content,
 ::ng-deep .dashboard-stats-card-small .p-card-content,
+::ng-deep .dashboard-stats-card-large .p-card-content,
 ::ng-deep .dashboard-heading .p-card-content,
 ::ng-deep .dashboard-heading-cards .p-card-content {
     padding: 0 !important;
@@ -54,23 +81,50 @@
     padding-left: 0 !important;
 }
 
-::ng-deep .dashboard-heading-cards .p-card,
-::ng-deep .dashboard-stats-card-small .p-card {
+::ng-deep .dashboard-heading-cards .p-card {
     border-radius: 7px !important;
+}
+
+::ng-deep .dashboard-stats-card-small .p-card,
+::ng-deep .dashboard-stats-card-large .p-card {
+    border-radius: 7px !important;
+    box-shadow: 0px 3px 16px rgba(231, 231, 231, 0.25);
+}
+
+::ng-deep .dashboard-heading-cards .p-card {
+    box-shadow: none;
+}
+
+::ng-deep .dashboard-heading-cards .p-card:hover {
+    transition: 0.5s;
+    box-shadow: 0px 4px 18px rgba(116, 109, 109, 0.21);
 }
 
 ::ng-deep .dashboard-heading-cards .dashboard-heading-card .p-card {
     border-radius: 2px !important;
 }
 
+::ng-deep .dashboard-stats-card-small .p-card-body {
+    height: 250px !important;
+}
 
+::ng-deep .dashboard-progress-bars .dashboard-progress-bar1 .p-progressbar .p-progressbar-value {
+    background: rgb(255, 92, 92) !important;
+    background: linear-gradient(90deg, rgba(255, 92, 92, 1) 35%, rgba(255, 158, 108, 1) 100%) !important;
+}
+
+::ng-deep .dashboard-progress-bars .dashboard-progress-bar2 .p-progressbar .p-progressbar-value {
+    background: rgb(108, 238, 255);
+    background: linear-gradient(90deg, rgba(108, 238, 255, 1) 35%, rgba(73, 178, 146, 1) 100%);
+}
 
 @media (max-width: 576px) {
     .dashboard-heading-card {
         width: 140px !important;
     }
 
-    .dashboard-stats-card-small {
-        height: 220px !important;
+    .dashboard-stats-card-small:nth-child(n+1) {
+        margin-top: 15px !important;
     }
+
 }

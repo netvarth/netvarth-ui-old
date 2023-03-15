@@ -60,10 +60,10 @@
                         class="col-lg-2 col-md-3 col-sm-6 col-xs-6 mr-2 mr-xs-0 mt-2 pointer-cursor text-center dashboard-heading-card">
                         <p-card>
                             <div>
-                                <img src="../../../../assets/images/dashboard/remainders.png" width="50" height="50">
+                                <img src="../../../../assets/images/dashboard/reminders.png" width="50" height="50">
                             </div>
                             <div>
-                                <span class="font-weight-400">Remainders</span>
+                                <span class="font-weight-400">Reminders</span>
                             </div>
                         </p-card>
                     </div>
@@ -76,7 +76,7 @@
         <div class="row">
             <div class="col-md-6 no-padding-small">
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 mt-2 no-padding-small dashboard-stats-card-small">
+                    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 no-padding-small dashboard-stats-card-small mt-2">
                         <p-card>
                             <div>
                                 <div>
@@ -112,23 +112,16 @@
                                                 class="fa fa-inr small-icon text-grey"></i></sup>&nbsp;9000</div>
                                 </div>
                                 <div>
-                                    <span class="font-weight-400 text-grey">Total Bookings this Week</span>
+                                    <span class="font-weight-400 text-grey">Average Weekly Earnings</span>
                                 </div>
                             </div>
-                            <div class="mt-4">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding-small">
-                                        <p-chart type="doughnut" [data]="doughnutChartData"
-                                            [options]="doughnutChartOptions" width="100"></p-chart>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6 mt-3 no-padding-small pl-0">
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#5A6ACF"></i>&nbsp;Appointments</div>
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#F1416C"></i>&nbsp;Tokens</div>
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#E4E6EF"></i>&nbsp;Orders</div>
-                                    </div>
+                            <div class="mt-2">
+                                <div class="font-weight-400 text-center"><i class="fa fa-circle"
+                                        style="color:#5BA6FF"></i>&nbsp;Earnings
+                                </div>
+                                <div>
+                                    <p-chart type="bar" [data]="barChartData" [options]="barChartOptions"
+                                        width="250"></p-chart>
                                 </div>
                             </div>
                         </p-card>
@@ -137,26 +130,18 @@
                         <p-card>
                             <div>
                                 <div>
-                                    <div class="dashboard-stats-card-small-title">250</div>
+                                    <div class="dashboard-stats-card-small-title">500</div>
                                 </div>
                                 <div>
-                                    <span class="font-weight-400 text-grey">Total Bookings this Week</span>
+                                    <span class="font-weight-400 text-grey">Total Customers</span>
                                 </div>
                             </div>
-                            <div class="mt-4">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding-small">
-                                        <p-chart type="doughnut" [data]="doughnutChartData"
-                                            [options]="doughnutChartOptions" width="100"></p-chart>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6 mt-3 no-padding-small pl-0">
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#5A6ACF"></i>&nbsp;Appointments</div>
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#F1416C"></i>&nbsp;Tokens</div>
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#E4E6EF"></i>&nbsp;Orders</div>
-                                    </div>
+                            <div class="mt-5">
+                                <div>
+                                    <div class="dashboard-stats-card-small-title">25</div>
+                                </div>
+                                <div>
+                                    <span class="font-weight-400 text-grey">Total Users</span>
                                 </div>
                             </div>
                         </p-card>
@@ -165,25 +150,29 @@
                         <p-card>
                             <div>
                                 <div>
-                                    <div class="dashboard-stats-card-small-title">250</div>
+                                    <div class="dashboard-stats-card-small-title">02</div>
                                 </div>
                                 <div>
-                                    <span class="font-weight-400 text-grey">Total Bookings this Week</span>
+                                    <span class="font-weight-400 text-grey">Top Services</span>
                                 </div>
                             </div>
-                            <div class="mt-4">
-                                <div class="row">
-                                    <div class="col-md-6 col-sm-6 col-xs-6 no-padding-small">
-                                        <p-chart type="doughnut" [data]="doughnutChartData"
-                                            [options]="doughnutChartOptions" width="100"></p-chart>
+                            <div class="mt-3 dashboard-progress-bars">
+                                <div>
+                                    <div>
+                                        <span class="font-weight-400">Gen. Check-Up</span>
                                     </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6 mt-3 no-padding-small pl-0">
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#5A6ACF"></i>&nbsp;Appointments</div>
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#F1416C"></i>&nbsp;Tokens</div>
-                                        <div class="font-weight-400 d-flex align-items-center"><i class="fa fa-circle"
-                                                style="color:#E4E6EF"></i>&nbsp;Orders</div>
+                                    <div class="dashboard-progress-bar1 mt-1">
+                                        <p-progressBar [value]="35" [showValue]='false'
+                                            [style]="{'height': '15px','border-radius': '10px', 'background-color': '#F2F5F6'}"></p-progressBar>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div>
+                                        <span class="font-weight-400">WhatsApp Video Consulation</span>
+                                    </div>
+                                    <div class="dashboard-progress-bar2 mt-1">
+                                        <p-progressBar [value]="60" [showValue]='false'
+                                            [style]="{'height': '15px','border-radius': '10px', 'background-color': '#F2F5F6'}"></p-progressBar>
                                     </div>
                                 </div>
                             </div>
@@ -192,17 +181,75 @@
                 </div>
             </div>
             <div class="col-md-6 no-padding-small">
-                <div class="mt-2 pointer-cursor text-center dashboard-stats-card" (click)="gotoAppointments()">
+                <div class="mt-2 dashboard-stats-card-large">
                     <p-card>
-                        <div>
-                            <img src="../../../../assets/images/dashboard/appointments.png" width="50" height="50">
+                        <div class="mt-0">
+                            <div class="dashboard-stats-card-large-title">Statistics</div>
                         </div>
-                        <div>
-                            <span class="font-weight-400">Appointments</span>
+                        <div class="mt-2">
+                            <div>
+                                <span class="font-medium"><i class="fa fa-inr"></i>&nbsp;40000</span>
+                            </div>
+                            <div>
+                                <span class="font-weight-400 text-grey">Total Revenue</span>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <p-chart type="line" height="345" [data]="lineChartData"
+                                [options]="lineChartOptions"></p-chart>
                         </div>
                     </p-card>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 no-padding-small mt-4">
+                <div>
+                    <app-booking-snippet [type]="'token'" [title]="'Upcoming Tokens'"
+                        [bookings]="bookings"></app-booking-snippet>
+                </div>
+                <div class="mt-3">
+                    <app-booking-snippet [type]="'appointments'" [title]="'Upcoming Appointments'"
+                        [bookings]="bookings"></app-booking-snippet>
+                </div>
+            </div>
+            <div class="col-md-4 no-padding-small mt-4">
+                <p-card>
+                    <div class="text-center">
+                        <img src="../../../../assets/images/dashboard/custom_app_card.png" width="180" height="180">
+                    </div>
+                    <div class="text-center font-weight-bold my-3">
+                        Custom Applications Tailored
+                        For Your Needs
+                    </div>
+                    <div class="font-weight-bold text-center my-3">
+                        <button pButton type="button" class="p-button-raised p-button-primary p-button-rounded"
+                            label="Try Now"></button>
+                    </div>
+                    <div class="text-center my-3">
+                        Share your jaldee profile
+                    </div>
+                    <div class="font-weight-bold text-center my-3">
+                        <button pButton type="button"
+                            class="p-button-raised p-button-light p-button-rounded  p-button-rounded-white">
+                            <span class="mr-4"><img src="../../../../assets/images/dashboard/phone.png" width="15"
+                                    height="15"></span>
+                            <span class="mr-4"><img src="../../../../assets/images/dashboard/message.png" width="15"
+                                    height="15"></span>
+                            <span class="mr-4"><img src="../../../../assets/images/dashboard/voicemail.png" width="15"
+                                    height="15"></span>
+                            <span class="mr-4"><img src="../../../../assets/images/dashboard/telegram.png" width="15"
+                                    height="15"></span>
+                            <span><img src="../../../../assets/images/dashboard/whatsapp.png" width="15"
+                                    height="15"></span>
+                        </button>
+                    </div>
+                </p-card>
+            </div>
+        </div>
+    </div>
+    <br>
 </div>

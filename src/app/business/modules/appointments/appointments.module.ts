@@ -29,6 +29,7 @@ import { BookingHistoryModule } from '../../shared/booking-history/booking-histo
 import { TeleBookingService } from '../../../shared/services/tele-bookings-service';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FullViewCalendarModule } from '../dashboard/full-view-calendar/full-view-calendar.module';
+import { TabViewModule } from 'primeng/tabview';
 
 const routes: Routes = [
     { path: '', component: AppointmentsComponent },
@@ -77,6 +78,7 @@ const routes: Routes = [
         BookingHistoryModule,
         MatAutocompleteModule,
         FullViewCalendarModule,
+        TabViewModule,
         [RouterModule.forChild(routes)]
     ],
     declarations: [

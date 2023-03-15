@@ -26,7 +26,7 @@ export class FullViewCalendarComponent implements OnInit {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     headerToolbar: {
       // left: 'prev,next today',
-      center: 'title',
+      // center: 'title',
       // right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
     weekends: true,
