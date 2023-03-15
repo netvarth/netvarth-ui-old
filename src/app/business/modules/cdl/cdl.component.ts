@@ -100,6 +100,8 @@ export class CdlComponent implements OnInit {
     },
     {
       "url": "./assets/images/cdl/rejected.png"
+    }, {
+      "url": "./assets/images/cdl/lead_generated.png"
     }
   ]
 
