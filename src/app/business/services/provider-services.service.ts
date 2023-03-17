@@ -2719,9 +2719,9 @@ export class ProviderServices {
     const _this = this;
     return new Promise(function (resolve, reject) {
       const accountSettings = _this.commonDataStorage.getSettings('account');
+      console.log("Account Settings:", accountSettings);
 
       if (accountSettings) {
-        console.log("Account Settings:", accountSettings);
         resolve(accountSettings);
       } else {
         console.log("Account Settings No:");
@@ -2936,6 +2936,16 @@ export class ProviderServices {
   addLabeltoService(serviceid ,data) {
     const url = 'provider/services/applyLabel/' + serviceid ;
     return this.servicemeta.httpPut(url,data);
+  }
+
+  getBusinessProfileFromCustomId(id) {
+    const url = 'provider/account/settings/config/' + id + '/businessProfile';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+  getCustomIdFromBusinessId(id) {
+    const url = 'provider/business/' + id;
+    return this.servicemeta.httpGet(url, null);
   }
 
 }

@@ -52,6 +52,7 @@ export class ProviderCustomLoginComponent implements OnInit {
   idPlaceHolder = 'Enter Mobile/Email';
   deviceId: any;
   loading = true;
+  pathRef: any;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -175,6 +176,7 @@ export class ProviderCustomLoginComponent implements OnInit {
     }
     console.log("this.busLoginId", this.prefix);
     if (projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId] && projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref']) {
+      this.pathRef = projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'];
       this.logoUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/plogo.png';
       console.log(this.logoUrl);
       this.graphicsUrl = projectConstantsLocal.UIS3PATH + projectConstantsLocal.CUSTOM_PROV_APP[this.busLoginId]['pathref'] + '/pgraphics.png';
@@ -249,47 +251,105 @@ export class ProviderCustomLoginComponent implements OnInit {
       }
     }
     const loginId = pN + this.prefix;
-    const post_data = {
+    let post_data = {
       'countryCode': this.selectedCountryCode,
       'loginId': loginId,
       'password': data.password,
       'mUniqueId': null
     };
+
     this.sessionStorageService.removeitemfromSessionStorage('tabId');
     post_data.mUniqueId = this.lStorageService.getitemfromLocalStorage('mUniqueId');
     // this.shared_functions.clearSessionStorage();
     this.sessionStorageService.clearSessionStorage();
     this.commonDataStorage.clearSpSettings();
-    this.authService.businessLogin(post_data)
-      .then(
-        () => {
-          const encrypted = this.shared_services.set(this.password, projectConstantsLocal.KEY);
-          this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-          this.lStorageService.setitemonLocalStorage('bpwd', data.password);
-          this.lStorageService.setitemonLocalStorage('busLoginId', this.busLoginId);
-          if (this.qParams && this.qParams['src']) {
-            if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
-              this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
+
+    const emailPattern = new RegExp(projectConstantsLocal.VALIDATOR_EMAIL);
+    const isEmail = emailPattern.test(loginId);
+    const isPhone = loginId && loginId.length >= 10 && loginId.length <= 12 ? true : false;
+    if (!isEmail && !isPhone) {
+      if (this.busLoginId) {
+        this.providerServices.getCustomIdFromBusinessId(this.busLoginId).subscribe((customId: any) => {
+          if (customId) {
+            this.providerServices.getBusinessProfileFromCustomId(customId).subscribe((data: any) => {
+              if (data && data.businessProfile) {
+                post_data['loginIdType'] = 'EmployeeId';
+                delete post_data['countryCode'];
+                delete post_data['mUniqueId'];
+                post_data['accountId'] = data.businessProfile.id
+              }
+
+              this.authService.businessLogin(post_data)
+                .then(
+                  () => {
+                    const encrypted = this.shared_services.set(this.password, projectConstantsLocal.KEY);
+                    this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+                    this.lStorageService.setitemonLocalStorage('bpwd', data.password);
+                    this.lStorageService.setitemonLocalStorage('busLoginId', this.busLoginId);
+                    if (this.qParams && this.qParams['src']) {
+                      if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
+                        this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
+                      } else {
+                        console.log("1 provider")
+                        this.router.navigate(['/provider']);
+                      }
+                    } else {
+                      // console.log("2 provider")
+                      this.router.navigate(['/provider']);
+                    }
+                  },
+                  error => {
+                    if (error.status === 401 && error.error === 'Session already exists.') {
+                      this.authService.doLogout().then(() => {
+                        this.onSubmit(data);
+                      });
+                    } else {
+                      this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+                    }
+                    this.api_loading = false;
+                  }
+                );
+
+            })
+          }
+        })
+      }
+    }
+
+    else {
+      this.authService.businessLogin(post_data)
+        .then(
+          () => {
+            const encrypted = this.shared_services.set(this.password, projectConstantsLocal.KEY);
+            this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+            this.lStorageService.setitemonLocalStorage('bpwd', data.password);
+            this.lStorageService.setitemonLocalStorage('busLoginId', this.busLoginId);
+            if (this.qParams && this.qParams['src']) {
+              if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
+                this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
+              } else {
+                console.log("1 provider")
+                this.router.navigate(['/provider']);
+              }
             } else {
-              console.log("1 provider")
+              // console.log("2 provider")
               this.router.navigate(['/provider']);
             }
-          } else {
-            // console.log("2 provider")
-            this.router.navigate(['/provider']);
+          },
+          error => {
+            if (error.status === 401 && error.error === 'Session already exists.') {
+              this.authService.doLogout().then(() => {
+                this.onSubmit(data);
+              });
+            } else {
+              this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            }
+            this.api_loading = false;
           }
-        },
-        error => {
-          if (error.status === 401 && error.error === 'Session already exists.') {
-            this.authService.doLogout().then(() => {
-              this.onSubmit(data);
-            });
-          } else {
-            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
-          }
-          this.api_loading = false;
-        }
-      );
+        );
+    }
+
+
   }
 
   createForm() {
