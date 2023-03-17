@@ -38,6 +38,10 @@ export class CustomerActionsComponent implements OnInit {
   groupMemberId = "";
   customerId;
   isMemberIdExisted;
+  from: any;
+  labelId: any;
+  serviceid: any;
+  selectedIndex: number;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private provider_services: ProviderServices,
@@ -48,17 +52,26 @@ export class CustomerActionsComponent implements OnInit {
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<CustomerActionsComponent>
   ) {
-    this.data.customer.forEach(element => {
-      // console.log("Element :", element);
-      this.customerId = element.id;
-    });
-
-    this.provider_services
+    if(this.data && this.data.customer){
+      this.data.customer.forEach(element => {
+        // console.log("Element :", element);
+        this.customerId = element.id;
+      });
+    }
+    if(this.data && this.data.groupName){
+      this.provider_services
       .getMemberId(this.data.groupName, this.customerId)
       .subscribe(data => {
         //  console.log("result :", data);
         this.isMemberIdExisted = data;
       });
+    }
+    if(this.data.from){
+    this.from = this.data.from
+    }
+    if(this.data.serviceid){
+      this.serviceid = this.data.serviceid
+      }
   }
   ngOnInit() {
     this.getLabel();
@@ -66,36 +79,33 @@ export class CustomerActionsComponent implements OnInit {
     //     'groupName':this.data.groupName,
     //     'proConId': this.customerId
     // }
-
-    this.customerDetails = this.data.customer;
-    console.log(
-      "generateMemberId",
-      this.data.generateMemberId,
-      this.data.groupName
-    );
-    console.log("generate ", this.customerDetails);
-    //this.isMemberIdExisted = this.data.isMemberIdExisted;
-    if (
-      this.customerDetails[0].phoneNo &&
-      this.customerDetails[0].phoneNo.trim() !== ""
-    ) {
-      this.phoneNum = this.customerDetails[0].phoneNo;
+    if (this.data.type && this.data.type === "label" && this.from === 'serv') {
+      this.action = "label_service";
     }
-    if (
-      this.customerDetails[0].whatsAppNum &&
-      this.customerDetails[0].whatsAppNum.number
-    ) {
-      this.whatsappNum = this.customerDetails[0].whatsAppNum.number;
-    }
-    if (this.phoneNum || this.customerDetails[0].email) {
-      this.showMessage = true;
-    }
-    if (this.data.type && this.data.type === "label") {
+    if (this.data.type && this.data.type === "label" && this.from !== 'serv') {
       this.action = "label";
     }
-    // if(this.action = 'generateMemberIds'){
-    // this.action = 'generateMemberIds';
-    // }
+    if(this.data && this.data.customer){
+      this.customerDetails = this.data.customer;
+      if(this.customerDetails){
+        if (
+          this.customerDetails[0].phoneNo &&
+          this.customerDetails[0].phoneNo.trim() !== ""
+        ) {
+          this.phoneNum = this.customerDetails[0].phoneNo;
+        }
+        if (
+          this.customerDetails[0].whatsAppNum &&
+          this.customerDetails[0].whatsAppNum.number
+        ) {
+          this.whatsappNum = this.customerDetails[0].whatsAppNum.number;
+        }
+        if (this.phoneNum || this.customerDetails[0].email) {
+          this.showMessage = true;
+        }
+      }
+    }
+   
     const user = this.groupService.getitemFromGroupStorage("ynw-user");
     this.domain = user.sector;
     this.subdomain = user.subSector;
@@ -342,6 +352,34 @@ export class CustomerActionsComponent implements OnInit {
       this.showApply = true;
     }
   }
+  addLabeltoService(label, event ) {
+    this.showApply = false;
+    let labelArr = this.providerLabels.filter(lab => lab.id === label);
+    console.log(labelArr)
+    console.log(this.labelMap)
+    if (this.labelMap[label]) {
+      delete this.labelMap[label];
+    }
+    if (this.labelsforRemove.indexOf(label) !== -1) {
+      this.labelsforRemove.splice(this.labelsforRemove.indexOf(label), 1);
+    }
+    if (event.checked) {
+      if (labelArr[0] && labelArr[0].selected) {
+      } else {
+        this.labelMap[label] = true;
+      }
+    } else {
+      if (labelArr[0] && labelArr[0].selected) {
+        this.labelsforRemove.push(label);
+      }
+    }
+    if (
+      Object.keys(this.labelMap).length > 0 ||
+      this.labelsforRemove.length > 0
+    ) {
+      this.showApply = true;
+    }
+  }
   applyLabel() {
     if (Object.keys(this.labelMap).length > 0) {
       this.addLabel();
@@ -373,6 +411,33 @@ export class CustomerActionsComponent implements OnInit {
       }
     );
   }
+  applyLabel_service(){
+    let labelId = [];
+   let labelIds = Object.keys(this.labelMap);
+  
+   labelIds.forEach(myFunction)
+   function myFunction(item) {
+    labelId.push(parseInt(item))
+  }
+  console.log(labelId)
+   const postData = labelId
+  ;
+
+    this.provider_services.addLabeltoService(this.serviceid , postData).subscribe(
+      data => {
+        this.snackbarService.openSnackBar("Label applied successfully", {
+          panelclass: "snackbarerror"
+        });
+        this.dialogRef.close("reload");
+      },
+      error => {
+        this.snackbarService.openSnackBar(error, {
+          panelClass: "snackbarerror"
+        });
+      }
+    );
+  }
+  
   deleteLabel() {
     const ids = [];
     for (const customer of this.customerDetails) {

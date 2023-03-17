@@ -14,6 +14,7 @@ import { DateTimeProcessor } from '../../../../../../shared/services/datetime-pr
 import { ProviderDataStorageService } from '../../../../../services/provider-datastorage.service';
 import { ServiceQRCodeGeneratordetailComponent } from '../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.component';
 import { projectConstantsLocal } from '../../../../../../shared/constants/project-constants';
+import { CustomerActionsComponent } from '../../../../../../../../src/app/business/modules/customers/customer-actions/customer-actions.component';
 
 @Component({
     selector: 'app-waitlist-services',
@@ -54,6 +55,11 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     bprofile: any = [];
     qrdialogRef: any;
     wndw_path = projectConstantsLocal.PATH;
+    action = "";
+    providerLabels: any = [];
+    loading = false;
+    showApply = false;
+    type: any;
     constructor(private provider_services: ProviderServices,
         public shared_functions: SharedFunctions,
         public provider_shared_functions: ProviderSharedFuctions,
@@ -83,6 +89,7 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         this.getDomainSubdomainSettings();
         this.getServiceCount();
         this.getLicenseUsage();
+        this.getLabel();
     }
 
     ngOnDestroy() {
@@ -304,4 +311,52 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
         //   }
         });
     }
+    showLabels() {
+        this.action = "label";
+      }
+      getLabel() {
+        this.loading = true;
+        this.providerLabels = [];
+        this.provider_services.getLabelList().subscribe((data: any) => {
+            console.log(data)
+          this.providerLabels = data.filter(label => label.status === "ENABLED");
+          this.loading = false;
+          
+            // this.labelselection();
+          
+        });
+      }
+     
+      showLabelPopup(serv, service) {
+      this.type = serv;
+        const notedialogRef = this.dialog.open(CustomerActionsComponent, {
+          width: '50%',
+          panelClass: ['popup-class', 'commonpopupmainclass'],
+          disableClose: true,
+          data: {
+            serviceid: service.id,
+            type: 'label',
+            from : this.type
+          }
+        });
+        notedialogRef.afterClosed().subscribe(result => {
+          this.getLabel();
+         
+        });
+      }
+    //   labelselection() {
+    //     const values = [];
+    //     if (this.appt.label && Object.keys(this.appt.label).length > 0) {
+    //       Object.keys(this.appt.label).forEach(key => {
+    //         values.push(key);
+    //       });
+    //       for (let i = 0; i < this.providerLabels.length; i++) {
+    //         for (let k = 0; k < values.length; k++) {
+    //           if (this.providerLabels[i].label === values[k]) {
+    //             this.providerLabels[i].selected = true;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
 }

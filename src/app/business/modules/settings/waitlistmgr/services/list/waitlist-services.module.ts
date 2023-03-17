@@ -12,6 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { ServiceqrcodegeneratorModule } from '../../../../../../shared/modules/service/serviceqrcodegenerator/serviceqrcodegeneratordetail.module';
+import { CommunicationService } from '../../../../../../../../src/app/business/services/communication-service';
 const routes: Routes = [
     { path: '', component: WaitlistServicesComponent },
     { path: ':id', loadChildren: ()=> import('../details/waitlistservice-detail.module').then(m=>m.WaitlistServiceDetailModule)}
@@ -37,7 +38,8 @@ const routes: Routes = [
         WaitlistServicesComponent
     ],
     providers: [
-        ServicesService
+        ServicesService,
+        CommunicationService
     ],
     schemas: [
         CUSTOM_ELEMENTS_SCHEMA,

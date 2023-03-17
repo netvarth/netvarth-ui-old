@@ -2933,5 +2933,9 @@ export class ProviderServices {
     const url = 'provider/user/' + id + '/available/' + status;
     return this.servicemeta.httpPut(url, null);
   }
+  addLabeltoService(serviceid ,data) {
+    const url = 'provider/services/applyLabel/' + serviceid ;
+    return this.servicemeta.httpPut(url,data);
+  }
 
 }
