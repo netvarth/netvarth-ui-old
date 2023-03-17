@@ -2719,9 +2719,9 @@ export class ProviderServices {
     const _this = this;
     return new Promise(function (resolve, reject) {
       const accountSettings = _this.commonDataStorage.getSettings('account');
+      console.log("Account Settings:", accountSettings);
 
       if (accountSettings) {
-        console.log("Account Settings:", accountSettings);
         resolve(accountSettings);
       } else {
         console.log("Account Settings No:");
@@ -2932,6 +2932,16 @@ export class ProviderServices {
   changeAvialabilityStatus(id, status) {
     const url = 'provider/user/' + id + '/available/' + status;
     return this.servicemeta.httpPut(url, null);
+  }
+
+  getBusinessProfileFromCustomId(id) {
+    const url = 'provider/account/settings/config/' + id + '/businessProfile';
+    return this.servicemeta.httpGet(url, null);
+  }
+
+  getCustomIdFromBusinessId(id) {
+    const url = 'provider/business/' + id;
+    return this.servicemeta.httpGet(url, null);
   }
 
 }

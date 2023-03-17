@@ -3,6 +3,14 @@
     font-weight: bold !important;
 }
 
+.text-small {
+    font-size: 20px !important;
+}
+
+
+.text-large {
+    font-size: 25px !important;
+}
 
 .form-title {
     font-size: 12px !important;
