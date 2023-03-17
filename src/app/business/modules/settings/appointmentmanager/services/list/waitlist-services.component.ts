@@ -323,10 +323,8 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
           this.loading = false;
           
             // this.labelselection();
-          
         });
       }
-     
       showLabelPopup(serv, service) {
       this.type = serv;
         const notedialogRef = this.dialog.open(CustomerActionsComponent, {
@@ -360,3 +358,4 @@ export class WaitlistServicesComponent implements OnInit, OnDestroy {
     //     }
     //   }
 }
+

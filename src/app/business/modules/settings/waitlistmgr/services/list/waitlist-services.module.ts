@@ -47,3 +47,4 @@ const routes: Routes = [
     ]
 })
 export class WaitlistServicesModule { }
+

@@ -2942,10 +2942,8 @@ export class ProviderServices {
     const url = 'provider/account/settings/config/' + id + '/businessProfile';
     return this.servicemeta.httpGet(url, null);
   }
-
   getCustomIdFromBusinessId(id) {
     const url = 'provider/business/' + id;
     return this.servicemeta.httpGet(url, null);
   }
-
 }
