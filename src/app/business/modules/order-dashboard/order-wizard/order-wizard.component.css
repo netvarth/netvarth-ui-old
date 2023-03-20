@@ -723,3 +723,14 @@ i {
 .color{
   color: #000 !important;
 }
+.py-2 {
+  padding-bottom: 0.5rem !important;
+  padding-top: 0.5rem !important;
+}
+.serchbt{
+  color: #fff;
+    background-color: #1e4079;
+    border-color: #1e4079;
+    padding-left: 1rem!important;
+    padding-right: 1rem!important;
+}
