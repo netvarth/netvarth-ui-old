@@ -200,8 +200,19 @@ export class LoansComponent implements OnInit {
     let api_filter = this.cdlservice.setFiltersFromPrimeTable(event);
     if (this.statusDropdownClicked) {
       if (this.statusDisplayName && this.statusDisplayName.name) {
-        if (this.statusDisplayName.name != 'All') {
-          api_filter['spInternalStatus-eq'] = this.statusDisplayName.name;
+        console.log("this.statusDisplayName.name", this.statusDisplayName.name)
+        if (this.statusDisplayName.name != 'All' && this.statusDisplayName.name != 'rejected') {
+          if (this.statusDisplayName.name == 'Rejected') {
+            // api_filter['applicationStatus-eq'] = 'Rejected';
+            api_filter['isRejected-eq'] = true;
+          }
+          else if (this.statusDisplayName.name == 'Redirected') {
+            api_filter['isRejected-eq'] = false;
+            api_filter['isActionRequired-eq'] = true;
+          }
+          else {
+            api_filter['spInternalStatus-eq'] = this.statusDisplayName.name;
+          }
         }
       }
     }
