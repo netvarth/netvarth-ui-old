@@ -40,9 +40,9 @@
 <app-common-innerloading-spinner *ngIf="apiloading"></app-common-innerloading-spinner>
 <br><br>
 
-<div class="card">
+<!-- <div class="card appointments-dashboard-card">
   <p-tabView>
-    <p-tabPanel header="List View" leftIcon="pi pi-list" tooltip="List View">
+    <p-tabPanel header="List View" leftIcon="pi pi-list" tooltip="List View"> -->
       <section *ngIf="!showDashbard && !apiloading">
         <div class="col-md-12 col-xs-12 col-sm-12 col-xs-12">
           <div class="token-appt" *ngIf="message">
@@ -2390,7 +2390,7 @@
                           </span>
                         </li>
                         <!--
-                      
+
                                                 <li class="filterli filterCheckbox  filterCheckboxborder filtercheckboxSize"
                                                   *ngFor="let multiUser of users">
                                                   <span *ngIf="multiUser.admin === true">
@@ -2665,13 +2665,13 @@
   </button>
 </div>
 </section>
-</p-tabPanel>
-<!-- <p-tabPanel header="Calendar View" leftIcon="pi pi-calendar" tooltip="Calendar View">
+<!-- </p-tabPanel>
+<p-tabPanel header="Calendar View" leftIcon="pi pi-calendar" tooltip="Calendar View">
   <section class="app-appointments-component dashboard content pro-dash" *ngIf="showDashbard && !apiloading">
     <div class="card">
       <app-full-view-calendar [type]="'appointments'"></app-full-view-calendar>
     </div>
   </section>
-</p-tabPanel> -->
+</p-tabPanel>
 </p-tabView>
-</div>
+</div> -->

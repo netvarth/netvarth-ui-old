@@ -534,7 +534,7 @@ export class BranchUsersComponent implements OnInit {
       api_filter['pinCode-eq'] = this.filter.pinCode;
     }
     if (this.filter.userRole !== '') {
-      api_filter['roleId-eq'] = this.filter.userRole;
+      api_filter['userRoles-eq'] = 'roleId::' + this.filter.userRole;
     }
     if (this.filter.userType !== '') {
       if (this.filter.userType == 'ADMIN') {
