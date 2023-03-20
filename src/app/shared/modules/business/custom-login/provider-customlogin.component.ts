@@ -47,12 +47,24 @@ export class ProviderCustomLoginComponent implements OnInit {
   busLoginId: any;
   logoUrl: string;
   graphicsUrl: string;
+  otpPageLoginId: any;
   prefix = '';
   idCaption = 'Mobile/Email';
   idPlaceHolder = 'Enter Mobile/Email';
   deviceId: any;
   loading = true;
   pathRef: any;
+  otpConfig = {
+    allowNumbersOnly: true,
+    length: 4,
+    inputStyles: {
+      'width': '50px',
+      'height': '50px'
+    }
+  };
+  showOtpPage: any;
+  otpPageData: any;
+  loginOtpEntered: any;
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private router: Router,
@@ -281,21 +293,33 @@ export class ProviderCustomLoginComponent implements OnInit {
 
               this.authService.businessLogin(post_data)
                 .then(
-                  () => {
-                    const encrypted = this.shared_services.set(this.password, projectConstantsLocal.KEY);
-                    this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
-                    this.lStorageService.setitemonLocalStorage('bpwd', data.password);
-                    this.lStorageService.setitemonLocalStorage('busLoginId', this.busLoginId);
-                    if (this.qParams && this.qParams['src']) {
-                      if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
-                        this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
+                  (loginResposeData: any) => {
+
+                    if (loginResposeData && loginResposeData.multiFactorAuthenticationRequired) {
+                      if (loginId.startsWith('55')) {
+                        this.otpConfig.length = 5;
+                      }
+                      this.otpPageLoginId = loginId;
+                      this.showOtpPage = true;
+                      this.otpPageData = [data, post_data];
+                      this.api_loading = false;
+                    }
+                    else {
+                      const encrypted = this.shared_services.set(this.password, projectConstantsLocal.KEY);
+                      this.lStorageService.setitemonLocalStorage('jld', encrypted.toString());
+                      this.lStorageService.setitemonLocalStorage('bpwd', data.password);
+                      this.lStorageService.setitemonLocalStorage('busLoginId', this.busLoginId);
+                      if (this.qParams && this.qParams['src']) {
+                        if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
+                          this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
+                        } else {
+                          console.log("1 provider")
+                          this.router.navigate(['/provider']);
+                        }
                       } else {
-                        console.log("1 provider")
+                        // console.log("2 provider")
                         this.router.navigate(['/provider']);
                       }
-                    } else {
-                      // console.log("2 provider")
-                      this.router.navigate(['/provider']);
                     }
                   },
                   error => {
@@ -350,6 +374,107 @@ export class ProviderCustomLoginComponent implements OnInit {
     }
 
 
+  }
+
+
+  goBackFromOtp() {
+    this.showOtpPage = false;
+    this.api_loading = false;
+  }
+
+  resendMfaOTP() {
+    this.onSubmit(this.otpPageData[0])
+    this.snackbarService.openSnackBar("Otp Resend Successfully");
+  }
+
+  onOtpChange(otp) {
+    this.loginOtpEntered = otp;
+  }
+
+  LoginWithMultiFactorOtp() {
+    this.api_loading = true;
+    if (this.otpPageLoginId) {
+      if (this.otpPageLoginId.startsWith('55')) {
+        if (this.loginOtpEntered.length < 5) {
+          return false;
+        } else {
+          this.otpVerification();
+        }
+      }
+      else {
+        if (this.loginOtpEntered.length < 4) {
+          return false;
+        } else {
+          this.otpVerification();
+        }
+      }
+    }
+  }
+
+
+
+  otpVerification() {
+    console.log(this.loginOtpEntered);
+    if (this.otpPageLoginId) {
+      if (this.loginOtpEntered.length < 4) {
+        this.snackbarService.openSnackBar('Invalid OTP', { 'panelClass': 'snackbarerror' });
+        return false;
+      }
+    }
+    if (this.loginOtpEntered === '' || this.loginOtpEntered === undefined) {
+      this.snackbarService.openSnackBar('Invalid OTP', { 'panelClass': 'snackbarerror' });
+    } else {
+      this.providerMultiFactorAuthenticationOtp()
+    }
+  }
+
+
+
+  providerMultiFactorAuthenticationOtp() {
+    if (this.otpPageData) {
+      let data = this.otpPageData[1];
+      data["multiFactorAuthenticationLogin"] = true;
+      data["otp"] = this.loginOtpEntered;
+
+      this.shared_services.ProviderLogin(data)
+        .subscribe(
+          (response: any) => {
+            this.setLoginData(response, this.otpPageData[1], 'provider');
+            if (this.qParams && this.qParams['src']) {
+              if (this.qParams['src'] && this.lStorageService.getitemfromLocalStorage(this.qParams['src'])) {
+                this.router.navigateByUrl(this.lStorageService.getitemfromLocalStorage(this.qParams['src']));
+              } else {
+                this.router.navigate(['/provider']);
+              }
+            } else {
+              this.providerServices.getAccountSettings().then(
+                (settings: any) => {
+                  console.log("Settings value:", settings);
+                  if (settings && settings.enableCdl) {
+                    this.router.navigate(['provider', 'cdl']);
+                  }
+                  else {
+                    this.router.navigate(['/provider']);
+                  }
+                });
+            }
+          },
+          error => {
+            this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
+            this.api_loading = false;
+          }
+        );
+    }
+  }
+
+
+  setLoginData(data, post_data, mod) {
+    this.groupService.setitemToGroupStorage('ynw-user', data);
+    this.lStorageService.setitemonLocalStorage('isBusinessOwner', (mod === 'provider') ? 'true' : 'false');
+    if (post_data['password']) {
+      delete post_data['password'];
+    }
+    this.lStorageService.setitemonLocalStorage('ynw-credentials', JSON.stringify(post_data));
   }
 
   createForm() {

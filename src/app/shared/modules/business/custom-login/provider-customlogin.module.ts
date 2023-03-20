@@ -10,26 +10,29 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { LoginModule } from '../../../components/login/login.module';
 import { RouterModule, Routes } from '@angular/router';
+import { NgOtpInputModule } from 'ng-otp-input';
+
 const routes: Routes = [
-    {path: '', component: ProviderCustomLoginComponent}
+  { path: '', component: ProviderCustomLoginComponent }
 ]
 @NgModule({
-    imports: [
-       CommonModule,
-       FormsModule,
-       HeaderModule,
-       ReactiveFormsModule,
-       FormMessageDisplayModule,
-       LoadingSpinnerModule,
-       MatFormFieldModule,
-       MatInputModule,
-       MatDialogModule,
-       LoginModule,
-       [RouterModule.forChild(routes)]
-    ],
-    declarations: [
-        ProviderCustomLoginComponent
-    ],
-    exports: [ProviderCustomLoginComponent]
+  imports: [
+    CommonModule,
+    FormsModule,
+    HeaderModule,
+    ReactiveFormsModule,
+    FormMessageDisplayModule,
+    LoadingSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    LoginModule,
+    NgOtpInputModule,
+    [RouterModule.forChild(routes)]
+  ],
+  declarations: [
+    ProviderCustomLoginComponent
+  ],
+  exports: [ProviderCustomLoginComponent]
 })
-export class ProviderCustomLoginModule {}
+export class ProviderCustomLoginModule { }

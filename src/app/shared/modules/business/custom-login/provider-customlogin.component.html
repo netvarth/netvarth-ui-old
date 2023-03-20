@@ -31,7 +31,7 @@
       <!--begin::Wrapper-->
       <div class="d-flex flex-row-fluid flex-center">
         <!--begin::Signin-->
-        <div class="login-form">
+        <div class="login-form" *ngIf="!showOtpPage">
           <!--begin::Form-->
           <form [formGroup]="loginForm" class="form" id="kt_login_singin_form" novalidate (ngSubmit)="loginForm.valid &&
             onSubmit (loginForm.value)" action="">
@@ -51,10 +51,10 @@
                 autocomplete="off" />
               <app-field-error-display class="text-left" [displayError]="fed_service.isFieldValid(loginForm,'emailId')"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'emailId',
-    {
-    'required' : 'Employee id is required',
-    'pattern' : 'Space not allowed'
-    })">
+          {
+          'required' : 'Employee id is required',
+          'pattern' : 'Space not allowed'
+          })">
               </app-field-error-display>
             </div>
             <!--end::Form group-->
@@ -68,9 +68,9 @@
                 placeholder="Enter password" formControlName="password" autocomplete="off" />
               <app-field-error-display class="text-left" [displayError]="fed_service.isFieldValid(loginForm,'password')"
                 [errorMsgs]="fed_service.getErrorMessage(loginForm,'password',
-    {
-    'required' : 'Password is required'
-    })">
+          {
+          'required' : 'Password is required'
+          })">
               </app-field-error-display>
             </div>
             <!--end::Form group-->
@@ -94,6 +94,37 @@
           <!--end::Form-->
         </div>
         <!--end::Signin-->
+
+        <div class="login-form" *ngIf="showOtpPage">
+          <div class="text-center">
+            <div class="row">
+              <div class="form-group otp">
+                <div class="font-weight-bold otp-title">Please Enter Otp For Verification</div>
+                <div class="mt-3">
+                  <ng-otp-input class="bkgclr" (onInputChange)="onOtpChange($event)" [config]="otpConfig"></ng-otp-input>
+                  <p class="mgn-up-20">Not received yet! <a class="pointer-cursor link" (click)="resendMfaOTP()">Resend
+                      OTP</a>
+                  </p>
+                  <div class="text-center">
+                    <button type="submit" (click)="goBackFromOtp()"
+                      class="btn btn-primary font-weight-bolder font-size-lg px-4 py-2 my-3 mr-3">
+                      Back
+                    </button>
+                    <button type="submit" (click)="LoginWithMultiFactorOtp()"
+                      class="btn btn-primary font-weight-bolder font-size-lg px-4 py-2 my-3 mr-3" [class.disabled]="api_loading"
+                      [class.spinner]="api_loading" [class.spinner-darker-success]="api_loading"
+                      [class.spinner-center]="api_loading">
+                      Login
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
       </div>
       <!--end::Wrapper-->
     </div>
