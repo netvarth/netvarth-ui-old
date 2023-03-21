@@ -31,7 +31,8 @@
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
                                                 <th>Status</th>
-                                                <th>
+                                              <th>
+                                                    <span *ngIf="showAddbt" class="addbt" (click)="addCatalog()"></span>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -67,7 +68,7 @@
                                                                 <i class="icon-edit"></i>
                                                                 {{edit_btn}}
                                                             </button>
-                                                            <button type="button" (click)="dochangeStatus(catalog)"
+                                                            <!-- <button type="button" (click)="dochangeStatus(catalog)"
                                                                 mat-menu-item>
                                                                 <i
                                                                     *ngIf="catalog.catalogStatus=='INACTIVE' || !catalog.catalogStatus"></i>
@@ -75,7 +76,10 @@
                                                                     class="icon-disable"></i>
                                                                 {{(catalog.catalogStatus=='ACTIVE') ? 'Disable'
                                                                 :'Enable'}}
-                                                            </button>
+                                                            </button> -->
+                                                            <button type="button" mat-menu-item *ngIf="catalog.catalogStatus=='ACTIVE'" (click)="dochangeStatus(catalog)">
+                                                                <i class="icon-disable"></i>Disable
+                                                              </button>
                                                             <button type="button" mat-menu-item *ngIf="catalog.catalogStatus=='ACTIVE'" (click)="catalogqrCodegeneraterOnlineID(catalog)">
                                                                 <i class="fa fa-share-alt"></i>Share catalog
                                                               </button>

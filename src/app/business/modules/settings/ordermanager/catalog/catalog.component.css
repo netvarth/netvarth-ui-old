@@ -1,3 +1,8 @@
 .red-text{
     color:red;
 }
+.addbt {
+    position: relative;
+    cursor: pointer;
+    color: #00aef2;
+}

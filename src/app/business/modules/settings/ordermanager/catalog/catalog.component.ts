@@ -47,6 +47,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
     private subscriptions = new SubSink();
     qrdialogRef: any;
     bprofile: any;
+    showAddbt = false;
     constructor(private provider_servicesobj: ProviderServices,
         public shared_functions: SharedFunctions,
         private router: Router, private dialog: MatDialog,
@@ -173,19 +174,28 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.router.navigate(['provider', 'settings', 'ordermanager', 'catalogs', catalog.id], navigationExtras);
     }
     dochangeStatus(catalog) {
+        if(catalog.catalogStatus === 'ACTIVE'){
+            this.showAddbt = false;
+        }
+        else{
+            this.showAddbt = true;
+        }
         if (catalog.catalogStatus === 'ACTIVE') {
             const stat = 'INACTIVE';
             this.subscriptions.sink = this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
                     this.snackbarService.openSnackBar(catalog.catalogName + ' disabled successfully');
+                    this.showAddbt = true;
                 },
                 error => {
                     this.snackbarService.openSnackBar(error, { 'panelClass': 'snackbarerror' });
                 }
             );
+           
         } else {
             const stat = 'ACTIVE';
+           
             this.subscriptions.sink = this.provider_servicesobj.stateChangeCatalog(catalog.id, stat).subscribe(
                 () => {
                     this.getCatalog();
