@@ -154,6 +154,14 @@ export class CatalogComponent implements OnInit, OnDestroy {
         this.subscriptions.sink = this.provider_servicesobj.getProviderCatalogs()
             .subscribe(data => {
                 this.catalog_list = data;
+                let catArr = this.catalog_list.filter(cat => cat.catalogStatus === 'ACTIVE');
+                console.log(catArr)
+                if(catArr.length ===0){
+                    this.showAddbt = true;
+                }
+                else{
+                    this.showAddbt = false; 
+                }
                 this.query_executed = true;
             });
     }
