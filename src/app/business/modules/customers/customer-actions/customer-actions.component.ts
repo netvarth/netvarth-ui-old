@@ -13,6 +13,7 @@ import { SnackbarService } from "../../../../shared/services/snackbar.service";
 import { VoiceConfirmComponent } from "../voice-confirm/voice-confirm.component";
 import { CommunicationService } from "../../../../business/services/communication-service";
 import { projectConstants } from "../../../../../../src/app/app.component";
+import { WordProcessor } from "../../../../../../src/app/shared/services/word-processor.service";
 
 @Component({
   selector: "app-customer-actions",
@@ -42,6 +43,8 @@ export class CustomerActionsComponent implements OnInit {
   labelId: any;
   serviceid: any;
   selectedIndex: number;
+  api_loading = true;
+  service_list: any = [];
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
     private provider_services: ProviderServices,
@@ -50,11 +53,12 @@ export class CustomerActionsComponent implements OnInit {
     private router: Router,
     private communicationService: CommunicationService,
     public dialog: MatDialog,
+    private wordProcessor: WordProcessor,
     public dialogRef: MatDialogRef<CustomerActionsComponent>
   ) {
     if(this.data && this.data.customer){
       this.data.customer.forEach(element => {
-        // console.log("Element :", element);
+     
         this.customerId = element.id;
       });
     }
@@ -62,7 +66,7 @@ export class CustomerActionsComponent implements OnInit {
       this.provider_services
       .getMemberId(this.data.groupName, this.customerId)
       .subscribe(data => {
-        //  console.log("result :", data);
+       
         this.isMemberIdExisted = data;
       });
     }
@@ -80,10 +84,14 @@ export class CustomerActionsComponent implements OnInit {
     //     'proConId': this.customerId
     // }
     if (this.data.type && this.data.type === "label" && this.from === 'serv') {
+     
       this.action = "label_service";
+      this.getServices();
     }
     if (this.data.type && this.data.type === "label" && this.from !== 'serv') {
+     
       this.action = "label";
+    
     }
     if(this.data && this.data.customer){
       this.customerDetails = this.data.customer;
@@ -354,9 +362,9 @@ export class CustomerActionsComponent implements OnInit {
   }
   addLabeltoService(label, event ) {
     this.showApply = false;
+    
     let labelArr = this.providerLabels.filter(lab => lab.id === label);
-    console.log(labelArr)
-    console.log(this.labelMap)
+   
     if (this.labelMap[label]) {
       delete this.labelMap[label];
     }
@@ -379,6 +387,7 @@ export class CustomerActionsComponent implements OnInit {
     ) {
       this.showApply = true;
     }
+    
   }
   applyLabel() {
     if (Object.keys(this.labelMap).length > 0) {
@@ -414,12 +423,12 @@ export class CustomerActionsComponent implements OnInit {
   applyLabel_service(){
     let labelId = [];
    let labelIds = Object.keys(this.labelMap);
-  
    labelIds.forEach(myFunction)
+  
    function myFunction(item) {
     labelId.push(parseInt(item))
   }
-  console.log(labelId)
+ 
    const postData = labelId
   ;
 
@@ -475,24 +484,62 @@ export class CustomerActionsComponent implements OnInit {
     }
   }
   labelSelection() {
-    const values = [];
-    for (let i = 0; i < this.customerDetails.length; i++) {
-      if (this.customerDetails[i].label) {
-        Object.keys(this.customerDetails[i].label).forEach(key => {
-          values.push(key);
-        });
+    if(this.action === "label_service"){
+      const values = [];
+      const servArray= [];
+      for(let m =0; m<this.service_list.length; m++){
+        if(this.service_list[m].id === this.serviceid){
+          servArray.push(this.service_list[m])
+        }
       }
+      for (let i = 0; i < servArray.length; i++) {
+        if (servArray[i].label) {
+          Object.keys(servArray[i].label).forEach(key => {
+            values.push(key)
+            
+           
+          });
+        }
+      }
+      for (let i = 0; i < this.providerLabels.length; i++) {
+       
+        for (let k = 0; k < values.length; k++) {
+          const filteredArr = values.filter(
+            value => value === this.providerLabels[i].label
+          );
+   
+      if (filteredArr.length === servArray.length) {
+        this.providerLabels[i].selected = true;
+      }
+        }
+      }
+      let selectedArray=this.providerLabels.filter(label => label.hasOwnProperty('selected') === true);
+      for(let p=0;p<selectedArray.length;p++){
+this.labelMap[selectedArray[p].id]=true;
+      }
+
     }
-    for (let i = 0; i < this.providerLabels.length; i++) {
-      for (let k = 0; k < values.length; k++) {
-        const filteredArr = values.filter(
-          value => value === this.providerLabels[i].label
-        );
-        if (filteredArr.length === this.customerDetails.length) {
-          this.providerLabels[i].selected = true;
+    else {
+      const values = [];
+      for (let i = 0; i < this.customerDetails.length; i++) {
+        if (this.customerDetails[i].label) {
+          Object.keys(this.customerDetails[i].label).forEach(key => {
+            values.push(key);
+          });
+        }
+      }
+      for (let i = 0; i < this.providerLabels.length; i++) {
+        for (let k = 0; k < values.length; k++) {
+          const filteredArr = values.filter(
+            value => value === this.providerLabels[i].label
+          );
+          if (filteredArr.length === this.customerDetails.length) {
+            this.providerLabels[i].selected = true;
+          }
         }
       }
     }
+   
   }
 
   createMemberId(groupMemberId) {
@@ -503,7 +550,7 @@ export class CustomerActionsComponent implements OnInit {
     };
 
     if (!this.isMemberIdExisted) {
-      console.log("Post Data :", postData);
+    
       this.provider_services.createGroupMemberId(postData).subscribe(
         (res: any) => {
           // this.snackbarService.openSnackBar('Member Id Created Successfully', { 'panelclass': 'snackbarnormal' });
@@ -545,6 +592,21 @@ export class CustomerActionsComponent implements OnInit {
     // this.provider_services
     //console.log("Enter in create Member :")
   }
-
+  getServices(pgefilter?) {
+    this.api_loading = true;
+    //  const filter = { 'scope-eq': 'account' };
+    this.provider_services.getProviderServices(pgefilter)
+        .subscribe(
+            data => {
+                this.service_list = data;
+              
+                this.api_loading = false;
+            },
+            error => {
+                this.api_loading = false;
+                this.wordProcessor.apiErrorAutoHide(this, error);
+            }
+        );
+}
   
 }

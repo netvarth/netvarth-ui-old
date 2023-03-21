@@ -107,6 +107,7 @@
         *ngIf="providerLabels.length > 0 && !loading">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
             <mat-checkbox [checked]="label.selected" (change)="addLabeltoPatient(label.label, $event)">
+              
                 {{label.displayName | capitalizeFirst}}</mat-checkbox>
         </div>
     </div>
@@ -134,6 +135,7 @@
         *ngIf="providerLabels.length > 0 && !loading">
         <div class="mgn-bt-5" *ngFor="let label of providerLabels;let i = index">
             <mat-checkbox [checked]="label.selected" (change)="addLabeltoService(label.id, $event)">
+                
                 {{label.displayName | capitalizeFirst}}</mat-checkbox>
         </div>
     </div>
