@@ -760,11 +760,20 @@ export class OrderConsumerComponent implements OnInit {
 
 
   addToCart(itemObj) {
+    console.log(itemObj);
     const spId = this.lStorageService.getitemfromLocalStorage('order_spId');
     console.log("spId", typeof (spId), typeof (this.provider_account_id));
     if (spId === null) {
       this.orderList = [];
       this.lStorageService.setitemonLocalStorage('order_spId', this.account_id);
+     
+  
+  if(!itemObj.item.isStockAvailable){
+    this.snackbarService.openSnackBar('Out of stock', { 'panelClass': 'snackbarerror' });
+   }
+   if(itemObj.item.isStockAvailable){
+    this.orderList.push(itemObj);
+   }
       this.orderList.push(itemObj);
       this.lStorageService.setitemonLocalStorage('order', this.orderList);
       this.getTotalItemAndPrice();
@@ -776,14 +785,26 @@ export class OrderConsumerComponent implements OnInit {
             this.lStorageService.removeitemfromLocalStorage('order');
           }
         } else {
-          this.orderList.push(itemObj);
+          
+           if(!itemObj.item.isStockAvailable){
+            this.snackbarService.openSnackBar('Out of stock', { 'panelClass': 'snackbarerror' });
+           }
+           if(itemObj.item.isStockAvailable){
+            this.orderList.push(itemObj);
+           }
           this.lStorageService.setitemonLocalStorage('order', this.orderList);
           this.getTotalItemAndPrice();
           console.log("Testing order catalog", this.lStorageService.getitemfromLocalStorage('order'));
           this.getItemQty(itemObj);
         }
       } else {
-        this.orderList.push(itemObj);
+        
+         if(!itemObj.item.isStockAvailable){
+          this.snackbarService.openSnackBar('Out of stock', { 'panelClass': 'snackbarerror' });
+         }
+         if(itemObj.item.isStockAvailable){
+          this.orderList.push(itemObj);
+         }
         this.lStorageService.setitemonLocalStorage('order', this.orderList);
         this.getTotalItemAndPrice();
         this.getItemQty(itemObj);
