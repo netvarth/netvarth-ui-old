@@ -34,6 +34,7 @@ export class CreateDealerComponent implements OnInit {
     base64: [],
     caption: []
   };
+  S3Path = projectConstantsLocal.UIS3PATH;
   selectedFiles = {
     "photo": { files: [], base64: [], caption: [] },
     "store": { files: [], base64: [], caption: [] },
